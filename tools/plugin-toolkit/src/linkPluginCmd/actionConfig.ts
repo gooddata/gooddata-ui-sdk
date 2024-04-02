@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { createWorkspaceTargetConfig, WorkspaceTargetConfig } from "../_base/workspaceTargetConfig.js";
 import { IAnalyticalBackend, IDashboardWithReferences } from "@gooddata/sdk-backend-spi";
 import { IDashboardPlugin } from "@gooddata/sdk-model";
@@ -129,7 +129,7 @@ export async function getLinkCmdActionConfig(
     options: ActionOptions,
 ): Promise<LinkCmdActionConfig> {
     const workspaceTargetConfig = await createWorkspaceTargetConfig(options);
-    const { hostname, backend, credentials, env, packageJson } = workspaceTargetConfig;
+    const { hostname, credentials, env, packageJson } = workspaceTargetConfig;
     const dashboard =
         getDashboardFromOptions(options) ??
         env.DASHBOARD_ID ??
@@ -137,7 +137,6 @@ export async function getLinkCmdActionConfig(
 
     const backendInstance = createBackend({
         hostname,
-        backend,
         credentials,
     });
 

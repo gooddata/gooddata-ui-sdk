@@ -1,8 +1,8 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import ora from "ora";
 
-import { ActionOptions, TargetBackendType } from "./types.js";
+import { ActionOptions } from "./types.js";
 import {
     BackendCredentials,
     createCredentialsFromEnv,
@@ -10,26 +10,17 @@ import {
     validateCredentialsComplete,
     promptCredentials,
 } from "./credentials.js";
-import { discoverBackendType, readPackageJsonIfExists } from "./utils.js";
-import {
-    getBackendFromOptions,
-    getHostnameFromOptions,
-    getWorkspaceFromOptions,
-} from "./inputHandling/extractors.js";
+import { readPackageJsonIfExists } from "./utils.js";
+import { getHostnameFromOptions, getWorkspaceFromOptions } from "./inputHandling/extractors.js";
 import { loadEnv } from "./env.js";
 import { createHostnameValidator, validOrDie } from "./inputHandling/validators.js";
 import { createBackend } from "./backend.js";
-import { promptBackend, promptHostname, promptWorkspaceId } from "./terminal/prompts.js";
+import { promptHostname, promptWorkspaceId } from "./terminal/prompts.js";
 
 /**
  * Config for commands that target a workspace.
  */
 export type WorkspaceTargetConfig = {
-    /**
-     * Backend type
-     */
-    backend: TargetBackendType;
-
     /**
      * Hostname where analytical backend lives
      */
@@ -58,27 +49,19 @@ export type WorkspaceTargetConfig = {
     packageJson: Record<string, any>;
 };
 
-function createOrPromptCredentials(
-    backend: TargetBackendType,
-    env: Record<string, string>,
-): Promise<BackendCredentials> {
+function createOrPromptCredentials(env: Record<string, string>): Promise<BackendCredentials> {
     const credentialsFromEnv = createCredentialsFromEnv(env);
-    const areCredentialsValid = !validateCredentialsComplete(backend, credentialsFromEnv);
+    const areCredentialsValid = !validateCredentialsComplete(credentialsFromEnv);
     if (areCredentialsValid) {
         return Promise.resolve(credentialsFromEnv);
     }
 
-    return promptCredentials(backend);
+    return promptCredentials();
 }
 
-async function promptWorkspace(
-    backend: TargetBackendType,
-    hostname: string,
-    credentials: BackendCredentials,
-): Promise<string> {
+async function promptWorkspace(hostname: string, credentials: BackendCredentials): Promise<string> {
     const backendInstance = createBackend({
         hostname,
-        backend,
         credentials,
     });
 
@@ -111,24 +94,19 @@ async function promptWorkspace(
 export async function createWorkspaceTargetConfig(options: ActionOptions): Promise<WorkspaceTargetConfig> {
     const packageJson = readPackageJsonIfExists();
 
-    const backendFromOptions = getBackendFromOptions(options);
-    const backend = backendFromOptions ?? discoverBackendType(packageJson) ?? (await promptBackend());
+    const env = loadEnv();
 
-    const env = loadEnv(backend);
+    const credentials = await createOrPromptCredentials(env);
+    completeCredentialsOrDie(credentials);
 
-    const credentials = await createOrPromptCredentials(backend, env);
-    completeCredentialsOrDie(backend, credentials);
-
-    const hostnameFromOptions = getHostnameFromOptions(backendFromOptions, options);
-    const hostname = hostnameFromOptions ?? env.BACKEND_URL ?? (await promptHostname(backend));
-    validOrDie("hostname", hostname, createHostnameValidator(backend));
+    const hostnameFromOptions = getHostnameFromOptions(options);
+    const hostname = hostnameFromOptions ?? env.BACKEND_URL ?? (await promptHostname());
+    validOrDie("hostname", hostname, createHostnameValidator());
 
     const workspaceFromOptions = getWorkspaceFromOptions(options);
-    const workspace =
-        workspaceFromOptions ?? env.WORKSPACE ?? (await promptWorkspace(backend, hostname, credentials));
+    const workspace = workspaceFromOptions ?? env.WORKSPACE ?? (await promptWorkspace(hostname, credentials));
 
     return {
-        backend,
         hostname,
         workspace,
         credentials,

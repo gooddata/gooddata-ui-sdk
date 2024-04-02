@@ -57,7 +57,6 @@
     "peerDependencies": {
         "@gooddata/sdk-model": "workspace:*",
         "@gooddata/sdk-backend-spi": "workspace:*",
-        "@gooddata/sdk-backend-bear": "workspace:*",
         "@gooddata/sdk-backend-tiger": "workspace:*",
         "@gooddata/sdk-ui": "workspace:*",
         "@gooddata/sdk-ui-dashboard": "workspace:*",
@@ -77,7 +76,6 @@
         "@gooddata/catalog-export": "workspace:*",
         "@gooddata/eslint-config": "^4.1.0",
         "@gooddata/plugin-toolkit": "workspace:*",
-        "@gooddata/sdk-backend-bear": "workspace:*",
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-backend-tiger": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
