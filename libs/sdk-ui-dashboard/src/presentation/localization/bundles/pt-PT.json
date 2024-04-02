@@ -369,6 +369,7 @@
     "configurationPanel.drillIntoUrl.editor.defaultDisplayFormTypeLabel": "Valor da etiqueta do atributo",
     "configurationPanel.drillIntoUrl.editor.geoDisplayFormTypeLabel": "Valor geográfico do atributo",
     "configurationPanel.drillIntoUrl.editor.urlDisplayFormTypeLabel": "Valor do URL do atributo",
+    "configurationPanel.drillIntoUrl.editor.imageDisplayFormTypeLabel": "Valor de imagem do atributo",
     "configurationPanel.zoomInsight": "Insight passível de zoom",
     "configurationPanel.zoomInsight.help": "Ative para ampliar o insight e apresentar uma vista detalhada. Mantenha premida a tecla Shift para rodar a zona ampliada.",
     "configurationPanel.zoomInsight.notice": "O zoom não será aplicado aos dashboards exportados",
@@ -432,5 +433,9 @@
     "attributesDropdown.valuesLimiting.addFilters.title": "Filtro de dashboard",
     "attributesDropdown.valuesLimiting.addFilters.description": "Utilize um filtro de dashboard existente para ocultar os valores irrelevantes. ",
     "attributesDropdown.valuesLimiting.addLimitingItem.title": "Métrica",
-    "attributesDropdown.valuesLimiting.addLimitingItem.description": "Utilize uma métrica para ocultar os valores irrelevantes. Só são apresentados os valores com resultados não nulos para a métrica. <a>Saber mais</a>"
+    "attributesDropdown.valuesLimiting.addLimitingItem.description": "Utilize uma métrica para ocultar os valores irrelevantes. Só são apresentados os valores com resultados não nulos para a métrica. <a>Saber mais</a>",
+    "attributesDropdown.valuesLimiting.commonDateFilterTitle": "{dateFilterTitle} como {dataSetTitle}",
+    "attributesDropdown.valuesLimiting.addDateTitle": "Escolher data",
+    "attributesDropdown.valuesLimiting.disableDateFilter": "Filtro indisponível: o filtro <strong>{dateFilterTitle}</strong> já utiliza este conjunto de dados de data.",
+    "attributesDropdown.valuesLimiting.disableDataSet": "Conjunto de dados de data indisponível: o filtro <strong>{dateFilterTitle}</strong> já utiliza este conjunto de dados de data."
 }

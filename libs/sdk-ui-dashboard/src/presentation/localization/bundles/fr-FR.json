@@ -369,6 +369,7 @@
     "configurationPanel.drillIntoUrl.editor.defaultDisplayFormTypeLabel": "Valeur du libellé de l'attribut",
     "configurationPanel.drillIntoUrl.editor.geoDisplayFormTypeLabel": "Valeur géographique de l'attribut",
     "configurationPanel.drillIntoUrl.editor.urlDisplayFormTypeLabel": "Valeur de l'URL de l'attribut",
+    "configurationPanel.drillIntoUrl.editor.imageDisplayFormTypeLabel": "Valeur de l'image de l'attribut",
     "configurationPanel.zoomInsight": "Zoom sur la perception",
     "configurationPanel.zoomInsight.help": "Zoomez sur une perception pour l'afficher en détail. Maintenez la touche Maj enfoncée pour parcourir la zone agrandie.",
     "configurationPanel.zoomInsight.notice": "Le zoom n'est pas appliqué aux tableaux de bord exportés",
@@ -432,5 +433,9 @@
     "attributesDropdown.valuesLimiting.addFilters.title": "Filtre de tableau de bord",
     "attributesDropdown.valuesLimiting.addFilters.description": "Utilisez un filtre de tableau de bord existant pour masquer les valeurs non pertinentes.",
     "attributesDropdown.valuesLimiting.addLimitingItem.title": "Métrique",
-    "attributesDropdown.valuesLimiting.addLimitingItem.description": "Utilisez une métrique pour masquer les valeurs non pertinentes. Seules les valeurs dont les résultats ne sont pas nuls pour cette métrique s'affichent. <a>En savoir plus</a>"
+    "attributesDropdown.valuesLimiting.addLimitingItem.description": "Utilisez une métrique pour masquer les valeurs non pertinentes. Seules les valeurs dont les résultats ne sont pas nuls pour cette métrique s'affichent. <a>En savoir plus</a>",
+    "attributesDropdown.valuesLimiting.commonDateFilterTitle": "{dateFilterTitle} en tant que {dataSetTitle}",
+    "attributesDropdown.valuesLimiting.addDateTitle": "Choix de la date",
+    "attributesDropdown.valuesLimiting.disableDateFilter": "Filtre non disponible : le filtre <strong>{dateFilterTitle}</strong> utilise déjà cet ensemble de données Date.",
+    "attributesDropdown.valuesLimiting.disableDataSet": "Ensemble de données Date indisponible : le filtre <strong>{dateFilterTitle}</strong> utilise déjà cet ensemble de données Date."
 }

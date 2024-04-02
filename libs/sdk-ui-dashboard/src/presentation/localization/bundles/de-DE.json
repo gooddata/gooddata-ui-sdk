@@ -369,6 +369,7 @@
     "configurationPanel.drillIntoUrl.editor.defaultDisplayFormTypeLabel": "Attributsbeschriftungswert",
     "configurationPanel.drillIntoUrl.editor.geoDisplayFormTypeLabel": "Geo-Attributswert",
     "configurationPanel.drillIntoUrl.editor.urlDisplayFormTypeLabel": "URL-Attributswert",
+    "configurationPanel.drillIntoUrl.editor.imageDisplayFormTypeLabel": "Attributbildwert",
     "configurationPanel.zoomInsight": "Vergrößerbare Betrachtung",
     "configurationPanel.zoomInsight.help": "Aktivieren Sie Vergrößern der Betrachtung für eine detaillierte Ansicht. Halten Sie die Umschalttaste gedrückt, um den vergrößerten Bereich zu verschieben.",
     "configurationPanel.zoomInsight.notice": "Vergrößern wird nicht auf exportierte Dashboards angewendet",
@@ -432,5 +433,9 @@
     "attributesDropdown.valuesLimiting.addFilters.title": "Dashboard-Filter",
     "attributesDropdown.valuesLimiting.addFilters.description": "Verwenden Sie einen vorhandenen Dashboard-Filter, um irrelevante Werte auszublenden.",
     "attributesDropdown.valuesLimiting.addLimitingItem.title": "Metrik",
-    "attributesDropdown.valuesLimiting.addLimitingItem.description": "Verwenden Sie eine Metrik, um irrelevante Werte auszublenden. Es werden nur Werte mit Ergebnissen ungleich Null für die Metrik angezeigt. <a>Mehr erfahren</a>"
+    "attributesDropdown.valuesLimiting.addLimitingItem.description": "Verwenden Sie eine Metrik, um irrelevante Werte auszublenden. Es werden nur Werte mit Ergebnissen ungleich Null für die Metrik angezeigt. <a>Mehr erfahren</a>",
+    "attributesDropdown.valuesLimiting.commonDateFilterTitle": "{dateFilterTitle} als {dataSetTitle}",
+    "attributesDropdown.valuesLimiting.addDateTitle": "Datum auswählen",
+    "attributesDropdown.valuesLimiting.disableDateFilter": "Filter nicht verfügbar: Der Filter <strong>{dateFilterTitle}</strong> verwendet diesen Datumsdatensatz bereits.",
+    "attributesDropdown.valuesLimiting.disableDataSet": "Datumsdatensatz nicht verfügbar: Der Filter <strong>{dateFilterTitle}</strong> verwendet diesen Datumsdatensatz bereits."
 }

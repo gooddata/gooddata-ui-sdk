@@ -369,6 +369,7 @@
     "configurationPanel.drillIntoUrl.editor.defaultDisplayFormTypeLabel": "Valore dell'etichetta dell'attributo",
     "configurationPanel.drillIntoUrl.editor.geoDisplayFormTypeLabel": "Valore dell'attributo geo",
     "configurationPanel.drillIntoUrl.editor.urlDisplayFormTypeLabel": "Valore URL dell'attributo",
+    "configurationPanel.drillIntoUrl.editor.imageDisplayFormTypeLabel": "Valore dell'immagine dell'attributo",
     "configurationPanel.zoomInsight": "Analisi con zoom",
     "configurationPanel.zoomInsight.help": "Attivare lo zoom dell'analisi per visualizzarla nel dettaglio. Tenere premuto il tasto Maiusc per scorrere l'area ingrandita.",
     "configurationPanel.zoomInsight.notice": "Lo zoom non verrà applicato ai dashboard esportati.",
@@ -432,5 +433,9 @@
     "attributesDropdown.valuesLimiting.addFilters.title": "Filtro del dashboard.",
     "attributesDropdown.valuesLimiting.addFilters.description": "Utilizzare un filtro del dashboard esistente per nascondere i valori non pertinenti.",
     "attributesDropdown.valuesLimiting.addLimitingItem.title": "Metrica",
-    "attributesDropdown.valuesLimiting.addLimitingItem.description": "Utilizzare una metrica per nascondere i valori non pertinenti. Vengono visualizzati solo i valori con risultati non nulli per la metrica. <a>Maggiori informazioni</a>"
+    "attributesDropdown.valuesLimiting.addLimitingItem.description": "Utilizzare una metrica per nascondere i valori non pertinenti. Vengono visualizzati solo i valori con risultati non nulli per la metrica. <a>Maggiori informazioni</a>",
+    "attributesDropdown.valuesLimiting.commonDateFilterTitle": "{dateFilterTitle} come {dataSetTitle}",
+    "attributesDropdown.valuesLimiting.addDateTitle": "Scegli data",
+    "attributesDropdown.valuesLimiting.disableDateFilter": "Filtro non disponibile: il filtro <strong>{dateFilterTitle}</strong> utilizza già questo set di dati.",
+    "attributesDropdown.valuesLimiting.disableDataSet": "Set di dati non disponibile: il filtro <strong>{dateFilterTitle}</strong> utilizza già questo set di dati."
 }
