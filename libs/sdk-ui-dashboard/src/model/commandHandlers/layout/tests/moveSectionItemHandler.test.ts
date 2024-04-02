@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { beforeEach, describe, it, expect } from "vitest";
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";
@@ -23,16 +23,6 @@ describe("move layout section item handler", () => {
             await preloadedTesterFactory((tester) => {
                 Tester = tester;
             }, SimpleDashboardIdentifier);
-        });
-
-        it("should fail if bad source section index is provided", async () => {
-            const event: DashboardCommandFailed<MoveLayoutSection> = await Tester.dispatchAndWaitFor(
-                moveSectionItem(2, 0, -1, -1, TestCorrelation),
-                "GDC.DASH/EVT.COMMAND.FAILED",
-            );
-
-            expect(event.payload.reason).toEqual("USER_ERROR");
-            expect(event.correlationId).toEqual(TestCorrelation);
         });
 
         it("should fail if bad source item index is provided", async () => {

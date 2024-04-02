@@ -84,7 +84,7 @@ export {
     IUseAttributeElements,
 } from "./types/attributeFilterTypes.js";
 
-export { IDashboardDependentDateFilter } from "./types/dateFilterTypes.js";
+export { IDashboardDependentDateFilter, isDashboardDependentDateFilter } from "./types/dateFilterTypes.js";
 
 export { DRILL_TO_URL_PLACEHOLDER } from "./types/drillTypes.js";
 export {

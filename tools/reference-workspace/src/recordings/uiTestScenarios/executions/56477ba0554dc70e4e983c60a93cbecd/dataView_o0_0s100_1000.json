@@ -1,0 +1,52 @@
+{
+    "count": [12, 1],
+    "data": [
+        [11640203.95],
+        [6758757.23],
+        [8566536.72],
+        [2178059.74],
+        [3762615.61],
+        [3312958.33],
+        [15582695.69],
+        [16188138.24],
+        [30029658.14],
+        [5863972.18],
+        [5763242.3],
+        [6978618.41]
+    ],
+    "headerItems": [
+        [
+            [
+                { "attributeHeaderItem": { "name": "Inside Sales", "uri": "Inside Sales" } },
+                { "attributeHeaderItem": { "name": "Inside Sales", "uri": "Inside Sales" } },
+                { "attributeHeaderItem": { "name": "Inside Sales", "uri": "Inside Sales" } },
+                { "attributeHeaderItem": { "name": "Inside Sales", "uri": "Inside Sales" } },
+                { "attributeHeaderItem": { "name": "Inside Sales", "uri": "Inside Sales" } },
+                { "attributeHeaderItem": { "name": "Inside Sales", "uri": "Inside Sales" } },
+                { "attributeHeaderItem": { "name": "Direct Sales", "uri": "Direct Sales" } },
+                { "attributeHeaderItem": { "name": "Direct Sales", "uri": "Direct Sales" } },
+                { "attributeHeaderItem": { "name": "Direct Sales", "uri": "Direct Sales" } },
+                { "attributeHeaderItem": { "name": "Direct Sales", "uri": "Direct Sales" } },
+                { "attributeHeaderItem": { "name": "Direct Sales", "uri": "Direct Sales" } },
+                { "attributeHeaderItem": { "name": "Direct Sales", "uri": "Direct Sales" } }
+            ],
+            [
+                { "attributeHeaderItem": { "name": "CompuSci", "uri": "CompuSci" } },
+                { "attributeHeaderItem": { "name": "Educationly", "uri": "Educationly" } },
+                { "attributeHeaderItem": { "name": "Explorer", "uri": "Explorer" } },
+                { "attributeHeaderItem": { "name": "Grammar Plus", "uri": "Grammar Plus" } },
+                { "attributeHeaderItem": { "name": "PhoenixSoft", "uri": "PhoenixSoft" } },
+                { "attributeHeaderItem": { "name": "WonderKid", "uri": "WonderKid" } },
+                { "attributeHeaderItem": { "name": "CompuSci", "uri": "CompuSci" } },
+                { "attributeHeaderItem": { "name": "Educationly", "uri": "Educationly" } },
+                { "attributeHeaderItem": { "name": "Explorer", "uri": "Explorer" } },
+                { "attributeHeaderItem": { "name": "Grammar Plus", "uri": "Grammar Plus" } },
+                { "attributeHeaderItem": { "name": "PhoenixSoft", "uri": "PhoenixSoft" } },
+                { "attributeHeaderItem": { "name": "WonderKid", "uri": "WonderKid" } }
+            ]
+        ],
+        [[{ "measureHeaderItem": { "name": "Amount", "order": 0 } }]]
+    ],
+    "offset": [0, 0],
+    "totalCount": [12, 1]
+}

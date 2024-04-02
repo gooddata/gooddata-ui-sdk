@@ -1,10 +1,12 @@
 // (C) 2019-2024 GoodData Corporation
+
 import {
-    isAttributeHeader,
-    IExecutionResult as IBearExecutionResult,
+    IExecutionResult as ILegacyExecutionResult,
     IResultDimension,
     IExecutionResponse,
-} from "@gooddata/api-model-bear";
+    isAttributeHeader,
+} from "./legacyBackendTypes.js";
+
 import {
     IAnalyticalBackendConfig,
     IAuthenticatedPrincipal,
@@ -270,7 +272,7 @@ function recordedDataView(
     result: IExecutionResult,
     recording: LegacyExecutionRecording,
 ): IDataView {
-    const afmResult = recording.result.executionResult as IBearExecutionResult;
+    const afmResult = recording.result.executionResult as ILegacyExecutionResult;
     const fp = defFingerprint(definition) + "/recordedData";
 
     return {

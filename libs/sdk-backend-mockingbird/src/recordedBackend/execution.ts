@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 import {
     IDataView,
@@ -486,7 +486,7 @@ function normalizedDataView(
  *
  * @param recording - recording (as obtained from the index, typically using the Scenario mapping)
  * @param dataViewId - Identifier of the data view; defaults to view with all data
- * @param resultRefType - Specify what types of refs should the backend create in the result's dimension descriptors (uri refs returned by bear, id refs returned by tiger)
+ * @param resultRefType - Specify what types of refs should the backend create in the result's dimension descriptors (id refs returned by tiger)
  * @internal
  */
 export function recordedDataView(

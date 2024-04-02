@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { LineChart, ILineChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src/index.js";
@@ -7,7 +7,7 @@ import { ScenarioGroupNames } from "../_infra/groupNames.js";
 
 export const LineChartTwoMeasuresWithTrendyBy = {
     measures: [ReferenceMd.Amount, ReferenceMd.Won],
-    trendBy: ReferenceMd.DateDatasets.Created.QuarterYear.USShort,
+    trendBy: ReferenceMd.DateDatasets.Created.CreatedQuarterYear.Default,
 };
 
 export const LineChartWithArithmeticMeasuresAndViewBy = {
@@ -17,7 +17,7 @@ export const LineChartWithArithmeticMeasuresAndViewBy = {
         ReferenceMdExt.CalculatedLost,
         ReferenceMdExt.CalculatedWonLostRatio,
     ],
-    trendBy: ReferenceMd.DateDatasets.Created.QuarterYear.USShort,
+    trendBy: ReferenceMd.DateDatasets.Created.CreatedQuarterYear.Default,
 };
 
 export const LineChartWithLotArithmeticMeasuresAndViewBy = {
@@ -30,7 +30,7 @@ export const LineChartWithLotArithmeticMeasuresAndViewBy = {
         ReferenceMdExt.CalculatedLost,
         ReferenceMdExt.CalculatedWonLostRatio,
     ],
-    trendBy: ReferenceMd.DateDatasets.Created.QuarterYear.USShort,
+    trendBy: ReferenceMd.DateDatasets.Created.CreatedQuarterYear.Default,
 };
 
 export const LineChartWithManyDataPoints = {
@@ -41,18 +41,18 @@ export const LineChartWithManyDataPoints = {
 
 export const LineChartWithSegmentByDate = {
     measures: [ReferenceMd.Amount],
-    segmentBy: ReferenceMd.DateDatasets.Created.Year.Default,
+    segmentBy: ReferenceMd.DateDatasets.Created.CreatedYear.Default,
 };
 
 export const LineChartWithTrendByDateAndSegmentByDate = {
     measures: [ReferenceMd.Amount],
-    trendBy: ReferenceMd.DateDatasets.Created.Year.Default,
-    segmentBy: ReferenceMd.DateDatasets.Closed.Year.Default,
+    trendBy: ReferenceMd.DateDatasets.Created.CreatedYear.Default,
+    segmentBy: ReferenceMd.DateDatasets.Closed.ClosedYear.Default,
 };
 
 export const LineChartViewByDate = {
     measures: [ReferenceMd.Amount, ReferenceMd.Won],
-    trendBy: ReferenceMd.DateDatasets.Closed.Year.Default,
+    trendBy: ReferenceMd.DateDatasets.Closed.ClosedYear.Default,
 };
 
 export default scenariosFor<ILineChartProps>("LineChart", LineChart)
@@ -62,27 +62,27 @@ export default scenariosFor<ILineChartProps>("LineChart", LineChart)
     })
     .addScenario("single measure with trendBy", {
         measures: [ReferenceMd.Amount],
-        trendBy: ReferenceMd.DateDatasets.Created.QuarterYear.USShort,
+        trendBy: ReferenceMd.DateDatasets.Created.CreatedQuarterYear.Default,
     })
     .addScenario("single measure with % and trendBy", {
         measures: [ReferenceMd.WinRate],
-        trendBy: ReferenceMd.DateDatasets.Created.QuarterYear.USShort,
+        trendBy: ReferenceMd.DateDatasets.Created.CreatedQuarterYear.Default,
     })
     .addScenario("two measures with trendBy", LineChartTwoMeasuresWithTrendyBy)
     .addScenario("two measures with trendBy and sort by measure", {
         measures: [ReferenceMd.Amount, ReferenceMd.Won],
-        trendBy: ReferenceMd.DateDatasets.Created.QuarterYear.USShort,
+        trendBy: ReferenceMd.DateDatasets.Created.CreatedQuarterYear.Default,
         sortBy: [newMeasureSort(ReferenceMd.Won, "asc")],
     })
     .addScenario("two measures with trendBy and sort by attribute", {
         measures: [ReferenceMd.Amount, ReferenceMd.Won],
-        trendBy: ReferenceMd.DateDatasets.Created.QuarterYear.USShort,
-        sortBy: [newAttributeSort(ReferenceMd.DateDatasets.Created.QuarterYear.USShort, "desc")],
+        trendBy: ReferenceMd.DateDatasets.Created.CreatedQuarterYear.Default,
+        sortBy: [newAttributeSort(ReferenceMd.DateDatasets.Created.CreatedQuarterYear.Default, "desc")],
     })
     .addScenario("single measure with trendBy and segmentBy", {
         measures: [ReferenceMd.Amount],
-        trendBy: ReferenceMd.DateDatasets.Created.QuarterYear.USShort,
-        segmentBy: ReferenceMd.Region,
+        trendBy: ReferenceMd.DateDatasets.Created.CreatedQuarterYear.Default,
+        segmentBy: ReferenceMd.Region.Default,
     })
     .addScenario("arithmetic measures", LineChartWithArithmeticMeasuresAndViewBy)
     .addScenario("with one measure and segment by date", LineChartWithSegmentByDate)

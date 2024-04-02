@@ -1,0 +1,56 @@
+{
+    "count": [18, 2],
+    "data": [],
+    "headerItems": [
+        [
+            [
+                { "attributeHeaderItem": { "name": "Interest", "uri": "Interest" } },
+                { "attributeHeaderItem": { "name": "Interest", "uri": "Interest" } },
+                { "attributeHeaderItem": { "name": "Discovery", "uri": "Discovery" } },
+                { "attributeHeaderItem": { "name": "Discovery", "uri": "Discovery" } },
+                { "attributeHeaderItem": { "name": "Short List", "uri": "Short List" } },
+                { "attributeHeaderItem": { "name": "Short List", "uri": "Short List" } },
+                { "attributeHeaderItem": { "name": "Short List", "uri": "Short List" } },
+                { "attributeHeaderItem": { "name": "Risk Assessment", "uri": "Risk Assessment" } },
+                { "attributeHeaderItem": { "name": "Risk Assessment", "uri": "Risk Assessment" } },
+                { "attributeHeaderItem": { "name": "Risk Assessment", "uri": "Risk Assessment" } },
+                { "attributeHeaderItem": { "name": "Conviction", "uri": "Conviction" } },
+                { "attributeHeaderItem": { "name": "Conviction", "uri": "Conviction" } },
+                { "attributeHeaderItem": { "name": "Negotiation", "uri": "Negotiation" } },
+                { "attributeHeaderItem": { "name": "Negotiation", "uri": "Negotiation" } },
+                { "attributeHeaderItem": { "name": "Closed Won", "uri": "Closed Won" } },
+                { "attributeHeaderItem": { "name": "Closed Won", "uri": "Closed Won" } },
+                { "attributeHeaderItem": { "name": "Closed Lost", "uri": "Closed Lost" } },
+                { "attributeHeaderItem": { "name": "Closed Lost", "uri": "Closed Lost" } }
+            ],
+            [
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "", "uri": "" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": null, "uri": null } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } }
+            ]
+        ],
+        [
+            [
+                { "attributeHeaderItem": { "name": "Direct Sales", "uri": "Direct Sales" } },
+                { "attributeHeaderItem": { "name": "Inside Sales", "uri": "Inside Sales" } }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [18, 2]
+}

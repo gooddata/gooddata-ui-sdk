@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React, { useMemo, useCallback } from "react";
 import { useMediaQuery } from "@gooddata/sdk-ui-kit";
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
@@ -40,6 +40,7 @@ export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyP
         workingSelectionElements,
         parentFilterAttributes,
         isFilteredByParentFilters,
+        isFilteredByDependentDateFilters,
         fullscreenOnMobile,
         selectionMode,
         title,
@@ -86,6 +87,7 @@ export const AttributeFilterDropdownBody: React.FC<IAttributeFilterDropdownBodyP
                 error={initialElementsPageError ?? nextElementsPageError}
                 attributeTitle={title}
                 enableShowingFilteredElements={enableShowingFilteredElements}
+                isFilteredByDependentDateFilters={isFilteredByDependentDateFilters}
                 onShowFilteredElements={onShowFilteredElements}
                 irrelevantSelection={irrelevantSelection}
                 onClearIrrelevantSelection={onClearIrrelevantSelection}

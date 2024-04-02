@@ -53,7 +53,6 @@ const isMetric = (item: ValuesLimitingItem) => isIdentifierRef(item) && item.typ
 const isFact = (item: ValuesLimitingItem) => isIdentifierRef(item) && item.type === "fact";
 const isAttribute = (item: ValuesLimitingItem) => isIdentifierRef(item) && item.type === "attribute";
 const isParentFilter = (item: ValuesLimitingItem) => !isObjRef(item);
-const isDateFilter = (item: ValuesLimitingItem) => isObjRef(item);
 
 export interface ILimitingItemTitleProps {
     title?: string;
@@ -118,11 +117,6 @@ export const LimitingItemTitle: React.FC<ILimitingItemTitleProps> = ({ item, tit
                     />
                 }
             />
-        );
-    }
-    if (isDateFilter(item)) {
-        return (
-            <ItemTitleWithIcon title={title} tooltip={titleTooltip} IconComponent={Icon.Date} iconSize={14} />
         );
     }
 

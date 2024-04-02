@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React from "react";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { scenariosFor } from "../../src/index.js";
@@ -33,11 +33,11 @@ export default scenariosFor<IExecuteProps>("Execute", Execute)
         children: DumpingComponent,
     })
     .addScenario("scoped series", {
-        seriesBy: [ReferenceMd.Amount, ReferenceMd.Won, ReferenceMd.Region],
+        seriesBy: [ReferenceMd.Amount, ReferenceMd.Won, ReferenceMd.Region.Default],
         children: DumpingComponent,
     })
     .addScenario("scoped series with slicing", {
-        seriesBy: [ReferenceMd.Amount, ReferenceMd.Won, ReferenceMd.Region],
+        seriesBy: [ReferenceMd.Amount, ReferenceMd.Won, ReferenceMd.Region.Default],
         slicesBy: [ReferenceMd.Product.Name],
         children: DumpingComponent,
     });

@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { newAttributeSort, newMeasureSort, newMeasureValueFilter } from "@gooddata/sdk-model";
 import { AreaChart, IAreaChartProps } from "@gooddata/sdk-ui-charts";
@@ -13,7 +13,7 @@ export const AreaChartWithViewBy = {
 export const AreaChartWithViewAndStackBy = {
     measures: [ReferenceMd.Amount],
     viewBy: [ReferenceMd.Product.Name],
-    stackBy: ReferenceMd.Region,
+    stackBy: ReferenceMd.Region.Default,
 };
 
 export const AreaChartWithTwoMeasuresAndViewBy = {
@@ -23,7 +23,7 @@ export const AreaChartWithTwoMeasuresAndViewBy = {
 
 export const AreaChartViewByDate = {
     measures: [ReferenceMd.Amount, ReferenceMd.Won],
-    viewBy: [ReferenceMd.DateDatasets.Closed.Year.Default],
+    viewBy: [ReferenceMd.DateDatasets.Closed.ClosedYear.Default],
 };
 
 export const AreaChartWithManyDataPoints = {
@@ -43,13 +43,13 @@ export const AreaChartWithLotArithmeticMeasuresAndViewBy = {
         ReferenceMdExt.CalculatedLost,
         ReferenceMdExt.CalculatedWonLostRatio,
     ],
-    viewBy: ReferenceMd.DateDatasets.Created.QuarterYear.USShort,
+    viewBy: ReferenceMd.DateDatasets.Created.CreatedQuarterYear.Default,
 };
 
 export const AreaChartWithViewByDateAndStackByDate = {
     measures: [ReferenceMd.Amount],
-    viewBy: [ReferenceMd.DateDatasets.Closed.Year.Default],
-    stackBy: ReferenceMd.DateDatasets.Created.Year.Default,
+    viewBy: [ReferenceMd.DateDatasets.Closed.ClosedYear.Default],
+    stackBy: ReferenceMd.DateDatasets.Created.CreatedYear.Default,
 };
 
 export default scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
@@ -61,7 +61,7 @@ export default scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
     .addScenario("single measure with viewBy and stackBy", AreaChartWithViewAndStackBy)
     .addScenario("single measure with two viewBy", {
         measures: [ReferenceMd.Amount],
-        viewBy: [ReferenceMd.Product.Name, ReferenceMd.Region],
+        viewBy: [ReferenceMd.Product.Name, ReferenceMd.Region.Default],
     })
     .addScenario("two measures with viewBy", AreaChartWithTwoMeasuresAndViewBy)
     .addScenario("two measures with undefined values", AreaChartViewByDate)

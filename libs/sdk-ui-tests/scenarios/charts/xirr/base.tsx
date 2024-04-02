@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { Xirr, IXirrProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src/index.js";
@@ -11,9 +11,9 @@ export default scenariosFor<IXirrProps>("Xirr", Xirr)
     })
     .addScenario("correct config", {
         measure: ReferenceMd.SampleXIRR,
-        attribute: ReferenceMd.DateDatasets.Timeline.Year.Default,
+        attribute: ReferenceMd.DateDatasets.Timeline.TimelineYear.Default,
     })
     .addScenario("semantically wrong measure", {
         measure: ReferenceMd.TimelineEOP,
-        attribute: ReferenceMd.DateDatasets.Timeline.Year.Default,
+        attribute: ReferenceMd.DateDatasets.Timeline.TimelineYear.Default,
     });

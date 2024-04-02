@@ -10,6 +10,7 @@ import {
     IRelativeDateFilter,
     SortDirection,
     ObjRef,
+    IAbsoluteDateFilter,
 } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
@@ -409,11 +410,11 @@ export class AttributeFilterLoader implements IAttributeFilterLoader {
         return this.bridge.getLimitingAttributeFilters();
     };
 
-    setLimitingDateFilters = (filters: IRelativeDateFilter[]): void => {
+    setLimitingDateFilters = (filters: IRelativeDateFilter[] | IAbsoluteDateFilter[]): void => {
         this.bridge.setLimitingDateFilters(filters);
     };
 
-    getLimitingDateFilters = (): IRelativeDateFilter[] => {
+    getLimitingDateFilters = (): IRelativeDateFilter[] | IAbsoluteDateFilter[] => {
         return this.bridge.getLimitingDateFilters();
     };
 

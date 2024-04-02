@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import {
     IDashboardLayout,
@@ -111,7 +111,7 @@ export function getPathConverterForIgnoredAttributeHierarchiesFromBackend(
         } else {
             pathConverterPairs.push({
                 path: [...widgetPath, "ignoredDrillDownHierarchies", index, "dateHierarchyTemplate"],
-                converter: (id: string) => idRef(id, "dataSet"),
+                converter: (id: string) => idRef(id, "dateHierarchyTemplate"),
             });
         }
     });
@@ -151,6 +151,7 @@ export function getPathConverterForIgnoredAttributeHierarchiesToBackend(
         } else {
             pathConverterPairs.push({
                 path: [...widgetPath, "ignoredDrillDownHierarchies", index, "dateHierarchyTemplate"],
+                // DateHierarchyTemplate is not valid MD type yet so we can not store full objRef but just id string
                 converter: objRefToString,
             });
         }

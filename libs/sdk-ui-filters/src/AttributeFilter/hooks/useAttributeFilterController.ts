@@ -3,11 +3,14 @@ import { useCallback, useEffect, useState } from "react";
 import isEqual from "lodash/isEqual.js";
 import debounce from "lodash/debounce.js";
 import difference from "lodash/difference.js";
+import differenceBy from "lodash/differenceBy.js";
 import {
     DashboardAttributeFilterSelectionMode,
     filterAttributeElements,
+    IAbsoluteDateFilter,
     IAttributeElement,
     IAttributeFilter,
+    IRelativeDateFilter,
     isAttributeElementsByRef,
     isAttributeElementsByValue,
     isNegativeAttributeFilter,
@@ -19,6 +22,7 @@ import { IMultiSelectAttributeFilterHandler } from "../../AttributeFilterHandler
 import { IAttributeFilterCoreProps, OnApplyCallbackType } from "../types.js";
 import { useResolveFilterInput } from "./useResolveFilterInput.js";
 import { useResolveParentFiltersInput } from "./useResolveParentFiltersInput.js";
+import { useResolveDependentDateFiltersInput } from "./useResolveDependentDateFiltersInput.js";
 import { useAttributeFilterHandler } from "./useAttributeFilterHandler.js";
 import { useAttributeFilterControllerData } from "./useAttributeFilterControllerData.js";
 import {
@@ -68,6 +72,7 @@ export const useAttributeFilterController = (
         filter: filterInput,
         connectToPlaceholder,
         parentFilters,
+        dependentDateFilters,
         parentFilterOverAttribute,
         validateElementsBy,
         resetOnParentFilterChange = true,
@@ -108,6 +113,8 @@ export const useAttributeFilterController = (
         supportsSettingConnectingAttributes,
     );
 
+    const limitingDateFilters = useResolveDependentDateFiltersInput(dependentDateFilters);
+
     const handler = useAttributeFilterHandler({
         backend,
         filter,
@@ -136,6 +143,7 @@ export const useAttributeFilterController = (
         {
             filter,
             limitingAttributeFilters,
+            limitingDateFilters,
             limitingValidationItems: validateElementsBy,
             limit: elementsOptions?.limit,
             onApply,
@@ -158,6 +166,7 @@ export const useAttributeFilterController = (
             shouldIncludeLimitingFilters,
             setShouldIncludeLimitingFilters,
             limitingAttributeFilters,
+            limitingDateFilters,
         },
         supportsShowingFilteredElements,
         supportsKeepingDependentFiltersSelection,
@@ -214,6 +223,7 @@ function useInitOrReload(
     props: {
         filter: IAttributeFilter;
         limitingAttributeFilters?: IElementsQueryAttributeFilter[];
+        limitingDateFilters?: (IRelativeDateFilter | IAbsoluteDateFilter)[];
         limitingValidationItems?: ObjRef[];
         limit?: number;
         setConnectedPlaceholderValue: (filter: IAttributeFilter) => void;
@@ -228,6 +238,7 @@ function useInitOrReload(
     const {
         filter,
         limitingAttributeFilters,
+        limitingDateFilters,
         limitingValidationItems = EMPTY_LIMITING_VALIDATION_ITEMS,
         limit,
         resetOnParentFilterChange,
@@ -239,6 +250,10 @@ function useInitOrReload(
     useEffect(() => {
         if (limitingAttributeFilters.length > 0) {
             handler.setLimitingAttributeFilters(limitingAttributeFilters);
+        }
+
+        if (limitingDateFilters.length > 0) {
+            handler.setLimitingDateFilters(limitingDateFilters);
         }
 
         if (limitingValidationItems?.length > 0) {
@@ -261,6 +276,9 @@ function useInitOrReload(
             limitingAttributeFilters,
             handler.getLimitingAttributeFilters(),
         );
+
+        const limitingDateFiltersChanged = !isEqual(limitingDateFilters, handler.getLimitingDateFilters());
+
         const filterChanged = !isEqual(filter, handler.getFilter());
 
         const limitingValidationItemsChanged = !isEqual(
@@ -272,6 +290,8 @@ function useInitOrReload(
             filter,
             limitingAttributeFilters,
             limitingAttributesChanged,
+            limitingDateFilters,
+            limitingDateFiltersChanged,
             filterChanged,
             setConnectedPlaceholderValue,
             onApply,
@@ -288,6 +308,7 @@ function useInitOrReload(
     }, [
         filter,
         limitingAttributeFilters,
+        limitingDateFilters,
         resetOnParentFilterChange,
         handler,
         onApply,
@@ -304,6 +325,8 @@ type UpdateFilterProps = {
     filter: IAttributeFilter;
     limitingAttributeFilters?: IElementsQueryAttributeFilter[];
     limitingAttributesChanged: boolean;
+    limitingDateFilters?: (IRelativeDateFilter | IAbsoluteDateFilter)[];
+    limitingDateFiltersChanged: boolean;
     filterChanged: boolean;
     setConnectedPlaceholderValue: (filter: IAttributeFilter) => void;
     onApply: OnApplyCallbackType;
@@ -321,6 +344,8 @@ function updateNonResettingFilter(
         filter,
         limitingAttributeFilters,
         limitingAttributesChanged,
+        limitingDateFilters,
+        limitingDateFiltersChanged,
         filterChanged,
         setConnectedPlaceholderValue,
         setShouldReloadElements,
@@ -329,7 +354,12 @@ function updateNonResettingFilter(
     }: UpdateFilterProps,
     supportsKeepingDependentFiltersSelection: boolean,
 ): UpdateFilterType {
-    if (limitingAttributesChanged || filterChanged || limitingValidationItemsChanged) {
+    if (
+        limitingAttributesChanged ||
+        filterChanged ||
+        limitingValidationItemsChanged ||
+        limitingDateFiltersChanged
+    ) {
         const elements = filterAttributeElements(filter);
         const keys = isAttributeElementsByValue(elements) ? elements.values : elements.uris;
         const isInverted = isNegativeAttributeFilter(filter);
@@ -339,16 +369,22 @@ function updateNonResettingFilter(
         // In this case, we want to reset the irrelevant keys.
         const leftoverIrrelevantKeys = difference(irrelevantKeys, keys);
 
+        const hasLimitingDateFiltersChanged =
+            handler.getLimitingDateFilters().length !== limitingDateFilters.length ||
+            differenceBy(handler.getLimitingDateFilters(), limitingDateFilters).length > 0;
         const hasNumberOfLimitingAttributesChanged =
             handler.getLimitingAttributeFilters().length !== limitingAttributeFilters.length;
         const shouldReinitilizeAllElements =
             supportsKeepingDependentFiltersSelection &&
-            (hasNumberOfLimitingAttributesChanged || !isEmpty(leftoverIrrelevantKeys));
+            (hasNumberOfLimitingAttributesChanged ||
+                hasLimitingDateFiltersChanged ||
+                !isEmpty(leftoverIrrelevantKeys));
 
         const irrelevantKeysObj = shouldReinitilizeAllElements ? { irrelevantKeys: [] } : {};
         handler.changeSelection({ keys, isInverted, ...irrelevantKeysObj });
         handler.setLimitingAttributeFilters(limitingAttributeFilters);
         handler.setLimitingValidationItems(limitingValidationItems);
+        handler.setLimitingDateFilters(limitingDateFilters);
         handler.commitSelection();
 
         const nextFilter = handler.getFilter();
@@ -358,7 +394,7 @@ function updateNonResettingFilter(
             return "init-self";
         }
 
-        if (limitingAttributesChanged) {
+        if (limitingAttributesChanged || limitingDateFiltersChanged) {
             setShouldReloadElements(true);
             return "init-parent";
         }
@@ -454,6 +490,7 @@ function useCallbacks(
         shouldIncludeLimitingFilters: boolean;
         setShouldIncludeLimitingFilters: (value: boolean) => void;
         limitingAttributeFilters: IElementsQueryAttributeFilter[];
+        limitingDateFilters: (IRelativeDateFilter | IAbsoluteDateFilter)[];
     },
     supportsShowingFilteredElements: boolean,
     supportsKeepingDependentFiltersSelection: boolean,
@@ -467,6 +504,7 @@ function useCallbacks(
         shouldIncludeLimitingFilters,
         setShouldIncludeLimitingFilters,
         limitingAttributeFilters,
+        limitingDateFilters,
     } = props;
     const onSelect = useCallback(
         (selectedItems: IAttributeElement[], isInverted: boolean) => {
@@ -511,10 +549,12 @@ function useCallbacks(
             setShouldIncludeLimitingFilters(true);
             setShouldReloadElements(true);
             handler.setLimitingAttributeFilters(limitingAttributeFilters);
+            handler.setLimitingDateFilters(limitingDateFilters);
         }
     }, [
         handler,
         limitingAttributeFilters,
+        limitingDateFilters,
         setShouldIncludeLimitingFilters,
         setShouldReloadElements,
         shouldIncludeLimitingFilters,
@@ -544,6 +584,7 @@ function useCallbacks(
             handler.changeSelection({ ...handler.getWorkingSelection(), irrelevantKeys: [] });
             handler.setLimitingAttributeFilters([]);
             handler.setLimitingValidationItems([]);
+            handler.setLimitingDateFilters([]);
             handler.loadInitialElementsPage(SHOW_FILTERED_ELEMENTS_CORRELATION);
         }
     }, [handler, setShouldIncludeLimitingFilters, supportsShowingFilteredElements]);

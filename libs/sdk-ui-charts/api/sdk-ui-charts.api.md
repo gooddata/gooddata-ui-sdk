@@ -82,8 +82,23 @@ export type CalculationType = "change" | "ratio" | "difference" | "change_differ
 // @public
 export type ChartAlignTypes = "top" | "bottom" | "middle";
 
+// @public (undocumented)
+export type ChartCellImageSizing = "fit" | "fill";
+
+// @public (undocumented)
+export type ChartCellTextWrapping = "clip" | "wrap";
+
+// @public (undocumented)
+export type ChartCellVerticalAlign = "top" | "middle" | "bottom";
+
+// @public (undocumented)
+export type ChartInlineVisualizationType = "metric" | "line" | "column";
+
 // @public
 export type ChartOrientationType = "horizontal" | "vertical";
+
+// @public (undocumented)
+export type ChartRowHeight = "small" | "medium" | "large";
 
 export { ColorUtils }
 
@@ -268,6 +283,9 @@ export interface IChartCallbacks extends IVisualizationCallbacks {
 
 // @public
 export interface IChartConfig {
+    cellImageSizing?: ChartCellImageSizing;
+    cellTextWrapping?: ChartCellTextWrapping;
+    cellVerticalAlign?: ChartCellVerticalAlign;
     // @internal
     chart?: any;
     colorMapping?: IColorMapping[];
@@ -289,6 +307,8 @@ export interface IChartConfig {
     enableSeparateTotalLabels?: boolean;
     forceDisableDrillOnAxes?: boolean;
     grid?: IGridConfig;
+    hyperLinks?: IDisplayFormHyperlinksConfig;
+    inlineVisualizations?: IInlineVisualizationsConfig;
     legend?: ILegendConfig;
     legendLayout?: "vertical" | "horizontal";
     // @internal (undocumented)
@@ -296,6 +316,7 @@ export interface IChartConfig {
     // @internal
     orientation?: IOrientationConfig;
     primaryChartType?: "line" | "column" | "area";
+    rowHeight?: ChartRowHeight;
     secondary_xaxis?: IAxisConfig;
     secondary_yaxis?: IAxisConfig;
     secondaryChartType?: "line" | "column" | "area";
@@ -475,6 +496,13 @@ export interface IDependencyWheelChartBucketProps {
 export interface IDependencyWheelChartProps extends IBucketChartProps, IDependencyWheelChartBucketProps {
 }
 
+// @public
+export interface IDisplayFormHyperlinksConfig {
+    [displayFormLocalIdentifier: string]: {
+        staticElementsText: string;
+    };
+}
+
 // @public (undocumented)
 export interface IDonutChartBucketProps {
     filters?: NullableFiltersOrPlaceholders;
@@ -553,6 +581,13 @@ export interface IHeatmapBucketProps {
 
 // @public (undocumented)
 export interface IHeatmapProps extends IBucketChartProps, IHeatmapBucketProps {
+}
+
+// @public (undocumented)
+export interface IInlineVisualizationsConfig {
+    [localIdentifier: string]: {
+        type: ChartInlineVisualizationType;
+    };
 }
 
 // @public

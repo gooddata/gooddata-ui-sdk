@@ -5,7 +5,7 @@ exports[`setMeasuresToSecondaryAxis > should  add measures to secondary axis whe
   "dualAxis": true,
   "secondary_yaxis": {
     "measures": [
-      "m_acugFHNJgsBy",
+      "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
     ],
     "rotation": "90",
   },
@@ -18,7 +18,7 @@ exports[`setMeasuresToSecondaryAxis > should  add measures to secondary axis whe
   "dualAxis": undefined,
   "secondary_yaxis": {
     "measures": [
-      "m_acugFHNJgsBy",
+      "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
     ],
     "rotation": "90",
   },

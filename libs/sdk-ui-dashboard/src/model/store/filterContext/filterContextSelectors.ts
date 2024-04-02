@@ -497,7 +497,10 @@ export const selectIsAttributeFilterDependentByLocalIdentifier: (
     createSelector(
         selectFilterContextAttributeFilterByLocalId(attributeFilterLocalIdentifier),
         (filterContextAttributeFilter) => {
-            return !isEmpty(filterContextAttributeFilter?.attributeFilter?.filterElementsBy);
+            return (
+                !isEmpty(filterContextAttributeFilter?.attributeFilter?.filterElementsBy) ||
+                !isEmpty(filterContextAttributeFilter?.attributeFilter?.filterElementsByDate)
+            );
         },
     ),
 );

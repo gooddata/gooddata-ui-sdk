@@ -1,0 +1,440 @@
+{
+    "dashboard": {
+        "created": "2024-03-26 13:18",
+        "description": "",
+        "disableCrossFiltering": true,
+        "filterContext": {
+            "description": "",
+            "filters": [
+                {
+                    "attributeFilter": {
+                        "attributeElements": { "uris": [] },
+                        "displayForm": { "identifier": "f_owner.department_id", "type": "displayForm" },
+                        "localIdentifier": "34b4386e227544b39ed0978791b8bd50",
+                        "negativeSelection": true,
+                        "selectionMode": "multi"
+                    }
+                },
+                {
+                    "attributeFilter": {
+                        "attributeElements": { "uris": [] },
+                        "displayForm": { "identifier": "label.f_activity.subject", "type": "displayForm" },
+                        "localIdentifier": "4436376372e7468b81b327dca9b65ec1",
+                        "negativeSelection": true,
+                        "selectionMode": "multi"
+                    }
+                }
+            ],
+            "identifier": "8ba62f8b-a012-4421-871b-dfcb27d6215e",
+            "ref": { "identifier": "8ba62f8b-a012-4421-871b-dfcb27d6215e", "type": "filterContext" },
+            "title": "filterContext",
+            "uri": "/api/v1/entities/workspaces/referenceworkspace/filterContexts/8ba62f8b-a012-4421-871b-dfcb27d6215e"
+        },
+        "identifier": "44a9d0ed-8a06-4ffd-b16c-6281707acfcf",
+        "isLocked": false,
+        "isUnderStrictControl": true,
+        "layout": {
+            "sections": [
+                {
+                    "header": {},
+                    "items": [
+                        {
+                            "size": { "xl": { "gridHeight": 8, "gridWidth": 2 } },
+                            "type": "IDashboardLayoutItem",
+                            "widget": {
+                                "dateDataSet": { "identifier": "dt_closedate_timestamp", "type": "dataSet" },
+                                "description": "",
+                                "drills": [],
+                                "identifier": "035e4951-9d8d-471c-8688-2670ad01a35c_widget-0",
+                                "ignoreDashboardFilters": [],
+                                "insight": {
+                                    "identifier": "04b8cd47-35d6-4e82-b24d-7a98647e0374",
+                                    "type": "insight"
+                                },
+                                "properties": {},
+                                "ref": { "identifier": "035e4951-9d8d-471c-8688-2670ad01a35c_widget-0" },
+                                "title": "Amount",
+                                "type": "insight",
+                                "uri": "035e4951-9d8d-471c-8688-2670ad01a35c_widget-0"
+                            }
+                        }
+                    ],
+                    "type": "IDashboardLayoutSection"
+                },
+                {
+                    "header": {},
+                    "items": [
+                        {
+                            "size": { "xl": { "gridHeight": 22, "gridWidth": 12 } },
+                            "type": "IDashboardLayoutItem",
+                            "widget": {
+                                "dateDataSet": { "identifier": "dt_closedate_timestamp", "type": "dataSet" },
+                                "description": "",
+                                "drills": [],
+                                "identifier": "dcb12367-d10f-48c8-9ec7-f9300cc61a95_widget-1",
+                                "ignoreDashboardFilters": [],
+                                "insight": {
+                                    "identifier": "f615b2cd-024c-4cc8-9db9-b6f08150b0b3",
+                                    "type": "insight"
+                                },
+                                "properties": {},
+                                "ref": { "identifier": "dcb12367-d10f-48c8-9ec7-f9300cc61a95_widget-1" },
+                                "title": "Simple Sorted Table",
+                                "type": "insight",
+                                "uri": "dcb12367-d10f-48c8-9ec7-f9300cc61a95_widget-1"
+                            }
+                        }
+                    ],
+                    "type": "IDashboardLayoutSection"
+                },
+                {
+                    "header": {},
+                    "items": [
+                        {
+                            "size": { "xl": { "gridHeight": 22, "gridWidth": 6 } },
+                            "type": "IDashboardLayoutItem",
+                            "widget": {
+                                "dateDataSet": { "identifier": "dt_closedate_timestamp", "type": "dataSet" },
+                                "description": "",
+                                "drills": [],
+                                "identifier": "187476dd-feda-47e7-aeae-db4976f29036_widget-2",
+                                "ignoreDashboardFilters": [],
+                                "insight": {
+                                    "identifier": "f615b2cd-024c-4cc8-9db9-b6f08150b0b3",
+                                    "type": "insight"
+                                },
+                                "properties": {},
+                                "ref": { "identifier": "187476dd-feda-47e7-aeae-db4976f29036_widget-2" },
+                                "title": "Simple Sorted Table",
+                                "type": "insight",
+                                "uri": "187476dd-feda-47e7-aeae-db4976f29036_widget-2"
+                            }
+                        },
+                        {
+                            "size": { "xl": { "gridHeight": 22, "gridWidth": 6 } },
+                            "type": "IDashboardLayoutItem",
+                            "widget": {
+                                "dateDataSet": { "identifier": "dt_closedate_timestamp", "type": "dataSet" },
+                                "description": "",
+                                "drills": [],
+                                "identifier": "2dbf7ada-c15b-44fc-8dd0-0a5a8f5413cb_widget-3",
+                                "ignoreDashboardFilters": [],
+                                "insight": {
+                                    "identifier": "b2cfe70f-59a6-4b04-b7ca-f01c8e47df0a",
+                                    "type": "insight"
+                                },
+                                "properties": {},
+                                "ref": { "identifier": "2dbf7ada-c15b-44fc-8dd0-0a5a8f5413cb_widget-3" },
+                                "title": "Test insight",
+                                "type": "insight",
+                                "uri": "2dbf7ada-c15b-44fc-8dd0-0a5a8f5413cb_widget-3"
+                            }
+                        }
+                    ],
+                    "type": "IDashboardLayoutSection"
+                },
+                {
+                    "header": {},
+                    "items": [
+                        {
+                            "size": { "xl": { "gridHeight": 22, "gridWidth": 12 } },
+                            "type": "IDashboardLayoutItem",
+                            "widget": {
+                                "dateDataSet": { "identifier": "dt_closedate_timestamp", "type": "dataSet" },
+                                "description": "",
+                                "drills": [],
+                                "identifier": "466dbbab-b7ac-4745-aaa5-dad77cdc7c23_widget-4",
+                                "ignoreDashboardFilters": [],
+                                "insight": {
+                                    "identifier": "7837806a-a406-4dcd-a8a2-902c64587e63",
+                                    "type": "insight"
+                                },
+                                "properties": {},
+                                "ref": { "identifier": "466dbbab-b7ac-4745-aaa5-dad77cdc7c23_widget-4" },
+                                "title": "drillToAttributeUrl",
+                                "type": "insight",
+                                "uri": "466dbbab-b7ac-4745-aaa5-dad77cdc7c23_widget-4"
+                            }
+                        }
+                    ],
+                    "type": "IDashboardLayoutSection"
+                }
+            ],
+            "type": "IDashboardLayout"
+        },
+        "ref": { "identifier": "44a9d0ed-8a06-4ffd-b16c-6281707acfcf", "type": "analyticalDashboard" },
+        "shareStatus": "shared",
+        "tags": [],
+        "title": "Simple dashboard no drills",
+        "type": "IDashboard",
+        "updated": "2024-03-26 13:19",
+        "uri": "/api/v1/entities/workspaces/referenceworkspace/analyticalDashboards/44a9d0ed-8a06-4ffd-b16c-6281707acfcf"
+    },
+    "references": {
+        "insights": [
+            {
+                "insight": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": "768414e1-4bbe-4f01-b125-0cdc6305dc76",
+                                                    "type": "measure"
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "606c8bce0b3a42f884c251b8b2648f93",
+                                        "title": "# Of Opportunities"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": "label.f_opportunity.opportunity.name",
+                                            "type": "displayForm"
+                                        },
+                                        "localIdentifier": "71155ff09d254ecc9265d67f5e6ee37f"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "attribute"
+                        }
+                    ],
+                    "created": "2024-03-25 12:43",
+                    "filters": [],
+                    "identifier": "7837806a-a406-4dcd-a8a2-902c64587e63",
+                    "isLocked": false,
+                    "properties": {
+                        "sortItems": [
+                            {
+                                "attributeSortItem": {
+                                    "attributeIdentifier": "71155ff09d254ecc9265d67f5e6ee37f",
+                                    "direction": "asc"
+                                }
+                            }
+                        ]
+                    },
+                    "ref": { "identifier": "7837806a-a406-4dcd-a8a2-902c64587e63", "type": "insight" },
+                    "sorts": [
+                        {
+                            "attributeSortItem": {
+                                "attributeIdentifier": "71155ff09d254ecc9265d67f5e6ee37f",
+                                "direction": "asc"
+                            }
+                        }
+                    ],
+                    "summary": "",
+                    "title": "drillToAttributeUrl",
+                    "uri": "/api/v1/entities/workspaces/referenceworkspace/visualizationObjects/7837806a-a406-4dcd-a8a2-902c64587e63",
+                    "visualizationUrl": "local:table"
+                }
+            },
+            {
+                "insight": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
+                                                    "type": "measure"
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "f5dad8b42c134c2b97fdb471663abf72",
+                                        "title": "Won"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": "label.f_product.product.name",
+                                            "type": "displayForm"
+                                        },
+                                        "localIdentifier": "0a5139550a7e490cae143219233471bf"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "attribute"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": "f_owner.department_id",
+                                            "type": "displayForm"
+                                        },
+                                        "localIdentifier": "91aada58ca3e43e79d2522f844171090"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "columns"
+                        }
+                    ],
+                    "created": "2024-03-25 12:34",
+                    "filters": [],
+                    "identifier": "f615b2cd-024c-4cc8-9db9-b6f08150b0b3",
+                    "isLocked": false,
+                    "properties": {
+                        "sortItems": [
+                            {
+                                "measureSortItem": {
+                                    "direction": "desc",
+                                    "locators": [
+                                        {
+                                            "attributeLocatorItem": {
+                                                "attributeIdentifier": "91aada58ca3e43e79d2522f844171090",
+                                                "element": "Direct Sales"
+                                            }
+                                        },
+                                        {
+                                            "measureLocatorItem": {
+                                                "measureIdentifier": "f5dad8b42c134c2b97fdb471663abf72"
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    "ref": { "identifier": "f615b2cd-024c-4cc8-9db9-b6f08150b0b3", "type": "insight" },
+                    "sorts": [
+                        {
+                            "measureSortItem": {
+                                "direction": "desc",
+                                "locators": [
+                                    {
+                                        "attributeLocatorItem": {
+                                            "attributeIdentifier": "91aada58ca3e43e79d2522f844171090",
+                                            "element": "Direct Sales"
+                                        }
+                                    },
+                                    {
+                                        "measureLocatorItem": {
+                                            "measureIdentifier": "f5dad8b42c134c2b97fdb471663abf72"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "summary": "",
+                    "title": "Simple Sorted Table",
+                    "uri": "/api/v1/entities/workspaces/referenceworkspace/visualizationObjects/f615b2cd-024c-4cc8-9db9-b6f08150b0b3",
+                    "visualizationUrl": "local:table"
+                }
+            },
+            {
+                "insight": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "aggregation": "sum",
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": "f_opportunitysnapshot.f_daystoclose",
+                                                    "type": "fact"
+                                                }
+                                            }
+                                        },
+                                        "format": "#,##0.00",
+                                        "localIdentifier": "f84de77f39514826a6d110928018ccb4",
+                                        "title": "Sum of Days to Close"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": "f_owner.department_id",
+                                            "type": "displayForm"
+                                        },
+                                        "localIdentifier": "40a12ec3031f440fb51c368c01a04714"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "view"
+                        }
+                    ],
+                    "created": "2024-03-25 12:40",
+                    "filters": [],
+                    "identifier": "b2cfe70f-59a6-4b04-b7ca-f01c8e47df0a",
+                    "isLocked": false,
+                    "properties": { "sortItems": [] },
+                    "ref": { "identifier": "b2cfe70f-59a6-4b04-b7ca-f01c8e47df0a", "type": "insight" },
+                    "sorts": [],
+                    "summary": "",
+                    "title": "Test insight",
+                    "uri": "/api/v1/entities/workspaces/referenceworkspace/visualizationObjects/b2cfe70f-59a6-4b04-b7ca-f01c8e47df0a",
+                    "visualizationUrl": "local:column"
+                }
+            },
+            {
+                "insight": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                                    "type": "measure"
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "12ef28a87dfa437ca3375f1ddd6baef8",
+                                        "title": "Amount"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        }
+                    ],
+                    "created": "2024-03-25 12:36",
+                    "filters": [],
+                    "identifier": "04b8cd47-35d6-4e82-b24d-7a98647e0374",
+                    "isLocked": false,
+                    "properties": { "controls": { "comparison": { "enabled": true } }, "sortItems": [] },
+                    "ref": { "identifier": "04b8cd47-35d6-4e82-b24d-7a98647e0374", "type": "insight" },
+                    "sorts": [],
+                    "summary": "",
+                    "title": "Amount",
+                    "uri": "/api/v1/entities/workspaces/referenceworkspace/visualizationObjects/04b8cd47-35d6-4e82-b24d-7a98647e0374",
+                    "visualizationUrl": "local:headline"
+                }
+            }
+        ],
+        "plugins": []
+    }
+}

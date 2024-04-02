@@ -97,10 +97,12 @@ export type AttributeFilterInteractionType =
     | "attributeFilterLimitAddParentFilterOptionClicked"
     | "attributeFilterLimitAddMetricOptionClicked"
     | "attributeFilterLimitParentFilterClicked"
+    | "attributeFilterLimitDependentDateFilterClicked"
     | "attributeFilterLimitMetricClicked"
     | "attributeFilterLimitFactMetricClicked"
     | "attributeFilterLimitAttributeMetricClicked"
     | "attributeFilterLimitRemoveParentFilterClicked"
+    | "attributeFilterLimitRemoveDependentDateFilterClicked"
     | "attributeFilterLimitRemoveMetricClicked";
 
 /**

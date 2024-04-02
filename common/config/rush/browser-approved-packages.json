@@ -108,7 +108,7 @@
     },
     {
       "name": "@gooddata/fixtures",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "@gooddata/i18n-toolkit",
@@ -724,7 +724,7 @@
     },
     {
       "name": "highcharts-react-official",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "history",

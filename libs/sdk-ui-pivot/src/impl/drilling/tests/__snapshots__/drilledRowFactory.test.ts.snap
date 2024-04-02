@@ -3,14 +3,14 @@
 exports[`createDrilledRow > creates drill row with extracted id when /gdc uri 1`] = `
 [
   {
-    "id": "165678",
+    "id": "CompuSci",
     "name": "CompuSci",
-    "uri": "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
+    "uri": "CompuSci",
   },
   {
-    "id": "460487",
+    "id": "Direct Sales",
     "name": "Direct Sales",
-    "uri": "/gdc/md/referenceworkspace/obj/1088/elements?id=460487",
+    "uri": "Direct Sales",
   },
   "0",
   "1",

@@ -18,6 +18,7 @@ import { removeAttributeFiltersHandler } from "./filterContext/attributeFilter/r
 import { moveAttributeFilterHandler } from "./filterContext/attributeFilter/moveAttributeFilterHandler.js";
 import { changeAttributeFilterSelectionHandler } from "./filterContext/attributeFilter/changeAttributeFilterSelectionHandler.js";
 import { setAttributeFilterParentsHandler } from "./filterContext/attributeFilter/setAttributeFilterParentHandler.js";
+import { setAttributeFilterDependentDateFiltersHandler } from "./filterContext/attributeFilter/setAttributeFilterDependentDateFilterHandler.js";
 import { changeAttributeTitleHandler } from "./filterContext/attributeFilter/changeAttributeTitleHandler.js";
 import { changeAttributeSelectionModeHandler } from "./filterContext/attributeFilter/changeAttributeSelectionModeHandler.js";
 import { addLayoutSectionHandler } from "./layout/addLayoutSectionHandler.js";
@@ -112,6 +113,8 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVE": moveAttributeFilterHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.CHANGE_SELECTION": changeAttributeFilterSelectionHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_PARENTS": setAttributeFilterParentsHandler,
+    "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_DEPENDENT_DATE_FILTERS":
+        setAttributeFilterDependentDateFiltersHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_DISPLAY_FORM": changeAttributeDisplayFormHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_TITLE": changeAttributeTitleHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_SELECTION_MODE": changeAttributeSelectionModeHandler,

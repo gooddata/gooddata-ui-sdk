@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import isEmpty from "lodash/isEmpty.js";
 import { IAttributeHierarchyMetadataObject } from "../../metadata/index.js";
@@ -39,8 +39,45 @@ export function isCatalogDateAttributeHierarchy(obj: unknown): obj is ICatalogDa
  */
 export interface ICatalogDateAttributeHierarchy {
     type: "dateAttributeHierarchy";
+    // hierarchy ref
+    ref: ObjRef;
+    /**
+     * Date dataset ref
+     */
     dateDatasetRef: ObjRef;
+    /**
+     * refs to attributes in hierarchy
+     */
+    attributes: ObjRef[];
     title: string;
     templateId: string;
-    attributes: ObjRef[];
 }
+
+/**
+ * @internal
+ */
+export const getHierarchyRef = (
+    hierarchy: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy,
+): ObjRef => {
+    return isCatalogAttributeHierarchy(hierarchy) ? hierarchy.attributeHierarchy.ref : hierarchy.ref;
+};
+
+/**
+ * @internal
+ */
+export const getHierarchyTitle = (
+    hierarchy: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy,
+): string => {
+    return isCatalogAttributeHierarchy(hierarchy) ? hierarchy.attributeHierarchy.title : hierarchy.title;
+};
+
+/**
+ * @internal
+ */
+export const getHierarchyAttributes = (
+    hierarchy: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy,
+): ObjRef[] => {
+    return isCatalogAttributeHierarchy(hierarchy)
+        ? hierarchy.attributeHierarchy.attributes
+        : hierarchy.attributes;
+};

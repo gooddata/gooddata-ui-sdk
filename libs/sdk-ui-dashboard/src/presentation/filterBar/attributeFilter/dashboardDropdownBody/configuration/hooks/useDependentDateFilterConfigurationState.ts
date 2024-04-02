@@ -2,7 +2,7 @@
 import { useMemo } from "react";
 import { invariant } from "ts-invariant";
 
-import { IDashboardDateFilter, isUriRef } from "@gooddata/sdk-model";
+import { IDashboardAttributeFilterByDate, IDashboardDateFilter, isUriRef } from "@gooddata/sdk-model";
 
 import { IDashboardDependentDateFilter } from "../../../../../../model/index.js";
 
@@ -12,12 +12,19 @@ import { IDashboardDependentDateFilter } from "../../../../../../model/index.js"
 export function useDependentDateFilterConfigurationState(
     neighborFilters: IDashboardDateFilter[],
     commonDateFilter?: IDashboardDateFilter,
+    filterElementsByDate?: IDashboardAttributeFilterByDate[],
 ) {
     const neighborDateFiltersWithDimensions: IDashboardDependentDateFilter[] = useMemo(() => {
         return neighborFilters.map((neighborFilter) => {
             const neighborLocalId = neighborFilter.dateFilter.dataSet;
 
             invariant(!isUriRef(neighborLocalId));
+
+            const isSelected =
+                filterElementsByDate?.some(
+                    (by) =>
+                        by.filterLocalIdentifier === neighborLocalId?.identifier && by.isCommonDate === false,
+                ) || false;
 
             invariant(
                 neighborLocalId?.identifier,
@@ -26,19 +33,53 @@ export function useDependentDateFilterConfigurationState(
 
             return {
                 localIdentifier: neighborLocalId.identifier,
-                isSelected: false,
+                isSelected,
                 dataSet: neighborFilter.dateFilter.dataSet,
                 from: neighborFilter.dateFilter.from,
                 to: neighborFilter.dateFilter.to,
                 granularity: neighborFilter.dateFilter.granularity,
                 type: neighborFilter.dateFilter.type,
+                isCommonDate: false,
             };
         });
-    }, [neighborFilters]);
+    }, [neighborFilters, filterElementsByDate]);
 
-    const commonFilter = parseCommonDateFilter(commonDateFilter);
+    const commonDateFilters: IDashboardDependentDateFilter[] = useMemo(() => {
+        const commonDate = parseCommonDateFilter(commonDateFilter);
 
-    return [...neighborDateFiltersWithDimensions, commonFilter];
+        return (filterElementsByDate ?? [])
+            .filter((parent) => !!parent.isCommonDate)
+            .map((parent) => ({
+                localIdentifier: parent.filterLocalIdentifier,
+                isSelected: true,
+                dataSet: {
+                    identifier: parent.filterLocalIdentifier,
+                    type: "dataSet",
+                },
+                from: commonDate.from,
+                to: commonDate.to,
+                granularity: commonDate.granularity,
+                type: commonDate.type,
+                isCommonDate: true,
+            }));
+    }, [filterElementsByDate, commonDateFilter]);
+
+    return [...neighborDateFiltersWithDimensions, ...commonDateFilters];
+}
+
+export function useDependentCommonDateFilterConfigurationState(
+    commonDateFilter?: IDashboardDateFilter,
+): IDashboardDateFilter {
+    if (commonDateFilter) {
+        return commonDateFilter;
+    } else {
+        return {
+            dateFilter: {
+                granularity: "GDC.time.date",
+                type: "relative",
+            },
+        };
+    }
 }
 
 const parseCommonDateFilter = (commonDate?: IDashboardDateFilter): IDashboardDependentDateFilter => {
@@ -49,14 +90,14 @@ const parseCommonDateFilter = (commonDate?: IDashboardDateFilter): IDashboardDep
             granularity: commonDate.dateFilter.granularity,
             type: commonDate.dateFilter.type,
             localIdentifier: "commonDate",
-            isSelected: true,
+            isCommonDate: true,
         };
     } else {
         return {
             granularity: "GDC.time.date",
-            isSelected: false,
             type: "relative",
             localIdentifier: "commonDate",
+            isCommonDate: true,
         };
     }
 };

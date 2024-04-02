@@ -80,6 +80,8 @@ import { DataSource } from "./icons/DataSource.js";
 import { User } from "./icons/User.js";
 import { UserGroup } from "./icons/UserGroup.js";
 import { Repeater } from "./icons/InsightIcons/Repeater.js";
+import { Image } from "./icons/Image.js";
+import { Hash } from "./icons/Hash.js";
 
 /**
  * @internal
@@ -163,6 +165,8 @@ export const Icon: Record<string, React.FC<IIconProps>> = {
     User,
     UserGroup,
     Repeater,
+    Image,
+    Hash,
 };
 
 export { IRowsIconProps, IColumnsIconProps };

@@ -40,11 +40,12 @@ exports[`changeAttributeFilterLimitingItemsHandler > should set the limiting ite
         "uris": [],
       },
       "displayForm": {
-        "uri": "/gdc/md/referenceworkspace/obj/1089",
+        "identifier": "f_owner.department_id",
+        "type": "displayForm",
       },
-      "filterElementsBy": [],
-      "localIdentifier": "8dd5d9818c5d45198cef0faa652b202b",
+      "localIdentifier": "34b4386e227544b39ed0978791b8bd50",
       "negativeSelection": true,
+      "selectionMode": "multi",
       "validateElementsBy": [
         {
           "identifier": "my-metric",
@@ -59,11 +60,12 @@ exports[`changeAttributeFilterLimitingItemsHandler > should set the limiting ite
         "uris": [],
       },
       "displayForm": {
-        "uri": "/gdc/md/referenceworkspace/obj/1071",
+        "identifier": "label.f_activity.subject",
+        "type": "displayForm",
       },
-      "filterElementsBy": [],
-      "localIdentifier": "10450fbbd67b4e42b3d1f58e038f2614",
+      "localIdentifier": "4436376372e7468b81b327dca9b65ec1",
       "negativeSelection": true,
+      "selectionMode": "multi",
     },
   },
 ]

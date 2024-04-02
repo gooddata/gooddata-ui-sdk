@@ -4,7 +4,7 @@ exports[`bear filter converter from model to AFM > convert absolute date filter 
 {
   "absoluteDateFilter": {
     "dataSet": {
-      "identifier": "closed.dataset.dt",
+      "identifier": "dt_closedate_timestamp",
     },
     "from": "2019-08-06",
     "to": "2019-08-12",
@@ -20,7 +20,7 @@ exports[`bear filter converter from model to AFM > convert filter > returns AFM 
 {
   "absoluteDateFilter": {
     "dataSet": {
-      "identifier": "closed.dataset.dt",
+      "identifier": "dt_closedate_timestamp",
     },
     "from": "2019-08-06",
     "to": "2019-08-12",
@@ -32,7 +32,7 @@ exports[`bear filter converter from model to AFM > convert filter > returns AFM 
 {
   "negativeAttributeFilter": {
     "displayForm": {
-      "identifier": "label.product.id.name",
+      "identifier": "label.f_product.product.name",
     },
     "notIn": {
       "values": [
@@ -47,7 +47,7 @@ exports[`bear filter converter from model to AFM > convert filter > returns AFM 
 {
   "positiveAttributeFilter": {
     "displayForm": {
-      "identifier": "label.product.id.name",
+      "identifier": "label.f_product.product.name",
     },
     "in": {
       "values": [
@@ -62,7 +62,7 @@ exports[`bear filter converter from model to AFM > convert filter > returns AFM 
 {
   "relativeDateFilter": {
     "dataSet": {
-      "identifier": "closed.dataset.dt",
+      "identifier": "dt_closedate_timestamp",
     },
     "from": 2,
     "granularity": "GDC.time.date",
@@ -82,7 +82,7 @@ exports[`bear filter converter from model to AFM > convert filter > returns AFM 
       },
     },
     "measure": {
-      "localIdentifier": "m_aangOxLSeztu",
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
     },
   },
 }
@@ -92,7 +92,7 @@ exports[`bear filter converter from model to AFM > convert measure filter > retu
 {
   "absoluteDateFilter": {
     "dataSet": {
-      "identifier": "closed.dataset.dt",
+      "identifier": "dt_closedate_timestamp",
     },
     "from": "2019-08-06",
     "to": "2019-08-12",
@@ -104,7 +104,7 @@ exports[`bear filter converter from model to AFM > convert measure filter > retu
 {
   "negativeAttributeFilter": {
     "displayForm": {
-      "identifier": "label.product.id.name",
+      "identifier": "label.f_product.product.name",
     },
     "notIn": {
       "values": [
@@ -119,7 +119,7 @@ exports[`bear filter converter from model to AFM > convert measure filter > retu
 {
   "positiveAttributeFilter": {
     "displayForm": {
-      "identifier": "label.product.id.name",
+      "identifier": "label.f_product.product.name",
     },
     "in": {
       "values": [
@@ -134,7 +134,7 @@ exports[`bear filter converter from model to AFM > convert measure filter > retu
 {
   "relativeDateFilter": {
     "dataSet": {
-      "identifier": "closed.dataset.dt",
+      "identifier": "dt_closedate_timestamp",
     },
     "from": 5,
     "granularity": "GDC.time.date",
@@ -156,7 +156,7 @@ exports[`bear filter converter from model to AFM > convert measure value filter 
       },
     },
     "measure": {
-      "localIdentifier": "m_aangOxLSeztu",
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
     },
   },
 }
@@ -172,7 +172,7 @@ exports[`bear filter converter from model to AFM > convert measure value filter 
       },
     },
     "measure": {
-      "localIdentifier": "m_aangOxLSeztu",
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
     },
   },
 }
@@ -188,7 +188,7 @@ exports[`bear filter converter from model to AFM > convert measure value filter 
       },
     },
     "measure": {
-      "localIdentifier": "m_aangOxLSeztu",
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
     },
   },
 }
@@ -204,7 +204,7 @@ exports[`bear filter converter from model to AFM > convert measure value filter 
       },
     },
     "measure": {
-      "localIdentifier": "m_aangOxLSeztu",
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
     },
   },
 }
@@ -220,7 +220,7 @@ exports[`bear filter converter from model to AFM > convert measure value filter 
       },
     },
     "measure": {
-      "localIdentifier": "m_aangOxLSeztu",
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
     },
   },
 }
@@ -236,7 +236,7 @@ exports[`bear filter converter from model to AFM > convert measure value filter 
       },
     },
     "measure": {
-      "localIdentifier": "m_aangOxLSeztu",
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
     },
   },
 }
@@ -253,7 +253,7 @@ exports[`bear filter converter from model to AFM > convert measure value filter 
       },
     },
     "measure": {
-      "localIdentifier": "m_aangOxLSeztu",
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
     },
   },
 }
@@ -269,7 +269,7 @@ exports[`bear filter converter from model to AFM > convert measure value filter 
       },
     },
     "measure": {
-      "localIdentifier": "m_aangOxLSeztu",
+      "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
     },
   },
 }
@@ -282,12 +282,12 @@ exports[`bear filter converter from model to AFM > convert ranking filter > shou
   "rankingFilter": {
     "attributes": [
       {
-        "localIdentifier": "a_label.owner.department",
+        "identifier": undefined,
       },
     ],
     "measures": [
       {
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     ],
     "operator": "TOP",
@@ -301,15 +301,15 @@ exports[`bear filter converter from model to AFM > convert ranking filter > shou
   "rankingFilter": {
     "attributes": [
       {
-        "localIdentifier": "a_label.owner.department",
+        "identifier": undefined,
       },
       {
-        "localIdentifier": "a_label.account.id",
+        "localIdentifier": "a_attr.f_account.account",
       },
     ],
     "measures": [
       {
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     ],
     "operator": "TOP",
@@ -324,7 +324,7 @@ exports[`bear filter converter from model to AFM > convert ranking filter > shou
     "attributes": undefined,
     "measures": [
       {
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     ],
     "operator": "TOP",
@@ -339,7 +339,7 @@ exports[`bear filter converter from model to AFM > convert ranking filter > shou
     "attributes": undefined,
     "measures": [
       {
-        "localIdentifier": "m_aangOxLSeztu",
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
       },
     ],
     "operator": "BOTTOM",
@@ -352,7 +352,7 @@ exports[`bear filter converter from model to AFM > convert relative date filter 
 {
   "relativeDateFilter": {
     "dataSet": {
-      "identifier": "closed.dataset.dt",
+      "identifier": "dt_closedate_timestamp",
     },
     "from": -11,
     "granularity": "GDC.time.date",
@@ -365,7 +365,7 @@ exports[`bear filter converter from model to AFM > convert relative date filter 
 {
   "relativeDateFilter": {
     "dataSet": {
-      "identifier": "closed.dataset.dt",
+      "identifier": "dt_closedate_timestamp",
     },
     "from": -3,
     "granularity": "GDC.time.month",
@@ -378,7 +378,7 @@ exports[`bear filter converter from model to AFM > convert relative date filter 
 {
   "relativeDateFilter": {
     "dataSet": {
-      "identifier": "closed.dataset.dt",
+      "identifier": "dt_closedate_timestamp",
     },
     "from": 25,
     "granularity": "GDC.time.quarter",
@@ -391,7 +391,7 @@ exports[`bear filter converter from model to AFM > convert relative date filter 
 {
   "relativeDateFilter": {
     "dataSet": {
-      "identifier": "closed.dataset.dt",
+      "identifier": "dt_closedate_timestamp",
     },
     "from": 50,
     "granularity": "GDC.time.week_us",
@@ -404,7 +404,7 @@ exports[`bear filter converter from model to AFM > convert relative date filter 
 {
   "relativeDateFilter": {
     "dataSet": {
-      "identifier": "closed.dataset.dt",
+      "identifier": "dt_closedate_timestamp",
     },
     "from": 2,
     "granularity": "GDC.time.year",
@@ -419,7 +419,7 @@ exports[`bear filter converter from model to AFM > convert relative date filter 
 {
   "relativeDateFilter": {
     "dataSet": {
-      "identifier": "closed.dataset.dt",
+      "identifier": "dt_closedate_timestamp",
     },
     "from": 5,
     "granularity": "GDC.time.date",

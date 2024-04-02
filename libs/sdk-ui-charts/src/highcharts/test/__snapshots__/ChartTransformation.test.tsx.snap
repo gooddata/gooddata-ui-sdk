@@ -15,13 +15,10 @@ exports[`ChartTransformation > Legend config > should be always disabled for sin
               "headerItem": {
                 "measureHeaderItem": {
                   "format": "$#,##0.00",
-                  "identifier": "aangOxLSeztu",
-                  "localIdentifier": "m_aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
                   "name": "Amount",
-                  "ref": {
-                    "uri": "/gdc/md/referenceworkspace/obj/1271",
-                  },
-                  "uri": "/gdc/md/referenceworkspace/obj/1271",
+                  "ref": undefined,
                 },
               },
             },
@@ -58,13 +55,10 @@ exports[`ChartTransformation > Legend config > should be enabled & on the top by
               "headerItem": {
                 "measureHeaderItem": {
                   "format": "$#,##0.00",
-                  "identifier": "aangOxLSeztu",
-                  "localIdentifier": "m_aangOxLSeztu",
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
                   "name": "Amount",
-                  "ref": {
-                    "uri": "/gdc/md/referenceworkspace/obj/1271",
-                  },
-                  "uri": "/gdc/md/referenceworkspace/obj/1271",
+                  "ref": undefined,
                 },
               },
             },
@@ -76,13 +70,10 @@ exports[`ChartTransformation > Legend config > should be enabled & on the top by
               "headerItem": {
                 "measureHeaderItem": {
                   "format": "$#,##0.00",
-                  "identifier": "acugFHNJgsBy",
-                  "localIdentifier": "m_acugFHNJgsBy",
+                  "identifier": "e519fa2a-86c3-4e32-8313-0c03062348j3",
+                  "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
                   "name": "Won",
-                  "ref": {
-                    "uri": "/gdc/md/referenceworkspace/obj/1272",
-                  },
-                  "uri": "/gdc/md/referenceworkspace/obj/1272",
+                  "ref": undefined,
                 },
               },
             },
@@ -93,8 +84,8 @@ exports[`ChartTransformation > Legend config > should be enabled & on the top by
               },
               "headerItem": {
                 "measureHeaderItem": {
-                  "format": "#,##0.00",
-                  "localIdentifier": "m_358184a8_f72796b0fbc7c0dc4d17a1e68c1a9933",
+                  "format": "#,#.##",
+                  "localIdentifier": "m_358184a8_9fa7cb9ce4d2947059b490e24a925317",
                   "name": "Calculated 'Lost' measure",
                   "ref": undefined,
                 },
@@ -107,8 +98,8 @@ exports[`ChartTransformation > Legend config > should be enabled & on the top by
               },
               "headerItem": {
                 "measureHeaderItem": {
-                  "format": "#,##0.00",
-                  "localIdentifier": "m_7ff816a7_476594e1d138bbf91ab5a7523beacd96",
+                  "format": "#,#.##",
+                  "localIdentifier": "m_7ff816a7_82e019308ff681db5738ce5040bc533d",
                   "name": "Ratio of Won and Lost",
                   "ref": undefined,
                 },

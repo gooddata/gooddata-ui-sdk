@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-example-relativedatefilter",
-    "version": "9.10.0-alpha.9",
+    "version": "10.0.0-alpha.13",
     "title": "RelativeDateFilter",
     "description": "Example demonstrates how to set relative DateFilter for visualization.",
     "author": "GoodData Corporation",
@@ -30,7 +30,6 @@
     "exampleDependencies": [],
     "dependencies": {
         "@gooddata/sdk-backend-base": "workspace:*",
-        "@gooddata/sdk-backend-bear": "workspace:*",
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-backend-tiger": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",

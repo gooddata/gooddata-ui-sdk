@@ -6,10 +6,10 @@ exports[`XIRR > with correct config > should create expected execution definitio
     {
       "attribute": {
         "displayForm": {
-          "identifier": "timeline.aag81lMifn6q",
+          "identifier": "dt_timeline_timestamp.year",
           "type": "displayForm",
         },
-        "localIdentifier": "a_timeline.aag81lMifn6q",
+        "localIdentifier": "a_dt_timeline_timestamp.year",
       },
     },
   ],
@@ -21,12 +21,12 @@ exports[`XIRR > with correct config > should create expected execution definitio
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aadpHDMBecIy",
+                  "identifier": "sample_xirr",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aadpHDMBecIy",
+            "localIdentifier": "m_sample_xirr",
           },
         },
       ],
@@ -37,10 +37,10 @@ exports[`XIRR > with correct config > should create expected execution definitio
         {
           "attribute": {
             "displayForm": {
-              "identifier": "timeline.aag81lMifn6q",
+              "identifier": "dt_timeline_timestamp.year",
               "type": "displayForm",
             },
-            "localIdentifier": "a_timeline.aag81lMifn6q",
+            "localIdentifier": "a_dt_timeline_timestamp.year",
           },
         },
       ],
@@ -51,7 +51,7 @@ exports[`XIRR > with correct config > should create expected execution definitio
     {
       "itemIdentifiers": [
         "measureGroup",
-        "a_timeline.aag81lMifn6q",
+        "a_dt_timeline_timestamp.year",
       ],
     },
   ],
@@ -62,12 +62,12 @@ exports[`XIRR > with correct config > should create expected execution definitio
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aadpHDMBecIy",
+              "identifier": "sample_xirr",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aadpHDMBecIy",
+        "localIdentifier": "m_sample_xirr",
       },
     },
   ],
@@ -90,10 +90,10 @@ exports[`XIRR > with drilling on single measure > should create expected executi
     {
       "attribute": {
         "displayForm": {
-          "identifier": "timeline.aag81lMifn6q",
+          "identifier": "dt_timeline_timestamp.year",
           "type": "displayForm",
         },
-        "localIdentifier": "a_timeline.aag81lMifn6q",
+        "localIdentifier": "a_dt_timeline_timestamp.year",
       },
     },
   ],
@@ -105,12 +105,12 @@ exports[`XIRR > with drilling on single measure > should create expected executi
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aadpHDMBecIy",
+                  "identifier": "sample_xirr",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aadpHDMBecIy",
+            "localIdentifier": "m_sample_xirr",
           },
         },
       ],
@@ -121,10 +121,10 @@ exports[`XIRR > with drilling on single measure > should create expected executi
         {
           "attribute": {
             "displayForm": {
-              "identifier": "timeline.aag81lMifn6q",
+              "identifier": "dt_timeline_timestamp.year",
               "type": "displayForm",
             },
-            "localIdentifier": "a_timeline.aag81lMifn6q",
+            "localIdentifier": "a_dt_timeline_timestamp.year",
           },
         },
       ],
@@ -135,7 +135,7 @@ exports[`XIRR > with drilling on single measure > should create expected executi
     {
       "itemIdentifiers": [
         "measureGroup",
-        "a_timeline.aag81lMifn6q",
+        "a_dt_timeline_timestamp.year",
       ],
     },
   ],
@@ -146,12 +146,12 @@ exports[`XIRR > with drilling on single measure > should create expected executi
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aadpHDMBecIy",
+              "identifier": "sample_xirr",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aadpHDMBecIy",
+        "localIdentifier": "m_sample_xirr",
       },
     },
   ],
@@ -177,10 +177,10 @@ exports[`XIRR > with drilling on single measure with underlining disabled > shou
     {
       "attribute": {
         "displayForm": {
-          "identifier": "timeline.aag81lMifn6q",
+          "identifier": "dt_timeline_timestamp.year",
           "type": "displayForm",
         },
-        "localIdentifier": "a_timeline.aag81lMifn6q",
+        "localIdentifier": "a_dt_timeline_timestamp.year",
       },
     },
   ],
@@ -192,12 +192,12 @@ exports[`XIRR > with drilling on single measure with underlining disabled > shou
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aadpHDMBecIy",
+                  "identifier": "sample_xirr",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aadpHDMBecIy",
+            "localIdentifier": "m_sample_xirr",
           },
         },
       ],
@@ -208,10 +208,10 @@ exports[`XIRR > with drilling on single measure with underlining disabled > shou
         {
           "attribute": {
             "displayForm": {
-              "identifier": "timeline.aag81lMifn6q",
+              "identifier": "dt_timeline_timestamp.year",
               "type": "displayForm",
             },
-            "localIdentifier": "a_timeline.aag81lMifn6q",
+            "localIdentifier": "a_dt_timeline_timestamp.year",
           },
         },
       ],
@@ -222,7 +222,7 @@ exports[`XIRR > with drilling on single measure with underlining disabled > shou
     {
       "itemIdentifiers": [
         "measureGroup",
-        "a_timeline.aag81lMifn6q",
+        "a_dt_timeline_timestamp.year",
       ],
     },
   ],
@@ -233,12 +233,12 @@ exports[`XIRR > with drilling on single measure with underlining disabled > shou
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aadpHDMBecIy",
+              "identifier": "sample_xirr",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aadpHDMBecIy",
+        "localIdentifier": "m_sample_xirr",
       },
     },
   ],
@@ -272,12 +272,12 @@ exports[`XIRR > with only measure > should create expected execution definition 
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "aadpHDMBecIy",
+                  "identifier": "sample_xirr",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_aadpHDMBecIy",
+            "localIdentifier": "m_sample_xirr",
           },
         },
       ],
@@ -302,12 +302,12 @@ exports[`XIRR > with only measure > should create expected execution definition 
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "aadpHDMBecIy",
+              "identifier": "sample_xirr",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_aadpHDMBecIy",
+        "localIdentifier": "m_sample_xirr",
       },
     },
   ],
@@ -330,10 +330,10 @@ exports[`XIRR > with semantically wrong measure > should create expected executi
     {
       "attribute": {
         "displayForm": {
-          "identifier": "timeline.aag81lMifn6q",
+          "identifier": "dt_timeline_timestamp.year",
           "type": "displayForm",
         },
-        "localIdentifier": "a_timeline.aag81lMifn6q",
+        "localIdentifier": "a_dt_timeline_timestamp.year",
       },
     },
   ],
@@ -345,12 +345,12 @@ exports[`XIRR > with semantically wrong measure > should create expected executi
             "definition": {
               "measureDefinition": {
                 "item": {
-                  "identifier": "abYgDBRagANw",
+                  "identifier": "6b1411d5-e253-418e-8fd3-137a9f56ea92",
                   "type": "measure",
                 },
               },
             },
-            "localIdentifier": "m_abYgDBRagANw",
+            "localIdentifier": "m_6b1411d5_e253_418e_8fd3_137a9f56ea92",
           },
         },
       ],
@@ -361,10 +361,10 @@ exports[`XIRR > with semantically wrong measure > should create expected executi
         {
           "attribute": {
             "displayForm": {
-              "identifier": "timeline.aag81lMifn6q",
+              "identifier": "dt_timeline_timestamp.year",
               "type": "displayForm",
             },
-            "localIdentifier": "a_timeline.aag81lMifn6q",
+            "localIdentifier": "a_dt_timeline_timestamp.year",
           },
         },
       ],
@@ -375,7 +375,7 @@ exports[`XIRR > with semantically wrong measure > should create expected executi
     {
       "itemIdentifiers": [
         "measureGroup",
-        "a_timeline.aag81lMifn6q",
+        "a_dt_timeline_timestamp.year",
       ],
     },
   ],
@@ -386,12 +386,12 @@ exports[`XIRR > with semantically wrong measure > should create expected executi
         "definition": {
           "measureDefinition": {
             "item": {
-              "identifier": "abYgDBRagANw",
+              "identifier": "6b1411d5-e253-418e-8fd3-137a9f56ea92",
               "type": "measure",
             },
           },
         },
-        "localIdentifier": "m_abYgDBRagANw",
+        "localIdentifier": "m_6b1411d5_e253_418e_8fd3_137a9f56ea92",
       },
     },
   ],

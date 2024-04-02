@@ -2,31 +2,95 @@
 
 exports[`AttributeFilterHandler > getAttribute() should return the attribute after successful initialization 1`] = `
 {
-  "description": "",
-  "displayForms": undefined,
-  "id": "attr.product.id",
-  "production": true,
+  "description": "Product",
+  "displayForms": [
+    {
+      "attribute": {
+        "identifier": "attr.f_product.product",
+        "type": "attribute",
+      },
+      "description": "Product",
+      "id": "attr.f_product.product",
+      "ref": {
+        "identifier": "attr.f_product.product",
+        "type": "displayForm",
+      },
+      "title": "Product",
+      "type": "displayForm",
+      "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/attr.f_product.product",
+    },
+    {
+      "attribute": {
+        "identifier": "attr.f_product.product",
+        "type": "attribute",
+      },
+      "description": "",
+      "id": "label.f_product.product.name",
+      "ref": {
+        "identifier": "label.f_product.product.name",
+        "type": "displayForm",
+      },
+      "title": "Product Name",
+      "type": "displayForm",
+      "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.name",
+    },
+  ],
+  "id": "attr.f_product.product",
+  "production": false,
   "ref": {
-    "uri": "/gdc/md/referenceworkspace/obj/1054",
+    "identifier": "attr.f_product.product",
+    "type": "attribute",
   },
   "title": "Product",
   "type": "attribute",
-  "uri": "/gdc/md/referenceworkspace/obj/1054",
+  "uri": "/api/v1/entities/workspaces/referenceworkspace/attributes/attr.f_product.product",
 }
 `;
 
 exports[`AttributeFilterHandler > getAttribute() should return the attribute after successful loadAttribute() call 1`] = `
 {
-  "description": "",
-  "displayForms": undefined,
-  "id": "attr.product.id",
-  "production": true,
+  "description": "Product",
+  "displayForms": [
+    {
+      "attribute": {
+        "identifier": "attr.f_product.product",
+        "type": "attribute",
+      },
+      "description": "Product",
+      "id": "attr.f_product.product",
+      "ref": {
+        "identifier": "attr.f_product.product",
+        "type": "displayForm",
+      },
+      "title": "Product",
+      "type": "displayForm",
+      "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/attr.f_product.product",
+    },
+    {
+      "attribute": {
+        "identifier": "attr.f_product.product",
+        "type": "attribute",
+      },
+      "description": "",
+      "id": "label.f_product.product.name",
+      "ref": {
+        "identifier": "label.f_product.product.name",
+        "type": "displayForm",
+      },
+      "title": "Product Name",
+      "type": "displayForm",
+      "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.name",
+    },
+  ],
+  "id": "attr.f_product.product",
+  "production": false,
   "ref": {
-    "uri": "/gdc/md/referenceworkspace/obj/1054",
+    "identifier": "attr.f_product.product",
+    "type": "attribute",
   },
   "title": "Product",
   "type": "attribute",
-  "uri": "/gdc/md/referenceworkspace/obj/1054",
+  "uri": "/api/v1/entities/workspaces/referenceworkspace/attributes/attr.f_product.product",
 }
 `;
 
@@ -81,16 +145,48 @@ exports[`AttributeFilterHandler > loadAttribute() that was successful should tri
 [
   {
     "attribute": {
-      "description": "",
-      "displayForms": undefined,
-      "id": "attr.product.id",
-      "production": true,
+      "description": "Product",
+      "displayForms": [
+        {
+          "attribute": {
+            "identifier": "attr.f_product.product",
+            "type": "attribute",
+          },
+          "description": "Product",
+          "id": "attr.f_product.product",
+          "ref": {
+            "identifier": "attr.f_product.product",
+            "type": "displayForm",
+          },
+          "title": "Product",
+          "type": "displayForm",
+          "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/attr.f_product.product",
+        },
+        {
+          "attribute": {
+            "identifier": "attr.f_product.product",
+            "type": "attribute",
+          },
+          "description": "",
+          "id": "label.f_product.product.name",
+          "ref": {
+            "identifier": "label.f_product.product.name",
+            "type": "displayForm",
+          },
+          "title": "Product Name",
+          "type": "displayForm",
+          "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.name",
+        },
+      ],
+      "id": "attr.f_product.product",
+      "production": false,
       "ref": {
-        "uri": "/gdc/md/referenceworkspace/obj/1054",
+        "identifier": "attr.f_product.product",
+        "type": "attribute",
       },
       "title": "Product",
       "type": "attribute",
-      "uri": "/gdc/md/referenceworkspace/obj/1054",
+      "uri": "/api/v1/entities/workspaces/referenceworkspace/attributes/attr.f_product.product",
     },
     "correlation": "success",
   },

@@ -4,11 +4,17 @@ linkTitle: "Quick Start"
 weight: 12
 ---
 
-The easiest way to get hands-on experience with GoodData.UI is to use the `@gooddata/app-toolkit`, which contans a sample setup for a React app 
- 
+{{% alert color="warning" title="Version 9 vs Versions 10+" %}}
+GoodData Platform users must stay on GoodData.UI version 9, do not update to version 10 or higher!
+From version 10 onwards, the GoodData.UI SDK solely supports only GoodData Cloud and GoodData.CN.
+{{% /alert %}}
+
+The easiest way to get hands-on experience with GoodData.UI is to use the `@gooddata/app-toolkit`, which contans a sample setup for a React app
+
 To see it in action:
-- Run `npx @gooddata/app-toolkit@latest init`
-- Follow instructions on the screen
+
+-   Run `npx @gooddata/app-toolkit@latest init`
+-   Follow instructions on the screen
 
 ## Quick Introduction
 
@@ -64,12 +70,12 @@ Let's build a simple pie chart in two steps!
 In `App.tsx` file:
 
 1. Import the `PieChart` component instead of the `InsightView` component.
-    ``` diff
+    ```diff
     -   import { InsightView } from "@gooddata/sdk-ui-ext";
     +   import { PieChart } from "@gooddata/sdk-ui-charts";
     ```
 2. Replace the component used in JSX and provide metrics and an attribute to view the data by.
-    ``` diff
+    ```diff
     -   <InsightView insight={Md.Insights.ProductCategoriesPieChart} />
     +   <PieChart measures={[Md.PercentRevenue]} viewBy={Md.Category_1} />
     ```
@@ -80,8 +86,8 @@ Read more about [PieChart](../references/visual_components/pie_chart/).
 
 Sometimes it's useful to get the raw data and use it to build a custom visualization or just use it in your app's business logic.
 
-
 Get your data in three steps:
+
 1. Create a new component that renders the same pie chart as a table. Create a new file `./src/MyTable.tsx`:
 
     ```javascript
@@ -190,10 +196,9 @@ your own data:
     +    "workspaceId": "<your-workspace-id>",
     ```
 2. Generate an [API Token](https://www.gooddata.com/docs/cloud/getting-started/create-api-token/)and add it to the `.env` file:
-    ```
-    TIGER_API_TOKEN=<your_api_token>
-    ```
-> Make sure you do not commit the `.env` file to your VCS (e.g. Git)
+   ` TIGER_API_TOKEN=<your_api_token> `
+
+    > Make sure you do not commit the `.env` file to your VCS (e.g. Git)
 
 3. Refresh [the metadata catalog](../learn/visualize_data/export_catalog/#ExportCatalog-AcceleratorToolkitapplications) for the newly configured workspace: `npm run refresh-md`.
 4. Update the `App.tsx`. Since we've switched to your own data, the reference to the insight in `App.tsx` is no longer valid.
@@ -212,18 +217,22 @@ By default, GoodData React SDK is configured to connect to GoodData Cloud or Goo
 Here is how you can switch to GoodData Platform instead:
 
 1. Edit `./src/backend.ts` file to use "bear" backend instead of "tiger":
+
     ```diff
     -    import backendFactory, { ContextDeferredAuthProvider } from "@gooddata/sdk-backend-tiger";
     +    import backendFactory, { ContextDeferredAuthProvider } from "@gooddata/sdk-backend-bear";
     ```
-   You'll also need to define a logic on what to do if the user is not logged in. The simplest case could look something like this:
+
+    You'll also need to define a logic on what to do if the user is not logged in. The simplest case could look something like this:
+
     ```diff
     -     backendFactory().withAuthentication(new ContextDeferredAuthProvider()),
     +     backendFactory().withAuthentication(new ContextDeferredAuthProvider(() => {
     +         window.location.replace(`${window.location.origin}/account.html?lastUrl=${encodeURIComponent(window.location.href)}`);
     +     })),
     ```
-   Your setup may vary, see [options GoodData Platform provides](../learn/integrate_and_authenticate/platform_integration/).
+
+    Your setup may vary, see [options GoodData Platform provides](../learn/integrate_and_authenticate/platform_integration/).
 
 2. Update package.json to specify you're using "bear" backend. Update the `hostname` and `workspaceId`:
     ```diff
@@ -246,13 +255,14 @@ Here is how you can switch to GoodData Platform instead:
 
 4. Refresh [the metadata catalog](../learn/visualize_data/export_catalog/#ExportCatalog-AcceleratorToolkitapplications) for the newly configured workspace:
 
-    ``` bash
+    ```bash
     npm run refresh-md
-    ````
+    ```
 
 5. Update the `App.tsx`. Since you've switched to your own data, the reference to the insight in `App.tsx` is no longer valid.
-   
-   To fix, update the `App.tsx` with an insight of your choice:
+
+    To fix, update the `App.tsx` with an insight of your choice:
+
     ```diff
     -   <InsightView insight={Md.Insights.ProductCategoriesPieChart} showTitle />
     +   <InsightView insight={Md.Insights.<your-insight-id>} showTitle />

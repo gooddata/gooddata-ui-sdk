@@ -13,3 +13,31 @@ exports[`save as dashboard handler > for a new dashboard > should emit correct e
   },
 ]
 `;
+
+exports[`save as dashboard handler > for an existing dashboard > should save an existing emit correct events 1`] = `
+[
+  {
+    "commandType": "GDC.DASH/CMD.SAVEAS",
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.COPY_SAVED",
+  },
+]
+`;
+
+exports[`save as dashboard handler > for an existing dashboard > should save an existing locked dashboard as a copy with isLocked flag cleaned 1`] = `
+[
+  {
+    "commandType": "GDC.DASH/CMD.SAVEAS",
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.COMMAND.STARTED",
+  },
+  {
+    "correlationId": "testCorrelationId",
+    "type": "GDC.DASH/EVT.COPY_SAVED",
+  },
+]
+`;

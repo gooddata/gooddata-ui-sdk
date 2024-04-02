@@ -5,7 +5,7 @@ exports[`filterConverters tests > filterContextToFiltersForDataSet > should hand
   {
     "absoluteDateFilter": {
       "dataSet": {
-        "identifier": "activity.dataset.dt",
+        "identifier": "dt_activity_timestamp",
         "type": "dataSet",
       },
       "from": "2020-01-01",
@@ -20,7 +20,7 @@ exports[`filterConverters tests > filterContextToFiltersForDataSet > should hand
   {
     "positiveAttributeFilter": {
       "displayForm": {
-        "identifier": "label.account.id.name",
+        "identifier": "label.f_account.account.name",
         "type": "displayForm",
       },
       "in": {
@@ -39,7 +39,7 @@ exports[`filterConverters tests > filterContextToFiltersForDataSet > should hand
   {
     "relativeDateFilter": {
       "dataSet": {
-        "identifier": "activity.dataset.dt",
+        "identifier": "dt_activity_timestamp",
         "type": "dataSet",
       },
       "from": -4,
@@ -57,7 +57,7 @@ exports[`filterConverters tests > filterContextToFiltersForWidget > should handl
   {
     "absoluteDateFilter": {
       "dataSet": {
-        "identifier": "activity.dataset.dt",
+        "identifier": "dt_activity_timestamp",
         "type": "dataSet",
       },
       "from": "2020-01-01",
@@ -72,7 +72,7 @@ exports[`filterConverters tests > filterContextToFiltersForWidget > should handl
   {
     "negativeAttributeFilter": {
       "displayForm": {
-        "identifier": "label.account.id.name",
+        "identifier": "label.f_account.account.name",
         "type": "displayForm",
       },
       "notIn": {
@@ -91,7 +91,7 @@ exports[`filterConverters tests > filterContextToFiltersForWidget > should handl
   {
     "positiveAttributeFilter": {
       "displayForm": {
-        "identifier": "label.account.id.name",
+        "identifier": "label.f_account.account.name",
         "type": "displayForm",
       },
       "in": {
@@ -110,7 +110,7 @@ exports[`filterConverters tests > filterContextToFiltersForWidget > should handl
   {
     "relativeDateFilter": {
       "dataSet": {
-        "identifier": "activity.dataset.dt",
+        "identifier": "dt_activity_timestamp",
         "type": "dataSet",
       },
       "from": -4,

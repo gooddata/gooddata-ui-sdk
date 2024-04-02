@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import has from "lodash/has.js";
 
 const NonAlphaNumRegex = /[^\w$]+/g;
@@ -67,7 +67,7 @@ export function createUniqueVariableName(title: string, scope: TakenNamesSet = {
  * @param scope - uniqueness scope
  */
 export function createUniqueVariableNameForIdentifier(id: string, scope: TakenNamesSet = {}): string {
-    return createUniqueName(id.replace(/\./g, "_"), scope);
+    return createUniqueName(id.replace(/[.-]/g, "_"), scope);
 }
 
 /**

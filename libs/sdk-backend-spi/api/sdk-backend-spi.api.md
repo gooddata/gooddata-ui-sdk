@@ -10,6 +10,7 @@ import { CatalogItemType } from '@gooddata/sdk-model';
 import { DataValue } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { FilterContextItem } from '@gooddata/sdk-model';
+import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAccessGrantee } from '@gooddata/sdk-model';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeElement } from '@gooddata/sdk-model';
@@ -200,7 +201,7 @@ export interface IAnalyticalWorkspace {
     // @alpha
     exportDefinitions(): IWorkspaceExportDefinitionsService;
     facts(): IWorkspaceFactsService;
-    getDescriptor(): Promise<IWorkspaceDescriptor>;
+    getDescriptor(includeParentPrefixes?: boolean): Promise<IWorkspaceDescriptor>;
     getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined>;
     insights(): IWorkspaceInsightsService;
     measures(): IWorkspaceMeasuresService;
@@ -275,6 +276,7 @@ export interface IBackendCapabilities {
     supportsCrossFiltering?: boolean;
     supportsCsvUploader?: boolean;
     supportsCustomColorPalettes?: boolean;
+    supportsElementsQueryParentFiltering?: boolean;
     supportsElementUris?: boolean;
     supportsEnumeratingDatetimeAttributes?: boolean;
     supportsEveryoneUserGroupForAccessControl?: boolean;
@@ -388,7 +390,7 @@ export interface IElementsQuery extends ICancelable<IElementsQuery> {
     query(): Promise<IElementsQueryResult>;
     withAttributeFilters(filters: IElementsQueryAttributeFilter[]): IElementsQuery;
     withAvailableElementsOnly(validateBy: ObjRef[]): IElementsQuery;
-    withDateFilters(filters: IRelativeDateFilter[]): IElementsQuery;
+    withDateFilters(filters: (IRelativeDateFilter | IAbsoluteDateFilter)[]): IElementsQuery;
     withLimit(limit: number): IElementsQuery;
     withMeasures(measures: IMeasure[]): IElementsQuery;
     withOffset(offset: number): IElementsQuery;

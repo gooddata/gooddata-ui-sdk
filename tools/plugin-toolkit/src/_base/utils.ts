@@ -1,9 +1,9 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import path from "path";
 import fse from "fs-extra";
 import snakeCase from "lodash/snakeCase.js";
-import { isInputValidationError, TargetBackendType } from "./types.js";
-import { logError, logInfo } from "./terminal/loggers.js";
+import { isInputValidationError } from "./types.js";
+import { logError } from "./terminal/loggers.js";
 import { isNotAuthenticated } from "@gooddata/sdk-backend-spi";
 
 export function toJsonString(obj: any): string {
@@ -70,29 +70,6 @@ export function convertToPluginDirectory(name: string): string {
  */
 export function convertToPluginEntrypoint(pluginIdentifier: string): string {
     return `${pluginIdentifier}.mjs`;
-}
-
-/**
- * Given package JSON contents, this function tries to discover the backend type that action should
- * target. The idea is: if the person develops plugin against particular backend then its likely
- * that they will also want to deploy it there.
- *
- * @param packageJson - package json object
- */
-export function discoverBackendType(packageJson: Record<string, any>): TargetBackendType | undefined {
-    const { peerDependencies = {} } = packageJson;
-
-    if (peerDependencies["@gooddata/sdk-backend-bear"] !== undefined) {
-        logInfo("Plugin project depends on @gooddata/sdk-backend-bear. Assuming backend type 'bear'.");
-
-        return "bear";
-    } else if (peerDependencies["@gooddata/sdk-backend-tiger"] !== undefined) {
-        logInfo("Plugin project depends on @gooddata/sdk-backend-tiger. Assuming backend type 'tiger'.");
-
-        return "tiger";
-    }
-
-    return undefined;
 }
 
 export function extractRootCause(error: any): any {

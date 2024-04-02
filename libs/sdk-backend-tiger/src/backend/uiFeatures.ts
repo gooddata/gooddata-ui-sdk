@@ -73,6 +73,10 @@ export enum TigerFeaturesNames {
     EnableRepeaterChart = "enableRepeaterChart",
     //boolean + possible values: enabled, disabled
     EnableKDAttributeFilterDatesValidation = "enableKDAttributeFilterDatesValidation",
+    //boolean + possible values: enabled, disabled
+    EnableMultipleCSVs = "enableMultipleCSVs",
+    //boolean
+    EnableOracleDataSource = "enableOracleDataSource",
 }
 
 export type ITigerFeatureFlags = {
@@ -112,6 +116,8 @@ export type ITigerFeatureFlags = {
     enableMariaDbDataSource: typeof FeatureFlagsValues["enableMariaDbDataSource"][number];
     enableRepeaterChart: typeof FeatureFlagsValues["enableRepeaterChart"][number];
     enableKDAttributeFilterDatesValidation: typeof FeatureFlagsValues["enableKDAttributeFilterDatesValidation"][number];
+    enableMultipleCSVs: typeof FeatureFlagsValues["enableMultipleCSVs"][number];
+    enableOracleDataSource: typeof FeatureFlagsValues["enableOracleDataSource"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -151,6 +157,8 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableMariaDbDataSource: false,
     enableRepeaterChart: false,
     enableKDAttributeFilterDatesValidation: false,
+    enableMultipleCSVs: false,
+    enableOracleDataSource: false,
 };
 
 export const FeatureFlagsValues = {
@@ -194,4 +202,6 @@ export const FeatureFlagsValues = {
     enableMariaDbDataSource: [true, false] as const,
     enableRepeaterChart: [true, false] as const,
     enableKDAttributeFilterDatesValidation: [true, false] as const,
+    enableMultipleCSVs: [true, false] as const,
+    enableOracleDataSource: [true, false] as const,
 };

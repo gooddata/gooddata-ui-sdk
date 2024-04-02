@@ -10,7 +10,13 @@ import {
     IElementsQueryResult,
     IPagedResource,
 } from "@gooddata/sdk-backend-spi";
-import { IMeasure, IRelativeDateFilter, ObjRef, IAttributeElement } from "@gooddata/sdk-model";
+import {
+    IMeasure,
+    ObjRef,
+    IAttributeElement,
+    IRelativeDateFilter,
+    IAbsoluteDateFilter,
+} from "@gooddata/sdk-model";
 
 /**
  * @alpha
@@ -41,7 +47,7 @@ export abstract class DecoratedElementsQuery implements IElementsQuery {
             offset?: number;
             options?: IElementsQueryOptions;
             attributeFilters?: IElementsQueryAttributeFilter[];
-            dateFilters?: IRelativeDateFilter[];
+            dateFilters?: (IRelativeDateFilter | IAbsoluteDateFilter)[];
             measures?: IMeasure[];
             validateBy?: ObjRef[];
         } = {},
@@ -93,7 +99,7 @@ export abstract class DecoratedElementsQuery implements IElementsQuery {
         return this.decorated.query();
     }
 
-    public withDateFilters(dateFilters: IRelativeDateFilter[]): IElementsQuery {
+    public withDateFilters(dateFilters: (IRelativeDateFilter | IAbsoluteDateFilter)[]): IElementsQuery {
         return this.createNew(this.decorated.withDateFilters(dateFilters), {
             ...this.settings,
             dateFilters,
@@ -111,7 +117,7 @@ export abstract class DecoratedElementsQuery implements IElementsQuery {
             offset?: number;
             options?: IElementsQueryOptions;
             attributeFilters?: IElementsQueryAttributeFilter[];
-            dateFilters?: IRelativeDateFilter[];
+            dateFilters?: (IRelativeDateFilter | IAbsoluteDateFilter)[];
             measures?: IMeasure[];
             validateBy?: ObjRef[];
         },

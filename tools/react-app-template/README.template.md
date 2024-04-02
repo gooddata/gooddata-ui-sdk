@@ -34,7 +34,6 @@ What can you do with this project next? Here are a few ideas:
 -   [Consume the raw data](#consume-the-raw-data)
 -   [Apply theming](#apply-theming)
 -   [Connect your own data from _GoodData Cloud_ or _GoodData.CN_ servers](#connect-your-own-data-from-gooddata-cloud-or-gooddatacn-servers)
--   [Connect your own data from _GoodData Platform_](#connect-your-own-data-from-gooddata-platform)
 
 ### Try a different visualization
 
@@ -191,7 +190,7 @@ your own data instead.
     ```
     TIGER_API_TOKEN=<your_api_token>
     ```
-   Make sure you do not commit the `.env` file to your VCS (e.g. Git)
+    Make sure you do not commit the `.env` file to your VCS (e.g. Git)
 3. Refresh [the metadata catalog](https://sdk.gooddata.com/gooddata-ui/docs/export_catalog.html) for the newly configured workspace: `{{packageManager}} run refresh-md`.
 4. Update the `App.{{language}}x`. Since we've switched to your own data, the reference to the insight in `App.{{language}}x` is no longer valid.
    Select a new insight to render from the catalog and update `App.{{language}}x`:
@@ -201,45 +200,3 @@ your own data instead.
     ```
 
 Read more about integration with GoodData Cloud or GoodData.CN in [our docs](https://sdk.gooddata.com/gooddata-ui/docs/cloudnative_getting_started.html).
-
-### Connect your own data from _GoodData Platform_
-
-By default, GoodData React SDK is configured to connect to GoodData Cloud or GoodData.CN server. Here is how you can switch to GoodData Platform instead.
-
-1. Edit `./src/backend.{{language}}` file to use "bear" backend instead of "tiger" one:
-    ```diff
-    -    import backendFactory, { ContextDeferredAuthProvider } from "@gooddata/sdk-backend-tiger";
-    +    import backendFactory, { ContextDeferredAuthProvider } from "@gooddata/sdk-backend-bear";
-    ```
-   You'll also need to define a logic on what to do if user is not logged in. The simplest case could look something like this:
-    ```diff
-    -     backendFactory().withAuthentication(new ContextDeferredAuthProvider()),
-    +     backendFactory().withAuthentication(new ContextDeferredAuthProvider(() => {
-    +         window.location.replace(`${window.location.origin}/account.html?lastUrl=${encodeURIComponent(window.location.href)}`);
-    +     })),
-    ```
-   Your setup may vary, see our [documentation on different authentication options GoodData Platform provides](https://sdk.gooddata.com/gooddata-ui/docs/platform_sso.html).
-2. Update `./package.json` to specify you're using "bear" backend. Update the hostname and workspaceId to the ones you'd like to connect to:
-    ```diff
-    -    "hostname": "https://public-examples.gooddata.com",
-    -    "workspaceId": "demo",
-    -    "backend": "tiger",
-    +    "hostname": "https://<your-gooddata-instance-host>",
-    +    "workspaceId": "<your-workspace-id>",
-    +    "backend": "bear",
-    ```
-3. Update `.env` file and put there your `USERNAME` and `PASSWORD`.
-    ```diff
-    -    USERNAME=
-    -    PASSWORD=
-    +    USERNAME=<your-username>
-    +    PASSWORD=<your-password>
-    ```
-   Make sure you do not commit the `.env` file to your VCS (e.g. Git).
-4. Refresh [the metadata catalog](https://sdk.gooddata.com/gooddata-ui/docs/export_catalog.html) for the newly configured workspace: `{{packageManager}} run refresh-md`.
-5. Update the `App.{{language}}x`. Since we've switched to your own data, the reference to the insight in `App.{{language}}x` is no longer valid.
-   Select a new insight to render from the catalog and update `App.{{language}}x`:
-    ```diff
-    -   <InsightView insight={Md.Insights.ProductCategoriesPieChart} showTitle />
-    +   <InsightView insight={Md.Insights.<your-insight-id>} showTitle />
-    ```

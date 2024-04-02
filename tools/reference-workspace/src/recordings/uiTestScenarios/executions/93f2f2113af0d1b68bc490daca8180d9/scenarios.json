@@ -1,0 +1,81 @@
+[
+    {
+        "n2oMap": {
+            "a_dt_oppcreated_timestamp.quarter": "a_dt_oppcreated_timestamp.quarter",
+            "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": {
+                            "identifier": "dt_oppcreated_timestamp.quarter",
+                            "type": "displayForm"
+                        },
+                        "localIdentifier": "a_dt_oppcreated_timestamp.quarter"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
+                                            "type": "measure"
+                                        }
+                                    }
+                                },
+                                "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": {
+                                    "identifier": "dt_oppcreated_timestamp.quarter",
+                                    "type": "displayForm"
+                                },
+                                "localIdentifier": "a_dt_oppcreated_timestamp.quarter"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "trend"
+                },
+                { "items": [], "localIdentifier": "segment" }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["measureGroup"] },
+                { "itemIdentifiers": ["a_dt_oppcreated_timestamp.quarter"] }
+            ],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
+                                    "type": "measure"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "single measure with % and trendBy",
+        "vis": "LineChart"
+    }
+]

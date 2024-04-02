@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-mockingbird",
-    "version": "9.10.0-alpha.9",
+    "version": "10.0.0-alpha.13",
     "author": "GoodData",
     "description": "Mock GoodData Backend SPI implementation",
     "repository": {
@@ -47,7 +47,6 @@
         "uuid": "^8.3.2"
     },
     "devDependencies": {
-        "@gooddata/api-model-bear": "workspace:*",
         "@gooddata/eslint-config": "^4.1.0",
         "@gooddata/reference-workspace": "workspace:*",
         "@microsoft/api-documenter": "^7.17.0",

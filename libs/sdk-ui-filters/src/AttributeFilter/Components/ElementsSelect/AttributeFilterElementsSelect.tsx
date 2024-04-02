@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
 import { InvertableSelect, useMediaQuery } from "@gooddata/sdk-ui-kit";
@@ -53,6 +53,8 @@ export const AttributeFilterElementsSelect: React.FC<IAttributeFilterElementsSel
 
         irrelevantSelection,
         onClearIrrelevantSelection,
+
+        isFilteredByDependentDateFilters,
     } = props;
 
     const intl = useIntl();
@@ -116,6 +118,7 @@ export const AttributeFilterElementsSelect: React.FC<IAttributeFilterElementsSel
                         <EmptyResultComponent
                             height={height}
                             isFilteredByParentFilters={isFilteredByParentFilters}
+                            isFilteredByDependentDateFilters={isFilteredByDependentDateFilters}
                             searchString={searchString}
                             totalItemsCount={totalItemsCount}
                             parentFilterTitles={parentFilterTitles}
@@ -137,6 +140,7 @@ export const AttributeFilterElementsSelect: React.FC<IAttributeFilterElementsSel
                         <StatusBarComponent
                             getItemTitle={getItemTitle}
                             isFilteredByParentFilters={isFilteredByParentFilters}
+                            isFilteredByDependentDateFilters={isFilteredByDependentDateFilters}
                             isInverted={isInverted}
                             parentFilterTitles={parentFilterTitles}
                             selectedItems={selectedItems}

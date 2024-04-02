@@ -31,6 +31,7 @@ export const CoreRepeaterImpl: React.FC<ICoreRepeterChartProps> = (props) => {
         onLoadingChanged,
         pushData,
         onError,
+        config,
     } = props;
 
     const intl = useIntl();
@@ -77,7 +78,7 @@ export const CoreRepeaterImpl: React.FC<ICoreRepeterChartProps> = (props) => {
         return <LoadingComponent />;
     }
 
-    return <RepeaterChart dataView={result} onError={onError} />;
+    return <RepeaterChart dataView={result} config={config} onError={onError} />;
 };
 
 const CoreRepeaterWithIntl = injectIntl(withTheme(CoreRepeaterImpl));

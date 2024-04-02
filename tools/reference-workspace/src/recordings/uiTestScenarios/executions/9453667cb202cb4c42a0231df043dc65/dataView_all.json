@@ -1,0 +1,20 @@
+{
+    "count": [3],
+    "data": [-123400, 36200, 54800],
+    "headerItems": [
+        [
+            [
+                { "measureHeaderItem": { "name": "Sample XIRR", "order": 0 } },
+                { "measureHeaderItem": { "name": "Sample XIRR", "order": 0 } },
+                { "measureHeaderItem": { "name": "Sample XIRR", "order": 0 } }
+            ],
+            [
+                { "attributeHeaderItem": { "formattedName": "2018", "name": "2018", "uri": "2018" } },
+                { "attributeHeaderItem": { "formattedName": "2019", "name": "2019", "uri": "2019" } },
+                { "attributeHeaderItem": { "formattedName": "2020", "name": "2020", "uri": "2020" } }
+            ]
+        ]
+    ],
+    "offset": [0],
+    "totalCount": [3]
+}

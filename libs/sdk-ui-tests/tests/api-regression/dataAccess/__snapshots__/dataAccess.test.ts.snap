@@ -1371,25 +1371,23 @@ exports[`DataAccess > should correctly identify series and slices for: ColumnCha
     "attributes": 0,
     "measures": 1,
     "seriesNames": [
-      " > m_fact.opportunitysnapshot.amount_sum",
+      " > m_f_opportunitysnapshot.f_amount_sum",
     ],
   },
   "slicesDigest": {
     "allSlices": 215,
     "attributes": 2,
     "sliceNames": [
+      "CompuSci > ASI System Integration > CompuSci",
       "CompuSci > AdvancedMD Software > CompuSci",
       "CompuSci > AdvantageBridal.com > CompuSci",
       "CompuSci > Aerial Services > CompuSci",
-      "CompuSci > agencyQ > CompuSci",
       "CompuSci > Air Innovations > CompuSci",
       "CompuSci > Ali International > CompuSci",
-      "CompuSci > allConnex > CompuSci",
       "CompuSci > American Bancard > CompuSci",
       "CompuSci > American Communications > CompuSci",
       "CompuSci > American Technologies > CompuSci",
       "CompuSci > Art & Logic > CompuSci",
-      "CompuSci > ASI System Integration > CompuSci",
       "CompuSci > Billtrust > CompuSci",
       "CompuSci > Boston Health Economics > CompuSci",
       "CompuSci > Bronto Software > CompuSci",
@@ -1397,12 +1395,12 @@ exports[`DataAccess > should correctly identify series and slices for: ColumnCha
       "CompuSci > BusinessOnLine > CompuSci",
       "CompuSci > C&I Engineering > CompuSci",
       "CompuSci > C&S Companies > CompuSci",
+      "CompuSci > CPX Interactive > CompuSci",
       "CompuSci > Cahill Gordon & Reindel > CompuSci",
       "CompuSci > Canyon Manufacturing Services > CompuSci",
       "CompuSci > Cash Cycle Solutions > CompuSci",
       "CompuSci > Compliance Implementation Services > CompuSci",
       "CompuSci > Convergence Consulting Group > CompuSci",
-      "CompuSci > CPX Interactive > CompuSci",
       "CompuSci > CyberData Technologies > CompuSci",
       "CompuSci > Davis Polk & Wardwell > CompuSci",
       "CompuSci > DestinationWeddings.com > CompuSci",
@@ -1412,30 +1410,32 @@ exports[`DataAccess > should correctly identify series and slices for: ColumnCha
       "CompuSci > Excalibur Technology > CompuSci",
       "CompuSci > First In Service Travel > CompuSci",
       "CompuSci > Flipswap > CompuSci",
-      "CompuSci > Greenberg Traurig > CompuSci",
       "CompuSci > GTM Sportswear > CompuSci",
+      "CompuSci > Greenberg Traurig > CompuSci",
       "CompuSci > Hinshaw & Culbertson > CompuSci",
       "CompuSci > Interbit Data > CompuSci",
-      "CompuSci > iPipeline > CompuSci",
       "CompuSci > Kansas City Home Care > CompuSci",
       "CompuSci > LasX Industries > CompuSci",
       "CompuSci > National Asset Recovery Services > CompuSci",
       "CompuSci > Paylocity > CompuSci",
       "CompuSci > Shorts Brewing > CompuSci",
       "CompuSci > TechSource > CompuSci",
+      "CompuSci > agencyQ > CompuSci",
+      "CompuSci > allConnex > CompuSci",
+      "CompuSci > iPipeline > CompuSci",
       "Educationly > 3balls.com > Educationly",
       "Educationly > 7-Eleven > Educationly",
+      "Educationly > AEEC > Educationly",
+      "Educationly > ASP Pool and Spa > Educationly",
       "Educationly > Acadian Ambulance Service > Educationly",
       "Educationly > AdvenTech > Educationly",
       "Educationly > Advocate Radiology Billing > Educationly",
-      "Educationly > AEEC > Educationly",
       "Educationly > AirSplat > Educationly",
       "Educationly > All Copy Products > Educationly",
       "Educationly > Allconnect > Educationly",
       "Educationly > American Business Solutions > Educationly",
       "Educationly > Arrow Strategies > Educationly",
       "Educationly > Arrowhead Advertising > Educationly",
-      "Educationly > ASP Pool and Spa > Educationly",
       "Educationly > Aspire Systems > Educationly",
       "Educationly > Aware Web Solutions > Educationly",
       "Educationly > Baseball Rampage > Educationly",
@@ -1443,6 +1443,7 @@ exports[`DataAccess > should correctly identify series and slices for: ColumnCha
       "Educationly > Big Red Fasteners > Educationly",
       "Educationly > Blaser's USA > Educationly",
       "Educationly > Blinc > Educationly",
+      "Educationly > CPower > Educationly",
       "Educationly > Cadena Contracting > Educationly",
       "Educationly > Cafe Rio > Educationly",
       "Educationly > Cascades Technologies > Educationly",
@@ -1450,7 +1451,6 @@ exports[`DataAccess > should correctly identify series and slices for: ColumnCha
       "Educationly > Clearpointe > Educationly",
       "Educationly > CloseOutStore.net > Educationly",
       "Educationly > Cowan & Associates > Educationly",
-      "Educationly > CPower > Educationly",
       "Educationly > Crescent City Packaging > Educationly",
       "Educationly > Cyquent > Educationly",
       "Educationly > DataDirect Networks > Educationly",
@@ -1458,13 +1458,12 @@ exports[`DataAccess > should correctly identify series and slices for: ColumnCha
       "Educationly > Diplomaframe.com > Educationly",
       "Educationly > Discount Ramps.com > Educationly",
       "Educationly > Dull Olson Weekes Architects > Educationly",
-      "Educationly > eVestment Alliance > Educationly",
       "Educationly > Global Medical Imaging > Educationly",
       "Educationly > Great Expressions Dental Centers > Educationly",
-      "Educationly > Holland & Hart > Educationly",
       "Educationly > HSP Direct > Educationly",
-      "Educationly > Iasta > Educationly",
+      "Educationly > Holland & Hart > Educationly",
       "Educationly > ICON Information Consultants > Educationly",
+      "Educationly > Iasta > Educationly",
       "Educationly > InterMed Biomedical Services > Educationly",
       "Educationly > Judicial Correction Services > Educationly",
       "Educationly > LAgraphico > Educationly",
@@ -1476,18 +1475,19 @@ exports[`DataAccess > should correctly identify series and slices for: ColumnCha
       "Educationly > Rabbit Air > Educationly",
       "Educationly > Sentek Global > Educationly",
       "Educationly > TalentBurst > Educationly",
+      "Educationly > eVestment Alliance > Educationly",
       "Explorer > 14 West > Explorer",
       "Explorer > 3Degrees > Explorer",
       "Explorer > 6K Systems > Explorer",
       "Explorer > A.B. Data > Explorer",
       "Explorer > ACAI Associates > Explorer",
+      "Explorer > AKA Media > Explorer",
+      "Explorer > ASK Staffing > Explorer",
       "Explorer > AccountNow > Explorer",
       "Explorer > Addx > Explorer",
       "Explorer > Aerodyn Engineering > Explorer",
-      "Explorer > AKA Media > Explorer",
       "Explorer > All American Swim Supply > Explorer",
       "Explorer > Area51-ESG > Explorer",
-      "Explorer > ASK Staffing > Explorer",
       "Explorer > Aspen of DC > Explorer",
       "Explorer > BANC3 > Explorer",
       "Explorer > Barrack's Cater Inn > Explorer",
@@ -1498,10 +1498,10 @@ exports[`DataAccess > should correctly identify series and slices for: ColumnCha
       "Explorer > Catch the Moment > Explorer",
       "Explorer > Cloud Creek Systems > Explorer",
       "Explorer > Concerro > Explorer",
+      "Explorer > DNT Environmental Services > Explorer",
       "Explorer > Data Systems Analysts > Explorer",
       "Explorer > Datawiz > Explorer",
       "Explorer > DealYard.com > Explorer",
-      "Explorer > DNT Environmental Services > Explorer",
       "Explorer > Dorsey & Whitney > Explorer",
       "Explorer > Duffey Petrosky > Explorer",
       "Explorer > Essai > Explorer",
@@ -1534,8 +1534,8 @@ exports[`DataAccess > should correctly identify series and slices for: ColumnCha
       "Explorer > Ovation Travel Group > Explorer",
       "Explorer > Paramore-Redd Online Marketing > Explorer",
       "Explorer > Post-Up Stand > Explorer",
-      "Explorer > See Kai Run > Explorer",
       "Explorer > SLR Contracting & Service > Explorer",
+      "Explorer > See Kai Run > Explorer",
       "Explorer > TBJ > Explorer",
       "Grammar Plus > Access Technology Solutions > Grammar Plus",
       "Grammar Plus > Alarm Team > Grammar Plus",
@@ -1566,7 +1566,6 @@ exports[`DataAccess > should correctly identify series and slices for: ColumnCha
       "WonderKid > 1 Source Consulting > WonderKid",
       "WonderKid > AArrow Advertising > WonderKid",
       "WonderKid > AccountNow > WonderKid",
-      "WonderKid > adaQuest > WonderKid",
       "WonderKid > Agency Consulting Group > WonderKid",
       "WonderKid > ArrowStream > WonderKid",
       "WonderKid > Ascendent Engineering & Safety Solutions > WonderKid",
@@ -1576,9 +1575,9 @@ exports[`DataAccess > should correctly identify series and slices for: ColumnCha
       "WonderKid > Community Impact Newspaper > WonderKid",
       "WonderKid > Compass Solutions > WonderKid",
       "WonderKid > Consero > WonderKid",
+      "WonderKid > DKW Communications > WonderKid",
       "WonderKid > Dennis Corporation > WonderKid",
       "WonderKid > Dialect Technologies > WonderKid",
-      "WonderKid > DKW Communications > WonderKid",
       "WonderKid > Dukas Public Relations > WonderKid",
       "WonderKid > EcoTech Marine > WonderKid",
       "WonderKid > Evolve > WonderKid",
@@ -1593,6 +1592,7 @@ exports[`DataAccess > should correctly identify series and slices for: ColumnCha
       "WonderKid > MyCEO > WonderKid",
       "WonderKid > Safety Sam > WonderKid",
       "WonderKid > SecurityMetrics > WonderKid",
+      "WonderKid > adaQuest > WonderKid",
     ],
     "totals": 0,
   },
@@ -3041,32 +3041,10 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
     "attributes": 0,
     "measures": 4,
     "seriesNames": [
-      " > Won",
-      " > Amount",
-      " > m_916f5387caf8737c37c4a2206c3471d2",
-      " > m_916f5387caf8737c37c4a2206c3471d2_1",
-    ],
-  },
-  "slicesDigest": {
-    "allSlices": 0,
-    "attributes": 0,
-    "sliceNames": [],
-    "totals": 0,
-  },
-}
-`;
-
-exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with calculate as change (difference) and custom format 2`] = `
-{
-  "seriesDigest": {
-    "allSeries": 4,
-    "attributes": 0,
-    "measures": 4,
-    "seriesNames": [
       " > Amount",
       " > Won",
-      " > m_f72796b0fbc7c0dc4d17a1e68c1a9933",
-      " > m_f72796b0fbc7c0dc4d17a1e68c1a9933_1",
+      " > m_9fa7cb9ce4d2947059b490e24a925317",
+      " > m_9fa7cb9ce4d2947059b490e24a925317_1",
     ],
   },
   "slicesDigest": {
@@ -3085,32 +3063,10 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
     "attributes": 0,
     "measures": 4,
     "seriesNames": [
-      " > Won",
-      " > Amount",
-      " > m_916f5387caf8737c37c4a2206c3471d2",
-      " > m_916f5387caf8737c37c4a2206c3471d2_1",
-    ],
-  },
-  "slicesDigest": {
-    "allSlices": 0,
-    "attributes": 0,
-    "sliceNames": [],
-    "totals": 0,
-  },
-}
-`;
-
-exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with calculate as change (difference) and default sub format 2`] = `
-{
-  "seriesDigest": {
-    "allSeries": 4,
-    "attributes": 0,
-    "measures": 4,
-    "seriesNames": [
       " > Amount",
       " > Won",
-      " > m_f72796b0fbc7c0dc4d17a1e68c1a9933",
-      " > m_f72796b0fbc7c0dc4d17a1e68c1a9933_1",
+      " > m_9fa7cb9ce4d2947059b490e24a925317",
+      " > m_9fa7cb9ce4d2947059b490e24a925317_1",
     ],
   },
   "slicesDigest": {
@@ -3129,30 +3085,9 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
     "attributes": 0,
     "measures": 3,
     "seriesNames": [
-      " > Won",
-      " > Amount",
-      " > m_916f5387caf8737c37c4a2206c3471d2",
-    ],
-  },
-  "slicesDigest": {
-    "allSlices": 0,
-    "attributes": 0,
-    "sliceNames": [],
-    "totals": 0,
-  },
-}
-`;
-
-exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with calculate as different and default format 2`] = `
-{
-  "seriesDigest": {
-    "allSeries": 3,
-    "attributes": 0,
-    "measures": 3,
-    "seriesNames": [
       " > Amount",
       " > Won",
-      " > m_f72796b0fbc7c0dc4d17a1e68c1a9933",
+      " > m_9fa7cb9ce4d2947059b490e24a925317",
     ],
   },
   "slicesDigest": {
@@ -3173,28 +3108,7 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
     "seriesNames": [
       " > Amount",
       " > Won",
-      " > m_f72796b0fbc7c0dc4d17a1e68c1a9933",
-    ],
-  },
-  "slicesDigest": {
-    "allSlices": 0,
-    "attributes": 0,
-    "sliceNames": [],
-    "totals": 0,
-  },
-}
-`;
-
-exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with custom format 2`] = `
-{
-  "seriesDigest": {
-    "allSeries": 3,
-    "attributes": 0,
-    "measures": 3,
-    "seriesNames": [
-      " > Won",
-      " > Amount",
-      " > m_916f5387caf8737c37c4a2206c3471d2",
+      " > m_9fa7cb9ce4d2947059b490e24a925317",
     ],
   },
   "slicesDigest": {
@@ -3215,28 +3129,7 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
     "seriesNames": [
       " > Amount",
       " > Won",
-      " > m_f72796b0fbc7c0dc4d17a1e68c1a9933",
-    ],
-  },
-  "slicesDigest": {
-    "allSlices": 0,
-    "attributes": 0,
-    "sliceNames": [],
-    "totals": 0,
-  },
-}
-`;
-
-exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with custom label 2`] = `
-{
-  "seriesDigest": {
-    "allSeries": 3,
-    "attributes": 0,
-    "measures": 3,
-    "seriesNames": [
-      " > Won",
-      " > Amount",
-      " > m_916f5387caf8737c37c4a2206c3471d2",
+      " > m_9fa7cb9ce4d2947059b490e24a925317",
     ],
   },
   "slicesDigest": {
@@ -3257,28 +3150,7 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
     "seriesNames": [
       " > Amount",
       " > Won",
-      " > m_f72796b0fbc7c0dc4d17a1e68c1a9933",
-    ],
-  },
-  "slicesDigest": {
-    "allSlices": 0,
-    "attributes": 0,
-    "sliceNames": [],
-    "totals": 0,
-  },
-}
-`;
-
-exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with decimal-1 format 2`] = `
-{
-  "seriesDigest": {
-    "allSeries": 3,
-    "attributes": 0,
-    "measures": 3,
-    "seriesNames": [
-      " > Won",
-      " > Amount",
-      " > m_916f5387caf8737c37c4a2206c3471d2",
+      " > m_9fa7cb9ce4d2947059b490e24a925317",
     ],
   },
   "slicesDigest": {
@@ -3299,28 +3171,7 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
     "seriesNames": [
       " > Amount",
       " > Won",
-      " > m_f72796b0fbc7c0dc4d17a1e68c1a9933",
-    ],
-  },
-  "slicesDigest": {
-    "allSlices": 0,
-    "attributes": 0,
-    "sliceNames": [],
-    "totals": 0,
-  },
-}
-`;
-
-exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with default config 2`] = `
-{
-  "seriesDigest": {
-    "allSeries": 3,
-    "attributes": 0,
-    "measures": 3,
-    "seriesNames": [
-      " > Won",
-      " > Amount",
-      " > m_916f5387caf8737c37c4a2206c3471d2",
+      " > m_9fa7cb9ce4d2947059b490e24a925317",
     ],
   },
   "slicesDigest": {
@@ -3341,7 +3192,7 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
     "seriesNames": [
       " > Won",
       " > Won Last Year",
-      " > m_33ed22617c38389dc2484e53eb5ac672",
+      " > m_fb5b6f1921f682f64c312ace756a8691",
     ],
   },
   "slicesDigest": {
@@ -3362,7 +3213,7 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
     "seriesNames": [
       " > Amount",
       " > Custom Amount",
-      " > m_c19f3a01eb26bc19f64735a06a09654d",
+      " > m_6aea7862cb864bcedb6ff97fce8fbfae",
     ],
   },
   "slicesDigest": {
@@ -3383,7 +3234,7 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
     "seriesNames": [
       " > Amount",
       " > Custom Amount",
-      " > m_c19f3a01eb26bc19f64735a06a09654d",
+      " > m_6aea7862cb864bcedb6ff97fce8fbfae",
     ],
   },
   "slicesDigest": {
@@ -3402,30 +3253,9 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
     "attributes": 0,
     "measures": 3,
     "seriesNames": [
-      " > Amount",
-      " > Won",
-      " > m_f72796b0fbc7c0dc4d17a1e68c1a9933",
-    ],
-  },
-  "slicesDigest": {
-    "allSlices": 0,
-    "attributes": 0,
-    "sliceNames": [],
-    "totals": 0,
-  },
-}
-`;
-
-exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with negative arrow 2`] = `
-{
-  "seriesDigest": {
-    "allSeries": 3,
-    "attributes": 0,
-    "measures": 3,
-    "seriesNames": [
       " > Won",
       " > Amount",
-      " > m_916f5387caf8737c37c4a2206c3471d2",
+      " > m_8a3164755a3677c1c8c4c3a9fb44ea3a",
     ],
   },
   "slicesDigest": {
@@ -3444,30 +3274,9 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
     "attributes": 0,
     "measures": 3,
     "seriesNames": [
-      " > Amount",
-      " > Won",
-      " > m_f72796b0fbc7c0dc4d17a1e68c1a9933",
-    ],
-  },
-  "slicesDigest": {
-    "allSlices": 0,
-    "attributes": 0,
-    "sliceNames": [],
-    "totals": 0,
-  },
-}
-`;
-
-exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with negative arrow and color 2`] = `
-{
-  "seriesDigest": {
-    "allSeries": 3,
-    "attributes": 0,
-    "measures": 3,
-    "seriesNames": [
       " > Won",
       " > Amount",
-      " > m_916f5387caf8737c37c4a2206c3471d2",
+      " > m_8a3164755a3677c1c8c4c3a9fb44ea3a",
     ],
   },
   "slicesDigest": {
@@ -3488,28 +3297,7 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
     "seriesNames": [
       " > Amount",
       " > Won",
-      " > m_f72796b0fbc7c0dc4d17a1e68c1a9933",
-    ],
-  },
-  "slicesDigest": {
-    "allSlices": 0,
-    "attributes": 0,
-    "sliceNames": [],
-    "totals": 0,
-  },
-}
-`;
-
-exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with position on right 2`] = `
-{
-  "seriesDigest": {
-    "allSeries": 3,
-    "attributes": 0,
-    "measures": 3,
-    "seriesNames": [
-      " > Won",
-      " > Amount",
-      " > m_916f5387caf8737c37c4a2206c3471d2",
+      " > m_9fa7cb9ce4d2947059b490e24a925317",
     ],
   },
   "slicesDigest": {
@@ -3530,28 +3318,7 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
     "seriesNames": [
       " > Amount",
       " > Won",
-      " > m_f72796b0fbc7c0dc4d17a1e68c1a9933",
-    ],
-  },
-  "slicesDigest": {
-    "allSlices": 0,
-    "attributes": 0,
-    "sliceNames": [],
-    "totals": 0,
-  },
-}
-`;
-
-exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with position on top 2`] = `
-{
-  "seriesDigest": {
-    "allSeries": 3,
-    "attributes": 0,
-    "measures": 3,
-    "seriesNames": [
-      " > Won",
-      " > Amount",
-      " > m_916f5387caf8737c37c4a2206c3471d2",
+      " > m_9fa7cb9ce4d2947059b490e24a925317",
     ],
   },
   "slicesDigest": {
@@ -3572,28 +3339,7 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
     "seriesNames": [
       " > Amount",
       " > Won",
-      " > m_f72796b0fbc7c0dc4d17a1e68c1a9933",
-    ],
-  },
-  "slicesDigest": {
-    "allSlices": 0,
-    "attributes": 0,
-    "sliceNames": [],
-    "totals": 0,
-  },
-}
-`;
-
-exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with positive arrow 2`] = `
-{
-  "seriesDigest": {
-    "allSeries": 3,
-    "attributes": 0,
-    "measures": 3,
-    "seriesNames": [
-      " > Won",
-      " > Amount",
-      " > m_916f5387caf8737c37c4a2206c3471d2",
+      " > m_9fa7cb9ce4d2947059b490e24a925317",
     ],
   },
   "slicesDigest": {
@@ -3614,28 +3360,7 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
     "seriesNames": [
       " > Amount",
       " > Won",
-      " > m_f72796b0fbc7c0dc4d17a1e68c1a9933",
-    ],
-  },
-  "slicesDigest": {
-    "allSlices": 0,
-    "attributes": 0,
-    "sliceNames": [],
-    "totals": 0,
-  },
-}
-`;
-
-exports[`DataAccess > should correctly identify series and slices for: Headline - comparison with positive arrow and color 2`] = `
-{
-  "seriesDigest": {
-    "allSeries": 3,
-    "attributes": 0,
-    "measures": 3,
-    "seriesNames": [
-      " > Won",
-      " > Amount",
-      " > m_916f5387caf8737c37c4a2206c3471d2",
+      " > m_9fa7cb9ce4d2947059b490e24a925317",
     ],
   },
   "slicesDigest": {
@@ -3855,28 +3580,7 @@ exports[`DataAccess > should correctly identify series and slices for: Headline 
     "seriesNames": [
       " > Amount",
       " > Won",
-      " > m_f72796b0fbc7c0dc4d17a1e68c1a9933",
-    ],
-  },
-  "slicesDigest": {
-    "allSlices": 0,
-    "attributes": 0,
-    "sliceNames": [],
-    "totals": 0,
-  },
-}
-`;
-
-exports[`DataAccess > should correctly identify series and slices for: Headline - two measures with comparison 2`] = `
-{
-  "seriesDigest": {
-    "allSeries": 3,
-    "attributes": 0,
-    "measures": 3,
-    "seriesNames": [
-      " > Won",
-      " > Amount",
-      " > m_916f5387caf8737c37c4a2206c3471d2",
+      " > m_9fa7cb9ce4d2947059b490e24a925317",
     ],
   },
   "slicesDigest": {
@@ -4139,24 +3843,24 @@ exports[`DataAccess > should correctly identify series and slices for: LineChart
     "allSlices": 18,
     "attributes": 1,
     "sliceNames": [
-      "Q1/2008",
-      "Q2/2008",
-      "Q3/2008",
-      "Q4/2008",
-      "Q1/2009",
-      "Q2/2009",
-      "Q3/2009",
-      "Q4/2009",
-      "Q1/2010",
-      "Q2/2010",
-      "Q3/2010",
-      "Q4/2010",
-      "Q1/2011",
-      "Q2/2011",
-      "Q3/2011",
-      "Q4/2011",
-      "Q1/2012",
-      "Q2/2012",
+      "2008-1",
+      "2008-2",
+      "2008-3",
+      "2008-4",
+      "2009-1",
+      "2009-2",
+      "2009-3",
+      "2009-4",
+      "2010-1",
+      "2010-2",
+      "2010-3",
+      "2010-4",
+      "2011-1",
+      "2011-2",
+      "2011-3",
+      "2011-4",
+      "2012-1",
+      "2012-2",
     ],
     "totals": 0,
   },
@@ -4178,24 +3882,24 @@ exports[`DataAccess > should correctly identify series and slices for: LineChart
     "allSlices": 18,
     "attributes": 1,
     "sliceNames": [
-      "Q1/2008",
-      "Q2/2008",
-      "Q3/2008",
-      "Q4/2008",
-      "Q1/2009",
-      "Q2/2009",
-      "Q3/2009",
-      "Q4/2009",
-      "Q1/2010",
-      "Q2/2010",
-      "Q3/2010",
-      "Q4/2010",
-      "Q1/2011",
-      "Q2/2011",
-      "Q3/2011",
-      "Q4/2011",
-      "Q1/2012",
-      "Q2/2012",
+      "2008-1",
+      "2008-2",
+      "2008-3",
+      "2008-4",
+      "2009-1",
+      "2009-2",
+      "2009-3",
+      "2009-4",
+      "2010-1",
+      "2010-2",
+      "2010-3",
+      "2010-4",
+      "2011-1",
+      "2011-2",
+      "2011-3",
+      "2011-4",
+      "2012-1",
+      "2012-2",
     ],
     "totals": 0,
   },
@@ -4235,24 +3939,24 @@ exports[`DataAccess > should correctly identify series and slices for: LineChart
     "allSlices": 18,
     "attributes": 1,
     "sliceNames": [
-      "Q1/2008",
-      "Q2/2008",
-      "Q3/2008",
-      "Q4/2008",
-      "Q1/2009",
-      "Q2/2009",
-      "Q3/2009",
-      "Q4/2009",
-      "Q1/2010",
-      "Q2/2010",
-      "Q3/2010",
-      "Q4/2010",
-      "Q1/2011",
-      "Q2/2011",
-      "Q3/2011",
-      "Q4/2011",
-      "Q1/2012",
-      "Q2/2012",
+      "2008-1",
+      "2008-2",
+      "2008-3",
+      "2008-4",
+      "2009-1",
+      "2009-2",
+      "2009-3",
+      "2009-4",
+      "2010-1",
+      "2010-2",
+      "2010-3",
+      "2010-4",
+      "2011-1",
+      "2011-2",
+      "2011-3",
+      "2011-4",
+      "2012-1",
+      "2012-2",
     ],
     "totals": 0,
   },
@@ -4273,24 +3977,24 @@ exports[`DataAccess > should correctly identify series and slices for: LineChart
     "allSlices": 18,
     "attributes": 1,
     "sliceNames": [
-      "Q1/2008",
-      "Q2/2008",
-      "Q3/2008",
-      "Q4/2008",
-      "Q1/2009",
-      "Q2/2009",
-      "Q3/2009",
-      "Q4/2009",
-      "Q1/2010",
-      "Q2/2010",
-      "Q3/2010",
-      "Q4/2010",
-      "Q1/2011",
-      "Q2/2011",
-      "Q3/2011",
-      "Q4/2011",
-      "Q1/2012",
-      "Q2/2012",
+      "2008-1",
+      "2008-2",
+      "2008-3",
+      "2008-4",
+      "2009-1",
+      "2009-2",
+      "2009-3",
+      "2009-4",
+      "2010-1",
+      "2010-2",
+      "2010-3",
+      "2010-4",
+      "2011-1",
+      "2011-2",
+      "2011-3",
+      "2011-4",
+      "2012-1",
+      "2012-2",
     ],
     "totals": 0,
   },
@@ -4304,24 +4008,24 @@ exports[`DataAccess > should correctly identify series and slices for: LineChart
     "attributes": 1,
     "measures": 1,
     "seriesNames": [
-      "Q1/2008 > Amount",
-      "Q2/2008 > Amount",
-      "Q3/2008 > Amount",
-      "Q4/2008 > Amount",
-      "Q1/2009 > Amount",
-      "Q2/2009 > Amount",
-      "Q3/2009 > Amount",
-      "Q4/2009 > Amount",
-      "Q1/2010 > Amount",
-      "Q2/2010 > Amount",
-      "Q3/2010 > Amount",
-      "Q4/2010 > Amount",
-      "Q1/2011 > Amount",
-      "Q2/2011 > Amount",
-      "Q3/2011 > Amount",
-      "Q4/2011 > Amount",
-      "Q1/2012 > Amount",
-      "Q2/2012 > Amount",
+      "2008-1 > Amount",
+      "2008-2 > Amount",
+      "2008-3 > Amount",
+      "2008-4 > Amount",
+      "2009-1 > Amount",
+      "2009-2 > Amount",
+      "2009-3 > Amount",
+      "2009-4 > Amount",
+      "2010-1 > Amount",
+      "2010-2 > Amount",
+      "2010-3 > Amount",
+      "2010-4 > Amount",
+      "2011-1 > Amount",
+      "2011-2 > Amount",
+      "2011-3 > Amount",
+      "2011-4 > Amount",
+      "2012-1 > Amount",
+      "2012-2 > Amount",
     ],
   },
   "slicesDigest": {
@@ -4351,24 +4055,24 @@ exports[`DataAccess > should correctly identify series and slices for: LineChart
     "allSlices": 18,
     "attributes": 1,
     "sliceNames": [
-      "Q1/2008",
-      "Q2/2008",
-      "Q3/2008",
-      "Q4/2008",
-      "Q1/2009",
-      "Q2/2009",
-      "Q3/2009",
-      "Q4/2009",
-      "Q1/2010",
-      "Q2/2010",
-      "Q3/2010",
-      "Q4/2010",
-      "Q1/2011",
-      "Q2/2011",
-      "Q3/2011",
-      "Q4/2011",
-      "Q1/2012",
-      "Q2/2012",
+      "2008-1",
+      "2008-2",
+      "2008-3",
+      "2008-4",
+      "2009-1",
+      "2009-2",
+      "2009-3",
+      "2009-4",
+      "2010-1",
+      "2010-2",
+      "2010-3",
+      "2010-4",
+      "2011-1",
+      "2011-2",
+      "2011-3",
+      "2011-4",
+      "2012-1",
+      "2012-2",
     ],
     "totals": 0,
   },
@@ -4390,24 +4094,24 @@ exports[`DataAccess > should correctly identify series and slices for: LineChart
     "allSlices": 18,
     "attributes": 1,
     "sliceNames": [
-      "Q1/2008",
-      "Q2/2008",
-      "Q3/2008",
-      "Q4/2008",
-      "Q1/2009",
-      "Q2/2009",
-      "Q3/2009",
-      "Q4/2009",
-      "Q1/2010",
-      "Q2/2010",
-      "Q3/2010",
-      "Q4/2010",
-      "Q1/2011",
-      "Q2/2011",
-      "Q3/2011",
-      "Q4/2011",
-      "Q1/2012",
-      "Q2/2012",
+      "2008-1",
+      "2008-2",
+      "2008-3",
+      "2008-4",
+      "2009-1",
+      "2009-2",
+      "2009-3",
+      "2009-4",
+      "2010-1",
+      "2010-2",
+      "2010-3",
+      "2010-4",
+      "2011-1",
+      "2011-2",
+      "2011-3",
+      "2011-4",
+      "2012-1",
+      "2012-2",
     ],
     "totals": 0,
   },
@@ -4429,24 +4133,24 @@ exports[`DataAccess > should correctly identify series and slices for: LineChart
     "allSlices": 18,
     "attributes": 1,
     "sliceNames": [
-      "Q2/2012",
-      "Q1/2012",
-      "Q4/2011",
-      "Q3/2011",
-      "Q2/2011",
-      "Q1/2011",
-      "Q4/2010",
-      "Q3/2010",
-      "Q2/2010",
-      "Q1/2010",
-      "Q4/2009",
-      "Q3/2009",
-      "Q2/2009",
-      "Q1/2009",
-      "Q4/2008",
-      "Q3/2008",
-      "Q2/2008",
-      "Q1/2008",
+      "2012-2",
+      "2012-1",
+      "2011-4",
+      "2011-3",
+      "2011-2",
+      "2011-1",
+      "2010-4",
+      "2010-3",
+      "2010-2",
+      "2010-1",
+      "2009-4",
+      "2009-3",
+      "2009-2",
+      "2009-1",
+      "2008-4",
+      "2008-3",
+      "2008-2",
+      "2008-1",
     ],
     "totals": 0,
   },
@@ -4468,24 +4172,24 @@ exports[`DataAccess > should correctly identify series and slices for: LineChart
     "allSlices": 18,
     "attributes": 1,
     "sliceNames": [
-      "Q1/2008",
-      "Q2/2008",
-      "Q3/2008",
-      "Q1/2009",
-      "Q4/2008",
-      "Q1/2010",
-      "Q3/2009",
-      "Q2/2009",
-      "Q4/2009",
-      "Q2/2012",
-      "Q2/2010",
-      "Q1/2012",
-      "Q4/2011",
-      "Q2/2011",
-      "Q4/2010",
-      "Q3/2010",
-      "Q1/2011",
-      "Q3/2011",
+      "2008-1",
+      "2008-2",
+      "2008-3",
+      "2009-1",
+      "2008-4",
+      "2010-1",
+      "2009-3",
+      "2009-2",
+      "2009-4",
+      "2012-2",
+      "2010-2",
+      "2012-1",
+      "2011-4",
+      "2011-2",
+      "2010-4",
+      "2010-3",
+      "2011-1",
+      "2011-3",
     ],
     "totals": 0,
   },
@@ -5356,24 +5060,24 @@ exports[`DataAccess > should correctly identify series and slices for: Treemap -
     "allSlices": 18,
     "attributes": 1,
     "sliceNames": [
-      "Q1/2008",
-      "Q2/2008",
-      "Q3/2008",
-      "Q4/2008",
-      "Q1/2009",
-      "Q2/2009",
-      "Q3/2009",
-      "Q4/2009",
-      "Q1/2010",
-      "Q2/2010",
-      "Q3/2010",
-      "Q4/2010",
-      "Q1/2011",
-      "Q2/2011",
-      "Q3/2011",
-      "Q4/2011",
-      "Q1/2012",
-      "Q2/2012",
+      "2008-1",
+      "2008-2",
+      "2008-3",
+      "2008-4",
+      "2009-1",
+      "2009-2",
+      "2009-3",
+      "2009-4",
+      "2010-1",
+      "2010-2",
+      "2010-3",
+      "2010-4",
+      "2011-1",
+      "2011-2",
+      "2011-3",
+      "2011-4",
+      "2012-1",
+      "2012-2",
     ],
     "totals": 0,
   },
@@ -5710,14 +5414,13 @@ exports[`DataAccess > should correctly identify series and slices for: Waterfall
 exports[`DataAccess > should correctly identify series and slices for: WaterfallChart - multi measures 1`] = `
 {
   "seriesDigest": {
-    "allSeries": 4,
+    "allSeries": 3,
     "attributes": 0,
-    "measures": 4,
+    "measures": 3,
     "seriesNames": [
       " > Sum Velocity",
-      " > Sum Values",
-      " > Negative Sum Probability",
-      " > Negative Sum Duration",
+      " > Sum Duration",
+      " > Sum Density",
     ],
   },
   "slicesDigest": {
@@ -5732,16 +5435,13 @@ exports[`DataAccess > should correctly identify series and slices for: Waterfall
 exports[`DataAccess > should correctly identify series and slices for: WaterfallChart - multi measures with a total measure 1`] = `
 {
   "seriesDigest": {
-    "allSeries": 6,
+    "allSeries": 3,
     "attributes": 0,
-    "measures": 6,
+    "measures": 3,
     "seriesNames": [
       " > Sum Velocity",
-      " > Sum Values",
-      " > Total of velocity and values",
-      " > Negative Sum Probability",
-      " > Negative Sum Duration",
-      " > Total balance",
+      " > Sum Duration",
+      " > Sum Density",
     ],
   },
   "slicesDigest": {
@@ -5756,14 +5456,13 @@ exports[`DataAccess > should correctly identify series and slices for: Waterfall
 exports[`DataAccess > should correctly identify series and slices for: WaterfallChart - multi measures with font 1`] = `
 {
   "seriesDigest": {
-    "allSeries": 4,
+    "allSeries": 3,
     "attributes": 0,
-    "measures": 4,
+    "measures": 3,
     "seriesNames": [
       " > Sum Velocity",
-      " > Sum Values",
-      " > Negative Sum Probability",
-      " > Negative Sum Duration",
+      " > Sum Duration",
+      " > Sum Density",
     ],
   },
   "slicesDigest": {
@@ -5778,14 +5477,13 @@ exports[`DataAccess > should correctly identify series and slices for: Waterfall
 exports[`DataAccess > should correctly identify series and slices for: WaterfallChart - multi measures with themed 1`] = `
 {
   "seriesDigest": {
-    "allSeries": 4,
+    "allSeries": 3,
     "attributes": 0,
-    "measures": 4,
+    "measures": 3,
     "seriesNames": [
       " > Sum Velocity",
-      " > Sum Values",
-      " > Negative Sum Probability",
-      " > Negative Sum Duration",
+      " > Sum Duration",
+      " > Sum Density",
     ],
   },
   "slicesDigest": {
@@ -5871,14 +5569,13 @@ exports[`DataAccess > should correctly identify series and slices for: Waterfall
 exports[`DataAccess > should correctly identify series and slices for: Xirr - correct config 1`] = `
 {
   "seriesDigest": {
-    "allSeries": 4,
+    "allSeries": 3,
     "attributes": 1,
     "measures": 1,
     "seriesNames": [
       "2018 > Sample XIRR",
       "2019 > Sample XIRR",
       "2020 > Sample XIRR",
-      "2021 > Sample XIRR",
     ],
   },
   "slicesDigest": {
@@ -5893,14 +5590,13 @@ exports[`DataAccess > should correctly identify series and slices for: Xirr - co
 exports[`DataAccess > should correctly identify series and slices for: Xirr - font 1`] = `
 {
   "seriesDigest": {
-    "allSeries": 4,
+    "allSeries": 3,
     "attributes": 1,
     "measures": 1,
     "seriesNames": [
       "2018 > Sample XIRR",
       "2019 > Sample XIRR",
       "2020 > Sample XIRR",
-      "2021 > Sample XIRR",
     ],
   },
   "slicesDigest": {
@@ -5973,14 +5669,13 @@ exports[`DataAccess > should correctly identify series and slices for: Xirr - se
 exports[`DataAccess > should correctly identify series and slices for: Xirr - themed 1`] = `
 {
   "seriesDigest": {
-    "allSeries": 4,
+    "allSeries": 3,
     "attributes": 1,
     "measures": 1,
     "seriesNames": [
       "2018 > Sample XIRR",
       "2019 > Sample XIRR",
       "2020 > Sample XIRR",
-      "2021 > Sample XIRR",
     ],
   },
   "slicesDigest": {

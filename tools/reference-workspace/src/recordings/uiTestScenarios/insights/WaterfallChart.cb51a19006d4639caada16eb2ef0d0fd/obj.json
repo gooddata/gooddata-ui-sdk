@@ -9,48 +9,37 @@
                             "definition": {
                                 "measureDefinition": {
                                     "aggregation": "sum",
-                                    "item": { "identifier": "fact.stagehistory.velocity", "type": "fact" }
+                                    "item": { "identifier": "f_stagehistory.f_velocity", "type": "fact" }
                                 }
                             },
                             "format": "$#,##0",
-                            "localIdentifier": "m_fact.stagehistory.velocity_sum"
+                            "localIdentifier": "m_f_stagehistory.f_velocity_sum"
                         }
                     },
                     {
                         "measure": {
-                            "alias": "Sum Values",
+                            "alias": "Sum Duration",
                             "definition": {
                                 "measureDefinition": {
                                     "aggregation": "sum",
-                                    "item": { "identifier": "fact.hardwaretest.values", "type": "fact" }
+                                    "item": { "identifier": "f_stagehistory.f_duration", "type": "fact" }
                                 }
                             },
                             "format": "$#,##0",
-                            "localIdentifier": "m_fact.hardwaretest.values_sum"
+                            "localIdentifier": "m_f_stagehistory.f_duration_sum"
                         }
                     },
                     {
                         "measure": {
-                            "alias": "Negative Sum Probability",
+                            "alias": "Sum Density",
                             "definition": {
                                 "measureDefinition": {
-                                    "item": { "identifier": "acEsTPZKdqzb", "type": "measure" }
+                                    "aggregation": "sum",
+                                    "item": { "identifier": "f_density", "type": "fact" }
                                 }
                             },
                             "format": "$#,##0",
-                            "localIdentifier": "m_acEsTPZKdqzb"
-                        }
-                    },
-                    {
-                        "measure": {
-                            "alias": "Negative Sum Duration",
-                            "definition": {
-                                "measureDefinition": {
-                                    "item": { "identifier": "abTsUy7k6OIl", "type": "measure" }
-                                }
-                            },
-                            "format": "$#,##0",
-                            "localIdentifier": "m_abTsUy7k6OIl"
+                            "localIdentifier": "m_f_density_sum"
                         }
                     }
                 ],

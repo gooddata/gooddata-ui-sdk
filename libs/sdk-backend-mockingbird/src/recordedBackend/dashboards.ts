@@ -138,17 +138,7 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
         return Promise.resolve(recording);
     };
 
-    public getDashboardWidgetAlertsForCurrentUser = (ref: ObjRef): Promise<IWidgetAlert[]> => {
-        const recording = this.findRecordingOrLocalDashboard(ref);
-
-        if (!recording) {
-            return Promise.reject(new UnexpectedResponseError("Not Found", 404, {}));
-        }
-
-        if (isDashboardRecording(recording)) {
-            return Promise.resolve(recording.alerts);
-        }
-
+    public getDashboardWidgetAlertsForCurrentUser = (_ref: ObjRef): Promise<IWidgetAlert[]> => {
         return Promise.resolve([]);
     };
 

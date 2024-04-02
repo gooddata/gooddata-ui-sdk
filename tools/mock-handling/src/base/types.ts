@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 
 /**
@@ -35,14 +35,9 @@ export type DataRecorderConfig = {
     projectId: string | null;
 
     /**
-     * User to authenticate as.
+     * Tiger token
      */
-    username: string | null;
-
-    /**
-     * Password to use for authentication
-     */
-    password: string | null;
+    tigerToken: string | null;
 
     /**
      * Directory with recordings inputs & outputs.

@@ -10,17 +10,80 @@ To learn more, check [the source monorepo](https://github.com/gooddata/gooddata-
 This project defines LDM and test data recordings to use for all types of tests in GoodData.UI SDK. The
 LDM and recordings are obtained from a live workspace in a GoodData Platform.
 
-## How to create reference workspace (GD-only for now)
+## How to create reference workspace
 
-The reference workspace is created by deploying a GoodSales/2 fixture from gdc-test-fixtures:
+Workspace can be created by script import-ref-workspace running `npm run import-ref-workspace`.
 
-1.  Clone the gdc-test-fixtures repository
+All scripts are defined in `reference-workspace-mgmt` package.
 
-2.  Navigate to tools directory, execute `zip_upload.sh ../fixtures/GoodSales/2`
-    This will prepare upload.zip that is input to GoodData ETL Pull API
+Import is using `@gooddata/fixtures`package.
 
-3.  Use either JavaScript or Python tooling with appropriate command line args to create a new workspace
-    using the GoodSales/2 fixture
+Workspace metadata like Dashboards, visualization etc are defined in `/reference-workspace-mgmt/fixtures/tiger_metadata_extension.json`
+This json is source of true of reference workspace that is than recorded.
+
+You need to set `/reference-workspace-mgmt/.env` file and defined variables. Use `/reference-workspace-mgmt/.env.template`
+
+`WORKSPACE_ID` will be automatically updated in .env file after success import.
+
+## How to export reference workspace
+
+After your changes in live workspace you need to export workspace into `/reference-workspace-mgmt/fixtures/tiger_metadata_extension.json`
+
+by command `npm run export-ref-workspace` and commit changes to git.
+
+All scripts are defined in `reference-workspace-mgmt` package.
+
+## How to create/ update recordings
+
+NOTE: you need set TIGER_API_TOKEN and HOST_NAME and WORKSPACE_ID in `/reference-workspace-mgmt/.env`
+
+All recordings are defined in `reference-workspace/src/recordings` directory
+
+### Update Catalogue
+
+In dir `src/md` theres is defined standard GD catalog to update it call `npm run refresh-md` and build `refresh-md` package.
+
+### Update recordings metadata
+
+NOTE: you need set TIGER_API_TOKEN and HOST_NAME and WORKSPACE_ID in `/reference-workspace-mgmt/.env`
+
+In `/reference-workspace/src/recordings/metadata` are recorded workspace metadata, like Dashboards, Catalog, Display Forms and list of VisClasses.
+
+### Update recordings metadata catalog
+
+Just delete `src/recordings/metadata/catalog` and rush `npm run refresh-recordings` script will record fresh recordings
+
+### Update recordings metadata dashboard
+
+In `dashboards.json` is defined list of recorded dashboard, to update recording just delete corresponding directory named by dashboard GUID
+and run `npm run refresh-recordings`
+
+To record new dashboard just add item to `dashboards.json`
+
+NOTE: Do not try delete or update empty dashboard its hardcoded dashboard and this dashboard not exists in reference workspace
+
+### Update recordings metadata displayForms
+
+In displayForms.json there is list of recorded display forms, each display form record its definition and also its elements.
+In case display forms has large amount of elements you can defined limit like `{ "elementCount": 10 }`
+
+To update recording just delete corresponding directory named by display forms id and run `npm run refresh-recordings`
+To record new dashboard just add item to `displayForms.json`
+
+### Update recordings metadata visClasses
+
+Just delete visClasses dir and run `npm run refresh-recordings`
+
+### Update uiTestScenarios
+
+In dir `src/recordings/uiTestScenarios` are defined recordings for storybook scenarios (sdk-ui-tests)
+
+To update this recordings run
+
+`rush build`
+`npm run clear-recordings`
+`npm run populate-ref` (script defined in sdk-ui-tests must be run from this dir) see readme there
+`npm run refresh-recordings`
 
 ## Working with reference workspace LDM
 
@@ -39,10 +102,6 @@ This is stored in [src/md](src/md) and consists of two files:
     and other types of 'fake' declarations.
 
 ## Working with recordings
-
-### How to create a new recording
-
-This really depends on _what_ is it that you want to record in the workspace.
 
 #### Executions
 

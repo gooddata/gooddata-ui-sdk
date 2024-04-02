@@ -4,9 +4,12 @@ linkTitle: "Compatibility"
 weight: 15
 ---
 
-{{% alert color="primary" title="Compatibility Article" %}}
-This article should **inform** the developers, whether their setup is **compatible** with using GD.UI and if so, what version.
+{{% alert color="warning" title="Version 9 vs Versions 10+" %}}
+GoodData Platform users must stay on GoodData.UI version 9, do not update to version 10 or higher!
+From version 10 onwards, the GoodData.UI SDK solely supports only GoodData Cloud and GoodData.CN.
 {{% /alert %}}
+
+This article should inform the developers, whether their setup is compatible with using GD.UI and if so, what version.
 
 ## Compatible Technologies:
 

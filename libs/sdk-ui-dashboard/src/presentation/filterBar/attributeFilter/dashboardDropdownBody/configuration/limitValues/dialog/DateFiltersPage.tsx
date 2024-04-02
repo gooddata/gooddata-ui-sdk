@@ -1,46 +1,91 @@
 // (C) 2024 GoodData Corporation
 
-import React, { useMemo } from "react";
+import React, { ReactNode, useMemo } from "react";
 import cx from "classnames";
-import { useIntl } from "react-intl";
-import { ICatalogDateDataset } from "@gooddata/sdk-model";
+import { FormattedMessage, useIntl } from "react-intl";
+import { ICatalogDateDataset, IDashboardDateFilter, serializeObjRef } from "@gooddata/sdk-model";
+import { DropdownList, ShortenedText } from "@gooddata/sdk-ui-kit";
+import { stringUtils } from "@gooddata/util";
 
 import { messages } from "../../../../../../../locales.js";
 import { ValuesLimitingItem } from "../../../../types.js";
 
 import { PopupHeader } from "./PopupHeader.js";
-import { DropdownList, ShortenedText } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+import {
+    IValuesLimitingItemWithTitle,
+    useCommonDateItems,
+    useDependentDateFilterTitle,
+} from "../shared/limitingItemsHook.js";
+import { UnknownItemTitle } from "../shared/LimitingItem.js";
+import {
+    IDashboardDependentDateFilter,
+    isDashboardDependentDateFilter,
+    useDashboardUserInteraction,
+} from "../../../../../../../model/index.js";
+import { WithDisabledParentFilterTooltip } from "./WithDisabledParentFilterTooltip.js";
 
 export interface IDateFiltersPageProps {
     availableDatasets: ICatalogDateDataset[];
+    dependentCommonDateFilter: IDashboardDateFilter;
+    dependentDateFilters: IDashboardDependentDateFilter[];
     onSelect: (item: ValuesLimitingItem) => void;
     onGoBack: () => void;
     onClose: () => void;
 }
 
 interface IAttributeListItemProps {
-    item: ICatalogDateDataset;
-    onClick: () => void;
+    item: IValuesLimitingItemWithTitle;
+    dependentDateFilters: IDashboardDependentDateFilter[];
+    onSelect: (item: ValuesLimitingItem) => void;
+    onClose: () => void;
 }
 
-const TOOLTIP_ALIGN_POINT = [
-    { align: "cr cl", offset: { x: 10, y: 0 } },
-    { align: "cl cr", offset: { x: -10, y: 0 } },
-];
-
-const DateAttributeListItem: React.FC<IAttributeListItemProps> = ({ item, onClick }) => {
+const DateAttributeListItem: React.FC<IAttributeListItemProps> = ({
+    item: { item, isDisabled, title },
+    dependentDateFilters,
+    onSelect,
+    onClose,
+}) => {
+    const { attributeFilterInteraction } = useDashboardUserInteraction();
     const classNames = useMemo(() => {
         return cx(
             "gd-list-item date-filter__limit__popup__item",
-            `s-${stringUtils.simplifyText(item.dataSet.title)}`,
+            `s-${stringUtils.simplifyText(title ?? "unknown")}`,
+            {
+                "is-disabled": isDisabled,
+            },
         );
     }, [item]);
 
+    const dataSet = isDashboardDependentDateFilter(item) ? item.dataSet : undefined;
+    const dependentDateFilterTitle = useDependentDateFilterTitle(dataSet, dependentDateFilters);
+
+    const onClick = () => {
+        if (!isDisabled) {
+            onSelect(item);
+            onClose();
+            attributeFilterInteraction("attributeFilterLimitDependentDateFilterClicked");
+        }
+    };
+
     return (
-        <div key={item.dataSet.id} className={classNames} onClick={onClick}>
-            <ShortenedText tooltipAlignPoints={TOOLTIP_ALIGN_POINT}>{item.dataSet.title}</ShortenedText>
-        </div>
+        <WithDisabledParentFilterTooltip
+            formattedMessage={
+                <FormattedMessage
+                    id="attributesDropdown.valuesLimiting.disableDataSet"
+                    values={{
+                        dateFilterTitle: dependentDateFilterTitle ?? <UnknownItemTitle />,
+                        // eslint-disable-next-line react/display-name
+                        strong: (chunks: ReactNode) => <strong>{chunks}</strong>,
+                    }}
+                />
+            }
+            isDisabled={!!isDisabled}
+        >
+            <div key={serializeObjRef(item)} className={classNames} onClick={onClick}>
+                <ShortenedText>{title!}</ShortenedText>
+            </div>
+        </WithDisabledParentFilterTooltip>
     );
 };
 
@@ -48,11 +93,19 @@ export default DateAttributeListItem;
 
 export const DateFiltersPage: React.FC<IDateFiltersPageProps> = ({
     availableDatasets,
+    dependentCommonDateFilter,
+    dependentDateFilters,
     onSelect,
     onGoBack,
     onClose,
 }) => {
     const intl = useIntl();
+
+    const commonDateItems = useCommonDateItems(
+        availableDatasets,
+        dependentCommonDateFilter,
+        dependentDateFilters,
+    );
 
     return (
         <>
@@ -66,14 +119,13 @@ export const DateFiltersPage: React.FC<IDateFiltersPageProps> = ({
                     width={250}
                     isMobile={false}
                     showSearch={false}
-                    items={availableDatasets}
+                    items={commonDateItems}
                     renderItem={({ item }) => (
                         <DateAttributeListItem
+                            dependentDateFilters={dependentDateFilters}
                             item={item}
-                            onClick={() => {
-                                onSelect(item.dataSet.ref);
-                                onClose();
-                            }}
+                            onSelect={onSelect}
+                            onClose={onClose}
                         />
                     )}
                 />

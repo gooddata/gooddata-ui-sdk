@@ -2411,14 +2411,24 @@
         "comment": "Description of section that describe the action user can choose. The action selects an existing dashboard filter to be used as a validation items to hide attribute filter elements. Do not translate <a> and </a> placeholders. They will be replaced with HTML tags in the runtime.",
         "limit": 0
     },
-    "attributesDropdown.valuesLimiting.depedentDateFilterTitle": {
-        "value": "Date ({dataSetTitle})",
-        "comment": "Do not translate variable enclosed in {}.",
+    "attributesDropdown.valuesLimiting.commonDateFilterTitle": {
+        "value": "{dateFilterTitle} as {dataSetTitle}",
+        "comment": "Do not translate variables enclosed in {}.",
         "limit": 0
     },
     "attributesDropdown.valuesLimiting.addDateTitle": {
         "value": "Choose date",
         "comment": "Title of popup with selection of date filters will available date datasets values.",
+        "limit": 0
+    },
+    "attributesDropdown.valuesLimiting.disableDateFilter": {
+        "value": "Filter not available: The <strong>{dateFilterTitle}</strong> filter is already using this date dataset.",
+        "comment": "Do not translate variable enclosed in {}.",
+        "limit": 0
+    },
+    "attributesDropdown.valuesLimiting.disableDataSet": {
+        "value": "Date dataset not available: The <strong>{dateFilterTitle}</strong> filter is already using this date dataset.",
+        "comment": "Do not translate variable enclosed in {}.",
         "limit": 0
     }
 }

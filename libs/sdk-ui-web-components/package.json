@@ -52,8 +52,6 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "@gooddata/api-client-bear": "workspace:*",
-        "@gooddata/sdk-backend-bear": "workspace:*",
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-backend-tiger": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",

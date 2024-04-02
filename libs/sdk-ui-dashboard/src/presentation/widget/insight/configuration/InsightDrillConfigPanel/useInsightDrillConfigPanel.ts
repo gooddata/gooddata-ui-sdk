@@ -5,8 +5,14 @@ import { invariant } from "ts-invariant";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import {
+    areObjRefsEqual,
+    getHierarchyRef,
+    ICatalogAttributeHierarchy,
+    ICatalogDateAttributeHierarchy,
+    idRef,
     IDrillDownReference,
     InsightDrillDefinition,
+    isCatalogDateAttributeHierarchy,
     isInsightWidget,
     localIdRef,
     ObjRef,
@@ -28,6 +34,7 @@ import {
     addDrillDownForInsightWidget,
     modifyDrillDownForInsightWidget,
     selectSupportsAttributeHierarchies,
+    selectAllCatalogAttributeHierarchies,
 } from "../../../../../model/index.js";
 import { getGlobalDrillDownMappedConfigForWidget, getMappedConfigForWidget } from "./drillConfigMapper.js";
 import {
@@ -142,6 +149,8 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
     const { enableKDZooming } = settings;
     const availableDrillTargets = configItems?.availableDrillTargets;
 
+    const attributeHierarchies = useDashboardSelector(selectAllCatalogAttributeHierarchies);
+
     const drillItems = useMemo(() => {
         return availableDrillTargets
             ? getMappedConfigForWidget(
@@ -192,7 +201,7 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
             const isNew = isItemNew(changedItem);
             if (!isDrillDownToAttributeHierarchyDefinition(drill)) {
                 const blacklistHierarchiesToUpdate = isDrillDownToAttributeHierarchyConfig(changedItem)
-                    ? buildBlacklistHierarchies(changedItem)
+                    ? buildBlacklistHierarchies(changedItem, attributeHierarchies)
                     : [];
 
                 dispatch(modifyDrillsForInsightWidget(widgetRef, [drill], blacklistHierarchiesToUpdate));
@@ -214,7 +223,10 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
                             widgetRef,
                             attributeDescriptor!.attributeHeader.formOf.ref,
                             (changedItem as IDrillDownAttributeHierarchyConfig).attributeHierarchyRef,
-                            buildBlacklistHierarchies(drill as IDrillDownAttributeHierarchyDefinition),
+                            buildBlacklistHierarchies(
+                                drill as IDrillDownAttributeHierarchyDefinition,
+                                attributeHierarchies,
+                            ),
                         ),
                     );
                 } else {
@@ -232,24 +244,32 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
             }
             addSuccess(isNew ? messages.added : messages.modified, { duration: 3000 });
         },
-        [widgetRef, completeItem, addSuccess, isItemNew, dispatch],
+        [
+            widgetRef,
+            completeItem,
+            addSuccess,
+            isItemNew,
+            dispatch,
+            attributeHierarchies,
+            deleteIncompleteItem,
+        ],
     );
 
     const onDeleteItem = useCallback(
         (item: IDrillConfigItem) => {
             if (item.complete) {
-                item.drillTargetType === DRILL_TARGET_TYPE.DRILL_DOWN
+                isDrillDownToAttributeHierarchyConfig(item)
                     ? dispatch(
                           removeDrillDownForInsightWidget(
                               widgetRef,
-                              buildBlacklistHierarchies(item as IDrillDownAttributeHierarchyConfig),
+                              buildBlacklistHierarchies(item, attributeHierarchies),
                           ),
                       )
                     : dispatch(removeDrillsForInsightWidget(widgetRef, [localIdRef(item.localIdentifier!)]));
             }
             deleteIncompleteItem(item);
         },
-        [widgetRef, dispatch, deleteIncompleteItem],
+        [widgetRef, dispatch, deleteIncompleteItem, attributeHierarchies],
     );
 
     return {
@@ -269,6 +289,7 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
 
 export function buildBlacklistHierarchies(
     item: IDrillDownAttributeHierarchyDefinition | IDrillDownAttributeHierarchyConfig,
+    attributeHierarchies: (ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy)[],
 ): IDrillDownReference[] {
     const attributeDescriptor = item.attributes.find(
         (attr) => attr.attributeHeader.localIdentifier === item.originLocalIdentifier,
@@ -278,13 +299,27 @@ export function buildBlacklistHierarchies(
     }
     const isDateAttribute = !!attributeDescriptor.attributeHeader.granularity;
     if (isDateAttribute) {
-        return [
-            {
-                type: "dateHierarchyReference",
-                dateHierarchyTemplate: item.attributeHierarchyRef,
-                dateDatasetAttribute: attributeDescriptor.attributeHeader.formOf.ref,
-            },
-        ];
+        const dateHierarchy = attributeHierarchies.find((hierarchy) =>
+            areObjRefsEqual(getHierarchyRef(hierarchy), item.attributeHierarchyRef),
+        );
+        // date attribute may reference either adhoc date hierarchy or std attribute hierarchy
+        if (isCatalogDateAttributeHierarchy(dateHierarchy)) {
+            return [
+                {
+                    type: "dateHierarchyReference",
+                    dateHierarchyTemplate: idRef(dateHierarchy.templateId, "dateHierarchyTemplate"),
+                    dateDatasetAttribute: attributeDescriptor.attributeHeader.formOf.ref,
+                },
+            ];
+        } else {
+            return [
+                {
+                    type: "attributeHierarchyReference",
+                    attributeHierarchy: item.attributeHierarchyRef,
+                    attribute: attributeDescriptor.attributeHeader.formOf.ref,
+                },
+            ];
+        }
     }
     return [
         {

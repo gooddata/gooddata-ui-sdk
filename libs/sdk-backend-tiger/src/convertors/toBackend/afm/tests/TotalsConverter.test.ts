@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import {
     bucketSetTotals,
@@ -83,16 +83,16 @@ const Test10 = defWithDimensions(
 );
 // Grand totals
 const total = newTotal("sum", ReferenceMd.WinRate, ReferenceMd.Account.Name);
-const columnTotal = newTotal("sum", ReferenceMd.WinRate, ReferenceMd.Department);
+const columnTotal = newTotal("sum", ReferenceMd.WinRate, ReferenceMd.Department.Default);
 const Test11 = defSetDimensions(
     newDefForBuckets("test", [
         newBucket("measure", ReferenceMd.WinRate),
         bucketSetTotals(newBucket("attribute", ReferenceMd.Account.Name), [total]),
-        bucketSetTotals(newBucket("columns", ReferenceMd.Department), [columnTotal]),
+        bucketSetTotals(newBucket("columns", ReferenceMd.Department.Default), [columnTotal]),
     ]),
     newTwoDimensional(
         [ReferenceMd.Account.Name, total],
-        [ReferenceMd.Department, MeasureGroupIdentifier, columnTotal],
+        [ReferenceMd.Department.Default, MeasureGroupIdentifier, columnTotal],
     ),
 );
 // Marginal totals
@@ -104,11 +104,13 @@ const Test12 = defSetDimensions(
         bucketSetTotals(newBucket("attribute", ReferenceMd.Account.Name, ReferenceMd.ForecastCategory), [
             subtotal,
         ]),
-        bucketSetTotals(newBucket("columns", ReferenceMd.Department, ReferenceMd.IsActive), [columnSubTotal]),
+        bucketSetTotals(newBucket("columns", ReferenceMd.Department.Default, ReferenceMd.IsActive), [
+            columnSubTotal,
+        ]),
     ]),
     newTwoDimensional(
         [ReferenceMd.Account.Name, ReferenceMd.ForecastCategory, subtotal],
-        [ReferenceMd.Department, ReferenceMd.IsActive, MeasureGroupIdentifier, columnSubTotal],
+        [ReferenceMd.Department.Default, ReferenceMd.IsActive, MeasureGroupIdentifier, columnSubTotal],
     ),
 );
 // Row total + column subtotal
@@ -118,11 +120,13 @@ const Test13 = defSetDimensions(
         bucketSetTotals(newBucket("attribute", ReferenceMd.Account.Name, ReferenceMd.ForecastCategory), [
             total,
         ]),
-        bucketSetTotals(newBucket("columns", ReferenceMd.Department, ReferenceMd.IsActive), [columnSubTotal]),
+        bucketSetTotals(newBucket("columns", ReferenceMd.Department.Default, ReferenceMd.IsActive), [
+            columnSubTotal,
+        ]),
     ]),
     newTwoDimensional(
         [ReferenceMd.Account.Name, ReferenceMd.ForecastCategory, subtotal],
-        [ReferenceMd.Department, ReferenceMd.IsActive, MeasureGroupIdentifier, columnSubTotal],
+        [ReferenceMd.Department.Default, ReferenceMd.IsActive, MeasureGroupIdentifier, columnSubTotal],
     ),
 );
 // Column total + row subtotal
@@ -132,11 +136,13 @@ const Test14 = defSetDimensions(
         bucketSetTotals(newBucket("attribute", ReferenceMd.Account.Name, ReferenceMd.ForecastCategory), [
             subtotal,
         ]),
-        bucketSetTotals(newBucket("columns", ReferenceMd.Department, ReferenceMd.IsActive), [columnTotal]),
+        bucketSetTotals(newBucket("columns", ReferenceMd.Department.Default, ReferenceMd.IsActive), [
+            columnTotal,
+        ]),
     ]),
     newTwoDimensional(
         [ReferenceMd.Account.Name, ReferenceMd.ForecastCategory, subtotal],
-        [ReferenceMd.Department, ReferenceMd.IsActive, MeasureGroupIdentifier, columnSubTotal],
+        [ReferenceMd.Department.Default, ReferenceMd.IsActive, MeasureGroupIdentifier, columnSubTotal],
     ),
 );
 
@@ -151,20 +157,20 @@ const Test16 = defSetDimensions(
     newDefForBuckets("test", [
         newBucket("measure", ReferenceMd.WinRate, ReferenceMd.Won),
         newBucket("attribute", ReferenceMd.Account.Name, ReferenceMd.ForecastCategory),
-        bucketSetTotals(newBucket("columns", ReferenceMd.Department, ReferenceMd.IsActive), [
-            newTotal("sum", ReferenceMd.Won, ReferenceMd.Department),
-            newTotal("sum", ReferenceMd.WinRate, ReferenceMd.Department),
+        bucketSetTotals(newBucket("columns", ReferenceMd.Department.Default, ReferenceMd.IsActive), [
+            newTotal("sum", ReferenceMd.Won, ReferenceMd.Department.Default),
+            newTotal("sum", ReferenceMd.WinRate, ReferenceMd.Department.Default),
         ]),
     ]),
     newTwoDimensional(
         [ReferenceMd.Account.Name, ReferenceMd.ForecastCategory],
         [
-            ReferenceMd.Department,
+            ReferenceMd.Department.Default,
             ReferenceMd.IsActive,
             MeasureGroupIdentifier,
             // it should be ordered as WinRate, Won in the snapshot
-            newTotal("sum", ReferenceMd.Won, ReferenceMd.Department),
-            newTotal("sum", ReferenceMd.WinRate, ReferenceMd.Department),
+            newTotal("sum", ReferenceMd.Won, ReferenceMd.Department.Default),
+            newTotal("sum", ReferenceMd.WinRate, ReferenceMd.Department.Default),
         ],
     ),
 );

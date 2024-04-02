@@ -9,9 +9,9 @@ import { DashboardMenu } from "../../tools/dashboardMenu";
 
 const editMode = new EditMode();
 const widget = new Widget(1);
-const addedWidget = new Widget(2);
+const addedWidget = new Widget(0);
 const header = new DashboardHeader();
-const layoutRow = new LayoutRow(1);
+const layoutRow = new LayoutRow(0);
 const dashboardMenu = new DashboardMenu();
 
 describe("RichText - isolated", { tags: ["pre-merge_isolated_tiger"] }, () => {
@@ -60,7 +60,7 @@ describe("RichText - integrated", { tags: ["checklist_integrated_tiger"] }, () =
     it("should add rich text widget and save it", () => {
         editMode.edit();
 
-        layoutRow.scrollIntoView().addRichTextWidget();
+        layoutRow.addRichTextWidget();
         const addedRichText = addedWidget.getRichText();
         addedRichText.exist();
         addedRichText.updateContent("# Title 2\n\n![Image2](/image2.png)").confirmChanges();

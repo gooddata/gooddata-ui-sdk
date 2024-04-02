@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/plugin-toolkit",
-    "version": "9.10.0-alpha.9",
+    "version": "10.0.0-alpha.13",
     "author": "GoodData",
     "description": "GoodData Set of Tools for working with Plugins",
     "repository": {
@@ -48,7 +48,6 @@
         "@babel/core": "^7.23.5",
         "@babel/preset-env": "^7.23.5",
         "@babel/preset-typescript": "^7.23.3",
-        "@gooddata/sdk-backend-bear": "workspace:*",
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-backend-tiger": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",

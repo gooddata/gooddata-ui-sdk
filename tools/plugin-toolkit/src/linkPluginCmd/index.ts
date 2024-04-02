@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { ActionOptions } from "../_base/types.js";
 import { logInfo, logSuccess, logWarn } from "../_base/terminal/loggers.js";
 import { getLinkCmdActionConfig, LinkCmdActionConfig } from "./actionConfig.js";
@@ -7,23 +7,10 @@ import ora from "ora";
 import { genericErrorReporter } from "../_base/utils.js";
 
 function printUseConfigSummary(config: LinkCmdActionConfig) {
-    const {
-        backend,
-        hostname,
-        workspace,
-        dashboard,
-        identifier,
-        parameters,
-        withParameters,
-        credentials: { username },
-    } = config;
+    const { hostname, workspace, dashboard, identifier, parameters, withParameters } = config;
 
     logInfo("Everything looks valid. Going to link plugin on the dashboard.");
-    logInfo(`  Hostname    : ${hostname}   (${backend === "bear" ? "GoodData platform" : "GoodData.CN"})`);
-
-    if (backend === "bear") {
-        logInfo(`  Username    : ${username}`);
-    }
+    logInfo(`  Hostname    : ${hostname}   (${"GoodData.CN"})`);
 
     logInfo(`  Workspace   : ${workspace}`);
     logInfo(`  Dashboard   : ${dashboard}`);

@@ -85,7 +85,7 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     filterCountMetricTitle: { id: "attributesDropdown.valuesLimiting.countAttribute" },
     filterSumMetricTitle: { id: "attributesDropdown.valuesLimiting.sumFact" },
     filterUnknownItemTitle: { id: "attributesDropdown.valuesLimiting.unknownItem" },
-    filterDependentDateFilterTitle: { id: "attributesDropdown.valuesLimiting.depedentDateFilterTitle" },
+    filterCommonDateFilterTitle: { id: "attributesDropdown.valuesLimiting.commonDateFilterTitle" },
 
     drillToDashboardConfig: { id: "configurationPanel.drillConfig.drillIntoDashboard" },
     drillIntoInsight: { id: "configurationPanel.drillConfig.drillIntoInsight" },

@@ -701,7 +701,8 @@
                             "GDSTORAGE",
                             "CLICKHOUSE",
                             "MYSQL",
-                            "MARIADB"
+                            "MARIADB",
+                            "ORACLE"
                         ]
                     },
                     "url": {

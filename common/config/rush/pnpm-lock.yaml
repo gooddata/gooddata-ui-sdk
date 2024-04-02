@@ -483,7 +483,7 @@ importers:
         version: 4.15.1(webpack-cli@4.10.0)(webpack@5.89.0)
 
   ../../examples/sdk-interactive-examples:
-    dependencies:
+    devDependencies:
       validate-npm-package-name:
         specifier: ^5.0.0
         version: 5.0.0
@@ -493,9 +493,6 @@ importers:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
         version: link:../../../libs/sdk-backend-base
-      '@gooddata/sdk-backend-bear':
-        specifier: workspace:*
-        version: link:../../../libs/sdk-backend-bear
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../../../libs/sdk-backend-spi
@@ -572,9 +569,6 @@ importers:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
         version: link:../../../../libs/sdk-backend-base
-      '@gooddata/sdk-backend-bear':
-        specifier: workspace:*
-        version: link:../../../../libs/sdk-backend-bear
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../../../../libs/sdk-backend-spi
@@ -651,9 +645,6 @@ importers:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
         version: link:../../../../libs/sdk-backend-base
-      '@gooddata/sdk-backend-bear':
-        specifier: workspace:*
-        version: link:../../../../libs/sdk-backend-bear
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../../../../libs/sdk-backend-spi
@@ -730,9 +721,6 @@ importers:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
         version: link:../../../../libs/sdk-backend-base
-      '@gooddata/sdk-backend-bear':
-        specifier: workspace:*
-        version: link:../../../../libs/sdk-backend-bear
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../../../../libs/sdk-backend-spi
@@ -809,9 +797,6 @@ importers:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
         version: link:../../../../libs/sdk-backend-base
-      '@gooddata/sdk-backend-bear':
-        specifier: workspace:*
-        version: link:../../../../libs/sdk-backend-bear
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../../../../libs/sdk-backend-spi
@@ -888,9 +873,6 @@ importers:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
         version: link:../../../../libs/sdk-backend-base
-      '@gooddata/sdk-backend-bear':
-        specifier: workspace:*
-        version: link:../../../../libs/sdk-backend-bear
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../../../../libs/sdk-backend-spi
@@ -967,9 +949,6 @@ importers:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
         version: link:../../../../libs/sdk-backend-base
-      '@gooddata/sdk-backend-bear':
-        specifier: workspace:*
-        version: link:../../../../libs/sdk-backend-bear
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../../../../libs/sdk-backend-spi
@@ -1046,9 +1025,6 @@ importers:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
         version: link:../../../../libs/sdk-backend-base
-      '@gooddata/sdk-backend-bear':
-        specifier: workspace:*
-        version: link:../../../../libs/sdk-backend-bear
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../../../../libs/sdk-backend-spi
@@ -1125,9 +1101,6 @@ importers:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
         version: link:../../../../libs/sdk-backend-base
-      '@gooddata/sdk-backend-bear':
-        specifier: workspace:*
-        version: link:../../../../libs/sdk-backend-bear
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../../../../libs/sdk-backend-spi
@@ -1213,9 +1186,6 @@ importers:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
         version: link:../../../../libs/sdk-backend-base
-      '@gooddata/sdk-backend-bear':
-        specifier: workspace:*
-        version: link:../../../../libs/sdk-backend-bear
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../../../../libs/sdk-backend-spi
@@ -1292,9 +1262,6 @@ importers:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
         version: link:../../../../libs/sdk-backend-base
-      '@gooddata/sdk-backend-bear':
-        specifier: workspace:*
-        version: link:../../../../libs/sdk-backend-bear
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../../../../libs/sdk-backend-spi
@@ -1371,9 +1338,6 @@ importers:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
         version: link:../../../../libs/sdk-backend-base
-      '@gooddata/sdk-backend-bear':
-        specifier: workspace:*
-        version: link:../../../../libs/sdk-backend-bear
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../../../../libs/sdk-backend-spi
@@ -1450,9 +1414,6 @@ importers:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
         version: link:../../../../libs/sdk-backend-base
-      '@gooddata/sdk-backend-bear':
-        specifier: workspace:*
-        version: link:../../../../libs/sdk-backend-bear
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../../../../libs/sdk-backend-spi
@@ -2096,9 +2057,6 @@ importers:
         specifier: ^8.3.2
         version: 8.3.2
     devDependencies:
-      '@gooddata/api-model-bear':
-        specifier: workspace:*
-        version: link:../api-model-bear
       '@gooddata/eslint-config':
         specifier: ^4.1.0
         version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
@@ -2294,8 +2252,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/fixtures':
-        specifier: 1.32.0
-        version: 1.32.0
+        specifier: 1.32.15
+        version: 1.32.15
       '@gooddata/reference-workspace':
         specifier: workspace:*
         version: link:../../tools/reference-workspace
@@ -2870,9 +2828,15 @@ importers:
       highcharts:
         specifier: 9.3.0
         version: 9.3.0
+      highcharts-react-official:
+        specifier: 3.2.1
+        version: 3.2.1(highcharts@9.3.0)(react@18.2.0)
       hoist-non-react-statics:
         specifier: ^3.3.0
         version: 3.3.2
+      json-stable-stringify:
+        specifier: ^1.0.1
+        version: 1.1.0
       lodash:
         specifier: ^4.17.19
         version: 4.17.21
@@ -2919,6 +2883,9 @@ importers:
       '@types/hoist-non-react-statics':
         specifier: ^3.3.1
         version: 3.3.5
+      '@types/json-stable-stringify':
+        specifier: ^1.0.32
+        version: 1.0.36
       '@types/lodash':
         specifier: ^4.14.202
         version: 4.14.202
@@ -4799,8 +4766,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/fixtures':
-        specifier: 1.32.0
-        version: 1.32.0
+        specifier: 1.32.15
+        version: 1.32.15
       '@gooddata/sdk-backend-bear':
         specifier: workspace:*
         version: link:../sdk-backend-bear
@@ -5322,12 +5289,6 @@ importers:
 
   ../../libs/sdk-ui-web-components:
     dependencies:
-      '@gooddata/api-client-bear':
-        specifier: workspace:*
-        version: link:../api-client-bear
-      '@gooddata/sdk-backend-bear':
-        specifier: workspace:*
-        version: link:../sdk-backend-bear
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../sdk-backend-spi
@@ -6148,9 +6109,6 @@ importers:
       '@gooddata/plugin-toolkit':
         specifier: workspace:*
         version: link:../plugin-toolkit
-      '@gooddata/sdk-backend-bear':
-        specifier: workspace:*
-        version: link:../../libs/sdk-backend-bear
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../../libs/sdk-backend-spi
@@ -6574,15 +6532,12 @@ importers:
 
   ../../tools/mock-handling:
     dependencies:
-      '@gooddata/api-model-bear':
-        specifier: workspace:*
-        version: link:../../libs/api-model-bear
-      '@gooddata/sdk-backend-bear':
-        specifier: workspace:*
-        version: link:../../libs/sdk-backend-bear
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../../libs/sdk-backend-spi
+      '@gooddata/sdk-backend-tiger':
+        specifier: workspace:*
+        version: link:../../libs/sdk-backend-tiger
       '@gooddata/sdk-model':
         specifier: workspace:*
         version: link:../../libs/sdk-model
@@ -6704,9 +6659,6 @@ importers:
       '@babel/preset-typescript':
         specifier: ^7.23.3
         version: 7.23.3(@babel/core@7.23.6)
-      '@gooddata/sdk-backend-bear':
-        specifier: workspace:*
-        version: link:../../libs/sdk-backend-bear
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../../libs/sdk-backend-spi
@@ -6846,9 +6798,6 @@ importers:
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
         version: link:../../libs/sdk-backend-base
-      '@gooddata/sdk-backend-bear':
-        specifier: workspace:*
-        version: link:../../libs/sdk-backend-bear
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../../libs/sdk-backend-spi
@@ -7080,6 +7029,9 @@ importers:
       '@gooddata/eslint-config':
         specifier: ^4.1.0
         version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+      '@gooddata/fixtures':
+        specifier: 1.32.15
+        version: 1.32.15
       '@types/lodash':
         specifier: ^4.14.202
         version: 4.14.202
@@ -7095,6 +7047,9 @@ importers:
       dependency-cruiser:
         specifier: ^13.0.3
         version: 13.1.5
+      dotenv:
+        specifier: 16.0.3
+        version: 16.0.3
       eslint:
         specifier: ^8.25.0
         version: 8.55.0
@@ -9324,8 +9279,8 @@ packages:
       - typescript
     dev: true
 
-  /@gooddata/fixtures@1.32.0:
-    resolution: {integrity: sha512-aNJxo/0XyLZr8DuAFxVdK7PlCUSR74E4yzEMGPkoBKfWeamdphOXDFdS6cxPBo1+Ef44kXnRcmAEIjrsAwcxOg==}
+  /@gooddata/fixtures@1.32.15:
+    resolution: {integrity: sha512-/VenNKJyZADppYS6QqXSmnhqAv+XhCZGHg50AvXna+YfXOplCNzKxv9CRqsyh+sUd8LZbYwnYlI3XA6X+t0sHQ==}
     dependencies:
       '@gooddata/api-client-bear': 8.12.3
       '@gooddata/api-client-tiger': 8.12.3
@@ -13437,7 +13392,6 @@ packages:
     resolution: {integrity: sha512-qwVpFEHNfhYJIzNRBvd2C1kyo6jz3ZSMPyyuR47OPdiKWlbYnZNyDWuyR175qDnAJLiCo5fBBqPb3RiXgWlkOQ==}
     dependencies:
       semver: 7.5.4
-    dev: false
 
   /bytes@3.0.0:
     resolution: {integrity: sha512-pMhOfFDPiv9t5jjIXkHosWmkSyQbvsgEVNkz0ERHbuLh2T/7j4Mqqpz523Fe8MVY89KC6Sh/QfS2sM+SjgFDcw==}
@@ -21603,6 +21557,7 @@ packages:
 
   /remove-trailing-separator@1.1.0:
     resolution: {integrity: sha512-/hS+Y0u3aOfIETiaiirUFwDBDzmXPvO+jAfKTitUngIPzdKc6Z0LoFjM/CK5PL4C+eKwHohlHAb6H0VFfmmUsw==}
+    requiresBuild: true
     dev: true
 
   /renderkid@3.0.0:
@@ -23981,7 +23936,6 @@ packages:
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
     dependencies:
       builtins: 5.0.1
-    dev: false
 
   /validator@13.11.0:
     resolution: {integrity: sha512-Ii+sehpSfZy+At5nPdnyMhx78fEoPDkR2XW/zimHEL3MyGJQOCQ7WeP20jPYRz7ZCpcKLB21NxuXHF3bxjStBQ==}

@@ -24,6 +24,13 @@ export const selectBackendCapabilities: DashboardSelector<IBackendCapabilities> 
 );
 
 /**
+ * This selector returns capability if parent child filtering is enabled.
+ *
+ * @public
+ */
+export const selectSupportsElementsQueryParentFiltering: DashboardSelector<boolean> = () => true;
+
+/**
  * Selector for {@link @gooddata/sdk-backend-spi#IBackendCapabilities.supportsKpiWidget}
  *
  * @internal

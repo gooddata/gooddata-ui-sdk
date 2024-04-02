@@ -1,0 +1,10 @@
+{
+    "attribute": { "identifier": "attr.f_product.product", "type": "attribute" },
+    "description": "",
+    "id": "label.f_product.product.name",
+    "isDefault": true,
+    "ref": { "identifier": "label.f_product.product.name", "type": "displayForm" },
+    "title": "Product Name",
+    "type": "displayForm",
+    "uri": "https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.name"
+}

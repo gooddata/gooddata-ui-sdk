@@ -321,7 +321,7 @@ export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
 export type DatasetLoadStatus = "RUNNING" | "OK" | "ERROR" | "CANCELLED" | "ERROR_METADATA" | "REFRESHING";
 
 // @alpha (undocumented)
-export type DataSourceType = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "MYSQL" | "MARIADB";
+export type DataSourceType = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "MYSQL" | "MARIADB" | "ORACLE";
 
 // @public
 export type DataValue = null | string | number;
@@ -478,6 +478,15 @@ export function filterObjRef(filter: IFilter): ObjRef | undefined;
 // @internal
 export function getAttributeElementsItems(attributeElements: IAttributeElements): Array<string | null>;
 
+// @internal (undocumented)
+export const getHierarchyAttributes: (hierarchy: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy) => ObjRef[];
+
+// @internal (undocumented)
+export const getHierarchyRef: (hierarchy: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy) => ObjRef;
+
+// @internal (undocumented)
+export const getHierarchyTitle: (hierarchy: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy) => string;
+
 // @alpha
 export function getSelectedElementsCount(filter: IDashboardAttributeFilter): number;
 
@@ -593,6 +602,7 @@ export interface IAttributeDescriptorBody {
     formOf: IAttributeHeaderFormOf;
     granularity?: string;
     identifier: string;
+    labelType?: AttributeDisplayFormType;
     localIdentifier: string;
     name: string;
     ref: ObjRef;
@@ -775,10 +785,10 @@ export interface ICatalogDateAttribute {
 
 // @internal (undocumented)
 export interface ICatalogDateAttributeHierarchy {
-    // (undocumented)
     attributes: ObjRef[];
-    // (undocumented)
     dateDatasetRef: ObjRef;
+    // (undocumented)
+    ref: ObjRef;
     // (undocumented)
     templateId: string;
     // (undocumented)
@@ -932,10 +942,17 @@ export interface IDashboardAttributeFilter {
         attributeElements: IAttributeElements;
         localIdentifier?: string;
         filterElementsBy?: IDashboardAttributeFilterParent[];
+        filterElementsByDate?: IDashboardAttributeFilterByDate[];
         validateElementsBy?: ObjRef[];
         title?: string;
         selectionMode?: DashboardAttributeFilterSelectionMode;
     };
+}
+
+// @beta
+export interface IDashboardAttributeFilterByDate {
+    filterLocalIdentifier: string;
+    isCommonDate: boolean;
 }
 
 // @alpha
@@ -2510,6 +2527,9 @@ export function isDateFilter(obj: unknown): obj is IDateFilter;
 // @alpha
 export const isDateFilterGranularity: (obj: unknown) => obj is DateFilterGranularity;
 
+// @alpha
+export function isDateHierarchyReference(obj: unknown): obj is IDateHierarchyReference;
+
 // @public
 export function isDimension(obj: unknown): obj is IDimension;
 
@@ -2587,6 +2607,7 @@ export interface ISettings {
     enableKPIDashboardSaveAsNew?: boolean;
     enableKPIDashboardSchedule?: boolean;
     enableKPIDashboardScheduleRecipients?: boolean;
+    enableMultipleCSVs?: boolean;
     enableMultipleDateFilters?: boolean;
     enableMultipleDates?: boolean;
     enableNewHeadline?: boolean;

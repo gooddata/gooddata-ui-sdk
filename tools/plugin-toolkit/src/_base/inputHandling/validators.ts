@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import axios, { AxiosError } from "axios";
 import validateNpmPackageName from "validate-npm-package-name";
 import url from "url";
@@ -12,7 +12,7 @@ import {
     IAnalyticalWorkspace,
 } from "@gooddata/sdk-backend-spi";
 import { idRef, IDashboardPlugin } from "@gooddata/sdk-model";
-import { InputValidationError, TargetBackendType } from "../types.js";
+import { InputValidationError } from "../types.js";
 import { convertToPluginEntrypoint, extractRootCause } from "../utils.js";
 
 export type InputValidator<T = string> = (value: T) => boolean | string;
@@ -44,17 +44,6 @@ export function pluginNameValidator(value: string): boolean | string {
 }
 
 /**
- * Validates that value is either 'bear' or 'tiger'.
- */
-export function backendTypeValidator(value: string): boolean | string {
-    if (value === "bear" || value === "tiger") {
-        return true;
-    }
-
-    return "Invalid backend type. Specify 'bear' for GoodData Platform or 'tiger' for GoodData.CN.";
-}
-
-/**
  * Validates that value is either 'js' or 'ts'.
  */
 export function languageValidator(value: string): boolean | string {
@@ -81,13 +70,10 @@ export function packageManagerValidator(value: string): boolean | string {
 //
 
 /**
- * Factory for hostname validators. Only validates that URL is syntactically correct. Validation depends on
- * the backend type:
- *
- * -  bear backend: only allow https protocol
+ * Factory for hostname validators. Only validates that URL is syntactically correct.
  * -  tiger backend: allows either http or https
  */
-export function createHostnameValidator(backend: TargetBackendType): InputValidator {
+export function createHostnameValidator(): InputValidator {
     const InvalidHostnameMessage =
         "Invalid hostname. Please provide a valid hostname in format [[https|http]://]host[:port]";
 
@@ -99,14 +85,8 @@ export function createHostnameValidator(backend: TargetBackendType): InputValida
         try {
             const { protocol } = url.parse(input);
 
-            if (backend === "bear") {
-                if (protocol && protocol !== "https:") {
-                    return "Provide hostname with https protocol or no protocol at all. ";
-                }
-            } else {
-                if (protocol && !includes(["http:", "https:"], protocol)) {
-                    return "Provide hostname with http or https protocol or no protocol at all.";
-                }
+            if (protocol && !includes(["http:", "https:"], protocol)) {
+                return "Provide hostname with http or https protocol or no protocol at all.";
             }
 
             // this will throw in case there is another problem with the URL

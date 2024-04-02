@@ -5,9 +5,10 @@ import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
     IAttributeMetadataObject,
     IMeasure,
-    IRelativeDateFilter,
     SortDirection,
     ObjRef,
+    IRelativeDateFilter,
+    IAbsoluteDateFilter,
 } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
@@ -95,10 +96,9 @@ const setLimitingValidationItems: AttributeFilterReducer<PayloadAction<{ validat
     state.elements.currentOptions.limitingValidationItems = action.payload.validateBy;
 };
 
-const setLimitingDateFilters: AttributeFilterReducer<PayloadAction<{ filters: IRelativeDateFilter[] }>> = (
-    state,
-    action,
-) => {
+const setLimitingDateFilters: AttributeFilterReducer<
+    PayloadAction<{ filters: IRelativeDateFilter[] | IAbsoluteDateFilter[] }>
+> = (state, action) => {
     state.elements.currentOptions.limitingDateFilters = action.payload.filters;
 };
 

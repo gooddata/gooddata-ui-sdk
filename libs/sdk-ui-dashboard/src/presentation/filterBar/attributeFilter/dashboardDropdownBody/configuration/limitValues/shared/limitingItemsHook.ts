@@ -1,6 +1,8 @@
 // (C) 2024 GoodData Corporation
 
 import { useMemo } from "react";
+import { IntlShape } from "react-intl";
+import { invariant } from "ts-invariant";
 import {
     ObjRef,
     ICatalogAttribute,
@@ -10,6 +12,8 @@ import {
     ICatalogDateDataset,
     IDashboardDateFilterConfigItem,
     IDashboardDateFilterConfig,
+    IDashboardDateFilter,
+    isUriRef,
 } from "@gooddata/sdk-model";
 
 import { ValuesLimitingItem } from "../../../../types.js";
@@ -27,13 +31,13 @@ import {
     selectDateFilterConfigsOverrides,
 } from "../../../../../../../model/index.js";
 import { ObjRefMap } from "../../../../../../../_staging/metadata/objRefMap.js";
-import { IntlShape } from "react-intl";
 
 export interface IValuesLimitingItemWithTitle {
     title?: string;
     item: ValuesLimitingItem;
     isDisabled?: boolean;
     type?: string;
+    isDisabledDateFilterTooltip?: boolean;
 }
 
 const findAttributeByLabel = (
@@ -136,9 +140,17 @@ export const useLimitingItems = (
     validParentFilters: ObjRef[],
     validateElementsBy: ObjRef[],
     metricsAndFacts: IMetricsAndFacts,
+    dependentDateFilters: IDashboardDependentDateFilter[],
+    availableDatasets: ICatalogDateDataset[],
+    isEnabledKDAttributeFilterDatesValidation: boolean,
+    isSelected: boolean,
+    intl: IntlShape,
 ): IValuesLimitingItemWithTitle[] => {
     const attributes = useDashboardSelector(selectCatalogAttributes);
     const labels = useDashboardSelector(selectAllCatalogDisplayFormsMap);
+    const dateDataSetsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
+    const filterConfig = useDashboardSelector(selectDateFilterConfigOverrides);
+    const filterConfigByDimension = useDashboardSelector(selectDateFilterConfigsOverrides);
 
     return useMemo(() => {
         const selectedParentFilterItems: IValuesLimitingItemWithTitle[] = mapParentFilters(
@@ -153,8 +165,38 @@ export const useLimitingItems = (
                 title: findTitleForCatalogItem(item, metricsAndFacts, attributes),
                 item,
             })) ?? [];
-        return [...selectedParentFilterItems, ...validationItems].sort(sortByTypeAndTitle);
-    }, [parentFilters, validParentFilters, validateElementsBy, attributes, labels, metricsAndFacts]);
+
+        let dependentDateFilterItems: IValuesLimitingItemWithTitle[] = [];
+        if (isEnabledKDAttributeFilterDatesValidation) {
+            dependentDateFilterItems = mapDependentDateFilters(
+                dateDataSetsMap,
+                dependentDateFilters,
+                availableDatasets,
+                filterConfigByDimension,
+                isSelected,
+                intl,
+                filterConfig,
+            );
+        }
+        return [...selectedParentFilterItems, ...validationItems, ...dependentDateFilterItems].sort(
+            sortByTypeAndTitle,
+        );
+    }, [
+        parentFilters,
+        dateDataSetsMap,
+        validParentFilters,
+        validateElementsBy,
+        attributes,
+        labels,
+        metricsAndFacts,
+        isEnabledKDAttributeFilterDatesValidation,
+        dependentDateFilters,
+        filterConfigByDimension,
+        intl,
+        filterConfig,
+        availableDatasets,
+        isSelected,
+    ]);
 };
 
 export const useSearchableLimitingItems = (
@@ -188,6 +230,7 @@ export const useFilterItems = (
     validParentFilters: ObjRef[],
     dependentDateFilters: IDashboardDependentDateFilter[],
     availableDatasets: ICatalogDateDataset[],
+    dependentCommonDateFilter: IDashboardDateFilter,
     isEnabledKDAttributeFilterDatesValidation: boolean,
     isSelected: boolean,
     intl: IntlShape,
@@ -218,7 +261,16 @@ export const useFilterItems = (
                 filterConfig,
             );
 
-            parentFilterItems = [...parentFilterItems, ...dependentDateFilterItems];
+            const commonDateFilter: IValuesLimitingItemWithTitle[] = [
+                {
+                    title: filterConfig?.filterName ?? intl.formatMessage({ id: "dateFilterDropdown.title" }),
+                    item: parseCommonDateFilter(dependentCommonDateFilter),
+                    isDisabled: false,
+                    type: "commonDate",
+                },
+            ];
+
+            parentFilterItems = [...parentFilterItems, ...dependentDateFilterItems, ...commonDateFilter];
         }
 
         return parentFilterItems;
@@ -250,24 +302,29 @@ const mapDependentDateFilters = (
     dependentDateFilters
         .filter((item) => item.isSelected === isSelected)
         .map((item) => {
-            if (item.localIdentifier === "commonDate") {
+            const dateDataSet = item.dataSet ? dateDataSetsMap.get(item.dataSet) : "";
+            const dataSetTitle = dateDataSet ? dateDataSet.dataSet.title : "";
+
+            const title = getDatasetTitle(item.dataSet, dataSetTitle, filterConfigByDimension, filterConfig);
+
+            if (item.isCommonDate) {
+                const dateFilterTitle =
+                    filterConfig?.filterName ?? intl.formatMessage({ id: "dateFilterDropdown.title" });
+
                 return {
-                    title: intl.formatMessage({ id: "dateFilterDropdown.title" }),
+                    title: intl.formatMessage(
+                        { id: "attributesDropdown.valuesLimiting.commonDateFilterTitle" },
+                        { dateFilterTitle, dataSetTitle },
+                    ),
                     item,
                     isDisabled: false,
                     type: "commonDate",
                 };
             }
-
-            const dateDataSet = dateDataSetsMap.get(item.dataSet!);
-            const dataSetTitle = dateDataSet ? dateDataSet.dataSet.title : "";
-
-            const title = getDatasetTitle(
-                item.dataSet,
-                dataSetTitle,
-                filterConfigByDimension,
-                intl,
-                filterConfig,
+            const isSelectedByCommonDateFilter = dependentDateFilters.some(
+                (dependentDateFilter) =>
+                    areObjRefsEqual(item.dataSet, dependentDateFilter.dataSet) &&
+                    !!dependentDateFilter.isCommonDate,
             );
 
             const isDisabled = !availableDatasets.some((availableDataset) =>
@@ -277,58 +334,87 @@ const mapDependentDateFilters = (
             return {
                 title,
                 item,
-                isDisabled,
+                isDisabled: isSelectedByCommonDateFilter || isDisabled,
+                isDisabledDateFilterTooltip: isSelectedByCommonDateFilter,
             };
         });
-
-// Specific date filters
-export const useDateFilterItemsWithDimensions = (
-    dependentDateFilters: IDashboardDependentDateFilter[],
-    availableDatasets: ICatalogDateDataset[],
-    isSelected: boolean,
-    intl: IntlShape,
-): IValuesLimitingItemWithTitle[] => {
-    const dateDataSetsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
-    const filterConfig = useDashboardSelector(selectDateFilterConfigOverrides);
-    const filterConfigByDimension = useDashboardSelector(selectDateFilterConfigsOverrides);
-
-    return useMemo(() => {
-        return mapDependentDateFilters(
-            dateDataSetsMap,
-            dependentDateFilters,
-            availableDatasets,
-            filterConfigByDimension,
-            isSelected,
-            intl,
-            filterConfig,
-        );
-    }, [
-        dateDataSetsMap,
-        dependentDateFilters,
-        availableDatasets,
-        filterConfigByDimension,
-        isSelected,
-        filterConfig,
-        intl,
-    ]);
-};
 
 const getDatasetTitle = (
     dateDataSet: ObjRef | undefined,
     defaultDateFilterTitle: string,
     filterConfigByDimension: IDashboardDateFilterConfigItem[],
-    intl: IntlShape,
     filterConfig?: IDashboardDateFilterConfig,
 ) => {
     const usedConfig = dateDataSet
         ? filterConfigByDimension.find((config) => areObjRefsEqual(config.dateDataSet, dateDataSet))?.config
         : filterConfig;
 
-    const dataSetTitle =
-        !usedConfig || usedConfig?.filterName === "" ? defaultDateFilterTitle : usedConfig?.filterName;
+    return !usedConfig || usedConfig?.filterName === "" ? defaultDateFilterTitle : usedConfig?.filterName;
+};
 
-    return intl.formatMessage(
-        { id: "attributesDropdown.valuesLimiting.depedentDateFilterTitle" },
-        { dataSetTitle },
-    );
+export const useCommonDateItems = (
+    availableDatasets: ICatalogDateDataset[],
+    dependentCommonDateFilter: IDashboardDateFilter,
+    dependentDateFilters?: IDashboardDependentDateFilter[],
+): IValuesLimitingItemWithTitle[] => {
+    return useMemo(() => {
+        return availableDatasets
+            .filter(
+                (availableDataset) =>
+                    !dependentDateFilters?.some(
+                        (item) =>
+                            areObjRefsEqual(availableDataset.dataSet.ref, item.dataSet) &&
+                            !!item.isCommonDate,
+                    ),
+            )
+            .map((dateDataSet) => {
+                const isDisabled = (dependentDateFilters ?? []).some(
+                    (item) =>
+                        areObjRefsEqual(dateDataSet.dataSet.ref, item.dataSet) &&
+                        !item.isCommonDate &&
+                        !!item.isSelected,
+                );
+                return {
+                    title: dateDataSet.dataSet.title,
+                    item: parseCommonDateFilter(dependentCommonDateFilter, dateDataSet.dataSet.ref),
+                    isDisabled,
+                    type: "commonDate",
+                };
+            });
+    }, [availableDatasets, dependentCommonDateFilter, dependentDateFilters]);
+};
+
+const parseCommonDateFilter = (
+    commonDate: IDashboardDateFilter,
+    dataSet?: ObjRef,
+): IDashboardDependentDateFilter => {
+    invariant(!isUriRef(dataSet));
+
+    return {
+        from: commonDate.dateFilter.from,
+        to: commonDate.dateFilter.to,
+        granularity: commonDate.dateFilter.granularity,
+        type: commonDate.dateFilter.type,
+        localIdentifier: dataSet?.identifier ?? "commonDate",
+        isSelected: true,
+        dataSet: dataSet,
+        isCommonDate: true,
+    };
+};
+
+export const useDependentDateFilterTitle = (
+    dataSet: ObjRef | undefined,
+    dependentDateFilters: IDashboardDependentDateFilter[],
+): string => {
+    const dateDataSetsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
+    const filterConfigByDimension = useDashboardSelector(selectDateFilterConfigsOverrides);
+
+    return useMemo(() => {
+        const dateFilter = dependentDateFilters.find((filter) => areObjRefsEqual(filter.dataSet, dataSet));
+
+        const dateDataSet = dateFilter?.dataSet ? dateDataSetsMap.get(dateFilter?.dataSet) : "";
+        const dataSetTitle = dateDataSet ? dateDataSet.dataSet.title : "";
+
+        return getDatasetTitle(dateFilter?.dataSet, dataSetTitle, filterConfigByDimension);
+    }, [dependentDateFilters, dataSet, filterConfigByDimension, dateDataSetsMap]);
 };

@@ -1,0 +1,27 @@
+{
+    "count": [1, 6],
+    "data": [[5099309.54, 6614222.47, 8269682.68, 2761931.26, 2664832.4, 2607118.07]],
+    "headerItems": [
+        [[{ "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } }]],
+        [
+            [
+                { "attributeHeaderItem": { "name": "CompuSci", "uri": "CompuSci" } },
+                { "attributeHeaderItem": { "name": "Educationly", "uri": "Educationly" } },
+                { "attributeHeaderItem": { "name": "Explorer", "uri": "Explorer" } },
+                { "attributeHeaderItem": { "name": "Grammar Plus", "uri": "Grammar Plus" } },
+                { "attributeHeaderItem": { "name": "PhoenixSoft", "uri": "PhoenixSoft" } },
+                { "attributeHeaderItem": { "name": "WonderKid", "uri": "WonderKid" } }
+            ],
+            [
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } },
+                { "measureHeaderItem": { "name": "Amount", "order": 0 } }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [1, 6]
+}

@@ -25,7 +25,8 @@ exports[`addAttributeFilterHandler > should set the attribute filter in state wh
       "uris": [],
     },
     "displayForm": {
-      "uri": "/gdc/md/referenceworkspace/obj/1055",
+      "identifier": "label.f_product.product.name",
+      "type": "displayForm",
     },
     "filterElementsBy": undefined,
     "localIdentifier": Any<String>,

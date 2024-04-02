@@ -33,8 +33,10 @@ export interface IAnalyticalWorkspace {
     /**
      * Returns details about the analytical workspace.
      * Throws error in case the workspace does not exist.
+     *
+     * @param includeParentPrefixes - Optional parameter to include parent prefixes in the workspace descriptor.
      */
-    getDescriptor(): Promise<IWorkspaceDescriptor>;
+    getDescriptor(includeParentPrefixes?: boolean): Promise<IWorkspaceDescriptor>;
 
     /**
      * Returns parent analytical workspace when this workspace has a parent, undefined otherwise.

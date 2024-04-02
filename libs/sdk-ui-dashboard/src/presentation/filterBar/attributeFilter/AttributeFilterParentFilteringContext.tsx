@@ -135,8 +135,14 @@ export const AttributeFilterParentFilteringProvider: React.FC<
         onConfigurationClose: onParentFiltersClose,
     } = useParentsConfiguration(neighborFilters, currentFilter);
 
-    const { dependentDateFilters, onConfigurationClose: onDependentDateFiltersClose } =
-        useDependentDateFiltersConfiguration(neighborDateFilters, currentFilter, commonDateFilter);
+    const {
+        dependentDateFilters,
+        dependentCommonDateFilter,
+        onDependentDateFiltersSelect,
+        onConfigurationClose: onDependentDateFiltersClose,
+        onDependentDateFiltersChange,
+        onDependentDateFiltersConfigurationChanged,
+    } = useDependentDateFiltersConfiguration(neighborDateFilters, currentFilter, commonDateFilter);
 
     const {
         onDisplayFormSelect,
@@ -185,10 +191,12 @@ export const AttributeFilterParentFilteringProvider: React.FC<
         // the order is important to keep the app in valid state
         if (selectionMode === "single") {
             onParentFiltersChange();
+            onDependentDateFiltersChange();
             onSelectionModeChange();
         } else {
             onSelectionModeChange();
             onParentFiltersChange();
+            onDependentDateFiltersChange();
         }
         onDisplayFormChange();
         onTitleChange();
@@ -202,6 +210,7 @@ export const AttributeFilterParentFilteringProvider: React.FC<
         onSelectionModeChange,
         onModeChange,
         onLimitingItemsChange,
+        onDependentDateFiltersChange,
     ]);
 
     const onConfigurationClose = useCallback(() => {
@@ -264,6 +273,10 @@ export const AttributeFilterParentFilteringProvider: React.FC<
                 onLimitingItemsChange,
                 availableDatasetsForFilter,
                 dependentDateFilters,
+                dependentCommonDateFilter,
+                onDependentDateFiltersSelect,
+                onDependentDateFiltersChange,
+                onDependentDateFiltersConfigurationChanged,
             }}
         >
             {children}

@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import { beforeEach, describe, it, expect } from "vitest";
 import { DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import {
@@ -64,7 +64,7 @@ describe("change filter context selection handler", () => {
 
     describe("single select filter", () => {
         const DASHBOARD_FILTER_DISPLAY_FORM = {
-            uri: "/gdc/md/referenceworkspace/obj/1089",
+            identifier: "f_owner.region_id",
         };
 
         let Tester: DashboardTester;
@@ -154,10 +154,10 @@ describe("change filter context selection handler", () => {
 
     describe("apply selection from another attribute display form", () => {
         const DASHBOARD_FILTER_DISPLAY_FORM = {
-            identifier: "label.activity.id.subject",
+            identifier: "f_owner.region_id",
         };
         const FILTER_COMMAND_DISPLAY_FORM = {
-            identifier: "label.activity.id",
+            identifier: "f_owner.region_id.regionhyperlink",
         };
         2;
         describe("backend supportsElementUris", () => {
@@ -182,40 +182,6 @@ describe("change filter context selection handler", () => {
                 });
                 const { elements } = getFilters(Tester);
                 expect(elements[0].uris).toEqual([FILTER_ELEMENTS[1]]);
-            });
-        });
-
-        describe("backend not supportsElementUris", () => {
-            let Tester: DashboardTester;
-
-            beforeEach(async () => {
-                await preloadedTesterFactory(
-                    async (tester) => {
-                        Tester = tester;
-                        await addFilter(Tester, DASHBOARD_FILTER_DISPLAY_FORM);
-                        await changeFilterSelection(Tester, {
-                            displayForm: DASHBOARD_FILTER_DISPLAY_FORM,
-                            negativeSelection: false,
-                            elements: FIRST_ELEMENT,
-                        });
-                    },
-                    EmptyDashboardIdentifier,
-                    {
-                        customCapabilities: {
-                            supportsElementUris: false,
-                        },
-                    },
-                );
-            });
-
-            it("should not apply elements from command", async () => {
-                await changeFilterSelection(Tester, {
-                    displayForm: FILTER_COMMAND_DISPLAY_FORM,
-                    negativeSelection: false,
-                    elements: [FILTER_ELEMENTS[1]],
-                });
-                const { elements } = getFilters(Tester);
-                expect(elements[0].uris).toEqual(FIRST_ELEMENT);
             });
         });
     });

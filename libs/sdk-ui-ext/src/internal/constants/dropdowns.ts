@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { CalculateAs, ComparisonPositionValues } from "@gooddata/sdk-ui-charts";
 
 import { IDropdownItem } from "../interfaces/Dropdown.js";
@@ -64,6 +64,28 @@ export const dataLabelsDropdownItems: IDropdownItem[] = [
     { type: "separator" },
     { title: messages.dataLabelsShow.id, value: true },
     { title: messages.dataLabelsHide.id, value: false },
+];
+
+export const rowSizingDropdownItems: IDropdownItem[] = [
+    { title: messages.rowHeightSmall.id, value: "small" },
+    { title: messages.rowHeightMedium.id, value: "medium" },
+    { title: messages.rowHeightLarge.id, value: "large" },
+];
+
+export const verticalAlignmentDropdownItems: IDropdownItem[] = [
+    { title: messages.verticalAlignTop.id, value: "top" },
+    { title: messages.verticalAlignMiddle.id, value: "middle" },
+    { title: messages.verticalAlignBottom.id, value: "bottom" },
+];
+
+export const textWrappingDropdownItems: IDropdownItem[] = [
+    { title: messages.textWrappingClip.id, value: "clip" },
+    { title: messages.textWrappingWrap.id, value: "wrap" },
+];
+
+export const imageDropdownItems: IDropdownItem[] = [
+    { title: messages.imageFit.id, value: "fit" },
+    { title: messages.imageFill.id, value: "fill" },
 ];
 
 export const totalLabelsDropdownItems: IDropdownItem[] = [

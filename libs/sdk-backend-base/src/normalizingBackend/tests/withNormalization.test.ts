@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { describe, it, expect } from "vitest";
 import { withNormalization } from "../index.js";
 import { dummyBackend, dummyBackendEmptyData } from "../../dummyBackend/index.js";
@@ -16,7 +16,7 @@ describe("withNormalization", () => {
         ReferenceMdExt.CalculatedLost,
     ];
 
-    const attributes = [ReferenceMd.Region, ReferenceMd.Product.Name];
+    const attributes = [ReferenceMd.Region.Default, ReferenceMd.Product.Name];
 
     it("should keep transparency of exec definition", async () => {
         const backend = withNormalization(dummyBackendEmptyData());

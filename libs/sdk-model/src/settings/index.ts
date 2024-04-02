@@ -351,6 +351,11 @@ export interface ISettings {
      */
     enableKDAttributeFilterDatesValidation?: boolean;
 
+    /**
+     * Enable upload of multiple CSVs to data source and multiple CSV data sources.
+     */
+    enableMultipleCSVs?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

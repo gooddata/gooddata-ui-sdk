@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { ReferenceRecordings, ReferenceMd } from "@gooddata/reference-workspace";
 import { IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
@@ -21,7 +21,7 @@ import { vi, MockInstance, describe, beforeAll, afterAll, expect, it } from "vit
 
 describe("elementsUtils", () => {
     const elements: IAttributeElement[] =
-        ReferenceRecordings.Recordings.metadata.displayForms.df_label_product_id_name.elements;
+        ReferenceRecordings.Recordings.metadata.displayForms.df_label_f_product_product_name.elements;
 
     describe("resolveLimitingItems", () => {
         const attributeFilter = newPositiveAttributeFilter(ReferenceMd.Account.Name, ["foo"]);

@@ -60,13 +60,13 @@ exports[`measure converter > should return converted pop measure definition from
 {
   "definition": {
     "popMeasure": {
-      "measureIdentifier": "m_acugFHNJgsBy",
+      "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       "popAttribute": {
         "identifier": "attr",
       },
     },
   },
-  "localIdentifier": "m_m_acugFHNJgsBy_attr",
+  "localIdentifier": "m_m_e519fa2a_86c3_4e32_8313_0c03062348j3_attr",
 }
 `;
 
@@ -109,14 +109,14 @@ exports[`measure converter > should return custom format: pop measure 1`] = `
 {
   "definition": {
     "popMeasure": {
-      "measureIdentifier": "m_acugFHNJgsBy",
+      "measureIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
       "popAttribute": {
         "identifier": "attr",
       },
     },
   },
   "format": "custom #,##0,00",
-  "localIdentifier": "m_e70a9702_m_acugFHNJgsBy_attr",
+  "localIdentifier": "m_e70a9702_m_e519fa2a_86c3_4e32_8313_0c03062348j3_attr",
 }
 `;
 
@@ -205,11 +205,11 @@ exports[`measure converter > should return local identifier of measure 1`] = `
   "definition": {
     "measure": {
       "item": {
-        "identifier": "aangOxLSeztu",
+        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
       },
     },
   },
-  "localIdentifier": "m_aangOxLSeztu",
+  "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
 }
 `;
 

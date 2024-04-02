@@ -509,6 +509,33 @@ export const selectIsDeleteFilterButtonEnabled: DashboardSelector<boolean> = cre
 );
 
 /**
+ * Returns whether dependent filters are enabled.
+ *
+ * @internal
+ */
+export const selectIsKPIDashboardDependentFiltersEnabled: DashboardSelector<boolean> = () => true;
+
+/**
+ * Returns whether new KD dependent filters are enabled.
+ *
+ * @internal
+ */
+export const selectEnableKDDependentFilters: DashboardSelector<boolean> = () => true;
+
+/**
+ * Returns whether KD dependent filters are enabled.
+ *
+ * @internal
+ */
+export const selectIsKDDependentFiltersEnabled: DashboardSelector<boolean> = createSelector(
+    selectEnableKDDependentFilters,
+    selectIsKPIDashboardDependentFiltersEnabled,
+    (enableKDDependentFilters, isKPIDashboardDependentFiltersEnabled) => {
+        return enableKDDependentFilters || isKPIDashboardDependentFiltersEnabled;
+    },
+);
+
+/**
  * Returns whether choice of alternate display forms is enabled.
  *
  * @internal

@@ -1,9 +1,8 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 /**
  * This package provides a mock Analytical Backend implementation used mainly for testing.
  *
  * @remarks
- * For the GoodData platform version, see `@gooddata/sdk-backend-bear`.
  * For the GoodData Cloud and GoodData.CN version, see `@gooddata/sdk-backend-tiger`.
  *
  * @packageDocumentation

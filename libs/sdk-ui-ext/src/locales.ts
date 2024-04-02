@@ -64,6 +64,7 @@ export const titles: Record<string, MessageDescriptor> = defineMessages({
     columns_table: { id: "dashboard.bucket.columns_title.table" },
     attribute_repeater: { id: "dashboard.bucket.attribute_title.repeater" },
     columns_repeater: { id: "dashboard.bucket.columns_title.repeater" },
+    view_repeater: { id: "dashboard.bucket.view_title.repeater" },
 });
 
 export const subtitles: Record<string, MessageDescriptor> = defineMessages({
@@ -212,6 +213,20 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     columnHeaderPositionLeft: { id: "properties.column.headers.position.left" },
     interactions: { id: "properties.interactions.title" },
     interactionsDrillDown: { id: "properties.interactions.drillDown" },
+    rowHeight: { id: "properties.canvas.rowHeight" },
+    rowHeightSmall: { id: "properties.canvas.rowHeight.small" },
+    rowHeightMedium: { id: "properties.canvas.rowHeight.medium" },
+    rowHeightLarge: { id: "properties.canvas.rowHeight.large" },
+    verticalAlign: { id: "properties.canvas.verticalAlign" },
+    verticalAlignTop: { id: "properties.canvas.verticalAlign.top" },
+    verticalAlignMiddle: { id: "properties.canvas.verticalAlign.middle" },
+    verticalAlignBottom: { id: "properties.canvas.verticalAlign.bottom" },
+    textWrapping: { id: "properties.canvas.textWrapping" },
+    textWrappingClip: { id: "properties.canvas.textWrapping.clip" },
+    textWrappingWrap: { id: "properties.canvas.textWrapping.wrap" },
+    image: { id: "properties.canvas.image" },
+    imageFit: { id: "properties.canvas.image.fit" },
+    imageFill: { id: "properties.canvas.image.fill" },
 });
 
 export const comparisonMessages: Record<string, MessageDescriptor> = defineMessages({

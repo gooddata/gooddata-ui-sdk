@@ -32,6 +32,7 @@ import {
 } from "@gooddata/sdk-ui";
 import { IAvailableSortsGroup, ISortConfig } from "./SortConfig.js";
 import { IDefaultControlProperties } from "./ControlProperties.js";
+import { ChartInlineVisualizationType } from "@gooddata/sdk-ui-charts";
 
 export type RenderFunction = (component: any, target: Element) => void;
 
@@ -280,6 +281,19 @@ export interface IBucketUiConfig {
 
     // indicates that the visualization prefers date items in the bucket to have the same dimension
     preferSynchronizedDates?: boolean;
+
+    // Allows override hyperlink text for the hyperlink display form
+    // elements with custom static text. (e.g. "Show more" instead of url link text)
+    allowsStaticHyperLinkDisplayFormText?: boolean;
+
+    // Allows metric of the bucket to be displayed as a inline visualization
+    allowsInlineVisualizations?: true;
+
+    // Supported visualization types for inline visualization
+    supportedInlineVisualizationTypes?: ChartInlineVisualizationType[];
+
+    // Disables measure filters for the bucket.
+    disableMeasureFilters?: boolean;
 }
 
 export interface IBucketsUiConfig {

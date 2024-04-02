@@ -39,11 +39,12 @@ exports[`changeAttributeTitleHandler > should set the attribute title in state o
       "uris": [],
     },
     "displayForm": {
-      "uri": "/gdc/md/referenceworkspace/obj/1089",
+      "identifier": "f_owner.department_id",
+      "type": "displayForm",
     },
-    "filterElementsBy": [],
     "localIdentifier": Any<String>,
     "negativeSelection": true,
+    "selectionMode": "multi",
     "title": "Updated title",
   },
 }

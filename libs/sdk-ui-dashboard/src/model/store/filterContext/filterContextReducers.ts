@@ -26,6 +26,7 @@ import {
     IDashboardDateFilter,
     isDashboardCommonDateFilter,
     newAllTimeDashboardDateFilter,
+    IDashboardAttributeFilterByDate,
 } from "@gooddata/sdk-model";
 import { IParentWithConnectingAttributes } from "../../types/attributeFilterTypes.js";
 import { AddDateFilterPayload } from "../../commands/index.js";
@@ -381,6 +382,33 @@ const setAttributeFilterParents: FilterContextReducer<PayloadAction<ISetAttribut
 //
 //
 
+export interface ISetAttributeFilterDependentDateFiltersPayload {
+    readonly filterLocalId: string;
+    readonly dependentDateFilters: ReadonlyArray<IDashboardAttributeFilterByDate>;
+}
+
+const setAttributeFilterDependentDateFilters: FilterContextReducer<
+    PayloadAction<ISetAttributeFilterDependentDateFiltersPayload>
+> = (state, action) => {
+    invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
+
+    const { filterLocalId, dependentDateFilters } = action.payload;
+
+    const currentFilterIndex = state.filterContextDefinition.filters.findIndex(
+        (item) => isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
+    );
+
+    invariant(currentFilterIndex >= 0, "Attempt to set dependent date filter of a non-existing filter");
+
+    (
+        state.filterContextDefinition.filters[currentFilterIndex] as IDashboardAttributeFilter
+    ).attributeFilter.filterElementsByDate = [...dependentDateFilters];
+};
+
+//
+//
+//
+
 export interface IClearAttributeFiltersSelectionPayload {
     readonly filterLocalIds: string[];
 }
@@ -634,6 +662,7 @@ export const filterContextReducers = {
     moveDateFilter,
     updateAttributeFilterSelection,
     setAttributeFilterParents,
+    setAttributeFilterDependentDateFilters,
     clearAttributeFiltersSelection,
     upsertDateFilter,
     changeAttributeDisplayForm,

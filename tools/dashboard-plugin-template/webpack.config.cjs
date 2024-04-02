@@ -38,7 +38,7 @@ module.exports = (_env, argv) => {
     const protocol = new URL(effectiveBackendUrl).protocol;
 
     const proxy = {
-        "/gdc": {
+        "/api": {
             changeOrigin: true,
             cookieDomainRewrite: "127.0.0.1",
             secure: false,
