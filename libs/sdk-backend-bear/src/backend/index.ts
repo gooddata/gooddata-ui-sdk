@@ -103,6 +103,7 @@ const CAPABILITIES: IBackendCapabilities = {
     supportsCrossFiltering: false,
     supportsMultipleDateFilters: false,
     supportsAttributeFilterElementsLimiting: false,
+    supportsAttributeFilterElementsLimitingByDependentDateFilters: false,
     supportsRichTextWidgets: false,
 };
 

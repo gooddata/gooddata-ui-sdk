@@ -156,7 +156,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDirectQuery: false,
     enableMariaDbDataSource: false,
     enableRepeaterChart: false,
-    enableKDAttributeFilterDatesValidation: false,
+    enableKDAttributeFilterDatesValidation: true,
     enableMultipleCSVs: false,
     enableOracleDataSource: false,
 };
