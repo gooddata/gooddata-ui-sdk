@@ -7,15 +7,17 @@ import { GridReadyEvent } from "@ag-grid-community/core";
 
 import { ColumnResizingConfig, ResizingState } from "../internal/privateTypes.js";
 import { IRepeaterChartProps } from "../publicTypes.js";
+import { UIClick } from "../columnWidths.js";
 import {
-    ColumnEventSourceType,
-    UIClick,
-    IRepeaterAttributeColumnWidthItem,
-    IRepeaterMeasureColumnWidthItem,
-    IRepeaterAttributeColumnLocator,
-    IRepeaterMeasureColumnLocator,
-} from "../columnWidths.js";
-import { getColumnWidths } from "../internal/columnSizing.js";
+    getColumnWidths,
+    getManualResizedColumn,
+    isAttributeColumnLocator,
+    isAttributeColumnWidthItem,
+    isMeasureColumnWidthItem,
+    isMeasureColumnLocator,
+    isManualResizing,
+} from "../internal/columnSizing.js";
+import { growToFit } from "../internal/tableSizing.js";
 
 const COLUMN_RESIZE_TIMEOUT = 300;
 
@@ -54,7 +56,7 @@ export function useResizing(columnDefs: ColDef[], items: IAttributeOrMeasure[], 
             defaultWidth: 200,
             growToFit: props.config?.columnSizing?.growToFit === true,
             columnAutoresizeOption: props.config?.columnSizing?.defaultWidth ?? "unset",
-            widths: props.config!.columnSizing?.columnWidths,
+            widths: props.config?.columnSizing?.columnWidths,
 
             isAltKeyPressed: resizingState.current.isAltKeyPressed,
             isMetaOrCtrlKeyPressed: resizingState.current.isMetaOrCtrlKeyPressed,
@@ -86,6 +88,7 @@ export function useResizing(columnDefs: ColDef[], items: IAttributeOrMeasure[], 
         (readyEvent: GridReadyEvent) => {
             resizingState.current.columnApi = readyEvent.columnApi;
             applyColumnSizes(columnDefs, resizingState, resizeSettings);
+            growToFit(resizingState, resizeSettings);
         },
         [columnDefs, resizeSettings],
     );
@@ -95,6 +98,7 @@ export function useResizing(columnDefs: ColDef[], items: IAttributeOrMeasure[], 
     }, [columnDefs, resizingState, resizeSettings]);
 
     return {
+        containerRef,
         onColumnResized,
         onGridReady,
     };
@@ -132,11 +136,15 @@ async function onColumnsManualReset(
 
         column.getColDef().suppressSizeToFit = false;
 
-        const columnIds = [column.getColId()];
-        setColumnMaxWidth(resizingState.current.columnApi!, columnIds, AUTO_SIZED_MAX_WIDTH);
-        columnApi.autoSizeColumns(columnIds);
-        setColumnMaxWidth(columnApi, columnIds, MANUALLY_SIZED_MAX_WIDTH);
-        resizingState.current.manuallyResizedColumns.push(column);
+        // If growToFit is disabled, we need to set the column's maxWidth to AUTO_SIZED_MAX_WIDTH
+        // otherwise, the column will be auto-resized to fit
+        if (!resizingConfig.growToFit) {
+            const columnIds = [column.getColId()];
+            setColumnMaxWidth(resizingState.current.columnApi!, columnIds, AUTO_SIZED_MAX_WIDTH);
+            columnApi.autoSizeColumns(columnIds);
+            setColumnMaxWidth(columnApi, columnIds, MANUALLY_SIZED_MAX_WIDTH);
+            resizingState.current.manuallyResizedColumns.push(column);
+        }
     }
 
     afterOnResizeColumns(resizingState, resizingConfig);
@@ -214,42 +222,10 @@ function afterOnResizeColumns(
     resizingState: MutableRefObject<ResizingState>,
     resizingConfig: ColumnResizingConfig,
 ) {
-    if (resizingConfig.growToFit) {
-        //TODO: growToFit(resizingConfig);
-    }
+    growToFit(resizingState, resizingConfig);
 
     const columnWidths = getColumnWidths(resizingState.current);
     resizingConfig.onColumnResized?.(columnWidths);
-}
-
-//check
-
-function isManualResizing(columnEvent: ColumnResizedEvent): boolean {
-    return Boolean(columnEvent?.source === ColumnEventSourceType.UI_DRAGGED && columnEvent.columns);
-}
-
-function isAttributeColumnWidthItem(obj: any): obj is IRepeaterAttributeColumnWidthItem {
-    return obj?.attributeColumnWidthItem !== undefined;
-}
-
-function isMeasureColumnWidthItem(obj: any): obj is IRepeaterMeasureColumnWidthItem {
-    return obj?.measureColumnWidthItem !== undefined;
-}
-
-function isAttributeColumnLocator(obj: any): obj is IRepeaterAttributeColumnLocator {
-    return obj?.attributeLocatorItem !== undefined;
-}
-
-function isMeasureColumnLocator(obj: any): obj is IRepeaterMeasureColumnLocator {
-    return obj?.measureLocatorItem !== undefined;
-}
-
-function getManualResizedColumn(resizingState: MutableRefObject<ResizingState>, column: Column) {
-    return (
-        resizingState.current.manuallyResizedColumns.find(
-            (manuallyResizedColumn) => manuallyResizedColumn.getColId() === column.getColId(),
-        ) ?? null
-    );
 }
 
 //utils
