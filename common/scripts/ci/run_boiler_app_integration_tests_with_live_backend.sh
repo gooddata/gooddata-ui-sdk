@@ -2,11 +2,7 @@
 set -ex
 
 : "${HOST:?}"
-: "${SDK_BACKEND:?}"
 : "${SDK_VERSION:?}"
-if [[ "$SDK_BACKEND" == 'BEAR' ]]; then
-    : "${USER_NAME:?}"
-fi
 
 export BOILER_APP_NAME=new-boiler-app-$SDK_LANG
 export BOILER_APP_VERSION=app-toolkit@$SDK_VERSION
@@ -18,7 +14,6 @@ ROOT_DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}")/../../../ && pwd -P))
 E2E_TEST_DIR=$ROOT_DIR/libs/sdk-ui-tests-e2e
 _RUSH="${DIR}/docker_rush.sh"
 _RUSHX="${DIR}/docker_rushx.sh"
-export sdk_backend=$(tr <<< "${SDK_BACKEND:?}" '[:upper:]' '[:lower:]')
 
 if [[ ! "${HOST:?}" =~ https?:// ]]; then
     export HOST="https://${HOST}"
@@ -26,9 +21,8 @@ fi
 
 pushd $E2E_TEST_DIR
 cat > .env <<-EOF
-SDK_BACKEND=${SDK_BACKEND:-TIGER}
 HOST=${HOST:-}
-CYPRESS_TEST_TAGS=checklist_integrated_boiler_${sdk_backend}
+CYPRESS_TEST_TAGS=checklist_integrated_boiler_tiger
 FIXTURE_TYPE=${FIXTURE_TYPE:-}
 FILTER=${FILTER:-}
 TIGER_DATASOURCES_NAME=${TIGER_DATASOURCES_NAME:-}
@@ -46,9 +40,6 @@ docker run --rm --entrypoint '' \
 -e VISUAL_MODE=false \
 -e HOST \
 -e TIGER_API_TOKEN \
--e sdk_backend \
--e USER_NAME \
--e PASSWORD \
 -e AUTH_TOKEN \
 -w /workspace/libs/sdk-ui-tests-e2e -v $ROOT_DIR:/workspace $CYPRESS_IMAGE \
 sh -c "./scripts/run_boiler_app.sh" || exit 1

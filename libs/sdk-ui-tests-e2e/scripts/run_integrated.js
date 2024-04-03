@@ -1,24 +1,22 @@
 #!/usr/bin/env node
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 /**
  * Run Integrated tests
  * This is useful to run tests against bear/tiger when you already have a project created.
  * It is run also from other scripts on ci.
  *
- * specify the backend platform type and test workspace id
- * - SDK_BACKEND BEAR | TIGER (mandatory)
+ * specify the params
  * - TEST_WORKSPACE_ID (mandatory)
- * - TEST_CHILD_WORKSPACE_ID (mandatory if SDK_BACKEND = TIGER and FIXTURE_TYPE=goodsales)
- * - USER_NAME, PASSWORD or TIGER_API_TOKEN (mandatory)
+ * - TEST_CHILD_WORKSPACE_ID (mandatory if FIXTURE_TYPE=goodsales)
+ * - TIGER_API_TOKEN (mandatory)
  * - HOST (optional, defaults to https://localhost:8443)
  * - CYPRESS_TEST_TAGS comma separated list of tags without spaces (optional, defaults to "")
  * - FILTER (optional) filter tests by filename
  * - VISUAL_MODE true | false (optional, defaults to true)
  * - EXECUTION_ENV (optional, defaults to chrome) browser to run tests
  *
- * Note that you need to make sure that the tests you choose by the tags can
- * run against the SDK_BACKEND you provide and also ensure that file specified with FILTER
+ * Note that you need to make sure that the file specified with FILTER
  * contains some tests with CYPRESS_TEST_TAGS
  *
  */
@@ -29,7 +27,6 @@ async function main() {
     try {
         const {
             TEST_WORKSPACE_ID,
-            SDK_BACKEND,
             TEST_CHILD_WORKSPACE_ID,
             FIXTURE_TYPE,
             TIGER_DATASOURCES_NAME,
@@ -43,41 +40,19 @@ async function main() {
             process.stderr.write("Integrated tests need TEST_WORKSPACE_ID\n");
         }
 
-        if (!SDK_BACKEND) {
-            process.stderr.write("Integrated tests need SDK_BACKEND\n");
-            return;
+        if (FIXTURE_TYPE === "goodsales" && !TEST_CHILD_WORKSPACE_ID) {
+            process.stderr.write("Integrated tests need TEST_CHILD_WORKSPACE_ID\n");
         }
 
-        let authorization = {};
-        if (SDK_BACKEND === "BEAR") {
-            const { USER_NAME, PASSWORD } = process.env;
-            if (!USER_NAME || !PASSWORD) {
-                process.stderr.write(
-                    `Integrated tests for SDK_BACKEND=${SDK_BACKEND} need USER_NAME, PASSWORD\n`,
-                );
-                return;
-            }
-
-            authorization = { credentials: { userName: USER_NAME, password: PASSWORD } };
+        const { TIGER_API_TOKEN } = process.env;
+        if (!TIGER_API_TOKEN) {
+            process.stderr.write(`Integrated tests for need TIGER_API_TOKEN\n`);
+            process.exit(1);
         }
 
-        if (SDK_BACKEND === "TIGER") {
-            if (FIXTURE_TYPE === "goodsales" && !TEST_CHILD_WORKSPACE_ID) {
-                process.stderr.write("Integrated tests need TEST_CHILD_WORKSPACE_ID\n");
-            }
-
-            const { TIGER_API_TOKEN } = process.env;
-            if (!TIGER_API_TOKEN) {
-                process.stderr.write(
-                    `Integrated tests for SDK_BACKEND=${SDK_BACKEND} need TIGER_API_TOKEN\n`,
-                );
-                process.exit(1);
-            }
-
-            authorization = {
-                token: TIGER_API_TOKEN,
-            };
-        }
+        const authorization = {
+            token: TIGER_API_TOKEN,
+        };
 
         // when running locally, it is sometimes useful to override the HOST param specified in the
         // .env with something else, like http://localhost:9500, so CYPRESS_HOST can be used
@@ -121,7 +96,6 @@ async function main() {
             tigerPermissionDatasourcePassword: TIGER_DATASOURCES_PASSWORD,
             tigerApiTokenNamePrefix: TIGER_API_TOKEN_NAME_PREFIX,
             browser: EXECUTION_ENV ? EXECUTION_ENV : "chrome",
-            sdkBackend: SDK_BACKEND,
             config: config,
             ...specFilesFilter,
             customCypressConfig: {

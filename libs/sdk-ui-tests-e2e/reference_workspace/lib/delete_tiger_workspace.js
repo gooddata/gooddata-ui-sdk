@@ -16,8 +16,7 @@ const envFilePath = ".env";
 
 async function main() {
     try {
-        const { HOST, TIGER_API_TOKEN, TEST_WORKSPACE_ID, TEST_CHILD_WORKSPACE_ID, SDK_BACKEND } =
-            process.env;
+        const { HOST, TIGER_API_TOKEN, TEST_WORKSPACE_ID, TEST_CHILD_WORKSPACE_ID } = process.env;
 
         if (!TIGER_API_TOKEN) {
             log("TIGER_API_TOKEN not specified in the .env file. Skipping.\n");
@@ -28,7 +27,7 @@ async function main() {
             log(`Removing TEST_CHILD_WORKSPACE_ID ${TEST_CHILD_WORKSPACE_ID}`);
             // retry to give Pg some time to replicate child WS removal to slaves
             await retryOperation(
-                () => deleteTigerWorkspace(TEST_CHILD_WORKSPACE_ID, TIGER_API_TOKEN, HOST, SDK_BACKEND),
+                () => deleteTigerWorkspace(TEST_CHILD_WORKSPACE_ID, TIGER_API_TOKEN, HOST, "TIGER"),
                 10,
                 1000,
             );
@@ -50,7 +49,7 @@ async function main() {
         log(`Removing TEST_WORKSPACE_ID ${TEST_WORKSPACE_ID} from the .env file\n`);
         // retry to give Pg some time to replicate child WS removal to slaves
         await retryOperation(
-            () => deleteTigerWorkspace(TEST_WORKSPACE_ID, TIGER_API_TOKEN, HOST, SDK_BACKEND),
+            () => deleteTigerWorkspace(TEST_WORKSPACE_ID, TIGER_API_TOKEN, HOST, "TIGER"),
             10,
             1000,
         );

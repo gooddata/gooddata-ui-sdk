@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import { measureLocalId } from "@gooddata/sdk-model";
 import * as Md from "../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
@@ -78,7 +78,9 @@ export const getMixedValuesColumnWidthItemByLocator = (data: any, measureIdentif
     });
 };
 
-describe(
+// Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip(
     "Transposed Pivot Table Sizing and Reset by double click",
     { tags: ["pre-merge_isolated_bear"] },
     () => {
@@ -260,7 +262,9 @@ describe(
     },
 );
 
-describe("Transposed Pivot Table resizing", { tags: ["checklist_integrated_bear"] }, () => {
+// Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip("Transposed Pivot Table resizing", { tags: ["checklist_integrated_bear"] }, () => {
     const SIZE_AFTER_GROW_FIT = TOTAL_SIZE / 3;
     const SIZE_AFTER_CHANGE_1_COL = (TOTAL_SIZE - SECOND_CELL_MANUAL_WIDTH) / 2;
     const SIZE_AFTER_CHANGE_2_COL = TOTAL_SIZE - SECOND_CELL_MANUAL_WIDTH - FIRST_CELL_MANUAL_WIDTH;

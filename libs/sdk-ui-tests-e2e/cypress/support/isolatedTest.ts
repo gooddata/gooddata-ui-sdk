@@ -1,17 +1,10 @@
 // (C) 2021-2024 GoodData Corporation
-import {
-    getBackend,
-    getBackendHost,
-    getMockServer,
-    getProjectId,
-    getWorkingDir,
-    isRecording,
-} from "./constants";
+import { getBackendHost, getMockServer, getProjectId, getWorkingDir, isRecording } from "./constants";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const record = require("../../scripts/lib/recordings");
 
-const currentTestFileMappings = `${getWorkingDir()}/recordings/mappings/${getBackend()}/mapping-${
+const currentTestFileMappings = `${getWorkingDir()}/recordings/mappings/TIGER/mapping-${
     Cypress.spec.name
 }.json`;
 

@@ -1,10 +1,12 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import * as Navigation from "../../tools/navigation";
 import { Table } from "../../tools/table";
 
 const CELL_AUTO_RESIZE_WIDTH = 105;
 
-describe("should autoresized all columns", { tags: ["pre-merge_isolated_bear"] }, () => {
+// Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip("should autoresized all columns", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
         Navigation.visit("visualizations/pivot-table/sizing/pivot-table-sizing");
     });

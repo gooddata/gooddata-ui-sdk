@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 /* eslint-disable sonarjs/cognitive-complexity */
 
 import { spawn, execSync } from "child_process";
@@ -33,7 +33,6 @@ export function runCypress(configParams = {}) {
         updateSnapshots,
         config,
         browser,
-        sdkBackend,
         tigerPermissionDatasourceName,
         tigerPermissionDatasourcePassword,
         tigerApiToken,
@@ -69,10 +68,6 @@ export function runCypress(configParams = {}) {
 
     if (!visual) {
         cypressProps["CYPRESS_COMMAND_DELAY"] = 0;
-    }
-
-    if (sdkBackend) {
-        cypressProps["CYPRESS_SDK_BACKEND"] = sdkBackend;
     }
 
     if (recording) {

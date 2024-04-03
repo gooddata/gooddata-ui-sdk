@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import * as Navigation from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
@@ -76,7 +76,7 @@ describe("Insight on dashboard", () => {
     //Cover ticket: RAIL-4715
     it(
         "should able to resize widget when is placed next to other in one row",
-        { tags: ["checklist_integrated_tiger", "checklist_integrated_bear"] },
+        { tags: ["checklist_integrated_tiger"] },
         () => {
             Navigation.visit("dashboard/insight");
             editMode.edit();

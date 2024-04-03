@@ -16,15 +16,7 @@ extended test - backstop
 ```
 
 ```
-// Tiger platform
 extended test - tiger-cypress - integrated
 extended test - tiger-cypress - isolated
 extended test - tiger-cypress - record
-```
-
-```
-// Bear platform
-extended test - cypress - integrated
-extended test - cypress - isolated
-extended test - cypress - record
 ```
