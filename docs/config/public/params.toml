@@ -11,18 +11,22 @@
     version = "9.9"
     dirpath = "latest"
     url = "/latest/"
+    tag = "v9.9.0"
 [[versions]]
     version = "9.8"
     dirpath = "9.8"
     url = "/9.8/"
+    tag = "v9.8.1"
 [[versions]]
     version = "9.7"
     dirpath = "9.7"
     url = "/9.7/"
+    tag = "v9.7.0"
 [[versions]]
     version = "9.6"
     dirpath = "9.6"
     url = "/9.6/"
+    tag = "v9.6.0"
 [[versions]]
     version = "Older"
     url = "https://sdk.gooddata.com/gooddata-ui/versions.html"
