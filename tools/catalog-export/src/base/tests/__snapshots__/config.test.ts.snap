@@ -2,7 +2,6 @@
 
 exports[`configuration > getConfigFromConfigFile > should read the given config file and return allowed values from it 1`] = `
 {
-  "backend": "backend",
   "catalogOutput": "catalogOutput",
   "hostname": "hostname",
   "workspaceId": "workspaceId",
@@ -11,28 +10,21 @@ exports[`configuration > getConfigFromConfigFile > should read the given config 
 
 exports[`configuration > getConfigFromEnv > should parse credentials and ignore everything else 1`] = `
 {
-  "password": "password",
   "token": "token",
-  "username": "username",
 }
 `;
 
 exports[`configuration > getConfigFromEnv > should return null for credentials if not present in env 1`] = `
 {
-  "password": null,
   "token": null,
-  "username": null,
 }
 `;
 
 exports[`configuration > getConfigFromOptions > should output allowed values from the input object 1`] = `
 {
-  "backend": "backend",
   "catalogOutput": "catalogOutput",
   "hostname": "hostname",
-  "password": "password",
   "token": "token",
-  "username": "username",
   "workspaceId": "workspaceId",
 }
 `;
@@ -46,7 +38,6 @@ exports[`configuration > getConfigFromPackage > should ignore credentials and no
 
 exports[`configuration > getConfigFromPackage > should override parent folder package.jsons with child ones 1`] = `
 {
-  "backend": "backend",
   "catalogOutput": "catalogOutput",
   "hostname": "hostname-new",
   "workspaceId": "workspaceId-new",
@@ -55,7 +46,6 @@ exports[`configuration > getConfigFromPackage > should override parent folder pa
 
 exports[`configuration > getConfigFromPackage > should parse allowed values from the package.json file in a given folder 1`] = `
 {
-  "backend": "backend",
   "catalogOutput": "catalogOutput",
   "hostname": "hostname",
   "workspaceId": "workspaceId",
@@ -64,12 +54,9 @@ exports[`configuration > getConfigFromPackage > should parse allowed values from
 
 exports[`configuration > mergeConfigs > should only output allowed values 1`] = `
 {
-  "backend": "tiger",
   "catalogOutput": "./cat.ts",
   "hostname": "https://cloud.gooddata.com/",
-  "password": "secret",
   "token": "secret",
-  "username": "tomas",
   "workspaceId": "123",
 }
 `;

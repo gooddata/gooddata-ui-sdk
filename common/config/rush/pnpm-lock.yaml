@@ -5957,15 +5957,9 @@ importers:
       '@babel/plugin-transform-typescript':
         specifier: ^7.23.5
         version: 7.23.6(@babel/core@7.23.6)
-      '@gooddata/api-client-bear':
-        specifier: workspace:*
-        version: link:../../libs/api-client-bear
       '@gooddata/api-client-tiger':
         specifier: workspace:*
         version: link:../../libs/api-client-tiger
-      '@gooddata/api-model-bear':
-        specifier: workspace:*
-        version: link:../../libs/api-model-bear
       '@gooddata/sdk-model':
         specifier: workspace:*
         version: link:../../libs/sdk-model

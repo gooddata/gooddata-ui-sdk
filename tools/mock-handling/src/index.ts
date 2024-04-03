@@ -32,7 +32,6 @@ program
     .option("--tigerToken <token>", "GoodData tiger platform auth token.")
     .option("--hostname <url>", `Instance of GoodData platform. The default is ${DEFAULT_HOSTNAME}`)
     .option("--config <path>", `Custom config file (default ${DEFAULT_CONFIG_FILE_NAME})`)
-    .option("--backend <type>", `Backend (default ${DEFAULT_BACKEND})`)
     .option(
         "--replace-project-id <id>",
         `Replace projectId with this value when writing out recordings. By default not specified and projectId will stay in recordings as-is.`,
@@ -41,7 +40,7 @@ program
     .parse(process.argv);
 
 async function promptForMissingConfig(config: DataRecorderConfig): Promise<DataRecorderConfig> {
-    const { hostname, backend } = config;
+    const { hostname } = config;
     let { projectId, tigerToken } = config;
 
     const logInSpinner = ora();
@@ -50,7 +49,7 @@ async function promptForMissingConfig(config: DataRecorderConfig): Promise<DataR
 
         logInSpinner.start("Logging in...");
 
-        await getOrInitBackend(tigerToken, hostname || DEFAULT_HOSTNAME, backend || DEFAULT_BACKEND);
+        await getOrInitBackend(tigerToken, hostname || DEFAULT_HOSTNAME, DEFAULT_BACKEND);
         logInSpinner.succeed();
         clearLine();
     } catch (err) {

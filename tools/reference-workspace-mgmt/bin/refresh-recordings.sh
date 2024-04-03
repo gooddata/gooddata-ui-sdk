@@ -15,7 +15,6 @@ fi
 
 $RECORDER \
   --hostname ${HOST_NAME} \
-  --backend "tiger" \
   --project-id ${WORKSPACE_ID} \
   --replace-project-id "referenceworkspace" \
   --tigerToken "${TIGER_API_TOKEN}" \
