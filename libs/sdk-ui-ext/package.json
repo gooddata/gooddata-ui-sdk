@@ -93,7 +93,6 @@
     "devDependencies": {
         "@gooddata/eslint-config": "^4.1.0",
         "@gooddata/i18n-toolkit": "workspace:*",
-        "@gooddata/live-examples-workspace": "workspace:*",
         "@gooddata/reference-workspace": "workspace:*",
         "@gooddata/sdk-backend-mockingbird": "workspace:*",
         "@gooddata/stylelint-config": "^5.0.0",

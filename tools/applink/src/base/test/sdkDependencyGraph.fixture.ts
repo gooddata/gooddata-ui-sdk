@@ -1,15 +1,13 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import { DependencyGraph } from "../types.js";
 import { naiveFilterDependencyGraph } from "../dependencyGraph.js";
 
 const SdkDependencySnapshot: Partial<DependencyGraph> = {
     nodes: [
         "@gooddata/applink",
-        "@gooddata/experimental-workspace",
         "@gooddata/util",
         "@gooddata/sdk-embedding",
         "@gooddata/sdk-ui-kit",
-        "@gooddata/live-examples-workspace",
         "@gooddata/sdk-ui-vis-commons",
         "@gooddata/sdk-ui-geo",
         "@gooddata/sdk-ui-all",
@@ -37,26 +35,6 @@ const SdkDependencySnapshot: Partial<DependencyGraph> = {
     ],
     edges: [
         {
-            from: "@gooddata/experimental-workspace",
-            to: "@gooddata/sdk-backend-spi",
-            type: "prod",
-        },
-        {
-            from: "@gooddata/experimental-workspace",
-            to: "@gooddata/sdk-model",
-            type: "prod",
-        },
-        {
-            from: "@gooddata/experimental-workspace",
-            to: "@gooddata/catalog-export",
-            type: "dev",
-        },
-        {
-            from: "@gooddata/experimental-workspace",
-            to: "@gooddata/mock-handling",
-            type: "dev",
-        },
-        {
             from: "@gooddata/sdk-embedding",
             to: "@gooddata/api-model-bear",
             type: "prod",
@@ -66,26 +44,6 @@ const SdkDependencySnapshot: Partial<DependencyGraph> = {
             from: "@gooddata/sdk-ui-kit",
             to: "@gooddata/util",
             type: "prod",
-        },
-        {
-            from: "@gooddata/live-examples-workspace",
-            to: "@gooddata/sdk-backend-spi",
-            type: "prod",
-        },
-        {
-            from: "@gooddata/live-examples-workspace",
-            to: "@gooddata/sdk-model",
-            type: "prod",
-        },
-        {
-            from: "@gooddata/live-examples-workspace",
-            to: "@gooddata/catalog-export",
-            type: "dev",
-        },
-        {
-            from: "@gooddata/live-examples-workspace",
-            to: "@gooddata/mock-handling",
-            type: "dev",
         },
         {
             from: "@gooddata/sdk-ui-vis-commons",

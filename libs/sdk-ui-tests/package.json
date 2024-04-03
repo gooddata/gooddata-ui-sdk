@@ -72,8 +72,6 @@
         "@babel/runtime": "^7.23.5",
         "@componentdriven/csf": "^0.0.2-alpha.0",
         "@gooddata/eslint-config": "^4.1.0",
-        "@gooddata/experimental-workspace": "workspace:*",
-        "@gooddata/live-examples-workspace": "workspace:*",
         "@gooddata/mock-handling": "workspace:*",
         "@gooddata/reference-workspace": "workspace:*",
         "@gooddata/sdk-backend-base": "workspace:*",
