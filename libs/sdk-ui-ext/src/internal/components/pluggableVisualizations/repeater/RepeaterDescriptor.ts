@@ -57,6 +57,7 @@ export class RepeaterDescriptor extends BaseChartDescriptor implements IVisualiz
         insightToProps: getInsightToPropsConverter<IRepeaterProps>({
             attribute: singleAttributeBucketConversion("attribute", BucketNames.ATTRIBUTE),
             columns: multipleAttributesOrMeasuresBucketConversion("columns", BucketNames.COLUMNS),
+            viewBy: singleAttributeBucketConversion("viewBy", BucketNames.VIEW),
             filters: filtersInsightConversion("filters"),
             config: chartConfigInsightConversion("config"),
             locale: localeInsightConversion("locale"),

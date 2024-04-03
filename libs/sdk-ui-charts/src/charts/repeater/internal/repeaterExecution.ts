@@ -22,12 +22,12 @@ import { BucketNames } from "@gooddata/sdk-ui";
 export function constructRepeaterBuckets(
     rowAttribute: IAttribute,
     columns: IAttributeOrMeasure[],
-    sliceVisualizationBy?: IAttribute,
+    viewBy?: IAttribute,
 ) {
     return [
         newBucket(BucketNames.ATTRIBUTE, rowAttribute as IAttribute),
         newBucket(BucketNames.COLUMNS, ...(columns as IAttributeOrMeasure[])),
-        sliceVisualizationBy ? newBucket(BucketNames.VIEW, sliceVisualizationBy as IAttribute) : undefined,
+        viewBy ? newBucket(BucketNames.VIEW, viewBy as IAttribute) : undefined,
     ].filter(Boolean);
 }
 

@@ -38,9 +38,9 @@ export interface IRepeaterBucketProps {
     columns?: AttributesMeasuresOrPlaceholders;
 
     /**
-     * Slicing attribute to be used for visualization measures.
+     * View by attribute to be used for inline visualizations.
      */
-    sliceVisualizationBy?: AttributeOrPlaceholder;
+    viewBy?: AttributeOrPlaceholder;
 
     /**
      * Specify filters to apply on the data to compute with.
@@ -92,18 +92,18 @@ type IIrrelevantRepeaterProps = IRepeaterBucketProps & IBucketChartProps;
 type IRepeaterNonBucketProps = Subtract<IRepeaterProps, IIrrelevantRepeaterProps>;
 
 export function toCoreRepeaterProps(props: IRepeaterProps): ICoreChartProps {
-    const { attribute, columns = [], sliceVisualizationBy } = props;
+    const { attribute, columns = [], viewBy } = props;
 
     const buckets = constructRepeaterBuckets(
         attribute as IAttribute,
         columns as IAttributeOrMeasure[],
-        sliceVisualizationBy as IAttribute,
+        viewBy as IAttribute,
     );
 
     const newProps: IRepeaterNonBucketProps = omit<IRepeaterProps, keyof IIrrelevantRepeaterProps>(props, [
         "attribute",
         "columns",
-        "sliceVisualizationBy",
+        "viewBy",
         "filters",
         "backend",
     ]);

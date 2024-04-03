@@ -26,6 +26,7 @@ export default class RepeaterConfigurationPanel extends ConfigurationPanelConten
         return (
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
                 <div>
+                    {this.renderColorSection()}
                     {this.renderInteractionsSection()}
                     <ConfigSection
                         id="canvas_section"
