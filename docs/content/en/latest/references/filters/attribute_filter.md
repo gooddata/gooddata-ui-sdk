@@ -149,7 +149,7 @@ If you want to customize the look of the AttributeFilter, you can provide your o
     />
 ```
 
-See the table below with the [customization properties](#customization-properties) to check all the customization possibilities, or see the [live example](https://gdui-examples.herokuapp.com/attribute-filter-components/customizations#customize-default-components).
+See the table below with the [customization properties](#customization-properties) to check all the customization possibilities.
 
 ### Accessing internal AttributeFilter context
 In some cases, properties provided to the custom components may not be sufficient for you. In this case, you can use `useAttributeFilterContext` hook to obtain the full internal state of the component, and obtain the data and callbacks you need.

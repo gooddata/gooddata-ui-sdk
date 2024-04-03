@@ -9,8 +9,8 @@ GoodData Platform users must stay on GoodData.UI version 9, do not update to ver
 From version 10 onwards, the GoodData.UI SDK solely supports only GoodData Cloud and GoodData.CN.
 {{% /alert %}}
 
-The easiest way to get hands-on experience with GoodData.UI is to use the `@gooddata/app-toolkit`, which contans a sample setup for a React app 
- 
+The easiest way to get hands-on experience with GoodData.UI is to use the `@gooddata/app-toolkit`, which contans a sample setup for a React app
+
 To see it in action:
 - Run `npx @gooddata/app-toolkit@latest init`
 - Follow instructions on the screen
@@ -177,7 +177,7 @@ Theming is important for making embedded analytics look like it truly is a part 
     +   }}>
     ```
 
-Read more about the [theming](../learn/apply_theming/) and check out [an example from the gallery](https://gdui-examples.herokuapp.com/theming).
+Read more about the [theming](../learn/apply_theming/).
 
 ### Connect your own data from _GoodData Cloud_ or _GoodData.CN_ servers
 
@@ -256,7 +256,7 @@ Here is how you can switch to GoodData Platform instead:
     ````
 
 5. Update the `App.tsx`. Since you've switched to your own data, the reference to the insight in `App.tsx` is no longer valid.
-   
+
    To fix, update the `App.tsx` with an insight of your choice:
     ```diff
     -   <InsightView insight={Md.Insights.ProductCategoriesPieChart} showTitle />

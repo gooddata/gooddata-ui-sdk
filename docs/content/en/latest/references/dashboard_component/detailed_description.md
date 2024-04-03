@@ -17,7 +17,7 @@ The Dashboard component:
 
 * Allows you to embed a dashboard natively in React (similarly to [InsightView](../../../learn/visualize_data/insightview/) for visualizations)
 * Provides mechanisms to allow you to integrate it with the rest of your application
-* Allows you to customize the way the dashboard is rendered: you can alter the layout and change the way particular widgets are rendered 
+* Allows you to customize the way the dashboard is rendered: you can alter the layout and change the way particular widgets are rendered
 
 The Dashboard component is built using an architecture resembling the Model-View-Controller pattern:
 
@@ -201,7 +201,6 @@ To access more than one dashboard `store` object, use the [DashboardStoreAccesso
 * `clearAllAccessors()` removes all accessors from the repository.
 * `isAccessorInitializedForDashboard(dashboard)` returns `true` if the accessor is available for a specific dashboard; otherwise, returns `false`.
 
-For more information, check the [example](https://gdui-examples.herokuapp.com/dashboard/accessor).
 
 If the default implementation of the `DashboardStoreAccessorRepository` class does not cover your specific scenario, you can use `DashboardStoreAccessor` to implement your own accessor repository.
 

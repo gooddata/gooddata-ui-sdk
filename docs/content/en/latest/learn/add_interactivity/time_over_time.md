@@ -122,7 +122,3 @@ If you use date filters by _weeks_ and compare the data to the previous period o
 2. Migrate the Date datasets in your workspace to the `urn:custom_v2:date` date dimension.
 
     To do so, see "Migrate from a Legacy Date Dimension to urn:custom_v2:date" in [Manage Custom Date Dimensions](https://help.gooddata.com/pages/viewpage.action?pageId=86795635).
-
-## More examples
-
-See the [live examples](https://gdui-examples.herokuapp.com/time-over-time-comparison).
