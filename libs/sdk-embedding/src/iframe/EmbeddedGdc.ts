@@ -1,10 +1,6 @@
 // (C) 2020-2024 GoodData Corporation
-import {
-    ILocalIdentifierQualifier as IBearLocalIdentifierQualifier,
-    ObjQualifier as BearObjQualifier,
-    isObjIdentifierQualifier as isBearObjIdentifierQualifier,
-    isObjectUriQualifier as isBearObjectUriQualifier,
-} from "@gooddata/api-model-bear";
+import { ILocalIdentifierQualifier, ObjQualifier, RankingFilterOperator } from "./legacyTypes.js";
+
 import { DashboardDateFilterConfigMode, DashboardAttributeFilterConfigMode } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty.js";
 
@@ -98,11 +94,6 @@ export interface IRelativeDateFilter {
 /**
  * @public
  */
-export type RankingFilterOperator = "TOP" | "BOTTOM";
-
-/**
- * @public
- */
 export interface IRankingFilter {
     rankingFilter: {
         measure: ILocalIdentifierQualifier;
@@ -126,16 +117,6 @@ export type DateFilterItem = IAbsoluteDateFilter | IRelativeDateFilter;
  * @public
  */
 export type FilterItem = DateFilterItem | AttributeFilterItem | IRankingFilter;
-
-/**
- * @public
- */
-export type ILocalIdentifierQualifier = IBearLocalIdentifierQualifier;
-
-/**
- * @public
- */
-export type ObjQualifier = BearObjQualifier;
 
 /**
  * @public
@@ -209,16 +190,6 @@ export function isPositiveAttributeFilter(filter: unknown): filter is IPositiveA
 export function isNegativeAttributeFilter(filter: unknown): filter is INegativeAttributeFilter {
     return !isEmpty(filter) && (filter as INegativeAttributeFilter).negativeAttributeFilter !== undefined;
 }
-
-/**
- * @public
- */
-export const isObjIdentifierQualifier = isBearObjIdentifierQualifier;
-
-/**
- * @public
- */
-export const isObjectUriQualifier = isBearObjectUriQualifier;
 
 /**
  * @public

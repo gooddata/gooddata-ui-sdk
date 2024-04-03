@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import isObject from "lodash/isObject.js";
 import {
     CommandFailed,
@@ -12,7 +12,7 @@ import {
     IDrillableItemsCommandBody,
 } from "./common.js";
 import { IInsightDefinition } from "@gooddata/sdk-model";
-import { IBaseExportConfig, IVisualization } from "@gooddata/api-model-bear";
+import { ILegacyBaseExportConfig, IVisualization } from "./legacyTypes.js";
 import { IFilterContextContent, IRemoveFilterContextContent } from "./EmbeddedGdc.js";
 
 /**
@@ -22,7 +22,7 @@ import { IFilterContextContent, IRemoveFilterContextContent } from "./EmbeddedGd
  *
  * @public
  */
-export interface IInsightExportConfig extends IBaseExportConfig {
+export interface IInsightExportConfig extends ILegacyBaseExportConfig {
     /**
      * Include applied filters
      */
@@ -629,9 +629,7 @@ export interface IAdExportInsightCommandBody {
 }
 
 /**
- * Exports current insight into CSV or XLSX. The export configuration matches that of the exportResult
- * function already available in `api-model-bear`. Please consult {@link @gooddata/api-model-bear#IBaseExportConfig} for more
- * detail about possible export configuration options.
+ * Exports current insight into CSV or XLSX.
  *
  * Contract:
  *

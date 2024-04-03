@@ -3,8 +3,9 @@ import isEmpty from "lodash/isEmpty.js";
 import isNumber from "lodash/isNumber.js";
 import isString from "lodash/isString.js";
 
-import { ObjQualifier, isLocalIdentifierQualifier } from "@gooddata/api-model-bear";
 import {
+    ObjQualifier,
+    isLocalIdentifierQualifier,
     AttributeFilterItem,
     DateFilterItem,
     FilterItem,
@@ -21,7 +22,7 @@ import {
     isRemoveAttributeFilter,
     isRemoveDateFilter,
     isRemoveRankingFilter,
-} from "../iframe/EmbeddedGdc.js";
+} from "../iframe/index.js";
 
 export const EXTERNAL_DATE_FILTER_FORMAT = "YYYY-MM-DD";
 
