@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import isObject from "lodash/isObject.js";
 import {
     IGdcMessageEvent,
@@ -9,7 +9,7 @@ import {
     IObjectMeta,
 } from "./common.js";
 import { ObjRef } from "@gooddata/sdk-model";
-import { IVisualization } from "@gooddata/api-model-bear";
+import { IVisualization } from "./legacyTypes.js";
 import {
     DashboardDateFilter,
     IDashboardAttributeFilter,

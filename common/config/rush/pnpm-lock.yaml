@@ -2326,9 +2326,6 @@ importers:
 
   ../../libs/sdk-embedding:
     dependencies:
-      '@gooddata/api-model-bear':
-        specifier: workspace:*
-        version: link:../api-model-bear
       '@gooddata/sdk-model':
         specifier: workspace:*
         version: link:../sdk-model
