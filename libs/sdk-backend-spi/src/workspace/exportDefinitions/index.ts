@@ -1,6 +1,6 @@
 // (C) 2019-2024 GoodData Corporation
 
-import { IExportDefinition, IExportDefinitionBase, ObjRef } from "@gooddata/sdk-model";
+import { ObjRef, IExportDefinition, IExportDefinitionBase } from "@gooddata/sdk-model";
 import { IPagedResource } from "../../common/paging.js";
 
 /**
@@ -45,10 +45,11 @@ export interface IWorkspaceExportDefinitionsService {
     /**
      * Update provided exportDefinition
      *
+     * @param ref - ref of the exportDefinition to update
      * @param exportDefinition - exportDefinition to update
      * @returns promise of updated exportDefinition
      */
-    updateExportDefinition(exportDefinition: IExportDefinition): Promise<IExportDefinition>;
+    updateExportDefinition(ref: ObjRef, exportDefinition: IExportDefinitionBase): Promise<IExportDefinition>;
 
     /**
      * Delete exportDefinition with the given reference

@@ -1040,7 +1040,7 @@ export interface IWorkspaceExportDefinitionsService {
     getExportDefinition(ref: ObjRef, options?: IGetExportDefinitionOptions): Promise<IExportDefinition>;
     getExportDefinitions(options?: IExportDefinitionsQueryOptions): Promise<IExportDefinitionsQueryResult>;
     getExportDefinitionsQuery(): IExportDefinitionsQuery;
-    updateExportDefinition(exportDefinition: IExportDefinition): Promise<IExportDefinition>;
+    updateExportDefinition(ref: ObjRef, exportDefinition: IExportDefinitionBase): Promise<IExportDefinition>;
 }
 
 // @public

@@ -21,7 +21,6 @@ export interface IExportDefinitionRequestPayload {
  * @alpha
  */
 export interface IExportDefinitionBase {
-    id: Identifier;
     title: string;
     description: string;
     tags: string[];

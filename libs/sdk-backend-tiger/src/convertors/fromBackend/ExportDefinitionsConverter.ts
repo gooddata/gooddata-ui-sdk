@@ -6,6 +6,8 @@ import {
     JsonApiExportDefinitionOutList,
     JsonApiExportDefinitionOutWithLinks,
     JsonApiExportDefinitionOutWithLinksTypeEnum,
+    JsonApiExportDefinitionPostOptionalIdDocument,
+    JsonApiVisualizationObjectLinkageTypeEnum,
 } from "@gooddata/api-client-tiger";
 import {
     idRef,
@@ -67,15 +69,14 @@ export const exportDefinitionsOutListToExportDefinitions = (
     );
 };
 
-export const exportDefinitionToExportDefinitionInDocument = (
+export const exportDefinitionToExportDefinitionPostOptionalIdDocument = (
     exportDefinition: IExportDefinitionBase,
-): JsonApiExportDefinitionInDocument => {
-    const { title, description, tags, requestPayload, id } = exportDefinition;
+): JsonApiExportDefinitionPostOptionalIdDocument => {
+    const { title, description, tags, requestPayload } = exportDefinition;
 
     return {
         data: {
             type: JsonApiExportDefinitionOutWithLinksTypeEnum.EXPORT_DEFINITION,
-            id,
             attributes: {
                 title,
                 description,
@@ -86,10 +87,24 @@ export const exportDefinitionToExportDefinitionInDocument = (
                 visualizationObject: {
                     data: {
                         id: requestPayload.visualizationObjectId,
-                        type: "visualizationObject",
+                        type: JsonApiVisualizationObjectLinkageTypeEnum.VISUALIZATION_OBJECT,
                     },
                 },
             },
+        },
+    };
+};
+
+export const exportDefinitionToExportDefinitionInDocument = (
+    exportDefinition: IExportDefinitionBase,
+    identifier: string,
+): JsonApiExportDefinitionInDocument => {
+    const postDefinition = exportDefinitionToExportDefinitionPostOptionalIdDocument(exportDefinition);
+
+    return {
+        data: {
+            ...postDefinition.data,
+            id: identifier,
         },
     };
 };

@@ -1,9 +1,9 @@
 // (C) 2019-2024 GoodData Corporation
 import {
     EntitiesApiGetAllEntitiesExportDefinitionsRequest,
+    jsonApiHeaders,
     MetadataUtilities,
     ValidateRelationsHeader,
-    jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
 import {
     IExportDefinitionsQuery,
@@ -21,9 +21,10 @@ import { objRefToIdentifier } from "../../../utils/api.js";
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 import {
     exportDefinitionOutDocumentToExportDefinition,
+    exportDefinitionOutDocumentToExportDefinitionOutWithLinks,
     exportDefinitionOutToExportDefinition,
     exportDefinitionToExportDefinitionInDocument,
-    exportDefinitionOutDocumentToExportDefinitionOutWithLinks,
+    exportDefinitionToExportDefinitionPostOptionalIdDocument,
 } from "../../../convertors/fromBackend/ExportDefinitionsConverter.js";
 import { ExportDefinitionsQuery } from "./exportDefinitionsQuery.js";
 
@@ -132,7 +133,7 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
                 {
                     workspaceId: this.workspace,
                     jsonApiExportDefinitionPostOptionalIdDocument:
-                        exportDefinitionToExportDefinitionInDocument(exportDefinition),
+                        exportDefinitionToExportDefinitionPostOptionalIdDocument(exportDefinition),
                     include: ["ALL"],
                 },
                 {
@@ -147,15 +148,20 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
     };
 
     public updateExportDefinition = async (
-        exportDefinition: IExportDefinition,
+        ref: ObjRef,
+        exportDefinition: IExportDefinitionBase,
     ): Promise<IExportDefinition> => {
-        await this.authCall((client) => {
+        const id = await objRefToIdentifier(ref, this.authCall);
+
+        const updateResponse = await this.authCall((client) => {
             return client.entities.updateEntityExportDefinitions(
                 {
-                    objectId: exportDefinition.id,
+                    objectId: id,
                     workspaceId: this.workspace,
-                    jsonApiExportDefinitionInDocument:
-                        exportDefinitionToExportDefinitionInDocument(exportDefinition),
+                    jsonApiExportDefinitionInDocument: exportDefinitionToExportDefinitionInDocument(
+                        exportDefinition,
+                        id,
+                    ),
                     include: ["ALL"],
                 },
                 {
@@ -163,7 +169,10 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
                 },
             );
         });
-        return exportDefinition;
+
+        const exportDefinitionData = updateResponse.data;
+
+        return exportDefinitionOutDocumentToExportDefinition(exportDefinitionData);
     };
 
     public deleteExportDefinition = async (ref: ObjRef): Promise<void> => {

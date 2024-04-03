@@ -1434,8 +1434,6 @@ export interface IExportDefinitionBase {
     // (undocumented)
     description: string;
     // (undocumented)
-    id: Identifier;
-    // (undocumented)
     requestPayload: IExportDefinitionRequestPayload;
     // (undocumented)
     tags: string[];
