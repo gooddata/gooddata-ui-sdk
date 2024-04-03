@@ -112,10 +112,10 @@ const numberOfChecks = modifyMeasure(Md.NrChecks, (m) =>
 export const TreemapExample = () => {
     return (
         <div style={{ height: 300 }}>
-            <Treemap 
-                measures={[numberOfChecks]} 
-                viewBy={Md.LocationState} 
-                segmentBy={Md.LocationCity} 
+            <Treemap
+                measures={[numberOfChecks]}
+                viewBy={Md.LocationState}
+                segmentBy={Md.LocationCity}
             />
         </div>
     );
@@ -128,7 +128,7 @@ The result may look like this:
 
 See [Start with Visual Components](../references/visual_components) to get started
 
-You can also create entirely new components and visualizations from scratch. We recommend you check out [our example gallery](https://gdui-examples.herokuapp.com/advanced/global-filters) for live examples of what is possible to do with the GoodData.UI.
+You can also create entirely new components and visualizations from scratch.
 
 {{% alert color="info" title="Tip on Getting Started with React Components" %}} GoodData lets you copy and paste automatically generated React code snippets directly from the web interface. It's a great way to get started with the GoodData.UI framework. See [Embed Visualizations Using React SDK](https://www.gooddata.com/docs/cloud/embed-visualizations/react-sdk/) in the GoodData Cloud documentation to get started.
 {{% /alert %}}

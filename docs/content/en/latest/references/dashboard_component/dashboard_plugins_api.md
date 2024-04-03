@@ -177,7 +177,6 @@ Once you have registered the custom widget type, you can add any number of widge
 
 **NOTE:** The default plugin bootstrapped by the Plugin Development Toolkit defines a sample custom widget
 that you can try out right away.
-For a more involved example, see the [example of a dashboard with a plugin](https://gdui-examples.herokuapp.com/dashboard/local-plugin) that shows how to register a custom widget type, connect it to the dashboard filters, and trigger custom execution for the custom widget to show some data in it.
 
 #### Register types of custom widgets
 
@@ -265,7 +264,7 @@ const customWidget = newCustomWidget("myWidget1", "myCustomWidget", {
 
 #### Trigger commands from a custom widget
 
-To interact with the dashboard from within a custom widget, dispatch commands from the Model Command API. For more details, see the [example](https://gdui-examples.herokuapp.com/dashboard/dispatch-dashboard-command-hook).
+To interact with the dashboard from within a custom widget, dispatch commands from the Model Command API.
 
 #### Prepare custom widget for PDF exports
 

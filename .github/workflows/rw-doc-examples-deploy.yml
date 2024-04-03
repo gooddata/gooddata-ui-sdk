@@ -9,7 +9,7 @@ on:
         required: true
         description: "The name of the source branch"
         type: string
-        default: "release"
+        default: "rel/9.9"
 
 jobs:
   release-ui-sdk-examples-deploy:
