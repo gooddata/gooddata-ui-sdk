@@ -25,17 +25,20 @@ import {
     measureAggregation,
     measureItem,
     newBucket,
+    IColorMappingItem,
 } from "@gooddata/sdk-model";
 import {
     RepeaterColumnWidthItem,
     IRepeaterColumnSizing,
     ChartInlineVisualizationType,
+    ColorUtils,
     CoreRepeater,
+    IColorMapping,
     constructRepeaterDimensions,
     updateConfigWithSettings,
 } from "@gooddata/sdk-ui-charts";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
-import { BucketNames } from "@gooddata/sdk-ui";
+import { BucketNames, IPushData } from "@gooddata/sdk-ui";
 import {
     IBucketItem,
     IBucketOfFun,
@@ -58,8 +61,12 @@ import {
 import cloneDeep from "lodash/cloneDeep.js";
 import { cloneBucketItem, getMainRowAttribute, sanitizeFilters } from "../../../utils/bucketHelper.js";
 import { getSupportedPropertiesControls } from "../../../utils/propertiesHelper.js";
+import { IColorConfiguration } from "src/internal/interfaces/Colors.js";
+import compact from "lodash/compact.js";
+import { getValidProperties } from "../../../utils/colors.js";
 
 const REPEATER_SUPPORTER_PROPERTIES_LIST = [
+    "colorMapping",
     "rowHeight",
     "cellVerticalAlign",
     "cellTextWrapping",
@@ -70,6 +77,7 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
     private featureFlags?: ISettings;
     private renderFun: RenderFunction;
     private unmountFun: UnmountFunction;
+    protected colors: IColorConfiguration;
 
     constructor(props: IVisConstruct) {
         super(props);
@@ -228,7 +236,7 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
             supportedProperties: { controls: supportedProperties },
         };
 
-        this.pushData({
+        this.handlePushData({
             initialProperties,
         });
     }
@@ -276,6 +284,32 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         return columnSizing as IRepeaterColumnSizing;
     }
 
+    protected handleConfirmedColorMapping(data: IPushData): void {
+        const resultingData = data;
+        this.colors = data.colors;
+
+        if (this.visualizationProperties) {
+            resultingData.properties = getValidProperties(
+                this.visualizationProperties,
+                data.colors.colorAssignments,
+            );
+
+            this.visualizationProperties = resultingData.properties;
+        }
+
+        this.pushData(resultingData);
+        this.renderConfigurationPanel(this.currentInsight, this.currentOptions);
+    }
+
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    protected handlePushData = (data: IPushData): void => {
+        if (data.colors) {
+            this.handleConfirmedColorMapping(data);
+        } else {
+            this.pushData(data);
+        }
+    };
+
     protected renderVisualization(
         options: IVisProps,
         insight: IInsightDefinition,
@@ -285,11 +319,27 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         const { drillableItems } = custom;
         const execution = this.getExecution(options, insight, executionFactory);
         const properties = insightProperties(insight);
-        const extendedConfig = {
+        let extendedConfig = {
             ...(properties?.controls ?? {}),
             ...config,
             ...properties,
             columnSizing: this.buildColumnSizing(properties?.controls?.columnWidths),
+        };
+
+        const colorMapping: IColorMappingItem[] = extendedConfig?.colorMapping;
+
+        const validColorMapping = compact(colorMapping).map(
+            (mapItem): IColorMapping => ({
+                predicate: ColorUtils.getColorMappingPredicate(mapItem.id),
+                color: mapItem.color,
+            }),
+        );
+
+        extendedConfig = {
+            ...(properties?.controls ?? {}),
+            ...config,
+            ...properties,
+            colorMapping: validColorMapping?.length > 0 ? validColorMapping : null,
         };
 
         this.renderFun(
@@ -301,7 +351,7 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
                 config={updateConfigWithSettings(extendedConfig, this.featureFlags)}
                 afterRender={this.afterRender}
                 onLoadingChanged={this.onLoadingChanged}
-                pushData={this.pushData}
+                pushData={this.handlePushData}
                 onError={this.onError}
                 onColumnResized={this.onColumnResized}
                 intl={this.intl}
@@ -316,11 +366,12 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         if (configPanelElement) {
             this.renderFun(
                 <RepeaterConfigurationPanel
+                    colors={this.colors}
                     locale={this.locale}
                     properties={this.visualizationProperties}
                     propertiesMeta={this.propertiesMeta}
                     insight={insight}
-                    pushData={this.pushData}
+                    pushData={this.handlePushData}
                     isError={this.getIsError()}
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}

@@ -304,37 +304,43 @@ export interface IChartConfig {
 
     /**
      * Configuration specific for hyperlinks in the chart.
+     * @beta
      */
     hyperLinks?: IDisplayFormHyperlinksConfig;
 
     /**
      * Configuration of row height of the chart.
+     * @beta
      */
     rowHeight?: ChartRowHeight;
 
     /**
      * Configuration of the vertical chart alignment.
+     * @beta
      */
     cellVerticalAlign?: ChartCellVerticalAlign;
 
     /**
      * Configuration of the text wrapping in the chart.
+     * @beta
      */
     cellTextWrapping?: ChartCellTextWrapping;
 
     /**
      * Configuration of the image sizing in the chart.
+     * @beta
      */
     cellImageSizing?: ChartCellImageSizing;
 
     /**
      * Configuration of the inline visualizations.
+     * @beta
      */
     inlineVisualizations?: IInlineVisualizationsConfig;
 }
 
 /**
- * @public
+ * @beta
  */
 export interface IInlineVisualizationsConfig {
     /**
@@ -349,34 +355,39 @@ export interface IInlineVisualizationsConfig {
 }
 
 /**
- * @public
+ * Possible types of the inline visualizations.
+ * @beta
  */
 export type ChartInlineVisualizationType = "metric" | "line" | "column";
 
 /**
- * @public
+ * Row height configuration for the chart.
+ * @beta
  */
 export type ChartRowHeight = "small" | "medium" | "large";
 
 /**
- * @public
+ * Vertical alignment configuration for the chart.
+ * @beta
  */
 export type ChartCellVerticalAlign = "top" | "middle" | "bottom";
 
 /**
- * @public
+ * Text wrapping configuration for the chart.
+ * @beta
  */
 export type ChartCellTextWrapping = "clip" | "wrap";
 
 /**
- * @public
+ * Image sizing configuration for the chart.
+ * @beta
  */
 export type ChartCellImageSizing = "fit" | "fill";
 
 /**
  * Customize behavior of the hyperlink display forms in the chart.
  *
- * @public
+ * @beta
  */
 export interface IDisplayFormHyperlinksConfig {
     /**

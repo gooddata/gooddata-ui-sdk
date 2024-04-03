@@ -82,22 +82,22 @@ export type CalculationType = "change" | "ratio" | "difference" | "change_differ
 // @public
 export type ChartAlignTypes = "top" | "bottom" | "middle";
 
-// @public (undocumented)
+// @beta
 export type ChartCellImageSizing = "fit" | "fill";
 
-// @public (undocumented)
+// @beta
 export type ChartCellTextWrapping = "clip" | "wrap";
 
-// @public (undocumented)
+// @beta
 export type ChartCellVerticalAlign = "top" | "middle" | "bottom";
 
-// @public (undocumented)
+// @beta
 export type ChartInlineVisualizationType = "metric" | "line" | "column";
 
 // @public
 export type ChartOrientationType = "horizontal" | "vertical";
 
-// @public (undocumented)
+// @beta
 export type ChartRowHeight = "small" | "medium" | "large";
 
 export { ColorUtils }
@@ -128,7 +128,7 @@ export type ComparisonPosition = "top" | "left" | "right" | "auto";
 export const ComparisonPositionValues: Record<Uppercase<ComparisonPosition>, ComparisonPosition>;
 
 // @internal
-export function constructRepeaterBuckets(rowAttribute: IAttribute, columns: IAttributeOrMeasure[], sliceVisualizationBy?: IAttribute): IBucket[];
+export function constructRepeaterBuckets(rowAttribute: IAttribute, columns: IAttributeOrMeasure[], viewBy?: IAttribute): IBucket[];
 
 // @internal
 export function constructRepeaterDimensions(buckets: IBucket[]): IDimension[];
@@ -283,8 +283,11 @@ export interface IChartCallbacks extends IVisualizationCallbacks {
 
 // @public
 export interface IChartConfig {
+    // @beta
     cellImageSizing?: ChartCellImageSizing;
+    // @beta
     cellTextWrapping?: ChartCellTextWrapping;
+    // @beta
     cellVerticalAlign?: ChartCellVerticalAlign;
     // @internal
     chart?: any;
@@ -307,7 +310,9 @@ export interface IChartConfig {
     enableSeparateTotalLabels?: boolean;
     forceDisableDrillOnAxes?: boolean;
     grid?: IGridConfig;
+    // @beta
     hyperLinks?: IDisplayFormHyperlinksConfig;
+    // @beta
     inlineVisualizations?: IInlineVisualizationsConfig;
     legend?: ILegendConfig;
     legendLayout?: "vertical" | "horizontal";
@@ -316,6 +321,7 @@ export interface IChartConfig {
     // @internal
     orientation?: IOrientationConfig;
     primaryChartType?: "line" | "column" | "area";
+    // @beta
     rowHeight?: ChartRowHeight;
     secondary_xaxis?: IAxisConfig;
     secondary_yaxis?: IAxisConfig;
@@ -497,7 +503,7 @@ export interface IDependencyWheelChartBucketProps {
 export interface IDependencyWheelChartProps extends IBucketChartProps, IDependencyWheelChartBucketProps {
 }
 
-// @public
+// @beta
 export interface IDisplayFormHyperlinksConfig {
     [displayFormLocalIdentifier: string]: {
         staticElementsText: string;
@@ -584,7 +590,7 @@ export interface IHeatmapBucketProps {
 export interface IHeatmapProps extends IBucketChartProps, IHeatmapBucketProps {
 }
 
-// @public (undocumented)
+// @beta (undocumented)
 export interface IInlineVisualizationsConfig {
     [localIdentifier: string]: {
         type: ChartInlineVisualizationType;
@@ -715,7 +721,7 @@ export interface IRepeaterBucketProps {
     columns?: AttributesMeasuresOrPlaceholders;
     filters?: NullableFiltersOrPlaceholders;
     placeholdersResolutionContext?: any;
-    sliceVisualizationBy?: AttributeOrPlaceholder;
+    viewBy?: AttributeOrPlaceholder;
 }
 
 // @public (undocumented)

@@ -6,14 +6,8 @@ import { RepeaterInlineVisualizationDataPoint } from "./dataViewToRepeaterData.j
 import { IResultAttributeHeaderItem } from "@gooddata/sdk-model";
 import { getTooltipHtml } from "./highcharts.js";
 
-export const InlineColumnChart: React.FC<IInlineColumnChartOptions> = ({
-    data,
-    height,
-    headerItems,
-    metricTitle,
-    sliceTitle,
-}) => {
-    const options = createOptions({ height, data, headerItems, metricTitle, sliceTitle });
+export const InlineColumnChart: React.FC<IInlineColumnChartOptions> = (props) => {
+    const options = createOptions(props);
     return <HighchartsReact options={options} highcharts={Highcharts} />;
 };
 
@@ -23,6 +17,7 @@ interface IInlineColumnChartOptions {
     headerItems: IResultAttributeHeaderItem[];
     metricTitle: string;
     sliceTitle?: string;
+    color?: string;
 }
 
 function createOptions({
@@ -31,6 +26,7 @@ function createOptions({
     headerItems,
     metricTitle,
     sliceTitle,
+    color,
 }: IInlineColumnChartOptions): Highcharts.Options {
     return {
         credits: {
@@ -46,18 +42,13 @@ function createOptions({
         chart: {
             backgroundColor: "transparent",
             height,
-            margin: 0,
-            spacing: [0, 0, 0, 0],
+            margin: 1,
         },
         yAxis: {
             visible: false,
-            minPadding: 0.001,
-            maxPadding: 0.001,
         },
         xAxis: {
             visible: false,
-            minPadding: 0.001,
-            maxPadding: 0.001,
         },
         legend: {
             enabled: false,
@@ -84,7 +75,7 @@ function createOptions({
         series: [
             {
                 type: "column",
-                color: "#14B2E2",
+                color,
                 data: data.map((d) => d.value),
                 states: {
                     hover: {

@@ -48,6 +48,7 @@ export const RepeaterChart: React.FC<IRepeaterChartProps> = (props) => {
     }, [dataView.fingerprint()]);
 
     const columnDefs = useMemo(() => {
+        let measureIndex = 0;
         return items.map((bucketItem): ColDef => {
             const sharedColDef: ColDef = {
                 headerName: getRepeaterColumnTitle(bucketItem, dataView),
@@ -59,6 +60,8 @@ export const RepeaterChart: React.FC<IRepeaterChartProps> = (props) => {
                 const measureTitle = getMetricTitle(bucketItem, dataView);
                 const viewByAttributeLocalId = getViewByAttributeLocalId(dataView);
                 const viewByAttributeTitle = getViewByAttributeTitle(dataView);
+                const measureColor = getMetricColor(bucketItem, dataView, config, measureIndex);
+                measureIndex = measureIndex + 1;
 
                 return {
                     ...sharedColDef,
@@ -82,6 +85,7 @@ export const RepeaterChart: React.FC<IRepeaterChartProps> = (props) => {
                             viewByAttributeTitle,
                             viewByAttributeHeaderItems: params.data?.[viewByAttributeLocalId] ?? [],
                             config,
+                            measureColor,
                         };
                     },
                 };
@@ -186,6 +190,7 @@ interface IMeasureColumnData {
     measureLocalId: string;
     measureTitle: string;
     measureDataPoints: RepeaterInlineVisualizationDataPoint[];
+    measureColor: string;
 
     viewByAttributeTitle?: string;
     viewByAttributeHeaderItems?: IResultAttributeHeaderItem[];
@@ -223,6 +228,7 @@ function MeasureCellRenderer({
                 metricTitle={measureTitle}
                 sliceTitle={viewByAttributeTitle}
                 data={measureDataPoints}
+                color={measureColumnData.measureColor}
                 headerItems={viewByAttributeHeaderItems}
                 height={rowHeight}
             />
@@ -233,6 +239,7 @@ function MeasureCellRenderer({
                 metricTitle={measureTitle}
                 sliceTitle={viewByAttributeTitle}
                 data={measureDataPoints}
+                color={measureColumnData.measureColor}
                 headerItems={viewByAttributeHeaderItems}
                 height={rowHeight}
             />
@@ -338,13 +345,46 @@ function getRepeaterColumnId(columnBucketItem: IAttributeOrMeasure) {
     return attributeLocalId(columnBucketItem);
 }
 
+function getMetricColor(measure: IMeasure, dataView: DataViewFacade, config: IChartConfig, index: number) {
+    const descriptor = getMetricDescriptor(measure, dataView);
+    const colorPalette = config?.colorPalette;
+    const colorMappingForMeasure = config?.colorMapping?.find((cm) =>
+        cm.predicate?.(descriptor, { dv: dataView }),
+    );
+    let color: string;
+    if (colorMappingForMeasure?.color?.type === "rgb") {
+        const rgbColor = colorMappingForMeasure.color.value;
+        color = `rgb(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b})`;
+    } else if (colorMappingForMeasure?.color?.type === "guid") {
+        const paletteColor = colorPalette?.find((c) => c.guid === colorMappingForMeasure.color.value);
+        if (paletteColor) {
+            const rgbColor = paletteColor.fill;
+            color = `rgb(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b})`;
+        }
+    }
+
+    if (!color) {
+        const paletteColor = colorPalette?.[index];
+        if (paletteColor) {
+            const rgbColor = paletteColor.fill;
+            color = `rgb(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b})`;
+        } else {
+            color = "#14B2E2";
+        }
+    }
+
+    return color;
+}
+
 function getMetricTitle(measure: IMeasure, dataView: DataViewFacade) {
+    const measureDescriptor = getMetricDescriptor(measure, dataView);
+    return measureDescriptor?.measureHeaderItem?.name;
+}
+
+function getMetricDescriptor(measure: IMeasure, dataView: DataViewFacade) {
     const localId = measureLocalId(measure);
     const measureDescriptors = dataView.meta().measureDescriptors();
-    const measureDescriptor = measureDescriptors.find(
-        (descriptor) => descriptor.measureHeaderItem.localIdentifier === localId,
-    );
-    return measureDescriptor?.measureHeaderItem?.name;
+    return measureDescriptors.find((descriptor) => descriptor.measureHeaderItem.localIdentifier === localId);
 }
 
 function getAttributeTitle(attribute: IAttribute, dataView: DataViewFacade) {

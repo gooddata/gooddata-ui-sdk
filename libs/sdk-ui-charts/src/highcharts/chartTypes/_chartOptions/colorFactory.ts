@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { IColorPalette, ITheme } from "@gooddata/sdk-model";
 import { DataViewFacade, DefaultColorPalette, VisualizationTypes } from "@gooddata/sdk-ui";
 import { IColorMapping } from "../../../interfaces/index.js";
@@ -38,6 +38,9 @@ function isAttributeColorPalette(type: string, dv: DataViewFacade, stackByAttrib
     return stackByAttribute || (attributeChartSupported && dv.def().hasAttributes());
 }
 
+/**
+ * @internal
+ */
 export class ColorFactory {
     public static getColorStrategy(
         colorPalette: IColorPalette = DefaultColorPalette,

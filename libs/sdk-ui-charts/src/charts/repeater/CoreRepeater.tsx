@@ -1,5 +1,5 @@
 // (C) 2024 GoodData Corporation
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import { WrappedComponentProps, injectIntl, useIntl } from "react-intl";
 import {
     LoadingComponent as SDKLoadingComponent,
@@ -12,10 +12,11 @@ import {
     ErrorCodes,
 } from "@gooddata/sdk-ui";
 import { ITheme } from "@gooddata/sdk-model";
-import { ThemeContextProvider, withTheme } from "@gooddata/sdk-ui-theme-provider";
-import { ICoreChartProps } from "../../interfaces/index.js";
+import { ThemeContextProvider, useTheme, withTheme } from "@gooddata/sdk-ui-theme-provider";
+import { IChartConfig, ICoreChartProps } from "../../interfaces/index.js";
 import { RepeaterChart } from "./internal/RepeaterChart.js";
 import { RepeaterColumnResizedCallback } from "./publicTypes.js";
+import { ColorFactory, getValidColorPalette } from "../../highcharts/index.js";
 
 export * from "./publicTypes.js";
 export * from "./columnWidths.js";
@@ -74,6 +75,39 @@ export const CoreRepeaterImpl: React.FC<ICoreRepeaterChartProps> = (props) => {
         [execution.fingerprint()],
     );
 
+    const configWithColorPalette = useMemo<IChartConfig>(() => {
+        const colorPalette = getValidColorPalette(config);
+        return {
+            ...config,
+            colorPalette,
+        };
+    }, [config]);
+
+    const theme = useTheme();
+    useEffect(() => {
+        if (result) {
+            const colorStrategy = ColorFactory.getColorStrategy(
+                configWithColorPalette.colorPalette,
+                configWithColorPalette.colorMapping,
+                null,
+                null,
+                null,
+                result,
+                "repeater",
+                theme,
+            );
+
+            const colorAssignment = colorStrategy.getColorAssignment();
+
+            pushData?.({
+                colors: {
+                    colorAssignments: colorAssignment,
+                    colorPalette: configWithColorPalette.colorPalette,
+                },
+            });
+        }
+    }, [theme, configWithColorPalette.colorPalette, configWithColorPalette.colorMapping, pushData, result]);
+
     if (error) {
         const convertedError = convertError(error);
         const errorMessage = convertedError.getMessage();
@@ -93,11 +127,12 @@ export const CoreRepeaterImpl: React.FC<ICoreRepeaterChartProps> = (props) => {
     return (
         <RepeaterChart
             dataView={result}
-            config={config}
+            config={configWithColorPalette}
             onError={onError}
             onColumnResized={onColumnResized}
         />
     );
+    return <RepeaterChart dataView={result} config={configWithColorPalette} onError={onError} />;
 };
 
 const CoreRepeaterWithIntl = injectIntl(withTheme(CoreRepeaterImpl));
