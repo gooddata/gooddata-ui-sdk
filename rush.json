@@ -407,13 +407,6 @@
             "shouldPublish": false
         },
         {
-            "packageName": "@gooddata/experimental-workspace",
-            "projectFolder": "tools/experimental-workspace",
-            "reviewCategory": "tools",
-            "versionPolicyName": "sdk",
-            "shouldPublish": true
-        },
-        {
             "packageName": "@gooddata/util",
             "projectFolder": "libs/util",
             "reviewCategory": "production",
@@ -431,13 +424,6 @@
             "packageName": "@gooddata/sdk-ui-kit",
             "projectFolder": "libs/sdk-ui-kit",
             "reviewCategory": "production",
-            "versionPolicyName": "sdk",
-            "shouldPublish": true
-        },
-        {
-            "packageName": "@gooddata/live-examples-workspace",
-            "projectFolder": "tools/live-examples-workspace",
-            "reviewCategory": "tools",
             "versionPolicyName": "sdk",
             "shouldPublish": true
         },

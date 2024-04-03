@@ -3050,9 +3050,6 @@ importers:
       '@gooddata/i18n-toolkit':
         specifier: workspace:*
         version: link:../../tools/i18n-toolkit
-      '@gooddata/live-examples-workspace':
-        specifier: workspace:*
-        version: link:../../tools/live-examples-workspace
       '@gooddata/reference-workspace':
         specifier: workspace:*
         version: link:../../tools/reference-workspace
@@ -3460,9 +3457,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: ^4.1.0
         version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
-      '@gooddata/live-examples-workspace':
-        specifier: workspace:*
-        version: link:../../tools/live-examples-workspace
       '@gooddata/sdk-backend-mockingbird':
         specifier: workspace:*
         version: link:../sdk-backend-mockingbird
@@ -4180,12 +4174,6 @@ importers:
       '@gooddata/eslint-config':
         specifier: ^4.1.0
         version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
-      '@gooddata/experimental-workspace':
-        specifier: workspace:*
-        version: link:../../tools/experimental-workspace
-      '@gooddata/live-examples-workspace':
-        specifier: workspace:*
-        version: link:../../tools/live-examples-workspace
       '@gooddata/mock-handling':
         specifier: workspace:*
         version: link:../../tools/mock-handling
@@ -5969,85 +5957,6 @@ importers:
         specifier: ^4.9.1
         version: 4.15.1(webpack-cli@4.10.0)(webpack@5.89.0)
 
-  ../../tools/experimental-workspace:
-    dependencies:
-      '@gooddata/sdk-backend-spi':
-        specifier: workspace:*
-        version: link:../../libs/sdk-backend-spi
-      '@gooddata/sdk-model':
-        specifier: workspace:*
-        version: link:../../libs/sdk-model
-      lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
-      tslib:
-        specifier: ^2.5.0
-        version: 2.6.2
-    devDependencies:
-      '@gooddata/catalog-export':
-        specifier: workspace:*
-        version: link:../catalog-export
-      '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
-      '@gooddata/mock-handling':
-        specifier: workspace:*
-        version: link:../mock-handling
-      '@microsoft/api-extractor':
-        specifier: ^7.36.0
-        version: 7.38.5(@types/node@18.19.3)
-      '@types/lodash':
-        specifier: ^4.14.202
-        version: 4.14.202
-      '@types/node':
-        specifier: ^18.17.6
-        version: 18.19.3
-      '@typescript-eslint/eslint-plugin':
-        specifier: ^5.57.1
-        version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.55.0)(typescript@5.3.3)
-      '@typescript-eslint/parser':
-        specifier: ^5.57.1
-        version: 5.62.0(eslint@8.55.0)(typescript@5.3.3)
-      dependency-cruiser:
-        specifier: ^13.0.3
-        version: 13.1.5
-      eslint:
-        specifier: ^8.25.0
-        version: 8.55.0
-      eslint-plugin-header:
-        specifier: ^3.0.0
-        version: 3.1.1(eslint@8.55.0)
-      eslint-plugin-import:
-        specifier: ^2.22.0
-        version: 2.29.0(eslint@8.55.0)
-      eslint-plugin-import-esm:
-        specifier: ^1.2.1
-        version: 1.2.1(eslint@8.55.0)
-      eslint-plugin-jest:
-        specifier: ^27.1.1
-        version: 27.6.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint@8.55.0)(typescript@5.3.3)
-      eslint-plugin-no-only-tests:
-        specifier: ^2.4.0
-        version: 2.6.0
-      eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
-      eslint-plugin-regexp:
-        specifier: ^1.9.0
-        version: 1.15.0(eslint@8.55.0)
-      eslint-plugin-sonarjs:
-        specifier: ^0.16.0
-        version: 0.16.0(eslint@8.55.0)
-      eslint-plugin-tsdoc:
-        specifier: ^0.2.14
-        version: 0.2.17
-      prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
-      typescript:
-        specifier: 5.3.3
-        version: 5.3.3
-
   ../../tools/i18n-toolkit:
     dependencies:
       '@formatjs/cli-lib':
@@ -6147,82 +6056,6 @@ importers:
       vitest:
         specifier: 1.0.4
         version: 1.0.4(@types/node@18.19.3)(happy-dom@9.20.3)
-
-  ../../tools/live-examples-workspace:
-    dependencies:
-      '@gooddata/sdk-backend-spi':
-        specifier: workspace:*
-        version: link:../../libs/sdk-backend-spi
-      '@gooddata/sdk-model':
-        specifier: workspace:*
-        version: link:../../libs/sdk-model
-      lodash:
-        specifier: ^4.17.19
-        version: 4.17.21
-      tslib:
-        specifier: ^2.5.0
-        version: 2.6.2
-    devDependencies:
-      '@gooddata/catalog-export':
-        specifier: workspace:*
-        version: link:../catalog-export
-      '@gooddata/eslint-config':
-        specifier: ^4.1.0
-        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
-      '@gooddata/mock-handling':
-        specifier: workspace:*
-        version: link:../mock-handling
-      '@types/lodash':
-        specifier: ^4.14.202
-        version: 4.14.202
-      '@types/node':
-        specifier: ^18.17.6
-        version: 18.19.3
-      '@typescript-eslint/eslint-plugin':
-        specifier: ^5.57.1
-        version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.55.0)(typescript@5.3.3)
-      '@typescript-eslint/parser':
-        specifier: ^5.57.1
-        version: 5.62.0(eslint@8.55.0)(typescript@5.3.3)
-      dependency-cruiser:
-        specifier: ^13.0.3
-        version: 13.1.5
-      eslint:
-        specifier: ^8.25.0
-        version: 8.55.0
-      eslint-plugin-header:
-        specifier: ^3.0.0
-        version: 3.1.1(eslint@8.55.0)
-      eslint-plugin-import:
-        specifier: ^2.22.0
-        version: 2.29.0(eslint@8.55.0)
-      eslint-plugin-import-esm:
-        specifier: ^1.2.1
-        version: 1.2.1(eslint@8.55.0)
-      eslint-plugin-jest:
-        specifier: ^27.1.1
-        version: 27.6.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint@8.55.0)(typescript@5.3.3)
-      eslint-plugin-no-only-tests:
-        specifier: ^2.4.0
-        version: 2.6.0
-      eslint-plugin-prettier:
-        specifier: ^4.0.0
-        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
-      eslint-plugin-regexp:
-        specifier: ^1.9.0
-        version: 1.15.0(eslint@8.55.0)
-      eslint-plugin-sonarjs:
-        specifier: ^0.16.0
-        version: 0.16.0(eslint@8.55.0)
-      eslint-plugin-tsdoc:
-        specifier: ^0.2.14
-        version: 0.2.17
-      prettier:
-        specifier: ~2.5.0
-        version: 2.5.1
-      typescript:
-        specifier: 5.3.3
-        version: 5.3.3
 
   ../../tools/mock-handling:
     dependencies:

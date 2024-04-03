@@ -38,21 +38,17 @@ exports[`dependency graph > should create correct build order 1`] = `
     "@gooddata/sdk-ui-kit",
   ],
   [
+    "@gooddata/sdk-ui-geo",
     "@gooddata/sdk-ui-charts",
     "@gooddata/sdk-ui-pivot",
     "@gooddata/reference-workspace-mgmt",
-    "@gooddata/live-examples-workspace",
-    "@gooddata/experimental-workspace",
-  ],
-  [
-    "@gooddata/sdk-ui-geo",
   ],
   [
     "@gooddata/sdk-ui-ext",
   ],
   [
-    "@gooddata/sdk-ui-tests",
     "@gooddata/sdk-ui-all",
+    "@gooddata/sdk-ui-tests",
   ],
 ]
 `;
@@ -75,8 +71,6 @@ exports[`dependency graph > should create correct build order for prod deps only
   [
     "@gooddata/reference-workspace",
     "@gooddata/sdk-backend-base",
-    "@gooddata/live-examples-workspace",
-    "@gooddata/experimental-workspace",
     "@gooddata/api-client-tiger",
     "@gooddata/sdk-ui",
   ],
@@ -116,8 +110,6 @@ exports[`dependency graph > should find depending packages 1`] = `
     "@gooddata/sdk-backend-bear",
     "@gooddata/api-client-bear",
     "@gooddata/sdk-ui-ext",
-    "@gooddata/experimental-workspace",
-    "@gooddata/live-examples-workspace",
     "@gooddata/reference-workspace-mgmt",
     "@gooddata/sdk-ui-tests",
     "@gooddata/sdk-ui-vis-commons",

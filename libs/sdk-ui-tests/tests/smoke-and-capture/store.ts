@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 
 import { IScenario, WorkspaceType } from "../../src/index.js";
 import process from "process";
@@ -29,13 +29,9 @@ function initializeStores(): DefinitionStores | undefined {
 
     return {
         executions: {
-            "experimental-workspace": initializeStore(rootDir, "experimental-workspace", "executions"),
-            "live-examples-workspace": initializeStore(rootDir, "live-examples-workspace", "executions"),
             "reference-workspace": initializeStore(rootDir, "reference-workspace", "executions"),
         },
         insights: {
-            "experimental-workspace": initializeStore(rootDir, "experimental-workspace", "insights"),
-            "live-examples-workspace": initializeStore(rootDir, "live-examples-workspace", "insights"),
             "reference-workspace": initializeStore(rootDir, "reference-workspace", "insights"),
         },
     };

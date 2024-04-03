@@ -1,4 +1,4 @@
-// (C) 2007-2018 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { RecordingIndex } from "@gooddata/sdk-backend-mockingbird";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -31,7 +31,6 @@ import {
 import { ShortPostInteractionTimeout } from "../../_infra/backstopWrapper.js";
 import { ConfigurationPanelWrapper } from "../../_infra/ConfigurationPanelWrapper.js";
 import { StorybookBackend } from "../../_infra/backend.js";
-import { ExamplesRecordings } from "@gooddata/live-examples-workspace";
 import { storyGroupFor } from "./storyGroupFactory.js";
 import groupBy from "lodash/groupBy.js";
 import keyBy from "lodash/keyBy.js";
@@ -95,10 +94,7 @@ function getAvailableInsights(recordings: RecordingIndex): IInsight[] {
     return values(recordings.metadata?.insights ?? {}).map((rec) => rec.obj);
 }
 
-const Insights = [
-    ...getAvailableInsights(ReferenceRecordings.Recordings),
-    ...getAvailableInsights(ExamplesRecordings.Recordings),
-];
+const Insights = [...getAvailableInsights(ReferenceRecordings.Recordings)];
 const InsightById = keyBy(Insights, insightId);
 
 const ScenarioGroupsByVis = sortBy(
