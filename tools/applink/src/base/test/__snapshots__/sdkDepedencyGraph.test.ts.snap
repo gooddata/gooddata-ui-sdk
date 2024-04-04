@@ -5,17 +5,16 @@ exports[`dependency graph > should create correct build order 1`] = `
   [
     "@gooddata/sdk-skel-ts",
     "@gooddata/sdk-skel-tsx",
-    "@gooddata/api-model-bear",
     "@gooddata/sdk-model",
+    "@gooddata/sdk-embedding",
     "@gooddata/util",
     "@gooddata/applink",
   ],
   [
     "@gooddata/sdk-backend-spi",
-    "@gooddata/api-client-bear",
-    "@gooddata/sdk-embedding",
   ],
   [
+    "@gooddata/mock-handling",
     "@gooddata/reference-workspace",
   ],
   [
@@ -29,10 +28,9 @@ exports[`dependency graph > should create correct build order 1`] = `
   ],
   [
     "@gooddata/sdk-ui",
-    "@gooddata/sdk-backend-bear",
+    "@gooddata/reference-workspace-mgmt",
   ],
   [
-    "@gooddata/mock-handling",
     "@gooddata/sdk-ui-filters",
     "@gooddata/sdk-ui-vis-commons",
     "@gooddata/sdk-ui-kit",
@@ -41,7 +39,6 @@ exports[`dependency graph > should create correct build order 1`] = `
     "@gooddata/sdk-ui-geo",
     "@gooddata/sdk-ui-charts",
     "@gooddata/sdk-ui-pivot",
-    "@gooddata/reference-workspace-mgmt",
   ],
   [
     "@gooddata/sdk-ui-ext",
@@ -58,17 +55,16 @@ exports[`dependency graph > should create correct build order for prod deps only
   [
     "@gooddata/sdk-skel-ts",
     "@gooddata/sdk-skel-tsx",
-    "@gooddata/api-model-bear",
     "@gooddata/sdk-model",
+    "@gooddata/sdk-embedding",
     "@gooddata/util",
     "@gooddata/applink",
   ],
   [
     "@gooddata/sdk-backend-spi",
-    "@gooddata/api-client-bear",
-    "@gooddata/sdk-embedding",
   ],
   [
+    "@gooddata/mock-handling",
     "@gooddata/reference-workspace",
     "@gooddata/sdk-backend-base",
     "@gooddata/api-client-tiger",
@@ -76,50 +72,24 @@ exports[`dependency graph > should create correct build order for prod deps only
   ],
   [
     "@gooddata/sdk-ui-kit",
+    "@gooddata/catalog-export",
     "@gooddata/sdk-ui-vis-commons",
     "@gooddata/sdk-ui-filters",
     "@gooddata/sdk-backend-mockingbird",
     "@gooddata/sdk-backend-tiger",
-    "@gooddata/sdk-backend-bear",
-    "@gooddata/catalog-export",
   ],
   [
-    "@gooddata/mock-handling",
+    "@gooddata/sdk-ui-tests",
     "@gooddata/sdk-ui-pivot",
     "@gooddata/sdk-ui-charts",
     "@gooddata/sdk-ui-geo",
-  ],
-  [
-    "@gooddata/sdk-ui-ext",
-    "@gooddata/sdk-ui-tests",
     "@gooddata/reference-workspace-mgmt",
   ],
   [
-    "@gooddata/sdk-ui-all",
-  ],
-]
-`;
-
-exports[`dependency graph > should find depending packages 1`] = `
-[
-  [
-    "@gooddata/sdk-embedding",
-    "@gooddata/catalog-export",
-    "@gooddata/mock-handling",
-    "@gooddata/sdk-backend-mockingbird",
-    "@gooddata/sdk-backend-bear",
-    "@gooddata/api-client-bear",
     "@gooddata/sdk-ui-ext",
-    "@gooddata/reference-workspace-mgmt",
-    "@gooddata/sdk-ui-tests",
-    "@gooddata/sdk-ui-vis-commons",
-    "@gooddata/sdk-ui-geo",
-    "@gooddata/sdk-ui-charts",
-    "@gooddata/sdk-ui-filters",
-    "@gooddata/sdk-ui-pivot",
-    "@gooddata/sdk-ui",
+  ],
+  [
     "@gooddata/sdk-ui-all",
-    "@gooddata/sdk-ui-kit",
   ],
 ]
 `;

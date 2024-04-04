@@ -532,13 +532,6 @@
             "shouldPublish": true
         },
         {
-            "packageName": "@gooddata/sdk-backend-bear",
-            "projectFolder": "libs/sdk-backend-bear",
-            "reviewCategory": "production",
-            "versionPolicyName": "sdk",
-            "shouldPublish": true
-        },
-        {
             "packageName": "@gooddata/sdk-model",
             "projectFolder": "libs/sdk-model",
             "reviewCategory": "production",
@@ -555,20 +548,6 @@
         {
             "packageName": "@gooddata/api-client-tiger",
             "projectFolder": "libs/api-client-tiger",
-            "reviewCategory": "production",
-            "versionPolicyName": "sdk",
-            "shouldPublish": true
-        },
-        {
-            "packageName": "@gooddata/api-client-bear",
-            "projectFolder": "libs/api-client-bear",
-            "reviewCategory": "production",
-            "versionPolicyName": "sdk",
-            "shouldPublish": true
-        },
-        {
-            "packageName": "@gooddata/api-model-bear",
-            "projectFolder": "libs/api-model-bear",
             "reviewCategory": "production",
             "versionPolicyName": "sdk",
             "shouldPublish": true

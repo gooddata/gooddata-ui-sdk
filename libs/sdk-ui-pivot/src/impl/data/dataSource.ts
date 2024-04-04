@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { IntlShape } from "react-intl";
 import { IDataView, IExecutionResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { ColDef, GridApi, IDatasource, IGetRowsParams } from "@ag-grid-community/all-modules";
@@ -307,7 +307,7 @@ export class AgGridDatasource implements IDatasource {
 function isSortedByFirstAttribute(tableDescriptor: TableDescriptor, sortingCols: ColDef[]): boolean {
     if (!sortingCols.length) {
         // this is somewhat dangerous assumption: no explicit sort == sorted by first col
-        //  (bear and tiger backend behaves thusly)
+        //  (the backend behaves thusly)
         return true;
     }
 
@@ -322,7 +322,7 @@ function isDataViewSortedByFirstAttribute(dv: DataViewFacade): boolean {
     const { sortBy } = dv.definition;
     if (!sortBy?.length) {
         // this is somewhat dangerous assumption: no explicit sort == sorted by first col
-        //  (bear and tiger backend behaves thusly)
+        //  (the backend behaves thusly)
         return true;
     }
 

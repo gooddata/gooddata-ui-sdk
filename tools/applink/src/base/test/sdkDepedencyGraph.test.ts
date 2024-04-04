@@ -1,6 +1,6 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import flatten from "lodash/flatten";
-import { determinePackageBuildOrder, findDependingPackages } from "../dependencyGraph.js";
+import { determinePackageBuildOrder } from "../dependencyGraph.js";
 import { TestSdkDependencyGraph } from "./sdkDependencyGraph.fixture.js";
 import { describe, it, expect } from "vitest";
 
@@ -16,9 +16,5 @@ describe("dependency graph", () => {
 
     it("should create correct build order for prod deps only", () => {
         expect(determinePackageBuildOrder(TestSdkDependencyGraph, ["prod"])).toMatchSnapshot();
-    });
-
-    it("should find depending packages", () => {
-        expect(findDependingPackages(TestSdkDependencyGraph, ["@gooddata/api-model-bear"])).toMatchSnapshot();
     });
 });

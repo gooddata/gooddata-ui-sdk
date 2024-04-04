@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import {
     EventBus,
     packagesChanged,
@@ -38,16 +38,6 @@ describe("BuildScheduler", () => {
     it("should build the entire subtree if leaf changes", async () => {
         eventBus?.post(
             packagesChanged([{ packageName: "@gooddata/sdk-model", files: [], independent: false }]),
-        );
-
-        const packagesBuilt = (await collector?.waitFor("packagesRebuilt")) as PackagesRebuilt;
-
-        expect(packagesBuilt.body.packages).toMatchSnapshot();
-    });
-
-    it("should build the other subtree if leaf changes", async () => {
-        eventBus?.post(
-            packagesChanged([{ packageName: "@gooddata/api-model-bear", files: [], independent: false }]),
         );
 
         const packagesBuilt = (await collector?.waitFor("packagesRebuilt")) as PackagesRebuilt;

@@ -12,10 +12,10 @@
 #    The detached mode recognizes presence of the WIREMOCK_NET variable. If found, the script alters the behavior
 #    so that:
 #
-#    1.  wiremock container runs on the network as outlined on WIREMOCK_NET, is aliased as 'bear'
+#    1.  wiremock container runs on the network as outlined on WIREMOCK_NET
 #    2.  when testing that wiremock is up, script uses dockerized curl which is started on the same network
 #
-# Note on the --insecure: bear api client only talks HTTPS. Wiremock talks HTTPS however uses self-signed certificate...
+# Note on the --insecure: the api client only talks HTTPS. Wiremock talks HTTPS however uses self-signed certificate...
 
 ROOT_DIR=$(echo $(cd $(dirname $0)/../.. && pwd -P))
 TESTS_DIR="${ROOT_DIR}/tests"
@@ -82,7 +82,7 @@ else
           --https-port 8442 --enable-browser-proxying --extensions org.gooddata.extensions.ResponseHeadersTransformer,org.gooddata.extensions.RequestHeadersTransformer)
   else
     #
-    # When running on dedicated docker network, use network id passed via WIREMOCK_NET and alias the server as "bear".
+    # When running on dedicated docker network, use network id passed via WIREMOCK_NET and alias the server.
     #
     echo "Starting Wiremock in detached mode in CI mode; network: ${WIREMOCK_NET}; recordings in ${RECORDINGS_DIR}"
 

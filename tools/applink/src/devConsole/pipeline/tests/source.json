@@ -251,18 +251,6 @@
                 "shouldPublish": true
             }
         },
-        "@gooddata/sdk-backend-bear": {
-            "packageName": "@gooddata/sdk-backend-bear",
-            "installDir": ["@gooddata", "sdk-backend-bear"],
-            "directory": "/dev/gooddata-ui-sdk/libs/sdk-backend-bear",
-            "rushPackage": {
-                "packageName": "@gooddata/sdk-backend-bear",
-                "projectFolder": "libs/sdk-backend-bear",
-                "reviewCategory": "production",
-                "versionPolicyName": "sdk",
-                "shouldPublish": true
-            }
-        },
         "@gooddata/sdk-model": {
             "packageName": "@gooddata/sdk-model",
             "installDir": ["@gooddata", "sdk-model"],
@@ -294,30 +282,6 @@
             "rushPackage": {
                 "packageName": "@gooddata/api-client-tiger",
                 "projectFolder": "libs/api-client-tiger",
-                "reviewCategory": "production",
-                "versionPolicyName": "sdk",
-                "shouldPublish": true
-            }
-        },
-        "@gooddata/api-client-bear": {
-            "packageName": "@gooddata/api-client-bear",
-            "installDir": ["@gooddata", "api-client-bear"],
-            "directory": "/dev/gooddata-ui-sdk/libs/api-client-bear",
-            "rushPackage": {
-                "packageName": "@gooddata/api-client-bear",
-                "projectFolder": "libs/api-client-bear",
-                "reviewCategory": "production",
-                "versionPolicyName": "sdk",
-                "shouldPublish": true
-            }
-        },
-        "@gooddata/api-model-bear": {
-            "packageName": "@gooddata/api-model-bear",
-            "installDir": ["@gooddata", "api-model-bear"],
-            "directory": "/dev/gooddata-ui-sdk/libs/api-model-bear",
-            "rushPackage": {
-                "packageName": "@gooddata/api-model-bear",
-                "projectFolder": "libs/api-model-bear",
                 "reviewCategory": "production",
                 "versionPolicyName": "sdk",
                 "shouldPublish": true
@@ -587,18 +551,6 @@
                 "shouldPublish": true
             }
         },
-        "libs/sdk-backend-bear": {
-            "packageName": "@gooddata/sdk-backend-bear",
-            "installDir": ["@gooddata", "sdk-backend-bear"],
-            "directory": "/dev/gooddata-ui-sdk/libs/sdk-backend-bear",
-            "rushPackage": {
-                "packageName": "@gooddata/sdk-backend-bear",
-                "projectFolder": "libs/sdk-backend-bear",
-                "reviewCategory": "production",
-                "versionPolicyName": "sdk",
-                "shouldPublish": true
-            }
-        },
         "libs/sdk-model": {
             "packageName": "@gooddata/sdk-model",
             "installDir": ["@gooddata", "sdk-model"],
@@ -630,30 +582,6 @@
             "rushPackage": {
                 "packageName": "@gooddata/api-client-tiger",
                 "projectFolder": "libs/api-client-tiger",
-                "reviewCategory": "production",
-                "versionPolicyName": "sdk",
-                "shouldPublish": true
-            }
-        },
-        "libs/api-client-bear": {
-            "packageName": "@gooddata/api-client-bear",
-            "installDir": ["@gooddata", "api-client-bear"],
-            "directory": "/dev/gooddata-ui-sdk/libs/api-client-bear",
-            "rushPackage": {
-                "packageName": "@gooddata/api-client-bear",
-                "projectFolder": "libs/api-client-bear",
-                "reviewCategory": "production",
-                "versionPolicyName": "sdk",
-                "shouldPublish": true
-            }
-        },
-        "libs/api-model-bear": {
-            "packageName": "@gooddata/api-model-bear",
-            "installDir": ["@gooddata", "api-model-bear"],
-            "directory": "/dev/gooddata-ui-sdk/libs/api-model-bear",
-            "rushPackage": {
-                "packageName": "@gooddata/api-model-bear",
-                "projectFolder": "libs/api-model-bear",
                 "reviewCategory": "production",
                 "versionPolicyName": "sdk",
                 "shouldPublish": true
@@ -695,12 +623,9 @@
             "@gooddata/mock-handling",
             "@gooddata/sdk-backend-mockingbird",
             "@gooddata/sdk-backend-tiger",
-            "@gooddata/sdk-backend-bear",
             "@gooddata/sdk-model",
             "@gooddata/sdk-backend-spi",
             "@gooddata/api-client-tiger",
-            "@gooddata/api-client-bear",
-            "@gooddata/api-model-bear",
             "@gooddata/sdk-ui"
         ],
         "edges": [
@@ -723,11 +648,6 @@
                 "from": "@gooddata/experimental-workspace",
                 "to": "@gooddata/mock-handling",
                 "type": "dev"
-            },
-            {
-                "from": "@gooddata/sdk-embedding",
-                "to": "@gooddata/api-model-bear",
-                "type": "prod"
             },
             {
                 "from": "@gooddata/sdk-embedding",
@@ -1166,27 +1086,7 @@
             },
             {
                 "from": "@gooddata/catalog-export",
-                "to": "@gooddata/api-client-bear",
-                "type": "prod"
-            },
-            {
-                "from": "@gooddata/catalog-export",
                 "to": "@gooddata/api-client-tiger",
-                "type": "prod"
-            },
-            {
-                "from": "@gooddata/catalog-export",
-                "to": "@gooddata/api-model-bear",
-                "type": "prod"
-            },
-            {
-                "from": "@gooddata/mock-handling",
-                "to": "@gooddata/api-model-bear",
-                "type": "prod"
-            },
-            {
-                "from": "@gooddata/mock-handling",
-                "to": "@gooddata/sdk-backend-bear",
                 "type": "prod"
             },
             {
@@ -1213,11 +1113,6 @@
                 "from": "@gooddata/sdk-backend-mockingbird",
                 "to": "@gooddata/sdk-model",
                 "type": "prod"
-            },
-            {
-                "from": "@gooddata/sdk-backend-mockingbird",
-                "to": "@gooddata/api-model-bear",
-                "type": "dev"
             },
             {
                 "from": "@gooddata/sdk-backend-mockingbird",
@@ -1247,46 +1142,6 @@
             {
                 "from": "@gooddata/sdk-backend-tiger",
                 "to": "@gooddata/reference-workspace",
-                "type": "dev"
-            },
-            {
-                "from": "@gooddata/sdk-backend-bear",
-                "to": "@gooddata/api-client-bear",
-                "type": "prod"
-            },
-            {
-                "from": "@gooddata/sdk-backend-bear",
-                "to": "@gooddata/api-model-bear",
-                "type": "prod"
-            },
-            {
-                "from": "@gooddata/sdk-backend-bear",
-                "to": "@gooddata/sdk-backend-base",
-                "type": "prod"
-            },
-            {
-                "from": "@gooddata/sdk-backend-bear",
-                "to": "@gooddata/sdk-backend-spi",
-                "type": "prod"
-            },
-            {
-                "from": "@gooddata/sdk-backend-bear",
-                "to": "@gooddata/sdk-embedding",
-                "type": "prod"
-            },
-            {
-                "from": "@gooddata/sdk-backend-bear",
-                "to": "@gooddata/sdk-model",
-                "type": "prod"
-            },
-            {
-                "from": "@gooddata/sdk-backend-bear",
-                "to": "@gooddata/reference-workspace",
-                "type": "dev"
-            },
-            {
-                "from": "@gooddata/sdk-backend-bear",
-                "to": "@gooddata/sdk-backend-mockingbird",
                 "type": "dev"
             },
             {
@@ -1308,11 +1163,6 @@
                 "from": "@gooddata/api-client-tiger",
                 "to": "@gooddata/reference-workspace",
                 "type": "dev"
-            },
-            {
-                "from": "@gooddata/api-client-bear",
-                "to": "@gooddata/api-model-bear",
-                "type": "prod"
             },
             {
                 "from": "@gooddata/sdk-ui",
