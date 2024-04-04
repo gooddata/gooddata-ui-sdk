@@ -1,9 +1,0 @@
-{
-    "request": {
-        "method": "ANY",
-        "urlPattern": "/gdc/.*"
-    },
-    "response": {
-        "proxyBaseUrl": "https://secure.gooddata.com"
-    }
-}
