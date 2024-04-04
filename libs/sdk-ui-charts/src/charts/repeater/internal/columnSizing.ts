@@ -1,15 +1,20 @@
 // (C) 2022-2024 GoodData Corporation
 
 import { invariant, InvariantError } from "ts-invariant";
-import { Column } from "@ag-grid-community/all-modules";
+import { Column, ColumnResizedEvent } from "@ag-grid-community/all-modules";
 import { IAttributeOrMeasure, IMeasure, isMeasure, isAttribute } from "@gooddata/sdk-model";
 
 import {
     RepeaterColumnWidthItem,
     RepeaterColumnWidth,
     IRepeaterMeasureColumnLocator,
+    ColumnEventSourceType,
+    IRepeaterAttributeColumnWidthItem,
+    IRepeaterMeasureColumnWidthItem,
+    IRepeaterAttributeColumnLocator,
 } from "../columnWidths.js";
 import { ResizingState } from "./privateTypes.js";
+import { MutableRefObject } from "react";
 
 export function getColumnWidths(resizingState: ResizingState): RepeaterColumnWidthItem[] {
     const columnApi = resizingState.columnApi;
@@ -83,4 +88,34 @@ function createMeasureLocator(measure: IMeasure): IRepeaterMeasureColumnLocator 
             measureIdentifier: measure.measure.localIdentifier,
         },
     };
+}
+
+//check
+
+export function isManualResizing(columnEvent: ColumnResizedEvent): boolean {
+    return Boolean(columnEvent?.source === ColumnEventSourceType.UI_DRAGGED && columnEvent.columns);
+}
+
+export function isAttributeColumnWidthItem(obj: any): obj is IRepeaterAttributeColumnWidthItem {
+    return obj?.attributeColumnWidthItem !== undefined;
+}
+
+export function isMeasureColumnWidthItem(obj: any): obj is IRepeaterMeasureColumnWidthItem {
+    return obj?.measureColumnWidthItem !== undefined;
+}
+
+export function isAttributeColumnLocator(obj: any): obj is IRepeaterAttributeColumnLocator {
+    return obj?.attributeLocatorItem !== undefined;
+}
+
+export function isMeasureColumnLocator(obj: any): obj is IRepeaterMeasureColumnLocator {
+    return obj?.measureLocatorItem !== undefined;
+}
+
+export function getManualResizedColumn(resizingState: MutableRefObject<ResizingState>, column: Column) {
+    return (
+        resizingState.current.manuallyResizedColumns.find(
+            (manuallyResizedColumn) => manuallyResizedColumn.getColId() === column.getColId(),
+        ) ?? null
+    );
 }

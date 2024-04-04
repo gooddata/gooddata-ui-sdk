@@ -131,10 +131,10 @@ export const RepeaterChart: React.FC<IRepeaterChartProps> = (props) => {
         config?.hyperLinks,
     ]);
 
-    const { onColumnResized, onGridReady } = useResizing(columnDefs, items, props);
+    const { onColumnResized, onGridReady, containerRef } = useResizing(columnDefs, items, props);
 
     return (
-        <div className="gd-repeater ag-theme-balham s-repeater">
+        <div className="gd-repeater ag-theme-balham s-repeater" ref={containerRef}>
             <AgGridReact
                 key={stringify({
                     rowHeight,

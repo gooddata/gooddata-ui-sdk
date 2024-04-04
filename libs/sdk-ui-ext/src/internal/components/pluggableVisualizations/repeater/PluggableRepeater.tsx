@@ -38,7 +38,7 @@ import {
     updateConfigWithSettings,
 } from "@gooddata/sdk-ui-charts";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
-import { BucketNames, IPushData } from "@gooddata/sdk-ui";
+import { BucketNames, IPushData, VisualizationEnvironment } from "@gooddata/sdk-ui";
 import {
     IBucketItem,
     IBucketOfFun,
@@ -50,6 +50,7 @@ import {
     InvalidColumnsSdkError,
     RenderFunction,
     UnmountFunction,
+    IGdcConfig,
 } from "../../../interfaces/Visualization.js";
 import RepeaterConfigurationPanel from "../../configurationPanels/RepeaterConfigurationPanel.js";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
@@ -64,6 +65,7 @@ import { getSupportedPropertiesControls } from "../../../utils/propertiesHelper.
 import { IColorConfiguration } from "src/internal/interfaces/Colors.js";
 import compact from "lodash/compact.js";
 import { getValidProperties } from "../../../utils/colors.js";
+import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
 
 const REPEATER_SUPPORTER_PROPERTIES_LIST = [
     "colorMapping",
@@ -74,6 +76,7 @@ const REPEATER_SUPPORTER_PROPERTIES_LIST = [
 ];
 
 export class PluggableRepeater extends AbstractPluggableVisualization {
+    private environment: VisualizationEnvironment;
     private featureFlags?: ISettings;
     private renderFun: RenderFunction;
     private unmountFun: UnmountFunction;
@@ -82,6 +85,7 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
     constructor(props: IVisConstruct) {
         super(props);
 
+        this.environment = props.environment;
         this.featureFlags = props.featureFlags;
         this.renderFun = props.renderFun;
         this.unmountFun = props.unmountFun;
@@ -258,21 +262,28 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         });
     };
 
-    private buildColumnSizing(columnWidths?: RepeaterColumnWidthItem[]): IRepeaterColumnSizing {
+    private buildColumnSizing(
+        _config: IGdcConfig,
+        columnWidths?: RepeaterColumnWidthItem[],
+    ): IRepeaterColumnSizing {
+        const autoSize = this.featureFlags?.enableTableColumnsAutoResizing;
+        const growToFit =
+            this.environment === DASHBOARDS_ENVIRONMENT && this.featureFlags?.enableTableColumnsGrowToFit;
+
         let columnSizing: Partial<IRepeaterColumnSizing> = {};
 
-        //TODO: implement autoSize and growToFit
-        // if (autoSize) {
-        //     columnSizing = {
-        //         defaultWidth: config.isExportMode ? "viewport" : "autoresizeAll",
-        //     };
-        // }
-        // if (growToFit) {
-        //     columnSizing = {
-        //         ...columnSizing,
-        //         growToFit: true,
-        //     };
-        // }
+        if (autoSize) {
+            columnSizing = {
+                defaultWidth: "autoresizeAll",
+            };
+        }
+
+        if (growToFit) {
+            columnSizing = {
+                ...columnSizing,
+                growToFit: true,
+            };
+        }
 
         if (columnWidths && columnWidths.length > 0) {
             columnSizing = {
@@ -323,7 +334,7 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
             ...(properties?.controls ?? {}),
             ...config,
             ...properties,
-            columnSizing: this.buildColumnSizing(properties?.controls?.columnWidths),
+            columnSizing: this.buildColumnSizing(config, properties?.controls?.columnWidths),
         };
 
         const colorMapping: IColorMappingItem[] = extendedConfig?.colorMapping;
@@ -390,7 +401,7 @@ export function transformAdhocMeasureToInline(measure: IMeasure, mainRowAttribut
 
     const itemRef = measureItem(measure) as IdentifierRef;
     const aggregation = measureAggregation(measure);
-    let maqlExpression = "";
+    let maqlExpression: string;
 
     const itemIdentifier = `{${itemRef.type}/${itemRef.identifier}}`;
 
