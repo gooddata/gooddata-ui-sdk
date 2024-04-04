@@ -1,9 +1,11 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import * as Navigation from "../../tools/navigation";
 import { AttributeFilterButton } from "../../tools/attributeFilterButton";
 import camelCase from "lodash/camelCase";
 
-describe("AttributeFilterButton with initial selection", { tags: ["pre-merge_isolated_bear"] }, () => {
+// Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip("AttributeFilterButton with initial selection", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
         Navigation.visit("filters/attribute-filter-button-with-selection");
     });

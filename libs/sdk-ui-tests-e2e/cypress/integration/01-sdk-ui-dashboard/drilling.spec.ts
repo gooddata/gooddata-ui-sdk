@@ -7,7 +7,6 @@ import { EditMode } from "../../tools/editMode";
 import { CustomURLDialog, WidgetConfiguration } from "../../tools/widgetConfiguration";
 import { Messages } from "../../tools/messages";
 import { DrillToModal } from "../../tools/drillToModal";
-import { getBackend } from "../../support/constants";
 
 const drillModal = new DrillToModal();
 const editMode = new EditMode();
@@ -31,15 +30,13 @@ describe("Interaction", () => {
     //Cover ticket: RAIL-4717
     it(
         "Should correctly display attribute list in custom URL dialog",
-        { tags: ["checklist_integrated_tiger", "checklist_integrated_bear"] },
+        { tags: ["checklist_integrated_tiger"] },
         () => {
             Navigation.visit("dashboard/drill-to-insight");
             editMode.edit();
             widget.waitChartLoaded().focus();
 
-            getBackend() === "TIGER"
-                ? widgetConfig.openInteractions().getDrillConfigItem("Created - Year").remove()
-                : widgetConfig.openInteractions();
+            widgetConfig.openInteractions().getDrillConfigItem("Created - Year").remove();
 
             widgetConfig.addInteraction("Sum of Probability", "measure");
             widgetConfig
@@ -64,7 +61,7 @@ describe("Interaction", () => {
     //Cover ticket: RAIL-4716
     it(
         "should display correct insight name on invalid interaction warning",
-        { tags: ["checklist_integrated_tiger", "checklist_integrated_bear"] },
+        { tags: ["checklist_integrated_tiger"] },
         () => {
             const widget1 = new Widget(1);
             const message = new Messages();
@@ -91,7 +88,9 @@ describe("Interaction", () => {
     );
 });
 
-describe("Drilling on Table with Metrics in Rows", { tags: ["post-merge_integrated_bear"] }, () => {
+// Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip("Drilling on Table with Metrics in Rows", { tags: ["post-merge_integrated_bear"] }, () => {
     beforeEach(() => {
         Navigation.visit("dashboard/drill-to-insight-metrics-in-rows");
     });

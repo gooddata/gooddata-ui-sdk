@@ -10,7 +10,7 @@ const envFilePath = ".env";
 
 async function main() {
     try {
-        const { HOST, TIGER_API_TOKEN, SDK_BACKEND, WORKSPACE_ID } = process.env;
+        const { HOST, TIGER_API_TOKEN, WORKSPACE_ID } = process.env;
 
         if (!TIGER_API_TOKEN) {
             log("TIGER_API_TOKEN not specified in the .env file. Skipping.\n");
@@ -23,7 +23,7 @@ async function main() {
         }
 
         log(`Deleting WORKSPACE_ID ${WORKSPACE_ID}`);
-        await deleteTigerWorkspace(WORKSPACE_ID, TIGER_API_TOKEN, HOST, SDK_BACKEND);
+        await deleteTigerWorkspace(WORKSPACE_ID, TIGER_API_TOKEN, HOST, "TIGER");
 
         const envFileContent = fs.readFileSync(envFilePath, "utf-8");
         const newEnvFileContent = envFileContent

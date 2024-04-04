@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import * as Navigation from "../../tools/navigation";
 import { DateFilter } from "../../tools/dateFilter";
@@ -62,7 +62,8 @@ describe("Date filtering", () => {
         });
     });
 
-    it("should select date filter by preset", { tags: "checklist_integrated_bear" }, () => {
+    // eslint-disable-next-line jest/no-disabled-tests
+    it.skip("should select date filter by preset", { tags: "checklist_integrated_bear" }, () => {
         Navigation.visit("dashboard/for-date-filter");
 
         const dateFilterValues = [

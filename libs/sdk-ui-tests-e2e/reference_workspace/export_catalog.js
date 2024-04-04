@@ -9,10 +9,6 @@ import { execSync } from "child_process";
 
 import { TIGER_FIXTURE_CATALOG } from "./constant.js";
 
-export function exportCatalogBear(_host, _projectId, _username, _password) {
-    console.error("Export catalog bear is not supported");
-}
-
 export function exportCatalogTiger(
     host,
     projectId,

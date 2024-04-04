@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import * as Navigation from "../../tools/navigation";
 import { Dashboard, FilterBar, TopBar } from "../../tools/dashboards";
@@ -9,7 +9,9 @@ import { Table } from "../../tools/table";
 const topBar = new TopBar();
 const dashboardHeader = new DashboardHeader();
 
-describe("Dashboard", { tags: ["pre-merge_isolated_bear"] }, () => {
+// Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip("Dashboard", { tags: ["pre-merge_isolated_bear"] }, () => {
     describe("TopBar rendering", () => {
         beforeEach(() => {
             Navigation.visit("dashboard/kpis");
@@ -47,7 +49,7 @@ describe("Dashboard", { tags: ["pre-merge_isolated_bear"] }, () => {
         //Cover ticket: RAIL-4431
         it(
             "should display placeholder and focus title for new dashboard",
-            { tags: ["checklist_integrated_tiger", "checklist_integrated_bear"] },
+            { tags: ["checklist_integrated_tiger"] },
             () => {
                 Navigation.visit("dashboard/new-dashboard");
                 dashboardHeader.hasTitlePlaceholder();
@@ -111,25 +113,21 @@ describe("Dashboard", { tags: ["pre-merge_isolated_bear"] }, () => {
 describe("Dashboard actions", () => {
     const editMode = new EditMode();
     //Cover ticket: RAIL-4772
-    it(
-        "should able to delete dashboard after save as new",
-        { tags: ["checklist_integrated_tiger", "checklist_integrated_bear"] },
-        () => {
-            Navigation.visitCopyOf("dashboard/kpis");
+    it("should able to delete dashboard after save as new", { tags: ["checklist_integrated_tiger"] }, () => {
+        Navigation.visitCopyOf("dashboard/kpis");
 
-            editMode.edit();
-            new DashboardHeader()
-                .menuButtonIsVisible(true)
-                .clickMenuButton()
-                .deleteDashboard(true)
-                .dashboardTitleHasValue("Untitled");
-        },
-    );
+        editMode.edit();
+        new DashboardHeader()
+            .menuButtonIsVisible(true)
+            .clickMenuButton()
+            .deleteDashboard(true)
+            .dashboardTitleHasValue("Untitled");
+    });
 
     //Cover ticket: RAIL-4642
     it(
         "should able to scroll vertical/ horizontal on widget",
-        { tags: ["checklist_integrated_tiger", "checklist_integrated_bear"] },
+        { tags: ["checklist_integrated_tiger"] },
         () => {
             const table = new Table(".s-dash-item-0");
 
@@ -140,12 +138,8 @@ describe("Dashboard actions", () => {
     );
 
     //Cover ticket: RAIL-4750
-    it(
-        "should direct to view mode after save as new",
-        { tags: ["checklist_integrated_tiger", "checklist_integrated_bear"] },
-        () => {
-            Navigation.visitCopyOf("dashboard/kpis");
-            dashboardHeader.editButtonIsVisible(true).shareButtonExists(true);
-        },
-    );
+    it("should direct to view mode after save as new", { tags: ["checklist_integrated_tiger"] }, () => {
+        Navigation.visitCopyOf("dashboard/kpis");
+        dashboardHeader.editButtonIsVisible(true).shareButtonExists(true);
+    });
 });

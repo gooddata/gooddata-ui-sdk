@@ -14,7 +14,9 @@ const getKPI = () => new Widget(0).waitKpiLoaded().getKPI();
 const getTable = () => new Widget(1).waitTableLoaded().getTable();
 const getChart = () => new Widget(2).waitChartLoaded().getChart();
 
-describe("Single selection filters", () => {
+// Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip("Single selection filters", () => {
     beforeEach(() => {
         Navigation.visit("dashboard/single-select-filter-integration");
     });

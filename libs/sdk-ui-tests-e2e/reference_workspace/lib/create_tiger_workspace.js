@@ -19,7 +19,8 @@ import { retryOperation } from "./utils.js";
 
 const childWSOutputFile = TIGER_CHILD_WORKSPACE_FIXTURE_CATALOG["goodsales"];
 
-async function createFixture(workspacePrefix, fixtureType, dataSource, token, host, backend) {
+async function createFixture(workspacePrefix, fixtureType, dataSource, token, host) {
+    const backend = "TIGER"; // needed by methods from @gooddata/fixtures
     const workspaceId = await createTigerWorkspaceWithPrefix(workspacePrefix, token, host, backend);
 
     const tigerMetadataExtension = TIGER_FIXTURE_METADATA_EXTENSIONS[fixtureType];
@@ -47,7 +48,6 @@ async function main() {
             TEST_CHILD_WORKSPACE_ID,
             TIGER_DATASOURCES_NAME,
             FIXTURE_TYPE = "goodsales",
-            SDK_BACKEND,
         } = process.env;
 
         if (TEST_WORKSPACE_ID) {
@@ -73,7 +73,6 @@ async function main() {
             TIGER_DATASOURCES_NAME,
             TIGER_API_TOKEN,
             HOST,
-            SDK_BACKEND,
         );
 
         log("Exporting metadata objects identifiers to local TypeScript file\n");
@@ -88,7 +87,7 @@ async function main() {
             log(`TEST_WORKSPACE_ID ${testReferenceWorkspaceId} added to the .env file\n`);
         });
 
-        if (SDK_BACKEND == "TIGER" && FIXTURE_TYPE == "goodsales") {
+        if (FIXTURE_TYPE == "goodsales") {
             log("Preparing test children workspace\n");
             if (TEST_CHILD_WORKSPACE_ID) {
                 log(
@@ -101,7 +100,7 @@ async function main() {
                 E2E_SDK_CHILD_WORKSPACE_PREFIX,
                 TIGER_API_TOKEN,
                 HOST,
-                SDK_BACKEND,
+                "TIGER",
                 testReferenceWorkspaceId,
             );
             fs.appendFile(".env", `\nTEST_CHILD_WORKSPACE_ID=${testChildReferenceWorkspaceId}`, () => {

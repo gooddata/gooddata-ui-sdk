@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 
 import { attributeLocalId, measureLocalId } from "@gooddata/sdk-model";
 import * as Md from "../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
@@ -104,7 +104,9 @@ const checkWidthWithTolerance = (width: Cypress.Chainable<JQuery<number>>, expec
 
 // first attribute column
 
-describe("Pivot Table Sizing and Reset by double click", { tags: ["pre-merge_isolated_bear"] }, () => {
+// Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip("Pivot Table Sizing and Reset by double click", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
         Navigation.visit("visualizations/pivot-table/sizing/pivot-table-complex-reset");
     });

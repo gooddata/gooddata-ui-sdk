@@ -18,7 +18,9 @@ beforeEach(() => {
     Navigation.visit("dashboard/kpis");
 });
 
-describe("KPI POP", { tags: ["pre-merge_isolated_bear"] }, () => {
+// Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip("KPI POP", { tags: ["pre-merge_isolated_bear"] }, () => {
     it("Check newly added KPI has POP section", () => {
         widget.getKPI().hasPOPSection();
 
@@ -77,7 +79,9 @@ describe("KPI POP", { tags: ["pre-merge_isolated_bear"] }, () => {
     });
 });
 
-describe("KPI metric dropdown", { tags: ["pre-merge_isolated_bear"] }, () => {
+// Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip("KPI metric dropdown", { tags: ["pre-merge_isolated_bear"] }, () => {
     it("Check search string reset after dropdown toggle", () => {
         editMode.edit();
 
@@ -107,7 +111,9 @@ describe("KPI metric dropdown", { tags: ["pre-merge_isolated_bear"] }, () => {
     });
 });
 
-describe("KPI metric formatting", { tags: ["pre-merge_isolated_bear"] }, () => {
+// Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip("KPI metric formatting", { tags: ["pre-merge_isolated_bear"] }, () => {
     it("Test custom metric formatting", () => {
         editMode.edit();
 
@@ -122,7 +128,9 @@ describe("KPI metric formatting", { tags: ["pre-merge_isolated_bear"] }, () => {
     });
 });
 
-describe("KPI with alert", { tags: ["checklist_integrated_bear"] }, () => {
+// Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
+// eslint-disable-next-line jest/no-disabled-tests
+describe.skip("KPI with alert", { tags: ["checklist_integrated_bear"] }, () => {
     //Cover ticket: RAIL-4760
     it("Dashboard should reload and render well after delete KPI has alert", () => {
         editMode.edit();

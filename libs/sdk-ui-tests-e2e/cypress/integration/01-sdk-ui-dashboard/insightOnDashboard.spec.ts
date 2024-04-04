@@ -47,7 +47,9 @@ describe("Insights on dashboard", () => {
             .clearSearch();
     });
 
-    it("should keep the panel after clearing search", { tags: ["checklist_integrated_bear"] }, () => {
+    // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
+    // eslint-disable-next-line jest/no-disabled-tests
+    it.skip("should keep the panel after clearing search", { tags: ["checklist_integrated_bear"] }, () => {
         insightCatalog
             .waitForCatalogReload()
             .clickTab("all")
@@ -74,7 +76,9 @@ describe("Insights on dashboard", () => {
     });
 
     //Cover ticket: RAIL-4783
-    it(
+    // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
+    // eslint-disable-next-line jest/no-disabled-tests
+    it.skip(
         "Dashboard should be displayed well after drag and drop new insight",
         { tags: ["checklist_integrated_bear"] },
         () => {

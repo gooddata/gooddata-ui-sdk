@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import * as Navigation from "../../tools/navigation";
 import { AttributeFilterConfiguration } from "../../tools/attributeFilterConfig";
 import { AttributeFilterButton } from "../../tools/attributeFilterButton";
@@ -16,6 +16,7 @@ const CONFIGURATION_SELECTOR = ".s-attribute-filter-dropdown-configuration";
 const ORDER_DISPLAY_FORM_VALUE = ".gd-list-item.s-attribute-display-form-name-order";
 
 describe("Attribute filter", () => {
+    // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
     // eslint-disable-next-line jest/no-disabled-tests
     describe.skip("Attribute filter Configuration", { tags: ["pre-merge_isolated_bear"] }, () => {
         beforeEach(() => {

@@ -4456,9 +4456,6 @@ importers:
       '@gooddata/fixtures':
         specifier: 1.32.15
         version: 1.32.15
-      '@gooddata/sdk-backend-bear':
-        specifier: workspace:*
-        version: link:../sdk-backend-bear
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../sdk-backend-spi

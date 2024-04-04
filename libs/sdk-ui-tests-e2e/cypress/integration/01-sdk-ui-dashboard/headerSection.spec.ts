@@ -73,36 +73,32 @@ describe("Header section", () => {
         });
 
         //Cover ticket: RAIL-4674
-        it(
-            "Limitation of title, description",
-            { tags: ["checklist_integrated_tiger", "checklist_integrated_bear"] },
-            () => {
-                cy.fixture("headerDataTest").then((data) => {
-                    const title = data["LimitTexts"].title;
-                    const desc = data["LimitTexts"].description;
-                    const headerRow_01 = layoutRow_01.getHeader();
-                    const headerRow_02 = layoutRow_02.getHeader();
-                    insightCatalog.waitForCatalogReload();
-                    headerRow_01
-                        .setTitle(title)
-                        .selectTitleInput()
-                        .hasLimitMessage(true, "128/256 caractères restant")
-                        .clickOutside()
-                        .hasLimitMessage(false, "128/256 caractères restant");
-                    headerRow_02
-                        .scrollIntoView()
-                        .setDescription(desc)
-                        .selectDescriptionInput()
-                        .hasLimitMessage(true, "512/1024 caractères restant")
-                        .clickOutside()
-                        .hasLimitMessage(false, "512/1024 caractères restant");
+        it("Limitation of title, description", { tags: ["checklist_integrated_tiger"] }, () => {
+            cy.fixture("headerDataTest").then((data) => {
+                const title = data["LimitTexts"].title;
+                const desc = data["LimitTexts"].description;
+                const headerRow_01 = layoutRow_01.getHeader();
+                const headerRow_02 = layoutRow_02.getHeader();
+                insightCatalog.waitForCatalogReload();
+                headerRow_01
+                    .setTitle(title)
+                    .selectTitleInput()
+                    .hasLimitMessage(true, "128/256 caractères restant")
+                    .clickOutside()
+                    .hasLimitMessage(false, "128/256 caractères restant");
+                headerRow_02
+                    .scrollIntoView()
+                    .setDescription(desc)
+                    .selectDescriptionInput()
+                    .hasLimitMessage(true, "512/1024 caractères restant")
+                    .clickOutside()
+                    .hasLimitMessage(false, "512/1024 caractères restant");
 
-                    editMode.save();
-                    headerRow_01.hasTitleWithText(title);
-                    headerRow_02.hasDescriptionWithText(desc);
-                });
-            },
-        );
+                editMode.save();
+                headerRow_01.hasTitleWithText(title);
+                headerRow_02.hasDescriptionWithText(desc);
+            });
+        });
 
         it("Header placeholder should be translated", { tags: ["pre-merge_isolated_tiger"] }, () => {
             layoutRow_01
