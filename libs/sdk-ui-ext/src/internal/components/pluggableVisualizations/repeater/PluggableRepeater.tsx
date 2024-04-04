@@ -51,6 +51,7 @@ import {
     RenderFunction,
     UnmountFunction,
     IGdcConfig,
+    InvalidBucketsSdkError,
 } from "../../../interfaces/Visualization.js";
 import RepeaterConfigurationPanel from "../../configurationPanels/RepeaterConfigurationPanel.js";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
@@ -194,6 +195,11 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         return bucket?.items?.length > 0;
     }
 
+    private insightHasRows(insight: IInsightDefinition): boolean {
+        const bucket = insightBucket(insight, BucketNames.ATTRIBUTE);
+        return bucket?.items?.length > 0;
+    }
+
     protected mergeDerivedBucketItems(
         _referencePoint: IReferencePoint,
         bucket: IBucketOfFun,
@@ -227,6 +233,9 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
 
         if (!this.insightHasColumns(insight)) {
             throw new InvalidColumnsSdkError();
+        }
+        if (!this.insightHasRows(insight)) {
+            throw new InvalidBucketsSdkError();
         }
 
         return true;
