@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { invariant } from "ts-invariant";
 import isNil from "lodash/isNil.js";
 import {
@@ -24,7 +24,7 @@ import { DateAttributeGranularity } from "../../base/dateGranularities.js";
  *
  * @remarks
  * NOTE: when specifying attribute element using URIs (primary keys), please keep in mind that they MAY NOT be transferable
- * across workspaces. On some backends (such as bear) same element WILL have different URI in each workspace.
+ * across workspaces. On some backends same element WILL have different URI in each workspace.
  * In general we recommend using URIs only if your code retrieves them at runtime from backend using elements query
  * or from the data view's headers. Hardcoding URIs is never a good idea, if you find yourself doing that,
  * please consider specifying attribute elements by value
@@ -59,7 +59,7 @@ export function newPositiveAttributeFilter(
  *
  * @remarks
  * NOTE: when specifying attribute element using URIs (primary keys), please keep in mind that they MAY NOT be transferable
- * across workspaces. On some backends (such as bear) same element WILL have different URI in each workspace.
+ * across workspaces. On some backends same element WILL have different URI in each workspace.
  * In general we recommend using URIs only if your code retrieves them at runtime from backend using elements query
  * or from the data view's headers. Hardcoding URIs is never a good idea, if you find yourself doing that,
  * please consider specifying attribute elements by value

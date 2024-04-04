@@ -22,7 +22,6 @@ exports[`BuildScheduler > should build the entire subtree if leaf changes 1`] = 
   "@gooddata/api-client-tiger",
   "@gooddata/sdk-backend-mockingbird",
   "@gooddata/sdk-backend-tiger",
-  "@gooddata/sdk-backend-bear",
   "@gooddata/sdk-ui",
   "@gooddata/sdk-ui-kit",
   "@gooddata/sdk-ui-vis-commons",
@@ -31,15 +30,5 @@ exports[`BuildScheduler > should build the entire subtree if leaf changes 1`] = 
   "@gooddata/sdk-ui-charts",
   "@gooddata/sdk-ui-pivot",
   "@gooddata/sdk-ui-ext",
-]
-`;
-
-exports[`BuildScheduler > should build the other subtree if leaf changes 1`] = `
-[
-  "@gooddata/api-model-bear",
-  "@gooddata/sdk-embedding",
-  "@gooddata/api-client-bear",
-  "@gooddata/sdk-ui-ext",
-  "@gooddata/sdk-backend-bear",
 ]
 `;

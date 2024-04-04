@@ -7,8 +7,6 @@
  * with low-level details. The functionality includes but is not limited to:
  * getting and creating metadata objects, running executions, getting settings, getting available workspaces, and more.
  *
- * For similar package for the GoodData platform, see `@gooddata/sdk-backend-bear`.
- *
  * @packageDocumentation
  */
 import { IAnalyticalBackendConfig, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";

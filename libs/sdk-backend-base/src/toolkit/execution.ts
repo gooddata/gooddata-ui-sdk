@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 import {
     IAttributeOrMeasure,
@@ -26,8 +26,7 @@ import { DecoratedExecutionFactory } from "../decoratedBackend/execution.js";
  *
  * Note: the `forInsightByRef` is implemented as fallback to freeform execution done by `forInsight`. The
  * rationale is that most backends do not support that anyway so it is a safe default behavior. If the backend
- * supports execute-by-reference, then overload the method with your own implementation (see sdk-backend-bear for
- * inspiration)
+ * supports execute-by-reference, then overload the method with your own implementation
  *
  * @internal
  */
