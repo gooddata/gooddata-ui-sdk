@@ -27,6 +27,7 @@ import {
     exportDefinitionToExportDefinitionPostOptionalIdDocument,
 } from "../../../convertors/fromBackend/ExportDefinitionsConverter.js";
 import { ExportDefinitionsQuery } from "./exportDefinitionsQuery.js";
+import { exportDefinitionsListComparator } from "./comparator.js";
 
 export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefinitionsService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -60,20 +61,17 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
                 });
         });
 
-        // todo verify, implement, or delete
         // Remove when API starts to support sort=modifiedBy,createdBy,insight.title
         // (first verify that modifiedBy,createdBy behave as the code below, i.e., use createdBy if modifiedBy is
         // not defined as it is missing for the insights that were just created and never updated, also title
         // should be compared in case-insensitive manner)
-        /*
+
         const sanitizedOrder =
             requestParameters.sort === undefined && allExportDefinitions.length > 0
-                ? [...allExportDefinitions].sort(insightListComparator)
+                ? [...allExportDefinitions].sort(exportDefinitionsListComparator)
                 : allExportDefinitions;
 
         return new InMemoryPaging(sanitizedOrder, options?.limit ?? 50, options?.offset ?? 0);
-        */
-        return new InMemoryPaging(allExportDefinitions, options?.limit ?? 50, options?.offset ?? 0);
     };
 
     public getExportDefinitionsQuery = (): IExportDefinitionsQuery => {

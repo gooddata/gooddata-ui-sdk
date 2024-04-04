@@ -868,4 +868,8 @@ export {
     IExportDefinition,
     IExportDefinitionRequestPayload,
     IExportDefinitionBase,
+    IExportDefinitionPdfOptions,
+    exportDefinitionTitle,
+    exportDefinitionCreated,
+    exportDefinitionUpdated,
 } from "./exportDefinitions/index.js";

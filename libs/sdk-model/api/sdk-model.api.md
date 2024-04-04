@@ -451,6 +451,15 @@ export type DrillType = "drillToInsight" | "drillToDashboard" | "drillToLegacyDa
 // @public
 export function emptyDef(workspace: string): IExecutionDefinition;
 
+// @alpha
+export function exportDefinitionCreated(exportDefinition: IExportDefinition): string | undefined;
+
+// @alpha
+export function exportDefinitionTitle(exportDefinition: IExportDefinition): string;
+
+// @alpha
+export function exportDefinitionUpdated(exportDefinition: IExportDefinition): string | undefined;
+
 // @public
 export const factoryNotationFor: (data: any, additionalConversion?: ((data: any) => string | undefined) | undefined) => string;
 
@@ -1442,13 +1451,19 @@ export interface IExportDefinitionBase {
 }
 
 // @alpha
+export interface IExportDefinitionPdfOptions {
+    // (undocumented)
+    orientation: "portrait" | "landscape";
+}
+
+// @alpha
 export interface IExportDefinitionRequestPayload {
     // (undocumented)
     filters?: IFilter[];
     // (undocumented)
     format: "PDF";
     // (undocumented)
-    pdfOptions?: any;
+    pdfOptions?: IExportDefinitionPdfOptions;
     // (undocumented)
     visualizationObjectId: Identifier;
 }
