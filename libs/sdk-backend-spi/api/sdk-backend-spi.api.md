@@ -160,6 +160,15 @@ export type ExplainType = "MAQL" | "GRPC_MODEL" | "WDF" | "QT" | "QT_SVG" | "OPT
 // @alpha
 export type ExportDefinitionOrdering = "id" | "title" | "updated";
 
+// @alpha
+export type ExportDefinitionQuerySort = ExportDefinitionQuerySortProperty | `${ExportDefinitionQuerySortProperty},${ExportDefinitionQuerySortDirection}`;
+
+// @alpha
+export type ExportDefinitionQuerySortDirection = "asc" | "desc";
+
+// @alpha
+export type ExportDefinitionQuerySortProperty = "id" | "title";
+
 // @public
 export type FilterWithResolvableElements = IAttributeFilter | IRelativeDateFilter;
 
@@ -502,7 +511,7 @@ export interface IExportDefinitionsQuery {
     }): IExportDefinitionsQuery;
     withPage(page: number): IExportDefinitionsQuery;
     withSize(size: number): IExportDefinitionsQuery;
-    withSorting(sort: string[]): IExportDefinitionsQuery;
+    withSorting(sort: ExportDefinitionQuerySort[]): IExportDefinitionsQuery;
 }
 
 // @alpha

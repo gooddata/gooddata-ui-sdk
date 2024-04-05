@@ -63,6 +63,9 @@ export {
     IExportDefinitionsQueryResult,
     IGetExportDefinitionOptions,
     IWorkspaceExportDefinitionsService,
+    ExportDefinitionQuerySortDirection,
+    ExportDefinitionQuerySortProperty,
+    ExportDefinitionQuerySort,
 } from "./workspace/exportDefinitions/index.js";
 
 export {

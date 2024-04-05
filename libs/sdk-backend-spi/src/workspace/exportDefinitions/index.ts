@@ -126,6 +126,29 @@ export interface IGetExportDefinitionOptions {
 }
 
 /**
+ * Sort direction for exportDefinition query.
+ *
+ * @alpha
+ */
+export type ExportDefinitionQuerySortDirection = "asc" | "desc";
+
+/**
+ * Sort order for exportDefinition query.
+ *
+ * @alpha
+ */
+export type ExportDefinitionQuerySortProperty = "id" | "title";
+
+/**
+ * Sort criteria for exportDefinition query.
+ *
+ * @alpha
+ */
+export type ExportDefinitionQuerySort =
+    | ExportDefinitionQuerySortProperty
+    | `${ExportDefinitionQuerySortProperty},${ExportDefinitionQuerySortDirection}`;
+
+/**
  * Service to query exportDefinitions.
  *
  * @alpha
@@ -164,7 +187,7 @@ export interface IExportDefinitionsQuery {
      * @param sort - Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
      * @returns exportDefinitions query
      */
-    withSorting(sort: string[]): IExportDefinitionsQuery;
+    withSorting(sort: ExportDefinitionQuerySort[]): IExportDefinitionsQuery;
 
     /**
      * Starts the query.

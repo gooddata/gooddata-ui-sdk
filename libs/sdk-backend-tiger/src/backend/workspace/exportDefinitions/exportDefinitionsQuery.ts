@@ -5,16 +5,25 @@ import {
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
-import { IExportDefinitionsQuery, IExportDefinitionsQueryResult } from "@gooddata/sdk-backend-spi";
+import {
+    ExportDefinitionQuerySort,
+    ExportDefinitionQuerySortDirection,
+    ExportDefinitionQuerySortProperty,
+    IExportDefinitionsQuery,
+    IExportDefinitionsQueryResult,
+} from "@gooddata/sdk-backend-spi";
 import isNil from "lodash/isNil.js";
 import { exportDefinitionsOutListToExportDefinitions } from "../../../convertors/fromBackend/ExportDefinitionsConverter.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { invariant } from "ts-invariant";
 
 export class ExportDefinitionsQuery implements IExportDefinitionsQuery {
     private size = 50;
     private page = 0;
     private filter: { title?: string } = {};
     private sort = {};
+    private allowedSortProperties: ExportDefinitionQuerySortProperty[] = ["title", "id"];
+    private allowedSortDirections: ExportDefinitionQuerySortDirection[] = ["asc", "desc"];
     private totalCount: number | undefined = undefined;
 
     constructor(
@@ -24,6 +33,32 @@ export class ExportDefinitionsQuery implements IExportDefinitionsQuery {
 
     private setTotalCount = (value?: number) => {
         this.totalCount = value;
+    };
+
+    private isValidSortItem = (sortItem = ""): sortItem is ExportDefinitionQuerySort => {
+        const [sortProp, optionalSortDirection, ...rest] = sortItem.split(",");
+
+        if (rest.length > 0) {
+            return false; // valid sort is either just the property or property,direction
+        }
+        if (!this.allowedSortProperties.includes(sortProp as ExportDefinitionQuerySortProperty)) {
+            return false; // invalid sort property check
+        }
+        return !(
+            optionalSortDirection &&
+            !this.allowedSortDirections.includes(optionalSortDirection as ExportDefinitionQuerySortDirection)
+        ); // invalid sort direction check
+    };
+
+    private validateQuerySort = (sort: ExportDefinitionQuerySort[]) => {
+        const isValidSort = sort.every(this.isValidSortItem);
+
+        invariant(
+            isValidSort,
+            `Invalid sort format. Use 'property' or 'property,direction' format. Allowed properties: ${this.allowedSortProperties.join(
+                ", ",
+            )}. Allowed directions: ${this.allowedSortDirections.join(", ")}.`,
+        );
     };
 
     withSize(size: number): IExportDefinitionsQuery {
@@ -43,7 +78,8 @@ export class ExportDefinitionsQuery implements IExportDefinitionsQuery {
         return this;
     }
 
-    withSorting(sort: string[]): IExportDefinitionsQuery {
+    withSorting(sort: ExportDefinitionQuerySort[]): IExportDefinitionsQuery {
+        this.validateQuerySort(sort);
         this.sort = { sort };
         return this;
     }
