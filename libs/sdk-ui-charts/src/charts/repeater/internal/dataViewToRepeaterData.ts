@@ -35,7 +35,6 @@ export type RepeaterInlineVisualizationDataPoint = {
  * Execution is always constructed by the following rules:
  *  - It always contains 1 main row attribute
  *  - It can contain 0..n column attributes
- *  - Column attributes have always the same count of headers as the main row attribute
  *  - It can contain 0..n measures
  *  - It can contain 0 or 1 slicing attribute.
  */
@@ -47,6 +46,9 @@ export function dataViewToRepeaterData(dataViewFacade: DataViewFacade): IRepeate
     ];
 
     const [firstDimHeaders, secondDimHeaders] = dataViewFacade.meta().allHeaders();
+
+    const numberOfMeasures =
+        secondDimDescriptors.find(isMeasureGroupDescriptor)?.measureGroupHeader?.items.length ?? 0;
 
     // Process first dimension (row and column attributes)
     firstDimDescriptors.forEach((dimDescriptor, headerIndex) => {
@@ -66,9 +68,9 @@ export function dataViewToRepeaterData(dataViewFacade: DataViewFacade): IRepeate
             const headerItems = secondDimHeaders[secondDimDescriptors.indexOf(dimDescriptor)];
             // Slicing attribute is same for each row
             rows.forEach((row) => {
-                row[localId] = (headerItems as IResultAttributeHeader[]).map(
-                    (header) => header.attributeHeaderItem,
-                );
+                row[localId] = (headerItems as IResultAttributeHeader[])
+                    .filter((_, index) => index % numberOfMeasures === 0) // skip repeating headers in case of multiple measures
+                    .map((header) => header.attributeHeaderItem);
             });
         } else if (isMeasureGroupDescriptor(dimDescriptor)) {
             // Map each measure to rows
