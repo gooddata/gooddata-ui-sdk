@@ -11,7 +11,7 @@ import { log, logError, logInfo, logSuccess } from "./cli/loggers.js";
 import { clearLine, clearTerminal } from "./cli/clear.js";
 import { promptProjectId, promptTigerToken } from "./cli/prompts.js";
 import { getConfigFromConfigFile, getConfigFromOptions } from "./base/config.js";
-import { DEFAULT_CONFIG_FILE_NAME, DEFAULT_HOSTNAME, DEFAULT_BACKEND } from "./base/constants.js";
+import { DEFAULT_CONFIG_FILE_NAME, DEFAULT_HOSTNAME } from "./base/constants.js";
 import { DataRecorderConfig, DataRecorderError, isDataRecorderError } from "./base/types.js";
 import { generateAllFiles } from "./codegen/index.js";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -49,7 +49,7 @@ async function promptForMissingConfig(config: DataRecorderConfig): Promise<DataR
 
         logInSpinner.start("Logging in...");
 
-        await getOrInitBackend(tigerToken, hostname || DEFAULT_HOSTNAME, DEFAULT_BACKEND);
+        await getOrInitBackend(tigerToken, hostname || DEFAULT_HOSTNAME);
         logInSpinner.succeed();
         clearLine();
     } catch (err) {
@@ -185,11 +185,7 @@ async function run() {
          * Instantiate analytical backend to run requests against; it is enough to do this once for the whole
          * run.
          */
-        const backend = getOrInitBackend(
-            fullConfig.tigerToken!,
-            options.hostname || DEFAULT_HOSTNAME,
-            options.backend || DEFAULT_BACKEND,
-        );
+        const backend = getOrInitBackend(fullConfig.tigerToken!, options.hostname || DEFAULT_HOSTNAME);
 
         const newRecordings = await captureRecordings(incompleteRecordings, backend, fullConfig);
 
