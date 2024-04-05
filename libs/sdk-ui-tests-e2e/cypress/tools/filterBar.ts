@@ -486,6 +486,82 @@ export class AttributeFilter {
         return this;
     }
 
+    /**
+     * Open add limit dashboard filter dialog
+     */
+    openAddLimitDashboardFilter() {
+        cy.get(".s-add").click();
+        cy.get(".s-add-limit-dashboard_filter").click();
+    }
+
+    closeAddLimitDashboardFilter() {
+        cy.get(".configuration-panel-header-title.clickable").click();
+        return this;
+    }
+
+    /**
+     * Works only for Tiger backend (available filter values UI)
+     *
+     * @param parentFilterName - name of parent specific date filter that current filter belong to
+     * @param visible - visibility of the filter, default is true
+     */
+    isSpecificDateFilterVisible(parentFilterName: string, visible = true): this {
+        this.openAddLimitDashboardFilter();
+        cy.get(".s-dashboard-filter-" + parentFilterName).should(($element) => {
+            if (visible) {
+                // eslint-disable-next-line jest/valid-expect
+                expect($element).to.have.class("is-disabled");
+            } else {
+                // eslint-disable-next-line jest/valid-expect
+                expect($element).not.to.have.class("is-disabled");
+            }
+        });
+        this.closeAddLimitDashboardFilter();
+        return this;
+    }
+
+    /**
+     * Works only for Tiger backend (available filter values UI)
+     *
+     * @param parentFilterName - name of parent common date filter that current filter belong to
+     * @param visible - visibility of the filter, default is true
+     */
+    isCommonDateFilterVisible(parentFilterName: string, visible = true): this {
+        this.openAddLimitDashboardFilter();
+        cy.get(getTestClassByTitle("Date range", "dashboard-filter-")).click();
+        cy.get(".date-filter__limit__popup__item.s-" + parentFilterName).should(($element) => {
+            if (visible) {
+                // eslint-disable-next-line jest/valid-expect
+                expect($element).to.have.class("is-disabled");
+            } else {
+                // eslint-disable-next-line jest/valid-expect
+                expect($element).not.to.have.class("is-disabled");
+            }
+        });
+        this.closeAddLimitDashboardFilter();
+        return this;
+    }
+
+    /**
+     * Works only for Tiger backend (available filter values UI)
+     *
+     * @param parentFilterName - name(s) of parent filter that current filter belong to
+     * @param dateType - type of date filter (Date range or Date specific)
+     */
+    configureLimitingDateFilterDependency(parentFilterName: string, dateType: string) {
+        this.openAddLimitDashboardFilter();
+
+        if (dateType == "Date range") {
+            cy.get(getTestClassByTitle(dateType, "dashboard-filter-")).click();
+            cy.get(".date-filter__limit__popup__item.s-" + parentFilterName).click();
+        } else {
+            cy.get(".s-dashboard-filter-" + parentFilterName).click();
+        }
+
+        this.getDropdownElement().find(".s-apply").click();
+        return this;
+    }
+
     searchMetricDependency(metricName: string) {
         cy.get(".s-add").click();
         this.getAttributeFilterLimit().addMetric();
