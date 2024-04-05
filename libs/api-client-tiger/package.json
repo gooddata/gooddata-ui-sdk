@@ -42,7 +42,7 @@
     "dependencies": {
         "@gooddata/sdk-model": "workspace:*",
         "axios": "^1.4.0",
-        "lodash": "^4.17.19",
+        "lodash": "^4.17.21",
         "tslib": "^2.5.0",
         "axios-cache-interceptor": "^1.2.0"
     },

@@ -50,7 +50,7 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "lodash": "^4.17.19",
+        "lodash": "^4.17.21",
         "react-intl": "^6.4.1",
         "tslib": "^2.5.0"
     },
