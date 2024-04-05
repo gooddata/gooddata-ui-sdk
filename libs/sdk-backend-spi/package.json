@@ -39,7 +39,7 @@
     },
     "dependencies": {
         "@gooddata/sdk-model": "workspace:*",
-        "lodash": "^4.17.19",
+        "lodash": "^4.17.21",
         "ts-invariant": "^0.7.5",
         "tslib": "^2.5.0"
     },
