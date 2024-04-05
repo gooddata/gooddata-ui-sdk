@@ -50,7 +50,6 @@ import {
     InvalidColumnsSdkError,
     RenderFunction,
     UnmountFunction,
-    IGdcConfig,
     InvalidBucketsSdkError,
 } from "../../../interfaces/Visualization.js";
 import RepeaterConfigurationPanel from "../../configurationPanels/RepeaterConfigurationPanel.js";
@@ -69,6 +68,7 @@ import { getValidProperties } from "../../../utils/colors.js";
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
 
 const REPEATER_SUPPORTER_PROPERTIES_LIST = [
+    "columnWidths",
     "colorMapping",
     "rowHeight",
     "cellVerticalAlign",
@@ -256,25 +256,21 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
 
     private onColumnResized = (columnWidths: RepeaterColumnWidthItem[]): void => {
         const properties = this.visualizationProperties ?? {};
-        const supportedProperties = getSupportedPropertiesControls(
-            properties?.controls,
-            this.supportedPropertiesList,
-        );
+        const supportedProperties = {
+            ...getSupportedPropertiesControls(properties?.controls, this.supportedPropertiesList),
+            columnWidths,
+        };
+
+        this.visualizationProperties = supportedProperties;
 
         this.pushData({
             properties: {
-                controls: {
-                    columnWidths,
-                    ...supportedProperties,
-                },
+                controls: supportedProperties,
             },
         });
     };
 
-    private buildColumnSizing(
-        _config: IGdcConfig,
-        columnWidths?: RepeaterColumnWidthItem[],
-    ): IRepeaterColumnSizing {
+    private buildColumnSizing(columnWidths?: RepeaterColumnWidthItem[]): IRepeaterColumnSizing {
         const autoSize = this.featureFlags?.enableTableColumnsAutoResizing;
         const growToFit =
             this.environment === DASHBOARDS_ENVIRONMENT && this.featureFlags?.enableTableColumnsGrowToFit;
@@ -302,6 +298,17 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         }
 
         return columnSizing as IRepeaterColumnSizing;
+    }
+
+    private buildColorMapping(colorMapping?: IColorMappingItem[]): IColorMapping[] {
+        const validColorMapping = compact(colorMapping).map(
+            (mapItem): IColorMapping => ({
+                predicate: ColorUtils.getColorMappingPredicate(mapItem.id),
+                color: mapItem.color,
+            }),
+        );
+
+        return validColorMapping?.length > 0 ? validColorMapping : null;
     }
 
     protected handleConfirmedColorMapping(data: IPushData): void {
@@ -339,27 +346,17 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         const { drillableItems } = custom;
         const execution = this.getExecution(options, insight, executionFactory);
         const properties = insightProperties(insight);
+
         let extendedConfig = {
             ...(properties?.controls ?? {}),
             ...config,
             ...properties,
-            columnSizing: this.buildColumnSizing(config, properties?.controls?.columnWidths),
         };
 
-        const colorMapping: IColorMappingItem[] = extendedConfig?.colorMapping;
-
-        const validColorMapping = compact(colorMapping).map(
-            (mapItem): IColorMapping => ({
-                predicate: ColorUtils.getColorMappingPredicate(mapItem.id),
-                color: mapItem.color,
-            }),
-        );
-
         extendedConfig = {
-            ...(properties?.controls ?? {}),
-            ...config,
-            ...properties,
-            colorMapping: validColorMapping?.length > 0 ? validColorMapping : null,
+            ...extendedConfig,
+            columnSizing: this.buildColumnSizing(extendedConfig?.columnWidths),
+            colorMapping: this.buildColorMapping(extendedConfig?.colorMapping),
         };
 
         this.renderFun(
