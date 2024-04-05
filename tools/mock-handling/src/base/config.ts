@@ -12,14 +12,7 @@ function mergeConfigs(config: DataRecorderConfig, prevConfig = DEFAULT_CONFIG): 
     return {
         ...prevConfig,
         ...pickBy(
-            pick(config, [
-                "hostname",
-                "projectId",
-                "tigerToken",
-                "recordingDir",
-                "backend",
-                "replaceProjectId",
-            ]),
+            pick(config, ["hostname", "projectId", "tigerToken", "recordingDir", "replaceProjectId"]),
             identity,
         ),
     };
@@ -31,7 +24,6 @@ function retrieveConfigFromObject(obj: OptionValues): DataRecorderConfig {
         projectId: obj.projectId ?? null,
         tigerToken: obj.tigerToken ?? null,
         recordingDir: obj.recordingDir ?? null,
-        backend: obj.backend ?? null,
         replaceProjectId: obj.replaceProjectId ?? null,
     };
 }
