@@ -10,8 +10,9 @@ import {
     IntlWrapper,
     convertError,
     ErrorCodes,
+    BucketNames,
 } from "@gooddata/sdk-ui";
-import { ITheme } from "@gooddata/sdk-model";
+import { ITheme, bucketsFind } from "@gooddata/sdk-model";
 import { ThemeContextProvider, useTheme, withTheme } from "@gooddata/sdk-ui-theme-provider";
 import { IChartConfig, ICoreChartProps } from "../../interfaces/index.js";
 import { RepeaterChart } from "./internal/RepeaterChart.js";
@@ -124,6 +125,18 @@ export const CoreRepeaterImpl: React.FC<ICoreRepeaterChartProps> = (props) => {
         return <LoadingComponent />;
     }
 
+    const columns = bucketsFind(result.definition.buckets, BucketNames.COLUMNS);
+    if (!columns || columns.items.length === 0) {
+        const err = new Error("Repeater chart requires at least one column") as any;
+        const convertedError = convertError(err);
+        const errorMessage = convertedError.getMessage();
+        const errorMap = newErrorMapping(intl);
+        const errorProps =
+            errorMap[Object.prototype.hasOwnProperty.call(errorMap, err) ? err : ErrorCodes.UNKNOWN_ERROR];
+
+        return <ErrorComponent code={errorMessage} {...errorProps} />;
+    }
+
     return (
         <RepeaterChart
             dataView={result}
@@ -132,7 +145,6 @@ export const CoreRepeaterImpl: React.FC<ICoreRepeaterChartProps> = (props) => {
             onColumnResized={onColumnResized}
         />
     );
-    return <RepeaterChart dataView={result} config={configWithColorPalette} onError={onError} />;
 };
 
 const CoreRepeaterWithIntl = injectIntl(withTheme(CoreRepeaterImpl));

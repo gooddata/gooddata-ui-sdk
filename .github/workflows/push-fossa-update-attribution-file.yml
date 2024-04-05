@@ -35,7 +35,7 @@ jobs:
           source-branch:  ${{ needs.prepare-branch-name.outputs.branch }}
 
     notify-publish-failed-to-slack:
-        if: ${{ always() && needs.run-fossa-scan-update-attribution == 'failure' }}
+        if: ${{ always() && needs.run-fossa-scan-update-attribution.result == 'failure' }}
         needs: [run-fossa-scan-update-attribution]
         runs-on: [ubuntu-latest]
         steps:
