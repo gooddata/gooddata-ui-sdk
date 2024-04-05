@@ -23,7 +23,7 @@ However, for more complex scenarios (for example, when one execution depends on 
     You can specify data to obtain with [series and slices](#access-custom-visualization-data) (recommended) or [custom execution](../../get_raw_data/execution_model/).
     It fetches the result data for you and informs you about the loading status or error if there are any.
 
-- `useInsightDataView` hook allows you to fetch data for an existing insight created in [Analytical Designer](https://help.gooddata.com/pages/viewpage.action?pageId=86794494) and render it with your custom visualization.
+- `useInsightDataView` hook allows you to fetch data for an existing visualization created in [Analytical Designer](https://help.gooddata.com/pages/viewpage.action?pageId=86794494) and render it with your custom visualization.
     It fetches the result data for you and informs you about the loading status or error if there are any.
     It is basically [InsightView](../insightview/), but without the view part.
 
@@ -35,7 +35,7 @@ However, for more complex scenarios (for example, when one execution depends on 
     It fetches the result data for you and informs you about the loading status or error if there are any.
 
 - `ExecuteInsight` is a component alternative to `useInsightDataView` hook.
-    It allows you to fetch data for an existing insight created in [Analytical Designer](https://help.gooddata.com/pages/viewpage.action?pageId=86794494) and render it with your custom visualization.
+    It allows you to fetch data for an existing visualization created in [Analytical Designer](https://help.gooddata.com/pages/viewpage.action?pageId=86794494) and render it with your custom visualization.
     It fetches the result data for you and informs you about the loading status or error if there are any.
     It is basically [InsightView](../insightview/), but without the view part.
 
