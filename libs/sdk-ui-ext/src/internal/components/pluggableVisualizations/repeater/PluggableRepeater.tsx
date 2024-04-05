@@ -13,7 +13,6 @@ import {
     insightBuckets,
     insightProperties,
     insightSetBuckets,
-    isAdhocMeasure,
     isMeasure,
     measureAlias,
     measureFormat,
@@ -401,15 +400,11 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
 }
 
 export function transformAdhocMeasureToInline(measure: IMeasure, mainRowAttributeId?: string): IMeasure {
-    if (!isAdhocMeasure(measure)) {
-        return measure;
-    }
-
     const itemRef = measureItem(measure) as IdentifierRef;
     const aggregation = measureAggregation(measure);
     let maqlExpression: string;
 
-    const itemIdentifier = `{${itemRef.type}/${itemRef.identifier}}`;
+    const itemIdentifier = `{metric/${itemRef.identifier}}`;
 
     if (aggregation) {
         maqlExpression = `SELECT ${aggregation}(${itemIdentifier})`;
