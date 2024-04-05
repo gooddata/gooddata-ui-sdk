@@ -29,7 +29,7 @@ Read on about different extensions to learn more about its stability and quality
 
 ## Pluggable Visualizations
 
-This extension implements visualizations that can be plugged into GoodData platform and then used seamlessly
+This extension implements visualizations that can be plugged and then used seamlessly
 in Analytical Designer (AD) and KPI Dashboard (KD). The extension defined Service Provider Interface that the pluggable
 visualizations must implement and then implements 'pluggables' for all visualizations in the SDK proper.
 

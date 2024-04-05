@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import intersection from "lodash/intersection.js";
 import { ISortItem, sortEntityIds, SortEntityIds } from "../execution/base/sort.js";
@@ -46,7 +46,7 @@ import { IUser } from "../user/index.js";
 import { IAuditable } from "../base/metadata.js";
 
 /**
- * Represents an Insight defined in GoodData platform. Insight is typically created using Analytical Designer
+ * Represents an Insight. Insight is typically created using Analytical Designer
  * and can be embedded using UI SDK.
  *
  * @remarks

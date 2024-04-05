@@ -30,7 +30,7 @@ program
     .option("--recordingDir <path>", "Directory with recording inputs and outputs")
     .option("--project-id <id>", "Project id from which you want to capture mock data")
     .option("--tigerToken <token>", "GoodData tiger platform auth token.")
-    .option("--hostname <url>", `Instance of GoodData platform. The default is ${DEFAULT_HOSTNAME}`)
+    .option("--hostname <url>", `Instance of the backend. The default is ${DEFAULT_HOSTNAME}`)
     .option("--config <path>", `Custom config file (default ${DEFAULT_CONFIG_FILE_NAME})`)
     .option(
         "--replace-project-id <id>",

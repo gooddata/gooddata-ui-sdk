@@ -27,12 +27,11 @@ dotenv.config();
 program
     .version(LIB_VERSION)
     .option("--workspace-id <id>", "Workspace id for which you want to export the catalog.")
-    .option("--username <email>", "Your username that you use to log in to GoodData platform.")
     .option(
         "--catalog-output <value>",
         `Output file (defaults to ${DEFAULT_OUTPUT_FILE_NAME}). The output file will be created in current working directory`,
     )
-    .option("--hostname <url>", `Instance of GoodData platform.`)
+    .option("--hostname <url>", `Instance of GoodData backend`)
     .option("--config <path>", `Custom config file (default ${DEFAULT_CONFIG_FILE_NAME})`)
     .option("--accept-untrusted-ssl", "Allows to run the tool with host, that has untrusted ssl certificate")
     .parse(process.argv);
