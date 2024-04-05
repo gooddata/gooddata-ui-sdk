@@ -44,7 +44,7 @@ To allow a plugin to be reused across dashboards, you can make each link between
 additional parameters. These parameters can then be used to customize the behavior of the plugin for
 a particular dashboard.
 
-The GoodData platform and GoodData.CN all treat parameters opaquely. Only soft-size limits of 2,048 bytes for
+GoodData treats parameters opaquely. Only soft-size limits of 2,048 bytes for
 the length of the parameter string are imposed. Otherwise, the parameters are fully under your control and responsibility.
 
 If the parameters are specified on the link between a dashboard and your plugin, the loader sends them as the
@@ -88,39 +88,39 @@ promise to resolve.
 The customization API is an entry point to all the customization and enhancement capabilities that your code can take advantage of. The
 API is described in detail in the [API reference](https://sdk.gooddata.com/gooddata-ui-apidocs/docs/sdk-ui-dashboard.idashboardcustomizer.html).
 
-### Customize rendering of insights
+### Customize rendering of visualizations
 
 Call the `insightWidgets()` method on the customization API to get to the API through which you can customize
-how the [insight widgets](https://sdk.gooddata.com/gooddata-ui-apidocs/docs/sdk-ui-dashboard.idashboardinsightcustomizer.html)
+how the [visualization widgets](https://sdk.gooddata.com/gooddata-ui-apidocs/docs/sdk-ui-dashboard.idashboardinsightcustomizer.html)
 on your dashboard will be rendered.
 
-* To **render data for one or more insights** using your own custom visualizations, the insight widget customization API provides the following methods:
+* To **render data for one or more visualizations** using your own custom visualizations, the visualization widget customization API provides the following methods:
    * `withCustomProvider()`
 
       When calling this method, you can register a function that will be called by the Dashboard component every time it
-      wants to render an insight widget. The function will receive a widget definition and the insight to be rendered. This function
+      wants to render a visualization widget. The function will receive a widget definition and the visualization to be rendered. This function
       is expected to return a React component to use for rendering that widget. If the function does not return
       a custom component, the Dashboard component falls back and uses the built-in component.
 
-      Your function must determine that a particular insight widget should be rendered using
+      Your function must determine that a particular visualization widget should be rendered using
       a custom component and then return the custom component. How your function determines this is up to you.
 
    * `withTag()`
 
-      This is a convenience method on top of the `withCustomProvider` method. To identify insight widgets to render
+      This is a convenience method on top of the `withCustomProvider` method. To identify visualization widgets to render
       using custom components, use tags. You can assign arbitrary tags to your insight objects and then use this
-      method to register a renderer for the insight widgets that have this tag.
+      method to register a renderer for the visualization widgets that have this tag.
 
-      To learn how to tag insights, see either the GoodData platform or GoodData.CN API documentation.
+      To learn how to tag visualizations, see the GoodData Cloud API documentation.
 
-* To **add additional elements on top of the insight widgets** that are rendered using the built-in renderers, the insight widget customization API provides
+* To **add additional elements on top of the visualization widgets** that are rendered using the built-in renderers, the visualization widget customization API provides
    a method to register a "decorator" called `withCustomDecorator()`.
 
    In some way, the decorators resemble a concept of middleware that you may be familiar with from `express` or `redux`. Instead of
-   registering a function that evaluates the widget and insight and returns a React component, for decorators you have to
+   registering a function that evaluates the widget and visualization and returns a React component, for decorators you have to
    register a factory function. This factory function receives a provider for the component to decorate
    and must then return a function to provide a decorator component. The function to return has the same signature as
-   the insight provider function that you register in `withCustomProvider`.
+   the visualization provider function that you register in `withCustomProvider`.
 
    This is best described in code:
 
@@ -149,26 +149,10 @@ on your dashboard will be rendered.
      })
      ```
 
-### Customize rendering of KPIs
-
-Call the `kpiWidgets()` method on the customization API to get to the API through which you can customize
-how the [KPI widgets](https://sdk.gooddata.com/gooddata-ui-apidocs/docs/sdk-ui-dashboard.idashboardkpicustomizer.html)
-on your dashboard will be rendered.
-
-The KPI widgets are a special type of widgets available only on the GoodData platform. Their purpose is to render the value of
-a single measure, possibly compared to the value of the measure in the previous period. The KPI widgets additionally
-allow dashboard consumers to register alerts for when the measure value changes.
-
-Similar to the insight widget customization API, you can register your own components to render the KPI widgets or
-to add extra elements on top of the widgets.
-
-The KPI customization API contains the `withCustomProvider()` and `withCustomDecorator()` methods that behave the same way
-the insight widget methods do.
-
 ### Use custom widgets
 
 With custom widgets, you can enrich dashboards with arbitrary content. For example, your dashboard can use
-a built-in insight and widget renderers and then use the custom widgets to add extra content such as images,
+a built-in visualization and widget renderers and then use the custom widgets to add extra content such as images,
 additional text, or forms.
 
 Your must first register a custom widget type, which is declaration of the custom widget type. The declaration links the custom widget type name and the React component to use for rendering.
@@ -239,7 +223,7 @@ When creating a custom widget, you often need to calculate some data for it simi
 To calculate data for a custom widget, use the following convenient hooks:
 
 -  [`useCustomWidgetExecutionDataView()`](https://sdk.gooddata.com/gooddata-ui-apidocs/docs/sdk-ui-dashboard.usecustomwidgetexecutiondataview.html) allows you to get data for free-form execution in the context of the widget.
--  [`useCustomWidgetInsightDataView()`](https://sdk.gooddata.com/gooddata-ui-apidocs/docs/sdk-ui-dashboard.usecustomwidgetinsightdataview.html) allows you to get data for a specific insight in the context of the widget.
+-  [`useCustomWidgetInsightDataView()`](https://sdk.gooddata.com/gooddata-ui-apidocs/docs/sdk-ui-dashboard.usecustomwidgetinsightdataview.html) allows you to get data for a specific visualization in the context of the widget.
 
 By default, the data computation respects the filters set on the dashboard. If you want a custom widget to ignore some filters during the data computation, set it up when creating the widget using the `newCustomWidget()` function:
 
@@ -271,7 +255,7 @@ To interact with the dashboard from within a custom widget, dispatch commands fr
 If you are loading some asynchronous data for your custom widget / visualization (either via the [hooks mentioned above](#calculate-data-for-a-custom-widget) or your own HTTP requests),
 then you must inform the dashboard via the `useDashboardAsyncRender` hook to ensure that the widget renders correctly during the export to PDF.
 Please note that it may take up to 20 minutes for additional data to load. After this time, the dashboard will be exported anyway.
-The following example demonstrates how to do it with a custom insight widget.
+The following example demonstrates how to do it with a custom visualization widget.
 
 ```javascript
 import React from "react";
@@ -345,7 +329,7 @@ function MyCustomInsight(props: IDashboardInsightProps): JSX.Element {
 
     return (
         <InsightView
-            insight="<your-insight-id>"
+            insight="<your-visualization-id>"
             onLoadingChanged={({ isLoading }) => {
                 if (isLoading) {
                     onRequestAsyncRender();
@@ -417,7 +401,7 @@ To change the rendering mode of the Filter bar, call the `setRenderingMode` meth
 ### Customize Attribute Filters and Date Filter
 Call the `filters()` method on the customization API to get the API through which you can customize how the attribute or date filters will be rendered on your dashboard.
 
-* To **render one or more attribute filters** using your custom components, the attribute filters customization API provides  the `withCustomProvider()` method [similar to insight widgets](#customize-rendering-of-insights).
+* To **render one or more attribute filters** using your custom components, the attribute filters customization API provides  the `withCustomProvider()` method [similar to visualization widgets](#customize-rendering-of-insights).
 
     When calling this method, you can register a function that will be called by the Dashboard component every time it
     wants to render an attribute filter. The function will receive a filter definition to be rendered. This function

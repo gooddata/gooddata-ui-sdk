@@ -10,7 +10,6 @@ React application or for some reason you cannot use [@gooddata/apptoolkit](../..
 
 ## Step 1. Install the necessary dependencies
 
-GoodData.UI can target multiple platforms. Therefore, it is essential to install packages for the right target platform.
 For GoodData Cloud and GoodData.CN, you need to install packages codenamed `tiger`:
 
 ```bash
@@ -64,7 +63,7 @@ Make sure to import the styles only from the packages that you actually use.
 
 ## Step 3. Set up Analytical Backend and integrate it into your application
 
-All integration and communication of GoodData.UI React components and the GoodData platform happens via the **Analytical Backend** abstraction. Your application should initialize an instance of the Analytical Backend as soon as possible as follows:
+All integration and communication of GoodData.UI React components and GoodData happens via the **Analytical Backend** abstraction. Your application should initialize an instance of the Analytical Backend as soon as possible as follows:
 
 ```javascript
 import tigerFactory, { ContextDeferredAuthProvider, redirectToTigerAuthentication } from "@gooddata/sdk-backend-tiger";
@@ -80,7 +79,7 @@ const backend = tigerFactory()
 Depending on the type and style used in your application, you can either store an instance of `backend` in a read-only global
 variable or use React contexts.
 
-This is how you can set contexts that hold both an instance of the Analytical Backend and the identifier of the GoodData platform workspace that you are targeting:
+This is how you can set contexts that hold both an instance of the Analytical Backend and the identifier of the GoodData workspace that you are targeting:
 
 ```jsx
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
@@ -125,7 +124,7 @@ The configuration listed in [Step 3](#step-3.-set-up-analytical-backend-and-inte
 
 ## Next steps
 
-At this point, your application should be set to use GoodData.UI and render visualizations from the GoodData platform. If you
+At this point, your application should be set to use GoodData.UI and render visualizations from GoodData. If you
 also configured and run the [catalog-export](../../visualize_data/export_catalog/) tool, you can now start embedding visualizations
 into your application:
 

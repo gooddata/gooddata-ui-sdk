@@ -111,14 +111,6 @@ Be careful when combining comparison to the PP with an **absolute** date filter.
 For example, when filtering from March 1 to March 31, the previous period is the previous 31 days and **not** the previous month.
 For comparing over a period other than a day, use a **relative** date filter with the required granularity (month, quarter).
 
-## Time over time comparison and week date filters
+## More examples
 
-If you use date filters by _weeks_ and compare the data to the previous period or the same period of the last year in those filters, you have to enable the GoodData platform to properly process such week filters. To do so, complete the following steps:
-
-1. Switch the version of the [Extensible Analytics Engine](https://help.gooddata.com/pages/viewpage.action?pageId=86795616) to 3.
-
-    To do so, set the `xae_version` platform setting to 3 (see [Configure Various Features via Platform Settings](https://help.gooddata.com/pages/viewpage.action?pageId=86796826)).
-
-2. Migrate the Date datasets in your workspace to the `urn:custom_v2:date` date dimension.
-
-    To do so, see "Migrate from a Legacy Date Dimension to urn:custom_v2:date" in [Manage Custom Date Dimensions](https://help.gooddata.com/pages/viewpage.action?pageId=86795635).
+See the [live examples](https://gdui-examples.herokuapp.com/time-over-time-comparison).

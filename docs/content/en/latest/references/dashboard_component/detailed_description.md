@@ -17,7 +17,7 @@ The Dashboard component:
 
 * Allows you to embed a dashboard natively in React (similarly to [InsightView](../../../learn/visualize_data/insightview/) for visualizations)
 * Provides mechanisms to allow you to integrate it with the rest of your application
-* Allows you to customize the way the dashboard is rendered: you can alter the layout and change the way particular widgets are rendered
+* Allows you to customize the way the dashboard is rendered: you can alter the layout and change the way particular widgets are rendered 
 
 The Dashboard component is built using an architecture resembling the Model-View-Controller pattern:
 
@@ -67,7 +67,7 @@ Here are the most important props:
 | Name                     | Required? | Type                             | Description                                                                                                                                                                                               |
 | :----------------------- | :-------- | :------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | customizationFns         | false     | DashboardModelCustomizationFns   | The customization functions. The dashboard component will call out to these functions at different points during its lifetime. To learn more, see documentation for a particular function. |
-| InsightComponentProvider | false     | OptionalInsightComponentProvider | The function to obtain a custom component to use for rendering an insight                                                                                                                   |
+| InsightComponentProvider | false     | OptionalInsightComponentProvider | The function to obtain a custom component to use for rendering a visualization                                                                                                                   |
 | KpiComponentProvider     | false     | OptionalKpiComponentProvider     | The function to obtain a custom component to use for rendering a KPI                                                                                                                        |
 | WidgetComponentProvider  | false     | OptionalWidgetComponentProvider  | The function to obtain a custom component to use for rendering either a built-in widget or a custom widget
 
@@ -91,11 +91,11 @@ the returned value should remain the same (unless the value itself changed), whi
 import { useDashboardSelector, selectInsights } from "@gooddata/sdk-ui-dashboard";
 
 const CustomDashboardWidget = () => {
-    // Example how to obtain all insights stored on the dashboard
-    const insights = useDashboardSelector(selectInsights);
+    // Example how to obtain all visualizations stored on the dashboard
+    const visualizations = useDashboardSelector(selectInsights);
 
     return (
-        <pre>{JSON.stringify(insights, null, 2)}</pre>
+        <pre>{JSON.stringify(visualizations, null, 2)}</pre>
     );
 }
 ```
@@ -201,9 +201,6 @@ To access more than one dashboard `store` object, use the [DashboardStoreAccesso
 * `clearAllAccessors()` removes all accessors from the repository.
 * `isAccessorInitializedForDashboard(dashboard)` returns `true` if the accessor is available for a specific dashboard; otherwise, returns `false`.
 
+For more information, check the [example](https://gdui-examples.herokuapp.com/dashboard/accessor).
 
 If the default implementation of the `DashboardStoreAccessorRepository` class does not cover your specific scenario, you can use `DashboardStoreAccessor` to implement your own accessor repository.
-
-## Improving performance
-
-To find out more about how to improve the performance of the Dashboard component, visit Tips on performance improvements.
