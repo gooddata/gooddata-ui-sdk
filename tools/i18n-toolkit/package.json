@@ -47,7 +47,7 @@
         "fast-glob": "^3.2.7",
         "html-validate": "^8.7.3",
         "jsonschema": "^1.2.6",
-        "lodash": "^4.17.19",
+        "lodash": "^4.17.21",
         "tslib": "^2.5.0",
         "util": "^0.12.3"
     },
