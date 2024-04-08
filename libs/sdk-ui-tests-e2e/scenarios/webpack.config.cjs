@@ -19,11 +19,7 @@ process.env.NODE_OPTIONS = "--max-old-space-size=4096";
 process.env.TIGER_API_TOKEN = "";
 
 module.exports = async (env, argv) => {
-    const [backendUrl, workspace, backendType] = [
-        process.env.HOST,
-        process.env.TEST_WORKSPACE_ID,
-        process.env.SDK_BACKEND,
-    ];
+    const [backendUrl, workspace] = [process.env.HOST, process.env.TEST_WORKSPACE_ID];
 
     if (!backendUrl) {
         process.stderr.write("HOST needs to be provided in .env\n");
@@ -35,64 +31,30 @@ module.exports = async (env, argv) => {
         process.exit(1);
     }
 
-    if (!backendType) {
-        process.stderr.write("SDK_BACKEND needs to be provided in .env\n");
-        process.exit(1);
-    }
-
-    console.log(
-        "Backend URI:",
-        backendUrl,
-        ", ",
-        "Backend Type:",
-        backendType,
-        ", ",
-        "Workspace to use:",
-        workspace,
-    );
+    console.log("Backend URI:", backendUrl, ", ", "Workspace to use:", workspace);
 
     const basePath = env?.basePath || "";
 
     const isProduction = argv.mode === "production";
 
-    const proxy =
-        backendType === "BEAR"
-            ? {
-                  "/gdc": {
-                      changeOrigin: true,
-                      cookieDomainRewrite: "localhost",
-                      secure: false,
-                      target: backendUrl,
-                      headers: {
-                          host: backendUrl.replace(/^https:\/\//, ""),
-                          // This is essential for Tiger backends. To ensure 401 flies when not authenticated and using proxy
-                          "X-Requested-With": "XMLHttpRequest",
-                      },
-                      onProxyReq: function (proxyReq, _req, _res) {
-                          // changeOrigin: true does not work well for POST requests, so remove origin like this to be safe
-                          proxyReq.removeHeader("origin");
-                          proxyReq.setHeader("accept-encoding", "identity");
-                      },
-                  },
-              }
-            : {
-                  "/api": {
-                      changeOrigin: true,
-                      cookieDomainRewrite: "localhost",
-                      secure: false,
-                      target: backendUrl,
-                      headers: {
-                          host: backendUrl,
-                          // This is essential for Tiger backends. To ensure 401 flies when not authenticated and using proxy
-                          "X-Requested-With": "XMLHttpRequest",
-                      },
-                      onProxyReq(proxyReq) {
-                          // changeOrigin: true does not work well for POST requests, so remove origin like this to be safe
-                          proxyReq.removeHeader("origin");
-                          proxyReq.setHeader("accept-encoding", "identity");
-                      },
-                  },
-              };
+    const proxy = {
+        "/api": {
+            changeOrigin: true,
+            cookieDomainRewrite: "localhost",
+            secure: false,
+            target: backendUrl,
+            headers: {
+                host: backendUrl,
+                // This is essential for Tiger backends. To ensure 401 flies when not authenticated and using proxy
+                "X-Requested-With": "XMLHttpRequest",
+            },
+            onProxyReq(proxyReq) {
+                // changeOrigin: true does not work well for POST requests, so remove origin like this to be safe
+                proxyReq.removeHeader("origin");
+                proxyReq.setHeader("accept-encoding", "identity");
+            },
+        },
+    };
 
     const plugins = [
         new CleanWebpackPlugin(),
@@ -110,7 +72,6 @@ module.exports = async (env, argv) => {
         }),
         new webpack.DefinePlugin({
             BACKEND_URL: JSON.stringify(backendUrl),
-            BACKEND_TYPE: JSON.stringify(backendType),
             WORKSPACE_ID: JSON.stringify(workspace),
             BASEPATH: JSON.stringify(basePath),
             BUILTIN_MAPBOX_TOKEN: JSON.stringify(process.env.EXAMPLE_MAPBOX_ACCESS_TOKEN || ""),

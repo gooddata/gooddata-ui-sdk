@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 /* eslint-disable sonarjs/cognitive-complexity */
 
 /**
@@ -20,9 +20,6 @@ async function main() {
         process.stderr.write("Running the isolated tests. Run only in docker-compose\n");
         const recording = process.argv.indexOf("--record") !== -1;
         const {
-            SDK_BACKEND,
-            USER_NAME,
-            PASSWORD,
             TIGER_API_TOKEN,
             TEST_WORKSPACE_ID,
             HOST,
@@ -46,39 +43,20 @@ async function main() {
         }
 
         let authorization = {};
-        if (SDK_BACKEND === "BEAR") {
-            if (recording) {
-                if (!USER_NAME || !PASSWORD || !TEST_WORKSPACE_ID || !HOST) {
-                    process.stderr.write(
-                        `Isolated tests recordings for ${SDK_BACKEND} need HOST, USER_NAME, PASSWORD, and TEST_WORKSPACE_ID\n`,
-                    );
-                    process.exit(1);
-                }
-
-                authorization = {
-                    credentials: {
-                        userName: USER_NAME,
-                        password: PASSWORD,
-                    },
-                };
+        if (recording) {
+            if (!TIGER_API_TOKEN || !TEST_WORKSPACE_ID) {
+                process.stderr.write(
+                    `Isolated tests recordings need TIGER_API_TOKEN and TEST_WORKSPACE_ID\n`,
+                );
+                process.exit(1);
             }
-            // eslint-disable-next-line  sonarjs/no-collapsible-if
-        } else if (SDK_BACKEND === "TIGER") {
-            if (recording) {
-                if (!TIGER_API_TOKEN || !TEST_WORKSPACE_ID) {
-                    process.stderr.write(
-                        `Isolated tests recordings for ${SDK_BACKEND} need TIGER_API_TOKEN and TEST_WORKSPACE_ID\n`,
-                    );
-                    process.exit(1);
-                }
 
-                authorization = {
-                    token: TIGER_API_TOKEN,
-                };
-            }
+            authorization = {
+                token: TIGER_API_TOKEN,
+            };
         }
 
-        if (!recording && !recordingsPresent(SDK_BACKEND)) {
+        if (!recording && !recordingsPresent()) {
             process.stderr.write("Recordings are missing. Run again with the --record parameter.\n");
             process.exit(0);
         }
@@ -109,7 +87,6 @@ async function main() {
                 workspaceId: testWorkspaceId,
                 tagsFilter: testTags,
                 config: `retries=0,baseUrl=${CYPRESS_HOST}`, // override cypress.json and have no retries when recording, this breaks mappings storage,
-                sdkBackend: SDK_BACKEND,
                 deleteCypressResults: false,
                 recording: recording ? recording : false,
             });

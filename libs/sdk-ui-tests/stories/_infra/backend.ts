@@ -1,6 +1,5 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 
-import { ExperimentalRecordings } from "@gooddata/experimental-workspace";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     compositeBackend,
@@ -9,12 +8,9 @@ import {
     RecordedBackendConfig,
 } from "@gooddata/sdk-backend-mockingbird";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { ExamplesRecordings } from "@gooddata/live-examples-workspace";
 import { withNormalization } from "@gooddata/sdk-backend-base";
 
 export const ReferenceWorkspaceId = "reference-workspace";
-export const ExampleWorkspaceId = "example-workspace";
-export const ExperimentalWorkspaceId = "experimental-workspace";
 
 export function StorybookBackend(config: RecordedBackendConfig = {}): IAnalyticalBackend {
     const reference: CompositeBackendPart = {
@@ -22,15 +18,5 @@ export function StorybookBackend(config: RecordedBackendConfig = {}): IAnalytica
         backend: withNormalization(recordedBackend(ReferenceRecordings.Recordings, config)),
     };
 
-    const examples: CompositeBackendPart = {
-        workspace: ExampleWorkspaceId,
-        backend: withNormalization(recordedBackend(ExamplesRecordings.Recordings, config)),
-    };
-
-    const experimental: CompositeBackendPart = {
-        workspace: ExperimentalWorkspaceId,
-        backend: withNormalization(recordedBackend(ExperimentalRecordings.Recordings, config)),
-    };
-
-    return compositeBackend(examples, reference, experimental);
+    return compositeBackend(reference);
 }

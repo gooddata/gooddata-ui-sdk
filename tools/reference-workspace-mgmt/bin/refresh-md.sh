@@ -14,7 +14,6 @@ if [ -z "$TIGER_API_TOKEN" ] || [ -z "$HOST_NAME" ] || [ -z "$WORKSPACE_ID" ]; t
 fi
 
 export TIGER_API_TOKEN=${TIGER_API_TOKEN} && $EXPORTER \
-  --backend tiger \
   --hostname  ${HOST_NAME} \
   --workspace-id ${WORKSPACE_ID} \
   --catalog-output "${OUTPUT}"

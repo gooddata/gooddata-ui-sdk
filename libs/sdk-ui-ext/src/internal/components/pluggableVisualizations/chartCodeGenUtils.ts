@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import {
     factoryNotationFor,
     isColorMappingItem,
@@ -50,6 +50,12 @@ const supportedChartConfigProperties = new Set<keyof IChartConfig>([
     "total",
     "orientation",
     "comparison",
+    "cellImageSizing",
+    "cellTextWrapping",
+    "cellVerticalAlign",
+    "rowHeight",
+    "inlineVisualizations",
+    "hyperLinks",
 ]);
 
 export function chartConfigFromInsight(
@@ -59,7 +65,13 @@ export function chartConfigFromInsight(
     const properties = insightProperties(insight);
     const controls = properties?.controls ?? {};
     const includeColorPalette = ctx?.backend?.capabilities.supportsCustomColorPalettes ?? false;
+    const { inlineVisualizations, hyperLinks } = properties;
+
     const withValuesFromContext = {
+        ...{
+            inlineVisualizations,
+            hyperLinks,
+        },
         ...controls,
         ...(ctx?.colorPalette && includeColorPalette ? { colorPalette: ctx.colorPalette } : {}),
         ...(ctx?.settings?.separators ? { separators: ctx.settings.separators } : {}),

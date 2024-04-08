@@ -45,7 +45,7 @@
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
     "dependencies": {
-        "lodash": "^4.17.19",
+        "lodash": "^4.17.21",
         "tslib": "^2.5.0"
     },
     "devDependencies": {

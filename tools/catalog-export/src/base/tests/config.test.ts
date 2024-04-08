@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { beforeEach, describe, vi, it, expect } from "vitest";
 import {
     getConfigFromConfigFile,
@@ -44,11 +44,8 @@ describe("configuration", () => {
         it("should only output allowed values", () => {
             const merged = mergeConfigs({
                 hostname: "https://cloud.gooddata.com/",
-                backend: "tiger",
                 catalogOutput: "./cat.ts",
                 workspaceId: "123",
-                username: "tomas",
-                password: "secret",
                 token: "secret",
                 unknown: "value",
                 // technically, we can't prevent user from putting random vars in JSON file...
@@ -61,8 +58,6 @@ describe("configuration", () => {
     describe("getConfigFromEnv", () => {
         it("should parse credentials and ignore everything else", () => {
             const config = getConfigFromEnv({
-                GDC_USERNAME: "username",
-                GDC_PASSWORD: "password",
                 TIGER_API_TOKEN: "token",
                 RANDOM: "random variable",
             });
@@ -82,11 +77,8 @@ describe("configuration", () => {
             const config = getConfigFromOptions({
                 hostname: "hostname",
                 workspaceId: "workspaceId",
-                username: "username",
-                password: "password",
                 token: "token",
                 catalogOutput: "catalogOutput",
-                backend: "backend",
             });
 
             expect(config).toMatchSnapshot();
@@ -112,7 +104,6 @@ describe("configuration", () => {
                     hostname: "hostname",
                     workspaceId: "workspaceId",
                     catalogOutput: "catalogOutput",
-                    backend: "backend",
                 }),
             );
 
@@ -146,7 +137,6 @@ describe("configuration", () => {
                         hostname: "hostname",
                         workspaceId: "workspaceId",
                         catalogOutput: "catalogOutput",
-                        backend: "backend",
                     },
                 }),
             );
@@ -162,7 +152,6 @@ describe("configuration", () => {
                             hostname: "hostname",
                             workspaceId: "workspaceId",
                             catalogOutput: "catalogOutput",
-                            backend: "backend",
                         },
                     }),
                     "/path/to/project/package.json": JSON.stringify({
@@ -191,8 +180,6 @@ describe("configuration", () => {
                         hostname: "hostname",
                         workspaceId: "workspaceId",
                         token: "token",
-                        username: "username",
-                        password: "password",
                         random: "random",
                     },
                 }),

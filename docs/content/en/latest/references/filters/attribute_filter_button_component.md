@@ -19,8 +19,7 @@ Optionally, you can define what attribute values should be selected in the filte
 
 > **When implementing the Attribute Filter Button component, consider the following:**:
 >
-> - The GoodData platform supports only filters with attribute elements defined by their URIs.
-> - GoodData Cloud and GoodData.CN support filters with attribute elements defined by their `primary key` that is equal to the title of the respective element.
+> GoodData Cloud and GoodData.CN support filters with attribute elements defined by their `primary key` that is equal to the title of the respective element.
 
 ## Example
 

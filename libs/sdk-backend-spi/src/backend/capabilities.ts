@@ -287,6 +287,11 @@ export interface IBackendCapabilities {
     supportsAttributeFilterElementsLimiting?: boolean;
 
     /**
+     * Indicates whether backend supports limiting of attribute filter elements by dependent date filters.
+     */
+    supportsAttributeFilterElementsLimitingByDependentDateFilters?: boolean;
+
+    /**
      * Indicates whether backend supports rich text widgets.
      */
     supportsRichTextWidgets?: boolean;

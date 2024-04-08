@@ -9,5 +9,4 @@ PROJECTID="12f912afa6d648c4953c254807eafd1f"
 $EXPORTER \
   --hostname "https://staging.dev-latest.stg11.panther.intgdc.com" \
   --catalog-output "${OUTPUT}" \
-  --workspace-id "${PROJECTID}" \
-  --backend "tiger"
+  --workspace-id "${PROJECTID}"

@@ -22,27 +22,22 @@ However, for more complex scenarios (for example, when one execution depends on 
 - `useExecutionDataView` hook allows you to specify and obtain the result data for your custom visualizations with convenient API.
     You can specify data to obtain with [series and slices](#access-custom-visualization-data) (recommended) or [custom execution](../../get_raw_data/execution_model/).
     It fetches the result data for you and informs you about the loading status or error if there are any.
-    See example usage of this hook in the [live examples](https://gdui-examples.herokuapp.com/execute/use-execution-data-view-hook) gallery.
 
-- `useInsightDataView` hook allows you to fetch data for an existing insight created in [Analytical Designer](https://help.gooddata.com/pages/viewpage.action?pageId=86794494) and render it with your custom visualization.
+- `useInsightDataView` hook allows you to fetch data for an existing visualization created in [Analytical Designer](https://help.gooddata.com/pages/viewpage.action?pageId=86794494) and render it with your custom visualization.
     It fetches the result data for you and informs you about the loading status or error if there are any.
     It is basically [InsightView](../insightview/), but without the view part.
-    See example usage of this hook in the [live examples](https://gdui-examples.herokuapp.com/execute/use-insight-data-view-hook) gallery.
 
 ### React components
 - `Execute` is a component alternative to the `useExecutionDataView` hook. You can specify data to obtain with [series and slices](#access-custom-visualization-data).
     It fetches the result data for you and informs you about the loading status or error if there are any.
-    See example usage of this component in the [live examples](https://gdui-examples.herokuapp.com/execute/execute-component) gallery.
 
 - `RawExecute` is a component alternative to `useExecutionDataView` hook. You can specify data to obtain with [custom execution](../../get_raw_data/execution_model/).
     It fetches the result data for you and informs you about the loading status or error if there are any.
-    See example usage of this component in the [live examples](https://gdui-examples.herokuapp.com/execute/raw-execute-component) gallery.
 
 - `ExecuteInsight` is a component alternative to `useInsightDataView` hook.
-    It allows you to fetch data for an existing insight created in [Analytical Designer](https://help.gooddata.com/pages/viewpage.action?pageId=86794494) and render it with your custom visualization.
+    It allows you to fetch data for an existing visualization created in [Analytical Designer](https://help.gooddata.com/pages/viewpage.action?pageId=86794494) and render it with your custom visualization.
     It fetches the result data for you and informs you about the loading status or error if there are any.
     It is basically [InsightView](../insightview/), but without the view part.
-    See example usage of this component in the [live examples](https://gdui-examples.herokuapp.com/execute/execute-insight-component) gallery.
 
 ### Execution API
 

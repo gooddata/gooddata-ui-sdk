@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 
 import isEmpty from "lodash/isEmpty.js";
 import { AuthenticationFlow } from "@gooddata/sdk-backend-spi";
@@ -138,7 +138,7 @@ export class DataTooLargeToDisplaySdkError extends GoodDataSdkError {
 
 /**
  * This error means that processed request would generate a result too large to be processed
- * by GoodData platform.
+ * by the backend.
  *
  * @public
  */
@@ -183,7 +183,7 @@ export class NotFoundSdkError extends GoodDataSdkError {
 }
 
 /**
- * This error means that requested visualization is restricted by access rules within the GoodData platform.
+ * This error means that requested visualization is restricted by access rules.
  * Please contact your administrator.
  *
  * @public

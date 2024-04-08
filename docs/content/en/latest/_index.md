@@ -21,7 +21,7 @@ Start your GoodData.UI journey with hands-on experience:
 {{< blocks/card sectionLink="/learn/visualize_data" description="Visualize your data ">}}
 {{< /blocks/card >}}
 
-{{< blocks/card sectionLink="/learn/embed_dashboards" description="Embed dashboards and insights in minutes!">}}
+{{< blocks/card sectionLink="/learn/embed_dashboards" description="Embed dashboards and visualizations in minutes!">}}
 {{< /blocks/card >}}
 
 {{< blocks/card sectionLink="/learn/apply_theming" description="Personalize your experience with theming!">}}
@@ -36,7 +36,7 @@ As a developer, make use of our development kits and API:
 {{< blocks/cards-container aligned="true">}}
 
 {{< blocks/card title="Web Components" icon="webcomponents-logo.svg" iconPosition="top" extLink="./learn/embed_dashboards/web_components/">}}
-Embed GoodData insights and dashboards into a web application in a framework agnostic way.
+Embed GoodData visualizations and dashboards into a web application in a framework agnostic way.
 {{< /blocks/card >}}
 
 {{< blocks/card icon="react-logo.svg" title="React" iconPosition="top" extLink="./quick_start/">}}
@@ -48,6 +48,39 @@ Load raw analytical data into your browser or NodeJS application using Custom Ex
 {{< /blocks/card >}}
 
 {{< /blocks/cards-container >}}
+
+## Other Integrations
+
+The following frameworks are not natively supported, but you can still use them work with GoodData.UI to embed GoodData content into your web applications:
+
+<style>
+.image-link {
+    display: inline-block; /* Make each div behave like an inline block */
+    margin-right: 20px; /* Optional: Adds some space between each item */
+}
+
+/* Optional: Ensure images and links align vertically */
+.image-link img, .image-link a {
+    vertical-align: middle;
+}
+</style>
+
+<div class="image-link">
+    <img src="../angular.png" width="60px" />
+    <a href="https://www.gooddata.com/blog/frontend-integration-series-angular/" target="_blank">Angular</a>
+</div>
+<div class="image-link">
+    <img src="../nextjs.png" width="60px" />
+    <a href="https://www.gooddata.com/blog/frontend-integration-series-nextjs/" target="_blank">Next.js</a>
+</div>
+<div class="image-link">
+    <img src="../vuejs.png" width="60px" />
+    <a href="https://www.gooddata.com/blog/frontend-integration-series-vue-js/" target="_blank">Vue.js</a>
+</div>
+<div class="image-link">
+    <img src="../svelte.png" width="60px" />
+    <a href="https://www.gooddata.com/blog/frontend-integration-series-sveltekit/" target="_blank">SvelteKit</a>
+</div>
 
 ## Join & Learn
 

@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import * as path from "path";
 import * as fs from "fs/promises";
 import identity from "lodash/identity.js";
@@ -12,18 +12,7 @@ export function mergeConfigs(...configs: Partial<CatalogExportConfig>[]): Catalo
     return Object.assign(
         {},
         ...configs.map((config) =>
-            pickBy(
-                pick(config, [
-                    "hostname",
-                    "workspaceId",
-                    "username",
-                    "password",
-                    "token",
-                    "catalogOutput",
-                    "backend",
-                ]),
-                identity,
-            ),
+            pickBy(pick(config, ["hostname", "workspaceId", "token", "catalogOutput"]), identity),
         ),
     );
 }
@@ -33,8 +22,6 @@ export function mergeConfigs(...configs: Partial<CatalogExportConfig>[]): Catalo
  */
 export function getConfigFromEnv(env: { [key: string]: string | undefined }): Partial<CatalogExportConfig> {
     return {
-        username: env.GDC_USERNAME ?? null,
-        password: env.GDC_PASSWORD ?? null,
         token: env[API_TOKEN_VAR_NAME] ?? null,
     };
 }
@@ -43,15 +30,7 @@ export function getConfigFromEnv(env: { [key: string]: string | undefined }): Pa
  * Allow normal props and credentials to be defined as CLI options
  */
 export function getConfigFromOptions(obj: OptionValues): Partial<CatalogExportConfig> {
-    return pick(obj, [
-        "hostname",
-        "workspaceId",
-        "username",
-        "password",
-        "token",
-        "catalogOutput",
-        "backend",
-    ]);
+    return pick(obj, ["hostname", "workspaceId", "token", "catalogOutput"]);
 }
 
 /**
@@ -62,7 +41,6 @@ export async function getConfigFromConfigFile(filePath: string): Promise<Partial
         "hostname",
         "workspaceId",
         "catalogOutput",
-        "backend",
     ]);
 }
 
@@ -82,7 +60,7 @@ export async function getConfigFromPackage(workingDir: string): Promise<Partial<
     return mergeConfigs(
         ...packages
             .filter(identity)
-            .map((pack) => pick(pack.gooddata ?? {}, ["hostname", "workspaceId", "catalogOutput", "backend"]))
+            .map((pack) => pick(pack.gooddata ?? {}, ["hostname", "workspaceId", "catalogOutput"]))
             .reverse(),
     );
 }

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-ext",
-    "version": "10.0.0-alpha.13",
+    "version": "10.1.0-alpha.2",
     "description": "GoodData.UI SDK - Extensions",
     "repository": {
         "type": "git",
@@ -72,7 +72,7 @@
         "date-fns": "^2.22.1",
         "default-import": "^1.1.5",
         "fixed-data-table-2": "^1.2.0",
-        "lodash": "^4.17.19",
+        "lodash": "^4.17.21",
         "lru-cache": "^10.0.1",
         "react-intl": "^6.4.1",
         "react-lines-ellipsis": "^0.15.0",
@@ -93,7 +93,6 @@
     "devDependencies": {
         "@gooddata/eslint-config": "^4.1.0",
         "@gooddata/i18n-toolkit": "workspace:*",
-        "@gooddata/live-examples-workspace": "workspace:*",
         "@gooddata/reference-workspace": "workspace:*",
         "@gooddata/sdk-backend-mockingbird": "workspace:*",
         "@gooddata/stylelint-config": "^5.0.0",

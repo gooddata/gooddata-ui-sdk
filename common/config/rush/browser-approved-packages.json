@@ -83,16 +83,8 @@
       "allowedCategories": [ "tools" ]
     },
     {
-      "name": "@gooddata/api-client-bear",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
       "name": "@gooddata/api-client-tiger",
       "allowedCategories": [ "production", "tools" ]
-    },
-    {
-      "name": "@gooddata/api-model-bear",
-      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@gooddata/catalog-export",
@@ -103,19 +95,11 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
-      "name": "@gooddata/experimental-workspace",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "@gooddata/fixtures",
       "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "@gooddata/i18n-toolkit",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "@gooddata/live-examples-workspace",
       "allowedCategories": [ "production" ]
     },
     {
@@ -136,10 +120,6 @@
     },
     {
       "name": "@gooddata/sdk-backend-base",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@gooddata/sdk-backend-bear",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {

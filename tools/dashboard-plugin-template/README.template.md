@@ -1,7 +1,7 @@
 # GoodData.UI Dashboard Plugin project
 
 This is a one stop project to help you develop, test and build your own dashboard plugin. Before you start, we
-encourage you to learn more about plugins in [our documentation](https://sdk.gooddata.com/gooddata-ui/docs/about_gooddataui.html).
+encourage you to learn more about plugins in [our documentation](https://www.gooddata.com/docs/gooddata-ui/latest/).
 
 In case you don't feel like reading the documentation at this point, go at least through the following quick introduction.
 
@@ -22,12 +22,12 @@ When developing your own plugin, you typically create custom React components an
 the rendered dashboard using available APIs and then register those components and handlers using the customization APIs.
 
 The infrastructure within this project allows you to develop and verify your new plugin against a live, existing dashboard
-located either on GoodData platform or GoodData.CN.
+located on GoodData.CN.
 
 Once you are happy with your new plugin you have to build it using scripts included in this project and then host
 the built artifacts.
 
-After that, you can register the plugin into one or more workspaces on GoodData platform and/or GoodData.CN and
+After that, you can register the plugin into one or more workspaces on GoodData.CN and
 then use the plugin on any number of dashboards
 
 _Note: GoodData currently does not provide hosting for your plugin artifacts._
@@ -38,11 +38,11 @@ Building a new plugin is easy. Before you start, ensure that your `.env` and `.e
 
 0.  (Optional) Export catalog: `{{packageManager}} run refresh-md`
 
-    To make referencing various metadata objects easier in your plugin, you can use the [Export catalog](https://sdk.gooddata.com/gooddata-ui/docs/export_catalog.html) feature to get a easy-to-use list of the various MD objects in your workspace (insights, dashboards, attributes, etc.).
+    To make referencing various metadata objects easier in your plugin, you can use the [Export catalog](https://www.gooddata.com/docs/gooddata-ui/latest/learn/visualize_data/export_catalog/) feature to get a easy-to-use list of the various MD objects in your workspace (insights, dashboards, attributes, etc.).
     For convenience, this was integrated to your plugin, just run `{{packageManager}} run refresh-md`.
     This will connect to the workspace specified in the `.env` file using the credentials from `.env.secrets`
     and populate the file `src/md/full.{{language}}` with information about the metadata objects available in the specified workspace.
-    See the [Export catalog](https://sdk.gooddata.com/gooddata-ui/docs/export_catalog.html) documentation page for more information.
+    See the [Export catalog](https://www.gooddata.com/docs/gooddata-ui/latest/learn/visualize_data/export_catalog/) documentation page for more information.
 
 1.  Start the development server: `{{packageManager}} start`
 
@@ -68,10 +68,11 @@ Building a new plugin is easy. Before you start, ensure that your `.env` and `.e
 
     It is paramount that you upload all files from the `esm/dashboardPlugin`.
 
-    _IMPORTANT_: your hosting must support https, allow CORS to your GoodData domain and your GoodData domain must include the hosting location in the list
-    of allowed hosts from where GoodData will load plugins. You should create a [support ticket](https://support.gooddata.com/hc/en-us/requests/new?ticket_form_id=582387) to explicitly allow the hosting
-    location before we will load any plugins from it. You may host multiple plugins in separate directories within
-    the allowed hosting location.
+    _IMPORTANT_:
+
+    Set up hosting for your plugins.
+    Update the Content Security Policy of your GoodData.CN installation’s gateway to enable loading plugins from the hosting location.
+    [More info](https://www.gooddata.com/docs/gooddata-ui/latest/learn/integrate_and_authenticate/)
 
     _GOOD IDEA_: treat plugin builds immutably. Never overwrite an already uploaded plugin artifacts. Organize your hosting
     location so there is always unique directory that contains all plugin artifacts. This is a corner-stone of controlled,
@@ -159,7 +160,6 @@ that is contained in the [src/harness/backend.ts](src/harness/backend.ts) - this
 You can edit the compatibility property in `src/{{pluginIdentifier}}\_entry/index`.
 It is a standard SemVer string.
 Usually you want to have ">=version" there, where version is the GoodData.UI version you developed and built the plugin with.
-
 
 ### How do plugin dependencies work?
 

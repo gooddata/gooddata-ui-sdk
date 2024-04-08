@@ -4,6 +4,7 @@ import { IAttributeOrMeasure, ICatalogDateDataset } from "@gooddata/sdk-model";
 import {
     queryAvailableDatasetsForItems,
     QueryAvailableDatasetsForItems,
+    selectBackendCapabilities,
     selectEnableKDAttributeFilterDatesValidation,
     useDashboardQueryProcessing,
     useDashboardSelector,
@@ -13,9 +14,13 @@ import {
  * @internal
  */
 export function useAvailableDatasetsForItems(items: IAttributeOrMeasure[]) {
-    const shouldLoadAvailableDatasetsForItems = useDashboardSelector(
+    const enableKDAttributeFilterDatesValidation = useDashboardSelector(
         selectEnableKDAttributeFilterDatesValidation,
     );
+    const capabilities = useDashboardSelector(selectBackendCapabilities);
+    const shouldLoadAvailableDatasetsForItems =
+        enableKDAttributeFilterDatesValidation &&
+        capabilities.supportsAttributeFilterElementsLimitingByDependentDateFilters;
 
     const {
         run: getAvilableDatasetForItems,

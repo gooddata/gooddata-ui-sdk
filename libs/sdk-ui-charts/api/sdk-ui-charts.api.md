@@ -82,22 +82,22 @@ export type CalculationType = "change" | "ratio" | "difference" | "change_differ
 // @public
 export type ChartAlignTypes = "top" | "bottom" | "middle";
 
-// @public (undocumented)
+// @beta
 export type ChartCellImageSizing = "fit" | "fill";
 
-// @public (undocumented)
+// @beta
 export type ChartCellTextWrapping = "clip" | "wrap";
 
-// @public (undocumented)
+// @beta
 export type ChartCellVerticalAlign = "top" | "middle" | "bottom";
 
-// @public (undocumented)
+// @beta
 export type ChartInlineVisualizationType = "metric" | "line" | "column";
 
 // @public
 export type ChartOrientationType = "horizontal" | "vertical";
 
-// @public (undocumented)
+// @beta
 export type ChartRowHeight = "small" | "medium" | "large";
 
 export { ColorUtils }
@@ -128,7 +128,7 @@ export type ComparisonPosition = "top" | "left" | "right" | "auto";
 export const ComparisonPositionValues: Record<Uppercase<ComparisonPosition>, ComparisonPosition>;
 
 // @internal
-export function constructRepeaterBuckets(rowAttribute: IAttribute, columns: IAttributeOrMeasure[], sliceVisualizationBy?: IAttribute): IBucket[];
+export function constructRepeaterBuckets(rowAttribute: IAttribute, columns: IAttributeOrMeasure[], viewBy?: IAttribute): IBucket[];
 
 // @internal
 export function constructRepeaterDimensions(buckets: IBucket[]): IDimension[];
@@ -137,7 +137,7 @@ export function constructRepeaterDimensions(buckets: IBucket[]): IDimension[];
 export const CoreHeadline: React_2.ComponentClass<ICoreChartProps & ICoreHeadlineExtendedProps, any>;
 
 // @internal (undocumented)
-export const CoreRepeater: React_2.FC<ICoreRepeterChartProps>;
+export const CoreRepeater: React_2.FC<ICoreRepeaterChartProps>;
 
 // @internal
 export const CoreXirr: React_2.ComponentClass<ICoreChartProps, any>;
@@ -283,8 +283,11 @@ export interface IChartCallbacks extends IVisualizationCallbacks {
 
 // @public
 export interface IChartConfig {
+    // @beta
     cellImageSizing?: ChartCellImageSizing;
+    // @beta
     cellTextWrapping?: ChartCellTextWrapping;
+    // @beta
     cellVerticalAlign?: ChartCellVerticalAlign;
     // @internal
     chart?: any;
@@ -307,7 +310,9 @@ export interface IChartConfig {
     enableSeparateTotalLabels?: boolean;
     forceDisableDrillOnAxes?: boolean;
     grid?: IGridConfig;
+    // @beta
     hyperLinks?: IDisplayFormHyperlinksConfig;
+    // @beta
     inlineVisualizations?: IInlineVisualizationsConfig;
     legend?: ILegendConfig;
     legendLayout?: "vertical" | "horizontal";
@@ -316,6 +321,7 @@ export interface IChartConfig {
     // @internal
     orientation?: IOrientationConfig;
     primaryChartType?: "line" | "column" | "area";
+    // @beta
     rowHeight?: ChartRowHeight;
     secondary_xaxis?: IAxisConfig;
     secondary_yaxis?: IAxisConfig;
@@ -430,7 +436,8 @@ export interface ICoreHeadlineExtendedProps {
 }
 
 // @internal (undocumented)
-export interface ICoreRepeterChartProps extends ICoreChartProps, WrappedComponentProps {
+export interface ICoreRepeaterChartProps extends ICoreChartProps, WrappedComponentProps {
+    onColumnResized?: RepeaterColumnResizedCallback;
     // (undocumented)
     theme?: ITheme;
 }
@@ -496,7 +503,7 @@ export interface IDependencyWheelChartBucketProps {
 export interface IDependencyWheelChartProps extends IBucketChartProps, IDependencyWheelChartBucketProps {
 }
 
-// @public
+// @beta
 export interface IDisplayFormHyperlinksConfig {
     [displayFormLocalIdentifier: string]: {
         staticElementsText: string;
@@ -583,7 +590,7 @@ export interface IHeatmapBucketProps {
 export interface IHeatmapProps extends IBucketChartProps, IHeatmapBucketProps {
 }
 
-// @public (undocumented)
+// @beta (undocumented)
 export interface IInlineVisualizationsConfig {
     [localIdentifier: string]: {
         type: ChartInlineVisualizationType;
@@ -668,13 +675,85 @@ export interface IPyramidChartBucketProps {
 export interface IPyramidChartProps extends IBucketChartProps, IPyramidChartBucketProps {
 }
 
+// @public (undocumented)
+export interface IRepeaterAbsoluteColumnWidth {
+    // (undocumented)
+    allowGrowToFit?: boolean;
+    // (undocumented)
+    value: number;
+}
+
+// @public
+export interface IRepeaterAttributeColumnLocator {
+    // (undocumented)
+    attributeLocatorItem: IRepeaterAttributeColumnLocatorBody;
+}
+
+// @public
+export interface IRepeaterAttributeColumnLocatorBody {
+    attributeIdentifier: Identifier;
+    element?: string | null;
+}
+
+// @public (undocumented)
+export interface IRepeaterAttributeColumnWidthItem {
+    // (undocumented)
+    attributeColumnWidthItem: IRepeaterAttributeColumnWidthItemBody;
+}
+
+// @public
+export interface IRepeaterAttributeColumnWidthItemBody {
+    // (undocumented)
+    attributeIdentifier: Identifier;
+    // (undocumented)
+    width: IRepeaterAbsoluteColumnWidth;
+}
+
+// @public (undocumented)
+export interface IRepeaterAutoColumnWidth {
+    // (undocumented)
+    value: "auto";
+}
+
 // @beta (undocumented)
 export interface IRepeaterBucketProps {
     attribute: AttributeOrPlaceholder;
     columns?: AttributesMeasuresOrPlaceholders;
     filters?: NullableFiltersOrPlaceholders;
     placeholdersResolutionContext?: any;
-    sliceVisualizationBy?: AttributeOrPlaceholder;
+    viewBy?: AttributeOrPlaceholder;
+}
+
+// @public (undocumented)
+export interface IRepeaterColumnSizing {
+    columnWidths?: RepeaterColumnWidthItem[];
+    defaultWidth?: RepeaterDefaultColumnWidth;
+    growToFit?: boolean;
+}
+
+// @public
+export interface IRepeaterMeasureColumnLocator {
+    // (undocumented)
+    measureLocatorItem: IRepeaterMeasureColumnLocatorBody;
+}
+
+// @public
+export interface IRepeaterMeasureColumnLocatorBody {
+    measureIdentifier: Identifier;
+}
+
+// @public (undocumented)
+export interface IRepeaterMeasureColumnWidthItem {
+    // (undocumented)
+    measureColumnWidthItem: IRepeaterMeasureColumnWidthItemBody;
+}
+
+// @public
+export interface IRepeaterMeasureColumnWidthItemBody {
+    // (undocumented)
+    locators: RepeaterColumnLocator[];
+    // (undocumented)
+    width: RepeaterColumnWidth;
 }
 
 // @beta (undocumented)
@@ -836,6 +915,21 @@ export const PyramidChart: (props: IPyramidChartProps) => React_2.JSX.Element;
 
 // @beta (undocumented)
 export const Repeater: (props: IRepeaterProps) => JSX.Element;
+
+// @public (undocumented)
+export type RepeaterColumnLocator = IRepeaterAttributeColumnLocator | IRepeaterMeasureColumnLocator;
+
+// @public (undocumented)
+export type RepeaterColumnResizedCallback = (columnWidths: RepeaterColumnWidthItem[]) => void;
+
+// @public (undocumented)
+export type RepeaterColumnWidth = IRepeaterAbsoluteColumnWidth | IRepeaterAutoColumnWidth;
+
+// @public (undocumented)
+export type RepeaterColumnWidthItem = IRepeaterAttributeColumnWidthItem | IRepeaterMeasureColumnWidthItem;
+
+// @public (undocumented)
+export type RepeaterDefaultColumnWidth = "unset" | "autoresizeAll" | "viewport";
 
 // @public
 export const SankeyChart: (props: ISankeyChartProps) => React_2.JSX.Element;

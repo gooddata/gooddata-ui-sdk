@@ -3,7 +3,7 @@
 import React, { useMemo, useState } from "react";
 import { AgGridReact } from "@ag-grid-community/react";
 import { AllCommunityModules, ColDef, ICellRendererParams } from "@ag-grid-community/all-modules";
-import { BucketNames, DataViewFacade, LoadingComponent, emptyHeaderTitleFromIntl } from "@gooddata/sdk-ui";
+import { BucketNames, LoadingComponent, emptyHeaderTitleFromIntl, DataViewFacade } from "@gooddata/sdk-ui";
 import { AgGridDatasource } from "./repeaterAgGridDataSource.js";
 import {
     IAttribute,
@@ -22,19 +22,16 @@ import { IChartConfig } from "../../../interfaces/index.js";
 import { Icon } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import stringify from "json-stable-stringify";
+import { IRepeaterChartProps } from "../publicTypes.js";
+import { useResizing } from "../hooks/useResizing.js";
 import { InlineLineChart } from "./InlineLineChart.js";
 import { InlineColumnChart } from "./InlineColumnChart.js";
 import { RepeaterInlineVisualizationDataPoint } from "./dataViewToRepeaterData.js";
 
-interface IRepeaterChartProps {
-    dataView: DataViewFacade;
-    config?: IChartConfig;
-    onError?: (error: any) => void;
-}
-
 const DEFAULT_COL_DEF = { resizable: true };
 
-export const RepeaterChart: React.FC<IRepeaterChartProps> = ({ dataView, onError, config }) => {
+export const RepeaterChart: React.FC<IRepeaterChartProps> = (props) => {
+    const { dataView, onError, config } = props;
     const dataSource = useMemo(
         () => new AgGridDatasource(dataView, { onError }),
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -43,21 +40,28 @@ export const RepeaterChart: React.FC<IRepeaterChartProps> = ({ dataView, onError
 
     const rowHeight = getRowHeight(config);
 
-    const columnDefs = useMemo(() => {
+    const items = useMemo(() => {
         const columnsBucket = bucketsFind(dataView.definition.buckets, BucketNames.COLUMNS);
 
-        return columnsBucket.items.map((bucketItem): ColDef => {
+        return columnsBucket.items ?? [];
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dataView.fingerprint()]);
+
+    const columnDefs = useMemo(() => {
+        let measureIndex = 0;
+        return items.map((bucketItem): ColDef => {
             const sharedColDef: ColDef = {
                 headerName: getRepeaterColumnTitle(bucketItem, dataView),
                 field: getRepeaterColumnId(bucketItem),
                 cellClass: "gd-cell",
             };
-
             if (isMeasure(bucketItem)) {
                 const localId = measureLocalId(bucketItem);
                 const measureTitle = getMetricTitle(bucketItem, dataView);
                 const viewByAttributeLocalId = getViewByAttributeLocalId(dataView);
                 const viewByAttributeTitle = getViewByAttributeTitle(dataView);
+                const measureColor = getMetricColor(bucketItem, dataView, config, measureIndex);
+                measureIndex = measureIndex + 1;
 
                 return {
                     ...sharedColDef,
@@ -81,6 +85,7 @@ export const RepeaterChart: React.FC<IRepeaterChartProps> = ({ dataView, onError
                             viewByAttributeTitle,
                             viewByAttributeHeaderItems: params.data?.[viewByAttributeLocalId] ?? [],
                             config,
+                            measureColor,
                         };
                     },
                 };
@@ -118,14 +123,26 @@ export const RepeaterChart: React.FC<IRepeaterChartProps> = ({ dataView, onError
             }
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [dataView.fingerprint(), JSON.stringify(config)]);
+    }, [
+        items,
+        config?.cellVerticalAlign,
+        config?.cellTextWrapping,
+        config?.cellImageSizing,
+        config?.hyperLinks,
+    ]);
+
+    const { onColumnResized, onGridReady, containerRef } = useResizing(columnDefs, items, props);
 
     return (
-        <div className="gd-repeater ag-theme-balham s-repeater">
+        <div className="gd-repeater ag-theme-balham s-repeater" ref={containerRef}>
             <AgGridReact
                 key={stringify({
+                    rowHeight,
+                    cellVerticalAlign: config?.cellVerticalAlign,
+                    cellTextWrapping: config?.cellTextWrapping,
+                    cellImageSizing: config?.cellImageSizing,
                     dataView: dataView.fingerprint(),
-                    config,
+                    hyperLinks: config?.hyperLinks,
                     onError: onError?.toString(),
                 })}
                 defaultColDef={DEFAULT_COL_DEF}
@@ -135,6 +152,8 @@ export const RepeaterChart: React.FC<IRepeaterChartProps> = ({ dataView, onError
                 datasource={dataSource}
                 rowModelType="infinite"
                 rowHeight={rowHeight}
+                onGridReady={onGridReady}
+                onColumnResized={onColumnResized}
             />
         </div>
     );
@@ -171,6 +190,7 @@ interface IMeasureColumnData {
     measureLocalId: string;
     measureTitle: string;
     measureDataPoints: RepeaterInlineVisualizationDataPoint[];
+    measureColor: string;
 
     viewByAttributeTitle?: string;
     viewByAttributeHeaderItems?: IResultAttributeHeaderItem[];
@@ -208,6 +228,7 @@ function MeasureCellRenderer({
                 metricTitle={measureTitle}
                 sliceTitle={viewByAttributeTitle}
                 data={measureDataPoints}
+                color={measureColumnData.measureColor}
                 headerItems={viewByAttributeHeaderItems}
                 height={rowHeight}
             />
@@ -218,13 +239,27 @@ function MeasureCellRenderer({
                 metricTitle={measureTitle}
                 sliceTitle={viewByAttributeTitle}
                 data={measureDataPoints}
+                color={measureColumnData.measureColor}
                 headerItems={viewByAttributeHeaderItems}
                 height={rowHeight}
             />
         );
     }
 
-    return <div>{measureDataPoints[0]?.formattedValue}</div>;
+    const verticalAlign = getVerticalAlign(config);
+    const textWrapping = getTextWrapping(config);
+
+    return (
+        <div
+            className={cx(
+                "gd-repeater-cell-wrapper",
+                `gd-vertical-align-${verticalAlign}`,
+                `gd-text-wrapping-${textWrapping}`,
+            )}
+        >
+            {measureDataPoints[0]?.formattedValue}
+        </div>
+    );
 }
 
 interface IAttributeColumnData {
@@ -323,13 +358,46 @@ function getRepeaterColumnId(columnBucketItem: IAttributeOrMeasure) {
     return attributeLocalId(columnBucketItem);
 }
 
+function getMetricColor(measure: IMeasure, dataView: DataViewFacade, config: IChartConfig, index: number) {
+    const descriptor = getMetricDescriptor(measure, dataView);
+    const colorPalette = config?.colorPalette;
+    const colorMappingForMeasure = config?.colorMapping?.find((cm) =>
+        cm.predicate?.(descriptor, { dv: dataView }),
+    );
+    let color: string;
+    if (colorMappingForMeasure?.color?.type === "rgb") {
+        const rgbColor = colorMappingForMeasure.color.value;
+        color = `rgb(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b})`;
+    } else if (colorMappingForMeasure?.color?.type === "guid") {
+        const paletteColor = colorPalette?.find((c) => c.guid === colorMappingForMeasure.color.value);
+        if (paletteColor) {
+            const rgbColor = paletteColor.fill;
+            color = `rgb(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b})`;
+        }
+    }
+
+    if (!color) {
+        const paletteColor = colorPalette?.[index];
+        if (paletteColor) {
+            const rgbColor = paletteColor.fill;
+            color = `rgb(${rgbColor.r}, ${rgbColor.g}, ${rgbColor.b})`;
+        } else {
+            color = "#14B2E2";
+        }
+    }
+
+    return color;
+}
+
 function getMetricTitle(measure: IMeasure, dataView: DataViewFacade) {
+    const measureDescriptor = getMetricDescriptor(measure, dataView);
+    return measureDescriptor?.measureHeaderItem?.name;
+}
+
+function getMetricDescriptor(measure: IMeasure, dataView: DataViewFacade) {
     const localId = measureLocalId(measure);
     const measureDescriptors = dataView.meta().measureDescriptors();
-    const measureDescriptor = measureDescriptors.find(
-        (descriptor) => descriptor.measureHeaderItem.localIdentifier === localId,
-    );
-    return measureDescriptor?.measureHeaderItem?.name;
+    return measureDescriptors.find((descriptor) => descriptor.measureHeaderItem.localIdentifier === localId);
 }
 
 function getAttributeTitle(attribute: IAttribute, dataView: DataViewFacade) {

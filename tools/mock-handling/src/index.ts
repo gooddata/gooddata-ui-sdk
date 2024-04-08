@@ -11,7 +11,7 @@ import { log, logError, logInfo, logSuccess } from "./cli/loggers.js";
 import { clearLine, clearTerminal } from "./cli/clear.js";
 import { promptProjectId, promptTigerToken } from "./cli/prompts.js";
 import { getConfigFromConfigFile, getConfigFromOptions } from "./base/config.js";
-import { DEFAULT_CONFIG_FILE_NAME, DEFAULT_HOSTNAME, DEFAULT_BACKEND } from "./base/constants.js";
+import { DEFAULT_CONFIG_FILE_NAME, DEFAULT_HOSTNAME } from "./base/constants.js";
 import { DataRecorderConfig, DataRecorderError, isDataRecorderError } from "./base/types.js";
 import { generateAllFiles } from "./codegen/index.js";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -30,9 +30,8 @@ program
     .option("--recordingDir <path>", "Directory with recording inputs and outputs")
     .option("--project-id <id>", "Project id from which you want to capture mock data")
     .option("--tigerToken <token>", "GoodData tiger platform auth token.")
-    .option("--hostname <url>", `Instance of GoodData platform. The default is ${DEFAULT_HOSTNAME}`)
+    .option("--hostname <url>", `Instance of the backend. The default is ${DEFAULT_HOSTNAME}`)
     .option("--config <path>", `Custom config file (default ${DEFAULT_CONFIG_FILE_NAME})`)
-    .option("--backend <type>", `Backend (default ${DEFAULT_BACKEND})`)
     .option(
         "--replace-project-id <id>",
         `Replace projectId with this value when writing out recordings. By default not specified and projectId will stay in recordings as-is.`,
@@ -41,7 +40,7 @@ program
     .parse(process.argv);
 
 async function promptForMissingConfig(config: DataRecorderConfig): Promise<DataRecorderConfig> {
-    const { hostname, backend } = config;
+    const { hostname } = config;
     let { projectId, tigerToken } = config;
 
     const logInSpinner = ora();
@@ -50,7 +49,7 @@ async function promptForMissingConfig(config: DataRecorderConfig): Promise<DataR
 
         logInSpinner.start("Logging in...");
 
-        await getOrInitBackend(tigerToken, hostname || DEFAULT_HOSTNAME, backend || DEFAULT_BACKEND);
+        await getOrInitBackend(tigerToken, hostname || DEFAULT_HOSTNAME);
         logInSpinner.succeed();
         clearLine();
     } catch (err) {
@@ -186,11 +185,7 @@ async function run() {
          * Instantiate analytical backend to run requests against; it is enough to do this once for the whole
          * run.
          */
-        const backend = getOrInitBackend(
-            fullConfig.tigerToken!,
-            options.hostname || DEFAULT_HOSTNAME,
-            options.backend || DEFAULT_BACKEND,
-        );
+        const backend = getOrInitBackend(fullConfig.tigerToken!, options.hostname || DEFAULT_HOSTNAME);
 
         const newRecordings = await captureRecordings(incompleteRecordings, backend, fullConfig);
 

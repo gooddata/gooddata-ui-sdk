@@ -1,6 +1,6 @@
 {
     "exclude": ["**/tests", "**/test"],
-    "include": ["src/**/*", "src/**/*.json", "typings"],
+    "include": ["src/index.tsx", "typings"],
     "compilerOptions": {
         "baseUrl": ".",
         "rootDir": "./src",
@@ -17,6 +17,7 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,
         "noImplicitReturns": true,
+        "declaration": true,
         "declarationMap": true,
         "sourceMap": true
     }

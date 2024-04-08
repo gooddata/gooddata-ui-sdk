@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import "../../scripts/env.js";
 import { exportTigerFixtureExtension } from "@gooddata/fixtures";
@@ -12,7 +12,7 @@ import { runPrettierOnFile } from "./prettierUtils.js";
 
 async function main() {
     try {
-        const { HOST, TIGER_API_TOKEN, TEST_WORKSPACE_ID, SDK_BACKEND, FIXTURE_TYPE } = process.env;
+        const { HOST, TIGER_API_TOKEN, TEST_WORKSPACE_ID, FIXTURE_TYPE } = process.env;
 
         if (!TEST_WORKSPACE_ID) {
             logLn("TEST_WORKSPACE_ID not specified in the .env file. Skipping.");
@@ -25,7 +25,7 @@ async function main() {
             TEST_WORKSPACE_ID,
             TIGER_API_TOKEN,
             HOST,
-            SDK_BACKEND,
+            "TIGER",
             outputFile,
         );
         runPrettierOnFile(outputFile);

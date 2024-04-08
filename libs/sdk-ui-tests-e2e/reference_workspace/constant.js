@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 
@@ -16,10 +16,6 @@ export const BEAR_FIXTURE_PATHS = {
 export const TIGER_FIXTURE_METADATA_EXTENSIONS = {
     goodsales: path.join(__dirname, `fixtures/goodsales/tiger_metadata_extension.json`),
     demo: path.join(__dirname, `fixtures/demo/tiger_metadata_extension.json`),
-};
-
-export const BEAR_FIXTURE_METADATA_EXTENSIONS = {
-    goodsales: path.join(__dirname, `fixtures/goodsales/bear_metadata_extension.json`),
 };
 
 export const TIGER_FIXTURE_CATALOG = {

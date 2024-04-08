@@ -1,5 +1,5 @@
 // (C) 2024 GoodData Corporation
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import { WrappedComponentProps, injectIntl, useIntl } from "react-intl";
 import {
     LoadingComponent as SDKLoadingComponent,
@@ -10,20 +10,33 @@ import {
     IntlWrapper,
     convertError,
     ErrorCodes,
+    BucketNames,
 } from "@gooddata/sdk-ui";
-import { ITheme } from "@gooddata/sdk-model";
-import { ThemeContextProvider, withTheme } from "@gooddata/sdk-ui-theme-provider";
-import { ICoreChartProps } from "../../interfaces/index.js";
+import { ITheme, bucketsFind } from "@gooddata/sdk-model";
+import { ThemeContextProvider, useTheme, withTheme } from "@gooddata/sdk-ui-theme-provider";
+import { IChartConfig, ICoreChartProps } from "../../interfaces/index.js";
 import { RepeaterChart } from "./internal/RepeaterChart.js";
+import { RepeaterColumnResizedCallback } from "./publicTypes.js";
+import { ColorFactory, getValidColorPalette } from "../../highcharts/index.js";
+
+export * from "./publicTypes.js";
+export * from "./columnWidths.js";
 
 /**
  * @internal
  */
-export interface ICoreRepeterChartProps extends ICoreChartProps, WrappedComponentProps {
+export interface ICoreRepeaterChartProps extends ICoreChartProps, WrappedComponentProps {
     theme?: ITheme;
+
+    /**
+     * Specify function to call when user manually resizes a table column.
+     *
+     * @param columnWidths - new widths for columns
+     */
+    onColumnResized?: RepeaterColumnResizedCallback;
 }
 
-export const CoreRepeaterImpl: React.FC<ICoreRepeterChartProps> = (props) => {
+export const CoreRepeaterImpl: React.FC<ICoreRepeaterChartProps> = (props) => {
     const {
         execution,
         ErrorComponent = SDKErrorComponent,
@@ -31,6 +44,7 @@ export const CoreRepeaterImpl: React.FC<ICoreRepeterChartProps> = (props) => {
         onLoadingChanged,
         pushData,
         onError,
+        onColumnResized,
         config,
     } = props;
 
@@ -62,6 +76,39 @@ export const CoreRepeaterImpl: React.FC<ICoreRepeterChartProps> = (props) => {
         [execution.fingerprint()],
     );
 
+    const configWithColorPalette = useMemo<IChartConfig>(() => {
+        const colorPalette = getValidColorPalette(config);
+        return {
+            ...config,
+            colorPalette,
+        };
+    }, [config]);
+
+    const theme = useTheme();
+    useEffect(() => {
+        if (result) {
+            const colorStrategy = ColorFactory.getColorStrategy(
+                configWithColorPalette.colorPalette,
+                configWithColorPalette.colorMapping,
+                null,
+                null,
+                null,
+                result,
+                "repeater",
+                theme,
+            );
+
+            const colorAssignment = colorStrategy.getColorAssignment();
+
+            pushData?.({
+                colors: {
+                    colorAssignments: colorAssignment,
+                    colorPalette: configWithColorPalette.colorPalette,
+                },
+            });
+        }
+    }, [theme, configWithColorPalette.colorPalette, configWithColorPalette.colorMapping, pushData, result]);
+
     if (error) {
         const convertedError = convertError(error);
         const errorMessage = convertedError.getMessage();
@@ -78,7 +125,26 @@ export const CoreRepeaterImpl: React.FC<ICoreRepeterChartProps> = (props) => {
         return <LoadingComponent />;
     }
 
-    return <RepeaterChart dataView={result} config={config} onError={onError} />;
+    const columns = bucketsFind(result.definition.buckets, BucketNames.COLUMNS);
+    if (!columns || columns.items.length === 0) {
+        const err = new Error("Repeater chart requires at least one column") as any;
+        const convertedError = convertError(err);
+        const errorMessage = convertedError.getMessage();
+        const errorMap = newErrorMapping(intl);
+        const errorProps =
+            errorMap[Object.prototype.hasOwnProperty.call(errorMap, err) ? err : ErrorCodes.UNKNOWN_ERROR];
+
+        return <ErrorComponent code={errorMessage} {...errorProps} />;
+    }
+
+    return (
+        <RepeaterChart
+            dataView={result}
+            config={configWithColorPalette}
+            onError={onError}
+            onColumnResized={onColumnResized}
+        />
+    );
 };
 
 const CoreRepeaterWithIntl = injectIntl(withTheme(CoreRepeaterImpl));
@@ -86,7 +152,7 @@ const CoreRepeaterWithIntl = injectIntl(withTheme(CoreRepeaterImpl));
 /**
  * @internal
  */
-export const CoreRepeater: React.FC<ICoreRepeterChartProps> = (props) => (
+export const CoreRepeater: React.FC<ICoreRepeaterChartProps> = (props) => (
     <ThemeContextProvider theme={props.theme || {}} themeIsLoading={false}>
         <IntlWrapper locale={props.locale}>
             <CoreRepeaterWithIntl {...props} />

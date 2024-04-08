@@ -1,12 +1,8 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import fs from "fs";
 
-export function ensureRecordingsDirectory(backend) {
-    fs.mkdirSync(`./recordings/mappings/${backend}`, { recursive: true });
-}
-
-export function recordingsPresent(backend) {
-    const recordingsLength = fs.readdirSync(`./recordings/mappings/${backend}`).length;
+export function recordingsPresent() {
+    const recordingsLength = fs.readdirSync(`./recordings/mappings/TIGER`).length;
     return recordingsLength !== 0;
 }
 

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-dashboard",
-    "version": "10.0.0-alpha.13",
+    "version": "10.1.0-alpha.2",
     "description": "GoodData SDK - Dashboard Component",
     "repository": {
         "type": "git",
@@ -74,7 +74,7 @@
         "default-import": "^1.1.5",
         "immer": "^9.0.3",
         "json-stable-stringify": "^1.0.1",
-        "lodash": "^4.17.19",
+        "lodash": "^4.17.21",
         "lru-cache": "^10.0.1",
         "react-dnd": "^14.0.5",
         "react-dnd-html5-backend": "^14.1.0",

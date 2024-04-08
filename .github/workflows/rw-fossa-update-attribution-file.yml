@@ -73,7 +73,10 @@ jobs:
 
             sed -i '/[*] Declared Licenses [*]/ {N; /No licenses found/d;}' NOTICE
       - name: Git commit and push
+        env:
+          BRANCH: ${{ inputs.source-branch }}
         run: |
           git add NOTICE
           git commit -m "chore: update attribution file" -m "" -m "TRIVIAL"
+          git pull --rebase origin ${BRANCH}
           git push origin HEAD

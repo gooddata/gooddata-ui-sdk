@@ -69,7 +69,6 @@
         "update-ref-workspace": "npm run delete-ref-workspace && npm run create-ref-workspace"
     },
     "dependenciesInfo": "This is package is SDK tool and is not distributed all dependencies must be defined as devDependencies due to FOSSA automated report generation",
-    "dependencies": {},
     "type": "module",
     "devDependencies": {
         "@babel/cli": "^7.23.4",
@@ -86,7 +85,6 @@
         "@gooddata/catalog-export": "workspace:*",
         "@gooddata/eslint-config": "^4.1.0",
         "@gooddata/fixtures": "1.32.15",
-        "@gooddata/sdk-backend-bear": "workspace:*",
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-backend-tiger": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
@@ -138,7 +136,7 @@
         "eslint-plugin-tsdoc": "^0.2.14",
         "fork-ts-checker-webpack-plugin": "^9.0.2",
         "html-webpack-plugin": "^5.3.1",
-        "lodash": "^4.17.19",
+        "lodash": "^4.17.21",
         "mocha": "~10.2.0",
         "mocha-junit-reporter": "~2.2.1",
         "node-xlsx": "^0.23.0",

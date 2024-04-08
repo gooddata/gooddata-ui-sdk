@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import isString from "lodash/isString.js";
 import SparkMD5 from "spark-md5";
@@ -282,8 +282,7 @@ export function defFingerprint(def: IExecutionDefinition): string {
      * - dimensions must be fingerprinted in the defined order
      *
      * This simple approach can lead to 'false negatives' => code says executions are different while in
-     * fact are the same. This does not lead to functional issues as the bear can deal with that and will
-     * reuse cached and all. The only drawback is frontend cache misses.
+     * fact are the same.
      */
 
     const hashFun = hasher.append.bind(hasher);

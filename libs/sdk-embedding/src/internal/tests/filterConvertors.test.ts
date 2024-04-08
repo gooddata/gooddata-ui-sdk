@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import { describe, expect, it } from "vitest";
 import {
     transformFilterContext,
@@ -9,10 +9,17 @@ import {
     IExternalFiltersObject,
     isValidRemoveFiltersFormat,
 } from "../filterConvertors.js";
-import { EmbeddedGdc } from "../../iframe/common.js";
+import {
+    FilterItem,
+    IAbsoluteDateFilter,
+    INegativeAttributeFilter,
+    IPositiveAttributeFilter,
+    IRankingFilter,
+    IRelativeDateFilter,
+} from "../../iframe/EmbeddedGdc.js";
 
 describe("filter convertors", () => {
-    const absoluteDateFilter: EmbeddedGdc.IAbsoluteDateFilter = {
+    const absoluteDateFilter: IAbsoluteDateFilter = {
         absoluteDateFilter: {
             from: "2020-01-01",
             to: "2020-02-01",
@@ -21,7 +28,7 @@ describe("filter convertors", () => {
             },
         },
     };
-    const absoluteDateFilterWithTime: EmbeddedGdc.IAbsoluteDateFilter = {
+    const absoluteDateFilterWithTime: IAbsoluteDateFilter = {
         absoluteDateFilter: {
             from: "2020-01-01 00:01",
             to: "2020-02-01 22:50",
@@ -30,7 +37,7 @@ describe("filter convertors", () => {
             },
         },
     };
-    const relativeDateFilter: EmbeddedGdc.IRelativeDateFilter = {
+    const relativeDateFilter: IRelativeDateFilter = {
         relativeDateFilter: {
             granularity: "gdc.time.month",
             from: -1,
@@ -53,7 +60,7 @@ describe("filter convertors", () => {
             dataSet: {},
         },
     };
-    const negativeAttributeFilter: EmbeddedGdc.INegativeAttributeFilter = {
+    const negativeAttributeFilter: INegativeAttributeFilter = {
         negativeAttributeFilter: {
             notIn: ["uri1"],
             displayForm: {
@@ -61,7 +68,7 @@ describe("filter convertors", () => {
             },
         },
     };
-    const positiveAttributeFilter: EmbeddedGdc.IPositiveAttributeFilter = {
+    const positiveAttributeFilter: IPositiveAttributeFilter = {
         positiveAttributeFilter: {
             in: ["uri1"],
             displayForm: {
@@ -69,7 +76,7 @@ describe("filter convertors", () => {
             },
         },
     };
-    const rankingFilter: EmbeddedGdc.IRankingFilter = {
+    const rankingFilter: IRankingFilter = {
         rankingFilter: {
             measure: { localIdentifier: "m1" },
             attributes: [{ localIdentifier: "a1" }, { localIdentifier: "a2" }],
@@ -83,7 +90,7 @@ describe("filter convertors", () => {
             displayForm: {},
         },
     };
-    const positiveAttributeFilterWithoutValue: EmbeddedGdc.IPositiveAttributeFilter = {
+    const positiveAttributeFilterWithoutValue: IPositiveAttributeFilter = {
         positiveAttributeFilter: {
             in: [],
             displayForm: {
@@ -91,7 +98,7 @@ describe("filter convertors", () => {
             },
         },
     };
-    const positiveAttributeMultiSelectionFilter: EmbeddedGdc.IPositiveAttributeFilter = {
+    const positiveAttributeMultiSelectionFilter: IPositiveAttributeFilter = {
         positiveAttributeFilter: {
             in: ["uri1", "uri2"],
             displayForm: {
@@ -100,7 +107,7 @@ describe("filter convertors", () => {
             selectionMode: "multi",
         },
     };
-    const positiveAttributeSelectionFilter: EmbeddedGdc.IPositiveAttributeFilter = {
+    const positiveAttributeSelectionFilter: IPositiveAttributeFilter = {
         positiveAttributeFilter: {
             in: ["uri1", "uri2"],
             displayForm: {
@@ -109,7 +116,7 @@ describe("filter convertors", () => {
         },
     };
 
-    const positiveAttributeSingleSelectionFilterWithoutValue: EmbeddedGdc.IPositiveAttributeFilter = {
+    const positiveAttributeSingleSelectionFilterWithoutValue: IPositiveAttributeFilter = {
         positiveAttributeFilter: {
             in: [],
             displayForm: {
@@ -118,7 +125,7 @@ describe("filter convertors", () => {
             selectionMode: "single",
         },
     };
-    const positiveAttributeSingleSelectionFilter: EmbeddedGdc.IPositiveAttributeFilter = {
+    const positiveAttributeSingleSelectionFilter: IPositiveAttributeFilter = {
         positiveAttributeFilter: {
             in: ["uri1"],
             displayForm: {
@@ -127,7 +134,7 @@ describe("filter convertors", () => {
             selectionMode: "single",
         },
     };
-    const positiveAttributeSingleSelectionFilterWithMultipleValues: EmbeddedGdc.IPositiveAttributeFilter = {
+    const positiveAttributeSingleSelectionFilterWithMultipleValues: IPositiveAttributeFilter = {
         positiveAttributeFilter: {
             in: ["uri1", "uri2"],
             displayForm: {
@@ -145,7 +152,7 @@ describe("filter convertors", () => {
             selectionMode: "xxx",
         },
     };
-    const negativeAttributeMultiSelectionFilter: EmbeddedGdc.INegativeAttributeFilter = {
+    const negativeAttributeMultiSelectionFilter: INegativeAttributeFilter = {
         negativeAttributeFilter: {
             notIn: ["uri1"],
             displayForm: {
@@ -308,7 +315,7 @@ describe("filter convertors", () => {
     });
 
     it("should transform filter context", () => {
-        const filters: EmbeddedGdc.FilterItem[] = [
+        const filters: FilterItem[] = [
             absoluteDateFilter,
             relativeDateFilter,
             negativeAttributeFilter,

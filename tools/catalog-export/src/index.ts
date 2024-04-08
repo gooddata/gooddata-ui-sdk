@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { program } from "commander";
 import chalk from "chalk";
 import * as path from "path";
@@ -20,7 +20,6 @@ import { DEFAULT_CONFIG, DEFAULT_CONFIG_FILE_NAME, DEFAULT_OUTPUT_FILE_NAME } fr
 import { CatalogExportConfig, isCatalogExportError, WorkspaceMetadata } from "./base/types.js";
 import { exportMetadataToTypescript } from "./exports/metaToTypescript.js";
 import { exportMetadataToJavascript } from "./exports/metaToJavascript.js";
-import { loadWorkspaceMetadataFromBear } from "./loaders/bear/index.js";
 import { loadWorkspaceMetadataFromTiger } from "./loaders/tiger/index.js";
 
 dotenv.config();
@@ -28,25 +27,16 @@ dotenv.config();
 program
     .version(LIB_VERSION)
     .option("--workspace-id <id>", "Workspace id for which you want to export the catalog.")
-    .option("--username <email>", "Your username that you use to log in to GoodData platform.")
     .option(
         "--catalog-output <value>",
         `Output file (defaults to ${DEFAULT_OUTPUT_FILE_NAME}). The output file will be created in current working directory`,
     )
-    .option("--hostname <url>", `Instance of GoodData platform.`)
+    .option("--hostname <url>", `Instance of GoodData backend`)
     .option("--config <path>", `Custom config file (default ${DEFAULT_CONFIG_FILE_NAME})`)
-    .option(
-        "--backend <backend>",
-        "Indicates type of the backend that runs on the hostname. Can be either tiger for GoodData Cloud or GoodData.CN or bear for the GoodData platform. Default: tiger",
-    )
     .option("--accept-untrusted-ssl", "Allows to run the tool with host, that has untrusted ssl certificate")
     .parse(process.argv);
 
 async function loadProjectMetadataFromBackend(config: CatalogExportConfig): Promise<WorkspaceMetadata> {
-    if (config.backend === "bear") {
-        return loadWorkspaceMetadataFromBear(config);
-    }
-
     return loadWorkspaceMetadataFromTiger(config);
 }
 
@@ -78,7 +68,7 @@ async function run() {
                 getConfigFromOptions(options),
             ])),
         );
-        const { catalogOutput, backend, hostname } = mergedConfig;
+        const { catalogOutput, hostname } = mergedConfig;
 
         const filePath = path.resolve(catalogOutput || (await requestFilePath()));
 
@@ -93,9 +83,9 @@ async function run() {
         await checkFolderExists(filePath);
 
         if (filePath.endsWith(".js")) {
-            await exportMetadataToJavascript(projectMetadata, filePath, backend !== "bear");
+            await exportMetadataToJavascript(projectMetadata, filePath);
         } else {
-            await exportMetadataToTypescript(projectMetadata, filePath, backend !== "bear");
+            await exportMetadataToTypescript(projectMetadata, filePath);
         }
 
         logSuccess("All data have been successfully exported");

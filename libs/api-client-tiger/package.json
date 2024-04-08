@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/api-client-tiger",
-    "version": "10.0.0-alpha.13",
+    "version": "10.1.0-alpha.2",
     "author": "GoodData",
     "description": "API Client for GoodData Cloud and GoodData.CN",
     "repository": {
@@ -42,7 +42,7 @@
     "dependencies": {
         "@gooddata/sdk-model": "workspace:*",
         "axios": "^1.4.0",
-        "lodash": "^4.17.19",
+        "lodash": "^4.17.21",
         "tslib": "^2.5.0",
         "axios-cache-interceptor": "^1.2.0"
     },

@@ -13,7 +13,6 @@ import {
     insightBuckets,
     insightProperties,
     insightSetBuckets,
-    isAdhocMeasure,
     isMeasure,
     measureAlias,
     measureFormat,
@@ -25,15 +24,20 @@ import {
     measureAggregation,
     measureItem,
     newBucket,
+    IColorMappingItem,
 } from "@gooddata/sdk-model";
 import {
+    RepeaterColumnWidthItem,
+    IRepeaterColumnSizing,
     ChartInlineVisualizationType,
+    ColorUtils,
     CoreRepeater,
+    IColorMapping,
     constructRepeaterDimensions,
     updateConfigWithSettings,
 } from "@gooddata/sdk-ui-charts";
 import { IExecutionFactory } from "@gooddata/sdk-backend-spi";
-import { BucketNames } from "@gooddata/sdk-ui";
+import { BucketNames, IPushData, VisualizationEnvironment } from "@gooddata/sdk-ui";
 import {
     IBucketItem,
     IBucketOfFun,
@@ -45,6 +49,7 @@ import {
     InvalidColumnsSdkError,
     RenderFunction,
     UnmountFunction,
+    InvalidBucketsSdkError,
 } from "../../../interfaces/Visualization.js";
 import RepeaterConfigurationPanel from "../../configurationPanels/RepeaterConfigurationPanel.js";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
@@ -56,8 +61,14 @@ import {
 import cloneDeep from "lodash/cloneDeep.js";
 import { cloneBucketItem, getMainRowAttribute, sanitizeFilters } from "../../../utils/bucketHelper.js";
 import { getSupportedPropertiesControls } from "../../../utils/propertiesHelper.js";
+import { IColorConfiguration } from "src/internal/interfaces/Colors.js";
+import compact from "lodash/compact.js";
+import { getValidProperties } from "../../../utils/colors.js";
+import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
 
 const REPEATER_SUPPORTER_PROPERTIES_LIST = [
+    "columnWidths",
+    "colorMapping",
     "rowHeight",
     "cellVerticalAlign",
     "cellTextWrapping",
@@ -65,13 +76,16 @@ const REPEATER_SUPPORTER_PROPERTIES_LIST = [
 ];
 
 export class PluggableRepeater extends AbstractPluggableVisualization {
+    private environment: VisualizationEnvironment;
     private featureFlags?: ISettings;
     private renderFun: RenderFunction;
     private unmountFun: UnmountFunction;
+    protected colors: IColorConfiguration;
 
     constructor(props: IVisConstruct) {
         super(props);
 
+        this.environment = props.environment;
         this.featureFlags = props.featureFlags;
         this.renderFun = props.renderFun;
         this.unmountFun = props.unmountFun;
@@ -180,6 +194,11 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         return bucket?.items?.length > 0;
     }
 
+    private insightHasRows(insight: IInsightDefinition): boolean {
+        const bucket = insightBucket(insight, BucketNames.ATTRIBUTE);
+        return bucket?.items?.length > 0;
+    }
+
     protected mergeDerivedBucketItems(
         _referencePoint: IReferencePoint,
         bucket: IBucketOfFun,
@@ -214,6 +233,9 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         if (!this.insightHasColumns(insight)) {
             throw new InvalidColumnsSdkError();
         }
+        if (!this.insightHasRows(insight)) {
+            throw new InvalidBucketsSdkError();
+        }
 
         return true;
     }
@@ -226,10 +248,93 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
             supportedProperties: { controls: supportedProperties },
         };
 
-        this.pushData({
+        this.handlePushData({
             initialProperties,
         });
     }
+
+    private onColumnResized = (columnWidths: RepeaterColumnWidthItem[]): void => {
+        const properties = this.visualizationProperties ?? {};
+        const supportedProperties = {
+            ...getSupportedPropertiesControls(properties?.controls, this.supportedPropertiesList),
+            columnWidths,
+        };
+
+        this.visualizationProperties = supportedProperties;
+
+        this.pushData({
+            properties: {
+                controls: supportedProperties,
+            },
+        });
+    };
+
+    private buildColumnSizing(columnWidths?: RepeaterColumnWidthItem[]): IRepeaterColumnSizing {
+        const autoSize = this.featureFlags?.enableTableColumnsAutoResizing;
+        const growToFit =
+            this.environment === DASHBOARDS_ENVIRONMENT && this.featureFlags?.enableTableColumnsGrowToFit;
+
+        let columnSizing: Partial<IRepeaterColumnSizing> = {};
+
+        if (autoSize) {
+            columnSizing = {
+                defaultWidth: "autoresizeAll",
+            };
+        }
+
+        if (growToFit) {
+            columnSizing = {
+                ...columnSizing,
+                growToFit: true,
+            };
+        }
+
+        if (columnWidths && columnWidths.length > 0) {
+            columnSizing = {
+                ...columnSizing,
+                columnWidths,
+            };
+        }
+
+        return columnSizing as IRepeaterColumnSizing;
+    }
+
+    private buildColorMapping(colorMapping?: IColorMappingItem[]): IColorMapping[] {
+        const validColorMapping = compact(colorMapping).map(
+            (mapItem): IColorMapping => ({
+                predicate: ColorUtils.getColorMappingPredicate(mapItem.id),
+                color: mapItem.color,
+            }),
+        );
+
+        return validColorMapping?.length > 0 ? validColorMapping : null;
+    }
+
+    protected handleConfirmedColorMapping(data: IPushData): void {
+        const resultingData = data;
+        this.colors = data.colors;
+
+        if (this.visualizationProperties) {
+            resultingData.properties = getValidProperties(
+                this.visualizationProperties,
+                data.colors.colorAssignments,
+            );
+
+            this.visualizationProperties = resultingData.properties;
+        }
+
+        this.pushData(resultingData);
+        this.renderConfigurationPanel(this.currentInsight, this.currentOptions);
+    }
+
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    protected handlePushData = (data: IPushData): void => {
+        if (data.colors) {
+            this.handleConfirmedColorMapping(data);
+        } else {
+            this.pushData(data);
+        }
+    };
 
     protected renderVisualization(
         options: IVisProps,
@@ -240,10 +345,17 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         const { drillableItems } = custom;
         const execution = this.getExecution(options, insight, executionFactory);
         const properties = insightProperties(insight);
-        const extendedConfig = {
+
+        let extendedConfig = {
             ...(properties?.controls ?? {}),
             ...config,
             ...properties,
+        };
+
+        extendedConfig = {
+            ...extendedConfig,
+            columnSizing: this.buildColumnSizing(extendedConfig?.columnWidths),
+            colorMapping: this.buildColorMapping(extendedConfig?.colorMapping),
         };
 
         this.renderFun(
@@ -255,8 +367,9 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
                 config={updateConfigWithSettings(extendedConfig, this.featureFlags)}
                 afterRender={this.afterRender}
                 onLoadingChanged={this.onLoadingChanged}
-                pushData={this.pushData}
+                pushData={this.handlePushData}
                 onError={this.onError}
+                onColumnResized={this.onColumnResized}
                 intl={this.intl}
             />,
             this.getElement(),
@@ -269,11 +382,12 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         if (configPanelElement) {
             this.renderFun(
                 <RepeaterConfigurationPanel
+                    colors={this.colors}
                     locale={this.locale}
                     properties={this.visualizationProperties}
                     propertiesMeta={this.propertiesMeta}
                     insight={insight}
-                    pushData={this.pushData}
+                    pushData={this.handlePushData}
                     isError={this.getIsError()}
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
@@ -286,15 +400,11 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
 }
 
 export function transformAdhocMeasureToInline(measure: IMeasure, mainRowAttributeId?: string): IMeasure {
-    if (!isAdhocMeasure(measure)) {
-        return measure;
-    }
-
     const itemRef = measureItem(measure) as IdentifierRef;
     const aggregation = measureAggregation(measure);
-    let maqlExpression = "";
+    let maqlExpression: string;
 
-    const itemIdentifier = `{${itemRef.type}/${itemRef.identifier}}`;
+    const itemIdentifier = `{metric/${itemRef.identifier}}`;
 
     if (aggregation) {
         maqlExpression = `SELECT ${aggregation}(${itemIdentifier})`;

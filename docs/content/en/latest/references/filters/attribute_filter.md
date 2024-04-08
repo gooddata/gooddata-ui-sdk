@@ -19,8 +19,7 @@ Optionally, you can define what attribute values should be selected in the filte
 
 > **When implementing the Attribute Filter Button component, consider the following:**:
 >
-> - The GoodData platform supports only filters with attribute elements defined by their URIs.
-> - GoodData Cloud and GoodData.CN support filters with attribute elements defined by their `primary key` that is equal to the title of the respective element.
+> GoodData Cloud and GoodData.CN support filters with attribute elements defined by their `primary key` that is equal to the title of the respective element.
 
 ## Example
 
@@ -149,7 +148,7 @@ If you want to customize the look of the AttributeFilter, you can provide your o
     />
 ```
 
-See the table below with the [customization properties](#customization-properties) to check all the customization possibilities, or see the [live example](https://gdui-examples.herokuapp.com/attribute-filter-components/customizations#customize-default-components).
+See the table below with the [customization properties](#customization-properties) to check all the customization possibilities.
 
 ### Accessing internal AttributeFilter context
 In some cases, properties provided to the custom components may not be sufficient for you. In this case, you can use `useAttributeFilterContext` hook to obtain the full internal state of the component, and obtain the data and callbacks you need.

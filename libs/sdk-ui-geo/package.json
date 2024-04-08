@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-geo",
-    "version": "10.0.0-alpha.13",
+    "version": "10.1.0-alpha.2",
     "description": "GoodData.UI SDK - Geo Charts",
     "repository": {
         "type": "git",
@@ -60,7 +60,7 @@
         "@gooddata/sdk-ui-vis-commons": "workspace:*",
         "classnames": "^2.3.1",
         "default-import": "^1.1.5",
-        "lodash": "^4.17.19",
+        "lodash": "^4.17.21",
         "mapbox-gl": "^2.6.1",
         "react-intl": "^6.4.1",
         "react-measure": "^2.5.2",
@@ -74,7 +74,6 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^4.1.0",
-        "@gooddata/live-examples-workspace": "workspace:*",
         "@gooddata/sdk-backend-mockingbird": "workspace:*",
         "@gooddata/stylelint-config": "^5.0.0",
         "@microsoft/api-documenter": "^7.17.0",

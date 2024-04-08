@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 /*
  * Starts Wiremock in Docker without recording
@@ -9,7 +9,6 @@
  * --simulate-recording - Behave as if recording was enabled
  *
  * Required env variables:
- * SDK_BACKEND (mandatory) BEAR | TIGER
  * HOST (optional, mandatory when --proxy given)
  */
 
@@ -31,24 +30,19 @@ async function main() {
     const proxy = process.argv.indexOf("--proxy") != -1;
     const simulateRecording = process.argv.indexOf("--simulate-recording") != -1;
 
-    const { HOST, SDK_BACKEND } = process.env;
-
-    if (!SDK_BACKEND) {
-        process.stderr.write("SDK_BACKEND needs to be provided.\n");
-        return;
-    }
+    const { HOST } = process.env;
 
     if (proxy && !HOST) {
         process.stderr.write("In the proxy mode the HOST needs to be specified in the .env file.\n");
         return;
     }
 
-    if (!recordingsPresent(SDK_BACKEND) && !proxy) {
+    if (!recordingsPresent() && !proxy) {
         process.stderr.write("Recordings are missing. You can still run the backend in --proxy mode\n");
         return;
     }
 
-    runWiremockDocker(HOST, verbose, proxy, SDK_BACKEND);
+    runWiremockDocker(HOST, verbose, proxy);
 
     await wiremockWait(wiremockHost);
     await wiremockSettings(wiremockHost);
@@ -59,8 +53,8 @@ async function main() {
     await wiremockMockLogRequests(wiremockHost);
 }
 
-function runWiremockDocker(host, verbose, proxy, backend) {
-    const wiremockParams = backend === "BEAR" ? ["--preserve-host-header"] : [];
+function runWiremockDocker(host, verbose, proxy) {
+    const wiremockParams = [];
     const dockerParams = [];
     if (verbose) {
         wiremockParams.push("--verbose");

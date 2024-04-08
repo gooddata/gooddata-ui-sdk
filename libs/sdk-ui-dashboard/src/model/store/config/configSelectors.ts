@@ -637,6 +637,6 @@ export const selectEnableAttributeFilterValuesValidation: DashboardSelector<bool
 export const selectEnableKDAttributeFilterDatesValidation: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableKDAttributeFilterDatesValidation ?? false;
+        return state.settings?.enableKDAttributeFilterDatesValidation ?? true;
     },
 );
