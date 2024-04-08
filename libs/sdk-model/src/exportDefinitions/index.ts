@@ -1,7 +1,10 @@
 // (C) 2024 GoodData Corporation
 
-import { IAuditable, IFilter, IMetadataObject, Identifier } from "../index.js";
 import { invariant } from "ts-invariant";
+import { Identifier } from "../objRef/index.js";
+import { IFilter } from "../execution/filter/index.js";
+import { IMetadataObject } from "../ldm/metadata/index.js";
+import { IAuditable } from "../base/metadata.js";
 
 /**
  * Export definition PDF Options
