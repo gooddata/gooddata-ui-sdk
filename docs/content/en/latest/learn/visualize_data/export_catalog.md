@@ -68,7 +68,6 @@ This is how it works:
                 "hostname": "https://your.gooddata.hostname.com",
                 "workspaceId": "your_gooddata_workspaceid",
                 "catalogOutput": "desired_file_name.ts|js",
-                "backend": "tiger"
             },
             ...
         }
@@ -80,13 +79,10 @@ The hostname has to include the protocol (`http://` / `https://`), otherwise you
 
 {{% /alert %}}
 
-2.  It is not possible to specify credentials (`token`, `username` and `password` parameters) in `package.json` file, as it is typically saved in VCS (e.g. Git). Instead, credentials can be specified through environmental variables. We also load `.env` file if it's present in the same folder.
+2.  It is not possible to specify api token in `package.json` file, as it is typically saved in VCS (e.g. Git). Instead, credentials can be specified through environmental variables. We also load `.env` file if it's present in the same folder.
 
     ```ini
     TIGER_API_TOKEN=<your_token_for_the_tiger_server>
-    # or
-    GDC_USERNAME=<your_username>
-    GDC_PASSWORD=<your_password>
     ```
 
     **NOTE:** Make sure to never commit `.env` file to your version control system.
