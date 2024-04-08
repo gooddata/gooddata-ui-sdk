@@ -64,8 +64,8 @@ export const exportDefinitionOutDocumentToExportDefinition = (
 export const exportDefinitionsOutListToExportDefinitions = (
     exportDefinitions: JsonApiExportDefinitionOutList,
 ): IExportDefinition[] => {
-    return exportDefinitions.data.map((visualizationObject) =>
-        exportDefinitionOutToExportDefinition(visualizationObject, exportDefinitions.included),
+    return exportDefinitions.data.map((exportDefinition) =>
+        exportDefinitionOutToExportDefinition(exportDefinition, exportDefinitions.included),
     );
 };
 

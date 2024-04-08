@@ -279,6 +279,7 @@ export interface IBackendCapabilities {
     maxDimensions?: number;
     supportsAccessControl?: boolean;
     supportsAttributeFilterElementsLimiting?: boolean;
+    supportsAttributeFilterElementsLimitingByDependentDateFilters?: boolean;
     supportsAttributeHierarchies?: boolean;
     supportsBootstrapResource?: boolean;
     supportsCircularDependencyInFilters?: boolean;

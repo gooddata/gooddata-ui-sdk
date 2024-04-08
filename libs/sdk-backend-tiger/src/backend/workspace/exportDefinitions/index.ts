@@ -132,7 +132,6 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
                     workspaceId: this.workspace,
                     jsonApiExportDefinitionPostOptionalIdDocument:
                         exportDefinitionToExportDefinitionPostOptionalIdDocument(exportDefinition),
-                    include: ["ALL"],
                 },
                 {
                     headers: jsonApiHeaders,
@@ -160,7 +159,6 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
                         exportDefinition,
                         id,
                     ),
-                    include: ["ALL"],
                 },
                 {
                     headers: jsonApiHeaders,

@@ -35,9 +35,9 @@ export interface IWorkspaceExportDefinitionsService {
     getExportDefinitionsQuery(): IExportDefinitionsQuery;
 
     /**
-     * Create and save exportDefinition for the provided exportDefinition definition
+     * Create and save exportDefinition for the provided exportDefinition
      *
-     * @param exportDefinition - exportDefinition definition
+     * @param exportDefinition - exportDefinition to create
      * @returns promise of created exportDefinition
      */
     createExportDefinition(exportDefinition: IExportDefinitionBase): Promise<IExportDefinition>;
@@ -85,12 +85,12 @@ export interface IExportDefinitionsQueryOptions {
 
     /**
      * Specify ordering of the exportDefinitions. Default: natural ordering provided by the
-     * analytical backend. Note: this may differ between backend implementations.
+     * analytical backend.
      */
     orderBy?: ExportDefinitionOrdering;
 
     /**
-     * Filter exportDefinitions by their author. The value of this property is URI of the author.
+     * Filter exportDefinitions by their author. The value of this property is identifier of the author.
      */
     author?: string;
 
@@ -192,7 +192,7 @@ export interface IExportDefinitionsQuery {
     /**
      * Starts the query.
      *
-     * @returns promise of first page of the results
+     * @returns promise of the first page of the results
      */
     query(): Promise<IExportDefinitionsQueryResult>;
 }
