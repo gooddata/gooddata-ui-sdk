@@ -241,6 +241,13 @@
      */
     "projects": [
         {
+            "packageName": "@gooddata/sdk-interactive-example-repeater",
+            "projectFolder": "examples/sdk-interactive-examples/examples/example-repeater",
+            "reviewCategory": "examples",
+            "versionPolicyName": "sdk-examples",
+            "shouldPublish": false
+        },
+        {
             "packageName": "@gooddata/sdk-interactive-example-dependentfilters",
             "projectFolder": "examples/sdk-interactive-examples/examples/example-dependentfilters",
             "reviewCategory": "examples",
