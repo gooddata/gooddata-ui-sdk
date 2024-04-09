@@ -451,6 +451,15 @@ export type DrillType = "drillToInsight" | "drillToDashboard" | "drillToLegacyDa
 // @public
 export function emptyDef(workspace: string): IExecutionDefinition;
 
+// @alpha
+export function exportDefinitionCreated(exportDefinition: IExportDefinition): string | undefined;
+
+// @alpha
+export function exportDefinitionTitle(exportDefinition: IExportDefinition): string;
+
+// @alpha
+export function exportDefinitionUpdated(exportDefinition: IExportDefinition): string | undefined;
+
 // @public
 export const factoryNotationFor: (data: any, additionalConversion?: ((data: any) => string | undefined) | undefined) => string;
 
@@ -1421,6 +1430,42 @@ export interface IExecutionDefinition {
 // @alpha
 export interface IExistingDashboard extends IDashboardObjectIdentity {
     title?: string;
+}
+
+// @alpha
+export interface IExportDefinition extends IExportDefinitionBase, IMetadataObject, IAuditable {
+    // (undocumented)
+    type: "exportDefinition";
+}
+
+// @alpha
+export interface IExportDefinitionBase {
+    // (undocumented)
+    description: string;
+    // (undocumented)
+    requestPayload: IExportDefinitionRequestPayload;
+    // (undocumented)
+    tags: string[];
+    // (undocumented)
+    title: string;
+}
+
+// @alpha
+export interface IExportDefinitionPdfOptions {
+    // (undocumented)
+    orientation: "portrait" | "landscape";
+}
+
+// @alpha
+export interface IExportDefinitionRequestPayload {
+    // (undocumented)
+    filters?: IFilter[];
+    // (undocumented)
+    format: "PDF";
+    // (undocumented)
+    pdfOptions?: IExportDefinitionPdfOptions;
+    // (undocumented)
+    visualizationObjectId: Identifier;
 }
 
 // @alpha
@@ -3616,7 +3661,7 @@ export function newTwoDimensional(dim1Input: DimensionItem[], dim2Input: Dimensi
 export function newVirtualArithmeticMeasure(measuresOrIds: ReadonlyArray<MeasureOrLocalId>, operator: ArithmeticMeasureOperator, modifications?: MeasureModifications<VirtualArithmeticMeasureBuilder>): IMeasure<IVirtualArithmeticMeasureDefinition>;
 
 // @public
-export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy";
+export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy" | "exportDefinition";
 
 // @public
 export type ObjRef = UriRef | IdentifierRef;

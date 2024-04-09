@@ -20,6 +20,7 @@ import {
     IWorkspaceUserGroupsQuery,
     IWorkspaceAccessControlService,
     IAttributeHierarchiesService,
+    IWorkspaceExportDefinitionsService,
 } from "@gooddata/sdk-backend-spi";
 import { TigerExecution } from "./execution/executionFactory.js";
 import { TigerWorkspaceCatalogFactory } from "./catalog/factory.js";
@@ -39,6 +40,7 @@ import { TigerWorkspaceDateFilterConfigsQuery } from "./dateFilterConfigs/index.
 import { TigerWorkspaceAccessControlService } from "./accessControl/index.js";
 import { TigerAttributeHierarchiesService } from "./attributeHierarchies/index.js";
 import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "./constants.js";
+import { TigerWorkspaceExportDefinitions } from "./exportDefinitions/index.js";
 
 export class TigerWorkspace implements IAnalyticalWorkspace {
     constructor(
@@ -143,5 +145,9 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
 
     public attributeHierarchies(): IAttributeHierarchiesService {
         return new TigerAttributeHierarchiesService(this.authCall, this.workspace);
+    }
+
+    public exportDefinitions(): IWorkspaceExportDefinitionsService {
+        return new TigerWorkspaceExportDefinitions(this.authCall, this.workspace);
     }
 }

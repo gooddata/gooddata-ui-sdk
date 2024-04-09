@@ -16,6 +16,7 @@ import { IWorkspaceFactsService } from "./facts/index.js";
 import { IWorkspaceAccessControlService } from "./accessControl/index.js";
 import { IWorkspaceUserGroupsQuery } from "./userGroups/index.js";
 import { IAttributeHierarchiesService } from "./attributeHierarchies/index.js";
+import { IWorkspaceExportDefinitionsService } from "./exportDefinitions/index.js";
 
 /**
  * Represents an analytical workspace hosted on a backend.
@@ -124,6 +125,12 @@ export interface IAnalyticalWorkspace {
      * @alpha
      */
     attributeHierarchies(): IAttributeHierarchiesService;
+
+    /**
+     * Returns service that operates over export definitions
+     * @alpha
+     */
+    exportDefinitions(): IWorkspaceExportDefinitionsService;
 }
 
 /**
