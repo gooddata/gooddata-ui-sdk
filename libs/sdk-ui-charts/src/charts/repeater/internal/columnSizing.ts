@@ -12,6 +12,7 @@ import {
     IRepeaterAttributeColumnWidthItem,
     IRepeaterMeasureColumnWidthItem,
     IRepeaterAttributeColumnLocator,
+    IRepeaterWeakMeasureColumnWidthItem,
 } from "../columnWidths.js";
 import { ResizingState } from "./privateTypes.js";
 import { MutableRefObject } from "react";
@@ -101,7 +102,7 @@ export function isAttributeColumnWidthItem(obj: any): obj is IRepeaterAttributeC
 }
 
 export function isMeasureColumnWidthItem(obj: any): obj is IRepeaterMeasureColumnWidthItem {
-    return obj?.measureColumnWidthItem !== undefined;
+    return obj?.measureColumnWidthItem && obj?.measureColumnWidthItem.locators !== undefined;
 }
 
 export function isAttributeColumnLocator(obj: any): obj is IRepeaterAttributeColumnLocator {
@@ -110,6 +111,10 @@ export function isAttributeColumnLocator(obj: any): obj is IRepeaterAttributeCol
 
 export function isMeasureColumnLocator(obj: any): obj is IRepeaterMeasureColumnLocator {
     return obj?.measureLocatorItem !== undefined;
+}
+
+export function isWeakMeasureColumnWidthItem(obj: any): obj is IRepeaterWeakMeasureColumnWidthItem {
+    return obj?.measureColumnWidthItem && obj?.measureColumnWidthItem.locator !== undefined;
 }
 
 export function getManualResizedColumn(resizingState: MutableRefObject<ResizingState>, column: Column) {

@@ -7,7 +7,7 @@ import { GridReadyEvent } from "@ag-grid-community/core";
 
 import { ColumnResizingConfig, ResizingState } from "../internal/privateTypes.js";
 import { IRepeaterChartProps } from "../publicTypes.js";
-import { UIClick } from "../columnWidths.js";
+import { UIClick, RepeaterColumnLocator } from "../columnWidths.js";
 import {
     getColumnWidths,
     getManualResizedColumn,
@@ -16,6 +16,7 @@ import {
     isMeasureColumnWidthItem,
     isMeasureColumnLocator,
     isManualResizing,
+    isWeakMeasureColumnWidthItem,
 } from "../internal/columnSizing.js";
 import { growToFit } from "../internal/tableSizing.js";
 
@@ -190,32 +191,50 @@ function applyColumnSizes(
         }
         if (isMeasureColumnWidthItem(columnWidth)) {
             columnWidth.measureColumnWidthItem.locators.forEach((locator) => {
-                if (isMeasureColumnLocator(locator)) {
-                    const column = columnDefs.find(
-                        (col) => col.field === locator.measureLocatorItem.measureIdentifier,
-                    );
-                    const value = columnWidth.measureColumnWidthItem.width.value;
-                    if (column && !columnApi && value !== "auto") {
-                        column.width = value;
-                        column.suppressSizeToFit = true;
-                    }
-                    if (column && columnApi && value !== "auto") {
-                        const columnDef = columnApi
-                            .getAllColumns()
-                            .find((col) => col.getColDef().field === column.field);
-                        columnApi.setColumnWidth(columnDef, value);
-                        if (!getManualResizedColumn(resizingState, columnDef)) {
-                            resizingState.current.manuallyResizedColumns.push(columnDef);
-                        }
-                    }
-                    //TODO: Autoresize column, value === "auto
-                }
-                if (isAttributeColumnLocator(locator)) {
-                    //TODO: Apply attribute column width
-                }
+                applyMeasureColumnSize(
+                    columnDefs,
+                    resizingState,
+                    locator,
+                    columnWidth.measureColumnWidthItem.width.value,
+                );
             });
         }
+        if (isWeakMeasureColumnWidthItem(columnWidth)) {
+            applyMeasureColumnSize(
+                columnDefs,
+                resizingState,
+                columnWidth.measureColumnWidthItem.locator,
+                columnWidth.measureColumnWidthItem.width.value,
+            );
+        }
     });
+}
+
+function applyMeasureColumnSize(
+    columnDefs: ColDef[],
+    resizingState: MutableRefObject<ResizingState>,
+    locator: RepeaterColumnLocator,
+    width: number | "auto",
+) {
+    const columnApi = resizingState.current.columnApi;
+    if (isMeasureColumnLocator(locator)) {
+        const column = columnDefs.find((col) => col.field === locator.measureLocatorItem.measureIdentifier);
+        if (column && !columnApi && width !== "auto") {
+            column.width = width;
+            column.suppressSizeToFit = true;
+        }
+        if (column && columnApi && width !== "auto") {
+            const columnDef = columnApi.getAllColumns().find((col) => col.getColDef().field === column.field);
+            columnApi.setColumnWidth(columnDef, width);
+            if (!getManualResizedColumn(resizingState, columnDef)) {
+                resizingState.current.manuallyResizedColumns.push(columnDef);
+            }
+        }
+        //TODO: Autoresize column, value === "auto
+    }
+    if (isAttributeColumnLocator(locator)) {
+        //TODO: Apply attribute column width
+    }
 }
 
 function afterOnResizeColumns(

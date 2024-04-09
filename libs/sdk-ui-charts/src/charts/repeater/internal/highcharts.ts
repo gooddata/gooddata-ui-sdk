@@ -4,13 +4,14 @@ export function getTooltipHtml({
     metricValue,
     sliceTitle,
     metricTitle,
+    pointColor = "#14B2E2",
 }: {
     metricTitle: string;
     metricValue: string;
     sliceTitle?: string;
     sliceValue?: string;
+    pointColor?: string;
 }) {
-    const pointColor = "#14B2E2";
     const strokeStyle = pointColor ? `border-top-color: ${pointColor};` : "";
     const sliceContent =
         sliceTitle && sliceValue
