@@ -5,12 +5,12 @@ import {
     LoadingComponent as SDKLoadingComponent,
     ErrorComponent as SDKErrorComponent,
     useCancelablePromise,
-    DataViewFacade,
     newErrorMapping,
     IntlWrapper,
     convertError,
     ErrorCodes,
     BucketNames,
+    DataViewFacade,
 } from "@gooddata/sdk-ui";
 import { ITheme, bucketsFind } from "@gooddata/sdk-model";
 import { ThemeContextProvider, useTheme, withTheme } from "@gooddata/sdk-ui-theme-provider";
@@ -18,6 +18,7 @@ import { IChartConfig, ICoreChartProps } from "../../interfaces/index.js";
 import { RepeaterChart } from "./internal/RepeaterChart.js";
 import { RepeaterColumnResizedCallback } from "./publicTypes.js";
 import { ColorFactory, getValidColorPalette } from "../../highcharts/index.js";
+import { getWindowSize } from "./internal/repeaterAgGridDataSource.js";
 
 export * from "./publicTypes.js";
 export * from "./columnWidths.js";
@@ -45,7 +46,7 @@ export const CoreRepeaterImpl: React.FC<ICoreRepeaterChartProps> = (props) => {
         pushData,
         onError,
         onColumnResized,
-        config,
+        config = {},
     } = props;
 
     const intl = useIntl();
@@ -53,10 +54,7 @@ export const CoreRepeaterImpl: React.FC<ICoreRepeaterChartProps> = (props) => {
     const { result, error } = useCancelablePromise(
         {
             promise: async () => {
-                const isTwoDim = execution.definition.dimensions.length === 2;
-                const offset = isTwoDim ? [0, 0] : [0];
-                const size = isTwoDim ? [1, 1] : [1];
-
+                const { offset, size } = getWindowSize(execution.definition.dimensions.length);
                 const executionResult = await execution.execute();
                 const dataWindow = await executionResult.readWindow(offset, size);
                 return DataViewFacade.for(dataWindow);

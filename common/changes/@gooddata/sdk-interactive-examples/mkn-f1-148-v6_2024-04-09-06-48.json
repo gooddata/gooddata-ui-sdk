@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-interactive-examples",
+            "comment": "Introduced a new visualization type - Repeater, currently in the @beta stage.",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-interactive-examples"
+}
