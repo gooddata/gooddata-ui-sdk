@@ -122,6 +122,7 @@
     "dashboard.bucket.attribute_title.table": "行",
     "dashboard.bucket.columns_title.table": "列",
     "dashboard.bucket.attribute_title.repeater": "行",
+    "dashboard.bucket.view_title.repeater": "查看条件",
     "dashboard.bucket.columns_title.repeater": "列",
     "dashboard.error.missing_primary_bucket_item.heading._measure": "您的洞察中没有基本度量",
     "dashboard.error.missing_primary_bucket_item.heading._metric": "您的洞察中没有基本指标",

@@ -122,6 +122,7 @@
     "dashboard.bucket.attribute_title.table": "Filas",
     "dashboard.bucket.columns_title.table": "Columnas",
     "dashboard.bucket.attribute_title.repeater": "Filas",
+    "dashboard.bucket.view_title.repeater": "Ver por",
     "dashboard.bucket.columns_title.repeater": "Columnas",
     "dashboard.error.missing_primary_bucket_item.heading._measure": "No hay ninguna medida principal en la perspectiva",
     "dashboard.error.missing_primary_bucket_item.heading._metric": "No hay ninguna métrica principal en la perspectiva",
