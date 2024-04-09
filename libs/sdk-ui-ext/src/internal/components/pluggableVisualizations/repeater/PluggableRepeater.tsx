@@ -25,6 +25,7 @@ import {
     measureItem,
     newBucket,
     IColorMappingItem,
+    isAdhocMeasure,
 } from "@gooddata/sdk-model";
 import {
     RepeaterColumnWidthItem,
@@ -400,6 +401,10 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
 }
 
 export function transformAdhocMeasureToInline(measure: IMeasure, mainRowAttributeId?: string): IMeasure {
+    if (!isAdhocMeasure(measure)) {
+        return measure;
+    }
+
     const itemRef = measureItem(measure) as IdentifierRef;
     const aggregation = measureAggregation(measure);
     let maqlExpression: string;

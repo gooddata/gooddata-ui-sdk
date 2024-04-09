@@ -129,6 +129,7 @@ export const RepeaterChart: React.FC<IRepeaterChartProps> = (props) => {
         config?.cellTextWrapping,
         config?.cellImageSizing,
         config?.hyperLinks,
+        config?.inlineVisualizations,
     ]);
 
     const { onColumnResized, onGridReady, containerRef } = useResizing(columnDefs, items, props);

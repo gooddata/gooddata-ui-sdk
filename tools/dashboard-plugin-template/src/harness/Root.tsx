@@ -16,7 +16,7 @@ export const Root: React.FC = () => {
         );
     }
 
-    if (!!process.env.WORKSPACE || !!process.env.DASHBOARD_ID || !!process.env.BACKEND_URL) {
+    if (!process.env.WORKSPACE || !process.env.DASHBOARD_ID || !process.env.BACKEND_URL) {
         return (
             <div>
                 The environment is not setup with WORKSPACE or DASHBOARD_ID or BACKEND_URL. Please see the

@@ -123,7 +123,7 @@ Building a new plugin is easy. Before you start, ensure that your `.env` and `.e
 ## Authentication & secrets
 
 Your plugin does not have to concern itself with the authentication against GoodData backend. When the plugin runs
-in context of GoodData KPI Dashboards, it is the application that takes care of all the authentication and ensures
+in context of GoodData Dashboards, it is the application that takes care of all the authentication and ensures
 that the plugin executes in an authenticated environment.
 
 The authentication credentials that are required to start the development harness included in this project are used

@@ -60,7 +60,13 @@ function createOptions({
             formatter: function () {
                 const sliceValue = headerItems[this.x]?.name;
                 const metricValue = data[this.x]?.formattedValue;
-                return getTooltipHtml({ metricTitle, metricValue, sliceTitle, sliceValue });
+                return getTooltipHtml({
+                    metricTitle,
+                    metricValue,
+                    sliceTitle,
+                    sliceValue,
+                    pointColor: color,
+                });
             },
         },
         plotOptions: {

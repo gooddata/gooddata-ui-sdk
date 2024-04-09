@@ -81,6 +81,23 @@ export interface IRepeaterMeasureColumnWidthItem {
 }
 
 /**
+ * Object defining the {@link IRepeaterWeakMeasureColumnWidthItem} object body.
+ *
+ * @public
+ */
+export interface IRepeaterWeakMeasureColumnWidthItemBody {
+    width: IRepeaterAbsoluteColumnWidth;
+    locator: IRepeaterMeasureColumnLocator;
+}
+
+/**
+ * @public
+ */
+export interface IRepeaterWeakMeasureColumnWidthItem {
+    measureColumnWidthItem: IRepeaterWeakMeasureColumnWidthItemBody;
+}
+
+/**
  * @public
  */
 export type RepeaterColumnWidthItem = IRepeaterAttributeColumnWidthItem | IRepeaterMeasureColumnWidthItem;
