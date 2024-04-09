@@ -9,8 +9,8 @@ GoodData Platform users must stay on GoodData.UI version 9, do not update to ver
 From version 10 onwards, the GoodData.UI SDK only supports GoodData Cloud and GoodData.CN.
 {{% /alert %}}
 
-The easiest way to get hands-on experience with GoodData.UI is to use the `@gooddata/app-toolkit`, which contans a sample setup for a React app 
- 
+The easiest way to get hands-on experience with GoodData.UI is to use the `@gooddata/app-toolkit`, which contans a sample setup for a React app
+
 To see it in action:
 - Run `npx @gooddata/app-toolkit@latest init`
 - Follow instructions on the screen
@@ -213,56 +213,3 @@ your own data:
     ```
 
 Read more about [integration with GoodData Cloud or GoodData.CN](../learn/integrate_and_authenticate/cn_and_cloud_authentication/) .
-
-### Connect your own _GoodData Platform_ data
-
-By default, GoodData React SDK is configured to connect to GoodData Cloud or GoodData.CN server.
-
-Here is how you can switch to GoodData Platform instead:
-
-1. Edit `./src/backend.ts` file to use "bear" backend instead of "tiger":
-    ```diff
-    -    import backendFactory, { ContextDeferredAuthProvider } from "@gooddata/sdk-backend-tiger";
-    +    import backendFactory, { ContextDeferredAuthProvider } from "@gooddata/sdk-backend-bear";
-    ```
-   You'll also need to define a logic on what to do if the user is not logged in. The simplest case could look something like this:
-    ```diff
-    -     backendFactory().withAuthentication(new ContextDeferredAuthProvider()),
-    +     backendFactory().withAuthentication(new ContextDeferredAuthProvider(() => {
-    +         window.location.replace(`${window.location.origin}/account.html?lastUrl=${encodeURIComponent(window.location.href)}`);
-    +     })),
-    ```
-   Your setup may vary, see [options GoodData Platform provides](../learn/integrate_and_authenticate/platform_integration/).
-
-2. Update package.json to specify you're using "bear" backend. Update the `hostname` and `workspaceId`:
-    ```diff
-    -    "hostname": "https://public-examples.gooddata.com",
-    -    "workspaceId": "demo",
-    -    "backend": "tiger",
-    +    "hostname": "https://<your-gooddata-instance-host>",
-    +    "workspaceId": "<your-workspace-id>",
-    +    "backend": "bear",
-    ```
-3. Update `.env` file and update `USERNAME` and `PASSWORD` to your credentials:
-    ```diff
-    -    USERNAME=
-    -    PASSWORD=
-    +    USERNAME=<your-username>
-    +    PASSWORD=<your-password>
-    ```
-
-> Make sure you do not commit the `.env` file to your VCS (e.g. Git).
-
-4. Refresh [the metadata catalog](../learn/visualize_data/export_catalog/#ExportCatalog-AcceleratorToolkitapplications) for the newly configured workspace:
-
-    ``` bash
-    npm run refresh-md
-    ````
-
-5. Update the `App.tsx`. Since you've switched to your own data, the reference to the visualization in `App.tsx` is no longer valid.
-   
-   To fix, update the `App.tsx` with an visualization of your choice:
-    ```diff
-    -   <InsightView insight={Md.Insights.ProductCategoriesPieChart} showTitle />
-    +   <InsightView insight={Md.Insights.<your-insight-id>} showTitle />
-    ```
