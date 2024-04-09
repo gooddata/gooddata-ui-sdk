@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-kit",
-    "version": "10.0.0-beta.1",
+    "version": "10.1.0-alpha.2",
     "description": "GoodData SDK - UI Building Components",
     "repository": {
         "type": "git",
