@@ -45,7 +45,7 @@ export const CoreRepeaterImpl: React.FC<ICoreRepeaterChartProps> = (props) => {
         pushData,
         onError,
         onColumnResized,
-        config,
+        config = {},
     } = props;
 
     const intl = useIntl();
