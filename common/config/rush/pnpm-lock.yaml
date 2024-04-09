@@ -1188,6 +1188,82 @@ importers:
         specifier: ~3.2.0
         version: 3.2.0(vite@5.0.8)
 
+  ../../examples/sdk-interactive-examples/examples/example-repeater:
+    dependencies:
+      '@gooddata/sdk-backend-base':
+        specifier: workspace:*
+        version: link:../../../../libs/sdk-backend-base
+      '@gooddata/sdk-backend-spi':
+        specifier: workspace:*
+        version: link:../../../../libs/sdk-backend-spi
+      '@gooddata/sdk-backend-tiger':
+        specifier: workspace:*
+        version: link:../../../../libs/sdk-backend-tiger
+      '@gooddata/sdk-model':
+        specifier: workspace:*
+        version: link:../../../../libs/sdk-model
+      '@gooddata/sdk-ui':
+        specifier: workspace:*
+        version: link:../../../../libs/sdk-ui
+      '@gooddata/sdk-ui-charts':
+        specifier: workspace:*
+        version: link:../../../../libs/sdk-ui-charts
+      '@gooddata/sdk-ui-dashboard':
+        specifier: workspace:*
+        version: link:../../../../libs/sdk-ui-dashboard
+      '@gooddata/sdk-ui-ext':
+        specifier: workspace:*
+        version: link:../../../../libs/sdk-ui-ext
+      '@gooddata/sdk-ui-filters':
+        specifier: workspace:*
+        version: link:../../../../libs/sdk-ui-filters
+      '@gooddata/sdk-ui-geo':
+        specifier: workspace:*
+        version: link:../../../../libs/sdk-ui-geo
+      '@gooddata/sdk-ui-kit':
+        specifier: workspace:*
+        version: link:../../../../libs/sdk-ui-kit
+      '@gooddata/sdk-ui-pivot':
+        specifier: workspace:*
+        version: link:../../../../libs/sdk-ui-pivot
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+      tslib:
+        specifier: ^2.5.0
+        version: 2.6.2
+    devDependencies:
+      '@gooddata/catalog-export':
+        specifier: workspace:*
+        version: link:../../../../tools/catalog-export
+      '@types/react':
+        specifier: ^18.2.0
+        version: 18.2.45
+      '@types/react-dom':
+        specifier: ^18.2.1
+        version: 18.2.17
+      '@vitejs/plugin-react-swc':
+        specifier: ~3.5.0
+        version: 3.5.0(vite@5.0.8)
+      prettier:
+        specifier: ~2.5.0
+        version: 2.5.1
+      process:
+        specifier: ^0.11.10
+        version: 0.11.10
+      typescript:
+        specifier: 5.3.3
+        version: 5.3.3
+      vite:
+        specifier: ~5.0.8
+        version: 5.0.8(@types/node@18.19.3)(sass@1.69.5)
+      vite-plugin-html:
+        specifier: ~3.2.0
+        version: 3.2.0(vite@5.0.8)
+
   ../../libs/api-client-tiger:
     dependencies:
       '@gooddata/sdk-model':

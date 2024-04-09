@@ -1,0 +1,7 @@
+{
+    "title": "Repeater Example",
+    "description": "This example demonstrates how to use Repeater component.",
+    "iconUrl": "https://www.gooddata.com/favicon.ico",
+    "tags": ["react", "typescript", "gooddata-ui-sdk"],
+    "published": true
+}
