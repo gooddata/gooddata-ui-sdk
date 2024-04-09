@@ -1,0 +1,31 @@
+{
+    "id": "551cf3e0-3172-45a9-b87c-4e72973d9035",
+    "name": "api_v1_entities_workspaces_547db92f29ef494ca992331cda27a869_visualizationobjects",
+    "request": {
+        "url": "/api/v1/entities/workspaces/547db92f29ef494ca992331cda27a869/visualizationObjects?page=4&size=50&sort=modifiedAt%2CcreatedAt%2Ctitle%2Cdesc&metaInclude=page",
+        "method": "GET",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json, text/plain, */*"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"data\":[],\"links\":{\"self\":\"https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/547db92f29ef494ca992331cda27a869/visualizationObjects?metaInclude=page&page=4&size=50&sort=modifiedAt,createdAt,title,desc\"},\"meta\":{\"page\":{\"number\":4,\"size\":50,\"totalPages\":0,\"totalElements\":0}}}",
+        "headers": {
+            "X-Content-Type-Options": "nosniff",
+            "Pragma": "no-cache",
+            "Referrer-Policy": "no-referrer",
+            "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+            "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+            "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
+            "Expires": "0",
+            "X-XSS-Protection": "1 ; mode=block",
+            "Content-Type": "application/vnd.gooddata.api+json"
+        }
+    },
+    "uuid": "551cf3e0-3172-45a9-b87c-4e72973d9035",
+    "persistent": true,
+    "insertionIndex": 8
+}
