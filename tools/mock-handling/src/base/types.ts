@@ -14,8 +14,6 @@ export class DataRecorderError extends Error {
     }
 }
 
-export type BackendType = "bear" | "tiger";
-
 /*
  * Defines types used across catalog exporter
  */
@@ -43,11 +41,6 @@ export type DataRecorderConfig = {
      * Directory with recordings inputs & outputs.
      */
     recordingDir: string | null;
-
-    /**
-     * Backend type: bear or tiger.
-     */
-    backend: BackendType | null;
 
     /**
      * If specified, projectId will be replaced with this value in all files written by
