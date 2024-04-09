@@ -404,7 +404,7 @@ export function transformAdhocMeasureToInline(measure: IMeasure, mainRowAttribut
     const aggregation = measureAggregation(measure);
     let maqlExpression: string;
 
-    const itemIdentifier = `{metric/${itemRef.identifier}}`;
+    const itemIdentifier = `{${itemRef.type === "measure" ? "metric" : itemRef.type}/${itemRef.identifier}}`;
 
     if (aggregation) {
         maqlExpression = `SELECT ${aggregation}(${itemIdentifier})`;
