@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -23,6 +23,7 @@ export const ShowAllFiltersButton: React.FC<IShowAllFiltersButtonProps> = ({
         <div className="show-all">
             <button
                 className="button-filter-bar-show-all"
+                type="button"
                 tabIndex={-1}
                 onClick={() => onToggle(!isFilterBarExpanded)}
             >
