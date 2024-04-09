@@ -110,6 +110,7 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         const rowAttribute = attributeBucket.items[0] as IAttribute;
         const columnsBucket = insightBucket(insight, BucketNames.COLUMNS);
         const visualizationProperties = insightProperties(insight);
+        console.log("🚀 ~ PluggableRepeater ~ visualizationProperties:", visualizationProperties, insight);
         const sanitizedBuckets = constructRepeaterBuckets(
             rowAttribute,
             columnsBucket?.items,

@@ -16,6 +16,10 @@ export const AttributeElements = {
         EastCoast: HeaderPredicates.attributeItemNameMatch("East Coast"),
         WestCoast: HeaderPredicates.attributeItemNameMatch("West Coast"),
     },
+    SalesRep: {
+        AdamBradley: HeaderPredicates.attributeItemNameMatch("Adam Bradley"),
+        RaviDeetri: HeaderPredicates.attributeItemNameMatch("Ravi Deetri"),
+    },
 };
 
 export const AmountMeasurePredicate = HeaderPredicates.identifierMatch(
