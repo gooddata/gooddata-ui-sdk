@@ -122,6 +122,7 @@
     "dashboard.bucket.attribute_title.table": "Lignes",
     "dashboard.bucket.columns_title.table": "Colonnes",
     "dashboard.bucket.attribute_title.repeater": "Lignes",
+    "dashboard.bucket.view_title.repeater": "Afficher par",
     "dashboard.bucket.columns_title.repeater": "Colonnes",
     "dashboard.error.missing_primary_bucket_item.heading._measure": "Aucune mesure principale dans votre perception.",
     "dashboard.error.missing_primary_bucket_item.heading._metric": "Aucune métrique principale dans votre perception.",

@@ -122,6 +122,7 @@
     "dashboard.bucket.attribute_title.table": "Zeilen",
     "dashboard.bucket.columns_title.table": "Spalten",
     "dashboard.bucket.attribute_title.repeater": "Zeilen",
+    "dashboard.bucket.view_title.repeater": "Anzeigen nach",
     "dashboard.bucket.columns_title.repeater": "Spalten",
     "dashboard.error.missing_primary_bucket_item.heading._measure": "Kein primäres Maß in Ihrer Betrachtung",
     "dashboard.error.missing_primary_bucket_item.heading._metric": "Keine primäre Metrik in Ihrer Betrachtung",

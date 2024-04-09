@@ -122,6 +122,7 @@
     "dashboard.bucket.attribute_title.table": "Rijen",
     "dashboard.bucket.columns_title.table": "Kolommen",
     "dashboard.bucket.attribute_title.repeater": "Rijen",
+    "dashboard.bucket.view_title.repeater": "Bekijken met",
     "dashboard.bucket.columns_title.repeater": "Kolommen",
     "dashboard.error.missing_primary_bucket_item.heading._measure": "Geen primaire maat in uw inzicht",
     "dashboard.error.missing_primary_bucket_item.heading._metric": "Geen primair meetgegeven in uw inzicht",
