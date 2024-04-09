@@ -122,6 +122,7 @@
     "dashboard.bucket.attribute_title.table": "行",
     "dashboard.bucket.columns_title.table": "列",
     "dashboard.bucket.attribute_title.repeater": "行",
+    "dashboard.bucket.view_title.repeater": "表示",
     "dashboard.bucket.columns_title.repeater": "列",
     "dashboard.error.missing_primary_bucket_item.heading._measure": "解析にプライマリメジャーがありません",
     "dashboard.error.missing_primary_bucket_item.heading._metric": "解析にプライマリメトリックがありません",

@@ -122,6 +122,7 @@
     "dashboard.bucket.attribute_title.table": "Righe",
     "dashboard.bucket.columns_title.table": "Colonne",
     "dashboard.bucket.attribute_title.repeater": "Righe",
+    "dashboard.bucket.view_title.repeater": "Visualizza per",
     "dashboard.bucket.columns_title.repeater": "Colonne",
     "dashboard.error.missing_primary_bucket_item.heading._measure": "Nessuna misura primaria nell'analisi",
     "dashboard.error.missing_primary_bucket_item.heading._metric": "Nessuna metrica primaria nell'analisi",

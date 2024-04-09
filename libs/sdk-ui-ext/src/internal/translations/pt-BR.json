@@ -122,6 +122,7 @@
     "dashboard.bucket.attribute_title.table": "Linhas",
     "dashboard.bucket.columns_title.table": "Colunas",
     "dashboard.bucket.attribute_title.repeater": "Linhas",
+    "dashboard.bucket.view_title.repeater": "Ver por",
     "dashboard.bucket.columns_title.repeater": "Colunas",
     "dashboard.error.missing_primary_bucket_item.heading._measure": "Sem medida primária no seu insight",
     "dashboard.error.missing_primary_bucket_item.heading._metric": "Nenhuma métrica principal no seu insight.",
