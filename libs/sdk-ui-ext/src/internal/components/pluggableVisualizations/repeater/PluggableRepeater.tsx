@@ -342,7 +342,7 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
     ): void {
-        const { locale, custom = {}, config } = options;
+        const { locale, custom = {}, config, customVisualizationConfig = {} } = options;
         const { drillableItems } = custom;
         const execution = this.getExecution(options, insight, executionFactory);
         const properties = insightProperties(insight);
@@ -351,6 +351,7 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
             ...(properties?.controls ?? {}),
             ...config,
             ...properties,
+            ...customVisualizationConfig,
         };
 
         extendedConfig = {
