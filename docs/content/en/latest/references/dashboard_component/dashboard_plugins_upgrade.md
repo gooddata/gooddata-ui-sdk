@@ -9,8 +9,9 @@ To make sure your Dashboard Plugins are up-to-date with the latest bug fixes and
 to occasionally upgrade them. In this article we the basic steps to achieve this are outlined.
 
 You can upgrade the plugins by:
-* Bootstrapping a new plugin, or 
-* Manually performing the necessary steps.
+
+-   Bootstrapping a new plugin, or
+-   Manually performing the necessary steps.
 
 ## Bootstrap a new plugin
 
@@ -34,6 +35,8 @@ If bootstrapping a new plugin is not suitable for you, you can follow these step
 
 Upgrade all the `@gooddata` dependencies to the latest stable version.
 To find the version used in your plugin, check your `package.json` file for the version next to the `"@gooddata/sdk-ui-dashboard"` entry.
+
+> **Note:** Starting with version 10.0.0, the **gooddata-ui-sdk** no longer supports the GoodData Platform. It is necessary to remove `"@gooddata/sdk-backend-bear"` from the `package.json`.
 
 To find the latest stable version available, run the following in your terminal:
 
@@ -63,7 +66,8 @@ https://github.com/gooddata/gooddata-ui-sdk/blob/vX.Y.Z/tools/dashboard-plugin-t
 ```
 
 Check the files there to see if there are any significant changes to your plugin directory.
->**Note:** For webpack.config.js, ignore the potential changes in the `proxy` object keys (e.g. if you have `"/api"` instead of `"/gdc"`, that is fine and you do not need to update that).
+
+> **Note:** For webpack.config.js, ignore the potential changes in the `proxy` object keys (e.g. if you have `"/api"` instead of `"/gdc"`, that is fine and you do not need to update that).
 
 ### Step 3. Test your plugin locally
 
