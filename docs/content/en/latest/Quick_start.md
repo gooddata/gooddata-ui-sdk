@@ -146,7 +146,7 @@ Get your data in three steps:
     +   <MyTable />
     ```
 
-Read more about how to [get raw data](../learn/get_raw_data).
+Read more about how to [get raw data](../learn/get_raw_data/).
 
 ### Apply theming
 

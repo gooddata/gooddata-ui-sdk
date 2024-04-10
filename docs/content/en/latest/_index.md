@@ -66,19 +66,19 @@ The following frameworks are not natively supported, but you can still use them 
 </style>
 
 <div class="image-link">
-    <img src="../angular.png" width="60px" />
+    <img alt="angular_logo" src="../angular.png" width="60px" />
     <a href="https://www.gooddata.com/blog/frontend-integration-series-angular/" target="_blank">Angular</a>
 </div>
 <div class="image-link">
-    <img src="../nextjs.png" width="60px" />
+    <img alt="nextjs_logo" src="../nextjs.png" width="60px" />
     <a href="https://www.gooddata.com/blog/frontend-integration-series-nextjs/" target="_blank">Next.js</a>
 </div>
 <div class="image-link">
-    <img src="../vuejs.png" width="60px" />
+    <img alt="vuejs_logo" src="../vuejs.png" width="60px" />
     <a href="https://www.gooddata.com/blog/frontend-integration-series-vue-js/" target="_blank">Vue.js</a>
 </div>
 <div class="image-link">
-    <img src="../svelte.png" width="60px" />
+    <img alt="svelte_logo" src="../svelte.png" width="60px" />
     <a href="https://www.gooddata.com/blog/frontend-integration-series-sveltekit/" target="_blank">SvelteKit</a>
 </div>
 

@@ -6,7 +6,7 @@ weight: 11
 
 GoodData.UI is the go-to SDK, when it comes to embedding, visualizing your data or creating custom visualizations with GoodData.
 
-{{% embedded-image src="/visuals.png" title="Visuals" width="80%" %}}
+{{% embedded-image alt="Visuals" src="/visuals.png" title="Visuals" width="80%" %}}
 
 
 It is built on top of TypeScript, so it is versatile, yet very fast.
@@ -62,7 +62,7 @@ The result may look like this:
 
 The Web Components library is part of the GoodData.UI. It is loading React and all the necessary dependencies. However, it runs in an isolated scope that will not conflict with other JavaScript running in your app.
 
-See [Introduction to GoodData Web Components](./learn/embed_dashboards/web_components/) to get started.
+See [Introduction to GoodData Web Components](../learn/embed_dashboards/web_components/) to get started.
 
 ## React
 
@@ -129,7 +129,7 @@ The result may look like this:
 
 ![treemap visualization](intro-treemap-visualization.png)
 
-See [Start with Visual Components](../references/visual_components) to get started
+See [Start with Visual Components](../references/visual_components/) to get started
 
 You can also create entirely new components and visualizations from scratch.
 

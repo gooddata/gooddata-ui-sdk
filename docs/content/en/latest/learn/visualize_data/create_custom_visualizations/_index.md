@@ -9,7 +9,7 @@ no_list: true
 With GoodData.UI, you can create a new, customized visual components to address your specific analytics needs.
 
 > Before you start with creation of the custom visualizations, ensure that you are already familiar with the [execution model](../../get_raw_data/execution_model/).
-> We also recommend to use the [export catalog](../export_catalog) tool for more natural and readable way to specify the result data.
+> We also recommend to use the [export catalog](../export_catalog/) tool for more natural and readable way to specify the result data.
 
 ## Get custom visualization data
 To specify and obtain the custom visualization data, you can use the following React [hooks](#react-hooks) and [components](#react-components), or [execution API](#execution-api).
