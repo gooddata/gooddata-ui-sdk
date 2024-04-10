@@ -11,7 +11,7 @@ as a developer can customize and enhance the default dashboard experience availa
 The plugins are an essential part of the GoodData dashboard stack.
 
 > #### Important change in the dashboard plugins since version 9.5.0:
-> Before v9.5.0, all dashboard plugins were locked to a set Dashboard component and some other GoodData.UI packages that were used to build the plugin. From v9.5.0 onwards, all plugins will always run with the latest version of these packages, which will be injected into the plugin at runtime. Version locking is now deprecated and no longer supported. We recommend you to [upgrade](../dashboard_plugins_upgrade) as soon as possible.
+> Before v9.5.0, all dashboard plugins were locked to a set Dashboard component and some other GoodData.UI packages that were used to build the plugin. From v9.5.0 onwards, all plugins will always run with the latest version of these packages, which will be injected into the plugin at runtime. Version locking is now deprecated and no longer supported. We recommend you to [upgrade](../dashboard_plugins_upgrade/) as soon as possible.
 
 ## What a dashboard plugin is
 

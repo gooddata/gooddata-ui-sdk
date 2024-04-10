@@ -5,7 +5,7 @@ copyright: (C) 2007-2020 GoodData Corporation
 weight: 11
 ---
 
-GoodData.UI comes with ready-made visual components. You can use these visual components as-is or customize them. You can also use the unique [InsightView](../../learn/visualize_data/insightview/) component that simply renders any chart that you create in GoodData.
+GoodData.UI comes with ready-made visual components. You can use these visual components as-is or customize them. You can also use the unique [InsightView](../insightview/) component that simply renders any chart that you create in GoodData.
 
 This article goes over the basic functionality of these visual components. To see the full list of supported components, see the [references](../../../references/visual_components/).
 

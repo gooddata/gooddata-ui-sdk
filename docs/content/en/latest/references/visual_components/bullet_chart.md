@@ -45,12 +45,12 @@ const style = { height: 300 };
 
 ## Colors
 
-To appropriately visualize the displayed data, bullet charts use colors provided by a color array or a palette in the [config](../chart_config#configure-colors) in the following way:
+To appropriately visualize the displayed data, bullet charts use colors provided by a color array or a palette in the [config](../chart_config/#configure-colors) in the following way:
 * For the **primary** measure, the first color from the color array/palette is used.
 * For the **target** measure, a darker shade of the first color is used.
 * For the **comparative** measure, gray is used.
 
-To override the default coloring scheme and set a custom color for each measure, use [color mapping](../chart_config#color-mapping).
+To override the default coloring scheme and set a custom color for each measure, use [color mapping](../chart_config/#color-mapping).
 
 ## Properties
 

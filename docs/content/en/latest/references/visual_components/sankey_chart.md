@@ -68,7 +68,7 @@ const config = {
 | onLoadingChanged | false | Function | A callback when the component updates its loading state |
 | onDrill          | false | Function | A callback when a drill is triggered on the component |
 
-The following example shows the supported `config` structure with sample values. For the descriptions of the individual options, see [ChartConfig](../chart_config).
+The following example shows the supported `config` structure with sample values. For the descriptions of the individual options, see [ChartConfig](../chart_config/).
 
 ```javascript
 {

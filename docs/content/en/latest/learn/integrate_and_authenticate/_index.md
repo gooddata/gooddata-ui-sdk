@@ -22,7 +22,6 @@ For detailed instructions, read the [Integrate into an Existing Application](./c
 You might be interested in:
 - How to [authenticate to GoodData.CN and Cloud](./cn_and_cloud_authentication/)
 - How to deal with [Cross origin issues](./cross_origin_issues/)
-- How to [setup SSO](./platform_authentication_and_sso/)
 
 
 
@@ -51,9 +50,3 @@ To learn more about dealing with cross-origin issues, read the [Deal with Cross-
 ### Set Up Authentication and Single Sign-On (SSO)
 
 To authenticate users for your analytical application, you can either use the GoodData login and registration page or implement the GoodData SSO process. Ensure that your site meets the necessary prerequisites, such as setting up Cross-Origin Resource Sharing (CORS) and verifying that all users have a GoodData account with access to your workspace.
-
-Choose the appropriate use case depending on whether SSO is implemented on your site:
-
-- For sites with SSO, refer to the `loginSSO` method. If your site employs SAML SSO with either Service Provider- or Identity Provider-initiated scenarios, consult the respective examples in the [set up authentication and Single Sign-On](./platform_authentication_and_sso/) article.
-
-- For sites without SSO, authentication is automatically enabled once prerequisites are met. Users will be directed to the GoodData login page as required. To grant users access to your workspace, customize the invitation link in the email and invite users to your GoodData workspace via the GoodData Portal.
