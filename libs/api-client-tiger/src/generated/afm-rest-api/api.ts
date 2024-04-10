@@ -740,13 +740,13 @@ export interface ClusteringResult {
      * @type {Array<number>}
      * @memberof ClusteringResult
      */
-    ycoord: Array<number>;
+    xcoord: Array<number>;
     /**
      *
      * @type {Array<number>}
      * @memberof ClusteringResult
      */
-    xcoord: Array<number>;
+    ycoord: Array<number>;
 }
 /**
  * Filter the result by comparing specified metric to given constant value, using given comparison operator.
@@ -1436,6 +1436,154 @@ export interface InlineMeasureDefinitionInline {
      * @memberof InlineMeasureDefinitionInline
      */
     maql: string;
+}
+/**
+ *
+ * @export
+ * @interface KeyDriversDimension
+ */
+export interface KeyDriversDimension {
+    /**
+     *
+     * @type {RestApiIdentifier}
+     * @memberof KeyDriversDimension
+     */
+    label: RestApiIdentifier;
+    /**
+     *
+     * @type {string}
+     * @memberof KeyDriversDimension
+     */
+    labelName: string;
+    /**
+     *
+     * @type {RestApiIdentifier}
+     * @memberof KeyDriversDimension
+     */
+    attribute: RestApiIdentifier;
+    /**
+     *
+     * @type {string}
+     * @memberof KeyDriversDimension
+     */
+    attributeName: string;
+    /**
+     *
+     * @type {string}
+     * @memberof KeyDriversDimension
+     */
+    granularity?: KeyDriversDimensionGranularityEnum;
+    /**
+     *
+     * @type {AttributeFormat}
+     * @memberof KeyDriversDimension
+     */
+    format?: AttributeFormat;
+    /**
+     *
+     * @type {string}
+     * @memberof KeyDriversDimension
+     */
+    valueType?: KeyDriversDimensionValueTypeEnum;
+}
+
+export const KeyDriversDimensionGranularityEnum = {
+    MINUTE: "MINUTE",
+    HOUR: "HOUR",
+    DAY: "DAY",
+    WEEK: "WEEK",
+    MONTH: "MONTH",
+    QUARTER: "QUARTER",
+    YEAR: "YEAR",
+    MINUTE_OF_HOUR: "MINUTE_OF_HOUR",
+    HOUR_OF_DAY: "HOUR_OF_DAY",
+    DAY_OF_WEEK: "DAY_OF_WEEK",
+    DAY_OF_MONTH: "DAY_OF_MONTH",
+    DAY_OF_YEAR: "DAY_OF_YEAR",
+    WEEK_OF_YEAR: "WEEK_OF_YEAR",
+    MONTH_OF_YEAR: "MONTH_OF_YEAR",
+    QUARTER_OF_YEAR: "QUARTER_OF_YEAR",
+} as const;
+
+export type KeyDriversDimensionGranularityEnum =
+    typeof KeyDriversDimensionGranularityEnum[keyof typeof KeyDriversDimensionGranularityEnum];
+export const KeyDriversDimensionValueTypeEnum = {
+    TEXT: "TEXT",
+    HYPERLINK: "HYPERLINK",
+    GEO: "GEO",
+    GEO_LONGITUDE: "GEO_LONGITUDE",
+    GEO_LATITUDE: "GEO_LATITUDE",
+    IMAGE: "IMAGE",
+} as const;
+
+export type KeyDriversDimensionValueTypeEnum =
+    typeof KeyDriversDimensionValueTypeEnum[keyof typeof KeyDriversDimensionValueTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface KeyDriversRequest
+ */
+export interface KeyDriversRequest {
+    /**
+     *
+     * @type {MeasureItem}
+     * @memberof KeyDriversRequest
+     */
+    metric: MeasureItem;
+    /**
+     * Additional metrics to be included in the computation, but excluded from the analysis.
+     * @type {Array<MeasureItem>}
+     * @memberof KeyDriversRequest
+     */
+    auxMetrics?: Array<MeasureItem>;
+    /**
+     * Sorting elements - ascending/descending order.
+     * @type {string}
+     * @memberof KeyDriversRequest
+     */
+    sortDirection?: KeyDriversRequestSortDirectionEnum;
+}
+
+export const KeyDriversRequestSortDirectionEnum = {
+    ASC: "ASC",
+    DESC: "DESC",
+} as const;
+
+export type KeyDriversRequestSortDirectionEnum =
+    typeof KeyDriversRequestSortDirectionEnum[keyof typeof KeyDriversRequestSortDirectionEnum];
+
+/**
+ *
+ * @export
+ * @interface KeyDriversResponse
+ */
+export interface KeyDriversResponse {
+    /**
+     *
+     * @type {Array<KeyDriversDimension>}
+     * @memberof KeyDriversResponse
+     */
+    dimensions: Array<KeyDriversDimension>;
+    /**
+     *
+     * @type {ExecutionLinks}
+     * @memberof KeyDriversResponse
+     */
+    links: ExecutionLinks;
+}
+/**
+ *
+ * @export
+ * @interface KeyDriversResult
+ */
+export interface KeyDriversResult {
+    /**
+     *
+     * @type {object}
+     * @memberof KeyDriversResult
+     */
+    data: object;
 }
 /**
  * @type MeasureDefinition
@@ -2922,6 +3070,121 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
+         * @summary (EXPERIMENTAL) Compute key driver analysis
+         * @param {string} workspaceId Workspace identifier
+         * @param {KeyDriversRequest} keyDriversRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        keyDriverAnalysis: async (
+            workspaceId: string,
+            keyDriversRequest: KeyDriversRequest,
+            skipCache?: boolean,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("keyDriverAnalysis", "workspaceId", workspaceId);
+            // verify required parameter 'keyDriversRequest' is not null or undefined
+            assertParamExists("keyDriverAnalysis", "keyDriversRequest", keyDriversRequest);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/computeKeyDrivers`.replace(
+                    `{${"workspaceId"}}`,
+                    encodeURIComponent(String(workspaceId)),
+                );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (skipCache !== undefined && skipCache !== null) {
+                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof keyDriversRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(keyDriversRequest !== undefined ? keyDriversRequest : {})
+                : keyDriversRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (EXPERIMENTAL) Gets key driver analysis.
+         * @summary (EXPERIMENTAL) Get key driver analysis result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        keyDriverAnalysisResult: async (
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("keyDriverAnalysisResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("keyDriverAnalysisResult", "resultId", resultId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/computeKeyDrivers/result/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (offset !== undefined) {
+                localVarQueryParameter["offset"] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter["limit"] = limit;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
          * @summary Get a single execution result\'s metadata.
          * @param {string} workspaceId Workspace identifier
@@ -3272,6 +3535,55 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
+         * @summary (EXPERIMENTAL) Compute key driver analysis
+         * @param {string} workspaceId Workspace identifier
+         * @param {KeyDriversRequest} keyDriversRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async keyDriverAnalysis(
+            workspaceId: string,
+            keyDriversRequest: KeyDriversRequest,
+            skipCache?: boolean,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDriversResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.keyDriverAnalysis(
+                workspaceId,
+                keyDriversRequest,
+                skipCache,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * (EXPERIMENTAL) Gets key driver analysis.
+         * @summary (EXPERIMENTAL) Get key driver analysis result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async keyDriverAnalysisResult(
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDriversResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.keyDriverAnalysisResult(
+                workspaceId,
+                resultId,
+                offset,
+                limit,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
          * @summary Get a single execution result\'s metadata.
          * @param {string} workspaceId Workspace identifier
@@ -3520,6 +3832,47 @@ export const ActionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
+         * @summary (EXPERIMENTAL) Compute key driver analysis
+         * @param {ActionsApiKeyDriverAnalysisRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        keyDriverAnalysis(
+            requestParameters: ActionsApiKeyDriverAnalysisRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<KeyDriversResponse> {
+            return localVarFp
+                .keyDriverAnalysis(
+                    requestParameters.workspaceId,
+                    requestParameters.keyDriversRequest,
+                    requestParameters.skipCache,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * (EXPERIMENTAL) Gets key driver analysis.
+         * @summary (EXPERIMENTAL) Get key driver analysis result
+         * @param {ActionsApiKeyDriverAnalysisResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        keyDriverAnalysisResult(
+            requestParameters: ActionsApiKeyDriverAnalysisResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<KeyDriversResult> {
+            return localVarFp
+                .keyDriverAnalysisResult(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.offset,
+                    requestParameters.limit,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
          * @summary Get a single execution result\'s metadata.
          * @param {ActionsApiRetrieveExecutionMetadataRequest} requestParameters Request parameters.
@@ -3681,6 +4034,32 @@ export interface ActionsApiInterface {
         requestParameters: ActionsApiForecastResultRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<ForecastResult>;
+
+    /**
+     * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
+     * @summary (EXPERIMENTAL) Compute key driver analysis
+     * @param {ActionsApiKeyDriverAnalysisRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    keyDriverAnalysis(
+        requestParameters: ActionsApiKeyDriverAnalysisRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<KeyDriversResponse>;
+
+    /**
+     * (EXPERIMENTAL) Gets key driver analysis.
+     * @summary (EXPERIMENTAL) Get key driver analysis result
+     * @param {ActionsApiKeyDriverAnalysisResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    keyDriverAnalysisResult(
+        requestParameters: ActionsApiKeyDriverAnalysisResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<KeyDriversResult>;
 
     /**
      * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
@@ -4007,6 +4386,69 @@ export interface ActionsApiForecastResultRequest {
 }
 
 /**
+ * Request parameters for keyDriverAnalysis operation in ActionsApi.
+ * @export
+ * @interface ActionsApiKeyDriverAnalysisRequest
+ */
+export interface ActionsApiKeyDriverAnalysisRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiKeyDriverAnalysis
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {KeyDriversRequest}
+     * @memberof ActionsApiKeyDriverAnalysis
+     */
+    readonly keyDriversRequest: KeyDriversRequest;
+
+    /**
+     * Ignore all caches during execution of current request.
+     * @type {boolean}
+     * @memberof ActionsApiKeyDriverAnalysis
+     */
+    readonly skipCache?: boolean;
+}
+
+/**
+ * Request parameters for keyDriverAnalysisResult operation in ActionsApi.
+ * @export
+ * @interface ActionsApiKeyDriverAnalysisResultRequest
+ */
+export interface ActionsApiKeyDriverAnalysisResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiKeyDriverAnalysisResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Result ID
+     * @type {string}
+     * @memberof ActionsApiKeyDriverAnalysisResult
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ActionsApiKeyDriverAnalysisResult
+     */
+    readonly offset?: number;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ActionsApiKeyDriverAnalysisResult
+     */
+    readonly limit?: number;
+}
+
+/**
  * Request parameters for retrieveExecutionMetadata operation in ActionsApi.
  * @export
  * @interface ActionsApiRetrieveExecutionMetadataRequest
@@ -4255,6 +4697,51 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     public forecastResult(requestParameters: ActionsApiForecastResultRequest, options?: AxiosRequestConfig) {
         return ActionsApiFp(this.configuration)
             .forecastResult(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.offset,
+                requestParameters.limit,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
+     * @summary (EXPERIMENTAL) Compute key driver analysis
+     * @param {ActionsApiKeyDriverAnalysisRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public keyDriverAnalysis(
+        requestParameters: ActionsApiKeyDriverAnalysisRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .keyDriverAnalysis(
+                requestParameters.workspaceId,
+                requestParameters.keyDriversRequest,
+                requestParameters.skipCache,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (EXPERIMENTAL) Gets key driver analysis.
+     * @summary (EXPERIMENTAL) Get key driver analysis result
+     * @param {ActionsApiKeyDriverAnalysisResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public keyDriverAnalysisResult(
+        requestParameters: ActionsApiKeyDriverAnalysisResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .keyDriverAnalysisResult(
                 requestParameters.workspaceId,
                 requestParameters.resultId,
                 requestParameters.offset,
@@ -4623,6 +5110,121 @@ export const ComputationApiAxiosParamCreator = function (configuration?: Configu
             };
         },
         /**
+         * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
+         * @summary (EXPERIMENTAL) Compute key driver analysis
+         * @param {string} workspaceId Workspace identifier
+         * @param {KeyDriversRequest} keyDriversRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        keyDriverAnalysis: async (
+            workspaceId: string,
+            keyDriversRequest: KeyDriversRequest,
+            skipCache?: boolean,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("keyDriverAnalysis", "workspaceId", workspaceId);
+            // verify required parameter 'keyDriversRequest' is not null or undefined
+            assertParamExists("keyDriverAnalysis", "keyDriversRequest", keyDriversRequest);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/computeKeyDrivers`.replace(
+                    `{${"workspaceId"}}`,
+                    encodeURIComponent(String(workspaceId)),
+                );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (skipCache !== undefined && skipCache !== null) {
+                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof keyDriversRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(keyDriversRequest !== undefined ? keyDriversRequest : {})
+                : keyDriversRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (EXPERIMENTAL) Gets key driver analysis.
+         * @summary (EXPERIMENTAL) Get key driver analysis result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        keyDriverAnalysisResult: async (
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("keyDriverAnalysisResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("keyDriverAnalysisResult", "resultId", resultId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/computeKeyDrivers/result/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (offset !== undefined) {
+                localVarQueryParameter["offset"] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter["limit"] = limit;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
          * @summary Get a single execution result\'s metadata.
          * @param {string} workspaceId Workspace identifier
@@ -4869,6 +5471,55 @@ export const ComputationApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
+         * @summary (EXPERIMENTAL) Compute key driver analysis
+         * @param {string} workspaceId Workspace identifier
+         * @param {KeyDriversRequest} keyDriversRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async keyDriverAnalysis(
+            workspaceId: string,
+            keyDriversRequest: KeyDriversRequest,
+            skipCache?: boolean,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDriversResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.keyDriverAnalysis(
+                workspaceId,
+                keyDriversRequest,
+                skipCache,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * (EXPERIMENTAL) Gets key driver analysis.
+         * @summary (EXPERIMENTAL) Get key driver analysis result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async keyDriverAnalysisResult(
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<KeyDriversResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.keyDriverAnalysisResult(
+                workspaceId,
+                resultId,
+                offset,
+                limit,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
          * @summary Get a single execution result\'s metadata.
          * @param {string} workspaceId Workspace identifier
@@ -5033,6 +5684,47 @@ export const ComputationApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
+         * @summary (EXPERIMENTAL) Compute key driver analysis
+         * @param {ComputationApiKeyDriverAnalysisRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        keyDriverAnalysis(
+            requestParameters: ComputationApiKeyDriverAnalysisRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<KeyDriversResponse> {
+            return localVarFp
+                .keyDriverAnalysis(
+                    requestParameters.workspaceId,
+                    requestParameters.keyDriversRequest,
+                    requestParameters.skipCache,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * (EXPERIMENTAL) Gets key driver analysis.
+         * @summary (EXPERIMENTAL) Get key driver analysis result
+         * @param {ComputationApiKeyDriverAnalysisResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        keyDriverAnalysisResult(
+            requestParameters: ComputationApiKeyDriverAnalysisResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<KeyDriversResult> {
+            return localVarFp
+                .keyDriverAnalysisResult(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.offset,
+                    requestParameters.limit,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
          * @summary Get a single execution result\'s metadata.
          * @param {ComputationApiRetrieveExecutionMetadataRequest} requestParameters Request parameters.
@@ -5142,6 +5834,32 @@ export interface ComputationApiInterface {
         requestParameters: ComputationApiExplainAFMRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<any>;
+
+    /**
+     * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
+     * @summary (EXPERIMENTAL) Compute key driver analysis
+     * @param {ComputationApiKeyDriverAnalysisRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApiInterface
+     */
+    keyDriverAnalysis(
+        requestParameters: ComputationApiKeyDriverAnalysisRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<KeyDriversResponse>;
+
+    /**
+     * (EXPERIMENTAL) Gets key driver analysis.
+     * @summary (EXPERIMENTAL) Get key driver analysis result
+     * @param {ComputationApiKeyDriverAnalysisResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApiInterface
+     */
+    keyDriverAnalysisResult(
+        requestParameters: ComputationApiKeyDriverAnalysisResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<KeyDriversResult>;
 
     /**
      * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
@@ -5328,6 +6046,69 @@ export interface ComputationApiExplainAFMRequest {
 }
 
 /**
+ * Request parameters for keyDriverAnalysis operation in ComputationApi.
+ * @export
+ * @interface ComputationApiKeyDriverAnalysisRequest
+ */
+export interface ComputationApiKeyDriverAnalysisRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ComputationApiKeyDriverAnalysis
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {KeyDriversRequest}
+     * @memberof ComputationApiKeyDriverAnalysis
+     */
+    readonly keyDriversRequest: KeyDriversRequest;
+
+    /**
+     * Ignore all caches during execution of current request.
+     * @type {boolean}
+     * @memberof ComputationApiKeyDriverAnalysis
+     */
+    readonly skipCache?: boolean;
+}
+
+/**
+ * Request parameters for keyDriverAnalysisResult operation in ComputationApi.
+ * @export
+ * @interface ComputationApiKeyDriverAnalysisResultRequest
+ */
+export interface ComputationApiKeyDriverAnalysisResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ComputationApiKeyDriverAnalysisResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Result ID
+     * @type {string}
+     * @memberof ComputationApiKeyDriverAnalysisResult
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ComputationApiKeyDriverAnalysisResult
+     */
+    readonly offset?: number;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ComputationApiKeyDriverAnalysisResult
+     */
+    readonly limit?: number;
+}
+
+/**
  * Request parameters for retrieveExecutionMetadata operation in ComputationApi.
  * @export
  * @interface ComputationApiRetrieveExecutionMetadataRequest
@@ -5500,6 +6281,51 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
                 requestParameters.workspaceId,
                 requestParameters.afmExecution,
                 requestParameters.explainType,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (EXPERIMENTAL) Computes key driver analysis for the provided execution definition.
+     * @summary (EXPERIMENTAL) Compute key driver analysis
+     * @param {ComputationApiKeyDriverAnalysisRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApi
+     */
+    public keyDriverAnalysis(
+        requestParameters: ComputationApiKeyDriverAnalysisRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ComputationApiFp(this.configuration)
+            .keyDriverAnalysis(
+                requestParameters.workspaceId,
+                requestParameters.keyDriversRequest,
+                requestParameters.skipCache,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (EXPERIMENTAL) Gets key driver analysis.
+     * @summary (EXPERIMENTAL) Get key driver analysis result
+     * @param {ComputationApiKeyDriverAnalysisResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApi
+     */
+    public keyDriverAnalysisResult(
+        requestParameters: ComputationApiKeyDriverAnalysisResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ComputationApiFp(this.configuration)
+            .keyDriverAnalysisResult(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.offset,
+                requestParameters.limit,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
