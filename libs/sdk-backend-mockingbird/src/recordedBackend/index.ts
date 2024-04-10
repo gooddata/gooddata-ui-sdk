@@ -1,74 +1,75 @@
 // (C) 2019-2024 GoodData Corporation
 
+import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 import {
-    IAuthenticatedPrincipal,
     IAnalyticalBackend,
     IAnalyticalWorkspace,
+    IAttributeHierarchiesService,
+    IAuthenticatedPrincipal,
     IAuthenticationProvider,
+    IBackendCapabilities,
+    IDataSourcesService,
+    IDateFilterConfigsQuery,
+    IDateFilterConfigsQueryResult,
+    IEntitlements,
     IExecutionFactory,
-    IWorkspaceCatalogFactory,
-    IWorkspaceDatasetsService,
+    IOrganization,
+    IOrganizationPermissionService,
+    IOrganizationSettingsService,
+    IOrganizationStylingService,
+    IOrganizationUserService,
+    IOrganizations,
+    ISecuritySettingsService,
+    IUserService,
+    IUserSettingsService,
+    IUserWorkspaceSettings,
+    IWorkspaceAccessControlService,
     IWorkspaceAttributesService,
-    IWorkspaceMeasuresService,
+    IWorkspaceCatalogFactory,
+    IWorkspaceDashboardsService,
+    IWorkspaceDatasetsService,
+    IWorkspaceDescriptor,
+    IWorkspaceExportDefinitionsService,
     IWorkspaceFactsService,
+    IWorkspaceInsightsService,
+    IWorkspaceMeasuresService,
     IWorkspacePermissionsService,
-    IWorkspacesQueryFactory,
     IWorkspaceSettings,
     IWorkspaceSettingsService,
     IWorkspaceStylingService,
-    NotSupported,
-    IUserService,
-    IWorkspaceInsightsService,
-    IUserSettingsService,
-    IWorkspaceDashboardsService,
-    IUserWorkspaceSettings,
-    IWorkspaceUsersQuery,
-    IDateFilterConfigsQuery,
-    IBackendCapabilities,
-    IWorkspaceDescriptor,
-    IOrganization,
-    ISecuritySettingsService,
-    ValidationContext,
-    IOrganizations,
-    IDateFilterConfigsQueryResult,
     IWorkspaceUserGroupsQuery,
-    IWorkspaceAccessControlService,
-    IOrganizationStylingService,
-    IOrganizationSettingsService,
-    IEntitlements,
-    IOrganizationPermissionService,
-    IOrganizationUserService,
-    IAttributeHierarchiesService,
-    IDataSourcesService,
+    IWorkspaceUsersQuery,
+    IWorkspacesQueryFactory,
+    NotSupported,
+    ValidationContext,
 } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
-    idRef,
+    IColorPaletteDefinition,
+    IColorPaletteMetadataObject,
+    IOrganizationDescriptor,
     ISeparators,
     ITheme,
-    IWorkspacePermissions,
-    IOrganizationDescriptor,
-    IUser,
     IThemeDefinition,
     IThemeMetadataObject,
-    IColorPaletteMetadataObject,
-    IColorPaletteDefinition,
+    IUser,
+    IWorkspacePermissions,
+    idRef,
 } from "@gooddata/sdk-model";
-import { RecordedExecutionFactory } from "./execution.js";
-import { RecordedBackendConfig, RecordingIndex } from "./types.js";
-import { RecordedInsights } from "./insights.js";
-import { RecordedCatalogFactory } from "./catalog.js";
+import RecordedAttributeHierarchiesService from "./attributeHierarchies.js";
 import { RecordedAttributes } from "./attributes.js";
-import { RecordedMeasures } from "./measures.js";
-import { RecordedFacts } from "./facts.js";
+import { RecordedCatalogFactory } from "./catalog.js";
 import { RecordedDashboards } from "./dashboards.js";
-import { InMemoryPaging } from "@gooddata/sdk-backend-base";
+import { RecordedExecutionFactory } from "./execution.js";
+import { RecordedFacts } from "./facts.js";
+import { RecordedInsights } from "./insights.js";
+import { RecordedMeasures } from "./measures.js";
+import { RecordedBackendConfig, RecordingIndex } from "./types.js";
 import {
+    RecordedWorkspaceUsersQuery,
     recordedAccessControlFactory,
     recordedUserGroupsQuery,
-    RecordedWorkspaceUsersQuery,
 } from "./userManagement.js";
-import RecordedAttributeHierarchiesService from "./attributeHierarchies.js";
 
 const defaultConfig: RecordedBackendConfig = {
     hostname: "test",
@@ -262,6 +263,9 @@ function recordedWorkspace(
         },
         attributeHierarchies(): IAttributeHierarchiesService {
             return new RecordedAttributeHierarchiesService(implConfig);
+        },
+        exportDefinitions(): IWorkspaceExportDefinitionsService {
+            throw new NotSupported("not supported");
         },
     };
 }

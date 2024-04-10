@@ -18,6 +18,9 @@
   },
   "scripts": {
     "build": "hugo",
-    "start": "hugo server"
+    "start": "hugo server",
+    "production": "../scripts/generate.sh upstream master && hugo server -e public",
+    "test": "rm -rf public && ../scripts/generate.sh upstream master && hugo -e public --minify && ../scripts/htmltest.sh -c .htmltest.yml public",
+    "test_local": "rm -rf public && hugo --minify && ../scripts/htmltest.sh -c .htmltest.yml public"
   }
 }

@@ -77,6 +77,7 @@ url = "https://community.gooddata.com/"
 weight = 3
 [[menu.main]]
 name = "Documentation"
+url = "https://gooddata.com/docs/gooddata-ui"
 weight = 4
 [menu.main.params]
     isHome = true
