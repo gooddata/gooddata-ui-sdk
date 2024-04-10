@@ -56,6 +56,18 @@ export {
 } from "./workspace/insights/index.js";
 
 export {
+    ExportDefinitionOrdering,
+    IExportDefinitionsQuery,
+    IExportDefinitionsQueryOptions,
+    IExportDefinitionsQueryResult,
+    IGetExportDefinitionOptions,
+    IWorkspaceExportDefinitionsService,
+    ExportDefinitionQuerySortDirection,
+    ExportDefinitionQuerySortProperty,
+    ExportDefinitionQuerySort,
+} from "./workspace/exportDefinitions/index.js";
+
+export {
     IElementsQueryFactory,
     IElementsQueryResult,
     IElementsQuery,

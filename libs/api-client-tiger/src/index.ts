@@ -180,6 +180,15 @@ export {
     ActionsApiClusteringRequest,
     ActionsApiClusteringResultRequest,
     AttributeHeaderOutAttributeHeaderValueTypeEnum,
+    KeyDriversRequest,
+    ActionsApiKeyDriverAnalysisRequest,
+    KeyDriversResponse,
+    ActionsApiKeyDriverAnalysisResultRequest,
+    KeyDriversResult,
+    KeyDriversRequestSortDirectionEnum,
+    KeyDriversDimension,
+    KeyDriversDimensionGranularityEnum,
+    KeyDriversDimensionValueTypeEnum,
 } from "./generated/afm-rest-api/api.js";
 export {
     ActionsApiFactory as AuthActionsApiFactory,
@@ -229,6 +238,21 @@ export {
     SqlColumnDataTypeEnum as ScanApiSqlColumnDataTypeEnum,
     SqlColumn as ScanApiSqlColumn,
     ScanSqlRequest,
+    ActionsApiColumnStatisticsRequest,
+    ColumnStatisticsResponse,
+    ColumnStatistic,
+    Histogram,
+    Frequency,
+    ColumnStatisticWarning,
+    ColumnStatisticsRequest,
+    ColumnStatisticTypeEnum,
+    SqlQuery,
+    Table,
+    ColumnStatisticsRequestStatisticsEnum,
+    HistogramBucket,
+    HistogramProperties,
+    FrequencyBucket,
+    FrequencyProperties,
 } from "./generated/scan-json-api/api.js";
 
 export {
@@ -258,6 +282,9 @@ export {
     WorkspaceCacheSettings,
     WorkspaceCacheUsage,
     WorkspaceCurrentCacheUsage,
+    ActionsApiListFilesRequest,
+    GdStorageFile,
+    GdStorageFileTypeEnum,
 } from "./generated/result-json-api/api.js";
 
 export * from "./client.js";
