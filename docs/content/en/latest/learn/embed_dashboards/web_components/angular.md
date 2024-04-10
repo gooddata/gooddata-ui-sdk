@@ -192,4 +192,4 @@ also need to remove the listeners on the component unmount.
     }
 ```
 
-[Read more about Dashboard events](../dashboard_custom_element#supported-events).
+[Read more about Dashboard events](../dashboard_custom_element/#supported-events).
