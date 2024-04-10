@@ -43,9 +43,9 @@ unknown components.
 -   import { NgModule } from '@angular/core';
 +   import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     import { BrowserModule } from '@angular/platform-browser';
-    
+
     import { AppComponent } from './app.component';
-    
+
     @NgModule({
       declarations: [
         AppComponent
@@ -71,7 +71,7 @@ You can now use `gd-insight` and `gd-dashboard` elements anywhere in your `src/a
 <gd-dashboard dashboard="my-dashboard-id"></gd-dashboard>
 ```
 
-You can copy the *insight id* and *dashboard id* from the URL bar of your web browser,
+You can copy the _insight id_ and _dashboard id_ from the URL bar of your web browser,
 from the Analyze and Dashboards pages respectively. At this point you should see an insight and a dashboard rendering
 on the screen.
 
@@ -83,9 +83,10 @@ otherwise.
 You can use attribute binding to define the IDs dynamically from the Angular component code.
 
 Define component variables in `src/app/app.component.ts`:
+
 ```diff
     import { Component } from "@angular/core";
-    
+
     @Component({
       selector: 'app-root',
       templateUrl: './app.component.html',
@@ -136,7 +137,11 @@ your component code (`src/app/app.component.ts`):
 Attach the event listener to the insight at `src/app/app.component.html`:
 
 ```html
-<gd-insight [attr.insight]="insightId" style="height:500px" (insightLoaded)="onInsightLoaded($event)"></gd-insight>
+<gd-insight
+    [attr.insight]="insightId"
+    style="height:500px"
+    (insightLoaded)="onInsightLoaded($event)"
+></gd-insight>
 ```
 
 [Read more about Insight events](../##supported-events).
@@ -171,7 +176,7 @@ also need to remove the listeners on the component unmount.
       dashboardId = 'my-dashboard-id';
       insightId = 'my-insight-id';
 +     private myDashboardElement?: HTMLElement;
-    
+
       onInsightLoaded(e: Event) {
         console.log((e as CustomEvent).detail);
       }
@@ -192,4 +197,4 @@ also need to remove the listeners on the component unmount.
     }
 ```
 
-[Read more about Dashboard events](../dashboard_custom_element#supported-events).
+[Read more about Dashboard events](../dashboard_custom_element/#supported-events).

@@ -11,7 +11,8 @@ as a developer can customize and enhance the default dashboard experience availa
 The plugins are an essential part of the GoodData dashboard stack.
 
 > #### Important change in the dashboard plugins since version 9.5.0:
-> Before v9.5.0, all dashboard plugins were locked to a set Dashboard component and some other GoodData.UI packages that were used to build the plugin. From v9.5.0 onwards, all plugins will always run with the latest version of these packages, which will be injected into the plugin at runtime. Version locking is now deprecated and no longer supported. We recommend you to [upgrade](../dashboard_plugins_upgrade) as soon as possible.
+>
+> Before v9.5.0, all dashboard plugins were locked to a set Dashboard component and some other GoodData.UI packages that were used to build the plugin. From v9.5.0 onwards, all plugins will always run with the latest version of these packages, which will be injected into the plugin at runtime. Version locking is now deprecated and no longer supported. We recommend you to [upgrade](../dashboard_plugins_upgrade/) as soon as possible.
 
 ## What a dashboard plugin is
 
@@ -70,18 +71,17 @@ plugin is loaded.
 All GoodData.UI dependencies are injected into the dashboard plugin at runtime with their latest versions. This ensures that all new features become available to the dashboard associated with the plugin as soon as we release them. However, this approach has certain consequences. In particular, there may be instances where a new dashboard component feature, upon rollout, is incompatible with your deployed dashboard plugin. This incompatibility can occur even if there is no breaking change at the API level. Since dashboard plugins offer extensive capabilities for customization, we cannot control the code of deployed plugins. To minimize these issues, please adhere to the following recommendations.
 
 ### Recommendations
-- Use only the public dashboard plugins API and GoodData.UI interfaces. Anything marked as alpha, beta, or internal within the plugin code should be used at your own risk. If you are missing an API for your particular use case or need something not yet marked as stable, please [get in touch with us](../../../#Home-JoinLearn), and we may consider updating or extending it.
-- Do not manipulate the CSS or DOM structure of the dashboard. Instead, stick to the [theming guidelines](https://www.gooddata.com/docs/cloud/customize-appearance/create-custom-themes/).
-- Create smaller, focused plugins. Avoid large, complicated plugins that drastically change the dashboard's behavior and look.
-- For more complex changes, consider using better-suited approaches, such as [using the standalone dashboard component](../../../learn/embed_dashboards/#EmbedDashboards-Dashboardcomponent) or [building your custom dashboard](../../../learn/embed_dashboards/#EmbedDashboards-Customdashboards)
+
+-   Use only the public dashboard plugins API and GoodData.UI interfaces. Anything marked as alpha, beta, or internal within the plugin code should be used at your own risk. If you are missing an API for your particular use case or need something not yet marked as stable, please [get in touch with us](../../../#Home-JoinLearn), and we may consider updating or extending it.
+-   Do not manipulate the CSS or DOM structure of the dashboard. Instead, stick to the [theming guidelines](https://www.gooddata.com/docs/cloud/customize-appearance/create-custom-themes/).
+-   Create smaller, focused plugins. Avoid large, complicated plugins that drastically change the dashboard's behavior and look.
+-   For more complex changes, consider using better-suited approaches, such as [using the standalone dashboard component](../../../learn/embed_dashboards/#EmbedDashboards-Dashboardcomponent) or [building your custom dashboard](../../../learn/embed_dashboards/#EmbedDashboards-Customdashboards)
 
 ### Maintenance
 
 Since dashboard plugins are primarily integrated with our ever-evolving SaaS platform (GoodData Platform or GoodData Cloud), there are occasions when introducing breaking changes is necessary.
 
 When this occurs, a grace period of approximately six months will be provided, allowing for the safe migration of your plugins. However, after this time frame, the dashboard will default to running with the latest version, and reverting to older versions will not be possible. Any plugins that have not been migrated to the new API version will not load once the grace period concludes.
-
-
 
 ### Capabilities
 
@@ -121,7 +121,6 @@ You can request multiple hosts to be added to the list. All hosts must run on th
 
 > **IMPORTANT!** Never put untrusted hosts into this list. Always put the hosts that are under your organization's
 > control and appropriate review and governance. Otherwise, you run risk of malicious code leaking your data.
-
 
 ### Configuration on GoodData Cloud
 

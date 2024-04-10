@@ -6,7 +6,7 @@ id: webcomponents_authentication
 ---
 
 You can configure the Web Components library to automatically attempt user authentication to a GoodData server using the
-`auth` query parameter in the script URL. 
+`auth` query parameter in the script URL.
 
 If you need more control over the authentication flow, you can also [authenticate the user programmatically](#programmatic-authentication).
 
@@ -17,7 +17,7 @@ If the `auth` parameter is not provided or has a value other than `sso`, the lib
 run the auto-authentication and will expect you to run the [programmatic authentication](#programmatic-authentication).
 Meanwhile, all custom elements present on the page will render a loading animation.
 
-> All your users must have a GoodData account and have access to your GoodData workspace. If users do not have a GoodData account or do not have access to the workspace, see [Grant users access to your workspace][1].
+> All your users must have a GoodData account and have access to your GoodData workspace.
 
 ## Programmatic authentication
 
@@ -32,12 +32,14 @@ The custom authentication would look like this:
     // Import the library along with `setContext` method
     import { setContext } from "https://example.gooddata.com/components/my-workspace.js";
     // Import GoodData.CN backend for GoodData.CN and GoodData Cloud
-    import factory, { ContextDeferredAuthProvider } from "https://example.gooddata.com/components/tigerBackend.js";
+    import factory, {
+        ContextDeferredAuthProvider,
+    } from "https://example.gooddata.com/components/tigerBackend.js";
 
     function myAuthenticationHandler(authError) {
         // ... define the logic for custom authentication flow
     }
-    
+
     // Set up GoodData.CN backend and default workspace id
     setContext({
         backend: factory()
@@ -63,8 +65,11 @@ You can also run the following programmatic setup:
 ```html
 <script type="module">
     import { setContext } from "https://example.gooddata.com/components/my-workspace.js";
-    import factory, { ContextDeferredAuthProvider, redirectToTigerAuthentication } from "https://example.gooddata.com/components/tigerBackend.js";
-    
+    import factory, {
+        ContextDeferredAuthProvider,
+        redirectToTigerAuthentication,
+    } from "https://example.gooddata.com/components/tigerBackend.js";
+
     setContext({
         backend: factory()
             .onHostname("https://example.gooddata.com")
@@ -78,5 +83,4 @@ Whenever a user is not authenticated with the GoodData server, the library will 
 SSO provider that you configured at GoodData. Once the user is logged in, the SSO provider will redirect the browser window
 back to the exact same page it was before the first redirect.
 
-[1]:../../../integrate_and_authenticate/platform_authentication_and_sso/
-[2]:../../../integrate_and_authenticate/cn_and_cloud_authentication/
+[2]: ../../../integrate_and_authenticate/cn_and_cloud_authentication/

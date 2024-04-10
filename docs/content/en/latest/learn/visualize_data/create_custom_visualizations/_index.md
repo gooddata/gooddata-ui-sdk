@@ -9,9 +9,10 @@ no_list: true
 With GoodData.UI, you can create a new, customized visual components to address your specific analytics needs.
 
 > Before you start with creation of the custom visualizations, ensure that you are already familiar with the [execution model](../../get_raw_data/execution_model/).
-> We also recommend to use the [export catalog](../export_catalog) tool for more natural and readable way to specify the result data.
+> We also recommend to use the [export catalog](../export_catalog/) tool for more natural and readable way to specify the result data.
 
 ## Get custom visualization data
+
 To specify and obtain the custom visualization data, you can use the following React [hooks](#react-hooks) and [components](#react-components), or [execution API](#execution-api).
 
 Components and hooks have similar API(s) and capabilities, so use your preferred approach.
@@ -19,26 +20,27 @@ However, for more complex scenarios (for example, when one execution depends on 
 
 ### React hooks
 
-- `useExecutionDataView` hook allows you to specify and obtain the result data for your custom visualizations with convenient API.
+-   `useExecutionDataView` hook allows you to specify and obtain the result data for your custom visualizations with convenient API.
     You can specify data to obtain with [series and slices](#access-custom-visualization-data) (recommended) or [custom execution](../../get_raw_data/execution_model/).
     It fetches the result data for you and informs you about the loading status or error if there are any.
     See example usage of this hook in the [live examples](https://gdui-examples.herokuapp.com/execute/use-execution-data-view-hook) gallery.
 
-- `useInsightDataView` hook allows you to fetch data for an existing insight created in [Analytical Designer](https://help.gooddata.com/pages/viewpage.action?pageId=86794494) and render it with your custom visualization.
+-   `useInsightDataView` hook allows you to fetch data for an existing insight created in [Analytical Designer](https://help.gooddata.com/pages/viewpage.action?pageId=86794494) and render it with your custom visualization.
     It fetches the result data for you and informs you about the loading status or error if there are any.
     It is basically [InsightView](../insightview/), but without the view part.
     See example usage of this hook in the [live examples](https://gdui-examples.herokuapp.com/execute/use-insight-data-view-hook) gallery.
 
 ### React components
-- `Execute` is a component alternative to the `useExecutionDataView` hook. You can specify data to obtain with [series and slices](#access-custom-visualization-data).
+
+-   `Execute` is a component alternative to the `useExecutionDataView` hook. You can specify data to obtain with [series and slices](#access-custom-visualization-data).
     It fetches the result data for you and informs you about the loading status or error if there are any.
     See example usage of this component in the [live examples](https://gdui-examples.herokuapp.com/execute/execute-component) gallery.
 
-- `RawExecute` is a component alternative to `useExecutionDataView` hook. You can specify data to obtain with [custom execution](../../get_raw_data/execution_model/).
+-   `RawExecute` is a component alternative to `useExecutionDataView` hook. You can specify data to obtain with [custom execution](../../get_raw_data/execution_model/).
     It fetches the result data for you and informs you about the loading status or error if there are any.
     See example usage of this component in the [live examples](https://gdui-examples.herokuapp.com/execute/raw-execute-component) gallery.
 
-- `ExecuteInsight` is a component alternative to `useInsightDataView` hook.
+-   `ExecuteInsight` is a component alternative to `useInsightDataView` hook.
     It allows you to fetch data for an existing insight created in [Analytical Designer](https://help.gooddata.com/pages/viewpage.action?pageId=86794494) and render it with your custom visualization.
     It fetches the result data for you and informs you about the loading status or error if there are any.
     It is basically [InsightView](../insightview/), but without the view part.

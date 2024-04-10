@@ -11,7 +11,6 @@ This article should **inform** the developers, whether their setup is **compatib
 ## Compatible Technologies:
 
 -   React >=16.8.0
--   [Angular 9+](../../supported_frameworks/angular/)
 -   TypeScript >= 5.0.2
 -   Node ^16.20.0 LTS
 

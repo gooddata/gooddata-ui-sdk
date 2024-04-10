@@ -49,6 +49,39 @@ Load raw analytical data into your browser or NodeJS application using Custom Ex
 
 {{< /blocks/cards-container >}}
 
+## Other Integrations
+
+The following frameworks are not natively supported, but you can still use them work with GoodData.UI to embed GoodData content into your web applications:
+
+<style>
+.image-link {
+    display: inline-block; /* Make each div behave like an inline block */
+    margin-right: 20px; /* Optional: Adds some space between each item */
+}
+
+/* Optional: Ensure images and links align vertically */
+.image-link img, .image-link a {
+    vertical-align: middle;
+}
+</style>
+
+<div class="image-link">
+    <img alt="angular_logo" src="../angular.png" width="60px" />
+    <a href="https://www.gooddata.com/blog/frontend-integration-series-angular/" target="_blank">Angular</a>
+</div>
+<div class="image-link">
+    <img alt="nextjs_logo" src="../nextjs.png" width="60px" />
+    <a href="https://www.gooddata.com/blog/frontend-integration-series-nextjs/" target="_blank">Next.js</a>
+</div>
+<div class="image-link">
+    <img alt="vuejs_logo" src="../vuejs.png" width="60px" />
+    <a href="https://www.gooddata.com/blog/frontend-integration-series-vue-js/" target="_blank">Vue.js</a>
+</div>
+<div class="image-link">
+    <img alt="svelte_logo" src="../svelte.png" width="60px" />
+    <a href="https://www.gooddata.com/blog/frontend-integration-series-sveltekit/" target="_blank">SvelteKit</a>
+</div>
+
 ## Join & Learn
 
 Meet other GoodData developers, talk with us and learn:

@@ -6,13 +6,11 @@ weight: 11
 
 GoodData.UI is the go-to SDK, when it comes to embedding, visualizing your data or creating custom visualizations with GoodData.
 
-{{% embedded-image src="/visuals.png" title="Visuals" width="80%" %}}
-
+{{% embedded-image alt="Visuals" src="/visuals.png" title="Visuals" width="80%" %}}
 
 It is built on top of TypeScript, so it is versatile, yet very fast.
 
 GoodData.UI works best with:
-
 
 {{< blocks/cards-container aligned="true">}}
 
@@ -26,7 +24,6 @@ GoodData.UI works best with:
 {{< /blocks/card >}}
 
 {{< /blocks/cards-container >}}
-
 
 GoodData.UI excells at creating Visualizations and Embedding, but can also help you retrieve data directly from the GooodData analytics engine. Here is an overview:
 
@@ -43,8 +40,7 @@ In the simplest form, the integration could look something like this:
 
 ```html
 <!-- Load the library... -->
-<script type="module" src="<host_url>/components/<workspace_id>.js?auth=sso">
-</script>
+<script type="module" src="<host_url>/components/<workspace_id>.js?auth=sso"></script>
 
 <!-- ...and embed a dashboard! -->
 <gd-dashboard dashboard="<dashboard_id>"></gd-dashboard>
@@ -59,7 +55,7 @@ The result may look like this:
 
 The Web Components library is part of the GoodData.UI. It is loading React and all the necessary dependencies. However, it runs in an isolated scope that will not conflict with other JavaScript running in your app.
 
-See [Introduction to GoodData Web Components](./learn/embed_dashboards/web_components/) to get started.
+See [Introduction to GoodData Web Components](../learn/embed_dashboards/web_components/) to get started.
 
 ## React
 
@@ -78,10 +74,8 @@ import * as Md from "../../md/full";
 
 export function MyComponent() {
     return (
-        <div style={{height:300}}>
-            <InsightView
-                insight={Md.Insights.MyInsight}
-            />
+        <div style={{ height: 300 }}>
+            <InsightView insight={Md.Insights.MyInsight} />
         </div>
     );
 }
@@ -112,11 +106,7 @@ const numberOfChecks = modifyMeasure(Md.NrChecks, (m) =>
 export const TreemapExample = () => {
     return (
         <div style={{ height: 300 }}>
-            <Treemap 
-                measures={[numberOfChecks]} 
-                viewBy={Md.LocationState} 
-                segmentBy={Md.LocationCity} 
-            />
+            <Treemap measures={[numberOfChecks]} viewBy={Md.LocationState} segmentBy={Md.LocationCity} />
         </div>
     );
 };
@@ -126,7 +116,7 @@ The result may look like this:
 
 ![treemap insight](intro-treemap-visualization.png)
 
-See [Start with Visual Components](../references/visual_components) to get started
+See [Start with Visual Components](../references/visual_components/) to get started
 
 You can also create entirely new components and visualizations from scratch. We recommend you check out [our example gallery](https://gdui-examples.herokuapp.com/advanced/global-filters) for live examples of what is possible to do with the GoodData.UI.
 
@@ -136,4 +126,3 @@ You can also create entirely new components and visualizations from scratch. We 
 ## REST API Clients
 
 The REST API Clients provides a way to directly retrieve data from the GoodData analytics engine. To learn how to utilize GoodData.UI for fetching data, refer to the [Get Raw Data](../learn/get_raw_data/) section. This data can be integrated into your custom frontend application or transferred to your Node.js backend application.
-

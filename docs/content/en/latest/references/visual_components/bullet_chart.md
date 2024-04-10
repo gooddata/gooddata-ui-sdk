@@ -40,40 +40,40 @@ const style = { height: 300 };
         comparativeMeasure={Md.$FranchiseFeesOngoingRoyalty}
         viewBy={Md.LocationResort}
     />
-</div>
+</div>;
 ```
 
 ## Colors
 
-To appropriately visualize the displayed data, bullet charts use colors provided by a color array or a palette in the [config](../chart_config#configure-colors) in the following way:
-* For the **primary** measure, the first color from the color array/palette is used.
-* For the **target** measure, a darker shade of the first color is used.
-* For the **comparative** measure, gray is used.
+To appropriately visualize the displayed data, bullet charts use colors provided by a color array or a palette in the [config](../chart_config/#configure-colors) in the following way:
 
-To override the default coloring scheme and set a custom color for each measure, use [color mapping](../chart_config#color-mapping).
+-   For the **primary** measure, the first color from the color array/palette is used.
+-   For the **target** measure, a darker shade of the first color is used.
+-   For the **comparative** measure, gray is used.
+
+To override the default coloring scheme and set a custom color for each measure, use [color mapping](../chart_config/#color-mapping).
 
 ## Properties
 
-| Name | Required? | Type | Description |
-| :--- | :--- | :--- | :--- |
-| primaryMeasure | false | IMeasure | The measure displayed as the primary measure |
-| targetMeasure | false | IMeasure | The measure displayed as the target measure |
-| comparativeMeasure | false | IMeasure | The measure displayed as the comparative measure |
-| viewBy | false | IAttribute &#124; Attribute[] | The attribute definition or an array of two attribute definitions. If set to a two-attribute array, the first attribute wraps up the second one. |
-| filters | false | IFilter[] | An array of filter definitions |
-| sortBy | false | ISortItem[] | An array of sort definitions |
-| config | false | IChartConfig | The chart configuration object |
-| backend | false | IAnalyticalBackend | The object with the configuration related to communication with the backend and access to analytical workspaces |
-| workspace | false | string | The workspace ID |
-| locale | false | string | The localization of the chart. Defaults to `en-US`.  |
-| drillableItems | false | IDrillableItem[] | An array of points and attribute values to be drillable |
-| ErrorComponent | false | Component | A component to be rendered if this component is in error state |
-| LoadingComponent | false | Component | A component to be rendered if this component is in loading state  |
-| onError | false | Function | A callback when the component updates its error state |
-| onExportReady | false | Function | A callback when the component is ready for exporting its data |
-| onLoadingChanged | false | Function | A callback when the component updates its loading state |
-| onDrill | false | Function | A callback when a drill is triggered on the component |
-
+| Name               | Required? | Type                          | Description                                                                                                                                      |
+| :----------------- | :-------- | :---------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------- |
+| primaryMeasure     | false     | IMeasure                      | The measure displayed as the primary measure                                                                                                     |
+| targetMeasure      | false     | IMeasure                      | The measure displayed as the target measure                                                                                                      |
+| comparativeMeasure | false     | IMeasure                      | The measure displayed as the comparative measure                                                                                                 |
+| viewBy             | false     | IAttribute &#124; Attribute[] | The attribute definition or an array of two attribute definitions. If set to a two-attribute array, the first attribute wraps up the second one. |
+| filters            | false     | IFilter[]                     | An array of filter definitions                                                                                                                   |
+| sortBy             | false     | ISortItem[]                   | An array of sort definitions                                                                                                                     |
+| config             | false     | IChartConfig                  | The chart configuration object                                                                                                                   |
+| backend            | false     | IAnalyticalBackend            | The object with the configuration related to communication with the backend and access to analytical workspaces                                  |
+| workspace          | false     | string                        | The workspace ID                                                                                                                                 |
+| locale             | false     | string                        | The localization of the chart. Defaults to `en-US`.                                                                                              |
+| drillableItems     | false     | IDrillableItem[]              | An array of points and attribute values to be drillable                                                                                          |
+| ErrorComponent     | false     | Component                     | A component to be rendered if this component is in error state                                                                                   |
+| LoadingComponent   | false     | Component                     | A component to be rendered if this component is in loading state                                                                                 |
+| onError            | false     | Function                      | A callback when the component updates its error state                                                                                            |
+| onExportReady      | false     | Function                      | A callback when the component is ready for exporting its data                                                                                    |
+| onLoadingChanged   | false     | Function                      | A callback when the component updates its loading state                                                                                          |
+| onDrill            | false     | Function                      | A callback when a drill is triggered on the component                                                                                            |
 
 The following example shows the supported `config` structure with sample values. For the descriptions of the individual options, see [Chart Config](../chart_config/).
 
