@@ -38,7 +38,6 @@ Here are a few ideas:
 -   [Consume the raw data](#consume-the-raw-data)
 -   [Apply theming](#apply-theming)
 -   [Connect your own data from _GoodData Cloud_ or _GoodData.CN_ servers](#connect-your-own-data-from-gooddata-cloud-or-gooddatacn-servers)
--   [Connect your own data from _GoodData Platform_](#connect_your_own_gooddata_platform_data)
 
 ### Try a different visualization
 

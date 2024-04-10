@@ -34,6 +34,10 @@ program
     .option("--hostname <url>", `Instance of GoodData backend`)
     .option("--config <path>", `Custom config file (default ${DEFAULT_CONFIG_FILE_NAME})`)
     .option("--accept-untrusted-ssl", "Allows to run the tool with host, that has untrusted ssl certificate")
+    .option(
+        "--backend",
+        "Deprecated: Retained for backward compatibility. Previously allowed selection of backends, now defaults to 'tiger' with no alternative options. Unnecessary for new scripts.",
+    )
     .parse(process.argv);
 
 async function loadProjectMetadataFromBackend(config: CatalogExportConfig): Promise<WorkspaceMetadata> {
