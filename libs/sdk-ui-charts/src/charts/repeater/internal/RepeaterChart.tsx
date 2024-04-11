@@ -27,6 +27,7 @@ import { useResizing, MANUALLY_SIZED_MIN_WIDTH } from "../hooks/useResizing.js";
 import { InlineLineChart } from "./InlineLineChart.js";
 import { InlineColumnChart } from "./InlineColumnChart.js";
 import { RepeaterInlineVisualizationDataPoint } from "./dataViewToRepeaterData.js";
+import isNil from "lodash/isNil.js";
 
 const DEFAULT_COL_DEF = { resizable: true };
 
@@ -250,7 +251,7 @@ function MeasureCellRenderer({
         );
     }
 
-    return <div>{measureDataPoints[0]?.formattedValue}</div>;
+    return <div>{measureDataPoints.find((point) => !isNil(point.value))?.formattedValue}</div>;
 }
 
 interface IAttributeColumnData {

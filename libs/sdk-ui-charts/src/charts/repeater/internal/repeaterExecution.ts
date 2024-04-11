@@ -5,17 +5,66 @@ import {
     IAttributeOrMeasure,
     IBucket,
     IDimension,
+    IMeasure,
+    IdentifierRef,
     MeasureGroupIdentifier,
+    attributeDisplayFormRef,
     bucketAttributes,
     bucketMeasures,
     bucketsFind,
+    isMeasure,
+    measureAggregation,
+    measureAlias,
+    measureFormat,
+    measureItem,
+    measureLocalId,
+    measureTitle,
+    modifyInlineMeasure,
     newBucket,
     newDimension,
+    newInlineMeasure,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
+import { ChartInlineVisualizationType, IInlineVisualizationsConfig } from "../../../interfaces/index.js";
 
 /**
- * Constructs repeater buckets from the provided attributes and measures.
+ * Returns an inline measure definition created from a standalone measure.
+ *
+ * This should be used in case there is some other slicing attribute in the insight.
+ * We want to avoid slicing by the slicing attribute and keep only slicing by the main row attribute.
+ *
+ * @internal
+ *
+ * @param measure - measure to be transformed
+ * @param mainRowAttributeId - the main slicing attribute id
+ * @returns IMeasure
+ */
+export function transformStandaloneMeasureToInline(measure: IMeasure, mainRowAttributeId: string): IMeasure {
+    const itemRef = measureItem(measure) as IdentifierRef;
+    const aggregation = measureAggregation(measure);
+    const itemIdentifier = `{${itemRef.type === "measure" ? "metric" : itemRef.type}/${itemRef.identifier}}`;
+
+    let maqlExpression: string;
+    if (aggregation) {
+        maqlExpression = `SELECT ${aggregation}(${itemIdentifier})`;
+    } else {
+        maqlExpression = `SELECT ${itemIdentifier}`;
+    }
+    maqlExpression += ` BY ALL OTHER EXCEPT {label/${mainRowAttributeId}}`;
+
+    const inlineMeasure = newInlineMeasure(maqlExpression);
+
+    return modifyInlineMeasure(inlineMeasure, (m) =>
+        m
+            .format(measureFormat(measure))
+            .localId(measureLocalId(measure))
+            .title(measureTitle(measure))
+            .alias(measureAlias(measure)),
+    );
+}
+
+/**
+ * Constructs repeater buckets from the provided attributes, columns and viewBy
  *
  * @internal
  */
@@ -23,11 +72,30 @@ export function constructRepeaterBuckets(
     rowAttribute: IAttribute,
     columns: IAttributeOrMeasure[],
     viewBy?: IAttribute,
+    inlineVisualizations?: IInlineVisualizationsConfig,
 ) {
+    const mainRowAttributeRef = attributeDisplayFormRef(rowAttribute) as IdentifierRef;
+    const mainRowAttributeId = mainRowAttributeRef.identifier;
+    const isExecutionSliced = !!viewBy;
+    const sanitizedColumnsBucketItems = columns.map((item) => {
+        if (isMeasure(item)) {
+            const localId = measureLocalId(item);
+            const isStandaloneMeasure =
+                ((inlineVisualizations?.[localId]?.type as ChartInlineVisualizationType) ?? "metric") ===
+                "metric";
+
+            return isStandaloneMeasure && isExecutionSliced
+                ? transformStandaloneMeasureToInline(item, mainRowAttributeId)
+                : item;
+        }
+
+        return item;
+    });
+
     return [
-        newBucket(BucketNames.ATTRIBUTE, rowAttribute as IAttribute),
-        newBucket(BucketNames.COLUMNS, ...(columns as IAttributeOrMeasure[])),
-        viewBy ? newBucket(BucketNames.VIEW, viewBy as IAttribute) : undefined,
+        newBucket(BucketNames.ATTRIBUTE, rowAttribute),
+        newBucket(BucketNames.COLUMNS, ...sanitizedColumnsBucketItems),
+        viewBy ? newBucket(BucketNames.VIEW, viewBy) : undefined,
     ].filter(Boolean);
 }
 

@@ -98,6 +98,7 @@ export function toCoreRepeaterProps(props: IRepeaterProps): ICoreChartProps {
         attribute as IAttribute,
         columns as IAttributeOrMeasure[],
         viewBy as IAttribute,
+        props.config?.inlineVisualizations,
     );
 
     const newProps: IRepeaterNonBucketProps = omit<IRepeaterProps, keyof IIrrelevantRepeaterProps>(props, [
