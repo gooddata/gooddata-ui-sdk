@@ -55,6 +55,43 @@
                 }
             }
         },
+        "/api/v1/actions/dataSources/{dataSourceId}/listFiles": {
+            "post": {
+                "tags": ["Data source files import", "actions"],
+                "summary": "List datasource files",
+                "description": "List all the files in the given data source.",
+                "operationId": "listFiles",
+                "parameters": [
+                    {
+                        "name": "dataSourceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful listing.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/GdStorageFile"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["MANAGE"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
         "/api/v1/actions/dataSources/{dataSourceId}/import": {
             "post": {
                 "tags": ["Data source files import", "actions"],
@@ -180,6 +217,37 @@
                     }
                 },
                 "description": "Information related to uploading a file to the staging area."
+            },
+            "GdStorageFile": {
+                "required": ["modifiedAt", "name", "size", "type", "version"],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the file."
+                    },
+                    "version": {
+                        "type": "integer",
+                        "description": "Version of the file.",
+                        "format": "int32"
+                    },
+                    "size": {
+                        "type": "integer",
+                        "description": "Size of the file in bytes.",
+                        "format": "int64"
+                    },
+                    "modifiedAt": {
+                        "type": "string",
+                        "description": "Last modification timestamp of the file.",
+                        "format": "date-time"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Type of file stored in GD Storage.",
+                        "enum": ["CSV"]
+                    }
+                },
+                "description": "File stored in GD Storage."
             },
             "CsvConvertOptions": {
                 "type": "object",
@@ -456,6 +524,11 @@
                     "headerDetectMaxRows": {
                         "type": "integer",
                         "description": "Maximum number of rows to work with during header detection.",
+                        "format": "int32"
+                    },
+                    "headerRowCount": {
+                        "type": "integer",
+                        "description": "Number of rows to consider as header, if null, header will be detected.",
                         "format": "int32"
                     },
                     "delimiters": {

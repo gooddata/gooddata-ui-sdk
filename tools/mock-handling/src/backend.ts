@@ -2,15 +2,9 @@
 import { IAnalyticalBackend, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import tigerFactory, { TigerTokenAuthProvider } from "@gooddata/sdk-backend-tiger";
 
-import { BackendType } from "./base/types.js";
-
 let backend: IAnalyticalBackend | null = null;
 
-export const getOrInitBackend = (
-    tigerToken: string,
-    hostname: string,
-    backendType: BackendType,
-): IAnalyticalBackend => {
+export const getOrInitBackend = (tigerToken: string, hostname: string): IAnalyticalBackend => {
     // return the current backend if we have one
     if (backend) {
         return backend;
@@ -20,12 +14,8 @@ export const getOrInitBackend = (
         throw new UnexpectedError("Tiger token not provided");
     }
 
-    if (backendType === "tiger") {
-        backend = tigerFactory({ hostname }).withAuthentication(new TigerTokenAuthProvider(tigerToken));
-    } else {
-        throw new UnexpectedError("Unknown backend type");
-    }
-
+    // assign to global and return
+    backend = tigerFactory({ hostname }).withAuthentication(new TigerTokenAuthProvider(tigerToken));
     return backend;
 };
 

@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { getAccountMenuFeatureFlagsMock, getWorkspacePermissionsMock } from "./mock.js";
 import { generateHeaderMenuItemsGroups } from "../generateHeaderMenuItemsGroups.js";
 import { describe, it, expect } from "vitest";
@@ -750,5 +750,61 @@ describe("generateHeaderMenuItemsGroups", () => {
                 },
             ],
         ]);
+    });
+
+    it("should return relative paths for Panther", () => {
+        const items = generateHeaderMenuItemsGroups(
+            { analyticalDesigner: true, enableDataSection: true },
+            getWorkspacePermissionsMock(true, true),
+            true,
+            "TestWorkspaceId",
+            "TestDashboardId",
+            undefined,
+            false,
+            true,
+            false,
+            true,
+            false,
+        );
+
+        expect(items).toMatchSnapshot();
+    });
+
+    it("should return absolute paths for Panther", () => {
+        const items = generateHeaderMenuItemsGroups(
+            { analyticalDesigner: true, enableDataSection: true },
+            getWorkspacePermissionsMock(true, true),
+            true,
+            "TestWorkspaceId",
+            "TestDashboardId",
+            undefined,
+            false,
+            true,
+            false,
+            true,
+            false,
+            "https://cdnUrl",
+        );
+
+        expect(items).toMatchSnapshot();
+    });
+
+    it("should return correct absolute paths for Panther when baseUrl ends with slash", () => {
+        const items = generateHeaderMenuItemsGroups(
+            { analyticalDesigner: true, enableDataSection: true },
+            getWorkspacePermissionsMock(true, true),
+            true,
+            "TestWorkspaceId",
+            "TestDashboardId",
+            undefined,
+            false,
+            true,
+            false,
+            true,
+            false,
+            "https://cdnUrl/",
+        );
+
+        expect(items).toMatchSnapshot();
     });
 });

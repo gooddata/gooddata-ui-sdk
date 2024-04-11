@@ -48,6 +48,7 @@ import {
     AnalyzeCsvResponse,
     ImportCsvRequest,
     JsonApiDataSourceInAttributesCacheStrategyEnum,
+    GdStorageFile,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling.js";
 import uniq from "lodash/uniq.js";
@@ -500,6 +501,12 @@ export type TigerSpecificFunctions = {
      * @param importRequest - the request to import CSV files
      */
     importCsv?: (dataSourceId: string, importCsvRequest: ImportCsvRequest) => Promise<void>;
+
+    /**
+     * List CSV files from GDSTORAGE data source staging location
+     * @param dataSourceId - id of the data source
+     */
+    listFiles?: (dataSourceId: string) => Promise<Array<GdStorageFile>>;
 };
 
 const getDataSourceErrorMessage = (error: unknown) => {
@@ -1515,6 +1522,22 @@ export const buildTigerSpecificFunctions = (
                     dataSourceId: dataSourceId,
                     importCsvRequest: importCsvRequest,
                 });
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+
+    listFiles: async (dataSourceId: string) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                return await sdk.result
+                    .listFiles({
+                        dataSourceId: dataSourceId,
+                    })
+                    .then((res) => {
+                        return res?.data;
+                    });
             });
         } catch (error: any) {
             throw convertApiError(error);

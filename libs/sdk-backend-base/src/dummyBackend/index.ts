@@ -60,6 +60,7 @@ import {
     IOrganizationUserService,
     IAttributeHierarchiesService,
     IDataSourcesService,
+    IWorkspaceExportDefinitionsService,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -315,6 +316,9 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
             throw new NotSupported("not supported");
         },
         attributeHierarchies(): IAttributeHierarchiesService {
+            throw new NotSupported("not supported");
+        },
+        exportDefinitions(): IWorkspaceExportDefinitionsService {
             throw new NotSupported("not supported");
         },
     };
