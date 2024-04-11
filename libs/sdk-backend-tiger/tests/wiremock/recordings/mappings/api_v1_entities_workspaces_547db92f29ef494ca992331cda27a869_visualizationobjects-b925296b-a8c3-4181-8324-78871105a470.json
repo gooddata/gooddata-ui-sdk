@@ -1,22 +1,18 @@
 {
-    "id": "c0db9976-b3d8-4535-acf9-f3e2e0b1c037",
-    "name": "api_v1_entities_workspaces_12f912afa6d648c4953c254807eafd1f_attributes",
+    "id": "b925296b-a8c3-4181-8324-78871105a470",
+    "name": "api_v1_entities_workspaces_547db92f29ef494ca992331cda27a869_visualizationobjects",
     "request": {
-        "url": "/api/v1/entities/workspaces/12f912afa6d648c4953c254807eafd1f/attributes?include=labels%2CdefaultView%2Cdataset%2CattributeHierarchies&size=250&page=0",
+        "url": "/api/v1/entities/workspaces/547db92f29ef494ca992331cda27a869/visualizationObjects?page=0&size=50&sort=modifiedAt%2CcreatedAt%2Ctitle%2Cdesc&metaInclude=page",
         "method": "GET",
         "headers": {
             "Accept": {
-                "equalTo": "application/vnd.gooddata.api+json"
-            },
-            "Content-Type": {
-                "equalTo": "application/vnd.gooddata.api+json",
-                "caseInsensitive": true
+                "equalTo": "application/json, text/plain, */*"
             }
         }
     },
     "response": {
         "status": 200,
-        "bodyFileName": "api_v1_entities_workspaces_12f912afa6d648c4953c254807eafd1f_attributes-c0db9976-b3d8-4535-acf9-f3e2e0b1c037.json",
+        "bodyFileName": "api_v1_entities_workspaces_547db92f29ef494ca992331cda27a869_visualizationobjects-b925296b-a8c3-4181-8324-78871105a470.json",
         "headers": {
             "X-Content-Type-Options": "nosniff",
             "Pragma": "no-cache",
@@ -34,7 +30,7 @@
             "Content-Type": "application/vnd.gooddata.api+json"
         }
     },
-    "uuid": "c0db9976-b3d8-4535-acf9-f3e2e0b1c037",
+    "uuid": "b925296b-a8c3-4181-8324-78871105a470",
     "persistent": true,
-    "insertionIndex": 5
+    "insertionIndex": 3
 }

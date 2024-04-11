@@ -1,7 +1,7 @@
 // (C) 2024 GoodData Corporation
 
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2024-03-20T14:45:16.277Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2024-04-11T08:59:46.154Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -33,14 +33,14 @@ export const Account = {
  */
 export const Activity = {
     /**
-     * Display Form Title: Subject
-     * Display Form ID: label.f_activity.subject
-     */
-    Subject: newAttribute("label.f_activity.subject"),
-    /**
      * Display Form Title: Activity
      * Display Form ID: attr.f_activity.activity
-     */ Default: newAttribute("attr.f_activity.activity"),
+     */
+    Default: newAttribute("attr.f_activity.activity"),
+    /**
+     * Display Form Title: Subject
+     * Display Form ID: label.f_activity.subject
+     */ Subject: newAttribute("label.f_activity.subject"),
 };
 /**
  * Attribute Title: Opportunity
@@ -87,22 +87,22 @@ export const SalesRep = {
  */
 export const Product = {
     /**
-     * Display Form Title: Product Image
-     * Display Form ID: label.f_product.product.image
-     */
-    Image: newAttribute("label.f_product.product.image"),
-    /**
      * Display Form Title: Product Name
      * Display Form ID: label.f_product.product.name
-     */ Name: newAttribute("label.f_product.product.name"),
+     */
+    Name: newAttribute("label.f_product.product.name"),
+    /**
+     * Display Form Title: Product
+     * Display Form ID: attr.f_product.product
+     */ Default: newAttribute("attr.f_product.product"),
     /**
      * Display Form Title: Product Link
      * Display Form ID: label.f_product.product.link
      */ Link: newAttribute("label.f_product.product.link"),
     /**
-     * Display Form Title: Product
-     * Display Form ID: attr.f_product.product
-     */ Default: newAttribute("attr.f_product.product"),
+     * Display Form Title: Product Image
+     * Display Form ID: label.f_product.product.image
+     */ Image: newAttribute("label.f_product.product.image"),
 };
 /**
  * Attribute Title: Stage History
@@ -174,22 +174,10 @@ export const Status: IAttribute = newAttribute("f_activity.status_id");
  */
 export const City = {
     /**
-     * Display Form Title: City
-     * Display Form ID: f_city.id
-     */
-    Default: newAttribute("f_city.id"),
-    /**
-     * Display Form Title: Longitude
-     * Display Form ID: f_city.id.longitude
-     */ Longitude: newAttribute("f_city.id.longitude"),
-    /**
-     * Display Form Title: Latitude
-     * Display Form ID: f_city.id.latitude
-     */ Latitude: newAttribute("f_city.id.latitude"),
-    /**
      * Display Form Title: City name
      * Display Form ID: f_city.id.cityname
-     */ Name: newAttribute("f_city.id.cityname"),
+     */
+    Name: newAttribute("f_city.id.cityname"),
     /**
      * Display Form Title: Location
      * Display Form ID: f_city.id.location
@@ -199,9 +187,21 @@ export const City = {
      * Display Form ID: f_city.id.cityasciiname
      */ AsciiName: newAttribute("f_city.id.cityasciiname"),
     /**
+     * Display Form Title: Latitude
+     * Display Form ID: f_city.id.latitude
+     */ Latitude: newAttribute("f_city.id.latitude"),
+    /**
      * Display Form Title: City short name
      * Display Form ID: f_city.id.cityshortname
      */ ShortName: newAttribute("f_city.id.cityshortname"),
+    /**
+     * Display Form Title: Longitude
+     * Display Form ID: f_city.id.longitude
+     */ Longitude: newAttribute("f_city.id.longitude"),
+    /**
+     * Display Form Title: City
+     * Display Form ID: f_city.id
+     */ Default: newAttribute("f_city.id"),
 };
 /**
  * Attribute Title: Opportunity Id
@@ -314,16 +314,16 @@ export const State = {
  */
 export const ProductThatIsRenamedToTestTheLongAttributeName = {
     /**
-     * Display Form Title: Product that is renamed to test the long attribute name
-     * Display Form ID: productthatisrenamedtotestthelongattributename
-     */
-    Default: newAttribute("productthatisrenamedtotestthelongattributename"),
-    /**
      * Display Form Title: Product that is renamed to test the long attribute name hyperlink
      * Display Form ID: productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink
-     */ Hyperlink: newAttribute(
+     */
+    Hyperlink: newAttribute(
         "productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink",
     ),
+    /**
+     * Display Form Title: Product that is renamed to test the long attribute name
+     * Display Form ID: productthatisrenamedtotestthelongattributename
+     */ Default: newAttribute("productthatisrenamedtotestthelongattributename"),
 };
 /**
  * Metric Title: 2 literals in datetime_diff

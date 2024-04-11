@@ -1,8 +1,8 @@
 {
-    "id": "8bf5722d-5776-4d6c-a137-da3d28802163",
-    "name": "api_v1_entities_workspaces_12f912afa6d648c4953c254807eafd1f_facts",
+    "id": "0fe50d1c-ba72-4bfa-a1a8-720be048e3f7",
+    "name": "api_v1_entities_workspaces_547db92f29ef494ca992331cda27a869_facts",
     "request": {
-        "url": "/api/v1/entities/workspaces/12f912afa6d648c4953c254807eafd1f/facts?size=250&page=0",
+        "url": "/api/v1/entities/workspaces/547db92f29ef494ca992331cda27a869/facts?size=250&page=0",
         "method": "GET",
         "headers": {
             "Accept": {
@@ -16,7 +16,7 @@
     },
     "response": {
         "status": 200,
-        "bodyFileName": "api_v1_entities_workspaces_12f912afa6d648c4953c254807eafd1f_facts-8bf5722d-5776-4d6c-a137-da3d28802163.json",
+        "bodyFileName": "api_v1_entities_workspaces_547db92f29ef494ca992331cda27a869_facts-0fe50d1c-ba72-4bfa-a1a8-720be048e3f7.json",
         "headers": {
             "X-Content-Type-Options": "nosniff",
             "Pragma": "no-cache",
@@ -34,7 +34,7 @@
             "Content-Type": "application/vnd.gooddata.api+json"
         }
     },
-    "uuid": "8bf5722d-5776-4d6c-a137-da3d28802163",
+    "uuid": "0fe50d1c-ba72-4bfa-a1a8-720be048e3f7",
     "persistent": true,
     "insertionIndex": 4
 }
