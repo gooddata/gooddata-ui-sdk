@@ -23,6 +23,7 @@ import { growToFit } from "../internal/tableSizing.js";
 const COLUMN_RESIZE_TIMEOUT = 300;
 
 export const MANUALLY_SIZED_MAX_WIDTH = 2000;
+export const MANUALLY_SIZED_MIN_WIDTH = 50;
 export const AUTO_SIZED_MAX_WIDTH = 500;
 
 export function useResizing(columnDefs: ColDef[], items: IAttributeOrMeasure[], props: IRepeaterChartProps) {
