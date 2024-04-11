@@ -1,10 +1,11 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React, { useCallback } from "react";
 import { CustomFormats, IntlProvider } from "react-intl";
 import {
     DefaultLocale,
     ITranslationsCustomizationProviderProps,
     TranslationsCustomizationProvider,
+    resolveLocaleDefaultMessages,
 } from "@gooddata/sdk-ui";
 
 import { translations } from "./translations.js";
@@ -49,5 +50,10 @@ export const IntlWrapper: React.FC<IIntlWrapperProps> = ({ children, locale = De
         ),
         [locale, children],
     );
-    return <TranslationsCustomizationProvider translations={translations[locale]} render={render} />;
+    return (
+        <TranslationsCustomizationProvider
+            translations={resolveLocaleDefaultMessages(locale, translations)}
+            render={render}
+        />
+    );
 };
