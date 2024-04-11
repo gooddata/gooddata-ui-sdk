@@ -23,10 +23,11 @@ import { Icon } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import stringify from "json-stable-stringify";
 import { IRepeaterChartProps } from "../publicTypes.js";
-import { useResizing } from "../hooks/useResizing.js";
+import { useResizing, MANUALLY_SIZED_MIN_WIDTH } from "../hooks/useResizing.js";
 import { InlineLineChart } from "./InlineLineChart.js";
 import { InlineColumnChart } from "./InlineColumnChart.js";
 import { RepeaterInlineVisualizationDataPoint } from "./dataViewToRepeaterData.js";
+import isNil from "lodash/isNil.js";
 
 const DEFAULT_COL_DEF = { resizable: true };
 
@@ -54,6 +55,7 @@ export const RepeaterChart: React.FC<IRepeaterChartProps> = (props) => {
                 headerName: getRepeaterColumnTitle(bucketItem, dataView),
                 field: getRepeaterColumnId(bucketItem),
                 cellClass: "gd-cell",
+                minWidth: MANUALLY_SIZED_MIN_WIDTH,
             };
             if (isMeasure(bucketItem)) {
                 const localId = measureLocalId(bucketItem);
@@ -153,6 +155,8 @@ export const RepeaterChart: React.FC<IRepeaterChartProps> = (props) => {
                 datasource={dataSource}
                 rowModelType="infinite"
                 rowHeight={rowHeight}
+                suppressCellFocus={true}
+                suppressMovableColumns={true}
                 onGridReady={onGridReady}
                 onColumnResized={onColumnResized}
             />
@@ -258,7 +262,7 @@ function MeasureCellRenderer({
                 `gd-text-wrapping-${textWrapping}`,
             )}
         >
-            {measureDataPoints[0]?.formattedValue}
+            {measureDataPoints.find((point) => !isNil(point.value))?.formattedValue}
         </div>
     );
 }
@@ -305,6 +309,7 @@ function AttributeCellRenderer({
             className={cx(
                 "gd-repeater-cell-wrapper",
                 `gd-vertical-align-${verticalAlign}`,
+                `gd-row-height-${rowHeight}`,
                 `gd-text-wrapping-${textWrapping}`,
                 `gd-image-sizing-${imageSizing}`,
             )}

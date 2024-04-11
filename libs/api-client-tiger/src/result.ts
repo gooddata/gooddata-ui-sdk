@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import { AxiosInstance } from "axios";
 import {
     ActionsApi,

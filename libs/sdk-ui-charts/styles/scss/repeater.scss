@@ -118,6 +118,19 @@ $subtotal-odd-background-color: var(
             }
             &-wrap {
                 white-space: normal;
+                //stylelint-disable-next-line value-no-vendor-prefix
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+
+                &.gd-row-height-25 {
+                    -webkit-line-clamp: 1;
+                }
+                &.gd-row-height-55 {
+                    -webkit-line-clamp: 2;
+                }
+                &.gd-row-height-85 {
+                    -webkit-line-clamp: 3;
+                }
             }
         }
 
