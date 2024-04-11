@@ -128,7 +128,7 @@ export type ComparisonPosition = "top" | "left" | "right" | "auto";
 export const ComparisonPositionValues: Record<Uppercase<ComparisonPosition>, ComparisonPosition>;
 
 // @internal
-export function constructRepeaterBuckets(rowAttribute: IAttribute, columns: IAttributeOrMeasure[], viewBy?: IAttribute): IBucket[];
+export function constructRepeaterBuckets(rowAttribute: IAttribute, columns: IAttributeOrMeasure[], viewBy?: IAttribute, inlineVisualizations?: IInlineVisualizationsConfig): IBucket[];
 
 // @internal
 export function constructRepeaterDimensions(buckets: IBucket[]): IDimension[];
