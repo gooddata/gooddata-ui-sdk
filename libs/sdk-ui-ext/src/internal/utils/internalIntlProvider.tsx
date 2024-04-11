@@ -5,6 +5,7 @@ import {
     DefaultLocale,
     ILocale,
     pickCorrectWording,
+    resolveLocaleDefaultMessages,
     TranslationsCustomizationProvider,
 } from "@gooddata/sdk-ui";
 
@@ -15,16 +16,6 @@ import { LRUCache } from "lru-cache";
 const INTL_CACHE_SIZE = 20;
 const INTL_CACHE_KEY = "messages";
 const intlCache = new LRUCache<string, IntlConfig>({ max: INTL_CACHE_SIZE });
-
-function getLocaleStrings(locale) {
-    const strings = translations[locale];
-    if (!strings) {
-        console.warn(`Missing locale strings for ${locale}, using ${DefaultLocale}`);
-        return translations[DefaultLocale];
-    }
-
-    return strings;
-}
 
 export function createInternalIntl(locale: ILocale = DefaultLocale): IntlShape {
     /**
@@ -37,7 +28,7 @@ export function createInternalIntl(locale: ILocale = DefaultLocale): IntlShape {
         return createIntl(cachedIntlConfig);
     }
     const settings = window.gdSettings as IWorkspaceSettings;
-    const strings = getLocaleStrings(locale);
+    const strings = resolveLocaleDefaultMessages(locale, translations);
 
     intlCache.set(INTL_CACHE_KEY, {
         locale,
@@ -64,7 +55,7 @@ export const InternalIntlWrapper: React.FC<IInternalIntlWrapperProps> = ({
      */
     const settings = window.gdSettings as IWorkspaceSettings;
 
-    const strings = getLocaleStrings(locale);
+    const strings = resolveLocaleDefaultMessages(locale, translations);
     const messages = useMemo(() => pickCorrectWording(strings, settings), [strings, settings]);
 
     if (settings) {
