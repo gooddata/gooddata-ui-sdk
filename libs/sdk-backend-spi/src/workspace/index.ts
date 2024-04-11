@@ -207,6 +207,13 @@ export interface IWorkspacesQuery {
     withParent(workspaceId: string | undefined): IWorkspacesQuery;
 
     /**
+     * Sets filter of workspaces by given attributes
+     * @param filter - an object of attributes and values to filter by
+     * @alpha
+     */
+    withFilter(filter: { description?: string; earlyAccess?: string; prefix?: string }): IWorkspacesQuery;
+
+    /**
      * Sets a text to search.
      * @param search - text to search
      */

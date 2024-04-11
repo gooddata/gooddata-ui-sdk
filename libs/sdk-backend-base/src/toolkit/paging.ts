@@ -73,6 +73,7 @@ export type IServerPagingParams = {
     offset: number;
     limit: number;
     cacheId?: string;
+    totalCount?: number;
 };
 
 /**
@@ -134,6 +135,7 @@ export class ServerPaging<T> implements IPagedResource<T> {
             limit: this.limit,
             offset: this.offset + this.limit,
             cacheId: this.cacheId,
+            totalCount: this.totalCount,
         });
         return new ServerPaging(
             this.getData,
@@ -151,6 +153,7 @@ export class ServerPaging<T> implements IPagedResource<T> {
             limit: this.limit,
             offset,
             cacheId: this.cacheId,
+            totalCount: this.totalCount,
         });
         return new ServerPaging(
             this.getData,

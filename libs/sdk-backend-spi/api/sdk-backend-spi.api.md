@@ -1105,6 +1105,12 @@ export interface IWorkspaceSettingsService {
 // @public
 export interface IWorkspacesQuery {
     query(): Promise<IWorkspacesQueryResult>;
+    // @alpha
+    withFilter(filter: {
+        description?: string;
+        earlyAccess?: string;
+        prefix?: string;
+    }): IWorkspacesQuery;
     withLimit(limit: number): IWorkspacesQuery;
     withOffset(offset: number): IWorkspacesQuery;
     withParent(workspaceId: string | undefined): IWorkspacesQuery;
