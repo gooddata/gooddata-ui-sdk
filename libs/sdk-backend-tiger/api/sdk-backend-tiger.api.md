@@ -18,6 +18,7 @@ import { DeclarativeModel } from '@gooddata/api-client-tiger';
 import { DeclarativeWorkspaceDataFilters } from '@gooddata/api-client-tiger';
 import { DependentEntitiesRequest } from '@gooddata/api-client-tiger';
 import { DependentEntitiesResponse } from '@gooddata/api-client-tiger';
+import { GdStorageFile } from '@gooddata/api-client-tiger';
 import { GenerateLdmRequest } from '@gooddata/api-client-tiger';
 import { HierarchyObjectIdentification } from '@gooddata/api-client-tiger';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
@@ -98,6 +99,8 @@ export interface Entitlement {
     // (undocumented)
     value?: string;
 }
+
+export { GdStorageFile }
 
 export { GenerateLdmRequest }
 
@@ -449,6 +452,7 @@ export type TigerSpecificFunctions = {
     getStagingUploadLocation?: (dataSourceId: string) => Promise<StagingUploadLocation>;
     analyzeCsv?: (dataSourceId: string, analyzeCsvRequest: AnalyzeCsvRequest) => Promise<Array<AnalyzeCsvResponse>>;
     importCsv?: (dataSourceId: string, importCsvRequest: ImportCsvRequest) => Promise<void>;
+    listFiles?: (dataSourceId: string) => Promise<Array<GdStorageFile>>;
 };
 
 // @public

@@ -259,6 +259,7 @@ export {
     ActionsApiAnalyzeCsvRequest,
     ActionsApiGetStagingUploadLocationRequest,
     ActionsApiImportCsvRequest,
+    ActionsApiListFilesRequest,
     AnalyzeCsvRequest,
     AnalyzeCsvRequestItem,
     AnalyzeCsvRequestItemConfig,
@@ -271,6 +272,8 @@ export {
     CsvConvertOptionsColumnType,
     CsvParseOptions,
     CsvReadOptions,
+    GdStorageFile,
+    GdStorageFileTypeEnum,
     ImportCsvRequest,
     ImportCsvRequestTable,
     ImportCsvRequestTableSource,
@@ -282,9 +285,6 @@ export {
     WorkspaceCacheSettings,
     WorkspaceCacheUsage,
     WorkspaceCurrentCacheUsage,
-    ActionsApiListFilesRequest,
-    GdStorageFile,
-    GdStorageFileTypeEnum,
 } from "./generated/result-json-api/api.js";
 
 export * from "./client.js";
