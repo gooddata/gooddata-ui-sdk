@@ -46800,6 +46800,243 @@ export function MyComponent() {
 "
 `;
 
+exports[`getEmbeddingCode functionality > should generate code for Repeater - canvas - large row height 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IChartConfig, Repeater } from "@gooddata/sdk-ui-charts";
+
+const attribute: IAttribute = newAttribute(idRef("f_city.id.cityname", "displayForm"), a => a.localId("a_f_city.id.cityname"));
+const columns: IAttributeOrMeasure[] = [
+    newAttribute(idRef("f_city.id.cityname", "displayForm"), a => a.localId("a_f_city.id.cityname_1")),
+    newInlineMeasure("SELECT {metric/of_lost_opps.} BY ALL OTHER EXCEPT {label/f_city.id.cityname}", m => m.localId("m_7bd77a90_inline").title("# of Lost Opps.")),
+    newMeasure(idRef("of_lost_opps.", "measure"), m => m.localId("m_of_lost_opps."))
+];
+const viewBy: IAttribute = newAttribute(idRef("attr.f_product.product", "displayForm"), a => a.localId("a_attr.f_product.product"));
+const config: IChartConfig = {
+    inlineVisualizations: {"m_of_lost_opps.": {type: "column"}},
+    rowHeight: "large",
+    separators: {decimal: ".", thousand: ","},
+    legend: {position: "auto"},
+    dataPoints: {visible: "auto"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <Repeater
+                attribute={attribute}
+                columns={columns}
+                viewBy={viewBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for Repeater - coloring - custom palette 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IChartConfig, Repeater } from "@gooddata/sdk-ui-charts";
+
+const attribute: IAttribute = newAttribute(idRef("f_city.id.cityname", "displayForm"), a => a.localId("a_f_city.id.cityname"));
+const columns: IAttributeOrMeasure[] = [
+    newAttribute(idRef("f_city.id.cityname", "displayForm"), a => a.localId("a_f_city.id.cityname_1")),
+    newInlineMeasure("SELECT {metric/of_lost_opps.} BY ALL OTHER EXCEPT {label/f_city.id.cityname}", m => m.localId("m_7bd77a90_inline").title("# of Lost Opps.")),
+    newMeasure(idRef("of_lost_opps.", "measure"), m => m.localId("m_of_lost_opps."))
+];
+const viewBy: IAttribute = newAttribute(idRef("attr.f_product.product", "displayForm"), a => a.localId("a_attr.f_product.product"));
+const config: IChartConfig = {
+    inlineVisualizations: {"m_of_lost_opps.": {type: "column"}},
+    separators: {decimal: ".", thousand: ","},
+    legend: {position: "auto"},
+    dataPoints: {visible: "auto"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <Repeater
+                attribute={attribute}
+                columns={columns}
+                viewBy={viewBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for Repeater - font 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IChartConfig, Repeater } from "@gooddata/sdk-ui-charts";
+
+const attribute: IAttribute = newAttribute(idRef("f_city.id.cityname", "displayForm"), a => a.localId("a_f_city.id.cityname"));
+const columns: IAttributeOrMeasure[] = [
+    newAttribute(idRef("f_city.id.cityname", "displayForm"), a => a.localId("a_f_city.id.cityname_1")),
+    newInlineMeasure("SELECT {metric/of_lost_opps.} BY ALL OTHER EXCEPT {label/f_city.id.cityname}", m => m.localId("m_7bd77a90_inline").title("# of Lost Opps.")),
+    newMeasure(idRef("of_lost_opps.", "measure"), m => m.localId("m_of_lost_opps."))
+];
+const viewBy: IAttribute = newAttribute(idRef("attr.f_product.product", "displayForm"), a => a.localId("a_attr.f_product.product"));
+const config: IChartConfig = {
+    inlineVisualizations: {"m_of_lost_opps.": {type: "column"}},
+    separators: {decimal: ".", thousand: ","},
+    legend: {position: "auto"},
+    dataPoints: {visible: "auto"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <Repeater
+                attribute={attribute}
+                columns={columns}
+                viewBy={viewBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for Repeater - one attribute 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute } from "@gooddata/sdk-model";
+import { IChartConfig, Repeater } from "@gooddata/sdk-ui-charts";
+
+const attribute: IAttribute = newAttribute(idRef("f_city.id.cityname", "displayForm"), a => a.localId("a_f_city.id.cityname"));
+const columns: IAttributeOrMeasure[] = [
+    newAttribute(idRef("f_city.id.cityname", "displayForm"), a => a.localId("a_f_city.id.cityname_1"))
+];
+const config: IChartConfig = {
+    separators: {decimal: ".", thousand: ","},
+    legend: {position: "auto"},
+    dataPoints: {visible: "auto"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <Repeater
+                attribute={attribute}
+                columns={columns}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for Repeater - one attribute and one measure 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IChartConfig, Repeater } from "@gooddata/sdk-ui-charts";
+
+const attribute: IAttribute = newAttribute(idRef("f_city.id.cityname", "displayForm"), a => a.localId("a_f_city.id.cityname"));
+const columns: IAttributeOrMeasure[] = [
+    newAttribute(idRef("f_city.id.cityname", "displayForm"), a => a.localId("a_f_city.id.cityname_1")),
+    newMeasure(idRef("of_lost_opps.", "measure"), m => m.localId("m_of_lost_opps."))
+];
+const config: IChartConfig = {
+    separators: {decimal: ".", thousand: ","},
+    legend: {position: "auto"},
+    dataPoints: {visible: "auto"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <Repeater
+                attribute={attribute}
+                columns={columns}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for Repeater - one attribute and one visualisation 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IChartConfig, Repeater } from "@gooddata/sdk-ui-charts";
+
+const attribute: IAttribute = newAttribute(idRef("f_city.id.cityname", "displayForm"), a => a.localId("a_f_city.id.cityname"));
+const columns: IAttributeOrMeasure[] = [
+    newAttribute(idRef("f_city.id.cityname", "displayForm"), a => a.localId("a_f_city.id.cityname_1")),
+    newInlineMeasure("SELECT {metric/of_lost_opps.} BY ALL OTHER EXCEPT {label/f_city.id.cityname}", m => m.localId("m_7bd77a90_inline").title("# of Lost Opps.")),
+    newMeasure(idRef("of_lost_opps.", "measure"), m => m.localId("m_of_lost_opps."))
+];
+const viewBy: IAttribute = newAttribute(idRef("attr.f_product.product", "displayForm"), a => a.localId("a_attr.f_product.product"));
+const config: IChartConfig = {
+    inlineVisualizations: {"m_of_lost_opps.": {type: "column"}},
+    separators: {decimal: ".", thousand: ","},
+    legend: {position: "auto"},
+    dataPoints: {visible: "auto"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <Repeater
+                attribute={attribute}
+                columns={columns}
+                viewBy={viewBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for Repeater - themed 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IChartConfig, Repeater } from "@gooddata/sdk-ui-charts";
+
+const attribute: IAttribute = newAttribute(idRef("f_city.id.cityname", "displayForm"), a => a.localId("a_f_city.id.cityname"));
+const columns: IAttributeOrMeasure[] = [
+    newAttribute(idRef("f_city.id.cityname", "displayForm"), a => a.localId("a_f_city.id.cityname_1")),
+    newInlineMeasure("SELECT {metric/of_lost_opps.} BY ALL OTHER EXCEPT {label/f_city.id.cityname}", m => m.localId("m_7bd77a90_inline").title("# of Lost Opps.")),
+    newMeasure(idRef("of_lost_opps.", "measure"), m => m.localId("m_of_lost_opps."))
+];
+const viewBy: IAttribute = newAttribute(idRef("attr.f_product.product", "displayForm"), a => a.localId("a_attr.f_product.product"));
+const config: IChartConfig = {
+    inlineVisualizations: {"m_of_lost_opps.": {type: "column"}},
+    separators: {decimal: ".", thousand: ","},
+    legend: {position: "auto"},
+    dataPoints: {visible: "auto"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <Repeater
+                attribute={attribute}
+                columns={columns}
+                viewBy={viewBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
 exports[`getEmbeddingCode functionality > should generate code for SankeyChart - 180x154 - Force position TOP, max 1 row, Gradient legend minimized - auto legend 1`] = `
 "import React from "react";
 import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
