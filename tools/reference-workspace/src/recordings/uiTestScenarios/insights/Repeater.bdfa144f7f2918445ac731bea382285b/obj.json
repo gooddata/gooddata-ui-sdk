@@ -1,0 +1,67 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                            "localIdentifier": "a_f_city.id.cityname"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                            "localIdentifier": "a_f_city.id.cityname_cloned"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "inlineDefinition": {
+                                    "maql": "SELECT {metric/of_lost_opps.} BY ALL OTHER EXCEPT {label/f_city.id.cityname}"
+                                }
+                            },
+                            "localIdentifier": "m_of_lost_opps._cloned",
+                            "title": "# of Lost Opps."
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "of_lost_opps.", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_of_lost_opps."
+                        }
+                    }
+                ],
+                "localIdentifier": "columns"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "attr.f_product.product", "type": "displayForm" },
+                            "localIdentifier": "a_attr.f_product.product"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            }
+        ],
+        "filters": [],
+        "identifier": "Repeater.bdfa144f7f2918445ac731bea382285b",
+        "properties": { "controls": { "inlineVisualizations": { "m_of_lost_opps.": { "type": "column" } } } },
+        "sorts": [],
+        "title": "Repeater - font",
+        "uri": "Repeater.bdfa144f7f2918445ac731bea382285b",
+        "visualizationUrl": "local:repeater"
+    }
+}
