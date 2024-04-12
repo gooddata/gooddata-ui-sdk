@@ -754,6 +754,7 @@ export type IServerPagingParams = {
     offset: number;
     limit: number;
     cacheId?: string;
+    totalCount?: number;
 };
 
 // @internal (undocumented)
