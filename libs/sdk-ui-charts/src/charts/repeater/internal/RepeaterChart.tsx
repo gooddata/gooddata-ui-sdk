@@ -172,9 +172,11 @@ function RepeaterImage({ src }: IRepeaterImageProps) {
     const [imageLoadError, setImageLoadError] = useState(false);
 
     if (!src || imageLoadError) {
-        <div className="gd-repeater-image-empty">
-            <Icon.Image />
-        </div>;
+        return (
+            <div className="gd-repeater-image-empty">
+                <Icon.Image />
+            </div>
+        );
     }
 
     return <img className="gd-repeater-image" src={src} alt={src} onError={() => setImageLoadError(true)} />;

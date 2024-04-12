@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React from "react";
 import { IntlProvider, createIntl, IntlShape } from "react-intl";
 import { ITranslations, messagesMap } from "./messagesMap.js";
@@ -12,7 +12,7 @@ export function createIntlMock(customMessages = {}, locale = "en-US"): IntlShape
     return createIntl({
         locale,
         messages: {
-            ...messagesMap[locale],
+            ...resolveLocaleDefaultMessages(locale, messagesMap),
             ...customMessages,
         },
     });
@@ -29,7 +29,10 @@ export function withIntl<P>(
     class WithIntl extends React.Component<P> {
         public render() {
             const locale = customLocale ? customLocale : DefaultLocale;
-            const messages = customMessages ? customMessages : messagesMap[locale as string];
+            const messages = customMessages
+                ? customMessages
+                : resolveLocaleDefaultMessages(locale, messagesMap);
+
             return (
                 <IntlProvider locale={locale as string} messages={messages}>
                     <WrappedComponent {...this.props} />
@@ -50,6 +53,28 @@ export function withIntl<P>(
  */
 export const resolveLocale = (locale: unknown): ILocale => {
     return isLocale(locale) ? locale : DefaultLocale;
+};
+
+/**
+ * This method try to resolve translations for the given locale.
+ * If the locale is not found or is invalid, it will return the translations for default locale.
+ * @param locale - input locale
+ * @param messagesMap - map of messages
+ * @returns resolved messages
+ *
+ * @internal
+ */
+export const resolveLocaleDefaultMessages = (
+    locale: string,
+    messagesMap: { [locale: string]: ITranslations },
+) => {
+    const strings = messagesMap[locale];
+    if (!strings) {
+        console.warn(`Missing locale strings for ${locale}, using ${DefaultLocale}`);
+        return messagesMap[DefaultLocale];
+    }
+
+    return strings;
 };
 
 /**

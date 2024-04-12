@@ -1,10 +1,9 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { createIntl, IntlShape } from "react-intl";
-import { DefaultLocale, ILocale, pickCorrectWording } from "@gooddata/sdk-ui";
+import { DefaultLocale, ILocale, pickCorrectWording, resolveLocaleDefaultMessages } from "@gooddata/sdk-ui";
 
-import { translations } from "./translations.js";
 import { IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-
+import { translations } from "./translations.js";
 /**
  * Test intl utils
  * @internal
@@ -16,5 +15,8 @@ export function createInternalIntl(locale: ILocale = DefaultLocale): IntlShape {
      * this workaround can be removed.
      */
     const settings = window.gdSettings as IWorkspaceSettings;
-    return createIntl({ locale, messages: pickCorrectWording(translations[locale], settings) });
+    return createIntl({
+        locale,
+        messages: pickCorrectWording(resolveLocaleDefaultMessages(locale, translations), settings),
+    });
 }

@@ -1534,6 +1534,11 @@ export function resolveLCMWorkspaceIdentifiers(backend: any, { client, dataProdu
 // @internal
 export const resolveLocale: (locale: unknown) => ILocale;
 
+// @internal
+export const resolveLocaleDefaultMessages: (locale: string, messagesMap: {
+    [locale: string]: ITranslations;
+}) => ITranslations;
+
 // @public
 export function resolveUseCancelablePromisesError<TError>(states: UseCancelablePromiseState<unknown, TError>[]): TError | undefined;
 

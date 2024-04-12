@@ -12,6 +12,7 @@ import {
     bucketAttributes,
     bucketMeasures,
     bucketsFind,
+    isInlineMeasure,
     isMeasure,
     measureAggregation,
     measureAlias,
@@ -40,6 +41,10 @@ import { ChartInlineVisualizationType, IInlineVisualizationsConfig } from "../..
  * @returns IMeasure
  */
 export function transformStandaloneMeasureToInline(measure: IMeasure, mainRowAttributeId: string): IMeasure {
+    if (isInlineMeasure(measure)) {
+        return measure;
+    }
+
     const itemRef = measureItem(measure) as IdentifierRef;
     const aggregation = measureAggregation(measure);
     const itemIdentifier = `{${itemRef.type === "measure" ? "metric" : itemRef.type}/${itemRef.identifier}}`;
