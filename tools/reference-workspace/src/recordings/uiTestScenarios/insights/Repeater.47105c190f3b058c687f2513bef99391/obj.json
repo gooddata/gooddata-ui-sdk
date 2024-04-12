@@ -1,0 +1,45 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                            "localIdentifier": "a_f_city.id.cityname"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                            "localIdentifier": "a_f_city.id.cityname_cloned"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "of_lost_opps.", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_of_lost_opps."
+                        }
+                    }
+                ],
+                "localIdentifier": "columns"
+            }
+        ],
+        "filters": [],
+        "identifier": "Repeater.47105c190f3b058c687f2513bef99391",
+        "properties": { "controls": { "rowHeight": "large" } },
+        "sorts": [],
+        "title": "Repeater - canvas - row height",
+        "uri": "Repeater.47105c190f3b058c687f2513bef99391",
+        "visualizationUrl": "local:repeater"
+    }
+}
