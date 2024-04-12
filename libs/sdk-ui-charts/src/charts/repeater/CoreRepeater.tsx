@@ -1,6 +1,7 @@
 // (C) 2024 GoodData Corporation
 import React, { useEffect, useMemo } from "react";
 import { WrappedComponentProps, injectIntl, useIntl } from "react-intl";
+import noop from "lodash/noop.js";
 import {
     LoadingComponent as SDKLoadingComponent,
     ErrorComponent as SDKErrorComponent,
@@ -12,7 +13,7 @@ import {
     BucketNames,
     DataViewFacade,
 } from "@gooddata/sdk-ui";
-import { ITheme, bucketsFind } from "@gooddata/sdk-model";
+import { ITheme, bucketsFind, isAttribute } from "@gooddata/sdk-model";
 import { ThemeContextProvider, useTheme, withTheme } from "@gooddata/sdk-ui-theme-provider";
 import { IChartConfig, ICoreChartProps } from "../../interfaces/index.js";
 import { RepeaterChart } from "./internal/RepeaterChart.js";
@@ -47,6 +48,8 @@ export const CoreRepeaterImpl: React.FC<ICoreRepeaterChartProps> = (props) => {
         onError,
         onColumnResized,
         config = {},
+        drillableItems = [],
+        onDrill = noop,
     } = props;
 
     const intl = useIntl();
@@ -107,6 +110,38 @@ export const CoreRepeaterImpl: React.FC<ICoreRepeaterChartProps> = (props) => {
         }
     }, [theme, configWithColorPalette.colorPalette, configWithColorPalette.colorMapping, pushData, result]);
 
+    useEffect(() => {
+        if (result) {
+            const columns = bucketsFind(result.definition.buckets, BucketNames.COLUMNS);
+
+            pushData?.({
+                availableDrillTargets: {
+                    attributes: result
+                        .meta()
+                        .attributeDescriptors()
+                        .filter((descriptor) =>
+                            columns.items.find((item) => {
+                                if (isAttribute(item)) {
+                                    return (
+                                        item.attribute.localIdentifier ===
+                                        descriptor.attributeHeader.localIdentifier
+                                    );
+                                }
+                                return false;
+                            }),
+                        )
+                        .map((descriptor) => {
+                            return {
+                                attribute: descriptor,
+                                intersectionAttributes: [descriptor],
+                            };
+                        }),
+                    measures: [],
+                },
+            });
+        }
+    }, [pushData, result]);
+
     if (error) {
         const convertedError = convertError(error);
         const errorMessage = convertedError.getMessage();
@@ -138,6 +173,8 @@ export const CoreRepeaterImpl: React.FC<ICoreRepeaterChartProps> = (props) => {
     return (
         <RepeaterChart
             dataView={result}
+            drillableItems={drillableItems}
+            onDrill={onDrill}
             config={configWithColorPalette}
             onError={onError}
             onColumnResized={onColumnResized}

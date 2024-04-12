@@ -152,6 +152,15 @@ $subtotal-odd-background-color: var(
         }
     }
 
+    .gd-repeater-cell-drillable {
+        font-weight: bold;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
     &.gd-repeater-header-hide {
         .ag-header-row {
             display: none;
