@@ -25,6 +25,145 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } from './base.js';
 
 /**
+ *
+ * @export
+ * @interface ColumnStatistic
+ */
+export interface ColumnStatistic {
+    /**
+     *
+     * @type {string}
+     * @memberof ColumnStatistic
+     */
+    type: ColumnStatisticTypeEnum;
+    /**
+     *
+     * @type {string}
+     * @memberof ColumnStatistic
+     */
+    value?: string;
+}
+
+export const ColumnStatisticTypeEnum = {
+    COUNT: "COUNT",
+    COUNT_NULL: "COUNT_NULL",
+    COUNT_UNIQUE: "COUNT_UNIQUE",
+    AVG: "AVG",
+    STDDEV: "STDDEV",
+    MIN: "MIN",
+    MAX: "MAX",
+    PERCENTILE_25: "PERCENTILE_25",
+    PERCENTILE_50: "PERCENTILE_50",
+    PERCENTILE_75: "PERCENTILE_75",
+} as const;
+
+export type ColumnStatisticTypeEnum = typeof ColumnStatisticTypeEnum[keyof typeof ColumnStatisticTypeEnum];
+
+/**
+ *
+ * @export
+ * @interface ColumnStatisticWarning
+ */
+export interface ColumnStatisticWarning {
+    /**
+     *
+     * @type {string}
+     * @memberof ColumnStatisticWarning
+     */
+    action: string;
+    /**
+     *
+     * @type {string}
+     * @memberof ColumnStatisticWarning
+     */
+    message: string;
+}
+/**
+ * A request to retrieve statistics for a column.
+ * @export
+ * @interface ColumnStatisticsRequest
+ */
+export interface ColumnStatisticsRequest {
+    /**
+     *
+     * @type {SqlQuery | Table}
+     * @memberof ColumnStatisticsRequest
+     */
+    from: SqlQuery | Table;
+    /**
+     *
+     * @type {string}
+     * @memberof ColumnStatisticsRequest
+     */
+    columnName: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof ColumnStatisticsRequest
+     */
+    statistics?: Array<ColumnStatisticsRequestStatisticsEnum>;
+    /**
+     *
+     * @type {HistogramProperties}
+     * @memberof ColumnStatisticsRequest
+     */
+    histogram?: HistogramProperties;
+    /**
+     *
+     * @type {FrequencyProperties}
+     * @memberof ColumnStatisticsRequest
+     */
+    frequency?: FrequencyProperties;
+}
+
+export const ColumnStatisticsRequestStatisticsEnum = {
+    COUNT: "COUNT",
+    COUNT_NULL: "COUNT_NULL",
+    COUNT_UNIQUE: "COUNT_UNIQUE",
+    AVG: "AVG",
+    STDDEV: "STDDEV",
+    MIN: "MIN",
+    MAX: "MAX",
+    PERCENTILE_25: "PERCENTILE_25",
+    PERCENTILE_50: "PERCENTILE_50",
+    PERCENTILE_75: "PERCENTILE_75",
+} as const;
+
+export type ColumnStatisticsRequestStatisticsEnum =
+    typeof ColumnStatisticsRequestStatisticsEnum[keyof typeof ColumnStatisticsRequestStatisticsEnum];
+
+/**
+ *
+ * @export
+ * @interface ColumnStatisticsResponse
+ */
+export interface ColumnStatisticsResponse {
+    /**
+     *
+     * @type {Array<ColumnStatistic>}
+     * @memberof ColumnStatisticsResponse
+     */
+    statistics?: Array<ColumnStatistic>;
+    /**
+     *
+     * @type {Histogram}
+     * @memberof ColumnStatisticsResponse
+     */
+    histogram?: Histogram;
+    /**
+     *
+     * @type {Frequency}
+     * @memberof ColumnStatisticsResponse
+     */
+    frequency?: Frequency;
+    /**
+     *
+     * @type {Array<ColumnStatisticWarning>}
+     * @memberof ColumnStatisticsResponse
+     */
+    warnings?: Array<ColumnStatisticWarning>;
+}
+/**
  * Warning related to single column.
  * @export
  * @interface ColumnWarning
@@ -177,6 +316,102 @@ export interface DeclarativeTables {
     tables: Array<DeclarativeTable>;
 }
 /**
+ *
+ * @export
+ * @interface Frequency
+ */
+export interface Frequency {
+    /**
+     *
+     * @type {Array<FrequencyBucket>}
+     * @memberof Frequency
+     */
+    buckets: Array<FrequencyBucket>;
+}
+/**
+ *
+ * @export
+ * @interface FrequencyBucket
+ */
+export interface FrequencyBucket {
+    /**
+     *
+     * @type {number}
+     * @memberof FrequencyBucket
+     */
+    count: number;
+    /**
+     *
+     * @type {string}
+     * @memberof FrequencyBucket
+     */
+    value?: string;
+}
+/**
+ *
+ * @export
+ * @interface FrequencyProperties
+ */
+export interface FrequencyProperties {
+    /**
+     * The maximum number of distinct values to return.
+     * @type {number}
+     * @memberof FrequencyProperties
+     */
+    valueLimit?: number;
+}
+/**
+ *
+ * @export
+ * @interface Histogram
+ */
+export interface Histogram {
+    /**
+     *
+     * @type {Array<HistogramBucket>}
+     * @memberof Histogram
+     */
+    buckets: Array<HistogramBucket>;
+}
+/**
+ *
+ * @export
+ * @interface HistogramBucket
+ */
+export interface HistogramBucket {
+    /**
+     *
+     * @type {number}
+     * @memberof HistogramBucket
+     */
+    count: number;
+    /**
+     *
+     * @type {number}
+     * @memberof HistogramBucket
+     */
+    lowerBound: number;
+    /**
+     *
+     * @type {number}
+     * @memberof HistogramBucket
+     */
+    upperBound: number;
+}
+/**
+ *
+ * @export
+ * @interface HistogramProperties
+ */
+export interface HistogramProperties {
+    /**
+     *
+     * @type {number}
+     * @memberof HistogramProperties
+     */
+    bucketCount: number;
+}
+/**
  * A request containing all information critical to model scanning.
  * @export
  * @interface ScanRequest
@@ -302,6 +537,58 @@ export const SqlColumnDataTypeEnum = {
 
 export type SqlColumnDataTypeEnum = typeof SqlColumnDataTypeEnum[keyof typeof SqlColumnDataTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface SqlQuery
+ */
+export interface SqlQuery {
+    /**
+     *
+     * @type {string}
+     * @memberof SqlQuery
+     */
+    sql: string;
+}
+/**
+ *
+ * @export
+ * @interface SqlQueryAllOf
+ */
+export interface SqlQueryAllOf {
+    /**
+     *
+     * @type {string}
+     * @memberof SqlQueryAllOf
+     */
+    sql?: string;
+}
+/**
+ *
+ * @export
+ * @interface Table
+ */
+export interface Table {
+    /**
+     *
+     * @type {string}
+     * @memberof Table
+     */
+    tableName: string;
+}
+/**
+ *
+ * @export
+ * @interface TableAllOf
+ */
+export interface TableAllOf {
+    /**
+     *
+     * @type {string}
+     * @memberof TableAllOf
+     */
+    tableName?: string;
+}
 /**
  * Warnings related to single table.
  * @export
@@ -508,6 +795,58 @@ export interface TestResponse {
  */
 export const ActionsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * (EXPERIMENTAL) Computes the requested statistical parameters of a column in a data source.
+         * @summary (EXPERIMENTAL) Compute column statistics
+         * @param {string} dataSourceId
+         * @param {ColumnStatisticsRequest} columnStatisticsRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        columnStatistics: async (
+            dataSourceId: string,
+            columnStatisticsRequest: ColumnStatisticsRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'dataSourceId' is not null or undefined
+            assertParamExists("columnStatistics", "dataSourceId", dataSourceId);
+            // verify required parameter 'columnStatisticsRequest' is not null or undefined
+            assertParamExists("columnStatistics", "columnStatisticsRequest", columnStatisticsRequest);
+            const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/computeColumnStatistics`.replace(
+                `{${"dataSourceId"}}`,
+                encodeURIComponent(String(dataSourceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof columnStatisticsRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(columnStatisticsRequest !== undefined ? columnStatisticsRequest : {})
+                : columnStatisticsRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * It scans a database and reads metadata. The result of the request contains a list of schema names of a database.
          * @summary Get a list of schema names of a database
@@ -760,6 +1099,26 @@ export const ActionsApiFp = function (configuration?: Configuration) {
     const localVarAxiosParamCreator = ActionsApiAxiosParamCreator(configuration);
     return {
         /**
+         * (EXPERIMENTAL) Computes the requested statistical parameters of a column in a data source.
+         * @summary (EXPERIMENTAL) Compute column statistics
+         * @param {string} dataSourceId
+         * @param {ColumnStatisticsRequest} columnStatisticsRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async columnStatistics(
+            dataSourceId: string,
+            columnStatisticsRequest: ColumnStatisticsRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ColumnStatisticsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.columnStatistics(
+                dataSourceId,
+                columnStatisticsRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * It scans a database and reads metadata. The result of the request contains a list of schema names of a database.
          * @summary Get a list of schema names of a database
          * @param {string} dataSourceId Data source id
@@ -868,6 +1227,25 @@ export const ActionsApiFactory = function (
     const localVarFp = ActionsApiFp(configuration);
     return {
         /**
+         * (EXPERIMENTAL) Computes the requested statistical parameters of a column in a data source.
+         * @summary (EXPERIMENTAL) Compute column statistics
+         * @param {ActionsApiColumnStatisticsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        columnStatistics(
+            requestParameters: ActionsApiColumnStatisticsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ColumnStatisticsResponse> {
+            return localVarFp
+                .columnStatistics(
+                    requestParameters.dataSourceId,
+                    requestParameters.columnStatisticsRequest,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * It scans a database and reads metadata. The result of the request contains a list of schema names of a database.
          * @summary Get a list of schema names of a database
          * @param {ActionsApiGetDataSourceSchemataRequest} requestParameters Request parameters.
@@ -952,6 +1330,19 @@ export const ActionsApiFactory = function (
  */
 export interface ActionsApiInterface {
     /**
+     * (EXPERIMENTAL) Computes the requested statistical parameters of a column in a data source.
+     * @summary (EXPERIMENTAL) Compute column statistics
+     * @param {ActionsApiColumnStatisticsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    columnStatistics(
+        requestParameters: ActionsApiColumnStatisticsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ColumnStatisticsResponse>;
+
+    /**
      * It scans a database and reads metadata. The result of the request contains a list of schema names of a database.
      * @summary Get a list of schema names of a database
      * @param {ActionsApiGetDataSourceSchemataRequest} requestParameters Request parameters.
@@ -1015,6 +1406,27 @@ export interface ActionsApiInterface {
         requestParameters: ActionsApiTestDataSourceDefinitionRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<TestResponse>;
+}
+
+/**
+ * Request parameters for columnStatistics operation in ActionsApi.
+ * @export
+ * @interface ActionsApiColumnStatisticsRequest
+ */
+export interface ActionsApiColumnStatisticsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiColumnStatistics
+     */
+    readonly dataSourceId: string;
+
+    /**
+     *
+     * @type {ColumnStatisticsRequest}
+     * @memberof ActionsApiColumnStatistics
+     */
+    readonly columnStatisticsRequest: ColumnStatisticsRequest;
 }
 
 /**
@@ -1115,6 +1527,27 @@ export interface ActionsApiTestDataSourceDefinitionRequest {
  * @extends {BaseAPI}
  */
 export class ActionsApi extends BaseAPI implements ActionsApiInterface {
+    /**
+     * (EXPERIMENTAL) Computes the requested statistical parameters of a column in a data source.
+     * @summary (EXPERIMENTAL) Compute column statistics
+     * @param {ActionsApiColumnStatisticsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public columnStatistics(
+        requestParameters: ActionsApiColumnStatisticsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .columnStatistics(
+                requestParameters.dataSourceId,
+                requestParameters.columnStatisticsRequest,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * It scans a database and reads metadata. The result of the request contains a list of schema names of a database.
      * @summary Get a list of schema names of a database

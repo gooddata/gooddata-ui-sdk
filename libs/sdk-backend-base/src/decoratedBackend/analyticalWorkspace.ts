@@ -18,6 +18,7 @@ import {
     IWorkspaceUserGroupsQuery,
     IWorkspaceAccessControlService,
     IAttributeHierarchiesService,
+    IWorkspaceExportDefinitionsService,
 } from "@gooddata/sdk-backend-spi";
 import { DecoratorFactories } from "./types.js";
 
@@ -132,5 +133,9 @@ export class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
 
     public attributeHierarchies(): IAttributeHierarchiesService {
         return this.decorated.attributeHierarchies();
+    }
+
+    public exportDefinitions(): IWorkspaceExportDefinitionsService {
+        return this.decorated.exportDefinitions();
     }
 }

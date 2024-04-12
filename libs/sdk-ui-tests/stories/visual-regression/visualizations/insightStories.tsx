@@ -280,12 +280,11 @@ ScenarioGroupsByVis.forEach((groups) => {
             const insight = InsightById[scenario.insightId];
 
             if (!insight) {
-                if (window.location.hostname === "localhost") {
+                if (window.location.hostname === "localhost" && !scenario.tags.includes("mock-no-insight")) {
                     console.warn(
                         `Ignoring test scenario for ${scenario.vis}: ${scenario.name} - insight does not exist.`,
                     );
                 }
-
                 return;
             }
 

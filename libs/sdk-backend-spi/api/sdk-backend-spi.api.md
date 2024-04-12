@@ -49,6 +49,8 @@ import { IEntitlementDescriptor } from '@gooddata/sdk-model';
 import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IExistingDashboard } from '@gooddata/sdk-model';
+import { IExportDefinition } from '@gooddata/sdk-model';
+import { IExportDefinitionBase } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IFilterContextDefinition } from '@gooddata/sdk-model';
 import { IGranularAccessGrantee } from '@gooddata/sdk-model';
@@ -155,6 +157,18 @@ export type ExplainConfig<T extends ExplainType | undefined> = {
 // @internal
 export type ExplainType = "MAQL" | "GRPC_MODEL" | "WDF" | "QT" | "QT_SVG" | "OPT_QT" | "OPT_QT_SVG" | "SQL";
 
+// @alpha
+export type ExportDefinitionOrdering = "id" | "title" | "updated";
+
+// @alpha
+export type ExportDefinitionQuerySort = ExportDefinitionQuerySortProperty | `${ExportDefinitionQuerySortProperty},${ExportDefinitionQuerySortDirection}`;
+
+// @alpha
+export type ExportDefinitionQuerySortDirection = "asc" | "desc";
+
+// @alpha
+export type ExportDefinitionQuerySortProperty = "id" | "title";
+
 // @public
 export type FilterWithResolvableElements = IAttributeFilter | IRelativeDateFilter;
 
@@ -193,6 +207,8 @@ export interface IAnalyticalWorkspace {
     datasets(): IWorkspaceDatasetsService;
     dateFilterConfigs(): IDateFilterConfigsQuery;
     execution(): IExecutionFactory;
+    // @alpha
+    exportDefinitions(): IWorkspaceExportDefinitionsService;
     facts(): IWorkspaceFactsService;
     getDescriptor(includeParentPrefixes?: boolean): Promise<IWorkspaceDescriptor>;
     getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined>;
@@ -488,6 +504,30 @@ export interface IExportConfig {
     title?: string;
 }
 
+// @alpha
+export interface IExportDefinitionsQuery {
+    query(): Promise<IExportDefinitionsQueryResult>;
+    withFilter(filter: {
+        title?: string;
+    }): IExportDefinitionsQuery;
+    withPage(page: number): IExportDefinitionsQuery;
+    withSize(size: number): IExportDefinitionsQuery;
+    withSorting(sort: ExportDefinitionQuerySort[]): IExportDefinitionsQuery;
+}
+
+// @alpha
+export interface IExportDefinitionsQueryOptions {
+    author?: string;
+    limit?: number;
+    loadUserData?: boolean;
+    offset?: number;
+    orderBy?: ExportDefinitionOrdering;
+    title?: string;
+}
+
+// @alpha
+export type IExportDefinitionsQueryResult = IPagedResource<IExportDefinition>;
+
 // @public
 export interface IExportResult {
     fileName?: string;
@@ -511,6 +551,11 @@ export interface IGetDashboardOptions {
 
 // @alpha
 export interface IGetDashboardPluginOptions {
+    loadUserData?: boolean;
+}
+
+// @alpha
+export interface IGetExportDefinitionOptions {
     loadUserData?: boolean;
 }
 
@@ -996,6 +1041,16 @@ export interface IWorkspaceDescriptor {
     prefix?: string;
     // (undocumented)
     title: string;
+}
+
+// @alpha
+export interface IWorkspaceExportDefinitionsService {
+    createExportDefinition(exportDefinition: IExportDefinitionBase): Promise<IExportDefinition>;
+    deleteExportDefinition(ref: ObjRef): Promise<void>;
+    getExportDefinition(ref: ObjRef, options?: IGetExportDefinitionOptions): Promise<IExportDefinition>;
+    getExportDefinitions(options?: IExportDefinitionsQueryOptions): Promise<IExportDefinitionsQueryResult>;
+    getExportDefinitionsQuery(): IExportDefinitionsQuery;
+    updateExportDefinition(ref: ObjRef, exportDefinition: IExportDefinitionBase): Promise<IExportDefinition>;
 }
 
 // @public

@@ -971,10 +971,10 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
 }
 
 /**
- * ComputationApi - axios parameter creator
+ * TabularExportApi - axios parameter creator
  * @export
  */
-export const ComputationApiAxiosParamCreator = function (configuration?: Configuration) {
+export const TabularExportApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
@@ -1075,11 +1075,11 @@ export const ComputationApiAxiosParamCreator = function (configuration?: Configu
 };
 
 /**
- * ComputationApi - functional programming interface
+ * TabularExportApi - functional programming interface
  * @export
  */
-export const ComputationApiFp = function (configuration?: Configuration) {
-    const localVarAxiosParamCreator = ComputationApiAxiosParamCreator(configuration);
+export const TabularExportApiFp = function (configuration?: Configuration) {
+    const localVarAxiosParamCreator = TabularExportApiAxiosParamCreator(configuration);
     return {
         /**
          * An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
@@ -1125,25 +1125,25 @@ export const ComputationApiFp = function (configuration?: Configuration) {
 };
 
 /**
- * ComputationApi - factory interface
+ * TabularExportApi - factory interface
  * @export
  */
-export const ComputationApiFactory = function (
+export const TabularExportApiFactory = function (
     configuration?: Configuration,
     basePath?: string,
     axios?: AxiosInstance,
 ) {
-    const localVarFp = ComputationApiFp(configuration);
+    const localVarFp = TabularExportApiFp(configuration);
     return {
         /**
          * An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
          * @summary Create tabular export request
-         * @param {ComputationApiCreateTabularExportRequest} requestParameters Request parameters.
+         * @param {TabularExportApiCreateTabularExportRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         createTabularExport(
-            requestParameters: ComputationApiCreateTabularExportRequest,
+            requestParameters: TabularExportApiCreateTabularExportRequest,
             options?: AxiosRequestConfig,
         ): AxiosPromise<ExportResponse> {
             return localVarFp
@@ -1157,12 +1157,12 @@ export const ComputationApiFactory = function (
         /**
          * After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
          * @summary Retrieve exported files
-         * @param {ComputationApiGetTabularExportRequest} requestParameters Request parameters.
+         * @param {TabularExportApiGetTabularExportRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getTabularExport(
-            requestParameters: ComputationApiGetTabularExportRequest,
+            requestParameters: TabularExportApiGetTabularExportRequest,
             options?: AxiosRequestConfig,
         ): AxiosPromise<void> {
             return localVarFp
@@ -1173,100 +1173,100 @@ export const ComputationApiFactory = function (
 };
 
 /**
- * ComputationApi - interface
+ * TabularExportApi - interface
  * @export
- * @interface ComputationApi
+ * @interface TabularExportApi
  */
-export interface ComputationApiInterface {
+export interface TabularExportApiInterface {
     /**
      * An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
      * @summary Create tabular export request
-     * @param {ComputationApiCreateTabularExportRequest} requestParameters Request parameters.
+     * @param {TabularExportApiCreateTabularExportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ComputationApiInterface
+     * @memberof TabularExportApiInterface
      */
     createTabularExport(
-        requestParameters: ComputationApiCreateTabularExportRequest,
+        requestParameters: TabularExportApiCreateTabularExportRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<ExportResponse>;
 
     /**
      * After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
      * @summary Retrieve exported files
-     * @param {ComputationApiGetTabularExportRequest} requestParameters Request parameters.
+     * @param {TabularExportApiGetTabularExportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ComputationApiInterface
+     * @memberof TabularExportApiInterface
      */
     getTabularExport(
-        requestParameters: ComputationApiGetTabularExportRequest,
+        requestParameters: TabularExportApiGetTabularExportRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 }
 
 /**
- * Request parameters for createTabularExport operation in ComputationApi.
+ * Request parameters for createTabularExport operation in TabularExportApi.
  * @export
- * @interface ComputationApiCreateTabularExportRequest
+ * @interface TabularExportApiCreateTabularExportRequest
  */
-export interface ComputationApiCreateTabularExportRequest {
+export interface TabularExportApiCreateTabularExportRequest {
     /**
      *
      * @type {string}
-     * @memberof ComputationApiCreateTabularExport
+     * @memberof TabularExportApiCreateTabularExport
      */
     readonly workspaceId: string;
 
     /**
      *
      * @type {TabularExportRequest}
-     * @memberof ComputationApiCreateTabularExport
+     * @memberof TabularExportApiCreateTabularExport
      */
     readonly tabularExportRequest: TabularExportRequest;
 }
 
 /**
- * Request parameters for getTabularExport operation in ComputationApi.
+ * Request parameters for getTabularExport operation in TabularExportApi.
  * @export
- * @interface ComputationApiGetTabularExportRequest
+ * @interface TabularExportApiGetTabularExportRequest
  */
-export interface ComputationApiGetTabularExportRequest {
+export interface TabularExportApiGetTabularExportRequest {
     /**
      *
      * @type {string}
-     * @memberof ComputationApiGetTabularExport
+     * @memberof TabularExportApiGetTabularExport
      */
     readonly workspaceId: string;
 
     /**
      *
      * @type {string}
-     * @memberof ComputationApiGetTabularExport
+     * @memberof TabularExportApiGetTabularExport
      */
     readonly exportId: string;
 }
 
 /**
- * ComputationApi - object-oriented interface
+ * TabularExportApi - object-oriented interface
  * @export
- * @class ComputationApi
+ * @class TabularExportApi
  * @extends {BaseAPI}
  */
-export class ComputationApi extends BaseAPI implements ComputationApiInterface {
+export class TabularExportApi extends BaseAPI implements TabularExportApiInterface {
     /**
      * An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
      * @summary Create tabular export request
-     * @param {ComputationApiCreateTabularExportRequest} requestParameters Request parameters.
+     * @param {TabularExportApiCreateTabularExportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ComputationApi
+     * @memberof TabularExportApi
      */
     public createTabularExport(
-        requestParameters: ComputationApiCreateTabularExportRequest,
+        requestParameters: TabularExportApiCreateTabularExportRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ComputationApiFp(this.configuration)
+        return TabularExportApiFp(this.configuration)
             .createTabularExport(
                 requestParameters.workspaceId,
                 requestParameters.tabularExportRequest,
@@ -1278,26 +1278,26 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
     /**
      * After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn\'t ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.
      * @summary Retrieve exported files
-     * @param {ComputationApiGetTabularExportRequest} requestParameters Request parameters.
+     * @param {TabularExportApiGetTabularExportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ComputationApi
+     * @memberof TabularExportApi
      */
     public getTabularExport(
-        requestParameters: ComputationApiGetTabularExportRequest,
+        requestParameters: TabularExportApiGetTabularExportRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ComputationApiFp(this.configuration)
+        return TabularExportApiFp(this.configuration)
             .getTabularExport(requestParameters.workspaceId, requestParameters.exportId, options)
             .then((request) => request(this.axios, this.basePath));
     }
 }
 
 /**
- * ExportingApi - axios parameter creator
+ * VisualExportApi - axios parameter creator
  * @export
  */
-export const ExportingApiAxiosParamCreator = function (configuration?: Configuration) {
+export const VisualExportApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * An visual export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
@@ -1441,11 +1441,11 @@ export const ExportingApiAxiosParamCreator = function (configuration?: Configura
 };
 
 /**
- * ExportingApi - functional programming interface
+ * VisualExportApi - functional programming interface
  * @export
  */
-export const ExportingApiFp = function (configuration?: Configuration) {
-    const localVarAxiosParamCreator = ExportingApiAxiosParamCreator(configuration);
+export const VisualExportApiFp = function (configuration?: Configuration) {
+    const localVarAxiosParamCreator = VisualExportApiAxiosParamCreator(configuration);
     return {
         /**
          * An visual export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
@@ -1511,25 +1511,25 @@ export const ExportingApiFp = function (configuration?: Configuration) {
 };
 
 /**
- * ExportingApi - factory interface
+ * VisualExportApi - factory interface
  * @export
  */
-export const ExportingApiFactory = function (
+export const VisualExportApiFactory = function (
     configuration?: Configuration,
     basePath?: string,
     axios?: AxiosInstance,
 ) {
-    const localVarFp = ExportingApiFp(configuration);
+    const localVarFp = VisualExportApiFp(configuration);
     return {
         /**
          * An visual export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
          * @summary Create visual - pdf export request
-         * @param {ExportingApiCreatePdfExportRequest} requestParameters Request parameters.
+         * @param {VisualExportApiCreatePdfExportRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         createPdfExport(
-            requestParameters: ExportingApiCreatePdfExportRequest,
+            requestParameters: VisualExportApiCreatePdfExportRequest,
             options?: AxiosRequestConfig,
         ): AxiosPromise<ExportResponse> {
             return localVarFp
@@ -1539,12 +1539,12 @@ export const ExportingApiFactory = function (
         /**
          * Returns 202 until original POST export request is not processed.Returns 200 with exported data once the export is done.
          * @summary Retrieve exported files
-         * @param {ExportingApiGetExportedFileRequest} requestParameters Request parameters.
+         * @param {VisualExportApiGetExportedFileRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getExportedFile(
-            requestParameters: ExportingApiGetExportedFileRequest,
+            requestParameters: VisualExportApiGetExportedFileRequest,
             options?: AxiosRequestConfig,
         ): AxiosPromise<void> {
             return localVarFp
@@ -1554,12 +1554,12 @@ export const ExportingApiFactory = function (
         /**
          * This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
          * @summary Retrieve metadata context
-         * @param {ExportingApiGetMetadataRequest} requestParameters Request parameters.
+         * @param {VisualExportApiGetMetadataRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         getMetadata(
-            requestParameters: ExportingApiGetMetadataRequest,
+            requestParameters: VisualExportApiGetMetadataRequest,
             options?: AxiosRequestConfig,
         ): AxiosPromise<void> {
             return localVarFp
@@ -1570,134 +1570,134 @@ export const ExportingApiFactory = function (
 };
 
 /**
- * ExportingApi - interface
+ * VisualExportApi - interface
  * @export
- * @interface ExportingApi
+ * @interface VisualExportApi
  */
-export interface ExportingApiInterface {
+export interface VisualExportApiInterface {
     /**
      * An visual export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
      * @summary Create visual - pdf export request
-     * @param {ExportingApiCreatePdfExportRequest} requestParameters Request parameters.
+     * @param {VisualExportApiCreatePdfExportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ExportingApiInterface
+     * @memberof VisualExportApiInterface
      */
     createPdfExport(
-        requestParameters: ExportingApiCreatePdfExportRequest,
+        requestParameters: VisualExportApiCreatePdfExportRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<ExportResponse>;
 
     /**
      * Returns 202 until original POST export request is not processed.Returns 200 with exported data once the export is done.
      * @summary Retrieve exported files
-     * @param {ExportingApiGetExportedFileRequest} requestParameters Request parameters.
+     * @param {VisualExportApiGetExportedFileRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ExportingApiInterface
+     * @memberof VisualExportApiInterface
      */
     getExportedFile(
-        requestParameters: ExportingApiGetExportedFileRequest,
+        requestParameters: VisualExportApiGetExportedFileRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 
     /**
      * This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
      * @summary Retrieve metadata context
-     * @param {ExportingApiGetMetadataRequest} requestParameters Request parameters.
+     * @param {VisualExportApiGetMetadataRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ExportingApiInterface
+     * @memberof VisualExportApiInterface
      */
     getMetadata(
-        requestParameters: ExportingApiGetMetadataRequest,
+        requestParameters: VisualExportApiGetMetadataRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
 }
 
 /**
- * Request parameters for createPdfExport operation in ExportingApi.
+ * Request parameters for createPdfExport operation in VisualExportApi.
  * @export
- * @interface ExportingApiCreatePdfExportRequest
+ * @interface VisualExportApiCreatePdfExportRequest
  */
-export interface ExportingApiCreatePdfExportRequest {
+export interface VisualExportApiCreatePdfExportRequest {
     /**
      *
      * @type {string}
-     * @memberof ExportingApiCreatePdfExport
+     * @memberof VisualExportApiCreatePdfExport
      */
     readonly workspaceId: string;
 
     /**
      *
      * @type {PdfExportRequest}
-     * @memberof ExportingApiCreatePdfExport
+     * @memberof VisualExportApiCreatePdfExport
      */
     readonly pdfExportRequest: PdfExportRequest;
 }
 
 /**
- * Request parameters for getExportedFile operation in ExportingApi.
+ * Request parameters for getExportedFile operation in VisualExportApi.
  * @export
- * @interface ExportingApiGetExportedFileRequest
+ * @interface VisualExportApiGetExportedFileRequest
  */
-export interface ExportingApiGetExportedFileRequest {
+export interface VisualExportApiGetExportedFileRequest {
     /**
      *
      * @type {string}
-     * @memberof ExportingApiGetExportedFile
+     * @memberof VisualExportApiGetExportedFile
      */
     readonly workspaceId: string;
 
     /**
      *
      * @type {string}
-     * @memberof ExportingApiGetExportedFile
+     * @memberof VisualExportApiGetExportedFile
      */
     readonly exportId: string;
 }
 
 /**
- * Request parameters for getMetadata operation in ExportingApi.
+ * Request parameters for getMetadata operation in VisualExportApi.
  * @export
- * @interface ExportingApiGetMetadataRequest
+ * @interface VisualExportApiGetMetadataRequest
  */
-export interface ExportingApiGetMetadataRequest {
+export interface VisualExportApiGetMetadataRequest {
     /**
      *
      * @type {string}
-     * @memberof ExportingApiGetMetadata
+     * @memberof VisualExportApiGetMetadata
      */
     readonly workspaceId: string;
 
     /**
      *
      * @type {string}
-     * @memberof ExportingApiGetMetadata
+     * @memberof VisualExportApiGetMetadata
      */
     readonly exportId: string;
 }
 
 /**
- * ExportingApi - object-oriented interface
+ * VisualExportApi - object-oriented interface
  * @export
- * @class ExportingApi
+ * @class VisualExportApi
  * @extends {BaseAPI}
  */
-export class ExportingApi extends BaseAPI implements ExportingApiInterface {
+export class VisualExportApi extends BaseAPI implements VisualExportApiInterface {
     /**
      * An visual export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
      * @summary Create visual - pdf export request
-     * @param {ExportingApiCreatePdfExportRequest} requestParameters Request parameters.
+     * @param {VisualExportApiCreatePdfExportRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ExportingApi
+     * @memberof VisualExportApi
      */
     public createPdfExport(
-        requestParameters: ExportingApiCreatePdfExportRequest,
+        requestParameters: VisualExportApiCreatePdfExportRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ExportingApiFp(this.configuration)
+        return VisualExportApiFp(this.configuration)
             .createPdfExport(requestParameters.workspaceId, requestParameters.pdfExportRequest, options)
             .then((request) => request(this.axios, this.basePath));
     }
@@ -1705,16 +1705,16 @@ export class ExportingApi extends BaseAPI implements ExportingApiInterface {
     /**
      * Returns 202 until original POST export request is not processed.Returns 200 with exported data once the export is done.
      * @summary Retrieve exported files
-     * @param {ExportingApiGetExportedFileRequest} requestParameters Request parameters.
+     * @param {VisualExportApiGetExportedFileRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ExportingApi
+     * @memberof VisualExportApi
      */
     public getExportedFile(
-        requestParameters: ExportingApiGetExportedFileRequest,
+        requestParameters: VisualExportApiGetExportedFileRequest,
         options?: AxiosRequestConfig,
     ) {
-        return ExportingApiFp(this.configuration)
+        return VisualExportApiFp(this.configuration)
             .getExportedFile(requestParameters.workspaceId, requestParameters.exportId, options)
             .then((request) => request(this.axios, this.basePath));
     }
@@ -1722,13 +1722,13 @@ export class ExportingApi extends BaseAPI implements ExportingApiInterface {
     /**
      * This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.
      * @summary Retrieve metadata context
-     * @param {ExportingApiGetMetadataRequest} requestParameters Request parameters.
+     * @param {VisualExportApiGetMetadataRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ExportingApi
+     * @memberof VisualExportApi
      */
-    public getMetadata(requestParameters: ExportingApiGetMetadataRequest, options?: AxiosRequestConfig) {
-        return ExportingApiFp(this.configuration)
+    public getMetadata(requestParameters: VisualExportApiGetMetadataRequest, options?: AxiosRequestConfig) {
+        return VisualExportApiFp(this.configuration)
             .getMetadata(requestParameters.workspaceId, requestParameters.exportId, options)
             .then((request) => request(this.axios, this.basePath));
     }
