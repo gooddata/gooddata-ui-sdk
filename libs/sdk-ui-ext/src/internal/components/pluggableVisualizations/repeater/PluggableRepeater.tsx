@@ -109,12 +109,12 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         const viewBucket = insightBucket(insight, BucketNames.VIEW);
         const rowAttribute = attributeBucket.items[0] as IAttribute;
         const columnsBucket = insightBucket(insight, BucketNames.COLUMNS);
-        const visualizationProperties = insightProperties(insight);
+        const extendedConfig = this.getExtendedConfig(options, insight);
         const sanitizedBuckets = constructRepeaterBuckets(
             rowAttribute,
             columnsBucket?.items,
             viewBucket?.items?.[0] as IAttribute,
-            visualizationProperties?.inlineVisualizations,
+            extendedConfig?.inlineVisualizations,
         );
         const insightWithSanitizedBuckets = insightSetBuckets(insight, sanitizedBuckets);
 
@@ -281,6 +281,18 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         return validColorMapping?.length > 0 ? validColorMapping : null;
     }
 
+    private getExtendedConfig(options: IVisProps, insight: IInsightDefinition) {
+        const { config = {}, customVisualizationConfig = {} } = options;
+        const properties = insightProperties(insight);
+
+        return {
+            ...(properties?.controls ?? {}),
+            ...config,
+            ...properties,
+            ...customVisualizationConfig,
+        };
+    }
+
     protected handleConfirmedColorMapping(data: IPushData): void {
         const resultingData = data;
         this.colors = data.colors;
@@ -312,17 +324,10 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
         insight: IInsightDefinition,
         executionFactory: IExecutionFactory,
     ): void {
-        const { locale, custom = {}, config, customVisualizationConfig = {} } = options;
+        const { locale, custom = {} } = options;
         const { drillableItems } = custom;
         const execution = this.getExecution(options, insight, executionFactory);
-        const properties = insightProperties(insight);
-
-        let extendedConfig = {
-            ...(properties?.controls ?? {}),
-            ...config,
-            ...properties,
-            ...customVisualizationConfig,
-        };
+        let extendedConfig = this.getExtendedConfig(options, insight);
 
         extendedConfig = {
             ...extendedConfig,
