@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 /*
  *
@@ -186,6 +186,7 @@ export {
     resolveLocale,
     emptyHeaderTitleFromIntl,
     totalColumnTitleFromIntl,
+    resolveLocaleDefaultMessages,
 } from "./localization/intlUtils.js";
 export {
     ITranslationsCustomizationContextProviderProps,
