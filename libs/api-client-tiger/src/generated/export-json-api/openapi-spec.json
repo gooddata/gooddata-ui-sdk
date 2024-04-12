@@ -19,7 +19,7 @@
     "paths": {
         "/api/v1/actions/workspaces/{workspaceId}/export/visual": {
             "post": {
-                "tags": ["Exporting", "actions"],
+                "tags": ["actions", "Visual export"],
                 "summary": "Create visual - pdf export request",
                 "description": "An visual export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.",
                 "operationId": "createPdfExport",
@@ -63,7 +63,7 @@
         },
         "/api/v1/actions/workspaces/{workspaceId}/export/tabular": {
             "post": {
-                "tags": ["Computation", "actions"],
+                "tags": ["Tabular export", "actions"],
                 "summary": "Create tabular export request",
                 "description": "An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.",
                 "operationId": "createTabularExport",
@@ -107,7 +107,7 @@
         },
         "/api/v1/actions/workspaces/{workspaceId}/export/visual/{exportId}/metadata": {
             "get": {
-                "tags": ["Exporting", "actions"],
+                "tags": ["actions", "Visual export"],
                 "summary": "Retrieve metadata context",
                 "description": "This endpoints serves as a cache for user defined metadata for the front end ui to retrieve them, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified. If metadata for given {exportId} has been found, endpoint returns the value 200 else 404.",
                 "operationId": "getMetadata",
@@ -145,7 +145,7 @@
         },
         "/api/v1/actions/workspaces/{workspaceId}/export/visual/{exportId}": {
             "get": {
-                "tags": ["Exporting", "actions"],
+                "tags": ["actions", "Visual export"],
                 "summary": "Retrieve exported files",
                 "description": "Returns 202 until original POST export request is not processed.Returns 200 with exported data once the export is done.",
                 "operationId": "getExportedFile",
@@ -204,7 +204,7 @@
         },
         "/api/v1/actions/workspaces/{workspaceId}/export/tabular/{exportId}": {
             "get": {
-                "tags": ["Computation", "actions"],
+                "tags": ["Tabular export", "actions"],
                 "summary": "Retrieve exported files",
                 "description": "After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn't ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.",
                 "operationId": "getTabularExport",
