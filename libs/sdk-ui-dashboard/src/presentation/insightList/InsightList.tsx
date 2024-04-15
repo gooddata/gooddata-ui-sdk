@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useIntl } from "react-intl";
 import {
@@ -30,6 +30,7 @@ import {
     useDashboardSelector,
     selectCurrentUser,
     selectSupportsObjectUris,
+    selectSupportsHierarchicalWorkspacesCapability,
 } from "../../model/index.js";
 import { IInsightListProps } from "./types.js";
 import { messages } from "../../locales.js";
@@ -88,6 +89,7 @@ export const InsightList: React.FC<IInsightListProps> = ({
     const allowCreateInsightRequest = useDashboardSelector(selectAllowCreateInsightRequest);
     const settings = useDashboardSelector(selectSettings);
     const previousSearch = useRef("");
+    const supportsWorkspaceHierarchy = useDashboardSelector(selectSupportsHierarchicalWorkspacesCapability);
 
     const params = pagesToLoad.map((pageNumber) => ({
         limit: ITEMS_PER_PAGE,
@@ -228,6 +230,7 @@ export const InsightList: React.FC<IInsightListProps> = ({
                             isLocked={insightIsLocked(insightListSourceItem.insight)}
                             onClick={() => onSelect?.(insight)}
                             metadataTimeZone={settings?.metadataTimeZone}
+                            supportsWorkspaceHierarchy={supportsWorkspaceHierarchy}
                         />
                     );
                 })

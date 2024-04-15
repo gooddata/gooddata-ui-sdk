@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 @use "sass:math";
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins";
 
@@ -675,4 +675,11 @@
 
 .gd-fluidlayout-column-container {
     z-index: 10;
+}
+
+.gd-icon-section-suggest {
+    position: absolute;
+    right: 40px;
+    bottom: 0;
+    cursor: pointer;
 }

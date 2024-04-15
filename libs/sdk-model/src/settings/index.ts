@@ -356,6 +356,21 @@ export interface ISettings {
      */
     enableMultipleCSVs?: boolean;
 
+    /**
+     * Enable advanced machine learning integration in KD.
+     */
+    enableAdvancedMachineLearningIntegration?: boolean;
+
+    /**
+     * Configuration of OpenAI integration
+     */
+    openAiConfig?: IOpenAiConfig;
+
+    /**
+     * Token for Zapier integration
+     */
+    zapierToken?: string;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 
@@ -416,3 +431,11 @@ export interface IWhiteLabeling {
  * @public
  */
 export type WeekStart = "Sunday" | "Monday";
+
+/**
+ * @public
+ */
+export interface IOpenAiConfig {
+    org: string;
+    token: string;
+}

@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import { alertsAdapter } from "./alertsEntityAdapter.js";
 import { DashboardSelector, DashboardState } from "../types.js";

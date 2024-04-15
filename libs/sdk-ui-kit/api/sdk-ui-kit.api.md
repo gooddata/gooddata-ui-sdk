@@ -690,6 +690,9 @@ export const HEADER_ITEM_ID_DASHBOARDS = "gs.header.dashboards";
 export const HEADER_ITEM_ID_DATA = "gs.header.data";
 
 // @internal (undocumented)
+export const HEADER_ITEM_ID_HOME = "gs.header.home";
+
+// @internal (undocumented)
 export const HEADER_ITEM_ID_KPIS = "gs.header.kpis";
 
 // @internal (undocumented)
@@ -1266,6 +1269,8 @@ export interface IDescriptionPanelProps {
     onBubbleOpen?: () => void;
     // (undocumented)
     title?: string;
+    // (undocumented)
+    titleIcon?: ReactNode;
 }
 
 // @internal (undocumented)
@@ -1520,6 +1525,8 @@ export interface IDropdownProps {
     onOpenStateChanged?: (isOpen: boolean) => void;
     // (undocumented)
     openOnInit?: boolean;
+    // (undocumented)
+    overlayClassName?: string;
     // (undocumented)
     overlayPositionType?: OverlayPositionType;
     // (undocumented)
@@ -2110,6 +2117,8 @@ export interface IInsightListItemProps {
     onDescriptionPanelOpen?: () => void;
     // (undocumented)
     showDescriptionPanel?: boolean;
+    // (undocumented)
+    supportsWorkspaceHierarchy?: boolean;
     // (undocumented)
     title?: string;
     // (undocumented)

@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { Action, AnyAction, configureStore, Middleware } from "@reduxjs/toolkit";
 import defaultReduxSaga from "redux-saga";
 import { actions, sliceReducer } from "./slice.js";

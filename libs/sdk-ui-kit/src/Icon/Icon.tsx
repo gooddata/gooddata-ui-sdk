@@ -34,6 +34,7 @@ import { Contract } from "./icons/Contract.js";
 import { Fact } from "./icons/Fact.js";
 import { Function } from "./icons/Function.js";
 import { Insight } from "./icons/Insight.js";
+import { Magic } from "./icons/Magic.js";
 import { Keyword } from "./icons/Keyword.js";
 import { Label } from "./icons/Label.js";
 import { Metric } from "./icons/Metric.js";
@@ -167,6 +168,7 @@ export const Icon: Record<string, React.FC<IIconProps>> = {
     Repeater,
     Image,
     Hash,
+    Magic,
 };
 
 export { IRowsIconProps, IColumnsIconProps };

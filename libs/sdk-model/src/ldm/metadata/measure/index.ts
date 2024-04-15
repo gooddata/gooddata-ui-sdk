@@ -1,6 +1,6 @@
 // (C) 2019-2024 GoodData Corporation
 import { IMetadataObject, IMetadataObjectBase, isMetadataObject } from "../types.js";
-import { IAuditable } from "../../../base/metadata.js";
+import { IAuditable, IObjectInteractions } from "../../../base/metadata.js";
 
 /**
  * @public
@@ -42,7 +42,9 @@ export interface IMetadataObjectDefinition
  *
  * @public
  */
-export type IMeasureMetadataObject = IMetadataObject & IMeasureMetadataObjectBase & IAuditable;
+export type IMeasureMetadataObject = IMetadataObject &
+    IMeasureMetadataObjectBase &
+    IAuditable & { interactions?: IObjectInteractions };
 
 /**
  * Measure metadata object definition

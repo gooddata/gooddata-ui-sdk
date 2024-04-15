@@ -7,17 +7,21 @@
 import { ActionsApiProcessInvitationRequest } from '@gooddata/api-client-tiger';
 import { AnalyzeCsvRequest } from '@gooddata/api-client-tiger';
 import { AnalyzeCsvResponse } from '@gooddata/api-client-tiger';
+import { AnomalyDetectionResult } from '@gooddata/api-client-tiger';
 import { AnonymousAuthProvider } from '@gooddata/sdk-backend-base';
 import { ApiEntitlement } from '@gooddata/api-client-tiger';
 import { ApiEntitlementNameEnum } from '@gooddata/api-client-tiger';
 import { AuthenticationFlow } from '@gooddata/sdk-backend-spi';
 import { AxiosRequestConfig } from 'axios';
+import { ClusteringResult } from '@gooddata/api-client-tiger';
 import { DataSourceParameter } from '@gooddata/api-client-tiger';
 import { DeclarativeAnalytics } from '@gooddata/api-client-tiger';
 import { DeclarativeModel } from '@gooddata/api-client-tiger';
 import { DeclarativeWorkspaceDataFilters } from '@gooddata/api-client-tiger';
 import { DependentEntitiesRequest } from '@gooddata/api-client-tiger';
 import { DependentEntitiesResponse } from '@gooddata/api-client-tiger';
+import { EntityIdentifier } from '@gooddata/api-client-tiger';
+import { ForecastResult } from '@gooddata/api-client-tiger';
 import { GdStorageFile } from '@gooddata/api-client-tiger';
 import { GenerateLdmRequest } from '@gooddata/api-client-tiger';
 import { HierarchyObjectIdentification } from '@gooddata/api-client-tiger';
@@ -27,9 +31,12 @@ import { IAuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
 import { IdentifierDuplications } from '@gooddata/api-client-tiger';
+import { IInsight } from '@gooddata/sdk-model';
+import { IMeasure } from '@gooddata/sdk-model';
 import { ImportCsvRequest } from '@gooddata/api-client-tiger';
 import { ITigerClient } from '@gooddata/api-client-tiger';
 import { IUser } from '@gooddata/sdk-model';
+import { IWidgetAlert } from '@gooddata/sdk-model';
 import { JsonApiAnalyticalDashboardOutMetaOrigin } from '@gooddata/api-client-tiger';
 import { JsonApiDatasetOutList } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInAttributesCacheStrategyEnum } from '@gooddata/api-client-tiger';
@@ -111,6 +118,9 @@ export type GenerateLogicalModelRequest = GenerateLdmRequest;
 export function getIdOrigin(id: string): OriginInfoWithId;
 
 // @internal (undocumented)
+export type IAnomalyDetectionCacheResult = AnomalyDetectionResult;
+
+// @internal (undocumented)
 export interface IApiToken {
     // (undocumented)
     id: string;
@@ -121,6 +131,9 @@ export interface IApiTokenExtended extends IApiToken {
     // (undocumented)
     bearerToken: string | undefined;
 }
+
+// @internal (undocumented)
+export type IClusteringCacheResult = ClusteringResult;
 
 // @internal (undocumented)
 export interface ICSPDirective {
@@ -266,11 +279,22 @@ export interface IDataSourceUpsertRequest {
 }
 
 // @internal (undocumented)
+export type IForecastCacheResult = ForecastResult;
+
+// @internal (undocumented)
 export interface IInvitationUserResponse {
     // (undocumented)
     errorMessage?: string;
     // (undocumented)
     successful?: boolean;
+}
+
+// @internal (undocumented)
+export interface IKeyDriverAnalysis {
+    // (undocumented)
+    effects: number[];
+    // (undocumented)
+    labels: string[];
 }
 
 export { ImportCsvRequest }
@@ -442,6 +466,12 @@ export type TigerSpecificFunctions = {
     updateCSPDirective?: (directiveId: string, requestData: ICSPDirective) => Promise<ICSPDirective>;
     deleteCSPDirective?: (directiveId: string) => Promise<void>;
     registerUploadNotification?: (dataSourceId: string) => Promise<void>;
+    setFavorite?: (workspaceId: string, objectType: "Dashboard" | "Insight" | "Metric", objectId: string, isDelete: boolean) => Promise<void>;
+    setLike?: (workspaceId: string, objectType: "Dashboard" | "Insight" | "Metric", objectId: string, isDelete: boolean) => Promise<void>;
+    setDislike?: (workspaceId: string, objectType: "Dashboard" | "Insight" | "Metric", objectId: string, isDelete: boolean) => Promise<void>;
+    subscribeToTag?: (workspaceId: string, tag: string) => Promise<void>;
+    unsubscribeFromTag?: (workspaceId: string, tag: string) => Promise<void>;
+    listSubscriptions?: (workspaceId: string) => Promise<EntityIdentifier[]>;
     getWorkspaceCustomAppSettings?: (workspaceId: string, applicationName?: string) => Promise<ICustomApplicationSetting[]>;
     getWorkspaceCustomAppSetting?: (workspaceId: string, settingId: string) => Promise<ICustomApplicationSetting>;
     createWorkspaceCustomAppSetting?: (workspaceId: string, applicationName: string, content: object, settingId?: string) => Promise<ICustomApplicationSetting>;
@@ -453,6 +483,25 @@ export type TigerSpecificFunctions = {
     analyzeCsv?: (dataSourceId: string, analyzeCsvRequest: AnalyzeCsvRequest) => Promise<Array<AnalyzeCsvResponse>>;
     importCsv?: (dataSourceId: string, importCsvRequest: ImportCsvRequest) => Promise<void>;
     listFiles?: (dataSourceId: string) => Promise<Array<GdStorageFile>>;
+    computeKeyDrivers?: (workspaceId: string, metric: IMeasure, sortDirection: "ASC" | "DESC") => Promise<IKeyDriverAnalysis>;
+    processForecastResult?: (workspaceId: string, executionResultId: string, forecastPeriod: number) => Promise<IForecastCacheResult>;
+    processClusterResult?: (workspaceId: string, executionResultId: string, numberOfClusters: number) => Promise<IClusteringCacheResult>;
+    processAnomalyDetection?: (workspaceId: string, executionResultId: string, sensitivity: number) => Promise<IAnomalyDetectionCacheResult>;
+    getForecastResult?: (workspaceId: string, resultId: string) => Promise<IForecastCacheResult>;
+    setForecastResult?: (workspaceId: string, resultId: string, forecastResult: IForecastCacheResult) => Promise<void>;
+    deleteForecastResult?: (workspaceId: string, resultId: string) => Promise<void>;
+    getClusterResult?: (workspaceId: string, resultId: string) => Promise<IClusteringCacheResult>;
+    setClusterResult?: (workspaceId: string, resultId: string, clusteringResult: IClusteringCacheResult) => Promise<void>;
+    deleteClusterResult?: (workspaceId: string, resultId: string) => Promise<void>;
+    getAnomalyDetectionResult?: (workspaceId: string, resultId: string) => Promise<IAnomalyDetectionCacheResult>;
+    setAnomalyDetectionResult?: (workspaceId: string, resultId: string, anomalyDetectionResult: IAnomalyDetectionCacheResult) => Promise<void>;
+    deleteAnomalyDetectionResult?: (workspaceId: string, resultId: string) => Promise<void>;
+    markNotificationAsRead?: (workspaceId: string, notificationId: number) => Promise<void>;
+    markAllNotificationsAsRead?: (workspaceId: string) => Promise<void>;
+    getAllEntitiesWidgetAlerts?: (workspaceId: string) => Promise<{
+        alert: IWidgetAlert;
+        insight: IInsight;
+    }[]>;
 };
 
 // @public

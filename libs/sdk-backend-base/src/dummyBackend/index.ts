@@ -386,6 +386,9 @@ function dummyExecutionResult(
         transform(): IPreparedExecution {
             return executionFactory.forDefinition(definition);
         },
+        getResultId(): string {
+            throw new NotSupported("...");
+        },
     };
 
     return result;

@@ -43,7 +43,7 @@ import { ObjRef, serializeObjRef } from "../objRef/index.js";
 import flatMap from "lodash/flatMap.js";
 import uniqBy from "lodash/uniqBy.js";
 import { IUser } from "../user/index.js";
-import { IAuditable } from "../base/metadata.js";
+import { IAuditable, IObjectInteractions } from "../base/metadata.js";
 
 /**
  * Represents an Insight. Insight is typically created using Analytical Designer
@@ -76,6 +76,8 @@ export type IInsight = IInsightDefinition & {
          * Insight is locked for editing & deleting
          */
         isLocked?: boolean;
+
+        interactions?: IObjectInteractions;
     };
 };
 
@@ -150,6 +152,8 @@ export type IInsightDefinition = {
          * any way.
          */
         properties: VisualizationProperties;
+
+        interactions?: IObjectInteractions;
     };
 };
 

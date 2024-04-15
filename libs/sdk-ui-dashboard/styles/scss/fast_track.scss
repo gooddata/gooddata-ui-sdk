@@ -1,0 +1,123 @@
+// (C) 2024 GoodData Corporation
+
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.gd-fast-track-dialog-header-title {
+    margin-top: -30px;
+}
+
+.gd-fast-track-buttons {
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid kit-variables.$is-focused-background;
+
+    .left-button {
+        order: 1;
+    }
+
+    .right-buttons {
+        display: flex;
+        gap: 5px;
+
+        .gd-button + .gd-button {
+            margin-left: 5px;
+        }
+    }
+}
+
+.gd-fast-track-popup-dialog {
+    // stylelint-disable-next-line declaration-no-important
+    max-width: 1300px !important;
+    // stylelint-disable-next-line declaration-no-important
+    padding: 0 !important;
+
+    .fast-track-form {
+        padding: 10px;
+    }
+
+    .gd-fast-track-buttons {
+        padding: 10px;
+    }
+}
+
+.gd-fast-track-popup-dialog-header h2 {
+    border-top-left-radius: var(--gd-modal-borderRadius, 3px);
+    border-top-right-radius: var(--gd-modal-borderRadius, 3px);
+    color: kit-variables.$gd-color-state-blank;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 3px 10px 3px 15px;
+    background: kit-variables.$is-focused-background;
+}
+
+.gd-fast-track-dialog {
+    // stylelint-disable-next-line declaration-no-important
+    max-width: 1300px !important;
+    // stylelint-disable-next-line declaration-no-important
+    padding-top: 50px !important;
+}
+
+.fast-track-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .fast-track-row {
+        display: flex;
+        align-items: center;
+    }
+
+    .fast-track-label {
+        width: 120px;
+    }
+
+    .fast-track-suffix-label {
+        color: kit-variables.$gd-color-label;
+        margin-left: 10px;
+    }
+
+    .gd-button,
+    .gd-message {
+        width: 211px;
+    }
+
+    .gd-button:not(.button-dropdown) {
+        margin-left: 10px;
+    }
+
+    p {
+        position: relative;
+        top: 5px;
+    }
+}
+
+.gd-fast-track-explain-toolbar {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
+.gd-fast-track-explain-text {
+    padding: 20px 0 20px;
+    white-space: normal;
+}
+
+.fast-track-input {
+    width: 100%;
+}
+
+.zapier-icon {
+    position: relative;
+    top: 4px;
+    margin-right: 5px;
+}
+
+.type-visualization {
+    .dash-item-action-alert-wrapper + .dash-item-action-placeholder {
+        margin-left: 10px;
+    }
+}

@@ -1,8 +1,8 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React, { useMemo, useCallback } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
-import { IInsight, insightVisualizationType, widgetTitle } from "@gooddata/sdk-model";
+import { IInsight, insightRef, insightVisualizationType, widgetTitle } from "@gooddata/sdk-model";
 import { VisType } from "@gooddata/sdk-ui";
 
 import {
@@ -11,6 +11,8 @@ import {
     useDashboardScheduledEmails,
     selectCanExportTabular,
     selectSettings,
+    selectAlertByWidgetRef,
+    selectIsInsightAlertOpenedByWidgetRef,
 } from "../../../../model/index.js";
 import {
     DashboardItem,
@@ -88,6 +90,10 @@ const DefaultDashboardInsightWidgetCore: React.FC<
     );
 
     const settings = useDashboardSelector(selectSettings);
+    const hasAlert = !!useDashboardSelector(selectAlertByWidgetRef(insightRef(insight)));
+    const hasAlertDialogOpened = useDashboardSelector(
+        selectIsInsightAlertOpenedByWidgetRef(insightRef(insight)),
+    );
 
     return (
         <DashboardItem
@@ -138,6 +144,10 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                         />
                     );
                 }}
+                contentClassName={cx({
+                    "has-set-alert": hasAlert,
+                    "is-alert-dialog": hasAlertDialogOpened,
+                })}
             >
                 {({ clientHeight, clientWidth }) => (
                     <DashboardInsight

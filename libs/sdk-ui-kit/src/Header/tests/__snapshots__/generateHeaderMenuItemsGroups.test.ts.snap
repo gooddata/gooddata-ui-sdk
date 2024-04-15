@@ -4,6 +4,11 @@ exports[`generateHeaderMenuItemsGroups > should return absolute paths for Panthe
 [
   [
     {
+      "className": "s-menu-workspace-home",
+      "href": "/workspaces/TestWorkspaceId/home",
+      "key": "gs.header.home",
+    },
+    {
       "className": "s-menu-kpis",
       "href": "https://cdnUrl/dashboards/#/project/TestWorkspaceId",
       "key": "gs.header.kpis",
@@ -31,6 +36,11 @@ exports[`generateHeaderMenuItemsGroups > should return correct absolute paths fo
 [
   [
     {
+      "className": "s-menu-workspace-home",
+      "href": "/workspaces/TestWorkspaceId/home",
+      "key": "gs.header.home",
+    },
+    {
       "className": "s-menu-kpis",
       "href": "https://cdnUr/dashboards/#/project/TestWorkspaceId",
       "key": "gs.header.kpis",
@@ -57,6 +67,11 @@ exports[`generateHeaderMenuItemsGroups > should return correct absolute paths fo
 exports[`generateHeaderMenuItemsGroups > should return relative paths for Panther 1`] = `
 [
   [
+    {
+      "className": "s-menu-workspace-home",
+      "href": "/workspaces/TestWorkspaceId/home",
+      "key": "gs.header.home",
+    },
     {
       "className": "s-menu-kpis",
       "href": "/dashboards/#/project/TestWorkspaceId",

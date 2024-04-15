@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 import { AbstractExecutionFactory } from "../toolkit/execution.js";
 import {
@@ -192,6 +192,10 @@ class CustomExecutionResult implements IExecutionResult {
     public fingerprint = (): string => {
         return this._fingerprint;
     };
+
+    public getResultId(): string {
+        throw Error("Not supported by this implementation");
+    }
 
     public export = (_options: IExportConfig): Promise<IExportResult> => {
         throw new NotSupported("exports from custom backend are not supported");

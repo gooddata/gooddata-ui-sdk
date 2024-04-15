@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import {
     IDataView,
     IExecutionFactory,
@@ -185,6 +185,10 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
 
     public fingerprint(): string {
         return this.decorated.fingerprint();
+    }
+
+    public getResultId(): string {
+        return this.decorated.getResultId();
     }
 }
 

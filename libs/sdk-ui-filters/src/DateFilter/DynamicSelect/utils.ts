@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import range from "lodash/range.js";
 import { IMessageTranslator } from "../utils/Translations/Translators.js";
 import { granularityIntlCodes } from "../constants/i18n.js";

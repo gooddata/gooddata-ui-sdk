@@ -1,6 +1,6 @@
 // (C) 2019-2024 GoodData Corporation
 import identity from "lodash/identity.js";
-import { ObjRef, IMeasureMetadataObject, IUser } from "@gooddata/sdk-model";
+import { ObjRef, IMeasureMetadataObject, IUser, IObjectInteractions } from "@gooddata/sdk-model";
 import { MetadataObjectBuilder } from "./factory.js";
 import { builderFactory, BuilderModifications } from "../builder.js";
 
@@ -28,11 +28,6 @@ export class MeasureMetadataObjectBuilder<
         return this;
     }
 
-    public tags(tags: string[]): this {
-        this.item.tags = tags;
-        return this;
-    }
-
     public created(createdAt?: string): this {
         this.item.created = createdAt;
         return this;
@@ -50,6 +45,16 @@ export class MeasureMetadataObjectBuilder<
 
     public updatedBy(updatedBy?: IUser): this {
         this.item.updatedBy = updatedBy;
+        return this;
+    }
+
+    public tags(tags?: string[]): this {
+        this.item.tags = tags;
+        return this;
+    }
+
+    public interactions(interactions?: IObjectInteractions): this {
+        this.item.interactions = interactions;
         return this;
     }
 }

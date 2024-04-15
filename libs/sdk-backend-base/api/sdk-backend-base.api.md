@@ -75,6 +75,7 @@ import { IMeasureMetadataObject } from '@gooddata/sdk-model';
 import { IMetadataObject } from '@gooddata/sdk-model';
 import { InsightDrillDefinition } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
+import { IObjectInteractions } from '@gooddata/sdk-model';
 import { IPagedResource } from '@gooddata/sdk-backend-spi';
 import { IPostProcessing } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
@@ -395,6 +396,8 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
     export(options: IExportConfig): Promise<IExportResult>;
     // (undocumented)
     fingerprint(): string;
+    // (undocumented)
+    getResultId(): string;
     // (undocumented)
     readAll(): Promise<IDataView>;
     // (undocumented)
@@ -824,9 +827,11 @@ export class MeasureMetadataObjectBuilder<T extends IMeasureMetadataObject = IMe
     // (undocumented)
     format(format: string): this;
     // (undocumented)
+    interactions(interactions?: IObjectInteractions): this;
+    // (undocumented)
     isLocked(isLocked: boolean): this;
     // (undocumented)
-    tags(tags: string[]): this;
+    tags(tags?: string[]): this;
     // (undocumented)
     updated(updatedAt?: string): this;
     // (undocumented)

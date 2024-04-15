@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
 import { areObjRefsEqual, ObjRef, objRefToString } from "@gooddata/sdk-model";
@@ -125,6 +125,21 @@ export const selectIsKpiAlertOpenedByWidgetRef = createMemoizedSelector(
             }
 
             return targetWidget.identifier === openedWidget.identifier;
+        });
+    },
+);
+
+/**
+ * @internal
+ */
+export const selectIsInsightAlertOpenedByWidgetRef = createMemoizedSelector(
+    (ref: ObjRef | undefined): ((state: DashboardState) => boolean) => {
+        return createSelector(selectOpenedKpiWidgetRef, (openedWidgetRef) => {
+            if (!ref) {
+                return false;
+            }
+
+            return areObjRefsEqual(ref, openedWidgetRef);
         });
     },
 );

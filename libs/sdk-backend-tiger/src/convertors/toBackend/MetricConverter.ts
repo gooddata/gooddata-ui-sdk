@@ -6,7 +6,7 @@ import { IMeasureMetadataObjectDefinition } from "@gooddata/sdk-model";
 export function convertMetricToBackend(
     measure: IMeasureMetadataObjectDefinition,
 ): JsonApiMetricOutAttributes {
-    return {
+    const convertedMeasure: JsonApiMetricOutAttributes = {
         title: measure.title,
         description: measure.description,
         content: {
@@ -15,4 +15,10 @@ export function convertMetricToBackend(
         },
         tags: measure.tags,
     };
+
+    if (measure.tags) {
+        convertedMeasure.tags = measure.tags;
+    }
+
+    return convertedMeasure;
 }

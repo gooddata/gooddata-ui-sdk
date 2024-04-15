@@ -1,8 +1,12 @@
 // (C) 2022-2024 GoodData Corporation
 
 import {
-    JsonApiOrganizationOutMetaPermissionsEnum,
-    GenerateLdmRequest,
+    ActionsApiProcessInvitationRequest,
+    AnomalyDetectionResult,
+    ApiEntitlement,
+    ClusteringResult,
+    DataSourceParameter,
+    DeclarativeAnalytics,
     DeclarativeModel,
     JsonApiDataSourceInDocument,
     LayoutApiPutWorkspaceLayoutRequest,
@@ -10,34 +14,34 @@ import {
     JsonApiOrganizationPatchTypeEnum,
     JsonApiApiTokenOutList,
     MetadataUtilities,
-    JsonApiApiTokenInDocument,
-    JsonApiApiTokenInTypeEnum,
-    JsonApiWorkspaceInTypeEnum,
-    ITigerClient,
-    JsonApiDataSourceInTypeEnum,
-    JsonApiDataSourceInAttributesTypeEnum,
-    OrganizationUtilities,
-    JsonApiDataSourceIdentifierOutWithLinks,
-    TestDefinitionRequestTypeEnum,
-    JsonApiDataSourceOutDocument,
-    JsonApiDataSourceIdentifierOutDocument,
-    DeclarativeAnalytics,
-    JsonApiWorkspaceInDocument,
+    DeclarativeWorkspaceDataFilters,
     DependentEntitiesRequest,
     DependentEntitiesResponse,
-    ApiEntitlement,
-    ActionsApiProcessInvitationRequest,
-    PlatformUsage,
-    DeclarativeWorkspaceDataFilters,
-    DataSourceParameter,
-    JsonApiCspDirectiveInTypeEnum,
-    JsonApiCspDirectiveInDocument,
-    JsonApiCustomApplicationSettingOutTypeEnum,
-    ScanSqlResponse,
+    EntityIdentifier,
+    ForecastResult,
+    GenerateLdmRequest,
     HierarchyObjectIdentification,
     IdentifierDuplications,
+    ITigerClient,
+    JsonApiApiTokenInDocument,
+    JsonApiApiTokenInTypeEnum,
+    JsonApiCspDirectiveInDocument,
+    JsonApiCspDirectiveInTypeEnum,
     JsonApiCustomApplicationSettingOut,
+    JsonApiCustomApplicationSettingOutTypeEnum,
     JsonApiDatasetOutList,
+    JsonApiDataSourceIdentifierOutDocument,
+    JsonApiDataSourceIdentifierOutWithLinks,
+    JsonApiDataSourceInAttributesTypeEnum,
+    JsonApiDataSourceInTypeEnum,
+    JsonApiDataSourceOutDocument,
+    JsonApiOrganizationOutMetaPermissionsEnum,
+    JsonApiWorkspaceInDocument,
+    JsonApiWorkspaceInTypeEnum,
+    OrganizationUtilities,
+    PlatformUsage,
+    ScanSqlResponse,
+    TestDefinitionRequestTypeEnum,
     JsonApiWorkspaceDataFilterInDocument,
     JsonApiWorkspaceDataFilterOutDocument,
     JsonApiWorkspaceDataFilterSettingOutDocument,
@@ -57,7 +61,7 @@ import { UnexpectedError, ErrorConverter, IAnalyticalBackend } from "@gooddata/s
 import isEmpty from "lodash/isEmpty.js";
 import { AuthenticatedAsyncCall } from "@gooddata/sdk-backend-base";
 import { AxiosRequestConfig } from "axios";
-import { IUser } from "@gooddata/sdk-model";
+import { IUser, IMeasure, IWidgetAlert, IInsight } from "@gooddata/sdk-model";
 
 /**
  * @internal
@@ -319,6 +323,29 @@ export type ScanSqlResult = ScanSqlResponse;
 export type WorkspaceEntitiesDatasets = JsonApiDatasetOutList;
 
 /**
+ * @internal
+ */
+export interface IKeyDriverAnalysis {
+    labels: string[];
+    effects: number[];
+}
+
+/**
+ * @internal
+ */
+export type IAnomalyDetectionCacheResult = AnomalyDetectionResult;
+
+/**
+ * @internal
+ */
+export type IForecastCacheResult = ForecastResult;
+
+/**
+ * @internal
+ */
+export type IClusteringCacheResult = ClusteringResult;
+
+/**
  * TigerBackend-specific functions.
  * If possible, avoid these functions, they are here for specific use cases.
  *
@@ -398,6 +425,27 @@ export type TigerSpecificFunctions = {
     updateCSPDirective?: (directiveId: string, requestData: ICSPDirective) => Promise<ICSPDirective>;
     deleteCSPDirective?: (directiveId: string) => Promise<void>;
     registerUploadNotification?: (dataSourceId: string) => Promise<void>;
+    setFavorite?: (
+        workspaceId: string,
+        objectType: "Dashboard" | "Insight" | "Metric",
+        objectId: string,
+        isDelete: boolean,
+    ) => Promise<void>;
+    setLike?: (
+        workspaceId: string,
+        objectType: "Dashboard" | "Insight" | "Metric",
+        objectId: string,
+        isDelete: boolean,
+    ) => Promise<void>;
+    setDislike?: (
+        workspaceId: string,
+        objectType: "Dashboard" | "Insight" | "Metric",
+        objectId: string,
+        isDelete: boolean,
+    ) => Promise<void>;
+    subscribeToTag?: (workspaceId: string, tag: string) => Promise<void>;
+    unsubscribeFromTag?: (workspaceId: string, tag: string) => Promise<void>;
+    listSubscriptions?: (workspaceId: string) => Promise<EntityIdentifier[]>;
 
     /**
      * Return all custom setting of a workspace.
@@ -507,6 +555,71 @@ export type TigerSpecificFunctions = {
      * @param dataSourceId - id of the data source
      */
     listFiles?: (dataSourceId: string) => Promise<Array<GdStorageFile>>;
+
+    computeKeyDrivers?: (
+        workspaceId: string,
+        metric: IMeasure,
+        sortDirection: "ASC" | "DESC",
+    ) => Promise<IKeyDriverAnalysis>;
+
+    processForecastResult?: (
+        workspaceId: string,
+        executionResultId: string,
+        forecastPeriod: number,
+    ) => Promise<IForecastCacheResult>;
+
+    processClusterResult?: (
+        workspaceId: string,
+        executionResultId: string,
+        numberOfClusters: number,
+    ) => Promise<IClusteringCacheResult>;
+
+    processAnomalyDetection?: (
+        workspaceId: string,
+        executionResultId: string,
+        sensitivity: number,
+    ) => Promise<IAnomalyDetectionCacheResult>;
+
+    getForecastResult?: (workspaceId: string, resultId: string) => Promise<IForecastCacheResult>;
+
+    setForecastResult?: (
+        workspaceId: string,
+        resultId: string,
+        forecastResult: IForecastCacheResult,
+    ) => Promise<void>;
+
+    deleteForecastResult?: (workspaceId: string, resultId: string) => Promise<void>;
+
+    getClusterResult?: (workspaceId: string, resultId: string) => Promise<IClusteringCacheResult>;
+
+    setClusterResult?: (
+        workspaceId: string,
+        resultId: string,
+        clusteringResult: IClusteringCacheResult,
+    ) => Promise<void>;
+
+    deleteClusterResult?: (workspaceId: string, resultId: string) => Promise<void>;
+
+    getAnomalyDetectionResult?: (
+        workspaceId: string,
+        resultId: string,
+    ) => Promise<IAnomalyDetectionCacheResult>;
+
+    setAnomalyDetectionResult?: (
+        workspaceId: string,
+        resultId: string,
+        anomalyDetectionResult: IAnomalyDetectionCacheResult,
+    ) => Promise<void>;
+
+    deleteAnomalyDetectionResult?: (workspaceId: string, resultId: string) => Promise<void>;
+
+    markNotificationAsRead?: (workspaceId: string, notificationId: number) => Promise<void>;
+
+    markAllNotificationsAsRead?: (workspaceId: string) => Promise<void>;
+
+    getAllEntitiesWidgetAlerts?: (
+        workspaceId: string,
+    ) => Promise<{ alert: IWidgetAlert; insight: IInsight }[]>;
 };
 
 const getDataSourceErrorMessage = (error: unknown) => {
