@@ -62,6 +62,38 @@ const REPEATER_SUPPORTER_PROPERTIES_LIST = [
     "cellImageSizing",
 ];
 
+/**
+ * PluggableRepeater
+ *
+ * ## Buckets
+ *
+ * | Name      | Id       -| Accepts              |
+ * |-----------|-----------|----------------------|
+ * | Attribute | attribute | attribute only       |
+ * | Columns   | columns   | attribute or measure |
+ * | ViewBy    | view      | attribute or date    |
+ *
+ *
+ * ### Bucket axioms
+ *
+ * - |Attribute| = 1
+ * - |Columns| ≥ 1
+ * - |ViewBy| ≤ 1
+ *
+ * ## Dimensions
+ *
+ * The PluggableRepeater creates one or two dimensional execution, based on  the buckets.
+ *
+ * With main attribute and column attributes only:
+ * - [[Attribute, ...ColumnAttributes]]
+ * With main attribute, column attributes and viewBy:
+ * - [[Attribute, ...ColumnAttributes], [ViewBy]]
+ * With main attribute and column attributes and measures:
+ * - [[Attribute, ...ColumnAttributes], [MeasureGroupIdentifier]]
+ * With main attribute, column attributes and measures, and viewBy:
+ * - [[Attribute, ...ColumnAttributes], [ViewBy, MeasureGroupIdentifier]]
+ *
+ */
 export class PluggableRepeater extends AbstractPluggableVisualization {
     private environment: VisualizationEnvironment;
     private featureFlags?: ISettings;
