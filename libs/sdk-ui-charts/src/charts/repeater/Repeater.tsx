@@ -13,6 +13,8 @@ import {
     ITranslationsComponentProps,
     IntlTranslationsProvider,
     IntlWrapper,
+    ExplicitDrill,
+    OnFiredDrillEvent,
 } from "@gooddata/sdk-ui";
 import { IBucketChartProps, ICoreChartProps } from "../../interfaces/index.js";
 import omit from "lodash/omit.js";
@@ -56,7 +58,18 @@ export interface IRepeaterBucketProps {
 /**
  * @beta
  */
-export interface IRepeaterProps extends IBucketChartProps, IRepeaterBucketProps {}
+export interface IRepeaterProps extends IBucketChartProps, IRepeaterBucketProps {
+    /**
+     * Configure drillability; e.g. which parts of the visualization can be interacted with.
+     * LIMITATION: For now only attributes in columns can be drilled into.
+     */
+    drillableItems?: ExplicitDrill[];
+
+    /**
+     * Called when user triggers a drill on a visualization.
+     */
+    onDrill?: OnFiredDrillEvent;
+}
 
 const WrappedRepeater = withContexts(RenderRepeater);
 

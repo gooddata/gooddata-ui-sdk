@@ -42,6 +42,7 @@ import { LodashIsEqual1x1 } from 'lodash/fp.js';
 import { MeasureOrPlaceholder } from '@gooddata/sdk-ui';
 import { MeasuresOrPlaceholders } from '@gooddata/sdk-ui';
 import { NullableFiltersOrPlaceholders } from '@gooddata/sdk-ui';
+import { OnFiredDrillEvent } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
 import { SortsOrPlaceholders } from '@gooddata/sdk-ui';
 import { VisType } from '@gooddata/sdk-ui';
@@ -758,6 +759,8 @@ export interface IRepeaterMeasureColumnWidthItemBody {
 
 // @beta (undocumented)
 export interface IRepeaterProps extends IBucketChartProps, IRepeaterBucketProps {
+    drillableItems?: ExplicitDrill[];
+    onDrill?: OnFiredDrillEvent;
 }
 
 // @public (undocumented)
