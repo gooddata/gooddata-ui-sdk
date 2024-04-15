@@ -156,6 +156,10 @@ export interface IWorkspaceDescriptor {
      * Prefixes of parent workspaces
      */
     parentPrefixes?: string[];
+    /**
+     * Early access attribute value of the workspace
+     */
+    earlyAccess?: string;
 }
 
 /**
