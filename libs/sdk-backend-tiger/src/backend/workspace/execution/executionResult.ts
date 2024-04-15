@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 import {
     ITigerClient,
@@ -33,6 +33,10 @@ import { parseNameFromContentDisposition } from "../../../utils/downloadFile.js"
 const TIGER_PAGE_SIZE_LIMIT = 1000;
 const DEFAULT_POLL_DELAY = 5000;
 const MAX_POLL_ATTEMPTS = 50;
+
+function isTabularExportFormat(format: string = ""): format is keyof typeof TabularExportRequestFormatEnum {
+    return format in TabularExportRequestFormatEnum;
+}
 
 function sanitizeOffset(offset: number[]): number[] {
     return offset.map((offsetItem = 0) => offsetItem);
@@ -107,18 +111,23 @@ export class TigerExecutionResult implements IExecutionResult {
     }
 
     public async export(options: IExportConfig): Promise<IExportResult> {
-        const isXlsx = options.format?.toUpperCase() === "XLSX";
-        const format = isXlsx ? TabularExportRequestFormatEnum.XLSX : TabularExportRequestFormatEnum.CSV;
+        const uppercaseFormat = options.format?.toUpperCase();
+        const format = isTabularExportFormat(uppercaseFormat)
+            ? TabularExportRequestFormatEnum[uppercaseFormat]
+            : TabularExportRequestFormatEnum.CSV;
+
+        const settings = {
+            ...(format === TabularExportRequestFormatEnum.XLSX
+                ? { mergeHeaders: Boolean(options.mergeHeaders), showFilters: Boolean(options.showFilters) }
+                : {}),
+            ...(format === TabularExportRequestFormatEnum.PDF ? options.pdfConfiguration : {}),
+        };
+
         const payload: TabularExportRequest = {
             format,
             executionResult: this.resultId,
             fileName: options.title ?? "default",
-            settings: isXlsx
-                ? {
-                      mergeHeaders: Boolean(options.mergeHeaders),
-                      showFilters: Boolean(options.showFilters),
-                  }
-                : undefined,
+            settings,
             customOverride: resolveCustomOverride(this.dimensions, this.definition),
         };
 

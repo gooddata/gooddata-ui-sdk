@@ -522,8 +522,9 @@ export type IExplainResult = {
 
 // @public
 export interface IExportConfig {
-    format?: "xlsx" | "csv" | "raw";
+    format?: "xlsx" | "csv" | "raw" | "pdf";
     mergeHeaders?: boolean;
+    pdfConfiguration?: IExportPdfConfig;
     showFilters?: boolean;
     title?: string;
 }
@@ -551,6 +552,12 @@ export interface IExportDefinitionsQueryOptions {
 
 // @alpha
 export type IExportDefinitionsQueryResult = IPagedResource<IExportDefinition>;
+
+// @public
+export interface IExportPdfConfig {
+    // (undocumented)
+    orientation: "portrait" | "landscape";
+}
 
 // @public
 export interface IExportResult {
