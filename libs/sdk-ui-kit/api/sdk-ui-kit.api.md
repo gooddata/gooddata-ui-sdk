@@ -2261,6 +2261,7 @@ export interface IInvertableSelectRenderItemProps<T> {
     onDeselect: () => void;
     onSelect: () => void;
     onSelectOnly: () => void;
+    title: string;
 }
 
 // @internal (undocumented)
