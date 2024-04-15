@@ -71,6 +71,22 @@ export interface ActionsApiAnalyzeCsvRequest {
 }
 
 // @public
+export interface ActionsApiAnomalyDetectionRequest {
+    readonly anomalyDetectionRequest: AnomalyDetectionRequest;
+    readonly resultId: string;
+    readonly skipCache?: boolean;
+    readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiAnomalyDetectionResultRequest {
+    readonly limit?: number;
+    readonly offset?: number;
+    readonly resultId: string;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface ActionsApiAvailableAssigneesRequest {
     readonly dashboardId: string;
     readonly workspaceId: string;
@@ -185,6 +201,12 @@ export interface ActionsApiCreateTabularExportRequest {
 export interface ActionsApiDashboardPermissionsRequest {
     readonly dashboardId: string;
     readonly workspaceId: string;
+}
+
+// @public
+export interface ActionsApiDeleteFilesRequest {
+    readonly dataSourceId: string;
+    readonly deleteFilesRequest: DeleteFilesRequest;
 }
 
 // @public
@@ -480,6 +502,12 @@ export interface ActionsApiSetTranslationsRequest {
 }
 
 // @public
+export interface ActionsApiStagingUploadRequest {
+    readonly dataSourceId: string;
+    readonly file: any;
+}
+
+// @public
 export interface ActionsApiTestDataSourceDefinitionRequest {
     readonly testDefinitionRequest: TestDefinitionRequest;
 }
@@ -521,6 +549,8 @@ export interface AFM {
 
 // @public
 export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApiInterface {
+    anomalyDetection(requestParameters: ActionsApiAnomalyDetectionRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<SmartFunctionResponse, any>>;
+    anomalyDetectionResult(requestParameters: ActionsApiAnomalyDetectionResultRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<AnomalyDetectionResult, any>>;
     clustering(requestParameters: ActionsApiClusteringRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<SmartFunctionResponse, any>>;
     clusteringResult(requestParameters: ActionsApiClusteringResultRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ClusteringResult, any>>;
     computeLabelElementsPost(requestParameters: ActionsApiComputeLabelElementsPostRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ElementsResponse, any>>;
@@ -538,6 +568,8 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
 
 // @public
 export const AfmActionsApiAxiosParamCreator: (configuration?: LabelElementsConfiguration) => {
+    anomalyDetection: (workspaceId: string, resultId: string, anomalyDetectionRequest: AnomalyDetectionRequest, skipCache?: boolean, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
+    anomalyDetectionResult: (workspaceId: string, resultId: string, offset?: number, limit?: number, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     clustering: (workspaceId: string, resultId: string, clusteringRequest: ClusteringRequest, skipCache?: boolean, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     clusteringResult: (workspaceId: string, resultId: string, offset?: number, limit?: number, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     computeLabelElementsPost: (workspaceId: string, elementsRequest: ElementsRequest, offset?: number, limit?: number, skipCache?: boolean, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
@@ -555,6 +587,8 @@ export const AfmActionsApiAxiosParamCreator: (configuration?: LabelElementsConfi
 
 // @public
 export const AfmActionsApiFactory: (configuration?: LabelElementsConfiguration, basePath?: string, axios?: AxiosInstance) => {
+    anomalyDetection(requestParameters: ActionsApiAnomalyDetectionRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
+    anomalyDetectionResult(requestParameters: ActionsApiAnomalyDetectionResultRequest, options?: AxiosRequestConfig): AxiosPromise<AnomalyDetectionResult>;
     clustering(requestParameters: ActionsApiClusteringRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
     clusteringResult(requestParameters: ActionsApiClusteringResultRequest, options?: AxiosRequestConfig): AxiosPromise<ClusteringResult>;
     computeLabelElementsPost(requestParameters: ActionsApiComputeLabelElementsPostRequest, options?: AxiosRequestConfig): AxiosPromise<ElementsResponse>;
@@ -572,6 +606,8 @@ export const AfmActionsApiFactory: (configuration?: LabelElementsConfiguration, 
 
 // @public
 export const AfmActionsApiFp: (configuration?: LabelElementsConfiguration) => {
+    anomalyDetection(workspaceId: string, resultId: string, anomalyDetectionRequest: AnomalyDetectionRequest, skipCache?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SmartFunctionResponse>>;
+    anomalyDetectionResult(workspaceId: string, resultId: string, offset?: number, limit?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnomalyDetectionResult>>;
     clustering(workspaceId: string, resultId: string, clusteringRequest: ClusteringRequest, skipCache?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SmartFunctionResponse>>;
     clusteringResult(workspaceId: string, resultId: string, offset?: number, limit?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ClusteringResult>>;
     computeLabelElementsPost(workspaceId: string, elementsRequest: ElementsRequest, offset?: number, limit?: number, skipCache?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ElementsResponse>>;
@@ -589,6 +625,8 @@ export const AfmActionsApiFp: (configuration?: LabelElementsConfiguration) => {
 
 // @public
 export interface AfmActionsApiInterface {
+    anomalyDetection(requestParameters: ActionsApiAnomalyDetectionRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
+    anomalyDetectionResult(requestParameters: ActionsApiAnomalyDetectionResultRequest, options?: AxiosRequestConfig): AxiosPromise<AnomalyDetectionResult>;
     clustering(requestParameters: ActionsApiClusteringRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
     clusteringResult(requestParameters: ActionsApiClusteringResultRequest, options?: AxiosRequestConfig): AxiosPromise<ClusteringResult>;
     computeLabelElementsPost(requestParameters: ActionsApiComputeLabelElementsPostRequest, options?: AxiosRequestConfig): AxiosPromise<ElementsResponse>;
@@ -873,6 +911,18 @@ export interface AnalyzeCsvResponseConfig {
 }
 
 // @public
+export interface AnomalyDetectionRequest {
+    sensitivity: number;
+}
+
+// @public
+export interface AnomalyDetectionResult {
+    anomalyFlag: Array<boolean>;
+    attribute: Array<string>;
+    values: Array<number>;
+}
+
+// @public
 export interface ApiEntitlement {
     expiry?: string;
     name: ApiEntitlementNameEnum;
@@ -896,7 +946,6 @@ export const ApiEntitlementNameEnum: {
     readonly WHITE_LABELING: "WhiteLabeling";
     readonly WORKSPACE_COUNT: "WorkspaceCount";
     readonly USER_TELEMETRY_DISABLED: "UserTelemetryDisabled";
-    readonly EXPERIMENTAL_FEATURES: "ExperimentalFeatures";
 };
 
 // @public (undocumented)
@@ -3270,6 +3319,7 @@ export const DeclarativeSettingTypeEnum: {
     readonly SHOW_HIDDEN_CATALOG_ITEMS: "SHOW_HIDDEN_CATALOG_ITEMS";
     readonly OPERATOR_OVERRIDES: "OPERATOR_OVERRIDES";
     readonly TIMEZONE_VALIDATION_ENABLED: "TIMEZONE_VALIDATION_ENABLED";
+    readonly OPENAI_CONFIG: "OPENAI_CONFIG";
 };
 
 // @public (undocumented)
@@ -3564,6 +3614,11 @@ export interface DeclarativeWorkspaces {
 // @public (undocumented)
 const defaultTigerClient: ITigerClient;
 export default defaultTigerClient;
+
+// @public
+export interface DeleteFilesRequest {
+    fileNames: Array<string>;
+}
 
 // @public
 export class DependencyGraphApi extends MetadataBaseApi implements DependencyGraphApiInterface {
@@ -5929,7 +5984,6 @@ export const EntitlementsRequestEntitlementsNameEnum: {
     readonly WHITE_LABELING: "WhiteLabeling";
     readonly WORKSPACE_COUNT: "WorkspaceCount";
     readonly USER_TELEMETRY_DISABLED: "UserTelemetryDisabled";
-    readonly EXPERIMENTAL_FEATURES: "ExperimentalFeatures";
 };
 
 // @public (undocumented)
@@ -6891,7 +6945,7 @@ export interface JsonApiAnalyticalDashboardOutList {
     data: Array<JsonApiAnalyticalDashboardOutWithLinks>;
     included?: Array<JsonApiAnalyticalDashboardOutIncludes>;
     links?: ListLinks;
-    meta?: JsonApiApiTokenOutListMeta;
+    meta?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public
@@ -7109,12 +7163,7 @@ export interface JsonApiApiTokenOutDocument {
 export interface JsonApiApiTokenOutList {
     data: Array<JsonApiApiTokenOutWithLinks>;
     links?: ListLinks;
-    meta?: JsonApiApiTokenOutListMeta;
-}
-
-// @public
-export interface JsonApiApiTokenOutListMeta {
-    page?: PageMetadata;
+    meta?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -7219,7 +7268,7 @@ export interface JsonApiAttributeHierarchyOutList {
     data: Array<JsonApiAttributeHierarchyOutWithLinks>;
     included?: Array<JsonApiAttributeHierarchyOutIncludes>;
     links?: ListLinks;
-    meta?: JsonApiApiTokenOutListMeta;
+    meta?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public
@@ -7381,7 +7430,7 @@ export interface JsonApiAttributeOutList {
     data: Array<JsonApiAttributeOutWithLinks>;
     included?: Array<JsonApiAttributeOutIncludes>;
     links?: ListLinks;
-    meta?: JsonApiApiTokenOutListMeta;
+    meta?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public
@@ -7479,7 +7528,12 @@ export interface JsonApiColorPaletteOutDocument {
 export interface JsonApiColorPaletteOutList {
     data: Array<JsonApiColorPaletteOutWithLinks>;
     links?: ListLinks;
-    meta?: JsonApiApiTokenOutListMeta;
+    meta?: JsonApiColorPaletteOutListMeta;
+}
+
+// @public
+export interface JsonApiColorPaletteOutListMeta {
+    page?: PageMetadata;
 }
 
 // @public (undocumented)
@@ -7534,7 +7588,7 @@ export type JsonApiColorPalettePatchTypeEnum = typeof JsonApiColorPalettePatchTy
 
 // @public
 export interface JsonApiCookieSecurityConfigurationIn {
-    attributes?: JsonApiCookieSecurityConfigurationPatchAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
     id: string;
     type: JsonApiCookieSecurityConfigurationInTypeEnum;
 }
@@ -7554,9 +7608,15 @@ export type JsonApiCookieSecurityConfigurationInTypeEnum = typeof JsonApiCookieS
 
 // @public
 export interface JsonApiCookieSecurityConfigurationOut {
-    attributes?: JsonApiCookieSecurityConfigurationPatchAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
     id: string;
     type: JsonApiCookieSecurityConfigurationOutTypeEnum;
+}
+
+// @public
+export interface JsonApiCookieSecurityConfigurationOutAttributes {
+    lastRotation?: string;
+    rotationInterval?: string;
 }
 
 // @public
@@ -7575,15 +7635,9 @@ export type JsonApiCookieSecurityConfigurationOutTypeEnum = typeof JsonApiCookie
 
 // @public
 export interface JsonApiCookieSecurityConfigurationPatch {
-    attributes?: JsonApiCookieSecurityConfigurationPatchAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
     id: string;
     type: JsonApiCookieSecurityConfigurationPatchTypeEnum;
-}
-
-// @public
-export interface JsonApiCookieSecurityConfigurationPatchAttributes {
-    lastRotation?: string;
-    rotationInterval?: string;
 }
 
 // @public
@@ -7641,7 +7695,7 @@ export interface JsonApiCspDirectiveOutDocument {
 export interface JsonApiCspDirectiveOutList {
     data: Array<JsonApiCspDirectiveOutWithLinks>;
     links?: ListLinks;
-    meta?: JsonApiApiTokenOutListMeta;
+    meta?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -7731,7 +7785,7 @@ export interface JsonApiCustomApplicationSettingOutDocument {
 export interface JsonApiCustomApplicationSettingOutList {
     data: Array<JsonApiCustomApplicationSettingOutWithLinks>;
     links?: ListLinks;
-    meta?: JsonApiApiTokenOutListMeta;
+    meta?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -7877,7 +7931,7 @@ export interface JsonApiDashboardPluginOutList {
     data: Array<JsonApiDashboardPluginOutWithLinks>;
     included?: Array<JsonApiUserIdentifierOutWithLinks>;
     links?: ListLinks;
-    meta?: JsonApiApiTokenOutListMeta;
+    meta?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public
@@ -8109,7 +8163,7 @@ export interface JsonApiDatasetOutList {
     data: Array<JsonApiDatasetOutWithLinks>;
     included?: Array<JsonApiDatasetOutIncludes>;
     links?: ListLinks;
-    meta?: JsonApiApiTokenOutListMeta;
+    meta?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public
@@ -8205,7 +8259,7 @@ export interface JsonApiDataSourceIdentifierOutDocument {
 export interface JsonApiDataSourceIdentifierOutList {
     data: Array<JsonApiDataSourceIdentifierOutWithLinks>;
     links?: ListLinks;
-    meta?: JsonApiApiTokenOutListMeta;
+    meta?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -8370,7 +8424,7 @@ export interface JsonApiDataSourceOutDocument {
 export interface JsonApiDataSourceOutList {
     data: Array<JsonApiDataSourceOutWithLinks>;
     links?: ListLinks;
-    meta?: JsonApiApiTokenOutListMeta;
+    meta?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public
@@ -8511,7 +8565,7 @@ export interface JsonApiEntitlementOutDocument {
 export interface JsonApiEntitlementOutList {
     data: Array<JsonApiEntitlementOutWithLinks>;
     links?: ListLinks;
-    meta?: JsonApiApiTokenOutListMeta;
+    meta?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -8593,7 +8647,7 @@ export interface JsonApiExportDefinitionOutList {
     data: Array<JsonApiExportDefinitionOutWithLinks>;
     included?: Array<JsonApiExportDefinitionOutIncludes>;
     links?: ListLinks;
-    meta?: JsonApiApiTokenOutListMeta;
+    meta?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public
@@ -8757,7 +8811,7 @@ export interface JsonApiFactOutList {
     data: Array<JsonApiFactOutWithLinks>;
     included?: Array<JsonApiDatasetOutWithLinks>;
     links?: ListLinks;
-    meta?: JsonApiApiTokenOutListMeta;
+    meta?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public
@@ -8849,7 +8903,7 @@ export interface JsonApiFilterContextOutList {
     data: Array<JsonApiFilterContextOutWithLinks>;
     included?: Array<JsonApiFilterContextOutIncludes>;
     links?: ListLinks;
-    meta?: JsonApiApiTokenOutListMeta;
+    meta?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public
@@ -8968,7 +9022,7 @@ export interface JsonApiJwkOutDocument {
 export interface JsonApiJwkOutList {
     data: Array<JsonApiJwkOutWithLinks>;
     links?: ListLinks;
-    meta?: JsonApiApiTokenOutListMeta;
+    meta?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -9094,7 +9148,7 @@ export interface JsonApiLabelOutList {
     data: Array<JsonApiLabelOutWithLinks>;
     included?: Array<JsonApiAttributeOutWithLinks>;
     links?: ListLinks;
-    meta?: JsonApiApiTokenOutListMeta;
+    meta?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public
@@ -9205,7 +9259,7 @@ export interface JsonApiMetricOutList {
     data: Array<JsonApiMetricOutWithLinks>;
     included?: Array<JsonApiMetricOutIncludes>;
     links?: ListLinks;
-    meta?: JsonApiApiTokenOutListMeta;
+    meta?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public
@@ -9316,9 +9370,23 @@ export type JsonApiMetricPostOptionalIdTypeEnum = typeof JsonApiMetricPostOption
 
 // @public
 export interface JsonApiOrganizationIn {
-    attributes?: JsonApiOrganizationPatchAttributes;
+    attributes?: JsonApiOrganizationInAttributes;
     id: string;
     type: JsonApiOrganizationInTypeEnum;
+}
+
+// @public
+export interface JsonApiOrganizationInAttributes {
+    allowedOrigins?: Array<string>;
+    earlyAccess?: string;
+    hostname?: string;
+    jitEnabled?: boolean;
+    name?: string;
+    oauthClientId?: string;
+    oauthClientSecret?: string;
+    oauthIssuerId?: string;
+    oauthIssuerLocation?: string;
+    oauthSubjectIdClaim?: string;
 }
 
 // @public
@@ -9422,23 +9490,9 @@ export type JsonApiOrganizationOutTypeEnum = typeof JsonApiOrganizationOutTypeEn
 
 // @public
 export interface JsonApiOrganizationPatch {
-    attributes?: JsonApiOrganizationPatchAttributes;
+    attributes?: JsonApiOrganizationInAttributes;
     id: string;
     type: JsonApiOrganizationPatchTypeEnum;
-}
-
-// @public
-export interface JsonApiOrganizationPatchAttributes {
-    allowedOrigins?: Array<string>;
-    earlyAccess?: string;
-    hostname?: string;
-    jitEnabled?: boolean;
-    name?: string;
-    oauthClientId?: string;
-    oauthClientSecret?: string;
-    oauthIssuerId?: string;
-    oauthIssuerLocation?: string;
-    oauthSubjectIdClaim?: string;
 }
 
 // @public
@@ -9456,7 +9510,7 @@ export type JsonApiOrganizationPatchTypeEnum = typeof JsonApiOrganizationPatchTy
 
 // @public
 export interface JsonApiOrganizationSettingIn {
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingPatchAttributes;
     id: string;
     type: JsonApiOrganizationSettingInTypeEnum;
 }
@@ -9476,7 +9530,7 @@ export type JsonApiOrganizationSettingInTypeEnum = typeof JsonApiOrganizationSet
 
 // @public
 export interface JsonApiOrganizationSettingOut {
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingPatchAttributes;
     id: string;
     type: JsonApiOrganizationSettingOutTypeEnum;
 }
@@ -9491,7 +9545,7 @@ export interface JsonApiOrganizationSettingOutDocument {
 export interface JsonApiOrganizationSettingOutList {
     data: Array<JsonApiOrganizationSettingOutWithLinks>;
     links?: ListLinks;
-    meta?: JsonApiApiTokenOutListMeta;
+    meta?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -9504,7 +9558,7 @@ export type JsonApiOrganizationSettingOutTypeEnum = typeof JsonApiOrganizationSe
 
 // @public
 export interface JsonApiOrganizationSettingOutWithLinks {
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingPatchAttributes;
     id: string;
     links?: ObjectLinks;
     type: JsonApiOrganizationSettingOutWithLinksTypeEnum;
@@ -9520,10 +9574,36 @@ export type JsonApiOrganizationSettingOutWithLinksTypeEnum = typeof JsonApiOrgan
 
 // @public
 export interface JsonApiOrganizationSettingPatch {
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingPatchAttributes;
     id: string;
     type: JsonApiOrganizationSettingPatchTypeEnum;
 }
+
+// @public
+export interface JsonApiOrganizationSettingPatchAttributes {
+    content?: object;
+    type?: JsonApiOrganizationSettingPatchAttributesTypeEnum;
+}
+
+// @public (undocumented)
+export const JsonApiOrganizationSettingPatchAttributesTypeEnum: {
+    readonly TIMEZONE: "TIMEZONE";
+    readonly ACTIVE_THEME: "ACTIVE_THEME";
+    readonly ACTIVE_COLOR_PALETTE: "ACTIVE_COLOR_PALETTE";
+    readonly WHITE_LABELING: "WHITE_LABELING";
+    readonly LOCALE: "LOCALE";
+    readonly METADATA_LOCALE: "METADATA_LOCALE";
+    readonly FORMAT_LOCALE: "FORMAT_LOCALE";
+    readonly MAPBOX_TOKEN: "MAPBOX_TOKEN";
+    readonly WEEK_START: "WEEK_START";
+    readonly SHOW_HIDDEN_CATALOG_ITEMS: "SHOW_HIDDEN_CATALOG_ITEMS";
+    readonly OPERATOR_OVERRIDES: "OPERATOR_OVERRIDES";
+    readonly TIMEZONE_VALIDATION_ENABLED: "TIMEZONE_VALIDATION_ENABLED";
+    readonly OPENAI_CONFIG: "OPENAI_CONFIG";
+};
+
+// @public (undocumented)
+export type JsonApiOrganizationSettingPatchAttributesTypeEnum = typeof JsonApiOrganizationSettingPatchAttributesTypeEnum[keyof typeof JsonApiOrganizationSettingPatchAttributesTypeEnum];
 
 // @public
 export interface JsonApiOrganizationSettingPatchDocument {
@@ -9575,7 +9655,7 @@ export interface JsonApiThemeOutDocument {
 export interface JsonApiThemeOutList {
     data: Array<JsonApiThemeOutWithLinks>;
     links?: ListLinks;
-    meta?: JsonApiApiTokenOutListMeta;
+    meta?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -9667,7 +9747,7 @@ export interface JsonApiUserDataFilterOutList {
     data: Array<JsonApiUserDataFilterOutWithLinks>;
     included?: Array<JsonApiUserDataFilterOutIncludes>;
     links?: ListLinks;
-    meta?: JsonApiApiTokenOutListMeta;
+    meta?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public
@@ -9828,7 +9908,7 @@ export interface JsonApiUserGroupOutList {
     data: Array<JsonApiUserGroupOutWithLinks>;
     included?: Array<JsonApiUserGroupOutWithLinks>;
     links?: ListLinks;
-    meta?: JsonApiApiTokenOutListMeta;
+    meta?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -9933,7 +10013,7 @@ export interface JsonApiUserIdentifierOutDocument {
 export interface JsonApiUserIdentifierOutList {
     data: Array<JsonApiUserIdentifierOutWithLinks>;
     links?: ListLinks;
-    meta?: JsonApiApiTokenOutListMeta;
+    meta?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -10018,7 +10098,7 @@ export interface JsonApiUserOutList {
     data: Array<JsonApiUserOutWithLinks>;
     included?: Array<JsonApiUserGroupOutWithLinks>;
     links?: ListLinks;
-    meta?: JsonApiApiTokenOutListMeta;
+    meta?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -10082,35 +10162,10 @@ export type JsonApiUserPatchTypeEnum = typeof JsonApiUserPatchTypeEnum[keyof typ
 
 // @public
 export interface JsonApiUserSettingIn {
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingPatchAttributes;
     id: string;
     type: JsonApiUserSettingInTypeEnum;
 }
-
-// @public
-export interface JsonApiUserSettingInAttributes {
-    content?: object;
-    type?: JsonApiUserSettingInAttributesTypeEnum;
-}
-
-// @public (undocumented)
-export const JsonApiUserSettingInAttributesTypeEnum: {
-    readonly TIMEZONE: "TIMEZONE";
-    readonly ACTIVE_THEME: "ACTIVE_THEME";
-    readonly ACTIVE_COLOR_PALETTE: "ACTIVE_COLOR_PALETTE";
-    readonly WHITE_LABELING: "WHITE_LABELING";
-    readonly LOCALE: "LOCALE";
-    readonly METADATA_LOCALE: "METADATA_LOCALE";
-    readonly FORMAT_LOCALE: "FORMAT_LOCALE";
-    readonly MAPBOX_TOKEN: "MAPBOX_TOKEN";
-    readonly WEEK_START: "WEEK_START";
-    readonly SHOW_HIDDEN_CATALOG_ITEMS: "SHOW_HIDDEN_CATALOG_ITEMS";
-    readonly OPERATOR_OVERRIDES: "OPERATOR_OVERRIDES";
-    readonly TIMEZONE_VALIDATION_ENABLED: "TIMEZONE_VALIDATION_ENABLED";
-};
-
-// @public (undocumented)
-export type JsonApiUserSettingInAttributesTypeEnum = typeof JsonApiUserSettingInAttributesTypeEnum[keyof typeof JsonApiUserSettingInAttributesTypeEnum];
 
 // @public
 export interface JsonApiUserSettingInDocument {
@@ -10127,7 +10182,7 @@ export type JsonApiUserSettingInTypeEnum = typeof JsonApiUserSettingInTypeEnum[k
 
 // @public
 export interface JsonApiUserSettingOut {
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingPatchAttributes;
     id: string;
     type: JsonApiUserSettingOutTypeEnum;
 }
@@ -10142,7 +10197,7 @@ export interface JsonApiUserSettingOutDocument {
 export interface JsonApiUserSettingOutList {
     data: Array<JsonApiUserSettingOutWithLinks>;
     links?: ListLinks;
-    meta?: JsonApiApiTokenOutListMeta;
+    meta?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -10155,7 +10210,7 @@ export type JsonApiUserSettingOutTypeEnum = typeof JsonApiUserSettingOutTypeEnum
 
 // @public
 export interface JsonApiUserSettingOutWithLinks {
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingPatchAttributes;
     id: string;
     links?: ObjectLinks;
     type: JsonApiUserSettingOutWithLinksTypeEnum;
@@ -10227,7 +10282,7 @@ export interface JsonApiVisualizationObjectOutList {
     data: Array<JsonApiVisualizationObjectOutWithLinks>;
     included?: Array<JsonApiMetricOutIncludes>;
     links?: ListLinks;
-    meta?: JsonApiApiTokenOutListMeta;
+    meta?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -10372,7 +10427,7 @@ export interface JsonApiWorkspaceDataFilterOutList {
     data: Array<JsonApiWorkspaceDataFilterOutWithLinks>;
     included?: Array<JsonApiWorkspaceDataFilterSettingOutWithLinks>;
     links?: ListLinks;
-    meta?: JsonApiApiTokenOutListMeta;
+    meta?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -10495,7 +10550,7 @@ export interface JsonApiWorkspaceDataFilterSettingOutList {
     data: Array<JsonApiWorkspaceDataFilterSettingOutWithLinks>;
     included?: Array<JsonApiWorkspaceDataFilterOutWithLinks>;
     links?: ListLinks;
-    meta?: JsonApiApiTokenOutListMeta;
+    meta?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -10604,7 +10659,7 @@ export interface JsonApiWorkspaceOutList {
     data: Array<JsonApiWorkspaceOutWithLinks>;
     included?: Array<JsonApiWorkspaceOutWithLinks>;
     links?: ListLinks;
-    meta?: JsonApiApiTokenOutListMeta;
+    meta?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public
@@ -10720,7 +10775,7 @@ export type JsonApiWorkspacePatchTypeEnum = typeof JsonApiWorkspacePatchTypeEnum
 
 // @public
 export interface JsonApiWorkspaceSettingIn {
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingPatchAttributes;
     id: string;
     type: JsonApiWorkspaceSettingInTypeEnum;
 }
@@ -10740,7 +10795,7 @@ export type JsonApiWorkspaceSettingInTypeEnum = typeof JsonApiWorkspaceSettingIn
 
 // @public
 export interface JsonApiWorkspaceSettingOut {
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingPatchAttributes;
     id: string;
     meta?: JsonApiAttributeHierarchyOutMeta;
     type: JsonApiWorkspaceSettingOutTypeEnum;
@@ -10756,7 +10811,7 @@ export interface JsonApiWorkspaceSettingOutDocument {
 export interface JsonApiWorkspaceSettingOutList {
     data: Array<JsonApiWorkspaceSettingOutWithLinks>;
     links?: ListLinks;
-    meta?: JsonApiApiTokenOutListMeta;
+    meta?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -10769,7 +10824,7 @@ export type JsonApiWorkspaceSettingOutTypeEnum = typeof JsonApiWorkspaceSettingO
 
 // @public
 export interface JsonApiWorkspaceSettingOutWithLinks {
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingPatchAttributes;
     id: string;
     links?: ObjectLinks;
     meta?: JsonApiAttributeHierarchyOutMeta;
@@ -10786,7 +10841,7 @@ export type JsonApiWorkspaceSettingOutWithLinksTypeEnum = typeof JsonApiWorkspac
 
 // @public
 export interface JsonApiWorkspaceSettingPatch {
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingPatchAttributes;
     id: string;
     type: JsonApiWorkspaceSettingPatchTypeEnum;
 }
@@ -10806,7 +10861,7 @@ export type JsonApiWorkspaceSettingPatchTypeEnum = typeof JsonApiWorkspaceSettin
 
 // @public
 export interface JsonApiWorkspaceSettingPostOptionalId {
-    attributes?: JsonApiUserSettingInAttributes;
+    attributes?: JsonApiOrganizationSettingPatchAttributes;
     id?: string;
     type: JsonApiWorkspaceSettingPostOptionalIdTypeEnum;
 }
@@ -13556,6 +13611,7 @@ export const ResolvedSettingTypeEnum: {
     readonly SHOW_HIDDEN_CATALOG_ITEMS: "SHOW_HIDDEN_CATALOG_ITEMS";
     readonly OPERATOR_OVERRIDES: "OPERATOR_OVERRIDES";
     readonly TIMEZONE_VALIDATION_ENABLED: "TIMEZONE_VALIDATION_ENABLED";
+    readonly OPENAI_CONFIG: "OPENAI_CONFIG";
 };
 
 // @public (undocumented)
@@ -13576,9 +13632,11 @@ export interface RestApiIdentifier {
 export interface ResultActionsApiInterface {
     analyzeCsv(requestParameters: ActionsApiAnalyzeCsvRequest, options?: AxiosRequestConfig): AxiosPromise<Array<AnalyzeCsvResponse>>;
     collectCacheUsage(options?: AxiosRequestConfig): AxiosPromise<CacheUsageData>;
+    deleteFiles(requestParameters: ActionsApiDeleteFilesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getStagingUploadLocation(requestParameters: ActionsApiGetStagingUploadLocationRequest, options?: AxiosRequestConfig): AxiosPromise<StagingUploadLocation>;
     importCsv(requestParameters: ActionsApiImportCsvRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     listFiles(requestParameters: ActionsApiListFilesRequest, options?: AxiosRequestConfig): AxiosPromise<Array<GdStorageFile>>;
+    stagingUpload(requestParameters: ActionsApiStagingUploadRequest, options?: AxiosRequestConfig): AxiosPromise<UploadFileResponse>;
 }
 
 // @public
@@ -14201,6 +14259,11 @@ export interface TranslationsApiRetrieveTranslationsRequest {
 export interface TranslationsApiSetTranslationsRequest {
     readonly workspaceId: string;
     readonly xliff: Xliff;
+}
+
+// @public
+export interface UploadFileResponse {
+    location: string;
 }
 
 // @public

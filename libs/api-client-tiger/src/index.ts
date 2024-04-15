@@ -189,6 +189,10 @@ export {
     KeyDriversDimension,
     KeyDriversDimensionGranularityEnum,
     KeyDriversDimensionValueTypeEnum,
+    AnomalyDetectionRequest,
+    ActionsApiAnomalyDetectionRequest,
+    ActionsApiAnomalyDetectionResultRequest,
+    AnomalyDetectionResult,
 } from "./generated/afm-rest-api/api.js";
 export {
     ActionsApiFactory as AuthActionsApiFactory,
@@ -285,6 +289,10 @@ export {
     WorkspaceCacheSettings,
     WorkspaceCacheUsage,
     WorkspaceCurrentCacheUsage,
+    ActionsApiDeleteFilesRequest,
+    ActionsApiStagingUploadRequest,
+    UploadFileResponse,
+    DeleteFilesRequest,
 } from "./generated/result-json-api/api.js";
 
 export * from "./client.js";

@@ -21,6 +21,57 @@
         }
     ],
     "paths": {
+        "/api/v1/actions/dataSources/{dataSourceId}/staging/uploadFile": {
+            "post": {
+                "tags": ["Data source staging location", "actions"],
+                "summary": "Upload a file to the staging area",
+                "description": "Provides a location for uploading staging files.",
+                "operationId": "stagingUpload",
+                "parameters": [
+                    {
+                        "name": "dataSourceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": ["file"],
+                                "type": "object",
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "description": "The file to upload.",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "Upload was successful.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UploadFileResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["MANAGE"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
         "/api/v1/actions/dataSources/{dataSourceId}/staging/upload": {
             "post": {
                 "tags": ["Data source staging location", "actions"],
@@ -57,7 +108,7 @@
         },
         "/api/v1/actions/dataSources/{dataSourceId}/listFiles": {
             "post": {
-                "tags": ["Data source files import", "actions"],
+                "tags": ["Data source files listing", "actions"],
                 "summary": "List datasource files",
                 "description": "List all the files in the given data source.",
                 "operationId": "listFiles",
@@ -121,6 +172,43 @@
                 "responses": {
                     "200": {
                         "description": "Successful import."
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["MANAGE"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/dataSources/{dataSourceId}/deleteFiles": {
+            "post": {
+                "tags": ["Data source files deletion", "actions"],
+                "summary": "Delete datasource files",
+                "description": "Delete the files in the given data source.",
+                "operationId": "deleteFiles",
+                "parameters": [
+                    {
+                        "name": "dataSourceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DeleteFilesRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "204": {
+                        "description": "Successful deletion."
                     }
                 },
                 "x-gdc-security-info": {
@@ -203,6 +291,17 @@
     },
     "components": {
         "schemas": {
+            "UploadFileResponse": {
+                "required": ["location"],
+                "type": "object",
+                "properties": {
+                    "location": {
+                        "type": "string",
+                        "description": "Location to use when referencing the uploaded file in subsequent requests."
+                    }
+                },
+                "description": "Information related to the file uploaded to the staging area."
+            },
             "StagingUploadLocation": {
                 "required": ["location", "uploadUrl"],
                 "type": "object",
@@ -484,6 +583,21 @@
                     }
                 },
                 "description": "Config to use when accessing the data for executions, etc."
+            },
+            "DeleteFilesRequest": {
+                "required": ["fileNames"],
+                "type": "object",
+                "properties": {
+                    "fileNames": {
+                        "type": "array",
+                        "description": "Names of the files to delete.",
+                        "items": {
+                            "type": "string",
+                            "description": "Names of the files to delete."
+                        }
+                    }
+                },
+                "description": "Request to delete files from the storage."
             },
             "AnalyzeCsvRequest": {
                 "required": ["analyzeRequests"],
