@@ -212,3 +212,9 @@ your own data:
     ```
 
 Read more about [integration with GoodData Cloud or GoodData.CN](../learn/integrate_and_authenticate/cn_and_cloud_authentication/) .
+
+### Update from v9 to v10
+
+Upgrade all the `@gooddata` dependencies to the latest stable version in `package.json`.
+
+> **Note:** Starting with version 10.0.0, the **gooddata-ui-sdk** no longer supports the GoodData Platform. It is necessary to remove `"@gooddata/sdk-backend-bear"` from the `package.json`.
