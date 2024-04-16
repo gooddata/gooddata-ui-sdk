@@ -21,6 +21,8 @@ import {
     IWorkspaceAccessControlService,
     IAttributeHierarchiesService,
     IWorkspaceExportDefinitionsService,
+    IDataFiltersService,
+    IWorkspaceLogicalModelService,
 } from "@gooddata/sdk-backend-spi";
 import { CustomExecutionFactory } from "./execution.js";
 import { CustomBackendConfig, CustomBackendState } from "./config.js";
@@ -116,7 +118,16 @@ export class CustomWorkspace implements IAnalyticalWorkspace {
     public attributeHierarchies(): IAttributeHierarchiesService {
         throw new NotSupported("attribute hierarchy is not supported");
     }
+
     public exportDefinitions(): IWorkspaceExportDefinitionsService {
         throw new NotSupported("export definitions are not supported");
+    }
+
+    public dataFilters(): IDataFiltersService {
+        throw new NotSupported("data filters are not supported");
+    }
+
+    public logicalModel(): IWorkspaceLogicalModelService {
+        throw new NotSupported("logical model is not supported");
     }
 }

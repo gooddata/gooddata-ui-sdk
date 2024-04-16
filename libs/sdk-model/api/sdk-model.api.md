@@ -3345,6 +3345,26 @@ export interface IWorkspaceAccess {
 }
 
 // @alpha
+export interface IWorkspaceDataFilter {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    settings: IWorkspaceDataFilterSetting[];
+    // (undocumented)
+    title?: string;
+}
+
+// @alpha
+export interface IWorkspaceDataFilterSetting {
+    // (undocumented)
+    filterValues: string[];
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    title?: string;
+}
+
+// @alpha
 export interface IWorkspacePermissionAssignment {
     // (undocumented)
     assigneeIdentifier: IOrganizationAssignee;
