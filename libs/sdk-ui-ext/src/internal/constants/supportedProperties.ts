@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { AXIS } from "./axis.js";
 import { HeadlineControlProperties } from "../interfaces/ControlProperties.js";
 import { CalculateAs } from "@gooddata/sdk-ui-charts";
@@ -12,6 +12,8 @@ const BASE_PROPERTIES = [
     "zoomInsight",
     "disableDrillDown",
 ];
+
+const FORECAST_PROPERTIES = ["forecast"];
 
 const BASE_X_AXIS_PROPERTIES = [
     "xaxis.rotation",
@@ -63,6 +65,7 @@ const CHART_TYPE_PROPERTIES = ["primaryChartType", "secondaryChartType", "dualAx
 
 export const BASE_CHART_SUPPORTED_PROPERTIES = [
     ...BASE_PROPERTIES,
+    ...FORECAST_PROPERTIES,
     ...BASE_X_AXIS_PROPERTIES,
     ...BASE_PRIMARY_AXIS_PROPERTIES,
 ];

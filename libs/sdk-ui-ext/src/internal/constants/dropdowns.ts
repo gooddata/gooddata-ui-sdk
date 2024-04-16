@@ -45,6 +45,15 @@ export const formatDropdownItems: IDropdownItem[] = [
     },
 ];
 
+export const confidenceDropdownItems: IDropdownItem[] = [
+    { title: messages.forecastConfidence70.id, value: "70" },
+    { title: messages.forecastConfidence75.id, value: "75" },
+    { title: messages.forecastConfidence80.id, value: "80" },
+    { title: messages.forecastConfidence85.id, value: "85" },
+    { title: messages.forecastConfidence90.id, value: "90" },
+    { title: messages.forecastConfidence95.id, value: "95" },
+];
+
 export const legendPositionDropdownItems: IDropdownItem[] = [
     { title: messages.autoDefault.id, value: "auto" },
     { type: "separator" },
