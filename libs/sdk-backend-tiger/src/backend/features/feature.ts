@@ -282,6 +282,48 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableOracleDataSource,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableAnalyticalCatalog,
+            "enableAnalyticalCatalog",
+            "BOOLEAN",
+            FeatureFlagsValues.enableAnalyticalCatalog,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableAlerting,
+            "enableAlerting",
+            "BOOLEAN",
+            FeatureFlagsValues.enableAlerting,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableLabsSmartFunctions,
+            "enableLabsSmartFunctions",
+            "BOOLEAN",
+            FeatureFlagsValues.enableLabsSmartFunctions,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableKeyDriverAnalysis,
+            "enableKeyDriverAnalysis",
+            "BOOLEAN",
+            FeatureFlagsValues.enableKeyDriverAnalysis,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableDataProfiling,
+            "enableDataProfiling",
+            "BOOLEAN",
+            FeatureFlagsValues.enableDataProfiling,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableExperimentalFeaturesUI,
+            "enableExperimentalFeaturesUI",
+            "BOOLEAN",
+            FeatureFlagsValues.enableExperimentalFeaturesUI,
+        ),
     };
 }
 
