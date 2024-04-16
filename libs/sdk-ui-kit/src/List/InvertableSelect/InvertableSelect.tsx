@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React, { useCallback } from "react";
 import cx from "classnames";
 import DefaultMeasure from "react-measure";
@@ -30,6 +30,11 @@ export interface IInvertableSelectRenderItemProps<T> {
      * Item of list
      */
     item: T;
+
+    /**
+     * Title of the item
+     */
+    title: string;
 
     /**
      * Indicate that item is selected
@@ -212,10 +217,11 @@ export function InvertableSelect<T>(props: IInvertableSelectProps<T>) {
                 },
                 onSelectOnly: () => selectOnly(item),
                 item,
+                title: getItemTitle(item),
                 isSelected: getIsItemSelected(item),
             });
         },
-        [renderItem, getIsItemSelected, selectItems, deselectItems, selectOnly],
+        [renderItem, getIsItemSelected, getItemTitle, selectItems, deselectItems, selectOnly],
     );
 
     return (
@@ -303,7 +309,14 @@ function defaultNoData(): JSX.Element {
 }
 
 function defaultItem<T>(props: IInvertableSelectRenderItemProps<T>): JSX.Element {
-    return <InvertableSelectItem {...props} />;
+    return (
+        <InvertableSelectItem
+            title={props.title}
+            isSelected={props.isSelected}
+            onClick={props.isSelected ? props.onDeselect : props.onSelect}
+            onOnly={props.onSelectOnly}
+        />
+    );
 }
 
 function defaultStatusBar<T>(props: IInvertableSelectRenderStatusBarProps<T>): JSX.Element {

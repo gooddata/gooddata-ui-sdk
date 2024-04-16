@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import {
     IOrganization,
@@ -55,6 +55,7 @@ export class TigerOrganization implements IOrganization {
                 title: organizationName,
                 bootstrapUser: idRef(bootstrapUser.id, bootstrapUser.type),
                 bootstrapUserGroup: idRef(bootstrapUserGroup.id, bootstrapUserGroup.type),
+                earlyAccess: result.data.data.attributes?.earlyAccess,
             };
         }
 

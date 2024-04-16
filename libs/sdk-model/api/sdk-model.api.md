@@ -2061,6 +2061,8 @@ export interface IOrganizationDescriptor {
     // (undocumented)
     bootstrapUserGroup?: ObjRef;
     // (undocumented)
+    earlyAccess?: string;
+    // (undocumented)
     id: string;
     // (undocumented)
     title: string;

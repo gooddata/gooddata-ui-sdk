@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { JsonApiWorkspaceOut, JsonApiWorkspaceOutWithLinks } from "@gooddata/api-client-tiger";
 import { IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
 
@@ -14,5 +14,6 @@ export const workspaceConverter = (
         prefix: attributes?.prefix,
         parentWorkspace,
         parentPrefixes,
+        earlyAccess: attributes?.earlyAccess,
     };
 };

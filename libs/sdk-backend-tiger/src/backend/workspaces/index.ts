@@ -6,7 +6,7 @@ import {
     IAnalyticalWorkspace,
     IWorkspaceDescriptor,
 } from "@gooddata/sdk-backend-spi";
-import { JsonApiWorkspaceOutList, JsonApiWorkspacePatchAttributes } from "@gooddata/api-client-tiger";
+import { JsonApiWorkspaceOutList, DeclarativeWorkspace } from "@gooddata/api-client-tiger";
 import { TigerAuthenticatedCallGuard } from "../../types/index.js";
 import { DateFormatter } from "../../convertors/fromBackend/dateFormatting/types.js";
 import { workspaceConverter } from "../../convertors/fromBackend/WorkspaceConverter.js";
@@ -32,7 +32,7 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
     private limit: number = 100;
     private offset: number = 0;
     private search: string | undefined = undefined;
-    private filter: JsonApiWorkspacePatchAttributes = {};
+    private filter: Partial<DeclarativeWorkspace> = {};
     private parentWorkspaceId: string | undefined = undefined;
 
     constructor(

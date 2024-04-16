@@ -446,6 +446,44 @@ export interface AfmValidObjectsResponse {
     items: Array<RestApiIdentifier>;
 }
 /**
+ *
+ * @export
+ * @interface AnomalyDetectionRequest
+ */
+export interface AnomalyDetectionRequest {
+    /**
+     * Anomaly detection sensitivity.
+     * @type {number}
+     * @memberof AnomalyDetectionRequest
+     */
+    sensitivity: number;
+}
+/**
+ *
+ * @export
+ * @interface AnomalyDetectionResult
+ */
+export interface AnomalyDetectionResult {
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof AnomalyDetectionResult
+     */
+    attribute: Array<string>;
+    /**
+     *
+     * @type {Array<number>}
+     * @memberof AnomalyDetectionResult
+     */
+    values: Array<number>;
+    /**
+     *
+     * @type {Array<boolean>}
+     * @memberof AnomalyDetectionResult
+     */
+    anomalyFlag: Array<boolean>;
+}
+/**
  * Metric representing arithmetics between metrics.
  * @export
  * @interface ArithmeticMeasureDefinition
@@ -740,13 +778,13 @@ export interface ClusteringResult {
      * @type {Array<number>}
      * @memberof ClusteringResult
      */
-    xcoord: Array<number>;
+    ycoord: Array<number>;
     /**
      *
      * @type {Array<number>}
      * @memberof ClusteringResult
      */
-    ycoord: Array<number>;
+    xcoord: Array<number>;
 }
 /**
  * Filter the result by comparing specified metric to given constant value, using given comparison operator.
@@ -2521,6 +2559,124 @@ export interface ValidateByItem {
 export const ActionsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * (EXPERIMENTAL) Computes anomaly detection.
+         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result ID to be used in the computation
+         * @param {AnomalyDetectionRequest} anomalyDetectionRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        anomalyDetection: async (
+            workspaceId: string,
+            resultId: string,
+            anomalyDetectionRequest: AnomalyDetectionRequest,
+            skipCache?: boolean,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("anomalyDetection", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("anomalyDetection", "resultId", resultId);
+            // verify required parameter 'anomalyDetectionRequest' is not null or undefined
+            assertParamExists("anomalyDetection", "anomalyDetectionRequest", anomalyDetectionRequest);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/anomalyDetection/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (skipCache !== undefined && skipCache !== null) {
+                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof anomalyDetectionRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(anomalyDetectionRequest !== undefined ? anomalyDetectionRequest : {})
+                : anomalyDetectionRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (EXPERIMENTAL) Gets anomalies.
+         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        anomalyDetectionResult: async (
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("anomalyDetectionResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("anomalyDetectionResult", "resultId", resultId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/anomalyDetection/result/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (offset !== undefined) {
+                localVarQueryParameter["offset"] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter["limit"] = limit;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
          * @summary (EXPERIMENTAL) Smart functions - Clustering
          * @param {string} workspaceId Workspace identifier
@@ -3303,6 +3459,58 @@ export const ActionsApiFp = function (configuration?: Configuration) {
     const localVarAxiosParamCreator = ActionsApiAxiosParamCreator(configuration);
     return {
         /**
+         * (EXPERIMENTAL) Computes anomaly detection.
+         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result ID to be used in the computation
+         * @param {AnomalyDetectionRequest} anomalyDetectionRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async anomalyDetection(
+            workspaceId: string,
+            resultId: string,
+            anomalyDetectionRequest: AnomalyDetectionRequest,
+            skipCache?: boolean,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SmartFunctionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.anomalyDetection(
+                workspaceId,
+                resultId,
+                anomalyDetectionRequest,
+                skipCache,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * (EXPERIMENTAL) Gets anomalies.
+         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async anomalyDetectionResult(
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnomalyDetectionResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.anomalyDetectionResult(
+                workspaceId,
+                resultId,
+                offset,
+                limit,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
          * @summary (EXPERIMENTAL) Smart functions - Clustering
          * @param {string} workspaceId Workspace identifier
@@ -3647,6 +3855,48 @@ export const ActionsApiFactory = function (
     const localVarFp = ActionsApiFp(configuration);
     return {
         /**
+         * (EXPERIMENTAL) Computes anomaly detection.
+         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
+         * @param {ActionsApiAnomalyDetectionRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        anomalyDetection(
+            requestParameters: ActionsApiAnomalyDetectionRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<SmartFunctionResponse> {
+            return localVarFp
+                .anomalyDetection(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.anomalyDetectionRequest,
+                    requestParameters.skipCache,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * (EXPERIMENTAL) Gets anomalies.
+         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
+         * @param {ActionsApiAnomalyDetectionResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        anomalyDetectionResult(
+            requestParameters: ActionsApiAnomalyDetectionResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<AnomalyDetectionResult> {
+            return localVarFp
+                .anomalyDetectionResult(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.offset,
+                    requestParameters.limit,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
          * @summary (EXPERIMENTAL) Smart functions - Clustering
          * @param {ActionsApiClusteringRequest} requestParameters Request parameters.
@@ -3919,6 +4169,32 @@ export const ActionsApiFactory = function (
  */
 export interface ActionsApiInterface {
     /**
+     * (EXPERIMENTAL) Computes anomaly detection.
+     * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
+     * @param {ActionsApiAnomalyDetectionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    anomalyDetection(
+        requestParameters: ActionsApiAnomalyDetectionRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<SmartFunctionResponse>;
+
+    /**
+     * (EXPERIMENTAL) Gets anomalies.
+     * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
+     * @param {ActionsApiAnomalyDetectionResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    anomalyDetectionResult(
+        requestParameters: ActionsApiAnomalyDetectionResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<AnomalyDetectionResult>;
+
+    /**
      * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
      * @summary (EXPERIMENTAL) Smart functions - Clustering
      * @param {ActionsApiClusteringRequest} requestParameters Request parameters.
@@ -4086,6 +4362,76 @@ export interface ActionsApiInterface {
         requestParameters: ActionsApiRetrieveResultRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<ExecutionResult>;
+}
+
+/**
+ * Request parameters for anomalyDetection operation in ActionsApi.
+ * @export
+ * @interface ActionsApiAnomalyDetectionRequest
+ */
+export interface ActionsApiAnomalyDetectionRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiAnomalyDetection
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Input result ID to be used in the computation
+     * @type {string}
+     * @memberof ActionsApiAnomalyDetection
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {AnomalyDetectionRequest}
+     * @memberof ActionsApiAnomalyDetection
+     */
+    readonly anomalyDetectionRequest: AnomalyDetectionRequest;
+
+    /**
+     * Ignore all caches during execution of current request.
+     * @type {boolean}
+     * @memberof ActionsApiAnomalyDetection
+     */
+    readonly skipCache?: boolean;
+}
+
+/**
+ * Request parameters for anomalyDetectionResult operation in ActionsApi.
+ * @export
+ * @interface ActionsApiAnomalyDetectionResultRequest
+ */
+export interface ActionsApiAnomalyDetectionResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiAnomalyDetectionResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Result ID
+     * @type {string}
+     * @memberof ActionsApiAnomalyDetectionResult
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ActionsApiAnomalyDetectionResult
+     */
+    readonly offset?: number;
+
+    /**
+     *
+     * @type {number}
+     * @memberof ActionsApiAnomalyDetectionResult
+     */
+    readonly limit?: number;
 }
 
 /**
@@ -4518,6 +4864,52 @@ export interface ActionsApiRetrieveResultRequest {
  * @extends {BaseAPI}
  */
 export class ActionsApi extends BaseAPI implements ActionsApiInterface {
+    /**
+     * (EXPERIMENTAL) Computes anomaly detection.
+     * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
+     * @param {ActionsApiAnomalyDetectionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public anomalyDetection(
+        requestParameters: ActionsApiAnomalyDetectionRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .anomalyDetection(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.anomalyDetectionRequest,
+                requestParameters.skipCache,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (EXPERIMENTAL) Gets anomalies.
+     * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
+     * @param {ActionsApiAnomalyDetectionResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public anomalyDetectionResult(
+        requestParameters: ActionsApiAnomalyDetectionResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .anomalyDetectionResult(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.offset,
+                requestParameters.limit,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
      * @summary (EXPERIMENTAL) Smart functions - Clustering
@@ -6380,6 +6772,124 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
 export const SmartFunctionsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * (EXPERIMENTAL) Computes anomaly detection.
+         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result ID to be used in the computation
+         * @param {AnomalyDetectionRequest} anomalyDetectionRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        anomalyDetection: async (
+            workspaceId: string,
+            resultId: string,
+            anomalyDetectionRequest: AnomalyDetectionRequest,
+            skipCache?: boolean,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("anomalyDetection", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("anomalyDetection", "resultId", resultId);
+            // verify required parameter 'anomalyDetectionRequest' is not null or undefined
+            assertParamExists("anomalyDetection", "anomalyDetectionRequest", anomalyDetectionRequest);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/anomalyDetection/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (skipCache !== undefined && skipCache !== null) {
+                localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
+            }
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof anomalyDetectionRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(anomalyDetectionRequest !== undefined ? anomalyDetectionRequest : {})
+                : anomalyDetectionRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (EXPERIMENTAL) Gets anomalies.
+         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        anomalyDetectionResult: async (
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("anomalyDetectionResult", "workspaceId", workspaceId);
+            // verify required parameter 'resultId' is not null or undefined
+            assertParamExists("anomalyDetectionResult", "resultId", resultId);
+            const localVarPath =
+                `/api/v1/actions/workspaces/{workspaceId}/execution/functions/anomalyDetection/result/{resultId}`
+                    .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+                    .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "GET", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (offset !== undefined) {
+                localVarQueryParameter["offset"] = offset;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter["limit"] = limit;
+            }
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
          * @summary (EXPERIMENTAL) Smart functions - Clustering
          * @param {string} workspaceId Workspace identifier
@@ -6626,6 +7136,58 @@ export const SmartFunctionsApiFp = function (configuration?: Configuration) {
     const localVarAxiosParamCreator = SmartFunctionsApiAxiosParamCreator(configuration);
     return {
         /**
+         * (EXPERIMENTAL) Computes anomaly detection.
+         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Input result ID to be used in the computation
+         * @param {AnomalyDetectionRequest} anomalyDetectionRequest
+         * @param {boolean} [skipCache] Ignore all caches during execution of current request.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async anomalyDetection(
+            workspaceId: string,
+            resultId: string,
+            anomalyDetectionRequest: AnomalyDetectionRequest,
+            skipCache?: boolean,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SmartFunctionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.anomalyDetection(
+                workspaceId,
+                resultId,
+                anomalyDetectionRequest,
+                skipCache,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * (EXPERIMENTAL) Gets anomalies.
+         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
+         * @param {string} workspaceId Workspace identifier
+         * @param {string} resultId Result ID
+         * @param {number} [offset]
+         * @param {number} [limit]
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async anomalyDetectionResult(
+            workspaceId: string,
+            resultId: string,
+            offset?: number,
+            limit?: number,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AnomalyDetectionResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.anomalyDetectionResult(
+                workspaceId,
+                resultId,
+                offset,
+                limit,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
          * @summary (EXPERIMENTAL) Smart functions - Clustering
          * @param {string} workspaceId Workspace identifier
@@ -6744,6 +7306,48 @@ export const SmartFunctionsApiFactory = function (
     const localVarFp = SmartFunctionsApiFp(configuration);
     return {
         /**
+         * (EXPERIMENTAL) Computes anomaly detection.
+         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
+         * @param {SmartFunctionsApiAnomalyDetectionRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        anomalyDetection(
+            requestParameters: SmartFunctionsApiAnomalyDetectionRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<SmartFunctionResponse> {
+            return localVarFp
+                .anomalyDetection(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.anomalyDetectionRequest,
+                    requestParameters.skipCache,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * (EXPERIMENTAL) Gets anomalies.
+         * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
+         * @param {SmartFunctionsApiAnomalyDetectionResultRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        anomalyDetectionResult(
+            requestParameters: SmartFunctionsApiAnomalyDetectionResultRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<AnomalyDetectionResult> {
+            return localVarFp
+                .anomalyDetectionResult(
+                    requestParameters.workspaceId,
+                    requestParameters.resultId,
+                    requestParameters.offset,
+                    requestParameters.limit,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
          * @summary (EXPERIMENTAL) Smart functions - Clustering
          * @param {SmartFunctionsApiClusteringRequest} requestParameters Request parameters.
@@ -6837,6 +7441,32 @@ export const SmartFunctionsApiFactory = function (
  */
 export interface SmartFunctionsApiInterface {
     /**
+     * (EXPERIMENTAL) Computes anomaly detection.
+     * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
+     * @param {SmartFunctionsApiAnomalyDetectionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    anomalyDetection(
+        requestParameters: SmartFunctionsApiAnomalyDetectionRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<SmartFunctionResponse>;
+
+    /**
+     * (EXPERIMENTAL) Gets anomalies.
+     * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
+     * @param {SmartFunctionsApiAnomalyDetectionResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    anomalyDetectionResult(
+        requestParameters: SmartFunctionsApiAnomalyDetectionResultRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<AnomalyDetectionResult>;
+
+    /**
      * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
      * @summary (EXPERIMENTAL) Smart functions - Clustering
      * @param {SmartFunctionsApiClusteringRequest} requestParameters Request parameters.
@@ -6887,6 +7517,76 @@ export interface SmartFunctionsApiInterface {
         requestParameters: SmartFunctionsApiForecastResultRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<ForecastResult>;
+}
+
+/**
+ * Request parameters for anomalyDetection operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiAnomalyDetectionRequest
+ */
+export interface SmartFunctionsApiAnomalyDetectionRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiAnomalyDetection
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Input result ID to be used in the computation
+     * @type {string}
+     * @memberof SmartFunctionsApiAnomalyDetection
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {AnomalyDetectionRequest}
+     * @memberof SmartFunctionsApiAnomalyDetection
+     */
+    readonly anomalyDetectionRequest: AnomalyDetectionRequest;
+
+    /**
+     * Ignore all caches during execution of current request.
+     * @type {boolean}
+     * @memberof SmartFunctionsApiAnomalyDetection
+     */
+    readonly skipCache?: boolean;
+}
+
+/**
+ * Request parameters for anomalyDetectionResult operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiAnomalyDetectionResultRequest
+ */
+export interface SmartFunctionsApiAnomalyDetectionResultRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiAnomalyDetectionResult
+     */
+    readonly workspaceId: string;
+
+    /**
+     * Result ID
+     * @type {string}
+     * @memberof SmartFunctionsApiAnomalyDetectionResult
+     */
+    readonly resultId: string;
+
+    /**
+     *
+     * @type {number}
+     * @memberof SmartFunctionsApiAnomalyDetectionResult
+     */
+    readonly offset?: number;
+
+    /**
+     *
+     * @type {number}
+     * @memberof SmartFunctionsApiAnomalyDetectionResult
+     */
+    readonly limit?: number;
 }
 
 /**
@@ -7036,6 +7736,52 @@ export interface SmartFunctionsApiForecastResultRequest {
  * @extends {BaseAPI}
  */
 export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInterface {
+    /**
+     * (EXPERIMENTAL) Computes anomaly detection.
+     * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
+     * @param {SmartFunctionsApiAnomalyDetectionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public anomalyDetection(
+        requestParameters: SmartFunctionsApiAnomalyDetectionRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return SmartFunctionsApiFp(this.configuration)
+            .anomalyDetection(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.anomalyDetectionRequest,
+                requestParameters.skipCache,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (EXPERIMENTAL) Gets anomalies.
+     * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection Result
+     * @param {SmartFunctionsApiAnomalyDetectionResultRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public anomalyDetectionResult(
+        requestParameters: SmartFunctionsApiAnomalyDetectionResultRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return SmartFunctionsApiFp(this.configuration)
+            .anomalyDetectionResult(
+                requestParameters.workspaceId,
+                requestParameters.resultId,
+                requestParameters.offset,
+                requestParameters.limit,
+                options,
+            )
+            .then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * (EXPERIMENTAL) Computes clusters for data points from the provided execution result and parameters.
      * @summary (EXPERIMENTAL) Smart functions - Clustering

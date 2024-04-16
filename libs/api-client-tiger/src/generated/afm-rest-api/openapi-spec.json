@@ -141,6 +141,68 @@
                 }
             }
         },
+        "/api/v1/actions/workspaces/{workspaceId}/execution/functions/anomalyDetection/{resultId}": {
+            "post": {
+                "tags": ["Smart Functions", "actions"],
+                "summary": "(EXPERIMENTAL) Smart functions - Anomaly Detection",
+                "description": "(EXPERIMENTAL) Computes anomaly detection.",
+                "operationId": "anomalyDetection",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "resultId",
+                        "in": "path",
+                        "description": "Input result ID to be used in the computation",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "9bd52018570364264fcf62d373da6bed313120e8"
+                    },
+                    {
+                        "name": "skip-cache",
+                        "in": "header",
+                        "description": "Ignore all caches during execution of current request.",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "default": false
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AnomalyDetectionRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SmartFunctionResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/actions/workspaces/{workspaceId}/execution/computeKeyDrivers": {
             "post": {
                 "tags": ["Computation", "actions"],
@@ -625,6 +687,66 @@
                 }
             }
         },
+        "/api/v1/actions/workspaces/{workspaceId}/execution/functions/anomalyDetection/result/{resultId}": {
+            "get": {
+                "tags": ["Smart Functions", "actions"],
+                "summary": "(EXPERIMENTAL) Smart functions - Anomaly Detection Result",
+                "description": "(EXPERIMENTAL) Gets anomalies.",
+                "operationId": "anomalyDetectionResult",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "resultId",
+                        "in": "path",
+                        "description": "Result ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "a9b28f9dc55f37ea9f4a5fb0c76895923591e781"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AnomalyDetectionResult"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/actions/workspaces/{workspaceId}/execution/computeKeyDrivers/result/{resultId}": {
             "get": {
                 "tags": ["Computation", "actions"],
@@ -883,6 +1005,17 @@
                         "type": "integer",
                         "description": "Number of clusters to create",
                         "format": "int32"
+                    }
+                }
+            },
+            "AnomalyDetectionRequest": {
+                "required": ["sensitivity"],
+                "type": "object",
+                "properties": {
+                    "sensitivity": {
+                        "type": "number",
+                        "description": "Anomaly detection sensitivity.",
+                        "format": "float"
                     }
                 }
             },
@@ -2539,16 +2672,42 @@
                             "nullable": true
                         }
                     },
-                    "xcoord": {
+                    "ycoord": {
                         "type": "array",
                         "items": {
                             "type": "number"
                         }
                     },
-                    "ycoord": {
+                    "xcoord": {
                         "type": "array",
                         "items": {
                             "type": "number"
+                        }
+                    }
+                }
+            },
+            "AnomalyDetectionResult": {
+                "required": ["anomalyFlag", "attribute", "values"],
+                "type": "object",
+                "properties": {
+                    "attribute": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "values": {
+                        "type": "array",
+                        "items": {
+                            "type": "number",
+                            "nullable": true
+                        }
+                    },
+                    "anomalyFlag": {
+                        "type": "array",
+                        "items": {
+                            "type": "boolean",
+                            "nullable": true
                         }
                     }
                 }

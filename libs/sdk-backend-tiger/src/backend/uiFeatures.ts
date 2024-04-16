@@ -77,6 +77,12 @@ export enum TigerFeaturesNames {
     EnableMultipleCSVs = "enableMultipleCSVs",
     //boolean
     EnableOracleDataSource = "enableOracleDataSource",
+    EnableAnalyticalCatalog = "enableAnalyticalCatalog",
+    EnableAlerting = "enableAlerting",
+    EnableLabsSmartFunctions = "enableLabsSmartFunctions",
+    EnableKeyDriverAnalysis = "enableKeyDriverAnalysis",
+    EnableDataProfiling = "enableDataProfiling",
+    EnableExperimentalFeaturesUI = "enableExperimentalFeaturesUI",
 }
 
 export type ITigerFeatureFlags = {
@@ -118,6 +124,12 @@ export type ITigerFeatureFlags = {
     enableKDAttributeFilterDatesValidation: typeof FeatureFlagsValues["enableKDAttributeFilterDatesValidation"][number];
     enableMultipleCSVs: typeof FeatureFlagsValues["enableMultipleCSVs"][number];
     enableOracleDataSource: typeof FeatureFlagsValues["enableOracleDataSource"][number];
+    enableAnalyticalCatalog: typeof FeatureFlagsValues["enableAnalyticalCatalog"][number];
+    enableAlerting: typeof FeatureFlagsValues["enableAlerting"][number];
+    enableLabsSmartFunctions: typeof FeatureFlagsValues["enableLabsSmartFunctions"][number];
+    enableKeyDriverAnalysis: typeof FeatureFlagsValues["enableKeyDriverAnalysis"][number];
+    enableDataProfiling: typeof FeatureFlagsValues["enableDataProfiling"][number];
+    enableExperimentalFeaturesUI: typeof FeatureFlagsValues["enableExperimentalFeaturesUI"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -159,6 +171,12 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableKDAttributeFilterDatesValidation: true,
     enableMultipleCSVs: false,
     enableOracleDataSource: false,
+    enableAnalyticalCatalog: false,
+    enableAlerting: false,
+    enableLabsSmartFunctions: false,
+    enableKeyDriverAnalysis: false,
+    enableDataProfiling: false,
+    enableExperimentalFeaturesUI: false,
 };
 
 export const FeatureFlagsValues = {
@@ -204,4 +222,10 @@ export const FeatureFlagsValues = {
     enableKDAttributeFilterDatesValidation: [true, false] as const,
     enableMultipleCSVs: [true, false] as const,
     enableOracleDataSource: [true, false] as const,
+    enableAnalyticalCatalog: [true, false] as const,
+    enableAlerting: [true, false] as const,
+    enableLabsSmartFunctions: [true, false] as const,
+    enableKeyDriverAnalysis: [true, false] as const,
+    enableDataProfiling: [true, false] as const,
+    enableExperimentalFeaturesUI: [true, false] as const,
 };

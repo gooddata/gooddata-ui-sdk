@@ -1032,6 +1032,7 @@ export interface IWorkspaceDatasetsService {
 export interface IWorkspaceDescriptor {
     // (undocumented)
     description: string;
+    earlyAccess?: string;
     // (undocumented)
     id: string;
     // (undocumented)
