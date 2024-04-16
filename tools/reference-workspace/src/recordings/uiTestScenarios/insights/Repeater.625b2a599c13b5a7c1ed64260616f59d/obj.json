@@ -1,0 +1,72 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                            "localIdentifier": "a_f_city.id.cityname"
+                        }
+                    }
+                ],
+                "localIdentifier": "attribute"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                            "localIdentifier": "a_f_city.id.cityname_cloned"
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "inlineDefinition": {
+                                    "maql": "SELECT {metric/of_lost_opps.} BY ALL OTHER EXCEPT {label/f_city.id.cityname}"
+                                }
+                            },
+                            "localIdentifier": "m_of_lost_opps._cloned",
+                            "title": "# of Lost Opps."
+                        }
+                    },
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": { "identifier": "of_lost_opps.", "type": "measure" }
+                                }
+                            },
+                            "localIdentifier": "m_of_lost_opps."
+                        }
+                    }
+                ],
+                "localIdentifier": "columns"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "attr.f_product.product", "type": "displayForm" },
+                            "localIdentifier": "a_attr.f_product.product"
+                        }
+                    }
+                ],
+                "localIdentifier": "view"
+            }
+        ],
+        "filters": [],
+        "identifier": "Repeater.625b2a599c13b5a7c1ed64260616f59d",
+        "properties": {
+            "controls": {
+                "inlineVisualizations": { "m_of_lost_opps.": { "type": "column" } },
+                "rowHeight": "large"
+            }
+        },
+        "sorts": [],
+        "title": "Repeater - canvas - large row height",
+        "uri": "Repeater.625b2a599c13b5a7c1ed64260616f59d",
+        "visualizationUrl": "local:repeater"
+    }
+}

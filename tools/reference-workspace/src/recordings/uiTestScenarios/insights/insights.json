@@ -4116,6 +4116,37 @@
     "PyramidChart.fdc00c1bad1d5d19ccac21804f66bd05": {
         "comment": "Auto-generated insight for test scenario PyramidChart - vertical alignment - default."
     },
+    "Repeater.625b2a599c13b5a7c1ed64260616f59d": {
+        "comment": "Auto-generated insight for test scenario Repeater - canvas - large row height."
+    },
+    "Repeater.7913aa1d19190897ce5cf885f9bf798f": {
+        "comment": "Auto-generated insight for test scenario Repeater - one attribute.",
+        "scenarioName": "one attribute",
+        "visName": "Repeater"
+    },
+    "Repeater.85a283be3d4d3ad21263155a16700543": {
+        "comment": "Auto-generated insight for test scenario Repeater - themed.",
+        "scenarioName": "themed",
+        "visName": "Repeater"
+    },
+    "Repeater.a2395468f97d492674ca8ef91ff46e46": {
+        "comment": "Auto-generated insight for test scenario Repeater - one attribute and one visualisation.",
+        "scenarioName": "one attribute and one visualisation",
+        "visName": "Repeater"
+    },
+    "Repeater.bdfa144f7f2918445ac731bea382285b": {
+        "comment": "Auto-generated insight for test scenario Repeater - font.",
+        "scenarioName": "font",
+        "visName": "Repeater"
+    },
+    "Repeater.c509fb9165eb4180f50442d1e7c5f53f": {
+        "comment": "Auto-generated insight for test scenario Repeater - coloring - custom palette."
+    },
+    "Repeater.ffd4d1e9f768baa1ca7c367880453191": {
+        "comment": "Auto-generated insight for test scenario Repeater - one attribute and one measure.",
+        "scenarioName": "one attribute and one measure",
+        "visName": "Repeater"
+    },
     "SankeyChart.028319311f1a319d889aee5ec859c3bc": {
         "comment": "Auto-generated insight for test scenario SankeyChart - 610x274 - Position respects configuration, max 2 row for TOP/BOTTOM - legend on right."
     },
