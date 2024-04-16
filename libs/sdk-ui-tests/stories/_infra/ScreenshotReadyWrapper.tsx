@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React from "react";
 import sumBy from "lodash/sumBy.js";
 
@@ -108,7 +108,23 @@ function loadedPivotTableSelector(element: HTMLElement): number {
     return sumBy(tables, (table) => (table.getElementsByClassName("s-loading").length === 0 ? 1 : 0));
 }
 
-const DefaultSelectors = ["highcharts-container", "s-headline-value", "s-error", loadedPivotTableSelector];
+/**
+ * This is a specialized element count selector, which returns number of repeater table that are already
+ * loaded == the s-loading indicator is no longer present.
+ */
+function loadedRepeaterSelector(element: HTMLElement): number {
+    const tables = element.querySelectorAll<HTMLElement>(".s-repeater");
+
+    return sumBy(tables, (table) => (table.getElementsByClassName("s-loading").length === 0 ? 1 : 0));
+}
+
+const DefaultSelectors = [
+    "highcharts-container",
+    "s-headline-value",
+    "s-error",
+    loadedPivotTableSelector,
+    loadedRepeaterSelector,
+];
 
 /**
  * Creates resolver which returns true if specified element contains at least `numOfElements` number of elements
