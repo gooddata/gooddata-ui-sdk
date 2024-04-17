@@ -8,7 +8,7 @@ describe("Repeater", { tags: ["checklist_integrated_tiger"] }, () => {
         const repeater = new Repeater();
         repeater
             .hasHeaderCellsAmount(5)
-            //.hasHeaderLabel(["Product Image", "Product Link", "Amount [BOP]", "Avg. Amount", "Probability"]) //skip because of bug F1-275
+            //.hasHeaderLabel(["Product Image", "Product Link", "Amount [BOP]", "Avg. Amount", "Probability"]) //unknow issue
             .hasRowHeight("85px")
             .hasVerticalAlign(1, "middle")
             .hasTextWrapping(1, "wrap")
@@ -28,7 +28,7 @@ describe("Repeater", { tags: ["checklist_integrated_tiger"] }, () => {
         const repeater = new Repeater();
         repeater
             .hasHeaderCellsAmount(5)
-            //.hasHeaderLabel(["Product Image", "Product Link", "Amount [BOP]", "Avg. Amount", "Probability"]) //skip because of bug F1-275
+            .hasHeaderLabel(["Product Image", "Product Link", "Amount [BOP]", "Avg. Amount", "Probability"])
             .hasRowHeight("85px")
             .hasVerticalAlign(1, "middle")
             .hasTextWrapping(1, "wrap")
@@ -47,7 +47,7 @@ describe("Repeater", { tags: ["checklist_integrated_tiger"] }, () => {
         const repeater = new Repeater();
         repeater
             .hasHeaderCellsAmount(5)
-            //.hasHeaderLabel(["Product Image", "Product Link", "Amount [BOP]", "Avg. Amount", "Probability"]) //skip because of bug F1-275
+            .hasHeaderLabel(["Product Image", "Product Link", "Amount [BOP]", "Avg. Amount", "Probability"])
             .hasRowHeight("85px")
             .hasVerticalAlign(1, "middle")
             .hasTextWrapping(1, "wrap")
