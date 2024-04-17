@@ -1695,8 +1695,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/fixtures':
-        specifier: 1.32.15
-        version: 1.32.15
+        specifier: 1.32.17
+        version: 1.32.17
       '@gooddata/reference-workspace':
         specifier: workspace:*
         version: link:../../tools/reference-workspace
@@ -4194,8 +4194,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/fixtures':
-        specifier: 1.32.15
-        version: 1.32.15
+        specifier: 1.32.17
+        version: 1.32.17
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../sdk-backend-spi
@@ -6294,8 +6294,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/fixtures':
-        specifier: 1.32.15
-        version: 1.32.15
+        specifier: 1.32.17
+        version: 1.32.17
       '@types/lodash':
         specifier: ^4.14.202
         version: 4.14.202
@@ -8557,8 +8557,8 @@ packages:
       - typescript
     dev: true
 
-  /@gooddata/fixtures@1.32.15:
-    resolution: {integrity: sha512-/VenNKJyZADppYS6QqXSmnhqAv+XhCZGHg50AvXna+YfXOplCNzKxv9CRqsyh+sUd8LZbYwnYlI3XA6X+t0sHQ==}
+  /@gooddata/fixtures@1.32.17:
+    resolution: {integrity: sha512-btpXGHjWoum/TVhDICh7BY7L8QGg7JcsEQ9FMUnHRyLhxz4h1zOYQku6r7XAdjNfZD1fDrp+x2PUL3nglNDHvg==}
     dependencies:
       '@gooddata/api-client-bear': 8.12.3
       '@gooddata/api-client-tiger': 8.12.3
