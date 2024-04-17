@@ -50,6 +50,7 @@ import { ScanResultPdm } from '@gooddata/api-client-tiger';
 import { ScanSqlResponse } from '@gooddata/api-client-tiger';
 import { StagingUploadLocation } from '@gooddata/api-client-tiger';
 import { TestDefinitionRequestTypeEnum } from '@gooddata/api-client-tiger';
+import { UploadFileResponse } from '@gooddata/api-client-tiger';
 
 export { AnalyzeCsvRequest }
 
@@ -450,6 +451,7 @@ export type TigerSpecificFunctions = {
     scanSql?: (dataSourceId: string, sql: string) => Promise<ScanSqlResult>;
     checkEntityOverrides?: (workspaceId: string, entities: Array<HierarchyObjectIdentification>) => Promise<Array<IdentifierDuplications>>;
     getStagingUploadLocation?: (dataSourceId: string) => Promise<StagingUploadLocation>;
+    stagingUpload?: (dataSourceId: string, file: File) => Promise<UploadFileResponse>;
     analyzeCsv?: (dataSourceId: string, analyzeCsvRequest: AnalyzeCsvRequest) => Promise<Array<AnalyzeCsvResponse>>;
     importCsv?: (dataSourceId: string, importCsvRequest: ImportCsvRequest) => Promise<void>;
     listFiles?: (dataSourceId: string) => Promise<Array<GdStorageFile>>;
