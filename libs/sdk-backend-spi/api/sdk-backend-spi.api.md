@@ -62,6 +62,7 @@ import { IMeasureMetadataObject } from '@gooddata/sdk-model';
 import { IMeasureMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { IMetadataObject } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
+import { IOpenAiConfig } from '@gooddata/sdk-model';
 import { IOrganizationAssignee } from '@gooddata/sdk-model';
 import { IOrganizationDescriptor } from '@gooddata/sdk-model';
 import { IOrganizationDescriptorUpdate } from '@gooddata/sdk-model';
@@ -700,6 +701,8 @@ export interface IOrganizationSettingsService {
     setColorPalette(colorPaletteId: string): Promise<void>;
     setDateFormat(dateFormat: string): Promise<void>;
     setLocale(locale: string): Promise<void>;
+    // @alpha
+    setOpenAiConfig(config: IOpenAiConfig): Promise<void>;
     setTheme(themeId: string): Promise<void>;
     setTimezone(timezone: string): Promise<void>;
     setWeekStart(weekStart: string): Promise<void>;

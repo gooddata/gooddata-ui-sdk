@@ -1,6 +1,6 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 
-import { ISettings, IWhiteLabeling } from "@gooddata/sdk-model";
+import { ISettings, IWhiteLabeling, IOpenAiConfig } from "@gooddata/sdk-model";
 
 /**
  * This service provides access to organization settings
@@ -71,6 +71,16 @@ export interface IOrganizationSettingsService {
      * @returns promise
      */
     setColorPalette(colorPaletteId: string): Promise<void>;
+
+    /**
+     * Sets OpenAI configuration for organization.
+     *
+     * @param config - describes parameters for OpenAI integration.
+     *
+     * @returns promise
+     * @alpha
+     */
+    setOpenAiConfig(config: IOpenAiConfig): Promise<void>;
 
     /**
      * Deletes theme from organization settings returning workspace styling to default.
