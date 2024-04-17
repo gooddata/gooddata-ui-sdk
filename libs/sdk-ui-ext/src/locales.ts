@@ -227,6 +227,18 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     image: { id: "properties.canvas.image" },
     imageFit: { id: "properties.canvas.image.fit" },
     imageFill: { id: "properties.canvas.image.fill" },
+    forecastTitle: { id: "properties.forecast.title" },
+    forecastDisabledTooltip: { id: "properties.forecastDisabled.title" },
+    forecastPeriod: { id: "properties.forecastPeriod.title" },
+    forecastPeriodPlaceholder: { id: "properties.forecastPeriod.placeholder" },
+    forecastSeasonal: { id: "properties.forecastSeasonal.title" },
+    forecastConfidence: { id: "properties.forecastConfidence.title" },
+    forecastConfidence70: { id: "properties.forecastConfidence.70" },
+    forecastConfidence75: { id: "properties.forecastConfidence.75" },
+    forecastConfidence80: { id: "properties.forecastConfidence.80" },
+    forecastConfidence85: { id: "properties.forecastConfidence.85" },
+    forecastConfidence90: { id: "properties.forecastConfidence.90" },
+    forecastConfidence95: { id: "properties.forecastConfidence.95" },
 });
 
 export const comparisonMessages: Record<string, MessageDescriptor> = defineMessages({

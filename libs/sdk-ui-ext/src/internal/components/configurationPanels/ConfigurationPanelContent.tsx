@@ -1,8 +1,14 @@
 // (C) 2019-2024 GoodData Corporation
 import React from "react";
 import noop from "lodash/noop.js";
-import { ChartType, DefaultLocale } from "@gooddata/sdk-ui";
-import { IInsightDefinition, insightHasMeasures, ISettings } from "@gooddata/sdk-model";
+import { ChartType, DefaultLocale, BucketNames } from "@gooddata/sdk-ui";
+import {
+    IInsightDefinition,
+    ISettings,
+    insightHasMeasures,
+    insightBuckets,
+    bucketsFind,
+} from "@gooddata/sdk-model";
 
 import {
     IReferences,
@@ -15,6 +21,7 @@ import LegendSection from "../configurationControls/legend/LegendSection.js";
 import { InternalIntlWrapper } from "../../utils/internalIntlProvider.js";
 import { getMeasuresFromMdObject } from "../../utils/bucketHelper.js";
 import InteractionsSection from "../configurationControls/interactions/InteractionsSection.js";
+import ForecastSection from "../configurationControls/forecast/ForecastSection.js";
 
 export interface IConfigurationPanelContentProps<PanelConfig = any> {
     properties?: IVisualizationProperties;
@@ -118,5 +125,34 @@ export default abstract class ConfigurationPanelContent<
                 InteractionsDetailRenderer={configurationPanelRenderers?.InteractionsDetailRenderer}
             />
         ) : null;
+    }
+
+    protected renderForecastSection(): React.ReactNode {
+        const { pushData, properties, propertiesMeta, insight, type, featureFlags } = this.props;
+
+        if (!featureFlags.enableSmartFunctions) {
+            return null;
+        }
+
+        //line chart only now
+        if (type === "line") {
+            const buckets = insightBuckets(insight);
+            const measures = bucketsFind(buckets, (b) => b.localIdentifier === BucketNames.MEASURES);
+            const trends = bucketsFind(buckets, (b) => b.localIdentifier === BucketNames.TREND);
+            //TODO: check if the trend is date attribute somehow
+            const enabled = measures?.items.length === 1 && trends?.items.length === 1;
+
+            return (
+                <ForecastSection
+                    controlsDisabled={this.isControlDisabled()}
+                    properties={properties}
+                    propertiesMeta={propertiesMeta}
+                    enabled={enabled}
+                    pushData={pushData}
+                />
+            );
+        }
+
+        return null;
     }
 }
