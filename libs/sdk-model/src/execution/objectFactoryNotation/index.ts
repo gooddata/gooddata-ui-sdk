@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import compact from "lodash/compact.js";
 import flow from "lodash/flow.js";
 import isNil from "lodash/isNil.js";
@@ -43,6 +43,8 @@ import {
     IArithmeticMeasureDefinition,
     IPoPMeasureDefinition,
     IPreviousPeriodMeasureDefinition,
+    isInlineMeasureDefinition,
+    IInlineMeasureDefinition,
 } from "../measure/index.js";
 import { isAttribute, IAttribute } from "../attribute/index.js";
 import { isTotal, ITotal } from "../base/totals.js";
@@ -139,6 +141,11 @@ const convertPopMeasure = (measure: IMeasure["measure"], definition: IPoPMeasure
     )}, ${builder})`;
 };
 
+const convertInlineMeasure = (measure: IMeasure["measure"], definition: IInlineMeasureDefinition) => {
+    const builder = getBuilder("m => m", baseMeasureDotAdders(measure));
+    return `newInlineMeasure(${stringify(definition.inlineDefinition.maql)}, ${builder})`;
+};
+
 const convertPreviousPeriodMeasure = (
     measure: IMeasure["measure"],
     definition: IPreviousPeriodMeasureDefinition,
@@ -165,6 +172,8 @@ const convertMeasure: Converter<IMeasure> = ({ measure }) => {
         return convertPopMeasure(measure, definition);
     } else if (isPreviousPeriodMeasureDefinition(definition)) {
         return convertPreviousPeriodMeasure(measure, definition);
+    } else if (isInlineMeasureDefinition(definition)) {
+        return convertInlineMeasure(measure, definition);
     }
     throw new Error("Unknown measure type");
 };

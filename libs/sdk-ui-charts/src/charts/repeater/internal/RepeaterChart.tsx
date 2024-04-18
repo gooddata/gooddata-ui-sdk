@@ -28,6 +28,7 @@ import { InlineLineChart } from "./InlineLineChart.js";
 import { InlineColumnChart } from "./InlineColumnChart.js";
 import { RepeaterInlineVisualizationDataPoint } from "./dataViewToRepeaterData.js";
 import isNil from "lodash/isNil.js";
+import { useDrilling } from "../hooks/useDrilling.js";
 
 const DEFAULT_COL_DEF = { resizable: true };
 
@@ -134,7 +135,12 @@ export const RepeaterChart: React.FC<IRepeaterChartProps> = (props) => {
         config?.inlineVisualizations,
     ]);
 
-    const { onColumnResized, onGridReady, containerRef } = useResizing(columnDefs, items, props);
+    const {
+        onColumnResized,
+        onGridReady: onResizingGridReady,
+        containerRef,
+    } = useResizing(columnDefs, items, props);
+    const { onCellClicked, onGridReady: onDrillingGridReady } = useDrilling(columnDefs, items, props);
 
     return (
         <div className="gd-repeater ag-theme-balham s-repeater" ref={containerRef}>
@@ -157,7 +163,11 @@ export const RepeaterChart: React.FC<IRepeaterChartProps> = (props) => {
                 rowHeight={rowHeight}
                 suppressCellFocus={true}
                 suppressMovableColumns={true}
-                onGridReady={onGridReady}
+                onCellClicked={onCellClicked}
+                onGridReady={(e) => {
+                    onResizingGridReady(e);
+                    onDrillingGridReady(e);
+                }}
                 onColumnResized={onColumnResized}
             />
         </div>
@@ -253,7 +263,20 @@ function MeasureCellRenderer({
         );
     }
 
-    return <div>{measureDataPoints.find((point) => !isNil(point.value))?.formattedValue}</div>;
+    const verticalAlign = getVerticalAlign(config);
+    const textWrapping = getTextWrapping(config);
+
+    return (
+        <div
+            className={cx(
+                "gd-repeater-cell-wrapper",
+                `gd-vertical-align-${verticalAlign}`,
+                `gd-text-wrapping-${textWrapping}`,
+            )}
+        >
+            {measureDataPoints.find((point) => !isNil(point.value))?.formattedValue}
+        </div>
+    );
 }
 
 interface IAttributeColumnData {

@@ -18,6 +18,7 @@ import { DeclarativeModel } from '@gooddata/api-client-tiger';
 import { DeclarativeWorkspaceDataFilters } from '@gooddata/api-client-tiger';
 import { DependentEntitiesRequest } from '@gooddata/api-client-tiger';
 import { DependentEntitiesResponse } from '@gooddata/api-client-tiger';
+import { GdStorageFile } from '@gooddata/api-client-tiger';
 import { GenerateLdmRequest } from '@gooddata/api-client-tiger';
 import { HierarchyObjectIdentification } from '@gooddata/api-client-tiger';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
@@ -49,6 +50,7 @@ import { ScanResultPdm } from '@gooddata/api-client-tiger';
 import { ScanSqlResponse } from '@gooddata/api-client-tiger';
 import { StagingUploadLocation } from '@gooddata/api-client-tiger';
 import { TestDefinitionRequestTypeEnum } from '@gooddata/api-client-tiger';
+import { UploadFileResponse } from '@gooddata/api-client-tiger';
 
 export { AnalyzeCsvRequest }
 
@@ -98,6 +100,8 @@ export interface Entitlement {
     // (undocumented)
     value?: string;
 }
+
+export { GdStorageFile }
 
 export { GenerateLdmRequest }
 
@@ -300,6 +304,7 @@ export const objectTypeToTigerIdType: {
     userGroup: TigerObjectType;
     dateHierarchyTemplate: TigerObjectType;
     dateAttributeHierarchy: TigerObjectType;
+    exportDefinition: TigerObjectType;
 };
 
 // @internal (undocumented)
@@ -446,8 +451,10 @@ export type TigerSpecificFunctions = {
     scanSql?: (dataSourceId: string, sql: string) => Promise<ScanSqlResult>;
     checkEntityOverrides?: (workspaceId: string, entities: Array<HierarchyObjectIdentification>) => Promise<Array<IdentifierDuplications>>;
     getStagingUploadLocation?: (dataSourceId: string) => Promise<StagingUploadLocation>;
+    stagingUpload?: (dataSourceId: string, file: File) => Promise<UploadFileResponse>;
     analyzeCsv?: (dataSourceId: string, analyzeCsvRequest: AnalyzeCsvRequest) => Promise<Array<AnalyzeCsvResponse>>;
     importCsv?: (dataSourceId: string, importCsvRequest: ImportCsvRequest) => Promise<void>;
+    listFiles?: (dataSourceId: string) => Promise<Array<GdStorageFile>>;
 };
 
 // @public

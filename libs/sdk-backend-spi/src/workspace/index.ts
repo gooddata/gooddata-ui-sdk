@@ -16,6 +16,7 @@ import { IWorkspaceFactsService } from "./facts/index.js";
 import { IWorkspaceAccessControlService } from "./accessControl/index.js";
 import { IWorkspaceUserGroupsQuery } from "./userGroups/index.js";
 import { IAttributeHierarchiesService } from "./attributeHierarchies/index.js";
+import { IWorkspaceExportDefinitionsService } from "./exportDefinitions/index.js";
 
 /**
  * Represents an analytical workspace hosted on a backend.
@@ -124,6 +125,12 @@ export interface IAnalyticalWorkspace {
      * @alpha
      */
     attributeHierarchies(): IAttributeHierarchiesService;
+
+    /**
+     * Returns service that operates over export definitions
+     * @alpha
+     */
+    exportDefinitions(): IWorkspaceExportDefinitionsService;
 }
 
 /**
@@ -149,6 +156,10 @@ export interface IWorkspaceDescriptor {
      * Prefixes of parent workspaces
      */
     parentPrefixes?: string[];
+    /**
+     * Early access attribute value of the workspace
+     */
+    earlyAccess?: string;
 }
 
 /**
@@ -198,6 +209,13 @@ export interface IWorkspacesQuery {
      * @param workspaceId - identifier of the parent workspace
      */
     withParent(workspaceId: string | undefined): IWorkspacesQuery;
+
+    /**
+     * Sets filter of workspaces by given attributes
+     * @param filter - an object of attributes and values to filter by
+     * @alpha
+     */
+    withFilter(filter: { description?: string; earlyAccess?: string; prefix?: string }): IWorkspacesQuery;
 
     /**
      * Sets a text to search.

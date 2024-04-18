@@ -30,7 +30,8 @@
         "./internal-tests/CoreSankeyChart": "./esm/charts/sankeyChart/CoreSankeyChart.js",
         "./internal-tests/CoreScatterPlot": "./esm/charts/scatterPlot/CoreScatterPlot.js",
         "./internal-tests/CoreTreemap": "./esm/charts/treemap/CoreTreemap.js",
-        "./internal-tests/CoreXirr": "./esm/charts/xirr/CoreXirr.js"
+        "./internal-tests/CoreXirr": "./esm/charts/xirr/CoreXirr.js",
+        "./internal-tests/CoreRepeater": "./esm/charts/repeater/CoreRepeater.js"
     },
     "types": "./esm/index.d.ts",
     "sideEffects": [

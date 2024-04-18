@@ -6,11 +6,11 @@ import {
     IAnalyticalWorkspace,
     IWorkspaceDescriptor,
 } from "@gooddata/sdk-backend-spi";
-import { JsonApiWorkspaceOutList, OrganizationUtilities } from "@gooddata/api-client-tiger";
+import { JsonApiWorkspaceOutList, DeclarativeWorkspace } from "@gooddata/api-client-tiger";
 import { TigerAuthenticatedCallGuard } from "../../types/index.js";
 import { DateFormatter } from "../../convertors/fromBackend/dateFormatting/types.js";
 import { workspaceConverter } from "../../convertors/fromBackend/WorkspaceConverter.js";
-import { InMemoryPaging } from "@gooddata/sdk-backend-base";
+import { ServerPaging } from "@gooddata/sdk-backend-base";
 import { TigerWorkspace } from "../workspace/index.js";
 
 export class TigerWorkspaceQueryFactory implements IWorkspacesQueryFactory {
@@ -32,6 +32,7 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
     private limit: number = 100;
     private offset: number = 0;
     private search: string | undefined = undefined;
+    private filter: Partial<DeclarativeWorkspace> = {};
     private parentWorkspaceId: string | undefined = undefined;
 
     constructor(
@@ -57,33 +58,48 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
         return this;
     }
 
+    public withFilter(filter: {
+        description?: string;
+        earlyAccess?: string;
+        prefix?: string;
+    }): IWorkspacesQuery {
+        this.filter = filter;
+        return this;
+    }
+
     public withSearch(search: string): IWorkspacesQuery {
         this.search = search;
         return this;
     }
 
     public query(): Promise<IWorkspacesQueryResult> {
-        return this.queryWorker(this.offset, this.limit, this.search);
+        return ServerPaging.for(
+            async ({ limit, offset, totalCount }) => {
+                const result = await this.authCall((client) =>
+                    client.entities.getAllEntitiesWorkspaces({
+                        size: limit,
+                        page: offset / limit,
+                        filter: this.constructFilter(),
+                        metaInclude: totalCount === undefined ? ["page"] : undefined,
+                    }),
+                );
+
+                const descriptors = this.resultToWorkspaceDescriptors(result.data);
+                const workspaces = this.descriptorsToAnalyticalWorkspaces(descriptors);
+
+                return {
+                    items: workspaces,
+                    totalCount: (result.data.meta?.page?.totalElements ?? totalCount)!,
+                };
+            },
+            this.limit,
+            this.offset,
+        );
     }
 
     private resultToWorkspaceDescriptors = (result: JsonApiWorkspaceOutList): IWorkspaceDescriptor[] => {
         return result.data.map((item) => workspaceConverter(item, []));
     };
-
-    private searchWorkspaceDescriptors =
-        (search?: string) =>
-        (results: IWorkspaceDescriptor[]): IWorkspaceDescriptor[] => {
-            if (search) {
-                const lowercaseSearch = search.toLocaleLowerCase();
-
-                return results.filter((workspace) => {
-                    const { title } = workspace;
-
-                    return title?.toLowerCase().indexOf(lowercaseSearch) > -1;
-                });
-            }
-            return results;
-        };
 
     private descriptorToAnalyticalWorkspace = (descriptor: IWorkspaceDescriptor): IAnalyticalWorkspace =>
         new TigerWorkspace(this.authCall, descriptor.id, this.dateFormatter, descriptor);
@@ -92,51 +108,17 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
         descriptors: IWorkspaceDescriptor[],
     ): IAnalyticalWorkspace[] => descriptors.map(this.descriptorToAnalyticalWorkspace);
 
-    private async queryWorker(
-        offset: number,
-        limit: number,
-        search?: string,
-    ): Promise<IWorkspacesQueryResult> {
-        const allWorkspaces = await this.authCall((client) => {
-            const filterParam = this.parentWorkspaceId ? `parent.id==${this.parentWorkspaceId}` : undefined;
-            return OrganizationUtilities.getAllPagesOf(client, client.entities.getAllEntitiesWorkspaces, {
-                sort: ["name"],
-                include: ["parent"],
-                filter: filterParam,
-            })
-                .then(OrganizationUtilities.mergeEntitiesResults)
-                .then(this.resultToWorkspaceDescriptors)
-                .then(this.searchWorkspaceDescriptors(search))
-                .then(this.descriptorsToAnalyticalWorkspaces);
-        });
-
-        return new WorkspacesInMemoryPaging(allWorkspaces, limit ?? 50, offset ?? 0, search);
-    }
-}
-
-class WorkspacesInMemoryPaging
-    extends InMemoryPaging<IAnalyticalWorkspace>
-    implements IWorkspacesQueryResult
-{
-    constructor(
-        allItems: IAnalyticalWorkspace[],
-        limit = 50,
-        offset = 0,
-        public readonly search: string | undefined = undefined,
-    ) {
-        super(allItems, limit, offset);
-    }
-
-    public async next(): Promise<IWorkspacesQueryResult> {
-        if (this.items.length === 0) {
-            return this;
-        }
-
-        return new WorkspacesInMemoryPaging(
-            this.allItems,
-            this.limit,
-            this.offset + this.items.length,
-            this.search,
-        );
+    private constructFilter(): string | undefined {
+        const filterParam = [
+            this.filter.description && `description==${this.filter.name}`,
+            this.filter.earlyAccess && `earlyAccess==${this.filter.earlyAccess}`,
+            this.filter.prefix && `prefix==${this.filter.prefix}`,
+            this.parentWorkspaceId && `parent.id==${this.parentWorkspaceId}`,
+            // case-insensitive search
+            this.search && `name=containsic=${this.search}`,
+        ]
+            .filter((param) => param !== undefined)
+            .join(";");
+        return filterParam === "" ? undefined : filterParam;
     }
 }

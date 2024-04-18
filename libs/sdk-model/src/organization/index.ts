@@ -12,6 +12,7 @@ export interface IOrganizationDescriptor {
     title: string;
     bootstrapUser?: ObjRef;
     bootstrapUserGroup?: ObjRef;
+    earlyAccess?: string;
 }
 
 /**

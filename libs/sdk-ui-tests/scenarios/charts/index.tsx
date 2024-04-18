@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 
 import areaChart from "./areaChart/index.js";
 import barChart from "./barChart/index.js";
@@ -19,6 +19,7 @@ import sankeyChart from "./sankeyChart/index.js";
 import xirr from "./xirr/index.js";
 import dependencyWheelChart from "./dependencyWheelChart/index.js";
 import waterfallChart from "./waterfallChart/index.js";
+import repeater from "./repeater/index.js";
 
 export default [
     ...areaChart,
@@ -40,4 +41,5 @@ export default [
     ...dependencyWheelChart,
     ...xirr,
     ...waterfallChart,
+    ...repeater,
 ];

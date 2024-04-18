@@ -16,6 +16,7 @@ import {
     ITheme,
     insightSetProperties,
     insightVisualizationUrl,
+    insightVisualizationType,
 } from "@gooddata/sdk-model";
 
 import {
@@ -139,9 +140,20 @@ class InsightRendererCore extends React.PureComponent<IInsightRendererProps & Wr
             theme: this.props.theme,
         };
 
-        const insight = fillMissingFormats(
-            ignoreTitlesForSimpleMeasures(fillMissingTitles(this.props.insight, this.props.locale)),
-        );
+        const visClass = insightVisualizationType(this.props.insight);
+        let insight = fillMissingFormats(fillMissingTitles(this.props.insight, this.props.locale));
+
+        /**
+         * Ignore titles for simple measures in all visualizations except for repeater.
+         * This is not nice, and InsightRenderer should not be aware of the visualization types.
+         * However, repeater is transforming simple measures to inline ones, so we need to keep the titles for them.
+         * We can remove this once we have a better solution on execution level,
+         * or all the visualizations start to use actual measure titles specified in AD, and not measure metadata titles.
+         * See also https://gooddata.atlassian.net/browse/SD-1012
+         */
+        if (visClass !== "repeater") {
+            insight = ignoreTitlesForSimpleMeasures(insight);
+        }
         this.visualization.update(visProps, insight, {}, this.getExecutionFactory());
     };
 

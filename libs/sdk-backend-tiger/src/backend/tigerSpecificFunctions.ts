@@ -48,6 +48,8 @@ import {
     AnalyzeCsvResponse,
     ImportCsvRequest,
     JsonApiDataSourceInAttributesCacheStrategyEnum,
+    GdStorageFile,
+    UploadFileResponse,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling.js";
 import uniq from "lodash/uniq.js";
@@ -482,8 +484,16 @@ export type TigerSpecificFunctions = {
     /**
      * Get pre-signed S3 URL to upload a CSV file to the GDSTORAGE data source staging location
      * @param dataSourceId - id of the data source
+     * @deprecated use stagingUpload instead
      */
     getStagingUploadLocation?: (dataSourceId: string) => Promise<StagingUploadLocation>;
+
+    /**
+     * Upload a CSV file to the GDSTORAGE data source staging location
+     * @param dataSourceId - id of the data source
+     * @param file - the file to upload
+     */
+    stagingUpload?: (dataSourceId: string, file: File) => Promise<UploadFileResponse>;
 
     /**
      * Analyze CSV files in GDSTORAGE data source staging location
@@ -500,6 +510,12 @@ export type TigerSpecificFunctions = {
      * @param importRequest - the request to import CSV files
      */
     importCsv?: (dataSourceId: string, importCsvRequest: ImportCsvRequest) => Promise<void>;
+
+    /**
+     * List CSV files from GDSTORAGE data source staging location
+     * @param dataSourceId - id of the data source
+     */
+    listFiles?: (dataSourceId: string) => Promise<Array<GdStorageFile>>;
 };
 
 const getDataSourceErrorMessage = (error: unknown) => {
@@ -1491,6 +1507,23 @@ export const buildTigerSpecificFunctions = (
         }
     },
 
+    stagingUpload: async (dataSourceId: string, file: File): Promise<UploadFileResponse> => {
+        try {
+            return await authApiCall(async (sdk) => {
+                return await sdk.result
+                    .stagingUpload({
+                        dataSourceId: dataSourceId,
+                        file: file,
+                    })
+                    .then((res) => {
+                        return res?.data;
+                    });
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+
     analyzeCsv: async (dataSourceId: string, analyzeCsvRequest: AnalyzeCsvRequest) => {
         try {
             return await authApiCall(async (sdk) => {
@@ -1515,6 +1548,22 @@ export const buildTigerSpecificFunctions = (
                     dataSourceId: dataSourceId,
                     importCsvRequest: importCsvRequest,
                 });
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+
+    listFiles: async (dataSourceId: string) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                return await sdk.result
+                    .listFiles({
+                        dataSourceId: dataSourceId,
+                    })
+                    .then((res) => {
+                        return res?.data;
+                    });
             });
         } catch (error: any) {
             throw convertApiError(error);

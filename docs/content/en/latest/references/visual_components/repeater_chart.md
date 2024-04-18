@@ -102,5 +102,7 @@ const style = { height: 300 };
 | backend          | false     | IAnalyticalBackend    | The object with the configuration related to communication with the backend and access to analytical workspaces |
 | workspace        | false     | string                | The workspace ID                                                                                                |
 | locale           | false     | string                | The localization of the chart. Defaults to `en-US`.                                                             |
+| drillableItems   | false     | IDrillableItem[]      | An array of attribute values to be drillable, **only attributes in columns can be drilled now**                 |
+| onDrill          | false     | Function              | A callback when a drill is triggered on the component                                                           |
 | ErrorComponent   | false     | Component             | A component to be rendered if this component is in error state                                                  |
 | LoadingComponent | false     | Component             | A component to be rendered if this component is in loading state                                                |

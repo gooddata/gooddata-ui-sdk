@@ -75,6 +75,12 @@ export interface AnalyzeCsvRequestItemConfig {
      */
     headerDetectMaxRows?: number;
     /**
+     * Number of rows to consider as header, if null, header will be detected.
+     * @type {number}
+     * @memberof AnalyzeCsvRequestItemConfig
+     */
+    headerRowCount?: number;
+    /**
      * Possible column delimiters.
      * @type {Array<string>}
      * @memberof AnalyzeCsvRequestItemConfig
@@ -409,6 +415,63 @@ export interface CsvReadOptions {
     encoding?: string;
 }
 /**
+ * Request to delete files from the storage.
+ * @export
+ * @interface DeleteFilesRequest
+ */
+export interface DeleteFilesRequest {
+    /**
+     * Names of the files to delete.
+     * @type {Array<string>}
+     * @memberof DeleteFilesRequest
+     */
+    fileNames: Array<string>;
+}
+/**
+ * File stored in GD Storage.
+ * @export
+ * @interface GdStorageFile
+ */
+export interface GdStorageFile {
+    /**
+     * Name of the file.
+     * @type {string}
+     * @memberof GdStorageFile
+     */
+    name: string;
+    /**
+     * Version of the file.
+     * @type {number}
+     * @memberof GdStorageFile
+     */
+    version: number;
+    /**
+     * Size of the file in bytes.
+     * @type {number}
+     * @memberof GdStorageFile
+     */
+    size: number;
+    /**
+     * Last modification timestamp of the file.
+     * @type {string}
+     * @memberof GdStorageFile
+     */
+    modifiedAt: string;
+    /**
+     * Type of file stored in GD Storage.
+     * @type {string}
+     * @memberof GdStorageFile
+     */
+    type: GdStorageFileTypeEnum;
+}
+
+export const GdStorageFileTypeEnum = {
+    CSV: "CSV",
+} as const;
+
+export type GdStorageFileTypeEnum = typeof GdStorageFileTypeEnum[keyof typeof GdStorageFileTypeEnum];
+
+/**
  * Request containing the information necessary to import one or more CSV files from the staging area.
  * @export
  * @interface ImportCsvRequest
@@ -573,6 +636,19 @@ export interface StagingUploadLocation {
     uploadUrl: string;
 }
 /**
+ * Information related to the file uploaded to the staging area.
+ * @export
+ * @interface UploadFileResponse
+ */
+export interface UploadFileResponse {
+    /**
+     * Location to use when referencing the uploaded file in subsequent requests.
+     * @type {string}
+     * @memberof UploadFileResponse
+     */
+    location: string;
+}
+/**
  * Cache settings for the workspace.
  * @export
  * @interface WorkspaceCacheSettings
@@ -732,6 +808,58 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Delete the files in the given data source.
+         * @summary Delete datasource files
+         * @param {string} dataSourceId
+         * @param {DeleteFilesRequest} deleteFilesRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteFiles: async (
+            dataSourceId: string,
+            deleteFilesRequest: DeleteFilesRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'dataSourceId' is not null or undefined
+            assertParamExists("deleteFiles", "dataSourceId", dataSourceId);
+            // verify required parameter 'deleteFilesRequest' is not null or undefined
+            assertParamExists("deleteFiles", "deleteFilesRequest", deleteFilesRequest);
+            const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/deleteFiles`.replace(
+                `{${"dataSourceId"}}`,
+                encodeURIComponent(String(dataSourceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof deleteFilesRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(deleteFilesRequest !== undefined ? deleteFilesRequest : {})
+                : deleteFilesRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Provides a location for uploading staging files.
          * @summary Get a staging upload location
          * @param {string} dataSourceId
@@ -823,6 +951,95 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * List all the files in the given data source.
+         * @summary List datasource files
+         * @param {string} dataSourceId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listFiles: async (dataSourceId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'dataSourceId' is not null or undefined
+            assertParamExists("listFiles", "dataSourceId", dataSourceId);
+            const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/listFiles`.replace(
+                `{${"dataSourceId"}}`,
+                encodeURIComponent(String(dataSourceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * Provides a location for uploading staging files.
+         * @summary Upload a file to the staging area
+         * @param {string} dataSourceId
+         * @param {any} file The file to upload.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stagingUpload: async (
+            dataSourceId: string,
+            file: any,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'dataSourceId' is not null or undefined
+            assertParamExists("stagingUpload", "dataSourceId", dataSourceId);
+            // verify required parameter 'file' is not null or undefined
+            assertParamExists("stagingUpload", "file", file);
+            const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/staging/uploadFile`.replace(
+                `{${"dataSourceId"}}`,
+                encodeURIComponent(String(dataSourceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+            if (file !== undefined) {
+                localVarFormParams.append("file", file as any);
+            }
+
+            localVarHeaderParameter["Content-Type"] = "multipart/form-data";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     };
 };
 
@@ -866,6 +1083,26 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Delete the files in the given data source.
+         * @summary Delete datasource files
+         * @param {string} dataSourceId
+         * @param {DeleteFilesRequest} deleteFilesRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteFiles(
+            dataSourceId: string,
+            deleteFilesRequest: DeleteFilesRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteFiles(
+                dataSourceId,
+                deleteFilesRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Provides a location for uploading staging files.
          * @summary Get a staging upload location
          * @param {string} dataSourceId
@@ -898,6 +1135,40 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.importCsv(
                 dataSourceId,
                 importCsvRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * List all the files in the given data source.
+         * @summary List datasource files
+         * @param {string} dataSourceId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listFiles(
+            dataSourceId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<GdStorageFile>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listFiles(dataSourceId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Provides a location for uploading staging files.
+         * @summary Upload a file to the staging area
+         * @param {string} dataSourceId
+         * @param {any} file The file to upload.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async stagingUpload(
+            dataSourceId: string,
+            file: any,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UploadFileResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.stagingUpload(
+                dataSourceId,
+                file,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -941,6 +1212,21 @@ export const ActionsApiFactory = function (
             return localVarFp.collectCacheUsage(options).then((request) => request(axios, basePath));
         },
         /**
+         * Delete the files in the given data source.
+         * @summary Delete datasource files
+         * @param {ActionsApiDeleteFilesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteFiles(
+            requestParameters: ActionsApiDeleteFilesRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .deleteFiles(requestParameters.dataSourceId, requestParameters.deleteFilesRequest, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * Provides a location for uploading staging files.
          * @summary Get a staging upload location
          * @param {ActionsApiGetStagingUploadLocationRequest} requestParameters Request parameters.
@@ -968,6 +1254,36 @@ export const ActionsApiFactory = function (
         ): AxiosPromise<void> {
             return localVarFp
                 .importCsv(requestParameters.dataSourceId, requestParameters.importCsvRequest, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * List all the files in the given data source.
+         * @summary List datasource files
+         * @param {ActionsApiListFilesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listFiles(
+            requestParameters: ActionsApiListFilesRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<Array<GdStorageFile>> {
+            return localVarFp
+                .listFiles(requestParameters.dataSourceId, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
+         * Provides a location for uploading staging files.
+         * @summary Upload a file to the staging area
+         * @param {ActionsApiStagingUploadRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stagingUpload(
+            requestParameters: ActionsApiStagingUploadRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<UploadFileResponse> {
+            return localVarFp
+                .stagingUpload(requestParameters.dataSourceId, requestParameters.file, options)
                 .then((request) => request(axios, basePath));
         },
     };
@@ -1002,6 +1318,19 @@ export interface ActionsApiInterface {
     collectCacheUsage(options?: AxiosRequestConfig): AxiosPromise<CacheUsageData>;
 
     /**
+     * Delete the files in the given data source.
+     * @summary Delete datasource files
+     * @param {ActionsApiDeleteFilesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    deleteFiles(
+        requestParameters: ActionsApiDeleteFilesRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+
+    /**
      * Provides a location for uploading staging files.
      * @summary Get a staging upload location
      * @param {ActionsApiGetStagingUploadLocationRequest} requestParameters Request parameters.
@@ -1026,6 +1355,32 @@ export interface ActionsApiInterface {
         requestParameters: ActionsApiImportCsvRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
+
+    /**
+     * List all the files in the given data source.
+     * @summary List datasource files
+     * @param {ActionsApiListFilesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    listFiles(
+        requestParameters: ActionsApiListFilesRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<Array<GdStorageFile>>;
+
+    /**
+     * Provides a location for uploading staging files.
+     * @summary Upload a file to the staging area
+     * @param {ActionsApiStagingUploadRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    stagingUpload(
+        requestParameters: ActionsApiStagingUploadRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<UploadFileResponse>;
 }
 
 /**
@@ -1047,6 +1402,27 @@ export interface ActionsApiAnalyzeCsvRequest {
      * @memberof ActionsApiAnalyzeCsv
      */
     readonly analyzeCsvRequest: AnalyzeCsvRequest;
+}
+
+/**
+ * Request parameters for deleteFiles operation in ActionsApi.
+ * @export
+ * @interface ActionsApiDeleteFilesRequest
+ */
+export interface ActionsApiDeleteFilesRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiDeleteFiles
+     */
+    readonly dataSourceId: string;
+
+    /**
+     *
+     * @type {DeleteFilesRequest}
+     * @memberof ActionsApiDeleteFiles
+     */
+    readonly deleteFilesRequest: DeleteFilesRequest;
 }
 
 /**
@@ -1085,6 +1461,41 @@ export interface ActionsApiImportCsvRequest {
 }
 
 /**
+ * Request parameters for listFiles operation in ActionsApi.
+ * @export
+ * @interface ActionsApiListFilesRequest
+ */
+export interface ActionsApiListFilesRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiListFiles
+     */
+    readonly dataSourceId: string;
+}
+
+/**
+ * Request parameters for stagingUpload operation in ActionsApi.
+ * @export
+ * @interface ActionsApiStagingUploadRequest
+ */
+export interface ActionsApiStagingUploadRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiStagingUpload
+     */
+    readonly dataSourceId: string;
+
+    /**
+     * The file to upload.
+     * @type {any}
+     * @memberof ActionsApiStagingUpload
+     */
+    readonly file: any;
+}
+
+/**
  * ActionsApi - object-oriented interface
  * @export
  * @class ActionsApi
@@ -1119,6 +1530,20 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
+     * Delete the files in the given data source.
+     * @summary Delete datasource files
+     * @param {ActionsApiDeleteFilesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public deleteFiles(requestParameters: ActionsApiDeleteFilesRequest, options?: AxiosRequestConfig) {
+        return ActionsApiFp(this.configuration)
+            .deleteFiles(requestParameters.dataSourceId, requestParameters.deleteFilesRequest, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Provides a location for uploading staging files.
      * @summary Get a staging upload location
      * @param {ActionsApiGetStagingUploadLocationRequest} requestParameters Request parameters.
@@ -1146,6 +1571,34 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     public importCsv(requestParameters: ActionsApiImportCsvRequest, options?: AxiosRequestConfig) {
         return ActionsApiFp(this.configuration)
             .importCsv(requestParameters.dataSourceId, requestParameters.importCsvRequest, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * List all the files in the given data source.
+     * @summary List datasource files
+     * @param {ActionsApiListFilesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public listFiles(requestParameters: ActionsApiListFilesRequest, options?: AxiosRequestConfig) {
+        return ActionsApiFp(this.configuration)
+            .listFiles(requestParameters.dataSourceId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Provides a location for uploading staging files.
+     * @summary Upload a file to the staging area
+     * @param {ActionsApiStagingUploadRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public stagingUpload(requestParameters: ActionsApiStagingUploadRequest, options?: AxiosRequestConfig) {
+        return ActionsApiFp(this.configuration)
+            .stagingUpload(requestParameters.dataSourceId, requestParameters.file, options)
             .then((request) => request(this.axios, this.basePath));
     }
 }
@@ -1459,6 +1912,192 @@ export class DataSourceFilesAnalysisApi extends BaseAPI implements DataSourceFil
 }
 
 /**
+ * DataSourceFilesDeletionApi - axios parameter creator
+ * @export
+ */
+export const DataSourceFilesDeletionApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Delete the files in the given data source.
+         * @summary Delete datasource files
+         * @param {string} dataSourceId
+         * @param {DeleteFilesRequest} deleteFilesRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteFiles: async (
+            dataSourceId: string,
+            deleteFilesRequest: DeleteFilesRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'dataSourceId' is not null or undefined
+            assertParamExists("deleteFiles", "dataSourceId", dataSourceId);
+            // verify required parameter 'deleteFilesRequest' is not null or undefined
+            assertParamExists("deleteFiles", "deleteFilesRequest", deleteFilesRequest);
+            const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/deleteFiles`.replace(
+                `{${"dataSourceId"}}`,
+                encodeURIComponent(String(dataSourceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof deleteFilesRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(deleteFilesRequest !== undefined ? deleteFilesRequest : {})
+                : deleteFilesRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    };
+};
+
+/**
+ * DataSourceFilesDeletionApi - functional programming interface
+ * @export
+ */
+export const DataSourceFilesDeletionApiFp = function (configuration?: Configuration) {
+    const localVarAxiosParamCreator = DataSourceFilesDeletionApiAxiosParamCreator(configuration);
+    return {
+        /**
+         * Delete the files in the given data source.
+         * @summary Delete datasource files
+         * @param {string} dataSourceId
+         * @param {DeleteFilesRequest} deleteFilesRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteFiles(
+            dataSourceId: string,
+            deleteFilesRequest: DeleteFilesRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteFiles(
+                dataSourceId,
+                deleteFilesRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    };
+};
+
+/**
+ * DataSourceFilesDeletionApi - factory interface
+ * @export
+ */
+export const DataSourceFilesDeletionApiFactory = function (
+    configuration?: Configuration,
+    basePath?: string,
+    axios?: AxiosInstance,
+) {
+    const localVarFp = DataSourceFilesDeletionApiFp(configuration);
+    return {
+        /**
+         * Delete the files in the given data source.
+         * @summary Delete datasource files
+         * @param {DataSourceFilesDeletionApiDeleteFilesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteFiles(
+            requestParameters: DataSourceFilesDeletionApiDeleteFilesRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .deleteFiles(requestParameters.dataSourceId, requestParameters.deleteFilesRequest, options)
+                .then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * DataSourceFilesDeletionApi - interface
+ * @export
+ * @interface DataSourceFilesDeletionApi
+ */
+export interface DataSourceFilesDeletionApiInterface {
+    /**
+     * Delete the files in the given data source.
+     * @summary Delete datasource files
+     * @param {DataSourceFilesDeletionApiDeleteFilesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DataSourceFilesDeletionApiInterface
+     */
+    deleteFiles(
+        requestParameters: DataSourceFilesDeletionApiDeleteFilesRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
+}
+
+/**
+ * Request parameters for deleteFiles operation in DataSourceFilesDeletionApi.
+ * @export
+ * @interface DataSourceFilesDeletionApiDeleteFilesRequest
+ */
+export interface DataSourceFilesDeletionApiDeleteFilesRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof DataSourceFilesDeletionApiDeleteFiles
+     */
+    readonly dataSourceId: string;
+
+    /**
+     *
+     * @type {DeleteFilesRequest}
+     * @memberof DataSourceFilesDeletionApiDeleteFiles
+     */
+    readonly deleteFilesRequest: DeleteFilesRequest;
+}
+
+/**
+ * DataSourceFilesDeletionApi - object-oriented interface
+ * @export
+ * @class DataSourceFilesDeletionApi
+ * @extends {BaseAPI}
+ */
+export class DataSourceFilesDeletionApi extends BaseAPI implements DataSourceFilesDeletionApiInterface {
+    /**
+     * Delete the files in the given data source.
+     * @summary Delete datasource files
+     * @param {DataSourceFilesDeletionApiDeleteFilesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DataSourceFilesDeletionApi
+     */
+    public deleteFiles(
+        requestParameters: DataSourceFilesDeletionApiDeleteFilesRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return DataSourceFilesDeletionApiFp(this.configuration)
+            .deleteFiles(requestParameters.dataSourceId, requestParameters.deleteFilesRequest, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+}
+
+/**
  * DataSourceFilesImportApi - axios parameter creator
  * @export
  */
@@ -1645,6 +2284,164 @@ export class DataSourceFilesImportApi extends BaseAPI implements DataSourceFiles
 }
 
 /**
+ * DataSourceFilesListingApi - axios parameter creator
+ * @export
+ */
+export const DataSourceFilesListingApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * List all the files in the given data source.
+         * @summary List datasource files
+         * @param {string} dataSourceId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listFiles: async (dataSourceId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'dataSourceId' is not null or undefined
+            assertParamExists("listFiles", "dataSourceId", dataSourceId);
+            const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/listFiles`.replace(
+                `{${"dataSourceId"}}`,
+                encodeURIComponent(String(dataSourceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    };
+};
+
+/**
+ * DataSourceFilesListingApi - functional programming interface
+ * @export
+ */
+export const DataSourceFilesListingApiFp = function (configuration?: Configuration) {
+    const localVarAxiosParamCreator = DataSourceFilesListingApiAxiosParamCreator(configuration);
+    return {
+        /**
+         * List all the files in the given data source.
+         * @summary List datasource files
+         * @param {string} dataSourceId
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async listFiles(
+            dataSourceId: string,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<GdStorageFile>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.listFiles(dataSourceId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    };
+};
+
+/**
+ * DataSourceFilesListingApi - factory interface
+ * @export
+ */
+export const DataSourceFilesListingApiFactory = function (
+    configuration?: Configuration,
+    basePath?: string,
+    axios?: AxiosInstance,
+) {
+    const localVarFp = DataSourceFilesListingApiFp(configuration);
+    return {
+        /**
+         * List all the files in the given data source.
+         * @summary List datasource files
+         * @param {DataSourceFilesListingApiListFilesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        listFiles(
+            requestParameters: DataSourceFilesListingApiListFilesRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<Array<GdStorageFile>> {
+            return localVarFp
+                .listFiles(requestParameters.dataSourceId, options)
+                .then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * DataSourceFilesListingApi - interface
+ * @export
+ * @interface DataSourceFilesListingApi
+ */
+export interface DataSourceFilesListingApiInterface {
+    /**
+     * List all the files in the given data source.
+     * @summary List datasource files
+     * @param {DataSourceFilesListingApiListFilesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DataSourceFilesListingApiInterface
+     */
+    listFiles(
+        requestParameters: DataSourceFilesListingApiListFilesRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<Array<GdStorageFile>>;
+}
+
+/**
+ * Request parameters for listFiles operation in DataSourceFilesListingApi.
+ * @export
+ * @interface DataSourceFilesListingApiListFilesRequest
+ */
+export interface DataSourceFilesListingApiListFilesRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof DataSourceFilesListingApiListFiles
+     */
+    readonly dataSourceId: string;
+}
+
+/**
+ * DataSourceFilesListingApi - object-oriented interface
+ * @export
+ * @class DataSourceFilesListingApi
+ * @extends {BaseAPI}
+ */
+export class DataSourceFilesListingApi extends BaseAPI implements DataSourceFilesListingApiInterface {
+    /**
+     * List all the files in the given data source.
+     * @summary List datasource files
+     * @param {DataSourceFilesListingApiListFilesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DataSourceFilesListingApi
+     */
+    public listFiles(
+        requestParameters: DataSourceFilesListingApiListFilesRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return DataSourceFilesListingApiFp(this.configuration)
+            .listFiles(requestParameters.dataSourceId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+}
+
+/**
  * DataSourceStagingLocationApi - axios parameter creator
  * @export
  */
@@ -1690,6 +2487,58 @@ export const DataSourceStagingLocationApiAxiosParamCreator = function (configura
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * Provides a location for uploading staging files.
+         * @summary Upload a file to the staging area
+         * @param {string} dataSourceId
+         * @param {any} file The file to upload.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stagingUpload: async (
+            dataSourceId: string,
+            file: any,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'dataSourceId' is not null or undefined
+            assertParamExists("stagingUpload", "dataSourceId", dataSourceId);
+            // verify required parameter 'file' is not null or undefined
+            assertParamExists("stagingUpload", "file", file);
+            const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/staging/uploadFile`.replace(
+                `{${"dataSourceId"}}`,
+                encodeURIComponent(String(dataSourceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+            if (file !== undefined) {
+                localVarFormParams.append("file", file as any);
+            }
+
+            localVarHeaderParameter["Content-Type"] = "multipart/form-data";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     };
 };
 
@@ -1713,6 +2562,26 @@ export const DataSourceStagingLocationApiFp = function (configuration?: Configur
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StagingUploadLocation>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getStagingUploadLocation(
                 dataSourceId,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * Provides a location for uploading staging files.
+         * @summary Upload a file to the staging area
+         * @param {string} dataSourceId
+         * @param {any} file The file to upload.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async stagingUpload(
+            dataSourceId: string,
+            file: any,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UploadFileResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.stagingUpload(
+                dataSourceId,
+                file,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -1746,6 +2615,21 @@ export const DataSourceStagingLocationApiFactory = function (
                 .getStagingUploadLocation(requestParameters.dataSourceId, options)
                 .then((request) => request(axios, basePath));
         },
+        /**
+         * Provides a location for uploading staging files.
+         * @summary Upload a file to the staging area
+         * @param {DataSourceStagingLocationApiStagingUploadRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        stagingUpload(
+            requestParameters: DataSourceStagingLocationApiStagingUploadRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<UploadFileResponse> {
+            return localVarFp
+                .stagingUpload(requestParameters.dataSourceId, requestParameters.file, options)
+                .then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -1767,6 +2651,19 @@ export interface DataSourceStagingLocationApiInterface {
         requestParameters: DataSourceStagingLocationApiGetStagingUploadLocationRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<StagingUploadLocation>;
+
+    /**
+     * Provides a location for uploading staging files.
+     * @summary Upload a file to the staging area
+     * @param {DataSourceStagingLocationApiStagingUploadRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DataSourceStagingLocationApiInterface
+     */
+    stagingUpload(
+        requestParameters: DataSourceStagingLocationApiStagingUploadRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<UploadFileResponse>;
 }
 
 /**
@@ -1781,6 +2678,27 @@ export interface DataSourceStagingLocationApiGetStagingUploadLocationRequest {
      * @memberof DataSourceStagingLocationApiGetStagingUploadLocation
      */
     readonly dataSourceId: string;
+}
+
+/**
+ * Request parameters for stagingUpload operation in DataSourceStagingLocationApi.
+ * @export
+ * @interface DataSourceStagingLocationApiStagingUploadRequest
+ */
+export interface DataSourceStagingLocationApiStagingUploadRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof DataSourceStagingLocationApiStagingUpload
+     */
+    readonly dataSourceId: string;
+
+    /**
+     * The file to upload.
+     * @type {any}
+     * @memberof DataSourceStagingLocationApiStagingUpload
+     */
+    readonly file: any;
 }
 
 /**
@@ -1804,6 +2722,23 @@ export class DataSourceStagingLocationApi extends BaseAPI implements DataSourceS
     ) {
         return DataSourceStagingLocationApiFp(this.configuration)
             .getStagingUploadLocation(requestParameters.dataSourceId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Provides a location for uploading staging files.
+     * @summary Upload a file to the staging area
+     * @param {DataSourceStagingLocationApiStagingUploadRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DataSourceStagingLocationApi
+     */
+    public stagingUpload(
+        requestParameters: DataSourceStagingLocationApiStagingUploadRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return DataSourceStagingLocationApiFp(this.configuration)
+            .stagingUpload(requestParameters.dataSourceId, requestParameters.file, options)
             .then((request) => request(this.axios, this.basePath));
     }
 }

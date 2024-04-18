@@ -604,7 +604,7 @@ showOnlyLogoutItem?: boolean, featureFlags?: ISettings): IHeaderMenuItem[];
 export function generateHeaderHelpMenuItems(documentationUrl?: string, supportForumUrl?: string, userEmail?: string, workspaceId?: string, sessionId?: string, supportEmail?: string, isBranded?: boolean, featureFlags?: ISettings): IHeaderMenuItem[];
 
 // @internal (undocumented)
-export function generateHeaderMenuItemsGroups(featureFlags: ISettings, workspacePermissions: IWorkspacePermissions, hasAnalyticalDashboards?: boolean, workspaceId?: string, dashboardId?: string, tabId?: string, hasNoDataSet?: boolean, backendSupportsDataItem?: boolean, backendSupportsCsvUploader?: boolean, hasMeasures?: boolean, hasManage?: boolean): IHeaderMenuItem[][];
+export function generateHeaderMenuItemsGroups(featureFlags: ISettings, workspacePermissions: IWorkspacePermissions, hasAnalyticalDashboards?: boolean, workspaceId?: string, dashboardId?: string, tabId?: string, hasNoDataSet?: boolean, backendSupportsDataItem?: boolean, backendSupportsCsvUploader?: boolean, hasMeasures?: boolean, hasManage?: boolean, baseUrl?: string): IHeaderMenuItem[][];
 
 // @internal (undocumented)
 export function generateHeaderStaticHelpMenuItems(documentationUrl?: string, communityUrl?: string, universityUrl?: string, slackUrl?: string): IHeaderMenuItem[];
@@ -2261,6 +2261,7 @@ export interface IInvertableSelectRenderItemProps<T> {
     onDeselect: () => void;
     onSelect: () => void;
     onSelectOnly: () => void;
+    title: string;
 }
 
 // @internal (undocumented)

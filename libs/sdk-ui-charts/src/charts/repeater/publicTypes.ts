@@ -1,6 +1,6 @@
 // (C) 2024 GoodData Corporation
 
-import { DataViewFacade } from "@gooddata/sdk-ui";
+import { DataViewFacade, ExplicitDrill, OnFiredDrillEvent } from "@gooddata/sdk-ui";
 
 import { IChartConfig } from "../../interfaces/index.js";
 
@@ -66,4 +66,14 @@ export interface IRepeaterChartProps {
      * @param columnWidths - new widths for columns
      */
     onColumnResized?: RepeaterColumnResizedCallback;
+
+    /**
+     * Configure drillability; e.g. which parts of the visualization can be interacted with.
+     */
+    drillableItems?: ExplicitDrill[];
+
+    /**
+     * Called when user triggers a drill on a visualization.
+     */
+    onDrill?: OnFiredDrillEvent;
 }

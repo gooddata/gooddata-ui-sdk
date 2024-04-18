@@ -28,7 +28,7 @@ import {
     createElementCountResolver,
     ScreenshotReadyWrapper,
 } from "../../_infra/ScreenshotReadyWrapper.js";
-import { ShortPostInteractionTimeout } from "../../_infra/backstopWrapper.js";
+import { LongPostInteractionTimeout, ShortPostInteractionTimeout } from "../../_infra/backstopWrapper.js";
 import { ConfigurationPanelWrapper } from "../../_infra/ConfigurationPanelWrapper.js";
 import { StorybookBackend } from "../../_infra/backend.js";
 import { storyGroupFor } from "./storyGroupFactory.js";
@@ -280,12 +280,11 @@ ScenarioGroupsByVis.forEach((groups) => {
             const insight = InsightById[scenario.insightId];
 
             if (!insight) {
-                if (window.location.hostname === "localhost") {
+                if (window.location.hostname === "localhost" && !scenario.tags.includes("mock-no-insight")) {
                     console.warn(
                         `Ignoring test scenario for ${scenario.vis}: ${scenario.name} - insight does not exist.`,
                     );
                 }
-
                 return;
             }
 
@@ -293,9 +292,11 @@ ScenarioGroupsByVis.forEach((groups) => {
                 screenshot: {
                     clickSelector: `.${ConfigurationPanelWrapper.DefaultExpandAllClassName}`,
                     readySelector: `.${ScreenshotReadyWrapper.OnReadyClassName}`,
-                    // give tables some more time to finish rendering
+                    // give specific charts some more time to finish rendering
                     postInteractionWait: insightVisualizationUrl(insight).includes("table")
                         ? ShortPostInteractionTimeout
+                        : insightVisualizationUrl(insight).includes("repeater")
+                        ? LongPostInteractionTimeout
                         : 200,
                 },
             });
