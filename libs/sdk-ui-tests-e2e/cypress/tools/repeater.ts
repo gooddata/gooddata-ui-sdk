@@ -67,7 +67,7 @@ export class Repeater {
     }
 
     hasContentInCell(cellIndex: number, value: string) {
-        this.getCellValue(cellIndex).find(`.gd-repeater-cell-wrapper`).should("contain.text", value);
+        this.getCellValue(cellIndex).should("contain.text", value);
         return this;
     }
 

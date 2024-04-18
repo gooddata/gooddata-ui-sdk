@@ -2,6 +2,36 @@
   "name": "@gooddata/sdk-ui-all",
   "entries": [
     {
+      "version": "10.0.0",
+      "tag": "@gooddata/sdk-ui-all_v10.0.0",
+      "date": "Thu, 18 Apr 2024 08:07:32 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Drop support for the GoodData Platform (Bear) in all packages."
+          },
+          {
+            "comment": "Removed the @gooddata/experimental-workspace and @gooddata/live-examples-workspace packages."
+          },
+          {
+            "comment": "Removed the sdk-examples package."
+          },
+          {
+            "comment": "Package @gooddata/reference-workspace migrated from GoodData Platform (Bear) to GoodData.CN (Panther/Tiger)."
+          },
+          {
+            "comment": "Removed GoodData Platform (Bear) related packages: @gooddata/api-client-bear, @gooddata/sdk-backend-bear, @gooddata/api-model-bear."
+          },
+          {
+            "comment": "Introduced a new visualization type - Repeater, currently in the @beta stage."
+          },
+          {
+            "comment": "Introduce ability to limit attribute filter values by dependent date filters on GoodData Cloud dashboards."
+          }
+        ]
+      }
+    },
+    {
       "version": "9.9.0",
       "tag": "@gooddata/sdk-ui-all_v9.9.0",
       "date": "Thu, 21 Mar 2024 09:56:41 GMT",
