@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
@@ -11,6 +11,7 @@ import {
     useDashboardDispatch,
     useDashboardEventDispatch,
     useDashboardSelector,
+    selectPredictionResult,
 } from "../../../../model/index.js";
 
 type UseEditableInsightMenuConfig = {
@@ -35,6 +36,8 @@ export const useEditableInsightMenu = (
         enableKPIDashboardDrillToInsight,
     } = settings;
 
+    const prediction = useDashboardSelector(selectPredictionResult(widget.ref));
+
     const configItems = useDashboardSelector(selectDrillTargetsByWidgetRef(widget.ref));
     const someDrillingEnabled =
         enableKPIDashboardDrillToURL ||
@@ -58,9 +61,9 @@ export const useEditableInsightMenu = (
 
     const menuItems = useMemo<IInsightMenuItem[]>(() => {
         return insightMenuItemsProvider
-            ? insightMenuItemsProvider(insight, widget, defaultMenuItems, closeMenu, "edit")
+            ? insightMenuItemsProvider(insight, widget, defaultMenuItems, closeMenu, "edit", prediction)
             : defaultMenuItems;
-    }, [insightMenuItemsProvider, insight, widget, defaultMenuItems, closeMenu]);
+    }, [insightMenuItemsProvider, insight, widget, defaultMenuItems, closeMenu, prediction]);
 
     return { menuItems };
 };

@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React from "react";
 import { IInsightListItemProps, InsightListItem } from "@gooddata/sdk-ui-kit";
 import { IInsight } from "@gooddata/sdk-model";
@@ -36,6 +36,7 @@ export const DraggableInsightListItemWrapper: React.FC<IDraggableInsightListItem
         insight,
         onDescriptionPanelOpen,
         metadataTimeZone,
+        supportsWorkspaceHierarchy,
     } = props;
     return (
         <DraggableInsightListItem
@@ -51,6 +52,7 @@ export const DraggableInsightListItemWrapper: React.FC<IDraggableInsightListItem
                 showDescriptionPanel,
                 onDescriptionPanelOpen,
                 metadataTimeZone,
+                supportsWorkspaceHierarchy,
             }}
             insight={insight}
         />

@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import {
@@ -18,6 +18,7 @@ import {
     DescriptionTooltipOpenedData,
     useDashboardSelector,
     selectSettings,
+    selectSupportsAccessControlCapability,
 } from "../../../../model/index.js";
 
 import { DraggableInsightListItemWrapper } from "./DraggableInsightListItemWrapper.js";
@@ -26,6 +27,7 @@ export const DraggableInsightListCore: React.FC<IInsightListProps> = (props) => 
     const { enableDescriptions, WrapInsightListItemWithDragComponent, ...remainingProps } = props;
     const userInteraction = useDashboardUserInteraction();
     const settings = useDashboardSelector(selectSettings);
+    const supportsWorkspaceHierarchy = useDashboardSelector(selectSupportsAccessControlCapability);
 
     return (
         <InsightList
@@ -66,6 +68,7 @@ export const DraggableInsightListCore: React.FC<IInsightListProps> = (props) => 
                             userInteraction.descriptionTooltipOpened(eventPayload);
                         }}
                         metadataTimeZone={settings?.metadataTimeZone}
+                        supportsWorkspaceHierarchy={supportsWorkspaceHierarchy}
                     />
                 );
             }}

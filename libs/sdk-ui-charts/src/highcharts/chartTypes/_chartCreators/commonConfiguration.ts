@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import invoke from "lodash/invoke.js";
 import isEmpty from "lodash/isEmpty.js";
 import set from "lodash/set.js";

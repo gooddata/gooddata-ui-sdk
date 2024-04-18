@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import {
     IAttributeOrMeasure,
     IBucket,
@@ -346,6 +346,8 @@ export interface IExecutionResult {
      * Thus, two results with the same data and same execution definition will have the same fingerprint.
      */
     fingerprint(): string;
+
+    getResultId(): string;
 }
 
 /**

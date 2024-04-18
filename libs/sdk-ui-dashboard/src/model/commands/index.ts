@@ -92,6 +92,7 @@ import {
 import { AddDrillTargets } from "./drillTargets.js";
 import { RequestAsyncRender, ResolveAsyncRender } from "./render.js";
 import { ChangeRenderMode } from "./renderMode.js";
+import { PredictionResult } from "./predictions.js";
 
 export { DashboardCommandType, IDashboardCommand, CommandProcessingMeta } from "./base.js";
 export {
@@ -136,6 +137,8 @@ export {
 } from "./dashboard.js";
 
 export { TriggerEvent, TriggerEventPayload, triggerEvent } from "./events.js";
+
+export { PredictionResult, PredictionResultPayload, setPredictionResult } from "./predictions.js";
 
 export {
     ChangeDateFilterSelection,
@@ -507,4 +510,5 @@ export type DashboardCommands =
     | MoveDateFilter
     | SetDashboardDateFilterWithDimensionConfigMode
     | SetDateFilterConfigTitle
-    | SetAttributeFilterLimitingItems;
+    | SetAttributeFilterLimitingItems
+    | PredictionResult;

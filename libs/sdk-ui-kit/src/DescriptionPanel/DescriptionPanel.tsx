@@ -1,5 +1,5 @@
-// (C) 2022 GoodData Corporation
-import React from "react";
+// (C) 2022-2024 GoodData Corporation
+import React, { ReactNode } from "react";
 import isEmpty from "lodash/isEmpty.js";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { EllipsisText } from "./EllipsisText.js";
@@ -66,6 +66,7 @@ export interface IDescriptionPanelProps {
     className?: string;
     onBubbleOpen?: () => void;
     arrowOffsets?: ArrowOffsets;
+    titleIcon?: ReactNode;
 }
 
 /**
@@ -124,11 +125,16 @@ const DescriptionPanelCore: React.FC<IDescriptionPanelProps> = (props) => {
 };
 
 const DescriptionPanelContentCore: React.FC<IDescriptionPanelProps> = (props) => {
-    const { title, description } = props;
+    const { title, description, titleIcon } = props;
 
     return (
         <div className="gd-description-panel s-gd-description-panel">
-            {!isEmpty(title) && <div className="gd-description-panel-title">{title}</div>}
+            {!isEmpty(title) && (
+                <div className="gd-description-panel-title">
+                    {titleIcon}
+                    {title}
+                </div>
+            )}
             {!isEmpty(description) && (
                 <div className="gd-description-panel-content">
                     <EllipsisText text={description} />

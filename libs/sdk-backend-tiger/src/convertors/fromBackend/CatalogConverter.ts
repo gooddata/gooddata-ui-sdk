@@ -99,7 +99,8 @@ export const convertMeasure = (
                     .created(measure.attributes?.createdAt)
                     .createdBy(convertUserIdentifier(measure.relationships?.createdBy, included))
                     .updated(measure.attributes?.modifiedAt)
-                    .updatedBy(convertUserIdentifier(measure.relationships?.modifiedBy, included)),
+                    .updatedBy(convertUserIdentifier(measure.relationships?.modifiedBy, included))
+                    .tags(measure.attributes?.tags),
             )
             .modify(commonGroupableCatalogItemModifications(measure)),
     );

@@ -30,6 +30,11 @@ describe("generateHeaderMenuItemsGroups", () => {
             ],
             [
                 {
+                    className: "s-menu-workspace-home",
+                    href: "/workspaces/TestWorkspaceId/home",
+                    key: "gs.header.home",
+                },
+                {
                     className: "s-menu-kpis",
                     href: "/dashboards/#/project/TestWorkspaceId",
                     key: "gs.header.kpis",
@@ -73,6 +78,11 @@ describe("generateHeaderMenuItemsGroups", () => {
         );
         expect(items).toEqual([
             [
+                {
+                    className: "s-menu-workspace-home",
+                    href: "/workspaces/TestWorkspaceId/home",
+                    key: "gs.header.home",
+                },
                 {
                     className: "s-menu-kpis",
                     href: "/dashboards/#/project/TestWorkspaceId",
@@ -130,6 +140,11 @@ describe("generateHeaderMenuItemsGroups", () => {
             ],
             [
                 {
+                    className: "s-menu-workspace-home",
+                    href: "/workspaces/TestWorkspaceId/home",
+                    key: "gs.header.home",
+                },
+                {
                     className: "s-menu-kpis",
                     href: "/dashboards/#/workspace/TestWorkspaceId",
                     key: "gs.header.kpis",
@@ -174,6 +189,11 @@ describe("generateHeaderMenuItemsGroups", () => {
         expect(items).toEqual([
             [
                 {
+                    className: "s-menu-workspace-home",
+                    href: "/workspaces/TestWorkspaceId/home",
+                    key: "gs.header.home",
+                },
+                {
                     className: "s-menu-data",
                     href: "/modeler/#/projects/TestWorkspaceId",
                     key: "gs.header.data",
@@ -208,6 +228,11 @@ describe("generateHeaderMenuItemsGroups", () => {
         expect(items).toEqual([
             [
                 {
+                    className: "s-menu-workspace-home",
+                    href: "/workspaces/TestWorkspaceId/home",
+                    key: "gs.header.home",
+                },
+                {
                     className: "s-menu-data",
                     href: "/modeler/#/workspaces/TestWorkspaceId",
                     key: "gs.header.data",
@@ -241,6 +266,11 @@ describe("generateHeaderMenuItemsGroups", () => {
         expect(items).toEqual([
             [
                 {
+                    className: "s-menu-workspace-home",
+                    href: "/workspaces/TestWorkspaceId/home",
+                    key: "gs.header.home",
+                },
+                {
                     className: "s-menu-data",
                     href: "/modeler/#/projects/TestWorkspaceId",
                     key: "gs.header.data",
@@ -269,6 +299,11 @@ describe("generateHeaderMenuItemsGroups", () => {
         expect(items).toEqual([
             [
                 {
+                    className: "s-menu-workspace-home",
+                    href: "/workspaces/TestWorkspaceId/home",
+                    key: "gs.header.home",
+                },
+                {
                     className: "s-menu-data",
                     href: "/modeler/#/workspaces/TestWorkspaceId",
                     key: "gs.header.data",
@@ -296,6 +331,11 @@ describe("generateHeaderMenuItemsGroups", () => {
         );
         expect(items).toEqual([
             [
+                {
+                    className: "s-menu-workspace-home",
+                    href: "/workspaces/TestWorkspaceId/home",
+                    key: "gs.header.home",
+                },
                 {
                     className: "s-menu-kpis",
                     href: "/dashboards/#/project/TestWorkspaceId",
@@ -330,6 +370,11 @@ describe("generateHeaderMenuItemsGroups", () => {
         expect(items).toEqual([
             [
                 {
+                    className: "s-menu-workspace-home",
+                    href: "/workspaces/TestWorkspaceId/home",
+                    key: "gs.header.home",
+                },
+                {
                     className: "s-menu-kpis",
                     href: "/dashboards/#/workspace/TestWorkspaceId",
                     key: "gs.header.kpis",
@@ -363,6 +408,11 @@ describe("generateHeaderMenuItemsGroups", () => {
         expect(items).toEqual([
             [
                 {
+                    className: "s-menu-workspace-home",
+                    href: "/workspaces/TestWorkspaceId/home",
+                    key: "gs.header.home",
+                },
+                {
                     className: "s-menu-data",
                     href: "/modeler/#/projects/TestWorkspaceId",
                     key: "gs.header.data",
@@ -383,6 +433,11 @@ describe("generateHeaderMenuItemsGroups", () => {
         );
         expect(items).toEqual([
             [
+                {
+                    className: "s-menu-workspace-home",
+                    href: "/workspaces/TestWorkspaceId/home",
+                    key: "gs.header.home",
+                },
                 {
                     className: "s-menu-data",
                     href: "/modeler/#/workspaces/TestWorkspaceId",
@@ -405,6 +460,11 @@ describe("generateHeaderMenuItemsGroups", () => {
         );
         expect(items).toEqual([
             [
+                {
+                    className: "s-menu-workspace-home",
+                    href: "/workspaces/TestWorkspaceId/home",
+                    key: "gs.header.home",
+                },
                 {
                     className: "s-menu-data",
                     href: "/modeler/#/projects/TestWorkspaceId",
@@ -432,6 +492,11 @@ describe("generateHeaderMenuItemsGroups", () => {
         );
         expect(items).toEqual([
             [
+                {
+                    className: "s-menu-workspace-home",
+                    href: "/workspaces/TestWorkspaceId/home",
+                    key: "gs.header.home",
+                },
                 {
                     className: "s-menu-data",
                     href: "/modeler/#/workspaces/TestWorkspaceId",
@@ -472,6 +537,11 @@ describe("generateHeaderMenuItemsGroups", () => {
                 },
             ],
             [
+                {
+                    className: "s-menu-workspace-home",
+                    href: "/workspaces/TestWorkspaceId/home",
+                    key: "gs.header.home",
+                },
                 {
                     className: "s-menu-kpis",
                     href: "/dashboards/#/project/TestWorkspaceId",
@@ -525,6 +595,11 @@ describe("generateHeaderMenuItemsGroups", () => {
             ],
             [
                 {
+                    className: "s-menu-workspace-home",
+                    href: "/workspaces/TestWorkspaceId/home",
+                    key: "gs.header.home",
+                },
+                {
                     className: "s-menu-kpis",
                     href: "/dashboards/#/workspace/TestWorkspaceId",
                     key: "gs.header.kpis",
@@ -577,6 +652,11 @@ describe("generateHeaderMenuItemsGroups", () => {
                 },
             ],
             [
+                {
+                    className: "s-menu-workspace-home",
+                    href: "/workspaces/TestWorkspaceId/home",
+                    key: "gs.header.home",
+                },
                 {
                     className: "s-menu-kpis",
                     href: "/dashboards/#/project/TestWorkspaceId",
@@ -641,6 +721,11 @@ describe("generateHeaderMenuItemsGroups", () => {
             ],
             [
                 {
+                    className: "s-menu-workspace-home",
+                    href: "/workspaces/TestWorkspaceId/home",
+                    key: "gs.header.home",
+                },
+                {
                     className: "s-menu-kpis",
                     href: "/dashboards/#/project/TestWorkspaceId",
                     key: "gs.header.kpis",
@@ -693,6 +778,11 @@ describe("generateHeaderMenuItemsGroups", () => {
             ],
             [
                 {
+                    className: "s-menu-workspace-home",
+                    href: "/workspaces/TestWorkspaceId/home",
+                    key: "gs.header.home",
+                },
+                {
                     className: "s-menu-kpis",
                     href: "/dashboards/#/project/TestWorkspaceId",
                     key: "gs.header.kpis",
@@ -736,6 +826,11 @@ describe("generateHeaderMenuItemsGroups", () => {
         );
         expect(items).toEqual([
             [
+                {
+                    className: "s-menu-workspace-home",
+                    href: "/workspaces/TestWorkspaceId/home",
+                    key: "gs.header.home",
+                },
                 {
                     className: "s-menu-kpis",
                     href: "/dashboards/#/project/TestWorkspaceId",

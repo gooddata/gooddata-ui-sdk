@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 import {
     IExecutionFactory,
@@ -88,6 +88,9 @@ export class TigerPreparedExecution implements IPreparedExecution {
                     (response) =>
                         new Promise((resolve, reject) => {
                             if (response) {
+                                // generated open api is not correct for some reason
+                                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                // @ts-ignore
                                 resolve(response.data);
                                 return;
                             }

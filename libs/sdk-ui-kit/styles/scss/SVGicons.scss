@@ -278,3 +278,7 @@ $base_path: "~@gooddata/sdk-ui-kit/styles";
 .gd-icon-image {
     @include gd-svg-icon("image");
 }
+
+.gd-icon-magic {
+    @include gd-svg-icon("magic");
+}

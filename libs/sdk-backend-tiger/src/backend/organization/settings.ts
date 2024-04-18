@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { IOrganizationSettingsService } from "@gooddata/sdk-backend-spi";
 import { ISettings, IWhiteLabeling } from "@gooddata/sdk-model";
 

@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { put, call, select, takeLatest, SagaReturnType, cancelled } from "redux-saga/effects";
 import { IAttributeMetadataObject } from "@gooddata/sdk-model";

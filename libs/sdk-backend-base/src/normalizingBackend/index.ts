@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 
 import {
     IAnalyticalBackend,
@@ -158,6 +158,10 @@ class DenormalizingExecutionResult implements IExecutionResult {
     public fingerprint = (): string => {
         return this._fingerprint;
     };
+
+    public getResultId(): string {
+        return this.normalizedResult.getResultId();
+    }
 
     private handleDataViewError = (error: unknown): never => {
         // make sure that errors with dataViews are repackaged with the dataView denormalized as well

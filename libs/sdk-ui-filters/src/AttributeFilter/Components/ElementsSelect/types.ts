@@ -204,4 +204,11 @@ export interface IAttributeFilterElementsSelectItemProps {
      * @beta
      */
     fullscreenOnMobile?: boolean;
+
+    /**
+     * Override how to render "Only" in the element item.
+     *
+     * @internal
+     */
+    renderSelectOnly?: JSX.Element;
 }

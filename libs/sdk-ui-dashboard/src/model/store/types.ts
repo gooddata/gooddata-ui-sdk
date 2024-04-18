@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { AnyAction, Dispatch, EntityState } from "@reduxjs/toolkit";
 import { IInsight, IWidgetAlert, IListedDashboard } from "@gooddata/sdk-model";
 import { LoadingState } from "./loading/loadingState.js";
@@ -23,6 +23,7 @@ import { DashboardPermissionsState } from "./dashboardPermissions/dashboardPermi
 import { IInaccessibleDashboard } from "../types/inaccessibleDashboardTypes.js";
 import { AttributeFilterConfigsState } from "./attributeFilterConfigs/attributeFilterConfigsState.js";
 import { DateFilterConfigsState } from "./dateFilterConfigs/dateFilterConfigsState.js";
+import { IPredictionState } from "./prediction/predictionState.js";
 
 /*
  * This explicit typing is unfortunate but cannot find better way. Normally the typings get inferred from store,
@@ -108,6 +109,12 @@ export interface DashboardState {
     _queryCache: {
         [queryName: string]: any;
     };
+
+    /**
+     * Prediction features related data
+     * @internal
+     */
+    prediction: IPredictionState;
 }
 
 /**

@@ -8,6 +8,7 @@ import {
     widgetRef,
     isKpiWidget,
     isRichTextWidget,
+    objRefToString,
 } from "@gooddata/sdk-model";
 import { BackendProvider, convertError, useBackendStrict } from "@gooddata/sdk-ui";
 import { withEventing } from "@gooddata/sdk-backend-base";
@@ -23,6 +24,7 @@ import { safeSerializeObjRef } from "../../../_staging/metadata/safeSerializeObj
 import { DefaultDashboardKpiWidget } from "./DefaultDashboardKpiWidget.js";
 import { RenderModeAwareDashboardInsightWidget } from "./InsightWidget/index.js";
 import { RenderModeAwareDashboardRichTextWidget } from "./RichTextWidget/index.js";
+import { stringUtils } from "@gooddata/util";
 
 /**
  * @internal
@@ -83,7 +85,8 @@ export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget
         });
     }, [effectiveBackend, dispatchEvent, safeSerializeObjRef(ref)]);
 
-    const dashboardItemClasses = `s-dash-item-${index}`;
+    const widgetRefAsString = objRefToString(widgetRef(widget));
+    const dashboardItemClasses = `s-dash-item-${index} widget-${stringUtils.simplifyText(widgetRefAsString)}`;
 
     if (isWidget(widget)) {
         let renderWidget = null;

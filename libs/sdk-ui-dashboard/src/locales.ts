@@ -55,6 +55,7 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     scheduleDialogEmailRepeatsFrequencies_day: { id: "dialogs.schedule.email.repeats.frequencies.day" },
     scheduleDialogEmailRepeatsFrequencies_month: { id: "dialogs.schedule.email.repeats.frequencies.month" },
     scheduleDialogEmailRepeatsFrequencies_week: { id: "dialogs.schedule.email.repeats.frequencies.week" },
+    widgetDescriptionApplied: { id: "dialogs.flexai.widgetDescriptionApplied" },
 
     filterHiddenTooltip: { id: "filter.visibilityMode.tooltip.hidden" },
     filterReadonlyInEditModeTooltip: { id: "filter.visibilityMode.tooltip.readonly.editMode" },

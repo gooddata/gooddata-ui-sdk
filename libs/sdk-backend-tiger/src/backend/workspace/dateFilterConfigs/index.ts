@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
 import { IDateFilterConfigsQuery, IDateFilterConfigsQueryResult } from "@gooddata/sdk-backend-spi";
 import { idRef, IDateFilterConfig } from "@gooddata/sdk-model";

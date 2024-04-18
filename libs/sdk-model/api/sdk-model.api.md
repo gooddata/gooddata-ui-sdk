@@ -1569,6 +1569,7 @@ export type IInsight = IInsightDefinition & {
         uri: string;
         ref: ObjRef;
         isLocked?: boolean;
+        interactions?: IObjectInteractions;
     };
 };
 
@@ -1583,6 +1584,7 @@ export type IInsightDefinition = {
         filters: IFilter[];
         sorts: ISortItem[];
         properties: VisualizationProperties;
+        interactions?: IObjectInteractions;
     };
 };
 
@@ -1697,6 +1699,8 @@ export interface IListedDashboard extends Readonly<Required<IAuditableDates>>, R
     readonly availability: ListedDashboardAvailability;
     readonly description: string;
     readonly identifier: string;
+    // (undocumented)
+    readonly interactions?: IObjectInteractions;
     readonly ref: ObjRef;
     readonly tags?: string[];
     readonly title: string;
@@ -1789,7 +1793,9 @@ export interface IMeasureLocatorItemBody {
 }
 
 // @public
-export type IMeasureMetadataObject = IMetadataObject & IMeasureMetadataObjectBase & IAuditable;
+export type IMeasureMetadataObject = IMetadataObject & IMeasureMetadataObjectBase & IAuditable & {
+    interactions?: IObjectInteractions;
+};
 
 // @public (undocumented)
 export interface IMeasureMetadataObjectBase {
@@ -2045,6 +2051,27 @@ export type InsightWidgetDescriptionSourceType = "widget" | "insight";
 
 // @public
 export type INullableFilter = IFilter | undefined | null;
+
+// @public (undocumented)
+export interface IObjectInteractions {
+    // (undocumented)
+    byUser?: ("like" | "dislike" | "favorite" | "subscribe" | "view")[];
+    // (undocumented)
+    statistics?: {
+        like?: number;
+        dislike?: number;
+        favorite?: number;
+        subscribe?: number;
+    };
+}
+
+// @public (undocumented)
+export interface IOpenAiConfig {
+    // (undocumented)
+    org: string;
+    // (undocumented)
+    token: string;
+}
 
 // @alpha (undocumented)
 export interface IOrganizationAssignee {
@@ -2585,6 +2612,7 @@ export interface ISettings {
     disableKpiDashboardHeadlineUnderline?: boolean;
     enableAdDescriptionEdit?: boolean;
     enableADMultipleDateFilters?: boolean;
+    enableAdvancedMachineLearningIntegration?: boolean;
     enableAlternativeDisplayFormSelection?: boolean;
     enableAnalyticalDashboardPermissions?: boolean;
     enableApproxCount?: boolean;
@@ -2642,11 +2670,13 @@ export interface ISettings {
     formatLocale?: string;
     hideKpiDrillInEmbedded?: boolean;
     metadataTimeZone?: string;
+    openAiConfig?: IOpenAiConfig;
     platformEdition?: PlatformEdition;
     responsiveUiDateFormat?: string;
     showHiddenCatalogItems?: boolean;
     weekStart?: WeekStart;
     whiteLabeling?: IWhiteLabeling;
+    zapierToken?: string;
 }
 
 // @public
@@ -3305,12 +3335,13 @@ export interface IWidgetAlert extends IWidgetAlertBase, IDashboardObjectIdentity
 
 // @alpha
 export interface IWidgetAlertBase {
+    readonly actionName?: string;
     readonly dashboard: ObjRef;
     readonly description: string;
     readonly isTriggered: boolean;
     readonly threshold: number;
     readonly title: string;
-    readonly whenTriggered: "underThreshold" | "aboveThreshold";
+    readonly whenTriggered: "underThreshold" | "aboveThreshold" | "outliers";
     readonly widget: ObjRef;
 }
 

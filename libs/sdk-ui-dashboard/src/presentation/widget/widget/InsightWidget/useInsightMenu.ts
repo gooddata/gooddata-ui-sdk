@@ -1,10 +1,14 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { useCallback, useMemo, useState, Dispatch, SetStateAction } from "react";
 import { useIntl } from "react-intl";
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 
-import { selectExecutionResultByRef, useDashboardSelector } from "../../../../model/index.js";
+import {
+    selectExecutionResultByRef,
+    useDashboardSelector,
+    selectPredictionResult,
+} from "../../../../model/index.js";
 
 import { isDataError } from "../../../../_staging/errors/errorPredicates.js";
 import {
@@ -38,14 +42,16 @@ export const useInsightMenu = (
     const closeMenu = useCallback(() => setIsMenuOpen(false), []);
     const openMenu = useCallback(() => setIsMenuOpen(true), []);
 
+    const prediction = useDashboardSelector(selectPredictionResult(widget.ref));
+
     const { insightMenuItemsProvider } = useDashboardCustomizationsContext();
     const defaultMenuItems = useDefaultMenuItems(config, insightMenuItemsProvider, setIsMenuOpen);
 
     const menuItems = useMemo<IInsightMenuItem[]>(() => {
         return insightMenuItemsProvider
-            ? insightMenuItemsProvider(insight, widget, defaultMenuItems, closeMenu, "view")
+            ? insightMenuItemsProvider(insight, widget, defaultMenuItems, closeMenu, "view", prediction)
             : defaultMenuItems;
-    }, [insightMenuItemsProvider, insight, widget, defaultMenuItems, closeMenu]);
+    }, [insightMenuItemsProvider, insight, widget, defaultMenuItems, closeMenu, prediction]);
 
     return { menuItems, isMenuOpen, openMenu, closeMenu };
 };

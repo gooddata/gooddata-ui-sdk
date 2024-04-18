@@ -1,11 +1,11 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import React, { ReactNode, useMemo } from "react";
 import cx from "classnames";
 import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 import cloneDeep from "lodash/cloneDeep.js";
 import { invariant } from "ts-invariant";
-
 import { stringUtils } from "@gooddata/util";
+
 import { messages } from "@gooddata/sdk-ui";
 import {
     DRILL_TARGET_TYPE,
@@ -193,6 +193,7 @@ function useDateAttributeOptions(item: IDrillConfigItem, widgetRef: UriRef | Ide
         dateAttributes,
         item.type,
         item.attributes,
+        item.localIdentifier,
         item.drillTargetType,
         item.originLocalIdentifier,
     ]);

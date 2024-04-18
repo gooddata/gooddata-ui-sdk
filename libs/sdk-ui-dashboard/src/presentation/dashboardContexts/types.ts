@@ -11,7 +11,7 @@ import {
     IInsightMenuItem,
     CustomDashboardRichTextComponent,
 } from "../widget/types.js";
-import { DashboardConfig, ExtendedDashboardWidget } from "../../model/index.js";
+import { DashboardConfig, ExtendedDashboardWidget, IPredictionResult } from "../../model/index.js";
 import {
     CustomDashboardAttributeFilterComponent,
     CustomDashboardDateFilterComponent,
@@ -122,6 +122,7 @@ export type InsightMenuItemsProvider = (
     defaultItems: IInsightMenuItem[],
     closeMenu: () => void,
     renderMode: RenderMode,
+    prediction?: IPredictionResult,
 ) => IInsightMenuItem[];
 
 /**

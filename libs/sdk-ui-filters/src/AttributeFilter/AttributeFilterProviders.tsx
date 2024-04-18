@@ -32,6 +32,7 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
         selectFirst = false,
         disabled,
         customIcon,
+        attribute,
         onApply,
         onError,
         ErrorComponent,
@@ -81,6 +82,7 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
                 StatusBarComponent={StatusBarComponent ?? DefaultComponents.StatusBarComponent}
             >
                 <AttributeFilterContextProvider
+                    attribute={attribute}
                     backend={backend}
                     workspace={workspace}
                     title={title}

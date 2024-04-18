@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { IUser } from "../user/index.js";
 
 /**
@@ -38,3 +38,16 @@ export interface IAuditableUsers {
  * @public
  */
 export type IAuditable = IAuditableDates & IAuditableUsers;
+
+/**
+ * @public
+ */
+export interface IObjectInteractions {
+    statistics?: {
+        like?: number;
+        dislike?: number;
+        favorite?: number;
+        subscribe?: number;
+    };
+    byUser?: ("like" | "dislike" | "favorite" | "subscribe" | "view")[];
+}

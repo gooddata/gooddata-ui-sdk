@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import {
     IWorkspaceMeasuresService,
     IMeasureExpressionToken,

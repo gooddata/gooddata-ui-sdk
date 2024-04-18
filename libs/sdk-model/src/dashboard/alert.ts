@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { ObjRef, isObjRef } from "../objRef/index.js";
 import { IDashboardObjectIdentity } from "./common.js";
@@ -43,7 +43,12 @@ export interface IWidgetAlertBase {
     /**
      * Rule to apply
      */
-    readonly whenTriggered: "underThreshold" | "aboveThreshold";
+    readonly whenTriggered: "underThreshold" | "aboveThreshold" | "outliers";
+
+    /**
+     * Action to trigger when the alert is triggered.
+     */
+    readonly actionName?: string;
 }
 
 /**

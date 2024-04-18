@@ -11,7 +11,7 @@
  * @packageDocumentation
  */
 export { DateAttributeGranularity, DateGranularity, AllTimeGranularity } from "./base/dateGranularities.js";
-export { IAuditable, IAuditableDates, IAuditableUsers } from "./base/metadata.js";
+export { IAuditable, IAuditableDates, IAuditableUsers, IObjectInteractions } from "./base/metadata.js";
 export { ComparatorDirection, IComparator } from "./base/comparators.js";
 
 export {
@@ -727,7 +727,14 @@ export {
     IExistingDashboard,
 } from "./dashboard/dashboard.js";
 
-export { ISeparators, ISettings, PlatformEdition, IWhiteLabeling, WeekStart } from "./settings/index.js";
+export {
+    ISeparators,
+    ISettings,
+    PlatformEdition,
+    IWhiteLabeling,
+    WeekStart,
+    IOpenAiConfig,
+} from "./settings/index.js";
 
 export { IWorkspaceUserGroup } from "./userGroup/index.js";
 

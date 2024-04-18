@@ -44,6 +44,10 @@ export const HEADER_ITEM_ID_DATA = "gs.header.data";
  * @internal
  */
 export const HEADER_ITEM_ID_MANAGE = "gs.header.manage";
+/**
+ * @internal
+ */
+export const HEADER_ITEM_ID_HOME = "gs.header.home";
 
 /**
  * @internal
@@ -161,6 +165,10 @@ function createInsightsItemsGroup(
 
     const insightItemsGroup: IHeaderMenuItem[] = [];
 
+    insightItemsGroup.push(
+        createIHeaderMenuItem(HEADER_ITEM_ID_HOME, "s-menu-workspace-home", homeItemUrl(workspaceId)),
+    );
+
     const kpisUrl = kpisItemUrl(baseUrl, workspaceRef, workspaceId);
     const kpisKey = shouldEnableNewNavigation(featureFlags) ? HEADER_ITEM_ID_KPIS_NEW : HEADER_ITEM_ID_KPIS;
     pushConditionally(
@@ -222,6 +230,10 @@ function pushConditionally<T>(items: T[], item: T, cond: boolean) {
 
 const withBaseUrl = (baseUrl: string, uri: string): string =>
     `${baseUrl.endsWith("/") ? baseUrl.substring(0, baseUrl.length - 2) : baseUrl}${uri}`;
+
+function homeItemUrl(workspaceId: string): string {
+    return `/workspaces/${workspaceId}/home`;
+}
 
 function manageItemUrl(workspaceRef: string, workspaceId: string): string {
     return `/#s=/gdc/${workspaceRef}s/${workspaceId}|dataPage|`;
