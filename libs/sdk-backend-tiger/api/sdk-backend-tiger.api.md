@@ -470,6 +470,8 @@ export class TigerTokenAuthProvider extends TigerAuthProviderBase {
     updateApiToken: (apiToken: string) => void;
 }
 
+export { UploadFileResponse }
+
 // @internal (undocumented)
 export type WorkspaceDataFilter = JsonApiWorkspaceDataFilterInDocument;
 

@@ -1491,7 +1491,7 @@ export const buildTigerSpecificFunctions = (
         }
     },
 
-    getStagingUploadLocation: async (dataSourceId: string) => {
+    getStagingUploadLocation: async (dataSourceId: string): Promise<StagingUploadLocation> => {
         try {
             return await authApiCall(async (sdk) => {
                 return await sdk.result
