@@ -16,6 +16,18 @@ export interface IOrganizationDescriptor {
 }
 
 /**
+ * Organization descriptor properties to update.
+ * Optional properties can be set to null to delete the value.
+ *
+ * @see IOrganizationDescriptor
+ * @public
+ */
+export interface IOrganizationDescriptorUpdate {
+    title?: string;
+    earlyAccess?: string | null;
+}
+
+/**
  * Information about assigned workspace.
  *
  * @alpha

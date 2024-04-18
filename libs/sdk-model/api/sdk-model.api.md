@@ -2068,6 +2068,14 @@ export interface IOrganizationDescriptor {
     title: string;
 }
 
+// @public
+export interface IOrganizationDescriptorUpdate {
+    // (undocumented)
+    earlyAccess?: string | null;
+    // (undocumented)
+    title?: string;
+}
+
 // @alpha (undocumented)
 export interface IOrganizationPermissionAssignment {
     // (undocumented)

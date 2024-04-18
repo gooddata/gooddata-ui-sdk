@@ -848,6 +848,7 @@ export {
 
 export {
     IOrganizationDescriptor,
+    IOrganizationDescriptorUpdate,
     IWorkspacePermissionAssignment,
     IAssignedWorkspace,
     AssignedWorkspacePermission,

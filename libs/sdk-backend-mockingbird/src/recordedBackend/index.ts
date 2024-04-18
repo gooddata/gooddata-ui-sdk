@@ -302,6 +302,9 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 title: "mock organization",
             });
         },
+        updateDescriptor(): Promise<void> {
+            return Promise.resolve();
+        },
         securitySettings(): ISecuritySettingsService {
             return {
                 scope: scopeFactory(organizationId),

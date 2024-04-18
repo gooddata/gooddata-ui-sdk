@@ -680,6 +680,10 @@ class DummyOrganization implements IOrganization {
         });
     }
 
+    updateDescriptor(): Promise<void> {
+        return Promise.resolve();
+    }
+
     securitySettings(): ISecuritySettingsService {
         return {
             scope: `/gdc/domains/${this.organizationId}`,
