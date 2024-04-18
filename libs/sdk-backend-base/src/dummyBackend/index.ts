@@ -269,6 +269,9 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
         async getDescriptor(): Promise<IWorkspaceDescriptor> {
             return dummyDescriptor(this.workspace);
         },
+        async updateDescriptor(): Promise<void> {
+            throw new NotSupported("not supported");
+        },
         getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {
             throw new NotSupported("not supported");
         },

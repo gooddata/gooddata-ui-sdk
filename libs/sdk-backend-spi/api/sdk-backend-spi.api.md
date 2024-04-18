@@ -222,6 +222,7 @@ export interface IAnalyticalWorkspace {
     permissions(): IWorkspacePermissionsService;
     settings(): IWorkspaceSettingsService;
     styling(): IWorkspaceStylingService;
+    updateDescriptor(descriptor: IWorkspaceDescriptorUpdate): Promise<void>;
     userGroups(): IWorkspaceUserGroupsQuery;
     users(): IWorkspaceUsersQuery;
     // (undocumented)
@@ -1063,6 +1064,18 @@ export interface IWorkspaceDescriptor {
     prefix?: string;
     // (undocumented)
     title: string;
+}
+
+// @public
+export interface IWorkspaceDescriptorUpdate {
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    earlyAccess?: string | null;
+    // (undocumented)
+    prefix?: string | null;
+    // (undocumented)
+    title?: string;
 }
 
 // @alpha

@@ -125,6 +125,7 @@ export {
     IWorkspacesQueryFactory,
     IWorkspacesQueryResult,
     IWorkspaceDescriptor,
+    IWorkspaceDescriptorUpdate,
 } from "./workspace/index.js";
 
 export { IAttributeHierarchiesService } from "./workspace/attributeHierarchies/index.js";

@@ -41,6 +41,14 @@ export interface IAnalyticalWorkspace {
     getDescriptor(includeParentPrefixes?: boolean): Promise<IWorkspaceDescriptor>;
 
     /**
+     * Updates the details of the workspace.
+     * Throws error in case the workspace does not exist.
+     *
+     * @param descriptor - properties to update
+     */
+    updateDescriptor(descriptor: IWorkspaceDescriptorUpdate): Promise<void>;
+
+    /**
      * Returns parent analytical workspace when this workspace has a parent, undefined otherwise.
      */
     getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined>;
@@ -174,6 +182,20 @@ export interface IWorkspaceDescriptor {
      * Early access attribute value of the workspace
      */
     earlyAccess?: string;
+}
+
+/**
+ * Workspace descriptor properties to update.
+ * Optional properties can be set to null to delete the value.
+ *
+ * @see IWorkspaceDescriptor
+ * @public
+ */
+export interface IWorkspaceDescriptorUpdate {
+    title?: string;
+    description?: string;
+    prefix?: string | null;
+    earlyAccess?: string | null;
 }
 
 /**

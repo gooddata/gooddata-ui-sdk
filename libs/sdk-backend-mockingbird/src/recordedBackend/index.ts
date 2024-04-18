@@ -183,6 +183,9 @@ function recordedWorkspace(
         async getDescriptor(): Promise<IWorkspaceDescriptor> {
             return recordedDescriptor(this.workspace, implConfig);
         },
+        async updateDescriptor(): Promise<void> {
+            throw new NotSupported("not supported");
+        },
         getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {
             throw new NotSupported("not supported");
         },
