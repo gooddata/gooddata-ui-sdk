@@ -17,6 +17,8 @@ import { IWorkspaceAccessControlService } from "./accessControl/index.js";
 import { IWorkspaceUserGroupsQuery } from "./userGroups/index.js";
 import { IAttributeHierarchiesService } from "./attributeHierarchies/index.js";
 import { IWorkspaceExportDefinitionsService } from "./exportDefinitions/index.js";
+import { IDataFiltersService } from "./dataFilter/index.js";
+import { IWorkspaceLogicalModelService } from "./ldm/model.js";
 
 /**
  * Represents an analytical workspace hosted on a backend.
@@ -131,6 +133,18 @@ export interface IAnalyticalWorkspace {
      * @alpha
      */
     exportDefinitions(): IWorkspaceExportDefinitionsService;
+
+    /**
+     * Returns service that operates over Data Filters.
+     * @alpha
+     */
+    dataFilters(): IDataFiltersService;
+
+    /**
+     * Returns experimental service that operates over logical data model.
+     * @internal
+     */
+    logicalModel(): IWorkspaceLogicalModelService;
 }
 
 /**

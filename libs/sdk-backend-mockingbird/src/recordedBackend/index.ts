@@ -42,6 +42,8 @@ import {
     IWorkspacesQueryFactory,
     NotSupported,
     ValidationContext,
+    IDataFiltersService,
+    IWorkspaceLogicalModelService,
 } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
@@ -265,6 +267,12 @@ function recordedWorkspace(
             return new RecordedAttributeHierarchiesService(implConfig);
         },
         exportDefinitions(): IWorkspaceExportDefinitionsService {
+            throw new NotSupported("not supported");
+        },
+        dataFilters(): IDataFiltersService {
+            throw new NotSupported("not supported");
+        },
+        logicalModel(): IWorkspaceLogicalModelService {
             throw new NotSupported("not supported");
         },
     };

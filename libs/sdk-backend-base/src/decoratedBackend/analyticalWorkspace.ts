@@ -19,6 +19,8 @@ import {
     IWorkspaceAccessControlService,
     IAttributeHierarchiesService,
     IWorkspaceExportDefinitionsService,
+    IDataFiltersService,
+    IWorkspaceLogicalModelService,
 } from "@gooddata/sdk-backend-spi";
 import { DecoratorFactories } from "./types.js";
 
@@ -137,5 +139,13 @@ export class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
 
     public exportDefinitions(): IWorkspaceExportDefinitionsService {
         return this.decorated.exportDefinitions();
+    }
+
+    public dataFilters(): IDataFiltersService {
+        return this.decorated.dataFilters();
+    }
+
+    public logicalModel(): IWorkspaceLogicalModelService {
+        return this.decorated.logicalModel();
     }
 }

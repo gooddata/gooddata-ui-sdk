@@ -214,3 +214,7 @@ export {
     IOrganizationUserGroupsQueryResult,
 } from "./organization/users/index.js";
 export { IOrganizationPermissionService, IPermissionsAssignment } from "./organization/permissions/index.js";
+
+export { IDataFiltersService } from "./workspace/dataFilter/index.js";
+
+export { IWorkspaceLogicalModelService, IDateDataset } from "./workspace/ldm/model.js";

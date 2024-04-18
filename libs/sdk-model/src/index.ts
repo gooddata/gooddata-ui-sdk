@@ -873,3 +873,5 @@ export {
     exportDefinitionCreated,
     exportDefinitionUpdated,
 } from "./exportDefinitions/index.js";
+
+export { IWorkspaceDataFilter, IWorkspaceDataFilterSetting } from "./dataFilter/index.js";

@@ -45,6 +45,8 @@ import {
     IAttributeHierarchiesService,
     IDataSourcesService,
     IWorkspaceExportDefinitionsService,
+    IDataFiltersService,
+    IWorkspaceLogicalModelService,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -252,6 +254,14 @@ function recordedWorkspace(
         },
 
         exportDefinitions(): IWorkspaceExportDefinitionsService {
+            throw new NotSupported("not supported");
+        },
+
+        dataFilters(): IDataFiltersService {
+            throw new NotSupported("not supported");
+        },
+
+        logicalModel(): IWorkspaceLogicalModelService {
             throw new NotSupported("not supported");
         },
     };

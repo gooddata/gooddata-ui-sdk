@@ -86,6 +86,7 @@ import { IWidget } from '@gooddata/sdk-model';
 import { IWidgetAlert } from '@gooddata/sdk-model';
 import { IWidgetAlertDefinition } from '@gooddata/sdk-model';
 import { IWidgetDefinition } from '@gooddata/sdk-model';
+import { IWorkspaceDataFilter } from '@gooddata/sdk-model';
 import { IWorkspacePermissionAssignment } from '@gooddata/sdk-model';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { IWorkspaceUser } from '@gooddata/sdk-model';
@@ -204,6 +205,8 @@ export interface IAnalyticalWorkspace {
     attributes(): IWorkspaceAttributesService;
     catalog(): IWorkspaceCatalogFactory;
     dashboards(): IWorkspaceDashboardsService;
+    // @alpha
+    dataFilters(): IDataFiltersService;
     datasets(): IWorkspaceDatasetsService;
     dateFilterConfigs(): IDateFilterConfigsQuery;
     execution(): IExecutionFactory;
@@ -213,6 +216,8 @@ export interface IAnalyticalWorkspace {
     getDescriptor(includeParentPrefixes?: boolean): Promise<IWorkspaceDescriptor>;
     getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined>;
     insights(): IWorkspaceInsightsService;
+    // @internal
+    logicalModel(): IWorkspaceLogicalModelService;
     measures(): IWorkspaceMeasuresService;
     permissions(): IWorkspacePermissionsService;
     settings(): IWorkspaceSettingsService;
@@ -365,6 +370,12 @@ export interface IDashboardWithReferences {
 }
 
 // @alpha
+export interface IDataFiltersService {
+    // (undocumented)
+    getWorkspaceDataFilters(): Promise<IWorkspaceDataFilter[]>;
+}
+
+// @alpha
 export interface IDataSourcesService {
     getDataSourceIdentifiers(): Promise<IDataSourceIdentifierDescriptor[]>;
 }
@@ -383,6 +394,16 @@ export interface IDataView {
     readonly totals?: DataValue[][][];
     readonly totalTotals?: DataValue[][][];
     readonly warnings?: IResultWarning[];
+}
+
+// @internal
+export interface IDateDataset {
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    title: string;
 }
 
 // @alpha
@@ -1072,6 +1093,11 @@ export interface IWorkspaceInsightsService {
     getVisualizationClass(ref: ObjRef): Promise<IVisualizationClass>;
     getVisualizationClasses(options?: IGetVisualizationClassesOptions): Promise<IVisualizationClass[]>;
     updateInsight(insight: IInsight): Promise<IInsight>;
+}
+
+// @internal
+export interface IWorkspaceLogicalModelService {
+    getDatasets(includeParents: boolean): Promise<IDateDataset[]>;
 }
 
 // @public
