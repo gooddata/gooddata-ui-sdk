@@ -144,7 +144,9 @@ exports[`PluggableGeoPushpinChart > getExtendedReferencePoint > should return a 
   "openAsReport": {
     "supported": false,
   },
-  "recommendations": {},
+  "recommendations": {
+    "supportsFilteringRecommendation": false,
+  },
   "supportedLocationIcon": {
     "supported": true,
   },

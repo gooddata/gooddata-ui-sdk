@@ -1,16 +1,21 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { IChartLimits } from "../../../interfaces/index.js";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import {
     DEFAULT_CATEGORIES_LIMIT,
     DEFAULT_DATA_POINTS_LIMIT,
     DEFAULT_SERIES_LIMIT,
-} from "../_chartCreators/commonConfiguration.js";
-import {
     HEATMAP_DATA_POINTS_LIMIT,
     PIE_CHART_LIMIT,
     SANKEY_CHART_DATA_POINT_LIMIT,
     SANKEY_CHART_NODE_LIMIT,
+    SOFT_DEFAULT_CATEGORIES_LIMIT,
+    SOFT_DEFAULT_DATA_POINTS_LIMIT,
+    SOFT_DEFAULT_SERIES_LIMIT,
+    SOFT_PIE_CHART_LIMIT,
+    SOFT_SANKEY_CHART_DATA_POINT_LIMIT,
+    SOFT_SANKEY_CHART_NODE_LIMIT,
+    SOFT_WATERFALL_CHART_DATA_POINT_LIMIT,
     WATERFALL_CHART_DATA_POINT_LIMIT,
 } from "../../constants/limits.js";
 import { IChartOptions, ISeriesDataItem, ISeriesItem } from "../../typings/unsafe.js";
@@ -80,6 +85,57 @@ function getChartLimits(type: string): IChartLimits {
     }
 }
 
+type ChartTypes = typeof VisualizationTypes[keyof typeof VisualizationTypes];
+
+function getSoftChartLimits(type: ChartTypes): IChartLimits {
+    switch (type) {
+        case VisualizationTypes.SCATTER:
+            return {
+                series: SOFT_DEFAULT_SERIES_LIMIT,
+                categories: SOFT_DEFAULT_SERIES_LIMIT,
+            };
+        case VisualizationTypes.PIE:
+        case VisualizationTypes.DONUT:
+        case VisualizationTypes.FUNNEL:
+        case VisualizationTypes.PYRAMID:
+            return {
+                series: 1,
+                categories: SOFT_PIE_CHART_LIMIT,
+            };
+        case VisualizationTypes.TREEMAP:
+            return {
+                series: SOFT_DEFAULT_SERIES_LIMIT,
+                categories: SOFT_DEFAULT_DATA_POINTS_LIMIT,
+                dataPoints: SOFT_DEFAULT_DATA_POINTS_LIMIT,
+            };
+        case VisualizationTypes.HEATMAP:
+            return {
+                series: SOFT_DEFAULT_SERIES_LIMIT,
+                categories: SOFT_DEFAULT_CATEGORIES_LIMIT,
+                dataPoints: HEATMAP_DATA_POINTS_LIMIT,
+            };
+
+        case VisualizationTypes.SANKEY:
+        case VisualizationTypes.DEPENDENCY_WHEEL:
+            return {
+                series: 1,
+                nodes: SOFT_SANKEY_CHART_NODE_LIMIT,
+                dataPoints: SOFT_SANKEY_CHART_DATA_POINT_LIMIT,
+            };
+        case VisualizationTypes.WATERFALL:
+            return {
+                series: 1,
+                categories: SOFT_WATERFALL_CHART_DATA_POINT_LIMIT,
+                dataPoints: SOFT_WATERFALL_CHART_DATA_POINT_LIMIT,
+            };
+        default:
+            return {
+                series: SOFT_DEFAULT_SERIES_LIMIT,
+                categories: SOFT_DEFAULT_CATEGORIES_LIMIT,
+            };
+    }
+}
+
 export function cannotShowNegativeValues(type: string): boolean {
     return isOneOfTypes(type, unsupportedNegativeValuesTypes);
 }
@@ -107,6 +163,16 @@ export function validateData(limits: IChartLimits, chartOptions: IChartOptions):
         dataTooLarge: !isDataOfReasonableSize(dataToValidate, finalLimits, isViewByTwoAttributes),
         hasNegativeValue: cannotShowNegativeValues(type) && isNegativeValueIncluded(chartOptions.data.series),
     };
+}
+
+export function getIsFilteringRecommended(chartOptions: IChartOptions): boolean {
+    const { type, isViewByTwoAttributes } = chartOptions;
+    const limits = getSoftChartLimits(type as ChartTypes);
+    const dataToValidate = isTreemap(type)
+        ? getTreemapDataForValidation(chartOptions.data)
+        : chartOptions.data;
+
+    return !isDataOfReasonableSize(dataToValidate, limits, isViewByTwoAttributes);
 }
 
 /**
