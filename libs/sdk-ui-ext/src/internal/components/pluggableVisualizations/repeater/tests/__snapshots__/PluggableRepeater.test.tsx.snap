@@ -138,7 +138,9 @@ exports[`PluggableRepeater > repeater should not allow date attributes or differ
     "openAsReport": {
       "supported": false,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": false,
+    },
     "supportedEmptyCanvasDragTypes": [
       "attribute",
     ],
@@ -285,7 +287,9 @@ exports[`PluggableRepeater > should return reference point with one attribute, c
     "openAsReport": {
       "supported": false,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": false,
+    },
     "supportedEmptyCanvasDragTypes": [
       "attribute",
     ],
@@ -446,7 +450,9 @@ exports[`PluggableRepeater > should reuse one attribute and measures 1`] = `
     "openAsReport": {
       "supported": false,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": false,
+    },
     "supportedEmptyCanvasDragTypes": [
       "attribute",
     ],
