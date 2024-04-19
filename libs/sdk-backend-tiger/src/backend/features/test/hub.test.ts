@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
 import axios from "axios";
 import { ILiveFeatures } from "@gooddata/api-client-tiger";
@@ -47,7 +47,7 @@ describe("live features", () => {
             baseURL: "/",
             headers: {
                 "Content-type": "application/json",
-                "X-FeatureHub": "earlyAccess=,organizationId=",
+                "X-FeatureHub": "",
             },
             method: "GET",
             params: { sdkUrl: "" },
