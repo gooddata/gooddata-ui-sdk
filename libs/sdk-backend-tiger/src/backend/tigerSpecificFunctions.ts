@@ -50,6 +50,7 @@ import {
     JsonApiDataSourceInAttributesCacheStrategyEnum,
     GdStorageFile,
     UploadFileResponse,
+    ReadFileManifestsResponse,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling.js";
 import uniq from "lodash/uniq.js";
@@ -519,6 +520,20 @@ export type TigerSpecificFunctions = {
      * @param dataSourceId - id of the data source
      */
     listFiles?: (dataSourceId: string) => Promise<Array<GdStorageFile>>;
+
+    /**
+     * Delete CSV files from GDSTORAGE data source
+     * @param dataSourceId - id of the data source
+     * @param fileNames - names of CSV files to delete
+     */
+    deleteFiles?: (dataSourceId: string, fileNames: string[]) => Promise<void>;
+
+    /**
+     * Delete CSV files from GDSTORAGE data source
+     * @param dataSourceId - id of the data source
+     * @param fileNames - names of CSV files to delete
+     */
+    readFileManifests?: (dataSourceId: string, fileNames: string[]) => Promise<ReadFileManifestsResponse[]>;
 };
 
 const getDataSourceErrorMessage = (error: unknown) => {
@@ -1567,6 +1582,41 @@ export const buildTigerSpecificFunctions = (
                     .then((res) => {
                         return res?.data;
                     });
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+
+    deleteFiles: async (dataSourceId: string, fileNames: string[]) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                await sdk.result.deleteFiles({
+                    dataSourceId: dataSourceId,
+                    deleteFilesRequest: {
+                        fileNames: fileNames,
+                    },
+                });
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+
+    readFileManifests: async (dataSourceId, fileNames) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                const request = {
+                    dataSourceId: dataSourceId,
+                    readFileManifestsRequest: {
+                        manifestRequests: fileNames.map((fileName) => ({
+                            fileName,
+                        })),
+                    },
+                };
+                return await sdk.result.readFileManifests(request).then((res) => {
+                    return res?.data;
+                });
             });
         } catch (error: any) {
             throw convertApiError(error);

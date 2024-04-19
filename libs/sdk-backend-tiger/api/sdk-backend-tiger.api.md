@@ -46,6 +46,7 @@ import { NotAuthenticated } from '@gooddata/sdk-backend-spi';
 import { NotAuthenticatedHandler } from '@gooddata/sdk-backend-spi';
 import { ObjectType } from '@gooddata/sdk-model';
 import { PlatformUsage } from '@gooddata/api-client-tiger';
+import { ReadFileManifestsResponse } from '@gooddata/api-client-tiger';
 import { ScanResultPdm } from '@gooddata/api-client-tiger';
 import { ScanSqlResponse } from '@gooddata/api-client-tiger';
 import { StagingUploadLocation } from '@gooddata/api-client-tiger';
@@ -455,6 +456,8 @@ export type TigerSpecificFunctions = {
     analyzeCsv?: (dataSourceId: string, analyzeCsvRequest: AnalyzeCsvRequest) => Promise<Array<AnalyzeCsvResponse>>;
     importCsv?: (dataSourceId: string, importCsvRequest: ImportCsvRequest) => Promise<void>;
     listFiles?: (dataSourceId: string) => Promise<Array<GdStorageFile>>;
+    deleteFiles?: (dataSourceId: string, fileNames: string[]) => Promise<void>;
+    readFileManifests?: (dataSourceId: string, fileNames: string[]) => Promise<ReadFileManifestsResponse[]>;
 };
 
 // @public
