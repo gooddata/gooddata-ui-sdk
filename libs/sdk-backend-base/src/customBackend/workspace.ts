@@ -41,6 +41,10 @@ export class CustomWorkspace implements IAnalyticalWorkspace {
         throw new NotSupported("getting workspace descriptor is not supported");
     }
 
+    public updateDescriptor(): Promise<void> {
+        throw new NotSupported("updating workspace descriptor is not supported");
+    }
+
     public getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {
         throw new NotSupported("getting parent workspace is not supported");
     }

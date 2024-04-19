@@ -9,7 +9,7 @@ import {
     IOrganizationUserService,
     IOrganizationPermissionService,
 } from "@gooddata/sdk-backend-spi";
-import { IOrganizationDescriptor, idRef } from "@gooddata/sdk-model";
+import { IOrganizationDescriptor, idRef, IOrganizationDescriptorUpdate } from "@gooddata/sdk-model";
 
 import { SecuritySettingsService } from "./securitySettings.js";
 import { TigerAuthenticatedCallGuard } from "../../types/index.js";
@@ -66,6 +66,26 @@ export class TigerOrganization implements IOrganization {
             id: organizationId,
             title: organizationName,
         };
+    }
+
+    public async updateDescriptor(descriptor: IOrganizationDescriptorUpdate): Promise<void> {
+        await this.authCall((client) =>
+            client.entities.patchEntityOrganizations({
+                id: this.organizationId,
+                jsonApiOrganizationPatchDocument: {
+                    data: {
+                        id: this.organizationId,
+                        type: "organization",
+                        attributes: {
+                            name: descriptor.title,
+                            // type casts are necessary because nulls are not allowed in the type definition,
+                            // but backend expects them in case we want to delete the value
+                            earlyAccess: descriptor.earlyAccess as string | undefined,
+                        },
+                    },
+                },
+            }),
+        );
     }
 
     public securitySettings(): ISecuritySettingsService {

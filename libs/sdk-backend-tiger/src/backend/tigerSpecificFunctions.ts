@@ -350,6 +350,9 @@ export type TigerSpecificFunctions = {
     createDemoWorkspace?: (sampleWorkspace: WorkspaceDefinition) => Promise<string>;
     createDemoDataSource?: (sampleDataSource: DataSourceDefinition) => Promise<string>;
     createWorkspace?: (id: string, name: string) => Promise<string>;
+    /**
+     * @deprecated use IAnalyticalBackend.workspace(id).updateDescriptor(\{ title: name \})
+     */
     updateWorkspaceTitle?: (id: string, name: string) => Promise<void>;
     deleteWorkspace?: (id: string) => Promise<void>;
     canDeleteWorkspace?: (id: string) => Promise<boolean>;
@@ -852,9 +855,9 @@ export const buildTigerSpecificFunctions = (
     updateWorkspaceTitle: async (id: string, name: string) => {
         try {
             return await authApiCall(async (sdk) => {
-                await sdk.entities.updateEntityWorkspaces({
+                await sdk.entities.patchEntityWorkspaces({
                     id,
-                    jsonApiWorkspaceInDocument: {
+                    jsonApiWorkspacePatchDocument: {
                         data: {
                             attributes: {
                                 name,

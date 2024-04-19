@@ -64,6 +64,7 @@ import { IMetadataObject } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
 import { IOrganizationAssignee } from '@gooddata/sdk-model';
 import { IOrganizationDescriptor } from '@gooddata/sdk-model';
+import { IOrganizationDescriptorUpdate } from '@gooddata/sdk-model';
 import { IOrganizationPermissionAssignment } from '@gooddata/sdk-model';
 import { IOrganizationUser } from '@gooddata/sdk-model';
 import { IOrganizationUserGroup } from '@gooddata/sdk-model';
@@ -222,6 +223,7 @@ export interface IAnalyticalWorkspace {
     permissions(): IWorkspacePermissionsService;
     settings(): IWorkspaceSettingsService;
     styling(): IWorkspaceStylingService;
+    updateDescriptor(descriptor: IWorkspaceDescriptorUpdate): Promise<void>;
     userGroups(): IWorkspaceUserGroupsQuery;
     users(): IWorkspaceUsersQuery;
     // (undocumented)
@@ -664,6 +666,7 @@ export interface IOrganization {
     securitySettings(): ISecuritySettingsService;
     settings(): IOrganizationSettingsService;
     styling(): IOrganizationStylingService;
+    updateDescriptor(descriptor: IOrganizationDescriptorUpdate): Promise<void>;
     users(): IOrganizationUserService;
 }
 
@@ -1063,6 +1066,18 @@ export interface IWorkspaceDescriptor {
     prefix?: string;
     // (undocumented)
     title: string;
+}
+
+// @public
+export interface IWorkspaceDescriptorUpdate {
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    earlyAccess?: string | null;
+    // (undocumented)
+    prefix?: string | null;
+    // (undocumented)
+    title?: string;
 }
 
 // @alpha
