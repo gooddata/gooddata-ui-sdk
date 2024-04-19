@@ -82,6 +82,7 @@ export enum TigerFeaturesNames {
     EnableLabsSmartFunctions = "enableLabsSmartFunctions",
     EnableKeyDriverAnalysis = "enableKeyDriverAnalysis",
     EnableDataProfiling = "enableDataProfiling",
+    EnableFlexAi = "enableFlexAi",
     EnableExperimentalFeaturesUI = "enableExperimentalFeaturesUI",
 }
 
@@ -129,6 +130,7 @@ export type ITigerFeatureFlags = {
     enableLabsSmartFunctions: typeof FeatureFlagsValues["enableLabsSmartFunctions"][number];
     enableKeyDriverAnalysis: typeof FeatureFlagsValues["enableKeyDriverAnalysis"][number];
     enableDataProfiling: typeof FeatureFlagsValues["enableDataProfiling"][number];
+    enableFlexAi: typeof FeatureFlagsValues["enableFlexAi"][number];
     enableExperimentalFeaturesUI: typeof FeatureFlagsValues["enableExperimentalFeaturesUI"][number];
 };
 
@@ -176,6 +178,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableLabsSmartFunctions: false,
     enableKeyDriverAnalysis: false,
     enableDataProfiling: false,
+    enableFlexAi: false,
     enableExperimentalFeaturesUI: false,
 };
 
@@ -227,5 +230,6 @@ export const FeatureFlagsValues = {
     enableLabsSmartFunctions: [true, false] as const,
     enableKeyDriverAnalysis: [true, false] as const,
     enableDataProfiling: [true, false] as const,
+    enableFlexAi: [true, false] as const,
     enableExperimentalFeaturesUI: [true, false] as const,
 };
