@@ -323,6 +323,43 @@ export interface CsvConvertOptionsColumnType {
     nullable?: boolean;
 }
 /**
+ * Body of the CSV manifest.
+ * @export
+ * @interface CsvManifestBody
+ */
+export interface CsvManifestBody {
+    /**
+     *
+     * @type {CsvReadOptions}
+     * @memberof CsvManifestBody
+     */
+    read?: CsvReadOptions;
+    /**
+     *
+     * @type {CsvParseOptions}
+     * @memberof CsvManifestBody
+     */
+    parse?: CsvParseOptions;
+    /**
+     *
+     * @type {CsvConvertOptions}
+     * @memberof CsvManifestBody
+     */
+    convert?: CsvConvertOptions;
+    /**
+     * Map of column names to date formats to use when parsing them as dates.
+     * @type {{ [key: string]: string; }}
+     * @memberof CsvManifestBody
+     */
+    column_date_formats?: { [key: string]: string };
+    /**
+     * Method used to read the CSV file.
+     * @type {string}
+     * @memberof CsvManifestBody
+     */
+    read_method?: string;
+}
+/**
  * Options for parsing CSV files.
  * @export
  * @interface CsvParseOptions
@@ -615,6 +652,63 @@ export interface OrganizationCurrentCacheUsage {
      * @memberof OrganizationCurrentCacheUsage
      */
     removedSinceStart: number;
+}
+/**
+ * Request to read the manifests of the specified files.
+ * @export
+ * @interface ReadFileManifestsRequest
+ */
+export interface ReadFileManifestsRequest {
+    /**
+     * Files to read the schemata for.
+     * @type {Array<ReadFileManifestsRequestItem>}
+     * @memberof ReadFileManifestsRequest
+     */
+    manifestRequests: Array<ReadFileManifestsRequestItem>;
+}
+/**
+ * Request to read the manifest of a single file.
+ * @export
+ * @interface ReadFileManifestsRequestItem
+ */
+export interface ReadFileManifestsRequestItem {
+    /**
+     * Name of the file to read the manifest for.
+     * @type {string}
+     * @memberof ReadFileManifestsRequestItem
+     */
+    fileName: string;
+    /**
+     * Optional version of the file to read the manifest for. If null or not specified, the latest version is read.
+     * @type {number}
+     * @memberof ReadFileManifestsRequestItem
+     */
+    version?: number;
+}
+/**
+ * Describes the results of a CSV manifest read of a single file.
+ * @export
+ * @interface ReadFileManifestsResponse
+ */
+export interface ReadFileManifestsResponse {
+    /**
+     * Name of the file in the source data source.
+     * @type {string}
+     * @memberof ReadFileManifestsResponse
+     */
+    name: string;
+    /**
+     * Version of the file in the source data source.
+     * @type {number}
+     * @memberof ReadFileManifestsResponse
+     */
+    version: number;
+    /**
+     *
+     * @type {CsvManifestBody}
+     * @memberof ReadFileManifestsResponse
+     */
+    manifest: CsvManifestBody;
 }
 /**
  * Information related to uploading a file to the staging area.
@@ -989,6 +1083,58 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Read the manifests of the files in the given data source.
+         * @summary Read datasource file manifests
+         * @param {string} dataSourceId
+         * @param {ReadFileManifestsRequest} readFileManifestsRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        readFileManifests: async (
+            dataSourceId: string,
+            readFileManifestsRequest: ReadFileManifestsRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'dataSourceId' is not null or undefined
+            assertParamExists("readFileManifests", "dataSourceId", dataSourceId);
+            // verify required parameter 'readFileManifestsRequest' is not null or undefined
+            assertParamExists("readFileManifests", "readFileManifestsRequest", readFileManifestsRequest);
+            const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/readFileManifests`.replace(
+                `{${"dataSourceId"}}`,
+                encodeURIComponent(String(dataSourceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof readFileManifestsRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(readFileManifestsRequest !== undefined ? readFileManifestsRequest : {})
+                : readFileManifestsRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Provides a location for uploading staging files.
          * @summary Upload a file to the staging area
          * @param {string} dataSourceId
@@ -1154,6 +1300,28 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Read the manifests of the files in the given data source.
+         * @summary Read datasource file manifests
+         * @param {string} dataSourceId
+         * @param {ReadFileManifestsRequest} readFileManifestsRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async readFileManifests(
+            dataSourceId: string,
+            readFileManifestsRequest: ReadFileManifestsRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ReadFileManifestsResponse>>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.readFileManifests(
+                dataSourceId,
+                readFileManifestsRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Provides a location for uploading staging files.
          * @summary Upload a file to the staging area
          * @param {string} dataSourceId
@@ -1272,6 +1440,25 @@ export const ActionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * Read the manifests of the files in the given data source.
+         * @summary Read datasource file manifests
+         * @param {ActionsApiReadFileManifestsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        readFileManifests(
+            requestParameters: ActionsApiReadFileManifestsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<Array<ReadFileManifestsResponse>> {
+            return localVarFp
+                .readFileManifests(
+                    requestParameters.dataSourceId,
+                    requestParameters.readFileManifestsRequest,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * Provides a location for uploading staging files.
          * @summary Upload a file to the staging area
          * @param {ActionsApiStagingUploadRequest} requestParameters Request parameters.
@@ -1368,6 +1555,19 @@ export interface ActionsApiInterface {
         requestParameters: ActionsApiListFilesRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<Array<GdStorageFile>>;
+
+    /**
+     * Read the manifests of the files in the given data source.
+     * @summary Read datasource file manifests
+     * @param {ActionsApiReadFileManifestsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    readFileManifests(
+        requestParameters: ActionsApiReadFileManifestsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<Array<ReadFileManifestsResponse>>;
 
     /**
      * Provides a location for uploading staging files.
@@ -1472,6 +1672,27 @@ export interface ActionsApiListFilesRequest {
      * @memberof ActionsApiListFiles
      */
     readonly dataSourceId: string;
+}
+
+/**
+ * Request parameters for readFileManifests operation in ActionsApi.
+ * @export
+ * @interface ActionsApiReadFileManifestsRequest
+ */
+export interface ActionsApiReadFileManifestsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiReadFileManifests
+     */
+    readonly dataSourceId: string;
+
+    /**
+     *
+     * @type {ReadFileManifestsRequest}
+     * @memberof ActionsApiReadFileManifests
+     */
+    readonly readFileManifestsRequest: ReadFileManifestsRequest;
 }
 
 /**
@@ -1585,6 +1806,27 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     public listFiles(requestParameters: ActionsApiListFilesRequest, options?: AxiosRequestConfig) {
         return ActionsApiFp(this.configuration)
             .listFiles(requestParameters.dataSourceId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * Read the manifests of the files in the given data source.
+     * @summary Read datasource file manifests
+     * @param {ActionsApiReadFileManifestsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public readFileManifests(
+        requestParameters: ActionsApiReadFileManifestsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ActionsApiFp(this.configuration)
+            .readFileManifests(
+                requestParameters.dataSourceId,
+                requestParameters.readFileManifestsRequest,
+                options,
+            )
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -2437,6 +2679,205 @@ export class DataSourceFilesListingApi extends BaseAPI implements DataSourceFile
     ) {
         return DataSourceFilesListingApiFp(this.configuration)
             .listFiles(requestParameters.dataSourceId, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+}
+
+/**
+ * DataSourceFilesManifestReadApi - axios parameter creator
+ * @export
+ */
+export const DataSourceFilesManifestReadApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * Read the manifests of the files in the given data source.
+         * @summary Read datasource file manifests
+         * @param {string} dataSourceId
+         * @param {ReadFileManifestsRequest} readFileManifestsRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        readFileManifests: async (
+            dataSourceId: string,
+            readFileManifestsRequest: ReadFileManifestsRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'dataSourceId' is not null or undefined
+            assertParamExists("readFileManifests", "dataSourceId", dataSourceId);
+            // verify required parameter 'readFileManifestsRequest' is not null or undefined
+            assertParamExists("readFileManifests", "readFileManifestsRequest", readFileManifestsRequest);
+            const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/readFileManifests`.replace(
+                `{${"dataSourceId"}}`,
+                encodeURIComponent(String(dataSourceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof readFileManifestsRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(readFileManifestsRequest !== undefined ? readFileManifestsRequest : {})
+                : readFileManifestsRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    };
+};
+
+/**
+ * DataSourceFilesManifestReadApi - functional programming interface
+ * @export
+ */
+export const DataSourceFilesManifestReadApiFp = function (configuration?: Configuration) {
+    const localVarAxiosParamCreator = DataSourceFilesManifestReadApiAxiosParamCreator(configuration);
+    return {
+        /**
+         * Read the manifests of the files in the given data source.
+         * @summary Read datasource file manifests
+         * @param {string} dataSourceId
+         * @param {ReadFileManifestsRequest} readFileManifestsRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async readFileManifests(
+            dataSourceId: string,
+            readFileManifestsRequest: ReadFileManifestsRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<
+            (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ReadFileManifestsResponse>>
+        > {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.readFileManifests(
+                dataSourceId,
+                readFileManifestsRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+    };
+};
+
+/**
+ * DataSourceFilesManifestReadApi - factory interface
+ * @export
+ */
+export const DataSourceFilesManifestReadApiFactory = function (
+    configuration?: Configuration,
+    basePath?: string,
+    axios?: AxiosInstance,
+) {
+    const localVarFp = DataSourceFilesManifestReadApiFp(configuration);
+    return {
+        /**
+         * Read the manifests of the files in the given data source.
+         * @summary Read datasource file manifests
+         * @param {DataSourceFilesManifestReadApiReadFileManifestsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        readFileManifests(
+            requestParameters: DataSourceFilesManifestReadApiReadFileManifestsRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<Array<ReadFileManifestsResponse>> {
+            return localVarFp
+                .readFileManifests(
+                    requestParameters.dataSourceId,
+                    requestParameters.readFileManifestsRequest,
+                    options,
+                )
+                .then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * DataSourceFilesManifestReadApi - interface
+ * @export
+ * @interface DataSourceFilesManifestReadApi
+ */
+export interface DataSourceFilesManifestReadApiInterface {
+    /**
+     * Read the manifests of the files in the given data source.
+     * @summary Read datasource file manifests
+     * @param {DataSourceFilesManifestReadApiReadFileManifestsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DataSourceFilesManifestReadApiInterface
+     */
+    readFileManifests(
+        requestParameters: DataSourceFilesManifestReadApiReadFileManifestsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<Array<ReadFileManifestsResponse>>;
+}
+
+/**
+ * Request parameters for readFileManifests operation in DataSourceFilesManifestReadApi.
+ * @export
+ * @interface DataSourceFilesManifestReadApiReadFileManifestsRequest
+ */
+export interface DataSourceFilesManifestReadApiReadFileManifestsRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof DataSourceFilesManifestReadApiReadFileManifests
+     */
+    readonly dataSourceId: string;
+
+    /**
+     *
+     * @type {ReadFileManifestsRequest}
+     * @memberof DataSourceFilesManifestReadApiReadFileManifests
+     */
+    readonly readFileManifestsRequest: ReadFileManifestsRequest;
+}
+
+/**
+ * DataSourceFilesManifestReadApi - object-oriented interface
+ * @export
+ * @class DataSourceFilesManifestReadApi
+ * @extends {BaseAPI}
+ */
+export class DataSourceFilesManifestReadApi
+    extends BaseAPI
+    implements DataSourceFilesManifestReadApiInterface
+{
+    /**
+     * Read the manifests of the files in the given data source.
+     * @summary Read datasource file manifests
+     * @param {DataSourceFilesManifestReadApiReadFileManifestsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DataSourceFilesManifestReadApi
+     */
+    public readFileManifests(
+        requestParameters: DataSourceFilesManifestReadApiReadFileManifestsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return DataSourceFilesManifestReadApiFp(this.configuration)
+            .readFileManifests(
+                requestParameters.dataSourceId,
+                requestParameters.readFileManifestsRequest,
+                options,
+            )
             .then((request) => request(this.axios, this.basePath));
     }
 }

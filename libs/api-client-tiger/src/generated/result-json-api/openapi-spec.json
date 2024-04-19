@@ -106,6 +106,53 @@
                 }
             }
         },
+        "/api/v1/actions/dataSources/{dataSourceId}/readFileManifests": {
+            "post": {
+                "tags": ["Data source files manifest read", "actions"],
+                "summary": "Read datasource file manifests",
+                "description": "Read the manifests of the files in the given data source.",
+                "operationId": "readFileManifests",
+                "parameters": [
+                    {
+                        "name": "dataSourceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ReadFileManifestsRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "204": {
+                        "description": "Successful listing.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ReadFileManifestsResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["MANAGE"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
         "/api/v1/actions/dataSources/{dataSourceId}/listFiles": {
             "post": {
                 "tags": ["Data source files listing", "actions"],
@@ -317,36 +364,35 @@
                 },
                 "description": "Information related to uploading a file to the staging area."
             },
-            "GdStorageFile": {
-                "required": ["modifiedAt", "name", "size", "type", "version"],
+            "ReadFileManifestsRequest": {
+                "required": ["manifestRequests"],
                 "type": "object",
                 "properties": {
-                    "name": {
+                    "manifestRequests": {
+                        "type": "array",
+                        "description": "Files to read the schemata for.",
+                        "items": {
+                            "$ref": "#/components/schemas/ReadFileManifestsRequestItem"
+                        }
+                    }
+                },
+                "description": "Request to read the manifests of the specified files."
+            },
+            "ReadFileManifestsRequestItem": {
+                "required": ["fileName"],
+                "type": "object",
+                "properties": {
+                    "fileName": {
                         "type": "string",
-                        "description": "Name of the file."
+                        "description": "Name of the file to read the manifest for."
                     },
                     "version": {
                         "type": "integer",
-                        "description": "Version of the file.",
+                        "description": "Optional version of the file to read the manifest for. If null or not specified, the latest version is read.",
                         "format": "int32"
-                    },
-                    "size": {
-                        "type": "integer",
-                        "description": "Size of the file in bytes.",
-                        "format": "int64"
-                    },
-                    "modifiedAt": {
-                        "type": "string",
-                        "description": "Last modification timestamp of the file.",
-                        "format": "date-time"
-                    },
-                    "type": {
-                        "type": "string",
-                        "description": "Type of file stored in GD Storage.",
-                        "enum": ["CSV"]
                     }
                 },
-                "description": "File stored in GD Storage."
+                "description": "Request to read the manifest of a single file."
             },
             "CsvConvertOptions": {
                 "type": "object",
@@ -448,6 +494,33 @@
                 },
                 "description": "Information about a certain column in the table."
             },
+            "CsvManifestBody": {
+                "type": "object",
+                "properties": {
+                    "read": {
+                        "$ref": "#/components/schemas/CsvReadOptions"
+                    },
+                    "parse": {
+                        "$ref": "#/components/schemas/CsvParseOptions"
+                    },
+                    "convert": {
+                        "$ref": "#/components/schemas/CsvConvertOptions"
+                    },
+                    "column_date_formats": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string",
+                            "description": "Map of column names to date formats to use when parsing them as dates."
+                        },
+                        "description": "Map of column names to date formats to use when parsing them as dates."
+                    },
+                    "read_method": {
+                        "type": "string",
+                        "description": "Method used to read the CSV file."
+                    }
+                },
+                "description": "Body of the CSV manifest."
+            },
             "CsvParseOptions": {
                 "type": "object",
                 "properties": {
@@ -518,6 +591,56 @@
                     }
                 },
                 "description": "Options for reading CSV files."
+            },
+            "ReadFileManifestsResponse": {
+                "required": ["manifest", "name", "version"],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the file in the source data source."
+                    },
+                    "version": {
+                        "type": "integer",
+                        "description": "Version of the file in the source data source.",
+                        "format": "int32"
+                    },
+                    "manifest": {
+                        "$ref": "#/components/schemas/CsvManifestBody"
+                    }
+                },
+                "description": "Describes the results of a CSV manifest read of a single file."
+            },
+            "GdStorageFile": {
+                "required": ["modifiedAt", "name", "size", "type", "version"],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the file."
+                    },
+                    "version": {
+                        "type": "integer",
+                        "description": "Version of the file.",
+                        "format": "int32"
+                    },
+                    "size": {
+                        "type": "integer",
+                        "description": "Size of the file in bytes.",
+                        "format": "int64"
+                    },
+                    "modifiedAt": {
+                        "type": "string",
+                        "description": "Last modification timestamp of the file.",
+                        "format": "date-time"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Type of file stored in GD Storage.",
+                        "enum": ["CSV"]
+                    }
+                },
+                "description": "File stored in GD Storage."
             },
             "ImportCsvRequest": {
                 "required": ["tables"],

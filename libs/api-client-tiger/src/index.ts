@@ -261,9 +261,12 @@ export {
 
 export {
     ActionsApiAnalyzeCsvRequest,
+    ActionsApiDeleteFilesRequest,
     ActionsApiGetStagingUploadLocationRequest,
     ActionsApiImportCsvRequest,
     ActionsApiListFilesRequest,
+    ActionsApiReadFileManifestsRequest,
+    ActionsApiStagingUploadRequest,
     AnalyzeCsvRequest,
     AnalyzeCsvRequestItem,
     AnalyzeCsvRequestItemConfig,
@@ -274,8 +277,10 @@ export {
     CacheUsageData,
     CsvConvertOptions,
     CsvConvertOptionsColumnType,
+    CsvManifestBody,
     CsvParseOptions,
     CsvReadOptions,
+    DeleteFilesRequest,
     GdStorageFile,
     GdStorageFileTypeEnum,
     ImportCsvRequest,
@@ -285,14 +290,14 @@ export {
     OrganizationCacheSettings,
     OrganizationCacheUsage,
     OrganizationCurrentCacheUsage,
+    ReadFileManifestsRequest,
+    ReadFileManifestsRequestItem,
+    ReadFileManifestsResponse,
     StagingUploadLocation,
+    UploadFileResponse,
     WorkspaceCacheSettings,
     WorkspaceCacheUsage,
     WorkspaceCurrentCacheUsage,
-    ActionsApiDeleteFilesRequest,
-    ActionsApiStagingUploadRequest,
-    UploadFileResponse,
-    DeleteFilesRequest,
 } from "./generated/result-json-api/api.js";
 
 export * from "./client.js";

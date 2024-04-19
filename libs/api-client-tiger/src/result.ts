@@ -15,6 +15,7 @@ import {
     ImportCsvRequestTableSource,
     ImportCsvRequestTableSourceConfig,
     GdStorageFile,
+    ReadFileManifestsResponse,
 } from "./generated/result-json-api/index.js";
 
 export const tigerResultClientFactory = (axios: AxiosInstance): ActionsApiInterface =>
@@ -34,4 +35,5 @@ export {
     ImportCsvRequestTableSource,
     ImportCsvRequestTableSourceConfig,
     GdStorageFile,
+    ReadFileManifestsResponse,
 };
