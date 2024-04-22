@@ -115,7 +115,7 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
             this.filter.prefix && `prefix==${this.filter.prefix}`,
             this.parentWorkspaceId && `parent.id==${this.parentWorkspaceId}`,
             // case-insensitive search
-            this.search && `name=containsic=${this.search}`,
+            this.search && `name=containsic='${this.search}'`,
         ]
             .filter((param) => param !== undefined)
             .join(";");
