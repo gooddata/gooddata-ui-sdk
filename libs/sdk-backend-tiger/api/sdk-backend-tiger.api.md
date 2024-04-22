@@ -319,6 +319,8 @@ export type OriginInfoWithId = JsonApiAnalyticalDashboardOutMetaOrigin & {
 // @internal (undocumented)
 export type PutWorkspaceLayoutRequest = LayoutApiPutWorkspaceLayoutRequest;
 
+export { ReadFileManifestsResponse }
+
 // @public
 export function redirectToTigerAuthentication(context: IAuthenticationContext, error: NotAuthenticated): void;
 
