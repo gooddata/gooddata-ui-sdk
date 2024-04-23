@@ -182,6 +182,10 @@ export interface IWorkspaceDescriptor {
      * Early access attribute value of the workspace
      */
     earlyAccess?: string;
+    /**
+     * Number of child workspaces
+     */
+    childWorkspacesCount?: number;
 }
 
 /**
