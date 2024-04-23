@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { IntlShape } from "react-intl";
 import pick from "lodash/pick.js";
 import set from "lodash/set.js";
@@ -9,6 +9,7 @@ import {
     isHeatmap,
     isLineChart,
     isOneOfTypes,
+    isPieOrDonutChart,
     isSankeyOrDependencyWheel,
     isScatterPlot,
     isTreemap,
@@ -186,6 +187,10 @@ export default function buildLegendOptions(
         isOneOfTypes(chartOptions.type, defaultHideLegendCharts)
     ) {
         set(defaultLegendConfigByType, "enabled", false);
+    }
+
+    if (isPieOrDonutChart(chartOptions.type)) {
+        set(defaultLegendConfigByType, "responsive", "autoPositionWithPopup");
     }
 
     const baseConfig = {

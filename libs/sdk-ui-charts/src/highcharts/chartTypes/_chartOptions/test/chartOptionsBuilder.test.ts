@@ -8,10 +8,13 @@ import { DefaultColorPalette, VisualizationTypes, HeaderPredicates, DataViewFaca
 import Highcharts from "../../../lib/index.js";
 import { findMeasureGroupInDimensions } from "../../_util/executionResultHelper.js";
 import { getHeatmapDataClasses, getTreemapAttributes } from "../chartOptionsBuilder.js";
-import { DEFAULT_CATEGORIES_LIMIT } from "../../_chartCreators/commonConfiguration.js";
 import { generateChartOptions, getMVS, getMVSForViewByTwoAttributes } from "../../_util/test/helper.js";
 import * as fixtures from "../../../../../__mocks__/fixtures.js";
-import { PIE_CHART_LIMIT, SANKEY_CHART_NODE_LIMIT } from "../../../constants/limits.js";
+import {
+    DEFAULT_CATEGORIES_LIMIT,
+    PIE_CHART_LIMIT,
+    SANKEY_CHART_NODE_LIMIT,
+} from "../../../constants/limits.js";
 import {
     getLighterColor,
     getRgbString,
@@ -331,7 +334,7 @@ describe("chartOptionsBuilder", () => {
             const testData = [
                 ["false", "less", 3, { dataTooLarge: false, hasNegativeValue: false }],
                 ["false", "greater", 31, { dataTooLarge: false, hasNegativeValue: false }],
-                ["true", "greater", 100, { dataTooLarge: true, hasNegativeValue: false }],
+                ["true", "greater", 10000, { dataTooLarge: true, hasNegativeValue: false }],
             ];
 
             it.each(testData)(

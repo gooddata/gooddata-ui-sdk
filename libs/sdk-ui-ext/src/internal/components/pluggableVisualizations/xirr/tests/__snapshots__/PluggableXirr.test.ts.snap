@@ -73,7 +73,9 @@ exports[`PluggableXirr > getExtendedReferencePoint > should correctly process em
     "openAsReport": {
       "supported": false,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [],
   },
 }
@@ -169,7 +171,9 @@ exports[`PluggableXirr > getExtendedReferencePoint > should return proper extend
     "openAsReport": {
       "supported": false,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [],
   },
 }
