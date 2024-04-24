@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React from "react";
 import { ContentRect } from "react-measure";
 import { v4 } from "uuid";
@@ -266,8 +266,8 @@ export class HighChartsRenderer extends React.PureComponent<
         if (isFunnel(chart.type)) {
             items = this.skipLeadingZeros(items).filter((i) => !isNil(i.y));
         }
-
-        const updatedItems = items.map((item: any, itemIndex: number) => {
+        const updatedItems = items.map((item: any) => {
+            const itemIndex = item.legendIndex;
             const visible =
                 legendItemsEnabled[itemIndex] !== undefined ? legendItemsEnabled[itemIndex] : true;
             return {

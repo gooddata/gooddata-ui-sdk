@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
 import {
     ColorAxisOptions,
@@ -73,6 +73,8 @@ export interface IStackMeasuresConfig {
 export interface ISeriesDataItem {
     x?: number;
     y?: number;
+    low?: number;
+    high?: number;
     value?: number;
     name?: string;
     legendIndex?: number;
@@ -102,6 +104,8 @@ export interface ISeriesItem {
     keys?: string[];
     data?: ISeriesDataItem[];
     color?: string;
+    lineColor?: string;
+    lineWidth?: number;
     userOptions?: any;
     visible?: boolean;
     type?: string;
@@ -116,6 +120,11 @@ export interface ISeriesItem {
     dataLabels?: DataLabelsOptionsObject;
     dataLabelsGroup?: SVGAttributes;
     nodes?: ISeriesNodeItem[];
+    dashStyle?: "dash";
+    showInLegend?: boolean;
+    marker?: {
+        enabled?: boolean;
+    };
 }
 
 export interface IChartOptionsData {
@@ -252,6 +261,8 @@ export interface IUnsafeHighchartsTooltipPoint {
     to?: string;
     weight?: number;
     sum?: number;
+    low?: number;
+    high?: number;
 }
 
 export interface ICategoryParent {
@@ -286,4 +297,15 @@ export interface IAxis {
     format?: string;
     opposite?: boolean;
     seriesIndices?: number[];
+}
+
+export interface IForecastData {
+    dispersion: {
+        name: string;
+        data: [any, any][];
+    };
+    forecast: {
+        data: any[];
+    };
+    categories: any[];
 }

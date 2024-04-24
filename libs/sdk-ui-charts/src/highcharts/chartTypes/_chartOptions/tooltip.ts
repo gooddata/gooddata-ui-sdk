@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { ISeparators } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty.js";
@@ -34,10 +34,51 @@ export function getFormattedValueForTooltip(
     separators?: ISeparators,
     percentageValue?: number,
 ): string {
-    const { target, y, format } = point;
+    const { target, y, low, high } = point;
+
+    if (!isNil(low) && !isNil(high)) {
+        const lowValue = getFormattedValue(
+            isDualChartWithRightAxis,
+            stackMeasuresToPercent,
+            point,
+            low,
+            separators,
+            percentageValue,
+        );
+        const highValue = getFormattedValue(
+            isDualChartWithRightAxis,
+            stackMeasuresToPercent,
+            point,
+            high,
+            separators,
+            percentageValue,
+        );
+
+        return `${lowValue} - ${highValue}`;
+    }
+
+    return getFormattedValue(
+        isDualChartWithRightAxis,
+        stackMeasuresToPercent,
+        point,
+        target ?? y,
+        separators,
+        percentageValue,
+    );
+}
+
+function getFormattedValue(
+    isDualChartWithRightAxis: boolean,
+    stackMeasuresToPercent: boolean,
+    point: IUnsafeHighchartsTooltipPoint,
+    value: number,
+    separators?: ISeparators,
+    percentageValue?: number,
+) {
+    const { format } = point;
     const isNotStackToPercent =
         stackMeasuresToPercent === false || isNil(percentageValue) || isDualChartWithRightAxis;
     return isNotStackToPercent
-        ? formatValueForTooltip(target ?? y, format, separators)
+        ? formatValueForTooltip(value, format, separators)
         : percentFormatter(percentageValue, format);
 }

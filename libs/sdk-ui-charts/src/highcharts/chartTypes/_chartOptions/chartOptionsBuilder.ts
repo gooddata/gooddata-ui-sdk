@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { ITheme, IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
@@ -77,6 +77,7 @@ import {
     getColorAssignment,
     getWaterfallChartCategories,
 } from "../waterfallChart/waterfallChartOptions.js";
+import { assignForecastAxes } from "./chartForecast.js";
 
 const isAreaChartStackingEnabled = (options: IChartConfig) => {
     const { type, stacking, stackMeasures } = options;
@@ -421,14 +422,14 @@ export function getChartOptions(
         type,
     );
 
-    const series = assignYAxes(drillableSeries, yAxes);
+    let series = assignYAxes(drillableSeries, yAxes);
 
     let categories = viewByParentAttribute
         ? getCategoriesForTwoAttributes(viewByAttribute, viewByParentAttribute, emptyHeaderTitle)
         : getCategories(type, measureGroup, viewByAttribute, stackByAttribute, emptyHeaderTitle);
 
     // When custom sorting is enabled and is chart which does the auto-sorting,
-    // need to skip this, so the sort specified by the user does not get overriden.
+    // need to skip this, so the sort specified by the user does not get override.
     if (isAutoSortableChart(type, viewByAttribute) && !config.enableChartSorting) {
         // dataPoints are sorted by default by value in descending order
         const dataPoints = series[0].data;
@@ -456,6 +457,25 @@ export function getChartOptions(
         );
         series[0].data = sortedDataPoints;
     }
+
+    //Forecast
+    const forecastedData = assignForecastAxes(type, categories, series, {
+        dispersion: {
+            data: [
+                [865190, 905190],
+                [402595, 482595],
+                [161297, 281297],
+                [30648, 190648],
+            ],
+            name: "Dispersion",
+        },
+        forecast: {
+            data: [885190, 442595, 221297, 110648],
+        },
+        categories: ["2026", "2027", "2028", "2029"],
+    });
+    series = forecastedData.series;
+    categories = forecastedData.categories;
 
     const colorAssignments = colorStrategy.getColorAssignment();
     const { colorPalette } = config;
