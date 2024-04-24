@@ -708,6 +708,8 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     // (undocumented)
     isEditMode?: boolean;
     // (undocumented)
+    isEmbedded?: boolean;
+    // (undocumented)
     isTimeForAbsoluteRangeEnabled?: boolean;
     // (undocumented)
     locale?: string;

@@ -14,6 +14,14 @@
         flex-direction: column;
         max-height: 600px;
         overflow: hidden;
+
+        &.gd-extended-date-filters-body-embedded {
+            @media only screen and (max-height: 900px) {
+                max-height: 50vh;
+            }
+
+            max-height: 600px;
+        }
     }
 
     &-body-mobile {
@@ -165,7 +173,12 @@
         min-height: 350px; // This makes sure date-picker and relative-form select is not clipped when not enought presets are visible
     }
 
-    &-body-scrollable-small-screen {
-        max-height: 350px;
+    &-body-scrollable-embedded {
+        // This makes sure date-picker and relative-form select is not clipped when not enought presets are visible
+        @media only screen and (max-height: 900px) {
+            min-height: 250px;
+        }
+
+        min-height: 350px;
     }
 }

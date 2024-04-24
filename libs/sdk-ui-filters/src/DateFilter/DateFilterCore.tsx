@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React, { useMemo, useState } from "react";
 import flow from "lodash/flow.js";
 import noop from "lodash/noop.js";
@@ -45,6 +45,7 @@ export interface IDateFilterCoreProps {
     availableGranularities: DateFilterGranularity[];
 
     isEditMode: boolean;
+    isEmbedded: boolean;
     locale?: string;
 
     showDropDownHeaderMessage?: boolean;

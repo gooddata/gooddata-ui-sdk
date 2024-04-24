@@ -17,6 +17,7 @@ import { IDashboardDateFilterProps } from "./types.js";
 import {
     selectBackendCapabilities,
     selectCatalogDateDatasets,
+    selectIsEmbedded,
     selectIsInEditMode,
     selectLocale,
     selectSettings,
@@ -40,6 +41,7 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
     const capabilities = useDashboardSelector(selectBackendCapabilities);
     const locale = useDashboardSelector(selectLocale);
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
+    const isEmbedded = useDashboardSelector(selectIsEmbedded);
     const weekStart = useDashboardSelector(selectWeekStart);
     const { filter, onFilterChanged, config, readonly, autoOpen } = props;
 
@@ -120,6 +122,7 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
             locale={locale}
             isTimeForAbsoluteRangeEnabled={!!capabilities.supportsTimeGranularities}
             isEditMode={isInEditMode}
+            isEmbedded={isEmbedded}
             openOnInit={autoOpen}
             weekStart={weekStart}
             customIcon={visibilityIcon}
