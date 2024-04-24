@@ -1152,11 +1152,7 @@ export interface IWorkspaceSettingsService {
 export interface IWorkspacesQuery {
     query(): Promise<IWorkspacesQueryResult>;
     // @alpha
-    withFilter(filter: {
-        description?: string;
-        earlyAccess?: string;
-        prefix?: string;
-    }): IWorkspacesQuery;
+    withFilter(filter: IWorkspacesQueryFilter): IWorkspacesQuery;
     withLimit(limit: number): IWorkspacesQuery;
     withOffset(offset: number): IWorkspacesQuery;
     withParent(workspaceId: string | undefined): IWorkspacesQuery;
@@ -1167,6 +1163,14 @@ export interface IWorkspacesQuery {
 export interface IWorkspacesQueryFactory {
     forCurrentUser(): IWorkspacesQuery;
     forUser(userId: string): IWorkspacesQuery;
+}
+
+// @public
+export interface IWorkspacesQueryFilter {
+    description?: string;
+    earlyAccess?: string;
+    prefix?: string;
+    rootWorkspacesOnly?: boolean;
 }
 
 // @public

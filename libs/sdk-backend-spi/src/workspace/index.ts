@@ -225,6 +225,30 @@ export interface IWorkspacesQueryFactory {
 }
 
 /**
+ * Filter options for workspaces query.
+ *
+ * @public
+ */
+export interface IWorkspacesQueryFilter {
+    /**
+     * Filter by description of the workspace
+     */
+    description?: string;
+    /**
+     * Filter by earlyAccess property on the workspace
+     */
+    earlyAccess?: string;
+    /**
+     * Filter by entity identifiers prefix in the workspace
+     */
+    prefix?: string;
+    /**
+     * When applied, only root workspaces without a parent workspace are queried
+     */
+    rootWorkspacesOnly?: boolean;
+}
+
+/**
  * Query to retrieve available workspaces.
  *
  * @public
@@ -255,7 +279,7 @@ export interface IWorkspacesQuery {
      * @param filter - an object of attributes and values to filter by
      * @alpha
      */
-    withFilter(filter: { description?: string; earlyAccess?: string; prefix?: string }): IWorkspacesQuery;
+    withFilter(filter: IWorkspacesQueryFilter): IWorkspacesQuery;
 
     /**
      * Sets a text to search.

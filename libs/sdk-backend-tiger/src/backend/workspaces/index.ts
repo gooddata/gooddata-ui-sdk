@@ -5,6 +5,7 @@ import {
     IWorkspacesQueryResult,
     IAnalyticalWorkspace,
     IWorkspaceDescriptor,
+    IWorkspacesQueryFilter,
 } from "@gooddata/sdk-backend-spi";
 import {
     JsonApiWorkspaceOutList,
@@ -36,7 +37,7 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
     private limit: number = 100;
     private offset: number = 0;
     private search: string | undefined = undefined;
-    private filter: Partial<DeclarativeWorkspace> = {};
+    private filter: Partial<DeclarativeWorkspace> & IWorkspacesQueryFilter = {};
     private parentWorkspaceId: string | undefined = undefined;
 
     private defaultMetaIncludeParam: Required<EntitiesApiGetAllEntitiesWorkspacesRequest>["metaInclude"] = [
@@ -67,11 +68,7 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
         return this;
     }
 
-    public withFilter(filter: {
-        description?: string;
-        earlyAccess?: string;
-        prefix?: string;
-    }): IWorkspacesQuery {
+    public withFilter(filter: IWorkspacesQueryFilter): IWorkspacesQuery {
         this.filter = filter;
         return this;
     }
@@ -126,11 +123,13 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
             this.filter.description && `description==${this.filter.name}`,
             this.filter.earlyAccess && `earlyAccess==${this.filter.earlyAccess}`,
             this.filter.prefix && `prefix==${this.filter.prefix}`,
+            // get only workspaces that have no parent workspace
+            this.filter.rootWorkspacesOnly && "parent.id=isnull=true",
             this.parentWorkspaceId && `parent.id==${this.parentWorkspaceId}`,
             // case-insensitive search
             this.search && `name=containsic='${this.search}'`,
         ]
-            .filter((param) => param !== undefined)
+            .filter(Boolean)
             .join(";");
         return filterParam === "" ? undefined : filterParam;
     }
