@@ -1054,6 +1054,7 @@ export interface IWorkspaceDatasetsService {
 
 // @public
 export interface IWorkspaceDescriptor {
+    childWorkspacesCount?: number;
     // (undocumented)
     description: string;
     earlyAccess?: string;

@@ -3,7 +3,7 @@ import { JsonApiWorkspaceOut, JsonApiWorkspaceOutWithLinks } from "@gooddata/api
 import { IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
 
 export const workspaceConverter = (
-    { relationships, attributes, id }: JsonApiWorkspaceOut | JsonApiWorkspaceOutWithLinks,
+    { relationships, attributes, id, meta }: JsonApiWorkspaceOut | JsonApiWorkspaceOutWithLinks,
     parentPrefixes: string[],
 ): IWorkspaceDescriptor => {
     const parentWorkspace = relationships?.parent?.data?.id;
@@ -15,5 +15,6 @@ export const workspaceConverter = (
         parentWorkspace,
         parentPrefixes,
         earlyAccess: attributes?.earlyAccess,
+        childWorkspacesCount: meta?.hierarchy?.childrenCount,
     };
 };

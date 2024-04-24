@@ -6,7 +6,11 @@ import {
     IAnalyticalWorkspace,
     IWorkspaceDescriptor,
 } from "@gooddata/sdk-backend-spi";
-import { JsonApiWorkspaceOutList, DeclarativeWorkspace } from "@gooddata/api-client-tiger";
+import {
+    JsonApiWorkspaceOutList,
+    DeclarativeWorkspace,
+    EntitiesApiGetAllEntitiesWorkspacesRequest,
+} from "@gooddata/api-client-tiger";
 import { TigerAuthenticatedCallGuard } from "../../types/index.js";
 import { DateFormatter } from "../../convertors/fromBackend/dateFormatting/types.js";
 import { workspaceConverter } from "../../convertors/fromBackend/WorkspaceConverter.js";
@@ -34,6 +38,11 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
     private search: string | undefined = undefined;
     private filter: Partial<DeclarativeWorkspace> = {};
     private parentWorkspaceId: string | undefined = undefined;
+
+    private defaultMetaIncludeParam: Required<EntitiesApiGetAllEntitiesWorkspacesRequest>["metaInclude"] = [
+        "hierarchy",
+    ];
+    private defaultIncludeParam: EntitiesApiGetAllEntitiesWorkspacesRequest["include"] = ["parent"];
 
     constructor(
         private readonly authCall: TigerAuthenticatedCallGuard,
@@ -80,7 +89,11 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
                         size: limit,
                         page: offset / limit,
                         filter: this.constructFilter(),
-                        metaInclude: totalCount === undefined ? ["page"] : undefined,
+                        metaInclude:
+                            totalCount === undefined
+                                ? ["page", ...this.defaultMetaIncludeParam]
+                                : this.defaultMetaIncludeParam,
+                        include: this.defaultIncludeParam,
                     }),
                 );
 
