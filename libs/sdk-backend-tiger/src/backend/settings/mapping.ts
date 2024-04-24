@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { ISettings } from "@gooddata/sdk-model";
 
 import { TigerSettingsType, TigerOrgSettingsType } from "../../types/index.js";
@@ -26,6 +26,8 @@ export function mapTypeToKey(
             return "weekStart";
         case "SHOW_HIDDEN_CATALOG_ITEMS":
             return "showHiddenCatalogItems";
+        case "OPENAI_CONFIG":
+            return "openAiConfig";
         case "organizationSetting":
             return "organizationSetting";
         default:

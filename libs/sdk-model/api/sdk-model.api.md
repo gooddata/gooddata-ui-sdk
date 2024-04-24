@@ -2046,6 +2046,12 @@ export type InsightWidgetDescriptionSourceType = "widget" | "insight";
 // @public
 export type INullableFilter = IFilter | undefined | null;
 
+// @alpha
+export interface IOpenAiConfig {
+    org: string;
+    token: string;
+}
+
 // @alpha (undocumented)
 export interface IOrganizationAssignee {
     // (undocumented)
@@ -2650,6 +2656,8 @@ export interface ISettings {
     formatLocale?: string;
     hideKpiDrillInEmbedded?: boolean;
     metadataTimeZone?: string;
+    // @alpha
+    openAiConfig?: IOpenAiConfig;
     platformEdition?: PlatformEdition;
     responsiveUiDateFormat?: string;
     showHiddenCatalogItems?: boolean;

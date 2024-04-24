@@ -381,6 +381,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 getSettings: () => Promise.resolve({}),
                 setTheme: () => Promise.resolve(),
                 setColorPalette: () => Promise.resolve(),
+                setOpenAiConfig: () => Promise.resolve(),
                 deleteTheme: () => Promise.resolve(),
                 deleteColorPalette: () => Promise.resolve(),
             };

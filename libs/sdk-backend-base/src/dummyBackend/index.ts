@@ -755,6 +755,7 @@ class DummyOrganization implements IOrganization {
             setWeekStart: () => Promise.resolve(),
             setTheme: () => Promise.resolve(),
             setColorPalette: () => Promise.resolve(),
+            setOpenAiConfig: () => Promise.resolve(),
             deleteTheme: () => Promise.resolve(),
             deleteColorPalette: () => Promise.resolve(),
             getSettings: () => Promise.resolve({}),

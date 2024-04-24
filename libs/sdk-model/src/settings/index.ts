@@ -261,6 +261,12 @@ export interface ISettings {
     whiteLabeling?: IWhiteLabeling;
 
     /**
+     * Represents configuration for OpenAI integration
+     * @alpha
+     */
+    openAiConfig?: IOpenAiConfig;
+
+    /**
      * Enable custom non-production dataset in AD/Modeler
      */
     ["msf.enableTenantCustomModel"]?: boolean;
@@ -408,6 +414,23 @@ export interface IWhiteLabeling {
      * Whitelabeling of Apple touch icon url
      */
     appleTouchIconUrl?: string;
+}
+
+/**
+ * Configuration of integration of OpenAI.
+ *
+ * @alpha
+ */
+export interface IOpenAiConfig {
+    /**
+     * OpenAI organization ID
+     */
+    org: string;
+
+    /**
+     * OpenAI API token
+     */
+    token: string;
 }
 
 /**

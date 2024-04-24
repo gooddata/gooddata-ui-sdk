@@ -727,7 +727,14 @@ export {
     IExistingDashboard,
 } from "./dashboard/dashboard.js";
 
-export { ISeparators, ISettings, PlatformEdition, IWhiteLabeling, WeekStart } from "./settings/index.js";
+export {
+    ISeparators,
+    ISettings,
+    PlatformEdition,
+    IWhiteLabeling,
+    WeekStart,
+    IOpenAiConfig,
+} from "./settings/index.js";
 
 export { IWorkspaceUserGroup } from "./userGroup/index.js";
 
