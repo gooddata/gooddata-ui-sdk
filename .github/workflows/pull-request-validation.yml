@@ -19,13 +19,9 @@ jobs:
               run: |
                   echo "PR_HEAD=${{ github.event.pull_request.head.sha }}" >> $GITHUB_ENV
                   echo "PR_BASE=${{ github.event.pull_request.base.sha }}" >> $GITHUB_ENV
-            - name: Install dependencies
-              run: |
-                  cd ./.github/actions/check-pull-request-commits
-                  yarn install --frozen-lockfile
             - name: Check the pull request commit messages
               uses: ./.github/actions/check-pull-request-commits
               with:
                   pr_head: ${{ env.PR_HEAD }}
                   pr_base: ${{ env.PR_BASE }}
-                  lint_config: ./.github/actions/check-pull-request-commits/commitlint.config.js
+                  lint_config: ./.github/actions/check-pull-request-commits/commitlint.config.cjs

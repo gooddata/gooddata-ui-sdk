@@ -27,8 +27,18 @@ Simple action that checks if pull request commits adhere to SDK contribution gui
 
 ## Development
 
-The action is executed from `src/action.js`. There is no build or compilation. GitHub workflow must first
-install action dependencies for action to work.
+The action is executed from its build `action-build/index.js`.
 
-Unfortunately, widely used [@vercel/ncc](https://github.com/vercel/ncc) compilation tool did not worked
-with commit lint packages and produced build file that could not have been executed.
+To modify action go to action dir and run
+
+```
+npm run install
+```
+
+after that call
+
+```
+npm run build
+```
+
+Commit also content of action-build dir

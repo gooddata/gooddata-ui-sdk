@@ -2,10 +2,20 @@
     "name": "check-pull-request-commits",
     "version": "1.0.0",
     "description": "Simple GitHub action that checks pull request commits",
-    "main": "src/action.js",
     "author": "GoodData",
     "license": "MIT",
-    "devDependencies": {},
+    "scripts": {
+        "build": "parcel build src/index.js"
+    },
+    "targets": {
+        "default": {
+            "context": "node",
+            "includeNodeModules": true,
+            "distDir": "action-build",
+            "outputFormat": "commonjs"
+        }
+    },
+    "type": "commonjs",
     "dependencies": {
         "@actions/core": "^1.10.0",
         "@commitlint/cli": "^17.6.1",
@@ -14,5 +24,8 @@
         "@commitlint/lint": "^17.6.1",
         "@commitlint/load": "^17.5.0",
         "@commitlint/read": "^17.5.1"
+    },
+    "devDependencies": {
+        "parcel": "^2.12.0"
     }
 }

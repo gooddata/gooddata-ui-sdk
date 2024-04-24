@@ -16,8 +16,8 @@ inputs:
         required: true
 
 runs:
-    using: "node16"
-    main: "src/action.js"
+    using: "node20"
+    main: "action-build/index.js"
 
 branding:
     icon: "git-pull-request"
