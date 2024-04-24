@@ -22,6 +22,7 @@ import { IChartOptions, ISeriesDataItem, ISeriesItem } from "../../typings/unsaf
 import { isOneOfTypes, isTreemap } from "../_util/common.js";
 import { unsupportedNegativeValuesTypes } from "./chartCapabilities.js";
 import { isDataOfReasonableSize } from "../_chartCreators/highChartsCreators.js";
+import { ChartType } from "../../typings/chartType.js";
 
 export interface IValidationResult {
     dataTooLarge: boolean;
@@ -85,9 +86,7 @@ function getChartLimits(type: string): IChartLimits {
     }
 }
 
-type ChartTypes = typeof VisualizationTypes[keyof typeof VisualizationTypes];
-
-function getSoftChartLimits(type: ChartTypes): IChartLimits {
+function getSoftChartLimits(type: ChartType): IChartLimits {
     switch (type) {
         case VisualizationTypes.SCATTER:
             return {
@@ -167,7 +166,7 @@ export function validateData(limits: IChartLimits, chartOptions: IChartOptions):
 
 export function getIsFilteringRecommended(chartOptions: IChartOptions): boolean {
     const { type, isViewByTwoAttributes } = chartOptions;
-    const limits = getSoftChartLimits(type as ChartTypes);
+    const limits = getSoftChartLimits(type as ChartType);
     const dataToValidate = isTreemap(type)
         ? getTreemapDataForValidation(chartOptions.data)
         : chartOptions.data;
