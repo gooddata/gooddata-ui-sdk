@@ -68,6 +68,13 @@ auth_header = '-H "Authorization: Bearer YWRtaW46Ym9vdHN0cmFwOmFkbWluMTIz"'
 
 [menu]
 [[menu.main]]
+name = "Learn"
+url = "https://www.gooddata.com/learn/"
+weight = 1
+[menu.main.params]
+    isMobileTitle = true
+    mobileOnly = true
+[[menu.main]]
 name = "University"
 url = "https://university.gooddata.com/"
 weight = 2
@@ -85,6 +92,10 @@ weight = 4
 name = "Support"
 url = "https://support.gooddata.com/hc/en-us"
 weight = 5
+[[menu.main]]
+name = "Go to GoodData.com"
+url = "https://www.gooddata.com/"
+weight = 6
 [menu.main.params]
     mobileOnly = true
 
