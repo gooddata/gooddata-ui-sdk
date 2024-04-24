@@ -3,7 +3,7 @@ import { IUserSettingsService, IUserSettings } from "@gooddata/sdk-backend-spi";
 import { ISettings } from "@gooddata/sdk-model";
 
 import { TigerAuthenticatedCallGuard, TigerSettingsType } from "../../types/index.js";
-import { TigerFeaturesService } from "../features/index.js";
+import { pickContext, TigerFeaturesService } from "../features/index.js";
 import { DefaultUserSettings } from "../uiSettings.js";
 import { TigerSettingsService, mapTypeToKey } from "../settings/index.js";
 import { unwrapSettingContent } from "../../convertors/fromBackend/SettingsConverter.js";
@@ -21,7 +21,8 @@ export class TigerUserSettingsService
     public async getSettings(): Promise<IUserSettings> {
         return this.authCall(async (client) => {
             const profile = await client.profile.getCurrent();
-            const features = await this.tigerFeatureService.getFeatures(profile);
+            const context = pickContext(undefined, profile.organizationId);
+            const features = await this.tigerFeatureService.getFeatures(profile, context);
             const { data } = await client.actions.resolveAllSettingsWithoutWorkspace();
             const resolvedSettings = data.reduce(
                 (result: ISettings, setting) => ({
