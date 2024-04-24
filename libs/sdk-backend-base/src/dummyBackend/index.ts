@@ -63,6 +63,8 @@ import {
     IWorkspaceExportDefinitionsService,
     IDataFiltersService,
     IWorkspaceLogicalModelService,
+    IForecastResult,
+    IForecastConfig,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -256,6 +258,9 @@ export function dummyDataView(
         equals(other: IDataView): boolean {
             return fp === other.fingerprint();
         },
+        withForecast(_config: IForecastConfig, _result: IForecastResult): IDataView {
+            throw new NotSupported("not supported");
+        },
     };
 }
 
@@ -384,6 +389,9 @@ function dummyExecutionResult(
         },
         readWindow(_1: number[], _2: number[]): Promise<IDataView> {
             return dummyRead();
+        },
+        readForecastAll(): Promise<IForecastResult> {
+            throw new NotSupported("Forecasting is not supported in dummy backend.");
         },
         fingerprint(): string {
             return fp;

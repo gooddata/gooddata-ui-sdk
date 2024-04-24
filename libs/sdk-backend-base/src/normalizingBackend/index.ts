@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 
 import {
     IAnalyticalBackend,
@@ -11,6 +11,8 @@ import {
     NotSupported,
     isNoDataError,
     NoDataError,
+    IForecastResult,
+    IForecastConfig,
 } from "@gooddata/sdk-backend-spi";
 import { decoratedBackend } from "../decoratedBackend/index.js";
 import { DecoratedExecutionFactory, DecoratedPreparedExecution } from "../decoratedBackend/execution.js";
@@ -151,6 +153,10 @@ class DenormalizingExecutionResult implements IExecutionResult {
             .catch(this.handleDataViewError);
     };
 
+    public readForecastAll(config: IForecastConfig): Promise<IForecastResult> {
+        return this.normalizedResult.readForecastAll(config);
+    }
+
     public equals = (other: IExecutionResult): boolean => {
         return this._fingerprint === other.fingerprint();
     };
@@ -191,12 +197,16 @@ class DenormalizedDataView implements IDataView {
     public readonly totalTotals: DataValue[][][] | undefined;
 
     private readonly _fingerprint: string;
+    private readonly _denormalizer: Denormalizer;
 
     constructor(
         result: DenormalizingExecutionResult,
         private readonly normalizedDataView: IDataView,
         denormalizer: Denormalizer,
+        public readonly forecastConfig?: IForecastConfig,
+        public readonly forecastResult?: IForecastResult,
     ) {
+        this._denormalizer = denormalizer;
         this.result = result;
         this.definition = this.result.definition;
         this.count = cloneDeep(this.normalizedDataView.count);
@@ -217,6 +227,16 @@ class DenormalizedDataView implements IDataView {
     public fingerprint = (): string => {
         return this._fingerprint;
     };
+
+    public withForecast(config: IForecastConfig, result: IForecastResult): IDataView {
+        return new DenormalizedDataView(
+            this.result as DenormalizingExecutionResult,
+            this.normalizedDataView,
+            this._denormalizer,
+            config,
+            result,
+        );
+    }
 }
 
 /**

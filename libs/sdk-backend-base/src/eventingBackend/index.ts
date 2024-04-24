@@ -1,11 +1,13 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { v4 as uuid } from "uuid";
 import {
     IAnalyticalBackend,
     IDataView,
     IExecutionResult,
+    IForecastResult,
     IPreparedExecution,
+    NotSupported,
 } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 
@@ -74,6 +76,10 @@ class WithExecutionResultEventing extends DecoratedExecutionResult {
                 throw e;
             });
     };
+
+    public readForecastAll(): Promise<IForecastResult> {
+        throw new NotSupported("Forecasting is not supported by the eventing backend.");
+    }
 
     public readWindow = (offset: number[], size: number[]): Promise<IDataView> => {
         const { successfulResultReadWindow, failedResultReadWindow } = this.callbacks;

@@ -30,6 +30,7 @@ import { IDrillEventIntersectionElement } from '@gooddata/sdk-ui';
 import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IExecutionFactory } from '@gooddata/sdk-backend-spi';
 import { IFilter } from '@gooddata/sdk-model';
+import { IForecastConfig } from '@gooddata/sdk-backend-spi';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { IRgbColorValue } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-model';
@@ -428,6 +429,7 @@ export interface IContinuousLineConfig {
 // @internal
 export interface ICoreChartProps extends ICommonChartProps {
     execution: IPreparedExecution;
+    forecastConfig?: IForecastConfig;
 }
 
 // @internal (undocumented)
@@ -642,6 +644,8 @@ export interface ILineChartBucketProps {
 
 // @public (undocumented)
 export interface ILineChartProps extends IBucketChartProps, ILineChartBucketProps {
+    // @beta
+    forecastConfig?: IForecastConfig;
 }
 
 // @public

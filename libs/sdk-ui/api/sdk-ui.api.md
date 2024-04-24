@@ -30,6 +30,7 @@ import { IExecutionResult } from '@gooddata/sdk-backend-spi';
 import { IExportConfig } from '@gooddata/sdk-backend-spi';
 import { IExportResult } from '@gooddata/sdk-backend-spi';
 import { IFilter } from '@gooddata/sdk-model';
+import { IForecastConfig } from '@gooddata/sdk-backend-spi';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureDefinitionType } from '@gooddata/sdk-model';
@@ -654,6 +655,8 @@ export interface IDataSliceCollection extends Iterable<IDataSlice> {
 // @public
 export interface IDataVisualizationProps extends IVisualizationProps, IVisualizationCallbacks {
     execution: IPreparedExecution;
+    // @beta
+    forecastConfig?: IForecastConfig;
 }
 
 // @public

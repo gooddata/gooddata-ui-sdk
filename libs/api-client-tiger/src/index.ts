@@ -284,6 +284,7 @@ export {
     GdStorageFile,
     GdStorageFileTypeEnum,
     ImportCsvRequest,
+    ImportCsvResponse,
     ImportCsvRequestTable,
     ImportCsvRequestTableSource,
     ImportCsvRequestTableSourceConfig,

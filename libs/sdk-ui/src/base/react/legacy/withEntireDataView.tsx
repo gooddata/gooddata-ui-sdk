@@ -1,8 +1,9 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 import {
     IDataView,
     IExecutionResult,
+    IForecastConfig,
     IPreparedExecution,
     isNoDataError,
     isUnexpectedResponseError,
@@ -114,7 +115,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
         }
 
         public componentDidMount() {
-            this.initDataLoading(this.props.execution);
+            this.initDataLoading(this.props.execution, this.props.forecastConfig);
         }
 
         public render() {
@@ -140,7 +141,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
         public UNSAFE_componentWillReceiveProps(nextProps: Readonly<T & ILoadingInjectedProps>) {
             //  we need strict equality here in case only the buckets changed (not measures or attributes)
             if (!this.props.execution.equals(nextProps.execution)) {
-                this.initDataLoading(nextProps.execution);
+                this.initDataLoading(nextProps.execution, nextProps.forecastConfig);
             }
         }
 
@@ -187,7 +188,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
             this.onError(new NegativeValuesSdkError());
         }
 
-        private async initDataLoading(execution: IPreparedExecution) {
+        private async initDataLoading(execution: IPreparedExecution, forecastConfig?: IForecastConfig) {
             const { onExportReady, pushData, exportTitle } = this.props;
             this.onLoadingChanged({ isLoading: true });
             this.setState({ dataView: null });
@@ -242,6 +243,19 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                     const availableDrillTargets = getAvailableDrillTargets(DataViewFacade.for(dataView));
 
                     pushData({ dataView, availableDrillTargets });
+                }
+
+                if (this.hasUnmounted) {
+                    return;
+                }
+
+                if (forecastConfig) {
+                    const forecastResult = await executionResult.readForecastAll(forecastConfig);
+                    const updatedDataView = dataView.withForecast(forecastConfig, forecastResult);
+                    this.setState((s) => ({ ...s, dataView: updatedDataView }));
+                    if (pushData) {
+                        pushData({ dataView: updatedDataView });
+                    }
                 }
             } catch (error) {
                 if (this.lastInitRequestFingerprint !== defFingerprint(execution.definition)) {

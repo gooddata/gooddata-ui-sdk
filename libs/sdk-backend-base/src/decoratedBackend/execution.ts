@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import {
     IDataView,
     IExecutionFactory,
@@ -9,6 +9,8 @@ import {
     ExplainConfig,
     IExplainProvider,
     ExplainType,
+    IForecastResult,
+    IForecastConfig,
 } from "@gooddata/sdk-backend-spi";
 import {
     IAttributeOrMeasure,
@@ -171,6 +173,10 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
         return this.decorated.readAll();
     }
 
+    public readForecastAll(config: IForecastConfig): Promise<IForecastResult> {
+        return this.decorated.readForecastAll(config);
+    }
+
     public readWindow(offset: number[], size: number[]): Promise<IDataView> {
         return this.decorated.readWindow(offset, size);
     }
@@ -226,5 +232,9 @@ export abstract class DecoratedDataView implements IDataView {
 
     public fingerprint(): string {
         return this.decorated.fingerprint();
+    }
+
+    public withForecast(config: IForecastConfig, result: IForecastResult): IDataView {
+        return this.decorated.withForecast(config, result);
     }
 }

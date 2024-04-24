@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import {
     IAttributeOrMeasure,
     IBucket,
@@ -16,6 +16,35 @@ import {
     IResultWarning,
 } from "@gooddata/sdk-model";
 import { IExportConfig, IExportResult } from "./export.js";
+
+/**
+ * @beta
+ */
+export interface IForecastConfig {
+    /**
+     * Forecast period in number of periods - e.g. 3
+     */
+    forecastPeriod: number;
+    /**
+     * Confidence level of the forecast in percents - e.g. 0.95
+     */
+    confidenceLevel: number;
+    /**
+     * Defines, whether the forecast should be seasonal.
+     */
+    seasonal: boolean;
+}
+
+/**
+ * @beta
+ */
+export interface IForecastResult {
+    attribute: string[];
+    origin: number[];
+    prediction: number[];
+    lowerBound: number[];
+    upperBound: number[];
+}
 
 /**
  * Execution factory provides several methods to create a prepared execution from different types
@@ -294,6 +323,18 @@ export interface IExecutionResult {
     readWindow(offset: number[], size: number[]): Promise<IDataView>;
 
     /**
+     * Reads forecast for the execution result.
+     * @beta
+     */
+    readForecastAll(config: IForecastConfig): Promise<IForecastResult>;
+
+    // TODO: add support for forecast paging
+    // /**
+    //  * Reads forecast for the execution result.
+    //  */
+    // readForecastWindow(offset: number[], size: number[], config: IForecastConfig): Promise<IForecastResult>;
+
+    /**
      * Transforms this execution result - changing the result sorting, dimensionality and available
      * totals is possible through transformation.
      *
@@ -428,6 +469,18 @@ export interface IDataView {
     readonly result: IExecutionResult;
 
     /**
+     * Configuration for the forecasting, if available.
+     * @beta
+     */
+    readonly forecastConfig?: IForecastConfig;
+
+    /**
+     * Forecasting result, if available.
+     * @beta
+     */
+    readonly forecastResult?: IForecastResult;
+
+    /**
      * Result warnings.
      *
      * @remarks
@@ -456,4 +509,14 @@ export interface IDataView {
      * Thus, two data views on the same result, with same offset and limit will have the same fingerprint.
      */
     fingerprint(): string;
+
+    /**
+     * Adds forecast for this data view.
+     *
+     * @beta
+     * @param config - forecast configuration
+     * @param result - forecast result
+     * @returns new data view with forecasting enabled
+     */
+    withForecast(config: IForecastConfig, result: IForecastResult): IDataView;
 }

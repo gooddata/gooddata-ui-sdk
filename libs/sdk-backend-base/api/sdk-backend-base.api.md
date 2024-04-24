@@ -56,6 +56,8 @@ import { IExportResult } from '@gooddata/sdk-backend-spi';
 import { IFactMetadataObject } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IFilterContextDefinition } from '@gooddata/sdk-model';
+import { IForecastConfig } from '@gooddata/sdk-backend-spi';
+import { IForecastResult } from '@gooddata/sdk-backend-spi';
 import { IGetDashboardOptions } from '@gooddata/sdk-backend-spi';
 import { IGetDashboardPluginOptions } from '@gooddata/sdk-backend-spi';
 import { IGetScheduledMailOptions } from '@gooddata/sdk-backend-spi';
@@ -397,6 +399,8 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
     fingerprint(): string;
     // (undocumented)
     readAll(): Promise<IDataView>;
+    // (undocumented)
+    readForecastAll(config: IForecastConfig): Promise<IForecastResult>;
     // (undocumented)
     readWindow(offset: number[], size: number[]): Promise<IDataView>;
     // (undocumented)

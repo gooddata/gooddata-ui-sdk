@@ -389,6 +389,10 @@ export interface IDataView {
     readonly definition: IExecutionDefinition;
     equals(other: IDataView): boolean;
     fingerprint(): string;
+    // @beta
+    readonly forecastConfig?: IForecastConfig;
+    // @beta
+    readonly forecastResult?: IForecastResult;
     readonly headerItems: IResultHeader[][][];
     readonly offset: number[];
     readonly result: IExecutionResult;
@@ -396,6 +400,8 @@ export interface IDataView {
     readonly totals?: DataValue[][][];
     readonly totalTotals?: DataValue[][][];
     readonly warnings?: IResultWarning[];
+    // @beta
+    withForecast(config: IForecastConfig, result: IForecastResult): IDataView;
 }
 
 // @internal
@@ -495,6 +501,8 @@ export interface IExecutionResult {
     export(options: IExportConfig): Promise<IExportResult>;
     fingerprint(): string;
     readAll(): Promise<IDataView>;
+    // @beta
+    readForecastAll(config: IForecastConfig): Promise<IForecastResult>;
     readWindow(offset: number[], size: number[]): Promise<IDataView>;
     transform(): IPreparedExecution;
 }
@@ -563,6 +571,27 @@ export interface IFilterElementsQuery {
     query(): Promise<IElementsQueryResult>;
     withLimit(limit: number): IFilterElementsQuery;
     withOffset(offset: number): IFilterElementsQuery;
+}
+
+// @beta (undocumented)
+export interface IForecastConfig {
+    confidenceLevel: number;
+    forecastPeriod: number;
+    seasonal: boolean;
+}
+
+// @beta (undocumented)
+export interface IForecastResult {
+    // (undocumented)
+    attribute: string[];
+    // (undocumented)
+    lowerBound: number[];
+    // (undocumented)
+    origin: number[];
+    // (undocumented)
+    prediction: number[];
+    // (undocumented)
+    upperBound: number[];
 }
 
 // @alpha

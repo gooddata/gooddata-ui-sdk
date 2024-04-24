@@ -50,6 +50,7 @@ import {
 import { tigerValidDescendantsClientFactory } from "./validDescendants.js";
 import { tigerResultClientFactory, ResultActionsApiInterface } from "./result.js";
 import { tigerUserManagementClientFactory } from "./userManagement.js";
+import { tigerForecastClientFactory } from "./forecast.js";
 
 export {
     tigerExecutionClientFactory,
@@ -67,6 +68,7 @@ export {
     tigerExportClientFactory,
     tigerResultClientFactory,
     tigerUserManagementClientFactory,
+    tigerForecastClientFactory,
     MetadataConfiguration,
     MetadataConfigurationParameters,
     MetadataBaseApi,
@@ -109,6 +111,10 @@ export interface ITigerClient {
     export: ReturnType<typeof tigerExportClientFactory>;
     result: ReturnType<typeof tigerResultClientFactory>;
     userManagement: ReturnType<typeof tigerUserManagementClientFactory>;
+    /**
+     * @beta
+     */
+    forecast: ReturnType<typeof tigerForecastClientFactory>;
 
     /**
      * Updates tiger client to send the provided API TOKEN in `Authorization` header of all
@@ -140,6 +146,7 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
     const exportFactory = tigerExportClientFactory(axios);
     const result = tigerResultClientFactory(axios);
     const userManagement = tigerUserManagementClientFactory(axios);
+    const forecast = tigerForecastClientFactory(axios);
 
     return {
         axios,
@@ -161,5 +168,6 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
             setAxiosAuthorizationToken(axios, token);
         },
         export: exportFactory,
+        forecast,
     };
 };

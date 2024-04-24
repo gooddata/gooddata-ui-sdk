@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 import {
     ITigerClient,
@@ -18,6 +18,8 @@ import {
     NoDataError,
     UnexpectedError,
     TimeoutError,
+    IForecastConfig,
+    IForecastResult,
 } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition, DataValue, IDimensionDescriptor, IResultHeader } from "@gooddata/sdk-model";
 import SparkMD5 from "spark-md5";
@@ -82,6 +84,30 @@ export class TigerExecutionResult implements IExecutionResult {
         );
 
         return this.asDataView(executionResultPromise);
+    }
+
+    public async readForecastAll(forecastConfig: IForecastConfig): Promise<IForecastResult> {
+        const workspace = this.workspace;
+        const resultId = this.resultId;
+
+        const forecast = await this.authCall((client) =>
+            client.forecast
+                .forecast({
+                    forecastRequest: forecastConfig,
+                    workspaceId: workspace,
+                    resultId: resultId,
+                })
+                .then(({ data }) => data),
+        );
+
+        return this.authCall((client) =>
+            client.forecast
+                .forecastResult({
+                    workspaceId: workspace,
+                    resultId: forecast.links.executionResult,
+                })
+                .then(({ data }) => data),
+        );
     }
 
     public async readWindow(offset: number[], size: number[]): Promise<IDataView> {
@@ -209,11 +235,25 @@ class TigerDataView implements IDataView {
     public readonly result: IExecutionResult;
     public readonly totals?: DataValue[][][];
     public readonly totalTotals?: DataValue[][][];
+    public readonly forecastConfig?: IForecastConfig;
+    public readonly forecastResult?: IForecastResult;
     private readonly _fingerprint: string;
+    private readonly _execResult: ExecutionResult;
+    private readonly _dateFormatter: DateFormatter;
 
-    constructor(result: IExecutionResult, execResult: ExecutionResult, dateFormatter: DateFormatter) {
+    constructor(
+        result: IExecutionResult,
+        execResult: ExecutionResult,
+        dateFormatter: DateFormatter,
+        forecastConfig?: IForecastConfig,
+        forecastResult?: IForecastResult,
+    ) {
         this.result = result;
         this.definition = result.definition;
+        this.forecastConfig = forecastConfig;
+        this.forecastResult = forecastResult;
+        this._execResult = execResult;
+        this._dateFormatter = dateFormatter;
 
         const transformDimensionHeaders = getTransformDimensionHeaders(
             result.dimensions,
@@ -249,6 +289,10 @@ class TigerDataView implements IDataView {
 
     public equals(other: IDataView): boolean {
         return this.fingerprint() === other.fingerprint();
+    }
+
+    public withForecast(config: IForecastConfig, result: IForecastResult): IDataView {
+        return new TigerDataView(this.result, this._execResult, this._dateFormatter, config, result);
     }
 }
 
