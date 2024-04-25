@@ -55,7 +55,7 @@
                     }
                 },
                 "responses": {
-                    "204": {
+                    "200": {
                         "description": "Upload was successful.",
                         "content": {
                             "application/json": {
@@ -89,7 +89,7 @@
                     }
                 ],
                 "responses": {
-                    "204": {
+                    "200": {
                         "description": "Staging upload location was registered.",
                         "content": {
                             "application/json": {
@@ -133,7 +133,7 @@
                     "required": true
                 },
                 "responses": {
-                    "204": {
+                    "200": {
                         "description": "Successful listing.",
                         "content": {
                             "application/json": {
@@ -218,7 +218,17 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful import."
+                        "description": "Successful import.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ImportCsvResponse"
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "x-gdc-security-info": {
@@ -636,7 +646,7 @@
                     },
                     "type": {
                         "type": "string",
-                        "description": "Type of file stored in GD Storage.",
+                        "description": "Type of the file.",
                         "enum": ["CSV"]
                     }
                 },
@@ -706,6 +716,22 @@
                     }
                 },
                 "description": "Config to use when accessing the data for executions, etc."
+            },
+            "ImportCsvResponse": {
+                "required": ["name", "version"],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the table the file was imported to."
+                    },
+                    "version": {
+                        "type": "integer",
+                        "description": "Version the file was imported as.",
+                        "format": "int32"
+                    }
+                },
+                "description": "Response containing the information about the imported CSV file."
             },
             "DeleteFilesRequest": {
                 "required": ["fileNames"],
