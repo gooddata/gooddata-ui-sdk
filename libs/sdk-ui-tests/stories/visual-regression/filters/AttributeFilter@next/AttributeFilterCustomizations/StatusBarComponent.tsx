@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React from "react";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { newNegativeAttributeFilter } from "@gooddata/sdk-model";
@@ -26,6 +26,7 @@ const CustomStatusBar = (props: IAttributeFilterStatusBarProps) => {
                 background: "cyan",
                 alignItems: "center",
                 padding: 10,
+                width: "100%",
             }}
         >
             <div>

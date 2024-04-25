@@ -1,8 +1,8 @@
-// (C) 2007-2022 GoodData Corporation
-import React, { useMemo } from "react";
-import { useIntl } from "react-intl";
+// (C) 2007-2024 GoodData Corporation
+import React from "react";
 import cx from "classnames";
 import { InvertableSelectLimitWarning } from "./InvertableSelectLimitWarning.js";
+import { InvertableSelectStatus } from "./InvertableSelectSelectionStatus.js";
 /**
  * @internal
  */
@@ -20,40 +20,14 @@ export interface IInvertableSelectStatusBarProps<T> {
 export function InvertableSelectStatusBar<T>(props: IInvertableSelectStatusBarProps<T>) {
     const { className, selectedItems, getItemTitle, isInverted, selectedItemsLimit } = props;
 
-    const intl = useIntl();
-
-    const isSelectionEmpty = selectedItems.length === 0;
-    const isAll = isSelectionEmpty && isInverted;
-    const isNone = isSelectionEmpty && !isInverted;
-    const isAllExcept = !isSelectionEmpty && isInverted;
-
-    const selectionString = useMemo(() => {
-        return selectedItems.map((selectedItem) => getItemTitle(selectedItem)).join(", ");
-    }, [selectedItems, getItemTitle]);
-
     return (
         <>
             <div className={cx([className, "gd-invertable-select-selection-status", "s-list-status-bar"])}>
-                <span>&nbsp;{intl.formatMessage({ id: "gs.list.is" })}&nbsp;</span>
-                {isAll ? <b>{intl.formatMessage({ id: "gs.list.all" })}</b> : null}
-                {isNone ? <b>{intl.formatMessage({ id: "gs.filterLabel.none" })}</b> : null}
-                {isAllExcept ? (
-                    <span>
-                        <b>{intl.formatMessage({ id: "gs.list.all" })}</b>&nbsp;
-                        {intl.formatMessage({ id: "gs.list.except" })}&nbsp;
-                    </span>
-                ) : null}
-                {!isAll && !isSelectionEmpty ? (
-                    <>
-                        <span
-                            className="gd-shortened-text gd-selection-list s-dropdown-attribute-selection-list"
-                            title={selectionString}
-                        >
-                            {selectionString}
-                        </span>
-                        {`\xa0(${selectedItems.length})`}
-                    </>
-                ) : null}
+                <InvertableSelectStatus
+                    selectedItems={selectedItems}
+                    getItemTitle={getItemTitle}
+                    isInverted={isInverted}
+                />
             </div>
             {selectedItems.length >= selectedItemsLimit ? (
                 <InvertableSelectLimitWarning

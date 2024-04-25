@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 @use "sass:color";
 @use "Button/_mixins" as button-mixins;
 @use "Button/variables" as button-variables;
@@ -437,7 +437,8 @@
     }
 }
 
-.gd-button-important {
+.gd-button-important,
+.gd-button-large {
     height: 38px;
     padding: 7px 19px;
     line-height: 22px;

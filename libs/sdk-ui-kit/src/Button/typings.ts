@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
 import { ReactNode } from "react";
 
@@ -12,9 +12,13 @@ export interface IButtonProps {
     tabIndex?: number;
     tagName?: string;
     title?: string;
-    type?: string;
+    type?: HTMLButtonElement["type"];
     value?: ReactNode;
+    children?: ReactNode;
     iconLeft?: string;
     iconRight?: string;
     onClick?(e: React.MouseEvent): void;
+    variant?: "primary" | "secondary";
+    intent?: "action" | "positive" | "negative";
+    size?: "small" | "medium" | "large";
 }

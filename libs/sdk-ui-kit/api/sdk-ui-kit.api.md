@@ -422,6 +422,9 @@ export const Dropdown: React_2.FC<IDropdownProps>;
 export const DropdownButton: React_2.FC<IDropdownButtonProps>;
 
 // @internal (undocumented)
+export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProps<T>): React_2.JSX.Element;
+
+// @internal (undocumented)
 export function DropdownList<T>(props: IDropdownListProps<T>): JSX.Element;
 
 // @internal (undocumented)
@@ -688,6 +691,9 @@ export const HEADER_ITEM_ID_DASHBOARDS = "gs.header.dashboards";
 
 // @internal (undocumented)
 export const HEADER_ITEM_ID_DATA = "gs.header.data";
+
+// @internal (undocumented)
+export const HEADER_ITEM_ID_HOME = "gs.header.home";
 
 // @internal (undocumented)
 export const HEADER_ITEM_ID_KPIS = "gs.header.kpis";
@@ -1030,6 +1036,8 @@ export interface IBucketItemDescriptors {
 // @internal (undocumented)
 export interface IButtonProps {
     // (undocumented)
+    children?: ReactNode;
+    // (undocumented)
     className?: string;
     // (undocumented)
     disabled?: boolean;
@@ -1040,7 +1048,11 @@ export interface IButtonProps {
     // (undocumented)
     id?: string;
     // (undocumented)
+    intent?: "action" | "positive" | "negative";
+    // (undocumented)
     onClick?(e: React.MouseEvent): void;
+    // (undocumented)
+    size?: "small" | "medium" | "large";
     // (undocumented)
     tabIndex?: number;
     // (undocumented)
@@ -1048,9 +1060,11 @@ export interface IButtonProps {
     // (undocumented)
     title?: string;
     // (undocumented)
-    type?: string;
+    type?: HTMLButtonElement["type"];
     // (undocumented)
     value?: ReactNode;
+    // (undocumented)
+    variant?: "primary" | "secondary";
 }
 
 // @internal (undocumented)
@@ -1441,6 +1455,21 @@ export interface IDropdownButtonRenderProps {
     openDropdown: () => void;
     // (undocumented)
     toggleDropdown: () => void;
+}
+
+// @internal (undocumented)
+export interface IDropdownInvertableSelectProps<T> {
+    getItemKey: (item: T) => string;
+    getItemTitle: (item: T) => string;
+    initialIsInverted?: boolean;
+    initialSearchString?: string;
+    initialValue?: T[];
+    onChange: (selectedItems: T[], isInverted: boolean) => void;
+    options: T[];
+    renderSearchBar?: (props: IInvertableSelectRenderSearchBarProps) => JSX.Element;
+    renderStatusBar?: (props: IInvertableSelectRenderStatusBarProps<T>) => JSX.Element;
+    title: string;
+    width?: number;
 }
 
 // @internal (undocumented)
@@ -2329,6 +2358,16 @@ export interface IInvertableSelectStatusBarProps<T> {
 }
 
 // @internal (undocumented)
+export interface IInvertableSelectStatusProps<T> {
+    // (undocumented)
+    getItemTitle: (item: T) => string;
+    // (undocumented)
+    isInverted: boolean;
+    // (undocumented)
+    selectedItems: T[];
+}
+
+// @internal (undocumented)
 export interface IItemProps {
     // (undocumented)
     checked?: boolean;
@@ -3169,6 +3208,9 @@ export function InvertableSelectLimitWarning(props: IInvertableSelectLimitWarnin
 export function InvertableSelectSearchBar(props: IInvertableSelectSearchBarProps): React_2.JSX.Element;
 
 // @internal (undocumented)
+export function InvertableSelectStatus<T>(props: IInvertableSelectStatusProps<T>): React_2.JSX.Element;
+
+// @internal (undocumented)
 export function InvertableSelectStatusBar<T>(props: IInvertableSelectStatusBarProps<T>): React_2.JSX.Element;
 
 // @internal (undocumented)
@@ -3398,6 +3440,21 @@ export const isDateDatasetHeader: (obj: unknown) => obj is IDateDatasetHeader;
 
 // @internal (undocumented)
 export type isElementInvisibleType = (element: HTMLElement, container: HTMLElement) => boolean;
+
+// @internal (undocumented)
+export interface ISeparatorLineProps {
+    height?: number;
+    m?: number;
+    mB?: number;
+    mL?: number;
+    mR?: number;
+    mT?: number;
+    p?: number;
+    pB?: number;
+    pL?: number;
+    pR?: number;
+    pT?: number;
+}
 
 // @internal (undocumented)
 export interface ISettingItem {
@@ -4313,6 +4370,9 @@ export type SelectedTime = {
 export const Separator: React_2.FC;
 
 // @internal (undocumented)
+export function SeparatorLine({ mT: marginTop, mR: marginRight, mB: marginBottom, mL: marginLeft, pT: paddingTop, pR: paddingRight, pB: paddingBottom, pL: paddingLeft, m, p, height, }: ISeparatorLineProps): React_2.JSX.Element;
+
+// @internal (undocumented)
 export type Separators = {
     thousand: string;
     decimal: string;
@@ -4588,6 +4648,9 @@ export type UnitsType = "px" | "%" | "rem" | "em";
 
 // @internal (undocumented)
 export const unrelatedHeader: IDateDatasetHeader;
+
+// @internal (undocumented)
+export function useInvertableSelectionStatusText<T>(selectedItems: T[], isInverted: boolean, getItemTitle: (item: T) => string): string;
 
 // @internal
 export const useMediaQuery: (mediaQueryName: keyof IMediaQueries) => boolean;

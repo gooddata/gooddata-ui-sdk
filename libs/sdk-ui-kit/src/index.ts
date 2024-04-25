@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 /**
  * This package provides various UI components used to build GoodData applications (such as buttons, icons, and so on).
  *
@@ -57,3 +57,4 @@ export * from "./ScrollablePanel/index.js";
 export * from "./DescriptionPanel/index.js";
 export * from "./SettingItem/index.js";
 export * from "./TextAreaWithSubmit/index.js";
+export * from "./SeparatorLine/index.js";

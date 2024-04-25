@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
 export {
     Item,
@@ -44,6 +44,9 @@ export {
     InvertableSelectSearchBar,
     InvertableSelectStatusBar,
     InvertableSelectAllCheckbox,
+    IInvertableSelectStatusProps,
+    InvertableSelectStatus,
+    useInvertableSelectionStatusText,
 } from "./InvertableSelect/index.js";
 export {
     SingleSelectListItem,
