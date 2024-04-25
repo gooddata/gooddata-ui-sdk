@@ -84,6 +84,7 @@ export enum TigerFeaturesNames {
     EnableDataProfiling = "enableDataProfiling",
     EnableFlexAi = "enableFlexAi",
     EnableExperimentalFeaturesUI = "enableExperimentalFeaturesUI",
+    EnableSingleStoreDataSource = "enableSingleStoreDataSource",
 }
 
 export type ITigerFeatureFlags = {
@@ -132,6 +133,7 @@ export type ITigerFeatureFlags = {
     enableDataProfiling: typeof FeatureFlagsValues["enableDataProfiling"][number];
     enableFlexAi: typeof FeatureFlagsValues["enableFlexAi"][number];
     enableExperimentalFeaturesUI: typeof FeatureFlagsValues["enableExperimentalFeaturesUI"][number];
+    enableSingleStoreDataSource: typeof FeatureFlagsValues["enableSingleStoreDataSource"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -180,6 +182,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDataProfiling: false,
     enableFlexAi: false,
     enableExperimentalFeaturesUI: false,
+    enableSingleStoreDataSource: false,
 };
 
 export const FeatureFlagsValues = {
@@ -232,4 +235,5 @@ export const FeatureFlagsValues = {
     enableDataProfiling: [true, false] as const,
     enableFlexAi: [true, false] as const,
     enableExperimentalFeaturesUI: [true, false] as const,
+    enableSingleStoreDataSource: [true, false] as const,
 };
