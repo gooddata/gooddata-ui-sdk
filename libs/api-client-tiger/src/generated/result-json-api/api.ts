@@ -495,7 +495,7 @@ export interface GdStorageFile {
      */
     modifiedAt: string;
     /**
-     * Type of file stored in GD Storage.
+     * Type of the file.
      * @type {string}
      * @memberof GdStorageFile
      */
@@ -589,6 +589,25 @@ export interface ImportCsvRequestTableSourceConfig {
      * @memberof ImportCsvRequestTableSourceConfig
      */
     columnDateFormats?: { [key: string]: string };
+}
+/**
+ * Response containing the information about the imported CSV file.
+ * @export
+ * @interface ImportCsvResponse
+ */
+export interface ImportCsvResponse {
+    /**
+     * Name of the table the file was imported to.
+     * @type {string}
+     * @memberof ImportCsvResponse
+     */
+    name: string;
+    /**
+     * Version the file was imported as.
+     * @type {number}
+     * @memberof ImportCsvResponse
+     */
+    version: number;
 }
 /**
  * Settings for organization cache.
@@ -1277,7 +1296,7 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             dataSourceId: string,
             importCsvRequest: ImportCsvRequest,
             options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ImportCsvResponse>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.importCsv(
                 dataSourceId,
                 importCsvRequest,
@@ -1419,7 +1438,7 @@ export const ActionsApiFactory = function (
         importCsv(
             requestParameters: ActionsApiImportCsvRequest,
             options?: AxiosRequestConfig,
-        ): AxiosPromise<void> {
+        ): AxiosPromise<Array<ImportCsvResponse>> {
             return localVarFp
                 .importCsv(requestParameters.dataSourceId, requestParameters.importCsvRequest, options)
                 .then((request) => request(axios, basePath));
@@ -1541,7 +1560,7 @@ export interface ActionsApiInterface {
     importCsv(
         requestParameters: ActionsApiImportCsvRequest,
         options?: AxiosRequestConfig,
-    ): AxiosPromise<void>;
+    ): AxiosPromise<Array<ImportCsvResponse>>;
 
     /**
      * List all the files in the given data source.
@@ -2419,7 +2438,7 @@ export const DataSourceFilesImportApiFp = function (configuration?: Configuratio
             dataSourceId: string,
             importCsvRequest: ImportCsvRequest,
             options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ImportCsvResponse>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.importCsv(
                 dataSourceId,
                 importCsvRequest,
@@ -2451,7 +2470,7 @@ export const DataSourceFilesImportApiFactory = function (
         importCsv(
             requestParameters: DataSourceFilesImportApiImportCsvRequest,
             options?: AxiosRequestConfig,
-        ): AxiosPromise<void> {
+        ): AxiosPromise<Array<ImportCsvResponse>> {
             return localVarFp
                 .importCsv(requestParameters.dataSourceId, requestParameters.importCsvRequest, options)
                 .then((request) => request(axios, basePath));
@@ -2476,7 +2495,7 @@ export interface DataSourceFilesImportApiInterface {
     importCsv(
         requestParameters: DataSourceFilesImportApiImportCsvRequest,
         options?: AxiosRequestConfig,
-    ): AxiosPromise<void>;
+    ): AxiosPromise<Array<ImportCsvResponse>>;
 }
 
 /**

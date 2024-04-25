@@ -684,6 +684,8 @@ export const TestDefinitionRequestTypeEnum = {
     MYSQL: "MYSQL",
     MARIADB: "MARIADB",
     ORACLE: "ORACLE",
+    PINOT: "PINOT",
+    SINGLESTORE: "SINGLESTORE",
 } as const;
 
 export type TestDefinitionRequestTypeEnum =
