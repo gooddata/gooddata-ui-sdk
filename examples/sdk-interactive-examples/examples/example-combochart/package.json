@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-example-combochart",
-    "version": "9.9.1",
+    "version": "9.9.2-beta.0",
     "title": "ComboChart",
     "description": "Example demonstrates ComboChart secondaryMeasures definition. ",
     "author": "GoodData Corporation",

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-example-granularity",
-    "version": "9.9.1",
+    "version": "9.9.2-beta.0",
     "title": "Granularity",
     "description": "This example exmplains DateFilter granularity ",
     "author": "GoodData Corporation",
