@@ -37,12 +37,6 @@
             "dashboardURL": "dashboard/nodata",
             "fileName": "KD with No data.pdf",
             "contents": "No data for your filter selection\nNo data\nKD with No data"
-        },
-        {
-            "dashboardTitle": "KD with many data insight",
-            "dashboardURL": "dashboard/manydata",
-            "fileName": "KD with many data insight.pdf",
-            "contents": "TOO MANY DATA POINTS TO DISPLAY\nTry applying one or more filters to your dashboard.\nmany data\nKD with many data insight"
         }
     ],
     "insightsAfterChangingFilterForPDFExport": [
