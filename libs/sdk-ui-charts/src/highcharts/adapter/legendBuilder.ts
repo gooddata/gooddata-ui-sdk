@@ -9,7 +9,6 @@ import {
     isHeatmap,
     isLineChart,
     isOneOfTypes,
-    isPieOrDonutChart,
     isSankeyOrDependencyWheel,
     isScatterPlot,
     isTreemap,
@@ -30,6 +29,7 @@ import {
     DEFAULT_LEGEND_CONFIG,
     ItemBorderRadiusPredicate,
 } from "@gooddata/sdk-ui-vis-commons";
+import { ChartType } from "../typings/chartType.js";
 
 function isHeatmapWithMultipleValues(chartOptions: IChartOptions) {
     const { type } = chartOptions;
@@ -140,6 +140,35 @@ export function getLegendItems(chartOptions: IChartOptions, intl?: IntlShape): L
         .map((legendDataSourceItem: any) => pick(legendDataSourceItem, pickedProps));
 }
 
+/**
+ * With relaxing of chart limits, we need to use responsive legend in more cases.
+ *
+ * Some charts only need it for top/bottom positions, others for all positions.
+ */
+const shouldUseResponsiveLegend = (chartType: ChartType, legendPosition: string): boolean => {
+    const legendTopBottomPositions = ["top", "bottom"];
+    const chartsWithAnyPopupPosition = [VisualizationTypes.PIE, VisualizationTypes.DONUT];
+    const chartsWithTopBottomPopupPosition = [
+        VisualizationTypes.COLUMN,
+        VisualizationTypes.BAR,
+        VisualizationTypes.LINE,
+        VisualizationTypes.AREA,
+        VisualizationTypes.BUBBLE,
+        VisualizationTypes.TREEMAP,
+        VisualizationTypes.PYRAMID,
+        VisualizationTypes.FUNNEL,
+        VisualizationTypes.DEPENDENCY_WHEEL,
+        VisualizationTypes.SANKEY,
+    ];
+
+    const isChartWithAnyPopupPosition = isOneOfTypes(chartType, chartsWithAnyPopupPosition);
+    const isChartWithTopBottomPopupPosition =
+        legendTopBottomPositions.includes(legendPosition) &&
+        isOneOfTypes(chartType, chartsWithTopBottomPopupPosition);
+
+    return isChartWithAnyPopupPosition || isChartWithTopBottomPopupPosition;
+};
+
 export default function buildLegendOptions(
     legendConfig: any = {},
     chartOptions: IChartOptions,
@@ -189,7 +218,7 @@ export default function buildLegendOptions(
         set(defaultLegendConfigByType, "enabled", false);
     }
 
-    if (isPieOrDonutChart(chartOptions.type)) {
+    if (shouldUseResponsiveLegend(chartOptions.type as ChartType, legendConfig.position)) {
         set(defaultLegendConfigByType, "responsive", "autoPositionWithPopup");
     }
 
