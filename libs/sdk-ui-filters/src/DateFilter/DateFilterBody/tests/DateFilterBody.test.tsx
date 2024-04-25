@@ -84,11 +84,7 @@ describe("ExtendedDateFilterBody", () => {
         };
 
         const getBodyScroller = () => {
-            const bodyScrollerClass =
-                window.innerHeight <= 640
-                    ? ".gd-extended-date-filter-body-scrollable-small-screen"
-                    : ".gd-extended-date-filter-body-scrollable";
-            return document.querySelector(bodyScrollerClass);
+            return document.querySelector(".gd-extended-date-filter-body-scrollable");
         };
 
         it("should not resize body wrapper and scroller", () => {

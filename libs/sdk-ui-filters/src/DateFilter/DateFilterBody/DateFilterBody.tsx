@@ -38,7 +38,6 @@ const ACTIONS_BUTTONS_HEIGHT = 53;
 const EXCLUDE_OPEN_PERIOD_HEIGHT = 30; // height of 'Exclude open period' checkbox component
 const MARGIN_BOTTOM = 8;
 const MOBILE_WIDTH = 414; // iPhone 11 Pro Max
-const SMALL_SCREEN_HEIGHT = 640;
 
 export interface IDateFilterBodyProps {
     dateFormat: string;
@@ -54,6 +53,7 @@ export interface IDateFilterBodyProps {
     availableGranularities: DateFilterGranularity[];
 
     isEditMode: boolean;
+    isEmbedded: boolean;
     isMobile: boolean;
     showHeaderMessage?: boolean;
 
@@ -100,6 +100,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
         const {
             isExcludeCurrentPeriodEnabled,
             isMobile,
+            isEmbedded,
             onApplyClick,
             onCancelClick,
             closeDropdown,
@@ -118,6 +119,7 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
                     className={cx(
                         "gd-extended-date-filter-body",
                         "s-extended-date-filters-body",
+                        isEmbedded && "gd-extended-date-filters-body-embedded",
                         isMobile && "gd-extended-date-filter-body-mobile",
                     )}
                 >
@@ -170,13 +172,14 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
             isExcludeCurrentPeriodEnabled,
             isMobile,
             isEditMode,
+            isEmbedded,
             selectedFilterOption,
             showHeaderMessage = true,
         } = this.props;
 
         const showExcludeCurrent: boolean = !isMobile || isExcludeCurrentPeriodEnabled;
         const bodyHeight: number = this.calculateHeight(showExcludeCurrent);
-        const visibleScrollbarClassName = this.getVisibleScrollbarClassName();
+        const visibleScrollbarClassName = this.getVisibleScrollbarClassName(isEmbedded);
         let wrapperStyle: React.CSSProperties = {};
         let scrollerStyle: React.CSSProperties = {};
         if (bodyHeight) {
@@ -433,9 +436,9 @@ export class DateFilterBody extends React.Component<IDateFilterBodyProps, IDateF
         return undefined;
     };
 
-    private getVisibleScrollbarClassName = (): string => {
-        if (window.innerHeight <= SMALL_SCREEN_HEIGHT) {
-            return "gd-extended-date-filter-body-scrollable-small-screen";
+    private getVisibleScrollbarClassName = (isEmbedded: boolean): string => {
+        if (isEmbedded) {
+            return "gd-extended-date-filter-body-scrollable-embedded";
         }
 
         return "gd-extended-date-filter-body-scrollable";

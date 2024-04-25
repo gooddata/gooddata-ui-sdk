@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React from "react";
 import isEqual from "lodash/isEqual.js";
 import isNil from "lodash/isNil.js";
@@ -36,6 +36,7 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     filterOptions: IDateFilterOptionsByType;
     availableGranularities: DateFilterGranularity[];
     isEditMode?: boolean;
+    isEmbedded?: boolean;
     openOnInit?: boolean;
     customFilterName?: string;
     dateFilterMode: VisibilityMode;
@@ -98,6 +99,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
     public static defaultProps: Partial<IDateFilterProps> = {
         dateFormat: DEFAULT_DATE_FORMAT,
         isEditMode: false,
+        isEmbedded: false,
         isTimeForAbsoluteRangeEnabled: false,
         locale: "en-US",
         onCancel: noop,
@@ -180,6 +182,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
             excludeCurrentPeriod: originalExcludeCurrentPeriod,
             availableGranularities,
             isEditMode,
+            isEmbedded,
             openOnInit,
             locale,
             isTimeForAbsoluteRangeEnabled,
@@ -202,6 +205,7 @@ export class DateFilter extends React.PureComponent<IDateFilterProps, IDateFilte
                 isExcludeCurrentPeriodEnabled={isExcludeCurrentPeriodEnabled}
                 isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled}
                 isEditMode={isEditMode}
+                isEmbedded={isEmbedded}
                 filterOptions={filterOptions}
                 selectedFilterOption={selectedFilterOption}
                 originalSelectedFilterOption={originalSelectedFilterOption}
