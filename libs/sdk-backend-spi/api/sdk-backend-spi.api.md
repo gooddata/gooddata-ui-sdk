@@ -1155,6 +1155,8 @@ export interface IWorkspacesQuery {
     withFilter(filter: IWorkspacesQueryFilter): IWorkspacesQuery;
     withLimit(limit: number): IWorkspacesQuery;
     withOffset(offset: number): IWorkspacesQuery;
+    // @alpha
+    withOptions(options: IWorkspacesQueryOptions): IWorkspacesQuery;
     withParent(workspaceId: string | undefined): IWorkspacesQuery;
     withSearch(search: string): IWorkspacesQuery;
 }
@@ -1171,6 +1173,11 @@ export interface IWorkspacesQueryFilter {
     earlyAccess?: string;
     prefix?: string;
     rootWorkspacesOnly?: boolean;
+}
+
+// @public
+export interface IWorkspacesQueryOptions {
+    includeChildWorkspacesCount?: boolean;
 }
 
 // @public

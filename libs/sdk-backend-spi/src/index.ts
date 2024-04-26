@@ -125,6 +125,7 @@ export {
     IWorkspacesQueryFactory,
     IWorkspacesQueryResult,
     IWorkspacesQueryFilter,
+    IWorkspacesQueryOptions,
     IWorkspaceDescriptor,
     IWorkspaceDescriptorUpdate,
 } from "./workspace/index.js";

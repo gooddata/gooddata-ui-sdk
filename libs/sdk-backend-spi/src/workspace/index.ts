@@ -249,6 +249,18 @@ export interface IWorkspacesQueryFilter {
 }
 
 /**
+ * Additional options for workspaces query.
+ *
+ * @public
+ */
+export interface IWorkspacesQueryOptions {
+    /**
+     * Include count of child workspaces in the result
+     */
+    includeChildWorkspacesCount?: boolean;
+}
+
+/**
  * Query to retrieve available workspaces.
  *
  * @public
@@ -280,6 +292,13 @@ export interface IWorkspacesQuery {
      * @alpha
      */
     withFilter(filter: IWorkspacesQueryFilter): IWorkspacesQuery;
+
+    /**
+     * Sets additional options for the query.
+     * @param options - an object of options to modify the query behavior
+     * @alpha
+     */
+    withOptions(options: IWorkspacesQueryOptions): IWorkspacesQuery;
 
     /**
      * Sets a text to search.
