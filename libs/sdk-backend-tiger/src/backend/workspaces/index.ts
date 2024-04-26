@@ -9,7 +9,6 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import {
     JsonApiWorkspaceOutList,
-    DeclarativeWorkspace,
     EntitiesApiGetAllEntitiesWorkspacesRequest,
 } from "@gooddata/api-client-tiger";
 import { TigerAuthenticatedCallGuard } from "../../types/index.js";
@@ -37,9 +36,10 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
     private limit: number = 100;
     private offset: number = 0;
     private search: string | undefined = undefined;
-    private filter: Partial<DeclarativeWorkspace> & IWorkspacesQueryFilter = {};
+    private filter: IWorkspacesQueryFilter = {};
     private parentWorkspaceId: string | undefined = undefined;
 
+    private defaultSortParam: string[] = ["name,asc"];
     private defaultMetaIncludeParam: Required<EntitiesApiGetAllEntitiesWorkspacesRequest>["metaInclude"] = [
         "hierarchy",
     ];
@@ -86,6 +86,7 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
                         size: limit,
                         page: offset / limit,
                         filter: this.constructFilter(),
+                        sort: this.defaultSortParam,
                         metaInclude:
                             totalCount === undefined
                                 ? ["page", ...this.defaultMetaIncludeParam]
@@ -120,7 +121,7 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
 
     private constructFilter(): string | undefined {
         const filterParam = [
-            this.filter.description && `description==${this.filter.name}`,
+            this.filter.description && `description==${this.filter.description}`,
             this.filter.earlyAccess && `earlyAccess==${this.filter.earlyAccess}`,
             this.filter.prefix && `prefix==${this.filter.prefix}`,
             // get only workspaces that have no parent workspace
