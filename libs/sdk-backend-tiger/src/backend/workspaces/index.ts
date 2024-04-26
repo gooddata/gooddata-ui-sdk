@@ -1,21 +1,23 @@
 // (C) 2019-2024 GoodData Corporation
 import {
-    IWorkspacesQueryFactory,
-    IWorkspacesQuery,
-    IWorkspacesQueryResult,
     IAnalyticalWorkspace,
     IWorkspaceDescriptor,
+    IWorkspacesQuery,
+    IWorkspacesQueryFactory,
     IWorkspacesQueryFilter,
+    IWorkspacesQueryOptions,
+    IWorkspacesQueryResult,
 } from "@gooddata/sdk-backend-spi";
 import {
-    JsonApiWorkspaceOutList,
     EntitiesApiGetAllEntitiesWorkspacesRequest,
+    JsonApiWorkspaceOutList,
 } from "@gooddata/api-client-tiger";
 import { TigerAuthenticatedCallGuard } from "../../types/index.js";
 import { DateFormatter } from "../../convertors/fromBackend/dateFormatting/types.js";
 import { workspaceConverter } from "../../convertors/fromBackend/WorkspaceConverter.js";
 import { ServerPaging } from "@gooddata/sdk-backend-base";
 import { TigerWorkspace } from "../workspace/index.js";
+import compact from "lodash/compact.js";
 
 export class TigerWorkspaceQueryFactory implements IWorkspacesQueryFactory {
     constructor(
@@ -32,17 +34,17 @@ export class TigerWorkspaceQueryFactory implements IWorkspacesQueryFactory {
     }
 }
 
+type WorkspaceMetaInclude = Required<EntitiesApiGetAllEntitiesWorkspacesRequest>["metaInclude"];
+
 class TigerWorkspaceQuery implements IWorkspacesQuery {
     private limit: number = 100;
     private offset: number = 0;
     private search: string | undefined = undefined;
     private filter: IWorkspacesQueryFilter = {};
     private parentWorkspaceId: string | undefined = undefined;
+    private options: IWorkspacesQueryOptions = {};
 
     private defaultSortParam: string[] = ["name,asc"];
-    private defaultMetaIncludeParam: Required<EntitiesApiGetAllEntitiesWorkspacesRequest>["metaInclude"] = [
-        "hierarchy",
-    ];
     private defaultIncludeParam: EntitiesApiGetAllEntitiesWorkspacesRequest["include"] = ["parent"];
 
     constructor(
@@ -73,6 +75,11 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
         return this;
     }
 
+    public withOptions(options: IWorkspacesQueryOptions): IWorkspacesQuery {
+        this.options = options;
+        return this;
+    }
+
     public withSearch(search: string): IWorkspacesQuery {
         this.search = search;
         return this;
@@ -87,10 +94,7 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
                         page: offset / limit,
                         filter: this.constructFilter(),
                         sort: this.defaultSortParam,
-                        metaInclude:
-                            totalCount === undefined
-                                ? ["page", ...this.defaultMetaIncludeParam]
-                                : this.defaultMetaIncludeParam,
+                        metaInclude: this.constructMetaInclude(totalCount),
                         include: this.defaultIncludeParam,
                     }),
                 );
@@ -120,7 +124,7 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
     ): IAnalyticalWorkspace[] => descriptors.map(this.descriptorToAnalyticalWorkspace);
 
     private constructFilter(): string | undefined {
-        const filterParam = [
+        const filterParam = compact([
             this.filter.description && `description==${this.filter.description}`,
             this.filter.earlyAccess && `earlyAccess==${this.filter.earlyAccess}`,
             this.filter.prefix && `prefix==${this.filter.prefix}`,
@@ -129,9 +133,15 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
             this.parentWorkspaceId && `parent.id==${this.parentWorkspaceId}`,
             // case-insensitive search
             this.search && `name=containsic='${this.search}'`,
-        ]
-            .filter(Boolean)
-            .join(";");
+        ]).join(";");
         return filterParam === "" ? undefined : filterParam;
+    }
+
+    private constructMetaInclude(totalCount?: number): WorkspaceMetaInclude | undefined {
+        const metaIncludeParam: WorkspaceMetaInclude = compact([
+            totalCount === undefined && "page",
+            this.options.includeChildWorkspacesCount && "hierarchy",
+        ]);
+        return metaIncludeParam.length === 0 ? undefined : metaIncludeParam;
     }
 }
