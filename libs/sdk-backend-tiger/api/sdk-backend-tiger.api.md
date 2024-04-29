@@ -28,6 +28,7 @@ import { IAuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
 import { IdentifierDuplications } from '@gooddata/api-client-tiger';
 import { ImportCsvRequest } from '@gooddata/api-client-tiger';
+import { ImportCsvResponse } from '@gooddata/api-client-tiger';
 import { ITigerClient } from '@gooddata/api-client-tiger';
 import { IUser } from '@gooddata/sdk-model';
 import { JsonApiAnalyticalDashboardOutMetaOrigin } from '@gooddata/api-client-tiger';
@@ -456,7 +457,7 @@ export type TigerSpecificFunctions = {
     getStagingUploadLocation?: (dataSourceId: string) => Promise<StagingUploadLocation>;
     stagingUpload?: (dataSourceId: string, file: File) => Promise<UploadFileResponse>;
     analyzeCsv?: (dataSourceId: string, analyzeCsvRequest: AnalyzeCsvRequest) => Promise<Array<AnalyzeCsvResponse>>;
-    importCsv?: (dataSourceId: string, importCsvRequest: ImportCsvRequest) => Promise<void>;
+    importCsv?: (dataSourceId: string, importCsvRequest: ImportCsvRequest) => Promise<Array<ImportCsvResponse>>;
     listFiles?: (dataSourceId: string) => Promise<Array<GdStorageFile>>;
     deleteFiles?: (dataSourceId: string, fileNames: string[]) => Promise<void>;
     readFileManifests?: (dataSourceId: string, fileNames: string[]) => Promise<ReadFileManifestsResponse[]>;

@@ -287,6 +287,7 @@ export {
     ImportCsvRequestTable,
     ImportCsvRequestTableSource,
     ImportCsvRequestTableSourceConfig,
+    ImportCsvResponse,
     OrganizationCacheSettings,
     OrganizationCacheUsage,
     OrganizationCurrentCacheUsage,
@@ -298,7 +299,6 @@ export {
     WorkspaceCacheSettings,
     WorkspaceCacheUsage,
     WorkspaceCurrentCacheUsage,
-    ImportCsvResponse,
 } from "./generated/result-json-api/api.js";
 
 export * from "./client.js";

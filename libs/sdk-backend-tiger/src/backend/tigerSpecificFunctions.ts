@@ -47,6 +47,7 @@ import {
     AnalyzeCsvRequest,
     AnalyzeCsvResponse,
     ImportCsvRequest,
+    ImportCsvResponse,
     JsonApiDataSourceInAttributesCacheStrategyEnum,
     GdStorageFile,
     UploadFileResponse,
@@ -513,7 +514,10 @@ export type TigerSpecificFunctions = {
      * @param dataSourceId - id of the data source
      * @param importRequest - the request to import CSV files
      */
-    importCsv?: (dataSourceId: string, importCsvRequest: ImportCsvRequest) => Promise<void>;
+    importCsv?: (
+        dataSourceId: string,
+        importCsvRequest: ImportCsvRequest,
+    ) => Promise<Array<ImportCsvResponse>>;
 
     /**
      * List CSV files from GDSTORAGE data source staging location
@@ -1562,10 +1566,14 @@ export const buildTigerSpecificFunctions = (
     importCsv: async (dataSourceId: string, importCsvRequest: ImportCsvRequest) => {
         try {
             return await authApiCall(async (sdk) => {
-                await sdk.result.importCsv({
-                    dataSourceId: dataSourceId,
-                    importCsvRequest: importCsvRequest,
-                });
+                return await sdk.result
+                    .importCsv({
+                        dataSourceId: dataSourceId,
+                        importCsvRequest: importCsvRequest,
+                    })
+                    .then((res) => {
+                        return res?.data;
+                    });
             });
         } catch (error: any) {
             throw convertApiError(error);
