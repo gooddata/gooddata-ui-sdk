@@ -91,7 +91,7 @@ export interface IAttributeFilterCoreProps {
     filter?: IAttributeFilter;
 
     /**
-     * Specifies a parent attribute filter that will be used to reduce options for for current attribute filter.
+     * Specifies a parent attribute filter that will be used to reduce options for current attribute filter.
      *
      * @remarks
      * Parent filters elements must contain their URIs due to current backend limitations.
