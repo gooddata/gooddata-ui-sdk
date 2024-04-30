@@ -86,6 +86,7 @@ export enum TigerFeaturesNames {
     EnableExperimentalFeaturesUI = "enableExperimentalFeaturesUI",
     EnableSingleStoreDataSource = "enableSingleStoreDataSource",
     EnableInvalidValuesInAttributeFilter = "enableInvalidValuesInAttributeFilter",
+    EnableDuplicatedLabelValuesInAttributeFilter = "enableDuplicatedLabelValuesInAttributeFilter",
 }
 
 export type ITigerFeatureFlags = {
@@ -136,6 +137,7 @@ export type ITigerFeatureFlags = {
     enableExperimentalFeaturesUI: typeof FeatureFlagsValues["enableExperimentalFeaturesUI"][number];
     enableSingleStoreDataSource: typeof FeatureFlagsValues["enableSingleStoreDataSource"][number];
     enableInvalidValuesInAttributeFilter: typeof FeatureFlagsValues["enableInvalidValuesInAttributeFilter"][number];
+    enableDuplicatedLabelValuesInAttributeFilter: typeof FeatureFlagsValues["enableDuplicatedLabelValuesInAttributeFilter"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -186,6 +188,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableExperimentalFeaturesUI: false,
     enableSingleStoreDataSource: false,
     enableInvalidValuesInAttributeFilter: false,
+    enableDuplicatedLabelValuesInAttributeFilter: false,
 };
 
 export const FeatureFlagsValues = {
@@ -240,4 +243,5 @@ export const FeatureFlagsValues = {
     enableExperimentalFeaturesUI: [true, false] as const,
     enableSingleStoreDataSource: [true, false] as const,
     enableInvalidValuesInAttributeFilter: [true, false] as const,
+    enableDuplicatedLabelValuesInAttributeFilter: [true, false] as const,
 };

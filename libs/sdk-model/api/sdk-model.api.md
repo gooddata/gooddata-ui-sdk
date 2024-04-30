@@ -2617,6 +2617,7 @@ export interface ISettings {
     enableDataSampling?: boolean;
     enableDescriptions?: boolean;
     enableDrilledInsightExport?: boolean;
+    enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     enableEmbedButtonInAD?: boolean;
     enableEmbedButtonInKD?: boolean;
     enableHidingOfDataPoints?: boolean;
