@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
@@ -25,8 +25,9 @@ export class Button extends React.Component<IButtonProps> {
     public buttonNode: HTMLElement;
 
     public render() {
-        const { id, tagName, title, value, tabIndex, type, iconLeft, iconRight } = this.props;
+        const { id, tagName, title, disabled, tabIndex, type, iconLeft, iconRight } = this.props;
         const TagName = tagName as any;
+        const effectiveValue = this.getEffectiveValue();
 
         return (
             <TagName
@@ -39,25 +40,39 @@ export class Button extends React.Component<IButtonProps> {
                 type={type}
                 onClick={this._onClick}
                 tabIndex={tabIndex}
+                aria-disabled={disabled}
+                aria-label={title}
+                role="button"
             >
                 {this.renderIcon(iconLeft)}
-                {value ? <span className="gd-button-text">{value}</span> : null}
+                {effectiveValue ? <span className="gd-button-text">{effectiveValue}</span> : null}
                 {this.renderIcon(iconRight)}
             </TagName>
         );
     }
 
-    private getClassnames() {
-        const { value } = this.props;
-        const generatedSeleniumClass =
-            value && typeof value === "string" ? `s-${stringUtils.simplifyText(value)}` : "";
+    private getEffectiveValue() {
+        return this.props.value ?? this.props.children;
+    }
 
-        return cx({
-            [this.props.className]: !!this.props.className,
-            [generatedSeleniumClass]: true,
-            ["gd-button"]: true,
-            disabled: this.props.disabled,
-        });
+    private getClassnames() {
+        const { className, variant, size, intent, disabled } = this.props;
+        const effectiveValue = this.getEffectiveValue();
+        const generatedSeleniumClass =
+            effectiveValue && typeof effectiveValue === "string"
+                ? `s-${stringUtils.simplifyText(effectiveValue)}`
+                : "";
+        return cx([
+            "gd-button",
+            generatedSeleniumClass,
+            className,
+            {
+                [`gd-button-${variant}`]: !!variant,
+                [`gd-button-${size}`]: !!size,
+                [`gd-button-${intent}`]: !!intent,
+                disabled: disabled,
+            },
+        ]);
     }
 
     private _onClick = (e: React.MouseEvent) => {

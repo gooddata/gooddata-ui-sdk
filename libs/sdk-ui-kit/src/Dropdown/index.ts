@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 export {
     Dropdown,
     IDropdownProps,
@@ -15,3 +15,4 @@ export {
     LOADING_HEIGHT,
 } from "./DropdownList.js";
 export { DropdownTabs, IDropdownTagsProps } from "./DropdownTabs.js";
+export { DropdownInvertableSelect, IDropdownInvertableSelectProps } from "./DropdownInvertableSelect.js";

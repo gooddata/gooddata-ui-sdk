@@ -300,6 +300,7 @@ function defaultSearchBar(props: IInvertableSelectRenderSearchBarProps): JSX.Ele
             searchPlaceholder={searchPlaceholder}
             onSearch={onSearch}
             searchString={searchString}
+            isSmall
         />
     );
 }
