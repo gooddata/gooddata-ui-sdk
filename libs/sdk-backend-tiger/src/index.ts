@@ -57,6 +57,7 @@ export {
     AnalyzeCsvRequest,
     AnalyzeCsvResponse,
     ImportCsvRequest,
+    ImportCsvResponse,
     GdStorageFile,
     UploadFileResponse,
     ReadFileManifestsResponse,
