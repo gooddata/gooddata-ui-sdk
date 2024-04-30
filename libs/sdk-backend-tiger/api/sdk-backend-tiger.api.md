@@ -278,6 +278,8 @@ export interface IInvitationUserResponse {
 
 export { ImportCsvRequest }
 
+export { ImportCsvResponse }
+
 // @alpha (undocumented)
 export const isTigerCompatibleType: (obj: unknown) => obj is TigerObjectType;
 
