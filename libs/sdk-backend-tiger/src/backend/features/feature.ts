@@ -338,6 +338,20 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableSingleStoreDataSource,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableInvalidValuesInAttributeFilter,
+            "enableInvalidValuesInAttributeFilter",
+            "BOOLEAN",
+            FeatureFlagsValues.enableInvalidValuesInAttributeFilter,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableDuplicatedLabelValuesInAttributeFilter,
+            "enableDuplicatedLabelValuesInAttributeFilter",
+            "BOOLEAN",
+            FeatureFlagsValues.enableDuplicatedLabelValuesInAttributeFilter,
+        ),
     };
 }
 

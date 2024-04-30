@@ -149,7 +149,6 @@ export interface IAttributeElementLoader {
      *
      * You can provide a correlation that will be included in the payload of all callbacks fired as a result of calling this method.
      *
-     * @param options - options to apply for the custom elements load
      * @param correlation - correlation that will be included in all callbacks fired by this method
      */
     loadIrrelevantElements(correlation?: Correlation): void;

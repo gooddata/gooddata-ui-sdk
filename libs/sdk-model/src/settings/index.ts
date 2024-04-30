@@ -362,6 +362,16 @@ export interface ISettings {
      */
     enableMultipleCSVs?: boolean;
 
+    /**
+     * Enable possibility to set non-existing value into attribute filter in AD and KD via postMessage.
+     */
+    enableInvalidValuesInAttributeFilter?: boolean;
+
+    /**
+     * Enable listing of the non-unique (duplicated) secondary label values in attribute filter.
+     */
+    enableDuplicatedLabelValuesInAttributeFilter?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 
