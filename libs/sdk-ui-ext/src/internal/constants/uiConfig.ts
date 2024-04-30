@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { IUiConfig } from "../interfaces/Visualization.js";
 
 import { METRIC, FACT, ATTRIBUTE, DATE, GEO_ATTRIBUTE } from "./bucket.js";
@@ -99,7 +99,9 @@ const enabledOpenAsReportConfig = {
 };
 
 export const defaultRootUiConfigProperties: Partial<IUiConfig> = {
-    recommendations: {},
+    recommendations: {
+        supportsFilteringRecommendation: true,
+    },
     supportedOverTimeComparisonTypes: [],
     ...disabledOpenAsReportConfig,
     ...enabledExportConfig,
@@ -507,6 +509,9 @@ export const DEFAULT_HEADLINE_UICONFIG: IUiConfig = {
         OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR,
         OverTimeComparisonTypes.PREVIOUS_PERIOD,
     ],
+    recommendations: {
+        supportsFilteringRecommendation: false,
+    },
 };
 
 export const DEFAULT_HEATMAP_UICONFIG: IUiConfig = {
@@ -728,6 +733,9 @@ export const GEO_PUSHPIN_CHART_UICONFIG: IUiConfig = {
     supportedLocationIcon: { supported: true },
     ...defaultRootUiConfigProperties,
     ...enabledNoMetricConfig,
+    recommendations: {
+        supportsFilteringRecommendation: false,
+    },
 };
 
 export const DEFAULT_SANKEY_UI_CONFIG: IUiConfig = {

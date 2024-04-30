@@ -29,6 +29,7 @@ exports[`ChartTransformation > Legend config > should be always disabled for sin
           "colorPalette": undefined,
         },
         "propertiesMeta": {
+          "isFilteringRecommended": false,
           "legend_enabled": false,
         },
       },
@@ -118,6 +119,7 @@ exports[`ChartTransformation > Legend config > should be enabled & on the top by
           "colorPalette": undefined,
         },
         "propertiesMeta": {
+          "isFilteringRecommended": false,
           "legend_enabled": true,
         },
       },

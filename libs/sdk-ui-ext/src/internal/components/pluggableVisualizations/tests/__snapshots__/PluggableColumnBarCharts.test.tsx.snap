@@ -120,6 +120,7 @@ exports[`PluggableColumnBarCharts > optional stacking > should cut out measures 
       "overTimeComparison": false,
       "percent": false,
       "previousPeriod": false,
+      "supportsFilteringRecommendation": true,
       "trending": true,
     },
     "supportedOverTimeComparisonTypes": [
@@ -329,6 +330,7 @@ exports[`PluggableColumnBarCharts > optional stacking > should place third attri
       "overTimeComparison": false,
       "percent": false,
       "previousPeriod": false,
+      "supportsFilteringRecommendation": true,
       "trending": false,
     },
     "supportedOverTimeComparisonTypes": [
@@ -468,6 +470,7 @@ exports[`PluggableColumnBarCharts > optional stacking > should return reference 
       "overTimeComparison": false,
       "percent": false,
       "previousPeriod": false,
+      "supportsFilteringRecommendation": true,
       "trending": false,
     },
     "supportedOverTimeComparisonTypes": [
@@ -686,6 +689,7 @@ exports[`PluggableColumnBarCharts > optional stacking > should reuse all measure
       "overTimeComparison": false,
       "percent": false,
       "previousPeriod": false,
+      "supportsFilteringRecommendation": true,
       "trending": false,
     },
     "supportedOverTimeComparisonTypes": [
@@ -895,6 +899,7 @@ exports[`PluggableColumnBarCharts > optional stacking > should reuse one measure
       "overTimeComparison": false,
       "percent": false,
       "previousPeriod": false,
+      "supportsFilteringRecommendation": true,
       "trending": false,
     },
     "supportedOverTimeComparisonTypes": [

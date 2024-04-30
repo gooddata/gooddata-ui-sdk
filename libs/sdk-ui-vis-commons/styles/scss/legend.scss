@@ -1,11 +1,10 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 @use "sass:color";
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/_variables" as button-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/Bubble/_variables" as bubble-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins";
 
-$legend-paging-background: #eee;
 $legend-right-width: 190px;
 $paging-button-small-size: 22px;
 $responsive-legend: "only screen and (max-width: 767px)";
@@ -103,7 +102,7 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
 
             @include mixins.active-states-and-self {
                 text-decoration: none;
-                background-color: var(--gd-palette-complementary-2, $legend-paging-background);
+                background-color: var(--gd-palette-complementary-2, $dialog-background);
 
                 // refactor?
                 // stylelint-disable-next-line max-nesting-depth
@@ -126,7 +125,7 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
                 @include mixins.active-states-and-self {
                     background-color: var(
                         --gd-palette-complementary-1,
-                        color.adjust($legend-paging-background, $alpha: -0.5)
+                        color.adjust(kit-variables.$default-is-focused-background, $alpha: -0.5)
                     );
 
                     // refactor?
@@ -453,10 +452,9 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
 
     &:hover,
     &.legend-popup-icon-active {
-        background-color: kit-variables.$gd-color-state-blank;
+        background-color: kit-variables.$gd-color-disabled;
 
-        // stylelint-disable-next-line selector-max-id
-        #LegendIcoContent {
+        .LegendMenuContent {
             fill: kit-variables.$gd-color-white;
         }
     }
@@ -517,16 +515,29 @@ $legend-content-background: var(--gd-chart-backgroundColor, var(--gd-palette-com
     flex-direction: column;
 
     .legend-header {
-        flex: 0 0 auto;
+        height: 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         margin: 0 15px;
+
         .legend-header-title {
             font-family: kit-variables.$gd-font-primary;
-            height: 100%;
-            line-height: 40px;
             color: kit-variables.$gd-color-label;
             font-size: 12px;
         }
+
+        .legend-close.gd-icon-cross.gd-button-link.gd-button-icon-only {
+            right: 0;
+            width: 12px;
+            position: relative;
+        }
+
+        .legend-close.gd-icon-cross.gd-button-link.gd-button-icon-only::before {
+            font-size: 12px;
+        }
     }
+
     .legend-content {
         flex: 1 1 auto;
         background-color: $legend-content-background;
