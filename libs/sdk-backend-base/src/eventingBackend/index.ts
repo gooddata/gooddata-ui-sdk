@@ -1,11 +1,13 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { v4 as uuid } from "uuid";
 import {
     IAnalyticalBackend,
     IDataView,
     IExecutionResult,
+    IForecastResult,
     IPreparedExecution,
+    IForecastConfig,
 } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 
@@ -74,6 +76,24 @@ class WithExecutionResultEventing extends DecoratedExecutionResult {
                 throw e;
             });
     };
+
+    public readForecastAll(config: IForecastConfig): Promise<IForecastResult> {
+        const { successfulForecastResultReadAll, failedForecastResultReadAll } = this.callbacks;
+
+        const promisedDataView = super.readForecastAll(config);
+
+        return promisedDataView
+            .then((res) => {
+                successfulForecastResultReadAll?.(res, this.executionId);
+
+                return res;
+            })
+            .catch((e) => {
+                failedForecastResultReadAll?.(e, this.executionId);
+
+                throw e;
+            });
+    }
 
     public readWindow = (offset: number[], size: number[]): Promise<IDataView> => {
         const { successfulResultReadWindow, failedResultReadWindow } = this.callbacks;
@@ -166,6 +186,22 @@ export type AnalyticalBackendCallbacks = {
      * @param executionId - unique ID assigned to each execution that can be used to correlate individual events that "belong" to the same execution
      */
     failedResultReadWindow?: (offset: number[], size: number[], error: any, executionId: string) => void;
+
+    /**
+     * Called success when forecast results read
+     *
+     * @param forecastResult - forecast result
+     * @param executionId - unique ID assigned to each execution that can be used to correlate individual events that "belong" to the same execution
+     */
+    successfulForecastResultReadAll?: (forecastResult: IForecastResult, executionId: string) => void;
+
+    /**
+     * Called when forecast results read failed
+     *
+     * @param error - error from the underlying backend, contractually this should be an instance of AnalyticalBackendError
+     * @param executionId - unique ID assigned to each execution that can be used to correlate individual events that "belong" to the same execution
+     */
+    failedForecastResultReadAll?: (error: any, executionId: string) => void;
 };
 
 /**

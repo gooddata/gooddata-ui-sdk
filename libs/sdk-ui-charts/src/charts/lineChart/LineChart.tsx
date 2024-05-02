@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React from "react";
 import {
     IAttribute,
@@ -22,6 +22,7 @@ import { IBucketChartProps } from "../../interfaces/index.js";
 import { CoreLineChart } from "./CoreLineChart.js";
 import { IChartDefinition } from "../_commons/chartDefinition.js";
 import { withChart } from "../_base/withChart.js";
+import { IForecastConfig } from "@gooddata/sdk-backend-spi";
 
 //
 // Internals
@@ -105,7 +106,13 @@ export interface ILineChartBucketProps {
 /**
  * @public
  */
-export interface ILineChartProps extends IBucketChartProps, ILineChartBucketProps {}
+export interface ILineChartProps extends IBucketChartProps, ILineChartBucketProps {
+    /**
+     * Enter the forecast configuration to apply to the chart data.
+     * @beta
+     */
+    forecastConfig?: IForecastConfig;
+}
 
 const WrappedLineChart = withChart(lineChartDefinition)(CoreLineChart);
 

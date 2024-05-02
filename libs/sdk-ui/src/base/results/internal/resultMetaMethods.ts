@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import flatMap from "lodash/flatMap.js";
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import {
@@ -238,14 +238,31 @@ class ResultMetaMethods implements IResultMetaMethods {
     }
 
     public allHeaders(): IResultHeader[][][] {
-        return this.dataView.headerItems;
+        const data = this.dataView.forecast();
+        return this.dataView.headerItems.map((dimension: IResultHeader[][], dim) => {
+            const forecastHeaders = (data.headerItems[dim]?.filter((headerList) =>
+                isResultAttributeHeader(headerList[0]),
+            ) ?? []) as IResultAttributeHeader[][];
+            return dimension.map((normalHeader, idx) => {
+                return [...normalHeader, ...(forecastHeaders[idx] ?? [])];
+            }) as IResultHeader[][];
+        });
     }
 
     public attributeHeaders(): IResultAttributeHeader[][][] {
-        return this.dataView.headerItems.map((dimension: IResultHeader[][]) => {
-            return dimension.filter((headerList) =>
+        const data = this.dataView.forecast();
+        return this.dataView.headerItems.map((dimension: IResultHeader[][], dim) => {
+            const normalHeaders = dimension.filter((headerList) =>
                 isResultAttributeHeader(headerList[0]),
             ) as IResultAttributeHeader[][];
+
+            const forecastHeaders = (data.headerItems[dim]?.filter((headerList) =>
+                isResultAttributeHeader(headerList[0]),
+            ) ?? []) as IResultAttributeHeader[][];
+
+            return normalHeaders.map((normalHeader, idx) => {
+                return [...normalHeader, ...(forecastHeaders[idx] ?? [])];
+            }) as IResultAttributeHeader[][];
         });
     }
 
@@ -254,9 +271,18 @@ class ResultMetaMethods implements IResultMetaMethods {
             return [];
         }
 
-        return this.dataView.headerItems[dim].filter((headerList) =>
+        const data = this.dataView.forecast();
+        const normalHeaders = this.dataView.headerItems[dim].filter((headerList) =>
             isResultAttributeHeader(headerList[0]),
         ) as IResultAttributeHeader[][];
+
+        const forecastHeaders = (data.headerItems[dim]?.filter((headerList) =>
+            isResultAttributeHeader(headerList[0]),
+        ) ?? []) as IResultAttributeHeader[][];
+
+        return normalHeaders.map((normalHeader, idx) => {
+            return [...normalHeader, ...(forecastHeaders[idx] ?? [])];
+        }) as IResultAttributeHeader[][];
     }
 
     public isDerivedMeasure(measureDescriptor: IMeasureDescriptor): boolean {

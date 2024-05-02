@@ -10,7 +10,7 @@ import { messages } from "../../../../locales.js";
 
 export interface IForecastConfidenceControl {
     disabled: boolean;
-    value: string;
+    value: number;
     showDisabledMessage: boolean;
     properties: IVisualizationProperties;
     pushData: (data: any) => any;

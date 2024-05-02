@@ -16,6 +16,13 @@ import { AttributeDisplayFormType } from "../../ldm/metadata/attributeDisplayFor
 export type DataValue = null | string | number;
 
 /**
+ * Forecast single data value
+ *
+ * @beta
+ */
+export type ForecastDataValue = { low: DataValue; high: DataValue; prediction: DataValue };
+
+/**
  * Descriptor of the measure and its contents.
  *
  * @public

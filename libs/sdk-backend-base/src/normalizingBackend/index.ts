@@ -1,8 +1,9 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 
 import {
     IAnalyticalBackend,
     IDataView,
+    IForecastView,
     IExecutionFactory,
     IExecutionResult,
     IExportConfig,
@@ -11,6 +12,8 @@ import {
     NotSupported,
     isNoDataError,
     NoDataError,
+    IForecastResult,
+    IForecastConfig,
 } from "@gooddata/sdk-backend-spi";
 import { decoratedBackend } from "../decoratedBackend/index.js";
 import { DecoratedExecutionFactory, DecoratedPreparedExecution } from "../decoratedBackend/execution.js";
@@ -151,6 +154,10 @@ class DenormalizingExecutionResult implements IExecutionResult {
             .catch(this.handleDataViewError);
     };
 
+    public readForecastAll(config: IForecastConfig): Promise<IForecastResult> {
+        return this.normalizedResult.readForecastAll(config);
+    }
+
     public equals = (other: IExecutionResult): boolean => {
         return this._fingerprint === other.fingerprint();
     };
@@ -181,6 +188,8 @@ class DenormalizingExecutionResult implements IExecutionResult {
 class DenormalizedDataView implements IDataView {
     public readonly definition: IExecutionDefinition;
     public readonly result: IExecutionResult;
+    public readonly forecastConfig?: IForecastConfig;
+    public readonly forecastResult?: IForecastResult;
 
     public readonly data: DataValue[][] | DataValue[];
     public readonly headerItems: IResultHeader[][][];
@@ -191,13 +200,21 @@ class DenormalizedDataView implements IDataView {
     public readonly totalTotals: DataValue[][][] | undefined;
 
     private readonly _fingerprint: string;
+    private readonly _denormalizer: Denormalizer;
 
     constructor(
         result: DenormalizingExecutionResult,
         private readonly normalizedDataView: IDataView,
         denormalizer: Denormalizer,
+        forecastConfig?: IForecastConfig,
+        forecastResult?: IForecastResult,
     ) {
+        this._denormalizer = denormalizer;
+
         this.result = result;
+        this.forecastConfig = forecastConfig;
+        this.forecastResult = forecastResult;
+
         this.definition = this.result.definition;
         this.count = cloneDeep(this.normalizedDataView.count);
         this.data = cloneDeep(this.normalizedDataView.data);
@@ -217,6 +234,25 @@ class DenormalizedDataView implements IDataView {
     public fingerprint = (): string => {
         return this._fingerprint;
     };
+
+    public forecast(): IForecastView {
+        const data = this.normalizedDataView.forecast();
+
+        return {
+            ...data,
+            headerItems: this._denormalizer.denormalizeHeaders(data.headerItems),
+        };
+    }
+
+    public withForecast(config: IForecastConfig, result: IForecastResult): IDataView {
+        return new DenormalizedDataView(
+            this.result as DenormalizingExecutionResult,
+            this.normalizedDataView.withForecast(config, result),
+            this._denormalizer,
+            config,
+            result,
+        );
+    }
 }
 
 /**

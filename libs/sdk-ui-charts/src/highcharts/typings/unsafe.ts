@@ -298,14 +298,3 @@ export interface IAxis {
     opposite?: boolean;
     seriesIndices?: number[];
 }
-
-export interface IForecastData {
-    dispersion: {
-        name: string;
-        data: [any, any][];
-    };
-    forecast: {
-        data: any[];
-    };
-    categories: any[];
-}

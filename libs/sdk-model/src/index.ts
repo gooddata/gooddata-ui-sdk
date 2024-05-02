@@ -779,6 +779,7 @@ export { IWorkspacePermissions, WorkspacePermission } from "./permissions/index.
 
 export {
     DataValue,
+    ForecastDataValue,
     IMeasureDescriptor,
     IMeasureDescriptorObject,
     IMeasureDescriptorItem,

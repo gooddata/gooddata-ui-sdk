@@ -1,6 +1,7 @@
 // (C) 2007-2024 GoodData Corporation
 
 export {
+    IForecast,
     IChartConfig,
     PositionType,
     ILegendConfig,

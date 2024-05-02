@@ -1,14 +1,9 @@
 // (C) 2019-2024 GoodData Corporation
 import React from "react";
 import noop from "lodash/noop.js";
-import { ChartType, DefaultLocale, BucketNames } from "@gooddata/sdk-ui";
-import {
-    IInsightDefinition,
-    ISettings,
-    insightHasMeasures,
-    insightBuckets,
-    bucketsFind,
-} from "@gooddata/sdk-model";
+import { ChartType, DefaultLocale } from "@gooddata/sdk-ui";
+import { isForecastEnabled } from "@gooddata/sdk-ui-charts";
+import { IInsightDefinition, ISettings, insightHasMeasures } from "@gooddata/sdk-model";
 
 import {
     IReferences,
@@ -134,25 +129,19 @@ export default abstract class ConfigurationPanelContent<
             return null;
         }
 
-        //line chart only now
-        if (type === "line") {
-            const buckets = insightBuckets(insight);
-            const measures = bucketsFind(buckets, (b) => b.localIdentifier === BucketNames.MEASURES);
-            const trends = bucketsFind(buckets, (b) => b.localIdentifier === BucketNames.TREND);
-            //TODO: check if the trend is date attribute somehow
-            const enabled = measures?.items.length === 1 && trends?.items.length === 1;
-
-            return (
-                <ForecastSection
-                    controlsDisabled={this.isControlDisabled()}
-                    properties={properties}
-                    propertiesMeta={propertiesMeta}
-                    enabled={enabled}
-                    pushData={pushData}
-                />
-            );
+        const { enabled, visible } = isForecastEnabled(insight, type);
+        if (!visible) {
+            return null;
         }
 
-        return null;
+        return (
+            <ForecastSection
+                controlsDisabled={this.isControlDisabled()}
+                properties={properties}
+                propertiesMeta={propertiesMeta}
+                enabled={enabled}
+                pushData={pushData}
+            />
+        );
     }
 }

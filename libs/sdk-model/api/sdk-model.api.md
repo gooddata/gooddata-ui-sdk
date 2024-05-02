@@ -484,6 +484,13 @@ export function filterObjRef(filter: IAbsoluteDateFilter | IRelativeDateFilter |
 // @public
 export function filterObjRef(filter: IFilter): ObjRef | undefined;
 
+// @beta
+export type ForecastDataValue = {
+    low: DataValue;
+    high: DataValue;
+    prediction: DataValue;
+};
+
 // @internal
 export function getAttributeElementsItems(attributeElements: IAttributeElements): Array<string | null>;
 

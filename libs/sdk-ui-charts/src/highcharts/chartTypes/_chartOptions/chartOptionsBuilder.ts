@@ -459,23 +459,7 @@ export function getChartOptions(
     }
 
     //Forecast
-    const forecastedData = assignForecastAxes(type, categories, series, {
-        dispersion: {
-            data: [
-                [865190, 905190],
-                [402595, 482595],
-                [161297, 281297],
-                [30648, 190648],
-            ],
-            name: "Dispersion",
-        },
-        forecast: {
-            data: [885190, 442595, 221297, 110648],
-        },
-        categories: ["2026", "2027", "2028", "2029"],
-    });
-    series = forecastedData.series;
-    categories = forecastedData.categories;
+    series = assignForecastAxes(type, series, dv.rawData().forecastTwoDimData());
 
     const colorAssignments = colorStrategy.getColorAssignment();
     const { colorPalette } = config;

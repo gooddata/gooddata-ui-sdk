@@ -1,6 +1,6 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { IDataView } from "@gooddata/sdk-backend-spi";
-import { DataValue } from "@gooddata/sdk-model";
+import { DataValue, ForecastDataValue } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import isArray from "lodash/isArray.js";
 
@@ -57,6 +57,15 @@ export interface IResultDataMethods {
      * @returns two dimensional data; if data is empty, returns array with single empty array in
      */
     twoDimData(): DataValue[][];
+
+    /**
+     * This is a convenience method that determines whether the data in the data view is two dimension; if it
+     * is then data is returned as-is. If the data is single dimension, this method will up-cast the data to
+     * two dimensions.
+     *
+     * @returns two dimensional data; if data is empty, returns array with single empty array in
+     */
+    forecastTwoDimData(): ForecastDataValue[][];
 
     /**
      * @returns grand totals in the data view, undefined if there are no grand totals
@@ -154,6 +163,28 @@ class ResultDataMethods implements IResultDataMethods {
         }
 
         return isArray(e) ? (d as DataValue[][]) : ([d] as DataValue[][]);
+    }
+
+    public forecastTwoDimData(): ForecastDataValue[][] {
+        const { prediction, low, high } = this.dataView.forecast();
+
+        if (prediction === null) {
+            return [];
+        }
+
+        const e = prediction[0];
+
+        if (!e) {
+            return [];
+        }
+
+        return prediction.map((p, id) =>
+            p.map((_, ii) => ({
+                prediction: prediction[id][ii],
+                low: low[id][ii],
+                high: high[id][ii],
+            })),
+        );
     }
 
     public totals(): DataValue[][][] | undefined {

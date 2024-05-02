@@ -31,10 +31,13 @@ export {
     IPreparedExecution,
     IExecutionResult,
     IDataView,
+    IForecastView,
     ExplainConfig,
     IExplainResult,
     IExplainProvider,
     ExplainType,
+    IForecastResult,
+    IForecastConfig,
 } from "./workspace/execution/index.js";
 
 export { IWorkspaceSettingsService } from "./workspace/settings/index.js";

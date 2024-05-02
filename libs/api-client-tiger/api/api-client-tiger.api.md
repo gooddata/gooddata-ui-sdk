@@ -6819,6 +6819,8 @@ export interface ITigerClient {
     explain: ReturnType<typeof tigerAfmExplainClientFactory>;
     // (undocumented)
     export: ReturnType<typeof tigerExportClientFactory>;
+    // @beta (undocumented)
+    forecast: ReturnType<typeof tigerForecastClientFactory>;
     // (undocumented)
     labelElements: ReturnType<typeof tigerLabelElementsClientFactory>;
     // (undocumented)
@@ -14188,6 +14190,9 @@ export const tigerExecutionResultClientFactory: (axios: AxiosInstance) => Pick<A
 
 // @public (undocumented)
 export const tigerExportClientFactory: (axios: AxiosInstance) => ExportActionsApiInterface;
+
+// @beta
+export const tigerForecastClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "forecast" | "forecastResult">;
 
 // @public (undocumented)
 export const tigerLabelElementsClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "computeLabelElementsPost">;

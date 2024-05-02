@@ -266,6 +266,7 @@ export class HighChartsRenderer extends React.PureComponent<
         if (isFunnel(chart.type)) {
             items = this.skipLeadingZeros(items).filter((i) => !isNil(i.y));
         }
+
         const updatedItems = items.map((item: any) => {
             const itemIndex = item.legendIndex;
             const visible =

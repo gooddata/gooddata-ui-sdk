@@ -1,4 +1,4 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import {
@@ -21,7 +21,7 @@ export interface IDropdownControlProps {
     valuePath: string;
     properties: IVisualizationProperties;
     labelText?: string;
-    value?: string;
+    value?: string | number;
     items?: IDropdownItem[];
     disabled?: boolean;
     width?: number;
@@ -141,7 +141,7 @@ class DropdownControl extends React.PureComponent<IDropdownControlProps & Wrappe
         pushData({ properties: clonedProperties });
     }
 
-    private getSelectedItem(value: string): IDropdownItem {
+    private getSelectedItem(value: string | number): IDropdownItem {
         if (this.props.items) {
             return this.props.items.find((item) => item.value === value);
         }
