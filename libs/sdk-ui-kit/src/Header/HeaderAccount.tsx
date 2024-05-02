@@ -1,9 +1,10 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React, { PureComponent, ReactNode } from "react";
 import cx from "classnames";
 import { injectIntl, FormattedMessage, WrappedComponentProps } from "react-intl";
 
 import { Overlay } from "../Overlay/index.js";
+import { Button } from "../Button/index.js";
 
 import { IHeaderAccountState, IHeaderMenuItem, IHeaderAccountProps } from "./typings.js";
 
@@ -26,7 +27,7 @@ class WrappedHeaderAccount extends PureComponent<
     }
 
     getClassNames(): string {
-        return cx({
+        return cx("gd-header-button", {
             "gd-header-account": true,
             "is-open": this.state.isOpen,
             [this.props.className]: !!this.props.className,
@@ -92,12 +93,15 @@ class WrappedHeaderAccount extends PureComponent<
 
     render(): ReactNode {
         return (
-            <div className={this.getClassNames()} onClick={this.toggleAccountMenuHandler}>
+            <Button
+                className={this.getClassNames()}
+                onClick={this.toggleAccountMenuHandler}
+                title={this.props.intl.formatMessage({ id: "gs.header.account.title" })}
+            >
                 <span className="gd-header-account-icon gd-icon-user" />
                 <span className="gd-header-account-user">{this.props.userName}</span>
-
                 {this.renderAccountMenu()}
-            </div>
+            </Button>
         );
     }
 }
