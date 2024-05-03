@@ -52,5 +52,13 @@
             "fileName": "KD has null value.pdf",
             "contents": "Region\n(empty value)\nProductMetric has null value_Snapshot [EOP]_Timeline [EOP]\nPhoenixSoft1,45941,054.0044,195\nAD has null value\nKD has null value"
         }
+    ],
+    "insightsManyData": [
+        {
+            "dashboardTitle": "KD with many data insight",
+            "dashboardURL": "dashboard/manydata",
+            "fileName": "KD with many data insight.pdf",
+            "contents": "Hyland Software"
+        }
     ]
 }
