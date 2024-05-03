@@ -76,4 +76,23 @@ describe("Export dashboard to pdf", { tags: ["checklist_integrated_tiger_export"
             });
         },
     );
+
+    it("should export insight over data points limit to PDF from dashboards", () => {
+        cy.fixture("dashboardInfosForExport").then((data) => {
+            data["insightsManyData"].forEach(
+                (dashboardInfo: {
+                    dashboardTitle: string;
+                    dashboardURL: string;
+                    fileName: string;
+                    contents: string;
+                }) => {
+                    Navigation.visit(dashboardInfo.dashboardURL);
+                    widget.waitChartLoaded();
+                    topBar.dashboardTitleExist().dashboardTitleHasValue(dashboardInfo.dashboardTitle);
+                    dashboardMenu.toggle().clickOption("Export to PDF");
+                    exportControl.expectExportedPDF(dashboardInfo.fileName, dashboardInfo.contents);
+                },
+            );
+        });
+    });
 });
