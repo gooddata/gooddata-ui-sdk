@@ -96,7 +96,7 @@ export function useDependentDateFiltersConfiguration(
                 .filter((filter) => filter.isSelected)
                 .map((filter) => ({
                     filterLocalIdentifier: filter.localIdentifier,
-                    isCommonDate: !!filter.isCommonDate,
+                    isCommonDate: filter.isCommonDate,
                 }));
 
             saveDependentDateFilterCommand(currentFilter.attributeFilter.localIdentifier!, dateFilters);
