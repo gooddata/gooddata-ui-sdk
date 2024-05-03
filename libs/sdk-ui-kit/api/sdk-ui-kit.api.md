@@ -191,7 +191,6 @@ export class Button extends React_2.Component<IButtonProps> {
         tagName: string;
         title: string;
         type: string;
-        value: string;
         iconLeft: string;
         iconRight: string;
     };
@@ -1035,6 +1034,8 @@ export interface IBucketItemDescriptors {
 
 // @internal (undocumented)
 export interface IButtonProps {
+    // (undocumented)
+    ariaLabel?: string;
     // (undocumented)
     children?: ReactNode;
     // (undocumented)

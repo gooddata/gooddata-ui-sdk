@@ -21,4 +21,5 @@ export interface IButtonProps {
     variant?: "primary" | "secondary";
     intent?: "action" | "positive" | "negative";
     size?: "small" | "medium" | "large";
+    ariaLabel?: string;
 }
