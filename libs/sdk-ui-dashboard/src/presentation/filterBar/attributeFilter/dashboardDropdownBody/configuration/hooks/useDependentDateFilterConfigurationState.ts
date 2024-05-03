@@ -22,8 +22,7 @@ export function useDependentDateFilterConfigurationState(
 
             const isSelected =
                 filterElementsByDate?.some(
-                    (by) =>
-                        by.filterLocalIdentifier === neighborLocalId?.identifier && by.isCommonDate === false,
+                    (by) => by.filterLocalIdentifier === neighborLocalId?.identifier && !by.isCommonDate,
                 ) || false;
 
             invariant(
@@ -48,7 +47,7 @@ export function useDependentDateFilterConfigurationState(
         const commonDate = parseCommonDateFilter(commonDateFilter);
 
         return (filterElementsByDate ?? [])
-            .filter((parent) => !!parent.isCommonDate)
+            .filter((parent) => parent.isCommonDate)
             .map((parent) => ({
                 localIdentifier: parent.filterLocalIdentifier,
                 isSelected: true,
