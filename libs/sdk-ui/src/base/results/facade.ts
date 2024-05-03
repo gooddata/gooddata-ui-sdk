@@ -1,6 +1,12 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { defFingerprint, IExecutionDefinition, IResultWarning } from "@gooddata/sdk-model";
-import { IDataView, IExecutionResult } from "@gooddata/sdk-backend-spi";
+import {
+    IDataView,
+    IExecutionResult,
+    IForecastConfig,
+    IForecastResult,
+    IForecastView,
+} from "@gooddata/sdk-backend-spi";
 import { DataAccessConfig } from "./dataAccessConfig.js";
 import { IExecutionDefinitionMethods, newExecutionDefinitonMethods } from "./internal/definitionMethods.js";
 import { IResultMetaMethods, newResultMetaMethods } from "./internal/resultMetaMethods.js";
@@ -159,16 +165,24 @@ export class DataViewFacade {
  * Constructs an empty data view with given execution result.
  *
  * @param result - execution result
+ * @param forecastConfig - forecast configuration
+ * @param forecastResult - forecast result
  * @returns data view
  * @public
  */
-export function emptyDataViewForResult(result: IExecutionResult): IDataView {
+export function emptyDataViewForResult(
+    result: IExecutionResult,
+    forecastConfig?: IForecastConfig,
+    forecastResult?: IForecastResult,
+): IDataView {
     const { definition } = result;
     const fp = defFingerprint(definition) + "/emptyView";
 
     return {
         definition,
         result,
+        forecastConfig,
+        forecastResult,
         headerItems: [],
         data: [],
         offset: [0, 0],
@@ -179,6 +193,17 @@ export function emptyDataViewForResult(result: IExecutionResult): IDataView {
         },
         equals(other: IDataView): boolean {
             return fp === other.fingerprint();
+        },
+        withForecast(forecastConfig: IForecastConfig, forecastResult: IForecastResult): IDataView {
+            return emptyDataViewForResult(result, forecastConfig, forecastResult);
+        },
+        forecast(): IForecastView {
+            return {
+                headerItems: [],
+                high: [],
+                low: [],
+                prediction: [],
+            };
         },
     };
 }

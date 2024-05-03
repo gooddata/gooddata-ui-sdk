@@ -1,8 +1,9 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 import {
     IDataView,
     IExecutionResult,
+    IForecastConfig,
     IPreparedExecution,
     isNoDataError,
     isUnexpectedResponseError,
@@ -12,6 +13,7 @@ import React from "react";
 import { injectIntl, IntlShape } from "react-intl";
 import noop from "lodash/noop.js";
 import omit from "lodash/omit.js";
+import isEqual from "lodash/isEqual.js";
 
 import { IExportFunction, ILoadingState } from "../../vis/Events.js";
 import {
@@ -114,7 +116,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
         }
 
         public componentDidMount() {
-            this.initDataLoading(this.props.execution);
+            this.initDataLoading(this.props.execution, this.props.forecastConfig);
         }
 
         public render() {
@@ -139,8 +141,11 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
 
         public UNSAFE_componentWillReceiveProps(nextProps: Readonly<T & ILoadingInjectedProps>) {
             //  we need strict equality here in case only the buckets changed (not measures or attributes)
-            if (!this.props.execution.equals(nextProps.execution)) {
-                this.initDataLoading(nextProps.execution);
+            if (
+                !this.props.execution.equals(nextProps.execution) ||
+                !isEqual(this.props.forecastConfig, nextProps.forecastConfig)
+            ) {
+                this.initDataLoading(nextProps.execution, nextProps.forecastConfig);
             }
         }
 
@@ -187,7 +192,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
             this.onError(new NegativeValuesSdkError());
         }
 
-        private async initDataLoading(execution: IPreparedExecution) {
+        private async initDataLoading(execution: IPreparedExecution, forecastConfig?: IForecastConfig) {
             const { onExportReady, pushData, exportTitle } = this.props;
             this.onLoadingChanged({ isLoading: true });
             this.setState({ dataView: null });
@@ -242,6 +247,26 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                     const availableDrillTargets = getAvailableDrillTargets(DataViewFacade.for(dataView));
 
                     pushData({ dataView, availableDrillTargets });
+                }
+
+                if (this.hasUnmounted) {
+                    return;
+                }
+
+                if (forecastConfig) {
+                    const normalizedForecastConfig = {
+                        ...forecastConfig,
+                        forecastPeriod: Math.min(
+                            forecastConfig.forecastPeriod,
+                            Math.max((dataView.count[1] ?? 0) - 1, 0),
+                        ),
+                    };
+                    const forecastResult = await executionResult.readForecastAll(normalizedForecastConfig);
+                    const updatedDataView = dataView.withForecast(normalizedForecastConfig, forecastResult);
+                    this.setState((s) => ({ ...s, dataView: updatedDataView }));
+                    if (pushData) {
+                        pushData({ dataView: updatedDataView });
+                    }
                 }
             } catch (error) {
                 if (this.lastInitRequestFingerprint !== defFingerprint(execution.definition)) {

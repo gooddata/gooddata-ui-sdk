@@ -22,7 +22,7 @@ import {
     createWaterfallLegendItems,
 } from "./legendHelpers.js";
 import { supportedDualAxesChartTypes } from "../chartTypes/_chartOptions/chartCapabilities.js";
-import { IChartOptions, ISeriesNodeItem } from "../typings/unsafe.js";
+import { IChartOptions, ISeriesNodeItem, ISeriesItem } from "../typings/unsafe.js";
 import {
     LegendOptionsItemType,
     ILegendOptions,
@@ -39,10 +39,16 @@ function isHeatmapWithMultipleValues(chartOptions: IChartOptions) {
 }
 
 export function shouldLegendBeEnabled(chartOptions: IChartOptions): boolean {
-    const seriesLength = chartOptions?.data?.series?.length;
+    const legendItemsLength = chartOptions?.data?.series?.reduce<number[]>((prev, cur: ISeriesItem) => {
+        if (prev.includes(cur.legendIndex)) {
+            return prev;
+        }
+        return [...prev, cur.legendIndex];
+    }, []).length;
+
     const { type, hasStackByAttribute, hasViewByAttribute } = chartOptions;
 
-    const hasMoreThanOneSeries = seriesLength > 1;
+    const hasMoreThanOneLegend = legendItemsLength > 1;
     const isLineChartStacked = isLineChart(type) && hasStackByAttribute;
     const isStacked = isStackedChart(chartOptions);
     const sliceTypes = [
@@ -63,7 +69,7 @@ export function shouldLegendBeEnabled(chartOptions: IChartOptions): boolean {
     const isWaterfallChart = isWaterfall(type);
 
     return (
-        hasMoreThanOneSeries ||
+        hasMoreThanOneLegend ||
         isSliceChartWithViewByAttributeOrMultipleMeasures ||
         isStacked ||
         isLineChartStacked ||

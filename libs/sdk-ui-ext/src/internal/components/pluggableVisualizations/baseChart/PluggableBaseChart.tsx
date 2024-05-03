@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { IBackendCapabilities, IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
     IColorMappingItem,
@@ -16,6 +16,8 @@ import {
     IChartConfig,
     IColorMapping,
     updateConfigWithSettings,
+    updateForecastWithSettings,
+    isForecastEnabled,
 } from "@gooddata/sdk-ui-charts";
 import React from "react";
 import compact from "lodash/compact.js";
@@ -275,6 +277,11 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
                 height={resultingHeight}
                 type={this.type}
                 locale={locale}
+                forecastConfig={updateForecastWithSettings(
+                    fullConfig,
+                    this.featureFlags,
+                    isForecastEnabled(insight, this.type),
+                )}
                 config={updateConfigWithSettings(fullConfig, this.featureFlags)}
                 LoadingComponent={null}
                 ErrorComponent={null}

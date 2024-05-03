@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import {
     DateAttributeGranularity,
     IDimensionDescriptor,
@@ -28,6 +28,7 @@ import {
 import { createDateValueFormatter } from "../dateFormatting/dateValueFormatter.js";
 import { toSdkGranularity } from "../dateGranularityConversions.js";
 import { FormattingLocale } from "../dateFormatting/defaultDateFormatter.js";
+import { IForecastConfig, IForecastResult } from "@gooddata/sdk-backend-spi";
 
 type DateAttributeFormatProps = {
     granularity: DateAttributeGranularity;
@@ -203,6 +204,63 @@ export function getTransformDimensionHeaders(
                 return [...baseHeaders, ...appendedHeaders];
             });
         });
+}
+
+export function getTransformForecastHeaders(
+    dimensions: IDimensionDescriptor[],
+    dateFormatter: DateFormatter,
+    forecastConfig?: IForecastConfig,
+): (
+    dimensionHeaders: DimensionHeader[],
+    forecastResults: IForecastResult | undefined,
+) => IResultHeader[][][] {
+    if (!forecastConfig) {
+        return () => [];
+    }
+
+    const dateValueFormatter = createDateValueFormatter(dateFormatter);
+
+    return (dimensionHeaders: DimensionHeader[], forecastResults: IForecastResult | undefined) => {
+        let used = false;
+        return dimensionHeaders.map((dimensionHeader, dimensionIndex) => {
+            if (!forecastResults) {
+                return [];
+            }
+            return dimensionHeader.headerGroups.map((headerGroup, headerGroupIndex) => {
+                const dateFormatProps = getDateFormatProps(
+                    dimensions[dimensionIndex].headers[headerGroupIndex],
+                );
+
+                if (
+                    !used &&
+                    headerGroup.headers.length > 1 &&
+                    isResultAttributeHeader(headerGroup.headers[0])
+                ) {
+                    used = true;
+
+                    const length = forecastResults.attribute.length;
+                    const data = forecastResults.attribute.slice(
+                        length - forecastConfig.forecastPeriod,
+                        length,
+                    );
+                    return data.map((header): IResultAttributeHeader => {
+                        return attributeHeaderItem(
+                            {
+                                attributeHeader: {
+                                    labelValue: header,
+                                    primaryLabelValue: header,
+                                },
+                            },
+                            dateFormatProps,
+                            dateValueFormatter,
+                        );
+                    });
+                }
+
+                return [];
+            });
+        });
+    };
 }
 
 function attributeHeaderItem(

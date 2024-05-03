@@ -23,7 +23,7 @@ class ForecastSection extends React.PureComponent<IForecastSection> {
         enabled: false,
         properties: {},
         propertiesMeta: {},
-        defaultForecastEnabled: true,
+        defaultForecastEnabled: false,
         pushData: noop,
     };
 
@@ -31,7 +31,7 @@ class ForecastSection extends React.PureComponent<IForecastSection> {
         const { controlsDisabled, properties, pushData, defaultForecastEnabled, enabled } = this.props;
 
         const forecastEnabled = this.props.properties?.controls?.forecast?.enabled ?? defaultForecastEnabled;
-        const forecastConfidence = this.props.properties?.controls?.forecast?.confidence ?? "95";
+        const forecastConfidence = this.props.properties?.controls?.forecast?.confidence ?? 0.95;
         const forecastPeriod = this.props.properties?.controls?.forecast?.period ?? 3;
         const forecastSeasonal = this.props.properties?.controls?.forecast?.seasonal ?? false;
         const forecastToggleDisabledByVisualization = !(this.props.propertiesMeta?.forecast_enabled ?? true);

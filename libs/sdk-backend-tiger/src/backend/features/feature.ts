@@ -305,6 +305,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableSmartFunctions,
+            "enableSmartFunctions",
+            "BOOLEAN",
+            FeatureFlagsValues.enableSmartFunctions,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableKeyDriverAnalysis,
             "enableKeyDriverAnalysis",
             "BOOLEAN",

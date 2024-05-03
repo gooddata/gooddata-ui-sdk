@@ -46,12 +46,12 @@ export const formatDropdownItems: IDropdownItem[] = [
 ];
 
 export const confidenceDropdownItems: IDropdownItem[] = [
-    { title: messages.forecastConfidence70.id, value: "70" },
-    { title: messages.forecastConfidence75.id, value: "75" },
-    { title: messages.forecastConfidence80.id, value: "80" },
-    { title: messages.forecastConfidence85.id, value: "85" },
-    { title: messages.forecastConfidence90.id, value: "90" },
-    { title: messages.forecastConfidence95.id, value: "95" },
+    { title: messages.forecastConfidence70.id, value: 0.7 },
+    { title: messages.forecastConfidence75.id, value: 0.75 },
+    { title: messages.forecastConfidence80.id, value: 0.8 },
+    { title: messages.forecastConfidence85.id, value: 0.85 },
+    { title: messages.forecastConfidence90.id, value: 0.9 },
+    { title: messages.forecastConfidence95.id, value: 0.95 },
 ];
 
 export const legendPositionDropdownItems: IDropdownItem[] = [

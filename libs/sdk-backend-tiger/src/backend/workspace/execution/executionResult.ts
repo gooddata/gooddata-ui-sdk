@@ -18,6 +18,9 @@ import {
     NoDataError,
     UnexpectedError,
     TimeoutError,
+    IForecastConfig,
+    IForecastResult,
+    IForecastView,
 } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition, DataValue, IDimensionDescriptor, IResultHeader } from "@gooddata/sdk-model";
 import SparkMD5 from "spark-md5";
@@ -26,9 +29,13 @@ import { transformExecutionResult } from "../../../convertors/fromBackend/afm/re
 import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { transformGrandTotalData } from "../../../convertors/fromBackend/afm/GrandTotalsConverter.js";
-import { getTransformDimensionHeaders } from "../../../convertors/fromBackend/afm/DimensionHeaderConverter.js";
+import {
+    getTransformDimensionHeaders,
+    getTransformForecastHeaders,
+} from "../../../convertors/fromBackend/afm/DimensionHeaderConverter.js";
 import { resolveCustomOverride } from "./utils.js";
 import { parseNameFromContentDisposition } from "../../../utils/downloadFile.js";
+import { transformForecastResult } from "../../../convertors/fromBackend/afm/forecast.js";
 
 const TIGER_PAGE_SIZE_LIMIT = 1000;
 const DEFAULT_POLL_DELAY = 5000;
@@ -86,6 +93,30 @@ export class TigerExecutionResult implements IExecutionResult {
         );
 
         return this.asDataView(executionResultPromise);
+    }
+
+    public async readForecastAll(forecastConfig: IForecastConfig): Promise<IForecastResult> {
+        const workspace = this.workspace;
+        const resultId = this.resultId;
+
+        const forecast = await this.authCall((client) =>
+            client.forecast
+                .forecast({
+                    forecastRequest: forecastConfig,
+                    workspaceId: workspace,
+                    resultId: resultId,
+                })
+                .then(({ data }) => data),
+        );
+
+        return this.authCall((client) =>
+            client.forecast
+                .forecastResult({
+                    workspaceId: workspace,
+                    resultId: forecast.links.executionResult,
+                })
+                .then(({ data }) => data),
+        );
     }
 
     public async readWindow(offset: number[], size: number[]): Promise<IDataView> {
@@ -217,12 +248,27 @@ class TigerDataView implements IDataView {
     public readonly offset: number[];
     public readonly result: IExecutionResult;
     public readonly totals?: DataValue[][][];
+    public readonly forecastConfig?: IForecastConfig;
+    public readonly forecastResult?: IForecastResult;
     public readonly totalTotals?: DataValue[][][];
     private readonly _fingerprint: string;
+    private readonly _execResult: ExecutionResult;
+    private readonly _dateFormatter: DateFormatter;
 
-    constructor(result: IExecutionResult, execResult: ExecutionResult, dateFormatter: DateFormatter) {
+    constructor(
+        result: IExecutionResult,
+        execResult: ExecutionResult,
+        dateFormatter: DateFormatter,
+        forecastConfig?: IForecastConfig,
+        forecastResult?: IForecastResult,
+    ) {
         this.result = result;
         this.definition = result.definition;
+        this.forecastConfig = forecastConfig;
+        this.forecastResult = forecastResult;
+
+        this._execResult = execResult;
+        this._dateFormatter = dateFormatter;
 
         const transformDimensionHeaders = getTransformDimensionHeaders(
             result.dimensions,
@@ -249,7 +295,9 @@ class TigerDataView implements IDataView {
         const totalTotals = grandTotalItem?.data as DataValue[][];
         this.totalTotals = totalTotals ? [totalTotals] : undefined;
 
-        this._fingerprint = `${result.fingerprint()}/${this.offset.join(",")}-${this.count.join(",")}`;
+        this._fingerprint = `${result.fingerprint()}/${this.offset.join(",")}-${this.count.join(",")}/f:${
+            this.forecastConfig?.forecastPeriod
+        },${this.forecastConfig?.confidenceLevel},${this.forecastConfig?.seasonal}`;
     }
 
     public fingerprint(): string {
@@ -258,6 +306,25 @@ class TigerDataView implements IDataView {
 
     public equals(other: IDataView): boolean {
         return this.fingerprint() === other.fingerprint();
+    }
+
+    public forecast(): IForecastView {
+        const transformForecastHeaders = getTransformForecastHeaders(
+            this.result.dimensions,
+            this._dateFormatter,
+            this.forecastConfig,
+        );
+
+        return transformForecastResult(
+            this._execResult,
+            this.forecastResult,
+            this.forecastConfig,
+            transformForecastHeaders,
+        );
+    }
+
+    public withForecast(config: IForecastConfig, result: IForecastResult): IDataView {
+        return new TigerDataView(this.result, this._execResult, this._dateFormatter, config, result);
     }
 }
 

@@ -11,6 +11,9 @@ import {
     NotSupported,
     IExplainProvider,
     ExplainType,
+    IForecastResult,
+    IForecastConfig,
+    IForecastView,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -285,6 +288,10 @@ class RecordedExecutionResult implements IExecutionResult {
         return Promise.resolve(new RecordedDataView(this, this.definition, windowData, this.denormalizer));
     };
 
+    public readForecastAll(): Promise<IForecastResult> {
+        throw new NotSupported("Forecasting is not supported by the recorded backend.");
+    }
+
     public transform = (): IPreparedExecution => {
         return this.executionFactory.forDefinition(this.definition);
     };
@@ -312,8 +319,10 @@ class RecordedDataView implements IDataView {
     constructor(
         public readonly result: IExecutionResult,
         public readonly definition: IExecutionDefinition,
-        recordedDataView: any,
-        denormalizer?: Denormalizer,
+        private readonly recordedDataView: any,
+        private readonly denormalizer?: Denormalizer,
+        public readonly forecastConfig?: IForecastConfig,
+        public readonly forecastResult?: IForecastResult,
     ) {
         this.data = recordedDataView.data;
         this.headerItems = denormalizer
@@ -338,6 +347,28 @@ class RecordedDataView implements IDataView {
     public fingerprint = (): string => {
         return this._fp;
     };
+
+    public withForecast(config: IForecastConfig, result: IForecastResult): IDataView {
+        return new RecordedDataView(
+            this.result,
+            this.definition,
+            this.recordedDataView,
+            this.denormalizer,
+            config,
+            result,
+        );
+    }
+
+    forecast(): IForecastView {
+        return (
+            this.recordedDataView.forecast ?? {
+                headerItems: [],
+                low: [],
+                high: [],
+                prediction: [],
+            }
+        );
+    }
 }
 
 //

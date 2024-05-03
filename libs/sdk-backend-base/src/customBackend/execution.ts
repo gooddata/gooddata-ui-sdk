@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 import { AbstractExecutionFactory } from "../toolkit/execution.js";
 import {
@@ -27,6 +27,7 @@ import {
     NotImplemented,
     IExplainProvider,
     ExplainType,
+    IForecastResult,
 } from "@gooddata/sdk-backend-spi";
 import isEqual from "lodash/isEqual.js";
 import {
@@ -159,6 +160,10 @@ class CustomExecutionResult implements IExecutionResult {
             return this.config.dataProvider(context);
         });
     };
+
+    public readForecastAll(): Promise<IForecastResult> {
+        throw new NotSupported("Forecasting is not supported by the custom backend.");
+    }
 
     public readWindow = (offset: number[], size: number[]): Promise<IDataView> => {
         return this.state.authApiCall((client) => {

@@ -79,6 +79,7 @@ export enum TigerFeaturesNames {
     EnableOracleDataSource = "enableOracleDataSource",
     EnableAnalyticalCatalog = "enableAnalyticalCatalog",
     EnableAlerting = "enableAlerting",
+    EnableSmartFunctions = "enableSmartFunctions",
     EnableLabsSmartFunctions = "enableLabsSmartFunctions",
     EnableKeyDriverAnalysis = "enableKeyDriverAnalysis",
     EnableDataProfiling = "enableDataProfiling",
@@ -131,6 +132,7 @@ export type ITigerFeatureFlags = {
     enableAnalyticalCatalog: typeof FeatureFlagsValues["enableAnalyticalCatalog"][number];
     enableAlerting: typeof FeatureFlagsValues["enableAlerting"][number];
     enableLabsSmartFunctions: typeof FeatureFlagsValues["enableLabsSmartFunctions"][number];
+    enableSmartFunctions: typeof FeatureFlagsValues["enableSmartFunctions"][number];
     enableKeyDriverAnalysis: typeof FeatureFlagsValues["enableKeyDriverAnalysis"][number];
     enableDataProfiling: typeof FeatureFlagsValues["enableDataProfiling"][number];
     enableFlexAi: typeof FeatureFlagsValues["enableFlexAi"][number];
@@ -182,6 +184,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAnalyticalCatalog: false,
     enableAlerting: false,
     enableLabsSmartFunctions: false,
+    enableSmartFunctions: false,
     enableKeyDriverAnalysis: false,
     enableDataProfiling: false,
     enableFlexAi: false,
@@ -237,6 +240,7 @@ export const FeatureFlagsValues = {
     enableAnalyticalCatalog: [true, false] as const,
     enableAlerting: [true, false] as const,
     enableLabsSmartFunctions: [true, false] as const,
+    enableSmartFunctions: [true, false] as const,
     enableKeyDriverAnalysis: [true, false] as const,
     enableDataProfiling: [true, false] as const,
     enableFlexAi: [true, false] as const,
