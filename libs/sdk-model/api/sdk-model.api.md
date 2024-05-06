@@ -489,6 +489,7 @@ export type ForecastDataValue = {
     low: DataValue;
     high: DataValue;
     prediction: DataValue;
+    loading: boolean;
 };
 
 // @internal

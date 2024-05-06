@@ -53,6 +53,7 @@ export function assignForecastAxes(
                 format: last.format,
                 low: item.low,
                 high: item.high,
+                loading: item.loading,
             } as ISeriesDataItem;
         }),
     ];
@@ -64,6 +65,7 @@ export function assignForecastAxes(
                 name: last.name,
                 format: last.format,
                 y: item.prediction,
+                loading: item.loading,
             } as ISeriesDataItem;
         }),
     ];

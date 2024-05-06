@@ -208,7 +208,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                     return;
                 }
 
-                const dataView = await executionResult.readAll().catch((err) => {
+                const originalDataView = await executionResult.readAll().catch((err) => {
                     /**
                      * When execution result is received successfully,
                      * but data load fails with unexpected http response,
@@ -228,13 +228,17 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                     return;
                 }
 
-                if (this.lastInitRequestFingerprint !== defFingerprint(dataView.definition)) {
+                if (this.lastInitRequestFingerprint !== defFingerprint(originalDataView.definition)) {
                     /*
                      * Stop right now if the data are not relevant anymore because there was another
                      * initialize request in the meantime.
                      */
                     return;
                 }
+
+                const dataView = forecastConfig
+                    ? originalDataView.withForecast(forecastConfig)
+                    : originalDataView;
 
                 this.setState({ dataView, error: null, executionResult });
                 this.onLoadingChanged({ isLoading: false });
@@ -253,16 +257,9 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                     return;
                 }
 
-                if (forecastConfig) {
-                    const normalizedForecastConfig = {
-                        ...forecastConfig,
-                        forecastPeriod: Math.min(
-                            forecastConfig.forecastPeriod,
-                            Math.max((dataView.count[1] ?? 0) - 1, 0),
-                        ),
-                    };
-                    const forecastResult = await executionResult.readForecastAll(normalizedForecastConfig);
-                    const updatedDataView = dataView.withForecast(normalizedForecastConfig, forecastResult);
+                if (dataView.forecastConfig) {
+                    const forecastResult = await executionResult.readForecastAll(dataView.forecastConfig);
+                    const updatedDataView = dataView.withForecast(dataView.forecastConfig, forecastResult);
                     this.setState((s) => ({ ...s, dataView: updatedDataView }));
                     if (pushData) {
                         pushData({ dataView: updatedDataView });

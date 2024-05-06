@@ -10,6 +10,7 @@ export type TransformedForecastResult = {
     readonly prediction: Data;
     readonly low: Data;
     readonly high: Data;
+    readonly loading: boolean;
 };
 
 export function transformForecastResult(
@@ -22,21 +23,10 @@ export function transformForecastResult(
     ) => IResultHeader[][][],
 ): TransformedForecastResult {
     const period = forecastConfig?.forecastPeriod ?? 0;
-    const prediction =
-        forecastResults?.prediction.slice(
-            forecastResults.prediction.length - period,
-            forecastResults.prediction.length,
-        ) ?? [];
-    const low =
-        forecastResults?.lowerBound.slice(
-            forecastResults.prediction.length - period,
-            forecastResults.prediction.length,
-        ) ?? [];
-    const high =
-        forecastResults?.upperBound.slice(
-            forecastResults.prediction.length - period,
-            forecastResults.prediction.length,
-        ) ?? [];
+
+    const prediction = fillData(forecastResults?.prediction, period);
+    const low = fillData(forecastResults?.lowerBound, period);
+    const high = fillData(forecastResults?.upperBound, period);
 
     return {
         // in API is data typed as Array<object>
@@ -45,5 +35,17 @@ export function transformForecastResult(
         high: [high],
         prediction: [prediction],
         headerItems: transformDimensionHeaders(result.dimensionHeaders, forecastResults),
+        loading: !forecastResults,
     };
+}
+
+function fillData(items: number[] | undefined, period: number): DataValue[] {
+    if (!items) {
+        const emptyData: (number | null)[] = [];
+        for (let i = 0; i < period; i++) {
+            emptyData.push(null);
+        }
+        return emptyData;
+    }
+    return items.slice(items.length - period, items.length);
 }

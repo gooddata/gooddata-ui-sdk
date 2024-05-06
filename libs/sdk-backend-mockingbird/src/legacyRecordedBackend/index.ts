@@ -314,6 +314,7 @@ function recordedDataView(
                 low: [],
                 high: [],
                 prediction: [],
+                loading: false,
             };
         },
     };

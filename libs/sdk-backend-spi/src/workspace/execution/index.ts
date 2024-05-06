@@ -531,4 +531,5 @@ export interface IForecastView {
     prediction: DataValue[][];
     low: DataValue[][];
     high: DataValue[][];
+    loading: boolean;
 }

@@ -239,7 +239,7 @@ export abstract class DecoratedDataView implements IDataView {
         return this.decorated.fingerprint();
     }
 
-    public withForecast(config: IForecastConfig, result: IForecastResult): IDataView {
+    public withForecast(config: IForecastConfig, result?: IForecastResult): IDataView {
         return this.decorated.withForecast(config, result);
     }
 

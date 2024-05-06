@@ -611,6 +611,8 @@ export interface IForecastView {
     // (undocumented)
     high: DataValue[][];
     // (undocumented)
+    loading: boolean;
+    // (undocumented)
     low: DataValue[][];
     // (undocumented)
     prediction: DataValue[][];

@@ -87,6 +87,7 @@ export interface ISeriesDataItem {
     visible?: boolean;
     format?: string;
     borderColor?: string;
+    loading?: boolean;
 }
 
 export interface ISeriesNodeItem {

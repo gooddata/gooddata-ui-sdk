@@ -194,7 +194,7 @@ export function emptyDataViewForResult(
         equals(other: IDataView): boolean {
             return fp === other.fingerprint();
         },
-        withForecast(forecastConfig: IForecastConfig, forecastResult: IForecastResult): IDataView {
+        withForecast(forecastConfig: IForecastConfig, forecastResult?: IForecastResult): IDataView {
             return emptyDataViewForResult(result, forecastConfig, forecastResult);
         },
         forecast(): IForecastView {
@@ -203,6 +203,7 @@ export function emptyDataViewForResult(
                 high: [],
                 low: [],
                 prediction: [],
+                loading: false,
             };
         },
     };
