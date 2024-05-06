@@ -127,6 +127,7 @@ export type AttributeFilterControllerData = {
     irrelevantSelection?: IAttributeElement[];
     limitingValidationItems?: ObjRef[];
     isFilteredByDependentDateFilters?: boolean;
+    enableDuplicatedLabelValuesInAttributeFilter?: boolean;
 };
 
 // @internal (undocumented)
@@ -391,6 +392,7 @@ export interface IAttributeFilterCoreProps {
     dependentDateFilters?: IDashboardDateFilter[];
     // @alpha
     disabled?: boolean;
+    enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     filter?: IAttributeFilter;
     fullscreenOnMobile?: boolean;
     hiddenElements?: string[];
@@ -588,6 +590,7 @@ export type IAttributeFilterHandlerOptions = ISingleSelectAttributeFilterHandler
 
 // @public
 export interface IAttributeFilterHandlerOptionsBase {
+    enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     hiddenElements?: string[];
     staticElements?: IAttributeElement[];
 }
@@ -1049,6 +1052,8 @@ export type IUseAttributeFilterControllerProps = Omit<IAttributeFilterCoreProps,
 export interface IUseAttributeFilterHandlerProps {
     // (undocumented)
     backend: IAnalyticalBackend;
+    // (undocumented)
+    enableDuplicatedLabelValuesInAttributeFilter: boolean;
     // (undocumented)
     filter: IAttributeFilter;
     // (undocumented)

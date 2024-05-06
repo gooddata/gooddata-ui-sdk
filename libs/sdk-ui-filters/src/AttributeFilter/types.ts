@@ -231,6 +231,11 @@ export interface IAttributeFilterCoreProps {
      * Callback that will be triggered when error is thrown.
      */
     onError?: (error: GoodDataSdkError) => void;
+
+    /**
+     * Enables duplicated values in secondary labels.
+     */
+    enableDuplicatedLabelValuesInAttributeFilter?: boolean;
 }
 
 /**

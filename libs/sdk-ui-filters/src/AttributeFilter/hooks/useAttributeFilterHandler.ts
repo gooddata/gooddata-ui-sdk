@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { useEffect, useRef, useState, useCallback } from "react";
 import isEqual from "lodash/isEqual.js";
 import { usePrevious } from "@gooddata/sdk-ui";
@@ -22,6 +22,7 @@ export interface IUseAttributeFilterHandlerProps {
 
     hiddenElements?: string[];
     staticElements?: IAttributeElement[];
+    enableDuplicatedLabelValuesInAttributeFilter: boolean;
 }
 
 /**
@@ -38,6 +39,7 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
 
         hiddenElements,
         staticElements,
+        enableDuplicatedLabelValuesInAttributeFilter,
     } = props;
 
     const [, setInvalidate] = useState(0);
@@ -49,7 +51,7 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
     const handlerRef = useRef<IMultiSelectAttributeFilterHandler>();
 
     const createNewHandler = useCallback(() => {
-        const newHandler = newAttributeFilterHandler(
+        handlerRef.current = newAttributeFilterHandler(
             backend.withTelemetry("AttributeFilter", { workspace, filter, hiddenElements, staticElements }),
             workspace,
             filter,
@@ -57,10 +59,17 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
                 selectionMode: "multi",
                 hiddenElements,
                 staticElements,
+                enableDuplicatedLabelValuesInAttributeFilter,
             },
         );
-        handlerRef.current = newHandler;
-    }, [backend, workspace, filter, hiddenElements, staticElements]);
+    }, [
+        backend,
+        workspace,
+        filter,
+        hiddenElements,
+        staticElements,
+        enableDuplicatedLabelValuesInAttributeFilter,
+    ]);
 
     if (!handlerRef.current) {
         createNewHandler();

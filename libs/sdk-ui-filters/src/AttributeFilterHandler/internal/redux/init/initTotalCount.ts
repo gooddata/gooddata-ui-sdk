@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { put, fork, race, take, call, select, SagaReturnType } from "redux-saga/effects";
 import { AnyAction } from "@reduxjs/toolkit";
@@ -8,6 +8,7 @@ import { loadCustomElementsSaga } from "../loadCustomElements/loadCustomElements
 import { actions } from "../store/slice.js";
 import { getAttributeFilterContext } from "../common/sagas.js";
 import { selectElementsForm } from "../common/selectors.js";
+import { shouldExcludePrimaryLabel } from "../utils.js";
 
 /**
  * @internal
@@ -23,8 +24,7 @@ export function* initTotalCountSaga(correlation: Correlation): SagaIterator<void
             options: {
                 limit: 1,
                 includeTotalCountWithoutFilters: true,
-                excludePrimaryLabel:
-                    !context.backend.capabilities.supportsElementUris && elementsForm === "values",
+                excludePrimaryLabel: shouldExcludePrimaryLabel(context, elementsForm),
             },
             correlation: initTotalCountCorrelation,
         }),

@@ -157,6 +157,11 @@ export type AttributeFilterControllerData = {
      * @beta
      */
     isFilteredByDependentDateFilters?: boolean;
+
+    /**
+     * Enables duplicated values in secondary labels.
+     */
+    enableDuplicatedLabelValuesInAttributeFilter?: boolean;
 };
 
 /**

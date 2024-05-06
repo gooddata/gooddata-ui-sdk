@@ -47,6 +47,7 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
         ElementsSelectActionsComponent,
         EmptyResultComponent,
         StatusBarComponent,
+        enableDuplicatedLabelValuesInAttributeFilter,
     } = props;
 
     const DefaultComponents = getAttributeFilterDefaultComponents(props);
@@ -100,6 +101,9 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
                     selectFirst={selectFirst}
                     disabled={disabled}
                     customIcon={customIcon}
+                    enableDuplicatedLabelValuesInAttributeFilter={
+                        enableDuplicatedLabelValuesInAttributeFilter
+                    }
                 >
                     {children}
                 </AttributeFilterContextProvider>
