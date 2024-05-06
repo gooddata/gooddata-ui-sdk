@@ -20,6 +20,8 @@ import {
     DataTooLargeToDisplaySdkError,
     GoodDataSdkError,
     NegativeValuesSdkError,
+    ForecastNotReceivedSdkError,
+    isForecastNotReceived,
 } from "../../errors/GoodDataSdkError.js";
 import { createExportErrorFunction, createExportFunction } from "../../vis/export.js";
 import { DataViewFacade } from "../../results/facade.js";
@@ -174,7 +176,10 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
         private onError(error: GoodDataSdkError) {
             const { onExportReady } = this.props;
 
-            this.setState({ error: error.getMessage(), dataView: null });
+            if (!isForecastNotReceived(error)) {
+                const err = error as GoodDataSdkError;
+                this.setState({ error: err.getMessage(), dataView: null });
+            }
             this.onLoadingChanged({ isLoading: false });
 
             if (onExportReady) {
@@ -258,11 +263,28 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                 }
 
                 if (dataView.forecastConfig) {
-                    const forecastResult = await executionResult.readForecastAll(dataView.forecastConfig);
-                    const updatedDataView = dataView.withForecast(dataView.forecastConfig, forecastResult);
-                    this.setState((s) => ({ ...s, dataView: updatedDataView }));
-                    if (pushData) {
-                        pushData({ dataView: updatedDataView });
+                    try {
+                        const forecastResult = await executionResult.readForecastAll(dataView.forecastConfig);
+                        const updatedDataView = dataView.withForecast(
+                            dataView.forecastConfig,
+                            forecastResult,
+                        );
+                        this.setState((s) => ({ ...s, dataView: updatedDataView }));
+                        if (pushData) {
+                            pushData({ dataView: updatedDataView });
+                        }
+                    } catch (e) {
+                        const updatedDataView = dataView.withForecast(undefined);
+                        this.setState((s) => ({ ...s, dataView: updatedDataView }));
+                        if (pushData) {
+                            pushData({ dataView: updatedDataView });
+                        }
+
+                        const err = e as any;
+                        throw new ForecastNotReceivedSdkError(
+                            err.responseBody?.reason || err.message || "Unknown error",
+                            err,
+                        );
                     }
                 }
             } catch (error) {

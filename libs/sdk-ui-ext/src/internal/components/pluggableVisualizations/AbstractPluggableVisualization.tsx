@@ -33,6 +33,7 @@ import {
     IPushData,
     isGoodDataSdkError,
     UnexpectedSdkError,
+    isForecastNotReceived,
 } from "@gooddata/sdk-ui";
 import { IntlShape } from "react-intl";
 import { createInternalIntl } from "../../utils/internalIntlProvider.js";
@@ -257,7 +258,8 @@ export abstract class AbstractPluggableVisualization implements IVisualization {
 
         // EMPTY_AFM is handled in update as it can change on any render contrary to other error types
         // that have to be set manually or by loading
-        if (!isEmptyAfm(error)) {
+        // FORECAST_NOT_RECEIVED is not handled as an normal error, cause its not results in invalid chart
+        if (!isEmptyAfm(error) && !isForecastNotReceived(error)) {
             this.hasError = true;
         }
 

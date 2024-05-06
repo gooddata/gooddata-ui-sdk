@@ -323,11 +323,13 @@ class TigerDataView implements IDataView {
         );
     }
 
-    public withForecast(config: IForecastConfig, result?: IForecastResult): IDataView {
-        const normalizedConfig = {
-            ...config,
-            forecastPeriod: Math.min(config.forecastPeriod, Math.max((this.count[1] ?? 0) - 1, 0)),
-        };
+    public withForecast(config?: IForecastConfig, result?: IForecastResult): IDataView {
+        const normalizedConfig = config
+            ? {
+                  ...config,
+                  forecastPeriod: Math.min(config.forecastPeriod, Math.max((this.count[1] ?? 0) - 1, 0)),
+              }
+            : undefined;
 
         return new TigerDataView(
             this.result,

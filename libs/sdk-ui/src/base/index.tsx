@@ -14,6 +14,7 @@ export { visualizationIsBetaWarning } from "./helpers/logging.js";
 export {
     SdkErrorType,
     ErrorCodes,
+    ForecastNotReceivedSdkError,
     GoodDataSdkError,
     UnauthorizedSdkError,
     NotFoundSdkError,
@@ -41,6 +42,7 @@ export {
     isProtectedReport,
     isUnauthorized,
     isUnknownSdkError,
+    isForecastNotReceived,
     isDynamicScriptLoadSdkError,
 } from "./errors/GoodDataSdkError.js";
 export {

@@ -519,7 +519,7 @@ export interface IDataView {
      * @param result - forecast result
      * @returns new data view with forecasting enabled
      */
-    withForecast(config: IForecastConfig, result?: IForecastResult): IDataView;
+    withForecast(config?: IForecastConfig, result?: IForecastResult): IDataView;
 }
 
 /**

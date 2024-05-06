@@ -412,9 +412,10 @@ export class HighChartsRenderer extends React.PureComponent<
         const { chartOptions } = this.props;
         const { data } = chartOptions;
 
-        const loading: ISeriesItem[] = data.series.filter((series: ISeriesItem) => {
-            return series.data.some((data?: ISeriesDataItem) => data?.loading);
-        });
+        const loading: ISeriesItem[] =
+            data?.series?.filter((series: ISeriesItem) => {
+                return series.data.some((data?: ISeriesDataItem) => data?.loading);
+            }) ?? [];
 
         if (!loading.length || !container) {
             return null;

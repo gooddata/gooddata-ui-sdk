@@ -404,7 +404,7 @@ export interface IDataView {
     readonly totalTotals?: DataValue[][][];
     readonly warnings?: IResultWarning[];
     // @beta
-    withForecast(config: IForecastConfig, result?: IForecastResult): IDataView;
+    withForecast(config?: IForecastConfig, result?: IForecastResult): IDataView;
 }
 
 // @internal
