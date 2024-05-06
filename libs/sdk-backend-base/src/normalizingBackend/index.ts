@@ -244,13 +244,14 @@ class DenormalizedDataView implements IDataView {
         };
     }
 
-    public withForecast(config: IForecastConfig, result: IForecastResult): IDataView {
+    public withForecast(config?: IForecastConfig, result?: IForecastResult): IDataView {
+        const normalizedDataView = this.normalizedDataView.withForecast(config, result);
         return new DenormalizedDataView(
             this.result as DenormalizingExecutionResult,
-            this.normalizedDataView.withForecast(config, result),
+            normalizedDataView,
             this._denormalizer,
-            config,
-            result,
+            normalizedDataView.forecastConfig,
+            normalizedDataView.forecastResult,
         );
     }
 }

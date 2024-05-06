@@ -25,7 +25,10 @@ import {
     ExecutionResultGrandTotal,
     ExecutionResultHeader,
 } from "@gooddata/api-client-tiger";
-import { createDateValueFormatter } from "../dateFormatting/dateValueFormatter.js";
+import {
+    createDateValueFormatter,
+    createForecastDateValueFormatter,
+} from "../dateFormatting/dateValueFormatter.js";
 import { toSdkGranularity } from "../dateGranularityConversions.js";
 import { FormattingLocale } from "../dateFormatting/defaultDateFormatter.js";
 import { IForecastConfig, IForecastResult } from "@gooddata/sdk-backend-spi";
@@ -218,14 +221,11 @@ export function getTransformForecastHeaders(
         return () => [];
     }
 
-    const dateValueFormatter = createDateValueFormatter(dateFormatter);
+    const dateValueFormatter = createForecastDateValueFormatter(dateFormatter);
 
     return (dimensionHeaders: DimensionHeader[], forecastResults: IForecastResult | undefined) => {
         let used = false;
         return dimensionHeaders.map((dimensionHeader, dimensionIndex) => {
-            if (!forecastResults) {
-                return [];
-            }
             return dimensionHeader.headerGroups.map((headerGroup, headerGroupIndex) => {
                 const dateFormatProps = getDateFormatProps(
                     dimensions[dimensionIndex].headers[headerGroupIndex],
@@ -238,17 +238,14 @@ export function getTransformForecastHeaders(
                 ) {
                     used = true;
 
-                    const length = forecastResults.attribute.length;
-                    const data = forecastResults.attribute.slice(
-                        length - forecastConfig.forecastPeriod,
-                        length,
-                    );
+                    const data = fillData(forecastResults?.attribute, forecastConfig.forecastPeriod);
+
                     return data.map((header): IResultAttributeHeader => {
                         return attributeHeaderItem(
                             {
                                 attributeHeader: {
-                                    labelValue: header,
-                                    primaryLabelValue: header,
+                                    labelValue: header as any,
+                                    primaryLabelValue: header as any,
                                 },
                             },
                             dateFormatProps,
@@ -316,4 +313,15 @@ function totalHeaderItem(header: TotalExecutionResultHeader, measureIndex?: numb
             ...optionalMeasureIndex,
         },
     };
+}
+
+function fillData(items: string[] | undefined, period: number): (string | null)[] {
+    if (!items) {
+        const emptyData: (string | null)[] = [];
+        for (let i = 0; i < period; i++) {
+            emptyData.push(null);
+        }
+        return emptyData;
+    }
+    return items.slice(items.length - period, items.length);
 }

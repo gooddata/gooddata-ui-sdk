@@ -359,6 +359,7 @@ export const ErrorCodes: {
     DYNAMIC_SCRIPT_LOAD_ERROR: string;
     TIMEOUT_ERROR: string;
     VISUALIZATION_CLASS_UNKNOWN: string;
+    FORECAST_NOT_RECEIVED: string;
 };
 
 // @public
@@ -401,6 +402,11 @@ export function fireDrillEvent(drillEventFunction: IDrillEventCallback, drillEve
 
 // @public
 export type Flatten<T> = T extends Array<infer A> ? A : T;
+
+// @public
+export class ForecastNotReceivedSdkError extends GoodDataSdkError {
+    constructor(message?: string, cause?: Error);
+}
 
 // @public
 export class GeoLocationMissingSdkError extends GoodDataSdkError {
@@ -1206,6 +1212,9 @@ export { ISeparators }
 
 // @public (undocumented)
 export function isExplicitDrill(obj: unknown): obj is ExplicitDrill;
+
+// @public
+export function isForecastNotReceived(obj: unknown): obj is ForecastNotReceivedSdkError;
 
 // @public
 export function isGeoLocationMissing(obj: unknown): obj is GeoLocationMissingSdkError;

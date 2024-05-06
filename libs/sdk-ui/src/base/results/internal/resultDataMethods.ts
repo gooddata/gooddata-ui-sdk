@@ -166,7 +166,7 @@ class ResultDataMethods implements IResultDataMethods {
     }
 
     public forecastTwoDimData(): ForecastDataValue[][] {
-        const { prediction, low, high } = this.dataView.forecast();
+        const { prediction, low, high, loading } = this.dataView.forecast();
 
         if (prediction === null) {
             return [];
@@ -183,6 +183,7 @@ class ResultDataMethods implements IResultDataMethods {
                 prediction: prediction[id][ii],
                 low: low[id][ii],
                 high: high[id][ii],
+                loading,
             })),
         );
     }

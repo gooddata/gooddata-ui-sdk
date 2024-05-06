@@ -404,7 +404,7 @@ export interface IDataView {
     readonly totalTotals?: DataValue[][][];
     readonly warnings?: IResultWarning[];
     // @beta
-    withForecast(config: IForecastConfig, result?: IForecastResult): IDataView;
+    withForecast(config?: IForecastConfig, result?: IForecastResult): IDataView;
 }
 
 // @internal
@@ -610,6 +610,8 @@ export interface IForecastView {
     headerItems: IResultHeader[][][];
     // (undocumented)
     high: DataValue[][];
+    // (undocumented)
+    loading: boolean;
     // (undocumented)
     low: DataValue[][];
     // (undocumented)

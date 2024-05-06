@@ -265,9 +265,10 @@ export function dummyDataView(
                 prediction: [],
                 low: [],
                 high: [],
+                loading: false,
             };
         },
-        withForecast(_config: IForecastConfig, _result: IForecastResult): IDataView {
+        withForecast(_config: IForecastConfig, _result?: IForecastResult): IDataView {
             throw new NotSupported("not supported");
         },
     };

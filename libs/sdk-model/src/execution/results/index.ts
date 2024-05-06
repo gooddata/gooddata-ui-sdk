@@ -20,7 +20,7 @@ export type DataValue = null | string | number;
  *
  * @beta
  */
-export type ForecastDataValue = { low: DataValue; high: DataValue; prediction: DataValue };
+export type ForecastDataValue = { low: DataValue; high: DataValue; prediction: DataValue; loading: boolean };
 
 /**
  * Descriptor of the measure and its contents.
