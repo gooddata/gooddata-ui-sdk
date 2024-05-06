@@ -88,6 +88,7 @@ export enum TigerFeaturesNames {
     EnableSingleStoreDataSource = "enableSingleStoreDataSource",
     EnableInvalidValuesInAttributeFilter = "enableInvalidValuesInAttributeFilter",
     EnableDuplicatedLabelValuesInAttributeFilter = "enableDuplicatedLabelValuesInAttributeFilter",
+    EnableWorkspacesHierarchyView = "enableWorkspacesHierarchyView",
 }
 
 export type ITigerFeatureFlags = {
@@ -140,6 +141,7 @@ export type ITigerFeatureFlags = {
     enableSingleStoreDataSource: typeof FeatureFlagsValues["enableSingleStoreDataSource"][number];
     enableInvalidValuesInAttributeFilter: typeof FeatureFlagsValues["enableInvalidValuesInAttributeFilter"][number];
     enableDuplicatedLabelValuesInAttributeFilter: typeof FeatureFlagsValues["enableDuplicatedLabelValuesInAttributeFilter"][number];
+    enableWorkspacesHierarchyView: typeof FeatureFlagsValues["enableWorkspacesHierarchyView"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -192,6 +194,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableSingleStoreDataSource: false,
     enableInvalidValuesInAttributeFilter: false,
     enableDuplicatedLabelValuesInAttributeFilter: false,
+    enableWorkspacesHierarchyView: false,
 };
 
 export const FeatureFlagsValues = {
@@ -248,4 +251,5 @@ export const FeatureFlagsValues = {
     enableSingleStoreDataSource: [true, false] as const,
     enableInvalidValuesInAttributeFilter: [true, false] as const,
     enableDuplicatedLabelValuesInAttributeFilter: [true, false] as const,
+    enableWorkspacesHierarchyView: [true, false] as const,
 };

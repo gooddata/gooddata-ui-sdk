@@ -372,6 +372,11 @@ export interface ISettings {
      */
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
 
+    /**
+     * Enable workspaces hierarchy view in Home UI.
+     */
+    enableWorkspacesHierarchyView?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

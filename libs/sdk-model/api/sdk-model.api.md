@@ -2662,6 +2662,7 @@ export interface ISettings {
     enableUserManagement?: boolean;
     enableWaterfallChart?: boolean;
     enableWeekFilters?: boolean;
+    enableWorkspacesHierarchyView?: boolean;
     formatLocale?: string;
     hideKpiDrillInEmbedded?: boolean;
     metadataTimeZone?: string;
