@@ -1076,6 +1076,11 @@
         "comment": "Text of button that opens share dialog",
         "limit": 0
     },
+    "share.button.tooltip": {
+        "value": "Share dashboard",
+        "comment": "Tooltip of button that opens share dialog",
+        "limit": 0
+    },
     "dashboard.error.empty.heading": {
         "value": "This dashboard is empty",
         "comment": "The user has a dashboard that contains no widgets.",
@@ -1252,8 +1257,18 @@
         "comment": "",
         "limit": 0
     },
+    "controlButtons.options.tooltip": {
+        "value": "More options",
+        "comment": "",
+        "limit": 0
+    },
     "controlButtons.edit.value": {
         "value": "Edit",
+        "comment": "",
+        "limit": 0
+    },
+    "controlButtons.edit.tooltip": {
+        "value": "Edit dashboard",
         "comment": "",
         "limit": 0
     },
