@@ -102,14 +102,14 @@ export function updateForecastWithSettings(
     { enabled }: { enabled: boolean },
 ): IForecastConfig | undefined {
     //no forecast setting
-    if (!config.forecast?.enabled || !enabled) {
+    if (!config.forecast?.enabled || !enabled || !settings.enableSmartFunctions) {
         return undefined;
     }
 
     //check if confidence is set and is valid
     const confidenceLevel = normalizeConfidence(config.forecast.confidence ?? 0.95);
     const forecastPeriod = normalizePeriod(config.forecast.period ?? 3);
-    if (isNaN(confidenceLevel) || isNaN(forecastPeriod) || !settings.enableSmartFunctions) {
+    if (isNaN(confidenceLevel) || isNaN(forecastPeriod)) {
         return undefined;
     }
 
