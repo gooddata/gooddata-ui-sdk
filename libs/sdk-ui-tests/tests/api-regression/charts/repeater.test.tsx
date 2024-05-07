@@ -10,7 +10,7 @@ import { ScenarioAndDescription } from "../../../src/index.js";
 import { createInsightDefinitionForChart } from "../../_infra/insightFactory.js";
 import { mountChartAndCapture } from "../../_infra/render.js";
 import { mountInsight } from "../../_infra/renderPlugVis.js";
-import { cleanupCoreChartProps } from "../../_infra/utils.js";
+import { cleanupCorePivotTableProps } from "../../_infra/utils.js";
 
 const Chart = "Repeater";
 
@@ -50,7 +50,7 @@ describe(Chart, () => {
 
             expect(interactions.effectiveProps).toBeDefined();
             expect(interactions.effectiveProps!.execution).toBeDefined();
-            expect(cleanupCoreChartProps(interactions.effectiveProps)).toMatchSnapshot();
+            expect(cleanupCorePivotTableProps(interactions.effectiveProps)).toMatchSnapshot();
         });
 
         it("should lead to same execution when rendered as insight via plug viz", async () => {
