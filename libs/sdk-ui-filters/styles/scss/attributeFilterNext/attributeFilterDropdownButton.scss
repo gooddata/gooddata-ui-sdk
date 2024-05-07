@@ -118,6 +118,12 @@
     &.gd-message {
         font-size: 12px;
     }
+
+    &:focus-visible {
+        outline: auto 5px Highlight; /* For Firefox */
+        // stylelint-disable-next-line declaration-block-no-duplicate-properties
+        outline: auto 5px -webkit-focus-ring-color; /* For Chrome */
+    }
 }
 
 .gd-attribute-filter-dropdown-button-icon__next {

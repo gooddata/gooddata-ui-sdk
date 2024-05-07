@@ -21,6 +21,7 @@ export interface IDateFilterButtonLocalizedProps {
     customFilterName?: string;
     disabled?: boolean;
     customIcon?: IFilterButtonCustomIcon;
+    onClick?: () => void;
 }
 
 export const DateFilterButtonLocalized: React.FC<IDateFilterButtonLocalizedProps> = ({
@@ -31,6 +32,7 @@ export const DateFilterButtonLocalized: React.FC<IDateFilterButtonLocalizedProps
     customFilterName,
     disabled,
     customIcon,
+    onClick,
 }) => {
     const title = customFilterName ? (
         <ShortenedText tooltipAlignPoints={ALIGN_POINT}>{customFilterName}</ShortenedText>
@@ -45,6 +47,7 @@ export const DateFilterButtonLocalized: React.FC<IDateFilterButtonLocalizedProps
             disabled={disabled}
             customIcon={customIcon}
             customFilterName={customFilterName}
+            onClick={onClick}
         >
             <span className="s-button-text">
                 <DateFilterTextLocalized filter={dateFilterOption} dateFormat={dateFormat} />
