@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React, { useContext } from "react";
 import { IAttributeFilterCoreProps } from "../types.js";
 import { useAttributeFilterController } from "../hooks/useAttributeFilterController.js";
@@ -38,6 +38,7 @@ export const AttributeFilterContextProvider: React.FC<
         selectFirst,
         disabled,
         customIcon,
+        enableDuplicatedLabelValuesInAttributeFilter,
     } = props;
 
     const controller = useAttributeFilterController(props);
@@ -53,6 +54,7 @@ export const AttributeFilterContextProvider: React.FC<
                 selectFirst,
                 disabled,
                 customIcon,
+                enableDuplicatedLabelValuesInAttributeFilter,
             }}
         >
             {children}

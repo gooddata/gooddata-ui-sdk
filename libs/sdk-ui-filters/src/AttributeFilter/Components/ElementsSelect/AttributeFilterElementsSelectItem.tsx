@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React, { useCallback } from "react";
 import cx from "classnames";
 import camelCase from "lodash/camelCase.js";
@@ -45,6 +45,7 @@ export const AttributeFilterElementsSelectItem: React.VFC<IAttributeFilterElemen
         "has-only-visible",
         "s-attribute-filter-list-item",
         `s-attribute-filter-list-item-${camelCase(item.title)}`,
+        `s-attribute-filter-list-item-${camelCase(item.title)}-${camelCase(item.uri)}`,
         { "is-selected": isSelected },
         {
             "s-attribute-filter-list-item-selected": isSelected,

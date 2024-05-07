@@ -6777,6 +6777,9 @@ export const selectEnableClickableAttributeURL: DashboardSelector<boolean>;
 // @public
 export const selectEnableCompanyLogoInEmbeddedUI: DashboardSelector<boolean>;
 
+// @internal
+export const selectEnableDuplicatedLabelValuesInAttributeFilter: DashboardSelector<boolean>;
+
 // @public
 export const selectEnableFilterValuesResolutionInDrillEvents: DashboardSelector<boolean>;
 
