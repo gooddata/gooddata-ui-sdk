@@ -13,11 +13,10 @@ export class Button extends React.Component<IButtonProps> {
         className: "",
         disabled: false,
         onClick: noop,
-        tabIndex: -1,
+        tabIndex: 0,
         tagName: "button",
         title: "",
         type: "button",
-        value: "",
         iconLeft: null as string,
         iconRight: null as string,
     };
@@ -25,7 +24,7 @@ export class Button extends React.Component<IButtonProps> {
     public buttonNode: HTMLElement;
 
     public render() {
-        const { id, tagName, title, disabled, tabIndex, type, iconLeft, iconRight } = this.props;
+        const { id, tagName, title, disabled, tabIndex, type, iconLeft, iconRight, ariaLabel } = this.props;
         const TagName = tagName as any;
         const effectiveValue = this.getEffectiveValue();
 
@@ -41,7 +40,7 @@ export class Button extends React.Component<IButtonProps> {
                 onClick={this._onClick}
                 tabIndex={tabIndex}
                 aria-disabled={disabled}
-                aria-label={title}
+                aria-label={ariaLabel}
                 role="button"
             >
                 {this.renderIcon(iconLeft)}

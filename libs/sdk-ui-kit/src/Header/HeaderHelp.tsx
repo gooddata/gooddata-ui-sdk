@@ -1,11 +1,12 @@
-// (C) 2021-2022 GoodData Corporation
-import React, { useState, useRef } from "react";
+// (C) 2021-2024 GoodData Corporation
+import React, { useState, useRef, useCallback } from "react";
 import { FormattedMessage, injectIntl, IntlShape } from "react-intl";
 import cx from "classnames";
 import isEmpty from "lodash/isEmpty.js";
 
 import { Overlay } from "../Overlay/index.js";
 import { HelpMenuDropdownAlignPoints, IAlignPoint } from "../typings/positioning.js";
+import { Button } from "../Button/index.js";
 
 interface IHelpItem {
     key: string;
@@ -38,7 +39,7 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
     helpRedirectUrl,
 }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const helpMenuRef = useRef<HTMLDivElement>(null);
+    const helpMenuRef = useRef<Button>(null);
 
     const classNames = cx({
         "gd-header-help": true,
@@ -68,10 +69,13 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
         );
     });
 
-    const toggleHelpMenu = (isMenuOpen = !isOpen) => {
-        onHelpClicked?.(isMenuOpen);
-        setIsOpen(isMenuOpen);
-    };
+    const toggleHelpMenu = useCallback(
+        (isMenuOpen = !isOpen) => {
+            onHelpClicked?.(isMenuOpen);
+            setIsOpen(isMenuOpen);
+        },
+        [isOpen, onHelpClicked],
+    );
 
     const menuItemClicked = (...args: any[]) => {
         toggleHelpMenu(false);
@@ -88,7 +92,7 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
                 align: "br tr",
             },
         ];
-        const helpMenuCurrentRef = helpMenuRef?.current;
+        const helpMenuCurrentRef = helpMenuRef?.current.buttonNode;
         if (
             !helpMenuCurrentRef ||
             !helpMenuDropdownAlignPoints ||
@@ -133,10 +137,14 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
             <FormattedMessage id="gs.header.help" />
         </a>
     ) : (
-        <div className={classNames} onClick={() => toggleHelpMenu()} ref={helpMenuRef}>
+        <Button
+            className={cx(classNames, "gd-header-button")}
+            onClick={() => toggleHelpMenu()}
+            ref={helpMenuRef}
+        >
             <FormattedMessage id="gs.header.help" />
             {renderHelpMenu()}
-        </div>
+        </Button>
     );
 };
 

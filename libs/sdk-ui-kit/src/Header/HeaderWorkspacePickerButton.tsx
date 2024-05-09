@@ -1,7 +1,8 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
+import { Button } from "../Button/index.js";
 
 interface IHeaderWorkspacePickerButtonProps {
     title: string;
@@ -22,8 +23,8 @@ export const HeaderWorkspacePickerButton: React.FC<IHeaderWorkspacePickerButtonP
     });
 
     return (
-        <div className={classNames} onClick={onClick}>
-            {title}
-        </div>
+        <Button className="gd-header-button gd-workspace-picker-button" onClick={onClick} title={title}>
+            <div className={classNames}>{title}</div>
+        </Button>
     );
 };

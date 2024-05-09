@@ -281,6 +281,12 @@ $gd-dashboards-filterBar-filterButton-backgroundColor: var(
             color: variables.$gd-color-negative;
         }
     }
+
+    &:focus-visible {
+        outline: auto 5px Highlight; /* For Firefox */
+        // stylelint-disable-next-line declaration-block-no-duplicate-properties
+        outline: auto 5px -webkit-focus-ring-color; /* For Chrome */
+    }
 }
 
 // remove button in mobile

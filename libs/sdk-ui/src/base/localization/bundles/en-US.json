@@ -19,6 +19,11 @@
         "comment": "",
         "limit": 0
     },
+    "gs.header.account.title": {
+        "value": "Account",
+        "comment": "",
+        "limit": 0
+    },
     "gs.list.all": {
         "value": "All",
         "comment": "",

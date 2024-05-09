@@ -1,3 +1,5 @@
+// (C) 2024 GoodData Corporation
+
 @use "variables";
 @use "zIndexes";
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins";
@@ -104,6 +106,16 @@
     }
 }
 
+.dash-header-options-wrapper {
+    @media #{kit-variables.$xsmall-only}, #{kit-variables.$small-only} {
+        height: 100%;
+
+        button {
+            height: 100%;
+        }
+    }
+}
+
 .dash-header-options-button {
     flex: 0 0 auto;
     text-align: center;
@@ -129,6 +141,10 @@
     @media #{kit-variables.$medium-up} {
         margin-right: 10px;
     }
+}
+
+.dash-header-share-button {
+    margin-left: 10px;
 }
 
 .overlay-wrapper {

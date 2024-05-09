@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { ScreenSize } from "@gooddata/sdk-model";
@@ -17,5 +17,11 @@ const screenClasses: { [S in ScreenSize]: string } = {
 };
 
 export const DashboardItem: React.FC<IDashboardItemProps> = ({ className, screen, ...props }) => {
-    return <div {...props} className={cx(className, "dash-item", "s-dash-item", screenClasses[screen])} />;
+    return (
+        <div
+            {...props}
+            className={cx(className, "dash-item", "s-dash-item", screenClasses[screen])}
+            tabIndex={0}
+        />
+    );
 };

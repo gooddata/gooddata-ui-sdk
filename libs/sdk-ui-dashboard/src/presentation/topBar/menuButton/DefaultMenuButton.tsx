@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import React, { useCallback, useMemo, useState } from "react";
 import cx from "classnames";
 import {
@@ -10,9 +10,11 @@ import {
     Overlay,
     SingleSelectListItem,
 } from "@gooddata/sdk-ui-kit";
+import { useIntl } from "react-intl";
 
 import { IMenuButtonProps } from "./types.js";
 
+const ALIGN_POINTS_TOOLTIP = [{ align: "bc tr" }, { align: "cl cr" }];
 const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "cl tr" }];
 
@@ -22,6 +24,8 @@ const bubbleAlignPoints: IAlignPoint[] = [{ align: "cl tr" }];
 export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null => {
     const { menuItems } = props;
     const [isOpen, setIsOpen] = useState(false);
+    const intl = useIntl();
+    const tooltipText = intl.formatMessage({ id: "controlButtons.options.tooltip" });
 
     const onMenuButtonClick = useCallback(() => {
         setIsOpen((prevIsOpen) => !prevIsOpen);
@@ -114,11 +118,24 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
 
     return (
         <>
-            <Button
-                onClick={onMenuButtonClick}
-                value="&#8943;"
-                className={"gd-button-primary dash-header-options-button s-header-options-button gd-button"}
-            />
+            <BubbleHoverTrigger className="dash-header-options-wrapper" showDelay={100}>
+                <Button
+                    onClick={onMenuButtonClick}
+                    value="&#8943;"
+                    className={
+                        "gd-button-primary dash-header-options-button s-header-options-button gd-button"
+                    }
+                    ariaLabel={tooltipText}
+                />
+                {!isOpen ? (
+                    <Bubble
+                        alignTo="gd-button-primary dash-header-options-button"
+                        alignPoints={ALIGN_POINTS_TOOLTIP}
+                    >
+                        {tooltipText}
+                    </Bubble>
+                ) : null}
+            </BubbleHoverTrigger>
             {isOpen ? renderMenuItems() : null}
         </>
     );
