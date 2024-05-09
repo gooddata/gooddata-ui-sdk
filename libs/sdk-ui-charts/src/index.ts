@@ -11,7 +11,6 @@
  */
 export * from "./interfaces/index.js";
 export * from "./charts/index.js";
-export * from "./forecast.js";
 export {
     ColorUtils,
     TOP,

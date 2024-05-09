@@ -31,7 +31,6 @@ import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IExecutionFactory } from '@gooddata/sdk-backend-spi';
 import { IFilter } from '@gooddata/sdk-model';
 import { IForecastConfig } from '@gooddata/sdk-backend-spi';
-import { IInsightDefinition } from '@gooddata/sdk-model';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { IRgbColorValue } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-model';
@@ -829,12 +828,6 @@ export const isDependencyWheel: LodashIsEqual1x1;
 
 // @internal (undocumented)
 export const isDonutChart: LodashIsEqual1x1;
-
-// @beta
-export function isForecastEnabled(insight: IInsightDefinition, type: ChartType): {
-    enabled: boolean;
-    visible: boolean;
-};
 
 // @internal (undocumented)
 export const isFunnel: LodashIsEqual1x1;

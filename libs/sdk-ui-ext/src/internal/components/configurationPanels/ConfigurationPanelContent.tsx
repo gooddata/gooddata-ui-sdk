@@ -2,13 +2,13 @@
 import React from "react";
 import noop from "lodash/noop.js";
 import { ChartType, DefaultLocale } from "@gooddata/sdk-ui";
-import { isForecastEnabled } from "@gooddata/sdk-ui-charts";
 import { IInsightDefinition, ISettings, insightHasMeasures } from "@gooddata/sdk-model";
 
 import {
     IReferences,
     IVisualizationProperties,
     IConfigurationPanelRenderers,
+    IReferencePoint,
 } from "../../interfaces/Visualization.js";
 import { IColorConfiguration } from "../../interfaces/Colors.js";
 import ColorsSection from "../configurationControls/colors/ColorsSection.js";
@@ -17,10 +17,12 @@ import { InternalIntlWrapper } from "../../utils/internalIntlProvider.js";
 import { getMeasuresFromMdObject } from "../../utils/bucketHelper.js";
 import InteractionsSection from "../configurationControls/interactions/InteractionsSection.js";
 import ForecastSection from "../configurationControls/forecast/ForecastSection.js";
+import { isForecastEnabled } from "../../utils/forecastHelper.js";
 
 export interface IConfigurationPanelContentProps<PanelConfig = any> {
     properties?: IVisualizationProperties;
     references?: IReferences;
+    referencePoint?: IReferencePoint;
     propertiesMeta?: any;
     colors?: IColorConfiguration;
     locale: string;
@@ -41,6 +43,7 @@ export default abstract class ConfigurationPanelContent<
     public static defaultProps: IConfigurationPanelContentProps = {
         properties: null,
         references: null,
+        referencePoint: null,
         propertiesMeta: null,
         colors: null,
         locale: DefaultLocale,
@@ -123,13 +126,14 @@ export default abstract class ConfigurationPanelContent<
     }
 
     protected renderForecastSection(): React.ReactNode {
-        const { pushData, properties, propertiesMeta, insight, type, featureFlags } = this.props;
+        const { pushData, properties, propertiesMeta, type, featureFlags, referencePoint, insight } =
+            this.props;
 
         if (!featureFlags.enableSmartFunctions) {
             return null;
         }
 
-        const { enabled, visible } = isForecastEnabled(insight, type);
+        const { enabled, visible } = isForecastEnabled(referencePoint, insight, type);
         if (!visible) {
             return null;
         }
