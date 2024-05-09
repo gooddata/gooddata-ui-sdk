@@ -6819,8 +6819,6 @@ export interface ITigerClient {
     explain: ReturnType<typeof tigerAfmExplainClientFactory>;
     // (undocumented)
     export: ReturnType<typeof tigerExportClientFactory>;
-    // @beta (undocumented)
-    forecast: ReturnType<typeof tigerForecastClientFactory>;
     // (undocumented)
     labelElements: ReturnType<typeof tigerLabelElementsClientFactory>;
     // (undocumented)
@@ -6830,6 +6828,8 @@ export interface ITigerClient {
     // (undocumented)
     scanModel: ReturnType<typeof tigerScanModelClientFactory>;
     setApiToken: (token: string | undefined) => void;
+    // @beta (undocumented)
+    smartFunctions: ReturnType<typeof tigerSmartFunctionsClientFactory>;
     // (undocumented)
     userManagement: ReturnType<typeof tigerUserManagementClientFactory>;
     // (undocumented)
@@ -14191,9 +14191,6 @@ export const tigerExecutionResultClientFactory: (axios: AxiosInstance) => Pick<A
 // @public (undocumented)
 export const tigerExportClientFactory: (axios: AxiosInstance) => ExportActionsApiInterface;
 
-// @beta
-export const tigerForecastClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "forecast" | "forecastResult">;
-
 // @public (undocumented)
 export const tigerLabelElementsClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "computeLabelElementsPost">;
 
@@ -14208,6 +14205,9 @@ export const tigerResultClientFactory: (axios: AxiosInstance) => ResultActionsAp
 
 // @public (undocumented)
 export const tigerScanModelClientFactory: (axios: AxiosInstance) => ScanModelActionsApiInterface;
+
+// @beta
+export const tigerSmartFunctionsClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "forecast" | "forecastResult" | "keyDriverAnalysis" | "keyDriverAnalysisResult" | "anomalyDetection" | "anomalyDetectionResult" | "clustering" | "clusteringResult">;
 
 // @public (undocumented)
 export const tigerUserManagementClientFactory: (axios: AxiosInstance) => UserManagementApiInterface;

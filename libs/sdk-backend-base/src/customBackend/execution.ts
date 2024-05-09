@@ -28,6 +28,8 @@ import {
     IExplainProvider,
     ExplainType,
     IForecastResult,
+    IAnomalyDetectionResult,
+    IClusteringResult,
 } from "@gooddata/sdk-backend-spi";
 import isEqual from "lodash/isEqual.js";
 import {
@@ -163,6 +165,14 @@ class CustomExecutionResult implements IExecutionResult {
 
     public readForecastAll(): Promise<IForecastResult> {
         throw new NotSupported("Forecasting is not supported by the custom backend.");
+    }
+
+    public readAnomalyDetectionAll(): Promise<IAnomalyDetectionResult> {
+        throw new NotSupported("Anomaly detection is not supported by the custom backend.");
+    }
+
+    public readClusteringAll(): Promise<IClusteringResult> {
+        throw new NotSupported("Clustering is not supported by the custom backend.");
     }
 
     public readWindow = (offset: number[], size: number[]): Promise<IDataView> => {

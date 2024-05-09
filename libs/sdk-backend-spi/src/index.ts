@@ -38,6 +38,10 @@ export {
     ExplainType,
     IForecastResult,
     IForecastConfig,
+    IAnomalyDetectionConfig,
+    IAnomalyDetectionResult,
+    IClusteringConfig,
+    IClusteringResult,
 } from "./workspace/execution/index.js";
 
 export { IWorkspaceSettingsService } from "./workspace/settings/index.js";
@@ -139,7 +143,11 @@ export { IWorkspacePermissionsService } from "./workspace/permissions/index.js";
 
 export { IWorkspaceAttributesService } from "./workspace/attributes/index.js";
 
-export { IWorkspaceMeasuresService, IMeasureReferencing } from "./workspace/measures/index.js";
+export {
+    IWorkspaceMeasuresService,
+    IMeasureReferencing,
+    IMeasureKeyDrivers,
+} from "./workspace/measures/index.js";
 
 export { IWorkspaceFactsService } from "./workspace/facts/index.js";
 
