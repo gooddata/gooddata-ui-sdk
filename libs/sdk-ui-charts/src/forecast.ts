@@ -19,10 +19,14 @@ export function isForecastEnabled(
             const buckets = insightBuckets(insight);
             const measures = bucketsFind(buckets, (b) => b.localIdentifier === BucketNames.MEASURES);
             const trends = bucketsFind(buckets, (b) => b.localIdentifier === BucketNames.TREND);
+            const segments = bucketsFind(buckets, (b) => b.localIdentifier === BucketNames.SEGMENT);
 
             //TODO: s.hacker check if the trend is date attribute somehow
             return {
-                enabled: measures?.items.length === 1 && trends?.items.length === 1,
+                enabled:
+                    measures?.items.length === 1 &&
+                    trends?.items.length === 1 &&
+                    (segments?.items.length ?? 0) === 0,
                 visible: true,
             };
         }

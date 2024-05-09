@@ -166,4 +166,46 @@ describe("isForecastEnabled", () => {
             visible: true,
         });
     });
+
+    it("should be disabled if more buckets 3", () => {
+        const res = isForecastEnabled(
+            {
+                ...insight,
+                insight: {
+                    ...insight.insight,
+                    buckets: [
+                        ...insight.insight.buckets,
+                        {
+                            localIdentifier: "segment",
+                            items: [
+                                {
+                                    attribute: {
+                                        localIdentifier: "date",
+                                        alias: "",
+                                        displayForm: {
+                                            uri: "dateUri",
+                                        },
+                                    },
+                                },
+                                {
+                                    attribute: {
+                                        localIdentifier: "date1",
+                                        alias: "",
+                                        displayForm: {
+                                            uri: "dateUri1",
+                                        },
+                                    },
+                                },
+                            ],
+                        },
+                    ],
+                },
+            },
+            "line",
+        );
+        expect(res).toEqual({
+            enabled: false,
+            visible: true,
+        });
+    });
 });

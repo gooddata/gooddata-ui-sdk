@@ -262,7 +262,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                     return;
                 }
 
-                if (dataView.forecastConfig) {
+                if (dataView.forecastConfig && forecastConfig) {
                     try {
                         const forecastResult = await executionResult.readForecastAll(dataView.forecastConfig);
                         const updatedDataView = dataView.withForecast(
@@ -271,7 +271,14 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                         );
                         this.setState((s) => ({ ...s, dataView: updatedDataView }));
                         if (pushData) {
-                            pushData({ dataView: updatedDataView });
+                            pushData({
+                                dataView: updatedDataView,
+                                propertiesMeta: {
+                                    slicedForecast:
+                                        forecastConfig.forecastPeriod !==
+                                        dataView.forecastConfig?.forecastPeriod,
+                                },
+                            });
                         }
                     } catch (e) {
                         const updatedDataView = dataView.withForecast(undefined);
