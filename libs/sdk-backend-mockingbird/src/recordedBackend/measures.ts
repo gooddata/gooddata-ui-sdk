@@ -1,10 +1,11 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 import {
     IWorkspaceMeasuresService,
     NotSupported,
     IMeasureExpressionToken,
     IMeasureReferencing,
+    IMeasureKeyDrivers,
 } from "@gooddata/sdk-backend-spi";
 import { ObjRef, IMeasureMetadataObject, IMeasureMetadataObjectDefinition } from "@gooddata/sdk-model";
 
@@ -13,6 +14,10 @@ import { ObjRef, IMeasureMetadataObject, IMeasureMetadataObjectDefinition } from
  */
 export class RecordedMeasures implements IWorkspaceMeasuresService {
     public getMeasureExpressionTokens(_: ObjRef): Promise<IMeasureExpressionToken[]> {
+        throw new NotSupported("not supported");
+    }
+
+    computeKeyDrivers(): Promise<IMeasureKeyDrivers> {
         throw new NotSupported("not supported");
     }
 

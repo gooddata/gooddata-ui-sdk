@@ -47,6 +47,45 @@ export interface IForecastResult {
 }
 
 /**
+ * @alpha
+ */
+export interface IAnomalyDetectionConfig {
+    /**
+     * Sensitivity of the anomaly detection - e.g. 1.5
+     */
+    sensitivity: number;
+}
+
+/**
+ * @alpha
+ */
+export interface IAnomalyDetectionResult {
+    attribute: string[];
+    values: number[];
+    anomalyFlag: boolean[];
+}
+
+/**
+ * @alpha
+ */
+export interface IClusteringConfig {
+    /**
+     * Number of clusters - e.g. 3
+     */
+    numberOfClusters: number;
+}
+
+/**
+ * @alpha
+ */
+export interface IClusteringResult {
+    attribute: string[];
+    clusters: number[];
+    xcoord: number[];
+    ycoord: number[];
+}
+
+/**
  * Execution factory provides several methods to create a prepared execution from different types
  * of inputs.
  *
@@ -327,6 +366,18 @@ export interface IExecutionResult {
      * @beta
      */
     readForecastAll(config: IForecastConfig): Promise<IForecastResult>;
+
+    /**
+     * Reads anomaly detection for the execution result.
+     * @alpha
+     */
+    readAnomalyDetectionAll(config: IAnomalyDetectionConfig): Promise<IAnomalyDetectionResult>;
+
+    /**
+     * Reads anomaly detection for the execution result.
+     * @alpha
+     */
+    readClusteringAll(config: IClusteringConfig): Promise<IClusteringResult>;
 
     /**
      * Transforms this execution result - changing the result sorting, dimensionality and available

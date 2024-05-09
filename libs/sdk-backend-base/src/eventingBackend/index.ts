@@ -8,6 +8,10 @@ import {
     IForecastResult,
     IPreparedExecution,
     IForecastConfig,
+    IAnomalyDetectionResult,
+    IAnomalyDetectionConfig,
+    IClusteringResult,
+    IClusteringConfig,
 } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 
@@ -93,6 +97,14 @@ class WithExecutionResultEventing extends DecoratedExecutionResult {
 
                 throw e;
             });
+    }
+
+    public readAnomalyDetectionAll(config: IAnomalyDetectionConfig): Promise<IAnomalyDetectionResult> {
+        return super.readAnomalyDetectionAll(config);
+    }
+
+    public readClusteringAll(config: IClusteringConfig): Promise<IClusteringResult> {
+        return super.readClusteringAll(config);
     }
 
     public readWindow = (offset: number[], size: number[]): Promise<IDataView> => {

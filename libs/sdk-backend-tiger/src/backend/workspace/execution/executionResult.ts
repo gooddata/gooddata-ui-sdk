@@ -21,6 +21,10 @@ import {
     IForecastConfig,
     IForecastResult,
     IForecastView,
+    IAnomalyDetectionConfig,
+    IAnomalyDetectionResult,
+    IClusteringConfig,
+    IClusteringResult,
 } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition, DataValue, IDimensionDescriptor, IResultHeader } from "@gooddata/sdk-model";
 import SparkMD5 from "spark-md5";
@@ -100,7 +104,7 @@ export class TigerExecutionResult implements IExecutionResult {
         const resultId = this.resultId;
 
         const forecast = await this.authCall((client) =>
-            client.forecast
+            client.smartFunctions
                 .forecast({
                     forecastRequest: forecastConfig,
                     workspaceId: workspace,
@@ -110,13 +114,70 @@ export class TigerExecutionResult implements IExecutionResult {
         );
 
         return this.authCall((client) =>
-            client.forecast
+            client.smartFunctions
                 .forecastResult({
                     workspaceId: workspace,
                     resultId: forecast.links.executionResult,
                 })
                 .then(({ data }) => data),
         );
+    }
+
+    public async readAnomalyDetectionAll(config: IAnomalyDetectionConfig): Promise<IAnomalyDetectionResult> {
+        const workspaceId = this.workspace;
+        const resultId = this.resultId;
+        const sensitivity = config.sensitivity;
+
+        const anomalyDetection = await this.authCall((client) =>
+            client.smartFunctions.anomalyDetection({
+                anomalyDetectionRequest: {
+                    sensitivity,
+                },
+                resultId,
+                workspaceId,
+            }),
+        );
+
+        const anomalyResult = await this.authCall((client) =>
+            client.smartFunctions.anomalyDetectionResult({
+                resultId: anomalyDetection.data.links.executionResult,
+                workspaceId: this.workspace,
+            }),
+        );
+
+        return anomalyResult.data;
+    }
+
+    public async readClusteringAll(clusteringConfig: IClusteringConfig): Promise<IClusteringResult> {
+        const workspaceId = this.workspace;
+        const resultId = this.resultId;
+        const numberOfClusters = clusteringConfig.numberOfClusters;
+
+        const clustering = await this.authCall((client) =>
+            client.smartFunctions.clustering({
+                clusteringRequest: {
+                    numberOfClusters,
+                },
+                resultId,
+                workspaceId,
+            }),
+        );
+
+        const clusteringResult = await this.authCall((client) =>
+            client.smartFunctions.clusteringResult({
+                resultId: clustering.data.links.executionResult,
+                workspaceId: this.workspace,
+            }),
+        );
+
+        const { attribute, clusters, xcoord, ycoord } = clusteringResult.data;
+
+        return {
+            attribute: attribute as unknown as string[], // OpenAPI definition has wrong typing
+            clusters,
+            xcoord,
+            ycoord,
+        };
     }
 
     public async readWindow(offset: number[], size: number[]): Promise<IDataView> {

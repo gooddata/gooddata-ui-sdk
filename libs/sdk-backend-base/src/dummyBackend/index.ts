@@ -66,6 +66,9 @@ import {
     IForecastResult,
     IForecastConfig,
     IForecastView,
+    IMeasureKeyDrivers,
+    IAnomalyDetectionResult,
+    IClusteringResult,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -402,6 +405,12 @@ function dummyExecutionResult(
         },
         readForecastAll(): Promise<IForecastResult> {
             throw new NotSupported("Forecasting is not supported in dummy backend.");
+        },
+        readAnomalyDetectionAll(): Promise<IAnomalyDetectionResult> {
+            throw new NotSupported("Anomaly detection is not supported in dummy backend.");
+        },
+        readClusteringAll(): Promise<IClusteringResult> {
+            throw new NotSupported("Clustering is not supported in dummy backend.");
         },
         fingerprint(): string {
             return fp;
@@ -1020,6 +1029,10 @@ class DummyWorkspaceAttributesService implements IWorkspaceAttributesService {
 
 class DummyWorkspaceMeasuresService implements IWorkspaceMeasuresService {
     constructor(public readonly workspace: string) {}
+
+    async computeKeyDrivers(): Promise<IMeasureKeyDrivers> {
+        throw new NotSupported("not supported");
+    }
 
     createMeasure(measure: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject> {
         return Promise.resolve({

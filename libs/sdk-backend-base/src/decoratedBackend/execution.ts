@@ -12,6 +12,10 @@ import {
     ExplainType,
     IForecastResult,
     IForecastConfig,
+    IAnomalyDetectionConfig,
+    IAnomalyDetectionResult,
+    IClusteringConfig,
+    IClusteringResult,
 } from "@gooddata/sdk-backend-spi";
 import {
     IAttributeOrMeasure,
@@ -176,6 +180,14 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
 
     public readForecastAll(config: IForecastConfig): Promise<IForecastResult> {
         return this.decorated.readForecastAll(config);
+    }
+
+    public readAnomalyDetectionAll(config: IAnomalyDetectionConfig): Promise<IAnomalyDetectionResult> {
+        return this.decorated.readAnomalyDetectionAll(config);
+    }
+
+    public readClusteringAll(config: IClusteringConfig): Promise<IClusteringResult> {
+        return this.decorated.readClusteringAll(config);
     }
 
     public readWindow(offset: number[], size: number[]): Promise<IDataView> {

@@ -231,6 +231,21 @@ export interface IAnalyticalWorkspace {
     readonly workspace: string;
 }
 
+// @alpha (undocumented)
+export interface IAnomalyDetectionConfig {
+    sensitivity: number;
+}
+
+// @alpha (undocumented)
+export interface IAnomalyDetectionResult {
+    // (undocumented)
+    anomalyFlag: boolean[];
+    // (undocumented)
+    attribute: string[];
+    // (undocumented)
+    values: number[];
+}
+
 // @public
 export interface IAttributeElementExpressionToken {
     deleted?: boolean;
@@ -336,6 +351,23 @@ export interface IBracketExpressionToken {
 export interface ICancelable<T> {
     // (undocumented)
     withSignal(signal: AbortSignal): T;
+}
+
+// @alpha (undocumented)
+export interface IClusteringConfig {
+    numberOfClusters: number;
+}
+
+// @alpha (undocumented)
+export interface IClusteringResult {
+    // (undocumented)
+    attribute: string[];
+    // (undocumented)
+    clusters: number[];
+    // (undocumented)
+    xcoord: number[];
+    // (undocumented)
+    ycoord: number[];
 }
 
 // @public
@@ -504,6 +536,10 @@ export interface IExecutionResult {
     export(options: IExportConfig): Promise<IExportResult>;
     fingerprint(): string;
     readAll(): Promise<IDataView>;
+    // @alpha
+    readAnomalyDetectionAll(config: IAnomalyDetectionConfig): Promise<IAnomalyDetectionResult>;
+    // @alpha
+    readClusteringAll(config: IClusteringConfig): Promise<IClusteringResult>;
     // @beta
     readForecastAll(config: IForecastConfig): Promise<IForecastResult>;
     readWindow(offset: number[], size: number[]): Promise<IDataView>;
@@ -688,6 +724,12 @@ export type IInsightsQueryResult = IPagedResource<IInsight>;
 
 // @public
 export type IMeasureExpressionToken = IObjectExpressionToken | IAttributeElementExpressionToken | ITextExpressionToken | ICommentExpressionToken | IBracketExpressionToken;
+
+// @alpha
+export interface IMeasureKeyDrivers {
+    effects: number[];
+    labels: string[];
+}
 
 // @public
 export interface IMeasureReferencing {
@@ -1173,6 +1215,10 @@ export interface IWorkspaceLogicalModelService {
 
 // @public
 export interface IWorkspaceMeasuresService {
+    // @alpha
+    computeKeyDrivers: (measure: IMeasure, options?: {
+        sortDirection: "ASC" | "DESC";
+    }) => Promise<IMeasureKeyDrivers>;
     createMeasure(measure: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject>;
     deleteMeasure(measureRef: ObjRef): Promise<void>;
     getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;

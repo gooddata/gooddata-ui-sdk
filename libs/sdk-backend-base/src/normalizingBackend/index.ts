@@ -14,6 +14,10 @@ import {
     NoDataError,
     IForecastResult,
     IForecastConfig,
+    IAnomalyDetectionConfig,
+    IAnomalyDetectionResult,
+    IClusteringConfig,
+    IClusteringResult,
 } from "@gooddata/sdk-backend-spi";
 import { decoratedBackend } from "../decoratedBackend/index.js";
 import { DecoratedExecutionFactory, DecoratedPreparedExecution } from "../decoratedBackend/execution.js";
@@ -156,6 +160,14 @@ class DenormalizingExecutionResult implements IExecutionResult {
 
     public readForecastAll(config: IForecastConfig): Promise<IForecastResult> {
         return this.normalizedResult.readForecastAll(config);
+    }
+
+    public readAnomalyDetectionAll(config: IAnomalyDetectionConfig): Promise<IAnomalyDetectionResult> {
+        return this.normalizedResult.readAnomalyDetectionAll(config);
+    }
+
+    public readClusteringAll(config: IClusteringConfig): Promise<IClusteringResult> {
+        return this.normalizedResult.readClusteringAll(config);
     }
 
     public equals = (other: IExecutionResult): boolean => {

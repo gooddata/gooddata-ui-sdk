@@ -15,6 +15,8 @@ import { ExplainType } from '@gooddata/sdk-backend-spi';
 import { FilterContextItem } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
+import { IAnomalyDetectionConfig } from '@gooddata/sdk-backend-spi';
+import { IAnomalyDetectionResult } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeMetadataObject } from '@gooddata/sdk-model';
@@ -30,6 +32,8 @@ import { ICatalogDateDataset } from '@gooddata/sdk-model';
 import { ICatalogFact } from '@gooddata/sdk-model';
 import { ICatalogGroup } from '@gooddata/sdk-model';
 import { ICatalogMeasure } from '@gooddata/sdk-model';
+import { IClusteringConfig } from '@gooddata/sdk-backend-spi';
+import { IClusteringResult } from '@gooddata/sdk-backend-spi';
 import { IDashboard } from '@gooddata/sdk-model';
 import { IDashboardDefinition } from '@gooddata/sdk-model';
 import { IDashboardFilterReference } from '@gooddata/sdk-model';
@@ -401,6 +405,10 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
     fingerprint(): string;
     // (undocumented)
     readAll(): Promise<IDataView>;
+    // (undocumented)
+    readAnomalyDetectionAll(config: IAnomalyDetectionConfig): Promise<IAnomalyDetectionResult>;
+    // (undocumented)
+    readClusteringAll(config: IClusteringConfig): Promise<IClusteringResult>;
     // (undocumented)
     readForecastAll(config: IForecastConfig): Promise<IForecastResult>;
     // (undocumented)
