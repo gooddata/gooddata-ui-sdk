@@ -6,6 +6,7 @@ import {
     insightProperties,
 } from "@gooddata/sdk-model";
 import { IChartConfig } from "@gooddata/sdk-ui-charts";
+import { IForecastConfig } from "@gooddata/sdk-backend-spi";
 import filter from "lodash/fp/filter.js";
 import flow from "lodash/fp/flow.js";
 import fromPairs from "lodash/fromPairs.js";
@@ -89,6 +90,26 @@ export function chartConfigFromInsight(
     )(withValuesFromContext);
 }
 
+export function chartForecastConfigFromInsight(
+    insight: IInsightDefinition,
+    _ctx?: IEmbeddingCodeContext,
+): IForecastConfig | undefined {
+    const properties = insightProperties(insight);
+    const controls = properties?.controls ?? {};
+
+    if (!controls.forecast || controls.forecast?.enabled === false) {
+        return undefined;
+    }
+
+    const period = controls.forecast?.period.toString();
+
+    return flow(removeUseless)({
+        confidenceLevel: controls.forecast?.confidence,
+        forecastPeriod: period ? parseInt(period, 10) : undefined,
+        seasonal: controls.forecast?.seasonal,
+    });
+}
+
 export function chartAdditionalFactories(options?: {
     getColorMappingPredicatePackage?: string;
 }): IAdditionalFactoryDefinition[] {
@@ -125,4 +146,19 @@ export function chartConfigInsightConversion<TProps extends object, TPropKey ext
     propName: TPropKey,
 ): IInsightToPropConversion<TProps, TPropKey, IChartConfig> {
     return insightConversion(propName, chartConfigPropMeta, chartConfigFromInsight);
+}
+
+const chartForecastConfigPropMeta: PropMeta = {
+    typeImport: {
+        importType: "named",
+        name: "IForecastConfig",
+        package: "@gooddata/sdk-backend-spi",
+    },
+    cardinality: "scalar",
+};
+
+export function chartForecastConfigInsightConversion<TProps extends object, TPropKey extends keyof TProps>(
+    propName: TPropKey,
+): IInsightToPropConversion<TProps, TPropKey, IForecastConfig> {
+    return insightConversion(propName, chartForecastConfigPropMeta, chartForecastConfigFromInsight);
 }

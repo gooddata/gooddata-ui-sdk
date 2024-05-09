@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { IInsight } from "@gooddata/sdk-model";
 import { BucketNames, IDrillEvent } from "@gooddata/sdk-ui";
 import { ILineChartProps } from "@gooddata/sdk-ui-charts";
@@ -26,7 +26,11 @@ import {
     singleAttributeBucketConversion,
     sortsInsightConversion,
 } from "../../../utils/embeddingCodeGenerator/index.js";
-import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
+import {
+    chartAdditionalFactories,
+    chartConfigInsightConversion,
+    chartForecastConfigInsightConversion,
+} from "../chartCodeGenUtils.js";
 
 export class LineChartDescriptor extends BaseChartDescriptor implements IVisualizationDescriptor {
     public getFactory(): PluggableVisualizationFactory {
@@ -60,6 +64,7 @@ export class LineChartDescriptor extends BaseChartDescriptor implements IVisuali
             filters: filtersInsightConversion("filters"),
             sortBy: sortsInsightConversion("sortBy"),
             config: chartConfigInsightConversion("config"),
+            forecastConfig: chartForecastConfigInsightConversion("forecastConfig"),
             locale: localeInsightConversion("locale"),
             execConfig: executionConfigInsightConversion("execConfig"),
         }),
