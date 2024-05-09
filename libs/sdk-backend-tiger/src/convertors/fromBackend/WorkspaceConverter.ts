@@ -8,8 +8,8 @@ export const workspaceConverter = (
 ): IWorkspaceDescriptor => {
     const parentWorkspace = relationships?.parent?.data?.id;
     return {
-        description: attributes?.description || attributes?.name || id,
-        title: attributes?.name || "",
+        description: attributes?.description ?? "",
+        title: attributes?.name ?? "",
         id: id,
         prefix: attributes?.prefix,
         parentWorkspace,
