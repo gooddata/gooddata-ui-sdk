@@ -1016,6 +1016,16 @@
         "comment": "",
         "limit": 0
     },
+    "properties.forecastSliced.title": {
+        "value": "Displaying partial results.",
+        "comment": "",
+        "limit": 0
+    },
+    "properties.forecastSliced.description": {
+        "value": "Try changing the visualization settings to display all results.",
+        "comment": "",
+        "limit": 0
+    },
     "properties.canvas.totalLabels": {
         "value": "Total Labels",
         "comment": "",
