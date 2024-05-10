@@ -98,6 +98,7 @@ export const LINE_CHART_SUPPORTED_PROPERTIES = {
         ...BASE_PROPERTIES,
         ...BASE_X_AXIS_PROPERTIES,
         ...BASE_SECONDARY_AXIS_PROPERTIES,
+        ...FORECAST_PROPERTIES,
         "dataPoints.visible",
         "continuousLine.enabled",
     ],
