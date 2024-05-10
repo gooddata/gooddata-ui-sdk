@@ -84,7 +84,7 @@ class ForecastSection extends React.PureComponent<IForecastSection> {
                 />
 
                 {Boolean(slicedForecast) && (
-                    <Message type="warning" className="adi-input-warning gd-slicedForecast-message">
+                    <Message type="progress" className="adi-input-progress gd-slicedForecast-message">
                         <FormattedMessage id={messages.forecastSlicedWarningTitle.id} tagName="strong" />
                         <FormattedMessage id={messages.forecastSlicedWarningDescription.id} tagName="div" />
                     </Message>
