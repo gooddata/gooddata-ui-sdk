@@ -1017,12 +1017,12 @@
         "limit": 0
     },
     "properties.forecastSliced.title": {
-        "value": "Displaying partial results.",
+        "value": "Showing partial forecast.",
         "comment": "",
         "limit": 0
     },
     "properties.forecastSliced.description": {
-        "value": "Try changing the visualization settings to display all results.",
+        "value": "The available data point don`t cover the entire selected period.",
         "comment": "",
         "limit": 0
     },
