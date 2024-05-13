@@ -101,7 +101,7 @@ export function chartForecastConfigFromInsight(
         return undefined;
     }
 
-    const period = controls.forecast?.period.toString();
+    const period = controls.forecast?.period?.toString();
 
     return flow(removeUseless)({
         confidenceLevel: controls.forecast?.confidence,
