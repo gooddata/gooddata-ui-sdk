@@ -377,6 +377,11 @@ export interface ISettings {
      */
     enableWorkspacesHierarchyView?: boolean;
 
+    /**
+     * Enable multiple data sources to be used in a single workspace.
+     */
+    enableMultipleDataSourcesInWorkspace?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 
