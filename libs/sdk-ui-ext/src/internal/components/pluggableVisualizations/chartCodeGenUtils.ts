@@ -101,12 +101,15 @@ export function chartForecastConfigFromInsight(
         return undefined;
     }
 
-    const period = controls.forecast?.period?.toString();
+    const parsedPeriod = controls.forecast?.period?.toString();
+    const forecastPeriod = parsedPeriod ? parseInt(parsedPeriod, 10) : 3;
+    const confidenceLevel = controls.forecast?.confidence ?? 0.95;
+    const seasonal = controls.forecast?.seasonal;
 
     return flow(removeUseless)({
-        confidenceLevel: controls.forecast?.confidence,
-        forecastPeriod: period ? parseInt(period, 10) : undefined,
-        seasonal: controls.forecast?.seasonal,
+        confidenceLevel,
+        forecastPeriod,
+        seasonal,
     });
 }
 
