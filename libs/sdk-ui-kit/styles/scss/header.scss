@@ -1068,7 +1068,7 @@ button.gd-button-primary.gd-upsell-button {
     color: inherit;
     font-family: inherit;
 
-    & + & {
+    &.gd-button + &.gd-button {
         margin: 0;
     }
 
