@@ -1,9 +1,9 @@
 // (C) 2024 GoodData Corporation
 
+import { IInsightDefinition, isAttributeSort, insightBuckets, bucketsFind } from "@gooddata/sdk-model";
 import { BucketNames, ChartType } from "@gooddata/sdk-ui";
 
 import { IReferencePoint } from "../interfaces/Visualization.js";
-import { IInsightDefinition, isAttributeSort } from "@gooddata/sdk-model";
 
 export function isForecastEnabled(
     referencePoint: IReferencePoint | undefined,
@@ -13,7 +13,7 @@ export function isForecastEnabled(
     switch (type) {
         case "line": {
             return {
-                enabled: lineChartBuckets(referencePoint) && lineChartNotSorts(insight),
+                enabled: lineChartBuckets(referencePoint, insight) && lineChartNotSorts(insight),
                 visible: true,
             };
         }
@@ -26,12 +26,29 @@ export function isForecastEnabled(
     }
 }
 
-function lineChartBuckets(referencePoint: IReferencePoint | undefined) {
+function lineChartBuckets(
+    referencePoint: IReferencePoint | undefined,
+    insight: IInsightDefinition | undefined,
+) {
+    //NOTE: No reference point, try to get it from
+    // Keep on mind that we are not able to check if trends item is date
+    // but this method is used on dashboard where is not necessary to be so strict
+    if (!referencePoint) {
+        const buckets = insightBuckets(insight);
+        const measures = bucketsFind(buckets, (b) => b.localIdentifier === BucketNames.MEASURES);
+        const trends = bucketsFind(buckets, (b) => b.localIdentifier === BucketNames.TREND);
+        const segments = bucketsFind(buckets, (b) => b.localIdentifier === BucketNames.SEGMENT);
+
+        return (
+            measures?.items.length === 1 && trends?.items.length === 1 && (segments?.items.length ?? 0) === 0
+        );
+    }
+
+    //NOTE: Only one measure and one trend bucket is allowed, trend bucket must be date
     const measures = referencePoint?.buckets.find((b) => b.localIdentifier === BucketNames.MEASURES);
     const trends = referencePoint?.buckets.find((b) => b.localIdentifier === BucketNames.TREND);
     const segments = referencePoint?.buckets.find((b) => b.localIdentifier === BucketNames.SEGMENT);
 
-    //NOTE: Only one measure and one trend bucket is allowed, trend bucket must be date
     return (
         measures?.items.length === 1 &&
         trends?.items.length === 1 &&
