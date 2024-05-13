@@ -2647,6 +2647,7 @@ export interface ISettings {
     enableKPIDashboardSchedule?: boolean;
     enableKPIDashboardScheduleRecipients?: boolean;
     enableMultipleCSVs?: boolean;
+    enableMultipleDataSourcesInWorkspace?: boolean;
     enableMultipleDateFilters?: boolean;
     enableMultipleDates?: boolean;
     enableNewHeadline?: boolean;
