@@ -1,10 +1,11 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import { useCallback, useState } from "react";
 import isEqual from "lodash/isEqual.js";
 import {
     useDashboardSelector,
     selectImplicitDrillsByAvailableDrillTargets,
     selectDrillableItemsByAvailableDrillTargets,
+    selectEnableKPIDashboardDrillFromAttribute,
 } from "../../../../../model/index.js";
 import { OnWidgetDrill } from "../../../../drill/types.js";
 import {
@@ -35,13 +36,22 @@ export const useDrillDialogInsightDrills = ({
 }: UseDashboardInsightDrillsProps) => {
     // Drilling
     const [drillTargets, setDrillTargets] = useState<IAvailableDrillTargets>();
+    const isDrillFromAttributeEnabled = useDashboardSelector(selectEnableKPIDashboardDrillFromAttribute);
+    const disableDrillDownOnInsight = insight.insight.properties.controls?.disableDrillDown;
+
     const onPushData = useCallback(
         (data: IPushData): void => {
-            if (data?.availableDrillTargets && !isEqual(drillTargets, data.availableDrillTargets)) {
-                setDrillTargets(data.availableDrillTargets);
+            const targets = sanitizeAvailableDrillTargets(
+                data?.availableDrillTargets,
+                isDrillFromAttributeEnabled,
+                !disableDrillDownOnInsight,
+            );
+
+            if (targets && !isEqual(drillTargets, data.availableDrillTargets)) {
+                setDrillTargets(targets);
             }
         },
-        [drillTargets],
+        [disableDrillDownOnInsight, drillTargets, isDrillFromAttributeEnabled],
     );
 
     const implicitDrillDefinitions = useDashboardSelector(
@@ -80,4 +90,21 @@ export const useDrillDialogInsightDrills = ({
         onPushData,
         onDrill,
     };
+};
+
+const sanitizeAvailableDrillTargets = (
+    availableDrillTargets: IAvailableDrillTargets | undefined,
+    isDrillFromAttributeEnabled: boolean,
+    isDrillDownOnInsightEnabled: boolean,
+) => {
+    // if no drill targets went in (likely the pushData was fired in a non-drill-related case)
+    // pass the undefined through, this avoids useless setting of the drill targets down the line
+    if (!availableDrillTargets) {
+        return availableDrillTargets;
+    }
+
+    // Both drill from attribute FF and drilldown enablement on insight level must be enabled
+    return isDrillFromAttributeEnabled && isDrillDownOnInsightEnabled
+        ? availableDrillTargets
+        : { ...availableDrillTargets, attributes: undefined };
 };
