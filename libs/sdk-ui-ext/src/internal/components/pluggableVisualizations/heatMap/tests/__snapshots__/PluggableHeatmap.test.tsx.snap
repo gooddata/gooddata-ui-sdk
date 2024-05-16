@@ -250,7 +250,9 @@ exports[`PluggableHeatmap > heatmap should allow date attribute in column bucket
     "openAsReport": {
       "supported": false,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [],
   },
 }
@@ -418,7 +420,9 @@ exports[`PluggableHeatmap > should return reference point with one metric, categ
     "openAsReport": {
       "supported": false,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [],
   },
 }

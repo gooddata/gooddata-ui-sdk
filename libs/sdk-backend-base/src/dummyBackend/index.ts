@@ -63,6 +63,12 @@ import {
     IWorkspaceExportDefinitionsService,
     IDataFiltersService,
     IWorkspaceLogicalModelService,
+    IForecastResult,
+    IForecastConfig,
+    IForecastView,
+    IMeasureKeyDrivers,
+    IAnomalyDetectionResult,
+    IClusteringResult,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -256,6 +262,18 @@ export function dummyDataView(
         equals(other: IDataView): boolean {
             return fp === other.fingerprint();
         },
+        forecast(): IForecastView {
+            return {
+                headerItems: [],
+                prediction: [],
+                low: [],
+                high: [],
+                loading: false,
+            };
+        },
+        withForecast(_config: IForecastConfig, _result?: IForecastResult): IDataView {
+            throw new NotSupported("not supported");
+        },
     };
 }
 
@@ -268,6 +286,9 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
         workspace,
         async getDescriptor(): Promise<IWorkspaceDescriptor> {
             return dummyDescriptor(this.workspace);
+        },
+        async updateDescriptor(): Promise<void> {
+            throw new NotSupported("not supported");
         },
         getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {
             throw new NotSupported("not supported");
@@ -381,6 +402,15 @@ function dummyExecutionResult(
         },
         readWindow(_1: number[], _2: number[]): Promise<IDataView> {
             return dummyRead();
+        },
+        readForecastAll(): Promise<IForecastResult> {
+            throw new NotSupported("Forecasting is not supported in dummy backend.");
+        },
+        readAnomalyDetectionAll(): Promise<IAnomalyDetectionResult> {
+            throw new NotSupported("Anomaly detection is not supported in dummy backend.");
+        },
+        readClusteringAll(): Promise<IClusteringResult> {
+            throw new NotSupported("Clustering is not supported in dummy backend.");
         },
         fingerprint(): string {
             return fp;
@@ -677,6 +707,10 @@ class DummyOrganization implements IOrganization {
         });
     }
 
+    updateDescriptor(): Promise<void> {
+        return Promise.resolve();
+    }
+
     securitySettings(): ISecuritySettingsService {
         return {
             scope: `/gdc/domains/${this.organizationId}`,
@@ -748,6 +782,7 @@ class DummyOrganization implements IOrganization {
             setWeekStart: () => Promise.resolve(),
             setTheme: () => Promise.resolve(),
             setColorPalette: () => Promise.resolve(),
+            setOpenAiConfig: () => Promise.resolve(),
             deleteTheme: () => Promise.resolve(),
             deleteColorPalette: () => Promise.resolve(),
             getSettings: () => Promise.resolve({}),
@@ -994,6 +1029,10 @@ class DummyWorkspaceAttributesService implements IWorkspaceAttributesService {
 
 class DummyWorkspaceMeasuresService implements IWorkspaceMeasuresService {
     constructor(public readonly workspace: string) {}
+
+    async computeKeyDrivers(): Promise<IMeasureKeyDrivers> {
+        throw new NotSupported("not supported");
+    }
 
     createMeasure(measure: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject> {
         return Promise.resolve({

@@ -959,7 +959,9 @@
                             "CLICKHOUSE",
                             "MYSQL",
                             "MARIADB",
-                            "ORACLE"
+                            "ORACLE",
+                            "PINOT",
+                            "SINGLESTORE"
                         ]
                     },
                     "url": {

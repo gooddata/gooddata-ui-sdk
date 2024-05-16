@@ -640,3 +640,15 @@ export const selectEnableKDAttributeFilterDatesValidation: DashboardSelector<boo
         return state.settings?.enableKDAttributeFilterDatesValidation ?? true;
     },
 );
+
+/**
+ * Returns whether attribute filter displays duplicated values when filter uses secondary label value.
+ *
+ * @internal
+ */
+export const selectEnableDuplicatedLabelValuesInAttributeFilter: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableDuplicatedLabelValuesInAttributeFilter ?? false;
+    },
+);

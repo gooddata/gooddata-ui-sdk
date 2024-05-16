@@ -17,6 +17,7 @@ import ptBR from "date-fns/locale/pt-BR/index.js";
 import zhCN from "date-fns/locale/zh-CN/index.js";
 import ru from "date-fns/locale/ru/index.js";
 import it from "date-fns/locale/it/index.js";
+import frCA from "date-fns/locale/fr-CA/index.js";
 
 const defaultLocaleCode = "en-US";
 
@@ -60,6 +61,8 @@ const localeConversions = {
     "zh-Hans": zhCN,
     "ru-RU": ru,
     "it-IT": it,
+    "es-419": es,
+    "fr-CA": frCA,
 };
 
 export type FormattingLocale = keyof typeof localeConversions;

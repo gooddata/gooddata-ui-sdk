@@ -47,6 +47,10 @@ import {
     IWorkspaceExportDefinitionsService,
     IDataFiltersService,
     IWorkspaceLogicalModelService,
+    IForecastResult,
+    IForecastView,
+    IAnomalyDetectionResult,
+    IClusteringResult,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -198,6 +202,9 @@ function recordedWorkspace(
         getDescriptor(): Promise<IWorkspaceDescriptor> {
             throw new NotSupported("not supported");
         },
+        updateDescriptor(): Promise<void> {
+            throw new NotSupported("not supported");
+        },
         getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {
             throw new NotSupported("not supported");
         },
@@ -300,6 +307,18 @@ function recordedDataView(
         equals(other: IDataView): boolean {
             return fp === other.fingerprint();
         },
+        withForecast(): IDataView {
+            throw new NotSupported("not supported");
+        },
+        forecast(): IForecastView {
+            return {
+                headerItems: [],
+                low: [],
+                high: [],
+                prediction: [],
+                loading: false,
+            };
+        },
     };
 }
 
@@ -356,6 +375,15 @@ function recordedExecutionResult(
         },
         readWindow(_1: number[], _2: number[]): Promise<IDataView> {
             return Promise.resolve(recordedDataView(definition, result, recording));
+        },
+        readForecastAll(): Promise<IForecastResult> {
+            throw new NotSupported("Forecasting is not supported by the recorded backend.");
+        },
+        readAnomalyDetectionAll(): Promise<IAnomalyDetectionResult> {
+            throw new NotSupported("Anomaly detection is not supported by the recorded backend.");
+        },
+        readClusteringAll(): Promise<IClusteringResult> {
+            throw new NotSupported("Clustering is not supported by the recorded backend.");
         },
         fingerprint(): string {
             return fp;

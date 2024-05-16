@@ -1,19 +1,14 @@
 // (C) 2019-2024 GoodData Corporation
 import React from "react";
 import noop from "lodash/noop.js";
-import { ChartType, DefaultLocale, BucketNames } from "@gooddata/sdk-ui";
-import {
-    IInsightDefinition,
-    ISettings,
-    insightHasMeasures,
-    insightBuckets,
-    bucketsFind,
-} from "@gooddata/sdk-model";
+import { ChartType, DefaultLocale } from "@gooddata/sdk-ui";
+import { IInsightDefinition, ISettings, insightHasMeasures } from "@gooddata/sdk-model";
 
 import {
     IReferences,
     IVisualizationProperties,
     IConfigurationPanelRenderers,
+    IReferencePoint,
 } from "../../interfaces/Visualization.js";
 import { IColorConfiguration } from "../../interfaces/Colors.js";
 import ColorsSection from "../configurationControls/colors/ColorsSection.js";
@@ -22,10 +17,12 @@ import { InternalIntlWrapper } from "../../utils/internalIntlProvider.js";
 import { getMeasuresFromMdObject } from "../../utils/bucketHelper.js";
 import InteractionsSection from "../configurationControls/interactions/InteractionsSection.js";
 import ForecastSection from "../configurationControls/forecast/ForecastSection.js";
+import { isForecastEnabled } from "../../utils/forecastHelper.js";
 
 export interface IConfigurationPanelContentProps<PanelConfig = any> {
     properties?: IVisualizationProperties;
     references?: IReferences;
+    referencePoint?: IReferencePoint;
     propertiesMeta?: any;
     colors?: IColorConfiguration;
     locale: string;
@@ -46,6 +43,7 @@ export default abstract class ConfigurationPanelContent<
     public static defaultProps: IConfigurationPanelContentProps = {
         properties: null,
         references: null,
+        referencePoint: null,
         propertiesMeta: null,
         colors: null,
         locale: DefaultLocale,
@@ -128,31 +126,26 @@ export default abstract class ConfigurationPanelContent<
     }
 
     protected renderForecastSection(): React.ReactNode {
-        const { pushData, properties, propertiesMeta, insight, type, featureFlags } = this.props;
+        const { pushData, properties, propertiesMeta, type, featureFlags, referencePoint, insight } =
+            this.props;
 
         if (!featureFlags.enableSmartFunctions) {
             return null;
         }
 
-        //line chart only now
-        if (type === "line") {
-            const buckets = insightBuckets(insight);
-            const measures = bucketsFind(buckets, (b) => b.localIdentifier === BucketNames.MEASURES);
-            const trends = bucketsFind(buckets, (b) => b.localIdentifier === BucketNames.TREND);
-            //TODO: check if the trend is date attribute somehow
-            const enabled = measures?.items.length === 1 && trends?.items.length === 1;
-
-            return (
-                <ForecastSection
-                    controlsDisabled={this.isControlDisabled()}
-                    properties={properties}
-                    propertiesMeta={propertiesMeta}
-                    enabled={enabled}
-                    pushData={pushData}
-                />
-            );
+        const { enabled, visible } = isForecastEnabled(referencePoint, insight, type);
+        if (!visible) {
+            return null;
         }
 
-        return null;
+        return (
+            <ForecastSection
+                controlsDisabled={this.isControlDisabled()}
+                properties={properties}
+                propertiesMeta={propertiesMeta}
+                enabled={enabled}
+                pushData={pushData}
+            />
+        );
     }
 }

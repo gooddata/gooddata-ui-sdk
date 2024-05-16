@@ -22,7 +22,9 @@ export type DataSourceType =
     | "CLICKHOUSE"
     | "MYSQL"
     | "MARIADB"
-    | "ORACLE";
+    | "ORACLE"
+    | "PINOT"
+    | "SINGLESTORE";
 
 /**
  * @alpha

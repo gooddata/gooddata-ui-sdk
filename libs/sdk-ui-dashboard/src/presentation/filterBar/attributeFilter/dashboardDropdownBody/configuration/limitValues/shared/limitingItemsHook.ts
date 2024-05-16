@@ -263,7 +263,7 @@ export const useFilterItems = (
 
             const commonDateFilter: IValuesLimitingItemWithTitle[] = [
                 {
-                    title: filterConfig?.filterName ?? intl.formatMessage({ id: "dateFilterDropdown.title" }),
+                    title: filterConfig?.filterName || intl.formatMessage({ id: "dateFilterDropdown.title" }),
                     item: parseCommonDateFilter(dependentCommonDateFilter),
                     isDisabled: false,
                     type: "commonDate",
@@ -275,6 +275,7 @@ export const useFilterItems = (
 
         return parentFilterItems;
     }, [
+        dependentCommonDateFilter,
         labels,
         attributes,
         parentFilters,
@@ -309,7 +310,7 @@ const mapDependentDateFilters = (
 
             if (item.isCommonDate) {
                 const dateFilterTitle =
-                    filterConfig?.filterName ?? intl.formatMessage({ id: "dateFilterDropdown.title" });
+                    filterConfig?.filterName || intl.formatMessage({ id: "dateFilterDropdown.title" });
 
                 return {
                     title: intl.formatMessage(
@@ -324,7 +325,7 @@ const mapDependentDateFilters = (
             const isSelectedByCommonDateFilter = dependentDateFilters.some(
                 (dependentDateFilter) =>
                     areObjRefsEqual(item.dataSet, dependentDateFilter.dataSet) &&
-                    !!dependentDateFilter.isCommonDate,
+                    dependentDateFilter.isCommonDate,
             );
 
             const isDisabled = !availableDatasets.some((availableDataset) =>
@@ -363,8 +364,7 @@ export const useCommonDateItems = (
                 (availableDataset) =>
                     !dependentDateFilters?.some(
                         (item) =>
-                            areObjRefsEqual(availableDataset.dataSet.ref, item.dataSet) &&
-                            !!item.isCommonDate,
+                            areObjRefsEqual(availableDataset.dataSet.ref, item.dataSet) && item.isCommonDate,
                     ),
             )
             .map((dateDataSet) => {

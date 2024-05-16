@@ -1,6 +1,7 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import {
     IDataView,
+    IForecastView,
     IExecutionFactory,
     IExecutionResult,
     IExportConfig,
@@ -9,6 +10,12 @@ import {
     ExplainConfig,
     IExplainProvider,
     ExplainType,
+    IForecastResult,
+    IForecastConfig,
+    IAnomalyDetectionConfig,
+    IAnomalyDetectionResult,
+    IClusteringConfig,
+    IClusteringResult,
 } from "@gooddata/sdk-backend-spi";
 import {
     IAttributeOrMeasure,
@@ -171,6 +178,18 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
         return this.decorated.readAll();
     }
 
+    public readForecastAll(config: IForecastConfig): Promise<IForecastResult> {
+        return this.decorated.readForecastAll(config);
+    }
+
+    public readAnomalyDetectionAll(config: IAnomalyDetectionConfig): Promise<IAnomalyDetectionResult> {
+        return this.decorated.readAnomalyDetectionAll(config);
+    }
+
+    public readClusteringAll(config: IClusteringConfig): Promise<IClusteringResult> {
+        return this.decorated.readClusteringAll(config);
+    }
+
     public readWindow(offset: number[], size: number[]): Promise<IDataView> {
         return this.decorated.readWindow(offset, size);
     }
@@ -205,9 +224,13 @@ export abstract class DecoratedDataView implements IDataView {
     public definition: IExecutionDefinition;
     public result: IExecutionResult;
     public warnings?: IResultWarning[];
+    public forecastConfig?: IForecastConfig;
+    public forecastResult?: IForecastResult;
 
     constructor(private readonly decorated: IDataView, result?: IExecutionResult) {
         this.result = result ?? decorated.result;
+        this.forecastConfig = decorated.forecastConfig;
+        this.forecastResult = decorated.forecastResult;
 
         this.count = decorated.count;
         this.data = decorated.data;
@@ -226,5 +249,13 @@ export abstract class DecoratedDataView implements IDataView {
 
     public fingerprint(): string {
         return this.decorated.fingerprint();
+    }
+
+    public withForecast(config?: IForecastConfig, result?: IForecastResult): IDataView {
+        return this.decorated.withForecast(config, result);
+    }
+
+    public forecast(): IForecastView {
+        return this.decorated.forecast();
     }
 }

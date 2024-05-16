@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React from "react";
 import { ContentRect } from "react-measure";
 import { v4 } from "uuid";
@@ -19,7 +19,7 @@ import {
     isSankeyOrDependencyWheel,
     isWaterfall,
 } from "../chartTypes/_util/common.js";
-import { VisualizationTypes } from "@gooddata/sdk-ui";
+import { VisualizationTypes, LoadingComponent } from "@gooddata/sdk-ui";
 import Highcharts, { HighchartsOptions, YAxisOptions, XAxisOptions } from "../lib/index.js";
 import { alignChart } from "../chartTypes/_chartCreators/helpers.js";
 import {
@@ -33,7 +33,7 @@ import {
 import { Bubble, BubbleHoverTrigger, Icon } from "@gooddata/sdk-ui-kit";
 import { BOTTOM, LEFT, RIGHT, TOP } from "../typings/mess.js";
 import { ITheme } from "@gooddata/sdk-model";
-import { IChartOptions, ISeriesDataItem } from "../typings/unsafe.js";
+import { IChartOptions, ISeriesDataItem, ISeriesItem } from "../typings/unsafe.js";
 
 /**
  * @internal
@@ -267,7 +267,8 @@ export class HighChartsRenderer extends React.PureComponent<
             items = this.skipLeadingZeros(items).filter((i) => !isNil(i.y));
         }
 
-        const updatedItems = items.map((item: any, itemIndex: number) => {
+        const updatedItems = items.map((item: any) => {
+            const itemIndex = item.legendIndex;
             const visible =
                 legendItemsEnabled[itemIndex] !== undefined ? legendItemsEnabled[itemIndex] : true;
             return {
@@ -406,6 +407,52 @@ export class HighChartsRenderer extends React.PureComponent<
         return null;
     }
 
+    private renderLoading() {
+        const container = this.highchartsRendererRef.current;
+        const { chartOptions } = this.props;
+        const { data } = chartOptions;
+
+        const loading: ISeriesItem[] =
+            data?.series?.filter((series: ISeriesItem) => {
+                return series.data.some((data?: ISeriesDataItem) => data?.loading);
+            }) ?? [];
+
+        if (!loading.length || !container) {
+            return null;
+        }
+
+        const loadingSeries = loading.reduce<number[]>((loadingSeries: number[], series: ISeriesItem) => {
+            if (!loadingSeries.includes(series.legendIndex)) {
+                loadingSeries.push(series.legendIndex);
+            }
+            return loadingSeries;
+        }, []);
+        const contentRect = container.getBoundingClientRect();
+
+        const elements: React.ReactNode[] = [];
+        for (let i = 0; i < loadingSeries.length; i++) {
+            const el = container.querySelector(`.highcharts-series.highcharts-series-${loadingSeries[i]}`);
+            if (el) {
+                const rect = el.getBoundingClientRect();
+                elements.push(
+                    <div
+                        key={i}
+                        className="gd-chart-forecasting"
+                        style={{
+                            width: contentRect.left + contentRect.width - (rect.left + rect.width),
+                            left: rect.left + rect.width - contentRect.left,
+                        }}
+                    >
+                        <div className="gd-chart-forecasting-background" />
+                        <LoadingComponent />
+                    </div>,
+                );
+            }
+        }
+
+        return elements;
+    }
+
     private renderVisualization() {
         const { legend, chartOptions, contentRect } = this.props;
         const legendDetailOptions: ILegendDetailOptions = {
@@ -444,6 +491,7 @@ export class HighChartsRenderer extends React.PureComponent<
                 {!isLegendRenderedFirst
                     ? this.renderLegend(legendDetails, contentRect, this.containerId)
                     : null}
+                {this.renderLoading()}
             </div>
         );
     }

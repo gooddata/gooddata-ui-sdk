@@ -395,7 +395,9 @@ exports[`PluggableAreaChart > optional stacking > should return reference point 
       "stackMeasures": true,
       "supported": true,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [],
   },
 }
@@ -563,7 +565,9 @@ exports[`PluggableAreaChart > optional stacking > should reuse all measures, onl
       "stackMeasures": true,
       "supported": true,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [],
   },
 }
@@ -732,7 +736,9 @@ exports[`PluggableAreaChart > optional stacking > should reuse one measure, only
       "stackMeasures": true,
       "supported": true,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [],
   },
 }
@@ -907,7 +913,9 @@ exports[`PluggableAreaChart > optional stacking > should reuse one measure, two 
       "stackMeasures": true,
       "supported": true,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [],
   },
 }
@@ -1027,7 +1035,9 @@ exports[`PluggableAreaChart > should cut out measures tail when getting nM 0Vb 1
       "stackMeasures": true,
       "supported": true,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [],
   },
 }
@@ -1147,7 +1157,9 @@ exports[`PluggableAreaChart > should return reference point when no categories a
       "stackMeasures": true,
       "supported": true,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [],
   },
 }

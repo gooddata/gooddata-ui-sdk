@@ -10,6 +10,8 @@ import {
     IElementsQueryResult,
     IExecutionFactory,
     IExecutionResult,
+    IForecastConfig,
+    IForecastResult,
     IPreparedExecution,
     ISecuritySettingsService,
     IUserWorkspaceSettings,
@@ -199,6 +201,8 @@ function windowKey(offset: number[], size: number[]): string {
 
 class WithExecutionResultCaching extends DecoratedExecutionResult {
     private allData: Promise<IDataView> | undefined;
+    private allForecastConfig: IForecastConfig | undefined;
+    private allForecastData: Promise<IForecastResult> | undefined;
     private windows: LRUCache<string, Promise<IDataView>> | undefined;
 
     constructor(
@@ -222,6 +226,19 @@ class WithExecutionResultCaching extends DecoratedExecutionResult {
         }
 
         return this.allData;
+    };
+
+    public readForecastAll = (config: IForecastConfig): Promise<IForecastResult> => {
+        // TODO: enable forecasting caching size configuration
+        if (!this.allForecastData || this.allForecastConfig !== config) {
+            this.allForecastConfig = config;
+            this.allForecastData = super.readForecastAll(config).catch((e) => {
+                this.allForecastData = undefined;
+                throw e;
+            });
+        }
+
+        return this.allForecastData;
     };
 
     public readWindow = (offset: number[], size: number[]): Promise<IDataView> => {

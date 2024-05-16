@@ -47,9 +47,11 @@ import {
     AnalyzeCsvRequest,
     AnalyzeCsvResponse,
     ImportCsvRequest,
+    ImportCsvResponse,
     JsonApiDataSourceInAttributesCacheStrategyEnum,
     GdStorageFile,
     UploadFileResponse,
+    ReadFileManifestsResponse,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling.js";
 import uniq from "lodash/uniq.js";
@@ -350,6 +352,9 @@ export type TigerSpecificFunctions = {
     createDemoWorkspace?: (sampleWorkspace: WorkspaceDefinition) => Promise<string>;
     createDemoDataSource?: (sampleDataSource: DataSourceDefinition) => Promise<string>;
     createWorkspace?: (id: string, name: string) => Promise<string>;
+    /**
+     * @deprecated use IAnalyticalBackend.workspace(id).updateDescriptor(\{ title: name \})
+     */
     updateWorkspaceTitle?: (id: string, name: string) => Promise<void>;
     deleteWorkspace?: (id: string) => Promise<void>;
     canDeleteWorkspace?: (id: string) => Promise<boolean>;
@@ -509,13 +514,30 @@ export type TigerSpecificFunctions = {
      * @param dataSourceId - id of the data source
      * @param importRequest - the request to import CSV files
      */
-    importCsv?: (dataSourceId: string, importCsvRequest: ImportCsvRequest) => Promise<void>;
+    importCsv?: (
+        dataSourceId: string,
+        importCsvRequest: ImportCsvRequest,
+    ) => Promise<Array<ImportCsvResponse>>;
 
     /**
      * List CSV files from GDSTORAGE data source staging location
      * @param dataSourceId - id of the data source
      */
     listFiles?: (dataSourceId: string) => Promise<Array<GdStorageFile>>;
+
+    /**
+     * Delete CSV files from GDSTORAGE data source
+     * @param dataSourceId - id of the data source
+     * @param fileNames - names of CSV files to delete
+     */
+    deleteFiles?: (dataSourceId: string, fileNames: string[]) => Promise<void>;
+
+    /**
+     * Delete CSV files from GDSTORAGE data source
+     * @param dataSourceId - id of the data source
+     * @param fileNames - names of CSV files to delete
+     */
+    readFileManifests?: (dataSourceId: string, fileNames: string[]) => Promise<ReadFileManifestsResponse[]>;
 };
 
 const getDataSourceErrorMessage = (error: unknown) => {
@@ -852,9 +874,9 @@ export const buildTigerSpecificFunctions = (
     updateWorkspaceTitle: async (id: string, name: string) => {
         try {
             return await authApiCall(async (sdk) => {
-                await sdk.entities.updateEntityWorkspaces({
+                await sdk.entities.patchEntityWorkspaces({
                     id,
-                    jsonApiWorkspaceInDocument: {
+                    jsonApiWorkspacePatchDocument: {
                         data: {
                             attributes: {
                                 name,
@@ -1491,7 +1513,7 @@ export const buildTigerSpecificFunctions = (
         }
     },
 
-    getStagingUploadLocation: async (dataSourceId: string) => {
+    getStagingUploadLocation: async (dataSourceId: string): Promise<StagingUploadLocation> => {
         try {
             return await authApiCall(async (sdk) => {
                 return await sdk.result
@@ -1544,10 +1566,14 @@ export const buildTigerSpecificFunctions = (
     importCsv: async (dataSourceId: string, importCsvRequest: ImportCsvRequest) => {
         try {
             return await authApiCall(async (sdk) => {
-                await sdk.result.importCsv({
-                    dataSourceId: dataSourceId,
-                    importCsvRequest: importCsvRequest,
-                });
+                return await sdk.result
+                    .importCsv({
+                        dataSourceId: dataSourceId,
+                        importCsvRequest: importCsvRequest,
+                    })
+                    .then((res) => {
+                        return res?.data;
+                    });
             });
         } catch (error: any) {
             throw convertApiError(error);
@@ -1564,6 +1590,41 @@ export const buildTigerSpecificFunctions = (
                     .then((res) => {
                         return res?.data;
                     });
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+
+    deleteFiles: async (dataSourceId: string, fileNames: string[]) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                await sdk.result.deleteFiles({
+                    dataSourceId: dataSourceId,
+                    deleteFilesRequest: {
+                        fileNames: fileNames,
+                    },
+                });
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
+    },
+
+    readFileManifests: async (dataSourceId, fileNames) => {
+        try {
+            return await authApiCall(async (sdk) => {
+                const request = {
+                    dataSourceId: dataSourceId,
+                    readFileManifestsRequest: {
+                        manifestRequests: fileNames.map((fileName) => ({
+                            fileName,
+                        })),
+                    },
+                };
+                return await sdk.result.readFileManifests(request).then((res) => {
+                    return res?.data;
+                });
             });
         } catch (error: any) {
             throw convertApiError(error);

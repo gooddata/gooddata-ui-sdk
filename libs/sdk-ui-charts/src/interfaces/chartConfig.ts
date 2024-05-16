@@ -337,6 +337,43 @@ export interface IChartConfig {
      * @beta
      */
     inlineVisualizations?: IInlineVisualizationsConfig;
+
+    /**
+     * Configuration of the forecast.
+     * @beta
+     */
+    forecast?: IForecast;
+}
+
+/**
+ * @beta
+ * Forecast configuration
+ */
+export interface IForecast {
+    /**
+     * @beta
+     * Indicates whether the forecast is enabled or not.
+     */
+    enabled: boolean;
+
+    /**
+     * @beta
+     * Indicates the confidence level of the forecast.
+     * The value should be between (0, 1).
+     */
+    confidence: number;
+
+    /**
+     * @beta
+     * Indicates the number of periods to forecast.
+     */
+    period: number;
+
+    /**
+     * @beta
+     * Indicates whether the forecast is seasonal or not.
+     */
+    seasonal: boolean;
 }
 
 /**

@@ -1,5 +1,5 @@
-// (C) 2021-2023 GoodData Corporation
-import { IOrganizationDescriptor } from "@gooddata/sdk-model";
+// (C) 2021-2024 GoodData Corporation
+import { IOrganizationDescriptor, IOrganizationDescriptorUpdate } from "@gooddata/sdk-model";
 import { IOrganizationSettingsService } from "./settings/index.js";
 import { ISecuritySettingsService } from "./securitySettings/index.js";
 import { IOrganizationStylingService } from "./styling/index.js";
@@ -23,6 +23,13 @@ export interface IOrganization {
      * @param includeAdditionalDetails - include additional details such as bootstrap user and user group.
      */
     getDescriptor(includeAdditionalDetails?: boolean): Promise<IOrganizationDescriptor>;
+
+    /**
+     * Updates details about the organization.
+     *
+     * @param descriptor - properties to update
+     */
+    updateDescriptor(descriptor: IOrganizationDescriptorUpdate): Promise<void>;
 
     /**
      * Returns service that can be used to query and update organization security settings.

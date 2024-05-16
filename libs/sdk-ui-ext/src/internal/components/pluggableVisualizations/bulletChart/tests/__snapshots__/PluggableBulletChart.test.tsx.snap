@@ -579,7 +579,9 @@ Once done, you'll be able to save it.",
     "openAsReport": {
       "supported": false,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [
       "same_period_previous_year",
       "previous_period",
@@ -736,7 +738,9 @@ exports[`PluggableBulletChart > should return reference point with three measure
     "openAsReport": {
       "supported": false,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [
       "same_period_previous_year",
       "previous_period",
@@ -957,7 +961,9 @@ exports[`PluggableBulletChart > should return reference point with three measure
     "openAsReport": {
       "supported": false,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [
       "same_period_previous_year",
       "previous_period",

@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 @use "sass:math";
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins";
 
@@ -165,6 +165,20 @@
             &::before {
                 color: var(--gd-palette-complementary-0, #fff);
             }
+        }
+    }
+
+    &:focus-visible {
+        outline: auto 5px Highlight; /* For Firefox */
+        // stylelint-disable-next-line declaration-block-no-duplicate-properties
+        outline: auto 5px -webkit-focus-ring-color; /* For Chrome */
+
+        .dash-item-action-options {
+            display: block;
+        }
+
+        .dash-item-action-description .dash-item-action-description-trigger {
+            display: flex;
         }
     }
 }
@@ -449,6 +463,16 @@
 .dash-item-action-placeholder {
     width: variables.$item-action-width;
     height: variables.$item-action-width;
+
+    &:focus-visible {
+        outline: auto 5px Highlight; /* For Firefox */
+        // stylelint-disable-next-line declaration-block-no-duplicate-properties
+        outline: auto 5px -webkit-focus-ring-color; /* For Chrome */
+
+        .dash-item-action-options {
+            display: block;
+        }
+    }
 }
 
 .dash-item-action-placeholder-headline {
@@ -461,6 +485,16 @@
 .dash-item-action-description {
     .dash-item-action-description-trigger:not(.is-mobile) {
         display: none;
+    }
+
+    &:focus-visible {
+        outline: auto 5px Highlight; /* For Firefox */
+        // stylelint-disable-next-line declaration-block-no-duplicate-properties
+        outline: auto 5px -webkit-focus-ring-color; /* For Chrome */
+
+        .dash-item-action-description-trigger {
+            display: flex;
+        }
     }
 }
 

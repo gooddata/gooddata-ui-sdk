@@ -16,20 +16,13 @@ import {
     SingleSelectionAttributeFilterStatusBar,
     AttributeFilterDependencyTooltip,
 } from "@gooddata/sdk-ui-filters";
+import { DashboardAttributeFilterConfigModeValues, filterObjRef } from "@gooddata/sdk-model";
+import { LoadingMask, LOADING_HEIGHT } from "@gooddata/sdk-ui-kit";
 
 import {
     attributeFilterToDashboardAttributeFilter,
     dashboardAttributeFilterToAttributeFilter,
 } from "../../../_staging/dashboard/dashboardFilterConverter.js";
-
-import { IDashboardAttributeFilterProps } from "./types.js";
-import { useParentFilters } from "./useParentFilters.js";
-import { DashboardAttributeFilterConfigModeValues, filterObjRef } from "@gooddata/sdk-model";
-import { AttributeFilterConfiguration } from "./dashboardDropdownBody/configuration/AttributeFilterConfiguration.js";
-import {
-    CustomAttributeFilterDropdownActions,
-    CustomConfigureAttributeFilterDropdownActions,
-} from "./CustomDropdownActions.js";
 import {
     removeAttributeFilter,
     useDashboardDispatch,
@@ -41,15 +34,23 @@ import {
     useDashboardUserInteraction,
     selectIsAttributeFilterDependentByLocalIdentifier,
     selectIsFilterFromCrossFilteringByLocalIdentifier,
+    selectEnableDuplicatedLabelValuesInAttributeFilter,
 } from "../../../model/index.js";
+import { useAttributes } from "../../../_staging/sharedHooks/useAttributes.js";
+import { getVisibilityIcon } from "../utils.js";
+
+import { IDashboardAttributeFilterProps } from "./types.js";
+import { useParentFilters } from "./useParentFilters.js";
+import { AttributeFilterConfiguration } from "./dashboardDropdownBody/configuration/AttributeFilterConfiguration.js";
+import {
+    CustomAttributeFilterDropdownActions,
+    CustomConfigureAttributeFilterDropdownActions,
+} from "./CustomDropdownActions.js";
 import {
     AttributeFilterParentFilteringProvider,
     useAttributeFilterParentFiltering,
 } from "./AttributeFilterParentFilteringContext.js";
-import { LoadingMask, LOADING_HEIGHT } from "@gooddata/sdk-ui-kit";
-import { useAttributes } from "../../../_staging/sharedHooks/useAttributes.js";
 import { useAttributeDataSet } from "./dashboardDropdownBody/configuration/hooks/useAttributeDataSet.js";
-import { getVisibilityIcon } from "../utils.js";
 import { useDependentDateFilters } from "./useDependentDateFilters.js";
 
 /**
@@ -77,6 +78,9 @@ export const DefaultDashboardAttributeFilter = (
     );
     const isVirtualAttributeFilter = useDashboardSelector(
         selectIsFilterFromCrossFilteringByLocalIdentifier(filter.attributeFilter.localIdentifier!),
+    );
+    const enableDuplicatedLabelValuesInAttributeFilter = useDashboardSelector(
+        selectEnableDuplicatedLabelValuesInAttributeFilter,
     );
 
     const filterRef = useMemo(() => {
@@ -413,6 +417,7 @@ export const DefaultDashboardAttributeFilter = (
                 }
                 customIcon={visibilityIcon}
                 StatusBarComponent={CustomStatusBarComponent}
+                enableDuplicatedLabelValuesInAttributeFilter={enableDuplicatedLabelValuesInAttributeFilter}
             />
         </AttributeFilterParentFilteringProvider>
     );

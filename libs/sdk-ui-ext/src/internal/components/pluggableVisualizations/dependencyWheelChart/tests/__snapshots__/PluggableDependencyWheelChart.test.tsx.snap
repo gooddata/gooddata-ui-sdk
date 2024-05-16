@@ -149,7 +149,9 @@ exports[`PluggableDependencyWheelChart > dependency wheel should allow date attr
     "openAsReport": {
       "supported": false,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [],
   },
 }
@@ -282,7 +284,9 @@ exports[`PluggableDependencyWheelChart > should return reference point with one 
     "openAsReport": {
       "supported": false,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [],
   },
 }
@@ -467,7 +471,9 @@ exports[`PluggableDependencyWheelChart > should reuse one measure and order attr
     "openAsReport": {
       "supported": false,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [],
   },
 }

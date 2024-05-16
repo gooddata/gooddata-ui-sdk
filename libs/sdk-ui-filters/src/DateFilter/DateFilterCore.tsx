@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React, { useMemo, useState } from "react";
 import flow from "lodash/flow.js";
 import noop from "lodash/noop.js";
@@ -131,7 +131,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
         <IntlWrapper locale={locale || "en-US"}>
             <MediaQuery query={MediaQueries.IS_MOBILE_DEVICE}>
                 {(isMobile) => {
-                    const dateFilterButton = (isOpen: boolean = false) => (
+                    const dateFilterButton = (isOpen: boolean = false, toggleDropdown = noop) => (
                         <DateFilterButtonLocalized
                             disabled={disabled}
                             isMobile={isMobile}
@@ -146,6 +146,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
                             )}
                             customFilterName={customFilterName}
                             customIcon={customIcon}
+                            onClick={toggleDropdown}
                         />
                     );
                     return (
@@ -165,7 +166,7 @@ export const DateFilterCore: React.FC<IDateFilterCoreProps> = ({
                             onOpenStateChanged={handleOpenStateChanged}
                             renderButton={({ isOpen, toggleDropdown }) => (
                                 <span onClick={disabled ? noop : toggleDropdown}>
-                                    {dateFilterButton(isOpen)}
+                                    {dateFilterButton(isOpen, toggleDropdown)}
                                 </span>
                             )}
                             ignoreClicksOnByClass={[

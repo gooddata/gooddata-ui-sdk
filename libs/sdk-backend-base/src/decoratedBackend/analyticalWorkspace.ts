@@ -20,6 +20,7 @@ import {
     IAttributeHierarchiesService,
     IWorkspaceExportDefinitionsService,
     IDataFiltersService,
+    IWorkspaceDescriptorUpdate,
     IWorkspaceLogicalModelService,
 } from "@gooddata/sdk-backend-spi";
 import { DecoratorFactories } from "./types.js";
@@ -37,6 +38,10 @@ export class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
 
     public getDescriptor(includeParentPrefixes?: boolean): Promise<IWorkspaceDescriptor> {
         return this.decorated.getDescriptor(includeParentPrefixes);
+    }
+
+    public updateDescriptor(descriptor: IWorkspaceDescriptorUpdate): Promise<void> {
+        return this.decorated.updateDescriptor(descriptor);
     }
 
     public getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {

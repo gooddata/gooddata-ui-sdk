@@ -150,7 +150,9 @@ exports[`PluggableScatterPlot > should return reference point after switching fr
     "openAsReport": {
       "supported": false,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [],
   },
 }
@@ -261,7 +263,9 @@ exports[`PluggableScatterPlot > should return reference point with one secondary
     "openAsReport": {
       "supported": false,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [],
   },
 }
@@ -414,7 +418,9 @@ exports[`PluggableScatterPlot > should return reference point with primary and s
     "openAsReport": {
       "supported": false,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [],
   },
 }
@@ -558,7 +564,9 @@ exports[`PluggableScatterPlot > should return reference point with primary measu
     "openAsReport": {
       "supported": false,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [],
   },
 }
@@ -678,7 +686,9 @@ exports[`PluggableScatterPlot > should return reference point with two measures 
     "openAsReport": {
       "supported": false,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [],
   },
 }

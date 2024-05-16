@@ -12,6 +12,7 @@ export { Chart, ChartTransformation, IChartTransformationProps, IChartProps };
 export { FLUID_LEGEND_THRESHOLD } from "./adapter/HighChartsRenderer.js";
 export { COMBO_SUPPORTED_CHARTS } from "./chartTypes/comboChart/comboChartOptions.js";
 export { updateConfigWithSettings } from "./chartTypes/_chartOptions/chartOptionsForSettings.js";
+export { updateForecastWithSettings } from "./chartTypes/_chartOptions/chartForecast.js";
 
 export {
     isLineChart,

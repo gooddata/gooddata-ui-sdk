@@ -7,6 +7,8 @@ import InputControl from "../InputControl.js";
 import { messages } from "../../../../locales.js";
 import noop from "lodash/noop.js";
 import CheckboxControl from "../CheckboxControl.js";
+import { Message } from "@gooddata/sdk-ui-kit";
+import { FormattedMessage } from "react-intl";
 
 export interface IForecastSection {
     controlsDisabled: boolean;
@@ -23,7 +25,7 @@ class ForecastSection extends React.PureComponent<IForecastSection> {
         enabled: false,
         properties: {},
         propertiesMeta: {},
-        defaultForecastEnabled: true,
+        defaultForecastEnabled: false,
         pushData: noop,
     };
 
@@ -31,10 +33,11 @@ class ForecastSection extends React.PureComponent<IForecastSection> {
         const { controlsDisabled, properties, pushData, defaultForecastEnabled, enabled } = this.props;
 
         const forecastEnabled = this.props.properties?.controls?.forecast?.enabled ?? defaultForecastEnabled;
-        const forecastConfidence = this.props.properties?.controls?.forecast?.confidence ?? "95";
+        const forecastConfidence = this.props.properties?.controls?.forecast?.confidence ?? 0.95;
         const forecastPeriod = this.props.properties?.controls?.forecast?.period ?? 3;
         const forecastSeasonal = this.props.properties?.controls?.forecast?.seasonal ?? false;
         const forecastToggleDisabledByVisualization = !(this.props.propertiesMeta?.forecast_enabled ?? true);
+        const slicedForecast = this.props.propertiesMeta?.slicedForecast ?? false;
 
         const toggleDisabled = controlsDisabled || forecastToggleDisabledByVisualization || !enabled;
         const forecastControlsDisabled = !forecastEnabled || toggleDisabled;
@@ -44,6 +47,7 @@ class ForecastSection extends React.PureComponent<IForecastSection> {
             <ConfigSection
                 id="forecast_section"
                 valuePath="forecast.enabled"
+                className="gd-forecast-section"
                 title={messages.forecastTitle.id}
                 propertiesMeta={this.props.propertiesMeta}
                 properties={properties}
@@ -78,6 +82,13 @@ class ForecastSection extends React.PureComponent<IForecastSection> {
                     properties={properties}
                     pushData={pushData}
                 />
+
+                {Boolean(slicedForecast) && (
+                    <Message type="progress" className="adi-input-progress gd-slicedForecast-message">
+                        <FormattedMessage id={messages.forecastSlicedWarningTitle.id} tagName="strong" />
+                        <FormattedMessage id={messages.forecastSlicedWarningDescription.id} tagName="div" />
+                    </Message>
+                )}
             </ConfigSection>
         );
     }

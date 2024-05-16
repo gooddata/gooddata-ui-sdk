@@ -305,6 +305,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableSmartFunctions,
+            "enableSmartFunctions",
+            "BOOLEAN",
+            FeatureFlagsValues.enableSmartFunctions,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableKeyDriverAnalysis,
             "enableKeyDriverAnalysis",
             "BOOLEAN",
@@ -319,10 +326,52 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableFlexAi,
+            "enableFlexAi",
+            "BOOLEAN",
+            FeatureFlagsValues.enableFlexAi,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableExperimentalFeaturesUI,
             "enableExperimentalFeaturesUI",
             "BOOLEAN",
             FeatureFlagsValues.enableExperimentalFeaturesUI,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableSingleStoreDataSource,
+            "enableSingleStoreDataSource",
+            "BOOLEAN",
+            FeatureFlagsValues.enableSingleStoreDataSource,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableInvalidValuesInAttributeFilter,
+            "enableInvalidValuesInAttributeFilter",
+            "BOOLEAN",
+            FeatureFlagsValues.enableInvalidValuesInAttributeFilter,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableDuplicatedLabelValuesInAttributeFilter,
+            "enableDuplicatedLabelValuesInAttributeFilter",
+            "BOOLEAN",
+            FeatureFlagsValues.enableDuplicatedLabelValuesInAttributeFilter,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableWorkspacesHierarchyView,
+            "enableWorkspacesHierarchyView",
+            "BOOLEAN",
+            FeatureFlagsValues.enableWorkspacesHierarchyView,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableMultipleDataSourcesInWorkspace,
+            "enableMultipleDataSourcesInWorkspace",
+            "BOOLEAN",
+            FeatureFlagsValues.enableMultipleDataSourcesInWorkspace,
         ),
     };
 }

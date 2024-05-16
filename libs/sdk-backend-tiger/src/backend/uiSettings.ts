@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import { IUserSettings } from "@gooddata/sdk-backend-spi";
 import { ISettings } from "@gooddata/sdk-model";
 import { DefaultFeatureFlags } from "./uiFeatures.js";
@@ -26,7 +26,6 @@ export const DefaultUiSettings: ISettings = {
     enableHidingOfDataPoints: true,
     enableAdCatalogRefresh: true,
     enableAdRankingFilter: true,
-    enableDomainHomepage: true,
     enableKPIDashboardDependentFilters: false,
     enableKDWidgetCustomHeight: true,
     enableSectionHeaders: true,

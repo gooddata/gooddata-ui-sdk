@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { IntlShape } from "react-intl";
 import pick from "lodash/pick.js";
 import set from "lodash/set.js";
@@ -22,13 +22,14 @@ import {
     createWaterfallLegendItems,
 } from "./legendHelpers.js";
 import { supportedDualAxesChartTypes } from "../chartTypes/_chartOptions/chartCapabilities.js";
-import { IChartOptions, ISeriesNodeItem } from "../typings/unsafe.js";
+import { IChartOptions, ISeriesNodeItem, ISeriesItem } from "../typings/unsafe.js";
 import {
     LegendOptionsItemType,
     ILegendOptions,
     DEFAULT_LEGEND_CONFIG,
     ItemBorderRadiusPredicate,
 } from "@gooddata/sdk-ui-vis-commons";
+import { ChartType } from "../typings/chartType.js";
 
 function isHeatmapWithMultipleValues(chartOptions: IChartOptions) {
     const { type } = chartOptions;
@@ -38,10 +39,16 @@ function isHeatmapWithMultipleValues(chartOptions: IChartOptions) {
 }
 
 export function shouldLegendBeEnabled(chartOptions: IChartOptions): boolean {
-    const seriesLength = chartOptions?.data?.series?.length;
+    const legendItemsLength = chartOptions?.data?.series?.reduce<number[]>((prev, cur: ISeriesItem) => {
+        if (prev.includes(cur.legendIndex)) {
+            return prev;
+        }
+        return [...prev, cur.legendIndex];
+    }, []).length;
+
     const { type, hasStackByAttribute, hasViewByAttribute } = chartOptions;
 
-    const hasMoreThanOneSeries = seriesLength > 1;
+    const hasMoreThanOneLegend = legendItemsLength > 1;
     const isLineChartStacked = isLineChart(type) && hasStackByAttribute;
     const isStacked = isStackedChart(chartOptions);
     const sliceTypes = [
@@ -62,7 +69,7 @@ export function shouldLegendBeEnabled(chartOptions: IChartOptions): boolean {
     const isWaterfallChart = isWaterfall(type);
 
     return (
-        hasMoreThanOneSeries ||
+        hasMoreThanOneLegend ||
         isSliceChartWithViewByAttributeOrMultipleMeasures ||
         isStacked ||
         isLineChartStacked ||
@@ -139,6 +146,35 @@ export function getLegendItems(chartOptions: IChartOptions, intl?: IntlShape): L
         .map((legendDataSourceItem: any) => pick(legendDataSourceItem, pickedProps));
 }
 
+/**
+ * With relaxing of chart limits, we need to use responsive legend in more cases.
+ *
+ * Some charts only need it for top/bottom positions, others for all positions.
+ */
+const shouldUseResponsiveLegend = (chartType: ChartType, legendPosition: string): boolean => {
+    const legendTopBottomPositions = ["top", "bottom"];
+    const chartsWithAnyPopupPosition = [VisualizationTypes.PIE, VisualizationTypes.DONUT];
+    const chartsWithTopBottomPopupPosition = [
+        VisualizationTypes.COLUMN,
+        VisualizationTypes.BAR,
+        VisualizationTypes.LINE,
+        VisualizationTypes.AREA,
+        VisualizationTypes.BUBBLE,
+        VisualizationTypes.TREEMAP,
+        VisualizationTypes.PYRAMID,
+        VisualizationTypes.FUNNEL,
+        VisualizationTypes.DEPENDENCY_WHEEL,
+        VisualizationTypes.SANKEY,
+    ];
+
+    const isChartWithAnyPopupPosition = isOneOfTypes(chartType, chartsWithAnyPopupPosition);
+    const isChartWithTopBottomPopupPosition =
+        legendTopBottomPositions.includes(legendPosition) &&
+        isOneOfTypes(chartType, chartsWithTopBottomPopupPosition);
+
+    return isChartWithAnyPopupPosition || isChartWithTopBottomPopupPosition;
+};
+
 export default function buildLegendOptions(
     legendConfig: any = {},
     chartOptions: IChartOptions,
@@ -186,6 +222,10 @@ export default function buildLegendOptions(
         isOneOfTypes(chartOptions.type, defaultHideLegendCharts)
     ) {
         set(defaultLegendConfigByType, "enabled", false);
+    }
+
+    if (shouldUseResponsiveLegend(chartOptions.type as ChartType, legendConfig.position)) {
+        set(defaultLegendConfigByType, "responsive", "autoPositionWithPopup");
     }
 
     const baseConfig = {

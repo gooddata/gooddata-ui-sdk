@@ -50,6 +50,7 @@ import {
 import { tigerValidDescendantsClientFactory } from "./validDescendants.js";
 import { tigerResultClientFactory, ResultActionsApiInterface } from "./result.js";
 import { tigerUserManagementClientFactory } from "./userManagement.js";
+import { tigerSmartFunctionsClientFactory } from "./smartFunctions.js";
 
 export {
     tigerExecutionClientFactory,
@@ -67,6 +68,7 @@ export {
     tigerExportClientFactory,
     tigerResultClientFactory,
     tigerUserManagementClientFactory,
+    tigerSmartFunctionsClientFactory,
     MetadataConfiguration,
     MetadataConfigurationParameters,
     MetadataBaseApi,
@@ -111,6 +113,11 @@ export interface ITigerClient {
     userManagement: ReturnType<typeof tigerUserManagementClientFactory>;
 
     /**
+     * @beta
+     */
+    smartFunctions: ReturnType<typeof tigerSmartFunctionsClientFactory>;
+
+    /**
      * Updates tiger client to send the provided API TOKEN in `Authorization` header of all
      * requests.
      *
@@ -140,6 +147,7 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
     const exportFactory = tigerExportClientFactory(axios);
     const result = tigerResultClientFactory(axios);
     const userManagement = tigerUserManagementClientFactory(axios);
+    const smartFunctions = tigerSmartFunctionsClientFactory(axios);
 
     return {
         axios,
@@ -161,5 +169,6 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
             setAxiosAuthorizationToken(axios, token);
         },
         export: exportFactory,
+        smartFunctions,
     };
 };

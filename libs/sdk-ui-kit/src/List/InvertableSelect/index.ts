@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 export {
     IInvertableSelectProps,
     IInvertableSelectRenderItemProps,
@@ -21,3 +21,8 @@ export {
     InvertableSelectAllCheckbox,
     IInvertableSelectAllCheckboxProps,
 } from "./InvertableSelectAllCheckbox.js";
+export {
+    InvertableSelectStatus,
+    IInvertableSelectStatusProps,
+    useInvertableSelectionStatusText,
+} from "./InvertableSelectSelectionStatus.js";

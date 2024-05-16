@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 @use "sass:color";
 
 $include-html-classes: false;
@@ -106,7 +106,8 @@ $gd-typo: (
 );
 
 // colors
-$is-focused-background: var(--gd-palette-complementary-2, #ebeff4);
+$default-is-focused-background: #ebeff4;
+$is-focused-background: var(--gd-palette-complementary-2, $default-is-focused-background);
 $is-focused-color: $gd-color-dark;
 
 $is-selected-color: $gd-palette-primary-base;

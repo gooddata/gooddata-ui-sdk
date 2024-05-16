@@ -12,6 +12,9 @@ import ptPT from "./bundles/pt-PT.json";
 import zhHans from "./bundles/zh-Hans.json";
 import ruRU from "./bundles/ru-RU.json";
 import itIT from "./bundles/it-IT.json";
+import es419 from "./bundles/es-419.json";
+import frCA from "./bundles/fr-CA.json";
+import enGB from "./bundles/en-GB.json";
 
 /**
  * @internal
@@ -35,4 +38,7 @@ export const messagesMap: { [locale: string]: ITranslations } = {
     "zh-Hans": zhHans,
     "ru-RU": ruRU,
     "it-IT": itIT,
+    "es-419": es419,
+    "fr-CA": frCA,
+    "en-GB": enGB,
 };

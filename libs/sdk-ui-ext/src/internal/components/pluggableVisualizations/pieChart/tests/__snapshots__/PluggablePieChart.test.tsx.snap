@@ -152,7 +152,9 @@ exports[`PluggablePieChart > should return reference point with multiple metrics
     "openAsReport": {
       "supported": true,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [],
   },
 }
@@ -240,7 +242,9 @@ exports[`PluggablePieChart > should return reference point with one metric and n
     "openAsReport": {
       "supported": true,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [],
   },
 }
@@ -337,7 +341,9 @@ exports[`PluggablePieChart > should return reference point with one metric and o
     "openAsReport": {
       "supported": true,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [],
   },
 }
@@ -458,7 +464,9 @@ exports[`PluggablePieChart > should return reference point with only one metric 
     "openAsReport": {
       "supported": true,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [],
   },
 }

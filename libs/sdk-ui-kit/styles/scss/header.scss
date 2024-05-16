@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 @use "sass:color";
 @use "variables";
 @use "mixins";
@@ -497,6 +497,7 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
     transition: all 0.2s;
     font-size: 14px;
     font-weight: 400;
+    padding-bottom: 2px;
 
     @include mixins.text-overflow;
 
@@ -1057,5 +1058,32 @@ button.gd-button-primary.gd-upsell-button {
 
     &:focus {
         outline: 0;
+    }
+}
+
+.gd-header-button {
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: inherit;
+    font-family: inherit;
+
+    &.gd-button + &.gd-button {
+        margin: 0;
+    }
+
+    &:focus-visible {
+        outline: revert;
+        opacity: 1;
+    }
+}
+
+.gd-workspace-picker-button {
+    width: 100%;
+    padding: 0;
+    text-align: left;
+
+    &:focus-visible {
+        outline-offset: -2px;
     }
 }

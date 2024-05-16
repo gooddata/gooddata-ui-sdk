@@ -727,7 +727,14 @@ export {
     IExistingDashboard,
 } from "./dashboard/dashboard.js";
 
-export { ISeparators, ISettings, PlatformEdition, IWhiteLabeling, WeekStart } from "./settings/index.js";
+export {
+    ISeparators,
+    ISettings,
+    PlatformEdition,
+    IWhiteLabeling,
+    WeekStart,
+    IOpenAiConfig,
+} from "./settings/index.js";
 
 export { IWorkspaceUserGroup } from "./userGroup/index.js";
 
@@ -772,6 +779,7 @@ export { IWorkspacePermissions, WorkspacePermission } from "./permissions/index.
 
 export {
     DataValue,
+    ForecastDataValue,
     IMeasureDescriptor,
     IMeasureDescriptorObject,
     IMeasureDescriptorItem,
@@ -848,6 +856,7 @@ export {
 
 export {
     IOrganizationDescriptor,
+    IOrganizationDescriptorUpdate,
     IWorkspacePermissionAssignment,
     IAssignedWorkspace,
     AssignedWorkspacePermission,

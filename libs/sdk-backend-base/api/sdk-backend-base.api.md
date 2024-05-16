@@ -15,6 +15,8 @@ import { ExplainType } from '@gooddata/sdk-backend-spi';
 import { FilterContextItem } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
+import { IAnomalyDetectionConfig } from '@gooddata/sdk-backend-spi';
+import { IAnomalyDetectionResult } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeMetadataObject } from '@gooddata/sdk-model';
@@ -30,6 +32,8 @@ import { ICatalogDateDataset } from '@gooddata/sdk-model';
 import { ICatalogFact } from '@gooddata/sdk-model';
 import { ICatalogGroup } from '@gooddata/sdk-model';
 import { ICatalogMeasure } from '@gooddata/sdk-model';
+import { IClusteringConfig } from '@gooddata/sdk-backend-spi';
+import { IClusteringResult } from '@gooddata/sdk-backend-spi';
 import { IDashboard } from '@gooddata/sdk-model';
 import { IDashboardDefinition } from '@gooddata/sdk-model';
 import { IDashboardFilterReference } from '@gooddata/sdk-model';
@@ -56,6 +60,8 @@ import { IExportResult } from '@gooddata/sdk-backend-spi';
 import { IFactMetadataObject } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IFilterContextDefinition } from '@gooddata/sdk-model';
+import { IForecastConfig } from '@gooddata/sdk-backend-spi';
+import { IForecastResult } from '@gooddata/sdk-backend-spi';
 import { IGetDashboardOptions } from '@gooddata/sdk-backend-spi';
 import { IGetDashboardPluginOptions } from '@gooddata/sdk-backend-spi';
 import { IGetScheduledMailOptions } from '@gooddata/sdk-backend-spi';
@@ -136,6 +142,8 @@ export type AnalyticalBackendCallbacks = {
     failedResultReadAll?: (error: any, executionId: string) => void;
     successfulResultReadWindow?: (offset: number[], size: number[], dataView: IDataView, executionId: string) => void;
     failedResultReadWindow?: (offset: number[], size: number[], error: any, executionId: string) => void;
+    successfulForecastResultReadAll?: (forecastResult: IForecastResult, executionId: string) => void;
+    failedForecastResultReadAll?: (error: any, executionId: string) => void;
 };
 
 // @public
@@ -397,6 +405,12 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
     fingerprint(): string;
     // (undocumented)
     readAll(): Promise<IDataView>;
+    // (undocumented)
+    readAnomalyDetectionAll(config: IAnomalyDetectionConfig): Promise<IAnomalyDetectionResult>;
+    // (undocumented)
+    readClusteringAll(config: IClusteringConfig): Promise<IClusteringResult>;
+    // (undocumented)
+    readForecastAll(config: IForecastConfig): Promise<IForecastResult>;
     // (undocumented)
     readWindow(offset: number[], size: number[]): Promise<IDataView>;
     // (undocumented)

@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import invoke from "lodash/invoke.js";
 import isEmpty from "lodash/isEmpty.js";
 import set from "lodash/set.js";
@@ -12,13 +12,11 @@ import Highcharts from "../../lib/index.js";
 import { supportedDualAxesChartTypes } from "../_chartOptions/chartCapabilities.js";
 import { IChartOptions } from "../../typings/unsafe.js";
 import { ITheme } from "@gooddata/sdk-model";
+import { DEFAULT_CATEGORIES_LIMIT } from "../../constants/limits.js";
 
 const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0;
 const HIGHCHART_PLOT_LIMITED_RANGE = 1e5;
 
-export const DEFAULT_SERIES_LIMIT = 1000;
-export const DEFAULT_CATEGORIES_LIMIT = 3000;
-export const DEFAULT_DATA_POINTS_LIMIT = 2000;
 export const MAX_POINT_WIDTH = 100;
 export const HOVER_BRIGHTNESS = 0.1;
 export const MINIMUM_HC_SAFE_BRIGHTNESS = Number.MIN_VALUE;

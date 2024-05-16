@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { useMemo, useCallback } from "react";
 import differenceBy from "lodash/differenceBy.js";
 import intersectionBy from "lodash/intersectionBy.js";
@@ -41,7 +41,7 @@ export function useInvertableSelect<T>(props: IUseInvertableSelectProps<T>) {
         numberOfHiddenSelectedItems = 0,
     } = props;
 
-    const isSearch = searchString.length > 0;
+    const isSearch = searchString?.length > 0;
     const isSelectionEmpty = selectedItems.length === 0;
 
     const selectionMap = useMemo(() => {

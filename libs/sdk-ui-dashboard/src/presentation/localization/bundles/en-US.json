@@ -1056,6 +1056,16 @@
         "comment": "Export to the file not supported.",
         "limit": 0
     },
+    "widget.options.description": {
+        "value": "Description",
+        "comment": "",
+        "limit": 0
+    },
+    "widget.options.menu": {
+        "value": "Options",
+        "comment": "",
+        "limit": 0
+    },
     "widget.options.menu.exportToCSV": {
         "value": "Export to CSV",
         "comment": "Export to file with CSV extension.",
@@ -1074,6 +1084,11 @@
     "share.button.text": {
         "value": "Share",
         "comment": "Text of button that opens share dialog",
+        "limit": 0
+    },
+    "share.button.tooltip": {
+        "value": "Share dashboard",
+        "comment": "Tooltip of button that opens share dialog",
         "limit": 0
     },
     "dashboard.error.empty.heading": {
@@ -1252,8 +1267,18 @@
         "comment": "",
         "limit": 0
     },
+    "controlButtons.options.tooltip": {
+        "value": "More options",
+        "comment": "",
+        "limit": 0
+    },
     "controlButtons.edit.value": {
         "value": "Edit",
+        "comment": "",
+        "limit": 0
+    },
+    "controlButtons.edit.tooltip": {
+        "value": "Edit dashboard",
         "comment": "",
         "limit": 0
     },

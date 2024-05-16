@@ -62,8 +62,10 @@ import { IMeasureMetadataObject } from '@gooddata/sdk-model';
 import { IMeasureMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { IMetadataObject } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
+import { IOpenAiConfig } from '@gooddata/sdk-model';
 import { IOrganizationAssignee } from '@gooddata/sdk-model';
 import { IOrganizationDescriptor } from '@gooddata/sdk-model';
+import { IOrganizationDescriptorUpdate } from '@gooddata/sdk-model';
 import { IOrganizationPermissionAssignment } from '@gooddata/sdk-model';
 import { IOrganizationUser } from '@gooddata/sdk-model';
 import { IOrganizationUserGroup } from '@gooddata/sdk-model';
@@ -222,10 +224,26 @@ export interface IAnalyticalWorkspace {
     permissions(): IWorkspacePermissionsService;
     settings(): IWorkspaceSettingsService;
     styling(): IWorkspaceStylingService;
+    updateDescriptor(descriptor: IWorkspaceDescriptorUpdate): Promise<void>;
     userGroups(): IWorkspaceUserGroupsQuery;
     users(): IWorkspaceUsersQuery;
     // (undocumented)
     readonly workspace: string;
+}
+
+// @alpha (undocumented)
+export interface IAnomalyDetectionConfig {
+    sensitivity: number;
+}
+
+// @alpha (undocumented)
+export interface IAnomalyDetectionResult {
+    // (undocumented)
+    anomalyFlag: boolean[];
+    // (undocumented)
+    attribute: string[];
+    // (undocumented)
+    values: number[];
 }
 
 // @public
@@ -335,6 +353,23 @@ export interface ICancelable<T> {
     withSignal(signal: AbortSignal): T;
 }
 
+// @alpha (undocumented)
+export interface IClusteringConfig {
+    numberOfClusters: number;
+}
+
+// @alpha (undocumented)
+export interface IClusteringResult {
+    // (undocumented)
+    attribute: string[];
+    // (undocumented)
+    clusters: number[];
+    // (undocumented)
+    xcoord: number[];
+    // (undocumented)
+    ycoord: number[];
+}
+
 // @public
 export interface ICommentExpressionToken {
     type: "comment";
@@ -387,6 +422,12 @@ export interface IDataView {
     readonly definition: IExecutionDefinition;
     equals(other: IDataView): boolean;
     fingerprint(): string;
+    // @beta
+    forecast(): IForecastView;
+    // @beta
+    readonly forecastConfig?: IForecastConfig;
+    // @beta
+    readonly forecastResult?: IForecastResult;
     readonly headerItems: IResultHeader[][][];
     readonly offset: number[];
     readonly result: IExecutionResult;
@@ -394,6 +435,8 @@ export interface IDataView {
     readonly totals?: DataValue[][][];
     readonly totalTotals?: DataValue[][][];
     readonly warnings?: IResultWarning[];
+    // @beta
+    withForecast(config?: IForecastConfig, result?: IForecastResult): IDataView;
 }
 
 // @internal
@@ -493,6 +536,12 @@ export interface IExecutionResult {
     export(options: IExportConfig): Promise<IExportResult>;
     fingerprint(): string;
     readAll(): Promise<IDataView>;
+    // @alpha
+    readAnomalyDetectionAll(config: IAnomalyDetectionConfig): Promise<IAnomalyDetectionResult>;
+    // @alpha
+    readClusteringAll(config: IClusteringConfig): Promise<IClusteringResult>;
+    // @beta
+    readForecastAll(config: IForecastConfig): Promise<IForecastResult>;
     readWindow(offset: number[], size: number[]): Promise<IDataView>;
     transform(): IPreparedExecution;
 }
@@ -519,8 +568,9 @@ export type IExplainResult = {
 
 // @public
 export interface IExportConfig {
-    format?: "xlsx" | "csv" | "raw";
+    format?: "xlsx" | "csv" | "raw" | "pdf";
     mergeHeaders?: boolean;
+    pdfConfiguration?: IExportPdfConfig;
     showFilters?: boolean;
     title?: string;
 }
@@ -550,6 +600,12 @@ export interface IExportDefinitionsQueryOptions {
 export type IExportDefinitionsQueryResult = IPagedResource<IExportDefinition>;
 
 // @public
+export interface IExportPdfConfig {
+    // (undocumented)
+    orientation: "portrait" | "landscape";
+}
+
+// @public
 export interface IExportResult {
     fileName?: string;
     objectUrl: string;
@@ -561,6 +617,41 @@ export interface IFilterElementsQuery {
     query(): Promise<IElementsQueryResult>;
     withLimit(limit: number): IFilterElementsQuery;
     withOffset(offset: number): IFilterElementsQuery;
+}
+
+// @beta (undocumented)
+export interface IForecastConfig {
+    confidenceLevel: number;
+    forecastPeriod: number;
+    seasonal: boolean;
+}
+
+// @beta (undocumented)
+export interface IForecastResult {
+    // (undocumented)
+    attribute: string[];
+    // (undocumented)
+    lowerBound: number[];
+    // (undocumented)
+    origin: number[];
+    // (undocumented)
+    prediction: number[];
+    // (undocumented)
+    upperBound: number[];
+}
+
+// @beta
+export interface IForecastView {
+    // (undocumented)
+    headerItems: IResultHeader[][][];
+    // (undocumented)
+    high: DataValue[][];
+    // (undocumented)
+    loading: boolean;
+    // (undocumented)
+    low: DataValue[][];
+    // (undocumented)
+    prediction: DataValue[][];
 }
 
 // @alpha
@@ -634,6 +725,12 @@ export type IInsightsQueryResult = IPagedResource<IInsight>;
 // @public
 export type IMeasureExpressionToken = IObjectExpressionToken | IAttributeElementExpressionToken | ITextExpressionToken | ICommentExpressionToken | IBracketExpressionToken;
 
+// @alpha
+export interface IMeasureKeyDrivers {
+    effects: number[];
+    labels: string[];
+}
+
 // @public
 export interface IMeasureReferencing {
     // (undocumented)
@@ -664,6 +761,7 @@ export interface IOrganization {
     securitySettings(): ISecuritySettingsService;
     settings(): IOrganizationSettingsService;
     styling(): IOrganizationStylingService;
+    updateDescriptor(descriptor: IOrganizationDescriptorUpdate): Promise<void>;
     users(): IOrganizationUserService;
 }
 
@@ -697,6 +795,8 @@ export interface IOrganizationSettingsService {
     setColorPalette(colorPaletteId: string): Promise<void>;
     setDateFormat(dateFormat: string): Promise<void>;
     setLocale(locale: string): Promise<void>;
+    // @alpha
+    setOpenAiConfig(config: IOpenAiConfig): Promise<void>;
     setTheme(themeId: string): Promise<void>;
     setTimezone(timezone: string): Promise<void>;
     setWeekStart(weekStart: string): Promise<void>;
@@ -1051,6 +1151,7 @@ export interface IWorkspaceDatasetsService {
 
 // @public
 export interface IWorkspaceDescriptor {
+    childWorkspacesCount?: number;
     // (undocumented)
     description: string;
     earlyAccess?: string;
@@ -1063,6 +1164,18 @@ export interface IWorkspaceDescriptor {
     prefix?: string;
     // (undocumented)
     title: string;
+}
+
+// @public
+export interface IWorkspaceDescriptorUpdate {
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    earlyAccess?: string | null;
+    // (undocumented)
+    prefix?: string | null;
+    // (undocumented)
+    title?: string;
 }
 
 // @alpha
@@ -1102,6 +1215,10 @@ export interface IWorkspaceLogicalModelService {
 
 // @public
 export interface IWorkspaceMeasuresService {
+    // @alpha
+    computeKeyDrivers: (measure: IMeasure, options?: {
+        sortDirection: "ASC" | "DESC";
+    }) => Promise<IMeasureKeyDrivers>;
     createMeasure(measure: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject>;
     deleteMeasure(measureRef: ObjRef): Promise<void>;
     getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
@@ -1133,13 +1250,11 @@ export interface IWorkspaceSettingsService {
 export interface IWorkspacesQuery {
     query(): Promise<IWorkspacesQueryResult>;
     // @alpha
-    withFilter(filter: {
-        description?: string;
-        earlyAccess?: string;
-        prefix?: string;
-    }): IWorkspacesQuery;
+    withFilter(filter: IWorkspacesQueryFilter): IWorkspacesQuery;
     withLimit(limit: number): IWorkspacesQuery;
     withOffset(offset: number): IWorkspacesQuery;
+    // @alpha
+    withOptions(options: IWorkspacesQueryOptions): IWorkspacesQuery;
     withParent(workspaceId: string | undefined): IWorkspacesQuery;
     withSearch(search: string): IWorkspacesQuery;
 }
@@ -1148,6 +1263,19 @@ export interface IWorkspacesQuery {
 export interface IWorkspacesQueryFactory {
     forCurrentUser(): IWorkspacesQuery;
     forUser(userId: string): IWorkspacesQuery;
+}
+
+// @public
+export interface IWorkspacesQueryFilter {
+    description?: string;
+    earlyAccess?: string;
+    prefix?: string;
+    rootWorkspacesOnly?: boolean;
+}
+
+// @public
+export interface IWorkspacesQueryOptions {
+    includeChildWorkspacesCount?: boolean;
 }
 
 // @public

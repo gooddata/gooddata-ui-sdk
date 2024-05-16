@@ -75,7 +75,9 @@ exports[`PluggableHeadline2 > getExtendedReferencePoint > should correctly proce
     "openAsReport": {
       "supported": false,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": false,
+    },
     "supportedOverTimeComparisonTypes": [
       "same_period_previous_year",
       "previous_period",
@@ -185,7 +187,9 @@ exports[`PluggableHeadline2 > getExtendedReferencePoint > should return proper e
     "openAsReport": {
       "supported": false,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": false,
+    },
     "supportedOverTimeComparisonTypes": [
       "same_period_previous_year",
       "previous_period",

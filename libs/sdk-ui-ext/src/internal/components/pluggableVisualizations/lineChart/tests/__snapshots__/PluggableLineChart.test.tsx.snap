@@ -364,7 +364,9 @@ exports[`PluggableLineChart > should cut out measures tail when getting nM 0Vb 1
     "openAsReport": {
       "supported": true,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [
       "same_period_previous_year",
       "previous_period",
@@ -494,7 +496,9 @@ exports[`PluggableLineChart > should handle wrong order of buckets in reference 
     "openAsReport": {
       "supported": true,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [
       "same_period_previous_year",
       "previous_period",
@@ -614,7 +618,9 @@ exports[`PluggableLineChart > should return reference point when no categories a
     "openAsReport": {
       "supported": true,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [
       "same_period_previous_year",
       "previous_period",
@@ -744,7 +750,9 @@ exports[`PluggableLineChart > should return reference point with Date in categor
     "openAsReport": {
       "supported": true,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [
       "same_period_previous_year",
       "previous_period",
@@ -874,7 +882,9 @@ exports[`PluggableLineChart > should return reference point with one category an
     "openAsReport": {
       "supported": true,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [
       "same_period_previous_year",
       "previous_period",
@@ -1051,7 +1061,9 @@ exports[`PluggableLineChart > should reuse all measures, only one category and n
     "openAsReport": {
       "supported": true,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [
       "same_period_previous_year",
       "previous_period",
@@ -1226,7 +1238,9 @@ exports[`PluggableLineChart > should reuse one measure, only one category and on
     "openAsReport": {
       "supported": true,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [
       "same_period_previous_year",
       "previous_period",

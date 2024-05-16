@@ -24,6 +24,7 @@ export const ErrorCodes = {
     DYNAMIC_SCRIPT_LOAD_ERROR: "DYNAMIC_SCRIPT_LOAD_ERROR",
     TIMEOUT_ERROR: "TIMEOUT_ERROR",
     VISUALIZATION_CLASS_UNKNOWN: "VISUALIZATION_CLASS_UNKNOWN",
+    FORECAST_NOT_RECEIVED: "FORECAST_NOT_RECEIVED",
 };
 
 /**
@@ -133,6 +134,17 @@ export class GeoTokenMissingSdkError extends GoodDataSdkError {
 export class DataTooLargeToDisplaySdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error) {
         super(ErrorCodes.DATA_TOO_LARGE_TO_DISPLAY as SdkErrorType, message, cause);
+    }
+}
+
+/**
+ * This error means that execution of forecast ended with error.
+ *
+ * @public
+ */
+export class ForecastNotReceivedSdkError extends GoodDataSdkError {
+    constructor(message?: string, cause?: Error) {
+        super(ErrorCodes.FORECAST_NOT_RECEIVED as SdkErrorType, message, cause);
     }
 }
 
@@ -292,6 +304,15 @@ export function isDataTooLargeToDisplay(obj: unknown): obj is DataTooLargeToDisp
  */
 export function isDataTooLargeToCompute(obj: unknown): obj is DataTooLargeToComputeSdkError {
     return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "DATA_TOO_LARGE_TO_COMPUTE";
+}
+
+/**
+ * Typeguard checking whether input is an instance of {@link ForecastNotReceivedSdkError}
+ *
+ * @public
+ */
+export function isForecastNotReceived(obj: unknown): obj is ForecastNotReceivedSdkError {
+    return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "FORECAST_NOT_RECEIVED";
 }
 
 /**

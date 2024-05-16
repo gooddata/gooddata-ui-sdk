@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import {
     IOrganization,
     ISecuritySettingsService,
@@ -7,7 +7,7 @@ import {
     IOrganizationUserService,
     IOrganizationPermissionService,
 } from "@gooddata/sdk-backend-spi";
-import { IOrganizationDescriptor } from "@gooddata/sdk-model";
+import { IOrganizationDescriptor, IOrganizationDescriptorUpdate } from "@gooddata/sdk-model";
 import { DecoratorFactories } from "./types.js";
 
 export class OrganizationDecorator implements IOrganization {
@@ -23,6 +23,10 @@ export class OrganizationDecorator implements IOrganization {
 
     public getDescriptor(includeAdditionalDetails?: boolean): Promise<IOrganizationDescriptor> {
         return this.decorated.getDescriptor(includeAdditionalDetails);
+    }
+
+    public updateDescriptor(descriptor: IOrganizationDescriptorUpdate): Promise<void> {
+        return this.decorated.updateDescriptor(descriptor);
     }
 
     public securitySettings(): ISecuritySettingsService {

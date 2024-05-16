@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 import {
     ITigerClient,
@@ -18,6 +18,13 @@ import {
     NoDataError,
     UnexpectedError,
     TimeoutError,
+    IForecastConfig,
+    IForecastResult,
+    IForecastView,
+    IAnomalyDetectionConfig,
+    IAnomalyDetectionResult,
+    IClusteringConfig,
+    IClusteringResult,
 } from "@gooddata/sdk-backend-spi";
 import { IExecutionDefinition, DataValue, IDimensionDescriptor, IResultHeader } from "@gooddata/sdk-model";
 import SparkMD5 from "spark-md5";
@@ -26,13 +33,21 @@ import { transformExecutionResult } from "../../../convertors/fromBackend/afm/re
 import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { transformGrandTotalData } from "../../../convertors/fromBackend/afm/GrandTotalsConverter.js";
-import { getTransformDimensionHeaders } from "../../../convertors/fromBackend/afm/DimensionHeaderConverter.js";
+import {
+    getTransformDimensionHeaders,
+    getTransformForecastHeaders,
+} from "../../../convertors/fromBackend/afm/DimensionHeaderConverter.js";
 import { resolveCustomOverride } from "./utils.js";
 import { parseNameFromContentDisposition } from "../../../utils/downloadFile.js";
+import { transformForecastResult } from "../../../convertors/fromBackend/afm/forecast.js";
 
 const TIGER_PAGE_SIZE_LIMIT = 1000;
 const DEFAULT_POLL_DELAY = 5000;
 const MAX_POLL_ATTEMPTS = 50;
+
+function isTabularExportFormat(format: string = ""): format is keyof typeof TabularExportRequestFormatEnum {
+    return format in TabularExportRequestFormatEnum;
+}
 
 function sanitizeOffset(offset: number[]): number[] {
     return offset.map((offsetItem = 0) => offsetItem);
@@ -84,6 +99,87 @@ export class TigerExecutionResult implements IExecutionResult {
         return this.asDataView(executionResultPromise);
     }
 
+    public async readForecastAll(forecastConfig: IForecastConfig): Promise<IForecastResult> {
+        const workspace = this.workspace;
+        const resultId = this.resultId;
+
+        const forecast = await this.authCall((client) =>
+            client.smartFunctions
+                .forecast({
+                    forecastRequest: forecastConfig,
+                    workspaceId: workspace,
+                    resultId: resultId,
+                })
+                .then(({ data }) => data),
+        );
+
+        return this.authCall((client) =>
+            client.smartFunctions
+                .forecastResult({
+                    workspaceId: workspace,
+                    resultId: forecast.links.executionResult,
+                })
+                .then(({ data }) => data),
+        );
+    }
+
+    public async readAnomalyDetectionAll(config: IAnomalyDetectionConfig): Promise<IAnomalyDetectionResult> {
+        const workspaceId = this.workspace;
+        const resultId = this.resultId;
+        const sensitivity = config.sensitivity;
+
+        const anomalyDetection = await this.authCall((client) =>
+            client.smartFunctions.anomalyDetection({
+                anomalyDetectionRequest: {
+                    sensitivity,
+                },
+                resultId,
+                workspaceId,
+            }),
+        );
+
+        const anomalyResult = await this.authCall((client) =>
+            client.smartFunctions.anomalyDetectionResult({
+                resultId: anomalyDetection.data.links.executionResult,
+                workspaceId: this.workspace,
+            }),
+        );
+
+        return anomalyResult.data;
+    }
+
+    public async readClusteringAll(clusteringConfig: IClusteringConfig): Promise<IClusteringResult> {
+        const workspaceId = this.workspace;
+        const resultId = this.resultId;
+        const numberOfClusters = clusteringConfig.numberOfClusters;
+
+        const clustering = await this.authCall((client) =>
+            client.smartFunctions.clustering({
+                clusteringRequest: {
+                    numberOfClusters,
+                },
+                resultId,
+                workspaceId,
+            }),
+        );
+
+        const clusteringResult = await this.authCall((client) =>
+            client.smartFunctions.clusteringResult({
+                resultId: clustering.data.links.executionResult,
+                workspaceId: this.workspace,
+            }),
+        );
+
+        const { attribute, clusters, xcoord, ycoord } = clusteringResult.data;
+
+        return {
+            attribute: attribute as unknown as string[], // OpenAPI definition has wrong typing
+            clusters,
+            xcoord,
+            ycoord,
+        };
+    }
+
     public async readWindow(offset: number[], size: number[]): Promise<IDataView> {
         const saneOffset = sanitizeOffset(offset);
         const saneSize = sanitizeSize(size);
@@ -107,18 +203,23 @@ export class TigerExecutionResult implements IExecutionResult {
     }
 
     public async export(options: IExportConfig): Promise<IExportResult> {
-        const isXlsx = options.format?.toUpperCase() === "XLSX";
-        const format = isXlsx ? TabularExportRequestFormatEnum.XLSX : TabularExportRequestFormatEnum.CSV;
+        const uppercaseFormat = options.format?.toUpperCase();
+        const format = isTabularExportFormat(uppercaseFormat)
+            ? TabularExportRequestFormatEnum[uppercaseFormat]
+            : TabularExportRequestFormatEnum.CSV;
+
+        const settings = {
+            ...(format === TabularExportRequestFormatEnum.XLSX
+                ? { mergeHeaders: Boolean(options.mergeHeaders), showFilters: Boolean(options.showFilters) }
+                : {}),
+            ...(format === TabularExportRequestFormatEnum.PDF ? options.pdfConfiguration : {}),
+        };
+
         const payload: TabularExportRequest = {
             format,
             executionResult: this.resultId,
             fileName: options.title ?? "default",
-            settings: isXlsx
-                ? {
-                      mergeHeaders: Boolean(options.mergeHeaders),
-                      showFilters: Boolean(options.showFilters),
-                  }
-                : undefined,
+            settings,
             customOverride: resolveCustomOverride(this.dimensions, this.definition),
         };
 
@@ -208,12 +309,27 @@ class TigerDataView implements IDataView {
     public readonly offset: number[];
     public readonly result: IExecutionResult;
     public readonly totals?: DataValue[][][];
+    public readonly forecastConfig?: IForecastConfig;
+    public readonly forecastResult?: IForecastResult;
     public readonly totalTotals?: DataValue[][][];
     private readonly _fingerprint: string;
+    private readonly _execResult: ExecutionResult;
+    private readonly _dateFormatter: DateFormatter;
 
-    constructor(result: IExecutionResult, execResult: ExecutionResult, dateFormatter: DateFormatter) {
+    constructor(
+        result: IExecutionResult,
+        execResult: ExecutionResult,
+        dateFormatter: DateFormatter,
+        forecastConfig?: IForecastConfig,
+        forecastResult?: IForecastResult,
+    ) {
         this.result = result;
         this.definition = result.definition;
+        this.forecastConfig = forecastConfig;
+        this.forecastResult = forecastResult;
+
+        this._execResult = execResult;
+        this._dateFormatter = dateFormatter;
 
         const transformDimensionHeaders = getTransformDimensionHeaders(
             result.dimensions,
@@ -240,7 +356,9 @@ class TigerDataView implements IDataView {
         const totalTotals = grandTotalItem?.data as DataValue[][];
         this.totalTotals = totalTotals ? [totalTotals] : undefined;
 
-        this._fingerprint = `${result.fingerprint()}/${this.offset.join(",")}-${this.count.join(",")}`;
+        this._fingerprint = `${result.fingerprint()}/${this.offset.join(",")}-${this.count.join(",")}/f:${
+            this.forecastConfig?.forecastPeriod
+        },${this.forecastConfig?.confidenceLevel},${this.forecastConfig?.seasonal}`;
     }
 
     public fingerprint(): string {
@@ -249,6 +367,38 @@ class TigerDataView implements IDataView {
 
     public equals(other: IDataView): boolean {
         return this.fingerprint() === other.fingerprint();
+    }
+
+    public forecast(): IForecastView {
+        const transformForecastHeaders = getTransformForecastHeaders(
+            this.result.dimensions,
+            this._dateFormatter,
+            this.forecastConfig,
+        );
+
+        return transformForecastResult(
+            this._execResult,
+            this.forecastResult,
+            this.forecastConfig,
+            transformForecastHeaders,
+        );
+    }
+
+    public withForecast(config?: IForecastConfig, result?: IForecastResult): IDataView {
+        const normalizedConfig = config
+            ? {
+                  ...config,
+                  forecastPeriod: Math.min(config.forecastPeriod, Math.max((this.count[1] ?? 0) - 1, 0)),
+              }
+            : undefined;
+
+        return new TigerDataView(
+            this.result,
+            this._execResult,
+            this._dateFormatter,
+            normalizedConfig,
+            result,
+        );
     }
 }
 

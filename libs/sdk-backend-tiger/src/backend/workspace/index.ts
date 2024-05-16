@@ -17,6 +17,7 @@ import {
     IWorkspaceMeasuresService,
     IWorkspaceFactsService,
     IWorkspaceDescriptor,
+    IWorkspaceDescriptorUpdate,
     IWorkspaceUserGroupsQuery,
     IWorkspaceAccessControlService,
     IAttributeHierarchiesService,
@@ -43,6 +44,7 @@ import { TigerWorkspaceAccessControlService } from "./accessControl/index.js";
 import { TigerAttributeHierarchiesService } from "./attributeHierarchies/index.js";
 import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "./constants.js";
 import { TigerWorkspaceExportDefinitions } from "./exportDefinitions/index.js";
+import { convertWorkspaceUpdate } from "../../convertors/toBackend/WorkspaceConverter.js";
 import { TigerDataFiltersService } from "./dataFilters/index.js";
 import { TigerWorkspaceLogicalModelService } from "./ldm/index.js";
 
@@ -77,6 +79,17 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
             );
         }
         return this.descriptor;
+    }
+
+    public async updateDescriptor(descriptor: IWorkspaceDescriptorUpdate): Promise<void> {
+        await this.authCall(async (client) => {
+            return client.entities.patchEntityWorkspaces({
+                id: this.workspace,
+                jsonApiWorkspacePatchDocument: {
+                    data: convertWorkspaceUpdate(descriptor, this.workspace),
+                },
+            });
+        });
     }
 
     public async getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {

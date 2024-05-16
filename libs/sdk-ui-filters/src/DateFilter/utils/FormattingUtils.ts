@@ -30,6 +30,8 @@ export const localizedIcuDateFormatPatterns: Record<string, string> = {
     "zh-Hans": "y/M/d",
     "ru-RU": "dd.MM.y",
     "it-IT": "dd/MM/y",
+    "es-419": "d/M/y",
+    "fr-CA": "dd/MM/y",
 };
 
 /**

@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { IBackendCapabilities, IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
     IColorMappingItem,
@@ -16,6 +16,7 @@ import {
     IChartConfig,
     IColorMapping,
     updateConfigWithSettings,
+    updateForecastWithSettings,
 } from "@gooddata/sdk-ui-charts";
 import React from "react";
 import compact from "lodash/compact.js";
@@ -81,6 +82,7 @@ import set from "lodash/set.js";
 import tail from "lodash/tail.js";
 import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil.js";
 import { messages } from "../../../../locales.js";
+import { isForecastEnabled } from "../../../utils/forecastHelper.js";
 
 export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected projectId: string;
@@ -90,6 +92,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected customControlsProperties: IVisualizationProperties;
     protected colors: IColorConfiguration;
     protected references: IReferences;
+    protected referencePoint: IReferencePoint | undefined;
     protected ignoreUndoRedo: boolean;
     protected axis: string;
     protected secondaryAxis: AxisType;
@@ -150,6 +153,8 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         if (!this.featureFlags.enableChartsSorting) {
             newReferencePoint = removeSort(newReferencePoint);
         }
+
+        this.referencePoint = newReferencePoint;
 
         return Promise.resolve(sanitizeFilters(newReferencePoint));
     }
@@ -275,6 +280,11 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
                 height={resultingHeight}
                 type={this.type}
                 locale={locale}
+                forecastConfig={updateForecastWithSettings(
+                    fullConfig,
+                    this.featureFlags,
+                    isForecastEnabled(this.referencePoint, insight, this.type),
+                )}
                 config={updateConfigWithSettings(fullConfig, this.featureFlags)}
                 LoadingComponent={null}
                 ErrorComponent={null}
@@ -368,12 +378,11 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
 
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     protected handlePushData = (data: any): void => {
-        const resultingData = data;
         if (data.colors) {
             this.handleConfirmedColorMapping(data);
         } else {
             this.pushData({
-                ...resultingData,
+                ...data,
                 references: this.references,
             });
         }

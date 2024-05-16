@@ -121,4 +121,14 @@ describe("Dashboard", () => {
             dashboard.dashboardBodyExist();
         });
     });
+
+    describe("Dashboard has too many data points insight", { tags: ["pre-merge_isolated_tiger"] }, () => {
+        beforeEach(() => {
+            Navigation.visit("dashboard/manydata");
+        });
+
+        it("should render insight", () => {
+            new Widget(0).getChart().isHighchartsChart();
+        });
+    });
 });

@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import { ILiveFeatures, FeatureContext } from "@gooddata/api-client-tiger";
 import axios, { AxiosResponse } from "axios";
 
@@ -99,10 +99,11 @@ async function getFeatureHubData(
             "Content-type": "application/json",
             "X-FeatureHub": Object.keys(context)
                 .reduce((prev, item) => {
-                    return [
-                        ...prev,
-                        `${item}=${encodeURIComponent(context[item as keyof typeof context].toString())}`,
-                    ];
+                    const value = context[item as keyof typeof context];
+                    if (value === undefined || value === "") {
+                        return prev;
+                    }
+                    return [...prev, `${item}=${encodeURIComponent(value)}`];
                 }, [] as Array<string>)
                 .join(","),
             ...(state ? { "if-none-match": state.etag } : {}),

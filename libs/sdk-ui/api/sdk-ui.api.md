@@ -10,6 +10,7 @@ import { AuthenticationFlow } from '@gooddata/sdk-backend-spi';
 import { ComponentType } from 'react';
 import { DataValue } from '@gooddata/sdk-model';
 import { DependencyList } from 'react';
+import { ForecastDataValue } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
@@ -30,6 +31,7 @@ import { IExecutionResult } from '@gooddata/sdk-backend-spi';
 import { IExportConfig } from '@gooddata/sdk-backend-spi';
 import { IExportResult } from '@gooddata/sdk-backend-spi';
 import { IFilter } from '@gooddata/sdk-model';
+import { IForecastConfig } from '@gooddata/sdk-backend-spi';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureDefinitionType } from '@gooddata/sdk-model';
@@ -357,6 +359,7 @@ export const ErrorCodes: {
     DYNAMIC_SCRIPT_LOAD_ERROR: string;
     TIMEOUT_ERROR: string;
     VISUALIZATION_CLASS_UNKNOWN: string;
+    FORECAST_NOT_RECEIVED: string;
 };
 
 // @public
@@ -399,6 +402,11 @@ export function fireDrillEvent(drillEventFunction: IDrillEventCallback, drillEve
 
 // @public
 export type Flatten<T> = T extends Array<infer A> ? A : T;
+
+// @public
+export class ForecastNotReceivedSdkError extends GoodDataSdkError {
+    constructor(message?: string, cause?: Error);
+}
 
 // @public
 export class GeoLocationMissingSdkError extends GoodDataSdkError {
@@ -654,6 +662,8 @@ export interface IDataSliceCollection extends Iterable<IDataSlice> {
 // @public
 export interface IDataVisualizationProps extends IVisualizationProps, IVisualizationCallbacks {
     execution: IPreparedExecution;
+    // @beta
+    forecastConfig?: IForecastConfig;
 }
 
 // @public
@@ -1018,7 +1028,7 @@ export interface ILoadingState {
 }
 
 // @public
-export type ILocale = "en-US" | "de-DE" | "es-ES" | "fr-FR" | "ja-JP" | "nl-NL" | "pt-BR" | "pt-PT" | "zh-Hans" | "ru-RU" | "it-IT";
+export type ILocale = "en-US" | "de-DE" | "es-ES" | "fr-FR" | "ja-JP" | "nl-NL" | "pt-BR" | "pt-PT" | "zh-Hans" | "ru-RU" | "it-IT" | "es-419" | "fr-CA" | "en-GB";
 
 // @public (undocumented)
 export type IMappingHeader = IAttributeDescriptor | IResultAttributeHeader | IMeasureDescriptor | ITotalDescriptor | IColorDescriptor;
@@ -1119,6 +1129,7 @@ export interface IResultDataMethods {
     dataAt(index: number): DataValue | DataValue[];
     // (undocumented)
     firstDimSize(): number;
+    forecastTwoDimData(): ForecastDataValue[][];
     hasColumnTotals(): boolean;
     hasRowTotals(): boolean;
     hasTotals(): boolean;
@@ -1201,6 +1212,9 @@ export { ISeparators }
 
 // @public (undocumented)
 export function isExplicitDrill(obj: unknown): obj is ExplicitDrill;
+
+// @public
+export function isForecastNotReceived(obj: unknown): obj is ForecastNotReceivedSdkError;
 
 // @public
 export function isGeoLocationMissing(obj: unknown): obj is GeoLocationMissingSdkError;

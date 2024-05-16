@@ -321,7 +321,7 @@ export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
 export type DatasetLoadStatus = "RUNNING" | "OK" | "ERROR" | "CANCELLED" | "ERROR_METADATA" | "REFRESHING";
 
 // @alpha (undocumented)
-export type DataSourceType = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "MYSQL" | "MARIADB" | "ORACLE";
+export type DataSourceType = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "SINGLESTORE";
 
 // @public
 export type DataValue = null | string | number;
@@ -483,6 +483,14 @@ export function filterObjRef(filter: IAbsoluteDateFilter | IRelativeDateFilter |
 
 // @public
 export function filterObjRef(filter: IFilter): ObjRef | undefined;
+
+// @beta
+export type ForecastDataValue = {
+    low: DataValue;
+    high: DataValue;
+    prediction: DataValue;
+    loading: boolean;
+};
 
 // @internal
 export function getAttributeElementsItems(attributeElements: IAttributeElements): Array<string | null>;
@@ -2046,6 +2054,12 @@ export type InsightWidgetDescriptionSourceType = "widget" | "insight";
 // @public
 export type INullableFilter = IFilter | undefined | null;
 
+// @alpha
+export interface IOpenAiConfig {
+    org: string;
+    token: string;
+}
+
 // @alpha (undocumented)
 export interface IOrganizationAssignee {
     // (undocumented)
@@ -2066,6 +2080,14 @@ export interface IOrganizationDescriptor {
     id: string;
     // (undocumented)
     title: string;
+}
+
+// @public
+export interface IOrganizationDescriptorUpdate {
+    // (undocumented)
+    earlyAccess?: string | null;
+    // (undocumented)
+    title?: string;
 }
 
 // @alpha (undocumented)
@@ -2603,12 +2625,14 @@ export interface ISettings {
     enableDataSampling?: boolean;
     enableDescriptions?: boolean;
     enableDrilledInsightExport?: boolean;
+    enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     enableEmbedButtonInAD?: boolean;
     enableEmbedButtonInKD?: boolean;
     enableHidingOfDataPoints?: boolean;
     enableHidingOfWidgetTitle?: boolean;
     enableInsightExportScheduling?: boolean;
     enableInsightToReport?: boolean;
+    enableInvalidValuesInAttributeFilter?: boolean;
     enableKDAttributeFilterDatesValidation?: boolean;
     enableKDCrossFiltering?: boolean;
     enableKDRichText?: boolean;
@@ -2623,6 +2647,7 @@ export interface ISettings {
     enableKPIDashboardSchedule?: boolean;
     enableKPIDashboardScheduleRecipients?: boolean;
     enableMultipleCSVs?: boolean;
+    enableMultipleDataSourcesInWorkspace?: boolean;
     enableMultipleDateFilters?: boolean;
     enableMultipleDates?: boolean;
     enableNewHeadline?: boolean;
@@ -2639,9 +2664,12 @@ export interface ISettings {
     enableUserManagement?: boolean;
     enableWaterfallChart?: boolean;
     enableWeekFilters?: boolean;
+    enableWorkspacesHierarchyView?: boolean;
     formatLocale?: string;
     hideKpiDrillInEmbedded?: boolean;
     metadataTimeZone?: string;
+    // @alpha
+    openAiConfig?: IOpenAiConfig;
     platformEdition?: PlatformEdition;
     responsiveUiDateFormat?: string;
     showHiddenCatalogItems?: boolean;

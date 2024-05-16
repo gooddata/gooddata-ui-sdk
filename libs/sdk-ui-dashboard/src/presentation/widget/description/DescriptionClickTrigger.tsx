@@ -1,6 +1,7 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React, { useState, useCallback } from "react";
 import cx from "classnames";
+import { useIntl } from "react-intl";
 
 import {
     DescriptionIcon,
@@ -31,6 +32,7 @@ const DESCRIPTION_PANEL_ALIGN_POINTS = [
 export const DescriptionClickTrigger: React.FC<IDescriptionClickTriggerProps> = (props) => {
     const { onOpen } = props;
     const [isOpen, setIsOpen] = useState(false);
+    const intl = useIntl();
 
     const switchIsOpen = useCallback(() => {
         setIsOpen((isOpen) => {
@@ -40,6 +42,17 @@ export const DescriptionClickTrigger: React.FC<IDescriptionClickTriggerProps> = 
             return !isOpen;
         });
     }, [setIsOpen, onOpen]);
+
+    const onKeyDown = useCallback(
+        (event: React.KeyboardEvent<HTMLDivElement>) => {
+            // This enables keyboard interaction events after focus
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                switchIsOpen();
+            }
+        },
+        [switchIsOpen],
+    );
 
     const iconClassName = cx(
         "dash-item-action-description",
@@ -51,7 +64,14 @@ export const DescriptionClickTrigger: React.FC<IDescriptionClickTriggerProps> = 
 
     return (
         <>
-            <div className={iconClassName} onClick={switchIsOpen}>
+            <div
+                className={iconClassName}
+                onClick={switchIsOpen}
+                onKeyDown={onKeyDown}
+                role="button"
+                tabIndex={0}
+                title={intl.formatMessage({ id: "widget.options.description" })}
+            >
                 <DescriptionIcon className="dash-item-action-description-trigger" />
             </div>
             {isOpen ? (

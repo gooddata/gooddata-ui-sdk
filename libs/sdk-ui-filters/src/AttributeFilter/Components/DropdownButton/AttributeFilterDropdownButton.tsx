@@ -1,5 +1,5 @@
 // (C) 2022-2024 GoodData Corporation
-import React, { ReactNode, useEffect, useRef, useState } from "react";
+import React, { ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import { stringUtils } from "@gooddata/util";
 import cx from "classnames";
@@ -200,6 +200,17 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
         buttonSubtitle = intl.formatMessage({ id: "filtering" });
     }
 
+    const onKeyDown = useCallback(
+        (event) => {
+            // This enables keyboard interaction events after focus
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                onClick();
+            }
+        },
+        [onClick],
+    );
+
     return (
         <div
             className={cx(
@@ -217,6 +228,9 @@ export const AttributeFilterDropdownButton: React.VFC<IAttributeFilterDropdownBu
                 className,
             )}
             onClick={onClick}
+            onKeyDown={onKeyDown}
+            role="button"
+            tabIndex={0}
         >
             {filterIcon ? (
                 <div className="gd-attribute-filter-dropdown-button-icon__next">{filterIcon}</div>

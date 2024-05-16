@@ -28,6 +28,7 @@ import { IAuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
 import { IdentifierDuplications } from '@gooddata/api-client-tiger';
 import { ImportCsvRequest } from '@gooddata/api-client-tiger';
+import { ImportCsvResponse } from '@gooddata/api-client-tiger';
 import { ITigerClient } from '@gooddata/api-client-tiger';
 import { IUser } from '@gooddata/sdk-model';
 import { JsonApiAnalyticalDashboardOutMetaOrigin } from '@gooddata/api-client-tiger';
@@ -46,6 +47,7 @@ import { NotAuthenticated } from '@gooddata/sdk-backend-spi';
 import { NotAuthenticatedHandler } from '@gooddata/sdk-backend-spi';
 import { ObjectType } from '@gooddata/sdk-model';
 import { PlatformUsage } from '@gooddata/api-client-tiger';
+import { ReadFileManifestsResponse } from '@gooddata/api-client-tiger';
 import { ScanResultPdm } from '@gooddata/api-client-tiger';
 import { ScanSqlResponse } from '@gooddata/api-client-tiger';
 import { StagingUploadLocation } from '@gooddata/api-client-tiger';
@@ -276,6 +278,8 @@ export interface IInvitationUserResponse {
 
 export { ImportCsvRequest }
 
+export { ImportCsvResponse }
+
 // @alpha (undocumented)
 export const isTigerCompatibleType: (obj: unknown) => obj is TigerObjectType;
 
@@ -317,6 +321,8 @@ export type OriginInfoWithId = JsonApiAnalyticalDashboardOutMetaOrigin & {
 
 // @internal (undocumented)
 export type PutWorkspaceLayoutRequest = LayoutApiPutWorkspaceLayoutRequest;
+
+export { ReadFileManifestsResponse }
 
 // @public
 export function redirectToTigerAuthentication(context: IAuthenticationContext, error: NotAuthenticated): void;
@@ -453,8 +459,10 @@ export type TigerSpecificFunctions = {
     getStagingUploadLocation?: (dataSourceId: string) => Promise<StagingUploadLocation>;
     stagingUpload?: (dataSourceId: string, file: File) => Promise<UploadFileResponse>;
     analyzeCsv?: (dataSourceId: string, analyzeCsvRequest: AnalyzeCsvRequest) => Promise<Array<AnalyzeCsvResponse>>;
-    importCsv?: (dataSourceId: string, importCsvRequest: ImportCsvRequest) => Promise<void>;
+    importCsv?: (dataSourceId: string, importCsvRequest: ImportCsvRequest) => Promise<Array<ImportCsvResponse>>;
     listFiles?: (dataSourceId: string) => Promise<Array<GdStorageFile>>;
+    deleteFiles?: (dataSourceId: string, fileNames: string[]) => Promise<void>;
+    readFileManifests?: (dataSourceId: string, fileNames: string[]) => Promise<ReadFileManifestsResponse[]>;
 };
 
 // @public
@@ -469,6 +477,8 @@ export class TigerTokenAuthProvider extends TigerAuthProviderBase {
     // (undocumented)
     updateApiToken: (apiToken: string) => void;
 }
+
+export { UploadFileResponse }
 
 // @internal (undocumented)
 export type WorkspaceDataFilter = JsonApiWorkspaceDataFilterInDocument;

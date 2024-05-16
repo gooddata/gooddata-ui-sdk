@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React, { useMemo, useCallback } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -69,6 +69,13 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         isScheduleExportVisible:
             isScheduledEmailingVisible && canExportTabular && enableInsightExportScheduling,
     });
+    const toggleMenu = useCallback(() => {
+        if (isMenuOpen) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
+    }, [isMenuOpen, closeMenu, openMenu]);
 
     const {
         InsightMenuButtonComponentProvider,
@@ -118,7 +125,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                             insight={insight}
                             widget={widget}
                             isOpen={isMenuOpen}
-                            onClick={openMenu}
+                            onClick={toggleMenu}
                             items={menuItems}
                         />
                     </div>

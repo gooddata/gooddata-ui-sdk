@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 /**
  * Configuration for exports of results into XLSX or CSV.
@@ -9,7 +9,7 @@ export interface IExportConfig {
     /**
      * Format of the export file. Defaults to CSV if not specified.
      */
-    format?: "xlsx" | "csv" | "raw";
+    format?: "xlsx" | "csv" | "raw" | "pdf";
 
     /**
      * Applicable for XLSX format; specifies title of the workbook.
@@ -32,6 +32,20 @@ export interface IExportConfig {
      * into the XLSX in a human readable form.
      */
     showFilters?: boolean;
+
+    /**
+     *  Applicable for PDF format; specifies configuration for PDF export.
+     */
+    pdfConfiguration?: IExportPdfConfig;
+}
+
+/**
+ * Configuration for PDF export.
+ *
+ * @public
+ */
+export interface IExportPdfConfig {
+    orientation: "portrait" | "landscape";
 }
 
 /**

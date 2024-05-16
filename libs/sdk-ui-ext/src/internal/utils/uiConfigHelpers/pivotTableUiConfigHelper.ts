@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import set from "lodash/set.js";
 import cloneDeep from "lodash/cloneDeep.js";
 import forEach from "lodash/forEach.js";
@@ -178,5 +178,8 @@ export function getPivotTableDefaultUiConfig(multipleDatesEnabled: boolean): IUi
             OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR,
             OverTimeComparisonTypes.PREVIOUS_PERIOD,
         ],
+        recommendations: {
+            supportsFilteringRecommendation: false,
+        },
     };
 }

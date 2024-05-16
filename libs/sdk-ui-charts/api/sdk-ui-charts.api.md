@@ -30,6 +30,7 @@ import { IDrillEventIntersectionElement } from '@gooddata/sdk-ui';
 import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IExecutionFactory } from '@gooddata/sdk-backend-spi';
 import { IFilter } from '@gooddata/sdk-model';
+import { IForecastConfig } from '@gooddata/sdk-backend-spi';
 import { IPreparedExecution } from '@gooddata/sdk-backend-spi';
 import { IRgbColorValue } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-model';
@@ -310,6 +311,8 @@ export interface IChartConfig {
     // (undocumented)
     enableSeparateTotalLabels?: boolean;
     forceDisableDrillOnAxes?: boolean;
+    // @beta
+    forecast?: IForecast;
     grid?: IGridConfig;
     // @beta
     hyperLinks?: IDisplayFormHyperlinksConfig;
@@ -428,6 +431,7 @@ export interface IContinuousLineConfig {
 // @internal
 export interface ICoreChartProps extends ICommonChartProps {
     execution: IPreparedExecution;
+    forecastConfig?: IForecastConfig;
 }
 
 // @internal (undocumented)
@@ -522,6 +526,14 @@ export interface IDonutChartBucketProps {
 
 // @public (undocumented)
 export interface IDonutChartProps extends IBucketChartProps, IDonutChartBucketProps {
+}
+
+// @beta
+export interface IForecast {
+    confidence: number;
+    enabled: boolean;
+    period: number;
+    seasonal: boolean;
 }
 
 // @public (undocumented)
@@ -642,6 +654,8 @@ export interface ILineChartBucketProps {
 
 // @public (undocumented)
 export interface ILineChartProps extends IBucketChartProps, ILineChartBucketProps {
+    // @beta
+    forecastConfig?: IForecastConfig;
 }
 
 // @public
@@ -948,6 +962,11 @@ export const Treemap: (props: ITreemapProps) => React_2.JSX.Element;
 
 // @internal (undocumented)
 export function updateConfigWithSettings(config: IChartConfig, settings: ISettings): IChartConfig;
+
+// @internal (undocumented)
+export function updateForecastWithSettings(config: IChartConfig, settings: ISettings, { enabled }: {
+    enabled: boolean;
+}): IForecastConfig | undefined;
 
 // @public
 export const ViewByAttributesLimit = 2;

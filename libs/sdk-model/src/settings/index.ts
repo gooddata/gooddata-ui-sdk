@@ -261,6 +261,12 @@ export interface ISettings {
     whiteLabeling?: IWhiteLabeling;
 
     /**
+     * Represents configuration for OpenAI integration
+     * @alpha
+     */
+    openAiConfig?: IOpenAiConfig;
+
+    /**
      * Enable custom non-production dataset in AD/Modeler
      */
     ["msf.enableTenantCustomModel"]?: boolean;
@@ -356,6 +362,26 @@ export interface ISettings {
      */
     enableMultipleCSVs?: boolean;
 
+    /**
+     * Enable possibility to set non-existing value into attribute filter in AD and KD via postMessage.
+     */
+    enableInvalidValuesInAttributeFilter?: boolean;
+
+    /**
+     * Enable listing of the non-unique (duplicated) secondary label values in attribute filter.
+     */
+    enableDuplicatedLabelValuesInAttributeFilter?: boolean;
+
+    /**
+     * Enable workspaces hierarchy view in Home UI.
+     */
+    enableWorkspacesHierarchyView?: boolean;
+
+    /**
+     * Enable multiple data sources to be used in a single workspace.
+     */
+    enableMultipleDataSourcesInWorkspace?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 
@@ -408,6 +434,23 @@ export interface IWhiteLabeling {
      * Whitelabeling of Apple touch icon url
      */
     appleTouchIconUrl?: string;
+}
+
+/**
+ * Configuration of integration of OpenAI.
+ *
+ * @alpha
+ */
+export interface IOpenAiConfig {
+    /**
+     * OpenAI organization ID
+     */
+    org: string;
+
+    /**
+     * OpenAI API token
+     */
+    token: string;
 }
 
 /**

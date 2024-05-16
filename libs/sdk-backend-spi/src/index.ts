@@ -31,10 +31,17 @@ export {
     IPreparedExecution,
     IExecutionResult,
     IDataView,
+    IForecastView,
     ExplainConfig,
     IExplainResult,
     IExplainProvider,
     ExplainType,
+    IForecastResult,
+    IForecastConfig,
+    IAnomalyDetectionConfig,
+    IAnomalyDetectionResult,
+    IClusteringConfig,
+    IClusteringResult,
 } from "./workspace/execution/index.js";
 
 export { IWorkspaceSettingsService } from "./workspace/settings/index.js";
@@ -84,7 +91,7 @@ export {
     FilterWithResolvableElements,
 } from "./workspace/attributes/elements/index.js";
 
-export { IExportConfig, IExportResult } from "./workspace/execution/export.js";
+export { IExportConfig, IExportResult, IExportPdfConfig } from "./workspace/execution/export.js";
 
 export { IWorkspaceStylingService } from "./workspace/styling/index.js";
 export {
@@ -124,7 +131,10 @@ export {
     IWorkspacesQuery,
     IWorkspacesQueryFactory,
     IWorkspacesQueryResult,
+    IWorkspacesQueryFilter,
+    IWorkspacesQueryOptions,
     IWorkspaceDescriptor,
+    IWorkspaceDescriptorUpdate,
 } from "./workspace/index.js";
 
 export { IAttributeHierarchiesService } from "./workspace/attributeHierarchies/index.js";
@@ -133,7 +143,11 @@ export { IWorkspacePermissionsService } from "./workspace/permissions/index.js";
 
 export { IWorkspaceAttributesService } from "./workspace/attributes/index.js";
 
-export { IWorkspaceMeasuresService, IMeasureReferencing } from "./workspace/measures/index.js";
+export {
+    IWorkspaceMeasuresService,
+    IMeasureReferencing,
+    IMeasureKeyDrivers,
+} from "./workspace/measures/index.js";
 
 export { IWorkspaceFactsService } from "./workspace/facts/index.js";
 

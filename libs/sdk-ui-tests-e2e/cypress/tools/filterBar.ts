@@ -134,7 +134,7 @@ export class AttributeFilter {
 
     search(attributeValue: string) {
         this.getDropdownElement()
-            .find(".gd-list-searchfield .gd-input-field")
+            .find(".gd-input-search .gd-input-field")
             .as("searchField")
             .should("be.visible")
             .clear();
@@ -187,7 +187,7 @@ export class AttributeFilter {
     }
 
     clearSearch() {
-        this.getDropdownElement().find(".gd-list-searchfield .gd-input-field").should("be.visible").clear();
+        this.getDropdownElement().find(".gd-input-search .gd-input-field").should("be.visible").clear();
         return this;
     }
 

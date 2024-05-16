@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { ITheme } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
@@ -30,7 +30,11 @@ import omitBy from "lodash/omitBy.js";
 import { IChartOptions } from "./typings/unsafe.js";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import { ILegendOptions } from "@gooddata/sdk-ui-vis-commons";
-import { getDataTooLargeErrorMessage, validateData } from "./chartTypes/_chartOptions/chartLimits.js";
+import {
+    getDataTooLargeErrorMessage,
+    getIsFilteringRecommended,
+    validateData,
+} from "./chartTypes/_chartOptions/chartLimits.js";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 import Highcharts from "./lib/index.js";
 import { isChartSupported, stringifyChartTypes } from "./chartTypes/_util/common.js";
@@ -120,6 +124,7 @@ const ChartTransformationImpl = (props: IChartTransformationProps) => {
         theme,
     };
 
+    let isFilteringRecommended = false;
     if (validationResult.dataTooLarge) {
         // always force onDataTooLarge error handling
         invariant(onDataTooLarge, "Visualization's onDataTooLarge callback is missing.");
@@ -133,12 +138,15 @@ const ChartTransformationImpl = (props: IChartTransformationProps) => {
             '"onNegativeValues" callback required for pie chart transformation is missing.',
         );
         onNegativeValues(chartOptions);
+    } else {
+        isFilteringRecommended = getIsFilteringRecommended(chartOptions);
     }
 
     useEffect(() => {
         pushData({
             propertiesMeta: {
                 legend_enabled: legendOptions.toggleEnabled,
+                isFilteringRecommended,
             },
             colors: {
                 colorAssignments: chartOptions.colorAssignments,

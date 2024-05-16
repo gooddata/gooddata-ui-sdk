@@ -149,7 +149,9 @@ exports[`PluggableSankeyChart > sankey should allow date attribute in attribute 
     "openAsReport": {
       "supported": false,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [],
   },
 }
@@ -282,7 +284,9 @@ exports[`PluggableSankeyChart > should return reference point with one metric, a
     "openAsReport": {
       "supported": false,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [],
   },
 }
@@ -467,7 +471,9 @@ exports[`PluggableSankeyChart > should reuse one measure and order attribute typ
     "openAsReport": {
       "supported": false,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [],
   },
 }

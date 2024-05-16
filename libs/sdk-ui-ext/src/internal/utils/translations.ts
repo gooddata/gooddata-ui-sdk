@@ -15,6 +15,10 @@ import ptPT from "../translations/pt-PT.json";
 import zhHans from "../translations/zh-Hans.json";
 import ruRU from "../translations/ru-RU.json";
 import itIT from "../translations/it-IT.json";
+import es419 from "../translations/es-419.json";
+import frCA from "../translations/fr-CA.json";
+import enGB from "../translations/en-GB.json";
+
 import { IDropdownItem } from "../interfaces/Dropdown.js";
 
 export function getTranslation(
@@ -45,6 +49,9 @@ const sdkUiExtTranslations: { [locale: string]: Record<string, string> } = {
     "zh-Hans": zhHans,
     "ru-RU": ruRU,
     "it-IT": itIT,
+    "es-419": es419,
+    "fr-CA": frCA,
+    "en-GB": enGB,
 };
 
 /**

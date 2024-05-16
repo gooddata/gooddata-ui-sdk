@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React from "react";
 import { ICoreChartProps, OnLegendReady } from "../../interfaces/index.js";
 import { getValidColorPalette, ChartTransformation } from "../../highcharts/index.js";

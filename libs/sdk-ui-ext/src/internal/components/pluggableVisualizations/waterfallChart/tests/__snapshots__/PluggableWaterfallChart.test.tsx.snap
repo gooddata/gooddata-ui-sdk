@@ -124,7 +124,9 @@ exports[`PluggableWaterfallChart > should return reference point after switching
       "stackMeasures": false,
       "supported": true,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [],
   },
 }
@@ -243,7 +245,9 @@ exports[`PluggableWaterfallChart > should return reference point with multi meas
       "stackMeasures": false,
       "supported": true,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [],
   },
 }
@@ -347,7 +351,9 @@ exports[`PluggableWaterfallChart > should return reference point with one measur
       "stackMeasures": false,
       "supported": true,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [],
   },
 }

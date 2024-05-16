@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import {
     DateAttributeGranularity,
     IDimensionDescriptor,
@@ -25,9 +25,13 @@ import {
     ExecutionResultGrandTotal,
     ExecutionResultHeader,
 } from "@gooddata/api-client-tiger";
-import { createDateValueFormatter } from "../dateFormatting/dateValueFormatter.js";
+import {
+    createDateValueFormatter,
+    createForecastDateValueFormatter,
+} from "../dateFormatting/dateValueFormatter.js";
 import { toSdkGranularity } from "../dateGranularityConversions.js";
 import { FormattingLocale } from "../dateFormatting/defaultDateFormatter.js";
+import { IForecastConfig, IForecastResult } from "@gooddata/sdk-backend-spi";
 
 type DateAttributeFormatProps = {
     granularity: DateAttributeGranularity;
@@ -205,6 +209,57 @@ export function getTransformDimensionHeaders(
         });
 }
 
+export function getTransformForecastHeaders(
+    dimensions: IDimensionDescriptor[],
+    dateFormatter: DateFormatter,
+    forecastConfig?: IForecastConfig,
+): (
+    dimensionHeaders: DimensionHeader[],
+    forecastResults: IForecastResult | undefined,
+) => IResultHeader[][][] {
+    if (!forecastConfig) {
+        return () => [];
+    }
+
+    const dateValueFormatter = createForecastDateValueFormatter(dateFormatter);
+
+    return (dimensionHeaders: DimensionHeader[], forecastResults: IForecastResult | undefined) => {
+        let used = false;
+        return dimensionHeaders.map((dimensionHeader, dimensionIndex) => {
+            return dimensionHeader.headerGroups.map((headerGroup, headerGroupIndex) => {
+                const dateFormatProps = getDateFormatProps(
+                    dimensions[dimensionIndex].headers[headerGroupIndex],
+                );
+
+                if (
+                    !used &&
+                    headerGroup.headers.length > 1 &&
+                    isResultAttributeHeader(headerGroup.headers[0])
+                ) {
+                    used = true;
+
+                    const data = fillData(forecastResults?.attribute, forecastConfig.forecastPeriod);
+
+                    return data.map((header): IResultAttributeHeader => {
+                        return attributeHeaderItem(
+                            {
+                                attributeHeader: {
+                                    labelValue: header as any,
+                                    primaryLabelValue: header as any,
+                                },
+                            },
+                            dateFormatProps,
+                            dateValueFormatter,
+                        );
+                    });
+                }
+
+                return [];
+            });
+        });
+    };
+}
+
 function attributeHeaderItem(
     header: AttributeExecutionResultHeader,
     dateFormatProps: DateAttributeFormatProps | undefined,
@@ -258,4 +313,15 @@ function totalHeaderItem(header: TotalExecutionResultHeader, measureIndex?: numb
             ...optionalMeasureIndex,
         },
     };
+}
+
+function fillData(items: string[] | undefined, period: number): (string | null)[] {
+    if (!items) {
+        const emptyData: (string | null)[] = [];
+        for (let i = 0; i < period; i++) {
+            emptyData.push(null);
+        }
+        return emptyData;
+    }
+    return items.slice(items.length - period, items.length);
 }

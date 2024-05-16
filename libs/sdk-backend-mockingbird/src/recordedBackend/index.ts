@@ -183,6 +183,9 @@ function recordedWorkspace(
         async getDescriptor(): Promise<IWorkspaceDescriptor> {
             return recordedDescriptor(this.workspace, implConfig);
         },
+        async updateDescriptor(): Promise<void> {
+            throw new NotSupported("not supported");
+        },
         getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {
             throw new NotSupported("not supported");
         },
@@ -299,6 +302,9 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 title: "mock organization",
             });
         },
+        updateDescriptor(): Promise<void> {
+            return Promise.resolve();
+        },
         securitySettings(): ISecuritySettingsService {
             return {
                 scope: scopeFactory(organizationId),
@@ -375,6 +381,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 getSettings: () => Promise.resolve({}),
                 setTheme: () => Promise.resolve(),
                 setColorPalette: () => Promise.resolve(),
+                setOpenAiConfig: () => Promise.resolve(),
                 deleteTheme: () => Promise.resolve(),
                 deleteColorPalette: () => Promise.resolve(),
             };

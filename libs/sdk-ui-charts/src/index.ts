@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 /**
  * This package provides a set of React-based chart visualizations that you can use to visualize your data.
  *
@@ -36,6 +36,7 @@ export {
     isSankeyOrDependencyWheel,
     isWaterfall,
     updateConfigWithSettings,
+    updateForecastWithSettings,
 } from "./highcharts/index.js";
 
 // export the getColorMappingPredicate so that users can import it directly without having to explicitly install vis-commons

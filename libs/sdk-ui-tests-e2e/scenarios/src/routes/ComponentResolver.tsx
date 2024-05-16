@@ -128,6 +128,10 @@ import {
     RepeaterNoColumn,
     RepeaterNoMetric,
 } from "../components/Scenarios/Visualizations/Repeater/RepeaterFullConfigs";
+import {
+    ChartTooManyDataScenario,
+    TooManyDataInsightViewScenario,
+} from "../components/Scenarios/Visualizations/ManyData/TooManyDataScenario";
 
 /**
  * Add key here for your new E2E test. Use the key in the map below with the scenario as well as in
@@ -274,6 +278,8 @@ export const SCENARIO_KEYS = {
     DASHBOARD_REPEATER: "visualizations/repeater/repeater-dashboard",
     VIS_REPEATER_NO_COLUMN: "visualizations/repeater/repeater-no-column",
     VIS_REPEATER_NO_METRIC: "visualizations/repeater/repeater-no-metric",
+    VIS_PIE_MANY_DATA: "visualizations/manydata/pie-many-data",
+    VIS_MANY_DATA_INSIGHT_VIEW: "visualizations/manydata/many-data-insight-view",
 };
 
 const scenarios = new Map<string, React.ComponentType>([
@@ -415,6 +421,8 @@ const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.VIS_REPEATER_NO_COLUMN, RepeaterNoColumn],
     [SCENARIO_KEYS.VIS_REPEATER_NO_METRIC, RepeaterNoMetric],
     [SCENARIO_KEYS.DASHBOARD_REPEATER, RepeaterDashboard],
+    [SCENARIO_KEYS.VIS_PIE_MANY_DATA, ChartTooManyDataScenario],
+    [SCENARIO_KEYS.VIS_MANY_DATA_INSIGHT_VIEW, TooManyDataInsightViewScenario],
 ]);
 
 const ComponentResolver: React.FC = () => {

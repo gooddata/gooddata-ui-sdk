@@ -157,7 +157,9 @@ exports[`bulletChartUiConfigHelper > getBulletChartUiConfig > should return bull
     "openAsReport": {
       "supported": false,
     },
-    "recommendations": {},
+    "recommendations": {
+      "supportsFilteringRecommendation": true,
+    },
     "supportedOverTimeComparisonTypes": [
       "same_period_previous_year",
       "previous_period",

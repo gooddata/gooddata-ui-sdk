@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { select, fork, take, race, SagaReturnType, call } from "redux-saga/effects";
 import { isAttributeElementsByRef } from "@gooddata/sdk-model";
@@ -10,6 +10,7 @@ import { selectAttributeFilterElements } from "../filter/filterSelectors.js";
 import { actions } from "../store/slice.js";
 import { getAttributeFilterContext } from "../common/sagas.js";
 import { selectElementsForm } from "../common/selectors.js";
+import { shouldExcludePrimaryLabel } from "../utils.js";
 
 /**
  * @internal
@@ -37,8 +38,7 @@ export function* initSelectionSaga(correlation: Correlation): SagaIterator<void>
                 offset: 0,
                 limit: 550,
                 search: undefined,
-                excludePrimaryLabel:
-                    !context.backend.capabilities.supportsElementUris && elementsForm === "values",
+                excludePrimaryLabel: shouldExcludePrimaryLabel(context, elementsForm),
             },
             correlation: initSelectionCorrelation,
         }),

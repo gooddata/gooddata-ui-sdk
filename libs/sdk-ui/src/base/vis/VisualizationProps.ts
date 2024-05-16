@@ -1,11 +1,11 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 import { ExplicitDrill, OnFiredDrillEvent } from "./DrillEvents.js";
 import React from "react";
 import { IErrorProps } from "../react/ErrorComponent.js";
 import { ILoadingProps } from "../react/LoadingComponent.js";
 import { IPushData, OnError, OnExportReady, OnLoadingChanged } from "./Events.js";
-import { IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { IForecastConfig, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 
 /**
  * Super-interface for all visualization props.
@@ -104,4 +104,10 @@ export interface IDataVisualizationProps extends IVisualizationProps, IVisualiza
      * Prepared execution - running this will compute data to visualize.
      */
     execution: IPreparedExecution;
+
+    /**
+     * Configuration for forecasting.
+     * @beta
+     */
+    forecastConfig?: IForecastConfig;
 }
