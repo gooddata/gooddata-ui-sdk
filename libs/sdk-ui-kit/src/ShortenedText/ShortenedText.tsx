@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React, { PureComponent } from "react";
 import cx from "classnames";
 
@@ -10,8 +10,6 @@ import { IAlignPoint } from "../typings/positioning.js";
 // SIDE_SCALE_RATIO is a constant which tells the percentage of
 // of the string characters to be taken from both sides to produce
 // final shortened string
-const SIDE_SCALE_RATIO = 0.42;
-
 function getElementWidth(element: Pick<HTMLElement, "scrollWidth" | "getBoundingClientRect">): number {
     return Math.ceil(element.getBoundingClientRect().width);
 }
@@ -19,6 +17,7 @@ function getElementWidth(element: Pick<HTMLElement, "scrollWidth" | "getBounding
 export function getShortenedTitle(
     title: string,
     element: Pick<HTMLElement, "scrollWidth" | "getBoundingClientRect">,
+    ellipsisPosition = "middle",
 ): string {
     const elementWidth = getElementWidth(element);
     const { scrollWidth } = element;
@@ -29,13 +28,21 @@ export function getShortenedTitle(
 
     const titleLength = title.length;
     const numChars = titleLength * (elementWidth / scrollWidth);
+    if (ellipsisPosition === "middle") {
+        const SIDE_SCALE_RATIO = 0.42;
 
-    const numCharsSideStrip = Math.floor(numChars * SIDE_SCALE_RATIO);
+        const numCharsSideStrip = Math.floor(numChars * SIDE_SCALE_RATIO);
 
-    const pre = title.substr(0, numCharsSideStrip);
-    const post = title.substr(titleLength - numCharsSideStrip, titleLength);
+        const pre = title.substr(0, numCharsSideStrip);
+        const post = title.substr(titleLength - numCharsSideStrip, titleLength);
 
-    return `${pre}…${post}`;
+        return `${pre}…${post}`;
+    } else {
+        const SIDE_SCALE_RATIO = 1;
+        const numCharsSideStrip = Math.floor(numChars * SIDE_SCALE_RATIO);
+        const pre = title.substr(0, numCharsSideStrip - 3); // -3 for ellipsis
+        return `${pre}…`;
+    }
 }
 
 /**
@@ -49,6 +56,7 @@ export interface IShortenedTextProps {
     tooltipVisibleOnMouseOver?: boolean;
     getElement?: (context: any) => Pick<HTMLElement, "scrollWidth" | "getBoundingClientRect">;
     displayTooltip?: boolean;
+    ellipsisPosition?: "middle" | "end";
 }
 
 /**
@@ -82,6 +90,7 @@ export class ShortenedText extends PureComponent<IShortenedTextProps, IShortened
         | "tooltipVisibleOnMouseOver"
         | "getElement"
         | "displayTooltip"
+        | "ellipsisPosition"
     > = {
         className: "",
         tagName: "span",
@@ -92,6 +101,7 @@ export class ShortenedText extends PureComponent<IShortenedTextProps, IShortened
             return context.textRef.current;
         },
         displayTooltip: true,
+        ellipsisPosition: "middle",
     };
 
     textRef = React.createRef<HTMLElement>();
@@ -130,9 +140,10 @@ export class ShortenedText extends PureComponent<IShortenedTextProps, IShortened
         const element = this.props.getElement(this);
         const title = this.props.children;
         const elementWidth = getElementWidth(element);
+        const ellipsisPosition = this.props.ellipsisPosition;
 
         if (elementWidth > 0 && elementWidth < element.scrollWidth) {
-            this.setState({ title: getShortenedTitle(title, element), customTitle: true });
+            this.setState({ title: getShortenedTitle(title, element, ellipsisPosition), customTitle: true });
         }
     }
 

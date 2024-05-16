@@ -3672,6 +3672,8 @@ export interface IShortenedTextProps {
     // (undocumented)
     displayTooltip?: boolean;
     // (undocumented)
+    ellipsisPosition?: "middle" | "end";
+    // (undocumented)
     getElement?: (context: any) => Pick<HTMLElement, "scrollWidth" | "getBoundingClientRect">;
     // (undocumented)
     tagName?: React_2.ElementType;
@@ -4414,7 +4416,7 @@ export class ShortenedText extends PureComponent<IShortenedTextProps, IShortened
     // (undocumented)
     componentDidUpdate(): void;
     // (undocumented)
-    static defaultProps: Pick<IShortenedTextProps, "className" | "tagName" | "tooltipAlignPoints" | "tooltipVisibleOnMouseOver" | "getElement" | "displayTooltip">;
+    static defaultProps: Pick<IShortenedTextProps, "className" | "tagName" | "tooltipAlignPoints" | "tooltipVisibleOnMouseOver" | "getElement" | "displayTooltip" | "ellipsisPosition">;
     // (undocumented)
     recomputeShortening(): void;
     // (undocumented)
