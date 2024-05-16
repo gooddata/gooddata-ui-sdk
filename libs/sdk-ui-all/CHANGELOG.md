@@ -1,6 +1,13 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 18 Apr 2024 08:07:32 GMT and should not be manually modified.
+This log was last generated on Thu, 16 May 2024 08:08:00 GMT and should not be manually modified.
+
+## 10.1.0
+Thu, 16 May 2024 08:08:00 GMT
+
+### Updates
+
+- Added a workspace service for working with export definitions metadata objects
 
 ## 10.0.0
 Thu, 18 Apr 2024 08:07:32 GMT
