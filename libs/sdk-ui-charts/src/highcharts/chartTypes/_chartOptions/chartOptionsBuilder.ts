@@ -66,6 +66,7 @@ import {
     buildTooltipFactory,
     generateTooltipHeatmapFn,
     generateTooltipSankeyChartFn,
+    generateTooltipScatterPlotFn,
     generateTooltipXYFn,
     getTooltipFactory,
     getTooltipWaterfallChart,
@@ -280,6 +281,27 @@ export function getTreemapAttributes(dv: DataViewFacade): ChartedAttributes {
     };
 }
 
+export function getScatterPlotAttributes(dv: DataViewFacade): ChartedAttributes {
+    const dimensions = dv.meta().dimensions();
+    const attributeHeaderItems = dv.meta().attributeHeaders();
+
+    const viewByAttribute = findAttributeInDimension(
+        dimensions[STACK_BY_DIMENSION_INDEX],
+        attributeHeaderItems[STACK_BY_DIMENSION_INDEX],
+    );
+
+    const stackByAttribute = findAttributeInDimension(
+        dimensions[STACK_BY_DIMENSION_INDEX],
+        attributeHeaderItems[STACK_BY_DIMENSION_INDEX],
+        1,
+    );
+
+    return {
+        viewByAttribute,
+        stackByAttribute,
+    };
+}
+
 type ChartedAttributes = {
     viewByAttribute?: IUnwrappedAttributeHeadersWithItems;
     viewByParentAttribute?: IUnwrappedAttributeHeadersWithItems;
@@ -327,6 +349,10 @@ function defaultChartedAttributeDiscovery(dv: DataViewFacade): ChartedAttributes
 function chartedAttributeDiscovery(dv: DataViewFacade, chartType: string): ChartedAttributes {
     if (isTreemap(chartType)) {
         return getTreemapAttributes(dv);
+    }
+
+    if (isScatterPlot(chartType)) {
+        return getScatterPlotAttributes(dv);
     }
 
     return defaultChartedAttributeDiscovery(dv);
@@ -521,7 +547,7 @@ export function getChartOptions(
                 categories,
             },
             actions: {
-                tooltip: generateTooltipXYFn(measures, stackByAttribute, config),
+                tooltip: generateTooltipScatterPlotFn(measures, stackByAttribute, viewByAttribute, config),
             },
             grid: {
                 enabled: gridEnabled,

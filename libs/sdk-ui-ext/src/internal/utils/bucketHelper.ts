@@ -296,7 +296,10 @@ function bucketSupportsSubtitle(visualizationType: string, bucketLocalIdentifier
             return true;
 
         case VisualizationTypes.SCATTER:
-            return bucketLocalIdentifier !== BucketNames.ATTRIBUTE;
+            return !(
+                bucketLocalIdentifier === BucketNames.ATTRIBUTE ||
+                bucketLocalIdentifier === BucketNames.SEGMENT
+            );
 
         case VisualizationTypes.BUBBLE:
             return bucketLocalIdentifier !== BucketNames.VIEW;

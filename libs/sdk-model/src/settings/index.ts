@@ -382,6 +382,11 @@ export interface ISettings {
      */
     enableMultipleDataSourcesInWorkspace?: boolean;
 
+    /**
+     * Enables segmentation in scatter plot.
+     */
+    enableScatterPlotSegmentation?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

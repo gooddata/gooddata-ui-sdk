@@ -31,6 +31,7 @@ export const titles: Record<string, MessageDescriptor> = defineMessages({
     tertiary_measures_bubble: { id: "dashboard.bucket.tertiary_measures_title.bubble" },
     tertiary_measures_bullet: { id: "dashboard.bucket.tertiary_measures_title.bullet" },
     attribute_scatter: { id: "dashboard.bucket.attribute_title.scatter" },
+    segment_scatter: { id: "dashboard.bucket.segment_title.scatter" },
     attribute_xirr: { id: "dashboard.bucket.attribute_title.xirr" },
     attribute_table: { id: "dashboard.bucket.attribute_title.table" },
     attribute_from_sankey: { id: "dashboard.bucket.attribute_from_title.sankey" },

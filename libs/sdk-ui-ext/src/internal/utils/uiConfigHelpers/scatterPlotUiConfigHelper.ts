@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
 import { IntlShape } from "react-intl";
@@ -14,7 +14,8 @@ import { setBucketTitles } from "../bucketHelper.js";
 // https://github.com/gooddata/gdc-analytical-designer/blob/develop/app/components/buckets/BucketIcon.tsx
 const scatterMeasuresXIcon = "local:scatter/bucket-title-measures-x.svg";
 const scatterMeasuresYIcon = "local:scatter/bucket-title-measures-y.svg";
-const scatterAttributeIcon = "local:scatter/bucket-title-attribute.svg";
+const scatterViewIcon = "local:scatter/bucket-title-view.svg";
+const scatterSegmentIcon = "local:scatter/bucket-title-segment.svg";
 
 export function setScatterPlotUiConfig(
     referencePoint: IExtendedReferencePoint,
@@ -31,7 +32,8 @@ export function setScatterPlotUiConfig(
         [UICONFIG, BUCKETS, BucketNames.SECONDARY_MEASURES, "icon"],
         scatterMeasuresYIcon,
     );
-    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.ATTRIBUTE, "icon"], scatterAttributeIcon);
+    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.ATTRIBUTE, "icon"], scatterViewIcon);
+    set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.SEGMENT, "icon"], scatterSegmentIcon);
 
     return referencePointConfigured;
 }

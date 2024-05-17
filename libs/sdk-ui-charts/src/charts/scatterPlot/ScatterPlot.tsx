@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React from "react";
 import { IAttribute, IMeasure, INullableFilter, ISortItem, newBucket } from "@gooddata/sdk-model";
 import {
@@ -21,12 +21,13 @@ import { withChart } from "../_base/withChart.js";
 
 const scatterPlotDefinition: IChartDefinition<IScatterPlotBucketProps, IScatterPlotProps> = {
     chartName: "ScatterPlot",
-    bucketPropsKeys: ["xAxisMeasure", "yAxisMeasure", "attribute", "filters", "sortBy"],
+    bucketPropsKeys: ["xAxisMeasure", "yAxisMeasure", "attribute", "segmentBy", "filters", "sortBy"],
     bucketsFactory: (props) => {
         return [
             newBucket(BucketNames.MEASURES, props.xAxisMeasure as IMeasure),
             newBucket(BucketNames.SECONDARY_MEASURES, props.yAxisMeasure as IMeasure),
             newBucket(BucketNames.ATTRIBUTE, props.attribute as IAttribute),
+            newBucket(BucketNames.SEGMENT, props.segmentBy as IAttribute),
         ];
     },
     executionFactory: (props, buckets) => {
@@ -69,6 +70,11 @@ export interface IScatterPlotBucketProps {
     attribute?: AttributeOrPlaceholder;
 
     /**
+     * Specify attribute whose values will be used to segment the data.
+     */
+    segmentBy?: AttributeOrPlaceholder;
+
+    /**
      * Specify filters to apply on the data to chart.
      */
     filters?: NullableFiltersOrPlaceholders;
@@ -105,10 +111,18 @@ const WrappedScatterPlot = withChart(scatterPlotDefinition)(CoreScatterPlot);
  * @public
  */
 export const ScatterPlot = (props: IScatterPlotProps) => {
-    const [xAxisMeasure, yAxisMeasure, attribute, filters, sortBy] = useResolveValuesWithPlaceholders(
-        [props.xAxisMeasure, props.yAxisMeasure, props.attribute, props.filters, props.sortBy],
-        props.placeholdersResolutionContext,
-    );
+    const [xAxisMeasure, yAxisMeasure, attribute, segmentBy, filters, sortBy] =
+        useResolveValuesWithPlaceholders(
+            [
+                props.xAxisMeasure,
+                props.yAxisMeasure,
+                props.attribute,
+                props.segmentBy,
+                props.filters,
+                props.sortBy,
+            ],
+            props.placeholdersResolutionContext,
+        );
 
     return (
         <WrappedScatterPlot
@@ -117,6 +131,7 @@ export const ScatterPlot = (props: IScatterPlotProps) => {
                 xAxisMeasure,
                 yAxisMeasure,
                 attribute,
+                segmentBy,
                 filters,
                 sortBy,
             }}

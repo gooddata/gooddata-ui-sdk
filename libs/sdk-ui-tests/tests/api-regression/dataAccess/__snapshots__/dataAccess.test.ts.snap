@@ -4973,6 +4973,47 @@ exports[`DataAccess > should correctly identify series and slices for: ScatterPl
 }
 `;
 
+exports[`DataAccess > should correctly identify series and slices for: ScatterPlot - x and y axis measures, attribute and segmentation 1`] = `
+{
+  "seriesDigest": {
+    "allSeries": 2,
+    "attributes": 0,
+    "measures": 2,
+    "seriesNames": [
+      " > Amount",
+      " > Win Rate",
+    ],
+  },
+  "slicesDigest": {
+    "allSlices": 20,
+    "attributes": 2,
+    "sliceNames": [
+      "Boston > Massachusetts",
+      "Bridgeport > Connecticut",
+      "Eugene > Oregon",
+      "Hartford > Connecticut",
+      "Nashua > New Hampshire",
+      "New York > New York",
+      "Philadelphia > Pennsylvania",
+      "Portland > Oregon",
+      "Poughkeepsie > New York",
+      "Providence > Rhode Island",
+      "Sacramento > California",
+      "Salem > Oregon",
+      "Salinas > California",
+      "San Francisco > California",
+      "San Jose > California",
+      "Santa Barbara > California",
+      "Santa Cruz > California",
+      "Santa Rosa > California",
+      "Seattle > Washington",
+      "Vancouver > Washington",
+    ],
+    "totals": 0,
+  },
+}
+`;
+
 exports[`DataAccess > should correctly identify series and slices for: ScatterPlot - x axis measure 1`] = `
 {
   "seriesDigest": {

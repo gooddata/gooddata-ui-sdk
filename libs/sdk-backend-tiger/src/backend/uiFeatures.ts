@@ -90,6 +90,7 @@ export enum TigerFeaturesNames {
     EnableDuplicatedLabelValuesInAttributeFilter = "enableDuplicatedLabelValuesInAttributeFilter",
     EnableWorkspacesHierarchyView = "enableWorkspacesHierarchyView",
     EnableMultipleDataSourcesInWorkspace = "enableMultipleDataSourcesInWorkspace",
+    EnableScatterPlotSegmentation = "enableScatterPlotSegmentation",
 }
 
 export type ITigerFeatureFlags = {
@@ -144,6 +145,7 @@ export type ITigerFeatureFlags = {
     enableDuplicatedLabelValuesInAttributeFilter: typeof FeatureFlagsValues["enableDuplicatedLabelValuesInAttributeFilter"][number];
     enableWorkspacesHierarchyView: typeof FeatureFlagsValues["enableWorkspacesHierarchyView"][number];
     enableMultipleDataSourcesInWorkspace: typeof FeatureFlagsValues["enableMultipleDataSourcesInWorkspace"][number];
+    enableScatterPlotSegmentation: typeof FeatureFlagsValues["enableScatterPlotSegmentation"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -198,6 +200,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDuplicatedLabelValuesInAttributeFilter: false,
     enableWorkspacesHierarchyView: false,
     enableMultipleDataSourcesInWorkspace: false,
+    enableScatterPlotSegmentation: false,
 };
 
 export const FeatureFlagsValues = {
@@ -256,4 +259,5 @@ export const FeatureFlagsValues = {
     enableDuplicatedLabelValuesInAttributeFilter: [true, false] as const,
     enableWorkspacesHierarchyView: [true, false] as const,
     enableMultipleDataSourcesInWorkspace: [true, false] as const,
+    enableScatterPlotSegmentation: [true, false] as const,
 };

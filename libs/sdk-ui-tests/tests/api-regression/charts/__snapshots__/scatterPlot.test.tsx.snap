@@ -64,6 +64,10 @@ exports[`ScatterPlot > with Y axis min/max configuration > should create expecte
       ],
       "localIdentifier": "attribute",
     },
+    {
+      "items": [],
+      "localIdentifier": "segment",
+    },
   ],
   "dimensions": [
     {
@@ -194,6 +198,10 @@ exports[`ScatterPlot > with assign color to measures > should create expected ex
         },
       ],
       "localIdentifier": "attribute",
+    },
+    {
+      "items": [],
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": [
@@ -373,6 +381,10 @@ exports[`ScatterPlot > with axis name configuration - high > should create expec
       ],
       "localIdentifier": "attribute",
     },
+    {
+      "items": [],
+      "localIdentifier": "segment",
+    },
   ],
   "dimensions": [
     {
@@ -519,6 +531,10 @@ exports[`ScatterPlot > with axis name configuration - invisible > should create 
         },
       ],
       "localIdentifier": "attribute",
+    },
+    {
+      "items": [],
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": [
@@ -667,6 +683,10 @@ exports[`ScatterPlot > with axis name configuration - low > should create expect
       ],
       "localIdentifier": "attribute",
     },
+    {
+      "items": [],
+      "localIdentifier": "segment",
+    },
   ],
   "dimensions": [
     {
@@ -813,6 +833,10 @@ exports[`ScatterPlot > with axis name configuration - middle > should create exp
         },
       ],
       "localIdentifier": "attribute",
+    },
+    {
+      "items": [],
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": [
@@ -961,6 +985,10 @@ exports[`ScatterPlot > with coloring - custom colors > should create expected ex
       ],
       "localIdentifier": "attribute",
     },
+    {
+      "items": [],
+      "localIdentifier": "segment",
+    },
   ],
   "dimensions": [
     {
@@ -1090,6 +1118,10 @@ exports[`ScatterPlot > with coloring - custom palette > should create expected e
         },
       ],
       "localIdentifier": "attribute",
+    },
+    {
+      "items": [],
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": [
@@ -1255,6 +1287,10 @@ exports[`ScatterPlot > with coloring - custom palette preferred over colors > sh
         },
       ],
       "localIdentifier": "attribute",
+    },
+    {
+      "items": [],
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": [
@@ -1428,6 +1464,10 @@ exports[`ScatterPlot > with coloring - default > should create expected executio
       ],
       "localIdentifier": "attribute",
     },
+    {
+      "items": [],
+      "localIdentifier": "segment",
+    },
   ],
   "dimensions": [
     {
@@ -1477,6 +1517,691 @@ exports[`ScatterPlot > with coloring - default > should create expected executio
 `;
 
 exports[`ScatterPlot > with coloring - default > should create expected props for core chart 1`] = `
+{
+  "config": {},
+  "exportTitle": "ScatterPlot",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`ScatterPlot > with coloring with segmentation - custom colors > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_city.id.cityname",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_city.id.cityname",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "state_id.statename",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_state_id.statename",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_city.id.cityname",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_city.id.cityname",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "state_id.statename",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_state_id.statename",
+          },
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_f_city.id.cityname",
+        "a_state_id.statename",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ScatterPlot > with coloring with segmentation - custom colors > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "colors": [
+      "rgb(33, 41, 195)",
+      "rgb(18, 194, 25)",
+      "rgb(243, 56, 47)",
+      "rgb(240, 239, 8)",
+      "rgb(131, 131, 131)",
+    ],
+  },
+  "exportTitle": "ScatterPlot",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`ScatterPlot > with coloring with segmentation - custom palette > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_city.id.cityname",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_city.id.cityname",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "state_id.statename",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_state_id.statename",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_city.id.cityname",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_city.id.cityname",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "state_id.statename",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_state_id.statename",
+          },
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_f_city.id.cityname",
+        "a_state_id.statename",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ScatterPlot > with coloring with segmentation - custom palette > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "colorPalette": [
+      {
+        "fill": {
+          "b": 73,
+          "g": 49,
+          "r": 195,
+        },
+        "guid": "01",
+      },
+      {
+        "fill": {
+          "b": 86,
+          "g": 194,
+          "r": 168,
+        },
+        "guid": "02",
+      },
+      {
+        "fill": {
+          "b": 177,
+          "g": 217,
+          "r": 243,
+        },
+        "guid": "03",
+      },
+      {
+        "fill": {
+          "b": 121,
+          "g": 153,
+          "r": 194,
+        },
+        "guid": "04",
+      },
+      {
+        "fill": {
+          "b": 34,
+          "g": 37,
+          "r": 162,
+        },
+        "guid": "05",
+      },
+    ],
+  },
+  "exportTitle": "ScatterPlot",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`ScatterPlot > with coloring with segmentation - custom palette preferred over colors > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_city.id.cityname",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_city.id.cityname",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "state_id.statename",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_state_id.statename",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_city.id.cityname",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_city.id.cityname",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "state_id.statename",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_state_id.statename",
+          },
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_f_city.id.cityname",
+        "a_state_id.statename",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ScatterPlot > with coloring with segmentation - custom palette preferred over colors > should create expected props for core chart 1`] = `
+{
+  "config": {
+    "colorPalette": [
+      {
+        "fill": {
+          "b": 73,
+          "g": 49,
+          "r": 195,
+        },
+        "guid": "01",
+      },
+      {
+        "fill": {
+          "b": 86,
+          "g": 194,
+          "r": 168,
+        },
+        "guid": "02",
+      },
+      {
+        "fill": {
+          "b": 177,
+          "g": 217,
+          "r": 243,
+        },
+        "guid": "03",
+      },
+      {
+        "fill": {
+          "b": 121,
+          "g": 153,
+          "r": 194,
+        },
+        "guid": "04",
+      },
+      {
+        "fill": {
+          "b": 34,
+          "g": 37,
+          "r": 162,
+        },
+        "guid": "05",
+      },
+    ],
+    "colors": [
+      "rgb(33, 41, 195)",
+      "rgb(18, 194, 25)",
+      "rgb(243, 56, 47)",
+      "rgb(240, 239, 8)",
+      "rgb(131, 131, 131)",
+    ],
+  },
+  "exportTitle": "ScatterPlot",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
+exports[`ScatterPlot > with coloring with segmentation - default > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_city.id.cityname",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_city.id.cityname",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "state_id.statename",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_state_id.statename",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_city.id.cityname",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_city.id.cityname",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "state_id.statename",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_state_id.statename",
+          },
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_f_city.id.cityname",
+        "a_state_id.statename",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ScatterPlot > with coloring with segmentation - default > should create expected props for core chart 1`] = `
 {
   "config": {},
   "exportTitle": "ScatterPlot",
@@ -1549,6 +2274,10 @@ exports[`ScatterPlot > with data labels - auto visibility > should create expect
         },
       ],
       "localIdentifier": "attribute",
+    },
+    {
+      "items": [],
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": [
@@ -1676,6 +2405,10 @@ exports[`ScatterPlot > with data labels - default > should create expected execu
       ],
       "localIdentifier": "attribute",
     },
+    {
+      "items": [],
+      "localIdentifier": "segment",
+    },
   ],
   "dimensions": [
     {
@@ -1797,6 +2530,10 @@ exports[`ScatterPlot > with data labels - forced hidden > should create expected
         },
       ],
       "localIdentifier": "attribute",
+    },
+    {
+      "items": [],
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": [
@@ -1924,6 +2661,10 @@ exports[`ScatterPlot > with data labels - forced visible > should create expecte
       ],
       "localIdentifier": "attribute",
     },
+    {
+      "items": [],
+      "localIdentifier": "segment",
+    },
   ],
   "dimensions": [
     {
@@ -2049,6 +2790,10 @@ exports[`ScatterPlot > with data labels - forced visible and german separators >
         },
       ],
       "localIdentifier": "attribute",
+    },
+    {
+      "items": [],
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": [
@@ -2180,6 +2925,10 @@ exports[`ScatterPlot > with x and y axis measures and attribute > should create 
       ],
       "localIdentifier": "attribute",
     },
+    {
+      "items": [],
+      "localIdentifier": "segment",
+    },
   ],
   "dimensions": [
     {
@@ -2300,6 +3049,10 @@ exports[`ScatterPlot > with x and y axis measures and attribute with attr sortin
         },
       ],
       "localIdentifier": "attribute",
+    },
+    {
+      "items": [],
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": [
@@ -2429,6 +3182,10 @@ exports[`ScatterPlot > with x and y axis measures and attribute with nulls in da
       ],
       "localIdentifier": "attribute",
     },
+    {
+      "items": [],
+      "localIdentifier": "segment",
+    },
   ],
   "dimensions": [
     {
@@ -2486,6 +3243,151 @@ exports[`ScatterPlot > with x and y axis measures and attribute with nulls in da
 }
 `;
 
+exports[`ScatterPlot > with x and y axis measures, attribute and segmentation > should create expected execution definition 1`] = `
+{
+  "attributes": [
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "f_city.id.cityname",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_f_city.id.cityname",
+      },
+    },
+    {
+      "attribute": {
+        "displayForm": {
+          "identifier": "state_id.statename",
+          "type": "displayForm",
+        },
+        "localIdentifier": "a_state_id.statename",
+      },
+    },
+  ],
+  "buckets": [
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+          },
+        },
+      ],
+      "localIdentifier": "measures",
+    },
+    {
+      "items": [
+        {
+          "measure": {
+            "definition": {
+              "measureDefinition": {
+                "item": {
+                  "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
+                  "type": "measure",
+                },
+              },
+            },
+            "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
+          },
+        },
+      ],
+      "localIdentifier": "secondary_measures",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "f_city.id.cityname",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_f_city.id.cityname",
+          },
+        },
+      ],
+      "localIdentifier": "attribute",
+    },
+    {
+      "items": [
+        {
+          "attribute": {
+            "displayForm": {
+              "identifier": "state_id.statename",
+              "type": "displayForm",
+            },
+            "localIdentifier": "a_state_id.statename",
+          },
+        },
+      ],
+      "localIdentifier": "segment",
+    },
+  ],
+  "dimensions": [
+    {
+      "itemIdentifiers": [
+        "a_f_city.id.cityname",
+        "a_state_id.statename",
+      ],
+    },
+    {
+      "itemIdentifiers": [
+        "measureGroup",
+      ],
+    },
+  ],
+  "filters": [],
+  "measures": [
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+      },
+    },
+    {
+      "measure": {
+        "definition": {
+          "measureDefinition": {
+            "item": {
+              "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
+              "type": "measure",
+            },
+          },
+        },
+        "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba",
+      },
+    },
+  ],
+  "postProcessing": {},
+  "sortBy": [],
+  "workspace": "reference-workspace",
+}
+`;
+
+exports[`ScatterPlot > with x and y axis measures, attribute and segmentation > should create expected props for core chart 1`] = `
+{
+  "exportTitle": "ScatterPlot",
+  "theme": undefined,
+  "themeIsLoading": undefined,
+  "themeStatus": "pending",
+}
+`;
+
 exports[`ScatterPlot > with x axis measure > should create expected execution definition 1`] = `
 {
   "attributes": [],
@@ -2515,6 +3417,10 @@ exports[`ScatterPlot > with x axis measure > should create expected execution de
     {
       "items": [],
       "localIdentifier": "attribute",
+    },
+    {
+      "items": [],
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": [
@@ -2607,6 +3513,10 @@ exports[`ScatterPlot > with x axis measure and attribute > should create expecte
         },
       ],
       "localIdentifier": "attribute",
+    },
+    {
+      "items": [],
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": [
@@ -2701,6 +3611,10 @@ exports[`ScatterPlot > with y axis measure and attribute > should create expecte
         },
       ],
       "localIdentifier": "attribute",
+    },
+    {
+      "items": [],
+      "localIdentifier": "segment",
     },
   ],
   "dimensions": [

@@ -1,0 +1,41 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ScatterPlotColorStrategy > should create palette with different colors from all segmentBy attribute elements 1`] = `"rgb(195,49,73)"`;
+
+exports[`ScatterPlotColorStrategy > should create palette with different colors from all segmentBy attribute elements 2`] = `"rgb(168,194,86)"`;
+
+exports[`ScatterPlotColorStrategy > should create palette with different colors from all segmentBy attribute elements 3`] = `"rgb(243,217,177)"`;
+
+exports[`ScatterPlotColorStrategy > should create palette with different colors from all segmentBy attribute elements 4`] = `"rgb(194,153,121)"`;
+
+exports[`ScatterPlotColorStrategy > should create palette with different colors from all segmentBy attribute elements 5`] = `"rgb(162,37,34)"`;
+
+exports[`ScatterPlotColorStrategy > should create palette with different colors from all segmentBy attribute elements 6`] = `"rgb(195,49,73)"`;
+
+exports[`ScatterPlotColorStrategy > should create palette with different colors from all segmentBy attribute elements 7`] = `"rgb(168,194,86)"`;
+
+exports[`ScatterPlotColorStrategy > should create palette with different colors from all segmentBy attribute elements 8`] = `"rgb(243,217,177)"`;
+
+exports[`ScatterPlotColorStrategy > should create palette with different colors from all segmentBy attribute elements 9`] = `"rgb(194,153,121)"`;
+
+exports[`ScatterPlotColorStrategy > should create palette with different colors from all segmentBy attribute elements 10`] = `"rgb(162,37,34)"`;
+
+exports[`ScatterPlotColorStrategy > should create palette with different colors from all segmentBy attribute elements 11`] = `"rgb(195,49,73)"`;
+
+exports[`ScatterPlotColorStrategy > should create palette with different colors from all segmentBy attribute elements 12`] = `"rgb(168,194,86)"`;
+
+exports[`ScatterPlotColorStrategy > should create palette with different colors from all segmentBy attribute elements 13`] = `"rgb(243,217,177)"`;
+
+exports[`ScatterPlotColorStrategy > should create palette with different colors from all segmentBy attribute elements 14`] = `"rgb(194,153,121)"`;
+
+exports[`ScatterPlotColorStrategy > should create palette with different colors from all segmentBy attribute elements 15`] = `"rgb(162,37,34)"`;
+
+exports[`ScatterPlotColorStrategy > should create palette with different colors from all segmentBy attribute elements 16`] = `"rgb(195,49,73)"`;
+
+exports[`ScatterPlotColorStrategy > should create palette with different colors from all segmentBy attribute elements 17`] = `"rgb(168,194,86)"`;
+
+exports[`ScatterPlotColorStrategy > should create palette with different colors from all segmentBy attribute elements 18`] = `"rgb(243,217,177)"`;
+
+exports[`ScatterPlotColorStrategy > should create palette with different colors from all segmentBy attribute elements 19`] = `"rgb(194,153,121)"`;
+
+exports[`ScatterPlotColorStrategy > should create palette with different colors from all segmentBy attribute elements 20`] = `"rgb(162,37,34)"`;

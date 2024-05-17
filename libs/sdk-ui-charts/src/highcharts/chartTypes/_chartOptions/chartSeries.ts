@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { ITheme, IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 import { IColorStrategy, valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
@@ -180,7 +180,7 @@ export function getSeries(
     if (isHeatmap(type)) {
         return getHeatmapSeries(dv, measureGroup, theme);
     } else if (isScatterPlot(type)) {
-        return getScatterPlotSeries(dv, stackByAttribute, colorStrategy, emptyHeaderTitle);
+        return getScatterPlotSeries(dv, viewByAttribute, stackByAttribute, colorStrategy, emptyHeaderTitle);
     } else if (isBubbleChart(type)) {
         return getBubbleChartSeries(dv, measureGroup, stackByAttribute, colorStrategy, emptyHeaderTitle);
     } else if (isTreemap(type) && stackByAttribute) {

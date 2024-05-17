@@ -54,7 +54,8 @@
                 }
             ],
             "localIdentifier": "attribute"
-        }
+        },
+        { "items": [], "localIdentifier": "segment" }
     ],
     "dimensions": [
         { "itemIdentifiers": ["a_dt_closedate_timestamp.year"] },

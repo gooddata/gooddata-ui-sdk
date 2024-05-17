@@ -40,30 +40,30 @@ const style = { height: 300 };
         yAxisMeasure={Md.$FranchisedSales}
         attribute={Md.DateMonth.Short}
     />
-</div>
+</div>;
 ```
 
 ## Properties
 
-| Name | Required? | Type | Description |
-| :--- | :--- | :--- | :--- |
-| xAxisMeasure | false | Measure | The measure definition (at least one of `xAxisMeasure` or `yAxisMeasure` must be provided for the scatter plot to render properly) |
-| yAxisMeasure | false | Measure | The measure definition (at least one of `xAxisMeasure` or `yAxisMeasure` must be provided for the scatter plot to render properly) |
-| attribute | false | Attribute | The attribute definition |
-| filters | false | Filter[] | An array of filter definitions |
-| sortBy | false | SortItem[] | An array of sort definitions |
-| config | false | ChartConfig | The chart configuration object |
-| backend | false | IAnalyticalBackend | The object with the configuration related to communication with the backend and access to analytical workspaces |
-| workspace | false | string | The workspace ID |
-| locale | false | string | The localization of the chart. Defaults to `en-US`.|
-| drillableItems | false | DrillableItem[] | An array of points and attribute values to be drillable. |
-| ErrorComponent | false | Component | A component to be rendered if this component is in error state |
-| LoadingComponent | false | Component | A component to be rendered if this component is in loading state |
-| onError | false | Function | A callback when the component updates its error state |
-| onExportReady | false | Function | A callback when the component is ready for exporting its data |
-| onLoadingChanged | false | Function | A callback when the component updates its loading state |
-| onDrill | false | Function | A callback when a drill is triggered on the component |
-
+| Name             | Required? | Type               | Description                                                                                                                        |
+| :--------------- | :-------- | :----------------- | :--------------------------------------------------------------------------------------------------------------------------------- |
+| xAxisMeasure     | false     | Measure            | The measure definition (at least one of `xAxisMeasure` or `yAxisMeasure` must be provided for the scatter plot to render properly) |
+| yAxisMeasure     | false     | Measure            | The measure definition (at least one of `xAxisMeasure` or `yAxisMeasure` must be provided for the scatter plot to render properly) |
+| attribute        | false     | Attribute          | The attribute definition                                                                                                           |
+| segmentBy        | false     | Attribute          | The attribute definition                                                                                                           |
+| filters          | false     | Filter[]           | An array of filter definitions                                                                                                     |
+| sortBy           | false     | SortItem[]         | An array of sort definitions                                                                                                       |
+| config           | false     | ChartConfig        | The chart configuration object                                                                                                     |
+| backend          | false     | IAnalyticalBackend | The object with the configuration related to communication with the backend and access to analytical workspaces                    |
+| workspace        | false     | string             | The workspace ID                                                                                                                   |
+| locale           | false     | string             | The localization of the chart. Defaults to `en-US`.                                                                                |
+| drillableItems   | false     | DrillableItem[]    | An array of points and attribute values to be drillable.                                                                           |
+| ErrorComponent   | false     | Component          | A component to be rendered if this component is in error state                                                                     |
+| LoadingComponent | false     | Component          | A component to be rendered if this component is in loading state                                                                   |
+| onError          | false     | Function           | A callback when the component updates its error state                                                                              |
+| onExportReady    | false     | Function           | A callback when the component is ready for exporting its data                                                                      |
+| onLoadingChanged | false     | Function           | A callback when the component updates its loading state                                                                            |
+| onDrill          | false     | Function           | A callback when a drill is triggered on the component                                                                              |
 
 The following example shows the supported `config` structure with sample values. For the descriptions of the individual options, see [ChartConfig](../chart_config/).
 
