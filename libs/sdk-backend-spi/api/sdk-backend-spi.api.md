@@ -83,6 +83,8 @@ import { IThemeMetadataObject } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
 import { IUserGroup } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
+import { IWebhookMetadataObject } from '@gooddata/sdk-model';
+import { IWebhookMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { IWhiteLabeling } from '@gooddata/sdk-model';
 import { IWidget } from '@gooddata/sdk-model';
 import { IWidgetAlert } from '@gooddata/sdk-model';
@@ -756,6 +758,7 @@ export interface IObjectExpressionToken {
 // @public
 export interface IOrganization {
     getDescriptor(includeAdditionalDetails?: boolean): Promise<IOrganizationDescriptor>;
+    notificationChannels(): IOrganizationNotificationChannelService;
     readonly organizationId: string;
     permissions(): IOrganizationPermissionService;
     securitySettings(): ISecuritySettingsService;
@@ -763,6 +766,15 @@ export interface IOrganization {
     styling(): IOrganizationStylingService;
     updateDescriptor(descriptor: IOrganizationDescriptorUpdate): Promise<void>;
     users(): IOrganizationUserService;
+}
+
+// @alpha
+export interface IOrganizationNotificationChannelService {
+    createWebhook(webhook: IWebhookMetadataObjectDefinition): Promise<IWebhookMetadataObject>;
+    deleteWebhook(id: string): Promise<void>;
+    getWebhook(id: string): Promise<IWebhookMetadataObject>;
+    getWebhooks(): Promise<IWebhookMetadataObject[]>;
+    updateWebhook(webhook: IWebhookMetadataObject): Promise<IWebhookMetadataObject>;
 }
 
 // @alpha

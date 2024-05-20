@@ -36,6 +36,7 @@ import { JsonApiDatasetOutList } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInAttributesCacheStrategyEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInAttributesTypeEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInDocument } from '@gooddata/api-client-tiger';
+import { JsonApiNotificationChannelOut } from '@gooddata/api-client-tiger';
 import { JsonApiOrganizationOutMetaPermissionsEnum } from '@gooddata/api-client-tiger';
 import { JsonApiWorkspaceDataFilterInDocument } from '@gooddata/api-client-tiger';
 import { JsonApiWorkspaceDataFilterOutDocument } from '@gooddata/api-client-tiger';
@@ -278,6 +279,9 @@ export interface IInvitationUserResponse {
 export { ImportCsvRequest }
 
 export { ImportCsvResponse }
+
+// @internal (undocumented)
+export type INotificationChannel = Omit<JsonApiNotificationChannelOut, "type">;
 
 // @alpha (undocumented)
 export const isTigerCompatibleType: (obj: unknown) => obj is TigerObjectType;

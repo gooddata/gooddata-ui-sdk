@@ -12,6 +12,7 @@ import { DefaultUiSettings, DefaultUserSettings } from "../../uiSettings.js";
 import { unwrapSettingContent } from "../../../convertors/fromBackend/SettingsConverter.js";
 import { TigerSettingsService, mapTypeToKey } from "../../settings/index.js";
 import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "../constants.js";
+import { DeclarativeWorkspace } from "@gooddata/api-client-tiger";
 
 export class TigerWorkspaceSettings
     extends TigerSettingsService<IWorkspaceSettings>
@@ -158,7 +159,7 @@ export function getSettingsForCurrentUser(
         const profile = await client.profile.getCurrent();
         const features = await new TigerFeaturesService(authCall).getFeatures(
             profile,
-            pickContext(attributes, profile.organizationId),
+            pickContext(attributes as Partial<DeclarativeWorkspace>, profile.organizationId),
         );
 
         return {

@@ -321,7 +321,7 @@ export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
 export type DatasetLoadStatus = "RUNNING" | "OK" | "ERROR" | "CANCELLED" | "ERROR_METADATA" | "REFRESHING";
 
 // @alpha (undocumented)
-export type DataSourceType = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "SINGLESTORE";
+export type DataSourceType = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "SINGLESTORE" | "MOTHERDUCK";
 
 // @public
 export type DataValue = null | string | number;
@@ -3314,6 +3314,29 @@ export interface IVisualizationClassBody {
     title: string;
     uri: string;
     url: string;
+}
+
+// @alpha (undocumented)
+export interface IWebhookMetadataObject extends IWebhookMetadataObjectBase {
+    id: string;
+}
+
+// @alpha (undocumented)
+export interface IWebhookMetadataObjectBase {
+    endpoint: string;
+    name: string;
+    token?: string;
+    triggers: IWebhookTrigger[];
+}
+
+// @alpha (undocumented)
+export interface IWebhookMetadataObjectDefinition extends Partial<IWebhookMetadataObjectBase>, Partial<Pick<IWebhookMetadataObject, "id">> {
+}
+
+// @alpha (undocumented)
+export interface IWebhookTrigger {
+    allowOn?: ("dashboard" | "visualization")[];
+    type: "SCHEDULE" | "ALERT";
 }
 
 // @public

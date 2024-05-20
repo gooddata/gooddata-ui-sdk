@@ -79,6 +79,7 @@ export enum TigerFeaturesNames {
     EnableOracleDataSource = "enableOracleDataSource",
     EnableAnalyticalCatalog = "enableAnalyticalCatalog",
     EnableAlerting = "enableAlerting",
+    EnableScheduling = "enableScheduling",
     EnableSmartFunctions = "enableSmartFunctions",
     EnableLabsSmartFunctions = "enableLabsSmartFunctions",
     EnableKeyDriverAnalysis = "enableKeyDriverAnalysis",
@@ -134,6 +135,7 @@ export type ITigerFeatureFlags = {
     enableOracleDataSource: typeof FeatureFlagsValues["enableOracleDataSource"][number];
     enableAnalyticalCatalog: typeof FeatureFlagsValues["enableAnalyticalCatalog"][number];
     enableAlerting: typeof FeatureFlagsValues["enableAlerting"][number];
+    enableScheduling: typeof FeatureFlagsValues["enableScheduling"][number];
     enableLabsSmartFunctions: typeof FeatureFlagsValues["enableLabsSmartFunctions"][number];
     enableSmartFunctions: typeof FeatureFlagsValues["enableSmartFunctions"][number];
     enableKeyDriverAnalysis: typeof FeatureFlagsValues["enableKeyDriverAnalysis"][number];
@@ -189,6 +191,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableOracleDataSource: false,
     enableAnalyticalCatalog: false,
     enableAlerting: false,
+    enableScheduling: false,
     enableLabsSmartFunctions: false,
     enableSmartFunctions: false,
     enableKeyDriverAnalysis: false,
@@ -248,6 +251,7 @@ export const FeatureFlagsValues = {
     enableOracleDataSource: [true, false] as const,
     enableAnalyticalCatalog: [true, false] as const,
     enableAlerting: [true, false] as const,
+    enableScheduling: [true, false] as const,
     enableLabsSmartFunctions: [true, false] as const,
     enableSmartFunctions: [true, false] as const,
     enableKeyDriverAnalysis: [true, false] as const,

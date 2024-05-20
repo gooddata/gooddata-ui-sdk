@@ -298,6 +298,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableScheduling,
+            "enableScheduling",
+            "BOOLEAN",
+            FeatureFlagsValues.enableScheduling,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableLabsSmartFunctions,
             "enableLabsSmartFunctions",
             "BOOLEAN",
