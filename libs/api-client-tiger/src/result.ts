@@ -3,8 +3,6 @@ import { AxiosInstance } from "axios";
 import {
     ActionsApi,
     ActionsApiInterface,
-    ActionsApiGetStagingUploadLocationRequest,
-    StagingUploadLocation,
     ActionsApiAnalyzeCsvRequest,
     AnalyzeCsvResponse,
     AnalyzeCsvRequest,
@@ -23,8 +21,6 @@ export const tigerResultClientFactory = (axios: AxiosInstance): ActionsApiInterf
 
 export {
     ActionsApiInterface as ResultActionsApiInterface,
-    ActionsApiGetStagingUploadLocationRequest,
-    StagingUploadLocation,
     ActionsApiAnalyzeCsvRequest,
     AnalyzeCsvResponse,
     AnalyzeCsvRequest,

@@ -50,7 +50,6 @@ import { PlatformUsage } from '@gooddata/api-client-tiger';
 import { ReadFileManifestsResponse } from '@gooddata/api-client-tiger';
 import { ScanResultPdm } from '@gooddata/api-client-tiger';
 import { ScanSqlResponse } from '@gooddata/api-client-tiger';
-import { StagingUploadLocation } from '@gooddata/api-client-tiger';
 import { TestDefinitionRequestTypeEnum } from '@gooddata/api-client-tiger';
 import { UploadFileResponse } from '@gooddata/api-client-tiger';
 
@@ -352,8 +351,6 @@ export type ScanSqlResult = ScanSqlResponse;
 // @alpha
 export type SetJwtCallback = (jwt: string, secondsBeforeTokenExpirationToCallReminder?: number) => void;
 
-export { StagingUploadLocation }
-
 // @public
 export type TigerAfmType = "label" | "metric" | "dataset" | "fact" | "attribute" | "prompt";
 
@@ -456,7 +453,6 @@ export type TigerSpecificFunctions = {
     getEntityUser?: (id: string) => Promise<IUser>;
     scanSql?: (dataSourceId: string, sql: string) => Promise<ScanSqlResult>;
     checkEntityOverrides?: (workspaceId: string, entities: Array<HierarchyObjectIdentification>) => Promise<Array<IdentifierDuplications>>;
-    getStagingUploadLocation?: (dataSourceId: string) => Promise<StagingUploadLocation>;
     stagingUpload?: (dataSourceId: string, file: File) => Promise<UploadFileResponse>;
     analyzeCsv?: (dataSourceId: string, analyzeCsvRequest: AnalyzeCsvRequest) => Promise<Array<AnalyzeCsvResponse>>;
     importCsv?: (dataSourceId: string, importCsvRequest: ImportCsvRequest) => Promise<Array<ImportCsvResponse>>;

@@ -43,7 +43,6 @@ import {
     JsonApiWorkspaceDataFilterSettingOutDocument,
     JsonApiWorkspaceDataFilterSettingInDocument,
     ScanResultPdm,
-    StagingUploadLocation,
     AnalyzeCsvRequest,
     AnalyzeCsvResponse,
     ImportCsvRequest,
@@ -485,13 +484,6 @@ export type TigerSpecificFunctions = {
         workspaceId: string,
         entities: Array<HierarchyObjectIdentification>,
     ) => Promise<Array<IdentifierDuplications>>;
-
-    /**
-     * Get pre-signed S3 URL to upload a CSV file to the GDSTORAGE data source staging location
-     * @param dataSourceId - id of the data source
-     * @deprecated use stagingUpload instead
-     */
-    getStagingUploadLocation?: (dataSourceId: string) => Promise<StagingUploadLocation>;
 
     /**
      * Upload a CSV file to the GDSTORAGE data source staging location
@@ -1506,22 +1498,6 @@ export const buildTigerSpecificFunctions = (
                     .checkEntityOverrides({ workspaceId, hierarchyObjectIdentification })
                     .then((response) => {
                         return response.data as Array<IdentifierDuplications>;
-                    });
-            });
-        } catch (error: any) {
-            throw convertApiError(error);
-        }
-    },
-
-    getStagingUploadLocation: async (dataSourceId: string): Promise<StagingUploadLocation> => {
-        try {
-            return await authApiCall(async (sdk) => {
-                return await sdk.result
-                    .getStagingUploadLocation({
-                        dataSourceId: dataSourceId,
-                    })
-                    .then((res) => {
-                        return res?.data;
                     });
             });
         } catch (error: any) {
