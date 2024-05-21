@@ -62,7 +62,7 @@
     "visualization.ErrorDescriptionMissingMapboxToken": "La configurazione di Geochart richiede un token di accesso API valido.",
     "visualization.tooltip.resetZoom": "Azzeramento zoom",
     "visualization.tooltip.interaction": "Fai clic sul grafico per eseguire il drill",
-    "visualization.tooltip.generic.interaction": "Fai clic per eseguire il drill o applicare il filtro",
+    "visualization.tooltip.generic.interaction": "Fai clic per approfondire o filtrare",
     "gs.filterLabel.all": "Tutti",
     "gs.filterLabel.none": "Nessuno",
     "gs.filter.loading": "Caricamento del filtro...",
