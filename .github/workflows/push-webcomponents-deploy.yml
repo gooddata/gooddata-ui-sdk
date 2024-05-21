@@ -17,7 +17,9 @@ env:
 jobs:
   build-web-components:
     if: ${{ startsWith(github.event.head_commit.message, 'Release ') || startsWith(github.event.head_commit.message, format('chore{0} bump versions to', ':')) }}
-    runs-on: [infra1-medium]  # need the bigger runner than small because Web component build consume more resource
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-cxa-xlarge  # need the bigger runner than small because Web component build consume more resource
     permissions:
       contents: read
       id-token: write
