@@ -655,6 +655,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "exponential-backoff",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "fast-glob",
       "allowedCategories": [ "production", "tools" ]
     },
