@@ -1,0 +1,124 @@
+[
+    {
+        "n2oMap": {
+            "a_f_city.id.cityname": "a_f_city.id.cityname",
+            "a_state_id.statename": "a_state_id.statename",
+            "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+            "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                        "localIdentifier": "a_f_city.id.cityname"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "state_id.statename", "type": "displayForm" },
+                        "localIdentifier": "a_state_id.statename"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                            "type": "measure"
+                                        }
+                                    }
+                                },
+                                "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "measures"
+                },
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
+                                            "type": "measure"
+                                        }
+                                    }
+                                },
+                                "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "secondary_measures"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                                "localIdentifier": "a_f_city.id.cityname"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "attribute"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "state_id.statename", "type": "displayForm" },
+                                "localIdentifier": "a_state_id.statename"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "segment"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["a_f_city.id.cityname", "a_state_id.statename"] },
+                { "itemIdentifiers": ["measureGroup"] }
+            ],
+            "filters": [],
+            "measures": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "type": "measure"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                    }
+                },
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "973a14c4-acb1-45fb-ba52-5d96fa02f7ba",
+                                    "type": "measure"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "x and y axis measures, attribute and segmentation",
+        "vis": "ScatterPlot"
+    }
+]

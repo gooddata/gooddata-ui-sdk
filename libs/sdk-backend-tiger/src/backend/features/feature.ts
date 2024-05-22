@@ -373,6 +373,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableMultipleDataSourcesInWorkspace,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableScatterPlotSegmentation,
+            "enableScatterPlotSegmentation",
+            "BOOLEAN",
+            FeatureFlagsValues.enableScatterPlotSegmentation,
+        ),
     };
 }
 

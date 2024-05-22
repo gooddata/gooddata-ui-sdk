@@ -11,6 +11,13 @@ export const ScatterPlotWithMeasuresAndAttribute = {
     attribute: ReferenceMd.Product.Name,
 };
 
+export const ScatterPlotWithMeasuresAttributeAndSegmentBy = {
+    xAxisMeasure: ReferenceMd.Amount,
+    yAxisMeasure: ReferenceMd.WinRate,
+    attribute: ReferenceMd.City.Name,
+    segmentBy: ReferenceMd.State.Name,
+};
+
 /*
  * TODO: omitted stories:
  *  - long name of X and Y axes are truncated
@@ -30,6 +37,10 @@ export default scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterPlot)
         attribute: ReferenceMd.Product.Name,
     })
     .addScenario("x and y axis measures and attribute", ScatterPlotWithMeasuresAndAttribute)
+    .addScenario(
+        "x and y axis measures, attribute and segmentation",
+        ScatterPlotWithMeasuresAttributeAndSegmentBy,
+    )
     .addScenario("x and y axis measures and attribute with attr sorting", {
         xAxisMeasure: ReferenceMd.Amount,
         yAxisMeasure: ReferenceMd.WinRate,

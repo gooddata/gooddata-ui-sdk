@@ -50,7 +50,8 @@
                     }
                 ],
                 "localIdentifier": "attribute"
-            }
+            },
+            { "items": [], "localIdentifier": "segment" }
         ],
         "filters": [],
         "identifier": "ScatterPlot.ec8ae1e345e59e6252a158353406724a",

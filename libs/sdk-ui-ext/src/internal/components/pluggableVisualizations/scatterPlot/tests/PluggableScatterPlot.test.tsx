@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import noop from "lodash/noop.js";
 import { PluggableScatterPlot } from "../PluggableScatterPlot.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
@@ -124,6 +124,10 @@ describe("PluggableScatterPlot", () => {
                     localIdentifier: "attribute",
                     items: [],
                 },
+                {
+                    localIdentifier: "segment",
+                    items: [],
+                },
             ]);
         });
 
@@ -160,6 +164,10 @@ describe("PluggableScatterPlot", () => {
                     localIdentifier: "attribute",
                     items: [],
                 },
+                {
+                    localIdentifier: "segment",
+                    items: [],
+                },
             ]);
         });
     });
@@ -192,6 +200,10 @@ describe("PluggableScatterPlot", () => {
                 },
                 {
                     localIdentifier: "attribute",
+                    items: [],
+                },
+                {
+                    localIdentifier: "segment",
                     items: [],
                 },
             ]);

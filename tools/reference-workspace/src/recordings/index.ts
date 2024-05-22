@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2024-04-16T08:11:01.184Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2024-05-17T07:58:37.948Z; */
 const fp_004031cbc9081950b7284311b004fe11 = {
     definition: require("./uiTestScenarios/executions/004031cbc9081950b7284311b004fe11/definition.json"),
     executionResult: require("./uiTestScenarios/executions/004031cbc9081950b7284311b004fe11/executionResult.json"),
@@ -1244,6 +1244,12 @@ const fp_ffefe1e672ff7d55be2bb41581749dd4 = {
     executionResult: require("./uiTestScenarios/executions/ffefe1e672ff7d55be2bb41581749dd4/executionResult.json"),
     dataView_all: require("./uiTestScenarios/executions/ffefe1e672ff7d55be2bb41581749dd4/dataView_all.json"),
 };
+const fp_cfa87f64d11e0f72705ca631d6d73a52 = {
+    definition: require("./uiTestScenarios/executions/cfa87f64d11e0f72705ca631d6d73a52/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/cfa87f64d11e0f72705ca631d6d73a52/executionResult.json"),
+    dataView_all: require("./uiTestScenarios/executions/cfa87f64d11e0f72705ca631d6d73a52/dataView_all.json"),
+    scenarios: require("./uiTestScenarios/executions/cfa87f64d11e0f72705ca631d6d73a52/scenarios.json"),
+};
 export const Scenarios = {
     ColumnChart: {
         SingleMeasureWithOneViewByAndOneStackByWithMultipleItems: {
@@ -1895,6 +1901,10 @@ export const Scenarios = {
         XAndYAxisMeasuresAndAttributeWithNullsInData: {
             scenarioIndex: 0,
             execution: fp_c1825c6987a5585a08614cacdcba4038,
+        },
+        XAndYAxisMeasuresAttributeAndSegmentation: {
+            scenarioIndex: 0,
+            execution: fp_cfa87f64d11e0f72705ca631d6d73a52,
         },
     },
 };
@@ -5829,6 +5839,9 @@ const i_SankeyChart_f413849f91796478c80743387474d5c4 = {
 const i_SankeyChart_fbe0abecfb74e515153ae491b739c9ba = {
     obj: require("./uiTestScenarios/insights/SankeyChart.fbe0abecfb74e515153ae491b739c9ba/obj.json"),
 };
+const i_ScatterPlot_02f16ac8fc6831e976c4503ba9cc1b90 = {
+    obj: require("./uiTestScenarios/insights/ScatterPlot.02f16ac8fc6831e976c4503ba9cc1b90/obj.json"),
+};
 const i_ScatterPlot_0596d6b98f5e4ea7da9b7efd2acd2ee2 = {
     obj: require("./uiTestScenarios/insights/ScatterPlot.0596d6b98f5e4ea7da9b7efd2acd2ee2/obj.json"),
 };
@@ -5837,6 +5850,9 @@ const i_ScatterPlot_1e8ea5cd5007cf4882be17f68da9b629 = {
 };
 const i_ScatterPlot_1f76e8e82586bdebd707271a42784586 = {
     obj: require("./uiTestScenarios/insights/ScatterPlot.1f76e8e82586bdebd707271a42784586/obj.json"),
+};
+const i_ScatterPlot_286e1e470deb063849a2aa3ce49d1112 = {
+    obj: require("./uiTestScenarios/insights/ScatterPlot.286e1e470deb063849a2aa3ce49d1112/obj.json"),
 };
 const i_ScatterPlot_384e6595215e2e9ffbcf2f0ce6a12185 = {
     obj: require("./uiTestScenarios/insights/ScatterPlot.384e6595215e2e9ffbcf2f0ce6a12185/obj.json"),
@@ -6634,6 +6650,7 @@ export const Insights = {
         MeasureAndAttributeTo: i_SankeyChart_e8ca4c0227e2eb78988211a009556cbd,
     },
     ScatterPlot: {
+        XAndYAxisMeasuresAttributeAndSegmentation: i_ScatterPlot_02f16ac8fc6831e976c4503ba9cc1b90,
         Themed: i_ScatterPlot_0596d6b98f5e4ea7da9b7efd2acd2ee2,
         XAxisMeasure: i_ScatterPlot_1e8ea5cd5007cf4882be17f68da9b629,
         Font: i_ScatterPlot_3c9babf74bfd6151e4b5e7c51dbd5a8e,
@@ -6904,6 +6921,7 @@ export const Recordings = {
         fp_fe88554dffc6b1cb444799b63bdbef5d,
         fp_fe9b7d7da26bca841ea91d1f0b83b67e,
         fp_ffefe1e672ff7d55be2bb41581749dd4,
+        fp_cfa87f64d11e0f72705ca631d6d73a52,
     },
     metadata: {
         catalog,
@@ -8216,9 +8234,11 @@ export const Recordings = {
             i_SankeyChart_f155bb5714a7a0672fb21a3e5044d043,
             i_SankeyChart_f413849f91796478c80743387474d5c4,
             i_SankeyChart_fbe0abecfb74e515153ae491b739c9ba,
+            i_ScatterPlot_02f16ac8fc6831e976c4503ba9cc1b90,
             i_ScatterPlot_0596d6b98f5e4ea7da9b7efd2acd2ee2,
             i_ScatterPlot_1e8ea5cd5007cf4882be17f68da9b629,
             i_ScatterPlot_1f76e8e82586bdebd707271a42784586,
+            i_ScatterPlot_286e1e470deb063849a2aa3ce49d1112,
             i_ScatterPlot_384e6595215e2e9ffbcf2f0ce6a12185,
             i_ScatterPlot_3c9babf74bfd6151e4b5e7c51dbd5a8e,
             i_ScatterPlot_43f04a05e8ba3ee3ffcf1d4d5bcc25c1,

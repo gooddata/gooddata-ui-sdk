@@ -808,6 +808,7 @@ export interface IScatterPlotBucketProps {
     attribute?: AttributeOrPlaceholder;
     filters?: NullableFiltersOrPlaceholders;
     placeholdersResolutionContext?: any;
+    segmentBy?: AttributeOrPlaceholder;
     sortBy?: SortsOrPlaceholders;
     xAxisMeasure?: MeasureOrPlaceholder;
     yAxisMeasure?: MeasureOrPlaceholder;

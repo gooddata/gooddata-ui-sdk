@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import compact from "lodash/compact.js";
 import {
     bucketAttributes,
@@ -94,9 +94,10 @@ export function getHeadlinesDimensions(): IDimension[] {
 }
 
 function getScatterDimensions(insight: IInsightDefinition): IDimension[] {
-    const attributes = safeBucketAttributes(insight, BucketNames.ATTRIBUTE);
+    const viewAttributes = safeBucketAttributes(insight, BucketNames.ATTRIBUTE);
+    const segmentAttributes = safeBucketAttributes(insight, BucketNames.SEGMENT);
 
-    return newTwoDimensional(attributes, [MeasureGroupIdentifier]);
+    return newTwoDimensional([...viewAttributes, ...segmentAttributes], [MeasureGroupIdentifier]);
 }
 
 function getHeatmapDimensions(insight: IInsightDefinition): IDimension[] {

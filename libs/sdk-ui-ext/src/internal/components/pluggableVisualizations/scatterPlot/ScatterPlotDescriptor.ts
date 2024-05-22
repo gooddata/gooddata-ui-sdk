@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { IScatterPlotProps } from "@gooddata/sdk-ui-charts";
 import { BucketNames } from "@gooddata/sdk-ui";
 
@@ -35,6 +35,7 @@ export class ScatterPlotDescriptor extends BigChartDescriptor {
             xAxisMeasure: singleMeasureBucketConversion("xAxisMeasure", BucketNames.MEASURES),
             yAxisMeasure: singleMeasureBucketConversion("yAxisMeasure", BucketNames.SECONDARY_MEASURES),
             attribute: singleAttributeBucketConversion("attribute", BucketNames.ATTRIBUTE),
+            segmentBy: singleAttributeBucketConversion("segmentBy", BucketNames.SEGMENT),
             filters: filtersInsightConversion("filters"),
             sortBy: sortsInsightConversion("sortBy"),
             config: chartConfigInsightConversion("config"),

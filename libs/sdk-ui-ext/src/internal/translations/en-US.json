@@ -165,7 +165,12 @@
         "limit": 0
     },
     "dashboard.bucket.attribute_title.scatter": {
-        "value": "Attribute",
+        "value": "View by",
+        "comment": "",
+        "limit": 0
+    },
+    "dashboard.bucket.segment_title.scatter": {
+        "value": "Segment by",
         "comment": "",
         "limit": 0
     },

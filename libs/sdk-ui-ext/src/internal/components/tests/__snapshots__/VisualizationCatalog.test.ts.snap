@@ -49688,6 +49688,38 @@ export function MyComponent() {
 "
 `;
 
+exports[`getEmbeddingCode functionality > should generate code for ScatterPlot - coloring with segmentation - custom palette 1`] = `
+"import React from "react";
+import { IAttribute, idRef, IMeasure, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IChartConfig, ScatterPlot } from "@gooddata/sdk-ui-charts";
+
+const xAxisMeasure: IMeasure = newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"));
+const yAxisMeasure: IMeasure = newMeasure(idRef("973a14c4-acb1-45fb-ba52-5d96fa02f7ba", "measure"), m => m.localId("m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba"));
+const attribute: IAttribute = newAttribute(idRef("f_city.id.cityname", "displayForm"), a => a.localId("a_f_city.id.cityname"));
+const segmentBy: IAttribute = newAttribute(idRef("state_id.statename", "displayForm"), a => a.localId("a_state_id.statename"));
+const config: IChartConfig = {
+    separators: {decimal: ".", thousand: ","},
+    legend: {position: "right"},
+    dataPoints: {visible: "auto"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <ScatterPlot
+                xAxisMeasure={xAxisMeasure}
+                yAxisMeasure={yAxisMeasure}
+                attribute={attribute}
+                segmentBy={segmentBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
 exports[`getEmbeddingCode functionality > should generate code for ScatterPlot - data labels - auto visibility 1`] = `
 "import React from "react";
 import { IAttribute, idRef, IMeasure, newAttribute, newMeasure } from "@gooddata/sdk-model";
@@ -49988,6 +50020,38 @@ export function MyComponent() {
                 xAxisMeasure={xAxisMeasure}
                 yAxisMeasure={yAxisMeasure}
                 attribute={attribute}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for ScatterPlot - x and y axis measures, attribute and segmentation 1`] = `
+"import React from "react";
+import { IAttribute, idRef, IMeasure, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { IChartConfig, ScatterPlot } from "@gooddata/sdk-ui-charts";
+
+const xAxisMeasure: IMeasure = newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"));
+const yAxisMeasure: IMeasure = newMeasure(idRef("973a14c4-acb1-45fb-ba52-5d96fa02f7ba", "measure"), m => m.localId("m_973a14c4_acb1_45fb_ba52_5d96fa02f7ba"));
+const attribute: IAttribute = newAttribute(idRef("f_city.id.cityname", "displayForm"), a => a.localId("a_f_city.id.cityname"));
+const segmentBy: IAttribute = newAttribute(idRef("state_id.statename", "displayForm"), a => a.localId("a_state_id.statename"));
+const config: IChartConfig = {
+    separators: {decimal: ".", thousand: ","},
+    legend: {position: "right"},
+    dataPoints: {visible: "auto"}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <ScatterPlot
+                xAxisMeasure={xAxisMeasure}
+                yAxisMeasure={yAxisMeasure}
+                attribute={attribute}
+                segmentBy={segmentBy}
                 config={config}
             />
         </div>

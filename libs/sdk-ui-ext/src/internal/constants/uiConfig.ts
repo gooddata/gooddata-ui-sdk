@@ -126,9 +126,11 @@ export const DEFAULT_SCATTERPLOT_UICONFIG: IUiConfig = {
         attribute: {
             ...viewBase,
             allowsReordering: false,
-            allowsSwapping: false,
             canAddItems: true,
             itemsLimit: MAX_STACKS_COUNT,
+        },
+        segment: {
+            ...stackBaseWithDate,
         },
         ...defaultFilters,
     },

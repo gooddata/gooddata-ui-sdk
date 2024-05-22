@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 import { IAttributeDescriptor, IResultAttributeHeader } from "@gooddata/sdk-model";
 import { isBubbleChart, isHeatmap, isOneOfTypes, isScatterPlot, isTreemap, unwrap } from "../_util/common.js";
@@ -106,10 +106,7 @@ export function getDrillableSeries(
             }
 
             const viewByIndex = isHeatmap(type) || isStackedTreemap ? pointData.x : pointIndex;
-            let stackByIndex = isHeatmap(type) || isStackedTreemap ? pointData.y : seriesIndex;
-            if (isScatterPlot(type)) {
-                stackByIndex = viewByIndex; // scatter plot uses stack by attribute but has only one serie
-            }
+            const stackByIndex = isHeatmap(type) || isStackedTreemap ? pointData.y : seriesIndex;
 
             const { stackByHeader, stackByAttributeDescriptor } = getStackBy(stackByAttribute, stackByIndex);
 

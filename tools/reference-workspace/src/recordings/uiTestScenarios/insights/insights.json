@@ -4384,6 +4384,11 @@
     "SankeyChart.fbe0abecfb74e515153ae491b739c9ba": {
         "comment": "Auto-generated insight for test scenario SankeyChart - 650x354 - Position respects configuration, map legend fits into 1 row for TOP/BOTTOM - legend at bottom."
     },
+    "ScatterPlot.02f16ac8fc6831e976c4503ba9cc1b90": {
+        "comment": "Auto-generated insight for test scenario ScatterPlot - x and y axis measures, attribute and segmentation.",
+        "scenarioName": "x and y axis measures, attribute and segmentation",
+        "visName": "ScatterPlot"
+    },
     "ScatterPlot.0596d6b98f5e4ea7da9b7efd2acd2ee2": {
         "comment": "Auto-generated insight for test scenario ScatterPlot - themed.",
         "scenarioName": "themed",
@@ -4396,6 +4401,9 @@
     },
     "ScatterPlot.1f76e8e82586bdebd707271a42784586": {
         "comment": "Auto-generated insight for test scenario ScatterPlot - axis name configuration - low."
+    },
+    "ScatterPlot.286e1e470deb063849a2aa3ce49d1112": {
+        "comment": "Auto-generated insight for test scenario ScatterPlot - coloring with segmentation - custom palette."
     },
     "ScatterPlot.384e6595215e2e9ffbcf2f0ce6a12185": {
         "comment": "Auto-generated insight for test scenario ScatterPlot - data labels - default."
