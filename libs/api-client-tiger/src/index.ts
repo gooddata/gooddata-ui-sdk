@@ -262,7 +262,6 @@ export {
 export {
     ActionsApiAnalyzeCsvRequest,
     ActionsApiDeleteFilesRequest,
-    ActionsApiGetStagingUploadLocationRequest,
     ActionsApiImportCsvRequest,
     ActionsApiListFilesRequest,
     ActionsApiReadFileManifestsRequest,
@@ -294,7 +293,6 @@ export {
     ReadFileManifestsRequest,
     ReadFileManifestsRequestItem,
     ReadFileManifestsResponse,
-    StagingUploadLocation,
     UploadFileResponse,
     WorkspaceCacheSettings,
     WorkspaceCacheUsage,

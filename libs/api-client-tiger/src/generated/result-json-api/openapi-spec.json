@@ -72,40 +72,6 @@
                 }
             }
         },
-        "/api/v1/actions/dataSources/{dataSourceId}/staging/upload": {
-            "post": {
-                "tags": ["Data source staging location", "actions"],
-                "summary": "Get a staging upload location",
-                "description": "Provides a location for uploading staging files.",
-                "operationId": "getStagingUploadLocation",
-                "parameters": [
-                    {
-                        "name": "dataSourceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Staging upload location was registered.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/StagingUploadLocation"
-                                }
-                            }
-                        }
-                    }
-                },
-                "x-gdc-security-info": {
-                    "permissions": ["MANAGE"],
-                    "description": "Minimal permission required to use this endpoint."
-                }
-            }
-        },
         "/api/v1/actions/dataSources/{dataSourceId}/readFileManifests": {
             "post": {
                 "tags": ["Data source files manifest read", "actions"],
@@ -359,21 +325,6 @@
                 },
                 "description": "Information related to the file uploaded to the staging area."
             },
-            "StagingUploadLocation": {
-                "required": ["location", "uploadUrl"],
-                "type": "object",
-                "properties": {
-                    "location": {
-                        "type": "string",
-                        "description": "Location relative to the root of the storage."
-                    },
-                    "uploadUrl": {
-                        "type": "string",
-                        "description": "Pre-signed upload URL to PUT the file to."
-                    }
-                },
-                "description": "Information related to uploading a file to the staging area."
-            },
             "ReadFileManifestsRequest": {
                 "required": ["manifestRequests"],
                 "type": "object",
@@ -622,17 +573,12 @@
                 "description": "Describes the results of a CSV manifest read of a single file."
             },
             "GdStorageFile": {
-                "required": ["modifiedAt", "name", "size", "type", "version"],
+                "required": ["modifiedAt", "name", "size", "type"],
                 "type": "object",
                 "properties": {
                     "name": {
                         "type": "string",
                         "description": "Name of the file."
-                    },
-                    "version": {
-                        "type": "integer",
-                        "description": "Version of the file.",
-                        "format": "int32"
                     },
                     "size": {
                         "type": "integer",

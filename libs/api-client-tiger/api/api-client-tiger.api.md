@@ -327,11 +327,6 @@ export interface ActionsApiGetMetadataRequest {
 }
 
 // @public
-export interface ActionsApiGetStagingUploadLocationRequest {
-    readonly dataSourceId: string;
-}
-
-// @public
 export interface ActionsApiGetTabularExportRequest {
     readonly exportId: string;
     readonly workspaceId: string;
@@ -6308,7 +6303,6 @@ export interface GdStorageFile {
     name: string;
     size: number;
     type: GdStorageFileTypeEnum;
-    version: number;
 }
 
 // @public (undocumented)
@@ -13686,7 +13680,6 @@ export interface ResultActionsApiInterface {
     analyzeCsv(requestParameters: ActionsApiAnalyzeCsvRequest, options?: AxiosRequestConfig): AxiosPromise<Array<AnalyzeCsvResponse>>;
     collectCacheUsage(options?: AxiosRequestConfig): AxiosPromise<CacheUsageData>;
     deleteFiles(requestParameters: ActionsApiDeleteFilesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    getStagingUploadLocation(requestParameters: ActionsApiGetStagingUploadLocationRequest, options?: AxiosRequestConfig): AxiosPromise<StagingUploadLocation>;
     importCsv(requestParameters: ActionsApiImportCsvRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ImportCsvResponse>>;
     listFiles(requestParameters: ActionsApiListFilesRequest, options?: AxiosRequestConfig): AxiosPromise<Array<GdStorageFile>>;
     readFileManifests(requestParameters: ActionsApiReadFileManifestsRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ReadFileManifestsResponse>>;
@@ -14061,12 +14054,6 @@ export type SqlColumnDataTypeEnum = typeof SqlColumnDataTypeEnum[keyof typeof Sq
 // @public
 export interface SqlQuery {
     sql: string;
-}
-
-// @public
-export interface StagingUploadLocation {
-    location: string;
-    uploadUrl: string;
 }
 
 // @public
