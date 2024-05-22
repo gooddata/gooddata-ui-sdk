@@ -29,12 +29,12 @@ export const transformBuckets = (buckets: IBucketOfFun[]): IBucketOfFun[] => {
 
     const attributeBucket = {
         localIdentifier: BucketNames.ATTRIBUTE,
-        items: viewByAttributes,
+        items: viewByAttributes.slice(0, 1),
     };
 
     const segmentBucket = {
         localIdentifier: BucketNames.SEGMENT,
-        items: segmentByAttributes,
+        items: segmentByAttributes.slice(0, 1),
     };
 
     return [...measureBuckets, attributeBucket, segmentBucket];
