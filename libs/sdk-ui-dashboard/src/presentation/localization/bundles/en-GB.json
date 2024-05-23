@@ -437,5 +437,10 @@
     "attributesDropdown.valuesLimiting.commonDateFilterTitle": "{dateFilterTitle} as {dataSetTitle}",
     "attributesDropdown.valuesLimiting.addDateTitle": "Choose date",
     "attributesDropdown.valuesLimiting.disableDateFilter": "Filter not available: The <strong>{dateFilterTitle}</strong> filter is already using this date dataset.",
-    "attributesDropdown.valuesLimiting.disableDataSet": "Date dataset not available: The <strong>{dateFilterTitle}</strong> filter is already using this date dataset."
+    "attributesDropdown.valuesLimiting.disableDataSet": "Date dataset not available: The <strong>{dateFilterTitle}</strong> filter is already using this date dataset.",
+    "widget.options.description": "Description",
+    "widget.options.menu": "Options",
+    "share.button.tooltip": "Share dashboard",
+    "controlButtons.options.tooltip": "More choices",
+    "controlButtons.edit.tooltip": "Edit dashboard"
 }

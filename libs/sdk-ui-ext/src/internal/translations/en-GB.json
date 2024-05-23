@@ -346,5 +346,7 @@
     "properties.comparison.position.title": "Position",
     "properties.comparison.position.top": "top",
     "properties.comparison.position.right": "right",
-    "properties.comparison.position.left": "left"
+    "properties.comparison.position.left": "left",
+    "properties.forecastSliced.title": "Displaying partial forecast.",
+    "properties.forecastSliced.description": "The available data point doesn't cover the entire selected period."
 }
