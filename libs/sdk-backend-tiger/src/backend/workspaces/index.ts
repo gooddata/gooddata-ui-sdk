@@ -71,7 +71,7 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
     }
 
     public withFilter(filter: IWorkspacesQueryFilter): IWorkspacesQuery {
-        this.filter = filter;
+        this.filter = filter ?? {};
         return this;
     }
 
