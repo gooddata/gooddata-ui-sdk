@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { describe, expect, it } from "vitest";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { IWorkspaceDescriptor } from "@gooddata/sdk-backend-spi";
@@ -54,6 +54,101 @@ describe("recordedBackend", () => {
 
                     expect(scope).toBe("#myOrganizationId#");
                 });
+            });
+        });
+
+        describe("notificationChannels", () => {
+            const ORGANIZATION_ID = "myOrganizationId";
+
+            it("empty list of webhooks", async () => {
+                const data = await recordedBackend(ReferenceRecordings.Recordings)
+                    .organization(ORGANIZATION_ID)
+                    .notificationChannels()
+                    .getWebhooks();
+
+                expect(data).toEqual([]);
+            });
+
+            it("create webhook", async () => {
+                const data = await recordedBackend(ReferenceRecordings.Recordings)
+                    .organization(ORGANIZATION_ID)
+                    .notificationChannels()
+                    .createWebhook({
+                        name: "name",
+                        endpoint: "endpoint",
+                        token: "token",
+                        triggers: [
+                            {
+                                type: "SCHEDULE",
+                                allowOn: ["dashboard", "visualization"],
+                            },
+                            {
+                                type: "ALERT",
+                            },
+                        ],
+                    });
+
+                expect(data).toEqual({
+                    endpoint: "endpoint",
+                    id: "webhook-id",
+                    name: "name",
+                    token: "token",
+                    triggers: [
+                        {
+                            allowOn: ["dashboard", "visualization"],
+                            type: "SCHEDULE",
+                        },
+                        {
+                            type: "ALERT",
+                        },
+                    ],
+                });
+            });
+
+            it("update webhook", async () => {
+                const data = await recordedBackend(ReferenceRecordings.Recordings)
+                    .organization(ORGANIZATION_ID)
+                    .notificationChannels()
+                    .updateWebhook({
+                        id: "webhook-id",
+                        name: "name",
+                        endpoint: "endpoint",
+                        token: "token",
+                        triggers: [
+                            {
+                                type: "SCHEDULE",
+                                allowOn: ["dashboard", "visualization"],
+                            },
+                            {
+                                type: "ALERT",
+                            },
+                        ],
+                    });
+
+                expect(data).toEqual({
+                    endpoint: "endpoint",
+                    id: "webhook-id",
+                    name: "name",
+                    token: "token",
+                    triggers: [
+                        {
+                            allowOn: ["dashboard", "visualization"],
+                            type: "SCHEDULE",
+                        },
+                        {
+                            type: "ALERT",
+                        },
+                    ],
+                });
+            });
+
+            it("delete webhook", async () => {
+                const data = await recordedBackend(ReferenceRecordings.Recordings)
+                    .organization(ORGANIZATION_ID)
+                    .notificationChannels()
+                    .deleteWebhook("webhook-id");
+
+                expect(data).toBeUndefined();
             });
         });
     });

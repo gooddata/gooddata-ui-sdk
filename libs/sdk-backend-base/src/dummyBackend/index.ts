@@ -836,7 +836,10 @@ class DummyOrganization implements IOrganization {
     notificationChannels(): IOrganizationNotificationChannelService {
         return {
             createWebhook: (webhook: IWebhookMetadataObjectDefinition) =>
-                Promise.resolve(webhook as IWebhookMetadataObject),
+                Promise.resolve({
+                    ...(webhook as IWebhookMetadataObject),
+                    id: "dummyWebhook",
+                }),
             deleteWebhook: () => Promise.resolve(),
             getWebhook: () =>
                 Promise.resolve({

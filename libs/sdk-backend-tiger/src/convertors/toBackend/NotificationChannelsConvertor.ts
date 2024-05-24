@@ -29,9 +29,13 @@ export function convertCreateWebhookToNotificationChannel(
             triggers:
                 webhook.triggers?.map((trigger) => ({
                     type: trigger.type,
-                    metadata: {
-                        allowedOn: trigger.allowOn,
-                    },
+                    ...(trigger?.allowOn
+                        ? {
+                              metadata: {
+                                  allowedOn: trigger.allowOn,
+                              },
+                          }
+                        : {}),
                 })) ?? [],
         },
     };
