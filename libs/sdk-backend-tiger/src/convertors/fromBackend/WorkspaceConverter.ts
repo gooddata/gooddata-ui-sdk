@@ -11,10 +11,10 @@ export const workspaceConverter = (
         description: attributes?.description ?? "",
         title: attributes?.name ?? "",
         id: id,
-        prefix: attributes?.prefix,
+        prefix: attributes?.prefix ?? undefined,
         parentWorkspace,
         parentPrefixes,
-        earlyAccess: attributes?.earlyAccess,
+        earlyAccess: attributes?.earlyAccess ?? undefined,
         childWorkspacesCount: meta?.hierarchy?.childrenCount,
     };
 };

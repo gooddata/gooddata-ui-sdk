@@ -24,7 +24,8 @@ export type DataSourceType =
     | "MARIADB"
     | "ORACLE"
     | "PINOT"
-    | "SINGLESTORE";
+    | "SINGLESTORE"
+    | "MOTHERDUCK";
 
 /**
  * @alpha

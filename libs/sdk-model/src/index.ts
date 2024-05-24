@@ -39,6 +39,13 @@ export {
 } from "./execution/attribute/factory.js";
 
 export {
+    IWebhookTrigger,
+    IWebhookMetadataObjectDefinition,
+    IWebhookMetadataObjectBase,
+    IWebhookMetadataObject,
+} from "./notificationChannels/index.js";
+
+export {
     ObjectType,
     Identifier,
     Uri,

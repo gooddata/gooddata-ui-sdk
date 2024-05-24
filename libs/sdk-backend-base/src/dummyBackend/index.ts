@@ -69,6 +69,7 @@ import {
     IMeasureKeyDrivers,
     IAnomalyDetectionResult,
     IClusteringResult,
+    IOrganizationNotificationChannelService,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -111,6 +112,8 @@ import {
     defWithBuckets,
     IRelativeDateFilter,
     IAbsoluteDateFilter,
+    IWebhookMetadataObjectDefinition,
+    IWebhookMetadataObject,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
 import isEmpty from "lodash/isEmpty.js";
@@ -827,6 +830,24 @@ class DummyOrganization implements IOrganization {
             removeUsersFromUserGroups: () => Promise.resolve(),
             updateUser: () => Promise.resolve(),
             updateUserGroup: () => Promise.resolve(),
+        };
+    }
+
+    notificationChannels(): IOrganizationNotificationChannelService {
+        return {
+            createWebhook: (webhook: IWebhookMetadataObjectDefinition) =>
+                Promise.resolve(webhook as IWebhookMetadataObject),
+            deleteWebhook: () => Promise.resolve(),
+            getWebhook: () =>
+                Promise.resolve({
+                    id: "dummyWebhook",
+                    name: "Dummy webhook",
+                    endpoint: "https://dummy.webhook",
+                    token: "dummyToken",
+                    triggers: [],
+                }),
+            getWebhooks: () => Promise.resolve([]),
+            updateWebhook: (webhook) => Promise.resolve(webhook),
         };
     }
 }

@@ -51,6 +51,7 @@ import {
     GdStorageFile,
     UploadFileResponse,
     ReadFileManifestsResponse,
+    JsonApiNotificationChannelOut,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling.js";
 import uniq from "lodash/uniq.js";
@@ -228,6 +229,11 @@ export interface ICSPDirective {
         sources: Array<string>;
     };
 }
+
+/**
+ * @internal
+ */
+export type INotificationChannel = Omit<JsonApiNotificationChannelOut, "type">;
 
 /**
  * @internal
