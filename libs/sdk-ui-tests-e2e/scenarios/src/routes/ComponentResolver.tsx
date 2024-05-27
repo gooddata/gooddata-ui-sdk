@@ -132,6 +132,11 @@ import {
     ChartTooManyDataScenario,
     TooManyDataInsightViewScenario,
 } from "../components/Scenarios/Visualizations/ManyData/TooManyDataScenario";
+import {
+    ScatterPlotSegmentation,
+    ScatterPlotSegmentationDashboard,
+    ScatterPlotSegmentationInsightView,
+} from "../components/Scenarios/Visualizations/ScatterPlot/ScatterPlot";
 
 /**
  * Add key here for your new E2E test. Use the key in the map below with the scenario as well as in
@@ -280,6 +285,9 @@ export const SCENARIO_KEYS = {
     VIS_REPEATER_NO_METRIC: "visualizations/repeater/repeater-no-metric",
     VIS_PIE_MANY_DATA: "visualizations/manydata/pie-many-data",
     VIS_MANY_DATA_INSIGHT_VIEW: "visualizations/manydata/many-data-insight-view",
+    DASHBOARD_SCATTER_PLOT_SEGMENTATION: "dashboard/dashboard-scatter-plot-segmentation",
+    VIS_SCATTER_PLOT_SEGMENTATION: "visualizations/scatterplot/segmentation",
+    VIS_SCATTER_PLOT_SEGMENTATION_INSIGHT_VIEW: "visualizations/scatterplot/segmentation-insight-view",
 };
 
 const scenarios = new Map<string, React.ComponentType>([
@@ -423,6 +431,9 @@ const scenarios = new Map<string, React.ComponentType>([
     [SCENARIO_KEYS.DASHBOARD_REPEATER, RepeaterDashboard],
     [SCENARIO_KEYS.VIS_PIE_MANY_DATA, ChartTooManyDataScenario],
     [SCENARIO_KEYS.VIS_MANY_DATA_INSIGHT_VIEW, TooManyDataInsightViewScenario],
+    [SCENARIO_KEYS.DASHBOARD_SCATTER_PLOT_SEGMENTATION, ScatterPlotSegmentationDashboard],
+    [SCENARIO_KEYS.VIS_SCATTER_PLOT_SEGMENTATION, ScatterPlotSegmentation],
+    [SCENARIO_KEYS.VIS_SCATTER_PLOT_SEGMENTATION_INSIGHT_VIEW, ScatterPlotSegmentationInsightView],
 ]);
 
 const ComponentResolver: React.FC = () => {
