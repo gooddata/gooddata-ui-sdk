@@ -4755,7 +4755,737 @@
                 "title": "filterContext"
             }
         ],
-        "metrics": [],
+        "metrics": [
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT DATETIME_DIFF({label/dt_closedate_timestamp.quarter},{label/dt_closedate_timestamp.quarter})"
+                },
+                "description": "",
+                "id": "datetime_diff_with_quarter",
+                "title": "Datetime_diff with quarter"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT DATETIME_DIFF(\"2020\", NEXT(MONTH), MONTH)"
+                },
+                "description": "",
+                "id": "incorrect_literal_string_with_datetime_diff",
+                "title": "Incorrect literal string with datetime_diff"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT COUNT({label/attr.f_owner.salesrep}) WHERE\n DATETIME_DIFF(\"2018\",\"2020\", YEAR)> 2"
+                },
+                "description": "",
+                "id": "2_literals_in_datetime_diff",
+                "title": "2 literals in datetime_diff"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT DATETIME_DIFF({label/dt_closedate_timestamp.day},{label/dt_oppcreated_timestamp.hour}, DAY)"
+                },
+                "description": "",
+                "id": "argument_bigger_granularity",
+                "title": "Argument bigger granularity"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT COUNT({label/attr.f_owner.salesrep})\n  WHERE DATETIME_ADD({label/dt_closedate_timestamp.quarter}, 2) <= PREVIOUS(QUARTER)"
+                },
+                "description": "",
+                "id": "datetime_add_with_quarter",
+                "title": "Datetime_add with quarter"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_closedate_timestamp.day} = DATETIME_ADD(\"2022-09-30\", MONTH, -1)"
+                },
+                "description": "",
+                "id": "incorrect_literal_string_with_datetime_add_with_month",
+                "title": "Incorrect literal string with datetime_add with month"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_closedate_timestamp.day} < DATETIME_ADD(\"2022\", DAY, 1)"
+                },
+                "description": "",
+                "id": "incorrect_literal_string_with_datetime_add_with_day",
+                "title": "Incorrect literal string with datetime_add with day"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_oppcreated_timestamp.day} < DATETIME_ADD({label/dt_closedate_timestamp.minute}, MONTH, 9999999999999999999999999999999)"
+                },
+                "description": "",
+                "id": "maximum_literal_of_datetime_add",
+                "title": "Maximum literal of datetime_add"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_oppcreated_timestamp.month} > DATETIME_ADD(\"2010-07\", 1)"
+                },
+                "description": "",
+                "id": "missing_required_datetime_add_granularity",
+                "title": "Missing required datetime_add granularity"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT DATETIME_ADD(THIS(MONTH), MONTH, -1)"
+                },
+                "description": "",
+                "id": "top_level_of_datetime_add",
+                "title": "Top level of datetime_add"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT DATETIME_DIFF({label/dt_closedate_timestamp.dayOfWeek},{label/dt_oppcreated_timestamp.weekOfYear})"
+                },
+                "description": "",
+                "id": "not_allow_datetime_types_for_datetime_diff",
+                "title": "Not allow datetime types for datetime_diff"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT MAX(SELECT {label/dt_closedate_timestamp.year} BY {dataset/f_opportunitysnapshot})   "
+                },
+                "description": "",
+                "id": "top_level_metric_for_max",
+                "title": "Top level metric for MAX"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT MIN({label/dt_closedate_timestamp.year}) USING {dataset/f_opportunitysnapshot}"
+                },
+                "description": "",
+                "id": "top_level_metric_for_min",
+                "title": "Top level metric for MIN"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_closedate_timestamp.year} = (\n  SELECT MAX(\n      SELECT {label/dt_oppcreated_timestamp.year})\n    BY ALL OTHER)"
+                },
+                "description": "",
+                "id": "not_enough_context_for_max",
+                "title": "Not enough context for MAX"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_oppcreated_timestamp.year} = (\n  SELECT MIN(\n      SELECT {label/dt_closedate_timestamp.year})\n    BY ALL OTHER)"
+                },
+                "description": "",
+                "id": "not_enough_context_for_min",
+                "title": "Not enough context for MIN"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT COUNT({label/attr.f_owner.salesrep}, {dataset/f_opportunitysnapshot})\n  WHERE DATETIME_DIFF({label/dt_oppcreated_timestamp.month}, DATETIME_ADD((\n        SELECT MAX({label/dt_closedate_timestamp.day}, {dataset/f_opportunitysnapshot})\n          BY {dataset/f_opportunitysnapshot}), -1), HOUR) < 600"
+                },
+                "description": "",
+                "id": "count_of_sales_rep_with_diff_and_add",
+                "title": "Count of sales rep with diff and add"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT COUNT({label/attr.f_owner.salesrep}, {dataset/f_opportunitysnapshot})\n  WHERE DATETIME_DIFF({label/dt_oppcreated_timestamp.year}, \n    SELECT MAX({label/dt_closedate_timestamp.month}) \n      USING {dataset/f_opportunitysnapshot}, MONTH) > 8"
+                },
+                "description": "",
+                "id": "count_sales_reps_with_diff_and_max_condition",
+                "title": "Count of sales reps with diff and max condition"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT COUNT({label/attr.f_owner.salesrep})\n  WHERE DATETIME_DIFF({label/dt_closedate_timestamp.month},\n    SELECT MAX({label/dt_oppcreated_timestamp.week})\n      BY ALL OTHER\n      USING {dataset/f_opportunitysnapshot}, DAY) > 670"
+                },
+                "description": "",
+                "id": "count_of_sales_rep_with_diff_and_max_by_all_other",
+                "title": "Count of sales rep with diff and max by all other"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT COUNT({label/attr.f_owner.salesrep}, {dataset/f_opportunitysnapshot})\n  WHERE DATETIME_DIFF({label/dt_oppcreated_timestamp.year}, {label/dt_closedate_timestamp.hour}, MINUTE) < 50000"
+                },
+                "description": "",
+                "id": "count_of_sales_rep_with_diff_and_3_difference_params",
+                "title": "Count of sales rep with diff and 3 difference params"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.week}, {label/dt_snapshotdate_timestamp.week}))"
+                },
+                "description": "",
+                "id": "datetime_diff_of_week_2_same_params",
+                "title": "Diff of week (2 same params)"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.week}, {label/dt_snapshotdate_timestamp.week}, WEEK))\n  WHERE {label/dt_closedate_timestamp.year} = \"2010\" "
+                },
+                "description": "",
+                "id": "datetime_diff_of_week_3_parameters",
+                "title": "Diff of week (3 parameters)"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF({label/dt_snapshotdate_timestamp.week}, \"2010-12\"))\n  WHERE {label/dt_snapshotdate_timestamp.year} = \"2010\" "
+                },
+                "description": "",
+                "id": "diff_of_week_string",
+                "title": "Diff of week (string)"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.week}))"
+                },
+                "description": "",
+                "id": "datetime_diff_of_week_week_year",
+                "title": "Diff of week (week year)"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.month}, {label/dt_snapshotdate_timestamp.week}))"
+                },
+                "description": "",
+                "id": "datetime_diff_of_week_month_week",
+                "title": "Diff of week (month week)"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.year}, MONTH))\n  WHERE {label/dt_snapshotdate_timestamp.year} = \"2010\" "
+                },
+                "description": "",
+                "id": "datetime_diff_of_month_3_diffenrence_params",
+                "title": "Diff of month (3 difference params)"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF(\"2010-12\", {label/dt_snapshotdate_timestamp.month}, MONTH))\n  WHERE {label/dt_snapshotdate_timestamp.year} = \"2010\" "
+                },
+                "description": "",
+                "id": "datetime_diff_of_month_3_params_string",
+                "title": "Diff of month (3 params and string)"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.month}, {label/dt_snapshotdate_timestamp.year}, MONTH))\n  WHERE {label/dt_snapshotdate_timestamp.year} = \"2010\" "
+                },
+                "description": "",
+                "id": "datetime_diff_of_month_3_parameters",
+                "title": "Diff of month (3 parameters)"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF({label/dt_snapshotdate_timestamp.month}, \"2010-12\"))\n  WHERE {label/dt_snapshotdate_timestamp.year} = \"2010\" "
+                },
+                "description": "",
+                "id": "datetime_diff_of_month_2_params_string",
+                "title": "Diff of month (2 params and string)"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.month}))\n  WHERE {label/dt_snapshotdate_timestamp.year} = \"2010\" "
+                },
+                "description": "",
+                "id": "datetime_diff_of_month_2_diffrence_params",
+                "title": "Diff of month (2 difference params)"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.month}, {label/dt_snapshotdate_timestamp.month}))\n  WHERE {label/dt_snapshotdate_timestamp.year} = \"2010\" "
+                },
+                "description": "",
+                "id": "datetime_diff_of_month_2_same_params",
+                "title": "Diff of month (2 same params)"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, \"2015\"))\n  WHERE {label/dt_snapshotdate_timestamp.year} = \"2010\" "
+                },
+                "description": "",
+                "id": "datetime_diff_of_year_string",
+                "title": "Diff of year (string)"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF(\"2010\", THIS(YEAR), YEAR))\n  WHERE {label/dt_snapshotdate_timestamp.year} = \"2010\" "
+                },
+                "description": "",
+                "id": "datetime_diff_of_year_string_and_this",
+                "title": "Diff of year (string and this)"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, PREVIOUS(YEAR, 2)))\n  WHERE {label/dt_snapshotdate_timestamp.year} = \"2010\" "
+                },
+                "description": "",
+                "id": "datetime_diff_of_year_previous",
+                "title": "Diff of year (previous)"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF(PREVIOUS(YEAR), NEXT(YEAR)))"
+                },
+                "description": "",
+                "id": "datetime_diff_of_year_previous_next",
+                "title": "Diff of year (previous and next)"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, NEXT(YEAR)))\n  WHERE {label/dt_snapshotdate_timestamp.year} = \"2010\" "
+                },
+                "description": "",
+                "id": "datetime_diff_of_year_next",
+                "title": "Diff of year (next)"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.year}, YEAR))\n  WHERE {label/dt_snapshotdate_timestamp.year} = \"2010\" "
+                },
+                "description": "",
+                "id": "datetime_diff_of_year_3_parameters",
+                "title": "Diff of year (3 parameters)"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM(DATETIME_DIFF({label/dt_closedate_timestamp.year}, {label/dt_snapshotdate_timestamp.year}))\n  WHERE {label/dt_snapshotdate_timestamp.year} = \"2010\" "
+                },
+                "description": "",
+                "id": "datetime_diff_of_year_2_parameters",
+                "title": "Diff of year (2 parameters)"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT IF DATETIME_ADD(MAX({label/dt_closedate_timestamp.year}, {dataset/f_opportunitysnapshot}), YEAR, 1) = {label/dt_snapshotdate_timestamp.year} THEN 1\n    ELSE -1\n  END\n  BY {dataset/f_opportunitysnapshot}"
+                },
+                "description": "",
+                "id": "datetime_add_with_if_else",
+                "title": "Datetime add with if else"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT COUNT({label/attr.f_owner.salesrep}) WHERE {label/dt_closedate_timestamp.week} <= DATETIME_ADD(PREVIOUS(YEAR, 2), WEEK, -551)"
+                },
+                "description": "",
+                "id": "count_of_sales_rep_with_datetime_and_previous",
+                "title": "Count of sales rep with datetime and previous"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT COUNT({label/attr.f_owner.salesrep}, {dataset/f_opportunitysnapshot})\n  WHERE {label/dt_closedate_timestamp.week} >= DATETIME_ADD(MAX({label/dt_oppcreated_timestamp.week}, {dataset/f_opportunitysnapshot}), -1)"
+                },
+                "description": "",
+                "id": "count_of_sales_rep_with_datetime_add_and_max",
+                "title": "Count of sales rep with datetime add and max"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT COUNT({label/attr.f_owner.salesrep})\n  WHERE DATETIME_ADD({metric/max_of_top_level}, WEEK, 1) < \"2010-26\""
+                },
+                "description": "",
+                "id": "count_of_sales_rep_and_datetime_condition",
+                "title": "Count of sales rep and datetime condition"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT MAX({label/dt_closedate_timestamp.week}, {dataset/f_opportunitysnapshot})"
+                },
+                "description": "",
+                "id": "max_of_top_level",
+                "title": "Max of top level"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  FOR Next({label/dt_oppcreated_timestamp.month})\n  WHERE DATETIME_ADD({label/dt_oppcreated_timestamp.month}, -1) = \"2010-01\""
+                },
+                "description": "",
+                "id": "time_transformation_combined",
+                "title": "Time transformation (combined)"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE DATETIME_ADD({label/dt_oppcreated_timestamp.month}, -1) = \"2010-01\""
+                },
+                "description": "",
+                "id": "filter_time_transformation_datetime_add",
+                "title": "Filter time transformation (datetime add)"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  FOR Next({label/dt_oppcreated_timestamp.month})\n  WHERE {label/dt_oppcreated_timestamp.month} = \"2010-01\""
+                },
+                "description": "",
+                "id": "time_transformation",
+                "title": "Time transformation"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_oppcreated_timestamp.month} = \"2010-01\""
+                },
+                "description": "",
+                "id": "no_time_transformation",
+                "title": "No Time transformation"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_oppcreated_timestamp.minute} <= DATETIME_ADD({label/dt_closedate_timestamp.year}, MINUTE, -10)"
+                },
+                "description": "",
+                "id": "datetime_add_of_minute",
+                "title": "Datetime add of minute"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_oppcreated_timestamp.hour} >= DATETIME_ADD({label/dt_closedate_timestamp.year}, HOUR, 1000)"
+                },
+                "description": "",
+                "id": "datetime_add_of_hour",
+                "title": "Datetime add of hour"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_oppcreated_timestamp.week} < DATETIME_ADD({label/dt_closedate_timestamp.year}, WEEK, 1)"
+                },
+                "description": "",
+                "id": "datetime_add_of_week",
+                "title": "Datetime add of week"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_oppcreated_timestamp.day} = DATETIME_ADD({label/dt_closedate_timestamp.year}, DAY, -150)"
+                },
+                "description": "",
+                "id": "datetime_add_of_day",
+                "title": "Datetime add of day"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_oppcreated_timestamp.month} = DATETIME_ADD({label/dt_closedate_timestamp.year}, MONTH, -2)"
+                },
+                "description": "",
+                "id": "datetime_add_of_month",
+                "title": "Datetime add of month"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_oppcreated_timestamp.year} = DATETIME_ADD({label/dt_closedate_timestamp.year}, YEAR, -2)"
+                },
+                "description": "",
+                "id": "datetime_add_of_year",
+                "title": "Datetime add of year"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_oppcreated_timestamp.month} > DATETIME_ADD(THIS(YEAR), YEAR, -13)"
+                },
+                "description": "",
+                "id": "datetime_add_of_this_year",
+                "title": "Datetime add of this year"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT LAST_VALUE(\n    SELECT RANK({fact/f_opportunitysnapshot.f_amount}))\n  ORDER BY {label/dt_oppcreated_timestamp.year}\n  BY ALL {label/f_owner.department_id}"
+                },
+                "description": "",
+                "id": "last_value_of_rank_amount",
+                "title": "Last value of rank amount"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT FIRST_VALUE(\n    SELECT RANK({fact/f_opportunitysnapshot.f_amount}))\n  ORDER BY {label/dt_oppcreated_timestamp.year}\n  BY ALL {label/f_owner.department_id}"
+                },
+                "description": "",
+                "id": "first_value_of_rank_amount",
+                "title": "First value of rank amount"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_closedate_timestamp.year}\n  BETWEEN DATETIME_ADD({label/dt_oppcreated_timestamp.year}, YEAR, 1) AND NEXT(YEAR)"
+                },
+                "description": "",
+                "id": "sum_amount_with_datetime_add_and_between",
+                "title": "Sum amount with datetime_add and between"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_closedate_timestamp.year}\n  NOT BETWEEN DATETIME_ADD({label/dt_oppcreated_timestamp.year}, YEAR, 1) AND PREVIOUS(YEAR)"
+                },
+                "description": "",
+                "id": "sum_amount_with_datetime_add_and_not_between",
+                "title": "Sum amount with datetime_add and not between"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT LAST_VALUE(RUNVAR ({fact/f_opportunitysnapshot.f_amount}))\n  ORDER BY {label/dt_oppcreated_timestamp.month}\n  BY {label/dt_oppcreated_timestamp.year}"
+                },
+                "description": "",
+                "id": "first_value_of_runvar_amount",
+                "title": "Last value of runvar amount"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT FIRST_VALUE(RUNVAR ({fact/f_opportunitysnapshot.f_amount}))\n  ORDER BY {label/dt_oppcreated_timestamp.month}\n  BY {label/dt_oppcreated_timestamp.year}"
+                },
+                "description": "",
+                "id": "first_value_of_runvar_amount_2",
+                "title": "First value of runvar amount"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT FIRST_VALUE( SELECT SUM({fact/f_opportunitysnapshot.f_amount}) BY {label/attr.f_owner.salesrep})\n  ORDER BY {label/dt_oppcreated_timestamp.year}, {label/attr.f_owner.salesrep}\n  FOR NEXT({label/dt_closedate_timestamp.year})"
+                },
+                "description": "",
+                "id": "for_next_first_value_of_amount",
+                "title": "For Next first value of amount"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT LAST_VALUE( SELECT SUM({fact/f_opportunitysnapshot.f_amount}) BY {label/attr.f_owner.salesrep})\n  ORDER BY {label/dt_oppcreated_timestamp.year}, {label/attr.f_owner.salesrep}\n  FOR NEXT({label/dt_closedate_timestamp.year})"
+                },
+                "description": "",
+                "id": "for_next_last_value_of_amount",
+                "title": "For Next last value of amount"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT FIRST_VALUE( SELECT SUM({fact/f_opportunitysnapshot.f_amount}) BY {label/attr.f_owner.salesrep})\n  ORDER BY {label/dt_oppcreated_timestamp.year}, {label/attr.f_owner.salesrep}\n  FOR Previous({label/dt_closedate_timestamp.year})"
+                },
+                "description": "",
+                "id": "for_previous_first_value_of_amount",
+                "title": "For Previous first value of amount"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT LAST_VALUE( SELECT SUM({fact/f_opportunitysnapshot.f_amount}) BY {label/attr.f_owner.salesrep})\n  ORDER BY {label/dt_oppcreated_timestamp.year}, {label/attr.f_owner.salesrep}\n  FOR Previous({label/dt_closedate_timestamp.year})"
+                },
+                "description": "",
+                "id": "for_previous_last_value_of_amount",
+                "title": "For Previous last value of amount"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT LAST_VALUE(SUM({fact/f_opportunitysnapshot.f_amount}))\n  ORDER BY {label/dt_oppcreated_timestamp.year}\n  by {label/attr.f_owner.salesrep}\n  WHERE {label/dt_closedate_timestamp.year} = PREVIOUS(YEAR, 12)"
+                },
+                "description": "",
+                "id": "last_value_of_amount_with_previous",
+                "title": "Last value of amount with previous"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT FIRST_VALUE(SUM({fact/f_opportunitysnapshot.f_amount}))\n  ORDER BY {label/dt_oppcreated_timestamp.year}\n  by {label/attr.f_owner.salesrep}\n  WHERE {label/dt_closedate_timestamp.year} = PREVIOUS(YEAR, 12)"
+                },
+                "description": "",
+                "id": "first_value_of_amount_with_previous",
+                "title": "First value of amount with previous"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT RUNSUM(LAST_VALUE(\n      SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n        BY {label/attr.f_owner.salesrep}\n        HAVING {label/attr.f_owner.salesrep} = \"Adam Bradley\")\n    ORDER BY {label/dt_oppcreated_timestamp.year})\n"
+                },
+                "description": "",
+                "id": "runsum_last_value_of_amount_with_condition",
+                "title": "Runsum last value of amount with condition"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT RUNSUM(FIRST_VALUE(\n      SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n        BY {label/attr.f_owner.salesrep}\n        WHERE {label/attr.f_owner.salesrep} = \"Adam Bradley\")\n    ORDER BY {label/dt_oppcreated_timestamp.year})"
+                },
+                "description": "",
+                "id": "runsum_first_value_of_amount_with_condition",
+                "title": "Runsum first value of amount with condition"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "select\n last_value(\n   select sum({fact/f_opportunitysnapshot.f_amount})\n   by {label/attr.f_owner.salesrep}\n   )\n order by {label/dt_oppcreated_timestamp.year}, {label/attr.f_owner.salesrep}\n within ({label/f_owner.department_id})"
+                },
+                "description": "",
+                "id": "last_value_of_amount_by_sales_rep",
+                "title": "Last value of amount by sales rep"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "select\n first_value(\n   select sum({fact/f_opportunitysnapshot.f_amount})\n   by {label/attr.f_owner.salesrep}\n   )\n order by {label/dt_oppcreated_timestamp.year}, {label/attr.f_owner.salesrep}\n within ({label/f_owner.department_id})"
+                },
+                "description": "",
+                "id": "first_value_of_amount_by_sales_rep",
+                "title": "First value of amount by sales rep"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT LAST_VALUE(\n    SELECT SUM({fact/f_opportunitysnapshot.f_amount}))\n  ORDER BY {label/dt_closedate_timestamp.quarter}\n  BY {label/dt_closedate_timestamp.year}"
+                },
+                "description": "",
+                "id": "last_value_of_amount_by_quarter",
+                "title": "Last value of amount by quarter"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT LAST_VALUE(SELECT SUM({fact/f_opportunitysnapshot.f_amount})) ORDER BY {label/dt_oppcreated_timestamp.year} ASC "
+                },
+                "description": "",
+                "id": "last_value_of_amount_order_asc",
+                "title": "Last value of amount order asc"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT LAST_VALUE(SELECT SUM({fact/f_opportunitysnapshot.f_amount})) ORDER BY {label/dt_oppcreated_timestamp.year} DESC "
+                },
+                "description": "",
+                "id": "last_value_of_amount_order_desc",
+                "title": "Last value of amount order desc"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT FIRST_VALUE(\n    SELECT SUM({fact/f_opportunitysnapshot.f_amount}))\n  ORDER BY {label/dt_closedate_timestamp.quarter}\n  BY {label/dt_closedate_timestamp.year}"
+                },
+                "description": "",
+                "id": "first_value_of_amount_by_quarter",
+                "title": "First value of amount by quarter"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT FIRST_VALUE(SELECT SUM({fact/f_opportunitysnapshot.f_amount})) ORDER BY {label/dt_oppcreated_timestamp.year} ASC "
+                },
+                "description": "",
+                "id": "first_value_of_amount_order_asc",
+                "title": "First value of amount order asc"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT FIRST_VALUE(SELECT SUM({fact/f_opportunitysnapshot.f_amount})) ORDER BY {label/dt_oppcreated_timestamp.year} DESC "
+                },
+                "description": "",
+                "id": "first_value_of_amount_order_desc",
+                "title": "First value of amount order desc"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_oppcreated_timestamp.year} = (\n  SELECT MIN((\n      SELECT {label/dt_closedate_timestamp.year}\n    BY ALL IN ALL OTHER DIMENSIONS EXCEPT {label/county_name})))"
+                },
+                "description": "",
+                "id": "sum_of_amount_with_min_and_by_all_other_except",
+                "title": "Sum of amount with min and by all other except"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_oppcreated_timestamp.year} = (\n  SELECT MIN((\n      SELECT {label/dt_closedate_timestamp.year}\n    BY ALL OTHER)))"
+                },
+                "description": "",
+                "id": "sum_of_amount_with_min_and_by_all_other",
+                "title": "Sum of amount with min and by all other"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  HAVING {label/dt_oppcreated_timestamp.year} = IF {label/county_name} = \"Clark\" THEN (\n    SELECT MIN(\n        {label/dt_closedate_timestamp.year}, {dataset/f_opportunitysnapshot}))\n    ELSE \"2009\"\n  END"
+                },
+                "description": "",
+                "id": "sum_of_amount_with_if_having_and_min",
+                "title": "Sum of amount with if, having and min"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM( {fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_closedate_timestamp.year} = CASE\n    WHEN {label/county_name} = \"Clark\" THEN MAX(\n      SELECT {label/dt_oppcreated_timestamp.year}\n        BY {dataset/f_opportunitysnapshot})\n    ELSE \"2010\"\n  END"
+                },
+                "description": "",
+                "id": "sum_of_amount_with_case_and_max",
+                "title": "Sum of amount with case and max"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT SUM({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_closedate_timestamp.year} BETWEEN (\n  SELECT MAX({label/dt_oppcreated_timestamp.year})\n    USING {label/f_opportunity.id}) AND PREVIOUS(YEAR)"
+                },
+                "description": "",
+                "id": "sum_of_amount_between_max_created_year_and_previous_year",
+                "title": "Sum of amount between max created year and previous year"
+            },
+            {
+                "content": {
+                    "format": "#,##0.00",
+                    "maql": "SELECT sum({fact/f_opportunitysnapshot.f_amount})\n  WHERE {label/dt_closedate_timestamp.year} NOT BETWEEN (\n  SELECT MAX(SELECT {label/dt_oppcreated_timestamp.year}\n        BY {dataset/f_opportunitysnapshot})) AND THIS(YEAR)"
+                },
+                "description": "",
+                "id": "sum_of_amount_not_between_max_created_year_and_this_year",
+                "title": "Sum of amount not between max created year and this year"
+            }
+        ],
         "visualizationObjects": [
             {
                 "content": {
