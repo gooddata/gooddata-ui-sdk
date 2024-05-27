@@ -2515,9 +2515,6 @@ importers:
       react-lines-ellipsis:
         specifier: ^0.15.0
         version: 0.15.4(react-dom@18.2.0)(react@18.2.0)
-      react-markdown:
-        specifier: ^9.0.1
-        version: 9.0.1(@types/react@18.2.45)(react@18.2.0)
       react-measure:
         specifier: ^2.5.2
         version: 2.5.2(react-dom@18.2.0)(react@18.2.0)

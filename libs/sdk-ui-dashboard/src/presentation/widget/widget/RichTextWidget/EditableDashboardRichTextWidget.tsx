@@ -40,7 +40,7 @@ export const EditableDashboardRichTextWidget: React.FC<IDefaultDashboardRichText
                 isSelected={isSelected}
                 onSelected={onSelected}
                 contentClassName={cx({ "is-editable": isEditable })}
-                visualizationClassName="gd-rich-text-wrapper"
+                visualizationClassName="gd-rich-text-widget-wrapper"
             >
                 {({ clientWidth, clientHeight }) => (
                     <DashboardRichText
