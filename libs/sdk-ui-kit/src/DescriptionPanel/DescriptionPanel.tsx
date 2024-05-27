@@ -1,10 +1,11 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React from "react";
 import isEmpty from "lodash/isEmpty.js";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { EllipsisText } from "./EllipsisText.js";
 import { ArrowOffsets, Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
 import { useMediaQuery } from "../responsive/index.js";
+import { RichText } from "../RichText/index.js";
 import cx from "classnames";
 
 /**
@@ -66,6 +67,7 @@ export interface IDescriptionPanelProps {
     className?: string;
     onBubbleOpen?: () => void;
     arrowOffsets?: ArrowOffsets;
+    useRichText?: boolean;
 }
 
 /**
@@ -124,14 +126,18 @@ const DescriptionPanelCore: React.FC<IDescriptionPanelProps> = (props) => {
 };
 
 const DescriptionPanelContentCore: React.FC<IDescriptionPanelProps> = (props) => {
-    const { title, description } = props;
+    const { title, description, useRichText = false } = props;
 
     return (
         <div className="gd-description-panel s-gd-description-panel">
             {!isEmpty(title) && <div className="gd-description-panel-title">{title}</div>}
             {!isEmpty(description) && (
                 <div className="gd-description-panel-content">
-                    <EllipsisText text={description} />
+                    {useRichText ? (
+                        <RichText value={description} renderMode="view" />
+                    ) : (
+                        <EllipsisText text={description} />
+                    )}
                 </div>
             )}
         </div>

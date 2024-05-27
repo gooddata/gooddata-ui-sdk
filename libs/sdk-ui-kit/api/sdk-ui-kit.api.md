@@ -1281,6 +1281,8 @@ export interface IDescriptionPanelProps {
     onBubbleOpen?: () => void;
     // (undocumented)
     title?: string;
+    // (undocumented)
+    useRichText?: boolean;
 }
 
 // @internal (undocumented)
