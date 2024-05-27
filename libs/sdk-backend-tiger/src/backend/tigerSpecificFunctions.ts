@@ -1,66 +1,66 @@
 // (C) 2022-2024 GoodData Corporation
 
 import {
-    JsonApiOrganizationOutMetaPermissionsEnum,
-    GenerateLdmRequest,
-    DeclarativeModel,
-    JsonApiDataSourceInDocument,
-    LayoutApiPutWorkspaceLayoutRequest,
-    jsonApiHeaders,
-    JsonApiOrganizationPatchTypeEnum,
-    JsonApiApiTokenOutList,
-    MetadataUtilities,
-    JsonApiApiTokenInDocument,
-    JsonApiApiTokenInTypeEnum,
-    JsonApiWorkspaceInTypeEnum,
-    ITigerClient,
-    JsonApiDataSourceInTypeEnum,
-    JsonApiDataSourceInAttributesTypeEnum,
-    OrganizationUtilities,
-    JsonApiDataSourceIdentifierOutWithLinks,
-    TestDefinitionRequestTypeEnum,
-    JsonApiDataSourceOutDocument,
-    JsonApiDataSourceIdentifierOutDocument,
-    DeclarativeAnalytics,
-    JsonApiWorkspaceInDocument,
-    DependentEntitiesRequest,
-    DependentEntitiesResponse,
-    ApiEntitlement,
     ActionsApiProcessInvitationRequest,
-    PlatformUsage,
-    DeclarativeWorkspaceDataFilters,
-    DataSourceParameter,
-    JsonApiCspDirectiveInTypeEnum,
-    JsonApiCspDirectiveInDocument,
-    JsonApiCustomApplicationSettingOutTypeEnum,
-    ScanSqlResponse,
-    HierarchyObjectIdentification,
-    IdentifierDuplications,
-    JsonApiCustomApplicationSettingOut,
-    JsonApiDatasetOutList,
-    JsonApiWorkspaceDataFilterInDocument,
-    JsonApiWorkspaceDataFilterOutDocument,
-    JsonApiWorkspaceDataFilterSettingOutDocument,
-    JsonApiWorkspaceDataFilterSettingInDocument,
-    ScanResultPdm,
     AnalyzeCsvRequest,
     AnalyzeCsvResponse,
+    ApiEntitlement,
+    DataSourceParameter,
+    DeclarativeAnalytics,
+    DeclarativeModel,
+    DeclarativeWorkspaceDataFilters,
+    DependentEntitiesRequest,
+    DependentEntitiesResponse,
+    GdStorageFile,
+    GenerateLdmRequest,
+    HierarchyObjectIdentification,
+    IdentifierDuplications,
     ImportCsvRequest,
     ImportCsvResponse,
+    ITigerClient,
+    JsonApiApiTokenInDocument,
+    JsonApiApiTokenInTypeEnum,
+    JsonApiApiTokenOutList,
+    JsonApiCspDirectiveInDocument,
+    JsonApiCspDirectiveInTypeEnum,
+    JsonApiCustomApplicationSettingOut,
+    JsonApiCustomApplicationSettingOutTypeEnum,
+    JsonApiDatasetOutList,
+    JsonApiDataSourceIdentifierOutDocument,
+    JsonApiDataSourceIdentifierOutWithLinks,
     JsonApiDataSourceInAttributesCacheStrategyEnum,
-    GdStorageFile,
-    UploadFileResponse,
-    ReadFileManifestsResponse,
+    JsonApiDataSourceInAttributesTypeEnum,
+    JsonApiDataSourceInDocument,
+    JsonApiDataSourceInTypeEnum,
+    JsonApiDataSourceOutDocument,
+    jsonApiHeaders,
     JsonApiNotificationChannelOut,
+    JsonApiOrganizationOutMetaPermissionsEnum,
+    JsonApiOrganizationPatchTypeEnum,
+    JsonApiWorkspaceDataFilterInDocument,
+    JsonApiWorkspaceDataFilterOutDocument,
+    JsonApiWorkspaceDataFilterSettingInDocument,
+    JsonApiWorkspaceDataFilterSettingOutDocument,
+    JsonApiWorkspaceInDocument,
+    JsonApiWorkspaceInTypeEnum,
+    LayoutApiPutWorkspaceLayoutRequest,
+    MetadataUtilities,
+    OrganizationUtilities,
+    PlatformUsage,
+    ReadFileManifestsResponse,
+    ScanResultPdm,
+    ScanSqlResponse,
+    TestDefinitionRequestTypeEnum,
+    UploadFileResponse,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling.js";
 import uniq from "lodash/uniq.js";
 import toLower from "lodash/toLower.js";
 import {
-    UnexpectedError,
     ErrorConverter,
     IAnalyticalBackend,
     isUnexpectedResponseError,
+    UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
 import isEmpty from "lodash/isEmpty.js";
 import { AuthenticatedAsyncCall } from "@gooddata/sdk-backend-base";
@@ -362,7 +362,7 @@ export type TigerSpecificFunctions = {
     scanDataSource?: (dataSourceId: string, scanRequest: ScanRequest) => Promise<ScanResult>;
     createDemoWorkspace?: (sampleWorkspace: WorkspaceDefinition) => Promise<string>;
     createDemoDataSource?: (sampleDataSource: DataSourceDefinition) => Promise<string>;
-    createWorkspace?: (id: string, name: string) => Promise<string>;
+    createWorkspace?: (id: string, name: string, parentId?: string) => Promise<string>;
     /**
      * @deprecated use IAnalyticalBackend.workspace(id).updateDescriptor(\{ title: name \})
      */
@@ -855,7 +855,7 @@ export const buildTigerSpecificFunctions = (
             throw convertApiError(error);
         }
     },
-    createWorkspace: async (id: string, name: string) => {
+    createWorkspace: async (id: string, name: string, parentId?: string) => {
         try {
             return await authApiCall(async (sdk) => {
                 const result = await sdk.entities.createEntityWorkspaces({
@@ -866,6 +866,16 @@ export const buildTigerSpecificFunctions = (
                             },
                             id,
                             type: JsonApiWorkspaceInTypeEnum.WORKSPACE,
+                            relationships: parentId
+                                ? {
+                                      parent: {
+                                          data: {
+                                              id: parentId,
+                                              type: JsonApiWorkspaceInTypeEnum.WORKSPACE,
+                                          },
+                                      },
+                                  }
+                                : undefined,
                         },
                     },
                 });
