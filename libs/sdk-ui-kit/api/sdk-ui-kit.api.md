@@ -3386,6 +3386,24 @@ export interface IResponsiveTextProps {
 }
 
 // @internal (undocumented)
+export interface IRichTextProps {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    editPlaceholder?: string;
+    // (undocumented)
+    editRows?: number;
+    // (undocumented)
+    emptyElement?: JSX.Element;
+    // (undocumented)
+    onChange?: (text: string) => void;
+    // (undocumented)
+    renderMode?: "view" | "edit";
+    // (undocumented)
+    value: string;
+}
+
+// @internal (undocumented)
 export interface IRowsIconProps extends IIconProps {
     // (undocumented)
     colorPalette?: {
@@ -4342,6 +4360,9 @@ export type ResponsiveScreenType = "xxl" | "xl" | "lg" | "md" | "sm" | "xs";
 
 // @internal (undocumented)
 export const ResponsiveText: React_2.FC<IResponsiveTextProps>;
+
+// @internal (undocumented)
+export const RichText: React_2.FC<IRichTextProps>;
 
 // @internal (undocumented)
 export type SameAsTargetPosition = "sameAsTarget";

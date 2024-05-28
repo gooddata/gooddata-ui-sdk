@@ -5,7 +5,7 @@
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins" as mx;
 @use "variables";
 
-.gd-rich-text-wrapper {
+.gd-rich-text-widget-wrapper {
     width: 100%;
     height: 100%;
     display: flex;
@@ -17,95 +17,29 @@
     top: 0;
 }
 
-.gd-rich-text-content {
-    width: 100%;
-    height: 100%;
+.gd-rich-text-widget {
     padding: 5px;
     border-radius: variables.$gd-dashboards-content-widget-borderRadius;
-    min-height: 0;
 
     textarea {
-        width: 100%;
-        height: 100%;
         background-color: var(--gd-chart-backgroundColor, var(--gd-palette-complementary-0, #fff));
         line-height: 19px;
         font-size: 14px;
         font-weight: 400;
         font-family: kit-variables.$measure_sequence_number_font;
         color: kit-variables.$gd-color-text;
-        border: none;
-        resize: none;
-        outline: none;
     }
 
-    .gd-rich-text-content-empty {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-}
-
-.gd-rich-text-content-view {
-    // styles for markdown elements
-    * {
-        margin-top: 0;
-        color: var(--gd-palette-complementary-6, #94a1ad);
-    }
-
-    a {
-        cursor: pointer;
-        color: var(--gd-palette-primary-base, #14b2e2);
-        text-decoration: none;
-
-        @include mx.active-states {
-            color: var(--gd-palette-complementary-8, #464e56);
-            text-decoration: underline;
+    .gd-rich-text-content-view {
+        h1,
+        h2,
+        h3 {
+            color: var(--gd-dashboards-title-color, var(--gd-palette-complementary-8, #464e56));
         }
     }
-
-    h1,
-    h2,
-    h3 {
-        color: var(--gd-dashboards-title-color, var(--gd-palette-complementary-8, #464e56));
-        font-weight: 700;
-        text-align: left;
-        letter-spacing: 0;
-    }
-
-    h1 {
-        font-size: 17px;
-        line-height: 23px;
-    }
-
-    h2 {
-        font-size: 15px;
-        line-height: 20px;
-    }
-
-    h3 {
-        font-size: 14px;
-        line-height: 19px;
-    }
-
-    p,
-    ul,
-    ol {
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 19px;
-        letter-spacing: 0;
-        text-align: left;
-    }
-
-    hr {
-        border-top: 0;
-        border-bottom: 1px solid var(--gd-palette-complementary-3, #dde4eb);
-    }
 }
 
-.gd-rich-text-footer {
+.gd-rich-text-widget-footer {
     padding: 0 4px;
     display: flex;
     justify-content: space-between;
