@@ -676,6 +676,85 @@
                 "content": {
                     "filterContextRef": {
                         "identifier": {
+                            "id": "2d1ca758-3240-4984-a84e-f2492c63ce8f",
+                            "type": "filterContext"
+                        }
+                    },
+                    "layout": {
+                        "sections": [
+                            {
+                                "header": {},
+                                "items": [
+                                    {
+                                        "size": {
+                                            "xl": {
+                                                "gridHeight": 22,
+                                                "gridWidth": 6
+                                            }
+                                        },
+                                        "type": "IDashboardLayoutItem",
+                                        "widget": {
+                                            "dateDataSet": {
+                                                "identifier": {
+                                                    "id": "dt_closedate_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "description": "",
+                                            "drills": [],
+                                            "ignoreDashboardFilters": [],
+                                            "insight": {
+                                                "identifier": {
+                                                    "id": "3fb464aa-4a2c-4412-8811-609e5d6e06a5",
+                                                    "type": "visualizationObject"
+                                                }
+                                            },
+                                            "properties": {},
+                                            "title": "Scatter plot segment by attribute",
+                                            "type": "insight"
+                                        }
+                                    }
+                                ],
+                                "type": "IDashboardLayoutSection"
+                            }
+                        ],
+                        "type": "IDashboardLayout"
+                    },
+                    "version": "2"
+                },
+                "createdAt": "2024-05-27 09:57",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "3999bcb1-696c-4587-a075-c403eef07552",
+                "modifiedAt": "2024-05-27 11:38",
+                "modifiedBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "permissions": [
+                    {
+                        "assigneeRule": {
+                            "type": "allWorkspaceUsers"
+                        },
+                        "name": "VIEW"
+                    },
+                    {
+                        "assignee": {
+                            "id": "admin",
+                            "type": "user"
+                        },
+                        "name": "EDIT"
+                    }
+                ],
+                "title": "Dashboard scatter plot segmentation"
+            },
+            {
+                "content": {
+                    "filterContextRef": {
+                        "identifier": {
                             "id": "882c3455-5c89-4577-a9c2-aa60ca875d19",
                             "type": "filterContext"
                         }
@@ -2915,6 +2994,15 @@
             },
             {
                 "content": {
+                    "filters": [],
+                    "version": "2"
+                },
+                "description": "",
+                "id": "2d1ca758-3240-4984-a84e-f2492c63ce8f",
+                "title": "filterContext"
+            },
+            {
+                "content": {
                     "filters": [
                         {
                             "dateFilter": {
@@ -4922,6 +5010,101 @@
                 "description": "Combo chart",
                 "id": "3c05e649-7897-4a95-9c75-c043f0c39e14",
                 "title": "Combo chart"
+            },
+            {
+                "content": {
+                    "buckets": [
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "amount_bop",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "e2443104dc0442dcadf04eb8a45996fe",
+                                        "title": "Amount [BOP]"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "measure": {
+                                        "definition": {
+                                            "measureDefinition": {
+                                                "filters": [],
+                                                "item": {
+                                                    "identifier": {
+                                                        "id": "avg._amount",
+                                                        "type": "metric"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "localIdentifier": "218a741d464f47c1bd6e7607ba3ca1c3",
+                                        "title": "Avg. Amount"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "secondary_measures"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "dt_closedate_timestamp.year",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "073f360b71214bbcab4002517983dc1f"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "attribute"
+                        },
+                        {
+                            "items": [
+                                {
+                                    "attribute": {
+                                        "displayForm": {
+                                            "identifier": {
+                                                "id": "f_owner.department_id",
+                                                "type": "label"
+                                            }
+                                        },
+                                        "localIdentifier": "88027b1059024979a33227cfebad0638"
+                                    }
+                                }
+                            ],
+                            "localIdentifier": "segment"
+                        }
+                    ],
+                    "filters": [],
+                    "properties": {},
+                    "sorts": [],
+                    "version": "2",
+                    "visualizationUrl": "local:scatter"
+                },
+                "createdAt": "2024-05-27 09:56",
+                "createdBy": {
+                    "id": "admin",
+                    "type": "user"
+                },
+                "description": "",
+                "id": "3fb464aa-4a2c-4412-8811-609e5d6e06a5",
+                "title": "Scatter plot segment by attribute"
             },
             {
                 "content": {
