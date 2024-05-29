@@ -193,7 +193,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAlerting: false,
     enableScheduling: false,
     enableLabsSmartFunctions: false,
-    enableSmartFunctions: false,
+    enableSmartFunctions: true,
     enableKeyDriverAnalysis: false,
     enableDataProfiling: false,
     enableFlexAi: false,
@@ -203,7 +203,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDuplicatedLabelValuesInAttributeFilter: false,
     enableWorkspacesHierarchyView: false,
     enableMultipleDataSourcesInWorkspace: false,
-    enableScatterPlotSegmentation: false,
+    enableScatterPlotSegmentation: true,
 };
 
 export const FeatureFlagsValues = {
