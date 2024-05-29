@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import React from "react";
 import { WrappedComponentProps, injectIntl } from "react-intl";
 import noop from "lodash/noop.js";
@@ -28,6 +28,23 @@ export interface IInputControlProps {
     pushData?(data: any): void;
     validateAndPushDataCallback?(value: string): void;
     maxLength?: number;
+    /**
+     * Optional function to validate the input value.
+     * If the value is considered as invalid, it won't be set and emitted,
+     * and last valid value will be used instead.
+     *
+     * @param value - the value to validate
+     * @returns true if the value is valid, false otherwise
+     */
+    validateFn?: (value: string) => boolean;
+    /**
+     * Optional function to transform the input value, before it's sent via pushData callback.
+     * This callback will be called only for valid values (see validateFn property).
+     *
+     * @param value - the value to transform
+     * @returns the transformed value
+     */
+    transformFn?: (value: string) => string;
 }
 
 export interface IInputControlState {
@@ -126,6 +143,11 @@ export class InputControl extends React.Component<
     }
 
     private isValid(type: string, value: string) {
+        const { validateFn } = this.props;
+        if (validateFn) {
+            return validateFn(value);
+        }
+
         if (type === "number") {
             // allow only numbers, `-` and string doesn't starts with `.`
             return !value.startsWith(".") && (!isNaN(Number(value)) || value === "-");
@@ -150,7 +172,11 @@ export class InputControl extends React.Component<
     }
 
     private modifyDataForSending(value: string) {
-        const { type } = this.props;
+        const { type, transformFn } = this.props;
+
+        if (transformFn) {
+            return transformFn(value);
+        }
 
         if (type === "number") {
             return value.replace(/\.+$/, "");

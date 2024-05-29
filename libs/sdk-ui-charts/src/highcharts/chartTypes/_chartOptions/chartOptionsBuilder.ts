@@ -390,6 +390,7 @@ export function getChartOptions(
     emptyHeaderTitle: string,
     theme?: ITheme,
     totalColumnTitle?: string,
+    clusterTitle?: string,
 ): IChartOptions {
     const dv = DataViewFacade.for(dataView);
     const dimensions = dv.meta().dimensions();
@@ -419,6 +420,7 @@ export function getChartOptions(
         dv,
         type,
         theme,
+        clusterTitle,
     );
 
     const gridEnabled = config?.grid?.enabled ?? true;
@@ -547,7 +549,13 @@ export function getChartOptions(
                 categories,
             },
             actions: {
-                tooltip: generateTooltipScatterPlotFn(measures, stackByAttribute, viewByAttribute, config),
+                tooltip: generateTooltipScatterPlotFn(
+                    measures,
+                    stackByAttribute,
+                    viewByAttribute,
+                    config,
+                    clusterTitle,
+                ),
             },
             grid: {
                 enabled: gridEnabled,

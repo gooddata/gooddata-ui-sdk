@@ -343,6 +343,28 @@ export interface IChartConfig {
      * @beta
      */
     forecast?: IForecast;
+
+    /**
+     * Configuration of the clustering.
+     * @beta
+     */
+    clustering?: IChartClusteringConfig;
+}
+
+/**
+ * @beta
+ * Forecast configuration
+ */
+export interface IChartClusteringConfig {
+    /**
+     * Indicates whether the clustering is enabled or not.
+     */
+    enabled: boolean;
+
+    /**
+     * Number of clusters.
+     */
+    numberOfClusters: number;
 }
 
 /**

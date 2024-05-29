@@ -5,7 +5,7 @@ import React from "react";
 import { IErrorProps } from "../react/ErrorComponent.js";
 import { ILoadingProps } from "../react/LoadingComponent.js";
 import { IPushData, OnError, OnExportReady, OnLoadingChanged } from "./Events.js";
-import { IForecastConfig, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import { IClusteringConfig, IForecastConfig, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 
 /**
  * Super-interface for all visualization props.
@@ -110,4 +110,10 @@ export interface IDataVisualizationProps extends IVisualizationProps, IVisualiza
      * @beta
      */
     forecastConfig?: IForecastConfig;
+
+    /**
+     * Configuration for clustering.
+     * @beta
+     */
+    clusteringConfig?: IClusteringConfig;
 }

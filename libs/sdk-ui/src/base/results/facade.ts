@@ -1,6 +1,8 @@
 // (C) 2019-2024 GoodData Corporation
 import { defFingerprint, IExecutionDefinition, IResultWarning } from "@gooddata/sdk-model";
 import {
+    IClusteringConfig,
+    IClusteringResult,
     IDataView,
     IExecutionResult,
     IForecastConfig,
@@ -174,6 +176,8 @@ export function emptyDataViewForResult(
     result: IExecutionResult,
     forecastConfig?: IForecastConfig,
     forecastResult?: IForecastResult,
+    clusteringConfig?: IClusteringConfig,
+    clusteringResult?: IClusteringResult,
 ): IDataView {
     const { definition } = result;
     const fp = defFingerprint(definition) + "/emptyView";
@@ -195,7 +199,13 @@ export function emptyDataViewForResult(
             return fp === other.fingerprint();
         },
         withForecast(forecastConfig?: IForecastConfig, forecastResult?: IForecastResult): IDataView {
-            return emptyDataViewForResult(result, forecastConfig, forecastResult);
+            return emptyDataViewForResult(
+                result,
+                forecastConfig,
+                forecastResult,
+                clusteringConfig,
+                clusteringResult,
+            );
         },
         forecast(): IForecastView {
             return {
@@ -205,6 +215,26 @@ export function emptyDataViewForResult(
                 prediction: [],
                 loading: false,
             };
+        },
+        clustering(): IClusteringResult {
+            return {
+                attribute: [],
+                clusters: [],
+                xcoord: [],
+                ycoord: [],
+            };
+        },
+        withClustering(
+            clusteringConfig?: IClusteringConfig,
+            clusteringResult?: IClusteringResult,
+        ): IDataView {
+            return emptyDataViewForResult(
+                result,
+                forecastConfig,
+                forecastResult,
+                clusteringConfig,
+                clusteringResult,
+            );
         },
     };
 }

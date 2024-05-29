@@ -16,6 +16,7 @@ import {
     IForecastView,
     IAnomalyDetectionResult,
     IClusteringResult,
+    IClusteringConfig,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -333,6 +334,8 @@ class RecordedDataView implements IDataView {
         private readonly denormalizer?: Denormalizer,
         public readonly forecastConfig?: IForecastConfig,
         public readonly forecastResult?: IForecastResult,
+        public readonly clusteringConfig?: IClusteringConfig,
+        public readonly clusteringResult?: IClusteringResult,
     ) {
         this.data = recordedDataView.data;
         this.headerItems = denormalizer
@@ -366,6 +369,8 @@ class RecordedDataView implements IDataView {
             this.denormalizer,
             config,
             result,
+            this.clusteringConfig,
+            this.clusteringResult,
         );
     }
 
@@ -377,6 +382,30 @@ class RecordedDataView implements IDataView {
                 high: [],
                 prediction: [],
             }
+        );
+    }
+
+    clustering(): IClusteringResult {
+        return (
+            this.recordedDataView.clusteringResult ?? {
+                attribute: [],
+                clusters: [],
+                xcoord: [],
+                ycoord: [],
+            }
+        );
+    }
+
+    withClustering(config?: IClusteringConfig, result?: IClusteringResult): IDataView {
+        return new RecordedDataView(
+            this.result,
+            this.definition,
+            this.recordedDataView,
+            this.denormalizer,
+            this.forecastConfig,
+            this.forecastResult,
+            config,
+            result,
         );
     }
 }

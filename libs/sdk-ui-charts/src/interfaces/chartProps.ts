@@ -1,5 +1,10 @@
 // (C) 2019-2024 GoodData Corporation
-import { IAnalyticalBackend, IForecastConfig, IPreparedExecution } from "@gooddata/sdk-backend-spi";
+import {
+    IAnalyticalBackend,
+    IClusteringConfig,
+    IForecastConfig,
+    IPreparedExecution,
+} from "@gooddata/sdk-backend-spi";
 import { IVisualizationCallbacks, IVisualizationProps } from "@gooddata/sdk-ui";
 import { IExecutionConfig } from "@gooddata/sdk-model";
 import { IChartConfig } from "./chartConfig.js";
@@ -114,4 +119,9 @@ export interface ICoreChartProps extends ICommonChartProps {
      * Forecast configuration to apply to the chart data.
      */
     forecastConfig?: IForecastConfig;
+
+    /**
+     * Clustering configuration to apply to the chart data.
+     */
+    clusteringConfig?: IClusteringConfig;
 }

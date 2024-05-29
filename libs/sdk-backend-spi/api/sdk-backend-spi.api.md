@@ -419,6 +419,12 @@ export interface IDataSourcesService {
 
 // @public
 export interface IDataView {
+    // @beta
+    clustering(): IClusteringResult;
+    // @beta
+    readonly clusteringConfig?: IClusteringConfig;
+    // @beta
+    readonly clusteringResult?: IClusteringResult;
     readonly count: number[];
     readonly data: DataValue[][] | DataValue[];
     readonly definition: IExecutionDefinition;
@@ -437,6 +443,8 @@ export interface IDataView {
     readonly totals?: DataValue[][][];
     readonly totalTotals?: DataValue[][][];
     readonly warnings?: IResultWarning[];
+    // @beta
+    withClustering(config?: IClusteringConfig, result?: IClusteringResult): IDataView;
     // @beta
     withForecast(config?: IForecastConfig, result?: IForecastResult): IDataView;
 }

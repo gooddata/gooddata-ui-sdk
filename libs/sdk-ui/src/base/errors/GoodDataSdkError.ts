@@ -25,6 +25,7 @@ export const ErrorCodes = {
     TIMEOUT_ERROR: "TIMEOUT_ERROR",
     VISUALIZATION_CLASS_UNKNOWN: "VISUALIZATION_CLASS_UNKNOWN",
     FORECAST_NOT_RECEIVED: "FORECAST_NOT_RECEIVED",
+    CLUSTERING_NOT_RECEIVED: "CLUSTERING_NOT_RECEIVED",
 };
 
 /**
@@ -145,6 +146,17 @@ export class DataTooLargeToDisplaySdkError extends GoodDataSdkError {
 export class ForecastNotReceivedSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error) {
         super(ErrorCodes.FORECAST_NOT_RECEIVED as SdkErrorType, message, cause);
+    }
+}
+
+/**
+ * This error means that execution of forecast ended with error.
+ *
+ * @public
+ */
+export class ClusteringNotReceivedSdkError extends GoodDataSdkError {
+    constructor(message?: string, cause?: Error) {
+        super(ErrorCodes.CLUSTERING_NOT_RECEIVED as SdkErrorType, message, cause);
     }
 }
 
@@ -313,6 +325,15 @@ export function isDataTooLargeToCompute(obj: unknown): obj is DataTooLargeToComp
  */
 export function isForecastNotReceived(obj: unknown): obj is ForecastNotReceivedSdkError {
     return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "FORECAST_NOT_RECEIVED";
+}
+
+/**
+ * Typeguard checking whether input is an instance of {@link ClusteringNotReceivedSdkError}
+ *
+ * @public
+ */
+export function isClusteringNotReceived(obj: unknown): obj is ClusteringNotReceivedSdkError {
+    return !isEmpty(obj) && (obj as GoodDataSdkError).seType === "CLUSTERING_NOT_RECEIVED";
 }
 
 /**
