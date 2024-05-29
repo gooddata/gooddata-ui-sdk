@@ -214,6 +214,7 @@ export function generateTooltipScatterPlotFn(
     stackByAttribute: IUnwrappedAttributeHeadersWithItems,
     viewByAttribute: IUnwrappedAttributeHeadersWithItems,
     config: IChartConfig = {},
+    clusterTitle?: string,
 ): ITooltipFactory {
     const { separators } = config;
 
@@ -221,6 +222,7 @@ export function generateTooltipScatterPlotFn(
         const textData = [];
         const viewByName = point.name ? point.name : point.series.name;
         const stackByName = point.segmentName ? point.segmentName : point.series.name;
+        const clusterName = point.clusterName ? point.clusterName : point.series.name;
 
         if (viewByAttribute) {
             textData.unshift([customEscape(viewByAttribute.formOf.name), customEscape(viewByName)]);
@@ -242,6 +244,10 @@ export function generateTooltipScatterPlotFn(
                 customEscape(measures[1].measureHeaderItem.name),
                 formatValueForTooltip(point.y, measures[1].measureHeaderItem.format, separators),
             ]);
+        }
+
+        if (config?.clustering?.enabled && clusterName) {
+            textData.unshift([clusterTitle, customEscape(clusterName)]);
         }
 
         return renderTooltipHTML(textData, maxTooltipContentWidth);

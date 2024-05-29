@@ -242,6 +242,9 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     forecastConfidence95: { id: "properties.forecastConfidence.95" },
     forecastSlicedWarningTitle: { id: "properties.forecastSliced.title" },
     forecastSlicedWarningDescription: { id: "properties.forecastSliced.description" },
+    clusteringTitle: { id: "properties.clustering.title" },
+    clusteringAmount: { id: "properties.clustering.amount" },
+    clusteringAmountPlaceholder: { id: "properties.clustering.amount.placeholder" },
 });
 
 export const comparisonMessages: Record<string, MessageDescriptor> = defineMessages({

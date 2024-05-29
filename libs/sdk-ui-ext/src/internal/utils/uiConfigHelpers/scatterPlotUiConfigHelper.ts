@@ -7,7 +7,7 @@ import { BucketNames } from "@gooddata/sdk-ui";
 import { IExtendedReferencePoint } from "../../interfaces/Visualization.js";
 import { UICONFIG } from "../../constants/uiConfig.js";
 import { BUCKETS } from "../../constants/bucket.js";
-import { setBucketTitles } from "../bucketHelper.js";
+import { getBucketItems, setBucketTitles } from "../bucketHelper.js";
 
 // If you need to edit these icons
 // reflect changes also in gdc-analytical-designer
@@ -22,7 +22,7 @@ export function setScatterPlotUiConfig(
     intl: IntlShape,
     visualizationType: string,
 ): IExtendedReferencePoint {
-    const referencePointConfigured = cloneDeep(referencePoint);
+    let referencePointConfigured = cloneDeep(referencePoint);
 
     set(referencePointConfigured, UICONFIG, setBucketTitles(referencePoint, visualizationType, intl));
 
@@ -35,5 +35,38 @@ export function setScatterPlotUiConfig(
     set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.ATTRIBUTE, "icon"], scatterViewIcon);
     set(referencePointConfigured, [UICONFIG, BUCKETS, BucketNames.SEGMENT, "icon"], scatterSegmentIcon);
 
+    referencePointConfigured = disableClusteringIfSegmentationIsActive(referencePointConfigured);
+
     return referencePointConfigured;
+}
+
+/**
+ * Clustering cannot be combined with segmentation,
+ * so disable clustering if segmentation is active.
+ *
+ * @param referencePoint - reference point
+ * @returns reference point with clustering disabled if segmentation is active, otherwise original reference point
+ */
+function disableClusteringIfSegmentationIsActive(
+    referencePoint: IExtendedReferencePoint,
+): IExtendedReferencePoint {
+    const segmentByAttributes = getBucketItems(referencePoint.buckets, BucketNames.SEGMENT);
+
+    if (referencePoint.properties?.controls?.clustering?.enabled && segmentByAttributes.length > 0) {
+        return {
+            ...referencePoint,
+            properties: {
+                ...referencePoint.properties,
+                controls: {
+                    ...referencePoint.properties.controls,
+                    clustering: {
+                        ...referencePoint.properties.controls.clustering,
+                        enabled: false,
+                    },
+                },
+            },
+        };
+    }
+
+    return referencePoint;
 }

@@ -526,6 +526,18 @@ export interface IDataView {
     readonly forecastResult?: IForecastResult;
 
     /**
+     * Configuration for the clustering, if available.
+     * @beta
+     */
+    readonly clusteringConfig?: IClusteringConfig;
+
+    /**
+     * Clustering result, if available.
+     * @beta
+     */
+    readonly clusteringResult?: IClusteringResult;
+
+    /**
      * Result warnings.
      *
      * @remarks
@@ -563,6 +575,13 @@ export interface IDataView {
     forecast(): IForecastView;
 
     /**
+     * Return clustering data view. This object is empty if `withClustering` was not called
+     * @see IDataView.withClustering
+     * @beta
+     */
+    clustering(): IClusteringResult;
+
+    /**
      * Adds forecast for this data view.
      *
      * @beta
@@ -571,6 +590,15 @@ export interface IDataView {
      * @returns new data view with forecasting enabled
      */
     withForecast(config?: IForecastConfig, result?: IForecastResult): IDataView;
+
+    /**
+     * Adds clustering for this data view.
+     * @beta
+     * @param config - clustering configuration
+     * @param result - clustering result
+     * @returns new data view with clustering enabled
+     */
+    withClustering(config?: IClusteringConfig, result?: IClusteringResult): IDataView;
 }
 
 /**

@@ -1,5 +1,5 @@
 // (C) 2019-2024 GoodData Corporation
-import { IBackendCapabilities, IExecutionFactory } from "@gooddata/sdk-backend-spi";
+import { IBackendCapabilities, IDataView, IExecutionFactory } from "@gooddata/sdk-backend-spi";
 import {
     IColorMappingItem,
     IDimension,
@@ -83,6 +83,8 @@ import tail from "lodash/tail.js";
 import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "../drillDownUtil.js";
 import { messages } from "../../../../locales.js";
 import { isForecastEnabled } from "../../../utils/forecastHelper.js";
+import omitBy from "lodash/omitBy.js";
+import { DEFAULT_NUMBER_OF_CLUSTERS } from "../../../constants/scatter.js";
 
 export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected projectId: string;
@@ -289,6 +291,7 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
                 LoadingComponent={null}
                 ErrorComponent={null}
                 theme={theme}
+                {...enhanceBaseChartWithClusteringConfiguration(fullConfig)}
             />,
             this.getElement(),
         );
@@ -381,8 +384,10 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         if (data.colors) {
             this.handleConfirmedColorMapping(data);
         } else {
+            const updatedData = enhancePropertiesMetaWithPartialClusteringInfo(data, this.type);
+
             this.pushData({
-                ...data,
+                ...updatedData,
                 references: this.references,
             });
         }
@@ -469,4 +474,41 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         const previousSort = properties?.sortItems;
         return validateCurrentSort(previousAvailableSorts, previousSort, availableSorts, defaultSort);
     }
+}
+
+function enhancePropertiesMetaWithPartialClusteringInfo(data: any, type: ChartType) {
+    let dataPropertiesMeta: { propertiesMeta?: any } = { propertiesMeta: data.propertiesMeta };
+
+    if (data.dataView && type === "scatter") {
+        const dataView = data.dataView as IDataView;
+        const numberOfDataPoints = dataView.count[0];
+        const numberOfClusters = dataView.clusteringConfig?.numberOfClusters;
+        const showingPartialClusters = !!numberOfClusters && numberOfDataPoints < numberOfClusters;
+
+        dataPropertiesMeta = {
+            propertiesMeta: {
+                ...dataPropertiesMeta.propertiesMeta,
+                showingPartialClusters,
+            },
+        };
+    }
+
+    return {
+        ...data,
+        ...omitBy(dataPropertiesMeta, isEmpty),
+    };
+}
+
+function enhanceBaseChartWithClusteringConfiguration(fullConfig: IChartConfig) {
+    return !isEmpty(fullConfig.clustering) && fullConfig.clustering.enabled
+        ? {
+              clusteringConfig: {
+                  ...fullConfig.clustering,
+                  numberOfClusters:
+                      typeof fullConfig.clustering.numberOfClusters === "string"
+                          ? parseInt(fullConfig.clustering.numberOfClusters, 10)
+                          : fullConfig.clustering.numberOfClusters ?? DEFAULT_NUMBER_OF_CLUSTERS,
+              },
+          }
+        : {};
 }

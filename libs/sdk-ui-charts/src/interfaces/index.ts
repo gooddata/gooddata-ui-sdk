@@ -27,6 +27,7 @@ export {
     ChartCellImageSizing,
     ChartInlineVisualizationType,
     IInlineVisualizationsConfig,
+    IChartClusteringConfig,
 } from "./chartConfig.js";
 
 export {

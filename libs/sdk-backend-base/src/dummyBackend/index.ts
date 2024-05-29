@@ -70,6 +70,7 @@ import {
     IAnomalyDetectionResult,
     IClusteringResult,
     IOrganizationNotificationChannelService,
+    IClusteringConfig,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -276,6 +277,12 @@ export function dummyDataView(
         },
         withForecast(_config: IForecastConfig, _result?: IForecastResult): IDataView {
             throw new NotSupported("not supported");
+        },
+        clustering(): IClusteringResult {
+            throw new NotSupported("clustering is not supported in this dummy backend");
+        },
+        withClustering(_config?: IClusteringConfig, _result?: IClusteringResult): IDataView {
+            throw new NotSupported("clustering is not supported in this dummy backend");
         },
     };
 }

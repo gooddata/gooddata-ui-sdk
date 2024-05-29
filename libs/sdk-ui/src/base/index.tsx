@@ -15,6 +15,7 @@ export {
     SdkErrorType,
     ErrorCodes,
     ForecastNotReceivedSdkError,
+    ClusteringNotReceivedSdkError,
     GoodDataSdkError,
     UnauthorizedSdkError,
     NotFoundSdkError,
@@ -43,6 +44,7 @@ export {
     isUnauthorized,
     isUnknownSdkError,
     isForecastNotReceived,
+    isClusteringNotReceived,
     isDynamicScriptLoadSdkError,
 } from "./errors/GoodDataSdkError.js";
 export {
@@ -188,6 +190,7 @@ export {
     resolveLocale,
     emptyHeaderTitleFromIntl,
     totalColumnTitleFromIntl,
+    clusterTitleFromIntl,
     resolveLocaleDefaultMessages,
 } from "./localization/intlUtils.js";
 export {

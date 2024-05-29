@@ -51,6 +51,7 @@ import {
     IForecastView,
     IAnomalyDetectionResult,
     IClusteringResult,
+    IClusteringConfig,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -318,6 +319,12 @@ function recordedDataView(
                 prediction: [],
                 loading: false,
             };
+        },
+        clustering(): IClusteringResult {
+            throw new NotSupported("Clustering is not supported by the legacy recorded backend.");
+        },
+        withClustering(_config?: IClusteringConfig, _result?: IClusteringResult): IDataView {
+            throw new NotSupported("Clustering is not supported by the legacy recorded backend.");
         },
     };
 }
