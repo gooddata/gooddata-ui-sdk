@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { IInsightDefinition } from "@gooddata/sdk-model";
 import { VisualizationObjectModelV2 } from "@gooddata/api-client-tiger";
 import { cloneWithSanitizedIds } from "../../IdSanitization.js";
@@ -19,6 +19,9 @@ export function convertVisualizationObject(
             summary: description,
             buckets: cloneWithSanitizedIds(visualizationObject.buckets) ?? [],
             filters: cloneWithSanitizedIds(visualizationObject.filters) ?? [],
+            ...(visualizationObject.attributeFilterConfigs
+                ? { attributeFilterConfigs: visualizationObject.attributeFilterConfigs }
+                : {}),
             sorts: cloneWithSanitizedIds(visualizationObject.sorts) ?? [],
             tags,
         },

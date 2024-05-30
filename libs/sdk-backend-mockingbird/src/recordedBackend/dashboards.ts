@@ -297,6 +297,7 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
         return Promise.resolve([
             {
                 negativeAttributeFilter: {
+                    localIdentifier: "naf_01",
                     displayForm: {
                         uri: "/example/md/mock/123",
                     },

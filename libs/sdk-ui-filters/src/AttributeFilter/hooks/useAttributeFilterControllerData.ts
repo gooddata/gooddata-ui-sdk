@@ -79,6 +79,7 @@ export function useAttributeFilterControllerData(
     const parentFilterAttributes = handler.getLimitingAttributeFiltersAttributes();
     const displayForms = attribute?.displayForms ?? [];
     const currentDisplayFormRef = filterObjRef(handlerState.attributeFilter);
+    const currentDisplayAsDisplayFormRef = filterObjRef(handlerState.attributeFilterToDisplay);
 
     const offset = handlerState.elements.options.offset;
 
@@ -125,6 +126,7 @@ export function useAttributeFilterControllerData(
 
         displayForms,
         currentDisplayFormRef,
+        currentDisplayAsDisplayFormRef,
 
         enableShowingFilteredElements: supportsShowingFilteredElements,
 

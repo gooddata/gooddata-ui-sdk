@@ -80,6 +80,25 @@ export type IInsight = IInsightDefinition & {
 };
 
 /**
+ * Attribute filter config
+ *
+ * @public
+ */
+export type IAttributeFilterConfig = {
+    displayAsLabel: ObjRef;
+};
+
+/**
+ * Definition of UI specific attribute filters configs.
+ * These influence how the filters are displayed in the UI not the execution.
+ *
+ * @public
+ */
+export type IAttributeFilterConfigs = {
+    [filterLocalIdentifier: string]: IAttributeFilterConfig;
+};
+
+/**
  * Insight definition specifies what and how should be visualized by an insight.
  *
  * @public
@@ -133,6 +152,8 @@ export type IInsightDefinition = {
          * Filters to apply on the data.
          */
         filters: IFilter[];
+
+        attributeFilterConfigs?: IAttributeFilterConfigs;
 
         /**
          * Sorting to apply on the data.
@@ -409,6 +430,20 @@ export function insightFilters(insight: IInsightDefinition): IFilter[] {
     invariant(insight, "insight must be specified");
 
     return insight.insight.filters;
+}
+
+/**
+ * Gets attribute filters configs used in an insight if defined.
+ *
+ * @param insight - insight to work with
+ * @public
+ */
+export function insightAttributeFilterConfigs(
+    insight: IInsightDefinition,
+): IAttributeFilterConfigs | undefined {
+    invariant(insight, "insight must be specified");
+
+    return insight.insight.attributeFilterConfigs;
 }
 
 /**

@@ -59,6 +59,7 @@ export interface ILoadElementsOptions {
     elements?: ElementsQueryOptionsElementsSpecification;
     includeTotalCountWithoutFilters?: boolean;
     excludePrimaryLabel?: boolean;
+    filterByPrimaryLabel?: boolean;
 }
 
 /**

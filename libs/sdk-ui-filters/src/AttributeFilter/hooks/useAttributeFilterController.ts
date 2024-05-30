@@ -1,12 +1,14 @@
 // (C) 2022-2024 GoodData Corporation
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import isEqual from "lodash/isEqual.js";
 import debounce from "lodash/debounce.js";
 import difference from "lodash/difference.js";
 import differenceBy from "lodash/differenceBy.js";
 import {
+    areObjRefsEqual,
     DashboardAttributeFilterSelectionMode,
     filterAttributeElements,
+    filterObjRef,
     IAbsoluteDateFilter,
     IAttributeElement,
     IAttributeFilter,
@@ -14,6 +16,7 @@ import {
     isAttributeElementsByRef,
     isAttributeElementsByValue,
     isNegativeAttributeFilter,
+    isPositiveAttributeFilter,
     ObjRef,
 } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict, GoodDataSdkError, UnexpectedSdkError } from "@gooddata/sdk-ui";
@@ -26,6 +29,7 @@ import { useResolveDependentDateFiltersInput } from "./useResolveDependentDateFi
 import { useAttributeFilterHandler } from "./useAttributeFilterHandler.js";
 import { useAttributeFilterControllerData } from "./useAttributeFilterControllerData.js";
 import {
+    DISPLAY_FORM_CHANGED_CORRELATION,
     IRRELEVANT_SELECTION,
     PARENT_FILTERS_CORRELATION,
     RESET_CORRELATION,
@@ -37,6 +41,7 @@ import { AttributeFilterController } from "./types.js";
 import { isValidSingleSelectionFilter } from "../utils.js";
 import isEmpty from "lodash/isEmpty.js";
 import { invariant } from "ts-invariant";
+import { useAttributeFilterHandlerState } from "./useAttributeFilterHandlerState.js";
 
 /**
  * Properties of {@link useAttributeFilterController}
@@ -84,6 +89,8 @@ export const useAttributeFilterController = (
 
         elementsOptions,
 
+        displayAsLabel,
+
         selectionMode = "multi",
         selectFirst = false,
         enableDuplicatedLabelValuesInAttributeFilter = false,
@@ -123,6 +130,7 @@ export const useAttributeFilterController = (
         hiddenElements,
         staticElements,
         enableDuplicatedLabelValuesInAttributeFilter,
+        displayAsLabel,
     });
     const attributeFilterControllerData = useAttributeFilterControllerData(
         handler,
@@ -153,9 +161,11 @@ export const useAttributeFilterController = (
             resetOnParentFilterChange,
             selectionMode,
             setShouldReloadElements,
+            displayAsLabel,
         },
         supportsKeepingDependentFiltersSelection,
         supportsCircularDependencyInFilters,
+        enableDuplicatedLabelValuesInAttributeFilter,
     );
     const callbacks = useCallbacks(
         handler,
@@ -172,6 +182,7 @@ export const useAttributeFilterController = (
         },
         supportsShowingFilteredElements,
         supportsKeepingDependentFiltersSelection,
+        enableDuplicatedLabelValuesInAttributeFilter,
     );
 
     useSingleSelectModeHandler(handler, {
@@ -220,6 +231,22 @@ function useOnError(
 
 const EMPTY_LIMITING_VALIDATION_ITEMS: ObjRef[] = [];
 
+// omit local identifier and sort elements because they order may change depending on current displayAsLabel order
+const areFiltersEqual = (filterA: IAttributeFilter, filterB: IAttributeFilter) => {
+    const typeEqual = isPositiveAttributeFilter(filterA) === isPositiveAttributeFilter(filterB);
+    const dfsEqual = areObjRefsEqual(filterObjRef(filterA), filterObjRef(filterB));
+    const elementsA = filterAttributeElements(filterA);
+    const elementsB = filterAttributeElements(filterB);
+    const elementsEqual =
+        (isAttributeElementsByRef(elementsA) &&
+            isAttributeElementsByRef(elementsB) &&
+            isEqual([...elementsA.uris].sort(), [...elementsB.uris].sort())) ||
+        (isAttributeElementsByValue(elementsA) &&
+            isAttributeElementsByValue(elementsB) &&
+            isEqual([...elementsA.values].sort(), [...elementsB.values].sort()));
+    return typeEqual && dfsEqual && elementsEqual;
+};
+
 function useInitOrReload(
     handler: IMultiSelectAttributeFilterHandler,
     props: {
@@ -233,9 +260,11 @@ function useInitOrReload(
         resetOnParentFilterChange: boolean;
         selectionMode: DashboardAttributeFilterSelectionMode;
         setShouldReloadElements: (value: boolean) => void;
+        displayAsLabel: ObjRef;
     },
     supportsKeepingDependentFiltersSelection: boolean,
     supportsCircularDependencyInFilters: boolean,
+    enableDuplicatedLabelValuesInAttributeFilter: boolean,
 ) {
     const {
         filter,
@@ -248,7 +277,11 @@ function useInitOrReload(
         onApply,
         selectionMode,
         setShouldReloadElements,
+        displayAsLabel,
     } = props;
+
+    const prevFilter = useRef(filter);
+
     useEffect(() => {
         if (limitingAttributeFilters.length > 0) {
             handler.setLimitingAttributeFilters(limitingAttributeFilters);
@@ -281,7 +314,8 @@ function useInitOrReload(
 
         const limitingDateFiltersChanged = !isEqual(limitingDateFilters, handler.getLimitingDateFilters());
 
-        const filterChanged = !isEqual(filter, handler.getFilter());
+        const filterChanged =
+            !areFiltersEqual(filter, handler.getFilter()) && !areFiltersEqual(filter, prevFilter.current);
 
         const limitingValidationItemsChanged = !isEqual(
             limitingValidationItems,
@@ -321,6 +355,43 @@ function useInitOrReload(
         setShouldReloadElements,
         limitingValidationItems,
     ]);
+
+    const isMountedRef = useRef(false);
+    useEffect(() => {
+        isMountedRef.current = true;
+        return () => {
+            isMountedRef.current = false;
+        };
+    }, []);
+
+    useEffect(() => {
+        const currentDisplayAsLabel = filterObjRef(handler.getFilterToDisplay());
+        if (
+            enableDuplicatedLabelValuesInAttributeFilter &&
+            displayAsLabel &&
+            currentDisplayAsLabel &&
+            !areObjRefsEqual(currentDisplayAsLabel, displayAsLabel)
+        ) {
+            const unsubscribe = handler.onLoadCustomElementsSuccess(() => {
+                onApply?.(
+                    handler.getFilter(),
+                    handler.getCommittedSelection()?.isInverted,
+                    selectionMode,
+                    handler.getElementsByKey(handler.getWorkingSelection().keys),
+                    displayAsLabel,
+                );
+            });
+            handler.setDisplayAsLabel(displayAsLabel);
+            // TODO INE: optimize and load only selection elements + first page, not attribute itself
+            handler.init(DISPLAY_FORM_CHANGED_CORRELATION);
+            return () => {
+                if (!isMountedRef.current) {
+                    unsubscribe();
+                }
+            };
+        }
+        return undefined;
+    }, [handler, displayAsLabel, enableDuplicatedLabelValuesInAttributeFilter, onApply, selectionMode]);
 }
 
 type UpdateFilterProps = {
@@ -438,7 +509,10 @@ function updateAutomaticResettingFilter(
         const isInverted = handler.getCommittedSelection()?.isInverted;
 
         setConnectedPlaceholderValue(nextFilter);
-        onApply?.(nextFilter, isInverted);
+
+        const nextFilterToDisplay = handler.getFilterToDisplay();
+        const displayAsLabel = filterObjRef(nextFilterToDisplay);
+        onApply?.(nextFilter, isInverted, selectionMode, [], displayAsLabel);
 
         return "init-parent";
     }
@@ -496,6 +570,7 @@ function useCallbacks(
     },
     supportsShowingFilteredElements: boolean,
     supportsKeepingDependentFiltersSelection: boolean,
+    enableDuplicatedLabelValuesInAttributeFilter: boolean,
 ) {
     const {
         onApply: onApplyInput,
@@ -513,11 +588,13 @@ function useCallbacks(
             const attributeFilter = handler.getFilter();
             const isElementsByRef = isAttributeElementsByRef(filterAttributeElements(attributeFilter));
 
-            const keys = selectedItems.map((item) => (isElementsByRef ? item.uri : item.title));
+            const keys = selectedItems.map((item) =>
+                isElementsByRef || enableDuplicatedLabelValuesInAttributeFilter ? item.uri : item.title,
+            );
             const irrelevantKeysObj = selectionMode === "single" ? { irrelevantKeys: [] } : {};
             handler.changeSelection({ keys, isInverted, ...irrelevantKeysObj });
         },
-        [handler, selectionMode],
+        [handler, selectionMode, enableDuplicatedLabelValuesInAttributeFilter],
     );
 
     // Rule is not working with debounce
@@ -563,14 +640,54 @@ function useCallbacks(
         supportsShowingFilteredElements,
     ]);
 
+    const handlerState = useAttributeFilterHandlerState(handler);
+
     const onApply = useCallback(() => {
         handler.commitSelection();
         const nextFilter = handler.getFilter();
         const isInverted = handler.getCommittedSelection()?.isInverted;
 
         setConnectedPlaceholderValue(nextFilter);
-        onApplyInput?.(nextFilter, isInverted, selectionMode);
-    }, [onApplyInput, setConnectedPlaceholderValue, handler, selectionMode]);
+
+        const nextFilterToDisplay = handler.getFilterToDisplay();
+        const displayAsLabel = filterObjRef(nextFilterToDisplay);
+
+        if (enableDuplicatedLabelValuesInAttributeFilter) {
+            const { attribute } = handlerState;
+            if (!isPrimaryLabelUsed(nextFilter, attribute.data?.displayForms)) {
+                const primaryDisplayForm = attribute.data?.displayForms.find((df) => df.isPrimary);
+                if (!primaryDisplayForm) {
+                    throw new Error("No primary display form found.");
+                }
+                const primaryLabelRef = primaryDisplayForm.ref;
+                const filterUsingPrimaryLabel = replaceFilterDisplayForm(nextFilter, primaryLabelRef);
+                onApplyInput?.(
+                    filterUsingPrimaryLabel,
+                    isInverted,
+                    selectionMode,
+                    handler.getElementsByKey(handler.getWorkingSelection().keys),
+                    displayAsLabel,
+                );
+            } else {
+                onApplyInput?.(
+                    nextFilter,
+                    isInverted,
+                    selectionMode,
+                    handler.getElementsByKey(handler.getWorkingSelection().keys),
+                    displayAsLabel,
+                );
+            }
+        } else {
+            onApplyInput?.(nextFilter, isInverted, selectionMode);
+        }
+    }, [
+        onApplyInput,
+        setConnectedPlaceholderValue,
+        handler,
+        selectionMode,
+        enableDuplicatedLabelValuesInAttributeFilter,
+        handlerState,
+    ]);
 
     const onOpen = useCallback(() => {
         if (shouldReloadElements) {
@@ -707,3 +824,36 @@ const useShouldIncludeLimitingFilters = (supportsShowingFilteredElements: boolea
         setShouldIncludeLimitingFilters: handleSetShouldIncludeLimitingFilters,
     };
 };
+function isPrimaryLabelUsed(
+    filter: IAttributeFilter,
+    displayForms: import("@gooddata/sdk-model").IAttributeDisplayFormMetadataObject[],
+): boolean {
+    const primaryDisplayForm = displayForms.find((df) => df.isPrimary);
+    if (!primaryDisplayForm) {
+        throw new Error("No primary display form found.");
+    }
+
+    const filterDisplayForm = filterObjRef(filter);
+    if (!filterDisplayForm) {
+        return false;
+    }
+
+    return areObjRefsEqual(filterDisplayForm, primaryDisplayForm.ref);
+}
+function replaceFilterDisplayForm(nextFilter: IAttributeFilter, primaryLabelRef: ObjRef): IAttributeFilter {
+    if (isPositiveAttributeFilter(nextFilter)) {
+        return {
+            positiveAttributeFilter: {
+                ...nextFilter.positiveAttributeFilter,
+                displayForm: primaryLabelRef,
+            },
+        };
+    }
+
+    return {
+        negativeAttributeFilter: {
+            ...nextFilter.negativeAttributeFilter,
+            displayForm: primaryLabelRef,
+        },
+    };
+}

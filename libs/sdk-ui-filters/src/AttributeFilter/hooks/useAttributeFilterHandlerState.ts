@@ -22,6 +22,7 @@ import { GoodDataSdkError } from "@gooddata/sdk-ui";
  */
 export interface IUseAttributeFilterHandlerStateResult {
     attributeFilter: IAttributeFilter;
+    attributeFilterToDisplay?: IAttributeFilter;
     displayForm?: IAttributeDisplayFormMetadataObject;
     initialization: {
         status: AsyncOperationStatus;
@@ -89,6 +90,7 @@ export const useAttributeFilterHandlerState = (
 
     return {
         attributeFilter: handler.getFilter(),
+        attributeFilterToDisplay: handler.getFilterToDisplay(),
         initialization: {
             status: handler.getInitStatus(),
             error: handler.getInitError(),

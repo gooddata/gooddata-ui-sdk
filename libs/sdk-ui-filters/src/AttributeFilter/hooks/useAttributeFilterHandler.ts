@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import isEqual from "lodash/isEqual.js";
 import { usePrevious } from "@gooddata/sdk-ui";
-import { filterObjRef, IAttributeElement, IAttributeFilter } from "@gooddata/sdk-model";
+import { IAttributeElement, IAttributeFilter, ObjRef, filterObjRef } from "@gooddata/sdk-model";
 
 import {
     IMultiSelectAttributeFilterHandler,
@@ -19,6 +19,7 @@ export interface IUseAttributeFilterHandlerProps {
     workspace: string;
 
     filter: IAttributeFilter;
+    displayAsLabel: ObjRef;
 
     hiddenElements?: string[];
     staticElements?: IAttributeElement[];
@@ -36,6 +37,7 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
         workspace,
 
         filter,
+        displayAsLabel,
 
         hiddenElements,
         staticElements,
@@ -60,6 +62,7 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
                 hiddenElements,
                 staticElements,
                 enableDuplicatedLabelValuesInAttributeFilter,
+                displayAsLabel,
             },
         );
     }, [
@@ -69,6 +72,7 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
         hiddenElements,
         staticElements,
         enableDuplicatedLabelValuesInAttributeFilter,
+        displayAsLabel,
     ]);
 
     if (!handlerRef.current) {
@@ -87,18 +91,29 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
         if (
             backend !== prevProps.backend ||
             workspace !== prevProps.workspace ||
-            !isEqual(filterObjRef(filter), filterObjRef(handler.getFilter())) ||
+            (!isEqual(filterObjRef(filter), filterObjRef(handler.getFilter())) &&
+                !isEqual(filterObjRef(filter), filterObjRef(handler.getFilterToDisplay()))) ||
             !isEqual(staticElements, prevProps.staticElements) ||
             !isEqual(hiddenElements, prevProps.hiddenElements)
         ) {
             createNewHandler();
             invalidate();
         }
-
         return () => {
             unsubscribe();
         };
-    }, [backend, workspace, filter, staticElements, hiddenElements, prevProps, handler, createNewHandler]);
+    }, [
+        backend,
+        workspace,
+        filter,
+        staticElements,
+        hiddenElements,
+        prevProps,
+        handler,
+        createNewHandler,
+        displayAsLabel,
+        prevProps.displayAsLabel,
+    ]);
 
     return handler;
 };

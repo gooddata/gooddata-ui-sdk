@@ -54,6 +54,11 @@ export interface IAttributeDisplayFormMetadataObject extends IMetadataObject {
      * Default display form of attribute.
      */
     isDefault?: boolean;
+
+    /**
+     * Primary display form of attribute.
+     */
+    isPrimary?: boolean;
 }
 
 /**

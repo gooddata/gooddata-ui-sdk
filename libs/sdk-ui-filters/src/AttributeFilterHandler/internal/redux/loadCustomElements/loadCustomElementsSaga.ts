@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { AnyAction } from "@reduxjs/toolkit";
 import { SagaIterator } from "redux-saga";
 import { race, put, call, take, takeEvery, cancelled, SagaReturnType } from "redux-saga/effects";
@@ -6,6 +6,7 @@ import { race, put, call, take, takeEvery, cancelled, SagaReturnType } from "red
 import { ILoadElementsResult } from "../../../types/index.js";
 import { elementsSaga } from "../elements/elementsSaga.js";
 import { actions } from "../store/slice.js";
+import { getAttributeFilterContext } from "../common/sagas.js";
 
 /**
  * @internal
@@ -26,6 +27,9 @@ export function* loadCustomElementsSaga(
 
     try {
         yield put(actions.loadCustomElementsStart({ correlation }));
+        const context: SagaReturnType<typeof getAttributeFilterContext> = yield call(
+            getAttributeFilterContext,
+        );
 
         const {
             result,
@@ -50,7 +54,7 @@ export function* loadCustomElementsSaga(
         });
 
         if (result) {
-            yield put(actions.loadCustomElementsSuccess({ ...result, correlation }));
+            yield put(actions.loadCustomElementsSuccess({ ...result, correlation, context }));
             return result;
         } else if (canceled || anotherRequest) {
             yield put(actions.loadCustomElementsCancel({ correlation }));
