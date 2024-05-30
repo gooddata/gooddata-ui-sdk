@@ -19,6 +19,7 @@ import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
+import { IClusteringConfig } from '@gooddata/sdk-backend-spi';
 import { IColor } from '@gooddata/sdk-model';
 import { IColorMapping } from '@gooddata/sdk-ui-vis-commons';
 import { IColorPalette } from '@gooddata/sdk-model';
@@ -283,6 +284,12 @@ export interface IChartCallbacks extends IVisualizationCallbacks {
     onLegendReady?: OnLegendReady;
 }
 
+// @beta
+export interface IChartClusteringConfig {
+    enabled: boolean;
+    numberOfClusters: number;
+}
+
 // @public
 export interface IChartConfig {
     // @beta
@@ -293,6 +300,8 @@ export interface IChartConfig {
     cellVerticalAlign?: ChartCellVerticalAlign;
     // @internal
     chart?: any;
+    // @beta
+    clustering?: IChartClusteringConfig;
     colorMapping?: IColorMapping[];
     colorPalette?: IColorPalette;
     colors?: string[];
@@ -430,6 +439,7 @@ export interface IContinuousLineConfig {
 
 // @internal
 export interface ICoreChartProps extends ICommonChartProps {
+    clusteringConfig?: IClusteringConfig;
     execution: IPreparedExecution;
     forecastConfig?: IForecastConfig;
 }
@@ -808,6 +818,7 @@ export interface IScatterPlotBucketProps {
     attribute?: AttributeOrPlaceholder;
     filters?: NullableFiltersOrPlaceholders;
     placeholdersResolutionContext?: any;
+    segmentBy?: AttributeOrPlaceholder;
     sortBy?: SortsOrPlaceholders;
     xAxisMeasure?: MeasureOrPlaceholder;
     yAxisMeasure?: MeasureOrPlaceholder;

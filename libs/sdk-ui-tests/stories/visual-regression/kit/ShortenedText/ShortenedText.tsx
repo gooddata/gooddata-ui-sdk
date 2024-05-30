@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React from "react";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
 import { storiesOf } from "../../../_infra/storyRepository.js";
@@ -50,6 +50,13 @@ const ShortenedTextExamples: React.FC = () => {
                     className="example-long-text"
                     tooltipAlignPoints={[{ align: "bc tc", offset: { x: 0, y: 0 } }]}
                 >
+                    very long text and more and more
+                </ShortenedText>
+            </div>
+
+            <p>Shortened text with position of ellipsis at the end</p>
+            <div className="example-wrapper-small">
+                <ShortenedText className="example-long-text" ellipsisPosition="end">
                     very long text and more and more
                 </ShortenedText>
             </div>

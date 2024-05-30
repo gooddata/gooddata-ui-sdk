@@ -83,6 +83,7 @@ import { Repeater } from "./icons/InsightIcons/Repeater.js";
 import { Image } from "./icons/Image.js";
 import { Hash } from "./icons/Hash.js";
 import { Magic } from "./icons/Magic.js";
+import { Webhook } from "./icons/Webhook.js";
 
 /**
  * @internal
@@ -169,6 +170,7 @@ export const Icon: Record<string, React.FC<IIconProps>> = {
     Image,
     Hash,
     Magic,
+    Webhook,
 };
 
 export { IRowsIconProps, IColumnsIconProps };

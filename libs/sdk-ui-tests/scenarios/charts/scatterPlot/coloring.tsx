@@ -1,10 +1,10 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { IScatterPlotProps, ScatterPlot } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src/index.js";
 import { BlackColor, CustomColorPalette } from "../../_infra/colors.js";
 import { AmountMeasurePredicate } from "../../_infra/predicates.js";
 import { coloringCustomizer } from "../_infra/coloringVariants.js";
-import { ScatterPlotWithMeasuresAndAttribute } from "./base.js";
+import { ScatterPlotWithMeasuresAndAttribute, ScatterPlotWithMeasuresAttributeAndSegmentBy } from "./base.js";
 import { replaceMappingPredicates } from "../_infra/insightConverters.js";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { ScenarioGroupNames } from "../_infra/groupNames.js";
@@ -13,7 +13,12 @@ const colorsAndPalette = scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterP
     .withGroupNames(...ScenarioGroupNames.Coloring)
     .withVisualTestConfig({ groupUnder: "coloring" })
     .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
-    .addScenarios("coloring", ScatterPlotWithMeasuresAndAttribute, coloringCustomizer);
+    .addScenarios("coloring", ScatterPlotWithMeasuresAndAttribute, coloringCustomizer)
+    .addScenarios(
+        "coloring with segmentation",
+        ScatterPlotWithMeasuresAttributeAndSegmentBy,
+        coloringCustomizer,
+    );
 
 const colorAssignment = scenariosFor<IScatterPlotProps>("ScatterPlot", ScatterPlot)
     .withGroupNames(...ScenarioGroupNames.Coloring)

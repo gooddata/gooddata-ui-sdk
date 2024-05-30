@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 import React from "react";
 import { BUCKETS } from "../../../constants/bucket.js";
@@ -36,19 +36,21 @@ import cloneDeep from "lodash/cloneDeep.js";
  * | Measure (X-axis) | measures           | measures only       |
  * | Measure (Y-axis) | secondary_measures | measures only       |
  * | ViewBy           | attribute          | attributes or dates |
+ * | SegmentBy        | attribute          | attributes or dates |
  *
  * ### Bucket axioms
  *
  * - |MeasureX| ≤ 1
  * - |MeasureY| ≤ 1
  * - |ViewBy| ≤ 1
+ * - |SegmentBy| ≤ 1
  * - |MeasureX| + |MeasureY| ≥ 1
  *
  * ## Dimensions
  *
  * The PluggableScatterPlot always creates the same two dimensional execution.
  *
- * - ⊤ ⇒ [[...ViewBy], [MeasureGroupIdentifier]]
+ * - ⊤ ⇒ [[...ViewBy, ...SegmentBy], [MeasureGroupIdentifier]]
  *
  * ## Sorts
  *
@@ -85,8 +87,9 @@ export class PluggableScatterPlot extends PluggableBaseChart {
             this.supportedPropertiesList,
         );
         newReferencePoint = removeSort(newReferencePoint);
+        newReferencePoint = sanitizeFilters(newReferencePoint);
 
-        return Promise.resolve(sanitizeFilters(newReferencePoint));
+        return Promise.resolve(newReferencePoint);
     }
 
     protected renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {

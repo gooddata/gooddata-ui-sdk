@@ -202,6 +202,8 @@ class DenormalizedDataView implements IDataView {
     public readonly result: IExecutionResult;
     public readonly forecastConfig?: IForecastConfig;
     public readonly forecastResult?: IForecastResult;
+    public readonly clusteringConfig?: IClusteringConfig;
+    public readonly clusteringResult?: IClusteringResult;
 
     public readonly data: DataValue[][] | DataValue[];
     public readonly headerItems: IResultHeader[][][];
@@ -220,12 +222,16 @@ class DenormalizedDataView implements IDataView {
         denormalizer: Denormalizer,
         forecastConfig?: IForecastConfig,
         forecastResult?: IForecastResult,
+        clusteringConfig?: IClusteringConfig,
+        clusteringResult?: IClusteringResult,
     ) {
         this._denormalizer = denormalizer;
 
         this.result = result;
         this.forecastConfig = forecastConfig;
         this.forecastResult = forecastResult;
+        this.clusteringConfig = clusteringConfig;
+        this.clusteringResult = clusteringResult;
 
         this.definition = this.result.definition;
         this.count = cloneDeep(this.normalizedDataView.count);
@@ -256,6 +262,10 @@ class DenormalizedDataView implements IDataView {
         };
     }
 
+    public clustering(): IClusteringResult {
+        return this.normalizedDataView.clustering();
+    }
+
     public withForecast(config?: IForecastConfig, result?: IForecastResult): IDataView {
         const normalizedDataView = this.normalizedDataView.withForecast(config, result);
         return new DenormalizedDataView(
@@ -264,6 +274,21 @@ class DenormalizedDataView implements IDataView {
             this._denormalizer,
             normalizedDataView.forecastConfig,
             normalizedDataView.forecastResult,
+            normalizedDataView.clusteringConfig,
+            normalizedDataView.clusteringResult,
+        );
+    }
+
+    public withClustering(config?: IClusteringConfig, result?: IClusteringResult): IDataView {
+        const normalizedDataView = this.normalizedDataView.withClustering(config, result);
+        return new DenormalizedDataView(
+            this.result as DenormalizingExecutionResult,
+            normalizedDataView,
+            this._denormalizer,
+            normalizedDataView.forecastConfig,
+            normalizedDataView.forecastResult,
+            normalizedDataView.clusteringConfig,
+            normalizedDataView.clusteringResult,
         );
     }
 }

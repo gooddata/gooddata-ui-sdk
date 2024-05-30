@@ -58,3 +58,4 @@ export * from "./DescriptionPanel/index.js";
 export * from "./SettingItem/index.js";
 export * from "./TextAreaWithSubmit/index.js";
 export * from "./SeparatorLine/index.js";
+export * from "./RichText/index.js";

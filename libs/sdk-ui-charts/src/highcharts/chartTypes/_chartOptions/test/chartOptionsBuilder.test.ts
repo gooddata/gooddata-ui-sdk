@@ -1625,14 +1625,14 @@ describe("chartOptionsBuilder", () => {
     describe("getDrillableSeries", () => {
         describe("in usecase of scatter plot with 2 measures and attribute", () => {
             const dv = fixtures.barChartWith3MetricsAndViewByAttribute;
-            const { measureGroup, viewByAttribute, stackByAttribute } = getMVS(dv);
+            const { measureGroup, viewByAttribute } = getMVS(dv);
             const type = "scatter";
 
             const metricColorStrategy = new MeasureColorStrategy(
                 DefaultColorPalette,
-                undefined,
+                [],
                 viewByAttribute,
-                stackByAttribute,
+                undefined,
                 dv,
             );
 
@@ -1641,7 +1641,7 @@ describe("chartOptionsBuilder", () => {
                 measureGroup,
                 viewByAttribute,
                 undefined,
-                stackByAttribute,
+                undefined,
                 type,
                 metricColorStrategy,
                 "empty value",
@@ -1655,7 +1655,7 @@ describe("chartOptionsBuilder", () => {
                 seriesWithoutDrillability,
                 drillableMeasures,
                 [viewByAttribute],
-                stackByAttribute,
+                undefined,
                 type,
             );
 
@@ -1669,14 +1669,14 @@ describe("chartOptionsBuilder", () => {
 
             it("should fillter out points with one or both coordinates null", () => {
                 const dv = fixtures.scatterPlotWith2MetricsAndAttributeNullsInData;
-                const { measureGroup, viewByAttribute, stackByAttribute } = getMVS(dv);
+                const { measureGroup, viewByAttribute } = getMVS(dv);
                 const type = "scatter";
 
                 const metricColorStrategy = new MeasureColorStrategy(
                     DefaultColorPalette,
                     undefined,
                     viewByAttribute,
-                    stackByAttribute,
+                    undefined,
                     dv,
                 );
 
@@ -1685,7 +1685,7 @@ describe("chartOptionsBuilder", () => {
                     measureGroup,
                     viewByAttribute,
                     undefined,
-                    stackByAttribute,
+                    undefined,
                     type,
                     metricColorStrategy,
                     "empty value",
@@ -1699,7 +1699,7 @@ describe("chartOptionsBuilder", () => {
                     seriesWithoutDrillability,
                     drillableMeasures,
                     [viewByAttribute],
-                    stackByAttribute,
+                    undefined,
                     type,
                 );
                 expect(seriesWithoutDrillability[0].data.length).toEqual(6);

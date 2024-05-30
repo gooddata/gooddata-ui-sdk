@@ -11,6 +11,7 @@ import {
     ExplicitDrill,
     emptyHeaderTitleFromIntl,
     totalColumnTitleFromIntl,
+    clusterTitleFromIntl,
 } from "@gooddata/sdk-ui";
 import { IChartConfig, OnLegendReady } from "../interfaces/index.js";
 import { getChartOptions } from "./chartTypes/_chartOptions/chartOptionsBuilder.js";
@@ -100,6 +101,7 @@ const ChartTransformationImpl = (props: IChartTransformationProps) => {
         emptyHeaderTitleFromIntl(intl),
         theme,
         totalColumnTitleFromIntl(intl),
+        clusterTitleFromIntl(intl),
     );
     const legendOptions: ILegendOptions = buildLegendOptions(config.legend, chartOptions, intl);
     const validationResult = validateData(config.limits, chartOptions);

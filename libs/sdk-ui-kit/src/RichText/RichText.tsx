@@ -1,4 +1,5 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2024 GoodData Corporation
+
 import React from "react";
 import Markdown from "react-markdown";
 import cx from "classnames";
@@ -11,53 +12,65 @@ const RICH_TEXT_PLACEHOLDER = `Add markdown text here...\n
 ![image](http://url/img.png)
 `;
 
-interface IRichTextProps {
-    text: string;
+/**
+ * @internal
+ */
+export interface IRichTextProps {
+    value: string;
     onChange?: (text: string) => void;
-    editMode?: boolean;
+    renderMode?: "view" | "edit";
     editPlaceholder?: string;
+    editRows?: number;
     emptyElement?: JSX.Element;
+    className?: string;
 }
 
+/**
+ * @internal
+ */
 export const RichText: React.FC<IRichTextProps> = ({
-    text,
+    value,
     onChange,
-    editMode = false,
+    renderMode = "view",
     editPlaceholder,
+    editRows,
     emptyElement,
+    className,
 }) => {
     return (
         <div
             className={cx([
                 "gd-rich-text-content",
-                `gd-rich-text-content-${editMode ? "edit" : "view"}`,
+                `gd-rich-text-content-${renderMode}`,
                 "s-rich-text",
-                `s-rich-text-${editMode ? "edit" : "view"}`,
-                { "gd-visible-scrollbar": !editMode },
+                `s-rich-text-${renderMode}`,
+                { "gd-visible-scrollbar": renderMode === "view" },
+                className,
             ])}
         >
-            {editMode ? (
+            {renderMode === "edit" ? (
                 <RichTextEdit
-                    text={text}
-                    onChange={(updatedText) => onChange?.(updatedText)}
+                    value={value}
+                    onChange={(updatedValue) => onChange?.(updatedValue)}
                     placeholder={editPlaceholder}
+                    rows={editRows}
                 />
             ) : (
-                <RichTextView text={text} emptyElement={emptyElement} />
+                <RichTextView value={value} emptyElement={emptyElement} />
             )}
         </div>
     );
 };
 
 interface IRichTextEditProps {
-    text: string;
+    value: string;
     onChange: (text: string) => void;
     placeholder?: string;
     rows?: number;
 }
 
 const RichTextEdit: React.FC<IRichTextEditProps> = ({
-    text,
+    value,
     onChange,
     placeholder = RICH_TEXT_PLACEHOLDER,
     rows = 10,
@@ -71,7 +84,7 @@ const RichTextEdit: React.FC<IRichTextEditProps> = ({
     return (
         <textarea
             className="gd-visible-scrollbar"
-            value={text}
+            value={value}
             autoFocus
             placeholder={placeholder}
             onChange={(event) => onChange(event.target.value)}
@@ -82,21 +95,25 @@ const RichTextEdit: React.FC<IRichTextEditProps> = ({
 };
 
 interface IRichTextViewProps {
-    text: string;
+    value: string;
     emptyElement?: JSX.Element;
 }
 
-const ImageComponent = (props: any) => <img style={{ maxWidth: "100%" }} {...props} />;
+const ImageComponent = (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
+    <img style={{ maxWidth: "100%" }} {...props} />
+);
 
-const AnchorComponent = (props: any) => <a target="_blank" rel="noopener noreferrer" {...props} />;
+const AnchorComponent = (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
+    <a target="_blank" rel="noopener noreferrer" {...props} />
+);
 
-const RichTextView: React.FC<IRichTextViewProps> = ({ text, emptyElement }) => {
+const RichTextView: React.FC<IRichTextViewProps> = ({ value, emptyElement }) => {
     // Strip all whitespace and newlines
-    const isTextEmpty = !text?.replace(/\s/g, "");
+    const isValueEmpty = !value?.replace(/\s/g, "");
 
-    if (isTextEmpty && emptyElement) {
+    if (isValueEmpty && emptyElement) {
         return <div className="gd-rich-text-content-empty">{emptyElement}</div>;
     }
 
-    return <Markdown components={{ img: ImageComponent, a: AnchorComponent }}>{text}</Markdown>;
+    return <Markdown components={{ img: ImageComponent, a: AnchorComponent }}>{value}</Markdown>;
 };

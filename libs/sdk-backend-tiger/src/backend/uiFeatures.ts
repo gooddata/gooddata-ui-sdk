@@ -79,6 +79,7 @@ export enum TigerFeaturesNames {
     EnableOracleDataSource = "enableOracleDataSource",
     EnableAnalyticalCatalog = "enableAnalyticalCatalog",
     EnableAlerting = "enableAlerting",
+    EnableScheduling = "enableScheduling",
     EnableSmartFunctions = "enableSmartFunctions",
     EnableLabsSmartFunctions = "enableLabsSmartFunctions",
     EnableKeyDriverAnalysis = "enableKeyDriverAnalysis",
@@ -90,6 +91,8 @@ export enum TigerFeaturesNames {
     EnableDuplicatedLabelValuesInAttributeFilter = "enableDuplicatedLabelValuesInAttributeFilter",
     EnableWorkspacesHierarchyView = "enableWorkspacesHierarchyView",
     EnableMultipleDataSourcesInWorkspace = "enableMultipleDataSourcesInWorkspace",
+    EnableScatterPlotSegmentation = "enableScatterPlotSegmentation",
+    EnableScatterPlotClustering = "enableScatterPlotClustering",
 }
 
 export type ITigerFeatureFlags = {
@@ -133,6 +136,7 @@ export type ITigerFeatureFlags = {
     enableOracleDataSource: typeof FeatureFlagsValues["enableOracleDataSource"][number];
     enableAnalyticalCatalog: typeof FeatureFlagsValues["enableAnalyticalCatalog"][number];
     enableAlerting: typeof FeatureFlagsValues["enableAlerting"][number];
+    enableScheduling: typeof FeatureFlagsValues["enableScheduling"][number];
     enableLabsSmartFunctions: typeof FeatureFlagsValues["enableLabsSmartFunctions"][number];
     enableSmartFunctions: typeof FeatureFlagsValues["enableSmartFunctions"][number];
     enableKeyDriverAnalysis: typeof FeatureFlagsValues["enableKeyDriverAnalysis"][number];
@@ -144,6 +148,8 @@ export type ITigerFeatureFlags = {
     enableDuplicatedLabelValuesInAttributeFilter: typeof FeatureFlagsValues["enableDuplicatedLabelValuesInAttributeFilter"][number];
     enableWorkspacesHierarchyView: typeof FeatureFlagsValues["enableWorkspacesHierarchyView"][number];
     enableMultipleDataSourcesInWorkspace: typeof FeatureFlagsValues["enableMultipleDataSourcesInWorkspace"][number];
+    enableScatterPlotSegmentation: typeof FeatureFlagsValues["enableScatterPlotSegmentation"][number];
+    enableScatterPlotClustering: typeof FeatureFlagsValues["enableScatterPlotClustering"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -187,8 +193,9 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableOracleDataSource: false,
     enableAnalyticalCatalog: false,
     enableAlerting: false,
+    enableScheduling: false,
     enableLabsSmartFunctions: false,
-    enableSmartFunctions: false,
+    enableSmartFunctions: true,
     enableKeyDriverAnalysis: false,
     enableDataProfiling: false,
     enableFlexAi: false,
@@ -198,6 +205,8 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDuplicatedLabelValuesInAttributeFilter: false,
     enableWorkspacesHierarchyView: false,
     enableMultipleDataSourcesInWorkspace: false,
+    enableScatterPlotSegmentation: true,
+    enableScatterPlotClustering: false,
 };
 
 export const FeatureFlagsValues = {
@@ -245,6 +254,7 @@ export const FeatureFlagsValues = {
     enableOracleDataSource: [true, false] as const,
     enableAnalyticalCatalog: [true, false] as const,
     enableAlerting: [true, false] as const,
+    enableScheduling: [true, false] as const,
     enableLabsSmartFunctions: [true, false] as const,
     enableSmartFunctions: [true, false] as const,
     enableKeyDriverAnalysis: [true, false] as const,
@@ -256,4 +266,6 @@ export const FeatureFlagsValues = {
     enableDuplicatedLabelValuesInAttributeFilter: [true, false] as const,
     enableWorkspacesHierarchyView: [true, false] as const,
     enableMultipleDataSourcesInWorkspace: [true, false] as const,
+    enableScatterPlotSegmentation: [true, false] as const,
+    enableScatterPlotClustering: [true, false] as const,
 };

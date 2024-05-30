@@ -9,13 +9,13 @@ import {
 } from "../../../model/index.js";
 import { IDashboardRichTextProps } from "./types.js";
 import { widgetRef } from "@gooddata/sdk-model";
-import { RichText } from "./RichText.js";
 import {
     Button,
     ConfirmDialog,
     Icon,
     OverlayController,
     OverlayControllerProvider,
+    RichText,
     Typography,
 } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -67,13 +67,14 @@ export const EditModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({ w
     return (
         <>
             <RichText
-                text={richText}
+                className="gd-rich-text-widget"
+                value={richText}
                 onChange={setRichText}
-                editMode={isRichTextEditing}
+                renderMode={isRichTextEditing ? "edit" : "view"}
                 emptyElement={EmptyElement}
             />
             {isRichTextEditing ? (
-                <div className="gd-rich-text-footer">
+                <div className="gd-rich-text-widget-footer">
                     <div className="gd-rich-text-footer-options">
                         {typeof clientWidth !== "undefined" && clientWidth > 250 ? (
                             <a

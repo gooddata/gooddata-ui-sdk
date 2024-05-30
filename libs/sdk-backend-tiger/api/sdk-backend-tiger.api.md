@@ -36,6 +36,7 @@ import { JsonApiDatasetOutList } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInAttributesCacheStrategyEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInAttributesTypeEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInDocument } from '@gooddata/api-client-tiger';
+import { JsonApiNotificationChannelOut } from '@gooddata/api-client-tiger';
 import { JsonApiOrganizationOutMetaPermissionsEnum } from '@gooddata/api-client-tiger';
 import { JsonApiWorkspaceDataFilterInDocument } from '@gooddata/api-client-tiger';
 import { JsonApiWorkspaceDataFilterOutDocument } from '@gooddata/api-client-tiger';
@@ -50,7 +51,6 @@ import { PlatformUsage } from '@gooddata/api-client-tiger';
 import { ReadFileManifestsResponse } from '@gooddata/api-client-tiger';
 import { ScanResultPdm } from '@gooddata/api-client-tiger';
 import { ScanSqlResponse } from '@gooddata/api-client-tiger';
-import { StagingUploadLocation } from '@gooddata/api-client-tiger';
 import { TestDefinitionRequestTypeEnum } from '@gooddata/api-client-tiger';
 import { UploadFileResponse } from '@gooddata/api-client-tiger';
 
@@ -280,6 +280,9 @@ export { ImportCsvRequest }
 
 export { ImportCsvResponse }
 
+// @internal (undocumented)
+export type INotificationChannel = Omit<JsonApiNotificationChannelOut, "type">;
+
 // @alpha (undocumented)
 export const isTigerCompatibleType: (obj: unknown) => obj is TigerObjectType;
 
@@ -352,8 +355,6 @@ export type ScanSqlResult = ScanSqlResponse;
 // @alpha
 export type SetJwtCallback = (jwt: string, secondsBeforeTokenExpirationToCallReminder?: number) => void;
 
-export { StagingUploadLocation }
-
 // @public
 export type TigerAfmType = "label" | "metric" | "dataset" | "fact" | "attribute" | "prompt";
 
@@ -414,7 +415,7 @@ export type TigerSpecificFunctions = {
     scanDataSource?: (dataSourceId: string, scanRequest: ScanRequest) => Promise<ScanResult>;
     createDemoWorkspace?: (sampleWorkspace: WorkspaceDefinition) => Promise<string>;
     createDemoDataSource?: (sampleDataSource: DataSourceDefinition) => Promise<string>;
-    createWorkspace?: (id: string, name: string) => Promise<string>;
+    createWorkspace?: (id: string, name: string, parentId?: string) => Promise<string>;
     updateWorkspaceTitle?: (id: string, name: string) => Promise<void>;
     deleteWorkspace?: (id: string) => Promise<void>;
     canDeleteWorkspace?: (id: string) => Promise<boolean>;
@@ -456,7 +457,6 @@ export type TigerSpecificFunctions = {
     getEntityUser?: (id: string) => Promise<IUser>;
     scanSql?: (dataSourceId: string, sql: string) => Promise<ScanSqlResult>;
     checkEntityOverrides?: (workspaceId: string, entities: Array<HierarchyObjectIdentification>) => Promise<Array<IdentifierDuplications>>;
-    getStagingUploadLocation?: (dataSourceId: string) => Promise<StagingUploadLocation>;
     stagingUpload?: (dataSourceId: string, file: File) => Promise<UploadFileResponse>;
     analyzeCsv?: (dataSourceId: string, analyzeCsvRequest: AnalyzeCsvRequest) => Promise<Array<AnalyzeCsvResponse>>;
     importCsv?: (dataSourceId: string, importCsvRequest: ImportCsvRequest) => Promise<Array<ImportCsvResponse>>;

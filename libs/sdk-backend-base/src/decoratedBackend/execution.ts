@@ -258,4 +258,12 @@ export abstract class DecoratedDataView implements IDataView {
     public forecast(): IForecastView {
         return this.decorated.forecast();
     }
+
+    clustering(): IClusteringResult {
+        return this.decorated.clustering();
+    }
+
+    withClustering(config?: IClusteringConfig, result?: IClusteringResult): IDataView {
+        return this.decorated.withClustering(config, result);
+    }
 }

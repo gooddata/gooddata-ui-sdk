@@ -94,3 +94,12 @@ export function emptyHeaderTitleFromIntl(intl: IntlShape): string {
 export function totalColumnTitleFromIntl(intl: IntlShape): string {
     return intl.formatMessage({ id: "visualization.waterfall.total" });
 }
+
+/**
+ * Returns a string meant to represent a cluster group.
+ * @param intl - the source of i18n strings
+ * @internal
+ */
+export function clusterTitleFromIntl(intl: IntlShape): string {
+    return intl.formatMessage({ id: "visualization.cluster" });
+}

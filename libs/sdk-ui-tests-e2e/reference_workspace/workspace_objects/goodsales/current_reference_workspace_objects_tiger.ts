@@ -1,7 +1,7 @@
 // (C) 2024 GoodData Corporation
 
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2024-04-11T09:26:34.881Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2024-05-27T11:40:05.266Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -18,14 +18,14 @@ import {
  */
 export const Account = {
     /**
-     * Display Form Title: Account
-     * Display Form ID: attr.f_account.account
-     */
-    Default: newAttribute("attr.f_account.account"),
-    /**
      * Display Form Title: Name
      * Display Form ID: label.f_account.account.name
-     */ Name: newAttribute("label.f_account.account.name"),
+     */
+    Name: newAttribute("label.f_account.account.name"),
+    /**
+     * Display Form Title: Account
+     * Display Form ID: attr.f_account.account
+     */ Default: newAttribute("attr.f_account.account"),
 };
 /**
  * Attribute Title: Activity
@@ -33,14 +33,14 @@ export const Account = {
  */
 export const Activity = {
     /**
-     * Display Form Title: Subject
-     * Display Form ID: label.f_activity.subject
-     */
-    Subject: newAttribute("label.f_activity.subject"),
-    /**
      * Display Form Title: Activity
      * Display Form ID: attr.f_activity.activity
-     */ Default: newAttribute("attr.f_activity.activity"),
+     */
+    Default: newAttribute("attr.f_activity.activity"),
+    /**
+     * Display Form Title: Subject
+     * Display Form ID: label.f_activity.subject
+     */ Subject: newAttribute("label.f_activity.subject"),
 };
 /**
  * Attribute Title: Opportunity
@@ -48,14 +48,14 @@ export const Activity = {
  */
 export const Opportunity = {
     /**
-     * Display Form Title: SFDC URL
-     * Display Form ID: label.f_opportunity.opportunity.sfdcurl
-     */
-    SFDCURL: newAttribute("label.f_opportunity.opportunity.sfdcurl"),
-    /**
      * Display Form Title: Opportunity
      * Display Form ID: attr.f_opportunity.opportunity
-     */ Default: newAttribute("attr.f_opportunity.opportunity"),
+     */
+    Default: newAttribute("attr.f_opportunity.opportunity"),
+    /**
+     * Display Form Title: SFDC URL
+     * Display Form ID: label.f_opportunity.opportunity.sfdcurl
+     */ SFDCURL: newAttribute("label.f_opportunity.opportunity.sfdcurl"),
     /**
      * Display Form Title: Opportunity Name
      * Display Form ID: label.f_opportunity.opportunity.name
@@ -87,18 +87,18 @@ export const SalesRep = {
  */
 export const Product = {
     /**
+     * Display Form Title: Product Name
+     * Display Form ID: label.f_product.product.name
+     */
+    Name: newAttribute("label.f_product.product.name"),
+    /**
      * Display Form Title: Product
      * Display Form ID: attr.f_product.product
-     */
-    Default: newAttribute("attr.f_product.product"),
+     */ Default: newAttribute("attr.f_product.product"),
     /**
      * Display Form Title: Product Link
      * Display Form ID: label.f_product.product.link
      */ Link: newAttribute("label.f_product.product.link"),
-    /**
-     * Display Form Title: Product Name
-     * Display Form ID: label.f_product.product.name
-     */ Name: newAttribute("label.f_product.product.name"),
     /**
      * Display Form Title: Product Image
      * Display Form ID: label.f_product.product.image
@@ -116,17 +116,17 @@ export const StageHistory: IAttribute = newAttribute("attr.f_stagehistory.stageh
 export const StageName = {
     /**
      * Display Form Title: Stage Name
-     * Display Form ID: label.f_stage.stagename.stagename
+     * Display Form ID: attr.f_stage.stagename
      */
-    Default: newAttribute("label.f_stage.stagename.stagename"),
+    Default: newAttribute("attr.f_stage.stagename"),
     /**
      * Display Form Title: Order
      * Display Form ID: label.f_stage.stagename.order
      */ Order: newAttribute("label.f_stage.stagename.order"),
     /**
      * Display Form Title: Stage Name
-     * Display Form ID: attr.f_stage.stagename
-     */ _1: newAttribute("attr.f_stage.stagename"),
+     * Display Form ID: label.f_stage.stagename.stagename
+     */ _1: newAttribute("label.f_stage.stagename.stagename"),
 };
 /**
  * Attribute Title: County name
@@ -179,25 +179,25 @@ export const City = {
      */
     Longitude: newAttribute("f_city.id.longitude"),
     /**
-     * Display Form Title: City ascii name
-     * Display Form ID: f_city.id.cityasciiname
-     */ AsciiName: newAttribute("f_city.id.cityasciiname"),
-    /**
      * Display Form Title: Latitude
      * Display Form ID: f_city.id.latitude
      */ Latitude: newAttribute("f_city.id.latitude"),
+    /**
+     * Display Form Title: City ascii name
+     * Display Form ID: f_city.id.cityasciiname
+     */ AsciiName: newAttribute("f_city.id.cityasciiname"),
     /**
      * Display Form Title: City name
      * Display Form ID: f_city.id.cityname
      */ Name: newAttribute("f_city.id.cityname"),
     /**
-     * Display Form Title: City
-     * Display Form ID: f_city.id
-     */ Default: newAttribute("f_city.id"),
-    /**
      * Display Form Title: City short name
      * Display Form ID: f_city.id.cityshortname
      */ ShortName: newAttribute("f_city.id.cityshortname"),
+    /**
+     * Display Form Title: City
+     * Display Form ID: f_city.id
+     */ Default: newAttribute("f_city.id"),
     /**
      * Display Form Title: Location
      * Display Form ID: f_city.id.location
@@ -244,14 +244,14 @@ export const OwnerId: IAttribute = newAttribute("f_owner.id");
  */
 export const Region = {
     /**
-     * Display Form Title: Region
-     * Display Form ID: f_owner.region_id
-     */
-    Default: newAttribute("f_owner.region_id"),
-    /**
      * Display Form Title: Region hyperlink
      * Display Form ID: f_owner.region_id.regionhyperlink
-     */ Hyperlink: newAttribute("f_owner.region_id.regionhyperlink"),
+     */
+    Hyperlink: newAttribute("f_owner.region_id.regionhyperlink"),
+    /**
+     * Display Form Title: Region
+     * Display Form ID: f_owner.region_id
+     */ Default: newAttribute("f_owner.region_id"),
 };
 /**
  * Attribute Title: Product Id
@@ -314,16 +314,16 @@ export const State = {
  */
 export const ProductThatIsRenamedToTestTheLongAttributeName = {
     /**
-     * Display Form Title: Product that is renamed to test the long attribute name hyperlink
-     * Display Form ID: productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink
-     */
-    Hyperlink: newAttribute(
-        "productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink",
-    ),
-    /**
      * Display Form Title: Product that is renamed to test the long attribute name
      * Display Form ID: productthatisrenamedtotestthelongattributename
-     */ Default: newAttribute("productthatisrenamedtotestthelongattributename"),
+     */
+    Default: newAttribute("productthatisrenamedtotestthelongattributename"),
+    /**
+     * Display Form Title: Product that is renamed to test the long attribute name hyperlink
+     * Display Form ID: productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink
+     */ Hyperlink: newAttribute(
+        "productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink",
+    ),
 };
 /**
  * Metric Title: 2 literals in datetime_diff
@@ -2500,6 +2500,10 @@ export const Insights = {
      * Insight ID: 3ef94acb-1e15-49ef-88d5-e9e2931be959
      */ MergeCellsInsight: "3ef94acb-1e15-49ef-88d5-e9e2931be959",
     /**
+     * Insight Title: Scatter plot segment by attribute
+     * Insight ID: 3fb464aa-4a2c-4412-8811-609e5d6e06a5
+     */ ScatterPlotSegmentByAttribute: "3fb464aa-4a2c-4412-8811-609e5d6e06a5",
+    /**
      * Insight Title: big insight
      * Insight ID: 5517045e-661f-4d6b-b0b0-98030ab9f68c
      */ BigInsight: "5517045e-661f-4d6b-b0b0-98030ab9f68c",
@@ -2710,6 +2714,10 @@ export const Dashboards = {
      * Dashboard Title: Header Tests
      * Dashboard ID: 2dcc56ff-5ae6-49f1-ba97-9b76000ca4a1
      */ HeaderTests: "2dcc56ff-5ae6-49f1-ba97-9b76000ca4a1",
+    /**
+     * Dashboard Title: Dashboard scatter plot segmentation
+     * Dashboard ID: 3999bcb1-696c-4587-a075-c403eef07552
+     */ DashboardScatterPlotSegmentation: "3999bcb1-696c-4587-a075-c403eef07552",
     /**
      * Dashboard Title: Insight on dashboard
      * Dashboard ID: 46dbb7b3-468c-436f-a2ff-85fbf4e8d5ad

@@ -69,6 +69,8 @@ import {
     IMeasureKeyDrivers,
     IAnomalyDetectionResult,
     IClusteringResult,
+    IOrganizationNotificationChannelService,
+    IClusteringConfig,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -111,6 +113,8 @@ import {
     defWithBuckets,
     IRelativeDateFilter,
     IAbsoluteDateFilter,
+    IWebhookMetadataObjectDefinition,
+    IWebhookMetadataObject,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
 import isEmpty from "lodash/isEmpty.js";
@@ -273,6 +277,12 @@ export function dummyDataView(
         },
         withForecast(_config: IForecastConfig, _result?: IForecastResult): IDataView {
             throw new NotSupported("not supported");
+        },
+        clustering(): IClusteringResult {
+            throw new NotSupported("clustering is not supported in this dummy backend");
+        },
+        withClustering(_config?: IClusteringConfig, _result?: IClusteringResult): IDataView {
+            throw new NotSupported("clustering is not supported in this dummy backend");
         },
     };
 }
@@ -827,6 +837,27 @@ class DummyOrganization implements IOrganization {
             removeUsersFromUserGroups: () => Promise.resolve(),
             updateUser: () => Promise.resolve(),
             updateUserGroup: () => Promise.resolve(),
+        };
+    }
+
+    notificationChannels(): IOrganizationNotificationChannelService {
+        return {
+            createWebhook: (webhook: IWebhookMetadataObjectDefinition) =>
+                Promise.resolve({
+                    ...(webhook as IWebhookMetadataObject),
+                    id: "dummyWebhook",
+                }),
+            deleteWebhook: () => Promise.resolve(),
+            getWebhook: () =>
+                Promise.resolve({
+                    id: "dummyWebhook",
+                    name: "Dummy webhook",
+                    endpoint: "https://dummy.webhook",
+                    token: "dummyToken",
+                    triggers: [],
+                }),
+            getWebhooks: () => Promise.resolve([]),
+            updateWebhook: (webhook) => Promise.resolve(webhook),
         };
     }
 }

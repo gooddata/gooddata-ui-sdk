@@ -1,6 +1,7 @@
 // (C) 2019-2024 GoodData Corporation
 
 import {
+    IClusteringConfig,
     IDataView,
     IExecutionResult,
     IForecastConfig,
@@ -22,6 +23,8 @@ import {
     NegativeValuesSdkError,
     ForecastNotReceivedSdkError,
     isForecastNotReceived,
+    ClusteringNotReceivedSdkError,
+    isClusteringNotReceived,
 } from "../../errors/GoodDataSdkError.js";
 import { createExportErrorFunction, createExportFunction } from "../../vis/export.js";
 import { DataViewFacade } from "../../results/facade.js";
@@ -118,7 +121,11 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
         }
 
         public componentDidMount() {
-            this.initDataLoading(this.props.execution, this.props.forecastConfig);
+            this.initDataLoading(
+                this.props.execution,
+                this.props.forecastConfig,
+                this.props.clusteringConfig,
+            );
         }
 
         public render() {
@@ -145,9 +152,14 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
             //  we need strict equality here in case only the buckets changed (not measures or attributes)
             if (
                 !this.props.execution.equals(nextProps.execution) ||
-                !isEqual(this.props.forecastConfig, nextProps.forecastConfig)
+                !isEqual(this.props.forecastConfig, nextProps.forecastConfig) ||
+                !isEqual(this.props.clusteringConfig, nextProps.clusteringConfig)
             ) {
-                this.initDataLoading(nextProps.execution, nextProps.forecastConfig);
+                this.initDataLoading(
+                    nextProps.execution,
+                    nextProps.forecastConfig,
+                    nextProps.clusteringConfig,
+                );
             }
         }
 
@@ -176,7 +188,7 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
         private onError(error: GoodDataSdkError) {
             const { onExportReady } = this.props;
 
-            if (!isForecastNotReceived(error)) {
+            if (!isForecastNotReceived(error) && !isClusteringNotReceived(error)) {
                 const err = error as GoodDataSdkError;
                 this.setState({ error: err.getMessage(), dataView: null });
             }
@@ -197,7 +209,11 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
             this.onError(new NegativeValuesSdkError());
         }
 
-        private async initDataLoading(execution: IPreparedExecution, forecastConfig?: IForecastConfig) {
+        private async initDataLoading(
+            execution: IPreparedExecution,
+            forecastConfig?: IForecastConfig,
+            clusteringConfig?: IClusteringConfig,
+        ) {
             const { onExportReady, pushData, exportTitle } = this.props;
             this.onLoadingChanged({ isLoading: true });
             this.setState({ dataView: null });
@@ -241,9 +257,15 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
                     return;
                 }
 
-                const dataView = forecastConfig
-                    ? originalDataView.withForecast(forecastConfig)
-                    : originalDataView;
+                let dataView = originalDataView;
+
+                if (forecastConfig) {
+                    dataView = originalDataView.withForecast(forecastConfig);
+                }
+
+                if (clusteringConfig) {
+                    dataView = originalDataView.withClustering(clusteringConfig);
+                }
 
                 this.setState({ dataView, error: null, executionResult });
                 this.onLoadingChanged({ isLoading: false });
@@ -289,6 +311,41 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
 
                         const err = e as any;
                         throw new ForecastNotReceivedSdkError(
+                            err.responseBody?.reason || err.message || "Unknown error",
+                            err,
+                        );
+                    }
+                }
+
+                if (dataView.clusteringConfig && clusteringConfig) {
+                    try {
+                        const clusteringResult = await executionResult.readClusteringAll(
+                            dataView.clusteringConfig,
+                        );
+                        const updatedDataView = dataView.withClustering(
+                            dataView.clusteringConfig,
+                            clusteringResult,
+                        );
+                        this.setState((s) => ({ ...s, dataView: updatedDataView }));
+                        if (pushData) {
+                            pushData({
+                                dataView: updatedDataView,
+                            });
+                        }
+                    } catch (e) {
+                        const updatedDataView = dataView.withClustering(dataView.clusteringConfig, {
+                            attribute: [],
+                            clusters: [],
+                            xcoord: [],
+                            ycoord: [],
+                        });
+                        this.setState((s) => ({ ...s, dataView: updatedDataView }));
+                        if (pushData) {
+                            pushData({ dataView: updatedDataView });
+                        }
+
+                        const err = e as any;
+                        throw new ClusteringNotReceivedSdkError(
                             err.responseBody?.reason || err.message || "Unknown error",
                             err,
                         );

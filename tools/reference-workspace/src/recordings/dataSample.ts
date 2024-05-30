@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2024-04-16T08:11:01.184Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2024-05-17T07:58:37.948Z; */
 const df_label_f_activity_subject = require("./metadata/displayForms/label.f_activity.subject/elements.json");
 const df_label_f_product_product_name = require("./metadata/displayForms/label.f_product.product.name/elements.json");
 const df_f_owner_department_id = require("./metadata/displayForms/f_owner.department_id/elements.json");

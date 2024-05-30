@@ -44,6 +44,7 @@ import {
     ValidationContext,
     IDataFiltersService,
     IWorkspaceLogicalModelService,
+    IOrganizationNotificationChannelService,
 } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
@@ -56,6 +57,7 @@ import {
     IThemeMetadataObject,
     IUser,
     IWorkspacePermissions,
+    IWebhookMetadataObject,
     idRef,
 } from "@gooddata/sdk-model";
 import RecordedAttributeHierarchiesService from "./attributeHierarchies.js";
@@ -384,6 +386,26 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 setOpenAiConfig: () => Promise.resolve(),
                 deleteTheme: () => Promise.resolve(),
                 deleteColorPalette: () => Promise.resolve(),
+            };
+        },
+        notificationChannels(): IOrganizationNotificationChannelService {
+            return {
+                getWebhooks: () => Promise.resolve([]),
+                getWebhook: () =>
+                    Promise.resolve({
+                        id: "webhook-id",
+                        name: "webhook-name",
+                        token: "webhook-token",
+                        endpoint: "webhook-endpoint",
+                        triggers: [],
+                    }),
+                createWebhook: (webhook) =>
+                    Promise.resolve({
+                        ...webhook,
+                        id: "webhook-id",
+                    } as IWebhookMetadataObject),
+                updateWebhook: (webhook) => Promise.resolve(webhook),
+                deleteWebhook: () => Promise.resolve(),
             };
         },
         permissions(): IOrganizationPermissionService {

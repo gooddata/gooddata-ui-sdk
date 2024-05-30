@@ -298,6 +298,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableScheduling,
+            "enableScheduling",
+            "BOOLEAN",
+            FeatureFlagsValues.enableScheduling,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableLabsSmartFunctions,
             "enableLabsSmartFunctions",
             "BOOLEAN",
@@ -372,6 +379,20 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableMultipleDataSourcesInWorkspace",
             "BOOLEAN",
             FeatureFlagsValues.enableMultipleDataSourcesInWorkspace,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableScatterPlotSegmentation,
+            "enableScatterPlotSegmentation",
+            "BOOLEAN",
+            FeatureFlagsValues.enableScatterPlotSegmentation,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableScatterPlotClustering,
+            "enableScatterPlotClustering",
+            "BOOLEAN",
+            FeatureFlagsValues.enableScatterPlotClustering,
         ),
     };
 }

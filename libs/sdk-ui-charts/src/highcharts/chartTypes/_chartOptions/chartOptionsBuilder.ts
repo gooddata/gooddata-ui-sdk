@@ -66,6 +66,7 @@ import {
     buildTooltipFactory,
     generateTooltipHeatmapFn,
     generateTooltipSankeyChartFn,
+    generateTooltipScatterPlotFn,
     generateTooltipXYFn,
     getTooltipFactory,
     getTooltipWaterfallChart,
@@ -280,6 +281,27 @@ export function getTreemapAttributes(dv: DataViewFacade): ChartedAttributes {
     };
 }
 
+export function getScatterPlotAttributes(dv: DataViewFacade): ChartedAttributes {
+    const dimensions = dv.meta().dimensions();
+    const attributeHeaderItems = dv.meta().attributeHeaders();
+
+    const viewByAttribute = findAttributeInDimension(
+        dimensions[STACK_BY_DIMENSION_INDEX],
+        attributeHeaderItems[STACK_BY_DIMENSION_INDEX],
+    );
+
+    const stackByAttribute = findAttributeInDimension(
+        dimensions[STACK_BY_DIMENSION_INDEX],
+        attributeHeaderItems[STACK_BY_DIMENSION_INDEX],
+        1,
+    );
+
+    return {
+        viewByAttribute,
+        stackByAttribute,
+    };
+}
+
 type ChartedAttributes = {
     viewByAttribute?: IUnwrappedAttributeHeadersWithItems;
     viewByParentAttribute?: IUnwrappedAttributeHeadersWithItems;
@@ -329,6 +351,10 @@ function chartedAttributeDiscovery(dv: DataViewFacade, chartType: string): Chart
         return getTreemapAttributes(dv);
     }
 
+    if (isScatterPlot(chartType)) {
+        return getScatterPlotAttributes(dv);
+    }
+
     return defaultChartedAttributeDiscovery(dv);
 }
 
@@ -364,6 +390,7 @@ export function getChartOptions(
     emptyHeaderTitle: string,
     theme?: ITheme,
     totalColumnTitle?: string,
+    clusterTitle?: string,
 ): IChartOptions {
     const dv = DataViewFacade.for(dataView);
     const dimensions = dv.meta().dimensions();
@@ -393,6 +420,7 @@ export function getChartOptions(
         dv,
         type,
         theme,
+        clusterTitle,
     );
 
     const gridEnabled = config?.grid?.enabled ?? true;
@@ -521,7 +549,13 @@ export function getChartOptions(
                 categories,
             },
             actions: {
-                tooltip: generateTooltipXYFn(measures, stackByAttribute, config),
+                tooltip: generateTooltipScatterPlotFn(
+                    measures,
+                    stackByAttribute,
+                    viewByAttribute,
+                    config,
+                    clusterTitle,
+                ),
             },
             grid: {
                 enabled: gridEnabled,

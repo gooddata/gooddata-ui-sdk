@@ -814,6 +814,7 @@ function getSeries(series: any) {
             // So to avoid this parsing, escape only < and > to &lt; and &gt;
             // which is understood by highcharts correctly
             name: seriesItem?.name && escapeAngleBrackets(seriesItem?.name),
+            segmentName: seriesItem?.segmentName && escapeAngleBrackets(seriesItem?.segmentName),
 
             // Escape data items for pie chart
             data: seriesItem?.data?.map((dataItem: any) => {

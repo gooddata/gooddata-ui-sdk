@@ -477,12 +477,6 @@ export interface GdStorageFile {
      */
     name: string;
     /**
-     * Version of the file.
-     * @type {number}
-     * @memberof GdStorageFile
-     */
-    version: number;
-    /**
      * Size of the file in bytes.
      * @type {number}
      * @memberof GdStorageFile
@@ -730,25 +724,6 @@ export interface ReadFileManifestsResponse {
     manifest: CsvManifestBody;
 }
 /**
- * Information related to uploading a file to the staging area.
- * @export
- * @interface StagingUploadLocation
- */
-export interface StagingUploadLocation {
-    /**
-     * Location relative to the root of the storage.
-     * @type {string}
-     * @memberof StagingUploadLocation
-     */
-    location: string;
-    /**
-     * Pre-signed upload URL to PUT the file to.
-     * @type {string}
-     * @memberof StagingUploadLocation
-     */
-    uploadUrl: string;
-}
-/**
  * Information related to the file uploaded to the staging area.
  * @export
  * @interface UploadFileResponse
@@ -966,46 +941,6 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             localVarRequestOptions.data = needsSerialization
                 ? JSON.stringify(deleteFilesRequest !== undefined ? deleteFilesRequest : {})
                 : deleteFilesRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Provides a location for uploading staging files.
-         * @summary Get a staging upload location
-         * @param {string} dataSourceId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getStagingUploadLocation: async (
-            dataSourceId: string,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'dataSourceId' is not null or undefined
-            assertParamExists("getStagingUploadLocation", "dataSourceId", dataSourceId);
-            const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/staging/upload`.replace(
-                `{${"dataSourceId"}}`,
-                encodeURIComponent(String(dataSourceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1268,23 +1203,6 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * Provides a location for uploading staging files.
-         * @summary Get a staging upload location
-         * @param {string} dataSourceId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getStagingUploadLocation(
-            dataSourceId: string,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StagingUploadLocation>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getStagingUploadLocation(
-                dataSourceId,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
          * Import the CSV files at the given locations in the staging area to the final location.
          * @summary Import CSV
          * @param {string} dataSourceId
@@ -1414,21 +1332,6 @@ export const ActionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
-         * Provides a location for uploading staging files.
-         * @summary Get a staging upload location
-         * @param {ActionsApiGetStagingUploadLocationRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getStagingUploadLocation(
-            requestParameters: ActionsApiGetStagingUploadLocationRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<StagingUploadLocation> {
-            return localVarFp
-                .getStagingUploadLocation(requestParameters.dataSourceId, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
          * Import the CSV files at the given locations in the staging area to the final location.
          * @summary Import CSV
          * @param {ActionsApiImportCsvRequest} requestParameters Request parameters.
@@ -1537,19 +1440,6 @@ export interface ActionsApiInterface {
     ): AxiosPromise<void>;
 
     /**
-     * Provides a location for uploading staging files.
-     * @summary Get a staging upload location
-     * @param {ActionsApiGetStagingUploadLocationRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ActionsApiInterface
-     */
-    getStagingUploadLocation(
-        requestParameters: ActionsApiGetStagingUploadLocationRequest,
-        options?: AxiosRequestConfig,
-    ): AxiosPromise<StagingUploadLocation>;
-
-    /**
      * Import the CSV files at the given locations in the staging area to the final location.
      * @summary Import CSV
      * @param {ActionsApiImportCsvRequest} requestParameters Request parameters.
@@ -1642,20 +1532,6 @@ export interface ActionsApiDeleteFilesRequest {
      * @memberof ActionsApiDeleteFiles
      */
     readonly deleteFilesRequest: DeleteFilesRequest;
-}
-
-/**
- * Request parameters for getStagingUploadLocation operation in ActionsApi.
- * @export
- * @interface ActionsApiGetStagingUploadLocationRequest
- */
-export interface ActionsApiGetStagingUploadLocationRequest {
-    /**
-     *
-     * @type {string}
-     * @memberof ActionsApiGetStagingUploadLocation
-     */
-    readonly dataSourceId: string;
 }
 
 /**
@@ -1780,23 +1656,6 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     public deleteFiles(requestParameters: ActionsApiDeleteFilesRequest, options?: AxiosRequestConfig) {
         return ActionsApiFp(this.configuration)
             .deleteFiles(requestParameters.dataSourceId, requestParameters.deleteFilesRequest, options)
-            .then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * Provides a location for uploading staging files.
-     * @summary Get a staging upload location
-     * @param {ActionsApiGetStagingUploadLocationRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ActionsApi
-     */
-    public getStagingUploadLocation(
-        requestParameters: ActionsApiGetStagingUploadLocationRequest,
-        options?: AxiosRequestConfig,
-    ) {
-        return ActionsApiFp(this.configuration)
-            .getStagingUploadLocation(requestParameters.dataSourceId, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -2909,46 +2768,6 @@ export const DataSourceStagingLocationApiAxiosParamCreator = function (configura
     return {
         /**
          * Provides a location for uploading staging files.
-         * @summary Get a staging upload location
-         * @param {string} dataSourceId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getStagingUploadLocation: async (
-            dataSourceId: string,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'dataSourceId' is not null or undefined
-            assertParamExists("getStagingUploadLocation", "dataSourceId", dataSourceId);
-            const localVarPath = `/api/v1/actions/dataSources/{dataSourceId}/staging/upload`.replace(
-                `{${"dataSourceId"}}`,
-                encodeURIComponent(String(dataSourceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * Provides a location for uploading staging files.
          * @summary Upload a file to the staging area
          * @param {string} dataSourceId
          * @param {any} file The file to upload.
@@ -3011,23 +2830,6 @@ export const DataSourceStagingLocationApiFp = function (configuration?: Configur
     return {
         /**
          * Provides a location for uploading staging files.
-         * @summary Get a staging upload location
-         * @param {string} dataSourceId
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getStagingUploadLocation(
-            dataSourceId: string,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<StagingUploadLocation>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getStagingUploadLocation(
-                dataSourceId,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * Provides a location for uploading staging files.
          * @summary Upload a file to the staging area
          * @param {string} dataSourceId
          * @param {any} file The file to upload.
@@ -3062,21 +2864,6 @@ export const DataSourceStagingLocationApiFactory = function (
     return {
         /**
          * Provides a location for uploading staging files.
-         * @summary Get a staging upload location
-         * @param {DataSourceStagingLocationApiGetStagingUploadLocationRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getStagingUploadLocation(
-            requestParameters: DataSourceStagingLocationApiGetStagingUploadLocationRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<StagingUploadLocation> {
-            return localVarFp
-                .getStagingUploadLocation(requestParameters.dataSourceId, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * Provides a location for uploading staging files.
          * @summary Upload a file to the staging area
          * @param {DataSourceStagingLocationApiStagingUploadRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -3101,19 +2888,6 @@ export const DataSourceStagingLocationApiFactory = function (
 export interface DataSourceStagingLocationApiInterface {
     /**
      * Provides a location for uploading staging files.
-     * @summary Get a staging upload location
-     * @param {DataSourceStagingLocationApiGetStagingUploadLocationRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DataSourceStagingLocationApiInterface
-     */
-    getStagingUploadLocation(
-        requestParameters: DataSourceStagingLocationApiGetStagingUploadLocationRequest,
-        options?: AxiosRequestConfig,
-    ): AxiosPromise<StagingUploadLocation>;
-
-    /**
-     * Provides a location for uploading staging files.
      * @summary Upload a file to the staging area
      * @param {DataSourceStagingLocationApiStagingUploadRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -3124,20 +2898,6 @@ export interface DataSourceStagingLocationApiInterface {
         requestParameters: DataSourceStagingLocationApiStagingUploadRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<UploadFileResponse>;
-}
-
-/**
- * Request parameters for getStagingUploadLocation operation in DataSourceStagingLocationApi.
- * @export
- * @interface DataSourceStagingLocationApiGetStagingUploadLocationRequest
- */
-export interface DataSourceStagingLocationApiGetStagingUploadLocationRequest {
-    /**
-     *
-     * @type {string}
-     * @memberof DataSourceStagingLocationApiGetStagingUploadLocation
-     */
-    readonly dataSourceId: string;
 }
 
 /**
@@ -3168,23 +2928,6 @@ export interface DataSourceStagingLocationApiStagingUploadRequest {
  * @extends {BaseAPI}
  */
 export class DataSourceStagingLocationApi extends BaseAPI implements DataSourceStagingLocationApiInterface {
-    /**
-     * Provides a location for uploading staging files.
-     * @summary Get a staging upload location
-     * @param {DataSourceStagingLocationApiGetStagingUploadLocationRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DataSourceStagingLocationApi
-     */
-    public getStagingUploadLocation(
-        requestParameters: DataSourceStagingLocationApiGetStagingUploadLocationRequest,
-        options?: AxiosRequestConfig,
-    ) {
-        return DataSourceStagingLocationApiFp(this.configuration)
-            .getStagingUploadLocation(requestParameters.dataSourceId, options)
-            .then((request) => request(this.axios, this.basePath));
-    }
-
     /**
      * Provides a location for uploading staging files.
      * @summary Upload a file to the staging area

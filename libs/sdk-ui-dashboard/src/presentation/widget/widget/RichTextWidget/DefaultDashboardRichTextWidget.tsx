@@ -18,7 +18,7 @@ export const DefaultDashboardRichTextWidget: React.FC<IDefaultDashboardRichTextW
             className={cx(dashboardItemClasses, "type-visualization", "gd-dashboard-view-widget")}
             screen={screen}
         >
-            <DashboardItemBase visualizationClassName="gd-rich-text-wrapper">
+            <DashboardItemBase visualizationClassName="gd-rich-text-widget-wrapper">
                 {() => <DashboardRichText widget={widget} />}
             </DashboardItemBase>
         </DashboardItem>

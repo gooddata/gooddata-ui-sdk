@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 @use "sass:color";
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins";
 @use "variables";
@@ -166,6 +166,10 @@
     text-align: left;
     border-top: 1px solid kit-variables.$gd-border-color;
     padding-top: 9px;
+
+    @media only screen and (min-width: kit-variables.$small-breakpoint) and (max-width: 720px) {
+        white-space: normal;
+    }
 }
 
 .gd-viz-tooltip-drilling-point {

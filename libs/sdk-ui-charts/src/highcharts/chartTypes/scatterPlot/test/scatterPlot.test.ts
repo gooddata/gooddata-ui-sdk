@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
 import { getMVS } from "../../_util/test/helper.js";
 import { IColorMapping } from "../../../../interfaces/index.js";
@@ -17,7 +17,7 @@ describe("ScatterPlotColorStrategy", () => {
         const dv = recordedDataFacade(
             ReferenceRecordings.Scenarios.ScatterPlot.XAndYAxisMeasuresAndAttribute,
         );
-        const { viewByAttribute, stackByAttribute } = getMVS(dv);
+        const { viewByAttribute } = getMVS(dv);
         const type = "scatter";
 
         const expectedColor = "rgb(0,0,0)";
@@ -40,15 +40,41 @@ describe("ScatterPlotColorStrategy", () => {
             colorMapping,
             viewByAttribute,
             undefined,
-            stackByAttribute,
+            undefined,
             dv,
             type,
         );
 
         expect(colorStrategy).toBeInstanceOf(ScatterPlotColorStrategy);
         expect(colorStrategy.getColorAssignment().length).toEqual(1);
-        range(6).map((itemIndex) => {
+        range(1).map((itemIndex) => {
             expect(colorStrategy.getColorByIndex(itemIndex)).toEqual(expectedColor);
+        });
+    });
+
+    it("should create palette with different colors from all segmentBy attribute elements", () => {
+        const dv = recordedDataFacade(
+            ReferenceRecordings.Scenarios.ScatterPlot.XAndYAxisMeasuresAttributeAndSegmentation,
+        );
+        const { viewByAttribute, stackByAttribute } = getMVS(dv);
+        const type = "scatter";
+
+        const colorMapping: IColorMapping[] = [];
+
+        const colorStrategy: IColorStrategy = ColorFactory.getColorStrategy(
+            CUSTOM_COLOR_PALETTE,
+            colorMapping,
+            viewByAttribute,
+            undefined,
+            stackByAttribute,
+            dv,
+            type,
+        );
+
+        expect(colorStrategy).toBeInstanceOf(ScatterPlotColorStrategy);
+        expect(colorStrategy.getColorAssignment().length).toEqual(20);
+        range(20).map((itemIndex) => {
+            expect(colorStrategy.getColorByIndex(itemIndex)).toMatchSnapshot();
         });
     });
 });

@@ -8,6 +8,7 @@ import {
     ISecuritySettingsService,
     IOrganizationUserService,
     IOrganizationPermissionService,
+    IOrganizationNotificationChannelService,
 } from "@gooddata/sdk-backend-spi";
 import { IOrganizationDescriptor, idRef, IOrganizationDescriptorUpdate } from "@gooddata/sdk-model";
 
@@ -17,6 +18,7 @@ import { OrganizationStylingService } from "./styling.js";
 import { OrganizationSettingsService } from "./settings.js";
 import { OrganizationUsersService } from "./users.js";
 import { OrganizationPermissionService } from "./permissions.js";
+import { OrganizationNotificationChannelService } from "./notificationChannels.js";
 
 export class TigerOrganization implements IOrganization {
     constructor(
@@ -55,7 +57,7 @@ export class TigerOrganization implements IOrganization {
                 title: organizationName,
                 bootstrapUser: idRef(bootstrapUser.id, bootstrapUser.type),
                 bootstrapUserGroup: idRef(bootstrapUserGroup.id, bootstrapUserGroup.type),
-                earlyAccess: result.data.data.attributes?.earlyAccess,
+                earlyAccess: result.data.data.attributes?.earlyAccess ?? undefined,
             };
         }
 
@@ -106,6 +108,10 @@ export class TigerOrganization implements IOrganization {
 
     public permissions(): IOrganizationPermissionService {
         return new OrganizationPermissionService(this.authCall);
+    }
+
+    public notificationChannels(): IOrganizationNotificationChannelService {
+        return new OrganizationNotificationChannelService(this.authCall);
     }
 }
 

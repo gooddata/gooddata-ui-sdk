@@ -205,6 +205,8 @@ export const SCATTERPLOT_SUPPORTED_PROPERTIES = [
     "zoomInsight",
     "yaxis.format",
     "disableDrillDown",
+    "clustering.enabled",
+    "clustering.numberOfClusters",
 ];
 
 export const PIECHART_SUPPORTED_PROPERTIES = [

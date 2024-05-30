@@ -686,6 +686,7 @@ export const TestDefinitionRequestTypeEnum = {
     ORACLE: "ORACLE",
     PINOT: "PINOT",
     SINGLESTORE: "SINGLESTORE",
+    MOTHERDUCK: "MOTHERDUCK",
 } as const;
 
 export type TestDefinitionRequestTypeEnum =
@@ -747,15 +748,17 @@ export interface TestRequest {
      */
     token?: string;
     /**
-     * Enable caching of intermediate results.
+     * Enable caching of intermediate results. The feature is deprecated. It is not possible to enable it anymore. Any input is interpreted as false.
      * @type {boolean}
      * @memberof TestRequest
+     * @deprecated
      */
     enableCaching?: boolean;
     /**
-     *
+     * Path to schema, where intermediate caches are stored. The feature is deprecated.
      * @type {Array<string>}
      * @memberof TestRequest
+     * @deprecated
      */
     cachePath?: Array<string>;
     /**

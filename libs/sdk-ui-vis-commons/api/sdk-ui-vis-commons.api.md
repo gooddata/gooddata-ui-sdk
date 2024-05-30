@@ -38,9 +38,11 @@ export const ColorLegend: React_2.ComponentType<Omit<IColorLegendProps, "theme" 
 
 // @internal (undocumented)
 export abstract class ColorStrategy implements IColorStrategy {
-    constructor(colorPalette: IColorPalette, colorMapping: IColorMapping[], viewByAttribute: any, stackByAttribute: any, dv: DataViewFacade, theme?: ITheme);
+    constructor(colorPalette: IColorPalette, colorMapping: IColorMapping[], viewByAttribute: any, stackByAttribute: any, dv: DataViewFacade, theme?: ITheme, clusterTitle?: string);
     // (undocumented)
-    protected abstract createColorAssignment(colorPalette: IColorPalette, colorMapping: IColorMapping[], viewByAttribute: any, stackByAttribute: any, dv: DataViewFacade): ICreateColorAssignmentReturnValue;
+    protected clusterTitle?: string;
+    // (undocumented)
+    protected abstract createColorAssignment(colorPalette: IColorPalette, colorMapping: IColorMapping[], viewByAttribute: any, stackByAttribute: any, dv: DataViewFacade, clusterTitle?: string): ICreateColorAssignmentReturnValue;
     // (undocumented)
     protected createPalette(colorPalette: IColorPalette, colorAssignment: IColorAssignment[], _viewByAttribute: any, _stackByAttribute: any): string[];
     // (undocumented)

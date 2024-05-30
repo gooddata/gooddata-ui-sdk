@@ -20,7 +20,8 @@
                 "localIdentifier": "measures"
             },
             { "items": [], "localIdentifier": "secondary_measures" },
-            { "items": [], "localIdentifier": "attribute" }
+            { "items": [], "localIdentifier": "attribute" },
+            { "items": [], "localIdentifier": "segment" }
         ],
         "filters": [],
         "identifier": "ScatterPlot.1e8ea5cd5007cf4882be17f68da9b629",

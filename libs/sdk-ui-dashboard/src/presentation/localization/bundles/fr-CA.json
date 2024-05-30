@@ -437,5 +437,10 @@
     "attributesDropdown.valuesLimiting.commonDateFilterTitle": "{dateFilterTitle} en tant que {dataSetTitle}",
     "attributesDropdown.valuesLimiting.addDateTitle": "Choix de la date",
     "attributesDropdown.valuesLimiting.disableDateFilter": "Filtre non disponible : le filtre <strong>{dateFilterTitle}</strong> utilise déjà cet ensemble de données Date.",
-    "attributesDropdown.valuesLimiting.disableDataSet": "Ensemble de données Date indisponible : le filtre <strong>{dateFilterTitle}</strong> utilise déjà cet ensemble de données Date."
+    "attributesDropdown.valuesLimiting.disableDataSet": "Ensemble de données Date indisponible : le filtre <strong>{dateFilterTitle}</strong> utilise déjà cet ensemble de données Date.",
+    "widget.options.description": "Description",
+    "widget.options.menu": "Options",
+    "share.button.tooltip": "Partager le tableau de bord",
+    "controlButtons.options.tooltip": "Plus d'options",
+    "controlButtons.edit.tooltip": "Éditer le tableau de bord"
 }

@@ -1,66 +1,72 @@
 // (C) 2022-2024 GoodData Corporation
 
 import {
-    JsonApiOrganizationOutMetaPermissionsEnum,
-    GenerateLdmRequest,
-    DeclarativeModel,
-    JsonApiDataSourceInDocument,
-    LayoutApiPutWorkspaceLayoutRequest,
-    jsonApiHeaders,
-    JsonApiOrganizationPatchTypeEnum,
-    JsonApiApiTokenOutList,
-    MetadataUtilities,
-    JsonApiApiTokenInDocument,
-    JsonApiApiTokenInTypeEnum,
-    JsonApiWorkspaceInTypeEnum,
-    ITigerClient,
-    JsonApiDataSourceInTypeEnum,
-    JsonApiDataSourceInAttributesTypeEnum,
-    OrganizationUtilities,
-    JsonApiDataSourceIdentifierOutWithLinks,
-    TestDefinitionRequestTypeEnum,
-    JsonApiDataSourceOutDocument,
-    JsonApiDataSourceIdentifierOutDocument,
-    DeclarativeAnalytics,
-    JsonApiWorkspaceInDocument,
-    DependentEntitiesRequest,
-    DependentEntitiesResponse,
-    ApiEntitlement,
     ActionsApiProcessInvitationRequest,
-    PlatformUsage,
-    DeclarativeWorkspaceDataFilters,
-    DataSourceParameter,
-    JsonApiCspDirectiveInTypeEnum,
-    JsonApiCspDirectiveInDocument,
-    JsonApiCustomApplicationSettingOutTypeEnum,
-    ScanSqlResponse,
-    HierarchyObjectIdentification,
-    IdentifierDuplications,
-    JsonApiCustomApplicationSettingOut,
-    JsonApiDatasetOutList,
-    JsonApiWorkspaceDataFilterInDocument,
-    JsonApiWorkspaceDataFilterOutDocument,
-    JsonApiWorkspaceDataFilterSettingOutDocument,
-    JsonApiWorkspaceDataFilterSettingInDocument,
-    ScanResultPdm,
-    StagingUploadLocation,
     AnalyzeCsvRequest,
     AnalyzeCsvResponse,
+    ApiEntitlement,
+    DataSourceParameter,
+    DeclarativeAnalytics,
+    DeclarativeModel,
+    DeclarativeWorkspaceDataFilters,
+    DependentEntitiesRequest,
+    DependentEntitiesResponse,
+    GdStorageFile,
+    GenerateLdmRequest,
+    HierarchyObjectIdentification,
+    IdentifierDuplications,
     ImportCsvRequest,
     ImportCsvResponse,
+    ITigerClient,
+    JsonApiApiTokenInDocument,
+    JsonApiApiTokenInTypeEnum,
+    JsonApiApiTokenOutList,
+    JsonApiCspDirectiveInDocument,
+    JsonApiCspDirectiveInTypeEnum,
+    JsonApiCustomApplicationSettingOut,
+    JsonApiCustomApplicationSettingOutTypeEnum,
+    JsonApiDatasetOutList,
+    JsonApiDataSourceIdentifierOutDocument,
+    JsonApiDataSourceIdentifierOutWithLinks,
     JsonApiDataSourceInAttributesCacheStrategyEnum,
-    GdStorageFile,
-    UploadFileResponse,
+    JsonApiDataSourceInAttributesTypeEnum,
+    JsonApiDataSourceInDocument,
+    JsonApiDataSourceInTypeEnum,
+    JsonApiDataSourceOutDocument,
+    jsonApiHeaders,
+    JsonApiNotificationChannelOut,
+    JsonApiOrganizationOutMetaPermissionsEnum,
+    JsonApiOrganizationPatchTypeEnum,
+    JsonApiWorkspaceDataFilterInDocument,
+    JsonApiWorkspaceDataFilterOutDocument,
+    JsonApiWorkspaceDataFilterSettingInDocument,
+    JsonApiWorkspaceDataFilterSettingOutDocument,
+    JsonApiWorkspaceInDocument,
+    JsonApiWorkspaceInTypeEnum,
+    LayoutApiPutWorkspaceLayoutRequest,
+    MetadataUtilities,
+    OrganizationUtilities,
+    PlatformUsage,
     ReadFileManifestsResponse,
+    ScanResultPdm,
+    ScanSqlResponse,
+    TestDefinitionRequestTypeEnum,
+    UploadFileResponse,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling.js";
 import uniq from "lodash/uniq.js";
 import toLower from "lodash/toLower.js";
-import { UnexpectedError, ErrorConverter, IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import {
+    ErrorConverter,
+    IAnalyticalBackend,
+    isUnexpectedResponseError,
+    UnexpectedError,
+} from "@gooddata/sdk-backend-spi";
 import isEmpty from "lodash/isEmpty.js";
 import { AuthenticatedAsyncCall } from "@gooddata/sdk-backend-base";
 import { AxiosRequestConfig } from "axios";
 import { IUser } from "@gooddata/sdk-model";
+import { backOff } from "exponential-backoff";
 
 /**
  * @internal
@@ -227,6 +233,11 @@ export interface ICSPDirective {
 /**
  * @internal
  */
+export type INotificationChannel = Omit<JsonApiNotificationChannelOut, "type">;
+
+/**
+ * @internal
+ */
 export interface ICustomApplicationSetting {
     id: string;
     /**
@@ -351,7 +362,7 @@ export type TigerSpecificFunctions = {
     scanDataSource?: (dataSourceId: string, scanRequest: ScanRequest) => Promise<ScanResult>;
     createDemoWorkspace?: (sampleWorkspace: WorkspaceDefinition) => Promise<string>;
     createDemoDataSource?: (sampleDataSource: DataSourceDefinition) => Promise<string>;
-    createWorkspace?: (id: string, name: string) => Promise<string>;
+    createWorkspace?: (id: string, name: string, parentId?: string) => Promise<string>;
     /**
      * @deprecated use IAnalyticalBackend.workspace(id).updateDescriptor(\{ title: name \})
      */
@@ -485,13 +496,6 @@ export type TigerSpecificFunctions = {
         workspaceId: string,
         entities: Array<HierarchyObjectIdentification>,
     ) => Promise<Array<IdentifierDuplications>>;
-
-    /**
-     * Get pre-signed S3 URL to upload a CSV file to the GDSTORAGE data source staging location
-     * @param dataSourceId - id of the data source
-     * @deprecated use stagingUpload instead
-     */
-    getStagingUploadLocation?: (dataSourceId: string) => Promise<StagingUploadLocation>;
 
     /**
      * Upload a CSV file to the GDSTORAGE data source staging location
@@ -851,7 +855,7 @@ export const buildTigerSpecificFunctions = (
             throw convertApiError(error);
         }
     },
-    createWorkspace: async (id: string, name: string) => {
+    createWorkspace: async (id: string, name: string, parentId?: string) => {
         try {
             return await authApiCall(async (sdk) => {
                 const result = await sdk.entities.createEntityWorkspaces({
@@ -862,6 +866,16 @@ export const buildTigerSpecificFunctions = (
                             },
                             id,
                             type: JsonApiWorkspaceInTypeEnum.WORKSPACE,
+                            relationships: parentId
+                                ? {
+                                      parent: {
+                                          data: {
+                                              id: parentId,
+                                              type: JsonApiWorkspaceInTypeEnum.WORKSPACE,
+                                          },
+                                      },
+                                  }
+                                : undefined,
                         },
                     },
                 });
@@ -1513,25 +1527,15 @@ export const buildTigerSpecificFunctions = (
         }
     },
 
-    getStagingUploadLocation: async (dataSourceId: string): Promise<StagingUploadLocation> => {
-        try {
-            return await authApiCall(async (sdk) => {
-                return await sdk.result
-                    .getStagingUploadLocation({
-                        dataSourceId: dataSourceId,
-                    })
-                    .then((res) => {
-                        return res?.data;
-                    });
-            });
-        } catch (error: any) {
-            throw convertApiError(error);
-        }
-    },
-
     stagingUpload: async (dataSourceId: string, file: File): Promise<UploadFileResponse> => {
-        try {
-            return await authApiCall(async (sdk) => {
+        /*
+         * Since the upload API has some rate limiting in place, we need to retry the upload in case of 503 errors.
+         * To make the retries more efficient, we use exponential backoff with jitter so as not to overload the API.
+         * On any other error, we throw the error right away: no retries there.
+         */
+
+        const body = async () =>
+            await authApiCall(async (sdk) => {
                 return await sdk.result
                     .stagingUpload({
                         dataSourceId: dataSourceId,
@@ -1540,6 +1544,26 @@ export const buildTigerSpecificFunctions = (
                     .then((res) => {
                         return res?.data;
                     });
+            });
+
+        try {
+            return backOff(body, {
+                // add some randomness to the delay to avoid all clients retrying at the same time
+                jitter: "full",
+                // retry at most 3 times
+                numOfAttempts: 3,
+                // wait 1s before the first retry
+                startingDelay: 1000,
+                // but never wait more than 4s
+                maxDelay: 4000,
+                // retry only on 503 errors, on this API this means that the API is overloaded
+                retry: (e, _attempt) => {
+                    const converted = convertApiError(e);
+                    if (isUnexpectedResponseError(converted)) {
+                        return converted.httpStatus === 503;
+                    }
+                    return false;
+                },
             });
         } catch (error: any) {
             throw convertApiError(error);

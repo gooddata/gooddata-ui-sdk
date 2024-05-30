@@ -606,5 +606,6 @@
     "userManagement.createUserGroup.createButton": "Crear",
     "userManagement.createUserGroup.cancelButton": "Cancelar",
     "userManagement.createUserGroup.dialogTitle": "Crear grupo",
-    "userManagement.createUserGroup.inputPlaceholder": "Nombre"
+    "userManagement.createUserGroup.inputPlaceholder": "Nombre",
+    "gs.header.account.title": "Cuenta"
 }

@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import { IColorAssignment, DataViewFacade } from "@gooddata/sdk-ui";
 import {
     IColor,
@@ -39,6 +39,7 @@ export abstract class ColorStrategy implements IColorStrategy {
     protected fullColorAssignment: IColorAssignment[];
     protected outputColorAssignment: IColorAssignment[];
     protected theme?: ITheme;
+    protected clusterTitle?: string;
 
     constructor(
         colorPalette: IColorPalette,
@@ -49,6 +50,7 @@ export abstract class ColorStrategy implements IColorStrategy {
         stackByAttribute: any,
         dv: DataViewFacade,
         theme?: ITheme,
+        clusterTitle?: string,
     ) {
         this.theme = theme;
 
@@ -58,6 +60,7 @@ export abstract class ColorStrategy implements IColorStrategy {
             viewByAttribute,
             stackByAttribute,
             dv,
+            clusterTitle,
         );
         this.fullColorAssignment = fullColorAssignment;
         this.outputColorAssignment = outputColorAssignment ? outputColorAssignment : fullColorAssignment;
@@ -106,6 +109,7 @@ export abstract class ColorStrategy implements IColorStrategy {
         // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
         stackByAttribute: any,
         dv: DataViewFacade,
+        clusterTitle?: string,
     ): ICreateColorAssignmentReturnValue;
 }
 

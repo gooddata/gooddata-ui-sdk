@@ -18,6 +18,7 @@ import { IAttributeDescriptor } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
+import { IClusteringConfig } from '@gooddata/sdk-backend-spi';
 import { IColor } from '@gooddata/sdk-model';
 import { IColorDescriptor } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
@@ -164,6 +165,14 @@ export type ChartType = "bar" | "column" | "pie" | "line" | "area" | "donut" | "
 
 // @alpha
 export const ClientWorkspaceProvider: React_2.FC<IClientWorkspaceProviderProps>;
+
+// @public
+export class ClusteringNotReceivedSdkError extends GoodDataSdkError {
+    constructor(message?: string, cause?: Error);
+}
+
+// @internal
+export function clusterTitleFromIntl(intl: IntlShape): string;
 
 // @public
 export function composedFromIdentifier(identifier: string): IHeaderPredicate;
@@ -360,6 +369,7 @@ export const ErrorCodes: {
     TIMEOUT_ERROR: string;
     VISUALIZATION_CLASS_UNKNOWN: string;
     FORECAST_NOT_RECEIVED: string;
+    CLUSTERING_NOT_RECEIVED: string;
 };
 
 // @public
@@ -661,6 +671,8 @@ export interface IDataSliceCollection extends Iterable<IDataSlice> {
 
 // @public
 export interface IDataVisualizationProps extends IVisualizationProps, IVisualizationCallbacks {
+    // @beta
+    clusteringConfig?: IClusteringConfig;
     execution: IPreparedExecution;
     // @beta
     forecastConfig?: IForecastConfig;
@@ -1183,6 +1195,9 @@ export const isCancelError: (obj: unknown) => obj is CancelError;
 
 // @public
 export function isCancelledSdkError(obj: unknown): obj is CancelledSdkError;
+
+// @public
+export function isClusteringNotReceived(obj: unknown): obj is ClusteringNotReceivedSdkError;
 
 // @public
 export function isComposedPlaceholder<TReturn, TValue extends any[], TContext>(obj: unknown): obj is IComposedPlaceholder<TReturn, TValue, TContext>;

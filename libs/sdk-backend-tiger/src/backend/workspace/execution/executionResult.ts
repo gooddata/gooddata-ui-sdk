@@ -311,6 +311,8 @@ class TigerDataView implements IDataView {
     public readonly totals?: DataValue[][][];
     public readonly forecastConfig?: IForecastConfig;
     public readonly forecastResult?: IForecastResult;
+    public readonly clusteringConfig?: IClusteringConfig;
+    public readonly clusteringResult?: IClusteringResult;
     public readonly totalTotals?: DataValue[][][];
     private readonly _fingerprint: string;
     private readonly _execResult: ExecutionResult;
@@ -322,11 +324,15 @@ class TigerDataView implements IDataView {
         dateFormatter: DateFormatter,
         forecastConfig?: IForecastConfig,
         forecastResult?: IForecastResult,
+        clusteringConfig?: IClusteringConfig,
+        clusteringResult?: IClusteringResult,
     ) {
         this.result = result;
         this.definition = result.definition;
         this.forecastConfig = forecastConfig;
         this.forecastResult = forecastResult;
+        this.clusteringConfig = clusteringConfig;
+        this.clusteringResult = clusteringResult;
 
         this._execResult = execResult;
         this._dateFormatter = dateFormatter;
@@ -384,6 +390,17 @@ class TigerDataView implements IDataView {
         );
     }
 
+    public clustering(): IClusteringResult {
+        return (
+            this.clusteringResult ?? {
+                attribute: [],
+                clusters: [],
+                xcoord: [],
+                ycoord: [],
+            }
+        );
+    }
+
     public withForecast(config?: IForecastConfig, result?: IForecastResult): IDataView {
         const normalizedConfig = config
             ? {
@@ -397,6 +414,20 @@ class TigerDataView implements IDataView {
             this._execResult,
             this._dateFormatter,
             normalizedConfig,
+            result,
+            this.clusteringConfig,
+            this.clusteringResult,
+        );
+    }
+
+    public withClustering(config?: IClusteringConfig, result?: IClusteringResult): IDataView {
+        return new TigerDataView(
+            this.result,
+            this._execResult,
+            this._dateFormatter,
+            this.forecastConfig,
+            this.forecastResult,
+            config,
             result,
         );
     }
