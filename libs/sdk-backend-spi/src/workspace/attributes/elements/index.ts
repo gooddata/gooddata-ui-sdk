@@ -150,6 +150,14 @@ export interface IElementsQueryOptions {
     excludePrimaryLabel?: boolean;
 
     /**
+     * Provided filter uses values from primary label.
+     *
+     * @remarks
+     * This is to allow getting elements of requested label corresponding to primary label values in filter.
+     */
+    filterByPrimaryLabel?: boolean;
+
+    /**
      * Cache ID to use when requesting subsequent elements from the backend.
      *
      * @remarks

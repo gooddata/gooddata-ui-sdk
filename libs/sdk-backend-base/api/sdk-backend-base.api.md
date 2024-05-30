@@ -169,6 +169,8 @@ export class AttributeDisplayFormMetadataObjectBuilder<T extends IAttributeDispl
     displayFormType(type: string | undefined): this;
     // (undocumented)
     isDefault(value: boolean | undefined): this;
+    // (undocumented)
+    isPrimary(value: boolean | undefined): this;
 }
 
 // @beta

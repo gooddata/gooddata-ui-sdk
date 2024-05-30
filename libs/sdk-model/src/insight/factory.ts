@@ -1,6 +1,6 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import identity from "lodash/identity.js";
-import { IInsightDefinition, VisualizationProperties } from "./index.js";
+import { IAttributeFilterConfigs, IInsightDefinition, VisualizationProperties } from "./index.js";
 import { IBucket } from "../execution/buckets/index.js";
 import { IFilter } from "../execution/filter/index.js";
 import { ISortItem } from "../execution/base/sort.js";
@@ -64,6 +64,14 @@ export class InsightDefinitionBuilder {
 
     public filters = (filters: IFilter[]): InsightDefinitionBuilder => {
         this.insight.filters = filters;
+
+        return this;
+    };
+
+    public attributeFilterConfigs = (
+        attributeFilterConfigs: IAttributeFilterConfigs,
+    ): InsightDefinitionBuilder => {
+        this.insight.attributeFilterConfigs = attributeFilterConfigs;
 
         return this;
     };

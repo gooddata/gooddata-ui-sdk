@@ -357,6 +357,9 @@ export class AttributeFilterLoader implements IAttributeFilterLoader {
     };
 
     // Elements options
+    setDisplayAsLabel = (displayAsLabel: ObjRef): void => {
+        this.bridge.setDisplayAsLabel(displayAsLabel);
+    };
 
     getOffset = (): number => {
         return this.bridge.getOffset();
@@ -440,6 +443,10 @@ export class AttributeFilterLoader implements IAttributeFilterLoader {
 
     getFilter = (): IAttributeFilter => {
         return this.bridge.getFilter();
+    };
+
+    getFilterToDisplay = (): IAttributeFilter => {
+        return this.bridge.getFilterToDisplay();
     };
 
     onUpdate: CallbackRegistration<void> = (cb) => {

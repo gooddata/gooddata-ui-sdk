@@ -502,6 +502,7 @@ export interface IElementsQueryOptions {
     elements?: ElementsQueryOptionsElementsSpecification;
     excludePrimaryLabel?: boolean;
     filter?: string;
+    filterByPrimaryLabel?: boolean;
     includeTotalCountWithoutFilters?: boolean;
     order?: SortDirection;
 }

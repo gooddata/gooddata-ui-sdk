@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { PayloadAction } from "@reduxjs/toolkit";
 import identity from "lodash/identity.js";
@@ -6,6 +6,7 @@ import identity from "lodash/identity.js";
 import { Correlation, ILoadElementsResult } from "../../../types/index.js";
 import { getElementCacheKey } from "../common/selectors.js";
 import { AttributeFilterReducer } from "../store/state.js";
+import { AttributeFilterHandlerStoreContext } from "../store/types.js";
 
 const loadInitialElementsPageRequest: AttributeFilterReducer<PayloadAction<{ correlation: Correlation }>> =
     identity;
@@ -24,18 +25,22 @@ const loadInitialElementsPageSuccess: AttributeFilterReducer<
     PayloadAction<
         ILoadElementsResult & {
             correlation: Correlation;
+            context: AttributeFilterHandlerStoreContext;
         }
     >
 > = (state, action) => {
+    const { context } = action.payload;
     state.elements.initialPageLoad.status = "success";
     state.elements.totalCountWithCurrentSettings = action.payload.totalCount;
     action.payload.elements.forEach((el) => {
-        const cacheKey = getElementCacheKey(state, el);
+        const cacheKey = getElementCacheKey(state, el, context.enableDuplicatedLabelValuesInAttributeFilter);
         if (!state.elements.cache[cacheKey]) {
             state.elements.cache[cacheKey] = el;
         }
     });
-    state.elements.data = action.payload.elements.map((el) => getElementCacheKey(state, el));
+    state.elements.data = action.payload.elements.map((el) =>
+        getElementCacheKey(state, el, context.enableDuplicatedLabelValuesInAttributeFilter),
+    );
     state.elements.lastLoadedOptions = action.payload.options;
 };
 

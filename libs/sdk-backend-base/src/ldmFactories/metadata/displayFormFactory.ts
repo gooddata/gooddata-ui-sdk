@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import identity from "lodash/identity.js";
 import { ObjRef, IAttributeDisplayFormMetadataObject } from "@gooddata/sdk-model";
 import { MetadataObjectBuilder } from "./factory.js";
@@ -25,6 +25,11 @@ export class AttributeDisplayFormMetadataObjectBuilder<
 
     public isDefault(value: boolean | undefined): this {
         this.item.isDefault = value;
+        return this;
+    }
+
+    public isPrimary(value: boolean | undefined): this {
+        this.item.isPrimary = value;
         return this;
     }
 }

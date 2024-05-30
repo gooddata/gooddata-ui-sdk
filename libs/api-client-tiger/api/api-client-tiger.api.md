@@ -8,6 +8,7 @@ import { AxiosInstance } from 'axios';
 import { AxiosPromise } from 'axios';
 import { AxiosRequestConfig } from 'axios';
 import { AxiosResponse } from 'axios';
+import { IAttributeFilterConfigs } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { IDashboardAttributeFilterConfig } from '@gooddata/sdk-model';
 import { IDashboardDateFilterConfig } from '@gooddata/sdk-model';
@@ -6960,6 +6961,8 @@ interface IVisualizationObject {
 
 // @public
 interface IVisualizationObject_2 {
+    // (undocumented)
+    attributeFilterConfigs?: IAttributeFilterConfigs;
     // (undocumented)
     buckets: IBucket[];
     // (undocumented)

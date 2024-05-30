@@ -46,6 +46,7 @@ const commonGroupableCatalogItemModifications =
 const tigerLabelToDisplayFormMd = (
     label: JsonApiLabelOutWithLinks,
     attributeRef: ObjRef,
+    defaultLabelId?: string,
 ): IAttributeDisplayFormMetadataObject => {
     return newAttributeDisplayFormMetadataObject(idRef(label.id, "displayForm"), (builder) => {
         const labelBuilder = commonMetadataObjectModifications(label)(
@@ -53,6 +54,8 @@ const tigerLabelToDisplayFormMd = (
         ) as AttributeDisplayFormMetadataObjectBuilder;
         labelBuilder.displayFormType(convertLabelType(label.attributes?.valueType));
         labelBuilder.attribute(attributeRef);
+        labelBuilder.isPrimary(!!label.attributes?.primary);
+        labelBuilder.isDefault(label.id === defaultLabelId);
         return labelBuilder;
     });
 };
@@ -66,7 +69,7 @@ export const convertAttribute = (
     const attributeRef = idRef(attribute.id, "attribute");
 
     const geoPinDisplayForms = geoLabels.map((df) => tigerLabelToDisplayFormMd(df, attributeRef));
-    const displayForms = allLabels.map((df) => tigerLabelToDisplayFormMd(df, attributeRef));
+    const displayForms = allLabels.map((df) => tigerLabelToDisplayFormMd(df, attributeRef, defaultLabel.id));
     const defaultDisplayForm = displayForms.find((df) => df.id === defaultLabel.id)!;
 
     return newCatalogAttribute((catalogA) =>
