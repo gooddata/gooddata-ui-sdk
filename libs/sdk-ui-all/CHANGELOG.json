@@ -2,6 +2,33 @@
   "name": "@gooddata/sdk-ui-all",
   "entries": [
     {
+      "version": "10.2.0",
+      "tag": "@gooddata/sdk-ui-all_v10.2.0",
+      "date": "Thu, 30 May 2024 08:50:26 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "API method importCsv now returns update info about file"
+          },
+          {
+            "comment": "Forecast implementation into line chart"
+          },
+          {
+            "comment": "Include hierarchy data in workspace descriptor"
+          },
+          {
+            "comment": "added filter for root workspaces only to workspaces query"
+          },
+          {
+            "comment": "use only description attribute for workspace description"
+          },
+          {
+            "comment": "Enhanced export function to support PDF format and added PDF configuration option."
+          }
+        ]
+      }
+    },
+    {
       "version": "10.1.0",
       "tag": "@gooddata/sdk-ui-all_v10.1.0",
       "date": "Thu, 16 May 2024 08:08:00 GMT",

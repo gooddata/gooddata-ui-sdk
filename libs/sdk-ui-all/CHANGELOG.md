@@ -1,6 +1,18 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 16 May 2024 08:08:00 GMT and should not be manually modified.
+This log was last generated on Thu, 30 May 2024 08:50:26 GMT and should not be manually modified.
+
+## 10.2.0
+Thu, 30 May 2024 08:50:26 GMT
+
+### Updates
+
+- API method importCsv now returns update info about file
+- Forecast implementation into line chart
+- Include hierarchy data in workspace descriptor
+- added filter for root workspaces only to workspaces query
+- use only description attribute for workspace description
+- Enhanced export function to support PDF format and added PDF configuration option.
 
 ## 10.1.0
 Thu, 16 May 2024 08:08:00 GMT
