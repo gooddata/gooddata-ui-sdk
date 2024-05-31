@@ -3162,5 +3162,15 @@
         "value": "Name",
         "comment": "Placeholder shown in input box where user types name of a new user group.",
         "limit": 0
+    },
+    "richText.placeholder": {
+        "value": "Add markdown text here...",
+        "comment": "Do not translate word 'Markdown'",
+        "limit": 0
+    },
+    "richText.tooltip": {
+        "value": "You can use Markdown syntax to style the description:",
+        "comment": "Do not translate word 'Markdown'",
+        "limit": 0
     }
 }

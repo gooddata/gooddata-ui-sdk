@@ -652,3 +652,15 @@ export const selectEnableDuplicatedLabelValuesInAttributeFilter: DashboardSelect
         return state.settings?.enableDuplicatedLabelValuesInAttributeFilter ?? false;
     },
 );
+
+/**
+ * Returns whether rich text in descriptions is enabled.
+ *
+ * @internal
+ */
+export const selectEnableRichTextDescriptions: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableRichTextDescriptions ?? false;
+    },
+);
