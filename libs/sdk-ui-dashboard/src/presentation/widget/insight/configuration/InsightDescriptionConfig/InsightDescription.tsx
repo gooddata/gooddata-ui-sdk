@@ -61,7 +61,6 @@ export function InsightDescription(props: IInsightDescriptionProps) {
                     onBlur={onDescriptionBlur}
                 >
                     <RichTextWithTooltip
-                        className="gd-rich-text-description-content"
                         value={richTextValue}
                         renderMode={isRichTextEditing ? "edit" : "view"}
                         onChange={onRichTextChange}

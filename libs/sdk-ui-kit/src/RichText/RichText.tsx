@@ -4,6 +4,7 @@ import React from "react";
 import Markdown from "react-markdown";
 import cx from "classnames";
 import { useIntl } from "react-intl";
+import { IntlWrapper } from "@gooddata/sdk-ui";
 
 const RICH_TEXT_PLACEHOLDER = `
 # Heading 1
@@ -26,10 +27,7 @@ export interface IRichTextProps {
     className?: string;
 }
 
-/**
- * @internal
- */
-export const RichText: React.FC<IRichTextProps> = ({
+const RichTextCore: React.FC<IRichTextProps> = ({
     value,
     onChange,
     renderMode = "view",
@@ -117,3 +115,12 @@ const RichTextView: React.FC<IRichTextViewProps> = ({ value, emptyElement }) => 
 
     return <Markdown components={{ img: ImageComponent, a: AnchorComponent }}>{value}</Markdown>;
 };
+
+/**
+ * @internal
+ */
+export const RichText: React.FC<IRichTextProps> = (props) => (
+    <IntlWrapper>
+        <RichTextCore {...props} />
+    </IntlWrapper>
+);
