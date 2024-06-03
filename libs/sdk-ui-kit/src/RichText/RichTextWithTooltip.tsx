@@ -65,7 +65,7 @@ const RichTextWithTooltipCore: React.FC<IRichTextWithTooltipProps> = ({
     }
 
     return (
-        <BubbleHoverTrigger>
+        <BubbleHoverTrigger showDelay={0} hideDelay={0}>
             {Component}
             {showTooltip ? (
                 <Bubble alignPoints={tooltipAlignPoints} className="bubble-primary bubble-small">
