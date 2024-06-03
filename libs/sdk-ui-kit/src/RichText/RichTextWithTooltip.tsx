@@ -2,6 +2,7 @@
 
 import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
+import { IntlWrapper } from "@gooddata/sdk-ui";
 import { IRichTextProps, RichText } from "./RichText.js";
 import { IAlignPoint } from "../typings/positioning.js";
 import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
@@ -29,10 +30,7 @@ export interface IRichTextWithTooltipProps extends IRichTextProps {
     tooltipMarkdown?: JSX.Element;
 }
 
-/**
- * @internal
- */
-export const RichTextWithTooltip: React.FC<IRichTextWithTooltipProps> = ({
+const RichTextWithTooltipCore: React.FC<IRichTextWithTooltipProps> = ({
     value,
     onChange,
     renderMode,
@@ -78,3 +76,12 @@ export const RichTextWithTooltip: React.FC<IRichTextWithTooltipProps> = ({
         </BubbleHoverTrigger>
     );
 };
+
+/**
+ * @internal
+ */
+export const RichTextWithTooltip: React.FC<IRichTextWithTooltipProps> = (props) => (
+    <IntlWrapper>
+        <RichTextWithTooltipCore {...props} />
+    </IntlWrapper>
+);
