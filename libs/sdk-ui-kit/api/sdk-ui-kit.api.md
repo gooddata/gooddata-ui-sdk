@@ -1005,6 +1005,8 @@ export interface IBubbleTriggerProps {
     // (undocumented)
     onBubbleOpen?: () => void;
     // (undocumented)
+    openOnInit?: boolean;
+    // (undocumented)
     tagName?: React_2.ElementType;
 }
 
