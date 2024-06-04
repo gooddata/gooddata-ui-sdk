@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { v4 as uuid } from "uuid";
@@ -14,6 +14,7 @@ export interface IBubbleTriggerProps {
     tagName?: React.ElementType;
     onBubbleOpen?: () => void;
     onBubbleClose?: () => void;
+    openOnInit?: boolean;
 }
 
 /**
@@ -36,11 +37,12 @@ export class BubbleTrigger<P extends IBubbleTriggerProps> extends React.PureComp
         children: false,
         eventsOnBubble: false,
         tagName: "span",
+        openOnInit: false,
     };
 
     public readonly state: Readonly<IBubbleTriggerState> = {
         bubbleId: `bubble-${uuid()}`,
-        isBubbleVisible: false,
+        isBubbleVisible: this.props.openOnInit ?? false,
     };
 
     private onClose = (): void => {
