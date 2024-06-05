@@ -102,6 +102,8 @@ export interface IStackItem {
 
 export interface ISeriesItem {
     name?: string;
+    segmentName?: string;
+    clusterName?: string;
     keys?: string[];
     data?: ISeriesDataItem[];
     color?: string;

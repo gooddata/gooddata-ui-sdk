@@ -258,6 +258,7 @@ export class HighChartsRenderer extends React.PureComponent<
             VisualizationTypes.TREEMAP,
             VisualizationTypes.FUNNEL,
             VisualizationTypes.PYRAMID,
+            VisualizationTypes.SCATTER,
         ];
         const multipleSeries = isOneOfTypes(chart.type, firstSeriesTypes);
 

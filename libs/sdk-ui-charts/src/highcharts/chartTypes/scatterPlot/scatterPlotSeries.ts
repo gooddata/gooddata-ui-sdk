@@ -94,6 +94,7 @@ export function getScatterPlotSeries(
             const assignedColor = colorStrategy.getColorByIndex(colorAssignmentIndex);
 
             return {
+                legendIndex: colorAssignmentIndex,
                 loading: isClustering ? isClusteringLoading : false,
                 x: !primaryMeasuresBucketEmpty ? values[0] : 0,
                 y: !secondaryMeasuresBucketEmpty ? (primaryMeasuresBucketEmpty ? values[0] : values[1]) : 0,
