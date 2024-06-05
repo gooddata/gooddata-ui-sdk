@@ -125,7 +125,7 @@ export function SectionHeaderEditable(props: ISectionHeaderEditableProps): JSX.E
                             value={richTextValue}
                             renderMode={isRichTextEditing ? "edit" : "view"}
                             onChange={onRichTextChange}
-                            editRows={3}
+                            editRows={10}
                             editPlaceholder={placeholder}
                             emptyElement={
                                 <div className="gd-editable-label-richtext-empty">{placeholder}</div>
