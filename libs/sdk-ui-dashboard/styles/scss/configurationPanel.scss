@@ -36,6 +36,24 @@
     .gd-button {
         max-width: 100%;
     }
+
+    .gd-rich-text-insight-description {
+        height: 85px;
+        overflow: auto;
+
+        textarea {
+            font-size: 14px;
+            font-family: gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
+            line-height: 21px;
+            color: kit-variables.$gd-color-text;
+            padding: 0;
+            margin-top: -1px;
+        }
+
+        .gd-bubble-trigger {
+            margin: revert;
+        }
+    }
 }
 
 .creation-panel {
