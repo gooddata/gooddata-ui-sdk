@@ -184,6 +184,7 @@ export const BUBBLE_CHART_SUPPORTED_PROPERTIES = [
 
 export const SCATTERPLOT_SUPPORTED_PROPERTIES = [
     "dataLabels.visible",
+    "legend",
     "grid",
     "xaxis.rotation",
     "xaxis.labelsEnabled",
