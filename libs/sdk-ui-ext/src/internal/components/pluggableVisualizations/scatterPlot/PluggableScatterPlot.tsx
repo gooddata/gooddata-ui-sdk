@@ -1,5 +1,5 @@
 // (C) 2019-2024 GoodData Corporation
-import { VisualizationTypes } from "@gooddata/sdk-ui";
+import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 import React from "react";
 import { BUCKETS } from "../../../constants/bucket.js";
 import { SCATTERPLOT_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
@@ -13,6 +13,7 @@ import {
 import { configureOverTimeComparison, configurePercent } from "../../../utils/bucketConfig.js";
 
 import {
+    findBucket,
     removeAllArithmeticMeasuresFromDerived,
     removeAllDerivedMeasures,
     sanitizeFilters,
@@ -25,6 +26,7 @@ import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 import { IInsightDefinition } from "@gooddata/sdk-model";
 import { transformBuckets } from "./bucketHelper.js";
 import cloneDeep from "lodash/cloneDeep.js";
+import set from "lodash/set.js";
 
 /**
  * PluggableScatterPlot
@@ -88,6 +90,7 @@ export class PluggableScatterPlot extends PluggableBaseChart {
         );
         newReferencePoint = removeSort(newReferencePoint);
         newReferencePoint = sanitizeFilters(newReferencePoint);
+        newReferencePoint = disableClusteringForMissingViewBy(newReferencePoint);
 
         return Promise.resolve(newReferencePoint);
     }
@@ -120,4 +123,14 @@ export class PluggableScatterPlot extends PluggableBaseChart {
             );
         }
     }
+}
+
+function disableClusteringForMissingViewBy(referencePoint: IExtendedReferencePoint): IExtendedReferencePoint {
+    let updatedReferencePoint = referencePoint;
+    const viewByBucket = findBucket(referencePoint.buckets, BucketNames.ATTRIBUTE);
+    const hasViewByItems = (viewByBucket?.items?.length ?? 0) > 0;
+    if (!hasViewByItems) {
+        updatedReferencePoint = set(referencePoint, "properties.controls.clustering.enabled", false);
+    }
+    return updatedReferencePoint;
 }

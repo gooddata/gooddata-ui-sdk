@@ -265,6 +265,23 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
 
                 if (clusteringConfig) {
                     dataView = originalDataView.withClustering(clusteringConfig);
+                    try {
+                        const clusteringResult = await executionResult.readClusteringAll(clusteringConfig);
+                        dataView = dataView.withClustering(clusteringConfig, clusteringResult);
+                    } catch (e) {
+                        dataView = dataView.withClustering(clusteringConfig, {
+                            attribute: [],
+                            clusters: [],
+                            xcoord: [],
+                            ycoord: [],
+                        });
+
+                        const err = e as any;
+                        throw new ClusteringNotReceivedSdkError(
+                            err.responseBody?.reason || err.message || "Unknown error",
+                            err,
+                        );
+                    }
                 }
 
                 this.setState({ dataView, error: null, executionResult });
@@ -311,41 +328,6 @@ export function withEntireDataView<T extends IDataVisualizationProps>(
 
                         const err = e as any;
                         throw new ForecastNotReceivedSdkError(
-                            err.responseBody?.reason || err.message || "Unknown error",
-                            err,
-                        );
-                    }
-                }
-
-                if (dataView.clusteringConfig && clusteringConfig) {
-                    try {
-                        const clusteringResult = await executionResult.readClusteringAll(
-                            dataView.clusteringConfig,
-                        );
-                        const updatedDataView = dataView.withClustering(
-                            dataView.clusteringConfig,
-                            clusteringResult,
-                        );
-                        this.setState((s) => ({ ...s, dataView: updatedDataView }));
-                        if (pushData) {
-                            pushData({
-                                dataView: updatedDataView,
-                            });
-                        }
-                    } catch (e) {
-                        const updatedDataView = dataView.withClustering(dataView.clusteringConfig, {
-                            attribute: [],
-                            clusters: [],
-                            xcoord: [],
-                            ycoord: [],
-                        });
-                        this.setState((s) => ({ ...s, dataView: updatedDataView }));
-                        if (pushData) {
-                            pushData({ dataView: updatedDataView });
-                        }
-
-                        const err = e as any;
-                        throw new ClusteringNotReceivedSdkError(
                             err.responseBody?.reason || err.message || "Unknown error",
                             err,
                         );

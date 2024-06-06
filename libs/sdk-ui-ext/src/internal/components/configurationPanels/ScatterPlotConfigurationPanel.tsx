@@ -206,8 +206,12 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
         const segmentByBucket = this.props?.insight
             ? insightBucket(this.props.insight, BucketNames.SEGMENT)
             : undefined;
+        const viewByBucket = this.props?.insight
+            ? insightBucket(this.props.insight, BucketNames.ATTRIBUTE)
+            : undefined;
         const hasSegmentBucketItems = (segmentByBucket?.items?.length ?? 0) > 0;
-        return isDisabled || hasSegmentBucketItems;
+        const hasViewBucketItems = (viewByBucket?.items?.length ?? 0) > 0;
+        return isDisabled || hasSegmentBucketItems || !hasViewBucketItems;
     }
 
     private getBubbleClassNames() {
