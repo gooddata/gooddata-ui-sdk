@@ -50,6 +50,7 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
             <BubbleHoverTrigger showDelay={SHOW_DELAY_DEFAULT} hideDelay={HIDE_DELAY_DEFAULT}>
                 <div>
                     {this.renderColorSection()}
+                    {this.renderLegendSection()}
                     <ConfigSection
                         id="xaxis_section"
                         title={messages.xaxisTitle.id}
