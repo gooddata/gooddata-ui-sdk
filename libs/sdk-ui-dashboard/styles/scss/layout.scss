@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
 @use "@gooddata/sdk-ui-kit/styles/scss/typo";
@@ -279,6 +279,39 @@ $gd-dashboards-section-description-color: var(
 
         &.placeholder {
             color: kit-variables.$gd-color-state-blank;
+        }
+    }
+
+    .gd-layout-row-description-richtext {
+        white-space: nowrap;
+    }
+
+    .gd-editable-label-richtext {
+        padding: 0 5px;
+        margin-top: 3px;
+        border: 1px solid transparent;
+
+        textarea {
+            padding: 0;
+            font-size: 14px;
+            color: kit-variables.$gd-color-state-blank;
+        }
+
+        @include mixins.active-states {
+            border-color: variables.$editable-label-border;
+        }
+
+        &.is-editing {
+            border-color: variables.$editable-label-border;
+        }
+
+        .gd-editable-label-richtext-empty {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 21px;
         }
     }
 }

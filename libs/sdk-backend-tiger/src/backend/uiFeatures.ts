@@ -93,6 +93,7 @@ export enum TigerFeaturesNames {
     EnableMultipleDataSourcesInWorkspace = "enableMultipleDataSourcesInWorkspace",
     EnableScatterPlotSegmentation = "enableScatterPlotSegmentation",
     EnableScatterPlotClustering = "enableScatterPlotClustering",
+    EnableRichTextDescriptions = "enableRichTextDescriptions",
 }
 
 export type ITigerFeatureFlags = {
@@ -150,6 +151,7 @@ export type ITigerFeatureFlags = {
     enableMultipleDataSourcesInWorkspace: typeof FeatureFlagsValues["enableMultipleDataSourcesInWorkspace"][number];
     enableScatterPlotSegmentation: typeof FeatureFlagsValues["enableScatterPlotSegmentation"][number];
     enableScatterPlotClustering: typeof FeatureFlagsValues["enableScatterPlotClustering"][number];
+    enableRichTextDescriptions: typeof FeatureFlagsValues["enableRichTextDescriptions"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -207,6 +209,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableMultipleDataSourcesInWorkspace: false,
     enableScatterPlotSegmentation: true,
     enableScatterPlotClustering: false,
+    enableRichTextDescriptions: false,
 };
 
 export const FeatureFlagsValues = {
@@ -268,4 +271,5 @@ export const FeatureFlagsValues = {
     enableMultipleDataSourcesInWorkspace: [true, false] as const,
     enableScatterPlotSegmentation: [true, false] as const,
     enableScatterPlotClustering: [true, false] as const,
+    enableRichTextDescriptions: [true, false] as const,
 };
