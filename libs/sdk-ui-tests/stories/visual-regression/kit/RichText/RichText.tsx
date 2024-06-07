@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { RichText } from "@gooddata/sdk-ui-kit";
+import { IntlWrapper } from "@gooddata/sdk-ui";
 import { storiesOf } from "../../../_infra/storyRepository.js";
 import { UiKit } from "../../../_infra/storyGroups.js";
 import { wrapWithTheme } from "../../themeWrapper.js";
@@ -29,6 +30,7 @@ const emptyElement = (
         style={{
             height: "100px",
             display: "flex",
+            justifyContent: "center",
             alignItems: "center",
             fontSize: "20px",
         }}
@@ -44,47 +46,50 @@ const RichTextTest: React.FC = () => {
     const [renderMode, setRenderMode] = useState<"view" | "edit">("view");
 
     return (
-        <div className="library-component screenshot-target">
-            <div>
-                <h3 style={headerStyle}>Fully interactive RichText</h3>
-                Change state on click in/out and input new markdown.
-                <div onClick={() => setRenderMode("edit")} onBlur={() => setRenderMode("view")}>
+        <IntlWrapper>
+            <div className="library-component screenshot-target">
+                <div>
+                    <h3 style={headerStyle}>Fully interactive RichText</h3>
+                    Change state on click in/out and input new markdown.
+                    <div onClick={() => setRenderMode("edit")} onBlur={() => setRenderMode("view")}>
+                        <RichText
+                            className="custom-rich-text"
+                            value={richTextValue}
+                            renderMode={renderMode}
+                            onChange={(text) => setRichTextValue(text)}
+                            emptyElement={<div>Empty</div>}
+                        />
+                    </div>
+                </div>
+                <div>
+                    <h3 style={headerStyle}>RichText in edit mode</h3>
+                    <RichText className="custom-rich-text" value={markdown} renderMode="edit" editRows={5} />
+                </div>
+                <div>
+                    <h3 style={headerStyle}>RichText in view mode</h3>
+                    <RichText className="custom-rich-text" value={markdown} renderMode="view" />
+                </div>
+                <div>
+                    <h3 style={headerStyle}>Empty RichText in edit mode with custom placeholder</h3>
                     <RichText
                         className="custom-rich-text"
-                        value={richTextValue}
-                        renderMode={renderMode}
-                        onChange={(text) => setRichTextValue(text)}
+                        value=""
+                        editPlaceholder={placeholder}
+                        renderMode="edit"
+                        editRows={5}
+                    />
+                </div>
+                <div>
+                    <h3 style={headerStyle}>Empty RichText in view mode with custom empty element</h3>
+                    <RichText
+                        className="custom-rich-text"
+                        value=""
+                        emptyElement={emptyElement}
+                        renderMode="view"
                     />
                 </div>
             </div>
-            <div>
-                <h3 style={headerStyle}>RichText in edit mode</h3>
-                <RichText className="custom-rich-text" value={markdown} renderMode="edit" editRows={5} />
-            </div>
-            <div>
-                <h3 style={headerStyle}>RichText in view mode</h3>
-                <RichText className="custom-rich-text" value={markdown} renderMode="view" />
-            </div>
-            <div>
-                <h3 style={headerStyle}>Empty RichText in edit mode with custom placeholder</h3>
-                <RichText
-                    className="custom-rich-text"
-                    value=""
-                    editPlaceholder={placeholder}
-                    renderMode="edit"
-                    editRows={5}
-                />
-            </div>
-            <div>
-                <h3 style={headerStyle}>Empty RichText in view mode with custom empty element</h3>
-                <RichText
-                    className="custom-rich-text"
-                    value=""
-                    emptyElement={emptyElement}
-                    renderMode="view"
-                />
-            </div>
-        </div>
+        </IntlWrapper>
     );
 };
 

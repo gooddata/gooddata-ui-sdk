@@ -2656,6 +2656,7 @@ export interface ISettings {
     enablePushpinGeoChart?: boolean;
     enableRenamingMeasureToMetric?: boolean;
     enableReversedStacking?: boolean;
+    enableRichTextDescriptions?: boolean;
     enableScatterPlotClustering?: boolean;
     enableScatterPlotSegmentation?: boolean;
     enableSeparateTotalLabels?: boolean;

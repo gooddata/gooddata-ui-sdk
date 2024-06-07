@@ -3,8 +3,10 @@
 import React from "react";
 import Markdown from "react-markdown";
 import cx from "classnames";
+import { useIntl } from "react-intl";
+import { IntlWrapper } from "@gooddata/sdk-ui";
 
-const RICH_TEXT_PLACEHOLDER = `Add markdown text here...\n
+const RICH_TEXT_PLACEHOLDER = `
 # Heading 1
 **Bold**
 * List
@@ -25,10 +27,7 @@ export interface IRichTextProps {
     className?: string;
 }
 
-/**
- * @internal
- */
-export const RichText: React.FC<IRichTextProps> = ({
+const RichTextCore: React.FC<IRichTextProps> = ({
     value,
     onChange,
     renderMode = "view",
@@ -69,12 +68,11 @@ interface IRichTextEditProps {
     rows?: number;
 }
 
-const RichTextEdit: React.FC<IRichTextEditProps> = ({
-    value,
-    onChange,
-    placeholder = RICH_TEXT_PLACEHOLDER,
-    rows = 10,
-}) => {
+const RichTextEdit: React.FC<IRichTextEditProps> = ({ value, onChange, placeholder, rows = 10 }) => {
+    const intl = useIntl();
+    const placeholderText =
+        placeholder ?? `${intl.formatMessage({ id: "richText.placeholder" })}\n${RICH_TEXT_PLACEHOLDER}`;
+
     const moveCaretToEnd = (event: React.FocusEvent<HTMLTextAreaElement>) => {
         const { value } = event.target;
         const position = value.length;
@@ -86,7 +84,7 @@ const RichTextEdit: React.FC<IRichTextEditProps> = ({
             className="gd-visible-scrollbar"
             value={value}
             autoFocus
-            placeholder={placeholder}
+            placeholder={placeholderText}
             onChange={(event) => onChange(event.target.value)}
             rows={rows}
             onFocus={moveCaretToEnd}
@@ -112,8 +110,17 @@ const RichTextView: React.FC<IRichTextViewProps> = ({ value, emptyElement }) => 
     const isValueEmpty = !value?.replace(/\s/g, "");
 
     if (isValueEmpty && emptyElement) {
-        return <div className="gd-rich-text-content-empty">{emptyElement}</div>;
+        return emptyElement;
     }
 
     return <Markdown components={{ img: ImageComponent, a: AnchorComponent }}>{value}</Markdown>;
 };
+
+/**
+ * @internal
+ */
+export const RichText: React.FC<IRichTextProps> = (props) => (
+    <IntlWrapper>
+        <RichTextCore {...props} />
+    </IntlWrapper>
+);

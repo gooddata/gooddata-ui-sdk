@@ -164,7 +164,6 @@ function getStackingConfig(
 }
 
 export const HEAT_MAP_CATEGORIES_COUNT = 7;
-export const HIGHCHARTS_PRECISION = 15;
 export const DEFAULT_HEATMAP_COLOR_INDEX = 1;
 
 export function getHeatmapDataClasses(
@@ -184,8 +183,6 @@ export function getHeatmapDataClasses(
 
     const min = Math.min(...values);
     const max = Math.max(...values);
-    const safeMin = parseFloat(Number(min).toPrecision(HIGHCHARTS_PRECISION));
-    const safeMax = parseFloat(Number(max).toPrecision(HIGHCHARTS_PRECISION));
     const dataClasses = [];
 
     if (min === max) {
@@ -195,12 +192,12 @@ export function getHeatmapDataClasses(
             color: colorStrategy.getColorByIndex(DEFAULT_HEATMAP_COLOR_INDEX),
         });
     } else {
-        const step = (safeMax - safeMin) / HEAT_MAP_CATEGORIES_COUNT;
-        let currentSum = safeMin;
+        const step = (max - min) / HEAT_MAP_CATEGORIES_COUNT;
+        let currentSum = min;
         for (let i = 0; i < HEAT_MAP_CATEGORIES_COUNT; i += 1) {
             dataClasses.push({
                 from: currentSum,
-                to: i === HEAT_MAP_CATEGORIES_COUNT - 1 ? safeMax : currentSum + step,
+                to: i === HEAT_MAP_CATEGORIES_COUNT - 1 ? max : currentSum + step,
                 color: colorStrategy.getColorByIndex(i),
             });
             currentSum += step;

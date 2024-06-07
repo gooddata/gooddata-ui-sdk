@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React from "react";
 import { objRefToString, widgetRef } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
@@ -6,7 +6,12 @@ import { stringUtils } from "@gooddata/util";
 import { DescriptionClickTrigger } from "./DescriptionClickTrigger.js";
 
 import { IInsightWidgetDescriptionTriggerProps } from "./types.js";
-import { useDashboardUserInteraction, DescriptionTooltipOpenedData } from "../../../model/index.js";
+import {
+    useDashboardSelector,
+    useDashboardUserInteraction,
+    DescriptionTooltipOpenedData,
+    selectEnableRichTextDescriptions,
+} from "../../../model/index.js";
 
 export const InsightWidgetDescriptionTrigger: React.FC<IInsightWidgetDescriptionTriggerProps> = (props) => {
     const { widget, insight } = props;
@@ -24,6 +29,7 @@ export const InsightWidgetDescriptionTrigger: React.FC<IInsightWidgetDescription
         type: widget.configuration?.description?.source === "widget" ? "custom" : "inherit",
         description: trimmedDescription,
     };
+    const useRichText = useDashboardSelector(selectEnableRichTextDescriptions);
 
     if (visible && trimmedDescription && trimmedDescription !== "") {
         return (
@@ -31,6 +37,7 @@ export const InsightWidgetDescriptionTrigger: React.FC<IInsightWidgetDescription
                 className={`widget-description-${stringUtils.simplifyText(widgetRefAsString)}`}
                 description={trimmedDescription}
                 onOpen={() => userInteraction.descriptionTooltipOpened(eventPayload)}
+                useRichText={useRichText}
             />
         );
     }

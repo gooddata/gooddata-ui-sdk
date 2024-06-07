@@ -6835,6 +6835,9 @@ export const selectEnableRenamingMeasureToMetric: DashboardSelector<boolean>;
 export const selectEnableRenamingProjectToWorkspace: DashboardSelector<boolean>;
 
 // @internal
+export const selectEnableRichTextDescriptions: DashboardSelector<boolean>;
+
+// @internal
 export const selectEnableUnavailableItemsVisibility: DashboardSelector<boolean>;
 
 // @internal

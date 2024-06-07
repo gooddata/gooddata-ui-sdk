@@ -392,6 +392,11 @@ export interface ISettings {
      */
     enableScatterPlotClustering?: boolean;
 
+    /**
+     * Enables rich text in descriptions.
+     */
+    enableRichTextDescriptions?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

@@ -79,6 +79,7 @@ export {
     selectEnableAttributeFilterValuesValidation,
     selectEnableKDAttributeFilterDatesValidation,
     selectEnableDuplicatedLabelValuesInAttributeFilter,
+    selectEnableRichTextDescriptions,
 } from "./config/configSelectors.js";
 export { EntitlementsState } from "./entitlements/entitlementsState.js";
 export { selectEntitlementExportPdf } from "./entitlements/entitlementsSelectors.js";
