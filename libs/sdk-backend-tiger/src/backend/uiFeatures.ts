@@ -208,7 +208,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableWorkspacesHierarchyView: false,
     enableMultipleDataSourcesInWorkspace: false,
     enableScatterPlotSegmentation: true,
-    enableScatterPlotClustering: false,
+    enableScatterPlotClustering: true,
     enableRichTextDescriptions: false,
 };
 

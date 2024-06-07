@@ -91,6 +91,7 @@ export class PluggableScatterPlot extends PluggableBaseChart {
         newReferencePoint = removeSort(newReferencePoint);
         newReferencePoint = sanitizeFilters(newReferencePoint);
         newReferencePoint = disableClusteringForMissingViewBy(newReferencePoint);
+        newReferencePoint = disableClusteringIfFewerThanTwoMeasures(newReferencePoint);
 
         return Promise.resolve(newReferencePoint);
     }
@@ -130,6 +131,21 @@ function disableClusteringForMissingViewBy(referencePoint: IExtendedReferencePoi
     const viewByBucket = findBucket(referencePoint.buckets, BucketNames.ATTRIBUTE);
     const hasViewByItems = (viewByBucket?.items?.length ?? 0) > 0;
     if (!hasViewByItems) {
+        updatedReferencePoint = set(referencePoint, "properties.controls.clustering.enabled", false);
+    }
+    return updatedReferencePoint;
+}
+
+function disableClusteringIfFewerThanTwoMeasures(
+    referencePoint: IExtendedReferencePoint,
+): IExtendedReferencePoint {
+    let updatedReferencePoint = referencePoint;
+    const measuresBucket = findBucket(referencePoint.buckets, BucketNames.MEASURES);
+    const secondaryMeasuresBucket = findBucket(referencePoint.buckets, BucketNames.SECONDARY_MEASURES);
+    const measuresBucketItemsCount = measuresBucket?.items?.length ?? 0;
+    const secondaryMeasuresBucketItemsCount = secondaryMeasuresBucket?.items?.length ?? 0;
+    const hasXAndYMeasures = measuresBucketItemsCount === 1 && secondaryMeasuresBucketItemsCount === 1;
+    if (!hasXAndYMeasures) {
         updatedReferencePoint = set(referencePoint, "properties.controls.clustering.enabled", false);
     }
     return updatedReferencePoint;
