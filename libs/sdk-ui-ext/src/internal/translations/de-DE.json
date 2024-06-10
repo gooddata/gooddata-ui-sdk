@@ -348,5 +348,12 @@
     "properties.comparison.position.right": "rechts",
     "properties.comparison.position.left": "links",
     "properties.forecastSliced.title": "Teilweise Prognose anzeigen.",
-    "properties.forecastSliced.description": "Die verfügbaren Datenpunkte decken den gesamten ausgewählten Zeitraum nicht ab."
+    "properties.forecastSliced.description": "Die verfügbaren Datenpunkte decken den gesamten ausgewählten Zeitraum nicht ab.",
+    "dashboard.bucket.segment_title.scatter": "Segmentieren nach",
+    "properties.clustering.title": "Cluster",
+    "properties.clustering.amount": "Anzahl",
+    "properties.clustering.amount.placeholder": "3",
+    "properties.clustering.amount.partial.title": "Teilcluster anzeigen",
+    "properties.clustering.amount.partial.description": "Die verfügbaren Datenpunkte decken nicht die gesamte ausgewählte Anzahl ab.",
+    "properties.clustering.disabled": "Clustering kann nur aktiviert werden, wenn das Bucket segmentBy leer ist."
 }

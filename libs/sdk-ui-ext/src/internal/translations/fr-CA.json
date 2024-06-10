@@ -348,5 +348,12 @@
     "properties.comparison.position.right": "droite",
     "properties.comparison.position.left": "gauche",
     "properties.forecastSliced.title": "Affichage des prévisions partielles.",
-    "properties.forecastSliced.description": "Les données disponibles ne couvrent pas la totalité de la période sélectionnée."
+    "properties.forecastSliced.description": "Les données disponibles ne couvrent pas la totalité de la période sélectionnée.",
+    "dashboard.bucket.segment_title.scatter": "Segmenter par",
+    "properties.clustering.title": "Groupement d'entreprises",
+    "properties.clustering.amount": "Montant",
+    "properties.clustering.amount.placeholder": "3",
+    "properties.clustering.amount.partial.title": "Afficher les grappes partielles",
+    "properties.clustering.amount.partial.description": "Les points de données disponibles ne couvrent pas la totalité du montant sélectionné.",
+    "properties.clustering.disabled": "Le clustering ne peut être activé que lorsque le seau segmentBy est vide."
 }

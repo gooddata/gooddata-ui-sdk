@@ -348,5 +348,12 @@
     "properties.comparison.position.right": "rechts",
     "properties.comparison.position.left": "links",
     "properties.forecastSliced.title": "Gedeeltelijke voorspelling.",
-    "properties.forecastSliced.description": "De beschikbare gegevenspunten dekken niet de hele geselecteerde periode."
+    "properties.forecastSliced.description": "De beschikbare gegevenspunten dekken niet de hele geselecteerde periode.",
+    "dashboard.bucket.segment_title.scatter": "Verdelen volgens",
+    "properties.clustering.title": "Cluster",
+    "properties.clustering.amount": "Bedrag",
+    "properties.clustering.amount.placeholder": "3",
+    "properties.clustering.amount.partial.title": "Gedeeltelijke clusters weergeven",
+    "properties.clustering.amount.partial.description": "De beschikbare gegevenspunten dekken niet het gehele geselecteerde bedrag.",
+    "properties.clustering.disabled": "Clustering kan alleen worden ingeschakeld als de segment 'Volgens bucket' leeg is."
 }

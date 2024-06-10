@@ -348,5 +348,12 @@
     "properties.comparison.position.right": "右 ",
     "properties.comparison.position.left": "左",
     "properties.forecastSliced.title": "显示部分预测。",
-    "properties.forecastSliced.description": "可用的数据点未覆盖整个选定的时间段。"
+    "properties.forecastSliced.description": "可用的数据点未覆盖整个选定的时间段。",
+    "dashboard.bucket.segment_title.scatter": "细分条件",
+    "properties.clustering.title": "聚类",
+    "properties.clustering.amount": "数量",
+    "properties.clustering.amount.placeholder": "3",
+    "properties.clustering.amount.partial.title": "显示部分聚类",
+    "properties.clustering.amount.partial.description": "可用的数据点未涵盖整个选定的数量。",
+    "properties.clustering.disabled": "仅当 segmentBy bucket 为空时，才可以启用聚类。"
 }
