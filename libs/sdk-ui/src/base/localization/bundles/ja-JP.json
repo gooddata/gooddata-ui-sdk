@@ -607,5 +607,8 @@
     "userManagement.createUserGroup.cancelButton": "キャンセル",
     "userManagement.createUserGroup.dialogTitle": "グループを作成",
     "userManagement.createUserGroup.inputPlaceholder": "名前",
-    "gs.header.account.title": "アカウント"
+    "gs.header.account.title": "アカウント",
+    "visualization.cluster": "クラスタ",
+    "richText.placeholder": "ここにマークダウンテキストを追加する...",
+    "richText.tooltip": "Markdown構文を使って、説明文のスタイルを設定することができます："
 }

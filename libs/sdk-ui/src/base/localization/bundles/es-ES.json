@@ -607,5 +607,8 @@
     "userManagement.createUserGroup.cancelButton": "Cancelar",
     "userManagement.createUserGroup.dialogTitle": "Crear grupo",
     "userManagement.createUserGroup.inputPlaceholder": "Nombre",
-    "gs.header.account.title": "Cuenta"
+    "gs.header.account.title": "Cuenta",
+    "visualization.cluster": "Grupo",
+    "richText.placeholder": "Añada aquí el texto markdown...",
+    "richText.tooltip": "Puede utilizar la sintaxis Markdown para dar estilo a la descripción:"
 }

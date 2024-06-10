@@ -607,5 +607,8 @@
     "userManagement.createUserGroup.cancelButton": "取消",
     "userManagement.createUserGroup.dialogTitle": "创建组",
     "userManagement.createUserGroup.inputPlaceholder": "名称",
-    "gs.header.account.title": "账户"
+    "gs.header.account.title": "账户",
+    "visualization.cluster": "聚类",
+    "richText.placeholder": "在此处添加 markdown 文本……",
+    "richText.tooltip": "您可以使用 Markdown 语法来设置描述样式："
 }
