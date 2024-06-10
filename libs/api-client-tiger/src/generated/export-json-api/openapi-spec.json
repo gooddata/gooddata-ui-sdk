@@ -37,7 +37,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/PdfExportRequest"
+                                "$ref": "#/components/schemas/VisualExportRequest"
                             }
                         }
                     },
@@ -285,7 +285,7 @@
     },
     "components": {
         "schemas": {
-            "PdfExportRequest": {
+            "VisualExportRequest": {
                 "required": ["dashboardId", "fileName"],
                 "type": "object",
                 "properties": {
@@ -301,11 +301,11 @@
                     },
                     "metadata": {
                         "type": "object",
-                        "description": "Metadata definition in open form JSON format.",
-                        "example": "\"metadata\":{}"
+                        "description": "Metadata definition in free-form JSON format.",
+                        "example": "{}"
                     }
                 },
-                "description": "Export request object describing the export properties and metadata for pdf exports."
+                "description": "Export request object describing the export properties and metadata for dashboard PDF exports."
             },
             "ExportResponse": {
                 "required": ["exportResult"],
