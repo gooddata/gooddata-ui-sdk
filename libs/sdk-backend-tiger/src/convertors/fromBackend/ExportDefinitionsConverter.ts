@@ -8,12 +8,15 @@ import {
     JsonApiExportDefinitionOutWithLinksTypeEnum,
     JsonApiExportDefinitionPostOptionalIdDocument,
     JsonApiVisualizationObjectLinkageTypeEnum,
+    TabularExportRequest,
+    VisualExportRequest,
 } from "@gooddata/api-client-tiger";
 import {
     idRef,
     IExportDefinition,
     IExportDefinitionBase,
     IExportDefinitionRequestPayload,
+    IFilter,
 } from "@gooddata/sdk-model";
 import { convertUserIdentifier } from "./UsersConverter.js";
 
@@ -23,7 +26,17 @@ export const exportDefinitionOutToExportDefinition = (
 ): IExportDefinition => {
     const { id, attributes, links, relationships = {} } = exportDefinitionOut;
     const { createdBy, modifiedBy } = relationships;
-    const { title = "", description = "", tags = [], requestPayload, createdAt, modifiedAt } = attributes;
+    const {
+        title = "",
+        description = "",
+        tags = [],
+        requestPayload,
+        createdAt,
+        modifiedAt,
+    } = attributes ?? {};
+    const request = exportRequestToExportDefinitionRequest(
+        requestPayload as VisualExportRequest | TabularExportRequest,
+    );
 
     return {
         type: "exportDefinition",
@@ -33,7 +46,7 @@ export const exportDefinitionOutToExportDefinition = (
         title,
         description,
         tags,
-        requestPayload: requestPayload as IExportDefinitionRequestPayload,
+        requestPayload: request,
         created: createdAt,
         updated: modifiedAt,
         createdBy: convertUserIdentifier(createdBy, included),
@@ -42,6 +55,37 @@ export const exportDefinitionOutToExportDefinition = (
         deprecated: false,
         unlisted: false,
     };
+};
+
+const exportRequestToExportDefinitionRequest = (
+    exportRequest: VisualExportRequest | TabularExportRequest,
+): IExportDefinitionRequestPayload => {
+    if (isTabularRequest(exportRequest) && exportRequest.format === "PDF") {
+        const pdfPageSize = exportRequest.settings?.pdfPageSize;
+        return {
+            fileName: exportRequest.fileName,
+            format: exportRequest.format,
+            visualizationObjectId: exportRequest.visualizationObject ?? "",
+            filters: (exportRequest.visualizationObjectCustomFilters as IFilter[]) ?? [],
+            pdfOptions: {
+                orientation:
+                    pdfPageSize === "portrait" || pdfPageSize === "landscape" ? pdfPageSize : "portrait",
+            },
+        };
+    } else {
+        // to be expanded when more formats are supported
+        return {
+            fileName: "",
+            format: "PDF",
+            visualizationObjectId: "",
+        };
+    }
+};
+
+const isTabularRequest = (
+    request: VisualExportRequest | TabularExportRequest,
+): request is TabularExportRequest => {
+    return "visualizationObject" in request;
 };
 
 export const exportDefinitionOutDocumentToExportDefinitionOutWithLinks = (
@@ -81,7 +125,7 @@ export const exportDefinitionToExportDefinitionPostOptionalIdDocument = (
                 title,
                 description,
                 tags,
-                requestPayload,
+                requestPayload: exportDefinitionRequestToExportRequest(requestPayload),
             },
             relationships: {
                 visualizationObject: {
@@ -91,6 +135,20 @@ export const exportDefinitionToExportDefinitionPostOptionalIdDocument = (
                     },
                 },
             },
+        },
+    };
+};
+
+const exportDefinitionRequestToExportRequest = (
+    exportRequest: IExportDefinitionRequestPayload,
+): TabularExportRequest => {
+    return {
+        fileName: exportRequest.fileName,
+        format: exportRequest.format,
+        visualizationObject: exportRequest.visualizationObjectId,
+        visualizationObjectCustomFilters: exportRequest.filters,
+        settings: {
+            pdfPageSize: exportRequest.pdfOptions?.orientation,
         },
     };
 };

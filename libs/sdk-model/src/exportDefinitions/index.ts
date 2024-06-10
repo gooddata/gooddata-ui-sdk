@@ -21,6 +21,7 @@ export interface IExportDefinitionPdfOptions {
  * @alpha
  */
 export interface IExportDefinitionRequestPayload {
+    fileName: string;
     format: "PDF";
     visualizationObjectId: Identifier;
     filters?: IFilter[];

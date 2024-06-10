@@ -212,7 +212,7 @@ export {
     CustomOverride,
     CustomLabel,
     CustomMetric,
-    PdfExportRequest,
+    VisualExportRequest,
     PdfTableStyle,
     PdfTableStyleProperty,
 } from "./generated/export-json-api/api.js";

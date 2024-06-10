@@ -1467,6 +1467,8 @@ export interface IExportDefinitionPdfOptions {
 // @alpha
 export interface IExportDefinitionRequestPayload {
     // (undocumented)
+    fileName: string;
+    // (undocumented)
     filters?: IFilter[];
     // (undocumented)
     format: "PDF";

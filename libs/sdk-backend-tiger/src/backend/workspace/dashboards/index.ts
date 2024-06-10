@@ -372,14 +372,14 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             );
 
             const { title } = convertDashboard(dashboardResponse.data);
-            const pdfExportRequest = {
+            const visualExportRequest = {
                 fileName: title,
                 dashboardId,
                 metadata: convertToBackendExportMetadata({ filters: withoutAllTime }),
             };
             const pdfExport = await client.export.createPdfExport({
                 workspaceId: this.workspace,
-                pdfExportRequest,
+                visualExportRequest,
             });
 
             return await this.handleExportResultPolling(client, {
