@@ -1467,6 +1467,8 @@ export interface IExportDefinitionPdfOptions {
 // @alpha
 export interface IExportDefinitionRequestPayload {
     // (undocumented)
+    fileName: string;
+    // (undocumented)
     filters?: IFilter[];
     // (undocumented)
     format: "PDF";
@@ -2656,6 +2658,7 @@ export interface ISettings {
     enablePushpinGeoChart?: boolean;
     enableRenamingMeasureToMetric?: boolean;
     enableReversedStacking?: boolean;
+    enableRichTextDescriptions?: boolean;
     enableScatterPlotClustering?: boolean;
     enableScatterPlotSegmentation?: boolean;
     enableSeparateTotalLabels?: boolean;

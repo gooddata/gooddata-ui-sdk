@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { IInsight, IInsightWidget, ScreenSize } from "@gooddata/sdk-model";
 
 export interface IInsightWidgetDescriptionTriggerProps {
@@ -11,4 +11,5 @@ export interface IDescriptionClickTriggerProps {
     className: string;
     description?: string;
     onOpen?: () => void;
+    useRichText?: boolean;
 }

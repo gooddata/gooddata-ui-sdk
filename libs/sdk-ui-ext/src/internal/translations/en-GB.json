@@ -348,5 +348,12 @@
     "properties.comparison.position.right": "right",
     "properties.comparison.position.left": "left",
     "properties.forecastSliced.title": "Displaying partial forecast.",
-    "properties.forecastSliced.description": "The available data point doesn't cover the entire selected period."
+    "properties.forecastSliced.description": "The available data point doesn't cover the entire selected period.",
+    "dashboard.bucket.segment_title.scatter": "Segment by",
+    "properties.clustering.title": "Cluster",
+    "properties.clustering.amount": "Sum",
+    "properties.clustering.amount.placeholder": "3",
+    "properties.clustering.amount.partial.title": "Displaying partial clusters",
+    "properties.clustering.amount.partial.description": "The available data points don't cover the entire SELECTed amount.",
+    "properties.clustering.disabled": "Clustering can be enabled only when the segmentBy bucket is empty."
 }

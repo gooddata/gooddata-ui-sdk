@@ -1005,6 +1005,8 @@ export interface IBubbleTriggerProps {
     // (undocumented)
     onBubbleOpen?: () => void;
     // (undocumented)
+    openOnInit?: boolean;
+    // (undocumented)
     tagName?: React_2.ElementType;
 }
 
@@ -1281,6 +1283,8 @@ export interface IDescriptionPanelProps {
     onBubbleOpen?: () => void;
     // (undocumented)
     title?: string;
+    // (undocumented)
+    useRichText?: boolean;
 }
 
 // @internal (undocumented)
@@ -3404,6 +3408,18 @@ export interface IRichTextProps {
 }
 
 // @internal (undocumented)
+export interface IRichTextWithTooltipProps extends IRichTextProps {
+    // (undocumented)
+    showTooltip?: boolean;
+    // (undocumented)
+    tooltipAlignPoints?: IAlignPoint[];
+    // (undocumented)
+    tooltipDescription?: string;
+    // (undocumented)
+    tooltipMarkdown?: JSX.Element;
+}
+
+// @internal (undocumented)
 export interface IRowsIconProps extends IIconProps {
     // (undocumented)
     colorPalette?: {
@@ -4363,6 +4379,9 @@ export const ResponsiveText: React_2.FC<IResponsiveTextProps>;
 
 // @internal (undocumented)
 export const RichText: React_2.FC<IRichTextProps>;
+
+// @internal (undocumented)
+export const RichTextWithTooltip: React_2.FC<IRichTextWithTooltipProps>;
 
 // @internal (undocumented)
 export type SameAsTargetPosition = "sameAsTarget";

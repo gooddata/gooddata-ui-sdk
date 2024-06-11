@@ -607,5 +607,8 @@
     "userManagement.createUserGroup.cancelButton": "Annuleren",
     "userManagement.createUserGroup.dialogTitle": "Groep maken",
     "userManagement.createUserGroup.inputPlaceholder": "Naam",
-    "gs.header.account.title": "Account"
+    "gs.header.account.title": "Account",
+    "visualization.cluster": "Cluster",
+    "richText.placeholder": "Markdown-tekst hier toevoegen...",
+    "richText.tooltip": "U kunt markdown-syntaxis gebruiken om de beschrijving op te maken:"
 }

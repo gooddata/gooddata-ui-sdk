@@ -348,5 +348,12 @@
     "properties.comparison.position.right": "右",
     "properties.comparison.position.left": "左",
     "properties.forecastSliced.title": "部分予報を表示します。",
-    "properties.forecastSliced.description": "利用可能なデータポイントは、選択した期間全体をカバーしていません。"
+    "properties.forecastSliced.description": "利用可能なデータポイントは、選択した期間全体をカバーしていません。",
+    "dashboard.bucket.segment_title.scatter": "セグメント",
+    "properties.clustering.title": "クラスタ",
+    "properties.clustering.amount": "数量",
+    "properties.clustering.amount.placeholder": "3",
+    "properties.clustering.amount.partial.title": "部分的なクラスタの表示",
+    "properties.clustering.amount.partial.description": "利用可能なデータポイントは、選択した数量全体をカバーしていません。",
+    "properties.clustering.disabled": "クラスタリングは、セグメント・バイ・バケットが空の場合にのみ有効にすることができます。"
 }
