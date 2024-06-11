@@ -209,7 +209,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableMultipleDataSourcesInWorkspace: false,
     enableScatterPlotSegmentation: true,
     enableScatterPlotClustering: true,
-    enableRichTextDescriptions: false,
+    enableRichTextDescriptions: true,
 };
 
 export const FeatureFlagsValues = {

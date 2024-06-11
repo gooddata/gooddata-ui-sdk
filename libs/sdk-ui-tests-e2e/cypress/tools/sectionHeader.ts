@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 export class SectionHeader {
     constructor(private rowIndex: number) {}
 
@@ -59,7 +59,8 @@ export class SectionHeader {
 
         textField.wait(500);
         textField.invoke("val", value);
-        textField.type(last, { parseSpecialCharSequences: false, delay: 100 }).type("{enter}");
+        textField.type(last, { parseSpecialCharSequences: false, delay: 100 });
+        this.clickOutside();
         return this;
     }
 
@@ -92,7 +93,7 @@ export class SectionHeader {
     }
 
     clickOutside() {
-        this.getTitleInputWrapper().click("left");
+        this.getTitleInputWrapper().click("left").type("{esc}");
         return this;
     }
 
