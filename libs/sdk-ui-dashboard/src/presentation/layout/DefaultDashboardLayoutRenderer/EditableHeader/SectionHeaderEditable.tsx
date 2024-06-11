@@ -115,7 +115,7 @@ export function SectionHeaderEditable(props: ISectionHeaderEditableProps): JSX.E
             <div className="gd-editable-label-container gd-row-header-description-wrapper">
                 {useRichText ? (
                     <div
-                        className={cx("gd-editable-label-richtext", {
+                        className={cx("gd-editable-label-richtext s-fluid-layout-row-description-input", {
                             "is-editing": isRichTextEditing,
                         })}
                         onClick={onDescriptionClick}
