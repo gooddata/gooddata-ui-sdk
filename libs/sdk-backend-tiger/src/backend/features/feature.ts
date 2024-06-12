@@ -319,6 +319,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableMotherDuckDataSource,
+            "enableMotherDuckDataSource",
+            "BOOLEAN",
+            FeatureFlagsValues.enableMotherDuckDataSource,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableKeyDriverAnalysis,
             "enableKeyDriverAnalysis",
             "BOOLEAN",

@@ -81,6 +81,7 @@ export enum TigerFeaturesNames {
     EnableAlerting = "enableAlerting",
     EnableScheduling = "enableScheduling",
     EnableSmartFunctions = "enableSmartFunctions",
+    EnableMotherDuckDataSource = "enableMotherDuckDataSource",
     EnableLabsSmartFunctions = "enableLabsSmartFunctions",
     EnableKeyDriverAnalysis = "enableKeyDriverAnalysis",
     EnableDataProfiling = "enableDataProfiling",
@@ -140,6 +141,7 @@ export type ITigerFeatureFlags = {
     enableScheduling: typeof FeatureFlagsValues["enableScheduling"][number];
     enableLabsSmartFunctions: typeof FeatureFlagsValues["enableLabsSmartFunctions"][number];
     enableSmartFunctions: typeof FeatureFlagsValues["enableSmartFunctions"][number];
+    enableMotherDuckDataSource: typeof FeatureFlagsValues["enableMotherDuckDataSource"][number];
     enableKeyDriverAnalysis: typeof FeatureFlagsValues["enableKeyDriverAnalysis"][number];
     enableDataProfiling: typeof FeatureFlagsValues["enableDataProfiling"][number];
     enableFlexAi: typeof FeatureFlagsValues["enableFlexAi"][number];
@@ -192,6 +194,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableRepeaterChart: false,
     enableKDAttributeFilterDatesValidation: true,
     enableMultipleCSVs: false,
+    enableMotherDuckDataSource: false,
     enableOracleDataSource: false,
     enableAnalyticalCatalog: false,
     enableAlerting: false,
@@ -248,6 +251,7 @@ export const FeatureFlagsValues = {
     enableKDRichText: [true, false] as const,
     enableAttributeFilterValuesValidation: [true, false] as const,
     enableMySqlDataSource: [true, false] as const,
+    enableMotherDuckDataSource: [true, false] as const,
     enableCreateUser: [true, false] as const,
     enableDirectQuery: [true, false] as const,
     enableMariaDbDataSource: [true, false] as const,
