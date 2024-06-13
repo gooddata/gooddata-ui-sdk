@@ -2,6 +2,7 @@
 
 import {
     ActionsApiProcessInvitationRequest,
+    ActionsApiReadCsvFileManifestsRequest,
     AnalyzeCsvRequest,
     AnalyzeCsvResponse,
     ApiEntitlement,
@@ -47,7 +48,7 @@ import {
     MetadataUtilities,
     OrganizationUtilities,
     PlatformUsage,
-    ReadFileManifestsResponse,
+    ReadCsvFileManifestsResponse,
     ScanResultPdm,
     ScanSqlResponse,
     TestDefinitionRequestTypeEnum,
@@ -502,16 +503,13 @@ export type TigerSpecificFunctions = {
      * @param dataSourceId - id of the data source
      * @param file - the file to upload
      */
-    stagingUpload?: (dataSourceId: string, file: File) => Promise<UploadFileResponse>;
+    stagingUpload?: (file: File) => Promise<UploadFileResponse>;
 
     /**
      * Analyze CSV files in GDSTORAGE data source staging location
      * @param analyzeRequest - the request to analyze CSV files
      */
-    analyzeCsv?: (
-        dataSourceId: string,
-        analyzeCsvRequest: AnalyzeCsvRequest,
-    ) => Promise<Array<AnalyzeCsvResponse>>;
+    analyzeCsv?: (analyzeCsvRequest: AnalyzeCsvRequest) => Promise<Array<AnalyzeCsvResponse>>;
 
     /**
      * Import CSV files from GDSTORAGE data source staging location
@@ -541,7 +539,10 @@ export type TigerSpecificFunctions = {
      * @param dataSourceId - id of the data source
      * @param fileNames - names of CSV files to delete
      */
-    readFileManifests?: (dataSourceId: string, fileNames: string[]) => Promise<ReadFileManifestsResponse[]>;
+    readFileManifests?: (
+        dataSourceId: string,
+        fileNames: string[],
+    ) => Promise<ReadCsvFileManifestsResponse[]>;
 };
 
 const getDataSourceErrorMessage = (error: unknown) => {
@@ -1527,7 +1528,7 @@ export const buildTigerSpecificFunctions = (
         }
     },
 
-    stagingUpload: async (dataSourceId: string, file: File): Promise<UploadFileResponse> => {
+    stagingUpload: async (file: File): Promise<UploadFileResponse> => {
         /*
          * Since the upload API has some rate limiting in place, we need to retry the upload in case of 503 errors.
          * To make the retries more efficient, we use exponential backoff with jitter so as not to overload the API.
@@ -1538,8 +1539,7 @@ export const buildTigerSpecificFunctions = (
             await authApiCall(async (sdk) => {
                 return await sdk.result
                     .stagingUpload({
-                        dataSourceId: dataSourceId,
-                        file: file,
+                        file,
                     })
                     .then((res) => {
                         return res?.data;
@@ -1570,12 +1570,11 @@ export const buildTigerSpecificFunctions = (
         }
     },
 
-    analyzeCsv: async (dataSourceId: string, analyzeCsvRequest: AnalyzeCsvRequest) => {
+    analyzeCsv: async (analyzeCsvRequest: AnalyzeCsvRequest) => {
         try {
             return await authApiCall(async (sdk) => {
                 return await sdk.result
                     .analyzeCsv({
-                        dataSourceId: dataSourceId,
                         analyzeCsvRequest: analyzeCsvRequest,
                     })
                     .then((res) => {
@@ -1638,15 +1637,15 @@ export const buildTigerSpecificFunctions = (
     readFileManifests: async (dataSourceId, fileNames) => {
         try {
             return await authApiCall(async (sdk) => {
-                const request = {
+                const request: ActionsApiReadCsvFileManifestsRequest = {
                     dataSourceId: dataSourceId,
-                    readFileManifestsRequest: {
+                    readCsvFileManifestsRequest: {
                         manifestRequests: fileNames.map((fileName) => ({
                             fileName,
                         })),
                     },
                 };
-                return await sdk.result.readFileManifests(request).then((res) => {
+                return await sdk.result.readCsvFileManifests(request).then((res) => {
                     return res?.data;
                 });
             });
