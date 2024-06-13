@@ -67,7 +67,6 @@ export class ActionsApi extends MetadataBaseApi implements ActionsApiInterface {
 // @public
 export interface ActionsApiAnalyzeCsvRequest {
     readonly analyzeCsvRequest: AnalyzeCsvRequest;
-    readonly dataSourceId: string;
 }
 
 // @public
@@ -443,9 +442,9 @@ export interface ActionsApiProcessInvitationRequest {
 }
 
 // @public
-export interface ActionsApiReadFileManifestsRequest {
+export interface ActionsApiReadCsvFileManifestsRequest {
     readonly dataSourceId: string;
-    readonly readFileManifestsRequest: ReadFileManifestsRequest;
+    readonly readCsvFileManifestsRequest: ReadCsvFileManifestsRequest;
 }
 
 // @public
@@ -504,7 +503,6 @@ export interface ActionsApiSetTranslationsRequest {
 
 // @public
 export interface ActionsApiStagingUploadRequest {
-    readonly dataSourceId: string;
     readonly file: any;
 }
 
@@ -13893,18 +13891,18 @@ export const RankingFilterRankingFilterOperatorEnum: {
 export type RankingFilterRankingFilterOperatorEnum = typeof RankingFilterRankingFilterOperatorEnum[keyof typeof RankingFilterRankingFilterOperatorEnum];
 
 // @public
-export interface ReadFileManifestsRequest {
-    manifestRequests: Array<ReadFileManifestsRequestItem>;
+export interface ReadCsvFileManifestsRequest {
+    manifestRequests: Array<ReadCsvFileManifestsRequestItem>;
 }
 
 // @public
-export interface ReadFileManifestsRequestItem {
+export interface ReadCsvFileManifestsRequestItem {
     fileName: string;
     version?: number;
 }
 
 // @public
-export interface ReadFileManifestsResponse {
+export interface ReadCsvFileManifestsResponse {
     manifest: CsvManifestBody;
     name: string;
     version: number;
@@ -14063,7 +14061,7 @@ export interface ResultActionsApiInterface {
     deleteFiles(requestParameters: ActionsApiDeleteFilesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     importCsv(requestParameters: ActionsApiImportCsvRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ImportCsvResponse>>;
     listFiles(requestParameters: ActionsApiListFilesRequest, options?: AxiosRequestConfig): AxiosPromise<Array<GdStorageFile>>;
-    readFileManifests(requestParameters: ActionsApiReadFileManifestsRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ReadFileManifestsResponse>>;
+    readCsvFileManifests(requestParameters: ActionsApiReadCsvFileManifestsRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ReadCsvFileManifestsResponse>>;
     stagingUpload(requestParameters: ActionsApiStagingUploadRequest, options?: AxiosRequestConfig): AxiosPromise<UploadFileResponse>;
 }
 

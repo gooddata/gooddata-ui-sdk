@@ -21,22 +21,12 @@
         }
     ],
     "paths": {
-        "/api/v1/actions/dataSources/{dataSourceId}/staging/uploadFile": {
+        "/api/v1/actions/fileStorage/staging/upload": {
             "post": {
                 "tags": ["Data source staging location", "actions"],
                 "summary": "Upload a file to the staging area",
                 "description": "Provides a location for uploading staging files.",
                 "operationId": "stagingUpload",
-                "parameters": [
-                    {
-                        "name": "dataSourceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
                 "requestBody": {
                     "content": {
                         "multipart/form-data": {
@@ -72,12 +62,49 @@
                 }
             }
         },
-        "/api/v1/actions/dataSources/{dataSourceId}/readFileManifests": {
+        "/api/v1/actions/fileStorage/staging/analyzeCsv": {
+            "post": {
+                "tags": ["Data source files analysis", "actions"],
+                "summary": "Analyze CSV",
+                "description": "Analyzes CSV files at the given locations",
+                "operationId": "analyzeCsv",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AnalyzeCsvRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful analysis.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/AnalyzeCsvResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["MANAGE"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/fileStorage/dataSources/{dataSourceId}/readCsvFileManifests": {
             "post": {
                 "tags": ["Data source files manifest read", "actions"],
-                "summary": "Read datasource file manifests",
-                "description": "Read the manifests of the files in the given data source.",
-                "operationId": "readFileManifests",
+                "summary": "Read CSV file manifests",
+                "description": "Read the manifests of the CSV files in the given data source.",
+                "operationId": "readCsvFileManifests",
                 "parameters": [
                     {
                         "name": "dataSourceId",
@@ -92,7 +119,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/ReadFileManifestsRequest"
+                                "$ref": "#/components/schemas/ReadCsvFileManifestsRequest"
                             }
                         }
                     },
@@ -106,7 +133,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/ReadFileManifestsResponse"
+                                        "$ref": "#/components/schemas/ReadCsvFileManifestsResponse"
                                     }
                                 }
                             }
@@ -119,7 +146,7 @@
                 }
             }
         },
-        "/api/v1/actions/dataSources/{dataSourceId}/listFiles": {
+        "/api/v1/actions/fileStorage/dataSources/{dataSourceId}/listFiles": {
             "post": {
                 "tags": ["Data source files listing", "actions"],
                 "summary": "List datasource files",
@@ -156,7 +183,7 @@
                 }
             }
         },
-        "/api/v1/actions/dataSources/{dataSourceId}/import": {
+        "/api/v1/actions/fileStorage/dataSources/{dataSourceId}/importCsv": {
             "post": {
                 "tags": ["Data source files import", "actions"],
                 "summary": "Import CSV",
@@ -203,7 +230,7 @@
                 }
             }
         },
-        "/api/v1/actions/dataSources/{dataSourceId}/deleteFiles": {
+        "/api/v1/actions/fileStorage/dataSources/{dataSourceId}/deleteFiles": {
             "post": {
                 "tags": ["Data source files deletion", "actions"],
                 "summary": "Delete datasource files",
@@ -232,53 +259,6 @@
                 "responses": {
                     "204": {
                         "description": "Successful deletion."
-                    }
-                },
-                "x-gdc-security-info": {
-                    "permissions": ["MANAGE"],
-                    "description": "Minimal permission required to use this endpoint."
-                }
-            }
-        },
-        "/api/v1/actions/dataSources/{dataSourceId}/analyze": {
-            "post": {
-                "tags": ["Data source files analysis", "actions"],
-                "summary": "Analyze CSV",
-                "description": "Analyzes CSV files at the given locations",
-                "operationId": "analyzeCsv",
-                "parameters": [
-                    {
-                        "name": "dataSourceId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/AnalyzeCsvRequest"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful analysis.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/AnalyzeCsvResponse"
-                                    }
-                                }
-                            }
-                        }
                     }
                 },
                 "x-gdc-security-info": {
@@ -325,35 +305,133 @@
                 },
                 "description": "Information related to the file uploaded to the staging area."
             },
-            "ReadFileManifestsRequest": {
-                "required": ["manifestRequests"],
+            "AnalyzeCsvRequest": {
+                "required": ["analyzeRequests"],
                 "type": "object",
                 "properties": {
-                    "manifestRequests": {
+                    "analyzeRequests": {
                         "type": "array",
-                        "description": "Files to read the schemata for.",
+                        "description": "List of individual CSV analysis requests.",
                         "items": {
-                            "$ref": "#/components/schemas/ReadFileManifestsRequestItem"
+                            "$ref": "#/components/schemas/AnalyzeCsvRequestItem"
                         }
                     }
                 },
-                "description": "Request to read the manifests of the specified files."
+                "description": "Bulk CSV analysis request."
             },
-            "ReadFileManifestsRequestItem": {
-                "required": ["fileName"],
+            "AnalyzeCsvRequestItem": {
+                "required": ["location"],
                 "type": "object",
                 "properties": {
-                    "fileName": {
+                    "location": {
                         "type": "string",
-                        "description": "Name of the file to read the manifest for."
+                        "description": "Location of the CSV file to analyze."
                     },
-                    "version": {
-                        "type": "integer",
-                        "description": "Optional version of the file to read the manifest for. If null or not specified, the latest version is read.",
-                        "format": "int32"
+                    "config": {
+                        "$ref": "#/components/schemas/AnalyzeCsvRequestItemConfig"
                     }
                 },
-                "description": "Request to read the manifest of a single file."
+                "description": "CSV analysis request."
+            },
+            "AnalyzeCsvRequestItemConfig": {
+                "type": "object",
+                "properties": {
+                    "resultRows": {
+                        "type": "integer",
+                        "description": "Number of rows to return in the flight that represents analysis result. If 0, no rows are returned, if less than 0, all rows that were in the sample are returned.",
+                        "format": "int32"
+                    },
+                    "headerDetectMaxRows": {
+                        "type": "integer",
+                        "description": "Maximum number of rows to work with during header detection.",
+                        "format": "int32"
+                    },
+                    "headerRowCount": {
+                        "type": "integer",
+                        "description": "Number of rows to consider as header, if null, header will be detected.",
+                        "format": "int32"
+                    },
+                    "delimiters": {
+                        "type": "array",
+                        "description": "Possible column delimiters.",
+                        "items": {
+                            "type": "string",
+                            "description": "Possible column delimiters."
+                        }
+                    }
+                },
+                "description": "CSV analysis request config."
+            },
+            "AnalyzeCsvResponse": {
+                "required": ["columns", "location", "previewData"],
+                "type": "object",
+                "properties": {
+                    "location": {
+                        "type": "string",
+                        "description": "Location of the analyzed file in the source data source."
+                    },
+                    "columns": {
+                        "type": "array",
+                        "description": "List of column metadata.",
+                        "items": {
+                            "$ref": "#/components/schemas/AnalyzeCsvResponseColumn"
+                        }
+                    },
+                    "previewData": {
+                        "type": "array",
+                        "description": "Preview of the first N rows of the file.",
+                        "items": {
+                            "type": "array",
+                            "description": "Preview of the first N rows of the file.",
+                            "items": {
+                                "type": "object",
+                                "description": "Preview of the first N rows of the file."
+                            }
+                        }
+                    },
+                    "config": {
+                        "$ref": "#/components/schemas/AnalyzeCsvResponseConfig"
+                    }
+                },
+                "description": "Describes the results of a CSV analysis of a single file."
+            },
+            "AnalyzeCsvResponseColumn": {
+                "required": ["name", "type"],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the column as specified in the file (or autogenerated one if the file has no header)."
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Type of the column (e.g. string, bool, etc.)."
+                    },
+                    "detectedDateFormats": {
+                        "type": "array",
+                        "description": "List of date formats that can be used to parse this column as date. Null if there are none.",
+                        "items": {
+                            "type": "string",
+                            "description": "List of date formats that can be used to parse this column as date. Null if there are none."
+                        }
+                    }
+                },
+                "description": "Describes the result column."
+            },
+            "AnalyzeCsvResponseConfig": {
+                "type": "object",
+                "properties": {
+                    "readOptions": {
+                        "$ref": "#/components/schemas/CsvReadOptions"
+                    },
+                    "parseOptions": {
+                        "$ref": "#/components/schemas/CsvParseOptions"
+                    },
+                    "convertOptions": {
+                        "$ref": "#/components/schemas/CsvConvertOptions"
+                    }
+                },
+                "description": "Config used to process the CSV file."
             },
             "CsvConvertOptions": {
                 "type": "object",
@@ -455,33 +533,6 @@
                 },
                 "description": "Information about a certain column in the table."
             },
-            "CsvManifestBody": {
-                "type": "object",
-                "properties": {
-                    "read": {
-                        "$ref": "#/components/schemas/CsvReadOptions"
-                    },
-                    "parse": {
-                        "$ref": "#/components/schemas/CsvParseOptions"
-                    },
-                    "convert": {
-                        "$ref": "#/components/schemas/CsvConvertOptions"
-                    },
-                    "column_date_formats": {
-                        "type": "object",
-                        "additionalProperties": {
-                            "type": "string",
-                            "description": "Map of column names to date formats to use when parsing them as dates."
-                        },
-                        "description": "Map of column names to date formats to use when parsing them as dates."
-                    },
-                    "read_method": {
-                        "type": "string",
-                        "description": "Method used to read the CSV file."
-                    }
-                },
-                "description": "Body of the CSV manifest."
-            },
             "CsvParseOptions": {
                 "type": "object",
                 "properties": {
@@ -553,7 +604,64 @@
                 },
                 "description": "Options for reading CSV files."
             },
-            "ReadFileManifestsResponse": {
+            "ReadCsvFileManifestsRequest": {
+                "required": ["manifestRequests"],
+                "type": "object",
+                "properties": {
+                    "manifestRequests": {
+                        "type": "array",
+                        "description": "Files to read the manifests for.",
+                        "items": {
+                            "$ref": "#/components/schemas/ReadCsvFileManifestsRequestItem"
+                        }
+                    }
+                },
+                "description": "Request to read the manifests of the specified CSV files."
+            },
+            "ReadCsvFileManifestsRequestItem": {
+                "required": ["fileName"],
+                "type": "object",
+                "properties": {
+                    "fileName": {
+                        "type": "string",
+                        "description": "Name of the CSV file to read the manifest for."
+                    },
+                    "version": {
+                        "type": "integer",
+                        "description": "Optional version of the file to read the manifest for. If null or not specified, the latest version is read.",
+                        "format": "int32"
+                    }
+                },
+                "description": "Request to read the manifest of a single CSV file."
+            },
+            "CsvManifestBody": {
+                "type": "object",
+                "properties": {
+                    "read": {
+                        "$ref": "#/components/schemas/CsvReadOptions"
+                    },
+                    "parse": {
+                        "$ref": "#/components/schemas/CsvParseOptions"
+                    },
+                    "convert": {
+                        "$ref": "#/components/schemas/CsvConvertOptions"
+                    },
+                    "column_date_formats": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string",
+                            "description": "Map of column names to date formats to use when parsing them as dates."
+                        },
+                        "description": "Map of column names to date formats to use when parsing them as dates."
+                    },
+                    "read_method": {
+                        "type": "string",
+                        "description": "Method used to read the CSV file."
+                    }
+                },
+                "description": "Body of the CSV manifest."
+            },
+            "ReadCsvFileManifestsResponse": {
                 "required": ["manifest", "name", "version"],
                 "type": "object",
                 "properties": {
@@ -693,134 +801,6 @@
                     }
                 },
                 "description": "Request to delete files from the storage."
-            },
-            "AnalyzeCsvRequest": {
-                "required": ["analyzeRequests"],
-                "type": "object",
-                "properties": {
-                    "analyzeRequests": {
-                        "type": "array",
-                        "description": "List of individual CSV analysis requests.",
-                        "items": {
-                            "$ref": "#/components/schemas/AnalyzeCsvRequestItem"
-                        }
-                    }
-                },
-                "description": "Bulk CSV analysis request."
-            },
-            "AnalyzeCsvRequestItem": {
-                "required": ["location"],
-                "type": "object",
-                "properties": {
-                    "location": {
-                        "type": "string",
-                        "description": "Location of the CSV file to analyze."
-                    },
-                    "config": {
-                        "$ref": "#/components/schemas/AnalyzeCsvRequestItemConfig"
-                    }
-                },
-                "description": "CSV analysis request."
-            },
-            "AnalyzeCsvRequestItemConfig": {
-                "type": "object",
-                "properties": {
-                    "resultRows": {
-                        "type": "integer",
-                        "description": "Number of rows to return in the flight that represents analysis result. If 0, no rows are returned, if less than 0, all rows that were in the sample are returned.",
-                        "format": "int32"
-                    },
-                    "headerDetectMaxRows": {
-                        "type": "integer",
-                        "description": "Maximum number of rows to work with during header detection.",
-                        "format": "int32"
-                    },
-                    "headerRowCount": {
-                        "type": "integer",
-                        "description": "Number of rows to consider as header, if null, header will be detected.",
-                        "format": "int32"
-                    },
-                    "delimiters": {
-                        "type": "array",
-                        "description": "Possible column delimiters.",
-                        "items": {
-                            "type": "string",
-                            "description": "Possible column delimiters."
-                        }
-                    }
-                },
-                "description": "CSV analysis request config."
-            },
-            "AnalyzeCsvResponse": {
-                "required": ["columns", "location", "previewData"],
-                "type": "object",
-                "properties": {
-                    "location": {
-                        "type": "string",
-                        "description": "Location of the analyzed file in the source data source."
-                    },
-                    "columns": {
-                        "type": "array",
-                        "description": "List of column metadata.",
-                        "items": {
-                            "$ref": "#/components/schemas/AnalyzeCsvResponseColumn"
-                        }
-                    },
-                    "previewData": {
-                        "type": "array",
-                        "description": "Preview of the first N rows of the file.",
-                        "items": {
-                            "type": "array",
-                            "description": "Preview of the first N rows of the file.",
-                            "items": {
-                                "type": "object",
-                                "description": "Preview of the first N rows of the file."
-                            }
-                        }
-                    },
-                    "config": {
-                        "$ref": "#/components/schemas/AnalyzeCsvResponseConfig"
-                    }
-                },
-                "description": "Describes the results of a CSV analysis of a single file."
-            },
-            "AnalyzeCsvResponseColumn": {
-                "required": ["name", "type"],
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "string",
-                        "description": "Name of the column as specified in the file (or autogenerated one if the file has no header)."
-                    },
-                    "type": {
-                        "type": "string",
-                        "description": "Type of the column (e.g. string, bool, etc.)."
-                    },
-                    "detectedDateFormats": {
-                        "type": "array",
-                        "description": "List of date formats that can be used to parse this column as date. Null if there are none.",
-                        "items": {
-                            "type": "string",
-                            "description": "List of date formats that can be used to parse this column as date. Null if there are none."
-                        }
-                    }
-                },
-                "description": "Describes the result column."
-            },
-            "AnalyzeCsvResponseConfig": {
-                "type": "object",
-                "properties": {
-                    "readOptions": {
-                        "$ref": "#/components/schemas/CsvReadOptions"
-                    },
-                    "parseOptions": {
-                        "$ref": "#/components/schemas/CsvParseOptions"
-                    },
-                    "convertOptions": {
-                        "$ref": "#/components/schemas/CsvConvertOptions"
-                    }
-                },
-                "description": "Config used to process the CSV file."
             },
             "CacheRemovalInterval": {
                 "required": ["from", "removed", "to"],
