@@ -1,6 +1,15 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 30 May 2024 08:50:26 GMT and should not be manually modified.
+This log was last generated on Thu, 13 Jun 2024 08:17:52 GMT and should not be manually modified.
+
+## 10.3.0
+Thu, 13 Jun 2024 08:17:52 GMT
+
+### Updates
+
+- Allow different position of ellipsis in ShortenedText component 
+- F1-349 Implement webhooks api in tiger functions
+- allow creating a workspace as a child
 
 ## 10.2.0
 Thu, 30 May 2024 08:50:26 GMT

@@ -2,6 +2,24 @@
   "name": "@gooddata/sdk-ui-all",
   "entries": [
     {
+      "version": "10.3.0",
+      "tag": "@gooddata/sdk-ui-all_v10.3.0",
+      "date": "Thu, 13 Jun 2024 08:17:52 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Allow different position of ellipsis in ShortenedText component "
+          },
+          {
+            "comment": "F1-349 Implement webhooks api in tiger functions"
+          },
+          {
+            "comment": "allow creating a workspace as a child"
+          }
+        ]
+      }
+    },
+    {
       "version": "10.2.0",
       "tag": "@gooddata/sdk-ui-all_v10.2.0",
       "date": "Thu, 30 May 2024 08:50:26 GMT",
