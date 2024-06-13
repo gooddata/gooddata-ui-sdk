@@ -89,31 +89,6 @@ export interface ExportResponse {
     exportResult: string;
 }
 /**
- * Export request object describing the export properties and metadata for pdf exports.
- * @export
- * @interface PdfExportRequest
- */
-export interface PdfExportRequest {
-    /**
-     * File name to be used for retrieving the pdf document.
-     * @type {string}
-     * @memberof PdfExportRequest
-     */
-    fileName: string;
-    /**
-     * Dashboard identifier
-     * @type {string}
-     * @memberof PdfExportRequest
-     */
-    dashboardId: string;
-    /**
-     * Metadata definition in open form JSON format.
-     * @type {object}
-     * @memberof PdfExportRequest
-     */
-    metadata?: object;
-}
-/**
  * Custom CSS styles for the table. (PDF, HTML)
  * @export
  * @interface PdfTableStyle
@@ -255,6 +230,32 @@ export type TabularExportRequestFormatEnum =
     typeof TabularExportRequestFormatEnum[keyof typeof TabularExportRequestFormatEnum];
 
 /**
+ * Export request object describing the export properties and metadata for dashboard PDF exports.
+ * @export
+ * @interface VisualExportRequest
+ */
+export interface VisualExportRequest {
+    /**
+     * File name to be used for retrieving the pdf document.
+     * @type {string}
+     * @memberof VisualExportRequest
+     */
+    fileName: string;
+    /**
+     * Dashboard identifier
+     * @type {string}
+     * @memberof VisualExportRequest
+     */
+    dashboardId: string;
+    /**
+     * Metadata definition in free-form JSON format.
+     * @type {object}
+     * @memberof VisualExportRequest
+     */
+    metadata?: object;
+}
+
+/**
  * ActionsApi - axios parameter creator
  * @export
  */
@@ -264,19 +265,19 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
          * An visual export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
          * @summary Create visual - pdf export request
          * @param {string} workspaceId
-         * @param {PdfExportRequest} pdfExportRequest
+         * @param {VisualExportRequest} visualExportRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         createPdfExport: async (
             workspaceId: string,
-            pdfExportRequest: PdfExportRequest,
+            visualExportRequest: VisualExportRequest,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
             assertParamExists("createPdfExport", "workspaceId", workspaceId);
-            // verify required parameter 'pdfExportRequest' is not null or undefined
-            assertParamExists("createPdfExport", "pdfExportRequest", pdfExportRequest);
+            // verify required parameter 'visualExportRequest' is not null or undefined
+            assertParamExists("createPdfExport", "visualExportRequest", visualExportRequest);
             const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/visual`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
@@ -301,11 +302,11 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
                 ...options.headers,
             };
             const needsSerialization =
-                typeof pdfExportRequest !== "string" ||
+                typeof visualExportRequest !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
             localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(pdfExportRequest !== undefined ? pdfExportRequest : {})
-                : pdfExportRequest || "";
+                ? JSON.stringify(visualExportRequest !== undefined ? visualExportRequest : {})
+                : visualExportRequest || "";
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -507,18 +508,18 @@ export const ActionsApiFp = function (configuration?: Configuration) {
          * An visual export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
          * @summary Create visual - pdf export request
          * @param {string} workspaceId
-         * @param {PdfExportRequest} pdfExportRequest
+         * @param {VisualExportRequest} visualExportRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async createPdfExport(
             workspaceId: string,
-            pdfExportRequest: PdfExportRequest,
+            visualExportRequest: VisualExportRequest,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createPdfExport(
                 workspaceId,
-                pdfExportRequest,
+                visualExportRequest,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -629,7 +630,11 @@ export const ActionsApiFactory = function (
             options?: AxiosRequestConfig,
         ): AxiosPromise<ExportResponse> {
             return localVarFp
-                .createPdfExport(requestParameters.workspaceId, requestParameters.pdfExportRequest, options)
+                .createPdfExport(
+                    requestParameters.workspaceId,
+                    requestParameters.visualExportRequest,
+                    options,
+                )
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -786,10 +791,10 @@ export interface ActionsApiCreatePdfExportRequest {
 
     /**
      *
-     * @type {PdfExportRequest}
+     * @type {VisualExportRequest}
      * @memberof ActionsApiCreatePdfExport
      */
-    readonly pdfExportRequest: PdfExportRequest;
+    readonly visualExportRequest: VisualExportRequest;
 }
 
 /**
@@ -896,7 +901,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
         options?: AxiosRequestConfig,
     ) {
         return ActionsApiFp(this.configuration)
-            .createPdfExport(requestParameters.workspaceId, requestParameters.pdfExportRequest, options)
+            .createPdfExport(requestParameters.workspaceId, requestParameters.visualExportRequest, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -1303,19 +1308,19 @@ export const VisualExportApiAxiosParamCreator = function (configuration?: Config
          * An visual export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
          * @summary Create visual - pdf export request
          * @param {string} workspaceId
-         * @param {PdfExportRequest} pdfExportRequest
+         * @param {VisualExportRequest} visualExportRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         createPdfExport: async (
             workspaceId: string,
-            pdfExportRequest: PdfExportRequest,
+            visualExportRequest: VisualExportRequest,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'workspaceId' is not null or undefined
             assertParamExists("createPdfExport", "workspaceId", workspaceId);
-            // verify required parameter 'pdfExportRequest' is not null or undefined
-            assertParamExists("createPdfExport", "pdfExportRequest", pdfExportRequest);
+            // verify required parameter 'visualExportRequest' is not null or undefined
+            assertParamExists("createPdfExport", "visualExportRequest", visualExportRequest);
             const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/export/visual`.replace(
                 `{${"workspaceId"}}`,
                 encodeURIComponent(String(workspaceId)),
@@ -1340,11 +1345,11 @@ export const VisualExportApiAxiosParamCreator = function (configuration?: Config
                 ...options.headers,
             };
             const needsSerialization =
-                typeof pdfExportRequest !== "string" ||
+                typeof visualExportRequest !== "string" ||
                 localVarRequestOptions.headers["Content-Type"] === "application/json";
             localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(pdfExportRequest !== undefined ? pdfExportRequest : {})
-                : pdfExportRequest || "";
+                ? JSON.stringify(visualExportRequest !== undefined ? visualExportRequest : {})
+                : visualExportRequest || "";
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1451,18 +1456,18 @@ export const VisualExportApiFp = function (configuration?: Configuration) {
          * An visual export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.
          * @summary Create visual - pdf export request
          * @param {string} workspaceId
-         * @param {PdfExportRequest} pdfExportRequest
+         * @param {VisualExportRequest} visualExportRequest
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async createPdfExport(
             workspaceId: string,
-            pdfExportRequest: PdfExportRequest,
+            visualExportRequest: VisualExportRequest,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ExportResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createPdfExport(
                 workspaceId,
-                pdfExportRequest,
+                visualExportRequest,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -1533,7 +1538,11 @@ export const VisualExportApiFactory = function (
             options?: AxiosRequestConfig,
         ): AxiosPromise<ExportResponse> {
             return localVarFp
-                .createPdfExport(requestParameters.workspaceId, requestParameters.pdfExportRequest, options)
+                .createPdfExport(
+                    requestParameters.workspaceId,
+                    requestParameters.visualExportRequest,
+                    options,
+                )
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -1630,10 +1639,10 @@ export interface VisualExportApiCreatePdfExportRequest {
 
     /**
      *
-     * @type {PdfExportRequest}
+     * @type {VisualExportRequest}
      * @memberof VisualExportApiCreatePdfExport
      */
-    readonly pdfExportRequest: PdfExportRequest;
+    readonly visualExportRequest: VisualExportRequest;
 }
 
 /**
@@ -1698,7 +1707,7 @@ export class VisualExportApi extends BaseAPI implements VisualExportApiInterface
         options?: AxiosRequestConfig,
     ) {
         return VisualExportApiFp(this.configuration)
-            .createPdfExport(requestParameters.workspaceId, requestParameters.pdfExportRequest, options)
+            .createPdfExport(requestParameters.workspaceId, requestParameters.visualExportRequest, options)
             .then((request) => request(this.axios, this.basePath));
     }
 

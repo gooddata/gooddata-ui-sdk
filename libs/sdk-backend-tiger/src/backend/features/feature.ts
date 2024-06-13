@@ -319,6 +319,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableMotherDuckDataSource,
+            "enableMotherDuckDataSource",
+            "BOOLEAN",
+            FeatureFlagsValues.enableMotherDuckDataSource,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableKeyDriverAnalysis,
             "enableKeyDriverAnalysis",
             "BOOLEAN",
@@ -393,6 +400,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableScatterPlotClustering",
             "BOOLEAN",
             FeatureFlagsValues.enableScatterPlotClustering,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableRichTextDescriptions,
+            "enableRichTextDescriptions",
+            "BOOLEAN",
+            FeatureFlagsValues.enableRichTextDescriptions,
         ),
     };
 }

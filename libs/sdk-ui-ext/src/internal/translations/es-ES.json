@@ -348,5 +348,12 @@
     "properties.comparison.position.right": "derecha",
     "properties.comparison.position.left": "izquierda",
     "properties.forecastSliced.title": "Muestra una previsión parcial.",
-    "properties.forecastSliced.description": "Los puntos de datos disponibles no cubren todo el período seleccionado."
+    "properties.forecastSliced.description": "Los puntos de datos disponibles no cubren todo el período seleccionado.",
+    "dashboard.bucket.segment_title.scatter": "Segmentar por",
+    "properties.clustering.title": "Grupo",
+    "properties.clustering.amount": "Importe",
+    "properties.clustering.amount.placeholder": "3",
+    "properties.clustering.amount.partial.title": "Mostrando grupos parciales",
+    "properties.clustering.amount.partial.description": "Los puntos de datos disponibles no cubren toda la cantidad seleccionada.",
+    "properties.clustering.disabled": "El clustering sólo puede activarse cuando el cubo segmentBy está vacío."
 }

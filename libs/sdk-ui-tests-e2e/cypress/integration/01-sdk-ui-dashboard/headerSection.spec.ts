@@ -40,7 +40,7 @@ describe("Header section", () => {
             cy.fixture("headerDataTest").then((data) => {
                 data["DataTest"].forEach((result: { rowIndex: number; sectionName: string }) => {
                     if (result.rowIndex === 0) {
-                        new LayoutRow(result.rowIndex).getHeader().hasTitle(false).hasDescription(false);
+                        new LayoutRow(result.rowIndex).getHeader().hasTitle(false).hasDescriptionWithText("");
                     } else {
                         new LayoutRow(result.rowIndex)
                             .getHeader()
@@ -73,7 +73,7 @@ describe("Header section", () => {
         });
 
         //Cover ticket: RAIL-4674
-        it("Limitation of title, description", { tags: ["checklist_integrated_tiger"] }, () => {
+        it("Limitation of title", { tags: ["checklist_integrated_tiger"] }, () => {
             cy.fixture("headerDataTest").then((data) => {
                 const title = data["LimitTexts"].title;
                 const desc = data["LimitTexts"].description;
@@ -86,13 +86,7 @@ describe("Header section", () => {
                     .hasLimitMessage(true, "128/256 caractères restant")
                     .clickOutside()
                     .hasLimitMessage(false, "128/256 caractères restant");
-                headerRow_02
-                    .scrollIntoView()
-                    .setDescription(desc)
-                    .selectDescriptionInput()
-                    .hasLimitMessage(true, "512/1024 caractères restant")
-                    .clickOutside()
-                    .hasLimitMessage(false, "512/1024 caractères restant");
+                headerRow_02.scrollIntoView().setDescription(desc).selectDescriptionInput().clickOutside();
 
                 editMode.save();
                 headerRow_01.hasTitleWithText(title);

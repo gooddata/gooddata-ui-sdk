@@ -81,6 +81,7 @@ export enum TigerFeaturesNames {
     EnableAlerting = "enableAlerting",
     EnableScheduling = "enableScheduling",
     EnableSmartFunctions = "enableSmartFunctions",
+    EnableMotherDuckDataSource = "enableMotherDuckDataSource",
     EnableLabsSmartFunctions = "enableLabsSmartFunctions",
     EnableKeyDriverAnalysis = "enableKeyDriverAnalysis",
     EnableDataProfiling = "enableDataProfiling",
@@ -93,6 +94,7 @@ export enum TigerFeaturesNames {
     EnableMultipleDataSourcesInWorkspace = "enableMultipleDataSourcesInWorkspace",
     EnableScatterPlotSegmentation = "enableScatterPlotSegmentation",
     EnableScatterPlotClustering = "enableScatterPlotClustering",
+    EnableRichTextDescriptions = "enableRichTextDescriptions",
 }
 
 export type ITigerFeatureFlags = {
@@ -139,6 +141,7 @@ export type ITigerFeatureFlags = {
     enableScheduling: typeof FeatureFlagsValues["enableScheduling"][number];
     enableLabsSmartFunctions: typeof FeatureFlagsValues["enableLabsSmartFunctions"][number];
     enableSmartFunctions: typeof FeatureFlagsValues["enableSmartFunctions"][number];
+    enableMotherDuckDataSource: typeof FeatureFlagsValues["enableMotherDuckDataSource"][number];
     enableKeyDriverAnalysis: typeof FeatureFlagsValues["enableKeyDriverAnalysis"][number];
     enableDataProfiling: typeof FeatureFlagsValues["enableDataProfiling"][number];
     enableFlexAi: typeof FeatureFlagsValues["enableFlexAi"][number];
@@ -150,6 +153,7 @@ export type ITigerFeatureFlags = {
     enableMultipleDataSourcesInWorkspace: typeof FeatureFlagsValues["enableMultipleDataSourcesInWorkspace"][number];
     enableScatterPlotSegmentation: typeof FeatureFlagsValues["enableScatterPlotSegmentation"][number];
     enableScatterPlotClustering: typeof FeatureFlagsValues["enableScatterPlotClustering"][number];
+    enableRichTextDescriptions: typeof FeatureFlagsValues["enableRichTextDescriptions"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -190,6 +194,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableRepeaterChart: false,
     enableKDAttributeFilterDatesValidation: true,
     enableMultipleCSVs: false,
+    enableMotherDuckDataSource: false,
     enableOracleDataSource: false,
     enableAnalyticalCatalog: false,
     enableAlerting: false,
@@ -207,6 +212,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableMultipleDataSourcesInWorkspace: false,
     enableScatterPlotSegmentation: true,
     enableScatterPlotClustering: true,
+    enableRichTextDescriptions: true,
 };
 
 export const FeatureFlagsValues = {
@@ -245,6 +251,7 @@ export const FeatureFlagsValues = {
     enableKDRichText: [true, false] as const,
     enableAttributeFilterValuesValidation: [true, false] as const,
     enableMySqlDataSource: [true, false] as const,
+    enableMotherDuckDataSource: [true, false] as const,
     enableCreateUser: [true, false] as const,
     enableDirectQuery: [true, false] as const,
     enableMariaDbDataSource: [true, false] as const,
@@ -268,4 +275,5 @@ export const FeatureFlagsValues = {
     enableMultipleDataSourcesInWorkspace: [true, false] as const,
     enableScatterPlotSegmentation: [true, false] as const,
     enableScatterPlotClustering: [true, false] as const,
+    enableRichTextDescriptions: [true, false] as const,
 };
