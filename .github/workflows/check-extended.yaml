@@ -1,0 +1,86 @@
+name: check-extended
+on:
+  issue_comment:
+    types:
+      - created
+jobs:
+  prepare-env:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    permissions: read-all
+    outputs:
+      branch: ${{ steps.branch.outputs.branch }}
+      ref: refs/pull/${{ github.event.issue.number }}/merge
+      commit: ${{ steps.commit.outputs.commit }}
+      pr_number: ${{ github.event.issue.number }}
+      project: ${{ github.repository }}
+      changed_files: ${{ steps.changed-files.outputs.all_changed_files }}
+    steps:
+      - name: Branch name
+        id: branch
+        run: |-
+          branch=$(echo "${{ github.ref }}" | sed 's/^refs\/heads\///')
+          echo "branch=$branch" >> "$GITHUB_OUTPUT"
+                                
+      - name: Commit
+        id: commit
+        run: |-
+          pr_head_sha=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.issue.number }}" | \
+            jq --raw-output .head.sha)
+          echo "commit=$pr_head_sha" >> "$GITHUB_OUTPUT"
+                                
+      - uses: actions/checkout@v4
+        with:
+          ref: refs/pull/${{ github.event.issue.number }}/merge
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v40
+    if: ${{ github.event.issue.pull_request && startsWith(github.event.comment.body, 'extended test') }}
+  gooddata-ui-sdk-pull-request-dispatcher-pipeline:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    needs:
+      - prepare-env
+    permissions:
+      contents: read
+      id-token: write
+    if: ${{ github.event.issue.pull_request && startsWith(github.event.comment.body, 'extended test') }}
+    steps:
+      - name: Call Jenkins trigger
+        id: call-jenkins
+        uses: gooddata/github-actions-public/jenkins/trigger@master
+        with:
+          server: ${{ secrets.JENKINS_ADDRESS }}
+          folder: gooddata-ui-sdk
+          job-name: gooddata-ui-sdk-pull-request-dispatcher-pipeline
+          vault-url: ${{ secrets.VAULT_ADDRESS }}
+          params: |-
+            {
+              "GH_BRANCH": "${{ needs.prepare-env.outputs.branch }}",
+              "GH_REF": "${{ needs.prepare-env.outputs.ref }}",
+              "GH_COMMIT": "${{ needs.prepare-env.outputs.commit }}",
+              "GH_URL": "git@github.com:",
+              "GH_CHANGE": "${{ needs.prepare-env.outputs.pr_number }}",
+              "GH_PROJECT": "${{ needs.prepare-env.outputs.project }}",
+              "BUILD_BY_GITHUB": "true",
+              "GH_PIPELINE": "check-extended",
+              "GH_COMMENT": "${{ github.event.comment.body }}"
+            }
+          comment-pr: 'true'
+  ready-to-merge:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    if: always() && ${{ github.event.issue.pull_request && startsWith(github.event.comment.body, 'extended test') }}
+    needs:
+      - prepare-env
+      - gooddata-ui-sdk-pull-request-dispatcher-pipeline
+    steps:
+      - name: Check if needed jobs succeeded
+        uses: re-actors/alls-green@release/v1
+        with:
+          allowed-skips: ${{ toJSON(needs) }}
+          jobs: ${{ toJSON(needs) }}
