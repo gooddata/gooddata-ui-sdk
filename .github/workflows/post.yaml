@@ -1,0 +1,106 @@
+name: post
+on:
+  push:
+    branches:
+      - master
+      - develop
+      - release
+      - hotfix/[0-9]+.[0-9]+
+      - hotfix/[0-9]+.[0-9]+.[0-9]+
+      - gd-patches
+      - next-[0-9]+.[0-9]+.[0-9]+
+jobs:
+  prepare-env:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    outputs:
+      branch: ${{ steps.branch.outputs.branch }}
+      ref: ${{ github.ref }}
+      commit: ${{ github.event.after }}
+      project: ${{ github.repository }}
+      changed_files: ${{ steps.changed-files.outputs.all_changed_files }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v40
+      - name: Extract branch name
+        id: branch
+        run: |-
+          branch=$(echo "${{ github.ref }}" | sed 's/^refs\/heads\///')
+          echo "branch=$branch" >> "$GITHUB_OUTPUT"
+                                
+  gooddata-ui-sdk-storybook-publish:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    needs:
+      - prepare-env
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Call Jenkins trigger
+        id: call-jenkins
+        uses: gooddata/github-actions-public/jenkins/trigger@master
+        with:
+          server: ${{ secrets.JENKINS_ADDRESS }}
+          folder: gooddata-ui-sdk
+          job-name: gooddata-ui-sdk-storybook-publish
+          vault-url: ${{ secrets.VAULT_ADDRESS }}
+          params: |-
+            {
+              "GH_BRANCH": "${{ needs.prepare-env.outputs.branch }}",
+              "GH_REF": "${{ needs.prepare-env.outputs.ref }}",
+              "GH_COMMIT": "${{ needs.prepare-env.outputs.commit }}",
+              "GH_URL": "git@github.com:",
+              "GH_PROJECT": "${{ needs.prepare-env.outputs.project }}",
+              "BUILD_BY_GITHUB": "true",
+              "GH_PIPELINE": "post"
+            }
+  gooddata-ui-sdk-cypress-tiger-integrated-post-merge:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    needs:
+      - prepare-env
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Call Jenkins trigger
+        id: call-jenkins
+        uses: gooddata/github-actions-public/jenkins/trigger@master
+        with:
+          server: ${{ secrets.JENKINS_ADDRESS }}
+          folder: gooddata-ui-sdk
+          job-name: gooddata-ui-sdk-cypress-tiger-integrated-post-merge
+          vault-url: ${{ secrets.VAULT_ADDRESS }}
+          params: |-
+            {
+              "GH_BRANCH": "${{ needs.prepare-env.outputs.branch }}",
+              "GH_REF": "${{ needs.prepare-env.outputs.ref }}",
+              "GH_COMMIT": "${{ needs.prepare-env.outputs.commit }}",
+              "GH_URL": "git@github.com:",
+              "GH_PROJECT": "${{ needs.prepare-env.outputs.project }}",
+              "BUILD_BY_GITHUB": "true",
+              "GH_PIPELINE": "post"
+            }
+  merge-success:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    if: always()
+    needs:
+      - prepare-env
+      - gooddata-ui-sdk-storybook-publish
+      - gooddata-ui-sdk-cypress-tiger-integrated-post-merge
+    steps:
+      - name: Check if needed jobs succeeded
+        uses: re-actors/alls-green@release/v1
+        with:
+          allowed-skips: ${{ toJSON(needs) }}
+          jobs: ${{ toJSON(needs) }}

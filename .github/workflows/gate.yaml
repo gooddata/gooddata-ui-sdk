@@ -1,0 +1,169 @@
+name: gate
+on:
+  merge_group:
+    types:
+      - checks_requested
+jobs:
+  prepare-env:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    outputs:
+      branch: ${{ steps.branch.outputs.branch }}
+      ref: ${{ github.event.merge_group.head_ref }}
+      commit: ${{ github.event.merge_group.head_sha }}
+      pr_number: ${{ steps.pr-number.outputs.pr_number }}
+      project: ${{ github.repository }}
+      changed_files: ${{ steps.changed-files.outputs.all_changed_files }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v40
+      - name: Branch name
+        id: branch
+        run: |-
+          branch=$(echo "${{ github.event.merge_group.base_ref }}" | sed 's/^refs\/heads\///')
+          echo "branch=$branch" >> "$GITHUB_OUTPUT"
+                                
+      - name: PR number
+        id: pr-number
+        run: |-
+          pr_num=$(echo "${{ github.ref }}" | sed -n 's/.*pr-\([0-9]*\).*/\1/p')
+          echo "pr_number=$pr_num" >> "$GITHUB_OUTPUT"
+                                
+  gooddata-ui-sdk-unit-tests:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    needs:
+      - prepare-env
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Call Jenkins trigger
+        id: call-jenkins
+        uses: gooddata/github-actions-public/jenkins/trigger@master
+        with:
+          server: ${{ secrets.JENKINS_ADDRESS }}
+          folder: gooddata-ui-sdk
+          job-name: gooddata-ui-sdk-unit-tests
+          vault-url: ${{ secrets.VAULT_ADDRESS }}
+          params: |-
+            {
+              "GH_BRANCH": "${{ needs.prepare-env.outputs.branch }}",
+              "GH_REF": "${{ needs.prepare-env.outputs.ref }}",
+              "GH_COMMIT": "${{ needs.prepare-env.outputs.commit }}",
+              "GH_URL": "git@github.com:",
+              "GH_CHANGE": "${{ needs.prepare-env.outputs.pr_number }}",
+              "GH_PROJECT": "${{ needs.prepare-env.outputs.project }}",
+              "BUILD_BY_GITHUB": "true",
+              "GH_PIPELINE": "gate"
+            }
+          comment-pr: 'true'
+  gooddata-ui-sdk-cypress-tiger-isolated-zuul-pipeline:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    needs:
+      - prepare-env
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Check if branch matches
+        id: branch-matches
+        run: |-
+          branch=${{ needs.prepare-env.outputs.branch }}
+          branch_matches=$([[ $branch =~ ^(master|release) ]] && echo true || echo false)
+          echo "branch_matches=$branch_matches" >> "$GITHUB_OUTPUT"
+      - name: Call Jenkins trigger
+        id: call-jenkins
+        uses: gooddata/github-actions-public/jenkins/trigger@master
+        with:
+          server: ${{ secrets.JENKINS_ADDRESS }}
+          folder: gooddata-ui-sdk
+          job-name: gooddata-ui-sdk-cypress-tiger-isolated-zuul-pipeline
+          vault-url: ${{ secrets.VAULT_ADDRESS }}
+          params: |-
+            {
+              "GH_BRANCH": "${{ needs.prepare-env.outputs.branch }}",
+              "GH_REF": "${{ needs.prepare-env.outputs.ref }}",
+              "GH_COMMIT": "${{ needs.prepare-env.outputs.commit }}",
+              "GH_URL": "git@github.com:",
+              "GH_CHANGE": "${{ needs.prepare-env.outputs.pr_number }}",
+              "GH_PROJECT": "${{ needs.prepare-env.outputs.project }}",
+              "BUILD_BY_GITHUB": "true",
+              "GH_PIPELINE": "gate"
+            }
+          comment-pr: 'true'
+        if: steps.branch-matches.outputs.branch_matches == 'true'
+  gooddata-ui-sdk-compatibility-pipeline:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    needs:
+      - prepare-env
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Check if any matching file changed
+        id: changed-files
+        run: |
+          any_changed=false
+          patterns=('^libs/sdk-backend-tiger/.*$' '^libs/api-client-tiger/.*$' '^libs/sdk-backend-base/.*$')
+          for file in ${{ needs.prepare-env.outputs.changed_files }}; do
+              for pattern in "${patterns[@]}"; do
+                  if [[ $file =~ $pattern ]]; then
+                      any_changed=true
+                  fi
+              done
+          done
+          echo "any_changed=$any_changed" >> "$GITHUB_OUTPUT"
+      - name: Check if branch matches
+        id: branch-matches
+        run: |-
+          branch=${{ needs.prepare-env.outputs.branch }}
+          branch_matches=$([[ $branch =~ ^(master|release) ]] && echo true || echo false)
+          echo "branch_matches=$branch_matches" >> "$GITHUB_OUTPUT"
+      - name: Call Jenkins trigger
+        id: call-jenkins
+        uses: gooddata/github-actions-public/jenkins/trigger@master
+        with:
+          server: ${{ secrets.JENKINS_ADDRESS }}
+          folder: gooddata-ui-sdk
+          job-name: gooddata-ui-sdk-compatibility-pipeline
+          vault-url: ${{ secrets.VAULT_ADDRESS }}
+          params: |-
+            {
+              "GH_BRANCH": "${{ needs.prepare-env.outputs.branch }}",
+              "GH_REF": "${{ needs.prepare-env.outputs.ref }}",
+              "GH_COMMIT": "${{ needs.prepare-env.outputs.commit }}",
+              "GH_URL": "git@github.com:",
+              "GH_CHANGE": "${{ needs.prepare-env.outputs.pr_number }}",
+              "GH_PROJECT": "${{ needs.prepare-env.outputs.project }}",
+              "BUILD_BY_GITHUB": "true",
+              "GH_PIPELINE": "gate"
+            }
+          comment-pr: 'true'
+        if: steps.changed-files.outputs.any_changed == 'true' && steps.branch-matches.outputs.branch_matches == 'true'
+  ready-to-merge:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    if: always()
+    needs:
+      - prepare-env
+      - gooddata-ui-sdk-unit-tests
+      - gooddata-ui-sdk-cypress-tiger-isolated-zuul-pipeline
+      - gooddata-ui-sdk-compatibility-pipeline
+    steps:
+      - name: Check if needed jobs succeeded
+        uses: re-actors/alls-green@release/v1
+        with:
+          allowed-skips: ${{ toJSON(needs) }}
+          jobs: ${{ toJSON(needs) }}
