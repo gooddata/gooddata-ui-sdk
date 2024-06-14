@@ -2423,6 +2423,8 @@ export interface ILegacyInvertableListProps<T> {
     // (undocumented)
     isMobile?: boolean;
     // (undocumented)
+    isSearchFieldAutoFocused?: boolean;
+    // (undocumented)
     itemHeight: number;
     // (undocumented)
     items: ReadonlyArray<T>;

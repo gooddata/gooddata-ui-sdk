@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React, { Component } from "react";
 import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
 import cx from "classnames";
@@ -76,6 +76,7 @@ export interface ILegacyInvertableListProps<T> {
     actionsAsCheckboxes?: boolean;
     selectAllCheckbox?: boolean;
     rowItem?: React.ReactElement;
+    isSearchFieldAutoFocused?: boolean;
 }
 
 /**
@@ -116,6 +117,7 @@ export class LegacyInvertableList<T> extends Component<
         smallSearch: false,
         tagName: "",
         selectAllCheckbox: false,
+        isSearchFieldAutoFocused: true,
     };
 
     constructor(props: ILegacyInvertableListProps<T> & WrappedComponentProps) {
@@ -294,7 +296,7 @@ export class LegacyInvertableList<T> extends Component<
     private renderSearchField() {
         return this.props.showSearchField ? (
             <Input
-                autofocus
+                autofocus={this.props.isSearchFieldAutoFocused}
                 className="gd-list-searchfield gd-flex-item-mobile s-attribute-filter-button-search-field"
                 clearOnEsc
                 isSearch
