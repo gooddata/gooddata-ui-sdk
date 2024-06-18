@@ -77,6 +77,6 @@ jobs:
           BRANCH: ${{ inputs.source-branch }}
         run: |
           git add NOTICE
-          git commit -m "chore: update attribution file" -m "" -m "TRIVIAL"
+          git commit -m "chore: update attribution file" -m "risk: nonprod"
           git pull --rebase origin ${BRANCH}
           git push origin HEAD
