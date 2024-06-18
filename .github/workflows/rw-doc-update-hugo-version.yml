@@ -72,7 +72,7 @@ jobs:
               run: |
                     git add ${path_to_version_config}
                     git add ${path_to_redir_config}
-                    git commit -m "chore: update Hugo version to ${version}" -m "" -m "TRIVIAL"
+                    git commit -m "chore: update Hugo version to ${version}" -m "risk: nonprod"
                     git push origin ${brach_name}
               env:
                 brach_name: ${{inputs.source-branch}}
