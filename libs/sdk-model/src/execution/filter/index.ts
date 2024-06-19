@@ -300,7 +300,7 @@ export type IFilter =
  * @public
  */
 export interface IIdentifiableFilter {
-    localIdentifier: Identifier;
+    localIdentifier?: Identifier;
 }
 
 /**

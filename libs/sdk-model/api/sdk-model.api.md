@@ -1585,7 +1585,7 @@ export interface IGroupableCatalogItemBase extends ICatalogItemBase {
 // @public
 export interface IIdentifiableFilter {
     // (undocumented)
-    localIdentifier: Identifier;
+    localIdentifier?: Identifier;
 }
 
 // @public

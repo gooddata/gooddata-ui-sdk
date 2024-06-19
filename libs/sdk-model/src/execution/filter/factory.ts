@@ -28,7 +28,7 @@ import { DateAttributeGranularity } from "../../base/dateGranularities.js";
 import SparkMD5 from "spark-md5";
 import { sanitizeLocalId } from "../../sanitizeLocalId.js";
 
-function generateLocalId(prefix: string, objRef: ObjRef, inObject: IAttributeElements): string {
+export function generateLocalId(prefix: string, objRef: ObjRef, inObject: IAttributeElements): string {
     const hasher = new SparkMD5();
     hasher.append(JSON.stringify(inObject));
 
@@ -66,9 +66,7 @@ export function newPositiveAttributeFilter(
 
     return {
         positiveAttributeFilter: {
-            ...(localIdentifier
-                ? { localIdentifier }
-                : { localIdentifier: generateLocalId("paf", objRef, inObject) }),
+            ...(localIdentifier ? { localIdentifier } : {}),
             displayForm: objRef,
             in: inObject,
         },
@@ -107,9 +105,7 @@ export function newNegativeAttributeFilter(
 
     return {
         negativeAttributeFilter: {
-            ...(localIdentifier
-                ? { localIdentifier }
-                : { localIdentifier: generateLocalId("naf", objRef, notInObject) }),
+            ...(localIdentifier ? { localIdentifier } : {}),
             displayForm: objRef,
             notIn: notInObject,
         },
