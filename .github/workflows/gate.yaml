@@ -27,13 +27,13 @@ jobs:
         run: |-
           branch=$(echo "${{ github.event.merge_group.base_ref }}" | sed 's/^refs\/heads\///')
           echo "branch=$branch" >> "$GITHUB_OUTPUT"
-                                
+
       - name: PR number
         id: pr-number
         run: |-
           pr_num=$(echo "${{ github.ref }}" | sed -n 's/.*pr-\([0-9]*\).*/\1/p')
           echo "pr_number=$pr_num" >> "$GITHUB_OUTPUT"
-                                
+
   gooddata-ui-sdk-unit-tests:
     runs-on:
       group: infra1-runners-arc
@@ -48,10 +48,10 @@ jobs:
         id: call-jenkins
         uses: gooddata/github-actions-public/jenkins/trigger@master
         with:
-          server: ${{ secrets.JENKINS_ADDRESS }}
+          server: ${{ vars.JENKINS_ADDRESS }}
           folder: gooddata-ui-sdk
           job-name: gooddata-ui-sdk-unit-tests
-          vault-url: ${{ secrets.VAULT_ADDRESS }}
+          vault-url: ${{ vars.VAULT_ADDRESS }}
           params: |-
             {
               "GH_BRANCH": "${{ needs.prepare-env.outputs.branch }}",
@@ -84,10 +84,10 @@ jobs:
         id: call-jenkins
         uses: gooddata/github-actions-public/jenkins/trigger@master
         with:
-          server: ${{ secrets.JENKINS_ADDRESS }}
+          server: ${{ vars.JENKINS_ADDRESS }}
           folder: gooddata-ui-sdk
           job-name: gooddata-ui-sdk-cypress-tiger-isolated-zuul-pipeline
-          vault-url: ${{ secrets.VAULT_ADDRESS }}
+          vault-url: ${{ vars.VAULT_ADDRESS }}
           params: |-
             {
               "GH_BRANCH": "${{ needs.prepare-env.outputs.branch }}",
@@ -134,10 +134,10 @@ jobs:
         id: call-jenkins
         uses: gooddata/github-actions-public/jenkins/trigger@master
         with:
-          server: ${{ secrets.JENKINS_ADDRESS }}
+          server: ${{ vars.JENKINS_ADDRESS }}
           folder: gooddata-ui-sdk
           job-name: gooddata-ui-sdk-compatibility-pipeline
-          vault-url: ${{ secrets.VAULT_ADDRESS }}
+          vault-url: ${{ vars.VAULT_ADDRESS }}
           params: |-
             {
               "GH_BRANCH": "${{ needs.prepare-env.outputs.branch }}",

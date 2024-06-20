@@ -32,7 +32,7 @@ jobs:
         run: |-
           branch=$(echo "${{ github.ref }}" | sed 's/^refs\/heads\///')
           echo "branch=$branch" >> "$GITHUB_OUTPUT"
-                                
+
   gooddata-ui-sdk-storybook-publish:
     runs-on:
       group: infra1-runners-arc
@@ -47,10 +47,10 @@ jobs:
         id: call-jenkins
         uses: gooddata/github-actions-public/jenkins/trigger@master
         with:
-          server: ${{ secrets.JENKINS_ADDRESS }}
+          server: ${{ vars.JENKINS_ADDRESS }}
           folder: gooddata-ui-sdk
           job-name: gooddata-ui-sdk-storybook-publish
-          vault-url: ${{ secrets.VAULT_ADDRESS }}
+          vault-url: ${{ vars.VAULT_ADDRESS }}
           params: |-
             {
               "GH_BRANCH": "${{ needs.prepare-env.outputs.branch }}",
@@ -75,10 +75,10 @@ jobs:
         id: call-jenkins
         uses: gooddata/github-actions-public/jenkins/trigger@master
         with:
-          server: ${{ secrets.JENKINS_ADDRESS }}
+          server: ${{ vars.JENKINS_ADDRESS }}
           folder: gooddata-ui-sdk
           job-name: gooddata-ui-sdk-cypress-tiger-integrated-post-merge
-          vault-url: ${{ secrets.VAULT_ADDRESS }}
+          vault-url: ${{ vars.VAULT_ADDRESS }}
           params: |-
             {
               "GH_BRANCH": "${{ needs.prepare-env.outputs.branch }}",
