@@ -72,6 +72,7 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     dateFilterDropdownConfigurationSaveText: { id: "dateFilterDropdown.save" },
     dateFilterDropdownConfigurationCancelText: { id: "gs.list.cancel" },
     filterResetButtonTooltip: { id: "filter.resetButton.tooltip" },
+    crossFilterResetButtonTooltip: { id: "filter.crossFilterResetButton.tooltip" },
     filterAddValuesLimit: { id: "attributesDropdown.valuesLimiting.addLink" },
     filterAddValuesLimitPopupSearchPlaceholder: { id: "attributesDropdown.valuesLimiting.searchPlaceholder" },
     filterAddValuesLimitPopupSearchNoMatch: { id: "attributesDropdown.valuesLimiting.searchNoMatch" },

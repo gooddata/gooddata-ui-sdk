@@ -7,7 +7,12 @@ import { IDashboard, IAccessControlAware } from "@gooddata/sdk-model";
  */
 export type DashboardDescriptor = Pick<
     IDashboard,
-    "title" | "description" | "tags" | "disableCrossFiltering"
+    | "title"
+    | "description"
+    | "tags"
+    | "disableCrossFiltering"
+    | "disableUserFilterReset"
+    | "disableUserFilterSave"
 > &
     IAccessControlAware;
 

@@ -271,6 +271,8 @@ export {
     selectIsDashboardPrivate,
     selectDashboardWorkingDefinition,
     selectDisableDashboardCrossFiltering,
+    selectDisableDashboardUserFilterReset,
+    selectDisableDashboardUserFilterSave,
 } from "./meta/metaSelectors.js";
 export {
     selectListedDashboards,

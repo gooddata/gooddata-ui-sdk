@@ -51,6 +51,8 @@ export function convertAnalyticalDashboard(
         layout: cloneWithSanitizedIds(layout),
         plugins: dashboard.plugins?.map(convertDashboardPluginLinkToBackend),
         disableCrossFiltering: dashboard.disableCrossFiltering,
+        disableUserFilterReset: dashboard.disableUserFilterReset,
+        disableUserFilterSave: dashboard.disableUserFilterSave,
         version: "2",
     };
 }
