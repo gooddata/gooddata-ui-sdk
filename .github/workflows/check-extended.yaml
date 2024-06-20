@@ -22,7 +22,7 @@ jobs:
         run: |-
           branch=$(echo "${{ github.ref }}" | sed 's/^refs\/heads\///')
           echo "branch=$branch" >> "$GITHUB_OUTPUT"
-                                
+
       - name: Commit
         id: commit
         run: |-
@@ -30,7 +30,7 @@ jobs:
             "https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.issue.number }}" | \
             jq --raw-output .head.sha)
           echo "commit=$pr_head_sha" >> "$GITHUB_OUTPUT"
-                                
+
       - uses: actions/checkout@v4
         with:
           ref: refs/pull/${{ github.event.issue.number }}/merge
@@ -53,10 +53,10 @@ jobs:
         id: call-jenkins
         uses: gooddata/github-actions-public/jenkins/trigger@master
         with:
-          server: ${{ secrets.JENKINS_ADDRESS }}
+          server: ${{ vars.JENKINS_ADDRESS }}
           folder: gooddata-ui-sdk
           job-name: gooddata-ui-sdk-pull-request-dispatcher-pipeline
-          vault-url: ${{ secrets.VAULT_ADDRESS }}
+          vault-url: ${{ vars.VAULT_ADDRESS }}
           params: |-
             {
               "GH_BRANCH": "${{ needs.prepare-env.outputs.branch }}",

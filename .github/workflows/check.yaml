@@ -33,10 +33,10 @@ jobs:
         id: call-jenkins
         uses: gooddata/github-actions-public/jenkins/trigger@master
         with:
-          server: ${{ secrets.JENKINS_ADDRESS }}
+          server: ${{ vars.JENKINS_ADDRESS }}
           folder: gooddata-ui-sdk
           job-name: gooddata-ui-sdk-unit-tests
-          vault-url: ${{ secrets.VAULT_ADDRESS }}
+          vault-url: ${{ vars.VAULT_ADDRESS }}
           params: |-
             {
               "GH_BRANCH": "${{ needs.prepare-env.outputs.branch }}",
