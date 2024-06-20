@@ -53,7 +53,10 @@ export interface IAttributeFilterHandlerOptionsBase {
      */
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
 
-    displayAsLabel: ObjRef;
+    /**
+     * If specified, the attribute filter will display the elements in specified label form.
+     */
+    displayAsLabel?: ObjRef;
 }
 
 /**

@@ -594,8 +594,7 @@ export type IAttributeFilterHandlerOptions = ISingleSelectAttributeFilterHandler
 
 // @public
 export interface IAttributeFilterHandlerOptionsBase {
-    // (undocumented)
-    displayAsLabel: ObjRef;
+    displayAsLabel?: ObjRef;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     hiddenElements?: string[];
     staticElements?: IAttributeElement[];
