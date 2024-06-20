@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import React from "react";
 
 import { Bubble, BubbleHoverTrigger, Icon } from "@gooddata/sdk-ui-kit";
@@ -14,13 +14,17 @@ const alignPoints = [{ align: "bc tc" }];
  */
 export const ResetFiltersButton: React.FC = () => {
     const intl = useIntl();
-    const bubbleText = intl.formatMessage(messages.filterResetButtonTooltip);
 
-    const [canReset, resetFilters] = useResetFiltersButton();
+    const { canReset, resetFilters, resetType } = useResetFiltersButton();
 
     if (!canReset) {
         return null;
     }
+
+    const bubbleText =
+        resetType === "all"
+            ? intl.formatMessage(messages.filterResetButtonTooltip)
+            : intl.formatMessage(messages.crossFilterResetButtonTooltip);
 
     return (
         <div className="dash-filters-reset">

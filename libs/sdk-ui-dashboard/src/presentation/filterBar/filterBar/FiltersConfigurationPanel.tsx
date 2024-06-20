@@ -2,15 +2,22 @@
 import React, { useState } from "react";
 import {
     selectDisableDashboardCrossFiltering,
+    selectDisableDashboardUserFilterReset,
+    selectDisableDashboardUserFilterSave,
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../model/index.js";
 
-import { IAlignPoint, Icon, Typography } from "@gooddata/sdk-ui-kit";
+import { IAlignPoint, Icon, Typography, Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import { ConfigurationBubble } from "../../widget/common/configuration/ConfigurationBubble.js";
 import { metaActions } from "../../../model/store/meta/index.js";
 import { FormattedMessage } from "react-intl";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+
+const bubbleAlignPoints: IAlignPoint[] = [
+    { align: "tr tl", offset: { x: 0, y: 5 } },
+    { align: "tl tr", offset: { x: 0, y: 5 } },
+];
 
 const alignPoints: IAlignPoint[] = [
     {
@@ -52,10 +59,8 @@ export function FiltersConfigurationPanel() {
                             </Typography>
                         </div>
                         <div className="configuration-category">
-                            <Typography tagName="h3">
-                                <FormattedMessage id="filters.configurationPanel.sectionHeader.interactions" />
-                            </Typography>
                             <CrossFilteringToggle />
+                            <UserFiltersToggle />
                         </div>
                     </div>
                 </ConfigurationBubble>
@@ -72,17 +77,96 @@ function CrossFilteringToggle() {
         dispatch(metaActions.setDisableCrossFiltering(disable));
 
     return (
-        <label className="input-checkbox-toggle">
-            <input
-                type="checkbox"
-                checked={!disableCrossFiltering}
-                onChange={(e) => {
-                    setDisableCrossFiltering(!e.currentTarget.checked);
-                }}
-            />
-            <span className="input-label-text">
-                <FormattedMessage id="filters.configurationPanel.crossFiltering.toggle" />
-            </span>
-        </label>
+        <div className="configuration-category-item">
+            <label className="input-checkbox-toggle">
+                <input
+                    type="checkbox"
+                    checked={!disableCrossFiltering}
+                    onChange={(e) => {
+                        setDisableCrossFiltering(!e.currentTarget.checked);
+                    }}
+                />
+                <span className="input-label-text">
+                    <FormattedMessage id="filters.configurationPanel.crossFiltering.toggle" />
+                    <BubbleHoverTrigger
+                        showDelay={0}
+                        hideDelay={0}
+                        eventsOnBubble={true}
+                        className="configuration-category-item-tooltip-icon"
+                    >
+                        <span className="gd-icon-circle-question s-configuration-category-crossFiltering-tooltip" />
+                        <Bubble alignPoints={bubbleAlignPoints}>
+                            <FormattedMessage id="filters.configurationPanel.crossFiltering.toggle.tooltip" />
+                        </Bubble>
+                    </BubbleHoverTrigger>
+                </span>
+            </label>
+        </div>
+    );
+}
+
+function UserFiltersToggle() {
+    const disableUserFilterReset = useDashboardSelector(selectDisableDashboardUserFilterReset);
+    const disableUserFilterSave = useDashboardSelector(selectDisableDashboardUserFilterSave);
+
+    const dispatch = useDashboardDispatch();
+    const setDisableUserFilterReset = (disable: boolean) =>
+        dispatch(metaActions.setDisableUserFilterReset(disable));
+    const setDisableUserFilterSave = (disable: boolean) =>
+        dispatch(metaActions.setDisableUserFilterSave(disable));
+
+    return (
+        <>
+            <div className="configuration-category-item">
+                <label className="input-checkbox-toggle">
+                    <input
+                        type="checkbox"
+                        checked={!disableUserFilterReset}
+                        onChange={(e) => {
+                            setDisableUserFilterReset(!e.currentTarget.checked);
+                        }}
+                    />
+                    <span className="input-label-text">
+                        <FormattedMessage id="filters.configurationPanel.userFilterReset.toggle" />
+                        <BubbleHoverTrigger
+                            showDelay={0}
+                            hideDelay={0}
+                            eventsOnBubble={true}
+                            className="configuration-category-item-tooltip-icon"
+                        >
+                            <span className="gd-icon-circle-question s-configuration-category-userFilterReset-tooltip" />
+                            <Bubble alignPoints={bubbleAlignPoints}>
+                                <FormattedMessage id="filters.configurationPanel.userFilterReset.toggle.tooltip" />
+                            </Bubble>
+                        </BubbleHoverTrigger>
+                    </span>
+                </label>
+            </div>
+            <div className="configuration-category-item">
+                <label className="input-checkbox-toggle">
+                    <input
+                        type="checkbox"
+                        checked={!disableUserFilterSave}
+                        onChange={(e) => {
+                            setDisableUserFilterSave(!e.currentTarget.checked);
+                        }}
+                    />
+                    <span className="input-label-text">
+                        <FormattedMessage id="filters.configurationPanel.userFilterSave.toggle" />
+                        <BubbleHoverTrigger
+                            showDelay={0}
+                            hideDelay={0}
+                            eventsOnBubble={true}
+                            className="configuration-category-item-tooltip-icon"
+                        >
+                            <span className="gd-icon-circle-question s-configuration-category-userFilterSave-tooltip" />
+                            <Bubble alignPoints={bubbleAlignPoints}>
+                                <FormattedMessage id="filters.configurationPanel.userFilterSave.toggle.tooltip" />
+                            </Bubble>
+                        </BubbleHoverTrigger>
+                    </span>
+                </label>
+            </div>
+        </>
     );
 }

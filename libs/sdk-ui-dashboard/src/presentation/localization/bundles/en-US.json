@@ -394,21 +394,40 @@
         "limit": 0
     },
     "filters.configurationPanel.header": {
-        "value": "Configuration",
-        "comment": "Cross-filtering configuration panel - header.",
-        "limit": 0
-    },
-    "filters.configurationPanel.sectionHeader.interactions": {
-        "value": "Interactions",
-        "comment": "Cross-filtering configuration panel - interactions sub section header.",
+        "value": "Filters Configuration",
+        "comment": "Filtering configuration panel - header.",
         "limit": 0
     },
     "filters.configurationPanel.crossFiltering.toggle": {
-        "value": "Cross-filtering",
-        "comment": "Cross-filtering configuration panel - label for toggle that disables or enables cross-filtering.",
+        "value": "Allow cross-filtering",
+        "comment": "Filters Configuration - label for toggle that disables or enables cross-filtering.",
         "limit": 0
     },
-
+    "filters.configurationPanel.crossFiltering.toggle.tooltip": {
+        "value": "This will allow users to cross-filter between visualizations.",
+        "comment": "Filters Configuration - tooltip for toggle that disables or enables cross-filtering.",
+        "limit": 0
+    },
+    "filters.configurationPanel.userFilterReset.toggle": {
+        "value": "Allow users to reset",
+        "comment": "Filters Configuration - label for toggle that disables or enables user reset of filters.",
+        "limit": 0
+    },
+    "filters.configurationPanel.userFilterReset.toggle.tooltip": {
+        "value": "Allow users to reset filters to the default state.",
+        "comment": "Filters Configuration - tooltip for toggle that disables or enables user reset of filters.",
+        "limit": 0
+    },
+    "filters.configurationPanel.userFilterSave.toggle": {
+        "value": "Persist changes locally",
+        "comment": "Filters Configuration - label for toggle that disables or enables user save of filters.",
+        "limit": 0
+    },
+    "filters.configurationPanel.userFilterSave.toggle.tooltip": {
+        "value": "This will allow to automatically save changes to filters locally.",
+        "comment": "Filters Configuration - tooltip for toggle that disables or enables user save of filters.",
+        "limit": 0
+    },
     "kpi.noData": {
         "value": "No data for current filter settings. Try changing the filters.",
         "comment": "",
@@ -2278,6 +2297,11 @@
     },
     "filter.resetButton.tooltip": {
         "value": "Reset all filters",
+        "comment": "The tooltip of the reset button in the filter bar",
+        "limit": 0
+    },
+    "filter.crossFilterResetButton.tooltip": {
+        "value": "Reset cross filters",
         "comment": "The tooltip of the reset button in the filter bar",
         "limit": 0
     },

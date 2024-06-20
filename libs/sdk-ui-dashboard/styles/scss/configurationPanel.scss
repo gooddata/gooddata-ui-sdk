@@ -123,6 +123,17 @@
             padding-left: 0;
         }
 
+        .configuration-category-item {
+            display: block;
+            padding: variables.$filter-config-padding 0;
+            font-size: 12px;
+            line-height: 20px;
+
+            .input-label-text {
+                display: flex;
+            }
+        }
+
         .configuration-panel-header-title {
             color: kit-variables.$gd-color-state-blank;
             font-size: 11px;

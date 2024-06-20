@@ -6597,6 +6597,10 @@ interface IAnalyticalDashboard_2 {
     // (undocumented)
     disableCrossFiltering?: boolean;
     // (undocumented)
+    disableUserFilterReset?: boolean;
+    // (undocumented)
+    disableUserFilterSave?: boolean;
+    // (undocumented)
     filterContextRef?: ObjRef;
     // (undocumented)
     layout?: IDashboardLayout;

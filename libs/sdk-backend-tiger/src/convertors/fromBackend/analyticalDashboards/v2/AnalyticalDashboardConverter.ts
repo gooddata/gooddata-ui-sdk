@@ -74,6 +74,8 @@ interface IAnalyticalDashboardContent {
     plugins?: IDashboardPluginLink[];
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
     disableCrossFiltering?: boolean;
+    disableUserFilterReset?: boolean;
+    disableUserFilterSave?: boolean;
 }
 
 function convertDashboardPluginLink(
@@ -101,6 +103,8 @@ function getConvertedAnalyticalDashboardContent(
         ),
         plugins: analyticalDashboard.plugins?.map(convertDashboardPluginLink),
         disableCrossFiltering: analyticalDashboard.disableCrossFiltering,
+        disableUserFilterReset: analyticalDashboard.disableUserFilterReset,
+        disableUserFilterSave: analyticalDashboard.disableUserFilterSave,
     };
 }
 
@@ -121,6 +125,8 @@ export function convertDashboard(
         attributeFilterConfigs,
         dateFilterConfigs,
         disableCrossFiltering,
+        disableUserFilterReset,
+        disableUserFilterSave,
     } = getConvertedAnalyticalDashboardContent(content as AnalyticalDashboardModelV2.IAnalyticalDashboard);
 
     return {
@@ -146,6 +152,8 @@ export function convertDashboard(
         layout,
         plugins,
         disableCrossFiltering,
+        disableUserFilterReset,
+        disableUserFilterSave,
     };
 }
 

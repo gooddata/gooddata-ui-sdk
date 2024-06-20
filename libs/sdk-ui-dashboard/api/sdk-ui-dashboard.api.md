@@ -1556,7 +1556,7 @@ export interface DashboardDeletedPayload {
 }
 
 // @public (undocumented)
-export type DashboardDescriptor = Pick<IDashboard, "title" | "description" | "tags" | "disableCrossFiltering"> & IAccessControlAware;
+export type DashboardDescriptor = Pick<IDashboard, "title" | "description" | "tags" | "disableCrossFiltering" | "disableUserFilterReset" | "disableUserFilterSave"> & IAccessControlAware;
 
 // @public (undocumented)
 export type DashboardDispatch = Dispatch<AnyAction>;
@@ -6716,6 +6716,12 @@ export const selectDateHierarchyTemplates: DashboardSelector<IDateHierarchyTempl
 
 // @public
 export const selectDisableDashboardCrossFiltering: DashboardSelector<boolean>;
+
+// @public
+export const selectDisableDashboardUserFilterReset: DashboardSelector<boolean>;
+
+// @public
+export const selectDisableDashboardUserFilterSave: DashboardSelector<boolean>;
 
 // @public
 export const selectDisableDefaultDrills: DashboardSelector<boolean>;
