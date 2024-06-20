@@ -34,6 +34,8 @@ export type OnApplyCallbackType = (
     filter: IAttributeFilter,
     isInverted: boolean,
     selectionMode?: DashboardAttributeFilterSelectionMode,
+    selectionTitles?: IAttributeElement[],
+    displayAsLabel?: ObjRef,
 ) => void;
 
 /**
@@ -87,6 +89,7 @@ export interface IAttributeFilterCoreProps {
      *
      * Note: It's not possible to combine this property with "connectToPlaceholder" property. Either - provide a value, or a placeholder.
      * The 'onApply' callback must be specified in order to handle filter changes.
+     * if enableDuplicatedLabelValuesInAttributeFilter is true, then this filter definition needs to use primary label of given attribute
      */
     filter?: IAttributeFilter;
 
@@ -216,6 +219,13 @@ export interface IAttributeFilterCoreProps {
      * @alpha
      */
     customIcon?: IFilterButtonCustomIcon;
+
+    /**
+     * Provide a attribute filter label used for representing elements in component.
+     *
+     * @alpha
+     */
+    displayAsLabel?: ObjRef;
 
     /**
      * Specify function which will be called when user clicks 'Apply' button.

@@ -1,7 +1,7 @@
 // (C) 2019-2024 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { invariant } from "ts-invariant";
-import { ObjRef, ObjRefInScope } from "../../objRef/index.js";
+import { Identifier, ObjRef, ObjRefInScope } from "../../objRef/index.js";
 import { DateAttributeGranularity, AllTimeGranularity } from "../../base/dateGranularities.js";
 
 /**
@@ -43,7 +43,7 @@ export type IAttributeElements = IAttributeElementsByRef | IAttributeElementsByV
  *
  * @public
  */
-export interface IPositiveAttributeFilterBody {
+export interface IPositiveAttributeFilterBody extends IIdentifiableFilter {
     /**
      * Display form whose attribute elements are included in the 'in' list.
      */
@@ -82,7 +82,7 @@ export interface IPositiveAttributeFilter {
  *
  * @public
  */
-export interface INegativeAttributeFilterBody {
+export interface INegativeAttributeFilterBody extends IIdentifiableFilter {
     /**
      * Display form whose attribute elements are included in the 'notIn' list.
      */
@@ -293,6 +293,15 @@ export type IFilter =
     | INegativeAttributeFilter
     | IMeasureValueFilter
     | IRankingFilter;
+
+/**
+ * Filter able to identify itself via local identifier
+ *
+ * @public
+ */
+export interface IIdentifiableFilter {
+    localIdentifier?: Identifier;
+}
 
 /**
  * Represents a filter specification variant where either the actual filter or a 'null' filter is
@@ -643,6 +652,33 @@ export function filterObjRef(filter: IFilter): ObjRef | undefined {
     }
     if (isRelativeDateFilter(filter)) {
         return filter.relativeDateFilter.dataSet;
+    }
+    return undefined;
+}
+
+/**
+ * Gets local identifier of filter.
+ *
+ * @remarks
+ * So far valid only for attribute filters.
+ *
+ * @param filter - filter to work with
+ * @returns local identifier of filter object if defined, undefined otherwise
+ * @public
+ */
+export function filterLocalIdentifier(filter: IFilter): string | undefined;
+export function filterLocalIdentifier(filter: IFilter): string | undefined {
+    invariant(filter, "filter must be specified");
+
+    if (!isAttributeFilter(filter)) {
+        return undefined;
+    }
+
+    if (isPositiveAttributeFilter(filter)) {
+        return filter.positiveAttributeFilter.localIdentifier;
+    }
+    if (isNegativeAttributeFilter(filter)) {
+        return filter.negativeAttributeFilter.localIdentifier;
     }
     return undefined;
 }

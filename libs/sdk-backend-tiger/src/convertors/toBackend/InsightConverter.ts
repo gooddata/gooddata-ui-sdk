@@ -1,4 +1,4 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { IInsight, IInsightDefinition } from "@gooddata/sdk-model";
 import { VisualizationObjectModelV2 } from "@gooddata/api-client-tiger";
 import { cloneWithSanitizedIds } from "./IdSanitization.js";
@@ -35,6 +35,9 @@ export const convertInsight = (
     return {
         buckets: cloneWithSanitizedIds(sanitizedInsight.insight.buckets),
         filters: cloneWithSanitizedIds(sanitizedInsight.insight.filters),
+        ...(sanitizedInsight.insight.attributeFilterConfigs
+            ? { attributeFilterConfigs: sanitizedInsight.insight.attributeFilterConfigs }
+            : {}),
         sorts: cloneWithSanitizedIds(sanitizedInsight.insight.sorts),
         properties: sanitizedInsight.insight.properties,
         visualizationUrl: sanitizedInsight.insight.visualizationUrl,

@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import {
     JsonApiAnalyticalDashboardOutWithLinks,
     JsonApiAttributeOut,
@@ -78,9 +78,11 @@ function convertAttributeLabels(
                 return undefined;
             }
 
-            const isDefault = defaultView ? defaultView.id === label.id : !!label.attributes?.primary;
+            const isPrimary = !!label.attributes?.primary;
 
-            return convertLabelWithLinks(label, attribute.id, isDefault);
+            const isDefault = defaultView ? defaultView.id === label.id : isPrimary;
+
+            return convertLabelWithLinks(label, attribute.id, isDefault, isPrimary);
         })
         .filter((df): df is IAttributeDisplayFormMetadataObject => df !== undefined);
 }
@@ -126,6 +128,7 @@ function convertLabelWithLinks(
     label: JsonApiLabelOutWithLinks,
     attributeId: string,
     isDefault: boolean,
+    isPrimary: boolean,
 ): IAttributeDisplayFormMetadataObject {
     return newAttributeDisplayFormMetadataObject(idRef(label.id, "displayForm"), (m) =>
         m
@@ -135,6 +138,7 @@ function convertLabelWithLinks(
             .uri(label.links!.self)
             .attribute(idRef(attributeId, "attribute"))
             .isDefault(isDefault)
+            .isPrimary(isPrimary)
             .displayFormType(convertLabelType(label.attributes?.valueType)),
     );
 }

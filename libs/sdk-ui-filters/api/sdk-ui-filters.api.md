@@ -123,6 +123,7 @@ export type AttributeFilterControllerData = {
     parentFilterAttributes: IAttributeMetadataObject[];
     displayForms: IAttributeDisplayFormMetadataObject[];
     currentDisplayFormRef: ObjRef;
+    currentDisplayAsDisplayFormRef: ObjRef;
     enableShowingFilteredElements?: boolean;
     irrelevantSelection?: IAttributeElement[];
     limitingValidationItems?: ObjRef[];
@@ -392,6 +393,8 @@ export interface IAttributeFilterCoreProps {
     dependentDateFilters?: IDashboardDateFilter[];
     // @alpha
     disabled?: boolean;
+    // @alpha
+    displayAsLabel?: ObjRef;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     filter?: IAttributeFilter;
     fullscreenOnMobile?: boolean;
@@ -525,6 +528,7 @@ export interface IAttributeFilterElementsSelectItemProps {
     onDeselect: () => void;
     onSelect: () => void;
     onSelectOnly: () => void;
+    primaryLabelTitle?: string;
 }
 
 // @beta
@@ -590,6 +594,7 @@ export type IAttributeFilterHandlerOptions = ISingleSelectAttributeFilterHandler
 
 // @public
 export interface IAttributeFilterHandlerOptionsBase {
+    displayAsLabel?: ObjRef;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     hiddenElements?: string[];
     staticElements?: IAttributeElement[];
@@ -598,6 +603,7 @@ export interface IAttributeFilterHandlerOptionsBase {
 // @public
 export interface IAttributeFilterLoader extends IAttributeLoader, IAttributeElementLoader {
     getFilter(): IAttributeFilter;
+    getFilterToDisplay(): IAttributeFilter;
     getInitError(): GoodDataSdkError | undefined;
     getInitStatus(): AsyncOperationStatus;
     init(correlation?: Correlation): void;
@@ -606,6 +612,8 @@ export interface IAttributeFilterLoader extends IAttributeLoader, IAttributeElem
     onInitStart: CallbackRegistration<OnInitStartCallbackPayload>;
     onInitSuccess: CallbackRegistration<OnInitSuccessCallbackPayload>;
     onUpdate: CallbackRegistration<void>;
+    // (undocumented)
+    setDisplayAsLabel(displayAsLabel: ObjRef): void;
 }
 
 // @beta
@@ -801,6 +809,8 @@ export interface ILoadElementsOptions {
     elements?: ElementsQueryOptionsElementsSpecification;
     // (undocumented)
     excludePrimaryLabel?: boolean;
+    // (undocumented)
+    filterByPrimaryLabel?: boolean;
     // (undocumented)
     includeTotalCountWithoutFilters?: boolean;
     // (undocumented)
@@ -1053,6 +1063,8 @@ export interface IUseAttributeFilterHandlerProps {
     // (undocumented)
     backend: IAnalyticalBackend;
     // (undocumented)
+    displayAsLabel: ObjRef;
+    // (undocumented)
     enableDuplicatedLabelValuesInAttributeFilter: boolean;
     // (undocumented)
     filter: IAttributeFilter;
@@ -1101,7 +1113,7 @@ export function newAttributeFilterHandler(backend: IAnalyticalBackend, workspace
 export function newAttributeFilterHandler(backend: IAnalyticalBackend, workspace: string, attributeFilter: IAttributeFilter, options: IMultiSelectAttributeFilterHandlerOptions): IMultiSelectAttributeFilterHandler;
 
 // @public (undocumented)
-export type OnApplyCallbackType = (filter: IAttributeFilter, isInverted: boolean, selectionMode?: DashboardAttributeFilterSelectionMode) => void;
+export type OnApplyCallbackType = (filter: IAttributeFilter, isInverted: boolean, selectionMode?: DashboardAttributeFilterSelectionMode, selectionTitles?: IAttributeElement[], displayAsLabel?: ObjRef) => void;
 
 // @public
 export type OnInitCancelCallbackPayload = CallbackPayloadWithCorrelation;

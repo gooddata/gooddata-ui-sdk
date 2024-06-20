@@ -72,7 +72,7 @@ export function* loadNextElementsPageSaga(
 
         const result = yield call(elementsSaga, loadOptionsWithExcludePrimaryLabel, cacheId);
 
-        yield put(actions.loadNextElementsPageSuccess({ ...result, correlation }));
+        yield put(actions.loadNextElementsPageSuccess({ ...result, correlation, context }));
     } catch (error) {
         yield put(
             actions.loadNextElementsPageError({

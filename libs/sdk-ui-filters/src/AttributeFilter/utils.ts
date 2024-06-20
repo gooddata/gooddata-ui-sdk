@@ -42,6 +42,13 @@ export function getElementTitle(element: IAttributeElement, intl: IntlShape) {
 /**
  * @internal
  */
+export function getElementPrimaryTitle(element: IAttributeElement) {
+    return element.uri && element.uri !== element.title ? element.uri : "";
+}
+
+/**
+ * @internal
+ */
 export function getElementTitles(elements: IAttributeElement[], intl: IntlShape) {
     return elements.map((el) => getElementTitle(el, intl)).join(", ");
 }

@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { Action, AnyAction, configureStore, Middleware } from "@reduxjs/toolkit";
 import defaultReduxSaga from "redux-saga";
 import { actions, sliceReducer } from "./slice.js";
@@ -7,6 +7,7 @@ import { AttributeFilterState, initialState } from "./state.js";
 import { AttributeFilterHandlerStore, AttributeFilterHandlerStoreContext } from "./types.js";
 import {
     filterAttributeElements,
+    filterLocalIdentifier,
     filterObjRef,
     isAttributeElementsByValue,
     isNegativeAttributeFilter,
@@ -58,6 +59,7 @@ export function createAttributeFilterHandlerStore(
     });
 
     const displayFormRef = filterObjRef(context.attributeFilter);
+    const localIdentifier = filterLocalIdentifier(context.attributeFilter);
     const elements = filterAttributeElements(context.attributeFilter);
     const elementsForm = isAttributeElementsByValue(elements) ? "values" : "uris";
     const elementKeys = isAttributeElementsByValue(elements) ? elements.values : elements.uris;
@@ -66,7 +68,9 @@ export function createAttributeFilterHandlerStore(
     const store = configureStore({
         preloadedState: {
             ...initialState,
+            localIdentifier,
             displayFormRef,
+            displayAsDisplayFormRef: context.displayAsLabel,
             elementsForm,
             selection: {
                 commited: {

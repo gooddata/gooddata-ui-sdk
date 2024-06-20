@@ -88,6 +88,7 @@ import {
     selectInitTotalCountStatus,
     selectInitTotalCountError,
     selectLimitingValidationItems,
+    selectAttributeFilterToDisplay,
 } from "./redux/index.js";
 import { newAttributeFilterCallbacks } from "./callbacks.js";
 import { AttributeFilterHandlerConfig } from "./types.js";
@@ -386,6 +387,10 @@ export class AttributeFilterReduxBridge {
     // Elements options
     //
 
+    setDisplayAsLabel = (displayAsLabel: ObjRef, correlation?: Correlation): void => {
+        this.redux.dispatch(actions.setDisplayAsLabel({ displayAsLabel, correlation }));
+    };
+
     getOffset = (): number => {
         return this.redux.select(selectOffset);
     };
@@ -598,6 +603,10 @@ export class AttributeFilterReduxBridge {
 
     getFilter = (): IAttributeFilter => {
         return this.redux.select(selectAttributeFilter);
+    };
+
+    getFilterToDisplay = (): IAttributeFilter => {
+        return this.redux.select(selectAttributeFilterToDisplay);
     };
 
     onUpdate: CallbackRegistration<void> = (cb) => {

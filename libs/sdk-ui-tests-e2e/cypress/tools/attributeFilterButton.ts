@@ -1,4 +1,5 @@
 // (C) 2022-2024 GoodData Corporation
+import { camelCase } from "lodash";
 export class AttributeFilterButton {
     private attributeFilterUniqueSelector;
 
@@ -100,12 +101,14 @@ export class AttributeFilterButton {
         this.searchElements(attributeValue);
         if (only) {
             this.getDropdownElement()
-                .find(`.s-attribute-filter-list-item[title="${attributeValue}"] .gd-list-item-only`)
+                .find(`.s-attribute-filter-list-item-${camelCase(attributeValue)} .gd-list-item-only`)
                 .invoke("show")
                 .click();
             return this;
         }
-        this.getDropdownElement().find(`.s-attribute-filter-list-item[title="${attributeValue}"]`).click();
+        this.getDropdownElement()
+            .find(`.s-attribute-filter-list-item-${camelCase(attributeValue)}`)
+            .click();
         return this;
     }
 

@@ -216,6 +216,11 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
                         }),
                         ...(this.validateBy && { validateBy: this.validateBy.map(this.mapValidationItems) }),
                         ...(cacheId && { cacheId: cacheId }),
+                        ...(options?.filterByPrimaryLabel && {
+                            filterBy: {
+                                labelType: FilterByLabelTypeEnum.PRIMARY,
+                            },
+                        }),
                     };
 
                     const elementsRequestWrapped: Parameters<

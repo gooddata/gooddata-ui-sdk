@@ -204,4 +204,11 @@ export interface IAttributeFilterElementsSelectItemProps {
      * @beta
      */
     fullscreenOnMobile?: boolean;
+
+    /**
+     * Title of attribute's primary label
+     *
+     * @beta
+     */
+    primaryLabelTitle?: string;
 }

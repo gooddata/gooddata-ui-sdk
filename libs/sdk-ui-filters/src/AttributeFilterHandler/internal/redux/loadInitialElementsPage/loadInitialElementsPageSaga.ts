@@ -73,7 +73,7 @@ export function* loadInitialElementsPageSaga(
             actions.setLimitingAttributeFiltersAttributes({ attributes: limitingAttributeFiltersAttributes }),
         );
         yield put(actions.setCacheId({ cacheId: result.cacheId }));
-        yield put(actions.loadInitialElementsPageSuccess({ ...result, correlation }));
+        yield put(actions.loadInitialElementsPageSuccess({ ...result, correlation, context }));
     } catch (error) {
         yield put(
             actions.loadInitialElementsPageError({

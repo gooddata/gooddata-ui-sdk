@@ -476,6 +476,9 @@ export type FilterContextItem = IDashboardAttributeFilter | IDashboardDateFilter
 export function filterIsEmpty(filter: IAttributeFilter): boolean;
 
 // @public
+export function filterLocalIdentifier(filter: IFilter): string | undefined;
+
+// @public
 export function filterMeasureRef(filter: IFilter): ObjRefInScope | undefined;
 
 // @public
@@ -634,6 +637,7 @@ export interface IAttributeDisplayFormMetadataObject extends IMetadataObject {
     attribute: ObjRef;
     displayFormType?: AttributeDisplayFormType | string;
     isDefault?: boolean;
+    isPrimary?: boolean;
     // (undocumented)
     type: "displayForm";
 }
@@ -662,6 +666,16 @@ export interface IAttributeElementsByValue {
 
 // @public
 export type IAttributeFilter = IPositiveAttributeFilter | INegativeAttributeFilter;
+
+// @public
+export type IAttributeFilterConfig = {
+    displayAsLabel: ObjRef;
+};
+
+// @public
+export type IAttributeFilterConfigs = {
+    [filterLocalIdentifier: string]: IAttributeFilterConfig;
+};
 
 // @public
 export interface IAttributeHeaderFormOf {
@@ -1569,6 +1583,12 @@ export interface IGroupableCatalogItemBase extends ICatalogItemBase {
 }
 
 // @public
+export interface IIdentifiableFilter {
+    // (undocumented)
+    localIdentifier?: Identifier;
+}
+
+// @public
 export interface IInlineMeasureDefinition {
     // (undocumented)
     inlineDefinition: {
@@ -1595,6 +1615,7 @@ export type IInsightDefinition = {
         visualizationUrl: string;
         buckets: IBucket[];
         filters: IFilter[];
+        attributeFilterConfigs?: IAttributeFilterConfigs;
         sorts: ISortItem[];
         properties: VisualizationProperties;
     };
@@ -1891,7 +1912,7 @@ export interface INegativeAttributeFilter {
 }
 
 // @public
-export interface INegativeAttributeFilterBody {
+export interface INegativeAttributeFilterBody extends IIdentifiableFilter {
     displayForm: ObjRef;
     notIn: IAttributeElements;
 }
@@ -1909,6 +1930,9 @@ export class InlineMeasureBuilder extends MeasureBuilderBase<IInlineMeasureDefin
 
 // @public
 export type InlineMeasureBuilderInput = string | IMeasure<IInlineMeasureDefinition>;
+
+// @public
+export function insightAttributeFilterConfigs(insight: IInsightDefinition): IAttributeFilterConfigs | undefined;
 
 // @public
 export function insightAttributes(insight: IInsightDefinition, attributePredicate?: AttributePredicate): IAttribute[];
@@ -1934,6 +1958,8 @@ export const insightCreatedComparator: (direction: ComparatorDirection_2) => ICo
 // @internal
 export class InsightDefinitionBuilder {
     constructor(visualizationUrl: string);
+    // (undocumented)
+    attributeFilterConfigs: (attributeFilterConfigs: IAttributeFilterConfigs) => InsightDefinitionBuilder;
     // (undocumented)
     buckets: (buckets: IBucket[]) => InsightDefinitionBuilder;
     // (undocumented)
@@ -2163,7 +2189,7 @@ export interface IPositiveAttributeFilter {
 }
 
 // @public
-export interface IPositiveAttributeFilterBody {
+export interface IPositiveAttributeFilterBody extends IIdentifiableFilter {
     displayForm: ObjRef;
     in: IAttributeElements;
 }
@@ -3710,13 +3736,13 @@ export function newMeasureValueFilter(measureOrRef: IMeasure | ObjRefInScope | s
 export function newMeasureValueFilter(measureOrRef: IMeasure | ObjRefInScope | LocalIdRef | string, operator: RangeConditionOperator, from: number, to: number, treatNullValuesAs?: number): IMeasureValueFilter;
 
 // @public
-export function newNegativeAttributeFilter(attributeOrRef: IAttribute | ObjRef | Identifier, notInValues: IAttributeElements | string[]): INegativeAttributeFilter;
+export function newNegativeAttributeFilter(attributeOrRef: IAttribute | ObjRef | Identifier, notInValues: IAttributeElements | string[], localIdentifier?: string): INegativeAttributeFilter;
 
 // @public
 export function newPopMeasure(measureOrLocalId: MeasureOrLocalId, popAttrIdOrRef: ObjRef | Identifier, modifications?: MeasureModifications<PoPMeasureBuilder>): IMeasure<IPoPMeasureDefinition>;
 
 // @public
-export function newPositiveAttributeFilter(attributeOrRef: IAttribute | ObjRef | Identifier, inValues: IAttributeElements | string[]): IPositiveAttributeFilter;
+export function newPositiveAttributeFilter(attributeOrRef: IAttribute | ObjRef | Identifier, inValues: IAttributeElements | string[], localIdentifier?: string): IPositiveAttributeFilter;
 
 // @public
 export function newPreviousPeriodMeasure(measureIdOrLocalId: MeasureOrLocalId, dateDataSets: IPreviousPeriodDateDataSetSimple[], modifications?: MeasureModifications<PreviousPeriodMeasureBuilder>): IMeasure<IPreviousPeriodMeasureDefinition>;
