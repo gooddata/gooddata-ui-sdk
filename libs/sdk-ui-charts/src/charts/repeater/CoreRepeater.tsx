@@ -1,5 +1,5 @@
 // (C) 2024 GoodData Corporation
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo, useEffect } from "react";
 import { WrappedComponentProps, injectIntl, useIntl } from "react-intl";
 import noop from "lodash/noop.js";
 import {
@@ -18,7 +18,7 @@ import { ThemeContextProvider, useTheme, withTheme } from "@gooddata/sdk-ui-them
 import { IChartConfig, ICoreChartProps } from "../../interfaces/index.js";
 import { RepeaterChart } from "./internal/RepeaterChart.js";
 import { RepeaterColumnResizedCallback } from "./publicTypes.js";
-import { ColorFactory, getValidColorPalette } from "../../highcharts/index.js";
+import { getValidColorPalette, ColorFactory } from "../../highcharts/index.js";
 import { getWindowSize } from "./internal/repeaterAgGridDataSource.js";
 
 export * from "./publicTypes.js";
@@ -86,6 +86,10 @@ export const CoreRepeaterImpl: React.FC<ICoreRepeaterChartProps> = (props) => {
     }, [config]);
 
     const theme = useTheme();
+    const colorMapping = JSON.stringify([
+        configWithColorPalette.colorPalette,
+        configWithColorPalette.colorMapping,
+    ]);
     useEffect(() => {
         if (result) {
             const colorStrategy = ColorFactory.getColorStrategy(
@@ -108,7 +112,8 @@ export const CoreRepeaterImpl: React.FC<ICoreRepeaterChartProps> = (props) => {
                 },
             });
         }
-    }, [theme, configWithColorPalette.colorPalette, configWithColorPalette.colorMapping, pushData, result]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [theme, colorMapping, pushData, result]);
 
     useEffect(() => {
         if (result) {
@@ -188,7 +193,7 @@ const CoreRepeaterWithIntl = injectIntl(withTheme(CoreRepeaterImpl));
  * @internal
  */
 export const CoreRepeater: React.FC<ICoreRepeaterChartProps> = (props) => (
-    <ThemeContextProvider theme={props.theme || {}} themeIsLoading={false}>
+    <ThemeContextProvider theme={props.theme} themeIsLoading={false}>
         <IntlWrapper locale={props.locale}>
             <CoreRepeaterWithIntl {...props} />
         </IntlWrapper>
