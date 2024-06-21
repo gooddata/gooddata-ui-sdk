@@ -7,6 +7,7 @@ import {
     ActionsApiGetTabularExportRequest,
     TabularExportRequest,
     TabularExportRequestFormatEnum,
+    Settings,
 } from "@gooddata/api-client-tiger";
 import {
     IDataView,
@@ -208,11 +209,18 @@ export class TigerExecutionResult implements IExecutionResult {
             ? TabularExportRequestFormatEnum[uppercaseFormat]
             : TabularExportRequestFormatEnum.CSV;
 
-        const settings = {
+        const settings: Settings = {
             ...(format === TabularExportRequestFormatEnum.XLSX
                 ? { mergeHeaders: Boolean(options.mergeHeaders), showFilters: Boolean(options.showFilters) }
                 : {}),
-            ...(format === TabularExportRequestFormatEnum.PDF ? options.pdfConfiguration : {}),
+            ...(format === TabularExportRequestFormatEnum.PDF
+                ? {
+                      showFilters: Boolean(options.showFilters),
+                      pdfPageSize: options.pdfConfiguration?.orientation,
+                      pdfTopLeftContent: options.pdfConfiguration?.topLeftContent,
+                      pdfTopRightContent: options.pdfConfiguration?.topRightContent,
+                  }
+                : {}),
         };
 
         const payload: TabularExportRequest = {

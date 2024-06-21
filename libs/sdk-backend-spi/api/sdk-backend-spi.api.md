@@ -611,8 +611,9 @@ export type IExportDefinitionsQueryResult = IPagedResource<IExportDefinition>;
 
 // @public
 export interface IExportPdfConfig {
-    // (undocumented)
-    orientation: "portrait" | "landscape";
+    orientation?: string;
+    topLeftContent?: string;
+    topRightContent?: string;
 }
 
 // @public
