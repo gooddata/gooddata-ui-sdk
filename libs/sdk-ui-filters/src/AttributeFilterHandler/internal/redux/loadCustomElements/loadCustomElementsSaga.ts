@@ -54,7 +54,14 @@ export function* loadCustomElementsSaga(
         });
 
         if (result) {
-            yield put(actions.loadCustomElementsSuccess({ ...result, correlation, context }));
+            yield put(
+                actions.loadCustomElementsSuccess({
+                    ...result,
+                    correlation,
+                    enableDuplicatedLabelValuesInAttributeFilter:
+                        context.enableDuplicatedLabelValuesInAttributeFilter,
+                }),
+            );
             return result;
         } else if (canceled || anotherRequest) {
             yield put(actions.loadCustomElementsCancel({ correlation }));

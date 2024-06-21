@@ -6,7 +6,6 @@ import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { Correlation, ILoadElementsOptions, ILoadElementsResult } from "../../../types/index.js";
 import { AttributeFilterReducer } from "../store/state.js";
 import { getElementCacheKey } from "../common/selectors.js";
-import { AttributeFilterHandlerStoreContext } from "../store/types.js";
 
 const loadCustomElementsRequest: AttributeFilterReducer<
     PayloadAction<{ options: ILoadElementsOptions; correlation: Correlation | undefined }>
@@ -20,16 +19,16 @@ const loadCustomElementsSuccess: AttributeFilterReducer<
     PayloadAction<
         ILoadElementsResult & {
             correlation?: Correlation;
-            context: AttributeFilterHandlerStoreContext;
+            enableDuplicatedLabelValuesInAttributeFilter: boolean;
         }
     >
 > = (state, action) => {
     const keys = [];
 
-    const { context } = action.payload;
+    const { enableDuplicatedLabelValuesInAttributeFilter } = action.payload;
 
     action.payload.elements.forEach((el) => {
-        const cacheKey = getElementCacheKey(state, el, context.enableDuplicatedLabelValuesInAttributeFilter);
+        const cacheKey = getElementCacheKey(state, el, enableDuplicatedLabelValuesInAttributeFilter);
         if (!state.elements.cache[cacheKey]) {
             state.elements.cache[cacheKey] = el;
         }

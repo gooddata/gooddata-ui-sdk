@@ -6,7 +6,6 @@ import identity from "lodash/identity.js";
 import { Correlation, ILoadElementsResult } from "../../../types/index.js";
 import { getElementCacheKey } from "../common/selectors.js";
 import { AttributeFilterReducer } from "../store/state.js";
-import { AttributeFilterHandlerStoreContext } from "../store/types.js";
 
 const loadInitialElementsPageRequest: AttributeFilterReducer<PayloadAction<{ correlation: Correlation }>> =
     identity;
@@ -25,21 +24,21 @@ const loadInitialElementsPageSuccess: AttributeFilterReducer<
     PayloadAction<
         ILoadElementsResult & {
             correlation: Correlation;
-            context: AttributeFilterHandlerStoreContext;
+            enableDuplicatedLabelValuesInAttributeFilter: boolean;
         }
     >
 > = (state, action) => {
-    const { context } = action.payload;
+    const { enableDuplicatedLabelValuesInAttributeFilter } = action.payload;
     state.elements.initialPageLoad.status = "success";
     state.elements.totalCountWithCurrentSettings = action.payload.totalCount;
     action.payload.elements.forEach((el) => {
-        const cacheKey = getElementCacheKey(state, el, context.enableDuplicatedLabelValuesInAttributeFilter);
+        const cacheKey = getElementCacheKey(state, el, enableDuplicatedLabelValuesInAttributeFilter);
         if (!state.elements.cache[cacheKey]) {
             state.elements.cache[cacheKey] = el;
         }
     });
     state.elements.data = action.payload.elements.map((el) =>
-        getElementCacheKey(state, el, context.enableDuplicatedLabelValuesInAttributeFilter),
+        getElementCacheKey(state, el, enableDuplicatedLabelValuesInAttributeFilter),
     );
     state.elements.lastLoadedOptions = action.payload.options;
 };
