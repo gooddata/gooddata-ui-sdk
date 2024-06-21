@@ -73,7 +73,14 @@ export function* loadInitialElementsPageSaga(
             actions.setLimitingAttributeFiltersAttributes({ attributes: limitingAttributeFiltersAttributes }),
         );
         yield put(actions.setCacheId({ cacheId: result.cacheId }));
-        yield put(actions.loadInitialElementsPageSuccess({ ...result, correlation, context }));
+        yield put(
+            actions.loadInitialElementsPageSuccess({
+                ...result,
+                correlation,
+                enableDuplicatedLabelValuesInAttributeFilter:
+                    context.enableDuplicatedLabelValuesInAttributeFilter,
+            }),
+        );
     } catch (error) {
         yield put(
             actions.loadInitialElementsPageError({

@@ -69,72 +69,6 @@ exports[`AttributeFilterHandler > loadNextElementsPage() that was successful sho
 [
   {
     "cacheId": undefined,
-    "context": {
-      "attributeFilter": {
-        "positiveAttributeFilter": {
-          "displayForm": {
-            "identifier": "label.f_product.product.name",
-            "type": "displayForm",
-          },
-          "in": {
-            "uris": [
-              "/gdc/md/referenceworkspace/obj/1054/elements?id=165678",
-              "/gdc/md/referenceworkspace/obj/1054/elements?id=165847",
-            ],
-          },
-        },
-      },
-      "backend": {
-        "authenticate": [Function],
-        "capabilities": {
-          "allowsInconsistentRelations": false,
-          "canCalculateGrandTotals": true,
-          "canCalculateNativeTotals": true,
-          "canCalculateSubTotals": true,
-          "canCalculateTotals": true,
-          "supportsCsvUploader": true,
-          "supportsCustomColorPalettes": true,
-          "supportsElementUris": true,
-          "supportsElementsQueryParentFiltering": true,
-          "supportsEveryoneUserGroupForAccessControl": true,
-          "supportsHierarchicalWorkspaces": false,
-          "supportsKpiWidget": false,
-          "supportsOwners": true,
-          "supportsWidgetEntity": true,
-        },
-        "config": {
-          "attributeElementsFiltering": {
-            "attributeFilters": {
-              "label.f_product.product.name": [Function],
-            },
-            "dateFilters": {
-              "dt_snapshotdate_timestamp.day": [Function],
-            },
-            "measures": {
-              "87a053b0-3947-49f3-b0c5-de53fd01f050": [Function],
-            },
-          },
-        },
-        "currentUser": [Function],
-        "dataSources": [Function],
-        "deauthenticate": [Function],
-        "entitlements": [Function],
-        "isAuthenticated": [Function],
-        "onHostname": [Function],
-        "organization": [Function],
-        "organizations": [Function],
-        "withAuthentication": [Function],
-        "withTelemetry": [Function],
-        "workspace": [Function],
-        "workspaces": [Function],
-      },
-      "displayAsLabel": undefined,
-      "enableDuplicatedLabelValuesInAttributeFilter": undefined,
-      "eventListener": [Function],
-      "hiddenElements": undefined,
-      "staticElements": undefined,
-      "workspace": "testWorkspace",
-    },
     "correlation": "success",
     "elements": [
       {
@@ -146,6 +80,7 @@ exports[`AttributeFilterHandler > loadNextElementsPage() that was successful sho
         "uri": "Grammar Plus",
       },
     ],
+    "enableDuplicatedLabelValuesInAttributeFilter": undefined,
     "options": {
       "excludePrimaryLabel": false,
       "limit": 2,
