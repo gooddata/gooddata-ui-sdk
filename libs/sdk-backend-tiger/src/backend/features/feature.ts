@@ -361,6 +361,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableSnowflakeKeyPairAuthentication,
+            "enableSnowflakeKeyPairAuthentication",
+            "BOOLEAN",
+            FeatureFlagsValues.enableSnowflakeKeyPairAuthentication,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableInvalidValuesInAttributeFilter,
             "enableInvalidValuesInAttributeFilter",
             "BOOLEAN",
