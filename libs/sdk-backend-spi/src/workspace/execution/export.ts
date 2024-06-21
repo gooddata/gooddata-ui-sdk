@@ -45,7 +45,12 @@ export interface IExportConfig {
  * @public
  */
 export interface IExportPdfConfig {
-    orientation: "portrait" | "landscape";
+    /** Page size and orientation (e.g. 'a4 landscape'). */
+    pdfPageSize?: string;
+    /** PDF top left header content. */
+    pdfTopLeftContent?: string;
+    /** PDF top right header content. */
+    pdfTopRightContent?: string;
 }
 
 /**
