@@ -1,5 +1,7 @@
 // (C) 2019-2024 GoodData Corporation
 
+import { IFilter } from "@gooddata/sdk-model";
+
 /**
  * Configuration for exports of results into XLSX or CSV.
  *
@@ -30,6 +32,7 @@ export interface IExportConfig {
      * Filters provided here are purely to paint a better context for the
      * person looking at the exported file. They serve no other purpose and are merely serialized
      * in the export in a human-readable form.
+     * The {@link visualizationObjectId} has to be provided to make this work for PDF format.
      */
     showFilters?: boolean;
 
@@ -39,14 +42,16 @@ export interface IExportConfig {
     pdfConfiguration?: IExportPdfConfig;
 
     /**
-     * Visualization object identifier. Used to ensure proper display of HTML/PDF documents. (HTML/PDF only)
+     * Visualization object identifier. Used to ensure the export result is generated based on
+     * existing visualization in the PDF document. (PDF only)
      */
     visualizationObjectId?: string;
 
     /**
-     * Optional custom filters (as array of IFilter objects defined in UI SDK) to be applied when visualizationObject is given. (HTML/PDF only)
+     * Optional custom filters (as array of IFilter objects defined in UI SDK) to be applied
+     * when visualizationObject is given. (PDF only)
      */
-    visualizationObjectCustomFilters?: Array<object>;
+    visualizationObjectCustomFilters?: Array<IFilter>;
 }
 
 /**

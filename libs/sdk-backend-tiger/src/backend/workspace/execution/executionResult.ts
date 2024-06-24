@@ -223,15 +223,13 @@ export class TigerExecutionResult implements IExecutionResult {
                 : {}),
         };
 
-        const useExecutionResult = !options.visualizationObjectId ? this.resultId : undefined;
-
         const payload: TabularExportRequest = {
             format,
-            executionResult: useExecutionResult,
+            executionResult: options.visualizationObjectId ? undefined : this.resultId, // use the visualizationObject for the export instead of the execution when provided
             fileName: options.title ?? "default",
             settings,
             customOverride: resolveCustomOverride(this.dimensions, this.definition),
-            visualizationObject: !useExecutionResult ? options.visualizationObjectId : undefined,
+            visualizationObject: options.visualizationObjectId,
             visualizationObjectCustomFilters: options.visualizationObjectCustomFilters,
         };
 
