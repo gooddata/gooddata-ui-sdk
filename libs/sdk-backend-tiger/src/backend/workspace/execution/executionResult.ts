@@ -223,12 +223,16 @@ export class TigerExecutionResult implements IExecutionResult {
                 : {}),
         };
 
+        const useExecutionResult = !options.visualizationObjectId ? this.resultId : undefined;
+
         const payload: TabularExportRequest = {
             format,
-            executionResult: this.resultId,
+            executionResult: useExecutionResult,
             fileName: options.title ?? "default",
             settings,
             customOverride: resolveCustomOverride(this.dimensions, this.definition),
+            visualizationObject: !useExecutionResult ? options.visualizationObjectId : undefined,
+            visualizationObjectCustomFilters: options.visualizationObjectCustomFilters,
         };
 
         return this.authCall(async (client) => {

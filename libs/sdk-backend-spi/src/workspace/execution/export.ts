@@ -23,20 +23,30 @@ export interface IExportConfig {
     mergeHeaders?: boolean;
 
     /**
-     * Applicable for XLSX format; specifies filters to include as comments / metadata in
+     * Applicable for XLSX, and PDF format; specifies filters to include as comments / metadata in
      * the Excel sheet.
      *
      * @remarks
      * Filters provided here are purely to paint a better context for the
-     * person looking at the XLSX file. They serve no other purpose and are merely serialized
-     * into the XLSX in a human readable form.
+     * person looking at the exported file. They serve no other purpose and are merely serialized
+     * in the export in a human-readable form.
      */
     showFilters?: boolean;
 
     /**
-     *  Applicable for PDF format; specifies configuration for PDF export.
+     * Applicable for PDF format; specifies configuration for PDF export.
      */
     pdfConfiguration?: IExportPdfConfig;
+
+    /**
+     * Visualization object identifier. Used to ensure proper display of HTML/PDF documents. (HTML/PDF only)
+     */
+    visualizationObjectId?: string;
+
+    /**
+     * Optional custom filters (as array of IFilter objects defined in UI SDK) to be applied when visualizationObject is given. (HTML/PDF only)
+     */
+    visualizationObjectCustomFilters?: Array<object>;
 }
 
 /**
