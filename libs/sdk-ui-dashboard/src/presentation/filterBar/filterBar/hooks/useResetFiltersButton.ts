@@ -25,6 +25,8 @@ import {
     useDashboardUserInteraction,
     selectDisableDashboardCrossFiltering,
     selectDisableDashboardUserFilterReset,
+    selectIsDisabledCrossFiltering,
+    selectIsDisableUserFilterReset,
 } from "../../../../model/index.js";
 
 /**
@@ -44,7 +46,9 @@ export const useResetFiltersButton = (): {
     const currentFilters = useDashboardSelector(selectFilterContextFilters);
     const enableKDCrossFiltering = useDashboardSelector(selectEnableKDCrossFiltering);
     const supportsCrossFiltering = useDashboardSelector(selectSupportsCrossFiltering);
+    const disableCrossFilteringByConfig = useDashboardSelector(selectIsDisabledCrossFiltering);
     const disableCrossFiltering = useDashboardSelector(selectDisableDashboardCrossFiltering);
+    const disableUserFilterResetByConfig = useDashboardSelector(selectIsDisableUserFilterReset);
     const disableUserFilterReset = useDashboardSelector(selectDisableDashboardUserFilterReset);
 
     const dispatch = useDashboardDispatch();
@@ -65,13 +69,15 @@ export const useResetFiltersButton = (): {
             !isEditMode &&
             !isEqual(currentFilters, originalFilters) &&
             // If the cross filter add some filters, we should allow the reset
-            (!disableUserFilterReset || newlyAddedFiltersLocalIds.length > 0)
+            ((!disableUserFilterReset && !disableUserFilterResetByConfig) ||
+                newlyAddedFiltersLocalIds.length > 0)
         );
     }, [
         isEditMode,
         currentFilters,
         originalFilters,
         disableUserFilterReset,
+        disableUserFilterResetByConfig,
         newlyAddedFiltersLocalIds.length,
     ]);
 
@@ -98,7 +104,12 @@ export const useResetFiltersButton = (): {
         }
 
         // If cross filtering is enabled, we need to remove all attribute filters that were added by cross filtering
-        if (enableKDCrossFiltering && supportsCrossFiltering && !disableCrossFiltering) {
+        if (
+            enableKDCrossFiltering &&
+            supportsCrossFiltering &&
+            !disableCrossFiltering &&
+            !disableCrossFilteringByConfig
+        ) {
             dispatch(removeAttributeFilters(newlyAddedFiltersLocalIds));
             dispatch(drillActions.resetCrossFiltering());
         }

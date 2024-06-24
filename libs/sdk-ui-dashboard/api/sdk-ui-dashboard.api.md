@@ -1424,7 +1424,9 @@ export interface DashboardConfig {
     allowUnfinishedFeatures?: boolean;
     colorPalette?: IColorPalette;
     dateFilterConfig?: IDateFilterConfig;
+    disableCrossFiltering?: boolean;
     disableDefaultDrills?: boolean;
+    disableUserFilterReset?: boolean;
     enableFilterValuesResolutionInDrillEvents?: boolean;
     // @internal
     exportId?: string;
@@ -6992,6 +6994,12 @@ export const selectIsDeleteDialogOpen: DashboardSelector<boolean>;
 
 // @internal
 export const selectIsDeleteFilterButtonEnabled: DashboardSelector<boolean>;
+
+// @internal
+export const selectIsDisabledCrossFiltering: DashboardSelector<boolean>;
+
+// @internal
+export const selectIsDisableUserFilterReset: DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export const selectIsDraggingWidget: DashboardSelector<boolean>;
