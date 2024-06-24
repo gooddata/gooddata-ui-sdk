@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import React from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import moment from "moment";
@@ -31,6 +31,8 @@ export interface ITimepickerOwnProps {
     overlayZIndex?: number;
     locale?: string;
     skipNormalizeTime?: boolean;
+    timeAnchor?: number;
+    timeFormat?: string;
 }
 
 export type TimePickerProps = ITimepickerOwnProps & WrappedComponentProps;
@@ -50,6 +52,8 @@ export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITim
         onChange: noop,
         overlayZIndex: 0,
         skipNormalizeTime: false,
+        timeAnchor: TIME_ANCHOR,
+        timeFormat: undefined,
     };
 
     constructor(props: TimePickerProps) {
@@ -60,7 +64,9 @@ export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITim
         const time = props.time || new Date();
         this.state = {
             dropdownWidth: DEFAULT_WIDTH,
-            selectedTime: props.skipNormalizeTime ? time : normalizeTime(time),
+            selectedTime: props.skipNormalizeTime
+                ? time
+                : normalizeTime(time, undefined, this.props.timeAnchor),
         };
     }
 
@@ -68,7 +74,9 @@ export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITim
         if (newProps.time !== this.props.time) {
             const updatedTime = newProps.time || new Date();
             this.setState({
-                selectedTime: this.props.skipNormalizeTime ? updatedTime : normalizeTime(updatedTime),
+                selectedTime: this.props.skipNormalizeTime
+                    ? updatedTime
+                    : normalizeTime(updatedTime, undefined, this.props.timeAnchor),
             });
         }
     }
@@ -88,11 +96,11 @@ export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITim
         const { h: hours, m: minutes } = selectedTime;
 
         for (let h = 0; h < HOURS_IN_DAY; h += 1) {
-            for (let m = 0; m < MINUTES_IN_HOUR; m += TIME_ANCHOR) {
+            for (let m = 0; m < MINUTES_IN_HOUR; m += this.props.timeAnchor) {
                 const item = {
                     h,
                     m,
-                    title: formatTime(h, m),
+                    title: formatTime(h, m, this.props.timeFormat),
                 };
                 items.push(item);
                 if (h === hours && m === minutes) {
@@ -147,7 +155,7 @@ export class WrappedTimepicker extends React.PureComponent<TimePickerProps, ITim
                     ]}
                     renderButton={({ openDropdown, isOpen }) => (
                         <DropdownButton
-                            value={formatTime(time.h, time.m)}
+                            value={formatTime(time.h, time.m, this.props.timeFormat)}
                             isOpen={isOpen}
                             onClick={openDropdown}
                             iconLeft="gd-icon-timer"

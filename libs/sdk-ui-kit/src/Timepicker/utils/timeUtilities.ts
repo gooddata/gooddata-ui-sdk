@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import moment from "moment";
 
 export const HOURS_IN_DAY = 24;
@@ -15,8 +15,8 @@ export function formatTime(h: number, m: number, format?: string): string {
         .format(format || TIME_FORMAT);
 }
 
-export function updateTime(h: number, m: number): Date {
-    const selectedTime = new Date();
+export function updateTime(h: number, m: number, date?: Date): Date {
+    const selectedTime = date ? new Date(date) : new Date();
     selectedTime.setHours(h);
     selectedTime.setMinutes(m);
     selectedTime.setSeconds(0);
@@ -24,23 +24,39 @@ export function updateTime(h: number, m: number): Date {
     return selectedTime;
 }
 
-/**
- * @internal
- * export normalizeTime function for use outside this component
- * return 7:30 if time is 7:25
- * return 8:00 if time is 7:35
- * return 0:00 if time is 23:45
- */
-export function normalizeTime(time: Date): Date {
-    let h;
-    let m;
+function getNormalizedHourAndMinute(time: Date, timeAnchor = TIME_ANCHOR) {
+    let h: number;
+    let m: number;
     const hours = time.getHours();
-    if (time.getMinutes() < TIME_ANCHOR) {
+    const minutes = time.getMinutes();
+
+    // Do not shift time if it is exactly on the new hour (0 == 60 when timeAnchor is 60)
+    if (minutes === 0 && timeAnchor === 60) {
+        return { hours, minutes: 0 };
+    }
+
+    if (time.getMinutes() < timeAnchor) {
         h = hours;
-        m = TIME_ANCHOR;
+        m = timeAnchor;
     } else {
         h = (hours + 1) % HOURS_IN_DAY;
         m = 0;
     }
-    return updateTime(h, m);
+
+    return { hours: h, minutes: m };
+}
+
+/**
+ * @internal
+ *
+ * Normalizes time based on time anchor (default is 30 minutes)
+ * When date is also provided, it combines date with the normalized time
+ *
+ * return 7:30 if time is 7:25
+ * return 8:00 if time is 7:35
+ * return 0:00 if time is 23:45
+ */
+export function normalizeTime(time: Date, date?: Date, timeAnchor = TIME_ANCHOR): Date {
+    const { hours, minutes } = getNormalizedHourAndMinute(time, timeAnchor);
+    return updateTime(hours, minutes, date);
 }
