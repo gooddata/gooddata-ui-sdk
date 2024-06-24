@@ -3,7 +3,7 @@
 import { IFilter } from "@gooddata/sdk-model";
 
 /**
- * Configuration for exports of results into XLSX or CSV.
+ * Configuration for exports of results into tabular formats.
  *
  * @public
  */
@@ -32,7 +32,7 @@ export interface IExportConfig {
      * Filters provided here are purely to paint a better context for the
      * person looking at the exported file. They serve no other purpose and are merely serialized
      * in the export in a human-readable form.
-     * The {@link visualizationObjectId} has to be provided to make this work for PDF format.
+     * The visualizationObjectId has to be provided to make this work for PDF format.
      */
     showFilters?: boolean;
 
