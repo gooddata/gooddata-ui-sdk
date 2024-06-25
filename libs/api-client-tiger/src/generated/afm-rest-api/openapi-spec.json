@@ -1005,6 +1005,14 @@
                         "type": "integer",
                         "description": "Number of clusters to create",
                         "format": "int32"
+                    },
+                    "threshold": {
+                        "minimum": 0,
+                        "exclusiveMinimum": true,
+                        "type": "number",
+                        "description": "Threshold used for algorithm",
+                        "format": "double",
+                        "default": 0.03
                     }
                 }
             },
@@ -2672,13 +2680,13 @@
                             "nullable": true
                         }
                     },
-                    "ycoord": {
+                    "xcoord": {
                         "type": "array",
                         "items": {
                             "type": "number"
                         }
                     },
-                    "xcoord": {
+                    "ycoord": {
                         "type": "array",
                         "items": {
                             "type": "number"

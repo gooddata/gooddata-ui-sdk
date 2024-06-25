@@ -328,6 +328,7 @@ export const objectTypeToTigerIdType: {
     dateHierarchyTemplate: TigerObjectType;
     dateAttributeHierarchy: TigerObjectType;
     exportDefinition: TigerObjectType;
+    automation: TigerObjectType;
 };
 
 // @internal (undocumented)

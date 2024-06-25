@@ -1,11 +1,15 @@
 // (C) 2019-2024 GoodData Corporation
 
-import { ObjRef, IExportDefinition, IExportDefinitionBase } from "@gooddata/sdk-model";
+import {
+    ObjRef,
+    IExportDefinitionMetadataObject,
+    IExportDefinitionMetadataObjectDefinition,
+} from "@gooddata/sdk-model";
 import { IPagedResource } from "../../common/paging.js";
 
 /**
  * Service to query, update or delete exportDefinitions, and other methods related to exportDefinitions.
- * Check IExportDefinition for more details.
+ * Check IExportDefinitionMetadataObject for more details.
  *
  * @alpha
  */
@@ -17,7 +21,10 @@ export interface IWorkspaceExportDefinitionsService {
      * @param options - specify additional options
      * @returns promise of exportDefinition
      */
-    getExportDefinition(ref: ObjRef, options?: IGetExportDefinitionOptions): Promise<IExportDefinition>;
+    getExportDefinition(
+        ref: ObjRef,
+        options?: IGetExportDefinitionOptions,
+    ): Promise<IExportDefinitionMetadataObject>;
 
     /**
      * Queries workspace exportDefinitions, using various criteria and paging settings.
@@ -40,7 +47,9 @@ export interface IWorkspaceExportDefinitionsService {
      * @param exportDefinition - exportDefinition to create
      * @returns promise of created exportDefinition
      */
-    createExportDefinition(exportDefinition: IExportDefinitionBase): Promise<IExportDefinition>;
+    createExportDefinition(
+        exportDefinition: IExportDefinitionMetadataObjectDefinition,
+    ): Promise<IExportDefinitionMetadataObject>;
 
     /**
      * Update provided exportDefinition
@@ -49,7 +58,10 @@ export interface IWorkspaceExportDefinitionsService {
      * @param exportDefinition - exportDefinition to update
      * @returns promise of updated exportDefinition
      */
-    updateExportDefinition(ref: ObjRef, exportDefinition: IExportDefinitionBase): Promise<IExportDefinition>;
+    updateExportDefinition(
+        ref: ObjRef,
+        exportDefinition: IExportDefinitionMetadataObjectDefinition,
+    ): Promise<IExportDefinitionMetadataObject>;
 
     /**
      * Delete exportDefinition with the given reference
@@ -202,4 +214,4 @@ export interface IExportDefinitionsQuery {
  *
  * @alpha
  */
-export type IExportDefinitionsQueryResult = IPagedResource<IExportDefinition>;
+export type IExportDefinitionsQueryResult = IPagedResource<IExportDefinitionMetadataObject>;

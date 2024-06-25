@@ -13,19 +13,22 @@ import {
     IWorkspaceExportDefinitionsService,
     UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
-import { IExportDefinition, IExportDefinitionBase, ObjRef, objRefToString } from "@gooddata/sdk-model";
+import {
+    IExportDefinitionMetadataObject,
+    IExportDefinitionMetadataObjectDefinition,
+    ObjRef,
+    objRefToString,
+} from "@gooddata/sdk-model";
 
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { objRefToIdentifier } from "../../../utils/api.js";
 
 import { InMemoryPaging } from "@gooddata/sdk-backend-base";
+import { convertExportDefinitionMdObject as convertExportDefinitionMdObjectFromBackend } from "../../../convertors/fromBackend/ExportDefinitionsConverter.js";
 import {
-    exportDefinitionOutDocumentToExportDefinition,
-    exportDefinitionOutDocumentToExportDefinitionOutWithLinks,
-    exportDefinitionOutToExportDefinition,
-    exportDefinitionToExportDefinitionInDocument,
-    exportDefinitionToExportDefinitionPostOptionalIdDocument,
-} from "../../../convertors/fromBackend/ExportDefinitionsConverter.js";
+    convertExportDefinitionMdObjectDefinition as convertExportDefinitionMdObjectDefinitionToBackend,
+    convertExportDefinitionMdObject as convertExportDefinitionMdObjectToBackend,
+} from "../../../convertors/toBackend/ExportDefinitionsConverter.js";
 import { ExportDefinitionsQuery } from "./exportDefinitionsQuery.js";
 import { exportDefinitionsListComparator } from "./comparator.js";
 
@@ -55,9 +58,9 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
 
                                 return title && title.toLowerCase().indexOf(lowercaseSearch) > -1;
                             })
-                            .map((ed) => exportDefinitionOutToExportDefinition(ed, res.included));
+                            .map((ed) => convertExportDefinitionMdObjectFromBackend(ed, res.included));
                     }
-                    return res.data.map((ep) => exportDefinitionOutToExportDefinition(ep, res.included));
+                    return res.data.map((ep) => convertExportDefinitionMdObjectFromBackend(ep, res.included));
                 });
         });
 
@@ -100,7 +103,7 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
     public getExportDefinition = async (
         ref: ObjRef,
         options: IGetExportDefinitionOptions = {},
-    ): Promise<IExportDefinition> => {
+    ): Promise<IExportDefinitionMetadataObject> => {
         const id = await objRefToIdentifier(ref, this.authCall);
         const includeUser = options?.loadUserData
             ? { include: ["createdBy" as const, "modifiedBy" as const] }
@@ -122,20 +125,18 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
             throw new UnexpectedError(`Export definition for ${objRefToString(ref)} not found!`);
         }
 
-        const exportDefinition = exportDefinitionOutDocumentToExportDefinitionOutWithLinks(response.data);
-
-        return exportDefinitionOutToExportDefinition(exportDefinition, response.data.included);
+        return convertExportDefinitionMdObjectFromBackend(response.data.data, response.data.included);
     };
 
     public createExportDefinition = async (
-        exportDefinition: IExportDefinitionBase,
-    ): Promise<IExportDefinition> => {
+        exportDefinition: IExportDefinitionMetadataObjectDefinition,
+    ): Promise<IExportDefinitionMetadataObject> => {
         const createResponse = await this.authCall((client) => {
             return client.entities.createEntityExportDefinitions(
                 {
                     workspaceId: this.workspace,
                     jsonApiExportDefinitionPostOptionalIdDocument:
-                        exportDefinitionToExportDefinitionPostOptionalIdDocument(exportDefinition),
+                        convertExportDefinitionMdObjectDefinitionToBackend(exportDefinition),
                 },
                 {
                     headers: jsonApiHeaders,
@@ -143,15 +144,16 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
             );
         });
 
-        const exportDefinitionData = createResponse.data;
-
-        return exportDefinitionOutDocumentToExportDefinition(exportDefinitionData);
+        return convertExportDefinitionMdObjectFromBackend(
+            createResponse.data.data,
+            createResponse.data.included,
+        );
     };
 
     public updateExportDefinition = async (
         ref: ObjRef,
-        exportDefinition: IExportDefinitionBase,
-    ): Promise<IExportDefinition> => {
+        exportDefinition: IExportDefinitionMetadataObjectDefinition,
+    ): Promise<IExportDefinitionMetadataObject> => {
         const id = await objRefToIdentifier(ref, this.authCall);
 
         const updateResponse = await this.authCall((client) => {
@@ -159,7 +161,7 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
                 {
                     objectId: id,
                     workspaceId: this.workspace,
-                    jsonApiExportDefinitionInDocument: exportDefinitionToExportDefinitionInDocument(
+                    jsonApiExportDefinitionInDocument: convertExportDefinitionMdObjectToBackend(
                         exportDefinition,
                         id,
                     ),
@@ -170,9 +172,10 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
             );
         });
 
-        const exportDefinitionData = updateResponse.data;
-
-        return exportDefinitionOutDocumentToExportDefinition(exportDefinitionData);
+        return convertExportDefinitionMdObjectFromBackend(
+            updateResponse.data.data,
+            updateResponse.data.included,
+        );
     };
 
     public deleteExportDefinition = async (ref: ObjRef): Promise<void> => {

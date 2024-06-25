@@ -13,7 +13,7 @@ import {
     IExportDefinitionsQueryResult,
 } from "@gooddata/sdk-backend-spi";
 import isNil from "lodash/isNil.js";
-import { exportDefinitionsOutListToExportDefinitions } from "../../../convertors/fromBackend/ExportDefinitionsConverter.js";
+import { convertExportDefinitionMdObject } from "../../../convertors/fromBackend/ExportDefinitionsConverter.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { invariant } from "ts-invariant";
 
@@ -111,7 +111,7 @@ export class ExportDefinitionsQuery implements IExportDefinitionsQuery {
                     .then((data) => {
                         const totalCount = data.meta?.page?.totalElements;
                         !isNil(totalCount) && this.setTotalCount(totalCount);
-                        return exportDefinitionsOutListToExportDefinitions(data);
+                        return data.data.map((ed) => convertExportDefinitionMdObject(ed, data.included));
                     });
 
                 return { items, totalCount: this.totalCount! };

@@ -24,6 +24,7 @@ import {
     IWorkspaceExportDefinitionsService,
     IDataFiltersService,
     IWorkspaceLogicalModelService,
+    IWorkspaceAutomationService,
 } from "@gooddata/sdk-backend-spi";
 import { TigerExecution } from "./execution/executionFactory.js";
 import { TigerWorkspaceCatalogFactory } from "./catalog/factory.js";
@@ -47,6 +48,7 @@ import { TigerWorkspaceExportDefinitions } from "./exportDefinitions/index.js";
 import { convertWorkspaceUpdate } from "../../convertors/toBackend/WorkspaceConverter.js";
 import { TigerDataFiltersService } from "./dataFilters/index.js";
 import { TigerWorkspaceLogicalModelService } from "./ldm/index.js";
+import { TigerWorkspaceAutomationService } from "./automations/index.js";
 
 export class TigerWorkspace implements IAnalyticalWorkspace {
     constructor(
@@ -174,5 +176,9 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
 
     public logicalModel(): IWorkspaceLogicalModelService {
         return new TigerWorkspaceLogicalModelService(this.authCall, this.workspace);
+    }
+
+    public automations(): IWorkspaceAutomationService {
+        return new TigerWorkspaceAutomationService(this.authCall, this.workspace);
     }
 }
