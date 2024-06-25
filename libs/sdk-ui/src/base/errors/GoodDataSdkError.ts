@@ -202,7 +202,7 @@ export class NoDataSdkError extends GoodDataSdkError {
  */
 export class NotFoundSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error) {
-        super(ErrorCodes.NO_DATA as SdkErrorType, message, cause);
+        super(ErrorCodes.NOT_FOUND as SdkErrorType, message, cause);
     }
 }
 
