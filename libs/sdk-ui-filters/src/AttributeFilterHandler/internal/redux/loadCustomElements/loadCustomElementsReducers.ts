@@ -6,6 +6,11 @@ import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { Correlation, ILoadElementsOptions, ILoadElementsResult } from "../../../types/index.js";
 import { AttributeFilterReducer } from "../store/state.js";
 import { getElementCacheKey } from "../common/selectors.js";
+import {
+    ElementsQueryOptionsElementsSpecification,
+    isElementsQueryOptionsElementsByPrimaryDisplayFormValue,
+    isElementsQueryOptionsElementsByValue,
+} from "@gooddata/sdk-backend-spi";
 
 const loadCustomElementsRequest: AttributeFilterReducer<
     PayloadAction<{ options: ILoadElementsOptions; correlation: Correlation | undefined }>
@@ -14,6 +19,19 @@ const loadCustomElementsRequest: AttributeFilterReducer<
 const loadCustomElementsStart: AttributeFilterReducer<
     PayloadAction<{ correlation: Correlation | undefined }>
 > = identity;
+
+const getElementValues = (elements: ElementsQueryOptionsElementsSpecification): string[] => {
+    if (!elements) {
+        return [];
+    }
+    if (isElementsQueryOptionsElementsByValue(elements)) {
+        return elements.values;
+    }
+    if (isElementsQueryOptionsElementsByPrimaryDisplayFormValue(elements)) {
+        return elements.primaryValues;
+    }
+    return elements.uris;
+};
 
 const loadCustomElementsSuccess: AttributeFilterReducer<
     PayloadAction<
@@ -25,19 +43,44 @@ const loadCustomElementsSuccess: AttributeFilterReducer<
 > = (state, action) => {
     const keys = [];
 
-    const { enableDuplicatedLabelValuesInAttributeFilter } = action.payload;
+    const {
+        enableDuplicatedLabelValuesInAttributeFilter,
+        options: { elements },
+    } = action.payload;
+    if (elements) {
+        const originalElements = getElementValues(elements);
+        // iterate over original elements to keep the order in selection,
+        // fetched elements are sorted by default
+        originalElements.forEach((originalEl) => {
+            action.payload.elements
+                .filter((el) => el.title === originalEl)
+                .forEach((el) => {
+                    const cacheKey = getElementCacheKey(
+                        state,
+                        el,
+                        enableDuplicatedLabelValuesInAttributeFilter,
+                    );
+                    if (!state.elements.cache[cacheKey]) {
+                        state.elements.cache[cacheKey] = el;
+                    }
+                    if (state.initialization.status === "loading") {
+                        keys.push(cacheKey);
+                    }
+                });
+        });
+    } else {
+        action.payload.elements.forEach((el) => {
+            const cacheKey = getElementCacheKey(state, el, enableDuplicatedLabelValuesInAttributeFilter);
+            if (!state.elements.cache[cacheKey]) {
+                state.elements.cache[cacheKey] = el;
+            }
+            if (state.initialization.status === "loading") {
+                keys.push(cacheKey);
+            }
+        });
+    }
 
-    action.payload.elements.forEach((el) => {
-        const cacheKey = getElementCacheKey(state, el, enableDuplicatedLabelValuesInAttributeFilter);
-        if (!state.elements.cache[cacheKey]) {
-            state.elements.cache[cacheKey] = el;
-        }
-        if (state.initialization.status === "loading") {
-            keys.push(cacheKey);
-        }
-    });
-
-    if (state.initialization.status === "loading") {
+    if (enableDuplicatedLabelValuesInAttributeFilter && state.initialization.status === "loading") {
         state.selection.working.keys = keys;
         state.selection.commited.keys = keys;
     }
