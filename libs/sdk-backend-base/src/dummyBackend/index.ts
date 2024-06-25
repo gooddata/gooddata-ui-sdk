@@ -71,6 +71,7 @@ import {
     IClusteringResult,
     IOrganizationNotificationChannelService,
     IClusteringConfig,
+    IWorkspaceAutomationService,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -359,6 +360,9 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
         },
         logicalModel(): IWorkspaceLogicalModelService {
             throw new NotSupported("not supported");
+        },
+        automations(): IWorkspaceAutomationService {
+            throw new NotSupported("automations are not supported");
         },
     };
 }

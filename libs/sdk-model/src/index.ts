@@ -886,13 +886,34 @@ export { IEntitlementsName, IEntitlementDescriptor } from "./entitlements/index.
 export { DataSourceType, IDataSourceIdentifierDescriptor } from "./dataSources/index.js";
 
 export {
-    IExportDefinition,
+    IExportDefinitionMetadataObject,
     IExportDefinitionRequestPayload,
     IExportDefinitionBase,
     IExportDefinitionPdfOptions,
     exportDefinitionTitle,
     exportDefinitionCreated,
     exportDefinitionUpdated,
+    IExportDefinitionContent,
+    IExportDefinitionDashboardContent,
+    IExportDefinitionVisualizationObjectContent,
+    isExportDefinitionDashboardContent,
+    isExportDefinitionVisualizationObjectContent,
+    IExportDefinitionMetadataObjectDefinition,
 } from "./exportDefinitions/index.js";
 
 export { IWorkspaceDataFilter, IWorkspaceDataFilterSetting } from "./dataFilter/index.js";
+export {
+    IAutomationMetadataObjectBase,
+    IAutomationMetadataObject,
+    IAutomationMetadataObjectDefinition,
+    IAutomationSchedule,
+    isAutomationMetadataObject,
+    isAutomationMetadataObjectDefinition,
+    IAutomationRecipient,
+    IAutomationRecipientBase,
+    IAutomationRecipientType,
+    IAutomationUserGroupRecipient,
+    IAutomationUserRecipient,
+    isAutomationUserGroupRecipient,
+    isAutomationUserRecipient,
+} from "./automations/index.js";

@@ -1,5 +1,3 @@
-// (C) 2024 GoodData Corporation
-
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -86,6 +84,12 @@ export interface AuthUser {
  * @interface FeatureFlagsContext
  */
 export interface FeatureFlagsContext {
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof FeatureFlagsContext
+     */
+    earlyAccessValues: Array<string>;
     /**
      *
      * @type {string}
