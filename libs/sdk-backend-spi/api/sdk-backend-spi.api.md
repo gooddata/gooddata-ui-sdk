@@ -584,6 +584,8 @@ export interface IExportConfig {
     pdfConfiguration?: IExportPdfConfig;
     showFilters?: boolean;
     title?: string;
+    visualizationObjectCustomFilters?: Array<IFilter>;
+    visualizationObjectId?: string;
 }
 
 // @alpha
