@@ -52,6 +52,7 @@ import {
     IAnomalyDetectionResult,
     IClusteringResult,
     IClusteringConfig,
+    IWorkspaceAutomationService,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -270,6 +271,10 @@ function recordedWorkspace(
         },
 
         logicalModel(): IWorkspaceLogicalModelService {
+            throw new NotSupported("not supported");
+        },
+
+        automations(): IWorkspaceAutomationService {
             throw new NotSupported("not supported");
         },
     };

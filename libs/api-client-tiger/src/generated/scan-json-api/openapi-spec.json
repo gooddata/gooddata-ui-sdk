@@ -992,6 +992,14 @@
                         "type": "string",
                         "description": "Secret for token based authentication for data sources which supports it."
                     },
+                    "privateKey": {
+                        "type": "string",
+                        "description": "Private key for data sources which supports key-pair authentication."
+                    },
+                    "privateKeyPassphrase": {
+                        "type": "string",
+                        "description": "Passphrase for a encrypted version of a private key."
+                    },
                     "parameters": {
                         "type": "array",
                         "items": {

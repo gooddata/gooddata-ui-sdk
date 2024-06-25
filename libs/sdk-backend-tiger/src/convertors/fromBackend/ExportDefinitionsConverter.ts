@@ -1,29 +1,23 @@
 // (C) 2020-2024 GoodData Corporation
 import {
-    JsonApiExportDefinitionInDocument,
-    JsonApiExportDefinitionOutDocument,
     JsonApiExportDefinitionOutIncludes,
-    JsonApiExportDefinitionOutList,
     JsonApiExportDefinitionOutWithLinks,
-    JsonApiExportDefinitionOutWithLinksTypeEnum,
-    JsonApiExportDefinitionPostOptionalIdDocument,
-    JsonApiVisualizationObjectLinkageTypeEnum,
     TabularExportRequest,
     VisualExportRequest,
 } from "@gooddata/api-client-tiger";
 import {
     idRef,
-    IExportDefinition,
-    IExportDefinitionBase,
+    IExportDefinitionMetadataObject,
     IExportDefinitionRequestPayload,
     IFilter,
 } from "@gooddata/sdk-model";
 import { convertUserIdentifier } from "./UsersConverter.js";
+import isEmpty from "lodash/isEmpty.js";
 
-export const exportDefinitionOutToExportDefinition = (
+export const convertExportDefinitionMdObject = (
     exportDefinitionOut: JsonApiExportDefinitionOutWithLinks,
     included: JsonApiExportDefinitionOutIncludes[] = [],
-): IExportDefinition => {
+): IExportDefinitionMetadataObject => {
     const { id, attributes, links, relationships = {} } = exportDefinitionOut;
     const { createdBy, modifiedBy } = relationships;
     const {
@@ -34,7 +28,7 @@ export const exportDefinitionOutToExportDefinition = (
         createdAt,
         modifiedAt,
     } = attributes ?? {};
-    const request = exportRequestToExportDefinitionRequest(
+    const request = convertExportDefinitionRequestPayload(
         requestPayload as VisualExportRequest | TabularExportRequest,
     );
 
@@ -57,7 +51,7 @@ export const exportDefinitionOutToExportDefinition = (
     };
 };
 
-const exportRequestToExportDefinitionRequest = (
+const convertExportDefinitionRequestPayload = (
     exportRequest: VisualExportRequest | TabularExportRequest,
 ): IExportDefinitionRequestPayload => {
     if (isTabularRequest(exportRequest) && exportRequest.format === "PDF") {
@@ -65,11 +59,21 @@ const exportRequestToExportDefinitionRequest = (
         return {
             fileName: exportRequest.fileName,
             format: exportRequest.format,
-            visualizationObjectId: exportRequest.visualizationObject ?? "",
-            filters: (exportRequest.visualizationObjectCustomFilters as IFilter[]) ?? [],
+            content: {
+                visualizationObject: exportRequest.visualizationObject ?? "",
+                filters: (exportRequest.visualizationObjectCustomFilters as IFilter[]) ?? [],
+            },
             pdfOptions: {
                 orientation:
                     pdfPageSize === "portrait" || pdfPageSize === "landscape" ? pdfPageSize : "portrait",
+            },
+        };
+    } else if (isVisualRequest(exportRequest)) {
+        return {
+            fileName: exportRequest.fileName,
+            format: "PDF",
+            content: {
+                dashboard: exportRequest.dashboardId,
             },
         };
     } else {
@@ -77,7 +81,9 @@ const exportRequestToExportDefinitionRequest = (
         return {
             fileName: "",
             format: "PDF",
-            visualizationObjectId: "",
+            content: {
+                visualizationObject: "",
+            },
         };
     }
 };
@@ -85,84 +91,11 @@ const exportRequestToExportDefinitionRequest = (
 const isTabularRequest = (
     request: VisualExportRequest | TabularExportRequest,
 ): request is TabularExportRequest => {
-    return "visualizationObject" in request;
+    return !isEmpty(request) && typeof (request as TabularExportRequest).visualizationObject === "string";
 };
 
-export const exportDefinitionOutDocumentToExportDefinitionOutWithLinks = (
-    exportDefinitionDocument: JsonApiExportDefinitionOutDocument,
-): JsonApiExportDefinitionOutWithLinks => {
-    const { data: exportDefinitionOut, ...restExportDefinitionOut } = exportDefinitionDocument;
-
-    return { ...exportDefinitionOut, ...restExportDefinitionOut };
-};
-
-export const exportDefinitionOutDocumentToExportDefinition = (
-    exportDefinitionDocument: JsonApiExportDefinitionOutDocument,
-): IExportDefinition => {
-    const exportDefinitionOut =
-        exportDefinitionOutDocumentToExportDefinitionOutWithLinks(exportDefinitionDocument);
-
-    return exportDefinitionOutToExportDefinition(exportDefinitionOut);
-};
-
-export const exportDefinitionsOutListToExportDefinitions = (
-    exportDefinitions: JsonApiExportDefinitionOutList,
-): IExportDefinition[] => {
-    return exportDefinitions.data.map((exportDefinition) =>
-        exportDefinitionOutToExportDefinition(exportDefinition, exportDefinitions.included),
-    );
-};
-
-export const exportDefinitionToExportDefinitionPostOptionalIdDocument = (
-    exportDefinition: IExportDefinitionBase,
-): JsonApiExportDefinitionPostOptionalIdDocument => {
-    const { title, description, tags, requestPayload } = exportDefinition;
-
-    return {
-        data: {
-            type: JsonApiExportDefinitionOutWithLinksTypeEnum.EXPORT_DEFINITION,
-            attributes: {
-                title,
-                description,
-                tags,
-                requestPayload: exportDefinitionRequestToExportRequest(requestPayload),
-            },
-            relationships: {
-                visualizationObject: {
-                    data: {
-                        id: requestPayload.visualizationObjectId,
-                        type: JsonApiVisualizationObjectLinkageTypeEnum.VISUALIZATION_OBJECT,
-                    },
-                },
-            },
-        },
-    };
-};
-
-const exportDefinitionRequestToExportRequest = (
-    exportRequest: IExportDefinitionRequestPayload,
-): TabularExportRequest => {
-    return {
-        fileName: exportRequest.fileName,
-        format: exportRequest.format,
-        visualizationObject: exportRequest.visualizationObjectId,
-        visualizationObjectCustomFilters: exportRequest.filters,
-        settings: {
-            pdfPageSize: exportRequest.pdfOptions?.orientation,
-        },
-    };
-};
-
-export const exportDefinitionToExportDefinitionInDocument = (
-    exportDefinition: IExportDefinitionBase,
-    identifier: string,
-): JsonApiExportDefinitionInDocument => {
-    const postDefinition = exportDefinitionToExportDefinitionPostOptionalIdDocument(exportDefinition);
-
-    return {
-        data: {
-            ...postDefinition.data,
-            id: identifier,
-        },
-    };
+const isVisualRequest = (
+    request: VisualExportRequest | TabularExportRequest,
+): request is VisualExportRequest => {
+    return !isEmpty(request) && typeof (request as VisualExportRequest).dashboardId === "string";
 };

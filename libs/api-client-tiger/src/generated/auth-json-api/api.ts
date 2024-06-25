@@ -88,6 +88,12 @@ export interface AuthUser {
 export interface FeatureFlagsContext {
     /**
      *
+     * @type {Array<string>}
+     * @memberof FeatureFlagsContext
+     */
+    earlyAccessValues: Array<string>;
+    /**
+     *
      * @type {string}
      * @memberof FeatureFlagsContext
      */

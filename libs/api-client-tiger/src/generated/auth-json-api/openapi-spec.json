@@ -265,9 +265,16 @@
                 "description": "Defines entitlements for given organization."
             },
             "FeatureFlagsContext": {
-                "required": ["earlyAccess"],
+                "required": ["earlyAccess", "earlyAccessValues"],
                 "type": "object",
                 "properties": {
+                    "earlyAccessValues": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
                     "earlyAccess": {
                         "type": "string"
                     }

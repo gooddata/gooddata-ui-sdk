@@ -23,6 +23,7 @@ import {
     IMeasureMetadataObjectDefinition,
     IMeasureMetadataObject,
     IMeasure,
+    ObjectType,
 } from "@gooddata/sdk-model";
 import { convertMetricFromBackend } from "../../../convertors/fromBackend/MetricConverter.js";
 import { convertMetricToBackend } from "../../../convertors/toBackend/MetricConverter.js";
@@ -147,7 +148,7 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
         }) as JsonApiMetricOut | JsonApiLabelOut | JsonApiAttributeOut | JsonApiFactOut;
 
         interface ITypeMapping {
-            [tokenObjectType: string]: IMeasureExpressionToken["type"];
+            [tokenObjectType: string]: ObjectType;
         }
         const typeMapping: ITypeMapping = {
             metric: "measure",
@@ -158,12 +159,14 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
         };
 
         const value = includedObject?.attributes?.title || `${objectType}/${objectId}`;
-        return {
+        const token: IMeasureExpressionToken = {
             type: typeMapping[objectType],
             value,
             id: objectId,
             ref: idRef(identifier),
         };
+
+        return token;
     }
 
     async createMeasure(measure: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject> {

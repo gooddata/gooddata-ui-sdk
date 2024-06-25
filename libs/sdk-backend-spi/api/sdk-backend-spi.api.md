@@ -17,6 +17,8 @@ import { IAttributeElement } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IAttributeMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
+import { IAutomationMetadataObject } from '@gooddata/sdk-model';
+import { IAutomationMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { IAvailableAccessGrantee } from '@gooddata/sdk-model';
 import { IBucket } from '@gooddata/sdk-model';
 import { ICatalogAttribute } from '@gooddata/sdk-model';
@@ -49,8 +51,8 @@ import { IEntitlementDescriptor } from '@gooddata/sdk-model';
 import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IExistingDashboard } from '@gooddata/sdk-model';
-import { IExportDefinition } from '@gooddata/sdk-model';
-import { IExportDefinitionBase } from '@gooddata/sdk-model';
+import { IExportDefinitionMetadataObject } from '@gooddata/sdk-model';
+import { IExportDefinitionMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IFilterContextDefinition } from '@gooddata/sdk-model';
 import { IGranularAccessGrantee } from '@gooddata/sdk-model';
@@ -133,6 +135,9 @@ export type AuthenticationFlow = {
     returnRedirectParam: string;
 };
 
+// @alpha
+export type AutomationType = "schedule" | "trigger";
+
 // @beta
 export type CancelableOptions = {
     signal?: AbortSignal;
@@ -207,6 +212,8 @@ export interface IAnalyticalWorkspace {
     // @alpha
     attributeHierarchies(): IAttributeHierarchiesService;
     attributes(): IWorkspaceAttributesService;
+    // @alpha
+    automations(): IWorkspaceAutomationService;
     catalog(): IWorkspaceCatalogFactory;
     dashboards(): IWorkspaceDashboardsService;
     // @alpha
@@ -284,6 +291,21 @@ export interface IAuthenticationProvider {
     initializeClient?(client: any): void;
     onNotAuthenticated?: NotAuthenticatedHandler;
 }
+
+// @public
+export interface IAutomationsQuery {
+    query(): Promise<IAutomationsQueryResult>;
+    withFilter(filter: {
+        title?: string;
+    }): IAutomationsQuery;
+    withPage(page: number): IAutomationsQuery;
+    withSize(size: number): IAutomationsQuery;
+    withSorting(sort: string[]): IAutomationsQuery;
+    withType(type: AutomationType): IAutomationsQuery;
+}
+
+// @public
+export type IAutomationsQueryResult = IPagedResource<IAutomationMetadataObject>;
 
 // @public
 export interface IBackendCapabilities {
@@ -610,7 +632,7 @@ export interface IExportDefinitionsQueryOptions {
 }
 
 // @alpha
-export type IExportDefinitionsQueryResult = IPagedResource<IExportDefinition>;
+export type IExportDefinitionsQueryResult = IPagedResource<IExportDefinitionMetadataObject>;
 
 // @public
 export interface IExportPdfConfig {
@@ -666,6 +688,18 @@ export interface IForecastView {
     low: DataValue[][];
     // (undocumented)
     prediction: DataValue[][];
+}
+
+// @alpha
+export interface IGetAutomationOptions {
+    loadUserData?: boolean;
+}
+
+// @alpha
+export interface IGetAutomationsOptions {
+    limit?: number;
+    loadUserData?: boolean;
+    offset?: number;
 }
 
 // @alpha
@@ -1064,6 +1098,16 @@ export interface IWorkspaceAttributesService {
     getConnectedAttributesByDisplayForm(ref: ObjRef): Promise<ObjRef[]>;
 }
 
+// @alpha
+export interface IWorkspaceAutomationService {
+    createAutomation(automation: IAutomationMetadataObjectDefinition, options?: IGetAutomationOptions): Promise<IAutomationMetadataObject>;
+    deleteAutomation(id: string): Promise<void>;
+    getAutomation(id: string, options?: IGetAutomationOptions): Promise<IAutomationMetadataObject>;
+    getAutomations(options?: IGetAutomationsOptions): Promise<IAutomationMetadataObject[]>;
+    getAutomationsQuery(): IAutomationsQuery;
+    updateAutomation(automation: IAutomationMetadataObject, options?: IGetAutomationOptions): Promise<IAutomationMetadataObject>;
+}
+
 // @public
 export interface IWorkspaceCatalog extends IWorkspaceCatalogMethods {
     availableItems(): IWorkspaceCatalogAvailableItemsFactory;
@@ -1204,12 +1248,12 @@ export interface IWorkspaceDescriptorUpdate {
 
 // @alpha
 export interface IWorkspaceExportDefinitionsService {
-    createExportDefinition(exportDefinition: IExportDefinitionBase): Promise<IExportDefinition>;
+    createExportDefinition(exportDefinition: IExportDefinitionMetadataObjectDefinition): Promise<IExportDefinitionMetadataObject>;
     deleteExportDefinition(ref: ObjRef): Promise<void>;
-    getExportDefinition(ref: ObjRef, options?: IGetExportDefinitionOptions): Promise<IExportDefinition>;
+    getExportDefinition(ref: ObjRef, options?: IGetExportDefinitionOptions): Promise<IExportDefinitionMetadataObject>;
     getExportDefinitions(options?: IExportDefinitionsQueryOptions): Promise<IExportDefinitionsQueryResult>;
     getExportDefinitionsQuery(): IExportDefinitionsQuery;
-    updateExportDefinition(ref: ObjRef, exportDefinition: IExportDefinitionBase): Promise<IExportDefinition>;
+    updateExportDefinition(ref: ObjRef, exportDefinition: IExportDefinitionMetadataObjectDefinition): Promise<IExportDefinitionMetadataObject>;
 }
 
 // @public

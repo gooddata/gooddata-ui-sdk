@@ -742,6 +742,12 @@ export interface ClusteringRequest {
      * @memberof ClusteringRequest
      */
     numberOfClusters: number;
+    /**
+     * Threshold used for algorithm
+     * @type {number}
+     * @memberof ClusteringRequest
+     */
+    threshold?: number;
 }
 /**
  *
@@ -778,13 +784,13 @@ export interface ClusteringResult {
      * @type {Array<number>}
      * @memberof ClusteringResult
      */
-    ycoord: Array<number>;
+    xcoord: Array<number>;
     /**
      *
      * @type {Array<number>}
      * @memberof ClusteringResult
      */
-    xcoord: Array<number>;
+    ycoord: Array<number>;
 }
 /**
  * Filter the result by comparing specified metric to given constant value, using given comparison operator.

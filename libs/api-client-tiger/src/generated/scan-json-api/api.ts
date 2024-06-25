@@ -657,6 +657,18 @@ export interface TestDefinitionRequest {
      */
     token?: string;
     /**
+     * Private key for data sources which supports key-pair authentication.
+     * @type {string}
+     * @memberof TestDefinitionRequest
+     */
+    privateKey?: string;
+    /**
+     * Passphrase for a encrypted version of a private key.
+     * @type {string}
+     * @memberof TestDefinitionRequest
+     */
+    privateKeyPassphrase?: string;
+    /**
      *
      * @type {Array<DataSourceParameter>}
      * @memberof TestDefinitionRequest
