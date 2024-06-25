@@ -2979,6 +2979,8 @@ export interface DeclarativeDataSource {
     parameters?: Array<Parameter>;
     password?: string;
     permissions?: Array<DeclarativeDataSourcePermission>;
+    privateKey?: string | null;
+    privateKeyPassphrase?: string | null;
     schema: string;
     token?: string;
     type: DeclarativeDataSourceTypeEnum;
@@ -8419,6 +8421,8 @@ export interface JsonApiDataSourceInAttributes {
     name: string;
     parameters?: Array<JsonApiDataSourceOutAttributesParameters> | null;
     password?: string | null;
+    privateKey?: string | null;
+    privateKeyPassphrase?: string | null;
     schema: string;
     token?: string | null;
     type: JsonApiDataSourceInAttributesTypeEnum;
@@ -8600,6 +8604,8 @@ export interface JsonApiDataSourcePatchAttributes {
     name?: string;
     parameters?: Array<JsonApiDataSourceOutAttributesParameters> | null;
     password?: string | null;
+    privateKey?: string | null;
+    privateKeyPassphrase?: string | null;
     schema?: string;
     token?: string | null;
     type?: JsonApiDataSourcePatchAttributesTypeEnum;
@@ -14480,6 +14486,8 @@ export type TabularExportRequestFormatEnum = typeof TabularExportRequestFormatEn
 export interface TestDefinitionRequest {
     parameters?: Array<DataSourceParameter>;
     password?: string;
+    privateKey?: string;
+    privateKeyPassphrase?: string;
     schema?: string;
     token?: string;
     type: TestDefinitionRequestTypeEnum;
@@ -14530,6 +14538,8 @@ export interface TestRequest {
     enableCaching?: boolean;
     parameters?: Array<DataSourceParameter>;
     password?: string;
+    privateKey?: string;
+    privateKeyPassphrase?: string;
     schema?: string;
     token?: string;
     url?: string;

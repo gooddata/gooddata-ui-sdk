@@ -18923,6 +18923,18 @@
                                 "description": "The password to use to connect to the database providing the data for the data source.",
                                 "nullable": true
                             },
+                            "privateKey": {
+                                "maxLength": 15000,
+                                "type": "string",
+                                "description": "The private key to use to connect to the database providing the data for the data source.",
+                                "nullable": true
+                            },
+                            "privateKeyPassphrase": {
+                                "maxLength": 255,
+                                "type": "string",
+                                "description": "The passphrase used to encrypt the private key.",
+                                "nullable": true
+                            },
                             "token": {
                                 "maxLength": 10000,
                                 "type": "string",
@@ -19717,6 +19729,18 @@
                                 "maxLength": 255,
                                 "type": "string",
                                 "description": "The password to use to connect to the database providing the data for the data source.",
+                                "nullable": true
+                            },
+                            "privateKey": {
+                                "maxLength": 15000,
+                                "type": "string",
+                                "description": "The private key to use to connect to the database providing the data for the data source.",
+                                "nullable": true
+                            },
+                            "privateKeyPassphrase": {
+                                "maxLength": 255,
+                                "type": "string",
+                                "description": "The passphrase used to encrypt the private key.",
                                 "nullable": true
                             },
                             "token": {
@@ -23876,6 +23900,18 @@
                         "type": "string",
                         "description": "Password for the data-source user, property is never returned back.",
                         "example": "*****"
+                    },
+                    "privateKey": {
+                        "maxLength": 250000,
+                        "type": "string",
+                        "description": "The private key to use to connect to the database providing the data for the data source.",
+                        "nullable": true
+                    },
+                    "privateKeyPassphrase": {
+                        "maxLength": 255,
+                        "type": "string",
+                        "description": "The passphrase used to encrypt the private key.",
+                        "nullable": true
                     },
                     "token": {
                         "maxLength": 10000,
