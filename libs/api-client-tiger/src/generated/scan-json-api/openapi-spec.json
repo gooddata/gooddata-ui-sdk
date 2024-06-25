@@ -458,6 +458,14 @@
                         "type": "string",
                         "description": "Secret for token based authentication for data sources which supports it."
                     },
+                    "privateKey": {
+                        "type": "string",
+                        "description": "Private key for data sources which supports key-pair authentication."
+                    },
+                    "privateKeyPassphrase": {
+                        "type": "string",
+                        "description": "Passphrase for a encrypted version of a private key."
+                    },
                     "enableCaching": {
                         "type": "boolean",
                         "description": "Enable caching of intermediate results. The feature is deprecated. It is not possible to enable it anymore. Any input is interpreted as false.",
@@ -991,6 +999,14 @@
                     "token": {
                         "type": "string",
                         "description": "Secret for token based authentication for data sources which supports it."
+                    },
+                    "privateKey": {
+                        "type": "string",
+                        "description": "Private key for data sources which supports key-pair authentication."
+                    },
+                    "privateKeyPassphrase": {
+                        "type": "string",
+                        "description": "Passphrase for a encrypted version of a private key."
                     },
                     "parameters": {
                         "type": "array",

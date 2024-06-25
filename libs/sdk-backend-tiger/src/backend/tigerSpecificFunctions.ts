@@ -138,6 +138,8 @@ export interface IDataSourceConnectionInfo {
     parameters?: Array<DataSourceParameter> | null;
     decodedParameters?: Array<DataSourceParameter> | null;
     cacheStrategy?: IDataSourceCacheStrategy;
+    privateKey?: string;
+    privateKeyPassphrase?: string;
 }
 
 /**
@@ -162,6 +164,8 @@ export interface IDataSourceUpsertRequest {
     username?: string;
     parameters?: Array<DataSourceParameter>;
     cacheStrategy?: IDataSourceCacheStrategy;
+    privateKey?: string;
+    privateKeyPassphrase?: string;
 }
 
 /**
@@ -178,6 +182,8 @@ export interface IDataSourcePatchRequest {
     username?: string;
     parameters?: Array<DataSourceParameter>;
     cacheStrategy?: IDataSourceCacheStrategy;
+    privateKey?: string;
+    privateKeyPassphrase?: string;
 }
 
 /**
@@ -191,6 +197,8 @@ export interface IDataSourceTestConnectionRequest {
     url: string;
     username?: string;
     parameters?: Array<DataSourceParameter>;
+    privateKey?: string;
+    privateKeyPassphrase?: string;
 }
 
 /**

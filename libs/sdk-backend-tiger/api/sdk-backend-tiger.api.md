@@ -171,6 +171,10 @@ export interface IDataSourceConnectionInfo {
     // (undocumented)
     permissions?: IDataSourcePermission[];
     // (undocumented)
+    privateKey?: string;
+    // (undocumented)
+    privateKeyPassphrase?: string;
+    // (undocumented)
     schema: string;
     // (undocumented)
     type: IDataSourceType;
@@ -201,6 +205,10 @@ export interface IDataSourcePatchRequest {
     // (undocumented)
     password?: string;
     // (undocumented)
+    privateKey?: string;
+    // (undocumented)
+    privateKeyPassphrase?: string;
+    // (undocumented)
     schema?: string;
     // (undocumented)
     token?: string;
@@ -221,6 +229,10 @@ export interface IDataSourceTestConnectionRequest {
     parameters?: Array<DataSourceParameter>;
     // (undocumented)
     password?: string;
+    // (undocumented)
+    privateKey?: string;
+    // (undocumented)
+    privateKeyPassphrase?: string;
     // (undocumented)
     schema: string;
     // (undocumented)
@@ -256,6 +268,10 @@ export interface IDataSourceUpsertRequest {
     parameters?: Array<DataSourceParameter>;
     // (undocumented)
     password?: string;
+    // (undocumented)
+    privateKey?: string;
+    // (undocumented)
+    privateKeyPassphrase?: string;
     // (undocumented)
     schema: string;
     // (undocumented)
