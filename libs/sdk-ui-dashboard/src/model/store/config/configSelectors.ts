@@ -555,6 +555,30 @@ export const selectIsShareButtonHidden: DashboardSelector<boolean> = createSelec
 });
 
 /**
+ * Returns whether cross filtering is disabled by config
+ *
+ * @internal
+ */
+export const selectIsDisabledCrossFiltering: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.disableCrossFiltering ?? false;
+    },
+);
+
+/**
+ * Returns whether user filter reset is disabled by config
+ *
+ * @internal
+ */
+export const selectIsDisableUserFilterReset: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.disableUserFilterReset ?? false;
+    },
+);
+
+/**
  * Returns whether drill down is enabled.
  *
  * On Bear, drill down is driven by isKPIDashboardImplicitDrillDown.
