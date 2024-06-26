@@ -1,12 +1,18 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 
-import React from "react";
+import React, { useState } from "react";
 
 import { ScheduledEmailDialog, ScheduledEmailManagementDialog } from "../../scheduledEmail/index.js";
 
-import { useDashboardScheduledEmails } from "../../../model/index.js";
+import { useDashboardScheduledEmails, useDashboardScheduledEmailsData } from "../../../model/index.js";
 
 export const ScheduledEmailDialogProvider = () => {
+    const [reloadId, setReloadId] = useState(0);
+
+    const reloadAutomations = () => {
+        setReloadId((prev) => prev + 1);
+    };
+
     const {
         isScheduleEmailingDialogOpen,
         isScheduleEmailingManagementDialogOpen,
@@ -16,14 +22,18 @@ export const ScheduledEmailDialogProvider = () => {
         onScheduleEmailingManagementAdd,
         onScheduleEmailingManagementEdit,
         scheduledEmailToEdit,
-        users,
         onScheduleEmailingSaveError,
         onScheduleEmailingSaveSuccess,
         onScheduleEmailingManagementClose,
-        onScheduleEmailingManagementLoadingError,
         onScheduleEmailingManagementDeleteSuccess,
         onScheduleEmailingManagementDeleteError,
-    } = useDashboardScheduledEmails();
+        onScheduleEmailingManagementLoadingError,
+    } = useDashboardScheduledEmails({ onReload: reloadAutomations });
+
+    const { webhooks, users, automations, isLoading, loadError } = useDashboardScheduledEmailsData({
+        reloadId,
+        onLoadError: onScheduleEmailingManagementLoadingError,
+    });
 
     return (
         <>
@@ -34,8 +44,11 @@ export const ScheduledEmailDialogProvider = () => {
                     onEdit={onScheduleEmailingManagementEdit}
                     onClose={onScheduleEmailingManagementClose}
                     onDeleteSuccess={onScheduleEmailingManagementDeleteSuccess}
-                    onLoadError={onScheduleEmailingManagementLoadingError}
                     onDeleteError={onScheduleEmailingManagementDeleteError}
+                    isLoadingScheduleData={isLoading}
+                    automations={automations}
+                    webhooks={webhooks}
+                    scheduleDataError={loadError}
                 />
             ) : null}
             {isScheduleEmailingDialogOpen ? (
@@ -48,6 +61,8 @@ export const ScheduledEmailDialogProvider = () => {
                     onSaveError={onScheduleEmailingSaveError}
                     onSaveSuccess={onScheduleEmailingSaveSuccess}
                     users={users}
+                    webhooks={webhooks}
+                    automations={automations}
                 />
             ) : null}
         </>

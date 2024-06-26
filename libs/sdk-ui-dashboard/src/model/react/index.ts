@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 export {
     DashboardStoreProvider,
     useDashboardDispatch,
@@ -25,4 +25,5 @@ export { IDashboardStoreProviderProps } from "./types.js";
 export { useDispatchDashboardCommand } from "./useDispatchDashboardCommand.js";
 export { useWidgetExecutionsHandler } from "./useWidgetExecutionsHandler.js";
 export { useDashboardScheduledEmails } from "./useDashboardScheduledEmails.js";
+export { useDashboardScheduledEmailsData } from "./useDashboardScheduledEmailsData.js";
 export { useWidgetSelection, IUseWidgetSelectionResult } from "./useWidgetSelection.js";

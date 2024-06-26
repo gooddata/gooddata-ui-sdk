@@ -312,7 +312,9 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
 }
 
 // @internal (undocumented)
-export const ContentDivider: React_2.FC;
+export const ContentDivider: React_2.FC<{
+    className?: string;
+}>;
 
 // @internal (undocumented)
 export type CopyCodeOriginType = "keyboard" | "button";

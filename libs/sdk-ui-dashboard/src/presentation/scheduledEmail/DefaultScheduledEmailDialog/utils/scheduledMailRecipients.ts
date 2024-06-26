@@ -1,5 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
-import { userFullName } from "@gooddata/sdk-model";
+// (C) 2019-2024 GoodData Corporation
 import {
     IScheduleEmailExternalRecipient,
     IScheduleEmailRecipient,
@@ -8,15 +7,6 @@ import {
 import isEmpty from "lodash/isEmpty.js";
 import flatMap from "lodash/flatMap.js";
 
-export const getScheduledEmailRecipientUniqueIdentifier = (recipient: IScheduleEmailRecipient): string =>
-    isScheduleEmailExistingRecipient(recipient) ? recipient.user.login : recipient.email;
-
-export const getScheduledEmailRecipientEmail = (recipient: IScheduleEmailRecipient): string =>
-    isScheduleEmailExistingRecipient(recipient) ? recipient.user.email! : recipient.email;
-
-export const getScheduledEmailRecipientDisplayName = (recipient: IScheduleEmailRecipient): string =>
-    isScheduleEmailExistingRecipient(recipient) ? userFullName(recipient.user)! : recipient.email;
-
 const scheduleEmailRecipientDelimiter = /[,;\s]/;
 
 export const splitScheduledEmailRecipients = (
@@ -24,21 +14,6 @@ export const splitScheduledEmailRecipients = (
 ): IScheduleEmailRecipient[] => {
     return flatMap(recipients, (recipient) => {
         return splitScheduledEmailRecipientByDelimiter(recipient, scheduleEmailRecipientDelimiter);
-    });
-};
-
-export const uniqueScheduledEmailRecipients = (
-    recipients: IScheduleEmailRecipient[],
-): IScheduleEmailRecipient[] => {
-    const recipientIds: string[] = [];
-    return recipients.filter((recipient) => {
-        const recipientId = getScheduledEmailRecipientUniqueIdentifier(recipient);
-        if (recipientIds.includes(recipientId)) {
-            return false;
-        } else {
-            recipientIds.push(recipientId);
-            return true;
-        }
     });
 };
 

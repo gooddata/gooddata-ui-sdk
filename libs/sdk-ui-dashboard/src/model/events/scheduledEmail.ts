@@ -1,5 +1,5 @@
-// (C) 2021-2023 GoodData Corporation
-import { IScheduledMail } from "@gooddata/sdk-model";
+// (C) 2021-2024 GoodData Corporation
+import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { DashboardContext } from "../types/commonTypes.js";
 import { IDashboardEvent } from "./base.js";
 import { eventGuard } from "./util.js";
@@ -12,7 +12,7 @@ export interface DashboardScheduledEmailCreatedPayload {
     /**
      * The scheduled email created.
      */
-    readonly scheduledEmail: IScheduledMail;
+    readonly scheduledEmail: IAutomationMetadataObject;
 }
 
 /**
@@ -27,7 +27,7 @@ export interface DashboardScheduledEmailCreated extends IDashboardEvent {
 
 export function scheduledEmailCreated(
     ctx: DashboardContext,
-    scheduledEmail: IScheduledMail,
+    scheduledEmail: IAutomationMetadataObject,
     correlationId?: string,
 ): DashboardScheduledEmailCreated {
     return {

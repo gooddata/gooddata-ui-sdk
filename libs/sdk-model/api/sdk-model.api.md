@@ -778,7 +778,7 @@ export interface IAutomationMetadataObjectBase {
 // @alpha (undocumented)
 export interface IAutomationMetadataObjectDefinition extends Omit<IAutomationMetadataObjectBase, "exportDefinitions">, IMetadataObjectDefinition, IAuditable {
     // (undocumented)
-    exportDefinitions: IExportDefinitionMetadataObjectDefinition[];
+    exportDefinitions?: (IExportDefinitionMetadataObjectDefinition | IExportDefinitionMetadataObject)[];
     // (undocumented)
     type: "automation";
 }
@@ -2776,6 +2776,7 @@ export interface ISettings {
     enableRichTextDescriptions?: boolean;
     enableScatterPlotClustering?: boolean;
     enableScatterPlotSegmentation?: boolean;
+    enableScheduling?: boolean;
     enableSeparateTotalLabels?: boolean;
     enableTableColumnsAutoResizing?: boolean;
     enableTableColumnsGrowToFit?: boolean;

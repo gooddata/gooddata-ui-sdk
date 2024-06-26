@@ -1,3 +1,3 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 
-export { ScheduledEmailManagementDialog as DefaultScheduledEmailManagementDialog } from "./ScheduledEmailManagementDialog.js";
+export { ScheduledEmailManagementDialog as DefaultScheduledEmailManagementDialog } from "./DefaultScheduledEmailManagementDialog.js";

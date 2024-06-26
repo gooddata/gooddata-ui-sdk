@@ -1,11 +1,14 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/_variables" as button-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+$input-height: 28px;
 
 .gd-recipients-field {
     .gd-recipients__control {
         // custom className from react-select rendered
         box-sizing: border-box;
+        min-height: $input-height;
         width: 100%;
         margin: 0;
         padding: 0;
@@ -39,8 +42,8 @@
     // custom className from react-select rendered
     .gd-recipients__value-container {
         overflow-y: auto;
-        padding: 6px 7px 5px;
-        min-height: 30px;
+        padding: 0;
+        min-height: $input-height;
         max-height: 100px;
     }
 
@@ -109,7 +112,9 @@
         padding-bottom: 0;
 
         .gd-recipient-option-item {
-            padding: 8px 12px;
+            padding: 6px 8px;
+            font-size: 13px;
+            line-height: 15px;
 
             .gd-recipient-option-value-item {
                 margin-left: 10px;
