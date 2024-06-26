@@ -2711,9 +2711,6 @@ importers:
       '@gooddata/sdk-ui-charts':
         specifier: workspace:*
         version: link:../sdk-ui-charts
-      '@gooddata/sdk-ui-filters':
-        specifier: workspace:*
-        version: link:../sdk-ui-filters
       '@gooddata/sdk-ui-geo':
         specifier: workspace:*
         version: link:../sdk-ui-geo
