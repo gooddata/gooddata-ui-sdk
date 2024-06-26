@@ -3334,6 +3334,32 @@ export interface IReactOptions {
 }
 
 // @internal (undocumented)
+export interface IRecurrenceFormProps {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    cronExpression: string;
+    // (undocumented)
+    dateFormat?: string;
+    // (undocumented)
+    locale?: string;
+    // (undocumented)
+    onChange: (cronExpression: string, startDate: Date) => void;
+    // (undocumented)
+    repeatLabel?: string;
+    // (undocumented)
+    startDate: Date;
+    // (undocumented)
+    startLabel?: string;
+    // (undocumented)
+    timeFormat?: string;
+    // (undocumented)
+    timezone?: string;
+    // (undocumented)
+    weekStart?: WeekStart;
+}
+
+// @internal (undocumented)
 export interface IRegion {
     // (undocumented)
     bottom?: number;
@@ -4034,6 +4060,10 @@ export interface ITimepickerOwnProps {
     skipNormalizeTime?: boolean;
     // (undocumented)
     time: Date;
+    // (undocumented)
+    timeAnchor?: number;
+    // (undocumented)
+    timeFormat?: string;
 }
 
 // @internal (undocumented)
@@ -4282,7 +4312,7 @@ export class MultiSelectListItem extends PureComponent<IMultiSelectListItemProps
 export const NoData: React_2.FC<INoDataProps>;
 
 // @internal
-export function normalizeTime(time: Date): Date;
+export function normalizeTime(time: Date, date?: Date, timeAnchor?: number): Date;
 
 // @internal (undocumented)
 export const NumericInput: React_2.FC<INumericInputProps>;
@@ -4366,6 +4396,9 @@ export enum PresetType {
 
 // @internal (undocumented)
 export const recommendedHeader: IDateDatasetHeader;
+
+// @internal (undocumented)
+export const RecurrenceForm: React_2.FC<IRecurrenceFormProps>;
 
 // @internal (undocumented)
 export const relatedHeader: IDateDatasetHeader;
