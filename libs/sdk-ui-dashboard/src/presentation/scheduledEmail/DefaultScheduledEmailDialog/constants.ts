@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
 export const PLATFORM_DATE_FORMAT = "yyyy-MM-dd";
 
@@ -18,6 +18,7 @@ export const REPEAT_TYPES = {
     DAILY: "daily",
     MONTHLY: "monthly",
     CUSTOM: "custom",
+    CRON: "cron",
 };
 
 export const REPEAT_FREQUENCIES = {
@@ -30,4 +31,4 @@ export const FREQUENCY_TYPE = [REPEAT_FREQUENCIES.DAY, REPEAT_FREQUENCIES.WEEK, 
 export const REPEAT_EXECUTE_ON = {
     DAY_OF_MONTH: "dayOfMonth",
     DAY_OF_WEEK: "dayOfWeek",
-};
+} as const;

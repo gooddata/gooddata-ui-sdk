@@ -1,6 +1,6 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
-import { IUser, IWorkspaceUser } from "@gooddata/sdk-model";
+import { IOrganizationUser } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty.js";
 
 /**
@@ -38,7 +38,7 @@ export interface IScheduleEmailRepeatFrequency {
         days: number[];
     };
     month?: {
-        type: string;
+        type: "dayOfMonth" | "dayOfWeek";
         dayOfMonth?: number;
         dayOfWeek?: IScheduleEmailRepeatFrequencyDayOfWeek;
     };
@@ -52,6 +52,7 @@ export interface IScheduleEmailRepeat {
     repeatFrequency: IScheduleEmailRepeatFrequency;
     repeatPeriod: number;
     repeatType: string;
+    cron: string;
 }
 
 /**
@@ -77,7 +78,7 @@ export interface IScheduleEmailExistingRecipient {
     /**
      * Target user, if the recipient is an existing user
      */
-    user: IWorkspaceUser | IUser;
+    user: IOrganizationUser;
 }
 
 /**

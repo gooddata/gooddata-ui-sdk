@@ -75,7 +75,7 @@ export interface IAutomationMetadataObjectDefinition
         IMetadataObjectDefinition,
         IAuditable {
     type: "automation";
-    exportDefinitions: IExportDefinitionMetadataObjectDefinition[];
+    exportDefinitions?: (IExportDefinitionMetadataObjectDefinition | IExportDefinitionMetadataObject)[];
 }
 
 /**
