@@ -1,0 +1,29 @@
+#this demonstrates how to use the rush build cache and pnpm module cache action
+#caching use github actions cache to store the rush build cache via configured official plugin github-action-build-cache
+#see: https://www.npmjs.com/package/@gigara/rush-github-action-build-cache-plugin
+#all configuration is done in the build-cache.json
+#all projects have set its build configuration outputs see example in libs/api-client-bear/config/rush-project.json
+#set-up-rush-with-cache action enable cache via environment variable RUSH_BUILD_CACHE_ENABLED to allow cache only on CI
+
+name: rw ~ Rush cache test
+on:
+    workflow_call:
+    #workflow_dispatch:
+jobs:
+    test-build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                ref: 'master'
+            - name: Setup node
+              uses: actions/setup-node@v4
+              with:
+                node-version: 18.17.0
+
+            - name: Setup rush
+              uses: gooddata/gooddata-ui-sdk/.github/actions/set-up-rush-with-cache@master
+
+            - name: Build rush
+              run: |
+                node common/scripts/install-run-rush.js build
