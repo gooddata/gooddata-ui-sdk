@@ -50,6 +50,7 @@ export abstract class DecoratedElementsQuery implements IElementsQuery {
             dateFilters?: (IRelativeDateFilter | IAbsoluteDateFilter)[];
             measures?: IMeasure[];
             validateBy?: ObjRef[];
+            signal?: AbortSignal;
         } = {},
     ) {}
 
@@ -107,6 +108,7 @@ export abstract class DecoratedElementsQuery implements IElementsQuery {
     }
 
     public withSignal(signal: AbortSignal): IElementsQuery {
+        this.settings.signal = signal;
         return this.decorated.withSignal(signal);
     }
 
@@ -120,6 +122,7 @@ export abstract class DecoratedElementsQuery implements IElementsQuery {
             dateFilters?: (IRelativeDateFilter | IAbsoluteDateFilter)[];
             measures?: IMeasure[];
             validateBy?: ObjRef[];
+            signal?: AbortSignal;
         },
     ): IElementsQuery;
 }

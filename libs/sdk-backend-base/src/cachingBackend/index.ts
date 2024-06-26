@@ -539,17 +539,33 @@ class CachedElementsQuery extends DecoratedElementsQuery {
         invariant(cache, "inconsistent attribute element cache config");
         const cacheKey = elementsCacheKey(this.ref, this.settings);
 
-        let result = cache.get(cacheKey);
+        const result = cache.get(cacheKey);
 
+        //If no cache entry and we have signal, we need cache by result
+        if (this.settings.signal) {
+            if (!result) {
+                try {
+                    const res = await super.query();
+                    cache.set(cacheKey, Promise.resolve(res));
+                    return res;
+                } catch (e) {
+                    cache.delete(cacheKey);
+                    throw e;
+                }
+            }
+            return result;
+        }
+
+        //If no cache entry and no signal, we need cache by promise
         if (!result) {
-            result = super.query().catch((e) => {
+            const promise = super.query().catch((e) => {
                 cache.delete(cacheKey);
                 throw e;
             });
 
-            cache.set(cacheKey, result);
+            cache.set(cacheKey, promise);
+            return promise;
         }
-
         return result;
     };
 
@@ -563,6 +579,7 @@ class CachedElementsQuery extends DecoratedElementsQuery {
             dateFilters?: IRelativeDateFilter[] | undefined;
             measures?: IMeasure<IMeasureDefinitionType>[] | undefined;
             validateBy?: ObjRef[];
+            signal?: AbortSignal;
         },
     ): IElementsQuery {
         return new CachedElementsQuery(decorated, this.ctx, this.workspace, this.ref, settings);
