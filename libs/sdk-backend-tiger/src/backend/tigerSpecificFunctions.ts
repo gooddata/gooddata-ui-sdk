@@ -1012,8 +1012,20 @@ export const buildTigerSpecificFunctions = (
         }
     },
     createDataSource: async (requestData: IDataSourceUpsertRequest) => {
-        const { id, name, password, schema, token, type, url, username, parameters, cacheStrategy } =
-            requestData;
+        const {
+            id,
+            name,
+            password,
+            schema,
+            token,
+            type,
+            url,
+            username,
+            parameters,
+            cacheStrategy,
+            privateKey,
+            privateKeyPassphrase,
+        } = requestData;
         try {
             return await authApiCall(async (sdk) => {
                 return sdk.entities
@@ -1030,6 +1042,8 @@ export const buildTigerSpecificFunctions = (
                                     username,
                                     parameters,
                                     cacheStrategy,
+                                    privateKey,
+                                    privateKeyPassphrase,
                                 },
                                 id,
                                 type: JsonApiDataSourceInTypeEnum.DATA_SOURCE,
@@ -1056,6 +1070,8 @@ export const buildTigerSpecificFunctions = (
             username,
             parameters,
             cacheStrategy,
+            privateKey,
+            privateKeyPassphrase,
         } = requestData;
         try {
             return await authApiCall(async (sdk) => {
@@ -1074,6 +1090,8 @@ export const buildTigerSpecificFunctions = (
                                     username,
                                     parameters,
                                     cacheStrategy,
+                                    privateKey,
+                                    privateKeyPassphrase,
                                 },
                                 id: requestDataId,
                                 type: JsonApiDataSourceInTypeEnum.DATA_SOURCE,
@@ -1100,6 +1118,8 @@ export const buildTigerSpecificFunctions = (
             username,
             parameters,
             cacheStrategy,
+            privateKey,
+            privateKeyPassphrase,
         } = requestData;
         try {
             return await authApiCall(async (sdk) => {
@@ -1118,6 +1138,8 @@ export const buildTigerSpecificFunctions = (
                                     username,
                                     parameters,
                                     cacheStrategy,
+                                    privateKey,
+                                    privateKeyPassphrase,
                                 },
                                 id: requestDataId,
                                 type: JsonApiDataSourceInTypeEnum.DATA_SOURCE,
