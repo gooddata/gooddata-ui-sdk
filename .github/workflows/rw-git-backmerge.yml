@@ -117,5 +117,5 @@ jobs:
         env:
           SOURCE_BRANCH: ${{ inputs.source-branch }}
           TARGET_BRANCH: ${{ inputs.target-branch }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}
         shell: bash
