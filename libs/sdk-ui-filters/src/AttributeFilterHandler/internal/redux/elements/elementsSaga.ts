@@ -41,6 +41,13 @@ export function* elementsSaga(
 
     const { enableDuplicatedLabelValuesInAttributeFilter } = context;
 
+    const filterByPrimaryLabelProp =
+        enableDuplicatedLabelValuesInAttributeFilter &&
+        attributeFilterDisplayAsDisplayFormRef &&
+        !options.search // when searching by string, we need to apply it to the displayAsLabel directly not primary label
+            ? { filterByPrimaryLabel: true }
+            : {};
+
     const elementsQueryResult: PromiseFnReturnType<typeof loadElements> = yield call(
         loadElements,
         context,
@@ -50,9 +57,7 @@ export function* elementsSaga(
                     ? attributeFilterDisplayAsDisplayFormRef
                     : attributeFilterDisplayFormRef,
             ...options,
-            ...(enableDuplicatedLabelValuesInAttributeFilter && attributeFilterDisplayAsDisplayFormRef
-                ? { filterByPrimaryLabel: true }
-                : {}),
+            ...filterByPrimaryLabelProp,
         },
         {
             hiddenElements,
