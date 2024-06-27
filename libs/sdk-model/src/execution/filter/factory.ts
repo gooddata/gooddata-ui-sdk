@@ -14,10 +14,27 @@ import {
     RankingFilterOperator,
 } from "./index.js";
 import { attributeDisplayFormRef, IAttribute, isAttribute, attributeLocalId } from "../attribute/index.js";
-import { Identifier, isObjRef, LocalIdRef, ObjRef, ObjRefInScope } from "../../objRef/index.js";
+import {
+    Identifier,
+    isObjRef,
+    LocalIdRef,
+    ObjRef,
+    ObjRefInScope,
+    objRefToString,
+} from "../../objRef/index.js";
 import { IMeasure, isMeasure, measureLocalId } from "../measure/index.js";
 import { idRef, localIdRef } from "../../objRef/factory.js";
 import { DateAttributeGranularity } from "../../base/dateGranularities.js";
+import SparkMD5 from "spark-md5";
+import { sanitizeLocalId } from "../../sanitizeLocalId.js";
+
+export function generateLocalId(prefix: string, objRef: ObjRef, inObject: IAttributeElements): string {
+    const hasher = new SparkMD5();
+    hasher.append(JSON.stringify(inObject));
+
+    const hash = hasher.end().substr(0, 8);
+    return sanitizeLocalId(`${prefix}_${objRefToString(objRef)}_${hash}`);
+}
 
 /**
  * Creates a new positive attribute filter.
@@ -37,6 +54,7 @@ import { DateAttributeGranularity } from "../../base/dateGranularities.js";
 export function newPositiveAttributeFilter(
     attributeOrRef: IAttribute | ObjRef | Identifier,
     inValues: IAttributeElements | string[],
+    localIdentifier?: string,
 ): IPositiveAttributeFilter {
     const objRef = isObjRef(attributeOrRef)
         ? attributeOrRef
@@ -48,6 +66,7 @@ export function newPositiveAttributeFilter(
 
     return {
         positiveAttributeFilter: {
+            ...(localIdentifier ? { localIdentifier } : {}),
             displayForm: objRef,
             in: inObject,
         },
@@ -72,6 +91,7 @@ export function newPositiveAttributeFilter(
 export function newNegativeAttributeFilter(
     attributeOrRef: IAttribute | ObjRef | Identifier,
     notInValues: IAttributeElements | string[],
+    localIdentifier?: string,
 ): INegativeAttributeFilter {
     const objRef = isObjRef(attributeOrRef)
         ? attributeOrRef
@@ -85,6 +105,7 @@ export function newNegativeAttributeFilter(
 
     return {
         negativeAttributeFilter: {
+            ...(localIdentifier ? { localIdentifier } : {}),
             displayForm: objRef,
             notIn: notInObject,
         },

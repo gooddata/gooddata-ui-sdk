@@ -296,6 +296,16 @@ export interface IDashboard<TWidget = IDashboardWidget>
      * Disables cross filtering for this dashboard.
      */
     readonly disableCrossFiltering?: boolean;
+
+    /**
+     * Disables reset of user filters for this dashboard.
+     */
+    readonly disableUserFilterReset?: boolean;
+
+    /**
+     * Disables save of user filters for this dashboard.
+     */
+    readonly disableUserFilterSave?: boolean;
 }
 
 /**
@@ -343,6 +353,16 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget>
      * Disables cross filtering for this dashboard.
      */
     readonly disableCrossFiltering?: boolean;
+
+    /**
+     * Disables reset of user filters for this dashboard.
+     */
+    readonly disableUserFilterReset?: boolean;
+
+    /**
+     * Disables save of user filters for this dashboard.
+     */
+    readonly disableUserFilterSave?: boolean;
 }
 
 /**

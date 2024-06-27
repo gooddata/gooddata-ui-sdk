@@ -28,6 +28,8 @@ export interface IAnalyticalDashboard {
     attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
     plugins?: IDashboardPluginLink[];
     disableCrossFiltering?: boolean;
+    disableUserFilterReset?: boolean;
+    disableUserFilterSave?: boolean;
 }
 
 /**

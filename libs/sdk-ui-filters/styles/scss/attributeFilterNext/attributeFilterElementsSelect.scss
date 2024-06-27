@@ -1,6 +1,24 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 @use "attributeFilterVariables";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables";
+
+.gd-item-title-tooltip {
+    .bubble-content .content {
+        p {
+            font-size: 12px;
+            line-height: 20px;
+        }
+
+        h4 {
+            margin: 13px 0 0;
+            padding-right: 5px;
+            font-size: 10px;
+            font-weight: normal;
+            text-transform: uppercase;
+            color: variables.$gd-color-state-blank;
+        }
+    }
+}
 
 .gd-attribute-filter-elements-select-item__next {
     min-height: 28px;
@@ -8,6 +26,15 @@
     .gd-empty-list-item-tooltip-wrapper {
         margin-left: 5px;
         flex-grow: 1;
+
+        .gd-empty-list-item-tooltip {
+            color: var(--gd-palette-complementary-6, #94a1ad);
+        }
+    }
+
+    .gd-item-title-tooltip-wrapper {
+        margin-left: 5px;
+        flex-grow: 0;
 
         .gd-empty-list-item-tooltip {
             color: var(--gd-palette-complementary-6, #94a1ad);

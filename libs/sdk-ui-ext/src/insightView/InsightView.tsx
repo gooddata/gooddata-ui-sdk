@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 import {
@@ -110,6 +110,10 @@ const InsightViewCore: React.FC<IInsightViewProps & WrappedComponentProps> = (pr
                     .workspace(workspace!)
                     .insights()
                     .getInsightWithAddedFilters(insightData, filters ?? []);
+            },
+            onError: (err) => {
+                const sdkError = convertError(err);
+                onError?.(sdkError);
             },
         },
         [insight, backend, workspace, executeByReference, filters, onInsightLoaded],

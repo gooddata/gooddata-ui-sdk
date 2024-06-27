@@ -72,7 +72,14 @@ export function* loadNextElementsPageSaga(
 
         const result = yield call(elementsSaga, loadOptionsWithExcludePrimaryLabel, cacheId);
 
-        yield put(actions.loadNextElementsPageSuccess({ ...result, correlation }));
+        yield put(
+            actions.loadNextElementsPageSuccess({
+                ...result,
+                correlation,
+                enableDuplicatedLabelValuesInAttributeFilter:
+                    context.enableDuplicatedLabelValuesInAttributeFilter,
+            }),
+        );
     } catch (error) {
         yield put(
             actions.loadNextElementsPageError({

@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import {
     IAttributeElements,
     INegativeAttributeFilter,
@@ -55,6 +55,22 @@ export const selectAttributeFilterDisplayForm: FilterSelector<ObjRef> = createSe
 /**
  * @internal
  */
+export const selectAttributeFilterDisplayAsLabel: FilterSelector<ObjRef> = createSelector(
+    selectState,
+    (state) => state.displayAsDisplayFormRef,
+);
+
+/**
+ * @internal
+ */
+export const selectAttributeFilterLocalIdentifier: FilterSelector<string> = createSelector(
+    selectState,
+    (state) => state.localIdentifier,
+);
+
+/**
+ * @internal
+ */
 export const selectAttributeFilterElements: FilterSelector<IAttributeElements> = createSelector(
     selectAttributeFilterElementsForm,
     selectCommittedSelection,
@@ -88,8 +104,26 @@ export const selectAttributeFilter: FilterSelector<INegativeAttributeFilter | IP
         selectAttributeFilterDisplayForm,
         selectIsCommittedSelectionInverted,
         selectAttributeFilterElementsWithHiddenElementsResolved,
-        (displayForm, isInverted, elements) =>
+        selectAttributeFilterLocalIdentifier,
+        (displayForm, isInverted, elements, localIdentifier) =>
             isInverted
-                ? newNegativeAttributeFilter(displayForm, elements)
-                : newPositiveAttributeFilter(displayForm, elements),
+                ? newNegativeAttributeFilter(displayForm, elements, localIdentifier)
+                : newPositiveAttributeFilter(displayForm, elements, localIdentifier),
     );
+
+/**
+ * @internal
+ */
+export const selectAttributeFilterToDisplay: FilterSelector<
+    INegativeAttributeFilter | IPositiveAttributeFilter
+> = createSelector(
+    selectAttributeFilterDisplayForm,
+    selectAttributeFilterDisplayAsLabel,
+    selectIsCommittedSelectionInverted,
+    selectAttributeFilterElementsWithHiddenElementsResolved,
+    selectAttributeFilterLocalIdentifier,
+    (displayForm, displayAsLabel, isInverted, elements, localIdentifier) =>
+        isInverted
+            ? newNegativeAttributeFilter(displayAsLabel ?? displayForm, elements, localIdentifier)
+            : newPositiveAttributeFilter(displayAsLabel ?? displayForm, elements, localIdentifier),
+);

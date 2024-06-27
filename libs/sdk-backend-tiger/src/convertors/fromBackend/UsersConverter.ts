@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { IUser, uriRef, idRef } from "@gooddata/sdk-model";
 import {
@@ -7,6 +7,7 @@ import {
     JsonApiUserIdentifierToOneLinkage,
     JsonApiMetricOutIncludes,
     JsonApiAnalyticalDashboardOutIncludes,
+    JsonApiAutomationOutIncludes,
 } from "@gooddata/api-client-tiger";
 
 /**
@@ -41,7 +42,10 @@ function isJsonApiUserIdentifierOutAttributes(
     );
 }
 
-export type IIncludedWithUserIdentifier = JsonApiMetricOutIncludes | JsonApiAnalyticalDashboardOutIncludes;
+export type IIncludedWithUserIdentifier =
+    | JsonApiMetricOutIncludes
+    | JsonApiAnalyticalDashboardOutIncludes
+    | JsonApiAutomationOutIncludes;
 
 /**
  * Convert user identifier link from relationships.[createdBy/modifiedBy] to {@link IUser} object.

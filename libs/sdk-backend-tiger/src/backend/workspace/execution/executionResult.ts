@@ -7,6 +7,7 @@ import {
     ActionsApiGetTabularExportRequest,
     TabularExportRequest,
     TabularExportRequestFormatEnum,
+    Settings,
 } from "@gooddata/api-client-tiger";
 import {
     IDataView,
@@ -208,19 +209,28 @@ export class TigerExecutionResult implements IExecutionResult {
             ? TabularExportRequestFormatEnum[uppercaseFormat]
             : TabularExportRequestFormatEnum.CSV;
 
-        const settings = {
+        const settings: Settings = {
             ...(format === TabularExportRequestFormatEnum.XLSX
                 ? { mergeHeaders: Boolean(options.mergeHeaders), showFilters: Boolean(options.showFilters) }
                 : {}),
-            ...(format === TabularExportRequestFormatEnum.PDF ? options.pdfConfiguration : {}),
+            ...(format === TabularExportRequestFormatEnum.PDF
+                ? {
+                      showFilters: Boolean(options.showFilters),
+                      pdfPageSize: options.pdfConfiguration?.pdfPageSize,
+                      pdfTopLeftContent: options.pdfConfiguration?.pdfTopLeftContent,
+                      pdfTopRightContent: options.pdfConfiguration?.pdfTopRightContent,
+                  }
+                : {}),
         };
 
         const payload: TabularExportRequest = {
             format,
-            executionResult: this.resultId,
+            executionResult: options.visualizationObjectId ? undefined : this.resultId, // use the visualizationObject for the export instead of the execution when provided
             fileName: options.title ?? "default",
             settings,
             customOverride: resolveCustomOverride(this.dimensions, this.definition),
+            visualizationObject: options.visualizationObjectId,
+            visualizationObjectCustomFilters: options.visualizationObjectCustomFilters,
         };
 
         return this.authCall(async (client) => {

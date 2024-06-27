@@ -45,6 +45,7 @@ import {
     IDataFiltersService,
     IWorkspaceLogicalModelService,
     IOrganizationNotificationChannelService,
+    IWorkspaceAutomationService,
 } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
@@ -278,6 +279,9 @@ function recordedWorkspace(
             throw new NotSupported("not supported");
         },
         logicalModel(): IWorkspaceLogicalModelService {
+            throw new NotSupported("not supported");
+        },
+        automations(): IWorkspaceAutomationService {
             throw new NotSupported("not supported");
         },
     };

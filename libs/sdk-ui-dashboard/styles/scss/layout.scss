@@ -284,6 +284,7 @@ $gd-dashboards-section-description-color: var(
 
     .gd-layout-row-description-richtext {
         white-space: nowrap;
+        text-wrap: wrap;
     }
 
     .gd-editable-label-richtext {
@@ -294,6 +295,7 @@ $gd-dashboards-section-description-color: var(
         textarea {
             padding: 0;
             font-size: 14px;
+            line-height: 19px;
             color: kit-variables.$gd-color-state-blank;
         }
 

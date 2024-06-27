@@ -232,3 +232,12 @@ export { IOrganizationNotificationChannelService } from "./organization/notifica
 export { IDataFiltersService } from "./workspace/dataFilter/index.js";
 
 export { IWorkspaceLogicalModelService, IDateDataset } from "./workspace/ldm/model.js";
+
+export {
+    IWorkspaceAutomationService,
+    IGetAutomationOptions,
+    IGetAutomationsOptions,
+    AutomationType,
+    IAutomationsQuery,
+    IAutomationsQueryResult,
+} from "./workspace/automations/index.js";

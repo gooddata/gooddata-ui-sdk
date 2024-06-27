@@ -80,6 +80,8 @@ export {
     selectEnableKDAttributeFilterDatesValidation,
     selectEnableDuplicatedLabelValuesInAttributeFilter,
     selectEnableRichTextDescriptions,
+    selectIsDisabledCrossFiltering,
+    selectIsDisableUserFilterReset,
 } from "./config/configSelectors.js";
 export { EntitlementsState } from "./entitlements/entitlementsState.js";
 export { selectEntitlementExportPdf } from "./entitlements/entitlementsSelectors.js";
@@ -271,6 +273,8 @@ export {
     selectIsDashboardPrivate,
     selectDashboardWorkingDefinition,
     selectDisableDashboardCrossFiltering,
+    selectDisableDashboardUserFilterReset,
+    selectDisableDashboardUserFilterSave,
 } from "./meta/metaSelectors.js";
 export {
     selectListedDashboards,

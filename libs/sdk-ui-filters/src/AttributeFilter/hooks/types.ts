@@ -135,6 +135,11 @@ export type AttributeFilterControllerData = {
     currentDisplayFormRef: ObjRef;
 
     /**
+     * Current attribute filter display form used for displaying filter's elements {@link @gooddata/sdk-model#ObjRef}.
+     */
+    currentDisplayAsDisplayFormRef: ObjRef;
+
+    /**
      * This enables "show filtered elements" option which manages showing filtered elements.
      */
     enableShowingFilteredElements?: boolean;

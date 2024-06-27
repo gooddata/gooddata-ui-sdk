@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React from "react";
 import { ObjRef } from "@gooddata/sdk-model";
 import { IAlignPoint } from "@gooddata/sdk-ui-kit";
@@ -22,12 +22,12 @@ export interface IAttributeDisplayFormSelectProps {
 export const AttributeDisplayFormSelect: React.FC<IAttributeDisplayFormSelectProps> = (props) => {
     const { onSelect, alignPoints } = props;
 
-    const { displayForms, currentDisplayFormRef } = useAttributeFilterContext();
+    const { displayForms, currentDisplayAsDisplayFormRef } = useAttributeFilterContext();
 
     return (
         <AttributeDisplayFormDropdown
             displayForms={displayForms}
-            selectedDisplayForm={currentDisplayFormRef}
+            selectedDisplayForm={currentDisplayAsDisplayFormRef}
             alignPoints={alignPoints}
             onSelect={onSelect}
         />

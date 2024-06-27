@@ -48,7 +48,7 @@ import { NotAuthenticated } from '@gooddata/sdk-backend-spi';
 import { NotAuthenticatedHandler } from '@gooddata/sdk-backend-spi';
 import { ObjectType } from '@gooddata/sdk-model';
 import { PlatformUsage } from '@gooddata/api-client-tiger';
-import { ReadFileManifestsResponse } from '@gooddata/api-client-tiger';
+import { ReadCsvFileManifestsResponse } from '@gooddata/api-client-tiger';
 import { ScanResultPdm } from '@gooddata/api-client-tiger';
 import { ScanSqlResponse } from '@gooddata/api-client-tiger';
 import { TestDefinitionRequestTypeEnum } from '@gooddata/api-client-tiger';
@@ -171,6 +171,10 @@ export interface IDataSourceConnectionInfo {
     // (undocumented)
     permissions?: IDataSourcePermission[];
     // (undocumented)
+    privateKey?: string;
+    // (undocumented)
+    privateKeyPassphrase?: string;
+    // (undocumented)
     schema: string;
     // (undocumented)
     type: IDataSourceType;
@@ -201,6 +205,10 @@ export interface IDataSourcePatchRequest {
     // (undocumented)
     password?: string;
     // (undocumented)
+    privateKey?: string;
+    // (undocumented)
+    privateKeyPassphrase?: string;
+    // (undocumented)
     schema?: string;
     // (undocumented)
     token?: string;
@@ -221,6 +229,10 @@ export interface IDataSourceTestConnectionRequest {
     parameters?: Array<DataSourceParameter>;
     // (undocumented)
     password?: string;
+    // (undocumented)
+    privateKey?: string;
+    // (undocumented)
+    privateKeyPassphrase?: string;
     // (undocumented)
     schema: string;
     // (undocumented)
@@ -256,6 +268,10 @@ export interface IDataSourceUpsertRequest {
     parameters?: Array<DataSourceParameter>;
     // (undocumented)
     password?: string;
+    // (undocumented)
+    privateKey?: string;
+    // (undocumented)
+    privateKeyPassphrase?: string;
     // (undocumented)
     schema: string;
     // (undocumented)
@@ -312,6 +328,7 @@ export const objectTypeToTigerIdType: {
     dateHierarchyTemplate: TigerObjectType;
     dateAttributeHierarchy: TigerObjectType;
     exportDefinition: TigerObjectType;
+    automation: TigerObjectType;
 };
 
 // @internal (undocumented)
@@ -325,7 +342,7 @@ export type OriginInfoWithId = JsonApiAnalyticalDashboardOutMetaOrigin & {
 // @internal (undocumented)
 export type PutWorkspaceLayoutRequest = LayoutApiPutWorkspaceLayoutRequest;
 
-export { ReadFileManifestsResponse }
+export { ReadCsvFileManifestsResponse }
 
 // @public
 export function redirectToTigerAuthentication(context: IAuthenticationContext, error: NotAuthenticated): void;
@@ -457,12 +474,12 @@ export type TigerSpecificFunctions = {
     getEntityUser?: (id: string) => Promise<IUser>;
     scanSql?: (dataSourceId: string, sql: string) => Promise<ScanSqlResult>;
     checkEntityOverrides?: (workspaceId: string, entities: Array<HierarchyObjectIdentification>) => Promise<Array<IdentifierDuplications>>;
-    stagingUpload?: (dataSourceId: string, file: File) => Promise<UploadFileResponse>;
-    analyzeCsv?: (dataSourceId: string, analyzeCsvRequest: AnalyzeCsvRequest) => Promise<Array<AnalyzeCsvResponse>>;
+    stagingUpload?: (file: File) => Promise<UploadFileResponse>;
+    analyzeCsv?: (analyzeCsvRequest: AnalyzeCsvRequest) => Promise<Array<AnalyzeCsvResponse>>;
     importCsv?: (dataSourceId: string, importCsvRequest: ImportCsvRequest) => Promise<Array<ImportCsvResponse>>;
     listFiles?: (dataSourceId: string) => Promise<Array<GdStorageFile>>;
     deleteFiles?: (dataSourceId: string, fileNames: string[]) => Promise<void>;
-    readFileManifests?: (dataSourceId: string, fileNames: string[]) => Promise<ReadFileManifestsResponse[]>;
+    readFileManifests?: (dataSourceId: string, fileNames: string[]) => Promise<ReadCsvFileManifestsResponse[]>;
 };
 
 // @public

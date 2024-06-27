@@ -1,5 +1,3 @@
-// (C) 2024 GoodData Corporation
-
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -657,6 +655,18 @@ export interface TestDefinitionRequest {
      */
     token?: string;
     /**
+     * Private key for data sources which supports key-pair authentication.
+     * @type {string}
+     * @memberof TestDefinitionRequest
+     */
+    privateKey?: string;
+    /**
+     * Passphrase for a encrypted version of a private key.
+     * @type {string}
+     * @memberof TestDefinitionRequest
+     */
+    privateKeyPassphrase?: string;
+    /**
      *
      * @type {Array<DataSourceParameter>}
      * @memberof TestDefinitionRequest
@@ -747,6 +757,18 @@ export interface TestRequest {
      * @memberof TestRequest
      */
     token?: string;
+    /**
+     * Private key for data sources which supports key-pair authentication.
+     * @type {string}
+     * @memberof TestRequest
+     */
+    privateKey?: string;
+    /**
+     * Passphrase for a encrypted version of a private key.
+     * @type {string}
+     * @memberof TestRequest
+     */
+    privateKeyPassphrase?: string;
     /**
      * Enable caching of intermediate results. The feature is deprecated. It is not possible to enable it anymore. Any input is interpreted as false.
      * @type {boolean}

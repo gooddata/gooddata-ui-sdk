@@ -1698,8 +1698,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/fixtures':
-        specifier: 1.32.15
-        version: 1.32.15
+        specifier: 1.32.23
+        version: 1.32.23
       '@gooddata/reference-workspace':
         specifier: workspace:*
         version: link:../../tools/reference-workspace
@@ -2711,9 +2711,6 @@ importers:
       '@gooddata/sdk-ui-charts':
         specifier: workspace:*
         version: link:../sdk-ui-charts
-      '@gooddata/sdk-ui-filters':
-        specifier: workspace:*
-        version: link:../sdk-ui-filters
       '@gooddata/sdk-ui-geo':
         specifier: workspace:*
         version: link:../sdk-ui-geo
@@ -4197,8 +4194,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/fixtures':
-        specifier: 1.32.15
-        version: 1.32.15
+        specifier: 1.32.23
+        version: 1.32.23
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../sdk-backend-spi
@@ -6297,8 +6294,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/fixtures':
-        specifier: 1.32.15
-        version: 1.32.15
+        specifier: 1.32.23
+        version: 1.32.23
       '@types/lodash':
         specifier: ^4.14.202
         version: 4.14.202
@@ -8560,8 +8557,8 @@ packages:
       - typescript
     dev: true
 
-  /@gooddata/fixtures@1.32.15:
-    resolution: {integrity: sha512-/VenNKJyZADppYS6QqXSmnhqAv+XhCZGHg50AvXna+YfXOplCNzKxv9CRqsyh+sUd8LZbYwnYlI3XA6X+t0sHQ==}
+  /@gooddata/fixtures@1.32.23:
+    resolution: {integrity: sha512-YvXpOvzy4xKkHXh4SuPuNqUftRxGbs6p3kgFScRaRWfTZklZLkBDqWMwIk3TSL2u/oAgw+wzBsJQl7tWQZxnUw==}
     dependencies:
       '@gooddata/api-client-bear': 8.12.3
       '@gooddata/api-client-tiger': 8.12.3

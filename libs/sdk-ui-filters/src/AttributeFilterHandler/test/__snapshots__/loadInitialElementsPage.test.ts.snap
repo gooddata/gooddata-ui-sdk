@@ -215,6 +215,7 @@ exports[`AttributeFilterHandler > loadInitialElementsPage() that was successful 
         "uri": "WonderKid",
       },
     ],
+    "enableDuplicatedLabelValuesInAttributeFilter": undefined,
     "options": {
       "excludePrimaryLabel": false,
       "limit": 500,

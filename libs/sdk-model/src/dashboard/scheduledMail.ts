@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { IAuditableUsers } from "../base/metadata.js";
 import { ObjRef } from "../objRef/index.js";
@@ -7,6 +7,7 @@ import { IDashboardObjectIdentity } from "./common.js";
 /**
  * A scheduled email common properties
  * @alpha
+ * @deprecated - use {@link IAutomationMetadataObjectBase} instead
  */
 export interface IScheduledMailBase {
     /**
@@ -90,12 +91,14 @@ export interface IScheduledMailBase {
 /**
  * A scheduled email is used to notify a user with an exported dashboard according to a specified time interval
  * @alpha
+ * @deprecated - use {@link IAutomationMetadataObjectDefinition} instead
  */
 export interface IScheduledMailDefinition extends IScheduledMailBase, Partial<IDashboardObjectIdentity> {}
 
 /**
  * Supported email attachments
  * @alpha
+ * @deprecated - use {@link IExportDefinitionMetadataObject} instead
  */
 export type ScheduledMailAttachment = IDashboardAttachment | IWidgetAttachment;
 
@@ -105,6 +108,7 @@ export type ScheduledMailAttachment = IDashboardAttachment | IWidgetAttachment;
  * @remarks
  * You can setup specific filter context to use for the dashboard export
  * @alpha
+ * @deprecated - use {@link IExportDefinitionMetadataObject} instead
  */
 export interface IDashboardAttachment {
     /**
@@ -139,6 +143,7 @@ export function isDashboardAttachment(obj: unknown): obj is IDashboardAttachment
  * @remarks
  * You can setup specific filter context to use for the widget export
  * @alpha
+ * @deprecated - use {@link IExportDefinitionMetadataObject} instead
  */
 export interface IWidgetAttachment {
     /**
@@ -189,5 +194,6 @@ export interface IExportOptions {
 /**
  * A scheduled email is used to notify a user with an exported dashboard according to a specified time interval
  * @alpha
+ * @deprecated - use {@link IAutomationMetadataObject} instead
  */
 export interface IScheduledMail extends IAuditableUsers, IScheduledMailBase, IDashboardObjectIdentity {}

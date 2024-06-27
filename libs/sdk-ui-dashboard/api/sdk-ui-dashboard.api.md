@@ -1424,7 +1424,9 @@ export interface DashboardConfig {
     allowUnfinishedFeatures?: boolean;
     colorPalette?: IColorPalette;
     dateFilterConfig?: IDateFilterConfig;
+    disableCrossFiltering?: boolean;
     disableDefaultDrills?: boolean;
+    disableUserFilterReset?: boolean;
     enableFilterValuesResolutionInDrillEvents?: boolean;
     // @internal
     exportId?: string;
@@ -1556,7 +1558,7 @@ export interface DashboardDeletedPayload {
 }
 
 // @public (undocumented)
-export type DashboardDescriptor = Pick<IDashboard, "title" | "description" | "tags" | "disableCrossFiltering"> & IAccessControlAware;
+export type DashboardDescriptor = Pick<IDashboard, "title" | "description" | "tags" | "disableCrossFiltering" | "disableUserFilterReset" | "disableUserFilterSave"> & IAccessControlAware;
 
 // @public (undocumented)
 export type DashboardDispatch = Dispatch<AnyAction>;
@@ -6718,6 +6720,12 @@ export const selectDateHierarchyTemplates: DashboardSelector<IDateHierarchyTempl
 export const selectDisableDashboardCrossFiltering: DashboardSelector<boolean>;
 
 // @public
+export const selectDisableDashboardUserFilterReset: DashboardSelector<boolean>;
+
+// @public
+export const selectDisableDashboardUserFilterSave: DashboardSelector<boolean>;
+
+// @public
 export const selectDisableDefaultDrills: DashboardSelector<boolean>;
 
 // @internal
@@ -6986,6 +6994,12 @@ export const selectIsDeleteDialogOpen: DashboardSelector<boolean>;
 
 // @internal
 export const selectIsDeleteFilterButtonEnabled: DashboardSelector<boolean>;
+
+// @internal
+export const selectIsDisabledCrossFiltering: DashboardSelector<boolean>;
+
+// @internal
+export const selectIsDisableUserFilterReset: DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export const selectIsDraggingWidget: DashboardSelector<boolean>;

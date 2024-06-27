@@ -59,7 +59,7 @@ export {
     ImportCsvResponse,
     GdStorageFile,
     UploadFileResponse,
-    ReadFileManifestsResponse,
+    ReadCsvFileManifestsResponse,
 } from "@gooddata/api-client-tiger";
 export {
     ContextDeferredAuthProvider,

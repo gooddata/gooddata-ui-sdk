@@ -59,7 +59,7 @@ export const AttributeFilterElementsSelect: React.FC<IAttributeFilterElementsSel
 
     const intl = useIntl();
     const isMobile = useMediaQuery("mobileDevice");
-    const { fullscreenOnMobile, selectionMode } = useAttributeFilterContext();
+    const { fullscreenOnMobile, selectionMode, attribute } = useAttributeFilterContext();
     const {
         ElementsSelectLoadingComponent,
         ElementsSelectItemComponent,
@@ -77,6 +77,14 @@ export const AttributeFilterElementsSelect: React.FC<IAttributeFilterElementsSel
     const loadingHeight = useMemo(() => {
         return Math.max((Math.min(previousItemsCount, VISIBLE_ITEMS_COUNT) || 1) * itemHeight, 20) + 32;
     }, [previousItemsCount, itemHeight]);
+
+    const primaryLabelTitle = useMemo(() => {
+        if (!attribute) {
+            return null;
+        }
+        const primaryLabel = attribute.displayForms.find((df) => !!df.isPrimary);
+        return primaryLabel?.title;
+    }, [attribute]);
 
     return (
         <>
@@ -105,7 +113,13 @@ export const AttributeFilterElementsSelect: React.FC<IAttributeFilterElementsSel
                 onLoadNextPage={onLoadNextPage}
                 numberOfHiddenSelectedItems={irrelevantSelection.length}
                 renderItem={(props) => {
-                    return <ElementsSelectItemComponent {...props} fullscreenOnMobile={fullscreenOnMobile} />;
+                    return (
+                        <ElementsSelectItemComponent
+                            {...props}
+                            primaryLabelTitle={primaryLabelTitle}
+                            fullscreenOnMobile={fullscreenOnMobile}
+                        />
+                    );
                 }}
                 renderError={() => {
                     return <ElementsSelectErrorComponent error={error} />;

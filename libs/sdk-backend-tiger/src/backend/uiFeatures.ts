@@ -88,6 +88,7 @@ export enum TigerFeaturesNames {
     EnableFlexAi = "enableFlexAi",
     EnableExperimentalFeaturesUI = "enableExperimentalFeaturesUI",
     EnableSingleStoreDataSource = "enableSingleStoreDataSource",
+    EnableSnowflakeKeyPairAuthentication = "enableSnowflakeKeyPairAuthentication",
     EnableInvalidValuesInAttributeFilter = "enableInvalidValuesInAttributeFilter",
     EnableDuplicatedLabelValuesInAttributeFilter = "enableDuplicatedLabelValuesInAttributeFilter",
     EnableWorkspacesHierarchyView = "enableWorkspacesHierarchyView",
@@ -147,6 +148,7 @@ export type ITigerFeatureFlags = {
     enableFlexAi: typeof FeatureFlagsValues["enableFlexAi"][number];
     enableExperimentalFeaturesUI: typeof FeatureFlagsValues["enableExperimentalFeaturesUI"][number];
     enableSingleStoreDataSource: typeof FeatureFlagsValues["enableSingleStoreDataSource"][number];
+    enableSnowflakeKeyPairAuthentication: typeof FeatureFlagsValues["enableSnowflakeKeyPairAuthentication"][number];
     enableInvalidValuesInAttributeFilter: typeof FeatureFlagsValues["enableInvalidValuesInAttributeFilter"][number];
     enableDuplicatedLabelValuesInAttributeFilter: typeof FeatureFlagsValues["enableDuplicatedLabelValuesInAttributeFilter"][number];
     enableWorkspacesHierarchyView: typeof FeatureFlagsValues["enableWorkspacesHierarchyView"][number];
@@ -206,6 +208,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableFlexAi: false,
     enableExperimentalFeaturesUI: false,
     enableSingleStoreDataSource: false,
+    enableSnowflakeKeyPairAuthentication: false,
     enableInvalidValuesInAttributeFilter: false,
     enableDuplicatedLabelValuesInAttributeFilter: false,
     enableWorkspacesHierarchyView: false,
@@ -269,6 +272,7 @@ export const FeatureFlagsValues = {
     enableFlexAi: [true, false] as const,
     enableExperimentalFeaturesUI: [true, false] as const,
     enableSingleStoreDataSource: [true, false] as const,
+    enableSnowflakeKeyPairAuthentication: [true, false] as const,
     enableInvalidValuesInAttributeFilter: [true, false] as const,
     enableDuplicatedLabelValuesInAttributeFilter: [true, false] as const,
     enableWorkspacesHierarchyView: [true, false] as const,

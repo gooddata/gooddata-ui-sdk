@@ -3,9 +3,10 @@ import React, { useCallback } from "react";
 import cx from "classnames";
 import camelCase from "lodash/camelCase.js";
 import { FormattedMessage, useIntl } from "react-intl";
-import { getElementTitle } from "../../utils.js";
+import { getElementPrimaryTitle, getElementTitle } from "../../utils.js";
 import { IAttributeFilterElementsSelectItemProps } from "./types.js";
 import { Bubble, BubbleHoverTrigger, IAlignPoint } from "@gooddata/sdk-ui-kit";
+import { AttributeFilterElementsSelectItemTooltip } from "./AttributeFilterElementsSelectItemTooltip.js";
 
 const ALIGN_POINTS: IAlignPoint[] = [{ align: "bl tc", offset: { x: 7, y: 0 } }];
 
@@ -20,7 +21,7 @@ const ALIGN_POINTS: IAlignPoint[] = [{ align: "bl tc", offset: { x: 7, y: 0 } }]
 export const AttributeFilterElementsSelectItem: React.VFC<IAttributeFilterElementsSelectItemProps> = (
     props,
 ) => {
-    const { item, isSelected, onSelect, onSelectOnly, onDeselect } = props;
+    const { item, isSelected, onSelect, onSelectOnly, onDeselect, primaryLabelTitle } = props;
     const intl = useIntl();
 
     const onItemClick = useCallback(() => {
@@ -60,9 +61,10 @@ export const AttributeFilterElementsSelectItem: React.VFC<IAttributeFilterElemen
     });
 
     const itemTitle = getElementTitle(item, intl);
+    const itemPrimaryTitle = getElementPrimaryTitle(item);
 
     return (
-        <div className={classes} onClick={onItemClick} title={itemTitle}>
+        <div className={classes} onClick={onItemClick}>
             <label className={labelClasses}>
                 <input type="checkbox" className="input-checkbox" readOnly checked={isSelected} />
                 <span className="input-label-text">{itemTitle}</span>
@@ -84,6 +86,11 @@ export const AttributeFilterElementsSelectItem: React.VFC<IAttributeFilterElemen
             <span className="gd-list-item-only" onClick={onOnlyItemClick}>
                 <FormattedMessage id="gs.list.only" />
             </span>
+            <AttributeFilterElementsSelectItemTooltip
+                itemTitle={itemTitle}
+                primaryLabelTitle={primaryLabelTitle}
+                itemPrimaryTitle={itemPrimaryTitle}
+            />
         </div>
     );
 };

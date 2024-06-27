@@ -1,7 +1,9 @@
 // (C) 2019-2024 GoodData Corporation
 
+import { IFilter } from "@gooddata/sdk-model";
+
 /**
- * Configuration for exports of results into XLSX or CSV.
+ * Configuration for exports of results into tabular formats.
  *
  * @public
  */
@@ -23,20 +25,33 @@ export interface IExportConfig {
     mergeHeaders?: boolean;
 
     /**
-     * Applicable for XLSX format; specifies filters to include as comments / metadata in
+     * Applicable for XLSX, and PDF format; specifies filters to include as comments / metadata in
      * the Excel sheet.
      *
      * @remarks
      * Filters provided here are purely to paint a better context for the
-     * person looking at the XLSX file. They serve no other purpose and are merely serialized
-     * into the XLSX in a human readable form.
+     * person looking at the exported file. They serve no other purpose and are merely serialized
+     * in the export in a human-readable form.
+     * The visualizationObjectId has to be provided to make this work for PDF format.
      */
     showFilters?: boolean;
 
     /**
-     *  Applicable for PDF format; specifies configuration for PDF export.
+     * Applicable for PDF format; specifies configuration for PDF export.
      */
     pdfConfiguration?: IExportPdfConfig;
+
+    /**
+     * Visualization object identifier. Used to ensure the export result is generated based on
+     * existing visualization in the PDF document. (PDF only)
+     */
+    visualizationObjectId?: string;
+
+    /**
+     * Optional custom filters (as array of IFilter objects defined in UI SDK) to be applied
+     * when visualizationObject is given. (PDF only)
+     */
+    visualizationObjectCustomFilters?: Array<IFilter>;
 }
 
 /**
@@ -45,7 +60,12 @@ export interface IExportConfig {
  * @public
  */
 export interface IExportPdfConfig {
-    orientation: "portrait" | "landscape";
+    /** Page size and orientation (e.g. 'a4 landscape'). */
+    pdfPageSize?: string;
+    /** PDF top left header content. */
+    pdfTopLeftContent?: string;
+    /** PDF top right header content. */
+    pdfTopRightContent?: string;
 }
 
 /**

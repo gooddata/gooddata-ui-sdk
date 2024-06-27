@@ -1,5 +1,3 @@
-// (C) 2024 GoodData Corporation
-
 /* tslint:disable */
 /* eslint-disable */
 /**

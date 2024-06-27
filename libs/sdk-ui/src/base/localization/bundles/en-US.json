@@ -3172,5 +3172,45 @@
         "value": "You can use Markdown syntax to style the description:",
         "comment": "Do not translate word 'Markdown'",
         "limit": 0
+    },
+    "recurrence.starts": {
+        "value": "Starts on",
+        "comment": "Describes when recurrence starts.",
+        "limit": 0
+    },
+    "recurrence.repeats": {
+        "value": "Repeats",
+        "comment": "Describes how recurrence repeats.",
+        "limit": 0
+    },
+    "recurrence.types.hourly": {
+        "value": "Hourly",
+        "comment": "Repeats the schedule hourly.",
+        "limit": 0
+    },
+    "recurrence.types.daily": {
+        "value": "Daily",
+        "comment": "Repeats the schedule daily.",
+        "limit": 0
+    },
+    "recurrence.types.weekly": {
+        "value": "Weekly on {day}",
+        "comment": "Example: 'Weekly on Friday'. Placeholder '{day}' refers to a day of a week. Don't translate placeholder '{day}'.",
+        "limit": 0
+    },
+    "recurrence.types.monthly.last": {
+        "value": "Monthly on the last {day}",
+        "comment": "Example: 'Monthly on the last Friday'. Do not translate placeholder {day}'",
+        "limit": 0
+    },
+    "recurrence.types.monthly": {
+        "value": "Monthly on the {week, select, 1 {first} 2 {second} 3 {third} 4 {fourth} other {last}} {day}",
+        "comment": "Example: 'Monthly on the first Friday'. Translate only uppercase in 'MONTHLY ON THE {week, select, 1 {FIRST} 2 {SECOND} 3 {THIRD} 4 {FOURTH} other {LAST}} {day}'",
+        "limit": 0
+    },
+    "recurrence.types.cron": {
+        "value": "Cron expression",
+        "comment": "Repeats the schedule email using custom cron expression defined by the user. Do not translate word 'Cron' as it is a name of technical specification.",
+        "limit": 0
     }
 }

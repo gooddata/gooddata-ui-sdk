@@ -56,6 +56,7 @@ import {
     selectHideKpiDrillInEmbedded,
     selectIsEmbedded,
     selectEnableKDCrossFiltering,
+    selectIsDisabledCrossFiltering,
 } from "../config/configSelectors.js";
 import flatMap from "lodash/flatMap.js";
 import { selectAccessibleDashboardsMap } from "../accessibleDashboards/accessibleDashboardsSelectors.js";
@@ -345,18 +346,21 @@ const selectCrossFilteringByWidgetRef: (
         selectSupportsCrossFiltering,
         selectDrillTargetsByWidgetRef(ref),
         selectDisableDashboardCrossFiltering,
+        selectIsDisabledCrossFiltering,
         selectDrillableItems,
         (
             isCrossFilteringEnabled,
             isCrossFilteringSupported,
             availableDrillTargets,
             disableCrossFiltering,
+            disableCrossFilteringByConfig,
             drillableItems,
         ) => {
             if (
                 !isCrossFilteringEnabled ||
                 !isCrossFilteringSupported ||
                 disableCrossFiltering ||
+                disableCrossFilteringByConfig ||
                 // When some drillable items are present, we need to disable
                 // cross filtering so that drill events are still possible to do.
                 drillableItems.length > 0
@@ -474,6 +478,7 @@ export const selectConfiguredDrillsByWidgetRef: (
         selectHideKpiDrillInEmbedded,
         selectIsEmbedded,
         selectDisableDashboardCrossFiltering,
+        selectIsDisabledCrossFiltering,
         (
             drills = [],
             disableDefaultDrills,
@@ -485,6 +490,7 @@ export const selectConfiguredDrillsByWidgetRef: (
             hideKpiDrillInEmbedded,
             isEmbedded,
             disableCrossFiltering,
+            disableCrossFilteringByConfig,
         ) => {
             if (disableDefaultDrills) {
                 return [];
@@ -509,7 +515,9 @@ export const selectConfiguredDrillsByWidgetRef: (
                         return !(isEmbedded && hideKpiDrillInEmbedded);
                     }
                     case "crossFiltering": {
-                        return enableKDCrossFiltering && !disableCrossFiltering;
+                        return (
+                            enableKDCrossFiltering && !disableCrossFiltering && !disableCrossFilteringByConfig
+                        );
                     }
                     default: {
                         const unhandledType: never = drillType;

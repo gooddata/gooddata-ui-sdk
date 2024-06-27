@@ -19,6 +19,7 @@ import { IAttributeHierarchiesService } from "./attributeHierarchies/index.js";
 import { IWorkspaceExportDefinitionsService } from "./exportDefinitions/index.js";
 import { IDataFiltersService } from "./dataFilter/index.js";
 import { IWorkspaceLogicalModelService } from "./ldm/model.js";
+import { IWorkspaceAutomationService } from "./automations/index.js";
 
 /**
  * Represents an analytical workspace hosted on a backend.
@@ -52,6 +53,13 @@ export interface IAnalyticalWorkspace {
      * Returns parent analytical workspace when this workspace has a parent, undefined otherwise.
      */
     getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined>;
+
+    /**
+     * Returns service that can be used to query and update workspace automations.
+     *
+     * @alpha
+     */
+    automations(): IWorkspaceAutomationService;
 
     /**
      * Returns factory that can be used to query workspace catalog items - attributes, measures, facts and date data sets.

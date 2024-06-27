@@ -60,6 +60,7 @@ exports[`AttributeFilterHandler > loadCustomElements() that was successful shoul
         "uri": "WonderKid",
       },
     ],
+    "enableDuplicatedLabelValuesInAttributeFilter": undefined,
     "options": {},
     "totalCount": 7,
   },

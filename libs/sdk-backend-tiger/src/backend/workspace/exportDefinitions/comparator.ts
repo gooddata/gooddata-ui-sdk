@@ -1,29 +1,34 @@
 // (C) 2023-2024 GoodData Corporation
 import {
-    IExportDefinition,
+    IExportDefinitionMetadataObject,
     exportDefinitionUpdated,
     exportDefinitionCreated,
     exportDefinitionTitle,
 } from "@gooddata/sdk-model";
 
-const exportDefinitionDate = (exportDefinition: IExportDefinition) =>
+const exportDefinitionDate = (exportDefinition: IExportDefinitionMetadataObject) =>
     exportDefinitionUpdated(exportDefinition) ?? exportDefinitionCreated(exportDefinition) ?? "";
 
 const compareCaseInsensitive = (a: string, b: string) =>
     a.localeCompare(b, undefined, { sensitivity: "base" });
 
-const compareDatesDesc = (exportDefinitionA: IExportDefinition, exportDefinitionB: IExportDefinition) =>
-    compareCaseInsensitive(exportDefinitionDate(exportDefinitionB), exportDefinitionDate(exportDefinitionA));
+const compareDatesDesc = (
+    exportDefinitionA: IExportDefinitionMetadataObject,
+    exportDefinitionB: IExportDefinitionMetadataObject,
+) => compareCaseInsensitive(exportDefinitionDate(exportDefinitionB), exportDefinitionDate(exportDefinitionA));
 
-const compareTitlesAsc = (exportDefinitionA: IExportDefinition, exportDefinitionB: IExportDefinition) =>
+const compareTitlesAsc = (
+    exportDefinitionA: IExportDefinitionMetadataObject,
+    exportDefinitionB: IExportDefinitionMetadataObject,
+) =>
     compareCaseInsensitive(
         exportDefinitionTitle(exportDefinitionA),
         exportDefinitionTitle(exportDefinitionB),
     );
 
 export const exportDefinitionsListComparator = (
-    exportDefinitionA: IExportDefinition,
-    exportDefinitionB: IExportDefinition,
+    exportDefinitionA: IExportDefinitionMetadataObject,
+    exportDefinitionB: IExportDefinitionMetadataObject,
 ) =>
     compareDatesDesc(exportDefinitionA, exportDefinitionB) ||
     compareTitlesAsc(exportDefinitionA, exportDefinitionB);

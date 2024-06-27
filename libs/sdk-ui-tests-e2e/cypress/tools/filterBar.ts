@@ -1,5 +1,6 @@
 // (C) 2021-2024 GoodData Corporation
 import { DashboardAttributeFilterConfigMode, DashboardDateFilterConfigMode } from "@gooddata/sdk-model";
+import camelCase from "lodash/camelCase";
 import { getTestClassByTitle } from "../support/commands/tools/classes";
 import { DropZone } from "./enum/DropZone";
 import { DateFilter } from "./dateFilter";
@@ -62,7 +63,9 @@ export class AttributeFilter {
 
     selectAttributesWithoutApply(name?: string) {
         this.clearAllValues();
-        this.getDropdownElement().find(`.s-attribute-filter-list-item[title="${name}"]`).click();
+        this.getDropdownElement()
+            .find(`.s-attribute-filter-list-item-${camelCase(name)}`)
+            .click();
         return this;
     }
 
@@ -198,14 +201,16 @@ export class AttributeFilter {
 
     isValueSelected(attributeValue: string, expected: boolean) {
         this.getDropdownElement()
-            .find(`.s-attribute-filter-list-item[title="${attributeValue}"]`)
+            .find(`.s-attribute-filter-list-item-${camelCase(attributeValue)}`)
             .should(expected ? "have.class" : "not.have.class", "s-attribute-filter-list-item-selected");
         return this;
     }
 
     searchAndSelectFilterItem(attributeValue: string) {
         this.search(attributeValue);
-        this.getDropdownElement().find(`.s-attribute-filter-list-item[title="${attributeValue}"]`).click();
+        this.getDropdownElement()
+            .find(`.s-attribute-filter-list-item-${camelCase(attributeValue)}`)
+            .click();
         return this;
     }
 

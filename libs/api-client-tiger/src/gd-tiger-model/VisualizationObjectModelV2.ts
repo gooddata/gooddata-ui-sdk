@@ -1,6 +1,12 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
-import { IBucket, IFilter, ISortItem, VisualizationProperties } from "@gooddata/sdk-model";
+import {
+    IBucket,
+    IFilter,
+    IAttributeFilterConfigs,
+    ISortItem,
+    VisualizationProperties,
+} from "@gooddata/sdk-model";
 
 /**
  * Visualization object used to store its data as a metadata object
@@ -11,6 +17,7 @@ export interface IVisualizationObject {
     visualizationUrl: string;
     buckets: IBucket[];
     filters: IFilter[];
+    attributeFilterConfigs?: IAttributeFilterConfigs;
     sorts: ISortItem[];
     properties: VisualizationProperties;
 }

@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { Correlation } from "../../AttributeFilterHandler/index.js";
 
 /**
@@ -25,6 +25,11 @@ export const SHOW_FILTERED_ELEMENTS_CORRELATION: Correlation = "showFilteredElem
  * @internal
  */
 export const IRRELEVANT_SELECTION: Correlation = "irrelevantSelection";
+
+/**
+ * @internal
+ */
+export const DISPLAY_FORM_CHANGED_CORRELATION: Correlation = "displayFormChanged";
 
 /**
  * @internal

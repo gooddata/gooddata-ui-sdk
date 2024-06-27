@@ -88,6 +88,7 @@ export async function loadElementsFromBackend(
         order,
         includeTotalCountWithoutFilters,
         excludePrimaryLabel = true,
+        filterByPrimaryLabel,
         signal,
     } = options;
 
@@ -122,6 +123,7 @@ export async function loadElementsFromBackend(
     let loader = backend.workspace(workspace).attributes().elements().forDisplayForm(displayFormRef);
     const loaderOptions: IElementsQueryOptions = {
         cacheId: cacheId,
+        filterByPrimaryLabel: filterByPrimaryLabel,
     };
 
     if (limit) {

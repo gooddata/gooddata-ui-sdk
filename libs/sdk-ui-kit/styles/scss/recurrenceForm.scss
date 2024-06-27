@@ -1,0 +1,63 @@
+// (C) 2024 GoodData Corporation
+
+$input-height: 28px;
+$input-width: 128px;
+
+.gd-recurrence-form {
+    display: flex;
+    flex-direction: column;
+
+    .gd-recurrence-form-datetime {
+        display: flex;
+        flex-direction: row;
+
+        > :not(:first-child),
+        > :not(:last-child) {
+            margin-right: 10px;
+        }
+
+        input,
+        button {
+            height: $input-height;
+        }
+
+        .gd-datepicker-icon {
+            left: 8px;
+            font-size: 16px;
+            line-height: 28px;
+        }
+
+        .gd-recurrence-form-datetime-date {
+            width: $input-width;
+        }
+
+        .gd-recurrence-form-datetime-time {
+            height: $input-height;
+            max-width: $input-width;
+        }
+    }
+
+    .gd-recurrence-form-repeat {
+        display: flex;
+        flex-direction: row;
+
+        > :not(:first-child),
+        > :not(:last-child) {
+            margin-right: 10px;
+        }
+
+        .gd-recurrence-form-type {
+            &,
+            button {
+                height: $input-height;
+            }
+        }
+
+        .gd-recurrence-form-cron {
+            input {
+                width: $input-width;
+                height: $input-height;
+            }
+        }
+    }
+}
