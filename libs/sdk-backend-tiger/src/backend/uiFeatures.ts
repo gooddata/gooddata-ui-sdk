@@ -96,6 +96,7 @@ export enum TigerFeaturesNames {
     EnableScatterPlotSegmentation = "enableScatterPlotSegmentation",
     EnableScatterPlotClustering = "enableScatterPlotClustering",
     EnableRichTextDescriptions = "enableRichTextDescriptions",
+    EnableSchedulingRollout = "enableSchedulingRollout",
 }
 
 export type ITigerFeatureFlags = {
@@ -156,6 +157,7 @@ export type ITigerFeatureFlags = {
     enableScatterPlotSegmentation: typeof FeatureFlagsValues["enableScatterPlotSegmentation"][number];
     enableScatterPlotClustering: typeof FeatureFlagsValues["enableScatterPlotClustering"][number];
     enableRichTextDescriptions: typeof FeatureFlagsValues["enableRichTextDescriptions"][number];
+    enableSchedulingRollout: typeof FeatureFlagsValues["enableSchedulingRollout"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -216,6 +218,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableScatterPlotSegmentation: true,
     enableScatterPlotClustering: true,
     enableRichTextDescriptions: true,
+    enableSchedulingRollout: false,
 };
 
 export const FeatureFlagsValues = {
@@ -280,4 +283,5 @@ export const FeatureFlagsValues = {
     enableScatterPlotSegmentation: [true, false] as const,
     enableScatterPlotClustering: [true, false] as const,
     enableRichTextDescriptions: [true, false] as const,
+    enableSchedulingRollout: [true, false] as const,
 };
