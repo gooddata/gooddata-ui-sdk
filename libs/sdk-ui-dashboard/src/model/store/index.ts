@@ -82,6 +82,7 @@ export {
     selectEnableRichTextDescriptions,
     selectIsDisabledCrossFiltering,
     selectIsDisableUserFilterReset,
+    selectEnableScheduling,
 } from "./config/configSelectors.js";
 export { EntitlementsState } from "./entitlements/entitlementsState.js";
 export { selectEntitlementExportPdf } from "./entitlements/entitlementsSelectors.js";

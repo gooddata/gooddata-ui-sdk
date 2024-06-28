@@ -18,11 +18,9 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     scheduleEmailDeleteSuccess: { id: "dialogs.schedule.email.delete.success" },
     scheduleManagementLoadError: { id: "dialogs.schedule.management.load.error" },
     scheduleManagementDeleteError: { id: "dialogs.schedule.management.delete.error" },
-
-    scheduleManagementTabUser: { id: "dialogs.schedule.management.tab.user" },
-    scheduleManagementTabAll: { id: "dialogs.schedule.management.tab.all" },
     scheduleManagementNoSchedules: { id: "dialogs.schedule.management.noSchedules" },
-    scheduleManagementNoSchedulesByUser: { id: "dialogs.schedule.management.noSchedules.byUser" },
+    scheduleManagementCreate: { id: "dialogs.schedule.management.create" },
+    scheduleManagementListTitle: { id: "dialogs.schedule.management.list.title" },
 
     saveAsNewAlertsAndEmailsMessage: { id: "dialogs.save.as.new.alertsAndEmailsMessage" },
     saveAsNewAlertsMessage: { id: "dialogs.save.as.new.alertsMessage" },
@@ -42,6 +40,7 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     controlButtonsSaveAndPublishNoChanges: { id: "controlButtons.saveAndPublish.disable.noChanges.title" },
     controlButtonsSaveAndPublishEmpty: { id: "controlButtons.saveAndPublish.disable.empty.title" },
 
+    scheduleDialogEmailRepeats_cron: { id: "dialogs.schedule.email.repeats.types.cron" },
     scheduleDialogEmailRepeats_custom: { id: "dialogs.schedule.email.repeats.types.custom" },
     scheduleDialogEmailRepeats_daily: { id: "dialogs.schedule.email.repeats.types.daily" },
     scheduleDialogEmailRepeats_monthly: { id: "dialogs.schedule.email.repeats.types.monthly" },

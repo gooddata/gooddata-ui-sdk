@@ -1,6 +1,11 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
-import { IFilterContextDefinition, IScheduledMailDefinition, ObjRef } from "@gooddata/sdk-model";
+import {
+    IFilterContextDefinition,
+    IAutomationMetadataObjectDefinition,
+    IAutomationMetadataObject,
+    ObjRef,
+} from "@gooddata/sdk-model";
 import { IDashboardCommand } from "./base.js";
 
 /**
@@ -11,7 +16,7 @@ export interface CreateScheduledEmailPayload {
     /**
      * The scheduled email to create.
      */
-    readonly scheduledEmail: IScheduledMailDefinition;
+    readonly scheduledEmail: IAutomationMetadataObjectDefinition;
     /**
      * Filter context to use for the scheduled email. If no filter context is provided, stored dashboard filter context will be used.
      */
@@ -41,7 +46,7 @@ export interface CreateScheduledEmail extends IDashboardCommand {
  * @beta
  */
 export function createScheduledEmail(
-    scheduledEmail: IScheduledMailDefinition,
+    scheduledEmail: IAutomationMetadataObjectDefinition,
     filterContext?: IFilterContextDefinition,
     correlationId?: string,
 ): CreateScheduledEmail {
@@ -73,7 +78,7 @@ export interface SaveScheduledEmailPayload {
     /**
      * The scheduled email to save.
      */
-    readonly scheduledEmail: IScheduledMailDefinition;
+    readonly scheduledEmail: IAutomationMetadataObject;
     /**
      * optionally specify existing filter context reference to be used for all attachments
      */
@@ -91,7 +96,7 @@ export interface SaveScheduledEmailPayload {
  * @beta
  */
 export function saveScheduledEmail(
-    scheduledEmail: IScheduledMailDefinition,
+    scheduledEmail: IAutomationMetadataObject,
     filterContextRef?: ObjRef,
     correlationId?: string,
 ): SaveScheduledEmail {
