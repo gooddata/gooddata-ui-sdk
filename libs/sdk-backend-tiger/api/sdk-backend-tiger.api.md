@@ -36,6 +36,7 @@ import { JsonApiDatasetOutList } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInAttributesCacheStrategyEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInAttributesTypeEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInDocument } from '@gooddata/api-client-tiger';
+import { JsonApiDataSourceOutAttributesAuthenticationTypeEnum } from '@gooddata/api-client-tiger';
 import { JsonApiNotificationChannelOut } from '@gooddata/api-client-tiger';
 import { JsonApiOrganizationOutMetaPermissionsEnum } from '@gooddata/api-client-tiger';
 import { JsonApiWorkspaceDataFilterInDocument } from '@gooddata/api-client-tiger';
@@ -159,6 +160,8 @@ export type IDataSourceCacheStrategy = JsonApiDataSourceInAttributesCacheStrateg
 // @internal (undocumented)
 export interface IDataSourceConnectionInfo {
     // (undocumented)
+    authenticationType?: JsonApiDataSourceOutAttributesAuthenticationTypeEnum;
+    // (undocumented)
     cacheStrategy?: IDataSourceCacheStrategy;
     // (undocumented)
     decodedParameters?: Array<DataSourceParameter> | null;
@@ -170,10 +173,6 @@ export interface IDataSourceConnectionInfo {
     parameters?: Array<DataSourceParameter> | null;
     // (undocumented)
     permissions?: IDataSourcePermission[];
-    // (undocumented)
-    privateKey?: string;
-    // (undocumented)
-    privateKeyPassphrase?: string;
     // (undocumented)
     schema: string;
     // (undocumented)
