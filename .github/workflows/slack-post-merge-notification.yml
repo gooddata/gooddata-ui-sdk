@@ -10,7 +10,9 @@ on:
 
 jobs:
   notify-post-merge-failed-to-slack:
-    runs-on: [infra1-small]
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
     steps:
       - name: Inform to slack when post-merge workflows failed
         if: ${{ github.event.workflow_run.conclusion == 'failure' }}
