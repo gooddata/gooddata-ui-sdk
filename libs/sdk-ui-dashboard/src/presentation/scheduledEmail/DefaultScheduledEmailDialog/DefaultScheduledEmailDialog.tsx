@@ -28,6 +28,7 @@ import {
     selectDashboardTitle,
     selectDashboardId,
     selectEntitlementMaxAutomationRecipients,
+    selectEntitlementMinimumRecurrenceMinutes,
 } from "../../../model/index.js";
 import { IScheduledEmailDialogProps } from "../types.js";
 import { invariant } from "ts-invariant";
@@ -55,6 +56,10 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
         selectEntitlementMaxAutomationRecipients,
     );
     const maxAutomationsRecipients = parseInt(maxAutomationsRecipientsEntitlement?.value ?? "0", 10);
+    const minimumRecurrenceMinutesEntitlement = useDashboardSelector(
+        selectEntitlementMinimumRecurrenceMinutes,
+    );
+    const allowHourlyRecurrence = parseInt(minimumRecurrenceMinutesEntitlement?.value ?? "60", 10) === 60;
 
     const { alignPoints, onAlign } = useScheduledEmailDialogAlignment();
     const {
@@ -166,6 +171,7 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
                         locale={locale}
                         weekStart={weekStart}
                         onChange={onRecurrenceChange}
+                        allowHourlyRecurrence={allowHourlyRecurrence}
                     />
                     <ContentDivider className="gd-divider-with-margin" />
                     <DestinationSelect

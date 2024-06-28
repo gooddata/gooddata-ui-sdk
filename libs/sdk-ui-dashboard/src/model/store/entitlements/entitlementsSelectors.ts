@@ -51,3 +51,12 @@ export const selectEntitlementMaxAutomations: DashboardSelector<IEntitlementDesc
     createSelector(selectEntitlements, (entitlements) => {
         return entitlements.find((entitlement) => entitlement.name === "MaxAutomations");
     });
+
+/**
+ * @alpha
+ */
+export const selectEntitlementMinimumRecurrenceMinutes: DashboardSelector<
+    IEntitlementDescriptor | undefined
+> = createSelector(selectEntitlements, (entitlements) => {
+    return entitlements.find((entitlement) => entitlement.name === "MinimumRecurrenceMinutes");
+});

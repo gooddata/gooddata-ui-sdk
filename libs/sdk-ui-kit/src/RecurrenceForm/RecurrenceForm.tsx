@@ -33,6 +33,7 @@ export interface IRecurrenceFormProps {
     startLabel?: string;
     repeatLabel?: string;
     className?: string;
+    allowHourlyRecurrence?: boolean;
 }
 
 const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
@@ -48,13 +49,14 @@ const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
         startLabel,
         repeatLabel,
         className,
+        allowHourlyRecurrence = true,
     } = props;
     const intl = useIntl();
 
     const [dateValue, setDateValue] = useState<Date>(startDate);
     const [cronValue, setCronValue] = useState<string>(cronExpression);
     const [recurrenceType, setRecurrenceType] = useState<RecurrenceType>(
-        transformCronExpressionToRecurrenceType(cronExpression),
+        transformCronExpressionToRecurrenceType(cronExpression, allowHourlyRecurrence),
     );
 
     const onDateChange = useCallback(
@@ -100,6 +102,7 @@ const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
                 cronValue={cronValue}
                 onRepeatTypeChange={onRepeatTypeChange}
                 onCronValueChange={onCronValueChange}
+                allowHourlyRecurrence={allowHourlyRecurrence}
             />
         </div>
     );

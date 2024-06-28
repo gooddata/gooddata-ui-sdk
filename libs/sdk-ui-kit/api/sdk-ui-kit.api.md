@@ -3338,6 +3338,8 @@ export interface IReactOptions {
 // @internal (undocumented)
 export interface IRecurrenceFormProps {
     // (undocumented)
+    allowHourlyRecurrence?: boolean;
+    // (undocumented)
     className?: string;
     // (undocumented)
     cronExpression: string;

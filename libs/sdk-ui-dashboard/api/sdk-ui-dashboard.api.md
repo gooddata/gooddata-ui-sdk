@@ -6870,6 +6870,9 @@ export const selectEntitlementMaxAutomationRecipients: DashboardSelector<IEntitl
 export const selectEntitlementMaxAutomations: DashboardSelector<IEntitlementDescriptor | undefined>;
 
 // @alpha (undocumented)
+export const selectEntitlementMinimumRecurrenceMinutes: DashboardSelector<IEntitlementDescriptor | undefined>;
+
+// @alpha (undocumented)
 export const selectExecutionResult: (state: DashboardState, id: EntityId) => IExecutionResultEnvelope | undefined;
 
 // @alpha (undocumented)

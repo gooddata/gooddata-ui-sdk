@@ -1491,7 +1491,7 @@ export interface IEntitlementDescriptor {
 }
 
 // @public
-export type IEntitlementsName = "CacheStrategy" | "Contract" | "CustomTheming" | "ExtraCache" | "ManagedOIDC" | "UiLocalization" | "Tier" | "UserCount" | "PdfExports" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WhiteLabeling" | "WorkspaceCount" | "Hipaa" | "UserTelemetryDisabled" | "MaxAutomationRecipients" | "MaxAutomations" | "MaxDailyScheduledActions" | "MinimumRecurrence";
+export type IEntitlementsName = "CacheStrategy" | "Contract" | "CustomTheming" | "ExtraCache" | "ManagedOIDC" | "UiLocalization" | "Tier" | "UserCount" | "PdfExports" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WhiteLabeling" | "WorkspaceCount" | "Hipaa" | "UserTelemetryDisabled" | "MaxAutomationRecipients" | "MaxAutomations" | "MaxDailyScheduledActions" | "MinimumRecurrenceMinutes";
 
 // @public
 export interface IExecutionConfig {

@@ -89,6 +89,7 @@ export {
     selectEntitlementExportPdf,
     selectEntitlementMaxAutomationRecipients,
     selectEntitlementMaxAutomations,
+    selectEntitlementMinimumRecurrenceMinutes,
 } from "./entitlements/entitlementsSelectors.js";
 
 export { PermissionsState } from "./permissions/permissionsState.js";

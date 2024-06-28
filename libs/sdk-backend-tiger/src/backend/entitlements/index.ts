@@ -13,6 +13,10 @@ const hardcodedEntitlements: IEntitlementDescriptor[] = [
         name: "MaxAutomations",
         value: "10",
     },
+    {
+        name: "MinimumRecurrenceMinutes",
+        value: "60",
+    },
 ];
 
 export class TigerEntitlements implements IEntitlements {

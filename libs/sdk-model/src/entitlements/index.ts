@@ -24,7 +24,7 @@ export type IEntitlementsName =
     | "MaxAutomationRecipients"
     | "MaxAutomations"
     | "MaxDailyScheduledActions"
-    | "MinimumRecurrence";
+    | "MinimumRecurrenceMinutes";
 
 /**
  * Entitlement descriptor
