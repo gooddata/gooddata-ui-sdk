@@ -1,3 +1,5 @@
+// (C) 2024 GoodData Corporation
+
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -2487,6 +2489,7 @@ export const TotalFunctionEnum = {
     MAX: "MAX",
     AVG: "AVG",
     MED: "MED",
+    NATIVE: "NATIVE",
 } as const;
 
 export type TotalFunctionEnum = typeof TotalFunctionEnum[keyof typeof TotalFunctionEnum];
