@@ -10,6 +10,7 @@ import {
     filterAttributeElements,
     filterObjRef,
     IAbsoluteDateFilter,
+    IAttributeDisplayFormMetadataObject,
     IAttributeElement,
     IAttributeFilter,
     IRelativeDateFilter,
@@ -823,7 +824,7 @@ const useShouldIncludeLimitingFilters = (supportsShowingFilteredElements: boolea
 };
 function isPrimaryLabelUsed(
     filter: IAttributeFilter,
-    displayForms: import("@gooddata/sdk-model").IAttributeDisplayFormMetadataObject[],
+    displayForms: IAttributeDisplayFormMetadataObject[],
 ): boolean {
     const primaryDisplayForm = displayForms.find((df) => df.isPrimary);
     if (!primaryDisplayForm) {
