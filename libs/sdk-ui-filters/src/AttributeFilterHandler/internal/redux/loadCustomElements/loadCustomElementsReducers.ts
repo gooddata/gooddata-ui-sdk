@@ -45,15 +45,15 @@ const loadCustomElementsSuccess: AttributeFilterReducer<
 
     const {
         enableDuplicatedLabelValuesInAttributeFilter,
-        options: { elements },
+        options: { elements, filterByPrimaryLabel },
     } = action.payload;
-    if (elements) {
+    if (enableDuplicatedLabelValuesInAttributeFilter && elements) {
         const originalElements = getElementValues(elements);
         // iterate over original elements to keep the order in selection,
         // fetched elements are sorted by default
         originalElements.forEach((originalEl) => {
             action.payload.elements
-                .filter((el) => el.title === originalEl)
+                .filter((el) => (filterByPrimaryLabel ? el.uri === originalEl : el.title === originalEl))
                 .forEach((el) => {
                     const cacheKey = getElementCacheKey(
                         state,
