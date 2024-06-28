@@ -346,6 +346,8 @@ export interface IAttributeElementLoader {
     onLoadNextElementsPageError: CallbackRegistration<OnLoadNextElementsPageErrorCallbackPayload>;
     onLoadNextElementsPageStart: CallbackRegistration<OnLoadNextElementsPageStartCallbackPayload>;
     onLoadNextElementsPageSuccess: CallbackRegistration<OnLoadNextElementsPageSuccessCallbackPayload>;
+    setDisplayAsLabel(displayAsLabel: ObjRef): void;
+    setDisplayForm(displayForm: ObjRef): void;
     setLimit(limit: number): void;
     setLimitingAttributeFilters(filters: IElementsQueryAttributeFilter[]): void;
     setLimitingDateFilters(filters: (IRelativeDateFilter | IAbsoluteDateFilter)[]): void;
@@ -612,8 +614,6 @@ export interface IAttributeFilterLoader extends IAttributeLoader, IAttributeElem
     onInitStart: CallbackRegistration<OnInitStartCallbackPayload>;
     onInitSuccess: CallbackRegistration<OnInitSuccessCallbackPayload>;
     onUpdate: CallbackRegistration<void>;
-    // (undocumented)
-    setDisplayAsLabel(displayAsLabel: ObjRef): void;
 }
 
 // @beta

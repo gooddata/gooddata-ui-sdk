@@ -190,6 +190,7 @@ export const useAttributeFilterController = (
         selectFirst,
         onApply: callbacks.onApply,
         selectionMode,
+        enableDuplicatedLabelValuesInAttributeFilter,
     });
 
     return {
@@ -333,6 +334,7 @@ function useInitOrReload(
             setShouldReloadElements,
             limitingValidationItems,
             limitingValidationItemsChanged,
+            displayAsLabel,
         };
 
         const change = resetOnParentFilterChange
@@ -352,6 +354,7 @@ function useInitOrReload(
         supportsCircularDependencyInFilters,
         setShouldReloadElements,
         limitingValidationItems,
+        displayAsLabel,
     ]);
 
     const isMountedRef = useRef(false);
@@ -394,6 +397,7 @@ function useInitOrReload(
 
 type UpdateFilterProps = {
     filter: IAttributeFilter;
+    displayAsLabel: ObjRef;
     limitingAttributeFilters?: IElementsQueryAttributeFilter[];
     limitingAttributesChanged: boolean;
     limitingDateFilters?: (IRelativeDateFilter | IAbsoluteDateFilter)[];
@@ -422,6 +426,7 @@ function updateNonResettingFilter(
         setShouldReloadElements,
         limitingValidationItemsChanged,
         limitingValidationItems,
+        displayAsLabel,
     }: UpdateFilterProps,
     supportsKeepingDependentFiltersSelection: boolean,
 ): UpdateFilterType {
@@ -452,11 +457,16 @@ function updateNonResettingFilter(
                 !isEmpty(leftoverIrrelevantKeys));
 
         const irrelevantKeysObj = shouldReinitilizeAllElements ? { irrelevantKeys: [] } : {};
-        handler.changeSelection({ keys, isInverted, ...irrelevantKeysObj });
+        if (filterChanged || !supportsKeepingDependentFiltersSelection || shouldReinitilizeAllElements) {
+            const displayFormRef = filterObjRef(filter);
+            handler.setDisplayForm(displayFormRef);
+            handler.setDisplayAsLabel(displayAsLabel);
+            handler.changeSelection({ keys, isInverted, ...irrelevantKeysObj });
+            handler.commitSelection();
+        }
         handler.setLimitingAttributeFilters(limitingAttributeFilters);
         handler.setLimitingValidationItems(limitingValidationItems);
         handler.setLimitingDateFilters(limitingDateFilters);
-        handler.commitSelection();
 
         const nextFilter = handler.getFilter();
         setConnectedPlaceholderValue(nextFilter);
@@ -485,6 +495,7 @@ function updateAutomaticResettingFilter(
         setConnectedPlaceholderValue,
         onApply,
         selectionMode,
+        displayAsLabel,
     }: UpdateFilterProps,
     supportsCircularDependencyInFilters: boolean,
 ): UpdateFilterType {
@@ -516,10 +527,15 @@ function updateAutomaticResettingFilter(
     }
 
     if (filterChanged) {
+        // reset handler completely to match input filter
+        // label could change as a part of migration to the primary label
+        const displayFormRef = filterObjRef(filter);
         const elements = filterAttributeElements(filter);
         const keys = isAttributeElementsByValue(elements) ? elements.values : elements.uris;
         const isInverted = isNegativeAttributeFilter(filter);
 
+        handler.setDisplayForm(displayFormRef);
+        handler.setDisplayAsLabel(displayAsLabel);
         handler.changeSelection({ keys, isInverted });
         handler.commitSelection();
 
@@ -742,11 +758,12 @@ const useSingleSelectModeHandler = (
         selectFirst: boolean;
         selectionMode: DashboardAttributeFilterSelectionMode;
         onApply: () => void;
+        enableDuplicatedLabelValuesInAttributeFilter: boolean;
     },
 ) => {
-    const { selectFirst, selectionMode, onApply } = props;
+    const { selectFirst, selectionMode, onApply, enableDuplicatedLabelValuesInAttributeFilter } = props;
     const committedSelectionKeys = handler.getCommittedSelection().keys;
-    const initialElementsPageStatus = handler.getInitialElementsPageStatus();
+    const initialStatus = handler.getInitStatus();
     const elements = handler.getAllElements();
     const filter = handler.getFilter();
 
@@ -755,11 +772,15 @@ const useSingleSelectModeHandler = (
             selectFirst &&
             selectionMode === "single" &&
             isEmpty(committedSelectionKeys) &&
-            initialElementsPageStatus === "success" &&
+            initialStatus === "success" &&
             !isEmpty(elements)
         ) {
             const isElementsByRef = isAttributeElementsByRef(filterAttributeElements(filter));
-            const keys = [isElementsByRef ? elements[0].uri : elements[0].title];
+            const keys = [
+                isElementsByRef || enableDuplicatedLabelValuesInAttributeFilter
+                    ? elements[0].uri
+                    : elements[0].title,
+            ];
 
             handler.changeSelection({ keys, isInverted: false, irrelevantKeys: [] });
             handler.commitSelection();
@@ -769,11 +790,12 @@ const useSingleSelectModeHandler = (
         selectFirst,
         selectionMode,
         committedSelectionKeys,
-        initialElementsPageStatus,
+        initialStatus,
         elements,
         filter,
         handler,
         onApply,
+        enableDuplicatedLabelValuesInAttributeFilter,
     ]);
 };
 

@@ -390,6 +390,9 @@ export class AttributeFilterReduxBridge {
     setDisplayAsLabel = (displayAsLabel: ObjRef, correlation?: Correlation): void => {
         this.redux.dispatch(actions.setDisplayAsLabel({ displayAsLabel, correlation }));
     };
+    setDisplayForm = (displayForm: ObjRef, correlation?: Correlation): void => {
+        this.redux.dispatch(actions.setDisplayFormRef({ displayForm, correlation }));
+    };
 
     getOffset = (): number => {
         return this.redux.select(selectOffset);

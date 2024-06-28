@@ -1,5 +1,5 @@
 // (C) 2022-2024 GoodData Corporation
-import { IAttributeFilter, ObjRef } from "@gooddata/sdk-model";
+import { IAttributeFilter } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import {
     AsyncOperationStatus,
@@ -40,8 +40,6 @@ export interface IAttributeFilterLoader extends IAttributeLoader, IAttributeElem
      * @param correlation - correlation that will be included in all callbacks fired by this method
      */
     init(correlation?: Correlation): void;
-
-    setDisplayAsLabel(displayAsLabel: ObjRef): void;
 
     /**
      * Returns the current status of the initialization.
