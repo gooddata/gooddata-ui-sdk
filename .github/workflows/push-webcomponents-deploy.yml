@@ -50,7 +50,9 @@ jobs:
           name: web-components-artifact
           path: ./${{ env.WEB_COMPONENTS_DIR }}/web-components.tar.gz
   docker-build-web-components:
-    runs-on: [infra1-small]
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
     needs: [build-web-components]
     permissions:
       contents: read
@@ -110,7 +112,9 @@ jobs:
     outputs:
       github_short_sha: ${{ env.GITHUB_SHORT_SHA }}
   generate-update:
-    runs-on: [infra1-small]
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
     needs: [docker-build-web-components]
     steps:
       - name: Repository Dispatch
