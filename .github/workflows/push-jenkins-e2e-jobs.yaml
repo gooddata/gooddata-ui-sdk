@@ -1,14 +1,10 @@
-name: post
+name: Push ~ Run jenkins integrated e2e tests
 on:
   push:
     branches:
       - master
-      - develop
       - release
-      - hotfix/[0-9]+.[0-9]+
-      - hotfix/[0-9]+.[0-9]+.[0-9]+
-      - gd-patches
-      - next-[0-9]+.[0-9]+.[0-9]+
+
 jobs:
   prepare-env:
     runs-on:
@@ -33,34 +29,6 @@ jobs:
           branch=$(echo "${{ github.ref }}" | sed 's/^refs\/heads\///')
           echo "branch=$branch" >> "$GITHUB_OUTPUT"
 
-  gooddata-ui-sdk-storybook-publish:
-    runs-on:
-      group: infra1-runners-arc
-      labels: runners-small
-    needs:
-      - prepare-env
-    permissions:
-      contents: read
-      id-token: write
-    steps:
-      - name: Call Jenkins trigger
-        id: call-jenkins
-        uses: gooddata/github-actions-public/jenkins/trigger@master
-        with:
-          server: ${{ vars.JENKINS_ADDRESS }}
-          folder: gooddata-ui-sdk
-          job-name: gooddata-ui-sdk-storybook-publish
-          vault-url: ${{ vars.VAULT_ADDRESS }}
-          params: |-
-            {
-              "GH_BRANCH": "${{ needs.prepare-env.outputs.branch }}",
-              "GH_REF": "${{ needs.prepare-env.outputs.ref }}",
-              "GH_COMMIT": "${{ needs.prepare-env.outputs.commit }}",
-              "GH_URL": "git@github.com:",
-              "GH_PROJECT": "${{ needs.prepare-env.outputs.project }}",
-              "BUILD_BY_GITHUB": "true",
-              "GH_PIPELINE": "post"
-            }
   gooddata-ui-sdk-cypress-tiger-integrated-post-merge:
     runs-on:
       group: infra1-runners-arc
@@ -96,7 +64,6 @@ jobs:
     if: always()
     needs:
       - prepare-env
-      - gooddata-ui-sdk-storybook-publish
       - gooddata-ui-sdk-cypress-tiger-integrated-post-merge
     steps:
       - name: Check if needed jobs succeeded
