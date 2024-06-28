@@ -46,12 +46,10 @@ export const EditModeDashboardRichText: React.FC<IDashboardRichTextProps> = ({ w
         return (
             <div className="gd-rich-text-widget-empty-content">
                 <Icon.RichText width={28} height={34} color={emptyContentIconColor} />
-                <Typography tagName="p">
-                    <FormattedMessage id="richText.emptyContent" />
-                </Typography>
+                <Typography tagName="p">{intl.formatMessage({ id: "richText.emptyContent" })}</Typography>
             </div>
         );
-    }, [emptyContentIconColor]);
+    }, [emptyContentIconColor, intl]);
 
     useEffect(() => {
         setIsRichTextEditing(isSelected);
