@@ -69,6 +69,7 @@ export {
     selectEnableKPIDashboardDrillFromAttribute,
     selectIsShareButtonHidden,
     selectWeekStart,
+    selectIsFilterResetEnabled,
     selectIsDrillDownEnabled,
     selectEnableUnavailableItemsVisibility,
     selectEnableKDDependentFilters,

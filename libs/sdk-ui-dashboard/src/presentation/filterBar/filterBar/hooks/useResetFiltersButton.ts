@@ -24,6 +24,7 @@ import {
     useDashboardSelector,
     useDashboardUserInteraction,
     selectDisableDashboardCrossFiltering,
+    selectIsFilterResetEnabled,
 } from "../../../../model/index.js";
 
 /**
@@ -40,13 +41,14 @@ export const useResetFiltersButton = (): [boolean, () => void] => {
     const enableKDCrossFiltering = useDashboardSelector(selectEnableKDCrossFiltering);
     const supportsCrossFiltering = useDashboardSelector(selectSupportsCrossFiltering);
     const disableCrossFiltering = useDashboardSelector(selectDisableDashboardCrossFiltering);
+    const isFilterResetEnabled = useDashboardSelector(selectIsFilterResetEnabled);
 
     const dispatch = useDashboardDispatch();
     const { filterContextStateReset } = useDashboardUserInteraction();
 
     const canReset = React.useMemo(() => {
-        return !isEditMode && !isEqual(currentFilters, originalFilters);
-    }, [originalFilters, currentFilters, isEditMode]);
+        return !isEditMode && !isEqual(currentFilters, originalFilters) && isFilterResetEnabled;
+    }, [originalFilters, currentFilters, isEditMode, isFilterResetEnabled]);
 
     const newlyAddedFiltersLocalIds = React.useMemo(() => {
         const originalAttributeFiltersLocalIds = originalFilters

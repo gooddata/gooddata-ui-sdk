@@ -133,6 +133,18 @@ export const selectWeekStart: DashboardSelector<WeekStart> = createSelector(sele
 });
 
 /**
+ * Returns if filter select is enabled
+ *
+ * @internal
+ */
+export const selectIsFilterResetEnabled: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return !state.settings?.disableFilterReset;
+    },
+);
+
+/**
  * Returns whether the Dashboard is executed in read-only mode.
  *
  * @remarks
