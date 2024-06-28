@@ -86,9 +86,10 @@ export const useDashboardScheduledEmails = ({ onReload }: { onReload?: () => voi
 
     const onScheduleEmailingCreateSuccess = useCallback(() => {
         closeScheduleEmailingDialog();
+        openScheduleEmailingManagementDialog();
         addSuccess(messages.scheduleEmailSubmitSuccess);
         onReload?.();
-    }, [closeScheduleEmailingDialog, addSuccess, onReload]);
+    }, [closeScheduleEmailingDialog, openScheduleEmailingManagementDialog, addSuccess, onReload]);
 
     const onScheduleEmailingSaveError = useCallback(() => {
         closeScheduleEmailingDialog();

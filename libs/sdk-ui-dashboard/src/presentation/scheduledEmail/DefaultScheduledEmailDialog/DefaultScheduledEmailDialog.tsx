@@ -27,6 +27,7 @@ import {
     selectEnableScheduling,
     selectDashboardTitle,
     selectDashboardId,
+    selectEntitlementMaxAutomationRecipients,
 } from "../../../model/index.js";
 import { IScheduledEmailDialogProps } from "../types.js";
 import { invariant } from "ts-invariant";
@@ -50,6 +51,10 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
     const dateFormat = useDashboardSelector(selectDateFormat);
     const weekStart = useDashboardSelector(selectWeekStart);
     const enableKPIDashboardSchedule = useDashboardSelector(selectEnableScheduling);
+    const maxAutomationsRecipientsEntitlement = useDashboardSelector(
+        selectEntitlementMaxAutomationRecipients,
+    );
+    const maxAutomationsRecipients = parseInt(maxAutomationsRecipientsEntitlement?.value ?? "0", 10);
 
     const { alignPoints, onAlign } = useScheduledEmailDialogAlignment();
     const {
@@ -77,7 +82,8 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
             return false;
         }) ?? false;
 
-    const isSubmitDisabled = editSchedule && isEqual(originalAutomation, automation);
+    const isValid = (automation.recipients?.length ?? 0) <= maxAutomationsRecipients;
+    const isSubmitDisabled = !isValid || (editSchedule && isEqual(originalAutomation, automation));
 
     const startDate = parseISO(
         automation.schedule?.firstRun ?? normalizeTime(new Date(), undefined, 60).toISOString(),
@@ -174,6 +180,7 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
                         originalValue={originalAutomation.recipients || []}
                         onChange={onRecipientsChange}
                         allowEmptySelection
+                        maxRecipients={maxAutomationsRecipients}
                     />
                     <Input
                         className="gd-schedule-email-dialog-subject s-gd-schedule-email-dialog-subject"

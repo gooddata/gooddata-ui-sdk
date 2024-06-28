@@ -6864,6 +6864,12 @@ export const selectEnableWidgetCustomHeight: DashboardSelector<boolean>;
 export const selectEntitlementExportPdf: DashboardSelector<IEntitlementDescriptor | undefined>;
 
 // @alpha (undocumented)
+export const selectEntitlementMaxAutomationRecipients: DashboardSelector<IEntitlementDescriptor | undefined>;
+
+// @alpha (undocumented)
+export const selectEntitlementMaxAutomations: DashboardSelector<IEntitlementDescriptor | undefined>;
+
+// @alpha (undocumented)
 export const selectExecutionResult: (state: DashboardState, id: EntityId) => IExecutionResultEnvelope | undefined;
 
 // @alpha (undocumented)

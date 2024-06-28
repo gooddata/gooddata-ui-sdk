@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import { IEntitlementDescriptor } from "@gooddata/sdk-model";
 import { DashboardSelector, DashboardState } from "../types.js";
@@ -34,4 +34,20 @@ export const selectEntitlements: DashboardSelector<ResolvedEntitlements> = creat
 export const selectEntitlementExportPdf: DashboardSelector<IEntitlementDescriptor | undefined> =
     createSelector(selectEntitlements, (entitlements) => {
         return entitlements.find((entitlement) => entitlement.name === "PdfExports");
+    });
+
+/**
+ * @alpha
+ */
+export const selectEntitlementMaxAutomationRecipients: DashboardSelector<IEntitlementDescriptor | undefined> =
+    createSelector(selectEntitlements, (entitlements) => {
+        return entitlements.find((entitlement) => entitlement.name === "MaxAutomationRecipients");
+    });
+
+/**
+ * @alpha
+ */
+export const selectEntitlementMaxAutomations: DashboardSelector<IEntitlementDescriptor | undefined> =
+    createSelector(selectEntitlements, (entitlements) => {
+        return entitlements.find((entitlement) => entitlement.name === "MaxAutomations");
     });

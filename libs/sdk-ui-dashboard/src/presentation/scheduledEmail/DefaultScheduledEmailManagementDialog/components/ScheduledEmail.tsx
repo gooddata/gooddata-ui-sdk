@@ -1,7 +1,7 @@
 // (C) 2022-2024 GoodData Corporation
 
 import React, { useCallback } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
 import { IAutomationMetadataObject, IWebhookMetadataObject } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, Icon, ShortenedText } from "@gooddata/sdk-ui-kit";
@@ -29,11 +29,12 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
 
     const { scheduledEmail, onDelete, onEdit, webhooks } = props;
 
+    const intl = useIntl();
     const parsedCron = scheduledEmail.schedule?.cron;
     const webhookTitle = webhooks.find((webhook) => webhook.id === scheduledEmail.webhook)?.name;
     const dashboardTitle = scheduledEmail.exportDefinitions?.[0]?.title;
 
-    const subtitle = [parsedCron, webhookTitle, dashboardTitle].join(" • ");
+    const subtitle = [parsedCron, webhookTitle, dashboardTitle].filter(Boolean).join(" • ");
 
     const handleClick = useCallback(() => {
         onEdit(scheduledEmail);
@@ -67,7 +68,8 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
                                 className="gd-scheduled-email-shortened-text"
                                 tooltipAlignPoints={TEXT_TOOLTIP_ALIGN_POINTS}
                             >
-                                {scheduledEmail.title ?? ""}
+                                {scheduledEmail.title ??
+                                    intl.formatMessage({ id: "dialogs.schedule.email.title.placeholder" })}
                             </ShortenedText>
                         </strong>
                     </div>

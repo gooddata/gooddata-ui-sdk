@@ -31,10 +31,15 @@ interface IRecipientsSelectProps {
      * Allow to remove the last recipient
      */
     allowEmptySelection?: boolean;
+
+    /**
+     * Maximum number of recipients
+     */
+    maxRecipients?: number;
 }
 
 export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
-    const { users, value, originalValue, onChange, allowEmptySelection } = props;
+    const { users, value, originalValue, onChange, allowEmptySelection, maxRecipients } = props;
 
     const [search, setSearch] = useState<string>();
 
@@ -66,6 +71,7 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
             }}
             isLoading={status === "loading" || status === "pending"}
             allowEmptySelection={allowEmptySelection}
+            maxRecipients={maxRecipients}
         />
     );
 };

@@ -4,11 +4,13 @@ import { ObjRef, IAutomationMetadataObject, IAutomationMetadataObjectDefinition 
 import { useCreateScheduledEmail } from "./useCreateScheduledEmail.js";
 import { useUpdateScheduledEmail } from "./useUpdateScheduledEmail.js";
 import { IScheduledEmailDialogProps } from "../../types.js";
+import { IntlShape, useIntl } from "react-intl";
 
 export function useSaveScheduledEmailToBackend(
-    scheduleToSave: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
+    automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
     { onSuccess, onError, onSubmit, onSaveSuccess, onSaveError, onSave }: IScheduledEmailDialogProps,
 ) {
+    const intl = useIntl();
     const scheduledEmailCreator = useCreateScheduledEmail({
         onSuccess,
         onError,
@@ -38,10 +40,11 @@ export function useSaveScheduledEmailToBackend(
     );
 
     const handleSaveScheduledEmail = (): void => {
-        if (scheduleToSave.id) {
-            handleUpdateScheduledEmail(scheduleToSave);
+        if (automation.id) {
+            handleUpdateScheduledEmail(automation);
         } else {
-            handleCreateScheduledEmail(scheduleToSave);
+            const sanitizedAutomation = sanitizeAutomation(automation, intl);
+            handleCreateScheduledEmail(sanitizedAutomation);
         }
     };
 
@@ -50,4 +53,14 @@ export function useSaveScheduledEmailToBackend(
         scheduledEmailUpdater.savingStatus === "running";
 
     return { handleSaveScheduledEmail, isSavingScheduledEmail };
+}
+
+function sanitizeAutomation(
+    automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
+    intl: IntlShape,
+) {
+    if (!automation.title) {
+        automation.title = intl.formatMessage({ id: "dialogs.schedule.email.title.placeholder" });
+    }
+    return automation;
 }
