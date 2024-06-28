@@ -7,6 +7,7 @@ on:
 
 jobs:
   prepare-env:
+    if: ${{ !(startsWith(github.event.head_commit.message, 'Release ') || startsWith(github.event.head_commit.message, format('chore{0} bump versions to', ':'))) }}
     runs-on:
       group: infra1-runners-arc
       labels: runners-small
