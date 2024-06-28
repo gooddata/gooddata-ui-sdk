@@ -67,9 +67,12 @@ const weeklyCronRegex = /^0 0 (\d{1,2}) \? \* (SUN|MON|TUE|WED|THU|FRI|SAT)$/; /
 // eslint-disable-next-line regexp/no-unused-capturing-group
 const monthlyCronRegex = /^0 0 (\d{1,2}) \? \* (SUN|MON|TUE|WED|THU|FRI|SAT)(#[1-5]|#L)$/; // Every month on the nth week day and same hour
 
-export const transformCronExpressionToRecurrenceType = (cronExpression: string) => {
+export const transformCronExpressionToRecurrenceType = (
+    cronExpression: string,
+    allowHourlyRecurrence: boolean,
+): RecurrenceType => {
     switch (true) {
-        case hourlyCronRegex.test(cronExpression):
+        case allowHourlyRecurrence && hourlyCronRegex.test(cronExpression):
             return RECURRENCE_TYPES.HOURLY;
         case dailyCronRegex.test(cronExpression):
             return RECURRENCE_TYPES.DAILY;

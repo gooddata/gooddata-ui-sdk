@@ -1,7 +1,7 @@
 // (C) 2022-2024 GoodData Corporation
 import { resolveUseCancelablePromisesStatus, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { useCurrentOrganization } from "./useCurrentOrganization.js";
-import { useOrganizationUsers } from "./useOrganizationUsers.js";
+import { useWorkspaceUsers } from "./useWorkspaceUsers.js";
 import { useOrganizationWebhooks } from "./useOrganizationWebhooks.js";
 import { useWorkspaceAutomations } from "./useWorkspaceAutomations.js";
 import { useDashboardSelector } from "./DashboardStoreProvider.js";
@@ -29,9 +29,10 @@ export const useDashboardScheduledEmailsData = ({
         onError: onLoadError,
     });
 
-    const organizationUsersPromise = useOrganizationUsers({
+    const organizationUsersPromise = useWorkspaceUsers({
         enable: isSchedulingEnabled,
-        organization: currentOrganizationPromise.result,
+        backend,
+        workspace,
         onError: onLoadError,
     });
 

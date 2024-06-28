@@ -27,3 +27,10 @@ export const RECURRENCE_TYPES = {
     MONTHLY: "monthly",
     CRON: "cron",
 };
+
+export const RECURRENCE_TYPES_WITHOUT_HOURS = {
+    DAILY: "daily",
+    WEEKLY: "weekly",
+    MONTHLY: "monthly",
+    CRON: "cron",
+};

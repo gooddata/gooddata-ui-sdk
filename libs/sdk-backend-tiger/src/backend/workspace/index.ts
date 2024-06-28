@@ -49,6 +49,7 @@ import { convertWorkspaceUpdate } from "../../convertors/toBackend/WorkspaceConv
 import { TigerDataFiltersService } from "./dataFilters/index.js";
 import { TigerWorkspaceLogicalModelService } from "./ldm/index.js";
 import { TigerWorkspaceAutomationService } from "./automations/index.js";
+import { TigerWorkspaceUsersQuery } from "./users/index.js";
 
 export class TigerWorkspace implements IAnalyticalWorkspace {
     constructor(
@@ -147,7 +148,7 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
     }
 
     public users(): IWorkspaceUsersQuery {
-        throw new NotSupported("Not supported");
+        return new TigerWorkspaceUsersQuery(this.authCall, this.workspace);
     }
 
     public userGroups(): IWorkspaceUserGroupsQuery {

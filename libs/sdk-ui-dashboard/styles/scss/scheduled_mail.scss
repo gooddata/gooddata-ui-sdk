@@ -79,10 +79,13 @@ $dialog-padding: 20px;
 
         .gd-label {
             width: 105px;
+            min-width: 105px;
         }
 
         .gd-input {
             flex-grow: 1;
+            min-width: 0;
+            width: 100%;
         }
     }
 }

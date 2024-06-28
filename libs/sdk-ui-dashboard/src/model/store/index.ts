@@ -85,7 +85,12 @@ export {
     selectEnableScheduling,
 } from "./config/configSelectors.js";
 export { EntitlementsState } from "./entitlements/entitlementsState.js";
-export { selectEntitlementExportPdf } from "./entitlements/entitlementsSelectors.js";
+export {
+    selectEntitlementExportPdf,
+    selectEntitlementMaxAutomationRecipients,
+    selectEntitlementMaxAutomations,
+    selectEntitlementMinimumRecurrenceMinutes,
+} from "./entitlements/entitlementsSelectors.js";
 
 export { PermissionsState } from "./permissions/permissionsState.js";
 export {

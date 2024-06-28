@@ -515,6 +515,11 @@
         "comment": "Message of the scheduled email.",
         "limit": 0
     },
+    "dialogs.schedule.email.max.recipients": {
+        "value": "You can select up to {maxRecipients} recipients.",
+        "comment": "Message for recipients input when the maximum number of recipients is reached",
+        "limit": 0
+    },
     "dialogs.schedule.email.unsubscribed.recipients": {
         "value": "{n, plural, one {1 recipient unsubscribed} other {# recipients unsubscribed}} from this schedule.",
         "comment": "Translate only 'recipient unsubscribed'/'recipients unsubscribed' and 'from this schedule.' to form a proper sentence with correct plural form for given language",

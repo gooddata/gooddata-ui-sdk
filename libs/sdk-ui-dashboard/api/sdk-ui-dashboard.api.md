@@ -225,7 +225,6 @@ import { INegativeAttributeFilter } from '@gooddata/sdk-model';
 import { InsightDisplayFormUsage } from '@gooddata/sdk-model';
 import { InsightDrillDefinition } from '@gooddata/sdk-model';
 import { IntlShape } from 'react-intl';
-import { IOrganizationUser } from '@gooddata/sdk-model';
 import { IPositiveAttributeFilter } from '@gooddata/sdk-model';
 import { IPushData } from '@gooddata/sdk-ui';
 import { IRelativeDateFilter } from '@gooddata/sdk-model';
@@ -250,6 +249,7 @@ import { IWidgetAlert } from '@gooddata/sdk-model';
 import { IWidgetAlertDefinition } from '@gooddata/sdk-model';
 import { IWidgetDefinition } from '@gooddata/sdk-model';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
+import { IWorkspaceUser } from '@gooddata/sdk-model';
 import { LocalIdRef } from '@gooddata/sdk-model';
 import { MemoizedFunction } from 'lodash';
 import { MessageDescriptor } from 'react-intl';
@@ -4719,7 +4719,7 @@ export interface IScheduledEmailDialogProps {
     onSaveSuccess?: () => void;
     onSubmit?: (scheduledEmailDefinition: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => void;
     onSuccess?: () => void;
-    users: IOrganizationUser[];
+    users: IWorkspaceUser[];
     webhooks: IWebhookMetadataObject[];
 }
 
@@ -6864,6 +6864,15 @@ export const selectEnableWidgetCustomHeight: DashboardSelector<boolean>;
 export const selectEntitlementExportPdf: DashboardSelector<IEntitlementDescriptor | undefined>;
 
 // @alpha (undocumented)
+export const selectEntitlementMaxAutomationRecipients: DashboardSelector<IEntitlementDescriptor | undefined>;
+
+// @alpha (undocumented)
+export const selectEntitlementMaxAutomations: DashboardSelector<IEntitlementDescriptor | undefined>;
+
+// @alpha (undocumented)
+export const selectEntitlementMinimumRecurrenceMinutes: DashboardSelector<IEntitlementDescriptor | undefined>;
+
+// @alpha (undocumented)
 export const selectExecutionResult: (state: DashboardState, id: EntityId) => IExecutionResultEnvelope | undefined;
 
 // @alpha (undocumented)
@@ -8274,7 +8283,7 @@ export const useDashboardScheduledEmailsData: ({ reloadId, onLoadError, }: {
     loadError: any;
     webhooks: IWebhookMetadataObject[];
     automations: IAutomationMetadataObject[];
-    users: IOrganizationUser[];
+    users: IWorkspaceUser[];
 };
 
 // @public

@@ -18,6 +18,7 @@ import isEqual from "lodash/isEqual.js";
 import includes from "lodash/includes.js";
 import { IWorkspaceUsersQueryOptions } from "@gooddata/sdk-backend-spi";
 import { LoadingMask } from "@gooddata/sdk-ui-kit";
+import cx from "classnames";
 
 import { isEmail } from "../../utils/validate.js";
 
@@ -75,9 +76,12 @@ export interface IRecipientsSelectRendererProps {
      * Allow to remove the last recipient
      */
     allowEmptySelection?: boolean;
-}
 
-// const bubbleAlignPoints: IAlignPoint[] = [{ align: "cr cl" }];
+    /**
+     * Maximum number of recipients
+     */
+    maxRecipients?: number;
+}
 
 export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSelectRendererProps> {
     private recipientRef = React.createRef<HTMLDivElement>();
@@ -98,7 +102,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
     }
 
     public render() {
-        const { isMulti, options, value } = this.props;
+        const { isMulti, options, value, maxRecipients } = this.props;
         const creatableSelectComponent: SelectComponentsConfig<
             IAutomationRecipient,
             boolean,
@@ -113,6 +117,8 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
             NoOptionsMessage: this.renderNoOptionsContainer,
         };
 
+        const maxRecipientsError = maxRecipients && value.length > maxRecipients;
+
         return (
             <div className="gd-input-component gd-recipients-field s-gd-schedule-email-dialog-recipients">
                 <label className="gd-label">
@@ -120,7 +126,9 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
                 </label>
                 <div ref={this.recipientRef} className="gd-input s-gd-recipients-value">
                     <ReactSelect
-                        className="gd-recipients-container"
+                        className={cx("gd-recipients-container", {
+                            "gd-input-component--invalid": maxRecipientsError,
+                        })}
                         classNamePrefix="gd-recipients"
                         components={creatableSelectComponent}
                         formatOptionLabel={this.renderOptionLabel}
@@ -138,6 +146,14 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
                         getOptionValue={(o) => o.id}
                         getOptionLabel={(o) => o.name ?? o.id}
                     />
+                    {maxRecipientsError ? (
+                        <div className="gd-recipients-field-error">
+                            <FormattedMessage
+                                id="dialogs.schedule.email.max.recipients"
+                                values={{ maxRecipients }}
+                            />
+                        </div>
+                    ) : null}
                 </div>
             </div>
         );

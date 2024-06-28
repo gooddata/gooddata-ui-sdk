@@ -4,7 +4,20 @@
 
 $input-height: 28px;
 
+.gd-recipients-container.gd-input-component--invalid {
+    .gd-recipients__control {
+        border-color: kit-variables.$gd-palette-error-base;
+        &:hover {
+            border-color: kit-variables.$gd-palette-error-base;
+        }
+    }
+}
+
 .gd-recipients-field {
+    &.gd-input-component {
+        align-items: flex-start;
+    }
+
     .gd-recipients__control {
         // custom className from react-select rendered
         box-sizing: border-box;
@@ -29,6 +42,13 @@ $input-height: 28px;
         &:hover {
             border-color: var(--gd-palette-complementary-5, #b3b3b3);
         }
+    }
+
+    .gd-recipients-field-error {
+        color: kit-variables.$gd-palette-error-base;
+        font-family: Avenir, sans-serif;
+        font-size: 12px;
+        margin-top: 5px;
     }
 
     // custom className from react-select rendered

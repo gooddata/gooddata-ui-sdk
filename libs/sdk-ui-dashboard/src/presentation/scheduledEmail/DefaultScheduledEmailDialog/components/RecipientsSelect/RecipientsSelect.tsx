@@ -1,7 +1,7 @@
 // (C) 2019-2024 GoodData Corporation
 /* eslint-disable import/named,import/namespace */
 import React, { useMemo, useState } from "react";
-import { IAutomationRecipient, IOrganizationUser } from "@gooddata/sdk-model";
+import { IAutomationRecipient, IWorkspaceUser } from "@gooddata/sdk-model";
 import sortBy from "lodash/sortBy.js";
 
 import { RecipientsSelectRenderer } from "./RecipientsSelectRenderer.js";
@@ -10,7 +10,7 @@ interface IRecipientsSelectProps {
     /**
      * Users to select from
      */
-    users: IOrganizationUser[];
+    users: IWorkspaceUser[];
 
     /**
      * Currently selected recipients.
@@ -31,10 +31,15 @@ interface IRecipientsSelectProps {
      * Allow to remove the last recipient
      */
     allowEmptySelection?: boolean;
+
+    /**
+     * Maximum number of recipients
+     */
+    maxRecipients?: number;
 }
 
 export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
-    const { users, value, originalValue, onChange, allowEmptySelection } = props;
+    const { users, value, originalValue, onChange, allowEmptySelection, maxRecipients } = props;
 
     const [search, setSearch] = useState<string>();
 
@@ -43,7 +48,7 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
         return sortBy(
             filteredUsers?.map(
                 (user): IAutomationRecipient => ({
-                    id: user.id,
+                    id: user.login,
                     email: user.email,
                     name: user.fullName,
                     type: "user",
@@ -66,15 +71,16 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
             }}
             isLoading={status === "loading" || status === "pending"}
             allowEmptySelection={allowEmptySelection}
+            maxRecipients={maxRecipients}
         />
     );
 };
 
-function matchUser(user: IOrganizationUser, search: string) {
+function matchUser(user: IWorkspaceUser, search: string) {
     const lowerCaseSearch = search.toLowerCase();
     const lowerCaseEmail = user.email?.toLowerCase();
     const lowerCaseName = user.fullName?.toLowerCase();
-    const lowerCaseId = user.id?.toLowerCase();
+    const lowerCaseId = user.login.toLowerCase();
     return (
         lowerCaseEmail?.includes(lowerCaseSearch) ||
         lowerCaseName?.includes(lowerCaseSearch) ||

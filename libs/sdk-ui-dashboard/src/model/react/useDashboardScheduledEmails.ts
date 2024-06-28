@@ -6,6 +6,7 @@ import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 
 import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider.js";
 import {
+    selectCanExportPdf,
     selectDashboardRef,
     selectEnableScheduling,
     selectIsInViewMode,
@@ -35,6 +36,7 @@ export const useDashboardScheduledEmails = ({ onReload }: { onReload?: () => voi
     const isInViewMode = useDashboardSelector(selectIsInViewMode);
     const menuButtonItemsVisibility = useDashboardSelector(selectMenuButtonItemsVisibility);
     const isScheduledEmailingEnabled = useDashboardSelector(selectEnableScheduling);
+    const canExport = useDashboardSelector(selectCanExportPdf);
 
     const openScheduleEmailingDialog = useCallback(
         () => isScheduledEmailingEnabled && dispatch(uiActions.openScheduleEmailDialog()),
@@ -59,6 +61,7 @@ export const useDashboardScheduledEmails = ({ onReload }: { onReload?: () => voi
         isInViewMode &&
         !isReadOnly &&
         isScheduledEmailingEnabled &&
+        canExport &&
         (menuButtonItemsVisibility.scheduleEmailButton ?? true);
 
     /*
@@ -86,9 +89,10 @@ export const useDashboardScheduledEmails = ({ onReload }: { onReload?: () => voi
 
     const onScheduleEmailingCreateSuccess = useCallback(() => {
         closeScheduleEmailingDialog();
+        openScheduleEmailingManagementDialog();
         addSuccess(messages.scheduleEmailSubmitSuccess);
         onReload?.();
-    }, [closeScheduleEmailingDialog, addSuccess, onReload]);
+    }, [closeScheduleEmailingDialog, openScheduleEmailingManagementDialog, addSuccess, onReload]);
 
     const onScheduleEmailingSaveError = useCallback(() => {
         closeScheduleEmailingDialog();

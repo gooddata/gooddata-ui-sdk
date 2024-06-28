@@ -3,8 +3,8 @@ import { ComponentType } from "react";
 import {
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
-    IOrganizationUser,
     IWebhookMetadataObject,
+    IWorkspaceUser,
 } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
@@ -66,7 +66,7 @@ export interface IScheduledEmailDialogProps {
     /**
      * Users in workspace
      */
-    users: IOrganizationUser[];
+    users: IWorkspaceUser[];
 
     /**
      * Webhooks in organization
