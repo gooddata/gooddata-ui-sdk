@@ -33,14 +33,14 @@ export interface ISectionHeaderEditableProps {
 }
 
 export function SectionHeaderEditable(props: ISectionHeaderEditableProps): JSX.Element {
-    const description = getDescription(props.description);
+    const useRichText = useDashboardSelector(selectEnableRichTextDescriptions);
+    const description = useRichText ? props.description : getDescription(props.description);
     const title = getTitle(props.title);
     const { index } = props;
     const intl = useIntl();
     const placeholder = intl.formatMessage({
         id: "layout.header.add.description.placeholder",
     });
-    const useRichText = useDashboardSelector(selectEnableRichTextDescriptions);
 
     const dispatch = useDashboardDispatch();
     const changeTitle = useCallback(
