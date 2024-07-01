@@ -66,7 +66,6 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
                     <Typography tagName="h3" className="gd-dialog-header">
                         <FormattedMessage id="dialogs.schedule.management.title" />
                     </Typography>
-                    <span className="gd-icon-circle-question" />
                 </div>
                 <div className="gd-scheduled-emails-content">
                     <div className="gd-scheduled-emails-content-header">

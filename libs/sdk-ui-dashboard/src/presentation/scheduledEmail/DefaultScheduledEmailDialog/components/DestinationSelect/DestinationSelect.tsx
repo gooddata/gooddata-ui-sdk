@@ -1,9 +1,15 @@
 // (C) 2024 GoodData Corporation
 
 import React, { useMemo } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { Dropdown, DropdownButton, DropdownList, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
+import {
+    Dropdown,
+    DropdownButton,
+    DropdownList,
+    Hyperlink,
+    SingleSelectListItem,
+} from "@gooddata/sdk-ui-kit";
 import { DEFAULT_DROPDOWN_ALIGN_POINTS, DEFAULT_DROPDOWN_ZINDEX } from "../../constants.js";
 import { IWebhookMetadataObject } from "@gooddata/sdk-model";
 
@@ -25,6 +31,7 @@ export const DestinationSelect: React.FC<IDestinationSelectProps> = ({
     selectedItemId,
     onChange,
 }) => {
+    const intl = useIntl();
     const items = useMemo(() => {
         return (
             webhooks?.map(
@@ -45,36 +52,49 @@ export const DestinationSelect: React.FC<IDestinationSelectProps> = ({
             <label className="gd-label">
                 <FormattedMessage id="dialogs.schedule.email.destination" />
             </label>
-            <Dropdown
-                alignPoints={DEFAULT_DROPDOWN_ALIGN_POINTS}
-                className="gd-schedule-email-dialog-destination s-gd-schedule-email-dialog-destination"
-                renderButton={({ toggleDropdown }) => (
-                    <DropdownButton
-                        value={selectedItem?.title}
-                        onClick={toggleDropdown}
-                        className="gd-schedule-email-dialog-destination-button"
+            {items.length === 0 ? (
+                <div className="gd-schedule-email-dialog-destination-empty">
+                    <span>
+                        <span className="gd-icon-warning" />
+                        <FormattedMessage id="dialogs.schedule.email.destination.missing" />
+                    </span>
+                    <Hyperlink
+                        text={intl.formatMessage({ id: "dialogs.schedule.email.destination.help" })}
+                        href="/settings"
                     />
-                )}
-                renderBody={({ closeDropdown, isMobile }) => (
-                    <DropdownList
-                        width={DROPDOWN_WIDTH}
-                        items={items}
-                        isMobile={isMobile}
-                        renderItem={({ item }) => (
-                            <SingleSelectListItem
-                                title={item.title}
-                                onClick={() => {
-                                    onChange(item.id);
-                                    closeDropdown();
-                                }}
-                                isSelected={selectedItem?.id === item.id}
-                            />
-                        )}
-                    />
-                )}
-                overlayPositionType="sameAsTarget"
-                overlayZIndex={DEFAULT_DROPDOWN_ZINDEX}
-            />
+                </div>
+            ) : (
+                <Dropdown
+                    alignPoints={DEFAULT_DROPDOWN_ALIGN_POINTS}
+                    className="gd-schedule-email-dialog-destination s-gd-schedule-email-dialog-destination"
+                    renderButton={({ toggleDropdown }) => (
+                        <DropdownButton
+                            value={selectedItem?.title}
+                            onClick={toggleDropdown}
+                            className="gd-schedule-email-dialog-destination-button"
+                        />
+                    )}
+                    renderBody={({ closeDropdown, isMobile }) => (
+                        <DropdownList
+                            width={DROPDOWN_WIDTH}
+                            items={items}
+                            isMobile={isMobile}
+                            renderItem={({ item }) => (
+                                <SingleSelectListItem
+                                    title={item.title}
+                                    onClick={() => {
+                                        onChange(item.id);
+                                        closeDropdown();
+                                    }}
+                                    isSelected={selectedItem?.id === item.id}
+                                />
+                            )}
+                        />
+                    )}
+                    overlayPositionType="sameAsTarget"
+                    overlayZIndex={DEFAULT_DROPDOWN_ZINDEX}
+                />
+            )}
         </div>
     );
 };
