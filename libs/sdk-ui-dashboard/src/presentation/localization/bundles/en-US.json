@@ -132,6 +132,11 @@
         "comment": "Translate as imperative. Schedule emailing whole KPI dashboard",
         "limit": 0
     },
+    "options.menu.schedule.email.tooltip": {
+        "value": "No destination available. To schedule an export, <a>create destination</a>.",
+        "comment": "Do not translate html tags <a>, </a>",
+        "limit": 0
+    },
     "options.menu.delete": {
         "value": "Delete",
         "comment": "Delete Dashboard",

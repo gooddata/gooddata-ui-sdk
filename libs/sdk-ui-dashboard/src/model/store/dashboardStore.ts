@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { combineReducers, configureStore, EnhancedStore, Middleware } from "@reduxjs/toolkit";
 import defaultReduxSaga, { Saga, SagaIterator, Task } from "redux-saga";
 import { enableBatching } from "redux-batched-actions";
@@ -46,6 +46,7 @@ import { dashboardPermissionsSliceReducer } from "./dashboardPermissions/index.j
 import { defaultImport } from "default-import";
 import { attributeFilterConfigsSliceReducer } from "./attributeFilterConfigs/index.js";
 import { dateFilterConfigsSliceReducer } from "./dateFilterConfigs/index.js";
+import { webhooksSliceReducer } from "./webhooks/index.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
@@ -319,6 +320,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
         renderMode: renderModeSliceReducer,
         ui: uiSliceReducer,
         dashboardPermissions: dashboardPermissionsSliceReducer,
+        webhooks: webhooksSliceReducer,
         _queryCache: queryProcessing.queryCacheReducer,
     });
 

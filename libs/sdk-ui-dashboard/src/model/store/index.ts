@@ -366,3 +366,6 @@ export {
     DashboardStoreAccessorRepository,
     SingleDashboardStoreAccessor,
 } from "./storeAccessors/index.js";
+
+export { WebhooksState } from "./webhooks/webhooksState.js";
+export { selectWebhooks } from "./webhooks/webhooksSelectors.js";
