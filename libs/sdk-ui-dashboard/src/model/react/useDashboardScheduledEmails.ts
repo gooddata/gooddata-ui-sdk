@@ -7,6 +7,7 @@ import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider.js";
 import {
     selectCanExportPdf,
+    selectCanManageWorkspace,
     selectDashboardRef,
     selectEnableScheduling,
     selectIsInViewMode,
@@ -14,6 +15,7 @@ import {
     selectIsScheduleEmailDialogOpen,
     selectIsScheduleEmailManagementDialogOpen,
     selectMenuButtonItemsVisibility,
+    selectWebhooks,
     uiActions,
 } from "../store/index.js";
 
@@ -37,6 +39,13 @@ export const useDashboardScheduledEmails = ({ onReload }: { onReload?: () => voi
     const menuButtonItemsVisibility = useDashboardSelector(selectMenuButtonItemsVisibility);
     const isScheduledEmailingEnabled = useDashboardSelector(selectEnableScheduling);
     const canExport = useDashboardSelector(selectCanExportPdf);
+    const webhooks = useDashboardSelector(selectWebhooks);
+    const numberOfAvailableWebhooks = webhooks.length;
+    const isWorkspaceManager = useDashboardSelector(selectCanManageWorkspace);
+    /**
+     * We want to hide scheduling when there are no webhooks unless the user is admin.
+     */
+    const showDueToNumberOfAvailableWebhooks = numberOfAvailableWebhooks > 0 || isWorkspaceManager;
 
     const openScheduleEmailingDialog = useCallback(
         () => isScheduledEmailingEnabled && dispatch(uiActions.openScheduleEmailDialog()),
@@ -62,6 +71,7 @@ export const useDashboardScheduledEmails = ({ onReload }: { onReload?: () => voi
         !isReadOnly &&
         isScheduledEmailingEnabled &&
         canExport &&
+        showDueToNumberOfAvailableWebhooks &&
         (menuButtonItemsVisibility.scheduleEmailButton ?? true);
 
     /*
@@ -171,5 +181,6 @@ export const useDashboardScheduledEmails = ({ onReload }: { onReload?: () => voi
         onScheduleEmailingManagementLoadingError,
         onScheduleEmailingManagementDeleteSuccess,
         onScheduleEmailingManagementDeleteError,
+        numberOfAvailableWebhooks,
     };
 };

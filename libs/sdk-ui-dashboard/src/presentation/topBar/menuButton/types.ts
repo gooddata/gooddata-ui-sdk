@@ -1,5 +1,5 @@
-// (C) 2021-2023 GoodData Corporation
-import { ComponentType } from "react";
+// (C) 2021-2024 GoodData Corporation
+import { ComponentType, ReactNode } from "react";
 
 /**
  * @alpha
@@ -20,7 +20,7 @@ export interface IMenuButtonItemButton extends IMenuItemCommonProps {
     /**
      * If specified, the value is shown on hover of the item as a tooltip.
      */
-    tooltip?: string;
+    tooltip?: string | ReactNode;
     disabled?: boolean;
 }
 

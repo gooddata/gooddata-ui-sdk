@@ -266,6 +266,7 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { PlatformEdition } from '@gooddata/sdk-model';
 import { QueryCacheEntryResult as QueryCacheEntryResult_2 } from '../store/_infra/queryService.js';
 import { default as React_2 } from 'react';
+import { ReactNode } from 'react';
 import { ReactReduxContextValue } from 'react-redux';
 import { Reducer } from '@reduxjs/toolkit';
 import { RefAttributes } from 'react';
@@ -2593,6 +2594,8 @@ export interface DashboardState {
     ui: UiState;
     // (undocumented)
     user: UserState;
+    // @alpha (undocumented)
+    webhooks: WebhooksState;
 }
 
 // @public
@@ -4414,7 +4417,7 @@ export interface IMenuButtonItemButton extends IMenuItemCommonProps {
     itemName: string;
     // (undocumented)
     onClick?: () => void;
-    tooltip?: string;
+    tooltip?: string | ReactNode;
     // (undocumented)
     type: "button";
 }
@@ -7229,6 +7232,9 @@ export const selectSupportsSingleSelectDependentFilters: DashboardSelector<boole
 // @internal (undocumented)
 export const selectValidConfiguredDrillsByWidgetRef: (ref: ObjRef) => DashboardSelector<IImplicitDrillWithPredicates[]>;
 
+// @alpha
+export const selectWebhooks: DashboardSelector<Webhooks>;
+
 // @internal
 export const selectWeekStart: DashboardSelector<WeekStart>;
 
@@ -8272,6 +8278,7 @@ export const useDashboardScheduledEmails: ({ onReload }?: {
     onScheduleEmailingManagementLoadingError: () => void;
     onScheduleEmailingManagementDeleteSuccess: () => void;
     onScheduleEmailingManagementDeleteError: () => void;
+    numberOfAvailableWebhooks: number;
 };
 
 // @alpha
@@ -8500,6 +8507,15 @@ export function useWidgetSelection(widgetRef?: ObjRef): IUseWidgetSelectionResul
 
 // @internal (undocumented)
 export type ValuesLimitingItem = IDashboardAttributeFilterParentItem | ObjRef | IDashboardDependentDateFilter;
+
+// @alpha
+export type Webhooks = IWebhookMetadataObject[];
+
+// @alpha (undocumented)
+export interface WebhooksState {
+    // (undocumented)
+    webhooks: Webhooks;
+}
 
 // @public (undocumented)
 export type WidgetComponentProvider = (widget: ExtendedDashboardWidget) => CustomDashboardWidgetComponent;

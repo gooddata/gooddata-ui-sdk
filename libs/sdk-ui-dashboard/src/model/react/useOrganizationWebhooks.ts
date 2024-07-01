@@ -7,6 +7,8 @@ import {
     UseCancelablePromiseCallbacks,
     UseCancelablePromiseState,
 } from "@gooddata/sdk-ui";
+import { useDashboardDispatch } from "./DashboardStoreProvider.js";
+import { webhooksActions } from "../store/webhooks/index.js";
 
 interface IUseOrganizationWebhooksConfig
     extends UseCancelablePromiseCallbacks<IWebhookMetadataObject[], GoodDataSdkError> {
@@ -41,6 +43,8 @@ export function useOrganizationWebhooks({
     onPending,
     onSuccess,
 }: IUseOrganizationWebhooksConfig): UseCancelablePromiseState<IWebhookMetadataObject[], any> {
+    const dispatch = useDashboardDispatch();
+
     return useCancelablePromise(
         {
             promise:
@@ -53,7 +57,10 @@ export function useOrganizationWebhooks({
             onError,
             onLoading,
             onPending,
-            onSuccess,
+            onSuccess: (result) => {
+                dispatch(webhooksActions.setWebhooks(result));
+                onSuccess?.(result);
+            },
         },
         [organization, search],
     );
