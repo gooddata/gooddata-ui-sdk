@@ -88,7 +88,9 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
         }) ?? false;
 
     const isValid = (automation.recipients?.length ?? 0) <= maxAutomationsRecipients;
-    const isSubmitDisabled = !isValid || (editSchedule && isEqual(originalAutomation, automation));
+    const isDestinationEmpty = !automation.webhook;
+    const isSubmitDisabled =
+        !isValid || isDestinationEmpty || (editSchedule && isEqual(originalAutomation, automation));
 
     const startDate = parseISO(
         automation.schedule?.firstRun ?? normalizeTime(new Date(), undefined, 60).toISOString(),

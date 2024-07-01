@@ -380,11 +380,6 @@ $dialog-padding: 20px;
         > h3 {
             color: var(--gd-modal-title-color, kit-variables.$gd-color-dark);
         }
-
-        > span {
-            margin-left: 10px;
-            color: kit-variables.$gd-color-state-blank;
-        }
     }
 
     .gd-scheduled-emails-content {
@@ -858,6 +853,30 @@ $dialog-padding: 20px;
 
 .gd-divider-full-row {
     margin: 0 (-$dialog-padding) $vertical-space;
+}
+
+.gd-schedule-email-dialog-destination-empty {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    color: kit-variables.$gd-color-state-blank;
+    gap: 10px;
+
+    span {
+        line-height: 30px;
+    }
+
+    .gd-icon-warning {
+        position: relative;
+        top: 3px;
+        font-size: 18px;
+        margin-right: 6px;
+    }
+
+    .gd-hyperlink-text {
+        color: kit-variables.$gd-palette-primary-base;
+        text-decoration: none;
+    }
 }
 
 .gd-schedule-email-dialog-destination {

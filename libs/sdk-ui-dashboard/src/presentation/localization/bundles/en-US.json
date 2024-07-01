@@ -128,7 +128,7 @@
         "limit": 0
     },
     "options.menu.schedule.email": {
-        "value": "Schedule emailing",
+        "value": "Schedule exports",
         "comment": "Translate as imperative. Schedule emailing whole KPI dashboard",
         "limit": 0
     },
@@ -603,6 +603,16 @@
     "dialogs.schedule.email.destination": {
         "value": "Destination",
         "comment": "Way how to send automated schedule",
+        "limit": 0
+    },
+    "dialogs.schedule.email.destination.missing": {
+        "value": "No destination available.",
+        "comment": "Title when no destination is created",
+        "limit": 0
+    },
+    "dialogs.schedule.email.destination.help": {
+        "value": "Create destination",
+        "comment": "Title of the help link for destination creation",
         "limit": 0
     },
     "dialogs.schedule.email.message.placeholder": {
