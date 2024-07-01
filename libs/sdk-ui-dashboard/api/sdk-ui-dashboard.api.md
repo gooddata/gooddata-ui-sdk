@@ -6963,6 +6963,9 @@ export const selectIsFilterAttributeSelectionOpen: DashboardSelector<boolean>;
 // @beta (undocumented)
 export const selectIsFilterFromCrossFilteringByLocalIdentifier: (localIdentifier: string) => DashboardSelector<boolean>;
 
+// @internal
+export const selectIsFilterResetEnabled: DashboardSelector<boolean>;
+
 // @public
 export const selectIsInEditMode: DashboardSelector<boolean>;
 
