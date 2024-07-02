@@ -10,13 +10,7 @@ import { transformCronExpressionToRecurrenceType, constructCronExpression } from
 import { DateTime } from "./DateTime.js";
 import { Recurrence } from "./Recurrence.js";
 import { messages } from "./locales.js";
-import {
-    DEFAULT_DATE_FORMAT,
-    DEFAULT_LOCALE,
-    DEFAULT_TIMEZONE,
-    DEFAULT_TIME_FORMAT,
-    DEFAULT_WEEK_START,
-} from "./constants.js";
+import { DEFAULT_DATE_FORMAT, DEFAULT_LOCALE, DEFAULT_TIME_FORMAT, DEFAULT_WEEK_START } from "./constants.js";
 
 /**
  * @internal
@@ -45,7 +39,7 @@ const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
         dateFormat = DEFAULT_DATE_FORMAT,
         timeFormat = DEFAULT_TIME_FORMAT,
         weekStart = DEFAULT_WEEK_START,
-        timezone = DEFAULT_TIMEZONE,
+        timezone,
         startLabel,
         repeatLabel,
         className,

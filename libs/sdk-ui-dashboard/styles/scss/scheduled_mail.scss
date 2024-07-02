@@ -152,7 +152,6 @@ $dialog-padding: 20px;
     > .gd-label {
         height: 30px;
         line-height: 30px;
-        margin-bottom: 5px;
     }
 
     .gd-attachment-config-button {
@@ -369,13 +368,17 @@ $dialog-padding: 20px;
 
     @media #{kit-variables.$small-only} {
         width: calc(100vw - 20px);
-        height: 100vh;
+        height: 90vh;
         max-height: none;
     }
 
     .gd-scheduled-email-management-dialog-title {
         display: flex;
         margin-bottom: 10px;
+
+        .gd-dialog-header {
+            margin: 0;
+        }
 
         > h3 {
             color: var(--gd-modal-title-color, kit-variables.$gd-color-dark);
@@ -848,6 +851,7 @@ $dialog-padding: 20px;
 }
 
 .gd-divider-with-margin {
+    margin-top: 0;
     margin-bottom: $vertical-space;
 }
 

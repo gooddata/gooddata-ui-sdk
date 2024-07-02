@@ -1,5 +1,7 @@
 // (C) 2024 GoodData Corporation
 
+@use "variables";
+
 $input-height: 28px;
 $input-width: 128px;
 
@@ -7,9 +9,18 @@ $input-width: 128px;
     display: flex;
     flex-direction: column;
 
+    .gd-input-component {
+        margin-bottom: 20px;
+
+        label {
+            min-width: 100px;
+        }
+    }
+
     .gd-recurrence-form-datetime {
         display: flex;
         flex-direction: row;
+        align-items: center;
 
         > :not(:first-of-type),
         > :not(:last-of-type) {
@@ -37,9 +48,16 @@ $input-width: 128px;
         }
     }
 
+    .gd-recurrence-form-datetime-inner,
+    .gd-recurrence-form-repeat-inner {
+        display: flex;
+        gap: 10px;
+    }
+
     .gd-recurrence-form-repeat {
         display: flex;
         flex-direction: row;
+        align-items: center;
 
         > :not(:first-of-type),
         > :not(:last-of-type) {
@@ -55,9 +73,25 @@ $input-width: 128px;
 
         .gd-recurrence-form-cron {
             input {
-                width: $input-width;
+                max-width: $input-width;
                 height: $input-height;
             }
+        }
+    }
+
+    @media #{variables.$small-only} {
+        .gd-recurrence-form-datetime,
+        .gd-recurrence-form-repeat {
+            display: block;
+        }
+
+        .gd-label {
+            display: block;
+            margin-bottom: 7px;
+        }
+
+        .gd-recurrence-form-datetime-timezone {
+            margin-top: 10px;
         }
     }
 }
