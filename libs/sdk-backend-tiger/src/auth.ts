@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import {
     AuthenticationFlow,
     IAnalyticalBackend,
@@ -24,8 +24,8 @@ export abstract class TigerAuthProviderBase implements IAuthenticationProvider {
 
     public abstract authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal>;
 
-    public deauthenticate(context: IAuthenticationContext): Promise<void> {
-        const logoutUrl = createTigerDeauthenticationUrl(context.backend, window.location);
+    public deauthenticate(context: IAuthenticationContext, returnTo?: string): Promise<void> {
+        const logoutUrl = createTigerDeauthenticationUrl(context.backend, window.location, returnTo);
         return Promise.resolve(window.location.assign(logoutUrl));
     }
 
@@ -332,7 +332,11 @@ export function createTigerAuthenticationUrl(
  * @param location - current location
  * @public
  */
-export function createTigerDeauthenticationUrl(backend: IAnalyticalBackend, location: Location): string {
+export function createTigerDeauthenticationUrl(
+    backend: IAnalyticalBackend,
+    location: Location,
+    returnTo?: string,
+): string {
     let host = `${location.protocol}//${location.host}`;
     const { hostname: backendHostname } = backend.config;
 
@@ -341,7 +345,8 @@ export function createTigerDeauthenticationUrl(backend: IAnalyticalBackend, loca
         host = backendHostname;
     }
 
-    return `${host}/logout`;
+    const returnUrl = returnTo ? `?returnTo=${returnTo}` : "";
+    return `${host}/logout${returnUrl}`;
 }
 
 /**
