@@ -33,30 +33,32 @@ export const DateTime: React.FC<IDateTimeProps> = (props) => {
     return (
         <div className="gd-recurrence-form-datetime s-recurrence-form-datetime gd-input-component">
             <label className="gd-label">{label}</label>
-            <Datepicker
-                className="gd-recurrence-form-datetime-date"
-                date={date}
-                dateFormat={dateFormat}
-                locale={locale}
-                placeholder={dateFormat}
-                resetOnInvalidValue={true}
-                onChange={handleDateChange}
-                weekStart={weekStart}
-            />
-            <Timepicker
-                className="gd-recurrence-form-datetime-time"
-                maxVisibleItemsCount={MAX_VISIBLE_TIME_ITEMS_COUNT}
-                time={date}
-                onChange={handleTimeChange}
-                overlayPositionType="sameAsTarget"
-                overlayZIndex={DEFAULT_DROPDOWN_ZINDEX}
-                timeAnchor={TIME_ANCHOR}
-                timeFormat={timeFormat}
-            />
+            <div className="gd-recurrence-form-datetime-inner">
+                <Datepicker
+                    className="gd-recurrence-form-datetime-date s-recurrence-form-datetime-date"
+                    date={date}
+                    dateFormat={dateFormat}
+                    locale={locale}
+                    placeholder={dateFormat}
+                    resetOnInvalidValue={true}
+                    onChange={handleDateChange}
+                    weekStart={weekStart}
+                />
+                <Timepicker
+                    className="gd-recurrence-form-datetime-time s-recurrence-form-datetime-time"
+                    maxVisibleItemsCount={MAX_VISIBLE_TIME_ITEMS_COUNT}
+                    time={date}
+                    onChange={handleTimeChange}
+                    overlayPositionType="sameAsTarget"
+                    overlayZIndex={DEFAULT_DROPDOWN_ZINDEX}
+                    timeAnchor={TIME_ANCHOR}
+                    timeFormat={timeFormat}
+                />
+            </div>
             {timezone ? (
-                <span className="gd-recurrence-form-datetime-timezone s-recurrence-form-datetime-timezone">
+                <div className="gd-recurrence-form-datetime-timezone s-recurrence-form-datetime-timezone">
                     {timezone}
-                </span>
+                </div>
             ) : null}
         </div>
     );
