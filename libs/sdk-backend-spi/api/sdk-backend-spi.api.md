@@ -189,7 +189,7 @@ export interface IAnalyticalBackend {
     readonly config: IAnalyticalBackendConfig;
     currentUser(): IUserService;
     dataSources(): IDataSourcesService;
-    deauthenticate(): Promise<void>;
+    deauthenticate(returnTo?: string): Promise<void>;
     entitlements(): IEntitlements;
     isAuthenticated(): Promise<IAuthenticatedPrincipal | null>;
     onHostname(hostname: string): IAnalyticalBackend;
@@ -286,7 +286,7 @@ export interface IAuthenticationContext {
 // @public
 export interface IAuthenticationProvider {
     authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal>;
-    deauthenticate(context: IAuthenticationContext): Promise<void>;
+    deauthenticate(context: IAuthenticationContext, returnTo?: string): Promise<void>;
     getCurrentPrincipal(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal | null>;
     initializeClient?(client: any): void;
     onNotAuthenticated?: NotAuthenticatedHandler;

@@ -113,8 +113,8 @@ export class AuthProviderCallGuard implements IAuthProviderCallGuard {
         return this.realProvider.getCurrentPrincipal(context);
     }
 
-    public async deauthenticate(context: IAuthenticationContext): Promise<void> {
-        return this.realProvider.deauthenticate(context);
+    public async deauthenticate(context: IAuthenticationContext, returnTo?: string): Promise<void> {
+        return this.realProvider.deauthenticate(context, returnTo);
     }
 }
 

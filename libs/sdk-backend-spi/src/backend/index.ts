@@ -130,10 +130,11 @@ export interface IAnalyticalBackend {
 
     /**
      * Triggers deauthentication process against the backend.
+     * @param returnTo - url to redirect after successful relogin
      *
      * @returns promise of the completed process, or rejection if deauthentication failed.
      */
-    deauthenticate(): Promise<void>;
+    deauthenticate(returnTo?: string): Promise<void>;
 
     /**
      * Returns an organization available on the backend.
@@ -232,8 +233,9 @@ export interface IAuthenticationProvider {
      * Clear existing authentication.
      *
      * @param context - context in which the authentication is done
+     * @param returnTo - url to redirect after successful logout
      */
-    deauthenticate(context: IAuthenticationContext): Promise<void>;
+    deauthenticate(context: IAuthenticationContext, returnTo?: string): Promise<void>;
 }
 
 /**
