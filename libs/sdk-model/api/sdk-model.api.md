@@ -1048,6 +1048,7 @@ export interface IDashboardAttributeFilterByDate {
 
 // @alpha
 export interface IDashboardAttributeFilterConfig {
+    displayAsLabel?: ObjRef;
     localIdentifier: string;
     mode?: DashboardAttributeFilterConfigMode;
 }

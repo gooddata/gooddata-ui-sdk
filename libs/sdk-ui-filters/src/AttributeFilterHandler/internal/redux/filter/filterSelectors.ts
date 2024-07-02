@@ -57,7 +57,7 @@ export const selectAttributeFilterDisplayForm: FilterSelector<ObjRef> = createSe
  */
 export const selectAttributeFilterDisplayAsLabel: FilterSelector<ObjRef> = createSelector(
     selectState,
-    (state) => state.displayAsDisplayFormRef,
+    (state) => state.displayAsLabelRef,
 );
 
 /**

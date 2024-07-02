@@ -11,7 +11,7 @@ import { ILoadElementsOptions, AsyncOperationStatus } from "../../../types/index
 export interface AttributeFilterState {
     localIdentifier?: string;
     displayFormRef: ObjRef; // primary label used for execution
-    displayAsDisplayFormRef?: ObjRef; // optional secondary label used for display elements in filter component
+    displayAsLabelRef?: ObjRef; // optional secondary label used for display elements in filter component
     elementsForm: "uris" | "values";
     initialization: {
         status: AsyncOperationStatus;

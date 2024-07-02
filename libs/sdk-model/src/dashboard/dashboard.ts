@@ -111,6 +111,11 @@ export interface IDashboardAttributeFilterConfig {
      * Control visibility mode of the attribute filter
      */
     mode?: DashboardAttributeFilterConfigMode;
+
+    /**
+     * Display form to use to show elements of attribute filter in UI
+     */
+    displayAsLabel?: ObjRef;
 }
 
 /**

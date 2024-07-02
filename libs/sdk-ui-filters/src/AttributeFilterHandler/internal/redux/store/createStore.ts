@@ -70,7 +70,7 @@ export function createAttributeFilterHandlerStore(
             ...initialState,
             localIdentifier,
             displayFormRef,
-            displayAsDisplayFormRef: context.displayAsLabel,
+            displayAsLabelRef: context.displayAsLabel,
             elementsForm,
             selection: {
                 commited: {
