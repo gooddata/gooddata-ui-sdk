@@ -2,7 +2,7 @@
 
 import React, { useCallback, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Button, Dialog, Hyperlink, Typography } from "@gooddata/sdk-ui-kit";
+import { AddButton, Button, Dialog, Hyperlink, Typography } from "@gooddata/sdk-ui-kit";
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 
 import { ScheduledEmails } from "./components/ScheduledEmailsList.js";
@@ -15,7 +15,6 @@ import {
     useDashboardSelector,
 } from "../../../model/index.js";
 import { messages } from "../../../locales.js";
-import { CreateButton } from "./components/CreateButton.js";
 
 /**
  * @alpha
@@ -55,6 +54,8 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
         setScheduledEmailToDelete(null);
     }, [onDelete]);
 
+    const maxAutomationsReached = automations.length >= maxAutomations;
+
     return (
         <>
             <Dialog
@@ -72,10 +73,15 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
                         <Typography tagName="h3">
                             <FormattedMessage id={messages.scheduleManagementListTitle.id!} />
                         </Typography>
-                        <CreateButton
+                        <AddButton
                             onClick={onAdd}
-                            isDisabled={isLoadingScheduleData || automations.length >= maxAutomations}
-                            titleId={messages.scheduleManagementCreate.id!}
+                            isDisabled={isLoadingScheduleData || maxAutomationsReached}
+                            title={<FormattedMessage id={messages.scheduleManagementCreate.id!} />}
+                            tooltip={
+                                maxAutomationsReached ? (
+                                    <FormattedMessage id={messages.scheduleManagementCreateTooMany.id!} />
+                                ) : undefined
+                            }
                         />
                     </div>
                     <ScheduledEmails
