@@ -192,11 +192,11 @@ export class TigerBackend implements IAnalyticalBackend {
         return new TigerBackend(this.config, this.implConfig, this.telemetry, guardedAuthProvider);
     }
 
-    public deauthenticate(): Promise<void> {
+    public deauthenticate(returnTo?: string): Promise<void> {
         if (!this.authProvider) {
             throw new NotAuthenticated("Backend is not set up with authentication provider.");
         }
-        return this.authProvider.deauthenticate(this.getAuthenticationContext());
+        return this.authProvider.deauthenticate(this.getAuthenticationContext(), returnTo);
     }
 
     public organization(organizationId: string): IOrganization {
