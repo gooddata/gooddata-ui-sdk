@@ -210,7 +210,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableFlexAi: false,
     enableExperimentalFeaturesUI: false,
     enableSingleStoreDataSource: false,
-    enableSnowflakeKeyPairAuthentication: false,
+    enableSnowflakeKeyPairAuthentication: true,
     enableInvalidValuesInAttributeFilter: false,
     enableDuplicatedLabelValuesInAttributeFilter: false,
     enableWorkspacesHierarchyView: false,
