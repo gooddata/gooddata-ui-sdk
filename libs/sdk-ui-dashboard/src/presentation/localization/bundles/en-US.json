@@ -635,6 +635,11 @@
         "comment": "Title of a link to documentation",
         "limit": 0
     },
+    "dialogs.schedule.email.footer.title.short": {
+        "value": "Help",
+        "comment": "Title of a link to documentation",
+        "limit": 0
+    },
     "dialogs.schedule.email.save": {
         "value": "Save",
         "comment": "Translate as imperative. It's caption of a button for saving scheduled mail",

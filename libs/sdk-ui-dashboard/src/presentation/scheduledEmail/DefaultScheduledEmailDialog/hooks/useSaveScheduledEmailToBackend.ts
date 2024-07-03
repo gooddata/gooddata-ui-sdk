@@ -1,10 +1,16 @@
 // (C) 2019-2024 GoodData Corporation
 import { useCallback } from "react";
-import { ObjRef, IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
+import {
+    ObjRef,
+    IAutomationMetadataObject,
+    IAutomationMetadataObjectDefinition,
+    IAutomationSchedule,
+} from "@gooddata/sdk-model";
 import { useCreateScheduledEmail } from "./useCreateScheduledEmail.js";
 import { useUpdateScheduledEmail } from "./useUpdateScheduledEmail.js";
 import { IScheduledEmailDialogProps } from "../../types.js";
 import { IntlShape, useIntl } from "react-intl";
+import omit from "lodash/omit.js";
 
 export function useSaveScheduledEmailToBackend(
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
@@ -40,10 +46,10 @@ export function useSaveScheduledEmailToBackend(
     );
 
     const handleSaveScheduledEmail = (): void => {
-        if (automation.id) {
-            handleUpdateScheduledEmail(automation);
+        const sanitizedAutomation = sanitizeAutomation(automation, intl);
+        if (sanitizedAutomation.id) {
+            handleUpdateScheduledEmail(sanitizedAutomation);
         } else {
-            const sanitizedAutomation = sanitizeAutomation(automation, intl);
             handleCreateScheduledEmail(sanitizedAutomation);
         }
     };
@@ -62,5 +68,12 @@ function sanitizeAutomation(
     if (!automation.title) {
         automation.title = intl.formatMessage({ id: "dialogs.schedule.email.title.placeholder" });
     }
+
+    // We want to omit the cronDescription as it a variable created on backend that cannot
+    // be overriden and BE has hard time handling it with each PUT
+    if (automation.schedule) {
+        automation.schedule = omit(automation.schedule, ["cronDescription"]) as IAutomationSchedule;
+    }
+
     return automation;
 }

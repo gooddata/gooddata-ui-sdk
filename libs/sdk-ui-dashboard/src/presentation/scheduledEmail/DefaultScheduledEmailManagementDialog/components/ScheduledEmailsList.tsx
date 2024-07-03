@@ -23,7 +23,7 @@ export const ScheduledEmails: React.FC<IScheduledEmailsProps> = (props) => {
 
     if (isLoading) {
         return (
-            <div className="gd-loading-equalizer-wrap">
+            <div className="gd-loading-equalizer-wrap gd-scheduled-emails-message">
                 <div className="gd-loading-equalizer gd-loading-equalizer-fade">
                     <LoadingSpinner
                         className="large gd-loading-equalizer-spinner"

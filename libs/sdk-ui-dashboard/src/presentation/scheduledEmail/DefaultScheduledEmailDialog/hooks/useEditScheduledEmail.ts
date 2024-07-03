@@ -156,7 +156,7 @@ function newAutomationMetadataObjectDefinition({
 }): IAutomationMetadataObjectDefinition {
     const firstRun = parseISO(new Date().toISOString());
     const normalizedFirstRun = normalizeTime(firstRun, undefined, 60);
-    const cron = getDefaultCronExpression(firstRun);
+    const cron = getDefaultCronExpression(normalizedFirstRun);
 
     const automation: IAutomationMetadataObjectDefinition = {
         type: "automation",

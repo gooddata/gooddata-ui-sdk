@@ -1,8 +1,6 @@
 // (C) 2019-2024 GoodData Corporation
 import * as React from "react";
 import cx from "classnames";
-
-import { isMobileView } from "../utils/responsive.js";
 interface ITextareaOwnProps {
     className: string;
     hasError: boolean;
@@ -30,18 +28,11 @@ export class Textarea extends React.PureComponent<ITextareaProps, ITextareaState
 
     constructor(props: ITextareaProps) {
         super(props);
-        this.state = {
-            rows: isMobileView() ? 1 : props.rows,
-        };
     }
 
     public render() {
-        const { className, label, maxlength, placeholder, value } = this.props;
-        const { rows } = this.state;
-
-        const classNames = cx(`gd-input-component gd-textarea-component ${className}`, {
-            "gd-textarea-component-collapsed": rows === 1,
-        });
+        const { className, label, maxlength, placeholder, value, rows } = this.props;
+        const classNames = cx(`gd-input-component gd-textarea-component ${className}`);
 
         return (
             <div className={classNames}>
@@ -53,11 +44,8 @@ export class Textarea extends React.PureComponent<ITextareaProps, ITextareaState
                         placeholder={placeholder}
                         value={value}
                         rows={rows}
-                        onBlur={this.onBlur}
                         onChange={this.onChange}
-                        onFocus={this.onFocus}
                     />
-                    {rows === 1 ? this.renderCollapseIndicator() : null}
                 </label>
             </div>
         );
@@ -71,23 +59,7 @@ export class Textarea extends React.PureComponent<ITextareaProps, ITextareaState
         });
     };
 
-    private onBlur = (_e: React.FocusEvent<HTMLTextAreaElement>): void => {
-        if (isMobileView()) {
-            this.setState({ rows: 1 });
-        }
-    };
-
     private onChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
         this.props.onChange(e.target.value);
-    };
-
-    private onFocus = (_e: React.FocusEvent<HTMLTextAreaElement>): void => {
-        if (isMobileView()) {
-            this.setState({ rows: this.props.rows });
-        }
-    };
-
-    private renderCollapseIndicator = (): React.ReactNode => {
-        return <span className="gd-input-component-indicator">&#8943;</span>;
     };
 }

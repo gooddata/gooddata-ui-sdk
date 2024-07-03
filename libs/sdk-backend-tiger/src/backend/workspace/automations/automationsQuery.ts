@@ -68,7 +68,13 @@ export class AutomationsQuery implements IAutomationsQuery {
                         ...metaIncludeObj,
                         ...filterObj,
                         ...this.sort,
-                        include: ["createdBy", "modifiedBy"],
+                        include: [
+                            "createdBy",
+                            "modifiedBy",
+                            "notificationChannel",
+                            "recipients",
+                            "exportDefinitions",
+                        ],
                         size: limit,
                         page: offset / limit,
                     }),
@@ -98,6 +104,6 @@ export class AutomationsQuery implements IAutomationsQuery {
             allFilters.push(`${this.type}=isnull=false`);
         }
 
-        return allFilters ? { filter: allFilters.join(";") } : {};
+        return allFilters.length > 0 ? { filter: allFilters.join(";") } : {};
     };
 }
