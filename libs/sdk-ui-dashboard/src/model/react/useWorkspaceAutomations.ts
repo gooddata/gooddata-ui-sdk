@@ -26,6 +26,13 @@ interface IUseWorkspaceAutomationsConfig
      * Workspace to work with.
      */
     workspace?: string;
+
+    /**
+     * Number of automations to get.
+     *
+     * Defaults to 100
+     */
+    limit?: number;
 }
 
 /**
@@ -43,6 +50,7 @@ export function useWorkspaceAutomations(
         onLoading,
         onPending,
         onSuccess,
+        limit = 100,
     }: IUseWorkspaceAutomationsConfig,
     dependencies?: any[],
 ): UseCancelablePromiseState<IAutomationMetadataObject[], any> {
@@ -52,7 +60,15 @@ export function useWorkspaceAutomations(
     return useCancelablePromise(
         {
             promise: enable
-                ? () => effectiveBackend.workspace(effectiveWorkspace).automations().getAutomations()
+                ? () =>
+                      effectiveBackend
+                          .workspace(effectiveWorkspace)
+                          .automations()
+                          .getAutomationsQuery()
+                          .withSize(limit)
+                          .withSorting(["title,asc"])
+                          .query()
+                          .then((result) => result.items)
                 : undefined,
             onCancel,
             onError,

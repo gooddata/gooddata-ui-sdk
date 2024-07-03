@@ -15,6 +15,7 @@ import {
     useDashboardSelector,
 } from "../../../model/index.js";
 import { messages } from "../../../locales.js";
+import { isMobileView } from "../DefaultScheduledEmailDialog/utils/responsive.js";
 
 /**
  * @alpha
@@ -55,6 +56,10 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
     }, [onDelete]);
 
     const maxAutomationsReached = automations.length >= maxAutomations;
+
+    const helpTextId = isMobileView()
+        ? "dialogs.schedule.email.footer.title.short"
+        : "dialogs.schedule.email.footer.title";
 
     return (
         <>
@@ -97,7 +102,7 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
                 <div className="gd-content-divider"></div>
                 <div className="gd-buttons">
                     <Hyperlink
-                        text={intl.formatMessage({ id: "dialogs.schedule.email.footer.title" })}
+                        text={intl.formatMessage({ id: helpTextId })}
                         href=""
                         iconClass="gd-icon-circle-question"
                     />

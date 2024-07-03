@@ -39,6 +39,7 @@ import { isExportDefinitionDashboardContent } from "@gooddata/sdk-model";
 import { getTimezoneByIdentifier, TIMEZONE_DEFAULT } from "./utils/timezone.js";
 import { DASHBOARD_TITLE_MAX_LENGTH } from "../../constants/index.js";
 import parseISO from "date-fns/parseISO/index.js";
+import { isMobileView } from "./utils/responsive.js";
 
 const MAX_MESSAGE_LENGTH = 200;
 const MAX_SUBJECT_LENGTH = 200;
@@ -96,6 +97,10 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
         automation.schedule?.firstRun ?? normalizeTime(new Date(), undefined, 60).toISOString(),
     );
 
+    const helpTextId = isMobileView()
+        ? "dialogs.schedule.email.footer.title.short"
+        : "dialogs.schedule.email.footer.title";
+
     // trigger the invariant only if the user tries to open the dialog
     if (isVisible) {
         invariant(
@@ -129,7 +134,7 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
                 footerLeftRenderer={() => (
                     <div className="gd-schedule-email-dialog-footer-link">
                         <Hyperlink
-                            text={intl.formatMessage({ id: "dialogs.schedule.email.footer.title" })}
+                            text={intl.formatMessage({ id: helpTextId })}
                             href=""
                             iconClass="gd-icon-circle-question"
                         />

@@ -8,6 +8,7 @@ $horizontal-space: 10px;
 $vertical-space: 20px;
 $input-height: 28px;
 $dialog-padding: 20px;
+$min-content-height: 110px;
 
 @mixin input-styles {
     color: button-variables.$button-normal-color;
@@ -96,27 +97,12 @@ $dialog-padding: 20px;
     }
 
     .gd-input-field {
-        resize: vertical;
+        resize: none;
         min-height: 30px;
-
-        @media #{kit-variables.$small-only} {
-            resize: none;
-        }
-    }
-
-    .gd-input-component-indicator {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        color: kit-variables.$gd-color-text;
-        font-size: 14px;
-        font-family: gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
-    }
-}
-
-.gd-textarea-component-collapsed {
-    .gd-input-field {
-        overflow: hidden;
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 15px;
     }
 }
 
@@ -364,7 +350,7 @@ $dialog-padding: 20px;
 .gd-scheduled-email-management-dialog {
     display: flex;
     flex-direction: column;
-    width: 460px;
+    width: 540px;
 
     @media #{kit-variables.$small-only} {
         width: calc(100vw - 20px);
@@ -386,19 +372,17 @@ $dialog-padding: 20px;
     }
 
     .gd-scheduled-emails-content {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
         overflow-x: hidden;
         width: calc(100% + 20px);
         margin: 0 -20px 0 0;
-        padding: 10px 20px 20px 0;
+        padding: 10px 20px 10px 0;
         min-height: 143px;
-        max-height: 455px;
+        max-height: 475px;
         overflow-y: auto;
 
         @media #{kit-variables.$small-only} {
             max-height: none;
+            height: 100%;
         }
     }
 
@@ -434,10 +418,11 @@ $dialog-padding: 20px;
     }
 
     .gd-scheduled-emails-message {
+        height: 100%;
+        min-height: $min-content-height;
         display: flex;
         justify-content: center;
         align-items: center;
-        flex: 1;
         padding-top: 10px;
         text-align: center;
         color: kit-variables.$gd-color-state-blank;
@@ -568,6 +553,10 @@ $dialog-padding: 20px;
 
         button {
             margin: 5px;
+        }
+
+        .gd-hyperlink:hover {
+            text-decoration: none;
         }
     }
 
@@ -881,6 +870,10 @@ $dialog-padding: 20px;
         color: kit-variables.$gd-palette-primary-base;
         text-decoration: none;
     }
+
+    @media #{kit-variables.$small-only} {
+        display: block;
+    }
 }
 
 .gd-schedule-email-dialog-destination {
@@ -946,4 +939,8 @@ $dialog-padding: 20px;
     display: inline-flex;
     flex: 1;
     justify-content: flex-start;
+
+    .gd-hyperlink:hover {
+        text-decoration: none;
+    }
 }
