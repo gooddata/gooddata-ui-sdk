@@ -20,6 +20,7 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     scheduleManagementDeleteError: { id: "dialogs.schedule.management.delete.error" },
     scheduleManagementNoSchedules: { id: "dialogs.schedule.management.noSchedules" },
     scheduleManagementCreate: { id: "dialogs.schedule.management.create" },
+    scheduleManagementCreateTooMany: { id: "dialogs.schedule.management.create.tooManyMessage" },
     scheduleManagementListTitle: { id: "dialogs.schedule.management.list.title" },
 
     saveAsNewAlertsAndEmailsMessage: { id: "dialogs.save.as.new.alertsAndEmailsMessage" },

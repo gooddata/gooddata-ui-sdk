@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 
 @use "variables";
 
@@ -202,4 +202,5 @@
     border-top: 1px solid variables.$gd-border-color;
     height: 0;
     margin-top: 10px;
+    margin-bottom: 5px;
 }

@@ -6,7 +6,6 @@ export const MAX_VISIBLE_TIME_ITEMS_COUNT = 5;
 export const DEFAULT_LOCALE = "en-US";
 export const DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
 export const DEFAULT_WEEK_START = "Monday";
-export const DEFAULT_TIMEZONE = "Europe/Prague";
 export const DEFAULT_TIME_FORMAT = "HH:mm";
 
 export const DEFAULT_DROPDOWN_ALIGN_POINTS = [

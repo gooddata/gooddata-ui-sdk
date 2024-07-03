@@ -30,15 +30,17 @@ export const Recurrence: React.FC<IRecurrenceProps> = (props) => {
     return (
         <div className="gd-recurrence-form-repeat gd-input-component">
             <label className="gd-label">{label}</label>
-            <RepeatTypeSelect
-                repeatType={recurrenceType}
-                startDate={startDate}
-                onChange={onRepeatTypeChange}
-                allowHourlyRecurrence={allowHourlyRecurrence}
-            />
-            {recurrenceType === RECURRENCE_TYPES.CRON ? (
-                <CronExpression expression={cronValue} onChange={onCronValueChange} />
-            ) : null}
+            <div className="gd-recurrence-form-repeat-inner">
+                <RepeatTypeSelect
+                    repeatType={recurrenceType}
+                    startDate={startDate}
+                    onChange={onRepeatTypeChange}
+                    allowHourlyRecurrence={allowHourlyRecurrence}
+                />
+                {recurrenceType === RECURRENCE_TYPES.CRON ? (
+                    <CronExpression expression={cronValue} onChange={onCronValueChange} />
+                ) : null}
+            </div>
         </div>
     );
 };
