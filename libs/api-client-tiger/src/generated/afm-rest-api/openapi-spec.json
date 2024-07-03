@@ -2497,6 +2497,12 @@
                         "items": {
                             "$ref": "#/components/schemas/MeasureHeaderOut"
                         }
+                    },
+                    "first": {
+                        "$ref": "#/components/schemas/MeasureHeaderOut"
+                    },
+                    "last": {
+                        "$ref": "#/components/schemas/MeasureHeaderOut"
                     }
                 }
             },
