@@ -43,6 +43,8 @@ import { isMobileView } from "./utils/responsive.js";
 
 const MAX_MESSAGE_LENGTH = 200;
 const MAX_SUBJECT_LENGTH = 200;
+const DEFAULT_MAX_RECIPIENTS = "10";
+const DEFAULT_MIN_RECURRENCE_MINUTES = "60";
 
 export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
     const { onCancel, isVisible, editSchedule, users, webhooks } = props;
@@ -56,11 +58,15 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
     const maxAutomationsRecipientsEntitlement = useDashboardSelector(
         selectEntitlementMaxAutomationRecipients,
     );
-    const maxAutomationsRecipients = parseInt(maxAutomationsRecipientsEntitlement?.value ?? "0", 10);
+    const maxAutomationsRecipients = parseInt(
+        maxAutomationsRecipientsEntitlement?.value ?? DEFAULT_MAX_RECIPIENTS,
+        10,
+    );
     const minimumRecurrenceMinutesEntitlement = useDashboardSelector(
         selectEntitlementMinimumRecurrenceMinutes,
     );
-    const allowHourlyRecurrence = parseInt(minimumRecurrenceMinutesEntitlement?.value ?? "60", 10) === 60;
+    const allowHourlyRecurrence =
+        parseInt(minimumRecurrenceMinutesEntitlement?.value ?? DEFAULT_MIN_RECURRENCE_MINUTES, 10) === 60;
 
     const { alignPoints, onAlign } = useScheduledEmailDialogAlignment();
     const {
@@ -135,7 +141,7 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
                     <div className="gd-schedule-email-dialog-footer-link">
                         <Hyperlink
                             text={intl.formatMessage({ id: helpTextId })}
-                            href=""
+                            href="https://www.gooddata.com/docs/cloud/create-dashboards/export/schedule-emailing/"
                             iconClass="gd-icon-circle-question"
                         />
                     </div>

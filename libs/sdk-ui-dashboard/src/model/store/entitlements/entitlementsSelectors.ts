@@ -41,7 +41,7 @@ export const selectEntitlementExportPdf: DashboardSelector<IEntitlementDescripto
  */
 export const selectEntitlementMaxAutomationRecipients: DashboardSelector<IEntitlementDescriptor | undefined> =
     createSelector(selectEntitlements, (entitlements) => {
-        return entitlements.find((entitlement) => entitlement.name === "MaxAutomationRecipients");
+        return entitlements.find((entitlement) => entitlement.name === "AutomationRecipientCount");
     });
 
 /**
@@ -49,7 +49,7 @@ export const selectEntitlementMaxAutomationRecipients: DashboardSelector<IEntitl
  */
 export const selectEntitlementMaxAutomations: DashboardSelector<IEntitlementDescriptor | undefined> =
     createSelector(selectEntitlements, (entitlements) => {
-        return entitlements.find((entitlement) => entitlement.name === "MaxAutomations");
+        return entitlements.find((entitlement) => entitlement.name === "AutomationCount");
     });
 
 /**
@@ -58,5 +58,5 @@ export const selectEntitlementMaxAutomations: DashboardSelector<IEntitlementDesc
 export const selectEntitlementMinimumRecurrenceMinutes: DashboardSelector<
     IEntitlementDescriptor | undefined
 > = createSelector(selectEntitlements, (entitlements) => {
-    return entitlements.find((entitlement) => entitlement.name === "MinimumRecurrenceMinutes");
+    return entitlements.find((entitlement) => entitlement.name === "ScheduledActionMinimumRecurrenceMinutes");
 });

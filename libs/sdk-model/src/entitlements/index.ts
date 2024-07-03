@@ -21,11 +21,13 @@ export type IEntitlementsName =
     | "WorkspaceCount"
     | "Hipaa"
     | "UserTelemetryDisabled"
-    | "MaxAutomationRecipients"
-    | "MaxAutomations"
-    | "MaxDailyScheduledActions"
-    | "MinimumRecurrenceMinutes";
-
+    | "AutomationCount"
+    | "UnlimitedAutomations"
+    | "AutomationRecipientCount"
+    | "UnlimitedAutomationRecipients"
+    | "DailyScheduledActionCount"
+    | "UnlimitedDailyScheduledActions"
+    | "ScheduledActionMinimumRecurrenceMinutes";
 /**
  * Entitlement descriptor
  *

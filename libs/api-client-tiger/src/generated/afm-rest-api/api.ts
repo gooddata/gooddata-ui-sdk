@@ -1665,6 +1665,18 @@ export interface MeasureGroupHeaders {
      * @memberof MeasureGroupHeaders
      */
     measureGroupHeaders?: Array<MeasureHeaderOut>;
+    /**
+     *
+     * @type {MeasureHeaderOut}
+     * @memberof MeasureGroupHeaders
+     */
+    first?: MeasureHeaderOut;
+    /**
+     *
+     * @type {MeasureHeaderOut}
+     * @memberof MeasureGroupHeaders
+     */
+    last?: MeasureHeaderOut;
 }
 /**
  *

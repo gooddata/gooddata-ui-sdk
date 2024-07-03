@@ -17,6 +17,8 @@ import {
 import { messages } from "../../../locales.js";
 import { isMobileView } from "../DefaultScheduledEmailDialog/utils/responsive.js";
 
+const DEFAULT_MAX_AUTOMATIONS = "10";
+
 /**
  * @alpha
  */
@@ -36,7 +38,7 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
     );
     const currentUser = useDashboardSelector(selectCurrentUser);
     const maxAutomationsEntitlement = useDashboardSelector(selectEntitlementMaxAutomations);
-    const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? "0", 10);
+    const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);
     const intl = useIntl();
 
     const handleScheduleDelete = useCallback((scheduledEmail: IAutomationMetadataObject) => {
@@ -103,7 +105,7 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
                 <div className="gd-buttons">
                     <Hyperlink
                         text={intl.formatMessage({ id: helpTextId })}
-                        href=""
+                        href="https://www.gooddata.com/docs/cloud/create-dashboards/export/schedule-emailing/"
                         iconClass="gd-icon-circle-question"
                     />
                     <Button
