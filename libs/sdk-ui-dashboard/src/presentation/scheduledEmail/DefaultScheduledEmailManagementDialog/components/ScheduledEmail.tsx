@@ -30,11 +30,11 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
     const { scheduledEmail, onDelete, onEdit, webhooks } = props;
 
     const intl = useIntl();
-    const parsedCron = scheduledEmail.schedule?.cron;
+    const cronDescription = scheduledEmail.schedule?.cronDescription;
     const webhookTitle = webhooks.find((webhook) => webhook.id === scheduledEmail.webhook)?.name;
     const dashboardTitle = scheduledEmail.exportDefinitions?.[0]?.title;
 
-    const subtitle = [parsedCron, webhookTitle, dashboardTitle].filter(Boolean).join(" • ");
+    const subtitle = [cronDescription, webhookTitle, dashboardTitle].filter(Boolean).join(" • ");
 
     const handleClick = useCallback(() => {
         onEdit(scheduledEmail);

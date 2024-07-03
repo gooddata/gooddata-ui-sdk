@@ -100,6 +100,11 @@ export interface IAutomationSchedule {
     cron: string;
 
     /**
+     * Human-readable description of the cron expression.
+     */
+    cronDescription?: string;
+
+    /**
      * Timezone in which the schedule is defined.
      *
      * Example: Europe/Prague
