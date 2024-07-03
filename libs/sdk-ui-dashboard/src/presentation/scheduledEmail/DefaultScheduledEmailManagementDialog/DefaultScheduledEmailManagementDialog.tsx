@@ -86,7 +86,10 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
                             title={<FormattedMessage id={messages.scheduleManagementCreate.id!} />}
                             tooltip={
                                 maxAutomationsReached ? (
-                                    <FormattedMessage id={messages.scheduleManagementCreateTooMany.id!} />
+                                    <FormattedMessage
+                                        id={messages.scheduleManagementCreateTooMany.id!}
+                                        values={{ number: maxAutomations }}
+                                    />
                                 ) : undefined
                             }
                         />

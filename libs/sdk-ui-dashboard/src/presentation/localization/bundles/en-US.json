@@ -702,8 +702,8 @@
         "limit": 0
     },
     "dialogs.schedule.management.create.tooManyMessage": {
-        "value": "Too many schedules. You can create up to 10 schedules.",
-        "comment": "",
+        "value": "Too many schedules. You can create up to {number} schedules.",
+        "comment": "Do no translate {number} variable",
         "limit": 0
     },
     "dialogs.schedule.management.noSchedules": {
