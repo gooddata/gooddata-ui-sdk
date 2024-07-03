@@ -198,7 +198,7 @@ export class AuthProviderCallGuard implements IAuthProviderCallGuard {
     // (undocumented)
     authenticate: (context: IAuthenticationContext) => Promise<IAuthenticatedPrincipal>;
     // (undocumented)
-    deauthenticate(context: IAuthenticationContext): Promise<void>;
+    deauthenticate(context: IAuthenticationContext, returnTo?: string): Promise<void>;
     // (undocumented)
     getCurrentPrincipal(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal | null>;
     // (undocumented)

@@ -47,8 +47,8 @@ class BackendWithDecoratedServices implements IAnalyticalBackend {
         return this.decorated.authenticate(force);
     }
 
-    public deauthenticate(): Promise<void> {
-        return this.decorated.deauthenticate();
+    public deauthenticate(returnTo?: string): Promise<void> {
+        return this.decorated.deauthenticate(returnTo);
     }
 
     public isAuthenticated(): Promise<IAuthenticatedPrincipal | null> {
