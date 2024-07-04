@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 
 import { DashboardSelector, DashboardState } from "../types.js";
@@ -6,6 +6,7 @@ import {
     DashboardAttributeFilterConfigMode,
     DashboardAttributeFilterConfigModeValues,
     IDashboardAttributeFilterConfig,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import { selectIsInEditMode } from "../renderMode/renderModeSelectors.js";
 
@@ -64,3 +65,16 @@ export const selectEffectiveAttributeFiltersModeMap: DashboardSelector<
         }, new Map());
     },
 );
+
+/**
+ * Get a map of attribute filter displayAsLabels
+ *
+ * @alpha
+ */
+export const selectAttributeFilterConfigsDisplayAsLabelMap: DashboardSelector<Map<string, ObjRef>> =
+    createSelector(selectAttributeFilterConfigsOverrides, (attributeFilterConfigs) => {
+        return attributeFilterConfigs.reduce((map, config) => {
+            map.set(config.localIdentifier, config.displayAsLabel);
+            return map;
+        }, new Map());
+    });

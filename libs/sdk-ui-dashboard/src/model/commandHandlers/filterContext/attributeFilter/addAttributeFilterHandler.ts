@@ -30,6 +30,7 @@ import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../../store/drill/drillSelectors.js";
 import { selectAllAnalyticalWidgets } from "../../../store/layout/layoutSelectors.js";
 import { validateDrillToCustomUrlParams } from "../../common/validateDrillToCustomUrlParams.js";
+import { selectEnableDuplicatedLabelValuesInAttributeFilter } from "../../../store/config/configSelectors.js";
 
 export function* addAttributeFilterHandler(
     ctx: DashboardContext,
@@ -44,11 +45,21 @@ export function* addAttributeFilterHandler(
         selectionMode,
         mode,
         localIdentifier,
+        primaryDisplayForm,
     } = cmd.payload;
 
     const isUnderFilterCountLimit: ReturnType<typeof selectCanAddMoreFilters> = yield select(
         selectCanAddMoreFilters,
     );
+
+    const enableDuplicatedLabelValuesInAttributeFilter: ReturnType<
+        typeof selectEnableDuplicatedLabelValuesInAttributeFilter
+    > = yield select(selectEnableDuplicatedLabelValuesInAttributeFilter);
+
+    const usedDisplayForm =
+        enableDuplicatedLabelValuesInAttributeFilter && primaryDisplayForm ? primaryDisplayForm : displayForm;
+    const displayAsLabel =
+        enableDuplicatedLabelValuesInAttributeFilter && primaryDisplayForm ? displayForm : undefined;
 
     if (!isUnderFilterCountLimit) {
         throw invalidArgumentsProvided(
@@ -65,18 +76,18 @@ export function* addAttributeFilterHandler(
     const resolvedDisplayForm: SagaReturnType<typeof resolveDisplayFormMetadata> = yield call(
         resolveDisplayFormMetadata,
         ctx,
-        [displayForm],
+        [usedDisplayForm],
     );
 
     if (!isEmpty(resolvedDisplayForm.missing)) {
         throw invalidArgumentsProvided(
             ctx,
             cmd,
-            `Attempting to add filter for a non-existing display form ${objRefToString(displayForm)}.`,
+            `Attempting to add filter for a non-existing display form ${objRefToString(usedDisplayForm)}.`,
         );
     }
 
-    const displayFormMetadata = resolvedDisplayForm.resolved.get(displayForm);
+    const displayFormMetadata = resolvedDisplayForm.resolved.get(usedDisplayForm);
 
     invariant(displayFormMetadata);
 
@@ -85,7 +96,7 @@ export function* addAttributeFilterHandler(
     const canBeAdded: PromiseFnReturnType<typeof canFilterBeAdded> = yield call(
         canFilterBeAdded,
         ctx,
-        displayForm,
+        usedDisplayForm,
         allFilters,
     );
 
@@ -101,7 +112,7 @@ export function* addAttributeFilterHandler(
             `Filter for attribute ${objRefToString(
                 attributeRef,
             )} represented by the displayForm ${objRefToString(
-                displayForm,
+                usedDisplayForm,
             )} already exists in the filter context.`,
         );
     }
@@ -135,15 +146,25 @@ export function* addAttributeFilterHandler(
     const capabilities: ReturnType<typeof selectBackendCapabilities> = yield select(
         selectBackendCapabilities,
     );
+    const attributeFilterConfigActions = [];
     if (capabilities.supportsHiddenAndLockedFiltersOnUI && mode) {
-        yield put(
-            batchActions([
-                attributeFilterConfigsActions.changeMode({
-                    localIdentifier: addedFilter.attributeFilter.localIdentifier!,
-                    mode,
-                }),
-            ]),
+        attributeFilterConfigActions.push(
+            attributeFilterConfigsActions.changeMode({
+                localIdentifier: addedFilter.attributeFilter.localIdentifier!,
+                mode,
+            }),
         );
+    }
+    if (enableDuplicatedLabelValuesInAttributeFilter && displayAsLabel) {
+        attributeFilterConfigActions.push(
+            attributeFilterConfigsActions.changeDisplayAsLabel({
+                localIdentifier: addedFilter.attributeFilter.localIdentifier!,
+                displayAsLabel,
+            }),
+        );
+    }
+    if (attributeFilterConfigActions.length > 0) {
+        yield put(batchActions(attributeFilterConfigActions));
     }
 
     yield dispatchDashboardEvent(

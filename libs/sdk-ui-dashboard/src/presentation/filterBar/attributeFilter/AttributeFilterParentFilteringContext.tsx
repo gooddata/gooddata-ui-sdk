@@ -10,6 +10,7 @@ import {
     DashboardAttributeFilterConfigModeValues,
     IAttributeOrMeasure,
     IDashboardDateFilter,
+    IAttributeElement,
 } from "@gooddata/sdk-model";
 import {
     selectAllCatalogDisplayFormsMap,
@@ -36,7 +37,10 @@ export type IAttributeFilterParentFiltering = ReturnType<typeof useParentsConfig
     ReturnType<typeof useTitleConfiguration> &
     ReturnType<typeof useSelectionModeConfiguration> &
     ReturnType<typeof useModeConfiguration> & {
-        onConfigurationSave: () => void;
+        onConfigurationSave: (
+            currentDisplayFormRef: ObjRef,
+            committedSelectionElements: IAttributeElement[],
+        ) => void;
         showDisplayFormPicker: boolean;
         showResetTitle: boolean;
         defaultAttributeFilterTitle?: string;
@@ -62,6 +66,7 @@ export const useAttributeFilterParentFiltering = (): IAttributeFilterParentFilte
  */
 export type IAttributeFilterParentFilteringProviderProps = {
     filter: IDashboardAttributeFilter;
+    displayAsLabel?: ObjRef;
     attributes?: IAttributeMetadataObject[];
     children?: React.ReactNode;
 };
@@ -72,18 +77,18 @@ export type IAttributeFilterParentFilteringProviderProps = {
 export const AttributeFilterParentFilteringProvider: React.FC<
     IAttributeFilterParentFilteringProviderProps
 > = (props) => {
-    const { children, filter: currentFilter, attributes } = props;
+    const { children, filter: currentFilter, attributes, displayAsLabel } = props;
 
     const availableDatasetsForFilter: IAttributeOrMeasure[] = useMemo(
         () => [
             {
                 attribute: {
                     localIdentifier: currentFilter.attributeFilter.localIdentifier!,
-                    displayForm: currentFilter.attributeFilter.displayForm,
+                    displayForm: displayAsLabel ?? currentFilter.attributeFilter.displayForm,
                 },
             },
         ],
-        [currentFilter],
+        [currentFilter, displayAsLabel],
     );
 
     const attributeFilter = useMemo(
@@ -151,7 +156,7 @@ export const AttributeFilterParentFilteringProvider: React.FC<
         onDisplayFormChange,
         onConfigurationClose: onDisplayFormClose,
         displayFormChangeStatus,
-    } = useDisplayFormConfiguration(currentFilter, memoizedAttributes);
+    } = useDisplayFormConfiguration(currentFilter, memoizedAttributes, displayAsLabel);
 
     const {
         title,

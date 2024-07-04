@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { SagaIterator } from "redux-saga";
 import { select } from "redux-saga/effects";
@@ -11,6 +11,7 @@ import { DashboardContext } from "../../types/commonTypes.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import { selectEffectiveDateFilterOptions } from "../../store/dateFilterConfig/dateFilterConfigSelectors.js";
 import { findDateFilterOptionByValue } from "../../../_staging/dateFilterConfig/dateFilterOptionMapping.js";
+import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 
 export function* dispatchFilterContextChanged(
     ctx: DashboardContext,
@@ -19,8 +20,13 @@ export function* dispatchFilterContextChanged(
     const filterContext: ReturnType<typeof selectFilterContextDefinition> = yield select(
         selectFilterContextDefinition,
     );
+    const attributeFilterConfigs: ReturnType<typeof selectAttributeFilterConfigsOverrides> = yield select(
+        selectAttributeFilterConfigsOverrides,
+    );
 
-    yield dispatchDashboardEvent(filterContextChanged(ctx, filterContext, cmd.correlationId));
+    yield dispatchDashboardEvent(
+        filterContextChanged(ctx, filterContext, attributeFilterConfigs, cmd.correlationId),
+    );
 }
 
 export function* canApplyDateFilter(dateFilter: IDashboardDateFilter): SagaIterator<boolean> {

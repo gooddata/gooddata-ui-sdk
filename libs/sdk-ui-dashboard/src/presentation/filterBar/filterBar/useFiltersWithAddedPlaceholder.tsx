@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { useCallback, useMemo, useState } from "react";
 import partition from "lodash/partition.js";
@@ -21,6 +21,7 @@ import {
     dispatchAndWaitFor,
     selectAllCatalogDateDatasetsMap,
     selectCatalogAttributes,
+    selectEnableDuplicatedLabelValuesInAttributeFilter,
     selectSelectedFilterIndex,
     uiActions,
     useDashboardDispatch,
@@ -120,6 +121,9 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
     const selectedFilterIndex = useDashboardSelector(selectSelectedFilterIndex);
     const allAttributes = useDashboardSelector(selectCatalogAttributes);
     const dateDatasetsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
+    const enableDuplicatedLabelValuesInAttributeFilter = useDashboardSelector(
+        selectEnableDuplicatedLabelValuesInAttributeFilter,
+    );
 
     const [draggableFilters, [commonDateFilter]] = partition(filters, isNotDashboardCommonDateFilter);
     const [dateFiltersWithDimensions, attributeFilters] = partition(
@@ -237,8 +241,16 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
                 );
 
                 const usedDisplayForm = relatedAttribute?.displayForms.find((df) => {
-                    return attributeFilters.find((x) => areObjRefsEqual(x.attributeFilter.displayForm, df));
+                    return attributeFilters.find((x) =>
+                        areObjRefsEqual(x.attributeFilter.displayForm, df.ref),
+                    );
                 });
+
+                const primaryDisplayForm = enableDuplicatedLabelValuesInAttributeFilter
+                    ? relatedAttribute?.displayForms.find((df) => {
+                          return df.isPrimary;
+                      })
+                    : undefined;
 
                 // We allowed just one attributeFilter for one attribute,
                 if (!usedDisplayForm) {
@@ -246,10 +258,20 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
                     setAutoOpenFilter(ref);
                     dispatchAndWaitFor(
                         dispatch,
-                        addAttributeFilterAction(ref, addedAttributeFilter.filterIndex),
+                        addAttributeFilterAction(
+                            ref,
+                            addedAttributeFilter.filterIndex,
+                            undefined,
+                            undefined,
+                            undefined,
+                            undefined,
+                            undefined,
+                            undefined,
+                            primaryDisplayForm?.ref,
+                        ),
                     ).finally(clearAddedFilter);
                 } else {
-                    setAutoOpenFilter(usedDisplayForm);
+                    setAutoOpenFilter(usedDisplayForm.ref);
                     clearAddedFilter();
                 }
             }
@@ -262,6 +284,7 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
             allAttributes,
             clearAddedFilter,
             dispatch,
+            enableDuplicatedLabelValuesInAttributeFilter,
         ],
     );
 
