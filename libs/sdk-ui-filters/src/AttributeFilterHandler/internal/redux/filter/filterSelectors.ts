@@ -1,6 +1,7 @@
 // (C) 2021-2024 GoodData Corporation
 import {
     IAttributeElements,
+    IAttributeFilter,
     INegativeAttributeFilter,
     IPositiveAttributeFilter,
     ObjRef,
@@ -66,6 +67,14 @@ export const selectAttributeFilterDisplayAsLabel: FilterSelector<ObjRef> = creat
 export const selectAttributeFilterLocalIdentifier: FilterSelector<string> = createSelector(
     selectState,
     (state) => state.localIdentifier,
+);
+
+/**
+ * @internal
+ */
+export const selectOriginalFilter: FilterSelector<IAttributeFilter> = createSelector(
+    selectState,
+    (state) => state.originalFilter,
 );
 
 /**

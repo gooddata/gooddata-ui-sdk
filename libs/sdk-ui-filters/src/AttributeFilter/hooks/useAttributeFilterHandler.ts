@@ -92,7 +92,7 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
             backend !== prevProps.backend ||
             workspace !== prevProps.workspace ||
             (!isEqual(filterObjRef(filter), filterObjRef(handler.getFilter())) &&
-                !isEqual(filterObjRef(filter), filterObjRef(handler.getFilterToDisplay()))) ||
+                !isEqual(filterObjRef(filter), filterObjRef(handler.getOriginalFilter()))) ||
             !isEqual(staticElements, prevProps.staticElements) ||
             !isEqual(hiddenElements, prevProps.hiddenElements)
         ) {
@@ -102,18 +102,7 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
         return () => {
             unsubscribe();
         };
-    }, [
-        backend,
-        workspace,
-        filter,
-        staticElements,
-        hiddenElements,
-        prevProps,
-        handler,
-        createNewHandler,
-        displayAsLabel,
-        prevProps.displayAsLabel,
-    ]);
+    }, [backend, workspace, filter, staticElements, hiddenElements, prevProps, handler, createNewHandler]);
 
     return handler;
 };

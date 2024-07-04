@@ -314,7 +314,9 @@ function useInitOrReload(
 
         const limitingDateFiltersChanged = !isEqual(limitingDateFilters, handler.getLimitingDateFilters());
 
-        const filterChanged = !areFiltersEqual(filter, handler.getFilter());
+        const filterChanged =
+            !areFiltersEqual(filter, handler.getFilter()) &&
+            !areFiltersEqual(filter, handler.getOriginalFilter());
 
         const limitingValidationItemsChanged = !isEqual(
             limitingValidationItems,

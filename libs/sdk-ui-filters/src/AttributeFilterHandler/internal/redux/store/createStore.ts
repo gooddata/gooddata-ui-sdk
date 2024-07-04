@@ -88,6 +88,7 @@ export function createAttributeFilterHandlerStore(
                 hiddenElements: context.hiddenElements,
                 staticElements: context.staticElements,
             },
+            originalFilter: context.attributeFilter,
         },
         reducer: sliceReducer,
         middleware: (getDefaultMiddleware) => {

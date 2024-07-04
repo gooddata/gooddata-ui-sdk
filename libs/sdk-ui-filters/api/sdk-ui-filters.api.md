@@ -608,6 +608,7 @@ export interface IAttributeFilterLoader extends IAttributeLoader, IAttributeElem
     getFilterToDisplay(): IAttributeFilter;
     getInitError(): GoodDataSdkError | undefined;
     getInitStatus(): AsyncOperationStatus;
+    getOriginalFilter(): IAttributeFilter;
     init(correlation?: Correlation): void;
     onInitCancel: CallbackRegistration<OnInitCancelCallbackPayload>;
     onInitError: CallbackRegistration<OnInitErrorCallbackPayload>;
