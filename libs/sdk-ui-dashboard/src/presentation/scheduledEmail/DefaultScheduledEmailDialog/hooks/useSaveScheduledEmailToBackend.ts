@@ -1,6 +1,7 @@
 // (C) 2019-2024 GoodData Corporation
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { ObjRef, IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
+import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { useCreateScheduledEmail } from "./useCreateScheduledEmail.js";
 import { useUpdateScheduledEmail } from "./useUpdateScheduledEmail.js";
 import { IScheduledEmailDialogProps } from "../../types.js";
@@ -12,10 +13,24 @@ export function useSaveScheduledEmailToBackend(
     { onSuccess, onError, onSubmit, onSaveSuccess, onSaveError, onSave }: IScheduledEmailDialogProps,
 ) {
     const intl = useIntl();
+    const [savingErrorMessage, setSavingErrorMessage] = useState<string | undefined>(undefined);
     const scheduledEmailCreator = useCreateScheduledEmail({
         onSuccess,
-        onError,
-        onBeforeRun: onSubmit,
+        onError: (error: GoodDataSdkError) => {
+            /**
+             * Handle 400 error separately as it contains a detailed error message
+             * to be shown in the dialog without closing it
+             */
+            if (error?.cause?.response?.status === 400) {
+                setSavingErrorMessage(error.cause.response.data?.detail);
+            } else {
+                onError?.(error);
+            }
+        },
+        onBeforeRun: (scheduledEmailToCreate: IAutomationMetadataObjectDefinition) => {
+            setSavingErrorMessage(undefined);
+            onSubmit?.(scheduledEmailToCreate);
+        },
     });
     const handleCreateScheduledEmail = useCallback(
         (scheduledEmail: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => {
@@ -26,8 +41,21 @@ export function useSaveScheduledEmailToBackend(
 
     const scheduledEmailUpdater = useUpdateScheduledEmail({
         onSuccess: onSaveSuccess,
-        onError: onSaveError,
-        onBeforeRun: onSave,
+        onError: (error: GoodDataSdkError) => {
+            /**
+             * Handle 400 error separately as it contains a detailed error message
+             * to be shown in the dialog without closing it
+             */
+            if (error?.cause?.response?.status === 400) {
+                setSavingErrorMessage(error.cause.response.data?.detail);
+            } else {
+                onSaveError?.(error);
+            }
+        },
+        onBeforeRun: (scheduledEmailToSave: IAutomationMetadataObject) => {
+            setSavingErrorMessage(undefined);
+            onSave?.(scheduledEmailToSave);
+        },
     });
 
     const handleUpdateScheduledEmail = useCallback(
@@ -53,7 +81,7 @@ export function useSaveScheduledEmailToBackend(
         scheduledEmailCreator.creationStatus === "running" ||
         scheduledEmailUpdater.savingStatus === "running";
 
-    return { handleSaveScheduledEmail, isSavingScheduledEmail };
+    return { handleSaveScheduledEmail, isSavingScheduledEmail, savingErrorMessage };
 }
 
 function sanitizeAutomation(

@@ -34,9 +34,12 @@ export const useUpdateScheduledEmail = ({
         },
     });
 
-    const save = useCallback((scheduledEmailToSave: IAutomationMetadataObject, filterContextRef?: ObjRef) => {
-        scheduledEmailCommandProcessing.run(scheduledEmailToSave, filterContextRef);
-    }, []);
+    const save = useCallback(
+        (scheduledEmailToSave: IAutomationMetadataObject, filterContextRef?: ObjRef) => {
+            scheduledEmailCommandProcessing.run(scheduledEmailToSave, filterContextRef);
+        },
+        [scheduledEmailCommandProcessing],
+    );
 
     return {
         save,

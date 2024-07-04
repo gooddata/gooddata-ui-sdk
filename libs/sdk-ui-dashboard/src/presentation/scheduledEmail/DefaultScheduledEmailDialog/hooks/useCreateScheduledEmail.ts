@@ -56,7 +56,7 @@ export const useCreateScheduledEmail = ({
 
             scheduledEmailCommandProcessing.run(scheduledEmailToCreate, filterContext);
         },
-        [],
+        [scheduledEmailCommandProcessing],
     );
 
     return {

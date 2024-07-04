@@ -41,7 +41,7 @@ $min-content-height: 110px;
 
     .gd-schedule-email-dialog-filters-message {
         margin-top: -5px;
-        margin-bottom: 20px;
+        margin-bottom: $vertical-space;
     }
 }
 
@@ -891,6 +891,12 @@ $min-content-height: 110px;
         font-weight: 400;
         line-height: 15px;
     }
+}
+
+.gd-schedule-email-dialog-error {
+    max-height: 70px;
+    overflow: auto;
+    margin-bottom: $vertical-space;
 }
 
 .gd-schedule-email-dialog-subject {

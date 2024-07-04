@@ -12,6 +12,7 @@ import {
     RecurrenceForm,
     normalizeTime,
     Alignment,
+    Message,
 } from "@gooddata/sdk-ui-kit";
 import { Textarea } from "./components/Textarea.js";
 import { Input } from "./components/Input.js";
@@ -80,10 +81,8 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
         onSubjectChange,
         onTitleChange,
     } = useEditScheduledEmail(props);
-    const { handleSaveScheduledEmail, isSavingScheduledEmail } = useSaveScheduledEmailToBackend(
-        automation,
-        props,
-    );
+    const { handleSaveScheduledEmail, isSavingScheduledEmail, savingErrorMessage } =
+        useSaveScheduledEmailToBackend(automation, props);
 
     const isDashboardExportSelected =
         automation.exportDefinitions?.some((exportDefinition) => {
@@ -229,6 +228,11 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
                         dashboardSelected={isDashboardExportSelected}
                         onAttachmentsSelectionChanged={onAttachmentsChange}
                     />
+                    {savingErrorMessage ? (
+                        <Message type="error" className="gd-schedule-email-dialog-error">
+                            {savingErrorMessage}
+                        </Message>
+                    ) : null}
                     <ContentDivider className="gd-divider-with-margin gd-divider-full-row" />
                 </div>
             </ConfirmDialogBase>
