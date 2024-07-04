@@ -12,6 +12,7 @@ import { getUserTimezone } from "../utils/timezone.js";
 import { useDashboardSelector, selectDashboardTitle, selectDashboardId } from "../../../../model/index.js";
 import { Alignment, normalizeTime } from "@gooddata/sdk-ui-kit";
 import { IScheduledEmailDialogProps } from "../../types.js";
+import { toModifiedISOString } from "../../DefaultScheduledEmailManagementDialog/utils.js";
 
 export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
     const { editSchedule, webhooks } = props;
@@ -37,7 +38,7 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
             schedule: {
                 ...(s.schedule ?? {}),
                 cron: cronExpression,
-                firstRun: startDate.toISOString(),
+                firstRun: toModifiedISOString(startDate),
             },
         }));
     };
@@ -164,7 +165,7 @@ function newAutomationMetadataObjectDefinition({
         description: undefined,
         tags: [],
         schedule: {
-            firstRun: normalizedFirstRun.toISOString(),
+            firstRun: toModifiedISOString(normalizedFirstRun),
             timezone: getUserTimezone().identifier,
             cron,
         },
@@ -175,7 +176,7 @@ function newAutomationMetadataObjectDefinition({
         exportDefinitions: [
             {
                 type: "exportDefinition",
-                title: "",
+                title: dashboardTitle,
                 requestPayload: {
                     fileName: dashboardTitle,
                     format: "PDF",

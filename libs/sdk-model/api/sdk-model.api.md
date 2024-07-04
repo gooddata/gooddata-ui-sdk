@@ -798,6 +798,7 @@ export type IAutomationRecipientType = "user" | "userGroup";
 // @alpha (undocumented)
 export interface IAutomationSchedule {
     cron: string;
+    cronDescription?: string;
     firstRun?: string;
     timezone?: string;
 }
