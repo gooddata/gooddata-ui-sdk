@@ -235,6 +235,9 @@ const EMPTY_LIMITING_VALIDATION_ITEMS: ObjRef[] = [];
 
 // omit local identifier and sort elements because they order may change depending on current displayAsLabel order
 const areFiltersEqual = (filterA: IAttributeFilter, filterB: IAttributeFilter) => {
+    if (!filterA || !filterB) {
+        return false;
+    }
     const typeEqual = isPositiveAttributeFilter(filterA) === isPositiveAttributeFilter(filterB);
     const dfsEqual = areObjRefsEqual(filterObjRef(filterA), filterObjRef(filterB));
     const elementsA = filterAttributeElements(filterA);
@@ -314,9 +317,22 @@ function useInitOrReload(
 
         const limitingDateFiltersChanged = !isEqual(limitingDateFilters, handler.getLimitingDateFilters());
 
-        const filterChanged =
-            !areFiltersEqual(filter, handler.getFilter()) &&
-            !areFiltersEqual(filter, handler.getOriginalFilter());
+        const getFilterChanged = (
+            filter: IAttributeFilter,
+            handler: IMultiSelectAttributeFilterHandler,
+            enableDuplicatedLabelValuesInAttributeFilter: boolean,
+        ) => {
+            if (enableDuplicatedLabelValuesInAttributeFilter) {
+                return (
+                    handler.getInitStatus() !== "loading" &&
+                    !areFiltersEqual(filter, handler.getFilter()) &&
+                    !areFiltersEqual(filter, handler.getFilterToDisplay())
+                );
+            }
+            return !areFiltersEqual(filter, handler.getFilter());
+        };
+
+        const filterChanged = getFilterChanged(filter, handler, enableDuplicatedLabelValuesInAttributeFilter);
 
         const limitingValidationItemsChanged = !isEqual(
             limitingValidationItems,
@@ -357,6 +373,7 @@ function useInitOrReload(
         setShouldReloadElements,
         limitingValidationItems,
         displayAsLabel,
+        enableDuplicatedLabelValuesInAttributeFilter,
     ]);
 
     const isMountedRef = useRef(false);
@@ -368,21 +385,36 @@ function useInitOrReload(
     }, []);
 
     useEffect(() => {
-        const currentDisplayAsLabel = filterObjRef(handler.getFilterToDisplay());
+        const originalFilterRef = filterObjRef(handler.getOriginalFilter());
+        const currentFilterToDisplayRef = filterObjRef(handler.getFilterToDisplay());
+        const currentFilterRef = filterObjRef(handler.getFilter());
+        const currentDisplayAsLabel = areObjRefsEqual(currentFilterRef, currentFilterToDisplayRef)
+            ? undefined
+            : currentFilterToDisplayRef;
+
+        const isNotResettingToOrigin =
+            currentDisplayAsLabel && !areObjRefsEqual(originalFilterRef, currentDisplayAsLabel);
         if (
             enableDuplicatedLabelValuesInAttributeFilter &&
-            displayAsLabel &&
-            currentDisplayAsLabel &&
-            !areObjRefsEqual(currentDisplayAsLabel, displayAsLabel)
+            handler.getInitStatus() !== "loading" && // previous effect already initializing
+            ((displayAsLabel && !currentDisplayAsLabel) ||
+                (!displayAsLabel && isNotResettingToOrigin) ||
+                (displayAsLabel &&
+                    currentDisplayAsLabel &&
+                    !areObjRefsEqual(displayAsLabel, currentDisplayAsLabel)))
         ) {
-            const unsubscribe = handler.onLoadCustomElementsSuccess(() => {
-                onApply?.(
-                    handler.getFilter(),
-                    handler.getCommittedSelection()?.isInverted,
-                    selectionMode,
-                    handler.getElementsByKey(handler.getWorkingSelection().keys),
-                    displayAsLabel,
-                );
+            const unsubscribe = handler.onLoadCustomElementsSuccess((params) => {
+                // check correlation to prevent events mismatch
+                if (params.correlation.includes(DISPLAY_FORM_CHANGED_CORRELATION)) {
+                    unsubscribe();
+                    onApply?.(
+                        handler.getFilter(),
+                        handler.getCommittedSelection()?.isInverted,
+                        selectionMode,
+                        handler.getElementsByKey(handler.getWorkingSelection().keys),
+                        displayAsLabel,
+                    );
+                }
             });
             handler.setDisplayAsLabel(displayAsLabel);
             // TODO INE: optimize and load only selection elements + first page, not attribute itself
