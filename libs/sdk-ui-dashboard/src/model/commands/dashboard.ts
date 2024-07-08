@@ -520,6 +520,111 @@ export function setDashboardAttributeFilterConfigMode(
 //
 
 /**
+ * Payload of the {@link SetAttributeFilterLimitingItems} command.
+ * @alpha
+ */
+export interface SetAttributeFilterLimitingItemsPayload {
+    /**
+     * Local identifier of the filter to change mode.
+     */
+    localIdentifier: string;
+    /**
+     * Limiting items applied on attribute filter elements.
+     */
+    limitingItems: ObjRef[];
+}
+
+/**
+ * Command for changing of attribute filter limiting items.
+ * @alpha
+ */
+export interface SetAttributeFilterLimitingItems extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_LIMITING_ITEMS";
+    readonly payload: SetAttributeFilterLimitingItemsPayload;
+}
+
+/**
+ * Creates the {@link SetAttributeFilterLimitingItems} command.
+ *
+ * @remarks
+ * Dispatching the commands will result into setting of provided limiting items to a defined attribute filter.
+ *
+ *
+ * @alpha
+ * @param localIdentifier - local identifier of the filter the limiting items are changed for
+ * @param limitingItems - limiting items set to the specified attribute filter.
+ * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
+ * @returns change limiting items command
+ */
+export function setAttributeFilterLimitingItems(
+    localIdentifier: string,
+    limitingItems: ObjRef[],
+    correlationId?: string,
+): SetAttributeFilterLimitingItems {
+    return {
+        type: "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_LIMITING_ITEMS",
+        correlationId,
+        payload: {
+            localIdentifier,
+            limitingItems,
+        },
+    };
+}
+
+/**
+ * Payload of the {@link SetDashboardAttributeFilterConfigDisplayAsLabel} command.
+ * @alpha
+ */
+export interface SetDashboardAttributeFilterConfigDisplayAsLabelPayload {
+    /**
+     * Local identifier of the filter to change display as label (= display form).
+     */
+    localIdentifier: string;
+    /**
+     *  Display as label of the attribute filter. Used to present filter in UI
+     */
+    displayAsLabel: ObjRef;
+}
+
+/**
+ * Command for changing attribute filter mode.
+ * @alpha
+ */
+export interface SetDashboardAttributeFilterConfigDisplayAsLabel extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_DISPLAY_AS_LABEL";
+    readonly payload: SetDashboardAttributeFilterConfigDisplayAsLabelPayload;
+}
+
+/**
+ * Creates the {@link SetDashboardAttributeFilterConfigDisplayAsLabel} command.
+ *
+ * @remarks
+ * Dispatching the command will result into setting provided label as new label (= display form) used for the displaying attribute filter elements.
+ *
+ *
+ * @alpha
+ * @param localIdentifier - local identifier of the filter the label is changed for
+ * @param displayAsLabel - newly used display as label
+ * @returns change filter mode command
+ */
+export function setDashboardAttributeFilterConfigDisplayAsLabel(
+    localIdentifier: string,
+    displayAsLabel: ObjRef,
+): SetDashboardAttributeFilterConfigDisplayAsLabel {
+    return {
+        type: "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_DISPLAY_AS_LABEL",
+        payload: {
+            localIdentifier,
+            displayAsLabel,
+        },
+    };
+}
+
+//
+//
+//
+
+/**
  * Payload of the {@link SetDashboardDateFilterConfigMode} command.
  * @alpha
  */
@@ -622,62 +727,6 @@ export function setDateFilterConfigTitle(
         payload: {
             dataSet,
             title,
-        },
-    };
-}
-
-//
-//
-//
-
-/**
- * Payload of the {@link SetAttributeFilterLimitingItems} command.
- * @alpha
- */
-export interface SetAttributeFilterLimitingItemsPayload {
-    /**
-     * Local identifier of the filter to change mode.
-     */
-    localIdentifier: string;
-    /**
-     * Limiting items applied on attribute filter elements.
-     */
-    limitingItems: ObjRef[];
-}
-
-/**
- * Command for changing of attribute filter limiting items.
- * @alpha
- */
-export interface SetAttributeFilterLimitingItems extends IDashboardCommand {
-    readonly type: "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_LIMITING_ITEMS";
-    readonly payload: SetAttributeFilterLimitingItemsPayload;
-}
-
-/**
- * Creates the {@link SetAttributeFilterLimitingItems} command.
- *
- * @remarks
- * Dispatching the commands will result into setting of provided limiting items to a defined attribute filter.
- *
- *
- * @alpha
- * @param localIdentifier - local identifier of the filter the display form is changed for
- * @param limitingItems - limiting items set to the specified attribute filter.
- * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
- * @returns change limiting items command
- */
-export function setAttributeFilterLimitingItems(
-    localIdentifier: string,
-    limitingItems: ObjRef[],
-    correlationId?: string,
-): SetAttributeFilterLimitingItems {
-    return {
-        type: "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_LIMITING_ITEMS",
-        correlationId,
-        payload: {
-            localIdentifier,
-            limitingItems,
         },
     };
 }

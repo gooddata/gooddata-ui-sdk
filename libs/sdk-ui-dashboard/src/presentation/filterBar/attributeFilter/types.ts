@@ -18,8 +18,9 @@ export interface IDashboardAttributeFilterProps {
      * new filter value.
      *
      * @param filter - new attribute filter value.
+     * @param displayAsLabel - label used for presentation of attribute filter elements in UI
      */
-    onFilterChanged: (filter: IDashboardAttributeFilter) => void;
+    onFilterChanged: (filter: IDashboardAttributeFilter, displayAsLabel?: ObjRef) => void;
 
     /**
      * Callback to be called, when user closes filter dropdown
@@ -42,6 +43,11 @@ export interface IDashboardAttributeFilterProps {
      * @alpha
      */
     readonly?: boolean;
+
+    /**
+     * Attribute label to use for UI representation of filter elements
+     */
+    displayAsLabel?: ObjRef;
 }
 
 /**

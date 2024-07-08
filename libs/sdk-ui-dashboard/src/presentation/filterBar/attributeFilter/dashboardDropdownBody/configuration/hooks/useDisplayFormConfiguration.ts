@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import {
     areObjRefsEqual,
     IAttributeMetadataObject,
@@ -12,13 +12,19 @@ import {
     IDashboardAttributeFilterDisplayForms,
     setAttributeFilterDisplayForm,
     useDashboardCommandProcessing,
+    selectEnableDuplicatedLabelValuesInAttributeFilter,
+    setDashboardAttributeFilterConfigDisplayAsLabel,
 } from "../../../../../../model/index.js";
 
 export function useDisplayFormConfiguration(
     currentFilter: IDashboardAttributeFilter,
     attributes: IAttributeMetadataObject[],
+    displayAsLabel?: ObjRef,
 ) {
     const catalogAttributes = useDashboardSelector(selectCatalogAttributes);
+    const enableDuplicatedLabelValuesInAttributeFilter = useDashboardSelector(
+        selectEnableDuplicatedLabelValuesInAttributeFilter,
+    );
 
     const { run: changeDisplayForm, status: displayFormChangeStatus } = useDashboardCommandProcessing({
         commandCreator: setAttributeFilterDisplayForm,
@@ -26,11 +32,17 @@ export function useDisplayFormConfiguration(
         errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
     });
 
-    const originalDisplayForm = currentFilter.attributeFilter.displayForm;
+    const { run: changeDisplayAsLabel, status: displayAsLabelChangeStatus } = useDashboardCommandProcessing({
+        commandCreator: setDashboardAttributeFilterConfigDisplayAsLabel,
+        successEvent: "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.DISPLAY_AS_LABEL_CHANGED",
+        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
+    });
+
+    const originalDisplayForm = displayAsLabel ?? currentFilter.attributeFilter.displayForm;
 
     const [filterDisplayForms, setFilterDisplayForms] = useState<IDashboardAttributeFilterDisplayForms>(
         () => {
-            const currentDisplayForm = currentFilter.attributeFilter.displayForm;
+            const currentDisplayForm = displayAsLabel ?? currentFilter.attributeFilter.displayForm;
 
             const availableDisplayForms = catalogAttributes.find((attribute) =>
                 attribute.displayForms.some((df) => areObjRefsEqual(df.ref, currentDisplayForm)),
@@ -64,12 +76,26 @@ export function useDisplayFormConfiguration(
 
     const onDisplayFormChange = useCallback(() => {
         if (!areObjRefsEqual(originalDisplayForm, filterDisplayForms.selectedDisplayForm)) {
-            changeDisplayForm(
-                currentFilter.attributeFilter.localIdentifier!,
-                filterDisplayForms.selectedDisplayForm,
-            );
+            if (enableDuplicatedLabelValuesInAttributeFilter) {
+                changeDisplayAsLabel(
+                    currentFilter.attributeFilter.localIdentifier!,
+                    filterDisplayForms.selectedDisplayForm,
+                );
+            } else {
+                changeDisplayForm(
+                    currentFilter.attributeFilter.localIdentifier!,
+                    filterDisplayForms.selectedDisplayForm,
+                );
+            }
         }
-    }, [filterDisplayForms, originalDisplayForm, currentFilter, changeDisplayForm]);
+    }, [
+        filterDisplayForms,
+        originalDisplayForm,
+        currentFilter,
+        changeDisplayForm,
+        enableDuplicatedLabelValuesInAttributeFilter,
+        changeDisplayAsLabel,
+    ]);
 
     const onConfigurationClose = useCallback(() => {
         setFilterDisplayForms((old) => ({
@@ -84,6 +110,8 @@ export function useDisplayFormConfiguration(
         displayFormChanged,
         onDisplayFormChange,
         onConfigurationClose,
-        displayFormChangeStatus,
+        displayFormChangeStatus: enableDuplicatedLabelValuesInAttributeFilter
+            ? displayAsLabelChangeStatus
+            : displayFormChangeStatus,
     };
 }

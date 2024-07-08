@@ -27,6 +27,12 @@ export interface IAttributeFilterLoader extends IAttributeLoader, IAttributeElem
     getFilterToDisplay(): IAttributeFilter;
 
     /**
+     * Get original filter used for initialization
+     * During initialization process of migration to primary label could happen
+     */
+    getOriginalFilter(): IAttributeFilter;
+
+    /**
      * Loads all the required data to initialize the attribute filter handler:
      * attribute, selected attribute elements, initial elements page and optionally elements total count (for filters with parent).
      *

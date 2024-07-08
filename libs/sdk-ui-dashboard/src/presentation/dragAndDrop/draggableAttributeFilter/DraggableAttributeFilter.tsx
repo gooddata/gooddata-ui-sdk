@@ -1,6 +1,6 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
-import { IDashboardAttributeFilter } from "@gooddata/sdk-model";
+import { IDashboardAttributeFilter, ObjRef } from "@gooddata/sdk-model";
 import classNames from "classnames";
 import {
     useDashboardSelector,
@@ -18,6 +18,7 @@ type DraggableAttributeFilterProps = {
     filterIndex: number;
     autoOpen: boolean;
     readonly: boolean;
+    displayAsLabel?: ObjRef;
     FilterComponent: CustomDashboardAttributeFilterComponent;
     onAttributeFilterChanged: (filter: IDashboardAttributeFilter) => void;
     onAttributeFilterAdded: (index: number) => void;
@@ -30,6 +31,7 @@ export function DraggableAttributeFilter({
     filterIndex,
     autoOpen,
     readonly,
+    displayAsLabel,
     onAttributeFilterChanged,
     onAttributeFilterAdded,
     onAttributeFilterClose,
@@ -85,6 +87,7 @@ export function DraggableAttributeFilter({
                     onFilterChanged={onAttributeFilterChanged}
                     isDraggable={isInEditMode}
                     readonly={readonly}
+                    displayAsLabel={displayAsLabel}
                     autoOpen={autoOpen}
                     onClose={onClose}
                 />

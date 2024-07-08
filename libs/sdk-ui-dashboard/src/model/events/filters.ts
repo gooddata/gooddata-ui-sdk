@@ -1,9 +1,11 @@
 // (C) 2021-2024 GoodData Corporation
 import {
     IDashboardAttributeFilter,
+    IDashboardAttributeFilterConfig,
     IDashboardDateFilter,
     IDashboardDateFilterConfig,
     IFilterContextDefinition,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import { IDashboardEvent } from "./base.js";
 import { DashboardContext } from "../types/commonTypes.js";
@@ -511,6 +513,10 @@ export const isDashboardAttributeFilterSelectionModeChanged =
         "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER.SELECTION_MODE_CHANGED",
     );
 
+//
+//
+//
+
 /**
  * Payload of the {@link isDashboardAttributeFilterConfigModeChanged} event.
  *
@@ -557,6 +563,64 @@ export function dashboardAttributeConfigModeChanged(
 export const isDashboardAttributeFilterConfigModeChanged =
     eventGuard<DashboardAttributeFilterConfigModeChanged>(
         "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.MODE_CHANGED",
+    );
+
+//
+//
+//
+
+/**
+ * Payload of the {@link isDashboardAttributeFilterConfigDisplayAsLabelChanged} event.
+ *
+ * @alpha
+ */
+export interface DashboardAttributeFilterConfigDisplayAsLabelChangedPayload {
+    /**
+     * The definition of the dashboard attribute filter.
+     */
+    readonly filter: IDashboardAttributeFilter;
+    /**
+     * New label used for displaying filter attribute values
+     */
+    readonly displayAsLabel: ObjRef;
+}
+
+/**
+ * This event is emitted when the attribute filter mode is change.
+ *
+ * @alpha
+ */
+export interface DashboardAttributeFilterConfigDisplayAsLabelChanged extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.DISPLAY_AS_LABEL_CHANGED";
+    readonly payload: DashboardAttributeFilterConfigDisplayAsLabelChangedPayload;
+}
+
+export function dashboardAttributeConfigDisplayAsLabelChanged(
+    ctx: DashboardContext,
+    filter: IDashboardAttributeFilter,
+    displayAsLabel: ObjRef,
+    correlationId?: string,
+): DashboardAttributeFilterConfigDisplayAsLabelChanged {
+    return {
+        type: "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.DISPLAY_AS_LABEL_CHANGED",
+        ctx,
+        correlationId,
+        payload: {
+            filter,
+            displayAsLabel,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardAttributeFilterConfigDisplayAsLabelChanged}.
+ *
+ * @param obj - object to test
+ * @alpha
+ */
+export const isDashboardAttributeFilterConfigDisplayAsLabelChanged =
+    eventGuard<DashboardAttributeFilterConfigDisplayAsLabelChanged>(
+        "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.DISPLAY_AS_LABEL_CHANGED",
     );
 
 //
@@ -631,6 +695,10 @@ export interface DashboardFilterContextChangedPayload {
      * The new value of the filterContext.
      */
     readonly filterContext: IFilterContextDefinition;
+    /**
+     * The new value of the attribute filter configs.
+     */
+    readonly attributeFilterConfigs: IDashboardAttributeFilterConfig[];
 }
 
 /**
@@ -655,6 +723,7 @@ export interface DashboardFilterContextChanged extends IDashboardEvent {
 export function filterContextChanged(
     ctx: DashboardContext,
     filterContext: IFilterContextDefinition,
+    attributeFilterConfigs: IDashboardAttributeFilterConfig[],
     correlationId?: string,
 ): DashboardFilterContextChanged {
     return {
@@ -663,6 +732,7 @@ export function filterContextChanged(
         correlationId,
         payload: {
             filterContext,
+            attributeFilterConfigs,
         },
     };
 }

@@ -452,6 +452,10 @@ export class AttributeFilterLoader implements IAttributeFilterLoader {
         return this.bridge.getFilterToDisplay();
     };
 
+    getOriginalFilter = (): IAttributeFilter => {
+        return this.bridge.getOriginalFilter();
+    };
+
     onUpdate: CallbackRegistration<void> = (cb) => {
         return this.bridge.onUpdate(cb);
     };

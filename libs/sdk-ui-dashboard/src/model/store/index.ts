@@ -135,6 +135,7 @@ export {
     selectOtherContextAttributeFilters,
     selectAttributeFilterDisplayFormsMap,
     selectAttributeFilterDisplayForms,
+    selectFilterContextAttributeFilterByLocalId,
     selectFilterContextAttributeFilterByDisplayForm,
     selectOriginalFilterContextDefinition,
     selectOriginalFilterContextFilters,
@@ -202,6 +203,7 @@ export {
     selectAttributeFilterConfigsOverrides,
     selectAttributeFilterConfigsModeMap,
     selectEffectiveAttributeFiltersModeMap,
+    selectAttributeFilterConfigsDisplayAsLabelMap,
 } from "./attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 export { DateFilterConfigsState } from "./dateFilterConfigs/dateFilterConfigsState.js";
 export {

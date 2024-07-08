@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import { invariant } from "ts-invariant";
@@ -19,6 +19,7 @@ import { IAttributeMetadataObject } from "@gooddata/sdk-model";
 import { query } from "../../../store/_infra/queryCall.js";
 import { queryAttributeByDisplayForm } from "../../../queries/index.js";
 import { newDisplayFormMap } from "../../../../_staging/metadata/objRefMap.js";
+import { selectEnableDuplicatedLabelValuesInAttributeFilter } from "../../../store/config/configSelectors.js";
 
 export function* changeAttributeDisplayFormHandler(
     ctx: DashboardContext,
@@ -67,6 +68,9 @@ export function* changeAttributeDisplayFormHandler(
 
         throw invalidArgumentsProvided(ctx, cmd, message);
     }
+    const enableDuplicatedLabelValuesInAttributeFilter: ReturnType<
+        typeof selectEnableDuplicatedLabelValuesInAttributeFilter
+    > = yield select(selectEnableDuplicatedLabelValuesInAttributeFilter);
 
     yield put(
         batchActions([
@@ -76,6 +80,7 @@ export function* changeAttributeDisplayFormHandler(
                 filterLocalId,
                 displayForm,
                 supportsElementUris,
+                enableDuplicatedLabelValuesInAttributeFilter,
             }),
         ]),
     );
