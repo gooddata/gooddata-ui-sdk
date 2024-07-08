@@ -195,7 +195,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableCreateUser: true,
     enableDirectQuery: false,
     enableMariaDbDataSource: false,
-    enableRepeaterChart: false,
+    enableRepeaterChart: true,
     enableKDAttributeFilterDatesValidation: true,
     enableMultipleCSVs: false,
     enableMotherDuckDataSource: false,
