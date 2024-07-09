@@ -716,9 +716,44 @@
         "comment": "Translate only uppercase in '{n, plural, one {# RECIPIENT} other {# RECIPIENTS}}'.",
         "limit": 0
     },
-    "dialogs.schedule.management.recipients.onlyYou": {
-        "value": "Only you",
-        "comment": "There is no other recipient than you.",
+    "dialogs.schedule.management.attachments.filters.title": {
+        "value": "Dashboard filters",
+        "comment": "Title of dropdown for selected type of dashboard filters for attachment",
+        "limit": 0
+    },
+    "dialogs.schedule.management.attachments.filters.using": {
+        "value": "using",
+        "comment": "Describes which filters will be used in the attachment",
+        "limit": 0
+    },
+    "dialogs.schedule.management.attachments.filters.default": {
+        "value": "default dashboard filters",
+        "comment": "Attachment filters type title",
+        "limit": 0
+    },
+    "dialogs.schedule.management.attachments.filters.edited": {
+        "value": "edited dashboard filters",
+        "comment": "Attachment filters type title",
+        "limit": 0
+    },
+    "dialogs.schedule.management.attachments.filters.item.default": {
+        "value": "Use default filters",
+        "comment": "Attachment filters type item",
+        "limit": 0
+    },
+    "dialogs.schedule.management.attachments.filters.item.edited": {
+        "value": "Use edited filters",
+        "comment": "Attachment filters type item",
+        "limit": 0
+    },
+    "dialogs.schedule.management.attachments.filters.item.tooltip": {
+        "value": "Default state of dashboard filters will be used in the scheduled export, even if the default values change in the future.",
+        "comment": "Attachment filters type tooltip",
+        "limit": 0
+    },
+    "dialogs.schedule.management.attachments.message": {
+        "value": "<strong>Note</strong>. Cross-filtering will not be applied in the scheduled export.",
+        "comment": "Message about used filters. Do not translate HTML tags.",
         "limit": 0
     },
     "dialogs.schedule.management.attachments.dashboard": {
@@ -790,6 +825,11 @@
     },
     "cancel": {
         "value": "Cancel",
+        "comment": "",
+        "limit": 0
+    },
+    "save": {
+        "value": "Save",
         "comment": "",
         "limit": 0
     },

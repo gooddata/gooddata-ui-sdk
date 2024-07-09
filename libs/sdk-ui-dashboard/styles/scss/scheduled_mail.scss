@@ -145,10 +145,14 @@ $min-content-height: 110px;
         margin: 10px 20px 0 0;
     }
 
-    .gd-dashboard-attachment-list {
+    .gd-attachment-list {
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
         flex: 1;
         overflow: hidden;
         margin: -2px 0;
+        flex-wrap: wrap;
 
         @media #{kit-variables.$small-only} {
             max-width: none;
@@ -159,6 +163,23 @@ $min-content-height: 110px;
             flex-wrap: wrap;
             overflow: hidden;
             margin: 0 -5px;
+        }
+    }
+
+    .gd-attachment-list-message {
+        display: flex;
+        flex-basis: 100%;
+        margin-top: 10px;
+    }
+
+    .gd-attachment-filters-dropdown-button {
+        display: flex;
+        align-items: baseline;
+        height: 28px;
+
+        .gd-button-link-dimmed {
+            border: none;
+            box-shadow: none;
         }
     }
 
@@ -205,6 +226,84 @@ $min-content-height: 110px;
                 margin-left: 7px;
             }
         }
+    }
+}
+
+.gd-attachment-filters-dropdown {
+    width: 245px;
+    max-height: 350px;
+
+    .gd-list-title {
+        line-height: normal;
+    }
+
+    .gd-close-button {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        outline: none;
+
+        .gd-button-link.gd-button-icon-only::before {
+            font-size: 14px;
+        }
+    }
+
+    .gd-attachment-filters-dropdown-content {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+
+        > :first-child {
+            margin-bottom: 5px;
+        }
+
+        > :last-child {
+            margin-top: 5px;
+        }
+
+        .gd-icon-circle-question {
+            position: relative;
+            top: 2px;
+            padding: 5px;
+            color: kit-variables.$gd-color-state-blank;
+        }
+
+        .gd-attachment-filters-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            border-left: 2px dotted kit-variables.$gd-border-color;
+            padding: 0 10px;
+            margin-left: 6px;
+            max-height: 190px;
+            overflow-y: auto;
+            margin-right: -10px;
+        }
+
+        .gd-attachment-filters-list-item-title {
+            color: kit-variables.$gd-color-link;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+        }
+
+        .gd-attachment-filters-list-item-subtitle {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            color: kit-variables.$gd-color-text;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: bold;
+            line-height: normal;
+        }
+    }
+
+    .gd-attachment-filters-dropdown-footer {
+        display: flex;
+        justify-content: end;
+        padding: 10px;
     }
 }
 
@@ -844,8 +943,14 @@ $min-content-height: 110px;
     margin-bottom: $vertical-space;
 }
 
+.gd-divider-without-margin {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
 .gd-divider-full-row {
-    margin: 0 (-$dialog-padding) $vertical-space;
+    margin-left: -$dialog-padding;
+    margin-right: -$dialog-padding;
 }
 
 .gd-schedule-email-dialog-destination-empty {

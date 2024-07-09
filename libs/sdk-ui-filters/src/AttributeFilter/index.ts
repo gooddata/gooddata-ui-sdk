@@ -83,3 +83,5 @@ export {
     IUseAttributeFilterSearchProps,
     useAttributeFilterSearch,
 } from "./hooks/useAttributeFilterSearch.js";
+
+export { getAttributeFilterSubtitle } from "./utils.js";

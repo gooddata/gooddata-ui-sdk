@@ -1018,11 +1018,11 @@ export interface CreateScheduledEmail extends IDashboardCommand {
 }
 
 // @beta
-export function createScheduledEmail(scheduledEmail: IAutomationMetadataObjectDefinition, filterContext?: IFilterContextDefinition, correlationId?: string): CreateScheduledEmail;
+export function createScheduledEmail(scheduledEmail: IAutomationMetadataObjectDefinition, filters?: FilterContextItem[], correlationId?: string): CreateScheduledEmail;
 
 // @beta
 export interface CreateScheduledEmailPayload {
-    readonly filterContext?: IFilterContextDefinition;
+    readonly filters?: FilterContextItem[];
     readonly scheduledEmail: IAutomationMetadataObjectDefinition;
 }
 
@@ -6412,11 +6412,11 @@ export interface SaveScheduledEmail extends IDashboardCommand {
 }
 
 // @beta
-export function saveScheduledEmail(scheduledEmail: IAutomationMetadataObject, filterContextRef?: ObjRef, correlationId?: string): SaveScheduledEmail;
+export function saveScheduledEmail(scheduledEmail: IAutomationMetadataObject, filters?: FilterContextItem[], correlationId?: string): SaveScheduledEmail;
 
 // @beta
 export interface SaveScheduledEmailPayload {
-    readonly filterContextRef?: ObjRef;
+    readonly filters?: FilterContextItem[];
     readonly scheduledEmail: IAutomationMetadataObject;
 }
 

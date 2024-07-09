@@ -1536,7 +1536,7 @@ export interface IExportDefinitionDashboardContent {
     // (undocumented)
     dashboard: string;
     // (undocumented)
-    filters?: IFilter[];
+    filters?: FilterContextItem[];
 }
 
 // @alpha
@@ -2834,6 +2834,9 @@ export function isFilterContext(obj: unknown): obj is IFilterContext;
 
 // @alpha
 export function isFilterContextDefinition(obj: unknown): obj is IFilterContextDefinition;
+
+// @alpha
+export function isFilterContextItem(obj: unknown): obj is FilterContextItem;
 
 // @alpha
 export const isGranularAccess: (obj: unknown) => obj is IGranularUserAccess | IGranularUserGroupAccess;

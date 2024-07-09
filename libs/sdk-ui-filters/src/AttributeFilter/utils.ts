@@ -117,3 +117,31 @@ export function isValidSingleSelectionFilter(
     }
     return true;
 }
+
+/**
+ * @internal
+ */
+export function getAttributeFilterSubtitle(
+    isCommittedSelectionInverted: boolean,
+    committedSelectionElements: IAttributeElement[],
+    intl: IntlShape,
+) {
+    const isCommittedSelectionEmpty = committedSelectionElements.length === 0;
+
+    const isNone = isCommittedSelectionEmpty && !isCommittedSelectionInverted;
+    const isNegativeSelection = !isCommittedSelectionEmpty && isCommittedSelectionInverted;
+    const isPositiveSelection = !isCommittedSelectionEmpty && !isCommittedSelectionInverted;
+
+    let subtitle = intl.formatMessage({ id: "gs.list.all" });
+    if (isNegativeSelection) {
+        subtitle = `${intl.formatMessage({ id: "gs.list.all" })} ${intl.formatMessage({
+            id: "gs.list.except",
+        })} ${getElementTitles(committedSelectionElements, intl)}`;
+    } else if (isPositiveSelection) {
+        subtitle = getElementTitles(committedSelectionElements, intl);
+    } else if (isNone) {
+        subtitle = intl.formatMessage({ id: "gs.filterLabel.none" });
+    }
+
+    return subtitle;
+}

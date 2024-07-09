@@ -29,9 +29,8 @@ import { messages } from "../../locales.js";
 export const useDashboardScheduledEmails = ({ onReload }: { onReload?: () => void } = {}) => {
     const { addSuccess, addError } = useToastMessage();
     const isScheduleEmailingDialogOpen = useDashboardSelector(selectIsScheduleEmailDialogOpen);
-    const isScheduleEmailingManagementDialogOpen = useDashboardSelector(
-        selectIsScheduleEmailManagementDialogOpen,
-    );
+    const isScheduleEmailingManagementDialogOpen =
+        useDashboardSelector(selectIsScheduleEmailManagementDialogOpen) || false;
     const dispatch = useDashboardDispatch();
     const dashboardRef = useDashboardSelector(selectDashboardRef);
     const isReadOnly = useDashboardSelector(selectIsReadOnly);

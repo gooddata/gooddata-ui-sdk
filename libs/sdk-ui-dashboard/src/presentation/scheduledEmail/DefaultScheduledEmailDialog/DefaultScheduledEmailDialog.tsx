@@ -249,6 +249,7 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
                             dashboardTitle={dashboardTitle}
                             dashboardSelected={isDashboardExportSelected}
                             onAttachmentsSelectionChanged={onAttachmentsChange}
+                            editSchedule={editSchedule}
                         />
                         {savingErrorMessage ? (
                             <Message type="error" className="gd-schedule-email-dialog-error">
