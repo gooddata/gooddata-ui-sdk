@@ -402,6 +402,11 @@ export interface ISettings {
      */
     enableScheduling?: boolean;
 
+    /**
+     * Enables rollup (native) totals.
+     */
+    enableRollupTotals?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

@@ -2776,6 +2776,7 @@ export interface ISettings {
     enableRenamingMeasureToMetric?: boolean;
     enableReversedStacking?: boolean;
     enableRichTextDescriptions?: boolean;
+    enableRollupTotals?: boolean;
     enableScatterPlotClustering?: boolean;
     enableScatterPlotSegmentation?: boolean;
     enableScheduling?: boolean;
