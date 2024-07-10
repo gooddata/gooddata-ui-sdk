@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { MessageDescriptor, defineMessages } from "react-intl";
 
 //NOTE: Follow up ticket for move all messages: https://gooddata.atlassian.net/browse/FET-1050
@@ -9,6 +9,7 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     max: { id: "visualizations.totals.dropdown.title.max" },
     nat: { id: "visualizations.totals.dropdown.title.nat" },
     med: { id: "visualizations.totals.dropdown.title.med" },
+    native: { id: "visualizations.totals.dropdown.title.nat" },
     "disabled.mvf": { id: "visualizations.totals.dropdown.tooltip.nat.disabled.mvf" },
     "disabled.ranking": { id: "visualizations.totals.dropdown.tooltip.nat.disabled.ranking" },
 });

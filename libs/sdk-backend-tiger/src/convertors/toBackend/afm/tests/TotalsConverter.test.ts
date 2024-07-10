@@ -192,14 +192,10 @@ describe("convertTotals", () => {
         ["two subtotals and marginal total", Test12],
         ["row total and column subtotal", Test13],
         ["column total and row subtotal", Test14],
+        ["native total", Test15],
         ["subtotals with non-sorted totals", Test16],
     ];
-    const ErrorScenarios: Array<[string, IExecutionDefinition]> = [["native total", Test15]];
-
     it.each(Scenarios)("should correctly convert %s", (_desc, def) => {
         expect(convertTotals(def)).toMatchSnapshot();
-    });
-    it.each(ErrorScenarios)("should fail on converting %s", (_desc, def) => {
-        expect(() => convertTotals(def)).toThrowErrorMatchingSnapshot();
     });
 });

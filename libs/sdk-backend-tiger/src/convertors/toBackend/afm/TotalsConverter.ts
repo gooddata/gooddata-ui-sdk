@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import isEqual from "lodash/isEqual.js";
 import {
     bucketsFind,
@@ -18,7 +18,7 @@ import flatMap from "lodash/flatMap.js";
 import { Total, TotalDimension, TotalFunctionEnum } from "@gooddata/api-client-tiger";
 import { dimensionLocalIdentifier } from "./DimensionsConverter.js";
 
-const TOTAL_ORDER: TotalFunctionEnum[] = ["SUM", "MAX", "MIN", "AVG", "MED"];
+const TOTAL_ORDER: TotalFunctionEnum[] = ["SUM", "MAX", "MIN", "AVG", "MED", "NATIVE"];
 
 const ATTRIBUTE = "attribute";
 const COLUMNS = "columns";
@@ -38,6 +38,7 @@ function enrichTotalWithMeasureIndex(total: Total, measures: IMeasure[]) {
         total,
     };
 }
+
 /**
  * Extracts total definitions from execution definition dimensions and converts them into total specifications for
  * Tiger AFM. Execution definition defines totals by a measure, aggregation function, and the attribute for whose
@@ -383,8 +384,10 @@ function convertTotalType(type: TotalType): TotalFunctionEnum {
     if (type === "med") {
         return TotalFunctionEnum.MED;
     }
-    // type === "nat"
-    throw new Error("Tiger backend does not support native totals.");
+    if (type === "nat") {
+        return TotalFunctionEnum.NATIVE;
+    }
+    throw new Error(`Unknown total type "${type}".`);
 }
 
 function getAttributeBucketIdentifiers(attribute: IAttribute[]) {
