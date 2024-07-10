@@ -131,9 +131,10 @@ export const useDashboardScheduledEmails = ({ onReload }: { onReload?: () => voi
     }, [closeScheduleEmailingDialog, openScheduleEmailingManagementDialog, setScheduledEmailToEdit]);
 
     const onScheduleEmailingManagementDeleteSuccess = useCallback(() => {
+        closeScheduleEmailingDialog();
         addSuccess(messages.scheduleEmailDeleteSuccess);
         onReload?.();
-    }, [addSuccess, onReload]);
+    }, [addSuccess, closeScheduleEmailingDialog, onReload]);
 
     const onScheduleEmailingManagementAdd = useCallback(() => {
         closeScheduleEmailingManagementDialog();
@@ -159,9 +160,10 @@ export const useDashboardScheduledEmails = ({ onReload }: { onReload?: () => voi
     }, [closeScheduleEmailingManagementDialog, addError]);
 
     const onScheduleEmailingManagementDeleteError = useCallback(() => {
+        closeScheduleEmailingDialog();
         closeScheduleEmailingManagementDialog();
         addError(messages.scheduleManagementDeleteError);
-    }, [closeScheduleEmailingManagementDialog, addError]);
+    }, [closeScheduleEmailingDialog, closeScheduleEmailingManagementDialog, addError]);
 
     return {
         isScheduledEmailingVisible,

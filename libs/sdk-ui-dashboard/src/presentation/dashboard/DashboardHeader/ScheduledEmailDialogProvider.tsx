@@ -60,6 +60,8 @@ export const ScheduledEmailDialogProvider = () => {
                     editSchedule={scheduledEmailToEdit}
                     onSaveError={onScheduleEmailingSaveError}
                     onSaveSuccess={onScheduleEmailingSaveSuccess}
+                    onDeleteSuccess={onScheduleEmailingManagementDeleteSuccess}
+                    onDeleteError={onScheduleEmailingManagementDeleteError}
                     users={users}
                     webhooks={webhooks}
                     automations={automations}

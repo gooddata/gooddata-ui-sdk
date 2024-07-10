@@ -4719,6 +4719,8 @@ export interface IScheduledEmailDialogProps {
     editSchedule?: IAutomationMetadataObject;
     isVisible?: boolean;
     onCancel?: () => void;
+    onDeleteError?: (error: GoodDataSdkError) => void;
+    onDeleteSuccess?: () => void;
     onError?: (error: GoodDataSdkError) => void;
     onSave?: (scheduledEmailDefinition: IAutomationMetadataObject) => void;
     onSaveError?: (error: GoodDataSdkError) => void;
