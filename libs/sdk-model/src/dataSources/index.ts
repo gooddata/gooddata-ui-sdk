@@ -25,7 +25,8 @@ export type DataSourceType =
     | "ORACLE"
     | "PINOT"
     | "SINGLESTORE"
-    | "MOTHERDUCK";
+    | "MOTHERDUCK"
+    | "FLIGHTRPC";
 
 /**
  * @alpha

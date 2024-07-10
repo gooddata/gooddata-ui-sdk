@@ -973,7 +973,8 @@
                             "ORACLE",
                             "PINOT",
                             "SINGLESTORE",
-                            "MOTHERDUCK"
+                            "MOTHERDUCK",
+                            "FLIGHTRPC"
                         ]
                     },
                     "url": {
