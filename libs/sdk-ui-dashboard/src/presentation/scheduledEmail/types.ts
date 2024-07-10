@@ -59,6 +59,16 @@ export interface IScheduledEmailDialogProps {
     onSaveSuccess?: () => void;
 
     /**
+     * Callback to be called, when scheduled email is deleted.
+     */
+    onDeleteSuccess?: () => void;
+
+    /**
+     * Callback to be called, when schedule fails to delete.
+     */
+    onDeleteError?: (error: GoodDataSdkError) => void;
+
+    /**
      * Schedule to be edited in the dialog.
      */
     editSchedule?: IAutomationMetadataObject;

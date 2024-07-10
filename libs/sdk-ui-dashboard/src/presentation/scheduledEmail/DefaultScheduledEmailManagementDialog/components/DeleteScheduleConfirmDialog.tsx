@@ -2,12 +2,12 @@
 
 import React, { ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 import { GoodDataSdkError, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { ConfirmDialog } from "@gooddata/sdk-ui-kit";
 
 interface IDeleteScheduleConfirmDialogProps {
-    scheduledEmail: IAutomationMetadataObject;
+    scheduledEmail: IAutomationMetadataObject | IAutomationMetadataObjectDefinition;
     onCancel: () => void;
     onSuccess?: () => void;
     onError?: (error: GoodDataSdkError) => void;
@@ -25,7 +25,7 @@ export const DeleteScheduleConfirmDialog: React.FC<IDeleteScheduleConfirmDialogP
             await effectiveBackend
                 .workspace(effectiveWorkspace)
                 .automations()
-                .deleteAutomation(scheduledEmail.id);
+                .deleteAutomation(scheduledEmail.id!);
             onSuccess?.();
         } catch (err) {
             onError?.(err as GoodDataSdkError);
