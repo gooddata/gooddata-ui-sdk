@@ -20,7 +20,11 @@ export function convertVisualizationObject(
             buckets: cloneWithSanitizedIds(visualizationObject.buckets) ?? [],
             filters: cloneWithSanitizedIds(visualizationObject.filters) ?? [],
             ...(visualizationObject.attributeFilterConfigs
-                ? { attributeFilterConfigs: visualizationObject.attributeFilterConfigs }
+                ? {
+                      attributeFilterConfigs: cloneWithSanitizedIds(
+                          visualizationObject.attributeFilterConfigs,
+                      ),
+                  }
                 : {}),
             sorts: cloneWithSanitizedIds(visualizationObject.sorts) ?? [],
             tags,
