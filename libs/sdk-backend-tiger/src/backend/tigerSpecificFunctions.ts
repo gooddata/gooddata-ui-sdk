@@ -174,16 +174,16 @@ export interface IDataSourceUpsertRequest {
 export interface IDataSourcePatchRequest {
     id: string;
     name?: string;
-    password?: string;
+    password?: string | null;
     schema?: string;
-    token?: string;
+    token?: string | null;
     type?: IDataSourceType;
     url?: string;
     username?: string;
     parameters?: Array<DataSourceParameter>;
     cacheStrategy?: IDataSourceCacheStrategy;
-    privateKey?: string;
-    privateKeyPassphrase?: string;
+    privateKey?: string | null;
+    privateKeyPassphrase?: string | null;
 }
 
 /**

@@ -202,15 +202,15 @@ export interface IDataSourcePatchRequest {
     // (undocumented)
     parameters?: Array<DataSourceParameter>;
     // (undocumented)
-    password?: string;
+    password?: string | null;
     // (undocumented)
-    privateKey?: string;
+    privateKey?: string | null;
     // (undocumented)
-    privateKeyPassphrase?: string;
+    privateKeyPassphrase?: string | null;
     // (undocumented)
     schema?: string;
     // (undocumented)
-    token?: string;
+    token?: string | null;
     // (undocumented)
     type?: IDataSourceType;
     // (undocumented)
