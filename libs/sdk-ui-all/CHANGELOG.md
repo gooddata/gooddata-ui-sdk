@@ -1,6 +1,15 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 27 Jun 2024 08:11:53 GMT and should not be manually modified.
+This log was last generated on Thu, 11 Jul 2024 08:01:45 GMT and should not be manually modified.
+
+## 10.5.0
+Thu, 11 Jul 2024 08:01:45 GMT
+
+### Updates
+
+- Allow specifying returnTo parameter with backend deauthenticate
+- Adjusted export function to support pdf options.
+- Using visualizationObject whenever provided as alternative to executionResult for export.
 
 ## 10.4.0
 Thu, 27 Jun 2024 08:11:53 GMT
