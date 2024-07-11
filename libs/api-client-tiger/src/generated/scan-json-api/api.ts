@@ -1,3 +1,5 @@
+// (C) 2024 GoodData Corporation
+
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -697,6 +699,7 @@ export const TestDefinitionRequestTypeEnum = {
     PINOT: "PINOT",
     SINGLESTORE: "SINGLESTORE",
     MOTHERDUCK: "MOTHERDUCK",
+    FLIGHTRPC: "FLIGHTRPC",
 } as const;
 
 export type TestDefinitionRequestTypeEnum =
