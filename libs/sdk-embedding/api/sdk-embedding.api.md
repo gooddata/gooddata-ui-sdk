@@ -420,6 +420,14 @@ export interface IAdSetApiTokenBody {
     type?: "gooddata" | "jwt";
 }
 
+// @public
+export interface IAttributeFilterConfig {
+    // @alpha
+    displayAsLabel?: ObjQualifier;
+    // @alpha
+    mode?: DashboardAttributeFilterConfigMode;
+}
+
 // @public (undocumented)
 export interface IBucket {
     // (undocumented)
@@ -783,9 +791,7 @@ export interface IMeasureContent {
 }
 
 // @public (undocumented)
-export interface INegativeAttributeFilter {
-    // @alpha
-    mode?: DashboardAttributeFilterConfigMode;
+export interface INegativeAttributeFilter extends IAttributeFilterConfig {
     // (undocumented)
     negativeAttributeFilter: {
         displayForm: ObjQualifier;
@@ -821,9 +827,7 @@ export interface IObjUriQualifier {
 }
 
 // @public
-export interface IPositiveAttributeFilter {
-    // @alpha
-    mode?: DashboardAttributeFilterConfigMode;
+export interface IPositiveAttributeFilter extends IAttributeFilterConfig {
     // (undocumented)
     positiveAttributeFilter: {
         displayForm: ObjQualifier;

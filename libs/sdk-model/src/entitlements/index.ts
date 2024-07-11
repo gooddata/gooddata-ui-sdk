@@ -20,8 +20,14 @@ export type IEntitlementsName =
     | "WhiteLabeling"
     | "WorkspaceCount"
     | "Hipaa"
-    | "UserTelemetryDisabled";
-
+    | "UserTelemetryDisabled"
+    | "AutomationCount"
+    | "UnlimitedAutomations"
+    | "AutomationRecipientCount"
+    | "UnlimitedAutomationRecipients"
+    | "DailyScheduledActionCount"
+    | "UnlimitedDailyScheduledActions"
+    | "ScheduledActionMinimumRecurrenceMinutes";
 /**
  * Entitlement descriptor
  *

@@ -778,7 +778,7 @@ export interface IAutomationMetadataObjectBase {
 // @alpha (undocumented)
 export interface IAutomationMetadataObjectDefinition extends Omit<IAutomationMetadataObjectBase, "exportDefinitions">, IMetadataObjectDefinition, IAuditable {
     // (undocumented)
-    exportDefinitions: IExportDefinitionMetadataObjectDefinition[];
+    exportDefinitions?: (IExportDefinitionMetadataObjectDefinition | IExportDefinitionMetadataObject)[];
     // (undocumented)
     type: "automation";
 }
@@ -798,6 +798,7 @@ export type IAutomationRecipientType = "user" | "userGroup";
 // @alpha (undocumented)
 export interface IAutomationSchedule {
     cron: string;
+    cronDescription?: string;
     firstRun?: string;
     timezone?: string;
 }
@@ -1048,6 +1049,7 @@ export interface IDashboardAttributeFilterByDate {
 
 // @alpha
 export interface IDashboardAttributeFilterConfig {
+    displayAsLabel?: ObjRef;
     localIdentifier: string;
     mode?: DashboardAttributeFilterConfigMode;
 }
@@ -1491,7 +1493,7 @@ export interface IEntitlementDescriptor {
 }
 
 // @public
-export type IEntitlementsName = "CacheStrategy" | "Contract" | "CustomTheming" | "ExtraCache" | "ManagedOIDC" | "UiLocalization" | "Tier" | "UserCount" | "PdfExports" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WhiteLabeling" | "WorkspaceCount" | "Hipaa" | "UserTelemetryDisabled";
+export type IEntitlementsName = "CacheStrategy" | "Contract" | "CustomTheming" | "ExtraCache" | "ManagedOIDC" | "UiLocalization" | "Tier" | "UserCount" | "PdfExports" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WhiteLabeling" | "WorkspaceCount" | "Hipaa" | "UserTelemetryDisabled" | "AutomationCount" | "UnlimitedAutomations" | "AutomationRecipientCount" | "UnlimitedAutomationRecipients" | "DailyScheduledActionCount" | "UnlimitedDailyScheduledActions" | "ScheduledActionMinimumRecurrenceMinutes";
 
 // @public
 export interface IExecutionConfig {
@@ -2774,8 +2776,10 @@ export interface ISettings {
     enableRenamingMeasureToMetric?: boolean;
     enableReversedStacking?: boolean;
     enableRichTextDescriptions?: boolean;
+    enableRollupTotals?: boolean;
     enableScatterPlotClustering?: boolean;
     enableScatterPlotSegmentation?: boolean;
+    enableScheduling?: boolean;
     enableSeparateTotalLabels?: boolean;
     enableTableColumnsAutoResizing?: boolean;
     enableTableColumnsGrowToFit?: boolean;

@@ -610,5 +610,13 @@
     "gs.header.account.title": "Account",
     "visualization.cluster": "Gruppo",
     "richText.placeholder": "Aggiungere il testo markdown qui...",
-    "richText.tooltip": "È possibile utilizzare la sintassi di Markdown per creare una descrizione:"
+    "richText.tooltip": "È possibile utilizzare la sintassi di Markdown per creare una descrizione:",
+    "recurrence.starts": "Inizia il",
+    "recurrence.repeats": "Ripetizioni",
+    "recurrence.types.hourly": "Orario",
+    "recurrence.types.daily": "Giornaliero",
+    "recurrence.types.weekly": "Ogni settimana il {day}",
+    "recurrence.types.monthly.last": "Mensilmente l'ultimo {day}",
+    "recurrence.types.monthly": "Ogni mese il {week, select, 1 {primo} 2 {secondo} 3 {terzo} 4 {quarto} other {ultimo}} {day}",
+    "recurrence.types.cron": "Espressione Cron"
 }

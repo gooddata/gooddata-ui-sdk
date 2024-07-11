@@ -1,6 +1,6 @@
 // (C) 2022-2024 GoodData Corporation
 import { CaseReducer, AnyAction } from "@reduxjs/toolkit";
-import { IAttributeElement, ObjRef, IAttributeMetadataObject } from "@gooddata/sdk-model";
+import { IAttributeElement, ObjRef, IAttributeMetadataObject, IAttributeFilter } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import { ILoadElementsOptions, AsyncOperationStatus } from "../../../types/index.js";
@@ -11,7 +11,7 @@ import { ILoadElementsOptions, AsyncOperationStatus } from "../../../types/index
 export interface AttributeFilterState {
     localIdentifier?: string;
     displayFormRef: ObjRef; // primary label used for execution
-    displayAsDisplayFormRef?: ObjRef; // optional secondary label used for display elements in filter component
+    displayAsLabelRef?: ObjRef; // optional secondary label used for display elements in filter component
     elementsForm: "uris" | "values";
     initialization: {
         status: AsyncOperationStatus;
@@ -60,6 +60,7 @@ export interface AttributeFilterState {
         hiddenElements?: string[];
         staticElements?: IAttributeElement[];
     };
+    originalFilter?: IAttributeFilter;
 }
 
 /**

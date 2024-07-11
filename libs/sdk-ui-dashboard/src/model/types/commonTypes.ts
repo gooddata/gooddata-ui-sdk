@@ -8,6 +8,7 @@ import {
     ISettings,
     ISeparators,
     IEntitlementDescriptor,
+    IWebhookMetadataObject,
 } from "@gooddata/sdk-model";
 import { ILocale } from "@gooddata/sdk-ui";
 import keys from "lodash/keys.js";
@@ -457,3 +458,10 @@ export type FiltersInfo = {
     filters: IDashboardFilter[];
     resolvedFilterValues?: IResolvedFilterValues;
 };
+
+/**
+ * Organization webhooks
+ *
+ * @alpha
+ */
+export type Webhooks = IWebhookMetadataObject[];

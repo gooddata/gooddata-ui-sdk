@@ -5,41 +5,46 @@ import { DashboardDateFilterConfigMode, DashboardAttributeFilterConfigMode } fro
 import isEmpty from "lodash/isEmpty.js";
 
 /**
+ * Attribute filter config with props non relevant for execution, but important for UI.
+ * @public
+ */
+export interface IAttributeFilterConfig {
+    /**
+     * Configures the visibility mode of the attribute filter.
+     *
+     * @alpha
+     */
+    mode?: DashboardAttributeFilterConfigMode;
+    /**
+     * Configures the label used for representing attribute filter elements in UI.
+     *
+     * @alpha
+     */
+    displayAsLabel?: ObjQualifier;
+}
+/**
  * Attribute filters were exposed in the 'old' format that did not match backend and used the
  * textFilter boolean indicator. We have to honor this for the public API.
  * @public
  */
-export interface IPositiveAttributeFilter {
+export interface IPositiveAttributeFilter extends IAttributeFilterConfig {
     positiveAttributeFilter: {
         displayForm: ObjQualifier;
         in: string[];
         textFilter?: boolean;
         selectionMode?: AttributeFilterItemSelectionMode;
     };
-    /**
-     * Configures the visibility mode of the attribute filter.
-     *
-     * @alpha
-     */
-    mode?: DashboardAttributeFilterConfigMode;
 }
-
 /**
  * @public
  */
-export interface INegativeAttributeFilter {
+export interface INegativeAttributeFilter extends IAttributeFilterConfig {
     negativeAttributeFilter: {
         displayForm: ObjQualifier;
         notIn: string[];
         textFilter?: boolean;
         selectionMode?: "multi";
     };
-    /**
-     * Configures the visibility mode of the attribute filter.
-     *
-     * @alpha
-     */
-    mode?: DashboardAttributeFilterConfigMode;
 }
 
 /**

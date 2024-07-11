@@ -3,24 +3,32 @@ import { PayloadAction } from "@reduxjs/toolkit";
 
 import { Correlation } from "../../../types/index.js";
 import { AttributeFilterReducer } from "../store/state.js";
-import { ObjRef } from "@gooddata/sdk-model";
+import { ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
 const transformFilterToPrimaryLabel: AttributeFilterReducer<
     PayloadAction<{ primaryLabelRef: ObjRef; secondaryLabelRef: ObjRef; correlation: Correlation }>
 > = (state, action) => {
     // this switch of display forms transforms old filters saved with secondary label in them to attributes primary label and backup secondary label to the new property
     state.displayFormRef = action.payload.primaryLabelRef;
-    if (!state.displayAsDisplayFormRef) {
+    if (!state.displayAsLabelRef) {
         // do not override already defined custom display form during migration
-        state.displayAsDisplayFormRef = action.payload.secondaryLabelRef;
+        state.displayAsLabelRef = action.payload.secondaryLabelRef;
     }
 };
 
 const setDisplayAsLabel: AttributeFilterReducer<
     PayloadAction<{ displayAsLabel: ObjRef; correlation: Correlation }>
 > = (state, action) => {
-    state.displayAsDisplayFormRef = action.payload.displayAsLabel;
-    state.elements.cache = {};
+    if (!areObjRefsEqual(state.displayAsLabelRef, action.payload.displayAsLabel)) {
+        state.elements.cache = {};
+    }
+    state.displayAsLabelRef = action.payload.displayAsLabel;
+};
+
+const setDisplayFormRef: AttributeFilterReducer<
+    PayloadAction<{ displayForm: ObjRef; correlation: Correlation }>
+> = (state, action) => {
+    state.displayFormRef = action.payload.displayForm;
 };
 
 /**
@@ -29,4 +37,5 @@ const setDisplayAsLabel: AttributeFilterReducer<
 export const displayFormsReducers = {
     transformFilterToPrimaryLabel,
     setDisplayAsLabel,
+    setDisplayFormRef,
 };

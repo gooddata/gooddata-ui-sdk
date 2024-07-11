@@ -75,7 +75,7 @@ export interface IAutomationMetadataObjectDefinition
         IMetadataObjectDefinition,
         IAuditable {
     type: "automation";
-    exportDefinitions: IExportDefinitionMetadataObjectDefinition[];
+    exportDefinitions?: (IExportDefinitionMetadataObjectDefinition | IExportDefinitionMetadataObject)[];
 }
 
 /**
@@ -98,6 +98,11 @@ export interface IAutomationSchedule {
      * Example: 0 *\/30 9-17 ? * MON-FRI (every 30 minutes from 9:00 to 17:00 on workdays)
      */
     cron: string;
+
+    /**
+     * Human-readable description of the cron expression.
+     */
+    cronDescription?: string;
 
     /**
      * Timezone in which the schedule is defined.

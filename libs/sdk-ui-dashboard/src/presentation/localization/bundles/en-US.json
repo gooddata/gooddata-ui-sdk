@@ -128,8 +128,13 @@
         "limit": 0
     },
     "options.menu.schedule.email": {
-        "value": "Schedule emailing",
+        "value": "Schedule exports",
         "comment": "Translate as imperative. Schedule emailing whole KPI dashboard",
+        "limit": 0
+    },
+    "options.menu.schedule.email.tooltip": {
+        "value": "No destination available. To schedule an export, <a>create destination</a>.",
+        "comment": "Do not translate html tags <a>, </a>",
         "limit": 0
     },
     "options.menu.delete": {
@@ -454,12 +459,12 @@
         "limit": 0
     },
     "dialogs.schedule.email.attachment.label": {
-        "value": "Attachment:",
+        "value": "Attachment",
         "comment": "Attachment of the scheduled email.",
         "limit": 0
     },
     "dialogs.schedule.email.attachments.label": {
-        "value": "Attachments:",
+        "value": "Attachments",
         "comment": "Attachments of the scheduled email.",
         "limit": 0
     },
@@ -505,9 +510,19 @@
         "comment": "Translate as imperative. Schedule exporting whole dashboard and visualizations",
         "limit": 0
     },
+    "dialogs.schedule.email.title.placeholder": {
+        "value": "Untitled schedule",
+        "comment": "Placeholder for schedule title input",
+        "limit": 0
+    },
     "dialogs.schedule.email.message.label": {
-        "value": "Message:",
+        "value": "Message",
         "comment": "Message of the scheduled email.",
+        "limit": 0
+    },
+    "dialogs.schedule.email.max.recipients": {
+        "value": "You can select up to {maxRecipients} recipients.",
+        "comment": "Message for recipients input when the maximum number of recipients is reached",
         "limit": 0
     },
     "dialogs.schedule.email.unsubscribed.recipients": {
@@ -516,7 +531,7 @@
         "limit": 0
     },
     "dialogs.schedule.email.repeats.label": {
-        "value": "Repeats:",
+        "value": "Repeats",
         "comment": "Count of repeats of the scheduled email.",
         "limit": 0
     },
@@ -555,6 +570,11 @@
         "comment": "Repeats the schedule email using custom rules defined by the user.",
         "limit": 0
     },
+    "dialogs.schedule.email.repeats.types.cron": {
+        "value": "Cron expression",
+        "comment": "Repeats the automation schedule using cron expression.",
+        "limit": 0
+    },
     "dialogs.schedule.email.repeats.types.daily": {
         "value": "Daily",
         "comment": "Repeats the schedule email daily.",
@@ -571,18 +591,33 @@
         "limit": 0
     },
     "dialogs.schedule.email.subject.label": {
-        "value": "Subject:",
+        "value": "Subject",
         "comment": "Subject of the schedule email.",
         "limit": 0
     },
     "dialogs.schedule.email.time.label": {
-        "value": "First occurrence:",
+        "value": "Starts on",
         "comment": "Translate as imperative. Date time of the schedule email.",
         "limit": 0
     },
     "dialogs.schedule.email.to.label": {
-        "value": "To:",
+        "value": "To",
         "comment": "Emails of the schedule email.",
+        "limit": 0
+    },
+    "dialogs.schedule.email.destination": {
+        "value": "Destination",
+        "comment": "Way how to send automated schedule",
+        "limit": 0
+    },
+    "dialogs.schedule.email.destination.missing": {
+        "value": "No destination available.",
+        "comment": "Title when no destination is created",
+        "limit": 0
+    },
+    "dialogs.schedule.email.destination.help": {
+        "value": "Create destination",
+        "comment": "Title of the help link for destination creation",
         "limit": 0
     },
     "dialogs.schedule.email.message.placeholder": {
@@ -590,9 +625,19 @@
         "comment": "Don't translate '\n\n' which adds 2 new lines to the text.",
         "limit": 0
     },
-    "dialogs.schedule.email.submit": {
-        "value": "Schedule",
-        "comment": "Translate as imperative. Submit the schedule config form.",
+    "dialogs.schedule.email.create": {
+        "value": "Create",
+        "comment": "Translate as imperative. Create the schedule by submitting form.",
+        "limit": 0
+    },
+    "dialogs.schedule.email.footer.title": {
+        "value": "How to schedule export?",
+        "comment": "Title of a link to documentation",
+        "limit": 0
+    },
+    "dialogs.schedule.email.footer.title.short": {
+        "value": "Help",
+        "comment": "Title of a link to documentation",
         "limit": 0
     },
     "dialogs.schedule.email.save": {
@@ -646,18 +691,23 @@
         "comment": "Do not translate html tags <b>, </b>",
         "limit": 0
     },
+    "dialogs.schedule.management.list.title": {
+        "value": "Your scheduled exports",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.schedule.management.create": {
+        "value": "Create",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.schedule.management.create.tooManyMessage": {
+        "value": "Too many schedules. You can create up to {number} schedules.",
+        "comment": "Do no translate {number} variable",
+        "limit": 0
+    },
     "dialogs.schedule.management.noSchedules": {
-        "value": "The dashboard contains no scheduled exports.{br}Add one now.",
-        "comment": "",
-        "limit": 0
-    },
-    "dialogs.schedule.management.noSchedules.byUser": {
-        "value": "You have not scheduled any exports yet.{br}Add one now.",
-        "comment": "",
-        "limit": 0
-    },
-    "dialogs.schedule.management.addSchedule": {
-        "value": "Add schedule",
+        "value": "There are no scheduled exports.{br}Create new.",
         "comment": "",
         "limit": 0
     },
@@ -705,16 +755,6 @@
     },
     "dialogs.schedule.management.delete.error": {
         "value": "Failed to delete schedule. Try again later.",
-        "comment": "",
-        "limit": 0
-    },
-    "dialogs.schedule.management.tab.all": {
-        "value": "all",
-        "comment": "",
-        "limit": 0
-    },
-    "dialogs.schedule.management.tab.user": {
-        "value": "created by me",
         "comment": "",
         "limit": 0
     },

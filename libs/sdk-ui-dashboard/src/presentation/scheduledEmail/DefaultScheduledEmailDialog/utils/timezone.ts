@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 export interface ITimezone {
     identifier: string;
@@ -10,7 +10,7 @@ export interface ITimezone {
 const JANUARY_OFFSET = -new Date(2011, 0, 1, 0, 0, 0, 0).getTimezoneOffset();
 const JUNE_OFFSET = -new Date(2011, 5, 1, 0, 0, 0, 0).getTimezoneOffset();
 
-const timezonesRaw: [string, string, number, number][] = [
+const timezonesRaw: [identifier: string, title: string, januaryOffset: number, juneOffset: number][] = [
     ["Pacific/Midway", "GMT-11:00 International Date Line West", -660, -660],
     ["Pacific/Pago_Pago", "GMT-11:00 Samoa", -660, -660],
     ["Pacific/Honolulu", "GMT-10:00 Hawaii", -600, -600],
@@ -155,6 +155,6 @@ export function getUserTimezone(): ITimezone {
     return TIMEZONE_BY_OFFSETS || TIMEZONE_DEFAULT;
 }
 
-export function getTimezoneByIdentifier(title: string) {
+export function getTimezoneByIdentifier(title: string | undefined) {
     return timezones.find((tz) => tz.identifier === title);
 }

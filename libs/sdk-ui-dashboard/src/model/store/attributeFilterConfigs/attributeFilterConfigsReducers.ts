@@ -1,9 +1,12 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 
 import { AttributeFilterConfigsState } from "./attributeFilterConfigsState.js";
-import { SetDashboardAttributeFilterConfigModePayload } from "../../../model/commands/dashboard.js";
+import {
+    SetDashboardAttributeFilterConfigDisplayAsLabelPayload,
+    SetDashboardAttributeFilterConfigModePayload,
+} from "../../../model/commands/dashboard.js";
 
 type AttributeFilterConfigReducer<A extends Action> = CaseReducer<AttributeFilterConfigsState, A>;
 
@@ -20,6 +23,25 @@ const changeMode: AttributeFilterConfigReducer<
 
     if (effectiveFilter) {
         effectiveFilter.mode = action.payload.mode;
+        state.attributeFilterConfigs = [...(state.attributeFilterConfigs ?? [])];
+    } else {
+        state.attributeFilterConfigs = [...(state.attributeFilterConfigs || []), action.payload];
+    }
+};
+
+/**
+ * Changes the config mode for the filter given by its local identifier.
+ */
+const changeDisplayAsLabel: AttributeFilterConfigReducer<
+    PayloadAction<SetDashboardAttributeFilterConfigDisplayAsLabelPayload>
+> = (state, action) => {
+    const { localIdentifier, displayAsLabel } = action.payload;
+    const existingConfig = state.attributeFilterConfigs?.find(
+        (item) => item.localIdentifier === localIdentifier,
+    );
+
+    if (existingConfig) {
+        existingConfig.displayAsLabel = displayAsLabel;
         state.attributeFilterConfigs = [...(state.attributeFilterConfigs ?? [])];
     } else {
         state.attributeFilterConfigs = [...(state.attributeFilterConfigs || []), action.payload];
@@ -45,4 +67,5 @@ export const attributeFilterConfigsReducers = {
     changeMode,
     setAttributeFilterConfigs,
     removeAttributeFilterConfig,
+    changeDisplayAsLabel,
 };

@@ -610,5 +610,13 @@
     "gs.header.account.title": "Cuenta",
     "visualization.cluster": "Grupo",
     "richText.placeholder": "Añada aquí el texto markdown...",
-    "richText.tooltip": "Puede utilizar la sintaxis Markdown para dar estilo a la descripción:"
+    "richText.tooltip": "Puede utilizar la sintaxis Markdown para dar estilo a la descripción:",
+    "recurrence.starts": "Comienza el",
+    "recurrence.repeats": "Repite",
+    "recurrence.types.hourly": "Cada hora",
+    "recurrence.types.daily": "Diario",
+    "recurrence.types.weekly": "Semanalmente el {day}",
+    "recurrence.types.monthly.last": "Mensualmente en el último {day}",
+    "recurrence.types.monthly": "Mensualmente el {week, select, 1 {primer} 2 {segundo} 3 {tercer} 4 {cuarto} other {último}} {day}",
+    "recurrence.types.cron": "Expresión Cron"
 }

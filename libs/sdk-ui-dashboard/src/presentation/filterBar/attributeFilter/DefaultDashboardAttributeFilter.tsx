@@ -15,6 +15,7 @@ import {
     IAttributeFilterStatusBarProps,
     SingleSelectionAttributeFilterStatusBar,
     AttributeFilterDependencyTooltip,
+    useAttributeFilterContext,
 } from "@gooddata/sdk-ui-filters";
 import { DashboardAttributeFilterConfigModeValues, filterObjRef } from "@gooddata/sdk-model";
 import { LoadingMask, LOADING_HEIGHT } from "@gooddata/sdk-ui-kit";
@@ -63,7 +64,7 @@ import { useDependentDateFilters } from "./useDependentDateFilters.js";
 export const DefaultDashboardAttributeFilter = (
     props: IDashboardAttributeFilterProps,
 ): JSX.Element | null => {
-    const { filter, onFilterChanged, isDraggable, readonly, autoOpen, onClose } = props;
+    const { filter, onFilterChanged, isDraggable, readonly, autoOpen, onClose, displayAsLabel } = props;
     const { parentFilters, parentFilterOverAttribute } = useParentFilters(filter);
     const { dependentDateFilters } = useDependentDateFilters(filter);
     const locale = useDashboardSelector(selectLocale);
@@ -210,6 +211,8 @@ export const DefaultDashboardAttributeFilter = (
 
     const CustomDropdownActions = useMemo(() => {
         return function DropdownActions(props: IAttributeFilterDropdownActionsProps) {
+            const { currentDisplayFormRef, committedSelectionElements } = useAttributeFilterContext();
+
             const {
                 title,
                 configurationChanged,
@@ -242,7 +245,7 @@ export const DefaultDashboardAttributeFilter = (
                         <CustomConfigureAttributeFilterDropdownActions
                             isSaveDisabled={isSaveDisabled}
                             onSaveButtonClick={() => {
-                                onConfigurationSave();
+                                onConfigurationSave(currentDisplayFormRef, committedSelectionElements);
                                 setIsConfigurationOpen(false);
                             }}
                             onCancelButtonClick={() => {
@@ -385,18 +388,24 @@ export const DefaultDashboardAttributeFilter = (
     ]);
 
     return (
-        <AttributeFilterParentFilteringProvider filter={filter} attributes={attributes}>
+        <AttributeFilterParentFilteringProvider
+            filter={filter}
+            attributes={attributes}
+            displayAsLabel={displayAsLabel}
+        >
             <AttributeFilterButton
                 title={filter.attributeFilter.title}
                 resetOnParentFilterChange={false}
                 filter={attributeFilter}
-                onApply={(newFilter) => {
+                displayAsLabel={displayAsLabel}
+                onApply={(newFilter, _isInverted, _selectionMode, _selectionTitles, displayAsLabel) => {
                     onFilterChanged(
                         attributeFilterToDashboardAttributeFilter(
                             newFilter,
                             filter.attributeFilter.localIdentifier,
                             filter.attributeFilter.title,
                         ),
+                        displayAsLabel,
                     );
                 }}
                 parentFilters={parentFilters}

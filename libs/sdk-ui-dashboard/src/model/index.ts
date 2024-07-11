@@ -28,6 +28,7 @@ export {
     IResolvedFilterValues,
     WidgetsOverlayFn,
     IDashboardWidgetOverlay,
+    Webhooks,
 } from "./types/commonTypes.js";
 export {
     ICustomWidget,

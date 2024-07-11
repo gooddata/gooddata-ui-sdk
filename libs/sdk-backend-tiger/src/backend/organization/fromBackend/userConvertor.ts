@@ -8,6 +8,7 @@ import {
     idRef,
     IWorkspacePermissionAssignment,
     IDataSourcePermissionAssignment,
+    IWorkspaceUser,
 } from "@gooddata/sdk-model";
 import {
     JsonApiUserOutDocument,
@@ -19,6 +20,7 @@ import {
     UserManagementWorkspacePermissionAssignment,
     UserManagementDataSourcePermissionAssignment,
     UserGroupIdentifier,
+    WorkspaceUser,
 } from "@gooddata/api-client-tiger";
 
 const constructFullName = (firstName?: string, lastName?: string) =>
@@ -37,6 +39,18 @@ export const convertUser = (user: JsonApiUserOutDocument): IUser => {
         fullName: constructFullName(firstName, lastName),
         firstName,
         lastName,
+    };
+};
+
+export const convertWorkspaceUser = (user: WorkspaceUser): IWorkspaceUser => {
+    const fullName = user.name;
+    const email = user.email ?? "";
+    return {
+        ref: idRef(user.id),
+        uri: user.id,
+        login: user.id,
+        email,
+        fullName,
     };
 };
 

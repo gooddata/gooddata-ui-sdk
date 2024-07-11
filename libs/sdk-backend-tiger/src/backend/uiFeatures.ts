@@ -96,6 +96,8 @@ export enum TigerFeaturesNames {
     EnableScatterPlotSegmentation = "enableScatterPlotSegmentation",
     EnableScatterPlotClustering = "enableScatterPlotClustering",
     EnableRichTextDescriptions = "enableRichTextDescriptions",
+    EnableSchedulingRollout = "enableSchedulingRollout",
+    EnableRollupTotals = "enableRollupTotals",
 }
 
 export type ITigerFeatureFlags = {
@@ -156,6 +158,8 @@ export type ITigerFeatureFlags = {
     enableScatterPlotSegmentation: typeof FeatureFlagsValues["enableScatterPlotSegmentation"][number];
     enableScatterPlotClustering: typeof FeatureFlagsValues["enableScatterPlotClustering"][number];
     enableRichTextDescriptions: typeof FeatureFlagsValues["enableRichTextDescriptions"][number];
+    enableSchedulingRollout: typeof FeatureFlagsValues["enableSchedulingRollout"][number];
+    enableRollupTotals: typeof FeatureFlagsValues["enableRollupTotals"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -193,7 +197,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableCreateUser: true,
     enableDirectQuery: false,
     enableMariaDbDataSource: false,
-    enableRepeaterChart: false,
+    enableRepeaterChart: true,
     enableKDAttributeFilterDatesValidation: true,
     enableMultipleCSVs: false,
     enableMotherDuckDataSource: false,
@@ -208,7 +212,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableFlexAi: false,
     enableExperimentalFeaturesUI: false,
     enableSingleStoreDataSource: false,
-    enableSnowflakeKeyPairAuthentication: false,
+    enableSnowflakeKeyPairAuthentication: true,
     enableInvalidValuesInAttributeFilter: false,
     enableDuplicatedLabelValuesInAttributeFilter: false,
     enableWorkspacesHierarchyView: false,
@@ -216,6 +220,8 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableScatterPlotSegmentation: true,
     enableScatterPlotClustering: true,
     enableRichTextDescriptions: true,
+    enableSchedulingRollout: false,
+    enableRollupTotals: false,
 };
 
 export const FeatureFlagsValues = {
@@ -280,4 +286,6 @@ export const FeatureFlagsValues = {
     enableScatterPlotSegmentation: [true, false] as const,
     enableScatterPlotClustering: [true, false] as const,
     enableRichTextDescriptions: [true, false] as const,
+    enableSchedulingRollout: [true, false] as const,
+    enableRollupTotals: [true, false] as const,
 };

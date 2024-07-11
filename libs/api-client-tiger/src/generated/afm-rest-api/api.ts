@@ -1,3 +1,5 @@
+// (C) 2024 GoodData Corporation
+
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -1663,6 +1665,18 @@ export interface MeasureGroupHeaders {
      * @memberof MeasureGroupHeaders
      */
     measureGroupHeaders?: Array<MeasureHeaderOut>;
+    /**
+     *
+     * @type {MeasureHeaderOut}
+     * @memberof MeasureGroupHeaders
+     */
+    first?: MeasureHeaderOut;
+    /**
+     *
+     * @type {MeasureHeaderOut}
+     * @memberof MeasureGroupHeaders
+     */
+    last?: MeasureHeaderOut;
 }
 /**
  *
@@ -2487,6 +2501,7 @@ export const TotalFunctionEnum = {
     MAX: "MAX",
     AVG: "AVG",
     MED: "MED",
+    NATIVE: "NATIVE",
 } as const;
 
 export type TotalFunctionEnum = typeof TotalFunctionEnum[keyof typeof TotalFunctionEnum];

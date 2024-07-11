@@ -84,6 +84,7 @@ import { Image } from "./icons/Image.js";
 import { Hash } from "./icons/Hash.js";
 import { Magic } from "./icons/Magic.js";
 import { Webhook } from "./icons/Webhook.js";
+import { Schedule } from "./icons/Schedule.js";
 
 /**
  * @internal
@@ -171,6 +172,7 @@ export const Icon: Record<string, React.FC<IIconProps>> = {
     Hash,
     Magic,
     Webhook,
+    Schedule,
 };
 
 export { IRowsIconProps, IColumnsIconProps };

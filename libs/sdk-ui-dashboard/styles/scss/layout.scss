@@ -283,8 +283,7 @@ $gd-dashboards-section-description-color: var(
     }
 
     .gd-layout-row-description-richtext {
-        white-space: nowrap;
-        text-wrap: wrap;
+        white-space: initial;
     }
 
     .gd-editable-label-richtext {

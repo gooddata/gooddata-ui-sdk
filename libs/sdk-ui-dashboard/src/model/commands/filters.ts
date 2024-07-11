@@ -266,6 +266,12 @@ export interface AddAttributeFilterPayload {
      * Specify the local identifier of attribute filter
      */
     readonly localIdentifier?: string;
+
+    /**
+     * Specify the primary display form of attribute filter.
+     * If provided it is used for filter definition and displayForm param is used only for UI representation
+     */
+    readonly primaryDisplayForm?: ObjRef;
 }
 
 /**
@@ -304,12 +310,14 @@ export function addAttributeFilter(
     initialSelection?: IAttributeElements,
     initialIsNegativeSelection?: boolean,
     localIdentifier?: string,
+    primaryDisplayForm?: ObjRef,
 ): AddAttributeFilter {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADD",
         correlationId,
         payload: {
             displayForm,
+            primaryDisplayForm,
             index,
             selectionMode,
             mode,

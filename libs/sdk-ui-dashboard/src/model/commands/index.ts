@@ -14,6 +14,7 @@ import {
     SetDashboardDateFilterWithDimensionConfigMode,
     SetDateFilterConfigTitle,
     SetAttributeFilterLimitingItems,
+    SetDashboardAttributeFilterConfigDisplayAsLabel,
 } from "./dashboard.js";
 import { TriggerEvent } from "./events.js";
 import { UpsertExecutionResult } from "./executionResults.js";
@@ -133,6 +134,9 @@ export {
     SetAttributeFilterLimitingItems,
     SetAttributeFilterLimitingItemsPayload,
     setAttributeFilterLimitingItems,
+    SetDashboardAttributeFilterConfigDisplayAsLabel,
+    SetDashboardAttributeFilterConfigDisplayAsLabelPayload,
+    setDashboardAttributeFilterConfigDisplayAsLabel,
 } from "./dashboard.js";
 
 export { TriggerEvent, TriggerEventPayload, triggerEvent } from "./events.js";
@@ -497,6 +501,7 @@ export type DashboardCommands =
     | AddDrillTargets
     | SetDashboardDateFilterConfigMode
     | SetDashboardAttributeFilterConfigMode
+    | SetDashboardAttributeFilterConfigDisplayAsLabel
     | RemoveDrillDownForInsightWidget
     | AddDrillDownForInsightWidget
     | ModifyDrillDownForInsightWidget

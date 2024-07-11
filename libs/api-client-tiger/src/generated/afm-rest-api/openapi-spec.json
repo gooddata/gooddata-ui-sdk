@@ -2363,7 +2363,7 @@
                         "type": "string",
                         "description": "Aggregation function to compute the total.",
                         "example": "SUM",
-                        "enum": ["SUM", "MIN", "MAX", "AVG", "MED"]
+                        "enum": ["SUM", "MIN", "MAX", "AVG", "MED", "NATIVE"]
                     },
                     "metric": {
                         "type": "string",
@@ -2497,6 +2497,12 @@
                         "items": {
                             "$ref": "#/components/schemas/MeasureHeaderOut"
                         }
+                    },
+                    "first": {
+                        "$ref": "#/components/schemas/MeasureHeaderOut"
+                    },
+                    "last": {
+                        "$ref": "#/components/schemas/MeasureHeaderOut"
                     }
                 }
             },

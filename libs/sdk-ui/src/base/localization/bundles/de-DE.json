@@ -610,5 +610,13 @@
     "gs.header.account.title": "Konto",
     "visualization.cluster": "Cluster",
     "richText.placeholder": "Markdown-Text hier hinzufügen...",
-    "richText.tooltip": "Sie können die Markdown-Syntax verwenden, um die Beschreibung zu formatieren:"
+    "richText.tooltip": "Sie können die Markdown-Syntax verwenden, um die Beschreibung zu formatieren:",
+    "recurrence.starts": "Beginnt am",
+    "recurrence.repeats": "Wiederholungen",
+    "recurrence.types.hourly": "Stündlich",
+    "recurrence.types.daily": "Täglich",
+    "recurrence.types.weekly": "Wöchentlich am {day}",
+    "recurrence.types.monthly.last": "Monatlich am letzten {day}",
+    "recurrence.types.monthly": "Monatlich am {week, select, 1 {ersten} 2 {zweiten} 3 {dritten} 4 {vierten} other {letzten}} {day}",
+    "recurrence.types.cron": "Cron-Ausdruck"
 }

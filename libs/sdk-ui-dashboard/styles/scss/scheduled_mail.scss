@@ -1,10 +1,14 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/_variables" as button-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "_variables" as variables;
 @use "zIndexes";
 
-$horizontal-space: 20px;
-$vertical-space: 10px;
+$horizontal-space: 10px;
+$vertical-space: 20px;
+$input-height: 28px;
+$dialog-padding: 20px;
+$min-content-height: 110px;
 
 @mixin input-styles {
     color: button-variables.$button-normal-color;
@@ -19,11 +23,11 @@ $vertical-space: 10px;
     }
 }
 
-.gd-dialog.gd-schedule-email-dialog {
+.gd-dialog:not(.gd-dropdown).gd-schedule-email-dialog {
     // TODO: test this with IE https://caniuse.com/#search=calc
-    // responsive layout: viewport's width - 20px
-    width: calc(100vw - 20px);
-    max-width: 620px;
+    // responsive layout: viewport's width - $dialog-padding
+    width: calc(100vw - $dialog-padding);
+    max-width: 640px;
 
     .hr {
         height: 0;
@@ -31,9 +35,13 @@ $vertical-space: 10px;
         border-top: 1px solid kit-variables.$gd-border-color;
     }
 
+    .gd-dialog-footer {
+        display: flex;
+    }
+
     .gd-schedule-email-dialog-filters-message {
         margin-top: -5px;
-        margin-bottom: 20px;
+        margin-bottom: $vertical-space;
     }
 }
 
@@ -72,11 +80,13 @@ $vertical-space: 10px;
 
         .gd-label {
             width: 105px;
+            min-width: 105px;
         }
 
         .gd-input {
             flex-grow: 1;
-            max-width: 480px;
+            min-width: 0;
+            width: 100%;
         }
     }
 }
@@ -87,27 +97,12 @@ $vertical-space: 10px;
     }
 
     .gd-input-field {
-        resize: vertical;
+        resize: none;
         min-height: 30px;
-
-        @media #{kit-variables.$small-only} {
-            resize: none;
-        }
-    }
-
-    .gd-input-component-indicator {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        color: kit-variables.$gd-color-text;
-        font-size: 14px;
-        font-family: gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
-    }
-}
-
-.gd-textarea-component-collapsed {
-    .gd-input-field {
-        overflow: hidden;
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 15px;
     }
 }
 
@@ -143,7 +138,6 @@ $vertical-space: 10px;
     > .gd-label {
         height: 30px;
         line-height: 30px;
-        margin-bottom: 5px;
     }
 
     .gd-attachment-config-button {
@@ -154,7 +148,7 @@ $vertical-space: 10px;
     .gd-dashboard-attachment-list {
         flex: 1;
         overflow: hidden;
-        margin: -5px 0;
+        margin: -2px 0;
 
         @media #{kit-variables.$small-only} {
             max-width: none;
@@ -172,7 +166,8 @@ $vertical-space: 10px;
         display: flex;
         flex-wrap: nowrap;
         overflow: hidden;
-        margin: 5px;
+        margin-top: -3px;
+        margin-left: 5px;
 
         &-format {
             padding-left: 7px;
@@ -180,8 +175,8 @@ $vertical-space: 10px;
             display: flex;
             align-items: center;
             height: 24px;
-            color: kit-variables.$gd-color-link;
-            background: kit-variables.$is-focused-background;
+            color: kit-variables.$gd-color-text;
+            background: kit-variables.$gd-border-color;
             border-radius: 3px 0 0 3px;
             text-transform: uppercase;
         }
@@ -193,7 +188,7 @@ $vertical-space: 10px;
             overflow: hidden;
             height: 24px;
             color: kit-variables.$gd-color-text;
-            background: button-variables.$button-normal-hover-bg;
+            background: variables.$button-grey-background;
             border-radius: 0 3px 3px 0;
             padding-left: 7px;
             padding-right: 7px;
@@ -216,7 +211,7 @@ $vertical-space: 10px;
 .gd-schedule-email-dialog-datetime,
 .gd-schedule-email-dialog-repeat {
     align-items: flex-start;
-    flex-direction: column;
+    flex-direction: row;
 
     @media #{kit-variables.$small-only} {
         .gd-label {
@@ -253,8 +248,16 @@ $vertical-space: 10px;
             }
         }
 
+        .gd-schedule-email-dialog-datetime-date input {
+            height: $input-height;
+        }
+
         .gd-schedule-email-dialog-datetime-time {
             margin-left: $horizontal-space;
+
+            button {
+                height: $input-height;
+            }
         }
 
         .gd-schedule-email-dialog-datetime-timezone {
@@ -270,6 +273,10 @@ $vertical-space: 10px;
     }
 }
 
+.gd-automation-cron-input {
+    margin-left: 10px;
+}
+
 .gd-schedule-email-dialog-repeat {
     @media #{kit-variables.$small-only} {
         .gd-schedule-email-dialog-repeat-type {
@@ -279,6 +286,12 @@ $vertical-space: 10px;
             .button-dropdown {
                 width: 100%;
             }
+        }
+    }
+
+    .gd-schedule-email-dialog-repeat-type {
+        button {
+            height: $input-height;
         }
     }
 
@@ -296,12 +309,13 @@ $vertical-space: 10px;
         }
 
         .gd-schedule-email-dialog-repeat-period {
-            width: 42px;
             margin-left: $horizontal-space;
 
             .gd-input-field {
                 @include input-styles;
 
+                width: 24px;
+                height: $input-height;
                 text-align: center;
                 padding-right: 0;
                 padding-left: 0;
@@ -310,6 +324,10 @@ $vertical-space: 10px;
 
         .gd-schedule-email-dialog-repeat-frequency {
             margin-left: $horizontal-space;
+
+            button {
+                height: $input-height;
+            }
         }
 
         @media #{kit-variables.$small-only} {
@@ -332,46 +350,79 @@ $vertical-space: 10px;
 .gd-scheduled-email-management-dialog {
     display: flex;
     flex-direction: column;
-    width: 460px;
-    height: 460px;
+    width: 540px;
 
     @media #{kit-variables.$small-only} {
         width: calc(100vw - 20px);
-        height: 100vh;
+        height: 90vh;
         max-height: none;
     }
 
     .gd-scheduled-email-management-dialog-title {
+        display: flex;
         margin-bottom: 10px;
+
+        .gd-dialog-header {
+            margin: 0;
+        }
+
         > h3 {
             color: var(--gd-modal-title-color, kit-variables.$gd-color-dark);
         }
     }
 
-    .gd-scheduled-email-management-dialog-tabs {
-        margin-top: 10px;
-    }
-
     .gd-scheduled-emails-content {
-        flex: 1;
         overflow-x: hidden;
         width: calc(100% + 20px);
         margin: 0 -20px 0 0;
-        padding: 10px 20px 20px 0;
-        min-height: 50px;
-        max-height: 455px;
+        padding: 10px 20px 10px 0;
+        min-height: 143px;
+        max-height: 475px;
         overflow-y: auto;
 
         @media #{kit-variables.$small-only} {
             max-height: none;
+            height: 100%;
+        }
+    }
+
+    .gd-scheduled-emails-content-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        h3 {
+            flex-grow: 2;
+            position: relative;
+            overflow: hidden;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: kit-variables.$gd-color-state-blank;
+
+            &::after {
+                content: "";
+                position: absolute;
+                top: 50%;
+                display: inline-block;
+                width: 100%;
+                height: 0;
+                margin-left: 10px;
+                border-top: 1px solid kit-variables.$gd-border-color;
+            }
+
+            + label {
+                margin-top: 10px;
+            }
         }
     }
 
     .gd-scheduled-emails-message {
+        height: 100%;
+        min-height: $min-content-height;
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100%;
         padding-top: 10px;
         text-align: center;
         color: kit-variables.$gd-color-state-blank;
@@ -502,6 +553,10 @@ $vertical-space: 10px;
 
         button {
             margin: 5px;
+        }
+
+        .gd-hyperlink:hover {
+            text-decoration: none;
         }
     }
 
@@ -673,7 +728,7 @@ $vertical-space: 10px;
         display: flex;
         flex-direction: row;
         align-items: center;
-        height: 28px;
+        height: $input-height;
 
         & > div {
             margin-left: 15px;
@@ -697,7 +752,7 @@ $vertical-space: 10px;
     & > div {
         display: flex;
         align-items: center;
-        height: 28px;
+        height: $input-height;
 
         & > label {
             display: flex;
@@ -753,7 +808,7 @@ $vertical-space: 10px;
         display: flex;
         align-items: center;
         overflow: hidden;
-        height: 28px;
+        height: $input-height;
 
         & > label {
             display: flex;
@@ -775,5 +830,127 @@ $vertical-space: 10px;
                 margin-left: 4px;
             }
         }
+    }
+}
+
+.gd-schedule-mail-dialog-content-wrapper {
+    background: variables.$dialog-background;
+    margin: 0 (-$dialog-padding);
+    padding: 0 $dialog-padding;
+}
+
+.gd-divider-with-margin {
+    margin-top: 0;
+    margin-bottom: $vertical-space;
+}
+
+.gd-divider-full-row {
+    margin: 0 (-$dialog-padding) $vertical-space;
+}
+
+.gd-schedule-email-dialog-destination-empty {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    color: kit-variables.$gd-color-state-blank;
+    gap: 10px;
+
+    span {
+        line-height: 30px;
+    }
+
+    .gd-icon-warning {
+        position: relative;
+        top: 3px;
+        font-size: 18px;
+        margin-right: 6px;
+    }
+
+    .gd-hyperlink-text {
+        color: kit-variables.$gd-palette-primary-base;
+        text-decoration: none;
+    }
+
+    @media #{kit-variables.$small-only} {
+        display: block;
+    }
+}
+
+.gd-schedule-email-dialog-destination {
+    button {
+        width: 200px;
+        height: $input-height;
+    }
+}
+
+.gd-schedule-email-dialog-message {
+    textarea {
+        padding: 6px 8px;
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 15px;
+    }
+}
+
+.gd-schedule-email-dialog-error {
+    max-height: 70px;
+    overflow: auto;
+    margin-bottom: $vertical-space;
+}
+
+.gd-schedule-email-dialog-subject {
+    input {
+        height: $input-height;
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 15px;
+    }
+}
+
+.gd-schedule-email-dialog-header {
+    display: flex;
+    flex: 1;
+    padding-bottom: $vertical-space;
+}
+
+.gd-schedule-email-dialog-title {
+    margin-left: 15px;
+    width: 100%;
+    height: 29px;
+
+    &.gd-editable-label.is-editing,
+    &:hover {
+        border-color: kit-variables.$gd-palette-primary-base;
+    }
+
+    &,
+    textarea {
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        font-family: Avenir, sans-serif;
+    }
+}
+
+.gd-schedule-mail-attachment-checkbox {
+    height: 100%;
+    margin-left: 2px;
+    margin-top: 8px;
+}
+
+.gd-schedule-email-dialog-footer-link {
+    display: inline-flex;
+    flex: 1;
+    justify-content: space-between;
+
+    .gd-hyperlink:hover {
+        text-decoration: none;
+    }
+
+    .gd-button {
+        padding: 0 10px;
     }
 }

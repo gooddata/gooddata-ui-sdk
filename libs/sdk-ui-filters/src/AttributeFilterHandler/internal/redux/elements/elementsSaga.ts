@@ -34,25 +34,32 @@ export function* elementsSaga(
         selectAttributeFilterDisplayForm,
     );
 
-    const attributeFilterDisplayAsDisplayFormRef: ReturnType<typeof selectAttributeFilterDisplayAsLabel> =
+    const attributeFilterDisplayAsLabelRef: ReturnType<typeof selectAttributeFilterDisplayAsLabel> =
         yield select(selectAttributeFilterDisplayAsLabel);
 
     const staticElements: ReturnType<typeof selectStaticElements> = yield select(selectStaticElements);
 
     const { enableDuplicatedLabelValuesInAttributeFilter } = context;
 
+    const filterByPrimaryLabelProp =
+        enableDuplicatedLabelValuesInAttributeFilter && attributeFilterDisplayAsLabelRef && !options.search // when searching by string, we need to apply it to the displayAsLabel directly not primary label
+            ? { filterByPrimaryLabel: true }
+            : {};
+
+    const allOptions = {
+        ...options,
+        ...filterByPrimaryLabelProp,
+    };
+
     const elementsQueryResult: PromiseFnReturnType<typeof loadElements> = yield call(
         loadElements,
         context,
         {
             displayFormRef:
-                enableDuplicatedLabelValuesInAttributeFilter && attributeFilterDisplayAsDisplayFormRef
-                    ? attributeFilterDisplayAsDisplayFormRef
+                enableDuplicatedLabelValuesInAttributeFilter && attributeFilterDisplayAsLabelRef
+                    ? attributeFilterDisplayAsLabelRef
                     : attributeFilterDisplayFormRef,
-            ...options,
-            ...(enableDuplicatedLabelValuesInAttributeFilter && attributeFilterDisplayAsDisplayFormRef
-                ? { filterByPrimaryLabel: true }
-                : {}),
+            ...allOptions,
         },
         {
             hiddenElements,
@@ -65,7 +72,7 @@ export function* elementsSaga(
     return {
         elements: elementsQueryResult.items,
         totalCount: elementsQueryResult.totalCount,
-        options: omit(options, "signal"),
+        options: omit(allOptions, "signal"),
         cacheId: elementsQueryResult.cacheId,
     };
 }

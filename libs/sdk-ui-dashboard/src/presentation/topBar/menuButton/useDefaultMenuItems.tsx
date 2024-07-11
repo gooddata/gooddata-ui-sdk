@@ -1,5 +1,5 @@
-// (C) 2022-2023 GoodData Corporation
-import { useCallback, useMemo, useRef } from "react";
+// (C) 2022-2024 GoodData Corporation
+import React, { useCallback, useMemo, useRef } from "react";
 import { useIntl } from "react-intl";
 import { isProtectedDataError } from "@gooddata/sdk-backend-spi";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
@@ -36,7 +36,8 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
     const isEmptyLayout = !useDashboardSelector(selectLayoutHasAnalyticalWidgets); // we need at least one non-custom widget there
     const { addSuccess, addError, addProgress, removeMessage } = useToastMessage();
-    const { isScheduledEmailingVisible, defaultOnScheduleEmailing } = useDashboardScheduledEmails();
+    const { isScheduledEmailingVisible, defaultOnScheduleEmailing, numberOfAvailableWebhooks } =
+        useDashboardScheduledEmails();
 
     const dispatch = useDashboardDispatch();
     const openSaveAsDialog = useCallback(() => dispatch(uiActions.openSaveAsDialog()), [dispatch]);
@@ -162,6 +163,19 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                 itemName: intl.formatMessage({ id: "options.menu.schedule.email" }),
                 onClick: defaultOnScheduleEmailing,
                 visible: isScheduledEmailingVisible,
+                tooltip:
+                    numberOfAvailableWebhooks === 0
+                        ? intl.formatMessage(
+                              { id: "options.menu.schedule.email.tooltip" },
+                              {
+                                  a: (chunk: React.ReactNode) => (
+                                      <a href="/settings" rel="noopener noreferrer" target="_blank">
+                                          {chunk}
+                                      </a>
+                                  ),
+                              },
+                          )
+                        : undefined,
             },
             {
                 type: "button",
@@ -192,6 +206,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         menuButtonItemsVisibility.deleteButton,
         menuButtonItemsVisibility.pdfExportButton,
         menuButtonItemsVisibility.saveAsNewButton,
+        numberOfAvailableWebhooks,
         openDeleteDialog,
     ]);
 }
