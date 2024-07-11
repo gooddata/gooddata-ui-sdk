@@ -29,11 +29,16 @@ import {
 import { changeAttributeFilterSelectionHandler } from "../filterContext/attributeFilter/changeAttributeFilterSelectionHandler.js";
 import { removeAttributeFiltersHandler } from "../filterContext/attributeFilter/removeAttributeFiltersHandler.js";
 import isEmpty from "lodash/isEmpty.js";
+import { selectEnableDuplicatedLabelValuesInAttributeFilter } from "../../store/config/configSelectors.js";
 
 export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFiltering) {
     yield put(
         crossFilteringRequested(ctx, cmd.payload.drillDefinition, cmd.payload.drillEvent, cmd.correlationId),
     );
+
+    const enableDuplicatedLabelValuesInAttributeFilter: ReturnType<
+        typeof selectEnableDuplicatedLabelValuesInAttributeFilter
+    > = yield select(selectEnableDuplicatedLabelValuesInAttributeFilter);
 
     const backendSupportsElementUris = !!ctx.backend.capabilities.supportsElementUris;
     const widgetRef = cmd.payload.drillEvent.widgetRef!;
@@ -60,6 +65,7 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
         cmd.payload.drillEvent.drillContext.intersection ?? [],
         dateDataSetsAttributesRefs,
         backendSupportsElementUris,
+        enableDuplicatedLabelValuesInAttributeFilter,
     );
 
     const shouldUpdateExistingCrossFiltering =
@@ -71,10 +77,10 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
          */
         crossFilteringItemByWidget?.filterLocalIdentifiers.length <= drillIntersectionFilters.length;
 
-    const virtualFilters = drillIntersectionFilters.map((filter) => {
-        const displayForm = filterObjRef(filter);
-        const attributeElements = filterAttributeElements(filter);
-        const negativeSelection = isNegativeAttributeFilter(filter);
+    const virtualFilters = drillIntersectionFilters.map(({ attributeFilter }) => {
+        const displayForm = filterObjRef(attributeFilter);
+        const attributeElements = filterAttributeElements(attributeFilter);
+        const negativeSelection = isNegativeAttributeFilter(attributeFilter);
         const existingVirtualFilter = shouldUpdateExistingCrossFiltering
             ? currentVirtualFilters.find((vf) => {
                   return areObjRefsEqual(vf.attributeFilter.displayForm, displayForm);
@@ -135,6 +141,7 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
                           vf.attributeFilter.attributeElements,
                           vf.attributeFilter.negativeSelection,
                           vf.attributeFilter.localIdentifier,
+                          drillIntersectionFilters[index].primaryLabel,
                       ),
                   )
                 : call(
