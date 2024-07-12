@@ -44,7 +44,10 @@ import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
 import { DashboardState } from "../../store/types.js";
 import { convertIntersectionToAttributeFilters } from "./common/intersectionUtils.js";
 import { selectSupportsMultipleDateFilters } from "../../store/backendCapabilities/backendCapabilitiesSelectors.js";
-import { selectEnableMultipleDateFilters } from "../../store/config/configSelectors.js";
+import {
+    selectEnableDuplicatedLabelValuesInAttributeFilter,
+    selectEnableMultipleDateFilters,
+} from "../../store/config/configSelectors.js";
 
 export function* drillToDashboardHandler(
     ctx: DashboardContext,
@@ -82,25 +85,44 @@ export function* drillToDashboardHandler(
     const enableMultipleDateFilters = yield select(selectEnableMultipleDateFilters);
     const includeOtherDateFilters = supportsMultipleDateFilters && enableMultipleDateFilters;
 
+    const allOtherFilters: ReturnType<typeof selectAllOtherFilters> = yield select(selectAllOtherFilters);
+    const allAttributeFilters: ReturnType<typeof selectAllAttributeFilters> = yield select(
+        selectAllAttributeFilters,
+    );
+
+    const widgetAwareFilters: GetWidgetAwareFiltersResult = !isDrillingToSelf
+        ? yield call(getWidgetAwareFilters, ctx, widget, includeOtherDateFilters)
+        : [];
+
     const dashboardFilters = isDrillingToSelf
         ? // if drilling to self, just take all filters
           includeOtherDateFilters
-            ? yield select(selectAllOtherFilters)
-            : yield select(selectAllAttributeFilters)
+            ? allOtherFilters
+            : allAttributeFilters
         : // if drilling to other, resolve widget filter ignores
-          yield call(getWidgetAwareFilters, ctx, widget, includeOtherDateFilters);
+          widgetAwareFilters;
 
     const dateAttributes: ReturnType<typeof selectCatalogDateAttributes> = yield select(
         selectCatalogDateAttributes,
     );
+
+    const enableDuplicatedLabelValuesInAttributeFilter: ReturnType<
+        typeof selectEnableDuplicatedLabelValuesInAttributeFilter
+    > = yield select(selectEnableDuplicatedLabelValuesInAttributeFilter);
+
     const drillIntersectionFilters = convertIntersectionToAttributeFilters(
         cmd.payload.drillEvent.drillContext.intersection!,
         dateAttributes.map((dA) => dA.attribute.ref),
         ctx.backend.capabilities.supportsElementUris ?? true,
+        enableDuplicatedLabelValuesInAttributeFilter,
     );
 
     // concat everything, order is important – drill filters must go first
-    const resultingFilters = compact([commonDateFilter, ...drillIntersectionFilters, ...dashboardFilters]);
+    const resultingFilters = compact([
+        commonDateFilter,
+        ...drillIntersectionFilters.map((f) => f.attributeFilter),
+        ...dashboardFilters,
+    ]);
 
     // put end event
     return drillToDashboardResolved(
@@ -136,11 +158,13 @@ function convertFilterItemsToFilters(
         : dashboardDateFilterToDateFilterByWidget(filter, widget);
 }
 
+type GetWidgetAwareFiltersResult = IAttributeFilter[];
+
 function* getWidgetAwareFilters(
     ctx: DashboardContext,
     widget: IInsightWidget,
     includeOtherDateFilters: boolean,
-): SagaIterator<IAttributeFilter[]> {
+): SagaIterator<GetWidgetAwareFiltersResult> {
     const filterContextItems: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
         includeOtherDateFilters ? selectFilterContextDraggableFilters : selectFilterContextAttributeFilters,
     );

@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import {
     DrillEventIntersectionElementHeader,
@@ -23,24 +23,40 @@ function filterIntersection(
     return ref ? !dateDataSetsAttributesRefs.some((ddsRef) => areObjRefsEqual(ddsRef, ref)) : false;
 }
 
+interface IConversionResult {
+    attributeFilter: IAttributeFilter;
+    primaryLabel?: ObjRef;
+}
+
 export function convertIntersectionToAttributeFilters(
     intersection: IDrillEventIntersectionElement[],
     dateDataSetsAttributesRefs: ObjRef[],
     backendSupportsElementUris: boolean,
-): IAttributeFilter[] {
+    enableDuplicatedLabelValuesInAttributeFilter: boolean,
+): IConversionResult[] {
     return intersection
         .map((i) => i.header)
         .filter((i: DrillEventIntersectionElementHeader) => filterIntersection(i, dateDataSetsAttributesRefs))
         .filter(isDrillIntersectionAttributeItem)
-        .map((h: IDrillIntersectionAttributeItem): IAttributeFilter => {
-            if (backendSupportsElementUris) {
-                return newPositiveAttributeFilter(h.attributeHeader.ref, {
-                    uris: [h.attributeHeaderItem.uri],
+        .reduce((result, h: IDrillIntersectionAttributeItem) => {
+            const ref = h.attributeHeader.ref;
+            if (backendSupportsElementUris || enableDuplicatedLabelValuesInAttributeFilter) {
+                result.push({
+                    attributeFilter: newPositiveAttributeFilter(ref, {
+                        uris: [h.attributeHeaderItem.uri],
+                    }),
+                    primaryLabel: h.attributeHeader.primaryLabel,
                 });
             } else {
-                return newPositiveAttributeFilter(h.attributeHeader.ref, {
-                    uris: [h.attributeHeaderItem.name],
+                result.push({
+                    attributeFilter: newPositiveAttributeFilter(ref, {
+                        uris: [h.attributeHeaderItem.name],
+                    }),
+                    ...(enableDuplicatedLabelValuesInAttributeFilter
+                        ? { primaryLabel: h.attributeHeader.primaryLabel }
+                        : {}),
                 });
             }
-        });
+            return result;
+        }, [] as IConversionResult[]);
 }

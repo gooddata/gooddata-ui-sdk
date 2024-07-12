@@ -628,6 +628,7 @@ export interface IAttributeDescriptorBody {
     labelType?: AttributeDisplayFormType;
     localIdentifier: string;
     name: string;
+    primaryLabel: ObjRef;
     ref: ObjRef;
     // (undocumented)
     totalItems?: ITotalDescriptor[];
