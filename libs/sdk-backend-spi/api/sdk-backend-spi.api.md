@@ -10,6 +10,7 @@ import { CatalogItemType } from '@gooddata/sdk-model';
 import { DataValue } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { FilterContextItem } from '@gooddata/sdk-model';
+import { GenAISemanticSearchType } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAccessGrantee } from '@gooddata/sdk-model';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
@@ -76,6 +77,7 @@ import { IResultHeader } from '@gooddata/sdk-model';
 import { IResultWarning } from '@gooddata/sdk-model';
 import { IScheduledMail } from '@gooddata/sdk-model';
 import { IScheduledMailDefinition } from '@gooddata/sdk-model';
+import { ISemanticSearchResultItem } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
@@ -224,6 +226,8 @@ export interface IAnalyticalWorkspace {
     // @alpha
     exportDefinitions(): IWorkspaceExportDefinitionsService;
     facts(): IWorkspaceFactsService;
+    // @alpha
+    genAI(): IGenAIService;
     getDescriptor(includeParentPrefixes?: boolean): Promise<IWorkspaceDescriptor>;
     getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined>;
     insights(): IWorkspaceInsightsService;
@@ -691,6 +695,14 @@ export interface IForecastView {
 }
 
 // @alpha
+export interface IGenAIService {
+    // (undocumented)
+    getSemanticSearchQuery(): ISemanticSearchQuery;
+    // (undocumented)
+    semanticSearchIndex(): Promise<void>;
+}
+
+// @alpha
 export interface IGetAutomationOptions {
     loadUserData?: boolean;
 }
@@ -996,6 +1008,21 @@ export function isElementsQueryOptionsElementsByPrimaryDisplayFormValue(obj: unk
 
 // @public
 export function isElementsQueryOptionsElementsByValue(obj: unknown): obj is IElementsQueryOptionsElementsByValue;
+
+// @alpha
+export interface ISemanticSearchQuery {
+    query(): Promise<ISemanticSearchResult>;
+    withDeepSearch(deepSearch: boolean): ISemanticSearchQuery;
+    withLimit(limit: number): ISemanticSearchQuery;
+    withObjectTypes(types: GenAISemanticSearchType[]): ISemanticSearchQuery;
+    withQuestion(question: string): ISemanticSearchQuery;
+}
+
+// @alpha
+export interface ISemanticSearchResult {
+    // (undocumented)
+    results: ISemanticSearchResultItem[];
+}
 
 // @public
 export function isLimitReached(obj: unknown): obj is LimitReached;

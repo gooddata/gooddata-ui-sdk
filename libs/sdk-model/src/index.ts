@@ -917,3 +917,5 @@ export {
     isAutomationUserGroupRecipient,
     isAutomationUserRecipient,
 } from "./automations/index.js";
+
+export { ISemanticSearchResultItem, GenAISemanticSearchType } from "./genAI/index.js";
