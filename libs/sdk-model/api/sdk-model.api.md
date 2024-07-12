@@ -495,6 +495,9 @@ export type ForecastDataValue = {
     loading: boolean;
 };
 
+// @alpha
+export type GenAISemanticSearchType = "workspace" | "dataset" | "attribute" | "label" | "fact" | "data" | "metric" | "visualization" | "dashboard";
+
 // @internal
 export function getAttributeElementsItems(attributeElements: IAttributeElements): Array<string | null>;
 
@@ -2709,6 +2712,18 @@ export function isDrillToInsight(obj: unknown): obj is IDrillToInsight;
 
 // @alpha
 export function isDrillToLegacyDashboard(obj: unknown): obj is IDrillToLegacyDashboard;
+
+// @alpha
+export interface ISemanticSearchResultItem {
+    // (undocumented)
+    description: string;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    title: string;
+    // (undocumented)
+    type: GenAISemanticSearchType;
+}
 
 // @public
 export interface ISeparators {

@@ -20,6 +20,7 @@ import { IWorkspaceExportDefinitionsService } from "./exportDefinitions/index.js
 import { IDataFiltersService } from "./dataFilter/index.js";
 import { IWorkspaceLogicalModelService } from "./ldm/model.js";
 import { IWorkspaceAutomationService } from "./automations/index.js";
+import { IGenAIService } from "./genAI/index.js";
 
 /**
  * Represents an analytical workspace hosted on a backend.
@@ -161,6 +162,12 @@ export interface IAnalyticalWorkspace {
      * @internal
      */
     logicalModel(): IWorkspaceLogicalModelService;
+
+    /**
+     * Returns service that can be used to access GenAI services.
+     * @alpha
+     */
+    genAI(): IGenAIService;
 }
 
 /**

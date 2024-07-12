@@ -15115,7 +15115,7 @@ export const tigerClientFactory: (axios: AxiosInstance) => ITigerClient;
 export const tigerEntitiesObjectsClientFactory: (axios: AxiosInstance) => EntitiesApiInterface;
 
 // @public
-export const tigerExecutionClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "computeReport">;
+export const tigerExecutionClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "computeReport" | "aiSearch">;
 
 // @public
 export const tigerExecutionResultClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "retrieveResult">;
