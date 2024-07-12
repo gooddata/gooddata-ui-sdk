@@ -357,7 +357,12 @@ function useInitOrReload(
 
         const change = resetOnParentFilterChange
             ? updateAutomaticResettingFilter(handler, props, supportsCircularDependencyInFilters)
-            : updateNonResettingFilter(handler, props, supportsKeepingDependentFiltersSelection);
+            : updateNonResettingFilter(
+                  handler,
+                  props,
+                  supportsKeepingDependentFiltersSelection,
+                  enableDuplicatedLabelValuesInAttributeFilter,
+              );
         refreshByType(handler, change, supportsKeepingDependentFiltersSelection);
     }, [
         filter,
@@ -386,11 +391,7 @@ function useInitOrReload(
 
     useEffect(() => {
         const originalFilterRef = filterObjRef(handler.getOriginalFilter());
-        const currentFilterToDisplayRef = filterObjRef(handler.getFilterToDisplay());
-        const currentFilterRef = filterObjRef(handler.getFilter());
-        const currentDisplayAsLabel = areObjRefsEqual(currentFilterRef, currentFilterToDisplayRef)
-            ? undefined
-            : currentFilterToDisplayRef;
+        const currentDisplayAsLabel = handler.getDisplayAsLabel();
 
         const isNotResettingToOrigin =
             currentDisplayAsLabel && !areObjRefsEqual(originalFilterRef, currentDisplayAsLabel);
@@ -463,6 +464,7 @@ function updateNonResettingFilter(
         displayAsLabel,
     }: UpdateFilterProps,
     supportsKeepingDependentFiltersSelection: boolean,
+    enableDuplicatedLabelValuesInAttributeFilter: boolean,
 ): UpdateFilterType {
     if (
         limitingAttributesChanged ||
@@ -492,9 +494,11 @@ function updateNonResettingFilter(
 
         const irrelevantKeysObj = shouldReinitilizeAllElements ? { irrelevantKeys: [] } : {};
         if (filterChanged || !supportsKeepingDependentFiltersSelection || shouldReinitilizeAllElements) {
-            const displayFormRef = filterObjRef(filter);
-            handler.setDisplayForm(displayFormRef);
-            handler.setDisplayAsLabel(displayAsLabel);
+            if (enableDuplicatedLabelValuesInAttributeFilter) {
+                const displayFormRef = filterObjRef(filter);
+                handler.setDisplayForm(displayFormRef);
+                handler.setDisplayAsLabel(displayAsLabel);
+            }
             handler.changeSelection({ keys, isInverted, ...irrelevantKeysObj });
             handler.commitSelection();
         }
@@ -553,8 +557,7 @@ function updateAutomaticResettingFilter(
 
         setConnectedPlaceholderValue(nextFilter);
 
-        const nextFilterToDisplay = handler.getFilterToDisplay();
-        const displayAsLabel = filterObjRef(nextFilterToDisplay);
+        const displayAsLabel = handler.getDisplayAsLabel();
         onApply?.(nextFilter, isInverted, selectionMode, [], displayAsLabel);
 
         return "init-parent";
@@ -697,8 +700,7 @@ function useCallbacks(
 
         setConnectedPlaceholderValue(nextFilter);
 
-        const nextFilterToDisplay = handler.getFilterToDisplay();
-        const displayAsLabel = filterObjRef(nextFilterToDisplay);
+        const displayAsLabel = handler.getDisplayAsLabel();
 
         if (enableDuplicatedLabelValuesInAttributeFilter) {
             const { attribute } = handlerState;

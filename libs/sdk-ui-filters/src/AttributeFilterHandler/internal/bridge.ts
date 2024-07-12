@@ -90,6 +90,7 @@ import {
     selectLimitingValidationItems,
     selectAttributeFilterToDisplay,
     selectOriginalFilter,
+    selectAttributeFilterDisplayAsLabel,
 } from "./redux/index.js";
 import { newAttributeFilterCallbacks } from "./callbacks.js";
 import { AttributeFilterHandlerConfig } from "./types.js";
@@ -391,6 +392,11 @@ export class AttributeFilterReduxBridge {
     setDisplayAsLabel = (displayAsLabel: ObjRef, correlation?: Correlation): void => {
         this.redux.dispatch(actions.setDisplayAsLabel({ displayAsLabel, correlation }));
     };
+
+    getDisplayAsLabel = (): ObjRef | undefined => {
+        return this.redux.select(selectAttributeFilterDisplayAsLabel);
+    };
+
     setDisplayForm = (displayForm: ObjRef, correlation?: Correlation): void => {
         this.redux.dispatch(actions.setDisplayFormRef({ displayForm, correlation }));
     };

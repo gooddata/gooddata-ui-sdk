@@ -360,6 +360,11 @@ export class AttributeFilterLoader implements IAttributeFilterLoader {
     setDisplayAsLabel = (displayAsLabel: ObjRef): void => {
         this.bridge.setDisplayAsLabel(displayAsLabel);
     };
+
+    getDisplayAsLabel = (): ObjRef | undefined => {
+        return this.bridge.getDisplayAsLabel();
+    };
+
     setDisplayForm = (label: ObjRef): void => {
         this.bridge.setDisplayForm(label);
     };
