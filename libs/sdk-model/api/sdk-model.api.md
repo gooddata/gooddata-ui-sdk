@@ -2727,13 +2727,9 @@ export function isDrillToLegacyDashboard(obj: unknown): obj is IDrillToLegacyDas
 
 // @alpha
 export interface ISemanticSearchResultItem {
-    // (undocumented)
     description: string;
-    // (undocumented)
     id: string;
-    // (undocumented)
     title: string;
-    // (undocumented)
     type: GenAISemanticSearchType;
 }
 

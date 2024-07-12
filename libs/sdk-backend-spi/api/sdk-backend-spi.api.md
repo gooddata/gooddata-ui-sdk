@@ -696,9 +696,7 @@ export interface IForecastView {
 
 // @alpha
 export interface IGenAIService {
-    // (undocumented)
     getSemanticSearchQuery(): ISemanticSearchQuery;
-    // (undocumented)
     semanticSearchIndex(): Promise<void>;
 }
 
