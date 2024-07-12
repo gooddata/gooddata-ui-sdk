@@ -610,5 +610,13 @@
     "gs.header.account.title": "Account",
     "visualization.cluster": "Cluster",
     "richText.placeholder": "Markdown-tekst hier toevoegen...",
-    "richText.tooltip": "U kunt markdown-syntaxis gebruiken om de beschrijving op te maken:"
+    "richText.tooltip": "U kunt markdown-syntaxis gebruiken om de beschrijving op te maken:",
+    "recurrence.starts": "Begint op",
+    "recurrence.repeats": "Herhaalt",
+    "recurrence.types.hourly": "Uurlijks",
+    "recurrence.types.daily": "Dagelijks",
+    "recurrence.types.weekly": "Wekelijks op {day}",
+    "recurrence.types.monthly.last": "Maandelijks op de laatste {day}",
+    "recurrence.types.monthly": "Maandelijks op de {week, select, 1 {eerste} 2 {tweede} 3 {derde} 4 {vierde} other {laatste}} {day}",
+    "recurrence.types.cron": "Cron-uitdrukking"
 }

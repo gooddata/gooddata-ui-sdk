@@ -567,6 +567,48 @@
                 }
             }
         },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/search": {
+            "post": {
+                "tags": ["Smart Functions", "actions"],
+                "summary": "(BETA) Semantic Search in Metadata",
+                "description": "(BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.",
+                "operationId": "aiSearch",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SearchRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SearchResult"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/actions/workspaces/{workspaceId}/execution/functions/forecast/result/{resultId}": {
             "get": {
                 "tags": ["Smart Functions", "actions"],
@@ -2363,7 +2405,7 @@
                         "type": "string",
                         "description": "Aggregation function to compute the total.",
                         "example": "SUM",
-                        "enum": ["SUM", "MIN", "MAX", "AVG", "MED"]
+                        "enum": ["SUM", "MIN", "MAX", "AVG", "MED", "NATIVE"]
                     },
                     "metric": {
                         "type": "string",
@@ -2497,6 +2539,12 @@
                         "items": {
                             "$ref": "#/components/schemas/MeasureHeaderOut"
                         }
+                    },
+                    "first": {
+                        "$ref": "#/components/schemas/MeasureHeaderOut"
+                    },
+                    "last": {
+                        "$ref": "#/components/schemas/MeasureHeaderOut"
                     }
                 }
             },
@@ -2605,6 +2653,69 @@
                     }
                 },
                 "description": "Entity describing the valid descendants response."
+            },
+            "SearchRequest": {
+                "required": ["question"],
+                "type": "object",
+                "properties": {
+                    "question": {
+                        "type": "string",
+                        "description": "Keyword/sentence is input for search."
+                    },
+                    "objectTypes": {
+                        "type": "array",
+                        "description": "List of object types to search for.",
+                        "items": {
+                            "type": "string",
+                            "description": "Object type to search for.",
+                            "enum": [
+                                "attribute",
+                                "metric",
+                                "fact",
+                                "label",
+                                "date",
+                                "dataset",
+                                "visualization",
+                                "dashboard"
+                            ]
+                        }
+                    },
+                    "deepSearch": {
+                        "type": "boolean",
+                        "description": "Turn on deep search. If true, content of complex objects will be searched as well, e.g. metrics in visualizations.",
+                        "default": false
+                    }
+                }
+            },
+            "SearchResult": {
+                "required": ["results"],
+                "type": "object",
+                "properties": {
+                    "results": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SearchResultObject"
+                        }
+                    }
+                }
+            },
+            "SearchResultObject": {
+                "required": ["description", "id", "title", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                }
             },
             "ForecastResult": {
                 "required": ["attribute", "lowerBound", "origin", "prediction", "upperBound"],

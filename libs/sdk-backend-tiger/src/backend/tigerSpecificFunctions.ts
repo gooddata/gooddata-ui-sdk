@@ -33,6 +33,7 @@ import {
     JsonApiDataSourceInAttributesTypeEnum,
     JsonApiDataSourceInDocument,
     JsonApiDataSourceInTypeEnum,
+    JsonApiDataSourceOutAttributesAuthenticationTypeEnum,
     JsonApiDataSourceOutDocument,
     jsonApiHeaders,
     JsonApiNotificationChannelOut,
@@ -138,8 +139,7 @@ export interface IDataSourceConnectionInfo {
     parameters?: Array<DataSourceParameter> | null;
     decodedParameters?: Array<DataSourceParameter> | null;
     cacheStrategy?: IDataSourceCacheStrategy;
-    privateKey?: string;
-    privateKeyPassphrase?: string;
+    authenticationType?: JsonApiDataSourceOutAttributesAuthenticationTypeEnum;
 }
 
 /**
@@ -174,16 +174,16 @@ export interface IDataSourceUpsertRequest {
 export interface IDataSourcePatchRequest {
     id: string;
     name?: string;
-    password?: string;
+    password?: string | null;
     schema?: string;
-    token?: string;
+    token?: string | null;
     type?: IDataSourceType;
     url?: string;
     username?: string;
     parameters?: Array<DataSourceParameter>;
     cacheStrategy?: IDataSourceCacheStrategy;
-    privateKey?: string;
-    privateKeyPassphrase?: string;
+    privateKey?: string | null;
+    privateKeyPassphrase?: string | null;
 }
 
 /**
@@ -564,7 +564,17 @@ const dataSourceResponseAsDataSourceConnectionInfo = (
     response: JsonApiDataSourceOutDocument,
 ): IDataSourceConnectionInfo => {
     const { id, meta, attributes } = response.data;
-    const { name, url, type, schema, username, parameters, decodedParameters, cacheStrategy } = attributes;
+    const {
+        name,
+        url,
+        type,
+        schema,
+        username,
+        parameters,
+        decodedParameters,
+        cacheStrategy,
+        authenticationType,
+    } = attributes;
     return {
         id,
         type,
@@ -576,6 +586,7 @@ const dataSourceResponseAsDataSourceConnectionInfo = (
         parameters,
         decodedParameters,
         cacheStrategy,
+        authenticationType,
     };
 };
 

@@ -397,6 +397,16 @@ export interface ISettings {
      */
     enableRichTextDescriptions?: boolean;
 
+    /**
+     * Enables scheduling of the dashboard pdf export.
+     */
+    enableScheduling?: boolean;
+
+    /**
+     * Enables rollup (native) totals.
+     */
+    enableRollupTotals?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

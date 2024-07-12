@@ -50,6 +50,9 @@ export type ActionType = "LinkButton" | "Button" | "Switcher";
 export function activateHeaderMenuItems(items: IHeaderMenuItem[][], ids: Array<string>): IHeaderMenuItem[][];
 
 // @internal (undocumented)
+export const AddButton: React_2.FC<IAddButtonProps>;
+
+// @internal (undocumented)
 export const AddGranteeBase: React_2.FC<IAddGranteeBaseProps>;
 
 // @internal (undocumented)
@@ -312,7 +315,9 @@ export class ConfirmDialogBase extends DialogBase<IConfirmDialogBaseProps> {
 }
 
 // @internal (undocumented)
-export const ContentDivider: React_2.FC;
+export const ContentDivider: React_2.FC<{
+    className?: string;
+}>;
 
 // @internal (undocumented)
 export type CopyCodeOriginType = "keyboard" | "button";
@@ -736,6 +741,22 @@ export const HubspotConversionTouchPointDialog: React_2.FC<IHubspotConversionTou
 
 // @internal
 export const Hyperlink: React_2.FC<IHyperlinkProps>;
+
+// @internal (undocumented)
+export interface IAddButtonProps {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    isDisabled?: boolean;
+    // (undocumented)
+    onClick?: () => void;
+    // (undocumented)
+    title: JSX.Element;
+    // (undocumented)
+    tooltip?: JSX.Element;
+    // (undocumented)
+    tooltipAlignPoints?: IAlignPoint[];
+}
 
 // @internal (undocumented)
 export interface IAddGranteeBaseProps {
@@ -3335,6 +3356,8 @@ export interface IReactOptions {
 
 // @internal (undocumented)
 export interface IRecurrenceFormProps {
+    // (undocumented)
+    allowHourlyRecurrence?: boolean;
     // (undocumented)
     className?: string;
     // (undocumented)

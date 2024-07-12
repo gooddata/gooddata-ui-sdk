@@ -610,5 +610,13 @@
     "gs.header.account.title": "Compte",
     "visualization.cluster": "Groupement d'entreprises",
     "richText.placeholder": "Ajoutez ici du texte en format markdown...",
-    "richText.tooltip": "Vous pouvez utiliser la syntaxe Markdown pour styliser la description :"
+    "richText.tooltip": "Vous pouvez utiliser la syntaxe Markdown pour styliser la description :",
+    "recurrence.starts": "Débute la",
+    "recurrence.repeats": "Se répète",
+    "recurrence.types.hourly": "Toutes les heures",
+    "recurrence.types.daily": "Quotidiennement",
+    "recurrence.types.weekly": "Hebdomadairement le{day}",
+    "recurrence.types.monthly.last": "Mensuellement sur le dernier {day}",
+    "recurrence.types.monthly": "Mensuellement le {week, select, 1 {premier} 2 {deuxième} 3 {troisième} 4 {quatrième} other {dernier}} {day}",
+    "recurrence.types.cron": "Expression Cron"
 }

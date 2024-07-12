@@ -1,20 +1,18 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 
 import { IntlShape } from "react-intl";
 import { isDashboardAttachment, isWidgetAttachment, ScheduledMailAttachment } from "@gooddata/sdk-model";
 import { Icon } from "@gooddata/sdk-ui-kit";
 import compact from "lodash/compact.js";
 
-export const getRecipientsLabel = (intl: IntlShape, recipients: string[], currentUserEmail?: string) => {
+export const getRecipientsLabel = (intl: IntlShape, recipients: string[]) => {
     const numberOfRecipients = recipients.length;
-    return numberOfRecipients === 1 && recipients[0] === currentUserEmail
-        ? intl.formatMessage({ id: "dialogs.schedule.management.recipients.onlyYou" })
-        : intl.formatMessage(
-              {
-                  id: "dialogs.schedule.management.recipients",
-              },
-              { n: numberOfRecipients },
-          );
+    return intl.formatMessage(
+        {
+            id: "dialogs.schedule.management.recipients",
+        },
+        { n: numberOfRecipients },
+    );
 };
 
 export const getAttachmentType = (intl: IntlShape, attachments: ScheduledMailAttachment[]) => {
@@ -52,4 +50,12 @@ export const getFormatsLabel = (attachments: ScheduledMailAttachment[]) => {
     const hasXlsxFormat = widgetAttachments.some((attachment) => attachment.formats.includes("xlsx"));
 
     return compact([hasPdfFormat && "PDF", hasCsvFormat && "CSV", hasXlsxFormat && "XLSX"]).join(", ");
+};
+
+/**
+ * In order to match backend format, we need to remove milliseconds from the date.
+ * Otherwise comparing newly created dates (as ISO string) with ISO dates from backend will fail.
+ */
+export const toModifiedISOString = (date: Date) => {
+    return date.toISOString().split(".")[0] + "Z";
 };

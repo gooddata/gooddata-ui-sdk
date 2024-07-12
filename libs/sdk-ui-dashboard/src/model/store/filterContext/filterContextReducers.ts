@@ -445,6 +445,7 @@ export interface IChangeAttributeDisplayFormPayload {
     readonly filterLocalId: string;
     readonly displayForm: ObjRef;
     readonly supportsElementUris?: boolean;
+    readonly enableDuplicatedLabelValuesInAttributeFilter?: boolean;
 }
 
 /**
@@ -456,7 +457,8 @@ const changeAttributeDisplayForm: FilterContextReducer<PayloadAction<IChangeAttr
 ) => {
     invariant(state.filterContextDefinition, "Attempt to edit uninitialized filter context");
 
-    const { filterLocalId, displayForm, supportsElementUris } = action.payload;
+    const { filterLocalId, displayForm, supportsElementUris, enableDuplicatedLabelValuesInAttributeFilter } =
+        action.payload;
 
     const currentFilterIndex = state.filterContextDefinition.filters.findIndex(
         (item) => isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
@@ -471,7 +473,7 @@ const changeAttributeDisplayForm: FilterContextReducer<PayloadAction<IChangeAttr
     currentFilter.attributeFilter.displayForm = { ...displayForm };
     const isMultiSelect = currentFilter.attributeFilter.selectionMode !== "single";
 
-    if (!supportsElementUris) {
+    if (!supportsElementUris && !enableDuplicatedLabelValuesInAttributeFilter) {
         currentFilter.attributeFilter.negativeSelection = isMultiSelect;
         currentFilter.attributeFilter.attributeElements = isAttributeElementsByRef(
             currentFilter.attributeFilter.attributeElements,

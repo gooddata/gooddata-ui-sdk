@@ -610,5 +610,13 @@
     "gs.header.account.title": "アカウント",
     "visualization.cluster": "クラスタ",
     "richText.placeholder": "ここにマークダウンテキストを追加する...",
-    "richText.tooltip": "Markdown構文を使って、説明文のスタイルを設定することができます："
+    "richText.tooltip": "Markdown構文を使って、説明文のスタイルを設定することができます：",
+    "recurrence.starts": "開始日：",
+    "recurrence.repeats": "反復",
+    "recurrence.types.hourly": "/時",
+    "recurrence.types.daily": "/日",
+    "recurrence.types.weekly": "毎週 {day}",
+    "recurrence.types.monthly.last": "毎月最後の{day}",
+    "recurrence.types.monthly": "毎月 {week, select, 1 { 1番目の} 2 {、2 番目の} 3 {、3 番目の} 4 {、4 番目の} other {、最後の}} {day}",
+    "recurrence.types.cron": "クロン式"
 }

@@ -160,6 +160,16 @@ export interface IAttributeElementLoader {
     cancelIrrelevantElementsLoad(correlation?: Correlation): void;
 
     /**
+     * Set attribute's display form
+     */
+    setDisplayForm(displayForm: ObjRef): void;
+
+    /**
+     * Set the label used for representing the attribute filter elements visually.
+     */
+    setDisplayAsLabel(displayAsLabel: ObjRef): void;
+
+    /**
      * Set the limit for the upcoming attribute element loads.
      *
      * @remarks

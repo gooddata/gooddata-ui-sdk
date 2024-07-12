@@ -6,9 +6,12 @@ import {
     areObjRefsEqual,
     DashboardAttributeFilterConfigModeValues,
     DashboardDateFilterConfigModeValues,
+    FilterContextItem,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
     isAllTimeDashboardDateFilter,
+    isDashboardAttributeFilter,
+    ObjRef,
     objRefToString,
     serializeObjRef,
 } from "@gooddata/sdk-model";
@@ -30,6 +33,10 @@ import {
     selectCanAddMoreFilters,
     selectCatalogDateDatasets,
     selectEffectiveDateFiltersModeMap,
+    selectAttributeFilterConfigsDisplayAsLabelMap,
+    selectEnableDuplicatedLabelValuesInAttributeFilter,
+    setAttributeFilterDisplayForm,
+    setDashboardAttributeFilterConfigDisplayAsLabel,
 } from "../../../model/index.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 import {
@@ -60,14 +67,46 @@ import { ResetFiltersButton } from "./ResetFiltersButton.js";
 export const useFilterBarProps = (): IFilterBarProps => {
     const filters = useDashboardSelector(selectFilterContextFilters);
     const supportElementUris = useDashboardSelector(selectSupportsElementUris);
+    const enableDuplicatedLabelValuesInAttributeFilter = useDashboardSelector(
+        selectEnableDuplicatedLabelValuesInAttributeFilter,
+    );
 
     const dispatch = useDashboardDispatch();
     const onAttributeFilterChanged = useCallback(
-        (filter: IDashboardAttributeFilter) => {
+        (filter: IDashboardAttributeFilter, displayAsLabel?: ObjRef) => {
             const convertedFilter = supportElementUris
                 ? filter
                 : convertDashboardAttributeFilterElementsValuesToUris(filter);
             const { attributeElements, negativeSelection, localIdentifier } = convertedFilter.attributeFilter;
+            if (enableDuplicatedLabelValuesInAttributeFilter) {
+                const getCurrentFilter = (
+                    existingFilter: FilterContextItem[],
+                    filterLocalId: string | undefined,
+                ) => {
+                    return existingFilter
+                        .filter(isDashboardAttributeFilter)
+                        .find(
+                            (existingFilter) =>
+                                existingFilter.attributeFilter.localIdentifier === filterLocalId,
+                        );
+                };
+                const currentFilter = getCurrentFilter(filters, localIdentifier);
+                if (
+                    !areObjRefsEqual(
+                        filter.attributeFilter.displayForm,
+                        currentFilter?.attributeFilter.displayForm,
+                    )
+                ) {
+                    dispatch(
+                        setAttributeFilterDisplayForm(localIdentifier!, filter.attributeFilter.displayForm),
+                    );
+                }
+                if (displayAsLabel) {
+                    dispatch(
+                        setDashboardAttributeFilterConfigDisplayAsLabel(localIdentifier!, displayAsLabel),
+                    );
+                }
+            }
 
             dispatch(
                 changeAttributeFilterSelection(
@@ -129,6 +168,9 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
     const dateFilterOptions = useDashboardSelector(selectEffectiveDateFilterOptions);
     const commonDateFilterMode = useDashboardSelector(selectEffectiveDateFilterMode);
     const attributeFiltersModeMap = useDashboardSelector(selectEffectiveAttributeFiltersModeMap);
+    const attributeFiltersDisplayAsLabelMap = useDashboardSelector(
+        selectAttributeFilterConfigsDisplayAsLabelMap,
+    );
     const dateFiltersModeMap = useDashboardSelector(selectEffectiveDateFiltersModeMap);
     const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
 
@@ -204,6 +246,9 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                     const attributeFilterMode = attributeFiltersModeMap.get(
                         filter.attributeFilter.localIdentifier!,
                     );
+                    const displayAsLabel = attributeFiltersDisplayAsLabelMap.get(
+                        filter.attributeFilter.localIdentifier!,
+                    );
 
                     /**
                      * Use the attribute as key, not the display form.
@@ -231,6 +276,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
                             readonly={
                                 attributeFilterMode === DashboardAttributeFilterConfigModeValues.READONLY
                             }
+                            displayAsLabel={displayAsLabel}
                             FilterComponent={CustomAttributeFilterComponent}
                             onAttributeFilterChanged={onAttributeFilterChanged}
                             onAttributeFilterAdded={addDraggableFilterPlaceholder}

@@ -1,6 +1,11 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { ComponentType } from "react";
-import { IScheduledMail, IScheduledMailDefinition, IWorkspaceUser } from "@gooddata/sdk-model";
+import {
+    IAutomationMetadataObject,
+    IAutomationMetadataObjectDefinition,
+    IWebhookMetadataObject,
+    IWorkspaceUser,
+} from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 ///
@@ -19,12 +24,14 @@ export interface IScheduledEmailDialogProps {
     /**
      * Callback to be called, when user submits the scheduled email dialog.
      */
-    onSubmit?: (scheduledEmailDefinition: IScheduledMailDefinition) => void;
+    onSubmit?: (
+        scheduledEmailDefinition: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
+    ) => void;
 
     /**
      * Callback to be called, when user save the existing scheduled email.
      */
-    onSave?: (scheduledEmailDefinition: IScheduledMailDefinition) => void;
+    onSave?: (scheduledEmailDefinition: IAutomationMetadataObject) => void;
 
     /**
      * Callback to be called, when user closes the scheduled email dialog.
@@ -52,14 +59,34 @@ export interface IScheduledEmailDialogProps {
     onSaveSuccess?: () => void;
 
     /**
+     * Callback to be called, when scheduled email is deleted.
+     */
+    onDeleteSuccess?: () => void;
+
+    /**
+     * Callback to be called, when schedule fails to delete.
+     */
+    onDeleteError?: (error: GoodDataSdkError) => void;
+
+    /**
      * Schedule to be edited in the dialog.
      */
-    editSchedule?: IScheduledMail;
+    editSchedule?: IAutomationMetadataObject;
 
     /**
      * Users in workspace
      */
     users: IWorkspaceUser[];
+
+    /**
+     * Webhooks in organization
+     */
+    webhooks: IWebhookMetadataObject[];
+
+    /**
+     * Automations in workspace
+     */
+    automations: IAutomationMetadataObject[];
 }
 
 /**
@@ -79,7 +106,7 @@ export interface IScheduledEmailManagementDialogProps {
     /**
      * Callback to be called, when user clicks scheduled email item for editing.
      */
-    onEdit?: (scheduledMail: IScheduledMail, users: IWorkspaceUser[]) => void;
+    onEdit?: (scheduledMail: IAutomationMetadataObject) => void;
 
     /**
      * Callback to be called, when user closes the scheduled email management dialog.
@@ -87,14 +114,29 @@ export interface IScheduledEmailManagementDialogProps {
     onClose?: () => void;
 
     /**
+     * Is loading schedule data?
+     */
+    isLoadingScheduleData: boolean;
+
+    /**
+     * Error occurred while loading schedule data?
+     */
+    scheduleDataError?: GoodDataSdkError;
+
+    /**
+     * Webhooks in organization
+     */
+    webhooks: IWebhookMetadataObject[];
+
+    /**
+     * Automations in workspace
+     */
+    automations: IAutomationMetadataObject[];
+
+    /**
      * Callback to be called, when scheduled email is deleted.
      */
     onDeleteSuccess?: () => void;
-
-    /**
-     * Callback to be called, when emails fail to load.
-     */
-    onLoadError?: (error: GoodDataSdkError) => void;
 
     /**
      * Callback to be called, when schedule fails to delete.

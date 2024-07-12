@@ -72,6 +72,7 @@ import {
     IOrganizationNotificationChannelService,
     IClusteringConfig,
     IWorkspaceAutomationService,
+    IGenAIService,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -363,6 +364,9 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
         },
         automations(): IWorkspaceAutomationService {
             throw new NotSupported("automations are not supported");
+        },
+        genAI(): IGenAIService {
+            throw new NotSupported("not supported");
         },
     };
 }

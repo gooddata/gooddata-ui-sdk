@@ -10,6 +10,7 @@ import {
     DEFAULT_DROPDOWN_WIDTH,
     DEFAULT_DROPDOWN_ZINDEX,
     RECURRENCE_TYPES,
+    RECURRENCE_TYPES_WITHOUT_HOURS,
 } from "./constants.js";
 import { getWeekNumber, getIntlDayName, isLastOccurrenceOfWeekdayInMonth } from "./utils.js";
 import { messages } from "./locales.js";
@@ -37,13 +38,18 @@ const getLocalizationKey = (id: RecurrenceType): MessageDescriptor => {
     }
 };
 
-const getRepeatItems = (intl: IntlShape, startDate: Date): IDropdownItem[] => {
+const getRepeatItems = (
+    intl: IntlShape,
+    startDate: Date,
+    allowHourlyRecurrence?: boolean,
+): IDropdownItem[] => {
     const isLastOccurenceOfWeekDay = isLastOccurrenceOfWeekdayInMonth(startDate);
+    const recurrenceTypes = allowHourlyRecurrence ? RECURRENCE_TYPES : RECURRENCE_TYPES_WITHOUT_HOURS;
 
-    return Object.values(RECURRENCE_TYPES).map((id): IDropdownItem => {
+    return Object.values(recurrenceTypes).map((id): IDropdownItem => {
         const localizationKey = getLocalizationKey(id);
 
-        if (id === RECURRENCE_TYPES.MONTHLY && isLastOccurenceOfWeekDay) {
+        if (id === recurrenceTypes.MONTHLY && isLastOccurenceOfWeekDay) {
             return {
                 id,
                 title: intl.formatMessage(messages.recurrence_monthly_last, {
@@ -66,12 +72,13 @@ export interface IRepeatTypeSelectProps {
     repeatType: RecurrenceType;
     startDate: Date;
     onChange: (repeatType: string) => void;
+    allowHourlyRecurrence?: boolean;
 }
 
 export const RepeatTypeSelect: React.FC<IRepeatTypeSelectProps> = (props) => {
-    const { onChange, repeatType, startDate } = props;
+    const { onChange, repeatType, startDate, allowHourlyRecurrence } = props;
     const intl = useIntl();
-    const repeatItems = getRepeatItems(intl, startDate);
+    const repeatItems = getRepeatItems(intl, startDate, allowHourlyRecurrence);
     const repeatTypeItem = repeatItems.find((item) => item.id === repeatType);
 
     invariant(repeatTypeItem, "Inconsistent state in RepeatTypeSelect");

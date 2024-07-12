@@ -1,3 +1,5 @@
+// (C) 2024 GoodData Corporation
+
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -1663,6 +1665,18 @@ export interface MeasureGroupHeaders {
      * @memberof MeasureGroupHeaders
      */
     measureGroupHeaders?: Array<MeasureHeaderOut>;
+    /**
+     *
+     * @type {MeasureHeaderOut}
+     * @memberof MeasureGroupHeaders
+     */
+    first?: MeasureHeaderOut;
+    /**
+     *
+     * @type {MeasureHeaderOut}
+     * @memberof MeasureGroupHeaders
+     */
+    last?: MeasureHeaderOut;
 }
 /**
  *
@@ -2230,6 +2244,90 @@ export interface ResultSpec {
 /**
  *
  * @export
+ * @interface SearchRequest
+ */
+export interface SearchRequest {
+    /**
+     * Keyword/sentence is input for search.
+     * @type {string}
+     * @memberof SearchRequest
+     */
+    question: string;
+    /**
+     * List of object types to search for.
+     * @type {Array<string>}
+     * @memberof SearchRequest
+     */
+    objectTypes?: Array<SearchRequestObjectTypesEnum>;
+    /**
+     * Turn on deep search. If true, content of complex objects will be searched as well, e.g. metrics in visualizations.
+     * @type {boolean}
+     * @memberof SearchRequest
+     */
+    deepSearch?: boolean;
+}
+
+export const SearchRequestObjectTypesEnum = {
+    ATTRIBUTE: "attribute",
+    METRIC: "metric",
+    FACT: "fact",
+    LABEL: "label",
+    DATE: "date",
+    DATASET: "dataset",
+    VISUALIZATION: "visualization",
+    DASHBOARD: "dashboard",
+} as const;
+
+export type SearchRequestObjectTypesEnum =
+    typeof SearchRequestObjectTypesEnum[keyof typeof SearchRequestObjectTypesEnum];
+
+/**
+ *
+ * @export
+ * @interface SearchResult
+ */
+export interface SearchResult {
+    /**
+     *
+     * @type {Array<SearchResultObject>}
+     * @memberof SearchResult
+     */
+    results: Array<SearchResultObject>;
+}
+/**
+ *
+ * @export
+ * @interface SearchResultObject
+ */
+export interface SearchResultObject {
+    /**
+     *
+     * @type {string}
+     * @memberof SearchResultObject
+     */
+    id: string;
+    /**
+     *
+     * @type {string}
+     * @memberof SearchResultObject
+     */
+    type: string;
+    /**
+     *
+     * @type {string}
+     * @memberof SearchResultObject
+     */
+    title: string;
+    /**
+     *
+     * @type {string}
+     * @memberof SearchResultObject
+     */
+    description: string;
+}
+/**
+ *
+ * @export
  * @interface SimpleMeasureDefinition
  */
 export interface SimpleMeasureDefinition {
@@ -2487,6 +2585,7 @@ export const TotalFunctionEnum = {
     MAX: "MAX",
     AVG: "AVG",
     MED: "MED",
+    NATIVE: "NATIVE",
 } as const;
 
 export type TotalFunctionEnum = typeof TotalFunctionEnum[keyof typeof TotalFunctionEnum];
@@ -2562,6 +2661,58 @@ export interface ValidateByItem {
  */
 export const ActionsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+         * @summary (BETA) Semantic Search in Metadata
+         * @param {string} workspaceId Workspace identifier
+         * @param {SearchRequest} searchRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiSearch: async (
+            workspaceId: string,
+            searchRequest: SearchRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("aiSearch", "workspaceId", workspaceId);
+            // verify required parameter 'searchRequest' is not null or undefined
+            assertParamExists("aiSearch", "searchRequest", searchRequest);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/search`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof searchRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(searchRequest !== undefined ? searchRequest : {})
+                : searchRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * (EXPERIMENTAL) Computes anomaly detection.
          * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
@@ -3463,6 +3614,26 @@ export const ActionsApiFp = function (configuration?: Configuration) {
     const localVarAxiosParamCreator = ActionsApiAxiosParamCreator(configuration);
     return {
         /**
+         * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+         * @summary (BETA) Semantic Search in Metadata
+         * @param {string} workspaceId Workspace identifier
+         * @param {SearchRequest} searchRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async aiSearch(
+            workspaceId: string,
+            searchRequest: SearchRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.aiSearch(
+                workspaceId,
+                searchRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * (EXPERIMENTAL) Computes anomaly detection.
          * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
          * @param {string} workspaceId Workspace identifier
@@ -3859,6 +4030,21 @@ export const ActionsApiFactory = function (
     const localVarFp = ActionsApiFp(configuration);
     return {
         /**
+         * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+         * @summary (BETA) Semantic Search in Metadata
+         * @param {ActionsApiAiSearchRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiSearch(
+            requestParameters: ActionsApiAiSearchRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<SearchResult> {
+            return localVarFp
+                .aiSearch(requestParameters.workspaceId, requestParameters.searchRequest, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * (EXPERIMENTAL) Computes anomaly detection.
          * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
          * @param {ActionsApiAnomalyDetectionRequest} requestParameters Request parameters.
@@ -4173,6 +4359,19 @@ export const ActionsApiFactory = function (
  */
 export interface ActionsApiInterface {
     /**
+     * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+     * @summary (BETA) Semantic Search in Metadata
+     * @param {ActionsApiAiSearchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    aiSearch(
+        requestParameters: ActionsApiAiSearchRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<SearchResult>;
+
+    /**
      * (EXPERIMENTAL) Computes anomaly detection.
      * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
      * @param {ActionsApiAnomalyDetectionRequest} requestParameters Request parameters.
@@ -4366,6 +4565,27 @@ export interface ActionsApiInterface {
         requestParameters: ActionsApiRetrieveResultRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<ExecutionResult>;
+}
+
+/**
+ * Request parameters for aiSearch operation in ActionsApi.
+ * @export
+ * @interface ActionsApiAiSearchRequest
+ */
+export interface ActionsApiAiSearchRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiAiSearch
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {SearchRequest}
+     * @memberof ActionsApiAiSearch
+     */
+    readonly searchRequest: SearchRequest;
 }
 
 /**
@@ -4868,6 +5088,20 @@ export interface ActionsApiRetrieveResultRequest {
  * @extends {BaseAPI}
  */
 export class ActionsApi extends BaseAPI implements ActionsApiInterface {
+    /**
+     * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+     * @summary (BETA) Semantic Search in Metadata
+     * @param {ActionsApiAiSearchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public aiSearch(requestParameters: ActionsApiAiSearchRequest, options?: AxiosRequestConfig) {
+        return ActionsApiFp(this.configuration)
+            .aiSearch(requestParameters.workspaceId, requestParameters.searchRequest, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * (EXPERIMENTAL) Computes anomaly detection.
      * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
@@ -6776,6 +7010,58 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
 export const SmartFunctionsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+         * @summary (BETA) Semantic Search in Metadata
+         * @param {string} workspaceId Workspace identifier
+         * @param {SearchRequest} searchRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiSearch: async (
+            workspaceId: string,
+            searchRequest: SearchRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("aiSearch", "workspaceId", workspaceId);
+            // verify required parameter 'searchRequest' is not null or undefined
+            assertParamExists("aiSearch", "searchRequest", searchRequest);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/search`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof searchRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(searchRequest !== undefined ? searchRequest : {})
+                : searchRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * (EXPERIMENTAL) Computes anomaly detection.
          * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
          * @param {string} workspaceId Workspace identifier
@@ -7140,6 +7426,26 @@ export const SmartFunctionsApiFp = function (configuration?: Configuration) {
     const localVarAxiosParamCreator = SmartFunctionsApiAxiosParamCreator(configuration);
     return {
         /**
+         * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+         * @summary (BETA) Semantic Search in Metadata
+         * @param {string} workspaceId Workspace identifier
+         * @param {SearchRequest} searchRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async aiSearch(
+            workspaceId: string,
+            searchRequest: SearchRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.aiSearch(
+                workspaceId,
+                searchRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * (EXPERIMENTAL) Computes anomaly detection.
          * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
          * @param {string} workspaceId Workspace identifier
@@ -7310,6 +7616,21 @@ export const SmartFunctionsApiFactory = function (
     const localVarFp = SmartFunctionsApiFp(configuration);
     return {
         /**
+         * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+         * @summary (BETA) Semantic Search in Metadata
+         * @param {SmartFunctionsApiAiSearchRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiSearch(
+            requestParameters: SmartFunctionsApiAiSearchRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<SearchResult> {
+            return localVarFp
+                .aiSearch(requestParameters.workspaceId, requestParameters.searchRequest, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * (EXPERIMENTAL) Computes anomaly detection.
          * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
          * @param {SmartFunctionsApiAnomalyDetectionRequest} requestParameters Request parameters.
@@ -7445,6 +7766,19 @@ export const SmartFunctionsApiFactory = function (
  */
 export interface SmartFunctionsApiInterface {
     /**
+     * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+     * @summary (BETA) Semantic Search in Metadata
+     * @param {SmartFunctionsApiAiSearchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    aiSearch(
+        requestParameters: SmartFunctionsApiAiSearchRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<SearchResult>;
+
+    /**
      * (EXPERIMENTAL) Computes anomaly detection.
      * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection
      * @param {SmartFunctionsApiAnomalyDetectionRequest} requestParameters Request parameters.
@@ -7521,6 +7855,27 @@ export interface SmartFunctionsApiInterface {
         requestParameters: SmartFunctionsApiForecastResultRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<ForecastResult>;
+}
+
+/**
+ * Request parameters for aiSearch operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiAiSearchRequest
+ */
+export interface SmartFunctionsApiAiSearchRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiAiSearch
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {SearchRequest}
+     * @memberof SmartFunctionsApiAiSearch
+     */
+    readonly searchRequest: SearchRequest;
 }
 
 /**
@@ -7740,6 +8095,20 @@ export interface SmartFunctionsApiForecastResultRequest {
  * @extends {BaseAPI}
  */
 export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInterface {
+    /**
+     * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
+     * @summary (BETA) Semantic Search in Metadata
+     * @param {SmartFunctionsApiAiSearchRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public aiSearch(requestParameters: SmartFunctionsApiAiSearchRequest, options?: AxiosRequestConfig) {
+        return SmartFunctionsApiFp(this.configuration)
+            .aiSearch(requestParameters.workspaceId, requestParameters.searchRequest, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * (EXPERIMENTAL) Computes anomaly detection.
      * @summary (EXPERIMENTAL) Smart functions - Anomaly Detection

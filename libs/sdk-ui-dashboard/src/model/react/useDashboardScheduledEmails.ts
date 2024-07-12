@@ -1,20 +1,21 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 
 import { useCallback, useState } from "react";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
-import { IScheduledMail, IWorkspaceUser, ObjRef } from "@gooddata/sdk-model";
+import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 
 import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider.js";
 import {
-    selectCanCreateScheduledMail,
+    selectCanExportPdf,
+    selectCanManageWorkspace,
     selectDashboardRef,
-    selectEnableInsightExportScheduling,
-    selectEnableKPIDashboardSchedule,
+    selectEnableScheduling,
     selectIsInViewMode,
     selectIsReadOnly,
     selectIsScheduleEmailDialogOpen,
     selectIsScheduleEmailManagementDialogOpen,
     selectMenuButtonItemsVisibility,
+    selectWebhooks,
     uiActions,
 } from "../store/index.js";
 
@@ -25,7 +26,7 @@ import { messages } from "../../locales.js";
  *
  * @alpha
  */
-export const useDashboardScheduledEmails = () => {
+export const useDashboardScheduledEmails = ({ onReload }: { onReload?: () => void } = {}) => {
     const { addSuccess, addError } = useToastMessage();
     const isScheduleEmailingDialogOpen = useDashboardSelector(selectIsScheduleEmailDialogOpen);
     const isScheduleEmailingManagementDialogOpen = useDashboardSelector(
@@ -33,32 +34,44 @@ export const useDashboardScheduledEmails = () => {
     );
     const dispatch = useDashboardDispatch();
     const dashboardRef = useDashboardSelector(selectDashboardRef);
-    const enableInsightExportScheduling = useDashboardSelector(selectEnableInsightExportScheduling);
     const isReadOnly = useDashboardSelector(selectIsReadOnly);
     const isInViewMode = useDashboardSelector(selectIsInViewMode);
-    const canCreateScheduledMail = useDashboardSelector(selectCanCreateScheduledMail);
-    const isScheduledEmailingEnabled = useDashboardSelector(selectEnableKPIDashboardSchedule);
     const menuButtonItemsVisibility = useDashboardSelector(selectMenuButtonItemsVisibility);
+    const isScheduledEmailingEnabled = useDashboardSelector(selectEnableScheduling);
+    const canExport = useDashboardSelector(selectCanExportPdf);
+    const webhooks = useDashboardSelector(selectWebhooks);
+    const numberOfAvailableWebhooks = webhooks.length;
+    const isWorkspaceManager = useDashboardSelector(selectCanManageWorkspace);
+    /**
+     * We want to hide scheduling when there are no webhooks unless the user is admin.
+     */
+    const showDueToNumberOfAvailableWebhooks = numberOfAvailableWebhooks > 0 || isWorkspaceManager;
 
-    const openScheduleEmailingDialog = () => dispatch(uiActions.openScheduleEmailDialog());
-    const closeScheduleEmailingDialog = () => dispatch(uiActions.closeScheduleEmailDialog());
-    const openScheduleEmailingManagementDialog = () =>
-        enableInsightExportScheduling && dispatch(uiActions.openScheduleEmailManagementDialog());
-    const closeScheduleEmailingManagementDialog = () =>
-        enableInsightExportScheduling && dispatch(uiActions.closeScheduleEmailManagementDialog());
-    const setScheduledEmailDefaultAttachment = (attachmentRef: ObjRef) =>
-        enableInsightExportScheduling &&
-        dispatch(uiActions.setScheduleEmailDialogDefaultAttachment(attachmentRef));
-    const resetScheduledEmailDefaultAttachment = () =>
-        enableInsightExportScheduling && dispatch(uiActions.resetScheduleEmailDialogDefaultAttachment());
-    const [scheduledEmailToEdit, setScheduledEmailToEdit] = useState<IScheduledMail>();
-    const [users, setUsers] = useState<IWorkspaceUser[]>([]);
+    const openScheduleEmailingDialog = useCallback(
+        () => isScheduledEmailingEnabled && dispatch(uiActions.openScheduleEmailDialog()),
+        [dispatch, isScheduledEmailingEnabled],
+    );
+    const closeScheduleEmailingDialog = useCallback(
+        () => isScheduledEmailingEnabled && dispatch(uiActions.closeScheduleEmailDialog()),
+        [dispatch, isScheduledEmailingEnabled],
+    );
+    const openScheduleEmailingManagementDialog = useCallback(
+        () => isScheduledEmailingEnabled && dispatch(uiActions.openScheduleEmailManagementDialog()),
+        [dispatch, isScheduledEmailingEnabled],
+    );
+    const closeScheduleEmailingManagementDialog = useCallback(
+        () => isScheduledEmailingEnabled && dispatch(uiActions.closeScheduleEmailManagementDialog()),
+        [dispatch, isScheduledEmailingEnabled],
+    );
+
+    const [scheduledEmailToEdit, setScheduledEmailToEdit] = useState<IAutomationMetadataObject>();
 
     const isScheduledEmailingVisible =
         isInViewMode &&
         !isReadOnly &&
-        canCreateScheduledMail &&
         isScheduledEmailingEnabled &&
+        canExport &&
+        showDueToNumberOfAvailableWebhooks &&
         (menuButtonItemsVisibility.scheduleEmailButton ?? true);
 
     /*
@@ -72,92 +85,94 @@ export const useDashboardScheduledEmails = () => {
             return;
         }
 
-        if (enableInsightExportScheduling) {
-            openScheduleEmailingManagementDialog();
-        } else {
-            openScheduleEmailingDialog();
-        }
-    }, [dashboardRef, enableInsightExportScheduling]);
+        openScheduleEmailingManagementDialog();
+    }, [dashboardRef, openScheduleEmailingManagementDialog]);
 
-    const onScheduleEmailingOpen = useCallback((attachmentRef?: ObjRef) => {
+    const onScheduleEmailingOpen = useCallback(() => {
         openScheduleEmailingDialog();
-        attachmentRef && setScheduledEmailDefaultAttachment(attachmentRef);
-    }, []);
+    }, [openScheduleEmailingDialog]);
 
     const onScheduleEmailingCreateError = useCallback(() => {
         closeScheduleEmailingDialog();
         addError(messages.scheduleEmailSubmitError);
-    }, []);
+    }, [closeScheduleEmailingDialog, addError]);
 
     const onScheduleEmailingCreateSuccess = useCallback(() => {
         closeScheduleEmailingDialog();
+        openScheduleEmailingManagementDialog();
         addSuccess(messages.scheduleEmailSubmitSuccess);
-        resetScheduledEmailDefaultAttachment();
-    }, []);
+        onReload?.();
+    }, [closeScheduleEmailingDialog, openScheduleEmailingManagementDialog, addSuccess, onReload]);
 
     const onScheduleEmailingSaveError = useCallback(() => {
         closeScheduleEmailingDialog();
         addError(messages.scheduleEmailSaveError);
         setScheduledEmailToEdit(undefined);
-    }, []);
+    }, [closeScheduleEmailingDialog, addError, setScheduledEmailToEdit]);
 
     const onScheduleEmailingSaveSuccess = useCallback(() => {
         closeScheduleEmailingDialog();
         openScheduleEmailingManagementDialog();
         addSuccess(messages.scheduleEmailSaveSuccess);
         setScheduledEmailToEdit(undefined);
-    }, []);
+        onReload?.();
+    }, [
+        closeScheduleEmailingDialog,
+        openScheduleEmailingManagementDialog,
+        addSuccess,
+        setScheduledEmailToEdit,
+        onReload,
+    ]);
 
     const onScheduleEmailingCancel = useCallback(() => {
         closeScheduleEmailingDialog();
         openScheduleEmailingManagementDialog();
-        resetScheduledEmailDefaultAttachment();
         setScheduledEmailToEdit(undefined);
-    }, []);
+    }, [closeScheduleEmailingDialog, openScheduleEmailingManagementDialog, setScheduledEmailToEdit]);
 
     const onScheduleEmailingManagementDeleteSuccess = useCallback(() => {
+        closeScheduleEmailingDialog();
         addSuccess(messages.scheduleEmailDeleteSuccess);
-    }, []);
+        onReload?.();
+    }, [addSuccess, closeScheduleEmailingDialog, onReload]);
 
     const onScheduleEmailingManagementAdd = useCallback(() => {
         closeScheduleEmailingManagementDialog();
         openScheduleEmailingDialog();
-    }, []);
+    }, [closeScheduleEmailingManagementDialog, openScheduleEmailingDialog]);
 
     const onScheduleEmailingManagementEdit = useCallback(
-        (schedule: IScheduledMail, users: IWorkspaceUser[]) => {
+        (schedule: IAutomationMetadataObject) => {
             closeScheduleEmailingManagementDialog();
             setScheduledEmailToEdit(schedule);
-            setUsers(users);
             openScheduleEmailingDialog();
         },
-        [],
+        [closeScheduleEmailingManagementDialog, openScheduleEmailingDialog, setScheduledEmailToEdit],
     );
 
     const onScheduleEmailingManagementClose = useCallback(() => {
         closeScheduleEmailingManagementDialog();
-    }, []);
+    }, [closeScheduleEmailingManagementDialog]);
 
     const onScheduleEmailingManagementLoadingError = useCallback(() => {
         closeScheduleEmailingManagementDialog();
         addError(messages.scheduleManagementLoadError);
-    }, []);
+    }, [closeScheduleEmailingManagementDialog, addError]);
 
     const onScheduleEmailingManagementDeleteError = useCallback(() => {
+        closeScheduleEmailingDialog();
         closeScheduleEmailingManagementDialog();
         addError(messages.scheduleManagementDeleteError);
-    }, []);
+    }, [closeScheduleEmailingDialog, closeScheduleEmailingManagementDialog, addError]);
 
     return {
         isScheduledEmailingVisible,
-        enableInsightExportScheduling,
         defaultOnScheduleEmailing,
         isScheduleEmailingDialogOpen,
         isScheduleEmailingManagementDialogOpen,
         onScheduleEmailingOpen,
         onScheduleEmailingManagementEdit,
         scheduledEmailToEdit,
-        users,
         onScheduleEmailingCancel,
         onScheduleEmailingCreateError,
         onScheduleEmailingCreateSuccess,
@@ -168,5 +183,6 @@ export const useDashboardScheduledEmails = () => {
         onScheduleEmailingManagementLoadingError,
         onScheduleEmailingManagementDeleteSuccess,
         onScheduleEmailingManagementDeleteError,
+        numberOfAvailableWebhooks,
     };
 };

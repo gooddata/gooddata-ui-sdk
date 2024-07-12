@@ -70,7 +70,7 @@ export function createAttributeFilterHandlerStore(
             ...initialState,
             localIdentifier,
             displayFormRef,
-            displayAsDisplayFormRef: context.displayAsLabel,
+            displayAsLabelRef: context.displayAsLabel,
             elementsForm,
             selection: {
                 commited: {
@@ -88,6 +88,7 @@ export function createAttributeFilterHandlerStore(
                 hiddenElements: context.hiddenElements,
                 staticElements: context.staticElements,
             },
+            originalFilter: context.attributeFilter,
         },
         reducer: sliceReducer,
         middleware: (getDefaultMiddleware) => {

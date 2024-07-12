@@ -21,6 +21,7 @@ import {
     JsonApiVisualizationObjectOutList,
     JsonApiExportDefinitionOutList,
     JsonApiAutomationOutList,
+    JsonApiUserOutList,
 } from "./generated/metadata-json-api/index.js";
 
 const DefaultPageSize = 250;
@@ -122,7 +123,8 @@ export type MetadataGetEntitiesResult =
     | JsonApiThemeOutList
     | JsonApiColorPaletteOutList
     | JsonApiExportDefinitionOutList
-    | JsonApiAutomationOutList;
+    | JsonApiAutomationOutList
+    | JsonApiUserOutList;
 
 /**
  * All API client getEntities* functions follow this signature.

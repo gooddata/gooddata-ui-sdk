@@ -24,6 +24,7 @@ import {
     IDataFiltersService,
     IWorkspaceLogicalModelService,
     IWorkspaceAutomationService,
+    IGenAIService,
 } from "@gooddata/sdk-backend-spi";
 import { CustomExecutionFactory } from "./execution.js";
 import { CustomBackendConfig, CustomBackendState } from "./config.js";
@@ -138,5 +139,9 @@ export class CustomWorkspace implements IAnalyticalWorkspace {
 
     public automations(): IWorkspaceAutomationService {
         throw new NotSupported("automations are not supported");
+    }
+
+    public genAI(): IGenAIService {
+        throw new NotSupported("genAI is not supported");
     }
 }

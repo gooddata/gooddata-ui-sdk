@@ -9,7 +9,6 @@ import {
     useDashboardSelector,
     isCustomWidget,
     useDashboardScheduledEmails,
-    selectCanExportTabular,
     selectSettings,
 } from "../../../../model/index.js";
 import {
@@ -48,13 +47,11 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         insight,
     });
 
-    const { isScheduledEmailingVisible, enableInsightExportScheduling, onScheduleEmailingOpen } =
-        useDashboardScheduledEmails();
-    const canExportTabular = useDashboardSelector(selectCanExportTabular);
+    const { onScheduleEmailingOpen } = useDashboardScheduledEmails();
 
     const onScheduleExport = useCallback(() => {
-        onScheduleEmailingOpen(widgetRef);
-    }, [onScheduleEmailingOpen, widgetRef]);
+        onScheduleEmailingOpen();
+    }, [onScheduleEmailingOpen]);
     const scheduleExportEnabled = !isCustomWidget(widget);
 
     const { closeMenu, isMenuOpen, menuItems, openMenu } = useInsightMenu({
@@ -66,8 +63,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         onExportCSV,
         onExportXLSX,
         onScheduleExport,
-        isScheduleExportVisible:
-            isScheduledEmailingVisible && canExportTabular && enableInsightExportScheduling,
+        isScheduleExportVisible: false, // Exporting insights is not supported yet
     });
     const toggleMenu = useCallback(() => {
         if (isMenuOpen) {

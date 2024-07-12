@@ -1,6 +1,7 @@
 // (C) 2021-2024 GoodData Corporation
 import {
     IAttributeElements,
+    IAttributeFilter,
     INegativeAttributeFilter,
     IPositiveAttributeFilter,
     ObjRef,
@@ -10,6 +11,7 @@ import {
 import { createSelector } from "@reduxjs/toolkit";
 import difference from "lodash/difference.js";
 import union from "lodash/union.js";
+import uniq from "lodash/uniq.js";
 
 import { selectState } from "../common/selectors.js";
 import {
@@ -17,6 +19,7 @@ import {
     selectIsCommittedSelectionInverted,
 } from "../selection/selectionSelectors.js";
 import { FilterSelector } from "../common/types.js";
+import { selectElements } from "../elements/elementsSelectors.js";
 
 /**
  * @internal
@@ -57,7 +60,7 @@ export const selectAttributeFilterDisplayForm: FilterSelector<ObjRef> = createSe
  */
 export const selectAttributeFilterDisplayAsLabel: FilterSelector<ObjRef> = createSelector(
     selectState,
-    (state) => state.displayAsDisplayFormRef,
+    (state) => state.displayAsLabelRef,
 );
 
 /**
@@ -66,6 +69,14 @@ export const selectAttributeFilterDisplayAsLabel: FilterSelector<ObjRef> = creat
 export const selectAttributeFilterLocalIdentifier: FilterSelector<string> = createSelector(
     selectState,
     (state) => state.localIdentifier,
+);
+
+/**
+ * @internal
+ */
+export const selectOriginalFilter: FilterSelector<IAttributeFilter> = createSelector(
+    selectState,
+    (state) => state.originalFilter,
 );
 
 /**
@@ -97,6 +108,30 @@ export const selectAttributeFilterElementsWithHiddenElementsResolved: FilterSele
     );
 
 /**
+ * Return filter in form given by displayAsLabel
+ * @internal
+ */
+export const selectAttributeFilterElementsToDisplayWithHiddenElementsResolved: FilterSelector<IAttributeElements> =
+    createSelector(
+        selectAttributeFilterElementsForm,
+        selectCommittedSelection,
+        selectIsCommittedSelectionInverted,
+        selectHiddenElements,
+        selectElements,
+        (elementsForm, selection, isInverted, hiddenElements, elements): IAttributeElements => {
+            const updatedSelection = isInverted
+                ? union(selection, hiddenElements)
+                : difference(selection, hiddenElements);
+
+            const selectedTitles = elements
+                .filter((element) => updatedSelection.find((selectionItem) => selectionItem === element.uri))
+                .map((element) => element.title);
+            const uniqueTitles = uniq(selectedTitles);
+            return elementsForm === "uris" ? { uris: uniqueTitles } : { values: uniqueTitles };
+        },
+    );
+
+/**
  * @internal
  */
 export const selectAttributeFilter: FilterSelector<INegativeAttributeFilter | IPositiveAttributeFilter> =
@@ -121,9 +156,18 @@ export const selectAttributeFilterToDisplay: FilterSelector<
     selectAttributeFilterDisplayAsLabel,
     selectIsCommittedSelectionInverted,
     selectAttributeFilterElementsWithHiddenElementsResolved,
+    selectAttributeFilterElementsToDisplayWithHiddenElementsResolved,
     selectAttributeFilterLocalIdentifier,
-    (displayForm, displayAsLabel, isInverted, elements, localIdentifier) =>
+    (displayForm, displayAsLabel, isInverted, primaryElements, secondaryElements, localIdentifier) =>
         isInverted
-            ? newNegativeAttributeFilter(displayAsLabel ?? displayForm, elements, localIdentifier)
-            : newPositiveAttributeFilter(displayAsLabel ?? displayForm, elements, localIdentifier),
+            ? newNegativeAttributeFilter(
+                  displayAsLabel ?? displayForm,
+                  displayAsLabel ? secondaryElements : primaryElements,
+                  localIdentifier,
+              )
+            : newPositiveAttributeFilter(
+                  displayAsLabel ?? displayForm,
+                  displayAsLabel ? secondaryElements : primaryElements,
+                  localIdentifier,
+              ),
 );

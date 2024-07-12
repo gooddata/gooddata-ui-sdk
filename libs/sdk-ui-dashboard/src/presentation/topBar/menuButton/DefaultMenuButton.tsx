@@ -103,7 +103,7 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
                         }
 
                         return (
-                            <BubbleHoverTrigger key={menuItem.itemId}>
+                            <BubbleHoverTrigger key={menuItem.itemId} eventsOnBubble={true}>
                                 {body}
                                 <Bubble alignTo={`.${selectorClassName}`} alignPoints={bubbleAlignPoints}>
                                     <span>{menuItem.tooltip}</span>

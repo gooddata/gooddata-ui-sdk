@@ -93,6 +93,8 @@ export {
 
 export { IExportConfig, IExportResult, IExportPdfConfig } from "./workspace/execution/export.js";
 
+export { IGenAIService, ISemanticSearchQuery, ISemanticSearchResult } from "./workspace/genAI/index.js";
+
 export { IWorkspaceStylingService } from "./workspace/styling/index.js";
 export {
     AnalyticalBackendError,

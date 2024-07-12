@@ -321,7 +321,7 @@ export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
 export type DatasetLoadStatus = "RUNNING" | "OK" | "ERROR" | "CANCELLED" | "ERROR_METADATA" | "REFRESHING";
 
 // @alpha (undocumented)
-export type DataSourceType = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "SINGLESTORE" | "MOTHERDUCK";
+export type DataSourceType = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "SINGLESTORE" | "MOTHERDUCK" | "FLIGHTRPC";
 
 // @public
 export type DataValue = null | string | number;
@@ -494,6 +494,9 @@ export type ForecastDataValue = {
     prediction: DataValue;
     loading: boolean;
 };
+
+// @alpha
+export type GenAISemanticSearchType = "workspace" | "dataset" | "attribute" | "label" | "fact" | "data" | "metric" | "visualization" | "dashboard";
 
 // @internal
 export function getAttributeElementsItems(attributeElements: IAttributeElements): Array<string | null>;
@@ -778,7 +781,7 @@ export interface IAutomationMetadataObjectBase {
 // @alpha (undocumented)
 export interface IAutomationMetadataObjectDefinition extends Omit<IAutomationMetadataObjectBase, "exportDefinitions">, IMetadataObjectDefinition, IAuditable {
     // (undocumented)
-    exportDefinitions: IExportDefinitionMetadataObjectDefinition[];
+    exportDefinitions?: (IExportDefinitionMetadataObjectDefinition | IExportDefinitionMetadataObject)[];
     // (undocumented)
     type: "automation";
 }
@@ -798,6 +801,7 @@ export type IAutomationRecipientType = "user" | "userGroup";
 // @alpha (undocumented)
 export interface IAutomationSchedule {
     cron: string;
+    cronDescription?: string;
     firstRun?: string;
     timezone?: string;
 }
@@ -1048,6 +1052,7 @@ export interface IDashboardAttributeFilterByDate {
 
 // @alpha
 export interface IDashboardAttributeFilterConfig {
+    displayAsLabel?: ObjRef;
     localIdentifier: string;
     mode?: DashboardAttributeFilterConfigMode;
 }
@@ -1491,7 +1496,7 @@ export interface IEntitlementDescriptor {
 }
 
 // @public
-export type IEntitlementsName = "CacheStrategy" | "Contract" | "CustomTheming" | "ExtraCache" | "ManagedOIDC" | "UiLocalization" | "Tier" | "UserCount" | "PdfExports" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WhiteLabeling" | "WorkspaceCount" | "Hipaa" | "UserTelemetryDisabled";
+export type IEntitlementsName = "CacheStrategy" | "Contract" | "CustomTheming" | "ExtraCache" | "ManagedOIDC" | "UiLocalization" | "Tier" | "UserCount" | "PdfExports" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WhiteLabeling" | "WorkspaceCount" | "Hipaa" | "UserTelemetryDisabled" | "AutomationCount" | "UnlimitedAutomations" | "AutomationRecipientCount" | "UnlimitedAutomationRecipients" | "DailyScheduledActionCount" | "UnlimitedDailyScheduledActions" | "ScheduledActionMinimumRecurrenceMinutes";
 
 // @public
 export interface IExecutionConfig {
@@ -2708,6 +2713,18 @@ export function isDrillToInsight(obj: unknown): obj is IDrillToInsight;
 // @alpha
 export function isDrillToLegacyDashboard(obj: unknown): obj is IDrillToLegacyDashboard;
 
+// @alpha
+export interface ISemanticSearchResultItem {
+    // (undocumented)
+    description: string;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    title: string;
+    // (undocumented)
+    type: GenAISemanticSearchType;
+}
+
 // @public
 export interface ISeparators {
     decimal: string;
@@ -2774,8 +2791,10 @@ export interface ISettings {
     enableRenamingMeasureToMetric?: boolean;
     enableReversedStacking?: boolean;
     enableRichTextDescriptions?: boolean;
+    enableRollupTotals?: boolean;
     enableScatterPlotClustering?: boolean;
     enableScatterPlotSegmentation?: boolean;
+    enableScheduling?: boolean;
     enableSeparateTotalLabels?: boolean;
     enableTableColumnsAutoResizing?: boolean;
     enableTableColumnsGrowToFit?: boolean;

@@ -1,10 +1,11 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import {
     isMeasureGroupIdentifier,
     DataValue,
     IExecutionDefinition,
     IResultHeader,
     isResultTotalHeader,
+    TotalType,
 } from "@gooddata/sdk-model";
 import { DimensionHeader, ExecutionResultGrandTotal } from "@gooddata/api-client-tiger";
 import isEmpty from "lodash/isEmpty.js";
@@ -155,7 +156,7 @@ function transformGrandTotal(
             const data = transformedTotals[totalType];
             return {
                 data,
-                defIdx: totalDefinitions.findIndex((def) => def.type === totalType),
+                defIdx: totalDefinitions.findIndex((def) => def.type === stringToTotalType(totalType)),
             };
         })
         .filter((total) => total.defIdx !== -1)
@@ -182,4 +183,26 @@ function getHeadersAtPosition(
         // get header at coordinate `coord` from each group
         return headerGroups.map((group) => group[coord]);
     });
+}
+
+/**
+ * Convert a string total type to a TotalType so that it is safe to compare with total definitions.
+ */
+function stringToTotalType(type: string): TotalType {
+    switch (type.toLowerCase()) {
+        case "sum":
+            return "sum";
+        case "max":
+            return "max";
+        case "min":
+            return "min";
+        case "avg":
+            return "avg";
+        case "med":
+            return "med";
+        case "native":
+            return "nat";
+        default:
+            throw new Error(`Unknown total type: ${type}`);
+    }
 }
