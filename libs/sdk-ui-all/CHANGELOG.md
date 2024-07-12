@@ -1,6 +1,13 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 11 Jul 2024 08:01:45 GMT and should not be manually modified.
+This log was last generated on Fri, 12 Jul 2024 11:00:39 GMT and should not be manually modified.
+
+## 10.5.1
+Fri, 12 Jul 2024 11:00:39 GMT
+
+### Updates
+
+- Fixed display of tooltips in drill dialog
 
 ## 10.5.0
 Thu, 11 Jul 2024 08:01:45 GMT
