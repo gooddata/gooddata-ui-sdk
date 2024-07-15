@@ -443,71 +443,9 @@
         "comment": "",
         "limit": 0
     },
-    "dialogs.schedule.email.filters": {
-        "value": "Dashboard contains filter changes that will be saved in the schedule.",
-        "comment": "",
-        "limit": 0
-    },
-    "dialogs.schedule.email.filters.not.saved": {
-        "value": "Dashboard filters saved in the schedule will not be affected.",
-        "comment": "",
-        "limit": 0
-    },
-    "dialogs.schedule.email.attachment.filter": {
-        "value": "(with currently set filters)",
-        "comment": "Keep the parentheses. Attachment with filters included.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.attachment.label": {
-        "value": "Attachment",
-        "comment": "Attachment of the scheduled email.",
-        "limit": 0
-    },
     "dialogs.schedule.email.attachments.label": {
         "value": "Attachments",
         "comment": "Attachments of the scheduled email.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.attachment.select": {
-        "value": "Select attachments",
-        "comment": "Label of a button that opens attachment selection",
-        "limit": 0
-    },
-    "dialogs.schedule.email.attachment.select.disabled.message|insight": {
-        "value": "This dashboard does not contain any visualizations.",
-        "comment": "Message for button to add visualizations to the export, if there are no visualizations.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.attachment.select.disabled.message|report": {
-        "value": "This dashboard does not contain any reports.",
-        "comment": "Message for button to add reports to the export, if there are no reports.",
-        "limit": 0,
-        "translate": false
-    },
-    "dialogs.schedule.email.attachment.select.dashboard.header": {
-        "value": "Dashboard (PDF)",
-        "comment": "Heading of checkbox that selects dashboard to be exported in PDF file format",
-        "limit": 0
-    },
-    "dialogs.schedule.email.attachment.select.widgets.header|report": {
-        "value": "Reports (CSV, XLSX)",
-        "comment": "Heading of section of checkboxes for selecting reports to be exported as CSV of XLSX file",
-        "limit": 0,
-        "translate": false
-    },
-    "dialogs.schedule.email.attachment.select.widgets.header|insight": {
-        "value": "Visualizations (CSV, XLSX)",
-        "comment": "Heading of section of checkboxes for selecting visualizations to be exported as CSV of XLSX file",
-        "limit": 0
-    },
-    "dialogs.schedule.email.headline": {
-        "value": "Schedule email delivery",
-        "comment": "Translate as imperative. Schedule emailing whole KPI dashboard.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.heading": {
-        "value": "Schedule export",
-        "comment": "Translate as imperative. Schedule exporting whole dashboard and visualizations",
         "limit": 0
     },
     "dialogs.schedule.email.title.placeholder": {
@@ -525,79 +463,9 @@
         "comment": "Message for recipients input when the maximum number of recipients is reached",
         "limit": 0
     },
-    "dialogs.schedule.email.unsubscribed.recipients": {
-        "value": "{n, plural, one {1 recipient unsubscribed} other {# recipients unsubscribed}} from this schedule.",
-        "comment": "Translate only 'recipient unsubscribed'/'recipients unsubscribed' and 'from this schedule.' to form a proper sentence with correct plural form for given language",
-        "limit": 0
-    },
-    "dialogs.schedule.email.repeats.label": {
-        "value": "Repeats",
-        "comment": "Count of repeats of the scheduled email.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.repeats.execute.on.dayOfMonth": {
-        "value": "on day {date}",
-        "comment": "Example 'on day 2 of January'. Placeholder '{date}' refers to ordinal number of day of the month. Don't translate placeholder '{date}'.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.repeats.execute.on.dayOfWeek": {
-        "value": "on the {week, select, 1 {first} 2 {second} 3 {third} 4 {fourth} other {last}} {day}",
-        "comment": "Example: 'on the first Friday'. Translate only uppercase in 'ON THE {week, select, 1 {FIRST} 2 {SECOND} 3 {THIRD} 4 {FOURTH} other {LAST}} {day}'",
-        "limit": 0
-    },
-    "dialogs.schedule.email.repeats.every": {
-        "value": "every",
-        "comment": "Example 'every 1 month'. FIXME: This needs to be split into variants 'every day', 'every week', ... since some languages uses different gramatical gender for the 'every' based on the subject.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.repeats.frequencies.day": {
-        "value": "{n, plural, one {day} other {days}}",
-        "comment": "Translate only uppercase in '{n, plural, one {DAY} other {DAYS}}'.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.repeats.frequencies.month": {
-        "value": "{n, plural, one {month} other {months}}",
-        "comment": "Translate only uppercase in '{n, plural, one {MONTH} other {MONTHS}}'.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.repeats.frequencies.week": {
-        "value": "{n, plural, one {week} other {weeks}}",
-        "comment": "Translate only uppercase in '{n, plural, one {WEEK} other {WEEKS}}'.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.repeats.types.custom": {
-        "value": "Custom",
-        "comment": "Repeats the schedule email using custom rules defined by the user.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.repeats.types.cron": {
-        "value": "Cron expression",
-        "comment": "Repeats the automation schedule using cron expression.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.repeats.types.daily": {
-        "value": "Daily",
-        "comment": "Repeats the schedule email daily.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.repeats.types.monthly": {
-        "value": "Monthly on the {week, select, 1 {first} 2 {second} 3 {third} 4 {fourth} other {last}} {day}",
-        "comment": "Example: 'Monthly on the first Friday'. Translate only uppercase in 'MONTHLY ON THE {week, select, 1 {FIRST} 2 {SECOND} 3 {THIRD} 4 {FOURTH} other {LAST}} {day}'",
-        "limit": 0
-    },
-    "dialogs.schedule.email.repeats.types.weekly": {
-        "value": "Weekly on {day}",
-        "comment": "Example: 'Weekly on Friday'. Placeholder '{day}' refers to a day of a week. Don't translate placeholder '{day}'.",
-        "limit": 0
-    },
     "dialogs.schedule.email.subject.label": {
         "value": "Subject",
         "comment": "Subject of the schedule email.",
-        "limit": 0
-    },
-    "dialogs.schedule.email.time.label": {
-        "value": "Starts on",
-        "comment": "Translate as imperative. Date time of the schedule email.",
         "limit": 0
     },
     "dialogs.schedule.email.to.label": {
@@ -645,29 +513,8 @@
         "comment": "Translate as imperative. It's caption of a button for saving scheduled mail",
         "limit": 0
     },
-    "dialogs.schedule.email.format.options": {
-        "value": "Format options",
-        "comment": "Header of a formatting dialog. Not an imperative!",
-        "limit": 0
-    },
-    "dialogs.schedule.email.insight.format|insight": {
-        "value": "Visualization format:",
-        "comment": "Label of a dropdown for selecting export format",
-        "limit": 0
-    },
-    "dialogs.schedule.email.insight.format|report": {
-        "value": "Report format:",
-        "comment": "Label of a dropdown for selecting export format",
-        "limit": 0,
-        "translate": false
-    },
     "dialogs.schedule.email.attribute.merged": {
         "value": "Keep attribute cells merged",
-        "comment": "Label of a checkbox field",
-        "limit": 0
-    },
-    "dialogs.schedule.email.show.filters": {
-        "value": "Show what filters are applied",
         "comment": "Label of a checkbox field",
         "limit": 0
     },
@@ -711,11 +558,6 @@
         "comment": "",
         "limit": 0
     },
-    "dialogs.schedule.management.recipients": {
-        "value": "{n, plural, one {# recipient} other {# recipients}}",
-        "comment": "Translate only uppercase in '{n, plural, one {# RECIPIENT} other {# RECIPIENTS}}'.",
-        "limit": 0
-    },
     "dialogs.schedule.management.attachments.filters.title": {
         "value": "Dashboard filters",
         "comment": "Title of dropdown for selected type of dashboard filters for attachment",
@@ -756,33 +598,6 @@
         "comment": "Message about used filters. Do not translate HTML tags.",
         "limit": 0
     },
-    "dialogs.schedule.management.attachments.dashboard": {
-        "value": "Dashboard",
-        "comment": "Type of attachment.",
-        "limit": 0
-    },
-    "dialogs.schedule.management.attachments.widgets|insight": {
-        "value": "{n, plural, one {# visualization} other {# visualizations}}",
-        "comment": "Translate only uppercase in '{n, plural, one {# VISUALIZATION} other {# VISUALIZATIONS}}'.",
-        "limit": 0
-    },
-    "dialogs.schedule.management.attachments.widgets|report": {
-        "value": "{n, plural, one {# report} other {# reports}}",
-        "comment": "Translate only uppercase in '{n, plural, one {# REPORT} other {# REPORTS}}'.",
-        "limit": 0,
-        "translate": false
-    },
-    "dialogs.schedule.management.attachments.mixed|insight": {
-        "value": "Dashboard and {n, plural, one {# visualization} other {# visualizations}}",
-        "comment": "In '{n, plural, one {# VISUALIZATION} other {# VISUALIZATIONS}}', translate only uppercase words.",
-        "limit": 0
-    },
-    "dialogs.schedule.management.attachments.mixed|report": {
-        "value": "Dashboard and {n, plural, one {# report} other {# reports}}",
-        "comment": "In '{n, plural, one {# REPORT} other {# REPORTS}}', translate only uppercase words.",
-        "limit": 0,
-        "translate": false
-    },
     "dialogs.schedule.management.load.error": {
         "value": "Failed to load. Try again later.",
         "comment": "",
@@ -791,26 +606,6 @@
     "dialogs.schedule.management.delete.error": {
         "value": "Failed to delete schedule. Try again later.",
         "comment": "",
-        "limit": 0
-    },
-    "options.menu.schedule.email.recipient.invalid": {
-        "value": "This is not a valid email address.",
-        "comment": "Translate as imperative. Error message for recipient email address",
-        "limit": 0
-    },
-    "options.menu.schedule.email.recipient.warning.existed": {
-        "value": "You have already added this recipient.",
-        "comment": "Translate as imperative. Warning email has been existed on recipient field in schedule email dialog",
-        "limit": 0
-    },
-    "options.menu.schedule.email.recipient.warning.belong.workspace": {
-        "value": "This email address does not belong to this workspace. The recipient may receive sensitive data.",
-        "comment": "Translate as imperative. Warning email on recipient field in schedule email dialog",
-        "limit": 0
-    },
-    "options.menu.schedule.email.recipient.external.not.allowed": {
-        "value": "This email address does not belong to this workspace. Only the author of the schedule can add this email address.",
-        "comment": "Translate as imperative. Warning email on recipient field in schedule email dialog",
         "limit": 0
     },
     "delete": {
