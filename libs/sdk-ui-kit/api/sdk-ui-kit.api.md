@@ -4752,6 +4752,22 @@ export type UnitsType = "px" | "%" | "rem" | "em";
 // @internal (undocumented)
 export const unrelatedHeader: IDateDatasetHeader;
 
+// @internal
+export const useDebouncedState: <T>(initialValue: T, delay: number) => UseDebouncedStateOutput<T>;
+
+// @internal
+export type UseDebouncedStateOutput<T> = [
+/**
+* The current value.
+*/
+T,
+(value: T) => void,
+/**
+* The debounced value.
+*/
+T
+];
+
 // @internal (undocumented)
 export function useInvertableSelectionStatusText<T>(selectedItems: T[], isInverted: boolean, getItemTitle: (item: T) => string): string;
 
