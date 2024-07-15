@@ -2734,7 +2734,6 @@ export interface ISeparators {
 
 // @public
 export interface ISettings {
-    ["msf.enableTenantCustomModel"]?: boolean;
     // (undocumented)
     [key: string]: number | boolean | string | object | undefined;
     ADCatalogGroupsExpanded?: boolean;
@@ -2744,6 +2743,8 @@ export interface ISettings {
     enableADMultipleDateFilters?: boolean;
     enableAlternativeDisplayFormSelection?: boolean;
     enableAnalyticalDashboardPermissions?: boolean;
+    // (undocumented)
+    enableAnalyticalDashboards?: boolean;
     enableApproxCount?: boolean;
     enableAttributeFilterValuesValidation?: boolean;
     enableAxisLabelFormat?: boolean;
@@ -2756,9 +2757,15 @@ export interface ISettings {
     enableCompanyLogoInEmbeddedUI?: boolean;
     enableCompositeGrain?: boolean;
     enableCreateUser?: boolean;
+    // (undocumented)
+    enableCsvUploader?: boolean;
     enableCustomColorPicker?: boolean;
     enableDataSampling?: boolean;
+    // (undocumented)
+    enableDataSection?: boolean;
     enableDescriptions?: boolean;
+    // (undocumented)
+    enableDirectQuery?: boolean;
     enableDrilledInsightExport?: boolean;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     enableEmbedButtonInAD?: boolean;
@@ -2781,15 +2788,29 @@ export interface ISettings {
     enableKPIDashboardSaveAsNew?: boolean;
     enableKPIDashboardSchedule?: boolean;
     enableKPIDashboardScheduleRecipients?: boolean;
+    // (undocumented)
+    enableMariaDbDataSource?: boolean;
+    // (undocumented)
+    enableMotherDuckDataSource?: boolean;
     enableMultipleCSVs?: boolean;
     enableMultipleDataSourcesInWorkspace?: boolean;
     enableMultipleDateFilters?: boolean;
     enableMultipleDates?: boolean;
+    // (undocumented)
+    enableMySqlDataSource?: boolean;
     enableNewHeadline?: boolean;
+    // (undocumented)
+    enableNewNavigationForResponsiveUi?: boolean;
+    // (undocumented)
+    enableOracleDataSource?: boolean;
     enablePivotTableIncreaseBucketSize?: boolean;
     enablePivotTableTransposition?: boolean;
+    // (undocumented)
+    enablePixelPerfectExperience?: boolean;
     enablePushpinGeoChart?: boolean;
     enableRenamingMeasureToMetric?: boolean;
+    // (undocumented)
+    enableRenamingProjectToWorkspace?: boolean;
     enableReversedStacking?: boolean;
     enableRichTextDescriptions?: boolean;
     enableRollupTotals?: boolean;
@@ -2797,6 +2818,8 @@ export interface ISettings {
     enableScatterPlotSegmentation?: boolean;
     enableScheduling?: boolean;
     enableSeparateTotalLabels?: boolean;
+    // (undocumented)
+    enableSnowflakeKeyPairAuthentication?: boolean;
     enableTableColumnsAutoResizing?: boolean;
     enableTableColumnsGrowToFit?: boolean;
     enableTableColumnsManualResizing?: boolean;
@@ -2807,6 +2830,8 @@ export interface ISettings {
     enableWorkspacesHierarchyView?: boolean;
     formatLocale?: string;
     hideKpiDrillInEmbedded?: boolean;
+    // (undocumented)
+    hidePixelPerfectExperience?: boolean;
     metadataTimeZone?: string;
     // @alpha
     openAiConfig?: IOpenAiConfig;
