@@ -46,7 +46,7 @@ export interface ISemanticSearchQuery {
     /**
      * Execute the search.
      */
-    query(): Promise<ISemanticSearchResult>;
+    query(options?: { signal?: AbortSignal }): Promise<ISemanticSearchResult>;
 }
 
 /**

@@ -1,7 +1,9 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2024 GoodData Corporation
 
-/*
- *
+/**
+ * This package provides React hooks and components for semantic search.
+ * @packageDocumentation
+ * @alpha
  */
 
-export { ISdkComponentProps, SdkComponent } from "./sdkComponent/SdkComponent";
+export * from "./hooks/index.js";

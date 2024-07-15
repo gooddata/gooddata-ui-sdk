@@ -496,7 +496,7 @@ export type ForecastDataValue = {
 };
 
 // @alpha
-export type GenAISemanticSearchType = "workspace" | "dataset" | "attribute" | "label" | "fact" | "data" | "metric" | "visualization" | "dashboard";
+export type GenAISemanticSearchType = "dataset" | "attribute" | "label" | "fact" | "date" | "metric" | "visualization" | "dashboard";
 
 // @internal
 export function getAttributeElementsItems(attributeElements: IAttributeElements): Array<string | null>;

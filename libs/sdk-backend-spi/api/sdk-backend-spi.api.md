@@ -1009,7 +1009,9 @@ export function isElementsQueryOptionsElementsByValue(obj: unknown): obj is IEle
 
 // @alpha
 export interface ISemanticSearchQuery {
-    query(): Promise<ISemanticSearchResult>;
+    query(options?: {
+        signal?: AbortSignal;
+    }): Promise<ISemanticSearchResult>;
     withDeepSearch(deepSearch: boolean): ISemanticSearchQuery;
     withLimit(limit: number): ISemanticSearchQuery;
     withObjectTypes(types: GenAISemanticSearchType[]): ISemanticSearchQuery;

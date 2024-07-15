@@ -9,6 +9,7 @@
     },
     "author": "GoodData Corporation",
     "license": "MIT",
+    "type": "module",
     "module": "esm/index.js",
     "es2015": "esm/index.js",
     "browser": "dist/index.js",
@@ -52,7 +53,10 @@
     "dependencies": {
         "lodash": "^4.17.21",
         "react-intl": "^6.4.1",
-        "tslib": "^2.5.0"
+        "tslib": "^2.5.0",
+        "@gooddata/sdk-model": "workspace:*",
+        "@gooddata/sdk-ui": "workspace:*",
+        "@gooddata/sdk-backend-spi": "workspace:*"
     },
     "peerDependencies": {
         "react": "^16.10.0 || ^17.0.0 || ^18.0.0",

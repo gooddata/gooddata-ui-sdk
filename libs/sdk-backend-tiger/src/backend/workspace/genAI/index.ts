@@ -26,14 +26,14 @@ type SemanticSearchQueryConfig = {
     deepSearch: boolean;
     limit: number;
     question: string;
-    types: GenAISemanticSearchType[];
+    objectTypes: GenAISemanticSearchType[];
 };
 
 const defaultConfig: SemanticSearchQueryConfig = {
     deepSearch: true,
     limit: 10,
     question: "",
-    types: [],
+    objectTypes: [],
 };
 
 export class SemanticSearchQuery implements ISemanticSearchQuery {
@@ -64,19 +64,22 @@ export class SemanticSearchQuery implements ISemanticSearchQuery {
         });
     }
 
-    withObjectTypes(types: GenAISemanticSearchType[]): ISemanticSearchQuery {
+    withObjectTypes(objectTypes: GenAISemanticSearchType[]): ISemanticSearchQuery {
         return new SemanticSearchQuery(this.authCall, this.workspaceId, {
             ...this.config,
-            types,
+            objectTypes,
         });
     }
 
-    async query(): Promise<ISemanticSearchResult> {
+    async query(options?: { signal?: AbortSignal }): Promise<ISemanticSearchResult> {
         const response = await this.authCall((client) =>
-            client.execution.aiSearch({
-                workspaceId: this.workspaceId,
-                searchRequest: this.config,
-            }),
+            client.execution.aiSearch(
+                {
+                    workspaceId: this.workspaceId,
+                    searchRequest: this.config,
+                },
+                options,
+            ),
         );
 
         // Casting because api-client has loose typing for object type

@@ -4,20 +4,26 @@
 
 ```ts
 
-import { default as React_2 } from 'react';
+import { GenAISemanticSearchType } from '@gooddata/sdk-model';
+import { ISemanticSearchResultItem } from '@gooddata/sdk-model';
 
-// @public (undocumented)
-export interface ISdkComponentProps {
-    // (undocumented)
-    message: string;
-}
+// @alpha
+export type SemanticSearchInputResult = [
+/**
+* Flag indicating whether the search is in progress.
+*/
+boolean,
+/**
+* Error message if the search failed.
+*/
+string,
+/**
+* The search results.
+*/
+ISemanticSearchResultItem[]
+];
 
-// @public (undocumented)
-export class SdkComponent extends React_2.Component<ISdkComponentProps> {
-    // (undocumented)
-    render(): React_2.JSX.Element;
-}
-
-// (No @packageDocumentation comment for this package)
+// @alpha
+export const useSemanticSearch: (searchTerm: string, objectTypes?: GenAISemanticSearchType[], deepSearch?: boolean, limit?: number) => SemanticSearchInputResult;
 
 ```

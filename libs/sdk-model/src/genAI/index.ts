@@ -28,12 +28,11 @@ export interface ISemanticSearchResultItem {
  * @alpha
  */
 export type GenAISemanticSearchType =
-    | "workspace"
     | "dataset"
     | "attribute"
     | "label"
     | "fact"
-    | "data"
+    | "date"
     | "metric"
     | "visualization"
     | "dashboard";

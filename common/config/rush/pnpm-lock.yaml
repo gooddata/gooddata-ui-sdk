@@ -55,6 +55,9 @@ importers:
       '@gooddata/sdk-ui-pivot':
         specifier: workspace:*
         version: link:../../libs/sdk-ui-pivot
+      '@gooddata/sdk-ui-semantic-search':
+        specifier: workspace:*
+        version: link:../../libs/sdk-ui-semantic-search
       '@gooddata/sdk-ui-theme-provider':
         specifier: workspace:*
         version: link:../../libs/sdk-ui-theme-provider
@@ -3890,6 +3893,15 @@ importers:
 
   ../../libs/sdk-ui-semantic-search:
     dependencies:
+      '@gooddata/sdk-backend-spi':
+        specifier: workspace:*
+        version: link:../sdk-backend-spi
+      '@gooddata/sdk-model':
+        specifier: workspace:*
+        version: link:../sdk-model
+      '@gooddata/sdk-ui':
+        specifier: workspace:*
+        version: link:../sdk-ui
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
