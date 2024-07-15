@@ -328,6 +328,14 @@ export function isAllTimeDashboardDateFilter(obj: unknown): boolean {
 export type FilterContextItem = IDashboardAttributeFilter | IDashboardDateFilter;
 
 /**
+ * Type-guard testing whether the provided object is an instance of {@link FilterContextItem}.
+ * @alpha
+ */
+export function isFilterContextItem(obj: unknown): obj is FilterContextItem {
+    return isDashboardDateFilter(obj) || isDashboardAttributeFilter(obj);
+}
+
+/**
  * Common filter context properties
  *
  * @alpha

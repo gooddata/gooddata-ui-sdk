@@ -2,7 +2,6 @@
 import { useCallback } from "react";
 import {
     FilterContextItem,
-    IFilterContextDefinition,
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
 } from "@gooddata/sdk-model";
@@ -42,19 +41,14 @@ export const useCreateScheduledEmail = ({
             onSuccess?.(event.payload.scheduledEmail);
         },
         onBeforeRun: (cmd) => {
-            onBeforeRun?.(cmd.payload.scheduledEmail, cmd.payload.filterContext?.filters);
+            onBeforeRun?.(cmd.payload.scheduledEmail, cmd.payload.filters);
         },
     });
 
     const create = useCallback(
         (scheduledEmailToCreate: IAutomationMetadataObjectDefinition, filters?: FilterContextItem[]) => {
-            const filterContext: IFilterContextDefinition | undefined = filters && {
-                title: "filterContext",
-                description: "",
-                filters: ensureAllTimeFilterForExport(filters),
-            };
-
-            scheduledEmailCommandProcessing.run(scheduledEmailToCreate, filterContext);
+            const sanitizedFilters = filters && ensureAllTimeFilterForExport(filters);
+            scheduledEmailCommandProcessing.run(scheduledEmailToCreate, sanitizedFilters);
         },
         [scheduledEmailCommandProcessing],
     );

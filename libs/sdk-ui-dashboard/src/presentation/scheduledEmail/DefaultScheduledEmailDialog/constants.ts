@@ -2,6 +2,8 @@
 
 export const PLATFORM_DATE_FORMAT = "yyyy-MM-dd";
 
+export const DEFAULT_DATE_FILTER_DATE_FORMAT = "MM/dd/yyyy";
+
 export const DEFAULT_DROPDOWN_ALIGN_POINTS = [
     {
         align: "bl tl",

@@ -495,6 +495,7 @@ export {
     newAbsoluteDashboardDateFilter,
     newAllTimeDashboardDateFilter,
     newRelativeDashboardDateFilter,
+    isFilterContextItem,
 } from "./dashboard/filterContext.js";
 
 export {

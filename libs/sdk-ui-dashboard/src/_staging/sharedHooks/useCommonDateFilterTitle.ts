@@ -2,7 +2,7 @@
 
 import { IntlShape } from "react-intl";
 
-import { selectDateFilterConfigOverrides, useDashboardSelector } from "../../../model/index.js";
+import { selectDateFilterConfigOverrides, useDashboardSelector } from "../../model/index.js";
 
 export const useCommonDateFilterTitle = (intl: IntlShape) => {
     const filterConfig = useDashboardSelector(selectDateFilterConfigOverrides);

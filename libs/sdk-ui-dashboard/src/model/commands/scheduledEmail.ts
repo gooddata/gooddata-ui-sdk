@@ -1,10 +1,9 @@
 // (C) 2021-2024 GoodData Corporation
 
 import {
-    IFilterContextDefinition,
     IAutomationMetadataObjectDefinition,
     IAutomationMetadataObject,
-    ObjRef,
+    FilterContextItem,
 } from "@gooddata/sdk-model";
 import { IDashboardCommand } from "./base.js";
 
@@ -18,9 +17,9 @@ export interface CreateScheduledEmailPayload {
      */
     readonly scheduledEmail: IAutomationMetadataObjectDefinition;
     /**
-     * Filter context to use for the scheduled email. If no filter context is provided, stored dashboard filter context will be used.
+     * Filter context filters to use for the scheduled email. If no filters are provided, stored dashboard filters will be used.
      */
-    readonly filterContext?: IFilterContextDefinition;
+    readonly filters?: FilterContextItem[];
 }
 
 /**
@@ -39,7 +38,7 @@ export interface CreateScheduledEmail extends IDashboardCommand {
  * Dispatching this command will result in the creating scheduled email on the backend.
  *
  * @param scheduledEmail - specify scheduled email to create.
- * @param filterContext - specify filter context to use for the scheduled email. If no filter context is provided, stored dashboard filter context will be used.
+ * @param filters - specify filter context filters to use for the scheduled email. If no filters are provided, stored dashboard filters will be used.
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
 
@@ -47,7 +46,7 @@ export interface CreateScheduledEmail extends IDashboardCommand {
  */
 export function createScheduledEmail(
     scheduledEmail: IAutomationMetadataObjectDefinition,
-    filterContext?: IFilterContextDefinition,
+    filters?: FilterContextItem[],
     correlationId?: string,
 ): CreateScheduledEmail {
     return {
@@ -55,7 +54,7 @@ export function createScheduledEmail(
         correlationId,
         payload: {
             scheduledEmail,
-            filterContext,
+            filters,
         },
     };
 }
@@ -80,16 +79,16 @@ export interface SaveScheduledEmailPayload {
      */
     readonly scheduledEmail: IAutomationMetadataObject;
     /**
-     * optionally specify existing filter context reference to be used for all attachments
+     * optionally specify existing filter context filters to be used for all attachments
      */
-    readonly filterContextRef?: ObjRef;
+    readonly filters?: FilterContextItem[];
 }
 
 /**
  * Saves existing SaveScheduledEmail command. Dispatching this command will result in saving scheduled email on the backend.
  *
  * @param scheduledEmail - specify scheduled email to save.
- * @param filterContextRef - optionally specify existing filter context reference to be used for all attachments
+ * @param filters - optionally specify existing filter context filters to be used for all attachments
  * @param correlationId - optionally specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
 
@@ -97,7 +96,7 @@ export interface SaveScheduledEmailPayload {
  */
 export function saveScheduledEmail(
     scheduledEmail: IAutomationMetadataObject,
-    filterContextRef?: ObjRef,
+    filters?: FilterContextItem[],
     correlationId?: string,
 ): SaveScheduledEmail {
     return {
@@ -105,7 +104,7 @@ export function saveScheduledEmail(
         correlationId,
         payload: {
             scheduledEmail,
-            filterContextRef,
+            filters,
         },
     };
 }

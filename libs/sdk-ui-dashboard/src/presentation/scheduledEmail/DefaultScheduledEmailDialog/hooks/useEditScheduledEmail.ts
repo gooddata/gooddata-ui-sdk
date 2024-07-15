@@ -6,6 +6,7 @@ import {
     IExportDefinitionMetadataObjectDefinition,
     isExportDefinitionDashboardContent,
     IAutomationRecipient,
+    FilterContextItem,
 } from "@gooddata/sdk-model";
 import parseISO from "date-fns/parseISO/index.js";
 import { getUserTimezone } from "../utils/timezone.js";
@@ -13,17 +14,24 @@ import { useDashboardSelector, selectDashboardTitle, selectDashboardId } from ".
 import { Alignment, normalizeTime } from "@gooddata/sdk-ui-kit";
 import { IScheduledEmailDialogProps } from "../../types.js";
 import { toModifiedISOString } from "../../DefaultScheduledEmailManagementDialog/utils.js";
+import { useAttachmentDashboardFilters } from "./useAttachmentDashboardFilters.js";
+import { getAutomationDashboardFilters } from "../utils/getAutomationFilters.js";
 
 export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
     const { editSchedule, webhooks } = props;
     const dashboardId = useDashboardSelector(selectDashboardId);
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
+    const dashboardEditFilters = getAutomationDashboardFilters(editSchedule);
+    const { areFiltersChanged, filtersToStore } = useAttachmentDashboardFilters({
+        customFilters: dashboardEditFilters,
+    });
 
     const [state, setState] = useState<IAutomationMetadataObject | IAutomationMetadataObjectDefinition>(
         editSchedule ??
             newAutomationMetadataObjectDefinition({
                 dashboardId: dashboardId!,
                 dashboardTitle,
+                filters: areFiltersChanged ? filtersToStore : undefined,
                 webhook: webhooks[0]?.id,
             }),
     );
@@ -74,25 +82,37 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
         }));
     };
 
-    const onAttachmentsChange = (dashboardSelected: boolean): void => {
-        const exportDefinitions = dashboardSelected
-            ? [
-                  ...(state.exportDefinitions ?? []),
-                  newDashboardExportDefinitionMetadataObjectDefinition({
-                      dashboardId: dashboardId!,
-                      dashboardTitle,
-                  }),
-              ]
-            : state.exportDefinitions?.filter((exportDefinition) =>
-                  isExportDefinitionDashboardContent(exportDefinition.requestPayload.content)
-                      ? exportDefinition.requestPayload.content.dashboard !== dashboardId
-                      : true,
-              );
+    const onAttachmentsChange = (dashboardSelected: boolean, filters?: FilterContextItem[]): void => {
+        if (dashboardSelected) {
+            const dashboardExportDefinition = newDashboardExportDefinitionMetadataObjectDefinition({
+                dashboardId: dashboardId!,
+                dashboardTitle,
+                filters,
+            });
+            const dashboardExportDefinitionExists = state.exportDefinitions?.some((exportDefinition) =>
+                isExportDefinitionDashboardContent(exportDefinition.requestPayload.content),
+            );
+            const updatedExportDefinitions = dashboardExportDefinitionExists
+                ? state.exportDefinitions?.map((exportDefinition) =>
+                      isExportDefinitionDashboardContent(exportDefinition.requestPayload.content)
+                          ? dashboardExportDefinition
+                          : exportDefinition,
+                  )
+                : [...(state.exportDefinitions ?? []), dashboardExportDefinition];
 
-        setState((s) => ({
-            ...s,
-            exportDefinitions,
-        }));
+            setState((s) => ({
+                ...s,
+                exportDefinitions: updatedExportDefinitions,
+            }));
+        } else {
+            setState((s) => ({
+                ...s,
+                exportDefinitions: s.exportDefinitions?.filter(
+                    (exportDefinition) =>
+                        !isExportDefinitionDashboardContent(exportDefinition.requestPayload.content),
+                ),
+            }));
+        }
     };
 
     return {
@@ -129,10 +149,14 @@ export function useScheduledEmailDialogAlignment() {
 function newDashboardExportDefinitionMetadataObjectDefinition({
     dashboardId,
     dashboardTitle,
+    filters,
 }: {
     dashboardId: string;
     dashboardTitle: string;
+    filters?: FilterContextItem[];
 }): IExportDefinitionMetadataObjectDefinition {
+    const filtersObj = filters ? { filters } : {};
+
     return {
         type: "exportDefinition",
         title: dashboardTitle,
@@ -141,6 +165,7 @@ function newDashboardExportDefinitionMetadataObjectDefinition({
             format: "PDF",
             content: {
                 dashboard: dashboardId,
+                ...filtersObj,
             },
         },
     };
@@ -150,14 +175,17 @@ function newAutomationMetadataObjectDefinition({
     dashboardId,
     dashboardTitle,
     webhook,
+    filters,
 }: {
     dashboardId: string;
     dashboardTitle: string;
     webhook: string;
+    filters?: FilterContextItem[];
 }): IAutomationMetadataObjectDefinition {
     const firstRun = parseISO(new Date().toISOString());
     const normalizedFirstRun = normalizeTime(firstRun, undefined, 60);
     const cron = getDefaultCronExpression(normalizedFirstRun);
+    const filtersObj = filters ? { filters } : {};
 
     const automation: IAutomationMetadataObjectDefinition = {
         type: "automation",
@@ -182,6 +210,7 @@ function newAutomationMetadataObjectDefinition({
                     format: "PDF",
                     content: {
                         dashboard: dashboardId,
+                        ...filtersObj,
                     },
                 },
             },

@@ -26,7 +26,7 @@ import {
     isDashboardDependentDateFilter,
 } from "../../../../../../model/index.js";
 import { IntlWrapper } from "../../../../../localization/index.js";
-import { useCommonDateFilterTitle } from "../../../../dateFilter/useCommonDateFilterTitle.js";
+import { useCommonDateFilterTitle } from "../../../../../../_staging/sharedHooks/useCommonDateFilterTitle.js";
 
 import { LimitingItem } from "./shared/LimitingItem.js";
 import { useLimitingItems } from "./shared/limitingItemsHook.js";

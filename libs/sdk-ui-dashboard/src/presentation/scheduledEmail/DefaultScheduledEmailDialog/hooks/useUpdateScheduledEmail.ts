@@ -1,6 +1,6 @@
 // (C) 2020-2024 GoodData Corporation
 import { useCallback } from "react";
-import { IAutomationMetadataObject, ObjRef } from "@gooddata/sdk-model";
+import { FilterContextItem, IAutomationMetadataObject } from "@gooddata/sdk-model";
 import {
     CommandProcessingStatus,
     saveScheduledEmail,
@@ -16,7 +16,7 @@ export const useUpdateScheduledEmail = ({
     onSuccess?: () => void;
     onError?: (error: any) => void;
 } = {}): {
-    save: (scheduledEmailToSave: IAutomationMetadataObject, filterContextRef?: ObjRef) => void;
+    save: (scheduledEmailToSave: IAutomationMetadataObject, filters?: FilterContextItem[]) => void;
     savingStatus?: CommandProcessingStatus;
 } => {
     const scheduledEmailCommandProcessing = useDashboardCommandProcessing({
@@ -35,8 +35,8 @@ export const useUpdateScheduledEmail = ({
     });
 
     const save = useCallback(
-        (scheduledEmailToSave: IAutomationMetadataObject, filterContextRef?: ObjRef) => {
-            scheduledEmailCommandProcessing.run(scheduledEmailToSave, filterContextRef);
+        (scheduledEmailToSave: IAutomationMetadataObject, filters?: FilterContextItem[]) => {
+            scheduledEmailCommandProcessing.run(scheduledEmailToSave, filters);
         },
         [scheduledEmailCommandProcessing],
     );
