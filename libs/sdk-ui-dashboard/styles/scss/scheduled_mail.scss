@@ -281,6 +281,9 @@ $min-content-height: 110px;
         }
 
         .gd-attachment-filters-list-item-title {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
             color: kit-variables.$gd-color-link;
             font-size: 12px;
             font-style: normal;

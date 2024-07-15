@@ -24,7 +24,9 @@ export const AttachmentFiltersList: React.FC<IAttachmentFiltersListProps> = ({ f
 const FilterListItem: React.FC<{ title: string; subtitle: string }> = ({ title, subtitle }) => {
     return (
         <div className="gd-attachment-filters-list-item">
-            <div className="gd-attachment-filters-list-item-title">{title}</div>
+            <div className="gd-attachment-filters-list-item-title" title={subtitle}>
+                {title}
+            </div>
             <div className="gd-attachment-filters-list-item-subtitle" title={subtitle}>
                 {subtitle}
             </div>
