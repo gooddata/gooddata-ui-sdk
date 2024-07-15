@@ -5,7 +5,7 @@ import { FilterContextItem, IAutomationMetadataObject } from "@gooddata/sdk-mode
 import { Message } from "@gooddata/sdk-ui-kit";
 import { AttachmentFilters, AttachmentFilterType } from "./AttachmentFilters.js";
 import { useAttachmentDashboardFilters } from "../../hooks/useAttachmentDashboardFilters.js";
-import { getAutomationDashboardFilters } from "../../utils/getAutomationFilters.js";
+import { getAutomationDashboardFilters } from "../../utils/automationFilters.js";
 
 export interface IAttachmentsProps {
     dashboardTitle: string;

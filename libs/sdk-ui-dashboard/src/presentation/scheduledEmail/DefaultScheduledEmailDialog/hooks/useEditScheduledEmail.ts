@@ -15,7 +15,7 @@ import { Alignment, normalizeTime } from "@gooddata/sdk-ui-kit";
 import { IScheduledEmailDialogProps } from "../../types.js";
 import { toModifiedISOString } from "../../DefaultScheduledEmailManagementDialog/utils.js";
 import { useAttachmentDashboardFilters } from "./useAttachmentDashboardFilters.js";
-import { getAutomationDashboardFilters } from "../utils/getAutomationFilters.js";
+import { getAutomationDashboardFilters, isDashboardAutomation } from "../utils/automationFilters.js";
 
 export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
     const { editSchedule, webhooks } = props;
@@ -89,9 +89,7 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
                 dashboardTitle,
                 filters,
             });
-            const dashboardExportDefinitionExists = state.exportDefinitions?.some((exportDefinition) =>
-                isExportDefinitionDashboardContent(exportDefinition.requestPayload.content),
-            );
+            const dashboardExportDefinitionExists = isDashboardAutomation(state);
             const updatedExportDefinitions = dashboardExportDefinitionExists
                 ? state.exportDefinitions?.map((exportDefinition) =>
                       isExportDefinitionDashboardContent(exportDefinition.requestPayload.content)
