@@ -18,7 +18,7 @@ export const isDashboardAutomation = (
         return false;
     }
 
-    return automation?.exportDefinitions?.some((exportDefinition) => {
+    return automation.exportDefinitions?.some((exportDefinition) => {
         return isExportDefinitionDashboardContent(exportDefinition.requestPayload.content);
     });
 };

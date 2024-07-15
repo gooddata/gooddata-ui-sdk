@@ -28,10 +28,6 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     saveAsNewEmailsMessage: { id: "dialogs.save.as.new.emailsMessage" },
     alertMessageRelativePresetInPeriod: { id: "filters.alertMessage.relativePreset.inPeriod" },
     alertMessageRelativePreset: { id: "filters.alertMessage.relativePreset" },
-    scheduleEmailOptionRecepientInvalid: { id: "options.menu.schedule.email.recipient.invalid" },
-    scheduleEmailOptionRecepientExternalNotAllowed: {
-        id: "options.menu.schedule.email.recipient.external.not.allowed",
-    },
     tabsMy: { id: "gs.visualizationsList.tabs.my" },
     tabsAll: { id: "gs.visualizationsList.tabs.all" },
     controlButtonsSaveValue: { id: "controlButtons.save.value" },
@@ -40,21 +36,6 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     controlButtonsSaveAsPrivateTitle: { id: "controlButtons.saveAsPrivate.title" },
     controlButtonsSaveAndPublishNoChanges: { id: "controlButtons.saveAndPublish.disable.noChanges.title" },
     controlButtonsSaveAndPublishEmpty: { id: "controlButtons.saveAndPublish.disable.empty.title" },
-
-    scheduleDialogEmailRepeats_cron: { id: "dialogs.schedule.email.repeats.types.cron" },
-    scheduleDialogEmailRepeats_custom: { id: "dialogs.schedule.email.repeats.types.custom" },
-    scheduleDialogEmailRepeats_daily: { id: "dialogs.schedule.email.repeats.types.daily" },
-    scheduleDialogEmailRepeats_monthly: { id: "dialogs.schedule.email.repeats.types.monthly" },
-    scheduleDialogEmailRepeats_weekly: { id: "dialogs.schedule.email.repeats.types.weekly" },
-    scheduleDialogEmailRepeatsExecuteOn_dayOfMonth: {
-        id: "dialogs.schedule.email.repeats.execute.on.dayOfMonth",
-    },
-    scheduleDialogEmailRepeatsExecuteOn_dayOfWeek: {
-        id: "dialogs.schedule.email.repeats.execute.on.dayOfWeek",
-    },
-    scheduleDialogEmailRepeatsFrequencies_day: { id: "dialogs.schedule.email.repeats.frequencies.day" },
-    scheduleDialogEmailRepeatsFrequencies_month: { id: "dialogs.schedule.email.repeats.frequencies.month" },
-    scheduleDialogEmailRepeatsFrequencies_week: { id: "dialogs.schedule.email.repeats.frequencies.week" },
 
     filterHiddenTooltip: { id: "filter.visibilityMode.tooltip.hidden" },
     filterReadonlyInEditModeTooltip: { id: "filter.visibilityMode.tooltip.readonly.editMode" },
