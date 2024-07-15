@@ -306,6 +306,7 @@ export interface IAttributeElementLoader {
     cancelIrrelevantElementsLoad(correlation?: Correlation): void;
     cancelNextElementsPageLoad(): void;
     getAllElements(): IAttributeElement[];
+    getDisplayAsLabel(): ObjRef | undefined;
     getElementsByKey(keys: AttributeElementKey[]): IAttributeElement[];
     getInitialElementsPageError(): GoodDataSdkError | undefined;
     getInitialElementsPageStatus(): AsyncOperationStatus;

@@ -170,6 +170,11 @@ export interface IAttributeElementLoader {
     setDisplayAsLabel(displayAsLabel: ObjRef): void;
 
     /**
+     * Get the label used for representing the attribute filter elements visually if defined.
+     */
+    getDisplayAsLabel(): ObjRef | undefined;
+
+    /**
      * Set the limit for the upcoming attribute element loads.
      *
      * @remarks

@@ -23,6 +23,7 @@ export interface IAttributeFilterLoader extends IAttributeLoader, IAttributeElem
 
     /**
      * Get the filter to display in component, including custom displayAsLabel applied.
+     * Note: This filter is not used for execution and can be completely the same as getFilter one.
      */
     getFilterToDisplay(): IAttributeFilter;
 
