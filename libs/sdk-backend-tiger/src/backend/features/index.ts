@@ -14,7 +14,7 @@ import { getFeatureHubFeatures } from "./hub.js";
 import { getStaticFeatures } from "./static.js";
 
 const getKeyFromContext = (wsContext?: Partial<FeatureContext>): string => {
-    return `${wsContext?.organizationId}-${wsContext?.earlyAccess}`;
+    return `${wsContext?.organizationId}-${wsContext?.earlyAccessValues?.join(",")}`;
 };
 const responseMap: LRUCache<string, Promise<ITigerFeatureFlags>> = new LRUCache<
     string,
@@ -78,8 +78,8 @@ export function pickContext(
 ): Partial<FeatureContext> {
     const context: Partial<FeatureContext> = {};
 
-    if (attributes?.earlyAccess !== undefined) {
-        context.earlyAccess = attributes.earlyAccess;
+    if (attributes?.earlyAccessValues !== undefined) {
+        context.earlyAccessValues = attributes.earlyAccessValues;
     }
 
     if (organizationId !== undefined) {

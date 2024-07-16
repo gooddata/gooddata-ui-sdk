@@ -103,7 +103,12 @@ async function getFeatureHubData(
                     if (value === undefined || value === "") {
                         return prev;
                     }
-                    return [...prev, `${item}=${encodeURIComponent(value)}`];
+
+                    const parsed = Array.isArray(value)
+                        ? value.map((v) => `${item}[]=${encodeURIComponent(v)}`)
+                        : [`${item}=${encodeURIComponent(value)}`];
+
+                    return [...prev, ...parsed];
                 }, [] as Array<string>)
                 .join(","),
             ...(state ? { "if-none-match": state.etag } : {}),

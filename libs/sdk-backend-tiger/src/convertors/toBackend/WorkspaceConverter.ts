@@ -17,6 +17,7 @@ export const convertWorkspaceUpdate = (
             // but backend expects them in case we want to delete the value
             prefix: descriptor.prefix as string | undefined,
             earlyAccess: descriptor.earlyAccess as string | undefined,
+            earlyAccessValues: descriptor.earlyAccessValues as string[] | undefined,
         },
     };
 };

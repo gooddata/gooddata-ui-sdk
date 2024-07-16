@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
 import { IStaticFeatures } from "@gooddata/api-client-tiger";
 import { TigerFeaturesNames } from "../../uiFeatures.js";
@@ -6,8 +6,8 @@ import { getStaticFeatures } from "../static.js";
 import { describe, expect, it } from "vitest";
 
 describe("static features", () => {
-    function createFeatures(items = {}, earlyAccess = ""): IStaticFeatures["static"] {
-        return { items, context: { earlyAccess } };
+    function createFeatures(items = {}, earlyAccessValues: string[] = []): IStaticFeatures["static"] {
+        return { items, context: { earlyAccessValues, organizationId: "" } };
     }
 
     it("empty definition", async () => {
@@ -56,7 +56,7 @@ describe("static features", () => {
                     [TigerFeaturesNames.EnableSqlDatasets]: "TRUE",
                     [TigerFeaturesNames.EnableCompositeGrain]: "TRUE",
                 },
-                "beta",
+                ["beta"],
             ),
         );
         expect(results).toEqual({
