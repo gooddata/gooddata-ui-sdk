@@ -2185,8 +2185,10 @@ export interface IOrganizationDescriptor {
     bootstrapUser?: ObjRef;
     // (undocumented)
     bootstrapUserGroup?: ObjRef;
-    // (undocumented)
+    // @deprecated (undocumented)
     earlyAccess?: string;
+    // (undocumented)
+    earlyAccessValues?: string[];
     // (undocumented)
     id: string;
     // (undocumented)
@@ -2195,8 +2197,10 @@ export interface IOrganizationDescriptor {
 
 // @public
 export interface IOrganizationDescriptorUpdate {
-    // (undocumented)
+    // @deprecated (undocumented)
     earlyAccess?: string | null;
+    // (undocumented)
+    earlyAccessValues?: string[] | null;
     // (undocumented)
     title?: string;
 }

@@ -195,8 +195,15 @@ export interface IWorkspaceDescriptor {
     parentPrefixes?: string[];
     /**
      * Early access attribute value of the workspace
+     * @deprecated - use earlyAccessValues instead
      */
     earlyAccess?: string;
+
+    /**
+     * Early access flags of the workspace
+     */
+    earlyAccessValues?: string[];
+
     /**
      * Number of child workspaces
      */
@@ -215,6 +222,7 @@ export interface IWorkspaceDescriptorUpdate {
     description?: string;
     prefix?: string | null;
     earlyAccess?: string | null;
+    earlyAccessValues?: string[] | null;
 }
 
 /**
@@ -253,6 +261,7 @@ export interface IWorkspacesQueryFilter {
      * Filter by earlyAccess property on the workspace
      */
     earlyAccess?: string;
+
     /**
      * Filter by entity identifiers prefix in the workspace
      */

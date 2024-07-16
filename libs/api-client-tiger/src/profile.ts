@@ -4,7 +4,7 @@ import { ApiEntitlement } from "./generated/metadata-json-api/index.js";
 
 export type FeatureContext = {
     organizationId: string;
-    earlyAccess: string;
+    earlyAccessValues: string[];
 };
 
 export interface ILiveFeatures {

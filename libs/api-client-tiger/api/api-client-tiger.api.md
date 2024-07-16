@@ -6617,7 +6617,7 @@ export interface FactsApiInterface {
 // @public (undocumented)
 export type FeatureContext = {
     organizationId: string;
-    earlyAccess: string;
+    earlyAccessValues: string[];
 };
 
 // @public

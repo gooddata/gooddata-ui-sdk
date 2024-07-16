@@ -1249,7 +1249,9 @@ export interface IWorkspaceDescriptor {
     childWorkspacesCount?: number;
     // (undocumented)
     description: string;
+    // @deprecated
     earlyAccess?: string;
+    earlyAccessValues?: string[];
     // (undocumented)
     id: string;
     // (undocumented)
@@ -1267,6 +1269,8 @@ export interface IWorkspaceDescriptorUpdate {
     description?: string;
     // (undocumented)
     earlyAccess?: string | null;
+    // (undocumented)
+    earlyAccessValues?: string[] | null;
     // (undocumented)
     prefix?: string | null;
     // (undocumented)

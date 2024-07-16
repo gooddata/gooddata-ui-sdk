@@ -58,6 +58,7 @@ export class TigerOrganization implements IOrganization {
                 bootstrapUser: idRef(bootstrapUser.id, bootstrapUser.type),
                 bootstrapUserGroup: idRef(bootstrapUserGroup.id, bootstrapUserGroup.type),
                 earlyAccess: result.data.data.attributes?.earlyAccess ?? undefined,
+                earlyAccessValues: result.data.data.attributes?.earlyAccessValues ?? undefined,
             };
         }
 
@@ -83,6 +84,7 @@ export class TigerOrganization implements IOrganization {
                             // type casts are necessary because nulls are not allowed in the type definition,
                             // but backend expects them in case we want to delete the value
                             earlyAccess: descriptor.earlyAccess as string | undefined,
+                            earlyAccessValues: descriptor.earlyAccessValues as string[] | undefined,
                         },
                     },
                 },
