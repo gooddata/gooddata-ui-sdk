@@ -558,7 +558,7 @@
     "userManagement.deleteDialog.userGroup.adminDisabledTooltip": "Impossible de supprimer ce groupe.",
     "userManagement.deleteDialog.userGroup.nonEmptyDisabledTooltip": "Il est impossible de supprimer ce groupe, car il contient des membres.",
     "userManagement.deleteDialog.multipleUsers.title": "Supprimer les utilisateurs ?",
-    "userManagement.deleteDialog.multipleUsers.body": "<{count} utilisateurs</b> seront irréversiblement supprimés, mais leurs visualisations et tableaux de bord ne seront pas affectés.",
+    "userManagement.deleteDialog.multipleUsers.body": "<b>{count} utilisateurs</b> seront irréversiblement supprimés, mais leurs visualisations et tableaux de bord ne seront pas affectés.",
     "userManagement.deleteDialog.group.title": "Supprimer le groupe ?",
     "userManagement.deleteDialog.group.body": "Le groupe sera supprimé de manière irréversible. Tous ses membres perdront les droits définis par les autorisations du groupe.",
     "userManagement.deleteDialog.multipleGroups.title": "Supprimer des groupes ?",

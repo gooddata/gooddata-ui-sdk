@@ -24,11 +24,6 @@
         "comment": "",
         "limit": 0
     },
-    "gs.list.only": {
-        "value": "Only",
-        "comment": "",
-        "limit": 0
-    },
     "messages.dashboardSaveSuccess": {
         "value": "Great. We saved your dashboard.",
         "comment": "",
@@ -498,24 +493,9 @@
         "comment": "Translate as imperative. Create the schedule by submitting form.",
         "limit": 0
     },
-    "dialogs.schedule.email.footer.title": {
-        "value": "How to schedule export?",
-        "comment": "Title of a link to documentation",
-        "limit": 0
-    },
-    "dialogs.schedule.email.footer.title.short": {
-        "value": "Help",
-        "comment": "Title of a link to documentation",
-        "limit": 0
-    },
     "dialogs.schedule.email.save": {
         "value": "Save",
         "comment": "Translate as imperative. It's caption of a button for saving scheduled mail",
-        "limit": 0
-    },
-    "dialogs.schedule.email.attribute.merged": {
-        "value": "Keep attribute cells merged",
-        "comment": "Label of a checkbox field",
         "limit": 0
     },
     "dialogs.schedule.management.title": {
@@ -568,16 +548,6 @@
         "comment": "Describes which filters will be used in the attachment",
         "limit": 0
     },
-    "dialogs.schedule.management.attachments.filters.default": {
-        "value": "default dashboard filters",
-        "comment": "Attachment filters type title",
-        "limit": 0
-    },
-    "dialogs.schedule.management.attachments.filters.edited": {
-        "value": "edited dashboard filters",
-        "comment": "Attachment filters type title",
-        "limit": 0
-    },
     "dialogs.schedule.management.attachments.filters.item.default": {
         "value": "Use default filters",
         "comment": "Attachment filters type item",
@@ -625,11 +595,6 @@
     },
     "save": {
         "value": "Save",
-        "comment": "",
-        "limit": 0
-    },
-    "gs.date.at": {
-        "value": "at",
         "comment": "",
         "limit": 0
     },
@@ -1049,21 +1014,6 @@
     "attributesDropdown.configuration": {
         "value": "Configuration",
         "comment": "Configuration button label in attribute filter dropdown",
-        "limit": 0
-    },
-    "attributesDropdown.itemsFiltered": {
-        "value": "Items are filtered",
-        "comment": "This message is displayed when attribute elements are being filtered out by parent filters",
-        "limit": 0
-    },
-    "attributesDropdown.allItemsFiltered": {
-        "value": "All items are filtered out",
-        "comment": "This message is displayed when there are no items available because they were filtered out by parent filters",
-        "limit": 0
-    },
-    "attributesDropdown.itemsFiltered.tooltip": {
-        "value": "Items are filtered by: <strong>{filters}</strong>",
-        "comment": "Do not translate HTML markup enclosed in <> and {filters} placeholder as it will be replaced by list of filter names.",
         "limit": 0
     },
     "attributesDropdown.save": {
@@ -1504,11 +1454,6 @@
     },
     "configurationPanel.filterBy": {
         "value": "Filter by",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.date": {
-        "value": "Date",
         "comment": "",
         "limit": 0
     },
@@ -2043,16 +1988,6 @@
         "comment": "Don't translate placeholder '{count}'. In '{count, plural, one {DATE} other {DATES}} and {isShow, select, true {VISIBLE} other {HIDDEN}}' translate only uppercase words.",
         "limit": 0
     },
-    "gs.date.date-dataset.unrelated.show": {
-        "value": "Show",
-        "comment": "The unrelated items button",
-        "limit": 0
-    },
-    "gs.date.date-dataset.unrelated.hide": {
-        "value": "Hide",
-        "comment": "The unrelated items button",
-        "limit": 0
-    },
     "gs.date.date-dataset.duplicityWarning": {
         "value": "Another filter is using the same date dataset. Disable this filter or set a different date.",
         "comment": "",
@@ -2183,6 +2118,16 @@
     "dateFilterDropdown.save": {
         "value": "Save",
         "comment": "Save button label in date filter dropdown configuration",
+        "limit": 0
+    },
+    "dateFilterDropdown.configuration": {
+        "value": "Configuration",
+        "comment": "Configuration button label in date filter dropdown",
+        "limit": 0
+    },
+    "dateFilterDropdown.title": {
+        "value": "Date range",
+        "comment": "",
         "limit": 0
     },
     "filter.configuration.mode.title": {
