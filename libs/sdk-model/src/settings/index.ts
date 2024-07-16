@@ -415,6 +415,7 @@ export interface ISettings {
     enableOracleDataSource?: boolean;
     enableSnowflakeKeyPairAuthentication?: boolean;
     enableMotherDuckDataSource?: boolean;
+    enableSingleStoreDataSource?: boolean;
 
     [key: string]: number | boolean | string | object | undefined;
 }
