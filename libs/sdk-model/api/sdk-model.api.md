@@ -2823,6 +2823,8 @@ export interface ISettings {
     enableScheduling?: boolean;
     enableSeparateTotalLabels?: boolean;
     // (undocumented)
+    enableSingleStoreDataSource?: boolean;
+    // (undocumented)
     enableSnowflakeKeyPairAuthentication?: boolean;
     enableTableColumnsAutoResizing?: boolean;
     enableTableColumnsGrowToFit?: boolean;
