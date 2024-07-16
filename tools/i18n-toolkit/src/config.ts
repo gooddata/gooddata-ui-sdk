@@ -1,16 +1,15 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import path from "path";
 
 import { ToolkitOptions, ToolkitConfigFile, DefaultConfigName } from "./data.js";
 import { readFile } from "./utils/index.js";
-import { skipped, message, fail } from "./utils/console.js";
+import { message, fail } from "./utils/console.js";
 
 export async function configure(cwd: string, opts: ToolkitOptions): Promise<ToolkitConfigFile> {
     const [configPath, configFile] = await loadConfigFile(cwd, opts.config);
 
     if (configFile === null) {
-        skipped("Configuration file not provided or not found.", opts.debug);
-        return { ...opts };
+        throw new Error("Configuration file not provided or not found.");
     }
 
     message(` ╏ Using configuration file "${configPath}".`);
@@ -32,8 +31,9 @@ async function loadConfigFile(
 
     try {
         await readFile(configPath);
-        return [configPath, await import(configPath)];
+        const impConfig = await import(configPath);
+        return [configPath, impConfig.default];
     } catch (e) {
-        return [configPath, null];
+        throw new Error(e);
     }
 }
