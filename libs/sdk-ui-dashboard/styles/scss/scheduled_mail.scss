@@ -38,26 +38,6 @@ $min-content-height: 110px;
     .gd-dialog-footer {
         display: flex;
     }
-
-    .gd-schedule-email-dialog-filters-message {
-        margin-top: -5px;
-        margin-bottom: $vertical-space;
-    }
-}
-
-.gd-schedule-email-dialog-unsubscribed-recipients {
-    margin-top: -5px;
-    margin-left: 105px;
-    overflow: hidden;
-    width: 100%;
-    line-height: 16px;
-    white-space: normal;
-    font-size: 12px;
-    color: kit-variables.$gd-color-link;
-
-    @media #{kit-variables.$small-only} {
-        margin-left: 0;
-    }
 }
 
 .gd-input-component {
@@ -106,30 +86,6 @@ $min-content-height: 110px;
     }
 }
 
-.gd-attachment-component {
-    @media #{kit-variables.$medium-up} {
-        align-items: flex-start;
-    }
-
-    .gd-attachment-name {
-        flex: 1;
-        padding-left: 7px;
-
-        @media #{kit-variables.$medium-up} {
-            margin-top: 3px;
-            word-break: break-all;
-        }
-    }
-
-    .gd-icon-pdf {
-        position: relative;
-        top: 1px;
-        flex: 0;
-        padding: 0;
-        margin-top: 3px;
-    }
-}
-
 .gd-schedule-email-attachments {
     @media #{kit-variables.$medium-up} {
         align-items: flex-start;
@@ -138,11 +94,6 @@ $min-content-height: 110px;
     > .gd-label {
         height: 30px;
         line-height: 30px;
-    }
-
-    .gd-attachment-config-button {
-        display: inline-block;
-        margin: 10px 20px 0 0;
     }
 
     .gd-attachment-list {
@@ -156,13 +107,6 @@ $min-content-height: 110px;
 
         @media #{kit-variables.$small-only} {
             max-width: none;
-        }
-
-        &-content {
-            display: flex;
-            flex-wrap: wrap;
-            overflow: hidden;
-            margin: 0 -5px;
         }
     }
 
@@ -281,6 +225,9 @@ $min-content-height: 110px;
         }
 
         .gd-attachment-filters-list-item-title {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
             color: kit-variables.$gd-color-link;
             font-size: 12px;
             font-style: normal;
@@ -304,145 +251,6 @@ $min-content-height: 110px;
         display: flex;
         justify-content: end;
         padding: 10px;
-    }
-}
-
-.gd-schedule-email-dialog-datetime,
-.gd-schedule-email-dialog-repeat {
-    align-items: flex-start;
-    flex-direction: row;
-
-    @media #{kit-variables.$small-only} {
-        .gd-label {
-            margin-bottom: 0;
-        }
-    }
-
-    > div {
-        display: flex;
-        align-items: center;
-        flex-wrap: wrap;
-    }
-}
-
-.gd-schedule-email-dialog-datetime {
-    > div {
-        .gd-datepicker {
-            width: 119px;
-
-            @media #{kit-variables.$small-only} {
-                width: calc(50% - 10px);
-            }
-
-            .input-text {
-                @include input-styles;
-            }
-
-            .input-text:hover {
-                color: var(--gd-palette-complementary-8, inherit);
-            }
-
-            .gd-datepicker-icon {
-                top: -2px;
-            }
-        }
-
-        .gd-schedule-email-dialog-datetime-date input {
-            height: $input-height;
-        }
-
-        .gd-schedule-email-dialog-datetime-time {
-            margin-left: $horizontal-space;
-
-            button {
-                height: $input-height;
-            }
-        }
-
-        .gd-schedule-email-dialog-datetime-timezone {
-            @media #{kit-variables.$small-only} {
-                width: 100%;
-                margin-top: 15px;
-            }
-
-            @media #{kit-variables.$medium-up} {
-                margin-left: $horizontal-space;
-            }
-        }
-    }
-}
-
-.gd-automation-cron-input {
-    margin-left: 10px;
-}
-
-.gd-schedule-email-dialog-repeat {
-    @media #{kit-variables.$small-only} {
-        .gd-schedule-email-dialog-repeat-type {
-            width: 100%;
-            margin-bottom: $vertical-space;
-
-            .button-dropdown {
-                width: 100%;
-            }
-        }
-    }
-
-    .gd-schedule-email-dialog-repeat-type {
-        button {
-            height: $input-height;
-        }
-    }
-
-    .gd-schedule-email-dialog-repeat-custom {
-        display: flex;
-        align-items: center;
-
-        @media #{kit-variables.$small-only} {
-            flex-wrap: wrap;
-            border-left: 2px dotted kit-variables.$gd-border-color;
-        }
-
-        .gd-schedule-email-dialog-repeat-every {
-            margin-left: $horizontal-space;
-        }
-
-        .gd-schedule-email-dialog-repeat-period {
-            margin-left: $horizontal-space;
-
-            .gd-input-field {
-                @include input-styles;
-
-                width: 24px;
-                height: $input-height;
-                text-align: center;
-                padding-right: 0;
-                padding-left: 0;
-            }
-        }
-
-        .gd-schedule-email-dialog-repeat-frequency {
-            margin-left: $horizontal-space;
-
-            button {
-                height: $input-height;
-            }
-        }
-
-        @media #{kit-variables.$small-only} {
-            .break-the-row {
-                height: 0;
-                flex-basis: 100%;
-            }
-        }
-
-        .gd-schedule-email-dialog-repeat-execute-on {
-            margin-left: $horizontal-space;
-
-            @media #{kit-variables.$small-only} {
-                margin-top: $vertical-space;
-            }
-        }
     }
 }
 
@@ -710,224 +518,6 @@ $min-content-height: 110px;
     @media #{kit-variables.$small-only} {
         .modalityPlugin-mask {
             z-index: zIndexes.$scheduled-email-mask-small;
-        }
-    }
-}
-
-.gd-schedule-email-dialog-attachments {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin: 0 -10px;
-
-    & > div {
-        margin: 5px 10px;
-    }
-}
-
-.gd-schedule-dropdown {
-    &-button {
-        display: flex;
-        align-items: center;
-        height: 30px;
-        margin: 0;
-        padding: 0;
-        border: none;
-        outline: inherit;
-        font: inherit;
-        color: kit-variables.$gd-color-link;
-        background: none;
-        text-decoration: underline;
-        font-size: 14px;
-        cursor: pointer;
-
-        &-icon {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            margin-right: 6px;
-            flex-shrink: 0;
-        }
-
-        &-disabled {
-            color: kit-variables.$gd-color-disabled;
-
-            svg {
-                fill: kit-variables.$gd-color-disabled;
-            }
-
-            &:hover {
-                color: kit-variables.$gd-color-disabled;
-            }
-        }
-    }
-
-    &-body {
-        display: flex;
-        flex-direction: column;
-        height: inherit;
-        font-size: 12px;
-
-        @media #{kit-variables.$small-only} {
-            width: 100vw;
-            max-height: calc(100vh - 30px);
-        }
-    }
-
-    &-header {
-        display: flex;
-        flex: 0 0 auto;
-        align-items: center;
-        padding-left: 10px;
-        padding-right: 10px;
-        overflow: hidden;
-        height: 35px;
-        white-space: nowrap;
-        color: kit-variables.$gd-color-state-blank;
-        background: kit-variables.$is-focused-background;
-        text-overflow: ellipsis;
-        text-transform: uppercase;
-        font-size: 11px;
-        font-weight: bold;
-    }
-
-    &-content {
-        flex: 0 0 auto;
-        overflow-y: auto;
-        max-height: 200px;
-
-        @media #{kit-variables.$small-only} {
-            overflow: auto;
-            height: calc(100vh - 113px);
-            max-height: calc(100vh - 113px);
-        }
-    }
-
-    &-footer {
-        flex: 0 0 auto;
-        height: 47px;
-        padding: 10px;
-        border-top: 1px solid kit-variables.$gd-border-color;
-        text-align: right;
-    }
-}
-
-.gd-format-options-dropdown {
-    padding: 10px;
-    min-width: 253px;
-
-    @media #{kit-variables.$small-only} {
-        width: 100%;
-        min-width: none;
-    }
-
-    &-selector {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        height: $input-height;
-
-        & > div {
-            margin-left: 15px;
-        }
-    }
-}
-
-.gd-format-options-dropdown-xlsx {
-    display: flex;
-    flex-direction: column;
-    border-left: 1px dashed kit-variables.$gd-color-link;
-    padding-left: 10px;
-    margin-top: 5px;
-    font-size: 14px;
-    color: kit-variables.$gd-color-text;
-
-    & > div:not(:first-child) {
-        margin-top: 10px;
-    }
-
-    & > div {
-        display: flex;
-        align-items: center;
-        height: $input-height;
-
-        & > label {
-            display: flex;
-            align-items: center;
-            width: 100%;
-            padding-right: 0;
-
-            & > span {
-                margin-left: 4px;
-                white-space: nowrap;
-            }
-        }
-    }
-}
-
-.gd-attachments-selection-dropdown {
-    width: 253px;
-    padding: 10px;
-
-    @media #{kit-variables.$small-only} {
-        width: 100%;
-    }
-
-    h3 {
-        flex-grow: 2;
-        position: relative;
-        overflow: hidden;
-        height: 23px;
-        margin-top: 5px;
-        margin-bottom: 5px;
-        font-size: 11px;
-        font-weight: bold;
-        text-transform: uppercase;
-        color: kit-variables.$gd-color-state-blank;
-
-        &::after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            display: inline-block;
-            width: 100%;
-            height: 0;
-            margin-left: 10px;
-            border-top: 1px solid kit-variables.$gd-color-state-blank;
-        }
-    }
-
-    & > div:not(:last-child) {
-        margin-bottom: 10px;
-    }
-
-    & > div {
-        display: flex;
-        align-items: center;
-        overflow: hidden;
-        height: $input-height;
-
-        & > label {
-            display: flex;
-            align-items: center;
-            overflow: hidden;
-            width: 100%;
-            padding-right: 0;
-
-            & > svg {
-                margin-left: 4px;
-                margin-right: 6px;
-                flex-shrink: 0;
-            }
-
-            & > span {
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                margin-left: 4px;
-            }
         }
     }
 }
