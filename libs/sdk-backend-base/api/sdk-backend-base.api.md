@@ -99,6 +99,7 @@ import { IWidgetAlertCount } from '@gooddata/sdk-backend-spi';
 import { IWidgetAlertDefinition } from '@gooddata/sdk-model';
 import { IWidgetReferences } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceAttributesService } from '@gooddata/sdk-backend-spi';
+import { IWorkspaceAutomationService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalog } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalogAvailableItemsFactory } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalogFactory } from '@gooddata/sdk-backend-spi';
@@ -209,6 +210,9 @@ export class AuthProviderCallGuard implements IAuthProviderCallGuard {
     reset: () => void;
 }
 
+// @alpha (undocumented)
+export type AutomationsDecoratorFactory = (automations: IWorkspaceAutomationService, workspace: string) => IWorkspaceAutomationService;
+
 // @beta
 export class Builder<T> implements IBuilder<T> {
     constructor(item: Partial<T>, validator?: ((item: Partial<T>) => void) | undefined);
@@ -254,6 +258,7 @@ export type CachingConfiguration = {
     maxSecuritySettingsOrgUrls?: number;
     maxSecuritySettingsOrgUrlsAge?: number;
     maxAttributeWorkspaces?: number;
+    maxAutomationsWorkspaces?: number;
     maxAttributeDisplayFormsPerWorkspace?: number;
     maxAttributesPerWorkspace?: number;
     maxAttributeElementResultsPerWorkspace?: number;
@@ -598,6 +603,7 @@ export type DecoratorFactories = {
     securitySettings?: SecuritySettingsDecoratorFactory;
     workspaceSettings?: WorkspaceSettingsDecoratorFactory;
     attributes?: AttributesDecoratorFactory;
+    automations?: AutomationsDecoratorFactory;
     dashboards?: DashboardsDecoratorFactory;
 };
 

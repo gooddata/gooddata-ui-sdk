@@ -123,13 +123,18 @@
         "limit": 0
     },
     "options.menu.schedule.email": {
-        "value": "Schedule exports",
+        "value": "Schedule export",
         "comment": "Translate as imperative. Schedule emailing whole KPI dashboard",
         "limit": 0
     },
     "options.menu.schedule.email.tooltip": {
         "value": "No destination available. To schedule an export, <a>create destination</a>.",
         "comment": "Do not translate html tags <a>, </a>",
+        "limit": 0
+    },
+    "options.menu.schedule.email.edit": {
+        "value": "Show schedules",
+        "comment": "Translate as imperative. Schedule emailing edit whole KPI dashboard",
         "limit": 0
     },
     "options.menu.delete": {
@@ -957,6 +962,11 @@
     },
     "widget.options.menu.scheduleExport": {
         "value": "Schedule export",
+        "comment": "",
+        "limit": 0
+    },
+    "widget.options.menu.scheduleExport.edit": {
+        "value": "Show schedules",
         "comment": "",
         "limit": 0
     },

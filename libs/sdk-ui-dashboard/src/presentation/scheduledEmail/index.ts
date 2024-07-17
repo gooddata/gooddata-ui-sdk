@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 export { DefaultScheduledEmailDialog } from "./DefaultScheduledEmailDialog/index.js";
 export { DefaultScheduledEmailManagementDialog } from "./DefaultScheduledEmailManagementDialog/index.js";
 export { ScheduledEmailDialog } from "./ScheduledEmailDialog.js";
@@ -8,4 +8,5 @@ export {
     CustomScheduledEmailManagementDialogComponent,
     IScheduledEmailDialogProps,
     IScheduledEmailManagementDialogProps,
+    IScheduledEmailDialogPropsContext,
 } from "./types.js";

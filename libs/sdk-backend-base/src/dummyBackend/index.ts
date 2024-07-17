@@ -73,6 +73,11 @@ import {
     IClusteringConfig,
     IWorkspaceAutomationService,
     IGenAIService,
+    IGetAutomationOptions,
+    IGetAutomationsOptions,
+    IAutomationsQuery,
+    IAutomationsQueryResult,
+    AutomationType,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -117,6 +122,8 @@ import {
     IAbsoluteDateFilter,
     IWebhookMetadataObjectDefinition,
     IWebhookMetadataObject,
+    IAutomationMetadataObjectDefinition,
+    IAutomationMetadataObject,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
 import isEmpty from "lodash/isEmpty.js";
@@ -363,7 +370,7 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
             throw new NotSupported("not supported");
         },
         automations(): IWorkspaceAutomationService {
-            throw new NotSupported("automations are not supported");
+            return new DummyWorkspaceAutomationService(workspace);
         },
         genAI(): IGenAIService {
             throw new NotSupported("not supported");
@@ -1104,5 +1111,164 @@ class DummyWorkspaceMeasuresService implements IWorkspaceMeasuresService {
 
     updateMeasure(measure: IMeasureMetadataObject): Promise<IMeasureMetadataObject> {
         return Promise.resolve({ ...measure });
+    }
+}
+
+class DummyWorkspaceAutomationService implements IWorkspaceAutomationService {
+    constructor(public readonly workspace: string) {}
+
+    async computeKeyDrivers(): Promise<IMeasureKeyDrivers> {
+        throw new NotSupported("not supported");
+    }
+
+    createAutomation(
+        automation: IAutomationMetadataObjectDefinition,
+        _options?: IGetAutomationOptions,
+    ): Promise<IAutomationMetadataObject> {
+        return Promise.resolve({
+            ...automation,
+            id: automation.id ?? "automation_id",
+            uri: automation.id ?? "automation_id",
+            ref: idRef(automation.id ?? "automation_id", "automation"),
+            type: "automation",
+        } as IAutomationMetadataObject);
+    }
+
+    deleteAutomation(_id: string): Promise<void> {
+        return Promise.resolve(undefined);
+    }
+
+    getAutomation(id: string, _options?: IGetAutomationOptions): Promise<IAutomationMetadataObject> {
+        return Promise.resolve({
+            id: id,
+            uri: id,
+            ref: idRef(id, "automation"),
+            type: "automation",
+            exportDefinitions: [],
+            deprecated: false,
+            production: true,
+            description: "",
+            title: "",
+            unlisted: false,
+            details: {
+                subject: "",
+                message: "",
+            },
+        } as IAutomationMetadataObject);
+    }
+
+    getAutomations(_options?: IGetAutomationsOptions): Promise<IAutomationMetadataObject[]> {
+        return Promise.resolve([
+            {
+                id: "automation_id",
+                uri: "automation_id",
+                ref: idRef("automation_id", "automation"),
+                type: "automation",
+                exportDefinitions: [],
+                deprecated: false,
+                production: true,
+                description: "",
+                title: "",
+                unlisted: false,
+                details: {
+                    subject: "",
+                    message: "",
+                },
+            },
+        ] as IAutomationMetadataObject[]);
+    }
+
+    updateAutomation(
+        automation: IAutomationMetadataObject,
+        _options?: IGetAutomationOptions,
+    ): Promise<IAutomationMetadataObject> {
+        return Promise.resolve({
+            exportDefinitions: [],
+            details: {
+                subject: "",
+                message: "",
+            },
+            ...automation,
+        } as IAutomationMetadataObject);
+    }
+
+    getAutomationsQuery(): IAutomationsQuery {
+        return new DummyAutomationsQuery();
+    }
+}
+
+class DummyAutomationsQuery implements IAutomationsQuery {
+    private settings: {
+        size: number;
+        page: number;
+        filter: { title?: string };
+        sort: NonNullable<unknown>;
+        type: AutomationType | undefined;
+        totalCount: number | undefined;
+    } = {
+        size: 50,
+        page: 0,
+        filter: {},
+        sort: {},
+        type: undefined,
+        totalCount: undefined,
+    };
+
+    query(): Promise<IAutomationsQueryResult> {
+        return Promise.resolve(
+            new DummyAutomationsQueryResult([], this.settings.size, this.settings.page, 0),
+        );
+    }
+
+    withFilter(filter: { title?: string }): IAutomationsQuery {
+        this.settings.filter = filter;
+        return this;
+    }
+
+    withPage(page: number): IAutomationsQuery {
+        this.settings.page = page;
+        return this;
+    }
+
+    withSize(size: number): IAutomationsQuery {
+        this.settings.size = size;
+        return this;
+    }
+
+    withSorting(sort: string[]): IAutomationsQuery {
+        this.settings.sort = sort;
+        return this;
+    }
+
+    withType(type: AutomationType): IAutomationsQuery {
+        this.settings.type = type;
+        return this;
+    }
+}
+
+class DummyAutomationsQueryResult implements IAutomationsQueryResult {
+    constructor(
+        public items: IAutomationMetadataObject[],
+        public limit: number,
+        public offset: number,
+        public totalCount: number,
+    ) {}
+
+    all(): Promise<IAutomationMetadataObject[]> {
+        throw new NotSupported("not supported");
+    }
+
+    allSorted(
+        _compareFn: (a: IAutomationMetadataObject, b: IAutomationMetadataObject) => number,
+    ): Promise<IAutomationMetadataObject[]> {
+        throw new NotSupported("not supported");
+    }
+
+    goTo(_pageIndex: number): Promise<IPagedResource<IAutomationMetadataObject>> {
+        throw new NotSupported("not supported");
+    }
+
+    next(): Promise<IPagedResource<IAutomationMetadataObject>> {
+        throw new NotSupported("not supported");
     }
 }

@@ -23,6 +23,18 @@ export const isDashboardAutomation = (
     });
 };
 
+export const isVisualisationAutomation = (
+    automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | undefined,
+) => {
+    if (!automation) {
+        return false;
+    }
+
+    return automation?.exportDefinitions?.some((exportDefinition) => {
+        return isExportDefinitionVisualizationObjectContent(exportDefinition.requestPayload.content);
+    });
+};
+
 export const getAutomationDashboardFilters = (
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | undefined,
 ): FilterContextItem[] | undefined => {

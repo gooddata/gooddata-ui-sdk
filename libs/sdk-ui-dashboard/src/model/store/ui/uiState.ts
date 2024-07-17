@@ -1,7 +1,11 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { ObjRef, Identifier, Uri } from "@gooddata/sdk-model";
 
-import { ILayoutCoordinates, IMenuButtonItemsVisibility } from "../../../types.js";
+import {
+    ILayoutCoordinates,
+    IMenuButtonItemsVisibility,
+    IScheduleEmailDialogContext,
+} from "../../../types.js";
 import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
 import { IDashboardWidgetOverlay } from "../../types/commonTypes.js";
 
@@ -22,10 +26,12 @@ export interface InvalidCustomUrlDrillParameterInfo {
 export interface UiState {
     scheduleEmailManagementDialog: {
         open: boolean;
+        context?: IScheduleEmailDialogContext;
     };
     scheduleEmailDialog: {
         open: boolean;
         defaultAttachmentRef: ObjRef | undefined;
+        context?: IScheduleEmailDialogContext;
     };
     saveAsDialog: {
         open: boolean;

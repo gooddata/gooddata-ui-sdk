@@ -157,6 +157,12 @@ export class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
     }
 
     public automations(): IWorkspaceAutomationService {
+        const { automations } = this.factories;
+
+        if (automations) {
+            return automations(this.decorated.automations(), this.workspace);
+        }
+
         return this.decorated.automations();
     }
 

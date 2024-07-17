@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import {
     IAbsoluteDateFilter,
@@ -277,4 +277,21 @@ export interface IGlobalDrillDownAttributeHierarchyDefinition {
      * Target attribute hierarchy for drill down.
      */
     target: ObjRef;
+}
+
+/**
+ * @internal
+ */
+export interface IScheduleEmailContext {
+    /**
+     * Widget to schedule email for.
+     */
+    widget?: IWidget;
+}
+
+/**
+ * @internal
+ */
+export interface IScheduleEmailDialogContext {
+    insightRef?: ObjRef | undefined;
 }

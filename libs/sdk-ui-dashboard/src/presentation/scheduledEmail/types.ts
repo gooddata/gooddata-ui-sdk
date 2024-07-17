@@ -5,12 +5,20 @@ import {
     IAutomationMetadataObjectDefinition,
     IWebhookMetadataObject,
     IWorkspaceUser,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 ///
 /// Component props
 ///
+
+/**
+ * @internal
+ */
+export interface IScheduledEmailDialogPropsContext {
+    insightRef?: ObjRef | undefined;
+}
 
 /**
  * @alpha
@@ -20,6 +28,11 @@ export interface IScheduledEmailDialogProps {
      * Is scheduled e-mail dialog visible?
      */
     isVisible?: boolean;
+
+    /**
+     * Context for the scheduled e-mail dialog.
+     */
+    context?: IScheduledEmailDialogPropsContext;
 
     /**
      * Callback to be called, when user submits the scheduled email dialog.
@@ -97,6 +110,11 @@ export interface IScheduledEmailManagementDialogProps {
      * Is scheduled email management dialog visible?
      */
     isVisible?: boolean;
+
+    /**
+     * Context for the scheduled e-mail dialog.
+     */
+    context?: IScheduledEmailDialogPropsContext;
 
     /**
      * Callback to be called, when user adds new scheduled email item.

@@ -10,7 +10,10 @@ import {
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 
-interface IUseWorkspaceAutomationsConfig
+/**
+ * @internal
+ */
+export interface IUseWorkspaceAutomationsConfig
     extends UseCancelablePromiseCallbacks<IAutomationMetadataObject[], GoodDataSdkError> {
     /**
      * Enable or disable the hook.
