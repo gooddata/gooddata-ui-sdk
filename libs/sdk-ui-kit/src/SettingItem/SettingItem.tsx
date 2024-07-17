@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 
 import React from "react";
 import cx from "classnames";
@@ -71,13 +71,14 @@ export const SettingItem: React.FC<ISettingItem> = ({
     alignPointActionTooltip,
     onAction,
     renderSubtitle,
+    titleTooltipHideDelay = 0,
 }) => {
     return (
         <div className={cx(className, "gd-setting-item-container", { divider: hasDivider })}>
             <div className="gd-setting-item-title">
                 <span className="title">{title}</span>
                 {titleTooltipText ? (
-                    <BubbleHoverTrigger>
+                    <BubbleHoverTrigger hideDelay={titleTooltipHideDelay}>
                         <span className="icon-circle-question gd-icon-circle-question" />
                         <Bubble
                             className={cx(className, "bubble-primary")}
