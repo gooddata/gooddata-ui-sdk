@@ -1,7 +1,7 @@
 // (C) 2019-2024 GoodData Corporation
 import React, { useState } from "react";
 import noop from "lodash/noop.js";
-import { useIntl } from "react-intl";
+import { defineMessage, useIntl } from "react-intl";
 import {
     ConfirmDialogBase,
     Overlay,
@@ -116,8 +116,8 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
     };
 
     const helpTextId = isMobileView()
-        ? "dialogs.schedule.email.footer.title.short"
-        : "dialogs.schedule.email.footer.title";
+        ? defineMessage({ id: "dialogs.schedule.email.footer.title.short" }).id
+        : defineMessage({ id: "dialogs.schedule.email.footer.title" }).id;
 
     // trigger the invariant only if the user tries to open the dialog
     if (isVisible) {

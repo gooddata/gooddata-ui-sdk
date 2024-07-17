@@ -24,11 +24,6 @@
         "comment": "",
         "limit": 0
     },
-    "gs.list.only": {
-        "value": "Only",
-        "comment": "",
-        "limit": 0
-    },
     "messages.dashboardSaveSuccess": {
         "value": "Great. We saved your dashboard.",
         "comment": "",
@@ -513,11 +508,6 @@
         "comment": "Translate as imperative. It's caption of a button for saving scheduled mail",
         "limit": 0
     },
-    "dialogs.schedule.email.attribute.merged": {
-        "value": "Keep attribute cells merged",
-        "comment": "Label of a checkbox field",
-        "limit": 0
-    },
     "dialogs.schedule.management.title": {
         "value": "Scheduled exports",
         "comment": "",
@@ -625,11 +615,6 @@
     },
     "save": {
         "value": "Save",
-        "comment": "",
-        "limit": 0
-    },
-    "gs.date.at": {
-        "value": "at",
         "comment": "",
         "limit": 0
     },
@@ -1049,21 +1034,6 @@
     "attributesDropdown.configuration": {
         "value": "Configuration",
         "comment": "Configuration button label in attribute filter dropdown",
-        "limit": 0
-    },
-    "attributesDropdown.itemsFiltered": {
-        "value": "Items are filtered",
-        "comment": "This message is displayed when attribute elements are being filtered out by parent filters",
-        "limit": 0
-    },
-    "attributesDropdown.allItemsFiltered": {
-        "value": "All items are filtered out",
-        "comment": "This message is displayed when there are no items available because they were filtered out by parent filters",
-        "limit": 0
-    },
-    "attributesDropdown.itemsFiltered.tooltip": {
-        "value": "Items are filtered by: <strong>{filters}</strong>",
-        "comment": "Do not translate HTML markup enclosed in <> and {filters} placeholder as it will be replaced by list of filter names.",
         "limit": 0
     },
     "attributesDropdown.save": {
@@ -1504,11 +1474,6 @@
     },
     "configurationPanel.filterBy": {
         "value": "Filter by",
-        "comment": "",
-        "limit": 0
-    },
-    "configurationPanel.date": {
-        "value": "Date",
         "comment": "",
         "limit": 0
     },
@@ -2183,6 +2148,16 @@
     "dateFilterDropdown.save": {
         "value": "Save",
         "comment": "Save button label in date filter dropdown configuration",
+        "limit": 0
+    },
+    "dateFilterDropdown.configuration": {
+        "value": "Configuration",
+        "comment": "Configuration button label in date filter dropdown",
+        "limit": 0
+    },
+    "dateFilterDropdown.title": {
+        "value": "Date range",
+        "comment": "",
         "limit": 0
     },
     "filter.configuration.mode.title": {

@@ -1,8 +1,9 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import { IColor, IColorPalette, IRgbColorValue, isColorFromPalette } from "@gooddata/sdk-model";
 import { getColorByGuid, isValidMappedColor } from "@gooddata/sdk-ui-vis-commons";
 
 import { CalculateAs, CalculationType } from "../../interfaces/index.js";
+import { defineMessage } from "react-intl";
 
 /**
  * @internal
@@ -38,35 +39,38 @@ enum ComparisonColorType {
 const CALCULATION_VALUES_DEFAULT: { [key in CalculationType]?: ICalculationDefaultValue } = {
     [CalculateAs.CHANGE]: {
         defaultLabelKeys: {
-            nonConditionalKey: "visualizations.headline.comparison.title.change",
-            positiveKey: "visualizations.headline.comparison.title.change.positive",
-            negativeKey: "visualizations.headline.comparison.title.change.negative",
-            equalsKey: "visualizations.headline.comparison.title.change.equals",
+            nonConditionalKey: defineMessage({ id: "visualizations.headline.comparison.title.change" }).id,
+            positiveKey: defineMessage({ id: "visualizations.headline.comparison.title.change.positive" }).id,
+            negativeKey: defineMessage({ id: "visualizations.headline.comparison.title.change.negative" }).id,
+            equalsKey: defineMessage({ id: "visualizations.headline.comparison.title.change.equals" }).id,
         },
         defaultFormat: "#,##0%",
     },
     [CalculateAs.RATIO]: {
         defaultLabelKeys: {
-            nonConditionalKey: "visualizations.headline.comparison.title.ratio",
+            nonConditionalKey: defineMessage({ id: "visualizations.headline.comparison.title.ratio" }).id,
         },
         defaultFormat: "#,##0%",
     },
     [CalculateAs.CHANGE_DIFFERENCE]: {
         defaultLabelKeys: {
-            nonConditionalKey: "visualizations.headline.comparison.title.change",
-            positiveKey: "visualizations.headline.comparison.title.change.positive",
-            negativeKey: "visualizations.headline.comparison.title.change.negative",
-            equalsKey: "visualizations.headline.comparison.title.change.equals",
+            nonConditionalKey: defineMessage({ id: "visualizations.headline.comparison.title.change" }).id,
+            positiveKey: defineMessage({ id: "visualizations.headline.comparison.title.change.positive" }).id,
+            negativeKey: defineMessage({ id: "visualizations.headline.comparison.title.change.negative" }).id,
+            equalsKey: defineMessage({ id: "visualizations.headline.comparison.title.change.equals" }).id,
         },
         defaultFormat: "#,##0%",
         defaultSubFormat: null,
     },
     [CalculateAs.DIFFERENCE]: {
         defaultLabelKeys: {
-            nonConditionalKey: "visualizations.headline.comparison.title.difference",
-            positiveKey: "visualizations.headline.comparison.title.difference.positive",
-            negativeKey: "visualizations.headline.comparison.title.difference.negative",
-            equalsKey: "visualizations.headline.comparison.title.difference.equals",
+            nonConditionalKey: defineMessage({ id: "visualizations.headline.comparison.title.difference" })
+                .id,
+            positiveKey: defineMessage({ id: "visualizations.headline.comparison.title.difference.positive" })
+                .id,
+            negativeKey: defineMessage({ id: "visualizations.headline.comparison.title.difference.negative" })
+                .id,
+            equalsKey: defineMessage({ id: "visualizations.headline.comparison.title.difference.equals" }).id,
         },
         defaultFormat: null,
     },
