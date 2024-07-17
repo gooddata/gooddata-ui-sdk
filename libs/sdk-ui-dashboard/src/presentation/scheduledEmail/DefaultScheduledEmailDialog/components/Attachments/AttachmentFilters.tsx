@@ -9,7 +9,7 @@ import {
     Dropdown,
     IAlignPoint,
 } from "@gooddata/sdk-ui-kit";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage, defineMessage, useIntl } from "react-intl";
 import { AttachmentFiltersList } from "./AttachmentFiltersList.js";
 import { IAttachmentFilterInfo } from "../../hooks/useAttachmentDashboardFilters.js";
 
@@ -63,8 +63,8 @@ interface IAttachmentFiltersProps {
 export type AttachmentFilterType = "edited" | "default";
 
 const buttonTitle = {
-    edited: "dialogs.schedule.management.attachments.filters.edited",
-    default: "dialogs.schedule.management.attachments.filters.default",
+    edited: defineMessage({ id: "dialogs.schedule.management.attachments.filters.edited" }).id,
+    default: defineMessage({ id: "dialogs.schedule.management.attachments.filters.default" }).id,
 };
 
 export const AttachmentFilters: React.FC<IAttachmentFiltersProps> = (props) => {

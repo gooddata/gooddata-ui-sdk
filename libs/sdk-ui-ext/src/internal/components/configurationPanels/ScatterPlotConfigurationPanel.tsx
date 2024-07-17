@@ -1,6 +1,6 @@
 // (C) 2019-2024 GoodData Corporation
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, defineMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger, Message } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 
@@ -149,7 +149,7 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
                             toggledOn={clusteringEnabled}
                             toggleDisabled={controlsDisabled || isScatterPlotClusteringDisabled}
                             showDisabledMessage={isScatterPlotClusteringDisabled}
-                            toggleMessageId="properties.clustering.disabled"
+                            toggleMessageId={defineMessage({ id: "properties.clustering.disabled" }).id}
                         >
                             <NumberOfClustersControl
                                 valuePath="clustering.numberOfClusters"
