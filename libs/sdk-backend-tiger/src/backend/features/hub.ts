@@ -88,6 +88,18 @@ async function getFeatureHubData(
     context: FeatureContext,
     state?: HubServiceState[string],
 ): Promise<AxiosResponse<FeatureHubResponse>> {
+    const featureHubFlags: string[] = [];
+    if (context.organizationId) {
+        featureHubFlags.push(`organizationId=${encodeURIComponent(context.organizationId)}`);
+    }
+    if (context.earlyAccessValues?.length > 0) {
+        featureHubFlags.push(
+            `earlyAccess=${context.earlyAccessValues
+                .filter(Boolean)
+                .map((v) => encodeURIComponent(v))
+                .join(";")}`,
+        );
+    }
     return axios.get("/features", {
         method: "GET",
         baseURL: host,
@@ -97,20 +109,7 @@ async function getFeatureHubData(
         timeout: FH_TIMEOUT,
         headers: {
             "Content-type": "application/json",
-            "X-FeatureHub": Object.keys(context)
-                .reduce((prev, item) => {
-                    const value = context[item as keyof typeof context];
-                    if (value === undefined || value === "") {
-                        return prev;
-                    }
-
-                    const parsed = Array.isArray(value)
-                        ? value.map((v) => `${item}[]=${encodeURIComponent(v)}`)
-                        : [`${item}=${encodeURIComponent(value)}`];
-
-                    return [...prev, ...parsed];
-                }, [] as Array<string>)
-                .join(","),
+            "X-FeatureHub": featureHubFlags.join(","),
             ...(state ? { "if-none-match": state.etag } : {}),
         },
         validateStatus: (status) => {
