@@ -3503,6 +3503,7 @@ export interface IWebhookMetadataObject extends IWebhookMetadataObjectBase {
 // @alpha (undocumented)
 export interface IWebhookMetadataObjectBase {
     endpoint: string;
+    hasToken?: boolean;
     name: string;
     token?: string;
     triggers: IWebhookTrigger[];

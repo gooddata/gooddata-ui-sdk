@@ -286,7 +286,7 @@ export interface IScheduleEmailContext {
     /**
      * Widget to schedule email for.
      */
-    widget?: IWidget;
+    insightRef?: ObjRef | undefined;
 }
 
 /**

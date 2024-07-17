@@ -4760,7 +4760,7 @@ export interface IScheduledEmailManagementDialogProps {
 
 // @internal (undocumented)
 export interface IScheduleEmailContext {
-    widget?: IWidget;
+    insightRef?: ObjRef | undefined;
 }
 
 // @internal (undocumented)

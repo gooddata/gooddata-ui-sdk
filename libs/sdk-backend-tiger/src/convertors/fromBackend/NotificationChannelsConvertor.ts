@@ -13,6 +13,7 @@ export function convertWebhookFromNotificationChannel(webhook: INotificationChan
         name: webhook.attributes?.name ?? "",
         endpoint: webhook.attributes?.webhook?.url ?? "",
         token: webhook.attributes?.webhook?.token ?? "",
+        hasToken: webhook.attributes?.webhook?.hasToken ?? false,
         triggers:
             webhook.attributes?.triggers?.map((trigger) => ({
                 type: trigger.type,

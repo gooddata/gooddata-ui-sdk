@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
-import { IAutomationMetadataObject, IWidget } from "@gooddata/sdk-model";
+import { IAutomationMetadataObject, IWidget, isInsightWidget } from "@gooddata/sdk-model";
 
 import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider.js";
 import {
@@ -61,7 +61,12 @@ export const useDashboardScheduledEmails = ({ onReload }: { onReload?: () => voi
 
     const openScheduleEmailingDialog = useCallback(
         (widget?: IWidget) =>
-            isScheduledEmailingEnabled && dispatch(uiActions.openScheduleEmailDialog({ widget })),
+            isScheduledEmailingEnabled &&
+            dispatch(
+                uiActions.openScheduleEmailDialog({
+                    ...(isInsightWidget(widget) ? { insightRef: widget.insight } : {}),
+                }),
+            ),
         [dispatch, isScheduledEmailingEnabled],
     );
     const closeScheduleEmailingDialog = useCallback(
@@ -70,7 +75,12 @@ export const useDashboardScheduledEmails = ({ onReload }: { onReload?: () => voi
     );
     const openScheduleEmailingManagementDialog = useCallback(
         (widget?: IWidget) =>
-            isScheduledEmailingEnabled && dispatch(uiActions.openScheduleEmailManagementDialog({ widget })),
+            isScheduledEmailingEnabled &&
+            dispatch(
+                uiActions.openScheduleEmailManagementDialog({
+                    ...(isInsightWidget(widget) ? { insightRef: widget.insight } : {}),
+                }),
+            ),
         [dispatch, isScheduledEmailingEnabled],
     );
     const closeScheduleEmailingManagementDialog = useCallback(
