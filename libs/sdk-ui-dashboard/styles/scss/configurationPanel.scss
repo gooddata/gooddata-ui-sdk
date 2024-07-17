@@ -42,12 +42,12 @@
         overflow: auto;
 
         textarea {
+            font-weight: 400;
             font-size: 14px;
             font-family: gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
-            line-height: 21px;
-            color: kit-variables.$gd-color-text;
+            line-height: 19px;
+            color: var(--gd-palette-complementary-7, #687581);
             padding: 0;
-            margin-top: -1px;
         }
 
         .gd-bubble-trigger {
