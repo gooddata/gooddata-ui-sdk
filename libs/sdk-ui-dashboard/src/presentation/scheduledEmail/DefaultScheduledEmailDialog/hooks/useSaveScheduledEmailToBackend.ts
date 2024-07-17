@@ -11,7 +11,7 @@ import { useUpdateScheduledEmail } from "./useUpdateScheduledEmail.js";
 import { IScheduledEmailDialogProps } from "../../types.js";
 import { IntlShape, useIntl } from "react-intl";
 import omit from "lodash/omit.js";
-import { getAutomationDashboardFilters } from "../utils/automationFilters.js";
+import { getAutomationDashboardFilters } from "../utils/automationHelpers.js";
 
 export function useSaveScheduledEmailToBackend(
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,

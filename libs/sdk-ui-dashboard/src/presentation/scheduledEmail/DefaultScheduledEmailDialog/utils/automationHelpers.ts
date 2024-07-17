@@ -4,6 +4,8 @@ import {
     FilterContextItem,
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
+    IExportDefinitionMetadataObject,
+    IExportDefinitionMetadataObjectDefinition,
     IFilter,
     isExportDefinitionDashboardContent,
     isExportDefinitionVisualizationObjectContent,
@@ -30,9 +32,55 @@ export const isVisualisationAutomation = (
         return false;
     }
 
-    return automation?.exportDefinitions?.some((exportDefinition) => {
+    return automation.exportDefinitions?.some((exportDefinition) => {
         return isExportDefinitionVisualizationObjectContent(exportDefinition.requestPayload.content);
     });
+};
+
+export const isCsvVisualizationAutomation = (
+    automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | undefined,
+) => {
+    if (!automation) {
+        return false;
+    }
+
+    return automation.exportDefinitions?.some(isCsvVisualizationExportDefinition);
+};
+
+export const isCsvVisualizationExportDefinition = (
+    exportDefinition: IExportDefinitionMetadataObject | IExportDefinitionMetadataObjectDefinition | undefined,
+) => {
+    if (!exportDefinition) {
+        return false;
+    }
+
+    return (
+        isExportDefinitionVisualizationObjectContent(exportDefinition.requestPayload.content) &&
+        exportDefinition.requestPayload.format === "CSV"
+    );
+};
+
+export const isXlsxVisualizationAutomation = (
+    automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | undefined,
+) => {
+    if (!automation) {
+        return false;
+    }
+
+    return automation.exportDefinitions?.some(isXlsxVisualizationExportDefinition);
+};
+
+export const isXlsxVisualizationExportDefinition = (
+    exportDefinition: IExportDefinitionMetadataObject | IExportDefinitionMetadataObjectDefinition | undefined,
+) => {
+    if (!exportDefinition) {
+        return false;
+    }
+
+    return (
+        isExportDefinitionVisualizationObjectContent(exportDefinition.requestPayload.content) &&
+        exportDefinition.requestPayload.format === "XLSX"
+    );
 };
 
 export const getAutomationDashboardFilters = (

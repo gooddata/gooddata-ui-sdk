@@ -1560,10 +1560,17 @@ export interface IExportDefinitionPdfOptions {
 // @alpha
 export type IExportDefinitionRequestPayload = {
     fileName: string;
-    format: "PDF";
+    format: "PDF" | "CSV" | "XLSX";
     pdfOptions?: IExportDefinitionPdfOptions;
+    settings?: IExportDefinitionSettings;
     content: IExportDefinitionContent;
 };
+
+// @alpha
+export interface IExportDefinitionSettings {
+    // (undocumented)
+    mergeHeaders: boolean;
+}
 
 // @alpha
 export interface IExportDefinitionVisualizationObjectContent {

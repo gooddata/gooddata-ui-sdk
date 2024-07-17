@@ -17,7 +17,7 @@ import { GoodDataSdkError } from "@gooddata/sdk-ui";
  * @internal
  */
 export interface IScheduledEmailDialogPropsContext {
-    insightRef?: ObjRef | undefined;
+    widgetRef?: ObjRef | undefined;
 }
 
 /**

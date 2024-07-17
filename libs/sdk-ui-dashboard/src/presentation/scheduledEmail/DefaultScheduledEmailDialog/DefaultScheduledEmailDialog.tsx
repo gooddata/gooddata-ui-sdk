@@ -30,6 +30,7 @@ import {
     selectDashboardId,
     selectEntitlementMaxAutomationRecipients,
     selectEntitlementMinimumRecurrenceMinutes,
+    selectAnalyticalWidgetByRef,
 } from "../../../model/index.js";
 import { IScheduledEmailDialogProps } from "../types.js";
 import { invariant } from "ts-invariant";
@@ -40,6 +41,7 @@ import {
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
     isExportDefinitionDashboardContent,
+    isExportDefinitionVisualizationObjectContent,
 } from "@gooddata/sdk-model";
 import { getTimezoneByIdentifier, TIMEZONE_DEFAULT } from "./utils/timezone.js";
 import { DASHBOARD_TITLE_MAX_LENGTH } from "../../constants/index.js";
@@ -53,7 +55,9 @@ const DEFAULT_MAX_RECIPIENTS = "10";
 const DEFAULT_MIN_RECURRENCE_MINUTES = "60";
 
 export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
-    const { onCancel, onDeleteSuccess, onDeleteError, isVisible, editSchedule, users, webhooks } = props;
+    const { onCancel, onDeleteSuccess, onDeleteError, isVisible, editSchedule, users, webhooks, context } =
+        props;
+    const widget = useDashboardSelector(selectAnalyticalWidgetByRef(context?.widgetRef));
     const intl = useIntl();
     const [scheduledEmailToDelete, setScheduledEmailToDelete] = useState<
         IAutomationMetadataObject | IAutomationMetadataObjectDefinition | null
@@ -81,7 +85,9 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
     const {
         automation,
         originalAutomation,
-        onAttachmentsChange,
+        onDashboardAttachmentsChange,
+        onWidgetAttachmentsChange,
+        onWidgetAttachmentsSettingsChange,
         onDestinationChange,
         onMessageChange,
         onRecipientsChange,
@@ -99,7 +105,36 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
             }
 
             return false;
+        }) ?? true;
+
+    const isCsvExportSelected =
+        automation.exportDefinitions?.some((exportDefinition) => {
+            if (isExportDefinitionVisualizationObjectContent(exportDefinition.requestPayload.content)) {
+                return exportDefinition.requestPayload.format === "CSV";
+            }
+
+            return false;
         }) ?? false;
+
+    const isXlsxExportSelected =
+        automation.exportDefinitions?.some((exportDefinition) => {
+            if (isExportDefinitionVisualizationObjectContent(exportDefinition.requestPayload.content)) {
+                return exportDefinition.requestPayload.format === "XLSX";
+            }
+
+            return false;
+        }) ?? true;
+
+    const settings = {
+        mergeHeaders:
+            automation.exportDefinitions?.some((exportDefinition) => {
+                if (isExportDefinitionVisualizationObjectContent(exportDefinition.requestPayload.content)) {
+                    return exportDefinition.requestPayload.settings?.mergeHeaders;
+                }
+
+                return false;
+            }) ?? true,
+    };
 
     const isValid = (automation.recipients?.length ?? 0) <= maxAutomationsRecipients;
     const isDestinationEmpty = !automation.webhook;
@@ -248,7 +283,13 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
                         <Attachments
                             dashboardTitle={dashboardTitle}
                             dashboardSelected={isDashboardExportSelected}
-                            onAttachmentsSelectionChanged={onAttachmentsChange}
+                            csvSelected={isCsvExportSelected}
+                            xlsxSelected={isXlsxExportSelected}
+                            settings={settings}
+                            onDashboardAttachmentsSelectionChange={onDashboardAttachmentsChange}
+                            onWidgetAttachmentsSelectionChange={onWidgetAttachmentsChange}
+                            onWidgetAttachmentsSettingsChange={onWidgetAttachmentsSettingsChange}
+                            widget={widget}
                             editSchedule={editSchedule}
                         />
                         {savingErrorMessage ? (

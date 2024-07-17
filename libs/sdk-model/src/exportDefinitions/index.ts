@@ -18,6 +18,15 @@ export interface IExportDefinitionPdfOptions {
 }
 
 /**
+ * Export definition tabular settings
+ *
+ * @alpha
+ */
+export interface IExportDefinitionSettings {
+    mergeHeaders: boolean;
+}
+
+/**
  * Export definition visualization content configuration.
  *
  * @alpha
@@ -76,8 +85,9 @@ export type IExportDefinitionContent =
  */
 export type IExportDefinitionRequestPayload = {
     fileName: string;
-    format: "PDF";
+    format: "PDF" | "CSV" | "XLSX";
     pdfOptions?: IExportDefinitionPdfOptions;
+    settings?: IExportDefinitionSettings;
     content: IExportDefinitionContent;
 };
 
