@@ -231,6 +231,8 @@ import { IRelativeDateFilter } from '@gooddata/sdk-model';
 import { IRenderListItemProps } from '@gooddata/sdk-ui-kit';
 import { IResultWarning } from '@gooddata/sdk-model';
 import { IRichTextWidget } from '@gooddata/sdk-model';
+import { IScheduleEmailContext as IScheduleEmailContext_2 } from '../../../types.js';
+import { IScheduleEmailDialogContext as IScheduleEmailDialogContext_2 } from '../../types.js';
 import { ISeparators } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-model';
 import { IShareDialogInteractionData } from '@gooddata/sdk-ui-kit';
@@ -3368,10 +3370,13 @@ export function getDefaultInsightMenuItems(intl: IntlShape, config: {
     exportXLSXDisabled: boolean;
     exportCSVDisabled: boolean;
     scheduleExportDisabled: boolean;
+    scheduleExportManagementDisabled: boolean;
     onExportXLSX: () => void;
     onExportCSV: () => void;
     onScheduleExport: () => void;
+    onScheduleManagementExport: () => void;
     isScheduleExportVisible: boolean;
+    isScheduleExportManagementVisible: boolean;
     isDataError: boolean;
 }): IInsightMenuItem[];
 
@@ -4716,6 +4721,7 @@ export function isBrokenAlertDateFilterInfo(item: IBrokenAlertFilterBasicInfo): 
 // @alpha (undocumented)
 export interface IScheduledEmailDialogProps {
     automations: IAutomationMetadataObject[];
+    context?: IScheduledEmailDialogPropsContext;
     editSchedule?: IAutomationMetadataObject;
     isVisible?: boolean;
     onCancel?: () => void;
@@ -4731,9 +4737,16 @@ export interface IScheduledEmailDialogProps {
     webhooks: IWebhookMetadataObject[];
 }
 
+// @internal (undocumented)
+export interface IScheduledEmailDialogPropsContext {
+    // (undocumented)
+    insightRef?: ObjRef | undefined;
+}
+
 // @alpha (undocumented)
 export interface IScheduledEmailManagementDialogProps {
     automations: IAutomationMetadataObject[];
+    context?: IScheduledEmailDialogPropsContext;
     isLoadingScheduleData: boolean;
     isVisible?: boolean;
     onAdd?: () => void;
@@ -4743,6 +4756,17 @@ export interface IScheduledEmailManagementDialogProps {
     onEdit?: (scheduledMail: IAutomationMetadataObject) => void;
     scheduleDataError?: GoodDataSdkError;
     webhooks: IWebhookMetadataObject[];
+}
+
+// @internal (undocumented)
+export interface IScheduleEmailContext {
+    widget?: IWidget;
+}
+
+// @internal (undocumented)
+export interface IScheduleEmailDialogContext {
+    // (undocumented)
+    insightRef?: ObjRef | undefined;
 }
 
 // @internal
@@ -5230,6 +5254,14 @@ export interface IUseWidgetSelectionResult {
     isSelectable: boolean;
     isSelected: boolean;
     onSelected: (e?: MouseEvent_2) => void;
+}
+
+// @internal (undocumented)
+export interface IUseWorkspaceAutomationsConfig extends UseCancelablePromiseCallbacks<IAutomationMetadataObject[], GoodDataSdkError> {
+    backend?: IAnalyticalBackend;
+    enable?: boolean;
+    limit?: number;
+    workspace?: string;
 }
 
 // @internal (undocumented)
@@ -7100,7 +7132,13 @@ export const selectIsSaveAsNewButtonHidden: DashboardSelector<boolean>;
 export const selectIsSaveAsNewButtonVisible: DashboardSelector<boolean>;
 
 // @alpha (undocumented)
+export const selectIsScheduleEmailDialogContext: DashboardSelector<IScheduleEmailDialogContext>;
+
+// @alpha (undocumented)
 export const selectIsScheduleEmailDialogOpen: DashboardSelector<boolean>;
+
+// @alpha (undocumented)
+export const selectIsScheduleEmailManagementDialogContext: DashboardSelector<IScheduleEmailDialogContext>;
 
 // @alpha (undocumented)
 export const selectIsScheduleEmailManagementDialogOpen: DashboardSelector<boolean>;
@@ -7592,14 +7630,20 @@ export interface TriggerEventPayload {
 
 // @internal
 export const uiActions: CaseReducerActions<    {
-openScheduleEmailDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+openScheduleEmailDialog: (state: WritableDraft<UiState_2>, action: {
+payload: IScheduleEmailContext_2;
+type: string;
+}) => void | UiState_2 | WritableDraft<UiState_2>;
 closeScheduleEmailDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
 setScheduleEmailDialogDefaultAttachment: (state: WritableDraft<UiState_2>, action: {
 payload: ObjRef;
 type: string;
 }) => void | UiState_2 | WritableDraft<UiState_2>;
 resetScheduleEmailDialogDefaultAttachment: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-openScheduleEmailManagementDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+openScheduleEmailManagementDialog: (state: WritableDraft<UiState_2>, action: {
+payload: IScheduleEmailContext_2;
+type: string;
+}) => void | UiState_2 | WritableDraft<UiState_2>;
 closeScheduleEmailManagementDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
 openSaveAsDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
 closeSaveAsDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
@@ -7771,10 +7815,12 @@ export interface UiState {
     scheduleEmailDialog: {
         open: boolean;
         defaultAttachmentRef: ObjRef | undefined;
+        context?: IScheduleEmailDialogContext;
     };
     // (undocumented)
     scheduleEmailManagementDialog: {
         open: boolean;
+        context?: IScheduleEmailDialogContext;
     };
     // (undocumented)
     selectedFilterIndex: number | undefined;
@@ -8290,18 +8336,23 @@ export const useDashboardScheduledEmails: ({ onReload }?: {
     onReload?: (() => void) | undefined;
 }) => {
     isScheduledEmailingVisible: boolean;
-    defaultOnScheduleEmailing: () => void;
+    isScheduledManagementEmailingVisible: boolean;
+    defaultOnScheduleEmailing: (widget?: IWidget) => void;
+    defaultOnScheduleEmailingManagement: (widget?: IWidget) => void;
     isScheduleEmailingDialogOpen: boolean;
     isScheduleEmailingManagementDialogOpen: boolean;
-    onScheduleEmailingOpen: () => void;
-    onScheduleEmailingManagementEdit: (schedule: IAutomationMetadataObject) => void;
+    scheduleEmailingDialogContext: IScheduleEmailDialogContext_2;
+    scheduleEmailingManagementDialogContext: IScheduleEmailDialogContext_2;
+    onScheduleEmailingOpen: (widget?: IWidget) => void;
+    onScheduleEmailingManagementOpen: (widget?: IWidget) => void;
+    onScheduleEmailingManagementEdit: (schedule: IAutomationMetadataObject, widget?: IWidget) => void;
     scheduledEmailToEdit: IAutomationMetadataObject | undefined;
-    onScheduleEmailingCancel: () => void;
+    onScheduleEmailingCancel: (widget?: IWidget) => void;
     onScheduleEmailingCreateError: () => void;
-    onScheduleEmailingCreateSuccess: () => void;
+    onScheduleEmailingCreateSuccess: (widget?: IWidget) => void;
     onScheduleEmailingSaveError: () => void;
-    onScheduleEmailingSaveSuccess: () => void;
-    onScheduleEmailingManagementAdd: () => void;
+    onScheduleEmailingSaveSuccess: (widget?: IWidget) => void;
+    onScheduleEmailingManagementAdd: (widget?: IWidget) => void;
     onScheduleEmailingManagementClose: () => void;
     onScheduleEmailingManagementLoadingError: () => void;
     onScheduleEmailingManagementDeleteSuccess: () => void;
@@ -8532,6 +8583,9 @@ export function useWidgetFilters(widget: ExtendedDashboardWidget | undefined, in
 
 // @internal (undocumented)
 export function useWidgetSelection(widgetRef?: ObjRef): IUseWidgetSelectionResult;
+
+// @internal
+export function useWorkspaceAutomations({ enable, workspace, backend, onCancel, onError, onLoading, onPending, onSuccess, limit, }: IUseWorkspaceAutomationsConfig, dependencies?: any[]): UseCancelablePromiseState<IAutomationMetadataObject[], any>;
 
 // @internal (undocumented)
 export type ValuesLimitingItem = IDashboardAttributeFilterParentItem | ObjRef | IDashboardDependentDateFilter;

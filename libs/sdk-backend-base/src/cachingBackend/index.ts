@@ -22,6 +22,12 @@ import {
     IWorkspaceSettings,
     IWorkspaceSettingsService,
     ValidationContext,
+    IWorkspaceAutomationService,
+    IGetAutomationsOptions,
+    IGetAutomationOptions,
+    IAutomationsQuery,
+    IAutomationsQueryResult,
+    AutomationType,
 } from "@gooddata/sdk-backend-spi";
 import {
     AttributesDecoratorFactory,
@@ -29,6 +35,7 @@ import {
     ExecutionDecoratorFactory,
     SecuritySettingsDecoratorFactory,
     WorkspaceSettingsDecoratorFactory,
+    AutomationsDecoratorFactory,
 } from "../decoratedBackend/types.js";
 import { decoratedBackend } from "../decoratedBackend/index.js";
 import { LRUCache } from "lru-cache";
@@ -67,9 +74,15 @@ import {
     IMeasureDefinitionType,
     IRelativeDateFilter,
     IAbsoluteDateFilter,
+    IAutomationMetadataObject,
+    IAutomationMetadataObjectDefinition,
 } from "@gooddata/sdk-model";
 import { DecoratedWorkspaceAttributesService } from "../decoratedBackend/attributes.js";
 import { DecoratedWorkspaceSettingsService } from "../decoratedBackend/workspaceSettings.js";
+import {
+    DecoratedWorkspaceAutomationsService,
+    DecoratedAutomationsQuery,
+} from "../decoratedBackend/automations.js";
 
 //
 // Supporting types
@@ -93,6 +106,11 @@ type AttributeCacheEntry = {
     attributeElementResults?: LRUCache<string, Promise<IElementsQueryResult>>;
 };
 
+type AutomationCacheEntry = {
+    automations: LRUCache<string, Promise<IAutomationMetadataObject[]>>;
+    queries: LRUCache<string, Promise<IAutomationsQueryResult>>;
+};
+
 type WorkspaceSettingsCacheEntry = {
     userWorkspaceSettings: LRUCache<string, Promise<IUserWorkspaceSettings>>;
     workspaceSettings: LRUCache<string, Promise<IWorkspaceSettings>>;
@@ -104,6 +122,7 @@ type CachingContext = {
         workspaceCatalogs?: LRUCache<string, CatalogCacheEntry>;
         securitySettings?: LRUCache<string, SecuritySettingsCacheEntry>;
         workspaceAttributes?: LRUCache<string, AttributeCacheEntry>;
+        workspaceAutomations?: LRUCache<string, AutomationCacheEntry>;
         workspaceSettings?: LRUCache<string, WorkspaceSettingsCacheEntry>;
     };
     config: CachingConfiguration;
@@ -737,6 +756,165 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
     }
 }
 
+//AUTOMATIONS CACHING
+
+function getOrCreateAutomationsCache(ctx: CachingContext, workspace: string): AutomationCacheEntry {
+    const cache = ctx.caches.workspaceAutomations!;
+    let cacheEntry = cache.get(workspace);
+
+    if (!cacheEntry) {
+        cacheEntry = {
+            automations: new LRUCache<string, Promise<IAutomationMetadataObject[]>>({
+                max: ctx.config.maxAutomationsWorkspaces!,
+            }),
+            queries: new LRUCache<string, Promise<IAutomationsQueryResult>>({
+                max: ctx.config.maxAutomationsWorkspaces!,
+            }),
+        };
+        cache.set(workspace, cacheEntry);
+    }
+
+    return cacheEntry;
+}
+
+class CachedAutomationsQueryFactory extends DecoratedAutomationsQuery {
+    private settings: {
+        size: number;
+        page: number;
+        filter: { title?: string };
+        sort: NonNullable<unknown>;
+        type: AutomationType | undefined;
+        totalCount: number | undefined;
+    } = {
+        size: 50,
+        page: 0,
+        filter: {},
+        sort: {},
+        type: undefined,
+        totalCount: undefined,
+    };
+
+    constructor(
+        decorated: IAutomationsQuery,
+        private readonly ctx: CachingContext,
+        private readonly workspace: string,
+    ) {
+        super(decorated);
+    }
+
+    withSize(size: number): IAutomationsQuery {
+        this.settings.size = size;
+        super.withSize(size);
+        return this;
+    }
+
+    withPage(page: number): IAutomationsQuery {
+        this.settings.page = page;
+        super.withPage(page);
+        return this;
+    }
+
+    withFilter(filter: { title?: string }): IAutomationsQuery {
+        this.settings.filter = { ...filter };
+        this.settings.totalCount = undefined;
+        super.withFilter(filter);
+        return this;
+    }
+
+    withSorting(sort: string[]): IAutomationsQuery {
+        this.settings.sort = { sort };
+        super.withSorting(sort);
+        return this;
+    }
+
+    withType(type: AutomationType): IAutomationsQuery {
+        this.settings.type = type;
+        super.withType(type);
+        return this;
+    }
+
+    public query(): Promise<IAutomationsQueryResult> {
+        const cache = getOrCreateAutomationsCache(this.ctx, this.workspace);
+        const key = stringify(this.settings);
+
+        const result = cache.queries.get(key);
+
+        if (!result) {
+            const promise = super.query().catch((e) => {
+                cache.queries.delete(key);
+                throw e;
+            });
+
+            cache.queries.set(key, promise);
+            return promise;
+        }
+
+        return result;
+    }
+}
+
+class WithAutomationsCaching extends DecoratedWorkspaceAutomationsService {
+    constructor(
+        decorated: IWorkspaceAutomationService,
+        private readonly ctx: CachingContext,
+        private readonly workspace: string,
+    ) {
+        super(decorated);
+    }
+
+    public getAutomations(options?: IGetAutomationsOptions): Promise<IAutomationMetadataObject[]> {
+        const cache = getOrCreateAutomationsCache(this.ctx, this.workspace).automations;
+        const key = stringify(options);
+
+        const result = cache.get(key);
+
+        if (!result) {
+            const promise = super.getAutomations(options).catch((e) => {
+                cache.delete(key);
+                throw e;
+            });
+
+            cache.set(key, promise);
+            return promise;
+        }
+
+        return result;
+    }
+
+    public async createAutomation(
+        automation: IAutomationMetadataObjectDefinition,
+        options?: IGetAutomationOptions,
+    ): Promise<IAutomationMetadataObject> {
+        const cache = getOrCreateAutomationsCache(this.ctx, this.workspace);
+        const result = await super.createAutomation(automation, options);
+        cache.automations.clear();
+        cache.queries.clear();
+        return result;
+    }
+
+    public async updateAutomation(
+        automation: IAutomationMetadataObject,
+        options?: IGetAutomationOptions,
+    ): Promise<IAutomationMetadataObject> {
+        const cache = getOrCreateAutomationsCache(this.ctx, this.workspace);
+        const result = await super.updateAutomation(automation, options);
+        cache.automations.clear();
+        cache.queries.clear();
+        return result;
+    }
+
+    public async deleteAutomation(id: string): Promise<void> {
+        const cache = getOrCreateAutomationsCache(this.ctx, this.workspace);
+        await super.deleteAutomation(id);
+        cache.automations.clear();
+        cache.queries.clear();
+    }
+
+    getAutomationsQuery(): IAutomationsQuery {
+        return new CachedAutomationsQueryFactory(super.getAutomationsQuery(), this.ctx, this.workspace);
+    }
+}
+
 //
 //
 //
@@ -760,6 +938,10 @@ function cachedWorkspaceSettings(ctx: CachingContext): WorkspaceSettingsDecorato
 
 function cachedAttributes(ctx: CachingContext): AttributesDecoratorFactory {
     return (original, workspace) => new WithAttributesCaching(original, ctx, workspace);
+}
+
+function cachedAutomations(ctx: CachingContext): AutomationsDecoratorFactory {
+    return (original, workspace) => new WithAutomationsCaching(original, ctx, workspace);
 }
 
 function cachingEnabled(desiredSize: number | undefined): boolean {
@@ -975,6 +1157,20 @@ export type CachingConfiguration = {
     maxAttributeWorkspaces?: number;
 
     /**
+     * Maximum number of workspaces for which to cache selected {@link @gooddata/sdk-backend-spi#IWorkspaceAutomationsService} calls.
+     * The workspace identifier is used as cache key.
+     *
+     * When limit is reached, cache entries will be evicted using LRU policy.
+     *
+     * When no maximum number is specified, the cache will be unbounded and no evictions will happen. Unbounded
+     * cache may be OK in applications where number of workspaces is small - the cache will be limited
+     * naturally and will not grow uncontrollably.
+     *
+     * When non-positive number is specified, then no caching will be done.
+     */
+    maxAutomationsWorkspaces?: number;
+
+    /**
      * Maximum number of attribute display forms to cache per workspace.
      *
      * When limit is reached, cache entries will be evicted using LRU policy.
@@ -1060,6 +1256,7 @@ export const RecommendedCachingConfiguration: CachingConfiguration = {
     maxAttributesPerWorkspace: 100,
     maxAttributeElementResultsPerWorkspace: 100,
     maxWorkspaceSettings: 1,
+    maxAutomationsWorkspaces: 1,
 };
 
 /**
@@ -1084,6 +1281,7 @@ export function withCaching(
     const securitySettingsCaching = cachingEnabled(config.maxSecuritySettingsOrgs);
     const attributeCaching = cachingEnabled(config.maxAttributeWorkspaces);
     const workspaceSettingsCaching = cachingEnabled(config.maxWorkspaceSettings);
+    const automationsCaching = cachingEnabled(config.maxAutomationsWorkspaces);
 
     const ctx: CachingContext = {
         caches: {
@@ -1098,6 +1296,9 @@ export function withCaching(
             workspaceSettings: workspaceSettingsCaching
                 ? new LRUCache({ max: config.maxWorkspaceSettings! })
                 : undefined,
+            workspaceAutomations: automationsCaching
+                ? new LRUCache({ max: config.maxAutomationsWorkspaces! })
+                : undefined,
         },
         config,
         capabilities: realBackend.capabilities,
@@ -1107,6 +1308,7 @@ export function withCaching(
     const catalog = catalogCaching ? cachedCatalog(ctx) : identity;
     const securitySettings = securitySettingsCaching ? cachedSecuritySettings(ctx) : identity;
     const attributes = attributeCaching ? cachedAttributes(ctx) : identity;
+    const automations = automationsCaching ? cachedAutomations(ctx) : identity;
     const workspaceSettings = workspaceSettingsCaching ? cachedWorkspaceSettings(ctx) : identity;
 
     if (config.onCacheReady) {
@@ -1119,6 +1321,7 @@ export function withCaching(
         securitySettings,
         attributes,
         workspaceSettings,
+        automations,
     });
 }
 

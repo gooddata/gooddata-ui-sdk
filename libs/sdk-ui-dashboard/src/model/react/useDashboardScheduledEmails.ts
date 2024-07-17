@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { IAutomationMetadataObject, IWidget } from "@gooddata/sdk-model";
 
 import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider.js";
 import {
@@ -14,12 +14,15 @@ import {
     selectIsReadOnly,
     selectIsScheduleEmailDialogOpen,
     selectIsScheduleEmailManagementDialogOpen,
+    selectIsScheduleEmailDialogContext,
+    selectIsScheduleEmailManagementDialogContext,
     selectMenuButtonItemsVisibility,
     selectWebhooks,
     uiActions,
 } from "../store/index.js";
 
 import { messages } from "../../locales.js";
+import { useWorkspaceAutomations } from "./useWorkspaceAutomations.js";
 
 /**
  * Hook that handles schedule emailing dialogs.
@@ -28,9 +31,15 @@ import { messages } from "../../locales.js";
  */
 export const useDashboardScheduledEmails = ({ onReload }: { onReload?: () => void } = {}) => {
     const { addSuccess, addError } = useToastMessage();
-    const isScheduleEmailingDialogOpen = useDashboardSelector(selectIsScheduleEmailDialogOpen);
+
+    const isScheduleEmailingDialogOpen = useDashboardSelector(selectIsScheduleEmailDialogOpen) || false;
+    const scheduleEmailingDialogContext = useDashboardSelector(selectIsScheduleEmailDialogContext);
     const isScheduleEmailingManagementDialogOpen =
         useDashboardSelector(selectIsScheduleEmailManagementDialogOpen) || false;
+    const scheduleEmailingManagementDialogContext = useDashboardSelector(
+        selectIsScheduleEmailManagementDialogContext,
+    );
+
     const dispatch = useDashboardDispatch();
     const dashboardRef = useDashboardSelector(selectDashboardRef);
     const isReadOnly = useDashboardSelector(selectIsReadOnly);
@@ -46,8 +55,13 @@ export const useDashboardScheduledEmails = ({ onReload }: { onReload?: () => voi
      */
     const showDueToNumberOfAvailableWebhooks = numberOfAvailableWebhooks > 0 || isWorkspaceManager;
 
+    const { result } = useWorkspaceAutomations({
+        enable: isScheduledEmailingEnabled,
+    });
+
     const openScheduleEmailingDialog = useCallback(
-        () => isScheduledEmailingEnabled && dispatch(uiActions.openScheduleEmailDialog()),
+        (widget?: IWidget) =>
+            isScheduledEmailingEnabled && dispatch(uiActions.openScheduleEmailDialog({ widget })),
         [dispatch, isScheduledEmailingEnabled],
     );
     const closeScheduleEmailingDialog = useCallback(
@@ -55,7 +69,8 @@ export const useDashboardScheduledEmails = ({ onReload }: { onReload?: () => voi
         [dispatch, isScheduledEmailingEnabled],
     );
     const openScheduleEmailingManagementDialog = useCallback(
-        () => isScheduledEmailingEnabled && dispatch(uiActions.openScheduleEmailManagementDialog()),
+        (widget?: IWidget) =>
+            isScheduledEmailingEnabled && dispatch(uiActions.openScheduleEmailManagementDialog({ widget })),
         [dispatch, isScheduledEmailingEnabled],
     );
     const closeScheduleEmailingManagementDialog = useCallback(
@@ -73,35 +88,64 @@ export const useDashboardScheduledEmails = ({ onReload }: { onReload?: () => voi
         showDueToNumberOfAvailableWebhooks &&
         (menuButtonItemsVisibility.scheduleEmailButton ?? true);
 
+    const isScheduledManagementEmailingVisible = isScheduledEmailingVisible && (result ?? []).length > 0;
+
     /*
      * exports and scheduling are not available when rendering a dashboard that is not persisted.
      * this can happen when a new dashboard is created and is being edited.
      *
      * the setup of menu items available in the menu needs to reflect this.
      */
-    const defaultOnScheduleEmailing = useCallback(() => {
-        if (!dashboardRef) {
-            return;
-        }
+    const defaultOnScheduleEmailingManagement = useCallback(
+        (widget?: IWidget) => {
+            if (!dashboardRef) {
+                return;
+            }
 
-        openScheduleEmailingManagementDialog();
-    }, [dashboardRef, openScheduleEmailingManagementDialog]);
+            openScheduleEmailingManagementDialog(widget);
+        },
+        [dashboardRef, openScheduleEmailingManagementDialog],
+    );
 
-    const onScheduleEmailingOpen = useCallback(() => {
-        openScheduleEmailingDialog();
-    }, [openScheduleEmailingDialog]);
+    const defaultOnScheduleEmailing = useCallback(
+        (widget?: IWidget) => {
+            if (!dashboardRef) {
+                return;
+            }
+
+            openScheduleEmailingDialog(widget);
+        },
+        [dashboardRef, openScheduleEmailingDialog],
+    );
+
+    const onScheduleEmailingOpen = useCallback(
+        (widget?: IWidget) => {
+            openScheduleEmailingDialog(widget);
+        },
+        [openScheduleEmailingDialog],
+    );
+
+    const onScheduleEmailingManagementOpen = useCallback(
+        (widget?: IWidget) => {
+            openScheduleEmailingManagementDialog(widget);
+        },
+        [openScheduleEmailingManagementDialog],
+    );
 
     const onScheduleEmailingCreateError = useCallback(() => {
         closeScheduleEmailingDialog();
         addError(messages.scheduleEmailSubmitError);
     }, [closeScheduleEmailingDialog, addError]);
 
-    const onScheduleEmailingCreateSuccess = useCallback(() => {
-        closeScheduleEmailingDialog();
-        openScheduleEmailingManagementDialog();
-        addSuccess(messages.scheduleEmailSubmitSuccess);
-        onReload?.();
-    }, [closeScheduleEmailingDialog, openScheduleEmailingManagementDialog, addSuccess, onReload]);
+    const onScheduleEmailingCreateSuccess = useCallback(
+        (widget?: IWidget) => {
+            closeScheduleEmailingDialog();
+            openScheduleEmailingManagementDialog(widget);
+            addSuccess(messages.scheduleEmailSubmitSuccess);
+            onReload?.();
+        },
+        [closeScheduleEmailingDialog, openScheduleEmailingManagementDialog, addSuccess, onReload],
+    );
 
     const onScheduleEmailingSaveError = useCallback(() => {
         closeScheduleEmailingDialog();
@@ -109,25 +153,31 @@ export const useDashboardScheduledEmails = ({ onReload }: { onReload?: () => voi
         setScheduledEmailToEdit(undefined);
     }, [closeScheduleEmailingDialog, addError, setScheduledEmailToEdit]);
 
-    const onScheduleEmailingSaveSuccess = useCallback(() => {
-        closeScheduleEmailingDialog();
-        openScheduleEmailingManagementDialog();
-        addSuccess(messages.scheduleEmailSaveSuccess);
-        setScheduledEmailToEdit(undefined);
-        onReload?.();
-    }, [
-        closeScheduleEmailingDialog,
-        openScheduleEmailingManagementDialog,
-        addSuccess,
-        setScheduledEmailToEdit,
-        onReload,
-    ]);
+    const onScheduleEmailingSaveSuccess = useCallback(
+        (widget?: IWidget) => {
+            closeScheduleEmailingDialog();
+            openScheduleEmailingManagementDialog(widget);
+            addSuccess(messages.scheduleEmailSaveSuccess);
+            setScheduledEmailToEdit(undefined);
+            onReload?.();
+        },
+        [
+            closeScheduleEmailingDialog,
+            openScheduleEmailingManagementDialog,
+            addSuccess,
+            setScheduledEmailToEdit,
+            onReload,
+        ],
+    );
 
-    const onScheduleEmailingCancel = useCallback(() => {
-        closeScheduleEmailingDialog();
-        openScheduleEmailingManagementDialog();
-        setScheduledEmailToEdit(undefined);
-    }, [closeScheduleEmailingDialog, openScheduleEmailingManagementDialog, setScheduledEmailToEdit]);
+    const onScheduleEmailingCancel = useCallback(
+        (widget?: IWidget) => {
+            closeScheduleEmailingDialog();
+            setScheduledEmailToEdit(undefined);
+            openScheduleEmailingManagementDialog(widget);
+        },
+        [closeScheduleEmailingDialog, openScheduleEmailingManagementDialog, setScheduledEmailToEdit],
+    );
 
     const onScheduleEmailingManagementDeleteSuccess = useCallback(() => {
         closeScheduleEmailingDialog();
@@ -135,16 +185,19 @@ export const useDashboardScheduledEmails = ({ onReload }: { onReload?: () => voi
         onReload?.();
     }, [addSuccess, closeScheduleEmailingDialog, onReload]);
 
-    const onScheduleEmailingManagementAdd = useCallback(() => {
-        closeScheduleEmailingManagementDialog();
-        openScheduleEmailingDialog();
-    }, [closeScheduleEmailingManagementDialog, openScheduleEmailingDialog]);
+    const onScheduleEmailingManagementAdd = useCallback(
+        (widget?: IWidget) => {
+            closeScheduleEmailingManagementDialog();
+            openScheduleEmailingDialog(widget);
+        },
+        [closeScheduleEmailingManagementDialog, openScheduleEmailingDialog],
+    );
 
     const onScheduleEmailingManagementEdit = useCallback(
-        (schedule: IAutomationMetadataObject) => {
+        (schedule: IAutomationMetadataObject, widget?: IWidget) => {
             closeScheduleEmailingManagementDialog();
             setScheduledEmailToEdit(schedule);
-            openScheduleEmailingDialog();
+            openScheduleEmailingDialog(widget);
         },
         [closeScheduleEmailingManagementDialog, openScheduleEmailingDialog, setScheduledEmailToEdit],
     );
@@ -166,10 +219,15 @@ export const useDashboardScheduledEmails = ({ onReload }: { onReload?: () => voi
 
     return {
         isScheduledEmailingVisible,
+        isScheduledManagementEmailingVisible,
         defaultOnScheduleEmailing,
+        defaultOnScheduleEmailingManagement,
         isScheduleEmailingDialogOpen,
         isScheduleEmailingManagementDialogOpen,
+        scheduleEmailingDialogContext,
+        scheduleEmailingManagementDialogContext,
         onScheduleEmailingOpen,
+        onScheduleEmailingManagementOpen,
         onScheduleEmailingManagementEdit,
         scheduledEmailToEdit,
         onScheduleEmailingCancel,

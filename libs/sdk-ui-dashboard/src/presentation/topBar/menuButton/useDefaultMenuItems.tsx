@@ -36,8 +36,13 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
     const isEmptyLayout = !useDashboardSelector(selectLayoutHasAnalyticalWidgets); // we need at least one non-custom widget there
     const { addSuccess, addError, addProgress, removeMessage } = useToastMessage();
-    const { isScheduledEmailingVisible, defaultOnScheduleEmailing, numberOfAvailableWebhooks } =
-        useDashboardScheduledEmails();
+    const {
+        isScheduledEmailingVisible,
+        isScheduledManagementEmailingVisible,
+        defaultOnScheduleEmailing,
+        defaultOnScheduleEmailingManagement,
+        numberOfAvailableWebhooks,
+    } = useDashboardScheduledEmails();
 
     const dispatch = useDashboardDispatch();
     const openSaveAsDialog = useCallback(() => dispatch(uiActions.openSaveAsDialog()), [dispatch]);
@@ -147,8 +152,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                 type: "separator",
                 itemId: "save-as-separator",
                 // show the separator if at least one item of the two groups is visible as well
-                visible:
-                    isSaveAsVisible && (isPdfExportVisible || isScheduledEmailingVisible || isDeleteVisible),
+                visible: isSaveAsVisible && isPdfExportVisible,
             },
             {
                 type: "button",
@@ -156,6 +160,14 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                 itemName: intl.formatMessage({ id: "options.menu.export.PDF" }),
                 onClick: defaultOnExportToPdf,
                 visible: isPdfExportVisible,
+            },
+            {
+                type: "separator",
+                itemId: "schedule-separator",
+                // show the separator if at least one item of the two groups is visible as well
+                visible:
+                    isPdfExportVisible &&
+                    (isScheduledEmailingVisible || isScheduledManagementEmailingVisible),
             },
             {
                 type: "button",
@@ -179,6 +191,20 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
             },
             {
                 type: "button",
+                itemId: "schedule-email-edit-item", // careful, this is also used as a selector in tests, do not change
+                itemName: intl.formatMessage({ id: "options.menu.schedule.email.edit" }),
+                onClick: defaultOnScheduleEmailingManagement,
+                visible: isScheduledManagementEmailingVisible,
+            },
+            {
+                type: "separator",
+                itemId: "delete-separator",
+                // show the separator if at least one item of the two groups is visible as well
+                visible:
+                    (isScheduledEmailingVisible || isScheduledManagementEmailingVisible) && isDeleteVisible,
+            },
+            {
+                type: "button",
                 itemId: "delete_dashboard", // careful, also a s- class selector, do not change
                 itemName: intl.formatMessage({ id: "options.menu.delete" }),
                 onClick: openDeleteDialog,
@@ -192,6 +218,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         defaultOnExportToPdf,
         defaultOnSaveAs,
         defaultOnScheduleEmailing,
+        defaultOnScheduleEmailingManagement,
         intl,
         isEmptyLayout,
         isExportPdfEntitlementPresent,
@@ -202,6 +229,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         isReadOnly,
         isSaveAsNewHidden,
         isScheduledEmailingVisible,
+        isScheduledManagementEmailingVisible,
         isStandaloneSaveAsNewButtonVisible,
         menuButtonItemsVisibility.deleteButton,
         menuButtonItemsVisibility.pdfExportButton,

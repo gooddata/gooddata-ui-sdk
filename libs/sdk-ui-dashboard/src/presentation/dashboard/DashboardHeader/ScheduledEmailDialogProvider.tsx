@@ -15,7 +15,9 @@ export const ScheduledEmailDialogProvider = () => {
 
     const {
         isScheduleEmailingDialogOpen,
+        scheduleEmailingDialogContext,
         isScheduleEmailingManagementDialogOpen,
+        scheduleEmailingManagementDialogContext,
         onScheduleEmailingCancel,
         onScheduleEmailingCreateError,
         onScheduleEmailingCreateSuccess,
@@ -40,6 +42,7 @@ export const ScheduledEmailDialogProvider = () => {
             {isScheduleEmailingManagementDialogOpen ? (
                 <ScheduledEmailManagementDialog
                     isVisible={isScheduleEmailingManagementDialogOpen}
+                    context={scheduleEmailingManagementDialogContext}
                     onAdd={onScheduleEmailingManagementAdd}
                     onEdit={onScheduleEmailingManagementEdit}
                     onClose={onScheduleEmailingManagementClose}
@@ -54,6 +57,7 @@ export const ScheduledEmailDialogProvider = () => {
             {isScheduleEmailingDialogOpen ? (
                 <ScheduledEmailDialog
                     isVisible={isScheduleEmailingDialogOpen}
+                    context={scheduleEmailingDialogContext}
                     onCancel={onScheduleEmailingCancel}
                     onError={onScheduleEmailingCreateError}
                     onSuccess={onScheduleEmailingCreateSuccess}

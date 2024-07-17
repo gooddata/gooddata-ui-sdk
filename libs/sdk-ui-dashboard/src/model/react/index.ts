@@ -27,3 +27,4 @@ export { useWidgetExecutionsHandler } from "./useWidgetExecutionsHandler.js";
 export { useDashboardScheduledEmails } from "./useDashboardScheduledEmails.js";
 export { useDashboardScheduledEmailsData } from "./useDashboardScheduledEmailsData.js";
 export { useWidgetSelection, IUseWidgetSelectionResult } from "./useWidgetSelection.js";
+export { useWorkspaceAutomations, IUseWorkspaceAutomationsConfig } from "./useWorkspaceAutomations.js";

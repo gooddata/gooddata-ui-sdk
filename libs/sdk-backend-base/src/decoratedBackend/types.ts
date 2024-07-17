@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import {
     IExecutionFactory,
@@ -7,6 +7,7 @@ import {
     IWorkspaceSettingsService,
     IWorkspaceDashboardsService,
     ISecuritySettingsService,
+    IWorkspaceAutomationService,
 } from "@gooddata/sdk-backend-spi";
 
 /**
@@ -45,6 +46,14 @@ export type AttributesDecoratorFactory = (
 /**
  * @alpha
  */
+export type AutomationsDecoratorFactory = (
+    automations: IWorkspaceAutomationService,
+    workspace: string,
+) => IWorkspaceAutomationService;
+
+/**
+ * @alpha
+ */
 export type DashboardsDecoratorFactory = (
     dashboards: IWorkspaceDashboardsService,
     workspace: string,
@@ -63,5 +72,6 @@ export type DecoratorFactories = {
     securitySettings?: SecuritySettingsDecoratorFactory;
     workspaceSettings?: WorkspaceSettingsDecoratorFactory;
     attributes?: AttributesDecoratorFactory;
+    automations?: AutomationsDecoratorFactory;
     dashboards?: DashboardsDecoratorFactory;
 };

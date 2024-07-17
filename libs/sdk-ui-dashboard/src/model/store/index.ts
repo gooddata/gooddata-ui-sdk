@@ -310,6 +310,8 @@ export { UiState, InvalidCustomUrlDrillParameterInfo } from "./ui/uiState.js";
 export {
     selectIsScheduleEmailDialogOpen,
     selectIsScheduleEmailManagementDialogOpen,
+    selectIsScheduleEmailDialogContext,
+    selectIsScheduleEmailManagementDialogContext,
     selectIsSaveAsDialogOpen,
     selectIsShareDialogOpen,
     selectFilterBarExpanded,
