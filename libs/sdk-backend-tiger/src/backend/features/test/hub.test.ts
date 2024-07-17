@@ -68,7 +68,7 @@ describe("live features", () => {
             baseURL: "/",
             headers: {
                 "Content-type": "application/json",
-                "X-FeatureHub": "earlyAccessValues[]=omega,organizationId=test-org",
+                "X-FeatureHub": "organizationId=test-org,earlyAccess=omega",
                 "if-none-match": expect.anything(),
             },
             method: "GET",
@@ -86,7 +86,7 @@ describe("live features", () => {
             baseURL: "/",
             headers: {
                 "Content-type": "application/json",
-                "X-FeatureHub": "earlyAccessValues[]=beta,organizationId=org",
+                "X-FeatureHub": "organizationId=org,earlyAccess=beta",
                 "if-none-match": expect.anything(),
             },
             method: "GET",
@@ -107,7 +107,7 @@ describe("live features", () => {
             baseURL: "/",
             headers: {
                 "Content-type": "application/json",
-                "X-FeatureHub": "earlyAccessValues[]=omega,organizationId=test-org",
+                "X-FeatureHub": "organizationId=test-org,earlyAccess=omega",
                 "if-none-match": expect.anything(),
             },
             method: "GET",
