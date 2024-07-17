@@ -66,7 +66,11 @@ export function InsightDescription(props: IInsightDescriptionProps) {
                         onChange={onRichTextChange}
                         editRows={4}
                         editPlaceholder={placeholder}
-                        emptyElement={readOnly ? undefined : <>{placeholder}</>}
+                        emptyElement={
+                            readOnly ? undefined : (
+                                <div className="gd-editable-label-richtext-empty">{placeholder}</div>
+                            )
+                        }
                         showTooltip={isRichTextEditing}
                         tooltipAlignPoints={richTextTooltipAlignPoints}
                     />
