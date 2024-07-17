@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 
 import { ReactNode } from "react";
 
@@ -13,7 +13,7 @@ export type ActionType = "LinkButton" | "Button" | "Switcher";
 export interface ISettingItem {
     className?: string;
     title: string;
-    titleTooltipText?: string;
+    titleTooltipText?: ReactNode;
     alignPointTitleTooltip?: { align: string }[];
     value: string | ReactNode;
     actionType: ActionType;
@@ -24,5 +24,5 @@ export interface ISettingItem {
     isDisableAction?: boolean;
     hasDivider?: boolean;
     onAction?: () => void;
-    renderSubtitle?: () => React.ReactNode;
+    renderSubtitle?: () => ReactNode;
 }
