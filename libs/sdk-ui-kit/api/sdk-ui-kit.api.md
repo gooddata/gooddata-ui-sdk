@@ -3573,6 +3573,8 @@ export interface ISettingItem {
     // (undocumented)
     title: string;
     // (undocumented)
+    titleTooltipHideDelay?: number;
+    // (undocumented)
     titleTooltipText?: ReactNode;
     // (undocumented)
     value: string | ReactNode;

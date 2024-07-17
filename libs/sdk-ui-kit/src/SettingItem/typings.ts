@@ -14,6 +14,7 @@ export interface ISettingItem {
     className?: string;
     title: string;
     titleTooltipText?: ReactNode;
+    titleTooltipHideDelay?: number;
     alignPointTitleTooltip?: { align: string }[];
     value: string | ReactNode;
     actionType: ActionType;
