@@ -3569,11 +3569,11 @@ export interface ISettingItem {
     // (undocumented)
     onAction?: () => void;
     // (undocumented)
-    renderSubtitle?: () => React.ReactNode;
+    renderSubtitle?: () => ReactNode;
     // (undocumented)
     title: string;
     // (undocumented)
-    titleTooltipText?: string;
+    titleTooltipText?: ReactNode;
     // (undocumented)
     value: string | ReactNode;
 }
