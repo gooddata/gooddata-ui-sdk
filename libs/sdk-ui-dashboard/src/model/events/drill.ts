@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import {
     IInsight,
     IDrillToAttributeUrl,
@@ -9,6 +9,7 @@ import {
     FilterContextItem,
     ICrossFiltering,
     IDashboardAttributeFilter,
+    IDashboardAttributeFilterConfig,
 } from "@gooddata/sdk-model";
 import { ExplicitDrill } from "@gooddata/sdk-ui";
 
@@ -473,6 +474,11 @@ export interface DashboardDrillToDashboardResolvedPayload {
      * Drill intersection filters that can be applied to the target dashboard.
      */
     readonly filters: (IDashboardFilter | FilterContextItem)[];
+
+    /**
+     * Attribute filter configs with additional props
+     */
+    readonly attributeFilterConfigs: IDashboardAttributeFilterConfig[];
     /**
      * Original drill event, that triggered this particular drill interaction.
      */
@@ -502,6 +508,7 @@ export interface DashboardDrillToDashboardResolved extends IDashboardEvent {
 export function drillToDashboardResolved(
     ctx: DashboardContext,
     filters: (IDashboardFilter | FilterContextItem)[],
+    attributeFilterConfigs: IDashboardAttributeFilterConfig[],
     drillDefinition: IDrillToDashboard,
     drillEvent: IDashboardDrillEvent,
     correlationId?: string,
@@ -512,6 +519,7 @@ export function drillToDashboardResolved(
         correlationId,
         payload: {
             filters,
+            attributeFilterConfigs,
             drillDefinition,
             drillEvent,
         },

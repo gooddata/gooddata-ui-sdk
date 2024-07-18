@@ -582,7 +582,7 @@ export interface DashboardAttributeFilterConfigDisplayAsLabelChangedPayload {
     /**
      * New label used for displaying filter attribute values
      */
-    readonly displayAsLabel: ObjRef;
+    readonly displayAsLabel: ObjRef | undefined;
 }
 
 /**
@@ -598,7 +598,7 @@ export interface DashboardAttributeFilterConfigDisplayAsLabelChanged extends IDa
 export function dashboardAttributeConfigDisplayAsLabelChanged(
     ctx: DashboardContext,
     filter: IDashboardAttributeFilter,
-    displayAsLabel: ObjRef,
+    displayAsLabel: ObjRef | undefined,
     correlationId?: string,
 ): DashboardAttributeFilterConfigDisplayAsLabelChanged {
     return {

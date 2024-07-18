@@ -652,8 +652,24 @@ export interface ChangeFilterContextSelection extends IDashboardCommand {
 // @public
 export function changeFilterContextSelection(filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean, correlationId?: string): ChangeFilterContextSelection;
 
+// @internal
+export function changeFilterContextSelectionByParams(params: ChangeFilterContextSelectionParams): ChangeFilterContextSelection;
+
+// @public
+export interface ChangeFilterContextSelectionParams {
+    // (undocumented)
+    attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
+    // (undocumented)
+    correlationId?: string;
+    // (undocumented)
+    filters: (IDashboardFilter | FilterContextItem)[];
+    // (undocumented)
+    resetOthers?: boolean;
+}
+
 // @public
 export interface ChangeFilterContextSelectionPayload {
+    attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
     filters: (IDashboardFilter | FilterContextItem)[];
     resetOthers: boolean;
 }
@@ -1736,6 +1752,7 @@ export interface DashboardDrillToDashboardResolved extends IDashboardEvent {
 
 // @alpha
 export interface DashboardDrillToDashboardResolvedPayload {
+    readonly attributeFilterConfigs: IDashboardAttributeFilterConfig[];
     readonly drillDefinition: IDrillToDashboard;
     readonly drillEvent: IDashboardDrillEvent;
     readonly filters: (IDashboardFilter | FilterContextItem)[];
@@ -7443,7 +7460,7 @@ export function setDashboardAttributeFilterConfigDisplayAsLabel(localIdentifier:
 
 // @alpha
 export interface SetDashboardAttributeFilterConfigDisplayAsLabelPayload {
-    displayAsLabel: ObjRef;
+    displayAsLabel: ObjRef | undefined;
     localIdentifier: string;
 }
 

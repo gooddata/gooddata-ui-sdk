@@ -176,6 +176,8 @@ export {
     ChangeFilterContextSelectionPayload,
     DateFilterSelection,
     changeFilterContextSelection,
+    ChangeFilterContextSelectionParams,
+    changeFilterContextSelectionByParams,
     applyAttributeFilter,
     applyDateFilter,
     SetAttributeFilterDisplayForm,

@@ -1,13 +1,6 @@
 // (C) 2023-2024 GoodData Corporation
 import { all, put, call, select } from "redux-saga/effects";
-import {
-    IDashboardAttributeFilter,
-    areObjRefsEqual,
-    filterAttributeElements,
-    filterObjRef,
-    isDashboardAttributeFilter,
-    isNegativeAttributeFilter,
-} from "@gooddata/sdk-model";
+import { IDashboardAttributeFilter, areObjRefsEqual, isDashboardAttributeFilter } from "@gooddata/sdk-model";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { selectFilterContextDraggableFilters } from "../../store/filterContext/filterContextSelectors.js";
 import { convertIntersectionToAttributeFilters } from "./common/intersectionUtils.js";
@@ -78,9 +71,8 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
         crossFilteringItemByWidget?.filterLocalIdentifiers.length <= drillIntersectionFilters.length;
 
     const virtualFilters = drillIntersectionFilters.map(({ attributeFilter }) => {
-        const displayForm = filterObjRef(attributeFilter);
-        const attributeElements = filterAttributeElements(attributeFilter);
-        const negativeSelection = isNegativeAttributeFilter(attributeFilter);
+        const { displayForm, attributeElements, negativeSelection } = attributeFilter.attributeFilter;
+
         const existingVirtualFilter = shouldUpdateExistingCrossFiltering
             ? currentVirtualFilters.find((vf) => {
                   return areObjRefsEqual(vf.attributeFilter.displayForm, displayForm);

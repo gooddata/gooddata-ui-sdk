@@ -47,6 +47,7 @@ import { defaultImport } from "default-import";
 import { attributeFilterConfigsSliceReducer } from "./attributeFilterConfigs/index.js";
 import { dateFilterConfigsSliceReducer } from "./dateFilterConfigs/index.js";
 import { webhooksSliceReducer } from "./webhooks/index.js";
+import { objRefToString } from "@gooddata/sdk-model";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
@@ -361,7 +362,11 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
                 );
         },
         devTools: {
-            name: "Dashboard component state",
+            name: `Dashboard component state: ${config.dashboardContext.workspace?.substring(0, 5)} - ${
+                config.dashboardContext.dashboardRef
+                    ? objRefToString(config.dashboardContext.dashboardRef).substring(0, 5)
+                    : ""
+            }`,
         },
     });
 

@@ -106,7 +106,7 @@ export function createAttributeFilterHandlerStore(
             }).concat([sagaMiddleware, eventListeningMiddleware(context.eventListener)]);
         },
         devTools: {
-            name: "AttributeFilter state",
+            name: `AttributeFilter state: ${localIdentifier?.substring(0, 5)}`,
         },
     });
 

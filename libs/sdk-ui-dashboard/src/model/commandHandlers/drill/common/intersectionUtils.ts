@@ -1,12 +1,12 @@
 // (C) 2023-2024 GoodData Corporation
-
+import { v4 as uuid } from "uuid";
 import {
     DrillEventIntersectionElementHeader,
     IDrillEventIntersectionElement,
     IDrillIntersectionAttributeItem,
     isDrillIntersectionAttributeItem,
 } from "@gooddata/sdk-ui";
-import { areObjRefsEqual, ObjRef, IAttributeFilter, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import { areObjRefsEqual, ObjRef, IDashboardAttributeFilter } from "@gooddata/sdk-model";
 
 /**
  *  For correct drill intersection that should be converted into AttributeFilters must be drill intersection:
@@ -23,8 +23,8 @@ function filterIntersection(
     return ref ? !dateDataSetsAttributesRefs.some((ddsRef) => areObjRefsEqual(ddsRef, ref)) : false;
 }
 
-interface IConversionResult {
-    attributeFilter: IAttributeFilter;
+export interface IConversionResult {
+    attributeFilter: IDashboardAttributeFilter;
     primaryLabel?: ObjRef;
 }
 
@@ -40,23 +40,23 @@ export function convertIntersectionToAttributeFilters(
         .filter(isDrillIntersectionAttributeItem)
         .reduce((result, h: IDrillIntersectionAttributeItem) => {
             const ref = h.attributeHeader.ref;
-            if (backendSupportsElementUris || enableDuplicatedLabelValuesInAttributeFilter) {
-                result.push({
-                    attributeFilter: newPositiveAttributeFilter(ref, {
-                        uris: [h.attributeHeaderItem.uri],
-                    }),
-                    primaryLabel: h.attributeHeader.primaryLabel,
-                });
-            } else {
-                result.push({
-                    attributeFilter: newPositiveAttributeFilter(ref, {
-                        uris: [h.attributeHeaderItem.name],
-                    }),
-                    ...(enableDuplicatedLabelValuesInAttributeFilter
-                        ? { primaryLabel: h.attributeHeader.primaryLabel }
-                        : {}),
-                });
-            }
+            const elementValue =
+                backendSupportsElementUris || enableDuplicatedLabelValuesInAttributeFilter
+                    ? h.attributeHeaderItem.uri
+                    : h.attributeHeaderItem.name;
+            result.push({
+                attributeFilter: {
+                    attributeFilter: {
+                        attributeElements: { uris: [elementValue] },
+                        displayForm: ref,
+                        negativeSelection: false,
+                        localIdentifier: uuid(),
+                    },
+                },
+                ...(enableDuplicatedLabelValuesInAttributeFilter
+                    ? { primaryLabel: h.attributeHeader.primaryLabel }
+                    : {}),
+            });
             return result;
         }, [] as IConversionResult[]);
 }

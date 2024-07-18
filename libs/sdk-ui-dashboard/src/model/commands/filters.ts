@@ -18,6 +18,7 @@ import {
     DashboardAttributeFilterSelectionMode,
     DashboardAttributeFilterConfigMode,
     IDashboardAttributeFilterByDate,
+    IDashboardAttributeFilterConfig,
 } from "@gooddata/sdk-model";
 import { IDashboardCommand } from "./base.js";
 import { IDashboardFilter } from "../../types.js";
@@ -722,6 +723,11 @@ export interface ChangeFilterContextSelectionPayload {
     filters: (IDashboardFilter | FilterContextItem)[];
 
     /**
+     * Attribute filter configs with additional props
+     */
+    attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
+
+    /**
      * Should filters not mentioned in the payload reset to All items selected/All time? Defaults to false.
      */
     resetOthers: boolean;
@@ -766,6 +772,48 @@ export function changeFilterContextSelection(
         correlationId,
         payload: {
             filters,
+            resetOthers,
+        },
+    };
+}
+
+/**
+ * Params for {@link changeFilterContextSelectionByParams} command.
+ *
+ * @public
+ */
+export interface ChangeFilterContextSelectionParams {
+    filters: (IDashboardFilter | FilterContextItem)[];
+    attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
+    resetOthers?: boolean;
+    correlationId?: string;
+}
+
+/**
+ * Creates the {@link ChangeFilterContextSelection} command.
+ *
+ * @remarks
+ * Dispatching this command will result into setting provided dashboard filters to the current dashboard filter context.
+ *
+ * Only filters that are stored in the filter context can be applied (filters that are visible in the filter bar).
+ * Filters will be matched via display form ref, duplicities will be omitted.
+ * Date filter that does not match any visible option by the current date filter config will be also omitted.
+ *
+ * @param params - params for the command creator
+ * @internal
+ * TODO: next major release can remove ByParams suffix and use this implementation instead of original cmd creator + other creators can be rewriten to use params object
+ * https://gooddata.atlassian.net/browse/STL-700
+ */
+export function changeFilterContextSelectionByParams(
+    params: ChangeFilterContextSelectionParams,
+): ChangeFilterContextSelection {
+    const { filters, attributeFilterConfigs = [], resetOthers = false, correlationId } = params;
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION",
+        correlationId,
+        payload: {
+            filters,
+            attributeFilterConfigs,
             resetOthers,
         },
     };
