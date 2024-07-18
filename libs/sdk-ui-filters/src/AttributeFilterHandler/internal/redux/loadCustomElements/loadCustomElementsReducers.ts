@@ -11,6 +11,7 @@ import {
     isElementsQueryOptionsElementsByPrimaryDisplayFormValue,
     isElementsQueryOptionsElementsByValue,
 } from "@gooddata/sdk-backend-spi";
+import { INIT_SELECTION_PREFIX } from "../constants.js";
 
 const loadCustomElementsRequest: AttributeFilterReducer<
     PayloadAction<{ options: ILoadElementsOptions; correlation: Correlation | undefined }>
@@ -46,7 +47,11 @@ const loadCustomElementsSuccess: AttributeFilterReducer<
     const {
         enableDuplicatedLabelValuesInAttributeFilter,
         options: { elements, filterByPrimaryLabel },
+        correlation,
     } = action.payload;
+
+    const shouldOverrideKeys =
+        state.initialization.status === "loading" && correlation.startsWith(INIT_SELECTION_PREFIX);
     if (enableDuplicatedLabelValuesInAttributeFilter && elements) {
         const originalElements = getElementValues(elements);
         // iterate over original elements to keep the order in selection,
@@ -63,7 +68,7 @@ const loadCustomElementsSuccess: AttributeFilterReducer<
                     if (!state.elements.cache[cacheKey]) {
                         state.elements.cache[cacheKey] = el;
                     }
-                    if (state.initialization.status === "loading") {
+                    if (shouldOverrideKeys) {
                         keys.push(cacheKey);
                     }
                 });
@@ -74,13 +79,13 @@ const loadCustomElementsSuccess: AttributeFilterReducer<
             if (!state.elements.cache[cacheKey]) {
                 state.elements.cache[cacheKey] = el;
             }
-            if (state.initialization.status === "loading") {
+            if (shouldOverrideKeys) {
                 keys.push(cacheKey);
             }
         });
     }
 
-    if (enableDuplicatedLabelValuesInAttributeFilter && state.initialization.status === "loading") {
+    if (enableDuplicatedLabelValuesInAttributeFilter && shouldOverrideKeys) {
         state.selection.working.keys = keys;
         state.selection.commited.keys = keys;
     }
