@@ -6,6 +6,7 @@ import { ChangeFilterContextSelection } from "../../commands/index.js";
 import { filterContextActions } from "../../store/filterContext/index.js";
 import {
     selectFilterContextAttributeFilterByDisplayForm,
+    selectFilterContextAttributeFilterByLocalId,
     selectFilterContextAttributeFilters,
     selectFilterContextDateFilterByDataSet,
     selectFilterContextDateFiltersWithDimension,
@@ -42,15 +43,21 @@ import {
     newRelativeDashboardDateFilter,
     serializeObjRef,
     isDashboardCommonDateFilter,
+    IDashboardAttributeFilterConfig,
+    areObjRefsEqual,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
     IUpdateAttributeFilterSelectionPayload,
     IUpsertDateFilterPayload,
 } from "../../store/filterContext/filterContextReducers.js";
-import { resolveDisplayFormMetadata } from "../../utils/displayFormResolver.js";
+import { DisplayFormResolutionResult, resolveDisplayFormMetadata } from "../../utils/displayFormResolver.js";
 import { resolveAttributeMetadata } from "../../utils/attributeResolver.js";
 import { IDashboardFilter } from "../../../types.js";
+import { selectEnableDuplicatedLabelValuesInAttributeFilter } from "../../store/config/configSelectors.js";
+import { attributeFilterConfigsActions } from "../../store/attributeFilterConfigs/index.js";
+import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 
 function dashboardFilterToFilterContextItem(
     filter: IDashboardFilter,
@@ -89,7 +96,7 @@ export function* changeFilterContextSelectionHandler(
     ctx: DashboardContext,
     cmd: ChangeFilterContextSelection,
 ): SagaIterator<void> {
-    const { filters, resetOthers } = cmd.payload;
+    const { filters, resetOthers, attributeFilterConfigs = [] } = cmd.payload;
 
     const normalizedFilters: FilterContextItem[] = filters.map((filter) => {
         if (isDashboardAttributeFilter(filter) || isDashboardDateFilter(filter)) {
@@ -102,11 +109,25 @@ export function* changeFilterContextSelectionHandler(
         }
     });
 
+    const enableDuplicatedLabelValuesInAttributeFilter: ReturnType<
+        typeof selectEnableDuplicatedLabelValuesInAttributeFilter
+    > = yield select(selectEnableDuplicatedLabelValuesInAttributeFilter);
+
     const uniqueFilters = uniqBy(normalizedFilters, (filter) => {
         const identification = isDashboardAttributeFilter(filter)
             ? filter.attributeFilter.displayForm
             : filter.dateFilter.dataSet;
-        return identification ? objRefToString(identification) : identification;
+        let config;
+        if (isDashboardAttributeFilter(filter) && enableDuplicatedLabelValuesInAttributeFilter) {
+            config = attributeFilterConfigs.find(
+                (config) => config.localIdentifier === filter.attributeFilter.localIdentifier,
+            );
+        }
+        // do not remove duplicates using same primary label, but different display as label
+        const secondaryIdentification = config?.displayAsLabel ? objRefToString(config.displayAsLabel) : "";
+        return identification
+            ? objRefToString(identification) + secondaryIdentification
+            : identification + secondaryIdentification;
     });
 
     const [dateFilters, attributeFilters] = partition(uniqueFilters, isDashboardDateFilter);
@@ -121,7 +142,13 @@ export function* changeFilterContextSelectionHandler(
         commonDateFilterUpdateActions,
         dateFiltersUpdateActions,
     ]: AnyAction[][] = yield all([
-        call(getAttributeFiltersUpdateActions, attributeFilters, resetOthers, ctx),
+        call(
+            getAttributeFiltersUpdateActions,
+            [...attributeFilters].reverse(),
+            attributeFilterConfigs,
+            resetOthers,
+            ctx,
+        ),
         call(getDateFilterUpdateActions, commonDateFilter, resetOthers),
         call(getDateFiltersUpdateActions, dateFiltersWithDimension, resetOthers),
     ]);
@@ -137,13 +164,79 @@ export function* changeFilterContextSelectionHandler(
     yield call(dispatchFilterContextChanged, ctx, cmd);
 }
 
+function* getDashboardFilterByAttributeMatching(
+    filterRef: ObjRef,
+    resolvedDisplayForms: DisplayFormResolutionResult,
+    ctx: DashboardContext,
+) {
+    if (isUriRef(filterRef) && !ctx.backend.capabilities.supportsObjectUris) {
+        throw new NotSupported("Unsupported filter ObjRef! Please provide IdentifierRef instead of UriRef.");
+    }
+
+    const filterDF = resolvedDisplayForms.resolved.get(filterRef);
+    const resolvedAttribute: SagaReturnType<typeof resolveAttributeMetadata> = yield call(
+        resolveAttributeMetadata,
+        ctx,
+        compact([filterDF?.attribute]),
+    );
+    const attribute = filterDF?.attribute && resolvedAttribute.resolved.get(filterDF?.attribute);
+
+    for (const displayForm of attribute?.displayForms ?? []) {
+        const dashboardFilter: ReturnType<typeof selectFilterContextAttributeFilterByDisplayForm> =
+            yield select(selectFilterContextAttributeFilterByDisplayForm(displayForm.ref));
+        if (dashboardFilter) {
+            return dashboardFilter;
+        }
+    }
+    return null;
+}
+
+function* getDashboardFilterByDisplayAsLabelMatching(
+    attributeFilter: IDashboardAttributeFilter,
+    attributeFilterConfigs: IDashboardAttributeFilterConfig[],
+) {
+    let foundByDisplayAsLabel = false;
+    let foundByDashboardFilterDisplayAsLabel = false;
+    let dashboardFilter: IDashboardAttributeFilter | undefined = undefined;
+
+    const filterRef = attributeFilter.attributeFilter.displayForm;
+
+    const filterConfig = attributeFilterConfigs.find(
+        (config) => config.localIdentifier === attributeFilter.attributeFilter.localIdentifier,
+    );
+    if (filterConfig?.displayAsLabel) {
+        dashboardFilter = yield select(
+            selectFilterContextAttributeFilterByDisplayForm(filterConfig.displayAsLabel),
+        );
+        foundByDisplayAsLabel = !!dashboardFilter;
+    }
+    if (!foundByDisplayAsLabel) {
+        const dashboardFiltersConfigs: ReturnType<typeof selectAttributeFilterConfigsOverrides> =
+            yield select(selectAttributeFilterConfigsOverrides);
+        const matchingDashboardFilterConfig = dashboardFiltersConfigs.find((config) =>
+            areObjRefsEqual(config.displayAsLabel, filterRef),
+        );
+        if (matchingDashboardFilterConfig) {
+            dashboardFilter = yield select(
+                selectFilterContextAttributeFilterByLocalId(matchingDashboardFilterConfig?.localIdentifier),
+            );
+            foundByDashboardFilterDisplayAsLabel = !!dashboardFilter;
+        }
+    }
+    return { foundByDisplayAsLabel, foundByDashboardFilterDisplayAsLabel, dashboardFilter };
+}
+
 function* getAttributeFiltersUpdateActions(
     attributeFilters: IDashboardAttributeFilter[],
+    attributeFilterConfigs: IDashboardAttributeFilterConfig[],
     resetOthers: boolean,
     ctx: DashboardContext,
 ): SagaIterator<AnyAction[]> {
     const updateActions: AnyAction[] = [];
     const handledLocalIds = new Set<string>();
+    const enableDuplicatedLabelValuesInAttributeFilter: ReturnType<
+        typeof selectEnableDuplicatedLabelValuesInAttributeFilter
+    > = yield select(selectEnableDuplicatedLabelValuesInAttributeFilter);
     const resolvedDisplayForms: SagaReturnType<typeof resolveDisplayFormMetadata> = yield call(
         resolveDisplayFormMetadata,
         ctx,
@@ -156,36 +249,71 @@ function* getAttributeFiltersUpdateActions(
             yield select(selectFilterContextAttributeFilterByDisplayForm(filterRef));
 
         if (!dashboardFilter && canMapDashboardFilterFromAnotherDisplayForm(ctx)) {
-            if (isUriRef(filterRef) && !ctx.backend.capabilities.supportsObjectUris) {
-                throw new NotSupported(
-                    "Unsupported filter ObjRef! Please provide IdentifierRef instead of UriRef.",
-                );
-            }
-
-            const filterDF = resolvedDisplayForms.resolved.get(filterRef);
-            const resolvedAttribute: SagaReturnType<typeof resolveAttributeMetadata> = yield call(
-                resolveAttributeMetadata,
+            dashboardFilter = yield call(
+                getDashboardFilterByAttributeMatching,
+                filterRef,
+                resolvedDisplayForms,
                 ctx,
-                compact([filterDF?.attribute]),
             );
-            const attribute = filterDF?.attribute && resolvedAttribute.resolved.get(filterDF?.attribute);
-
-            for (const displayForm of attribute?.displayForms ?? []) {
-                dashboardFilter = yield select(
-                    selectFilterContextAttributeFilterByDisplayForm(displayForm.ref),
-                );
-                if (dashboardFilter) {
-                    break;
-                }
-            }
         }
 
+        let foundByDisplayAsLabel = false;
+        let foundByDashboardFilterDisplayAsLabel = false;
+
+        if (enableDuplicatedLabelValuesInAttributeFilter && !dashboardFilter) {
+            const result = yield call(
+                getDashboardFilterByDisplayAsLabelMatching,
+                attributeFilter,
+                attributeFilterConfigs,
+            );
+            foundByDisplayAsLabel = result.foundByDisplayAsLabel;
+            foundByDashboardFilterDisplayAsLabel = result.foundByDashboardFilterDisplayAsLabel;
+            dashboardFilter = result.dashboardFilter;
+        }
+
+        const displayFormData = resolvedDisplayForms.resolved.get(filterRef);
+
         if (dashboardFilter) {
+            if (foundByDisplayAsLabel && displayFormData) {
+                updateActions.push(
+                    // keep the attribute display form field up to date
+                    filterContextActions.addAttributeFilterDisplayForm(displayFormData),
+                    filterContextActions.changeAttributeDisplayForm({
+                        filterLocalId: dashboardFilter.attributeFilter.localIdentifier!,
+                        displayForm: filterRef,
+                        supportsElementUris: ctx.backend.capabilities.supportsElementUris,
+                        enableDuplicatedLabelValuesInAttributeFilter,
+                    }),
+                    // backup current displayForm to the displayAsLabel
+                    attributeFilterConfigsActions.changeDisplayAsLabel({
+                        localIdentifier: dashboardFilter.attributeFilter.localIdentifier!,
+                        displayAsLabel: dashboardFilter.attributeFilter.displayForm,
+                    }),
+                );
+            }
+            if (foundByDashboardFilterDisplayAsLabel && displayFormData) {
+                updateActions.push(
+                    // keep the attribute display form field up to date
+                    filterContextActions.addAttributeFilterDisplayForm(displayFormData),
+                    filterContextActions.changeAttributeDisplayForm({
+                        filterLocalId: dashboardFilter.attributeFilter.localIdentifier!,
+                        displayForm: filterRef,
+                        supportsElementUris: ctx.backend.capabilities.supportsElementUris,
+                        enableDuplicatedLabelValuesInAttributeFilter,
+                    }),
+                    // clear displayAsLabel
+                    attributeFilterConfigsActions.changeDisplayAsLabel({
+                        localIdentifier: dashboardFilter.attributeFilter.localIdentifier!,
+                        displayAsLabel: undefined,
+                    }),
+                );
+            }
             updateActions.push(
                 filterContextActions.updateAttributeFilterSelection(
                     getAttributeFilterSelectionPayload(attributeFilter, dashboardFilter),
                 ),
             );
+
             handledLocalIds.add(dashboardFilter.attributeFilter.localIdentifier!);
         }
     }
