@@ -9,7 +9,6 @@ import {
     widgetId,
     widgetRef,
     widgetUri,
-    isInsightWidget,
 } from "@gooddata/sdk-model";
 import { InvalidCustomUrlDrillParameterInfo, UiState } from "./uiState.js";
 import { ILayoutCoordinates, IMenuButtonItemsVisibility, IScheduleEmailContext } from "../../../types.js";
@@ -21,9 +20,9 @@ type UiReducer<A extends Action = AnyAction> = CaseReducer<UiState, A>;
 
 const openScheduleEmailDialog: UiReducer<PayloadAction<IScheduleEmailContext>> = (state, action) => {
     state.scheduleEmailDialog.open = true;
-    if (isInsightWidget(action.payload.widget)) {
+    if (action.payload.insightRef) {
         state.scheduleEmailDialog.context = {
-            insightRef: action.payload.widget.insight,
+            insightRef: action.payload.insightRef,
         };
     }
 };
@@ -46,9 +45,9 @@ const openScheduleEmailManagementDialog: UiReducer<PayloadAction<IScheduleEmailC
     action,
 ) => {
     state.scheduleEmailManagementDialog.open = true;
-    if (isInsightWidget(action.payload.widget)) {
+    if (action.payload.insightRef) {
         state.scheduleEmailManagementDialog.context = {
-            insightRef: action.payload.widget.insight,
+            insightRef: action.payload.insightRef,
         };
     }
 };
