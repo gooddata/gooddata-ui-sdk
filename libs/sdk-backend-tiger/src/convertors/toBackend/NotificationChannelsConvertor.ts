@@ -7,7 +7,7 @@ import {
 import { IWebhookMetadataObjectDefinition, IWebhookMetadataObject } from "@gooddata/sdk-model";
 
 export function convertWebhookToNotificationChannel(
-    webhook: IWebhookMetadataObject,
+    webhook: Partial<IWebhookMetadataObject> & Pick<IWebhookMetadataObject, "id">,
 ): JsonApiNotificationChannelOut {
     return {
         id: webhook.id,
