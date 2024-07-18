@@ -11,6 +11,7 @@ import { actions } from "../store/slice.js";
 import { getAttributeFilterContext } from "../common/sagas.js";
 import { selectElementsForm } from "../common/selectors.js";
 import { shouldExcludePrimaryLabel } from "../utils.js";
+import { INIT_SELECTION_PREFIX } from "../constants.js";
 
 /**
  * @internal
@@ -28,7 +29,7 @@ export function* initSelectionSaga(correlation: Correlation): SagaIterator<void>
         return;
     }
 
-    const initSelectionCorrelation = `initSelection_${correlation}`;
+    const initSelectionCorrelation = `${INIT_SELECTION_PREFIX}${correlation}`;
 
     yield fork(
         loadCustomElementsSaga,
