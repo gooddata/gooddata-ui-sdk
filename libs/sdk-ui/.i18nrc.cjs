@@ -20,11 +20,16 @@ module.exports = {
         /**
          * These ignored messages are used in the attribute filter implementation for dashboard component, so we need to have these messages
          * here even though they are used within the sdk-ui-dashboard code.
+         *
+         * userManagement and isualizations.headline.comparison and workspaceHierarchy is used by HOME-UI!!!
          */
         {
             dir: /src\/base\/localization\/bundles/,
-            pattern:
+            pattern: [
                 /^(attributesDropdown.filterConfiguredMessage|attributesDropdown.noConnectionMessage|attributesDropdown.attributeNameWithData)$/,
+                /^userManagement\./,
+                /^workspaceHierarchy\./,
+            ],
             ignore: true,
         },
     ],
