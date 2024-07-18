@@ -286,12 +286,15 @@ export interface IScheduleEmailContext {
     /**
      * Widget to schedule email for.
      */
-    insightRef?: ObjRef | undefined;
+    widgetRef?: ObjRef | undefined;
 }
 
 /**
  * @internal
  */
 export interface IScheduleEmailDialogContext {
-    insightRef?: ObjRef | undefined;
+    /**
+     * Widget to schedule email for.
+     */
+    widgetRef?: ObjRef | undefined;
 }

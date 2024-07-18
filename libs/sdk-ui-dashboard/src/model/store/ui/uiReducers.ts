@@ -20,9 +20,9 @@ type UiReducer<A extends Action = AnyAction> = CaseReducer<UiState, A>;
 
 const openScheduleEmailDialog: UiReducer<PayloadAction<IScheduleEmailContext>> = (state, action) => {
     state.scheduleEmailDialog.open = true;
-    if (action.payload.insightRef) {
+    if (action.payload.widgetRef) {
         state.scheduleEmailDialog.context = {
-            insightRef: action.payload.insightRef,
+            widgetRef: action.payload.widgetRef,
         };
     }
 };
@@ -45,9 +45,9 @@ const openScheduleEmailManagementDialog: UiReducer<PayloadAction<IScheduleEmailC
     action,
 ) => {
     state.scheduleEmailManagementDialog.open = true;
-    if (action.payload.insightRef) {
+    if (action.payload.widgetRef) {
         state.scheduleEmailManagementDialog.context = {
-            insightRef: action.payload.insightRef,
+            widgetRef: action.payload.widgetRef,
         };
     }
 };

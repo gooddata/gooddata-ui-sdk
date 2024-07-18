@@ -1,28 +1,53 @@
 // (C) 2019-2024 GoodData Corporation
 import React, { ReactNode, useState } from "react";
 import { FormattedMessage } from "react-intl";
-import { FilterContextItem, IAutomationMetadataObject } from "@gooddata/sdk-model";
+import {
+    FilterContextItem,
+    IAutomationMetadataObject,
+    IExportDefinitionSettings,
+    IWidget,
+} from "@gooddata/sdk-model";
 import { Message } from "@gooddata/sdk-ui-kit";
 import { AttachmentFilters, AttachmentFilterType } from "./AttachmentFilters.js";
 import { useAttachmentDashboardFilters } from "../../hooks/useAttachmentDashboardFilters.js";
-import { getAutomationDashboardFilters } from "../../utils/automationFilters.js";
+import { getAutomationDashboardFilters } from "../../utils/automationHelpers.js";
+import { AttachmentDashboard, AttachmentWidgets } from "./AttachmentItems.js";
+import { WidgetAttachmentType } from "../../types.js";
+// import { WidgetAttachmentType } from "../../../types.js";
 
 export interface IAttachmentsProps {
     dashboardTitle: string;
     dashboardSelected: boolean;
-    onAttachmentsSelectionChanged(dashboardSelected: boolean, filters?: FilterContextItem[]): void;
+    csvSelected: boolean;
+    xlsxSelected: boolean;
+    settings: IExportDefinitionSettings;
+    onDashboardAttachmentsSelectionChange: (
+        dashboardSelected: boolean,
+        filters?: FilterContextItem[],
+    ) => void;
+    onWidgetAttachmentsSelectionChange: (
+        selected: boolean,
+        format: WidgetAttachmentType,
+        filters?: FilterContextItem[],
+    ) => void;
+    onWidgetAttachmentsSettingsChange: (obj: IExportDefinitionSettings) => void;
+    widget?: IWidget;
     editSchedule?: IAutomationMetadataObject;
 }
 
-const AttachmentItem: React.FC<{ format: string; children?: React.ReactNode }> = ({ format, children }) => (
-    <div aria-label="dashboard-attachment" className="gd-dashboard-attachment s-gd-dashboard-attachment">
-        <span className="gd-dashboard-attachment-format">{format}</span>
-        <span className="gd-dashboard-attachment-name">{children}</span>
-    </div>
-);
-
 export const Attachments = (props: IAttachmentsProps) => {
-    const { dashboardTitle, dashboardSelected, onAttachmentsSelectionChanged, editSchedule } = props;
+    const {
+        dashboardTitle,
+        dashboardSelected,
+        csvSelected,
+        xlsxSelected,
+        settings,
+        onDashboardAttachmentsSelectionChange,
+        onWidgetAttachmentsSelectionChange,
+        onWidgetAttachmentsSettingsChange,
+        widget,
+        editSchedule,
+    } = props;
 
     /**
      * When editing a schedule, we need to get the filters from the export definition and we don't care
@@ -45,16 +70,35 @@ export const Attachments = (props: IAttachmentsProps) => {
     );
     const showAttachmentFilters = isEditing || (areFiltersChanged && dashboardSelected);
     const disableDropdown = isEditing && attachmentFilterType === "default";
+    const includeFilters = attachmentFilterType === "edited" && areFiltersChanged;
 
     const handleAttachmentFilterTypeChange = (type: AttachmentFilterType) => {
         const includeFilters = type === "edited" && areFiltersChanged;
         setAttachmentFilterType(type);
-        onAttachmentsSelectionChanged(dashboardSelected, includeFilters ? filtersToStore : undefined);
+        onDashboardAttachmentsSelectionChange(dashboardSelected, includeFilters ? filtersToStore : undefined);
     };
 
-    const handleAttachmentSelectionChange = () => {
-        const includeFilters = attachmentFilterType === "edited" && areFiltersChanged;
-        onAttachmentsSelectionChanged(!dashboardSelected, includeFilters ? filtersToStore : undefined);
+    const handleDashboardAttachmentSelectionChange = () => {
+        onDashboardAttachmentsSelectionChange(
+            !dashboardSelected,
+            includeFilters ? filtersToStore : undefined,
+        );
+    };
+
+    const handleWidgetAttachmentSelectionChange = (format: WidgetAttachmentType) => {
+        if (format === "CSV") {
+            onWidgetAttachmentsSelectionChange(
+                !csvSelected,
+                format,
+                includeFilters ? filtersToStore : undefined,
+            );
+        } else {
+            onWidgetAttachmentsSelectionChange(
+                !xlsxSelected,
+                format,
+                includeFilters ? filtersToStore : undefined,
+            );
+        }
     };
 
     return (
@@ -63,18 +107,21 @@ export const Attachments = (props: IAttachmentsProps) => {
                 <FormattedMessage id="dialogs.schedule.email.attachments.label" />
             </label>
             <div className="gd-attachment-list">
-                <label className="gd-schedule-mail-attachment-checkbox input-checkbox-label">
-                    <input
-                        type="checkbox"
-                        className="input-checkbox"
-                        checked={props.dashboardSelected}
-                        onChange={handleAttachmentSelectionChange}
+                {widget ? (
+                    <AttachmentWidgets
+                        csvSelected={csvSelected}
+                        xlsxSelected={xlsxSelected}
+                        settings={settings}
+                        onSelectionChange={handleWidgetAttachmentSelectionChange}
+                        onSettingsChange={onWidgetAttachmentsSettingsChange}
                     />
-                    <span className="input-label-text" />
-                    <AttachmentItem format="pdf">
-                        <span className="shortened-name">{dashboardTitle}</span>
-                    </AttachmentItem>
-                </label>
+                ) : (
+                    <AttachmentDashboard
+                        title={dashboardTitle}
+                        pdfSelected={dashboardSelected}
+                        onSelectionChange={handleDashboardAttachmentSelectionChange}
+                    />
+                )}
                 <AttachmentFilters
                     filterType={attachmentFilterType}
                     onChange={handleAttachmentFilterTypeChange}

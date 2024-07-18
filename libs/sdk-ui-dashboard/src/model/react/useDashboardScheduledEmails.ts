@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from "react";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
-import { IAutomationMetadataObject, IWidget, isInsightWidget } from "@gooddata/sdk-model";
+import { IAutomationMetadataObject, IWidget } from "@gooddata/sdk-model";
 
 import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider.js";
 import {
@@ -64,7 +64,7 @@ export const useDashboardScheduledEmails = ({ onReload }: { onReload?: () => voi
             isScheduledEmailingEnabled &&
             dispatch(
                 uiActions.openScheduleEmailDialog({
-                    ...(isInsightWidget(widget) ? { insightRef: widget.insight } : {}),
+                    ...(widget?.ref ? { widgetRef: widget.ref } : {}),
                 }),
             ),
         [dispatch, isScheduledEmailingEnabled],
@@ -78,7 +78,7 @@ export const useDashboardScheduledEmails = ({ onReload }: { onReload?: () => voi
             isScheduledEmailingEnabled &&
             dispatch(
                 uiActions.openScheduleEmailManagementDialog({
-                    ...(isInsightWidget(widget) ? { insightRef: widget.insight } : {}),
+                    ...(widget?.ref ? { widgetRef: widget.ref } : {}),
                 }),
             ),
         [dispatch, isScheduledEmailingEnabled],

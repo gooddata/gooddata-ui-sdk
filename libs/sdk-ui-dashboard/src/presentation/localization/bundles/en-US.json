@@ -553,6 +553,16 @@
         "comment": "",
         "limit": 0
     },
+    "dialogs.schedule.management.attachments.xlsx.settings": {
+        "value": "XLSX options",
+        "comment": "Do not translate format 'XLSX'",
+        "limit": 0
+    },
+    "dialogs.schedule.management.attachments.cells.merged": {
+        "value": "Keep attribute cells merged",
+        "comment": "Label of a checkbox field",
+        "limit": 0
+    },
     "dialogs.schedule.management.attachments.filters.title": {
         "value": "Dashboard filters",
         "comment": "Title of dropdown for selected type of dashboard filters for attachment",

@@ -4757,7 +4757,7 @@ export interface IScheduledEmailDialogProps {
 // @internal (undocumented)
 export interface IScheduledEmailDialogPropsContext {
     // (undocumented)
-    insightRef?: ObjRef | undefined;
+    widgetRef?: ObjRef | undefined;
 }
 
 // @alpha (undocumented)
@@ -4777,13 +4777,12 @@ export interface IScheduledEmailManagementDialogProps {
 
 // @internal (undocumented)
 export interface IScheduleEmailContext {
-    insightRef?: ObjRef | undefined;
+    widgetRef?: ObjRef | undefined;
 }
 
 // @internal (undocumented)
 export interface IScheduleEmailDialogContext {
-    // (undocumented)
-    insightRef?: ObjRef | undefined;
+    widgetRef?: ObjRef | undefined;
 }
 
 // @internal

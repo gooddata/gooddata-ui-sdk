@@ -891,6 +891,7 @@ export {
     IExportDefinitionRequestPayload,
     IExportDefinitionBase,
     IExportDefinitionPdfOptions,
+    IExportDefinitionSettings,
     exportDefinitionTitle,
     exportDefinitionCreated,
     exportDefinitionUpdated,

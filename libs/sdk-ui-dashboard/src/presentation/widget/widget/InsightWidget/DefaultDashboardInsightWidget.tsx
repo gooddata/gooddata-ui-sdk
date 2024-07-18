@@ -70,8 +70,8 @@ const DefaultDashboardInsightWidgetCore: React.FC<
     const { onScheduleEmailingOpen, onScheduleEmailingManagementOpen } = useDashboardScheduledEmails();
 
     const onScheduleExport = useCallback(() => {
-        onScheduleEmailingOpen();
-    }, [onScheduleEmailingOpen]);
+        onScheduleEmailingOpen(widget);
+    }, [onScheduleEmailingOpen, widget]);
 
     const onScheduleManagementExport = useCallback(() => {
         onScheduleEmailingManagementOpen(widget);
