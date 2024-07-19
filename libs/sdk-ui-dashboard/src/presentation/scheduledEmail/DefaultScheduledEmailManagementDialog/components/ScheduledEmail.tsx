@@ -6,7 +6,8 @@ import cx from "classnames";
 import { IAutomationMetadataObject, IWebhookMetadataObject } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, Icon, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
-import { gdColorDisabled } from "../../../constants/colors.js";
+import { gdColorStateBlank } from "../../../constants/colors.js";
+import { isDashboardAutomation } from "../../DefaultScheduledEmailDialog/utils/automationHelpers.js";
 
 interface IScheduledEmailProps {
     onDelete: (scheduledEmail: IAutomationMetadataObject) => void;
@@ -33,6 +34,8 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
     const cronDescription = scheduledEmail.schedule?.cronDescription;
     const webhookTitle = webhooks.find((webhook) => webhook.id === scheduledEmail.webhook)?.name;
     const dashboardTitle = scheduledEmail.exportDefinitions?.[0]?.title;
+    const isDashboard = isDashboardAutomation(scheduledEmail);
+    const IconComponent = isDashboard ? Icon.Website : Icon.Widget;
 
     const subtitle = [cronDescription, webhookTitle, dashboardTitle].filter(Boolean).join(" • ");
 
@@ -55,8 +58,8 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
             </div>
             <div className="gd-scheduled-email-content" onClick={handleClick}>
                 <div className="gd-scheduled-email-icon">
-                    <Icon.Schedule
-                        color={theme?.palette?.complementary?.c5 ?? gdColorDisabled}
+                    <IconComponent
+                        color={theme?.palette?.complementary?.c6 ?? gdColorStateBlank}
                         width={14}
                         height={14}
                     />
