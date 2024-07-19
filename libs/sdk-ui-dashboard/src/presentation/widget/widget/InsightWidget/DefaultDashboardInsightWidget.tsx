@@ -55,7 +55,8 @@ const DefaultDashboardInsightWidgetCore: React.FC<
     /**
      * We want to hide scheduling when there are no webhooks unless the user is admin.
      */
-    const isScheduleExportVisible = numberOfAvailableWebhooks > 0 || isWorkspaceManager;
+    const isScheduleExportVisible =
+        isScheduledEmailingEnabled && (numberOfAvailableWebhooks > 0 || isWorkspaceManager);
     const isScheduleExportManagementVisible = isScheduleExportVisible && automations.length > 0;
 
     const visType = insightVisualizationType(insight) as VisType;
