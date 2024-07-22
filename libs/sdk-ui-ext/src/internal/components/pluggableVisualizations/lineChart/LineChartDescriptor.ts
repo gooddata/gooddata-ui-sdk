@@ -41,12 +41,14 @@ export class LineChartDescriptor extends BaseChartDescriptor implements IVisuali
         source: IInsight,
         drillDownContext: IDrillDownContext,
         backendSupportsElementUris: boolean,
+        enableDuplicatedLabelValuesInAttributeFilter: boolean,
     ): IInsight {
         const withFilters = this.addFilters(
             source,
             drillDownContext.drillDefinition,
             drillDownContext.event,
             backendSupportsElementUris,
+            enableDuplicatedLabelValuesInAttributeFilter,
         );
         return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
@@ -84,8 +86,14 @@ export class LineChartDescriptor extends BaseChartDescriptor implements IVisuali
         drillConfig: IDrillDownDefinition,
         event: IDrillEvent,
         backendSupportsElementUris: boolean,
+        enableDuplicatedLabelValuesInAttributeFilter: boolean,
     ) {
         const cutIntersection = reverseAndTrimIntersection(drillConfig, event.drillContext.intersection);
-        return addIntersectionFiltersToInsight(source, cutIntersection, backendSupportsElementUris);
+        return addIntersectionFiltersToInsight(
+            source,
+            cutIntersection,
+            backendSupportsElementUris,
+            enableDuplicatedLabelValuesInAttributeFilter,
+        );
     }
 }

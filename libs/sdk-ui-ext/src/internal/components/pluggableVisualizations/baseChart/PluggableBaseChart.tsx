@@ -167,7 +167,12 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         backendSupportsElementUris: boolean,
     ): IInsight {
         const intersection = drillDownContext.event.drillContext.intersection;
-        const withFilters = addIntersectionFiltersToInsight(source, intersection, backendSupportsElementUris);
+        const withFilters = addIntersectionFiltersToInsight(
+            source,
+            intersection,
+            backendSupportsElementUris,
+            this.featureFlags.enableDuplicatedLabelValuesInAttributeFilter,
+        );
         return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
 
