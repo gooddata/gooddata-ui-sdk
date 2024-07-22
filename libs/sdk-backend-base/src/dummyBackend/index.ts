@@ -73,6 +73,7 @@ import {
     IClusteringConfig,
     IWorkspaceAutomationService,
     IGenAIService,
+    ISemanticSearchQuery,
     IGetAutomationOptions,
     IGetAutomationsOptions,
     IAutomationsQuery,
@@ -122,6 +123,7 @@ import {
     IAbsoluteDateFilter,
     IWebhookMetadataObjectDefinition,
     IWebhookMetadataObject,
+    GenAISemanticSearchType,
     IAutomationMetadataObjectDefinition,
     IAutomationMetadataObject,
 } from "@gooddata/sdk-model";
@@ -373,7 +375,14 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
             return new DummyWorkspaceAutomationService(workspace);
         },
         genAI(): IGenAIService {
-            throw new NotSupported("not supported");
+            return {
+                getSemanticSearchQuery(): ISemanticSearchQuery {
+                    return new DummySemanticSearchQueryBuilder();
+                },
+                async semanticSearchIndex(): Promise<void> {
+                    throw new NotSupported("not supported");
+                },
+            };
         },
     };
 }
@@ -1113,6 +1122,57 @@ class DummyWorkspaceMeasuresService implements IWorkspaceMeasuresService {
         return Promise.resolve({ ...measure });
     }
 }
+
+/**
+ * Dummy query builder for semantic search testing
+ * @internal
+ */
+export class DummySemanticSearchQueryBuilder implements ISemanticSearchQuery {
+    question = "";
+    withQuestion(question: string) {
+        this.question = question;
+        return this;
+    }
+    withLimit() {
+        return this;
+    }
+    withObjectTypes() {
+        return this;
+    }
+    withDeepSearch() {
+        return this;
+    }
+    async query({ signal }: { signal?: AbortSignal } = {}) {
+        await cancellableTimeout(100, signal);
+        return {
+            results: [
+                "dataset",
+                "attribute",
+                "label",
+                "fact",
+                "date",
+                "metric",
+                "visualization",
+                "dashboard",
+            ].map((type) => ({
+                id: type,
+                type: type as GenAISemanticSearchType,
+                title: `${type} title`,
+                description: this.question,
+            })),
+        };
+    }
+}
+
+const cancellableTimeout = async (ms: number, signal?: AbortSignal) => {
+    return new Promise((res, rej) => {
+        if (signal?.aborted) {
+            rej(signal.reason);
+        }
+        signal?.addEventListener("abort", () => rej(signal.reason));
+        setTimeout(res, ms);
+    });
+};
 
 class DummyWorkspaceAutomationService implements IWorkspaceAutomationService {
     constructor(public readonly workspace: string) {}

@@ -3902,6 +3902,12 @@ importers:
       '@gooddata/sdk-ui':
         specifier: workspace:*
         version: link:../sdk-ui
+      '@gooddata/sdk-ui-kit':
+        specifier: workspace:*
+        version: link:../sdk-ui-kit
+      classnames:
+        specifier: ^2.3.1
+        version: 2.3.2
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -3915,6 +3921,9 @@ importers:
       '@gooddata/eslint-config':
         specifier: ^4.1.0
         version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+      '@gooddata/sdk-backend-mockingbird':
+        specifier: workspace:*
+        version: link:../sdk-backend-mockingbird
       '@microsoft/api-documenter':
         specifier: ^7.17.0
         version: 7.23.14(@types/node@18.19.3)
@@ -3993,12 +4002,27 @@ importers:
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
+      sass:
+        specifier: ^1.52.3
+        version: 1.69.5
+      stylelint:
+        specifier: ^13.8.0
+        version: 13.13.1
+      stylelint-checkstyle-formatter:
+        specifier: ^0.1.2
+        version: 0.1.2
+      stylelint-config-prettier:
+        specifier: ^8.0.2
+        version: 8.0.2(stylelint@13.13.1)
       typescript:
         specifier: 5.3.3
         version: 5.3.3
       vitest:
         specifier: 1.0.4
         version: 1.0.4(@types/node@18.19.3)(jsdom@22.1.0)(sass@1.69.5)
+      vitest-dom:
+        specifier: 0.1.1
+        version: 0.1.1(vitest@1.0.4)
 
   ../../libs/sdk-ui-tests:
     devDependencies:
@@ -4065,6 +4089,9 @@ importers:
       '@gooddata/sdk-ui-pivot':
         specifier: workspace:*
         version: link:../sdk-ui-pivot
+      '@gooddata/sdk-ui-semantic-search':
+        specifier: workspace:*
+        version: link:../sdk-ui-semantic-search
       '@gooddata/sdk-ui-theme-provider':
         specifier: workspace:*
         version: link:../sdk-ui-theme-provider
@@ -12180,7 +12207,7 @@ packages:
     hasBin: true
     dependencies:
       browserslist: 4.23.1
-      caniuse-lite: 1.0.30001570
+      caniuse-lite: 1.0.30001632
       normalize-range: 0.1.2
       num2fraction: 1.2.2
       picocolors: 0.2.1
@@ -12781,10 +12808,6 @@ packages:
   /camelcase@6.3.0:
     resolution: {integrity: sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==}
     engines: {node: '>=10'}
-    dev: true
-
-  /caniuse-lite@1.0.30001570:
-    resolution: {integrity: sha512-+3e0ASu4sw1SWaoCtvPeyXp+5PsjigkSt8OXZbF9StH5pQWbxEjLAZE3n8Aup5udop1uRiKA7a4utUk/uoSpUw==}
     dev: true
 
   /caniuse-lite@1.0.30001632:

@@ -64,6 +64,7 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "^4.1.0",
+        "@gooddata/sdk-backend-mockingbird": "workspace:*",
         "@microsoft/api-documenter": "^7.17.0",
         "@microsoft/api-extractor": "^7.36.0",
         "@testing-library/react": "^14.0.0",
@@ -92,6 +93,7 @@
         "react-dom": "^18.2.0",
         "typescript": "5.3.3",
         "vitest": "1.0.4",
+        "vitest-dom": "0.1.1",
         "sass": "^1.52.3",
         "stylelint": "^13.8.0",
         "stylelint-checkstyle-formatter": "^0.1.2",
