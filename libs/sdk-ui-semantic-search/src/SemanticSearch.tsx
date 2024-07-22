@@ -39,7 +39,7 @@ const SemanticSearchCore: React.FC<SemanticSearchCoreProps> = ({
     workspace,
     onSelect,
     onError,
-    objectTypes = [],
+    objectTypes,
     deepSearch = false,
     limit = 10,
     className,

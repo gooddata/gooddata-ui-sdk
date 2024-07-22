@@ -1,9 +1,9 @@
 // (C) 2024 GoodData Corporation
 
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { act, renderHook, waitFor } from "@testing-library/react";
+import { act, renderHook } from "@testing-library/react";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { useSemanticSearch } from "../useSemanticSearch";
+import { useSemanticSearch } from "../useSemanticSearch.js";
 
 const backend = dummyBackend();
 

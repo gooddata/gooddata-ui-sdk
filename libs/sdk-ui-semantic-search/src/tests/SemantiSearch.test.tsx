@@ -2,9 +2,9 @@
 
 import * as React from "react";
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import { render, fireEvent, act, waitFor } from "@testing-library/react";
+import { render, fireEvent, act } from "@testing-library/react";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { SemanticSearch } from "../SemanticSearch";
+import { SemanticSearch } from "../SemanticSearch.js";
 
 const backend = dummyBackend();
 

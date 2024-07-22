@@ -67,6 +67,8 @@ export type SemanticSearchHookInput = {
     workspace?: string;
 };
 
+const DEFAULT_OBJECT_TYPES: GenAISemanticSearchType[] = [];
+
 /**
  * Hook to perform semantic search.
  * Makes the request to server and returns the search results.
@@ -75,7 +77,7 @@ export type SemanticSearchHookInput = {
  */
 export const useSemanticSearch = ({
     searchTerm,
-    objectTypes = [],
+    objectTypes = DEFAULT_OBJECT_TYPES,
     deepSearch,
     limit,
     backend,
@@ -140,7 +142,7 @@ export const useSemanticSearch = ({
         return () => {
             searchController.abort();
         };
-    }, [searchTerm, ...objectTypes, deepSearch, limit]);
+    }, [effectiveBackend, effectiveWorkspace, searchTerm, objectTypes, deepSearch, limit]);
 
     return state;
 };

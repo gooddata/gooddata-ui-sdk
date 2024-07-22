@@ -4,7 +4,7 @@
     "operationSettings": [
         {
             "operationName": "build",
-            "outputFolderNames": ["esm"]
+            "outputFolderNames": ["esm", "styles/css"]
         }
     ]
 }

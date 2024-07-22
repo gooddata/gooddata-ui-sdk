@@ -13,8 +13,7 @@
     "browser": "./esm/index.js",
     "exports": {
         ".": "./esm/index.js",
-        "./styles/css/*": "./styles/css/*",
-        "./internal": "./esm/internal.js"
+        "./styles/css/*": "./styles/css/*"
     },
     "types": "./esm/index.d.ts",
     "sideEffects": [
@@ -30,7 +29,7 @@
         "styles"
     ],
     "config": {
-        "eslint": "-c .eslintrc.js --ext ts,tsx src/"
+        "eslint": "-c .eslintrc.cjs --ext ts,tsx src/"
     },
     "scripts": {
         "clean": "rm -rf ci dist esm coverage *.log styles/css tsconfig.tsbuildinfo",
@@ -43,8 +42,8 @@
         "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml $npm_package_config_eslint",
         "prettier-check": "prettier --check '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
-        "dep-cruiser": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
-        "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.js --output-type err-long src/",
+        "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
+        "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check",
         "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run prettier-check"
     },
@@ -79,6 +78,7 @@
         "eslint": "^8.25.0",
         "eslint-plugin-header": "^3.0.0",
         "eslint-plugin-import": "^2.22.0",
+        "eslint-plugin-import-esm": "^1.2.1",
         "eslint-plugin-jest": "^27.1.1",
         "eslint-plugin-no-only-tests": "^2.4.0",
         "eslint-plugin-prettier": "^4.0.0",
