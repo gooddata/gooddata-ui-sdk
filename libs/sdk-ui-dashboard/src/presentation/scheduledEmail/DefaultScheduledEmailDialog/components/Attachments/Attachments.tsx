@@ -66,8 +66,10 @@ export const Attachments = (props: IAttachmentsProps) => {
          */
         !isEditing || dashboardEditFilters ? "edited" : "default",
     );
-    const showAttachmentFilters = isEditing || (areFiltersChanged && dashboardSelected);
-    const disableDropdown = isEditing && attachmentFilterType === "default";
+    const attachmentSelected = dashboardSelected || csvSelected || xlsxSelected;
+    const showAttachmentFilters = isEditing
+        ? attachmentFilterType !== "default"
+        : areFiltersChanged && attachmentSelected;
     const includeFilters = attachmentFilterType === "edited" && areFiltersChanged;
 
     const handleAttachmentFilterTypeChange = (type: AttachmentFilterType) => {
@@ -124,7 +126,6 @@ export const Attachments = (props: IAttachmentsProps) => {
                     onChange={handleAttachmentFilterTypeChange}
                     hidden={!showAttachmentFilters}
                     disabled={isEditing}
-                    useDropdown={!disableDropdown}
                     filters={filtersToDisplayInfo}
                 />
                 {isCrossFiltering && props.dashboardSelected ? (
