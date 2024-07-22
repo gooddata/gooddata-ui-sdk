@@ -598,6 +598,11 @@
         "comment": "Attachment filters type tooltip",
         "limit": 0
     },
+    "dialogs.schedule.management.attachments.filters.item.tooltip.disabled": {
+        "value": "To schedule an export with default filters, create a new scheduled export.",
+        "comment": "Attachment filters type tooltip when filter option is disabled",
+        "limit": 0
+    },
     "dialogs.schedule.management.attachments.message": {
         "value": "<strong>Note</strong>. Cross-filtering will not be applied in the scheduled export.",
         "comment": "Message about used filters. Do not translate HTML tags.",

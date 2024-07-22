@@ -71,6 +71,12 @@ export const AttachmentFilters: React.FC<IAttachmentFiltersProps> = (props) => {
     const handleTypeChange = (type: AttachmentFilterType) => {
         !disabled && setSelectedType(type);
     };
+    const isDefaultDisabled = selectedType !== "default" && disabled;
+    const defaultFiltersTooltipMessage = isDefaultDisabled
+        ? defineMessage({
+              id: "dialogs.schedule.management.attachments.filters.item.tooltip.disabled",
+          })
+        : defineMessage({ id: "dialogs.schedule.management.attachments.filters.item.tooltip" });
 
     if (hidden) {
         return null;
@@ -124,14 +130,14 @@ export const AttachmentFilters: React.FC<IAttachmentFiltersProps> = (props) => {
                                     name="filterType"
                                     onChange={() => handleTypeChange("default")}
                                     checked={selectedType === "default"}
-                                    disabled={selectedType !== "default" && disabled}
+                                    disabled={isDefaultDisabled}
                                 />
                                 <span className="input-label-text">
                                     <FormattedMessage id="dialogs.schedule.management.attachments.filters.item.default" />
                                     <BubbleHoverTrigger>
                                         <span className="gd-icon-circle-question" />
                                         <Bubble alignPoints={TOOLTIP_ALIGN_POINTS}>
-                                            <FormattedMessage id="dialogs.schedule.management.attachments.filters.item.tooltip" />
+                                            <FormattedMessage id={defaultFiltersTooltipMessage.id} />
                                         </Bubble>
                                     </BubbleHoverTrigger>
                                 </span>
