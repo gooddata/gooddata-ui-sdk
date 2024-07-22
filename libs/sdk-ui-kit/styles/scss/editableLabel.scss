@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 @use "EditableLabel/_mixins" as form-mixins;
 @use "mixins";
 
@@ -11,6 +11,10 @@ $editable-label-border: #b1c1d1;
     vertical-align: inherit;
     background: transparent;
     resize: none;
+
+    &::placeholder {
+        color: var(--gd-palette-complementary-6, #94a1ad);
+    }
 }
 
 .editable-label {
