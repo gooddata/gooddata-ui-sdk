@@ -180,7 +180,7 @@
     },
     {
       "name": "@gooddata/sdk-ui-semantic-search",
-      "allowedCategories": [ "examples" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "@gooddata/sdk-ui-theme-provider",

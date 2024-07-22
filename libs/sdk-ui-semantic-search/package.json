@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-semantic-search",
-    "version": "1.0.0",
+    "version": "10.7.0-alpha.1",
     "description": "GoodData SDK TypeScript & React skeleton",
     "repository": {
         "type": "git",
@@ -10,20 +10,18 @@
     "author": "GoodData Corporation",
     "license": "MIT",
     "type": "module",
-    "module": "esm/index.js",
-    "es2015": "esm/index.js",
-    "browser": "dist/index.js",
-    "typings": "esm/index.d.ts",
+    "browser": "./esm/index.js",
+    "exports": {
+        ".": "./esm/index.js",
+        "./styles/css/*": "./styles/css/*",
+        "./internal": "./esm/internal.js"
+    },
+    "types": "./esm/index.d.ts",
     "sideEffects": [
         "*.css",
         "*.svg"
     ],
     "files": [
-        "dist/**/*.js",
-        "dist/**/*.json",
-        "dist/**/*.d.ts",
-        "dist/**/*.map",
-        "dist/**/*.svg",
         "esm/**/*.js",
         "esm/**/*.json",
         "esm/**/*.d.ts",
@@ -37,7 +35,7 @@
     "scripts": {
         "clean": "rm -rf ci dist esm coverage *.log styles/css tsconfig.tsbuildinfo",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
-        "build": "tsc -p tsconfig.json && npm run api-extractor",
+        "build": "./scripts/build.sh",
         "test": "vitest watch",
         "test-once": "vitest run",
         "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml",
@@ -56,7 +54,9 @@
         "tslib": "^2.5.0",
         "@gooddata/sdk-model": "workspace:*",
         "@gooddata/sdk-ui": "workspace:*",
-        "@gooddata/sdk-backend-spi": "workspace:*"
+        "@gooddata/sdk-ui-kit": "workspace:*",
+        "@gooddata/sdk-backend-spi": "workspace:*",
+        "classnames": "^2.3.1"
     },
     "peerDependencies": {
         "react": "^16.10.0 || ^17.0.0 || ^18.0.0",
@@ -91,6 +91,10 @@
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "typescript": "5.3.3",
-        "vitest": "1.0.4"
+        "vitest": "1.0.4",
+        "sass": "^1.52.3",
+        "stylelint": "^13.8.0",
+        "stylelint-checkstyle-formatter": "^0.1.2",
+        "stylelint-config-prettier": "^8.0.2"
     }
 }

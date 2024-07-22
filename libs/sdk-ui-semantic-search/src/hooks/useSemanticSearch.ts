@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { ISemanticSearchResultItem, GenAISemanticSearchType } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 /**
  * The result of the semantic search hook.
@@ -23,10 +24,47 @@ export type SemanticSearchInputResult = {
     searchResults: ISemanticSearchResultItem[];
 };
 
+/**
+ * Default state of the semantic search hook.
+ */
 const DEFAULT_STATE: SemanticSearchInputResult = {
     searchLoading: false,
     searchError: "",
     searchResults: [],
+};
+
+/**
+ * Input parameters for the semantic search hook.
+ * @alpha
+ */
+export type SemanticSearchHookInput = {
+    /**
+     * The search term.
+     */
+    searchTerm: string;
+    /**
+     * The object types to search for.
+     */
+    objectTypes?: GenAISemanticSearchType[];
+    /**
+     * Whether to perform deep search.
+     * E.g. find dashboard if it contains matching insight.
+     */
+    deepSearch?: boolean;
+    /**
+     * The number of results to return.
+     */
+    limit?: number;
+    /**
+     * The backend to use for the search.
+     * If omitted, will be retrieved from the context.
+     */
+    backend?: IAnalyticalBackend;
+    /**
+     * The workspace to use for the search.
+     * If omitted, will be retrieved from the context.
+     */
+    workspace?: string;
 };
 
 /**
@@ -35,15 +73,17 @@ const DEFAULT_STATE: SemanticSearchInputResult = {
  * The request is cancellable and auto-updates when the search term changes.
  * @alpha
  */
-export const useSemanticSearch = (
-    searchTerm: string,
-    objectTypes: GenAISemanticSearchType[] = [],
-    deepSearch?: boolean,
-    limit?: number,
-): SemanticSearchInputResult => {
+export const useSemanticSearch = ({
+    searchTerm,
+    objectTypes = [],
+    deepSearch,
+    limit,
+    backend,
+    workspace,
+}: SemanticSearchHookInput): SemanticSearchInputResult => {
     const [state, setState] = useState<SemanticSearchInputResult>(DEFAULT_STATE);
-    const effectiveBackend = useBackendStrict();
-    const effectiveWorkspace = useWorkspaceStrict();
+    const effectiveBackend = useBackendStrict(backend);
+    const effectiveWorkspace = useWorkspaceStrict(workspace);
 
     useEffect(() => {
         if (searchTerm === "") {
@@ -63,7 +103,7 @@ export const useSemanticSearch = (
             .genAI()
             .getSemanticSearchQuery()
             .withQuestion(searchTerm);
-        if (objectTypes) {
+        if (objectTypes.length) {
             qb = qb.withObjectTypes(objectTypes);
         }
         if (deepSearch) {
@@ -105,6 +145,9 @@ export const useSemanticSearch = (
     return state;
 };
 
+/**
+ * Retrieve error message from the error object.
+ */
 const errorMessage = (e: unknown) => {
     if (e instanceof Error) {
         return e.message;

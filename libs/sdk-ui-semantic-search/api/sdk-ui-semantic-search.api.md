@@ -5,25 +5,48 @@
 ```ts
 
 import { GenAISemanticSearchType } from '@gooddata/sdk-model';
+import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { ISemanticSearchResultItem } from '@gooddata/sdk-model';
+import * as React_2 from 'react';
 
 // @alpha
-export type SemanticSearchInputResult = [
-/**
-* Flag indicating whether the search is in progress.
-*/
-boolean,
-/**
-* Error message if the search failed.
-*/
-string,
-/**
-* The search results.
-*/
-ISemanticSearchResultItem[]
-];
+export const SemanticSearch: React_2.FC<SemanticSearchProps>;
 
 // @alpha
-export const useSemanticSearch: (searchTerm: string, objectTypes?: GenAISemanticSearchType[], deepSearch?: boolean, limit?: number) => SemanticSearchInputResult;
+export type SemanticSearchCoreProps = {
+    backend?: IAnalyticalBackend;
+    workspace?: string;
+    onSelect: (item: ISemanticSearchResultItem) => void;
+    onError?: (errorMessage: string) => void;
+    className?: string;
+    objectTypes?: GenAISemanticSearchType[];
+    deepSearch?: boolean;
+    limit?: number;
+};
+
+// @alpha
+export type SemanticSearchHookInput = {
+    searchTerm: string;
+    objectTypes?: GenAISemanticSearchType[];
+    deepSearch?: boolean;
+    limit?: number;
+    backend?: IAnalyticalBackend;
+    workspace?: string;
+};
+
+// @alpha
+export type SemanticSearchInputResult = {
+    searchLoading: boolean;
+    searchError: string;
+    searchResults: ISemanticSearchResultItem[];
+};
+
+// @alpha
+export type SemanticSearchProps = SemanticSearchCoreProps & {
+    locale?: string;
+};
+
+// @alpha
+export const useSemanticSearch: ({ searchTerm, objectTypes, deepSearch, limit, backend, workspace, }: SemanticSearchHookInput) => SemanticSearchInputResult;
 
 ```
