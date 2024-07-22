@@ -22,9 +22,8 @@ const AttachmentItem: React.FC<{
     format: AttachmentType;
     checked: boolean;
     onChange: () => void;
-    children?: React.ReactNode;
     className?: string;
-}> = ({ format, checked, onChange, children, className }) => (
+}> = ({ format, checked, onChange, className }) => (
     <label className="gd-schedule-mail-attachment-checkbox input-checkbox-label">
         <input type="checkbox" className="input-checkbox" checked={checked} onChange={onChange} />
         <span className="input-label-text" />
@@ -33,23 +32,17 @@ const AttachmentItem: React.FC<{
             className={cx("gd-attachment-item", `s-attachment-item-${format.toLowerCase()}`, className)}
         >
             <span className="gd-attachment-item-format">{format}</span>
-            {children ? <span className="gd-attachment-item-name">{children}</span> : null}
         </div>
     </label>
 );
 
 export const AttachmentDashboard: React.FC<{
-    title: string;
     pdfSelected: boolean;
     onSelectionChange: () => void;
 }> = (props) => {
-    const { title, pdfSelected, onSelectionChange } = props;
+    const { pdfSelected, onSelectionChange } = props;
 
-    return (
-        <AttachmentItem format="PDF" checked={pdfSelected} onChange={onSelectionChange}>
-            <span className="shortened-name">{title}</span>
-        </AttachmentItem>
-    );
+    return <AttachmentItem format="PDF" checked={pdfSelected} onChange={onSelectionChange} />;
 };
 
 export const AttachmentWidgets: React.FC<{
@@ -65,13 +58,13 @@ export const AttachmentWidgets: React.FC<{
 
     return (
         <>
+            <AttachmentItem format="CSV" checked={csvSelected} onChange={() => onSelectionChange("CSV")} />
             <AttachmentItem
-                format="CSV"
-                checked={csvSelected}
-                onChange={() => onSelectionChange("CSV")}
-                className="gd-attachment-item-no-name"
+                format="XLSX"
+                checked={xlsxSelected}
+                onChange={() => onSelectionChange("XLSX")}
+                className="gd-attachment-item-format-with-configuration"
             />
-            <AttachmentItem format="XLSX" checked={xlsxSelected} onChange={() => onSelectionChange("XLSX")} />
             <Dropdown
                 alignPoints={DROPDOWN_ALIGN_POINTS}
                 renderButton={({ toggleDropdown }) => (

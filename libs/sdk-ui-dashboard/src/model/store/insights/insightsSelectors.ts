@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { insightsAdapter } from "./insightsEntityAdapter.js";
 import { DashboardSelector, DashboardState } from "../types.js";
 import { createSelector } from "@reduxjs/toolkit";
@@ -67,6 +67,7 @@ export const selectInsightByRef: (ref: ObjRef | undefined) => DashboardSelector<
 export const selectInsightByWidgetRef: (ref: ObjRef | undefined) => DashboardSelector<IInsight | undefined> =
     createMemoizedSelector((ref: ObjRef | undefined) => {
         return createSelector(selectWidgetByRef(ref), selectInsightsMap, (widget, insights) => {
-            return insights.get((widget as IInsightWidget)?.insight);
+            const ref = (widget as IInsightWidget)?.insight;
+            return ref && insights.get(ref);
         });
     });

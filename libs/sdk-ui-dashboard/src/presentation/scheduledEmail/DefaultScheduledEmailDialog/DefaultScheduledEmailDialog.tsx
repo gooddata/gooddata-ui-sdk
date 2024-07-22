@@ -105,7 +105,7 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
             }
 
             return false;
-        }) ?? true;
+        }) ?? false;
 
     const isCsvExportSelected =
         automation.exportDefinitions?.some((exportDefinition) => {
@@ -123,7 +123,7 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
             }
 
             return false;
-        }) ?? true;
+        }) ?? false;
 
     const settings = {
         mergeHeaders:

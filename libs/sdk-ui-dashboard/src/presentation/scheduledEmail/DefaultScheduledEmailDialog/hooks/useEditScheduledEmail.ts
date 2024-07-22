@@ -10,7 +10,6 @@ import {
     IFilter,
     isFilterContextItem,
     IExportDefinitionSettings,
-    isInsightWidget,
 } from "@gooddata/sdk-model";
 import parseISO from "date-fns/parseISO/index.js";
 import { getUserTimezone } from "../utils/timezone.js";
@@ -19,7 +18,7 @@ import {
     selectDashboardTitle,
     selectDashboardId,
     selectAnalyticalWidgetByRef,
-    selectInsightByRef,
+    selectInsightByWidgetRef,
 } from "../../../../model/index.js";
 import { Alignment, normalizeTime } from "@gooddata/sdk-ui-kit";
 import { IScheduledEmailDialogProps } from "../../types.js";
@@ -41,9 +40,8 @@ import { invariant } from "ts-invariant";
 export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
     const { editSchedule, webhooks, context } = props;
     const widget = useDashboardSelector(selectAnalyticalWidgetByRef(context?.widgetRef));
-    const insight = useDashboardSelector(
-        selectInsightByRef(isInsightWidget(widget) ? widget.insight : undefined),
-    );
+    const insight = useDashboardSelector(selectInsightByWidgetRef(widget?.ref));
+    const isWidget = !!widget && !!insight;
 
     const dashboardId = useDashboardSelector(selectDashboardId);
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
@@ -55,10 +53,10 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
     const [state, setState] = useState<IAutomationMetadataObject | IAutomationMetadataObjectDefinition>(
         editSchedule ??
             newAutomationMetadataObjectDefinition({
-                id: widget ? insight!.insight.identifier : dashboardId!,
-                title: widget ? widget.title : dashboardTitle,
+                id: isWidget ? insight.insight.identifier : dashboardId!,
+                title: isWidget ? widget.title : dashboardTitle,
                 filters: areFiltersChanged ? filtersToStore : undefined,
-                isWidget: !!widget,
+                isWidget,
                 webhook: webhooks[0]?.id,
             }),
     );
@@ -153,7 +151,7 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
         const exportDefinitionTypeGuard =
             format === "CSV" ? isCsvVisualizationExportDefinition : isXlsxVisualizationExportDefinition;
 
-        invariant(widget, "Widget is missing in scheduling dialog context.");
+        invariant(isWidget, "Widget or insight is missing in scheduling dialog context.");
 
         if (selected) {
             const transformedFilters = filters
@@ -161,7 +159,7 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
                 : undefined;
             const filtersObj = transformedFilters ? { filters: transformedFilters } : {};
             const newExportDefinition = newWidgetExportDefinitionMetadataObjectDefinition({
-                insightId: insight!.insight.identifier,
+                insightId: insight.insight.identifier,
                 widgetTitle: widget.title,
                 format,
                 ...filtersObj,

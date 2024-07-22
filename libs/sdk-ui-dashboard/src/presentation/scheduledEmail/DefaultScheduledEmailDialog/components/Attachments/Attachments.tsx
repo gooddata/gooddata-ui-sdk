@@ -13,7 +13,6 @@ import { useAttachmentDashboardFilters } from "../../hooks/useAttachmentDashboar
 import { getAutomationDashboardFilters } from "../../utils/automationHelpers.js";
 import { AttachmentDashboard, AttachmentWidgets } from "./AttachmentItems.js";
 import { WidgetAttachmentType } from "../../types.js";
-// import { WidgetAttachmentType } from "../../../types.js";
 
 export interface IAttachmentsProps {
     dashboardTitle: string;
@@ -37,7 +36,6 @@ export interface IAttachmentsProps {
 
 export const Attachments = (props: IAttachmentsProps) => {
     const {
-        dashboardTitle,
         dashboardSelected,
         csvSelected,
         xlsxSelected,
@@ -68,8 +66,10 @@ export const Attachments = (props: IAttachmentsProps) => {
          */
         !isEditing || dashboardEditFilters ? "edited" : "default",
     );
-    const showAttachmentFilters = isEditing || (areFiltersChanged && dashboardSelected);
-    const disableDropdown = isEditing && attachmentFilterType === "default";
+    const attachmentSelected = dashboardSelected || csvSelected || xlsxSelected;
+    const showAttachmentFilters = isEditing
+        ? attachmentFilterType !== "default"
+        : areFiltersChanged && attachmentSelected;
     const includeFilters = attachmentFilterType === "edited" && areFiltersChanged;
 
     const handleAttachmentFilterTypeChange = (type: AttachmentFilterType) => {
@@ -117,7 +117,6 @@ export const Attachments = (props: IAttachmentsProps) => {
                     />
                 ) : (
                     <AttachmentDashboard
-                        title={dashboardTitle}
                         pdfSelected={dashboardSelected}
                         onSelectionChange={handleDashboardAttachmentSelectionChange}
                     />
@@ -127,7 +126,6 @@ export const Attachments = (props: IAttachmentsProps) => {
                     onChange={handleAttachmentFilterTypeChange}
                     hidden={!showAttachmentFilters}
                     disabled={isEditing}
-                    useDropdown={!disableDropdown}
                     filters={filtersToDisplayInfo}
                 />
                 {isCrossFiltering && props.dashboardSelected ? (

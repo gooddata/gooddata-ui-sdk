@@ -47,10 +47,6 @@ interface IAttachmentFiltersProps {
      */
     disabled?: boolean;
     /**
-     * Determines whether dropdown is available or not
-     */
-    useDropdown?: boolean;
-    /**
      * Information about attachment filters
      */
     filters?: IAttachmentFilterInfo[];
@@ -68,18 +64,19 @@ const buttonTitle = {
 };
 
 export const AttachmentFilters: React.FC<IAttachmentFiltersProps> = (props) => {
-    const { filterType, onChange, hidden = false, disabled = false, useDropdown = true, filters } = props;
+    const { filterType, onChange, hidden = false, disabled = false, filters } = props;
     const [selectedType, setSelectedType] = useState<AttachmentFilterType>(filterType);
     const intl = useIntl();
 
     const handleTypeChange = (type: AttachmentFilterType) => {
         !disabled && setSelectedType(type);
     };
-
-    const filtersButtonValue = intl.formatMessage({ id: buttonTitle[filterType] });
-    const filtersUsingMessage = intl.formatMessage({
-        id: "dialogs.schedule.management.attachments.filters.using",
-    });
+    const isDefaultDisabled = selectedType !== "default" && disabled;
+    const defaultFiltersTooltipMessage = isDefaultDisabled
+        ? defineMessage({
+              id: "dialogs.schedule.management.attachments.filters.item.tooltip.disabled",
+          })
+        : defineMessage({ id: "dialogs.schedule.management.attachments.filters.item.tooltip" });
 
     if (hidden) {
         return null;
@@ -87,91 +84,85 @@ export const AttachmentFilters: React.FC<IAttachmentFiltersProps> = (props) => {
 
     return (
         <div>
-            {useDropdown ? (
-                <Dropdown
-                    alignPoints={DROPDOWN_ALIGN_POINTS}
-                    renderButton={({ toggleDropdown }) => (
-                        <div className="gd-attachment-filters-dropdown-button">
-                            {filtersUsingMessage}
-                            <Button
-                                className="gd-button-link-dimmed s-attachment-filters-dropdown-button"
-                                value={intl.formatMessage({ id: buttonTitle[filterType] })}
-                                onClick={toggleDropdown}
-                            />
-                        </div>
-                    )}
-                    renderBody={({ closeDropdown }) => (
-                        <div className="gd-attachment-filters-dropdown">
-                            <div className="gd-list-title">
-                                <FormattedMessage id="dialogs.schedule.management.attachments.filters.title" />
-                                <div className="gd-close-button">
-                                    <Button
-                                        className="gd-button-link gd-button-icon-only gd-icon-cross s-dialog-close-button"
-                                        value=""
-                                        onClick={closeDropdown}
-                                    />
-                                </div>
-                            </div>
-                            <div className="gd-attachment-filters-dropdown-content">
-                                <label className="input-radio-label">
-                                    <input
-                                        type="radio"
-                                        className="input-radio"
-                                        name="filterType"
-                                        onChange={() => handleTypeChange("edited")}
-                                        checked={selectedType === "edited"}
-                                        disabled={selectedType !== "edited" && disabled}
-                                    />
-                                    <span className="input-label-text">
-                                        <FormattedMessage id="dialogs.schedule.management.attachments.filters.item.edited" />
-                                    </span>
-                                </label>
-                                <AttachmentFiltersList filters={filters} />
-                                <label className="input-radio-label">
-                                    <input
-                                        type="radio"
-                                        className="input-radio"
-                                        name="filterType"
-                                        onChange={() => handleTypeChange("default")}
-                                        checked={selectedType === "default"}
-                                        disabled={selectedType !== "default" && disabled}
-                                    />
-                                    <span className="input-label-text">
-                                        <FormattedMessage id="dialogs.schedule.management.attachments.filters.item.default" />
-                                        <BubbleHoverTrigger>
-                                            <span className="gd-icon-circle-question" />
-                                            <Bubble alignPoints={TOOLTIP_ALIGN_POINTS}>
-                                                <FormattedMessage id="dialogs.schedule.management.attachments.filters.item.tooltip" />
-                                            </Bubble>
-                                        </BubbleHoverTrigger>
-                                    </span>
-                                </label>
-                            </div>
-                            <ContentDivider className="gd-divider-without-margin" />
-                            <div className="gd-attachment-filters-dropdown-footer">
+            <Dropdown
+                alignPoints={DROPDOWN_ALIGN_POINTS}
+                renderButton={({ toggleDropdown }) => (
+                    <div className="gd-attachment-filters-dropdown-button">
+                        <FormattedMessage id="dialogs.schedule.management.attachments.filters.using" />
+                        <Button
+                            className="gd-button-link-dimmed s-attachment-filters-dropdown-button"
+                            value={intl.formatMessage({ id: buttonTitle[filterType] })}
+                            onClick={toggleDropdown}
+                        />
+                    </div>
+                )}
+                renderBody={({ closeDropdown }) => (
+                    <div className="gd-attachment-filters-dropdown">
+                        <div className="gd-list-title">
+                            <FormattedMessage id="dialogs.schedule.management.attachments.filters.title" />
+                            <div className="gd-close-button">
                                 <Button
-                                    value={intl.formatMessage({ id: "cancel" })}
-                                    className="gd-button-secondary"
+                                    className="gd-button-link gd-button-icon-only gd-icon-cross s-dialog-close-button"
+                                    value=""
                                     onClick={closeDropdown}
                                 />
-                                <Button
-                                    value={intl.formatMessage({ id: "save" })}
-                                    className="gd-button-action"
-                                    onClick={() => {
-                                        onChange(selectedType);
-                                        closeDropdown();
-                                    }}
-                                    disabled={selectedType === filterType}
-                                />
                             </div>
                         </div>
-                    )}
-                />
-            ) : (
-                <span>
-                    {filtersUsingMessage}&nbsp;{filtersButtonValue}
-                </span>
-            )}
+                        <div className="gd-attachment-filters-dropdown-content">
+                            <label className="input-radio-label">
+                                <input
+                                    type="radio"
+                                    className="input-radio"
+                                    name="filterType"
+                                    onChange={() => handleTypeChange("edited")}
+                                    checked={selectedType === "edited"}
+                                    disabled={selectedType !== "edited" && disabled}
+                                />
+                                <span className="input-label-text">
+                                    <FormattedMessage id="dialogs.schedule.management.attachments.filters.item.edited" />
+                                </span>
+                            </label>
+                            <AttachmentFiltersList filters={filters} />
+                            <label className="input-radio-label">
+                                <input
+                                    type="radio"
+                                    className="input-radio"
+                                    name="filterType"
+                                    onChange={() => handleTypeChange("default")}
+                                    checked={selectedType === "default"}
+                                    disabled={isDefaultDisabled}
+                                />
+                                <span className="input-label-text">
+                                    <FormattedMessage id="dialogs.schedule.management.attachments.filters.item.default" />
+                                    <BubbleHoverTrigger>
+                                        <span className="gd-icon-circle-question" />
+                                        <Bubble alignPoints={TOOLTIP_ALIGN_POINTS}>
+                                            <FormattedMessage id={defaultFiltersTooltipMessage.id} />
+                                        </Bubble>
+                                    </BubbleHoverTrigger>
+                                </span>
+                            </label>
+                        </div>
+                        <ContentDivider className="gd-divider-without-margin" />
+                        <div className="gd-attachment-filters-dropdown-footer">
+                            <Button
+                                value={intl.formatMessage({ id: "cancel" })}
+                                className="gd-button-secondary"
+                                onClick={closeDropdown}
+                            />
+                            <Button
+                                value={intl.formatMessage({ id: "save" })}
+                                className="gd-button-action"
+                                onClick={() => {
+                                    onChange(selectedType);
+                                    closeDropdown();
+                                }}
+                                disabled={selectedType === filterType}
+                            />
+                        </div>
+                    </div>
+                )}
+            />
         </div>
     );
 };

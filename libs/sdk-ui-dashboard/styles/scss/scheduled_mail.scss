@@ -120,6 +120,7 @@ $min-content-height: 110px;
         display: flex;
         align-items: baseline;
         height: 28px;
+        color: kit-variables.$gd-color-link;
 
         .gd-button-link-dimmed {
             border: none;
@@ -142,38 +143,13 @@ $min-content-height: 110px;
             height: 24px;
             color: kit-variables.$gd-color-text;
             background: kit-variables.$gd-border-color;
-            border-radius: 3px 0 0 3px;
+            border-radius: 3px;
             text-transform: uppercase;
         }
 
-        &-name {
-            display: flex;
-            align-items: center;
-            flex-wrap: nowrap;
-            overflow: hidden;
-            height: 24px;
-            color: kit-variables.$gd-color-text;
-            background: variables.$button-grey-background;
-            border-radius: 0 3px 3px 0;
-            padding-left: 7px;
-            padding-right: 7px;
-
-            .shortened-name {
-                text-overflow: ellipsis;
-                display: inline-block;
-                overflow: hidden;
-                white-space: nowrap;
-                vertical-align: middle;
-            }
-
-            & > span:nth-child(2) {
-                margin-left: 7px;
-            }
-        }
-
-        &-no-name {
+        &-format-with-configuration {
             > span {
-                border-radius: 3px;
+                border-radius: 3px 0 0 3px;
             }
         }
 
@@ -186,6 +162,7 @@ $min-content-height: 110px;
             padding-left: 7px;
             padding-right: 7px;
             margin-left: -10px;
+            margin-right: 10px;
             cursor: pointer;
 
             &::before {
@@ -222,16 +199,16 @@ $min-content-height: 110px;
         padding: 10px;
 
         > :first-child {
-            margin-bottom: 5px;
+            margin-bottom: 10px;
         }
 
         > :last-child {
-            margin-top: 5px;
+            margin-top: 10px;
         }
 
         .gd-icon-circle-question {
             position: relative;
-            top: 2px;
+            top: -1px;
             padding: 5px;
             color: kit-variables.$gd-color-state-blank;
         }
@@ -243,7 +220,7 @@ $min-content-height: 110px;
             border-left: 2px dotted kit-variables.$gd-border-color;
             padding: 0 10px;
             margin-left: 6px;
-            max-height: 190px;
+            max-height: 180px;
             overflow-y: auto;
             margin-right: -10px;
         }
@@ -673,6 +650,10 @@ $min-content-height: 110px;
     &.gd-editable-label.is-editing,
     &:hover {
         border-color: kit-variables.$gd-palette-primary-base;
+    }
+
+    &.placeholder {
+        color: kit-variables.$gd-color-state-blank;
     }
 
     &,
