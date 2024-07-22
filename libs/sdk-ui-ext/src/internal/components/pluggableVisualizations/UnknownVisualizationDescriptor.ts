@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { IInsight } from "@gooddata/sdk-model";
 import {
     IVisualizationDescriptor,
@@ -24,6 +24,7 @@ export class UnknownVisualizationDescriptor extends BaseChartDescriptor implemen
         insight: IInsight,
         _drillDownContext: IDrillDownContext,
         _backendSupportsElementUris: boolean,
+        _enableDuplicatedLabelValuesInAttributeFilter: boolean,
     ): IInsight {
         return insight;
     }

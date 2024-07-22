@@ -339,6 +339,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             drillDownInsight,
             drillDownContext.event.drillContext.intersection,
             backendSupportsElementUris,
+            this.settings?.enableDuplicatedLabelValuesInAttributeFilter,
         );
         return sanitizeTableProperties(insightSanitize(drillDownInsightWithFilters));
     }

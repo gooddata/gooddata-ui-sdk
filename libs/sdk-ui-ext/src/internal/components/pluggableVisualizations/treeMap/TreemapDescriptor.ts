@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { IInsight } from "@gooddata/sdk-model";
 import { BucketNames, IDrillEvent } from "@gooddata/sdk-ui";
 import { ITreemapProps } from "@gooddata/sdk-ui-charts";
@@ -35,12 +35,14 @@ export class TreemapDescriptor extends BigChartDescriptor {
         source: IInsight,
         drillDownContext: IDrillDownContext,
         backendSupportsElementUris: boolean,
+        enableDuplicatedLabelValuesInAttributeFilter: boolean,
     ): IInsight {
         const withFilters = this.addFilters(
             source,
             drillDownContext.drillDefinition,
             drillDownContext.event,
             backendSupportsElementUris,
+            enableDuplicatedLabelValuesInAttributeFilter,
         );
         return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
@@ -76,8 +78,14 @@ export class TreemapDescriptor extends BigChartDescriptor {
         drillConfig: IDrillDownDefinition,
         event: IDrillEvent,
         backendSupportsElementUris: boolean,
+        enableDuplicatedLabelValuesInAttributeFilter: boolean,
     ) {
         const cutIntersection = reverseAndTrimIntersection(drillConfig, event.drillContext.intersection);
-        return addIntersectionFiltersToInsight(source, cutIntersection, backendSupportsElementUris);
+        return addIntersectionFiltersToInsight(
+            source,
+            cutIntersection,
+            backendSupportsElementUris,
+            enableDuplicatedLabelValuesInAttributeFilter,
+        );
     }
 }

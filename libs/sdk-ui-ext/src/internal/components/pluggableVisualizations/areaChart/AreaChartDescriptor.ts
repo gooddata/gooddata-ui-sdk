@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { IInsight } from "@gooddata/sdk-model";
 import { BucketNames, IDrillEvent } from "@gooddata/sdk-ui";
 import { IAreaChartProps } from "@gooddata/sdk-ui-charts";
@@ -38,12 +38,14 @@ export class AreaChartDescriptor extends BigChartDescriptor implements IVisualiz
         insight: IInsight,
         drillDownContext: IDrillDownContext,
         backendSupportsElementUris: boolean,
+        enableDuplicatedLabelValuesInAttributeFilter: boolean,
     ): IInsight {
         const withFilters = this.addFilters(
             insight,
             drillDownContext.drillDefinition,
             drillDownContext.event,
             backendSupportsElementUris,
+            enableDuplicatedLabelValuesInAttributeFilter,
         );
         return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
@@ -80,8 +82,14 @@ export class AreaChartDescriptor extends BigChartDescriptor implements IVisualiz
         drillConfig: IDrillDownDefinition,
         event: IDrillEvent,
         backendSupportsElementUris: boolean,
+        enableDuplicatedLabelValuesInAttributeFilter: boolean,
     ) {
         const cutIntersection = reverseAndTrimIntersection(drillConfig, event.drillContext.intersection);
-        return addIntersectionFiltersToInsight(source, cutIntersection, backendSupportsElementUris);
+        return addIntersectionFiltersToInsight(
+            source,
+            cutIntersection,
+            backendSupportsElementUris,
+            enableDuplicatedLabelValuesInAttributeFilter,
+        );
     }
 }
