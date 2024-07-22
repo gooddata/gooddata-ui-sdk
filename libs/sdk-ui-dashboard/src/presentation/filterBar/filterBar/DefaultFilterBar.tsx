@@ -116,7 +116,7 @@ export const useFilterBarProps = (): IFilterBarProps => {
                 ),
             );
         },
-        [dispatch, supportElementUris],
+        [dispatch, supportElementUris, enableDuplicatedLabelValuesInAttributeFilter, filters],
     );
 
     const onDateFilterChanged = useCallback(
