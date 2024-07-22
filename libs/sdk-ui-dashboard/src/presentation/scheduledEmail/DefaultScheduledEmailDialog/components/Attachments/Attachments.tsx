@@ -13,7 +13,6 @@ import { useAttachmentDashboardFilters } from "../../hooks/useAttachmentDashboar
 import { getAutomationDashboardFilters } from "../../utils/automationHelpers.js";
 import { AttachmentDashboard, AttachmentWidgets } from "./AttachmentItems.js";
 import { WidgetAttachmentType } from "../../types.js";
-// import { WidgetAttachmentType } from "../../../types.js";
 
 export interface IAttachmentsProps {
     dashboardTitle: string;
@@ -37,7 +36,6 @@ export interface IAttachmentsProps {
 
 export const Attachments = (props: IAttachmentsProps) => {
     const {
-        dashboardTitle,
         dashboardSelected,
         csvSelected,
         xlsxSelected,
@@ -117,7 +115,6 @@ export const Attachments = (props: IAttachmentsProps) => {
                     />
                 ) : (
                     <AttachmentDashboard
-                        title={dashboardTitle}
                         pdfSelected={dashboardSelected}
                         onSelectionChange={handleDashboardAttachmentSelectionChange}
                     />

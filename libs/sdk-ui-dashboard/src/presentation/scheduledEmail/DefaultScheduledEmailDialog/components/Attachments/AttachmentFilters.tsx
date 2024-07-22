@@ -168,7 +168,7 @@ export const AttachmentFilters: React.FC<IAttachmentFiltersProps> = (props) => {
                     )}
                 />
             ) : (
-                <span>
+                <span className="gd-attachment-filters-dropdown-button">
                     {filtersUsingMessage}&nbsp;{filtersButtonValue}
                 </span>
             )}
