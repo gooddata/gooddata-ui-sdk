@@ -162,8 +162,6 @@ import { IDashboardDateFilterConfigItem } from '@gooddata/sdk-model';
 import { IDashboardDefinition } from '@gooddata/sdk-model';
 import { IDashboardDrillEvent as IDashboardDrillEvent_2 } from '../../../types.js';
 import { IDashboardFilterReference } from '@gooddata/sdk-model';
-import { IDashboardInsightMenuButtonProps as IDashboardInsightMenuButtonProps_2 } from '../types.js';
-import { IDashboardInsightMenuProps as IDashboardInsightMenuProps_2 } from '../types.js';
 import { IDashboardInsightProps as IDashboardInsightProps_2 } from './types.js';
 import { IDashboardKpiProps as IDashboardKpiProps_2 } from './types.js';
 import { IDashboardLayout } from '@gooddata/sdk-model';
@@ -3398,15 +3396,6 @@ export function getDefaultInsightMenuItems(intl: IntlShape, config: {
 }): IInsightMenuItem[];
 
 // @internal (undocumented)
-export function getDefaultLegacyInsightMenuItems(intl: IntlShape, config: {
-    exportXLSXDisabled: boolean;
-    exportCSVDisabled: boolean;
-    onExportXLSX: () => void;
-    onExportCSV: () => void;
-    isDataError: boolean;
-}): IInsightMenuItem[];
-
-// @internal (undocumented)
 export function getDrillDownAttributeTitle(localIdentifier: string, drillEvent: IDrillEvent): string | null;
 
 // @internal (undocumented)
@@ -4439,6 +4428,8 @@ export interface IMenuButtonItemButton extends IMenuItemCommonProps {
     // (undocumented)
     disabled?: boolean;
     // (undocumented)
+    icon?: string | ReactNode;
+    // (undocumented)
     itemName: string;
     // (undocumented)
     onClick?: () => void;
@@ -5378,12 +5369,6 @@ export interface LayoutState extends UndoEnhancedState<DashboardLayoutCommands> 
     // (undocumented)
     stash: LayoutStash;
 }
-
-// @internal (undocumented)
-export const LegacyDashboardInsightMenu: ComponentType<IDashboardInsightMenuProps_2 | (IDashboardInsightMenuProps_2 & RefAttributes<Component<IDashboardInsightMenuProps_2, any, any>>)>;
-
-// @internal (undocumented)
-export const LegacyDashboardInsightMenuButton: ComponentType<IDashboardInsightMenuButtonProps_2 | (IDashboardInsightMenuButtonProps_2 & RefAttributes<Component<IDashboardInsightMenuButtonProps_2, any, any>>)>;
 
 // @public (undocumented)
 export interface LegacyDashboardsState {

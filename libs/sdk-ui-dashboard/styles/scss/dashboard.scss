@@ -11,6 +11,8 @@
 @use "item-states";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
+$dashboard-menu-item-icon-color: var(--gd-palette-complementary-5, #b1c1d1);
+
 // this must be used on the body element in gdc-dashboards
 .gd-dashboards-root {
     flex-wrap: nowrap;
@@ -616,6 +618,7 @@
 
     &:hover,
     &.dash-item-action-widget-options-active {
+        background-color: var(--gd-palette-complementary-7, kit-variables.$gd-color-text-dimmed);
         &::before {
             color: kit-variables.$gd-color-white;
         }
@@ -709,4 +712,17 @@
 
 .gd-fluidlayout-column-container {
     z-index: 10;
+}
+
+.gd-header-menu-overlay {
+    .gd-menu-item {
+        //stylelint-disable-next-line declaration-no-important
+        padding: 5px 10px !important;
+
+        .gd-list-icon {
+            color: $dashboard-menu-item-icon-color;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+    }
 }

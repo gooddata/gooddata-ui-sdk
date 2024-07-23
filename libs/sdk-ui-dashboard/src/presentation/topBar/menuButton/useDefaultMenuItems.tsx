@@ -147,6 +147,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                         ? intl.formatMessage({ id: "options.menu.save.as.tooltip" })
                         : undefined,
                 onClick: defaultOnSaveAs,
+                icon: "gd-icon-save-as-new",
             },
             {
                 type: "separator",
@@ -160,6 +161,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                 itemName: intl.formatMessage({ id: "options.menu.export.PDF" }),
                 onClick: defaultOnExportToPdf,
                 visible: isPdfExportVisible,
+                icon: "gd-icon-download",
             },
             {
                 type: "separator",
@@ -188,6 +190,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                               },
                           )
                         : undefined,
+                icon: "gd-icon-clock",
             },
             {
                 type: "button",
@@ -195,6 +198,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                 itemName: intl.formatMessage({ id: "options.menu.schedule.email.edit" }),
                 onClick: defaultOnScheduleEmailingManagement,
                 visible: isScheduledManagementEmailingVisible,
+                icon: "gd-icon-list",
             },
             {
                 type: "separator",
@@ -210,6 +214,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                 onClick: openDeleteDialog,
                 visible: isDeleteVisible,
                 className: "delete-button",
+                icon: "gd-icon-trash",
             },
         ];
     }, [

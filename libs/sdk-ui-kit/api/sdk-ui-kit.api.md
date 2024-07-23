@@ -3809,7 +3809,7 @@ export interface ISingleSelectListItemProps {
     // (undocumented)
     hideDelayBubble?: number;
     // (undocumented)
-    icon?: string;
+    icon?: string | ReactNode;
     // (undocumented)
     info?: string | ReactNode;
     // (undocumented)

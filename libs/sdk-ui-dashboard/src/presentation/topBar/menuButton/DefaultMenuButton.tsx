@@ -87,6 +87,7 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
                                 })}
                                 key={menuItem.itemId}
                                 title={menuItem.itemName}
+                                icon={menuItem.icon}
                                 onClick={
                                     menuItem.disabled
                                         ? undefined
