@@ -245,6 +245,9 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     clusteringTitle: { id: "properties.clustering.title" },
     clusteringAmount: { id: "properties.clustering.amount" },
     clusteringAmountPlaceholder: { id: "properties.clustering.amount.placeholder" },
+    clusteringThreshold: { id: "properties.clustering.threshold" },
+    clusteringThresholdPlaceholder: { id: "properties.clustering.threshold.placeholder" },
+    clusteringThresholdTooltip: { id: "properties.clustering.threshold.tooltip" },
 });
 
 export const comparisonMessages: Record<string, MessageDescriptor> = defineMessages({

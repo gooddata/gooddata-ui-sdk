@@ -384,6 +384,7 @@ export interface ICancelable<T> {
 // @alpha (undocumented)
 export interface IClusteringConfig {
     numberOfClusters: number;
+    threshold?: number;
 }
 
 // @alpha (undocumented)
