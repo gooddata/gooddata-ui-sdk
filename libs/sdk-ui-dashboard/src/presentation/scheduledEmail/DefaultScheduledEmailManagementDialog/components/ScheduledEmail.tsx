@@ -35,7 +35,12 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
     const webhookTitle = webhooks.find((webhook) => webhook.id === scheduledEmail.webhook)?.name;
     const dashboardTitle = scheduledEmail.exportDefinitions?.[0]?.title;
     const isDashboard = isDashboardAutomation(scheduledEmail);
-    const IconComponent = isDashboard ? Icon.Dashboard : Icon.Insight;
+    const iconColor = theme?.palette?.complementary?.c6 ?? gdColorStateBlank;
+    const iconComponent = isDashboard ? (
+        <Icon.SimplifiedDashboard width={19} height={19} color={iconColor} />
+    ) : (
+        <Icon.Insight width={16} height={16} color={iconColor} />
+    );
 
     const subtitle = [cronDescription, webhookTitle, dashboardTitle].filter(Boolean).join(" • ");
 
@@ -57,13 +62,7 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
                 </BubbleHoverTrigger>
             </div>
             <div className="gd-scheduled-email-content" onClick={handleClick}>
-                <div className="gd-scheduled-email-icon">
-                    <IconComponent
-                        color={theme?.palette?.complementary?.c6 ?? gdColorStateBlank}
-                        width={14}
-                        height={14}
-                    />
-                </div>
+                <div className="gd-scheduled-email-icon">{iconComponent}</div>
                 <div className="gd-scheduled-email-text-content">
                     <div className="gd-scheduled-email-title">
                         <strong>

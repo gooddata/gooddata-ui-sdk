@@ -300,6 +300,9 @@ const IconsTest: React.FC<{ children?: React.ReactNode }> = () => {
                     <IconWrapper name="Widget">
                         <Icon.Widget color="#00f" />
                     </IconWrapper>
+                    <IconWrapper name="SimplifiedDashboard">
+                        <Icon.SimplifiedDashboard color="#00f" />
+                    </IconWrapper>
                 </ColumnWrapper>
             </RowWrapper>
         </div>
