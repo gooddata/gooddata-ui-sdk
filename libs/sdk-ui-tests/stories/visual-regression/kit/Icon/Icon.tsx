@@ -77,6 +77,24 @@ const InsightIconsTest: React.FC<{ children?: React.ReactNode }> = () => {
             <IconWrapper name="Pie">
                 <Icon.Pie color="#000" width={15} height={15} />
             </IconWrapper>
+            <IconWrapper name="Sankey">
+                <Icon.Sankey color="#000" width={15} height={15} />
+            </IconWrapper>
+            <IconWrapper name="DependencyWheel">
+                <Icon.DependencyWheel color="#000" width={15} height={15} />
+            </IconWrapper>
+            <IconWrapper name="Waterfall">
+                <Icon.Waterfall color="#000" width={15} height={15} />
+            </IconWrapper>
+            <IconWrapper name="Funnel">
+                <Icon.Funnel color="#000" width={15} height={15} />
+            </IconWrapper>
+            <IconWrapper name="Pyramid">
+                <Icon.Pyramid color="#000" width={15} height={15} />
+            </IconWrapper>
+            <IconWrapper name="Repeater">
+                <Icon.Repeater color="#000" width={15} height={15} />
+            </IconWrapper>
         </div>
     );
 };
@@ -87,90 +105,93 @@ const IconsTest: React.FC<{ children?: React.ReactNode }> = () => {
             <RowWrapper>
                 <ColumnWrapper>
                     <IconWrapper name="Refresh">
-                        <Icon.Refresh color="#f00" />
+                        <Icon.Refresh color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="DrillDown">
-                        <Icon.DrillDown color="#0f0" />
+                        <Icon.DrillDown color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="DrillToDashboard">
                         <Icon.DrillToDashboard color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="DrillToInsight">
-                        <Icon.DrillToInsight color="#f00" />
+                        <Icon.DrillToInsight color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="Date">
-                        <Icon.Date color="#0f0" />
+                        <Icon.Date color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="Explore">
                         <Icon.Explore color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="Logout">
-                        <Icon.Logout color="#f00" />
+                        <Icon.Logout color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="Pdf">
-                        <Icon.Pdf color="#0f0" />
+                        <Icon.Pdf color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="ExternalLink">
                         <Icon.ExternalLink color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="Hyperlink">
-                        <Icon.Hyperlink color="#f00" />
+                        <Icon.Hyperlink color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="Undo">
-                        <Icon.Undo color="#0f0" />
+                        <Icon.Undo color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="Home">
                         <Icon.Home color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="DragHandle">
-                        <Icon.DragHandle color="#f00" />
+                        <Icon.DragHandle color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="AttributeFilter">
-                        <Icon.AttributeFilter color="#0f0" />
+                        <Icon.AttributeFilter color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="Interaction">
                         <Icon.Interaction color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="Book">
-                        <Icon.Book color="#f00" />
+                        <Icon.Book color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="Lock">
-                        <Icon.Lock color="#0f0" />
+                        <Icon.Lock color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="Rows">
-                        <Icon.Rows colorPalette={{ normalRow: "#f00", totalRow: "#0f0" }} />
+                        <Icon.Rows colorPalette={{ normalRow: "#f00", totalRow: "#00f" }} />
                     </IconWrapper>
                     <IconWrapper name="Columns">
-                        <Icon.Columns colorPalette={{ normalColumn: "#f00", totalColumn: "#0f0" }} />
+                        <Icon.Columns colorPalette={{ normalColumn: "#f00", totalColumn: "#00f" }} />
                     </IconWrapper>
                     <IconWrapper name="ArrowDown">
-                        <Icon.ArrowDown color="#f00" />
+                        <Icon.ArrowDown color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="ArrowUp">
-                        <Icon.ArrowUp color="#f00" />
+                        <Icon.ArrowUp color="#00f" />
+                    </IconWrapper>
+                    <IconWrapper name="Contract">
+                        <Icon.Contract color="#00f" />
                     </IconWrapper>
                 </ColumnWrapper>
                 <ColumnWrapper>
                     <IconWrapper name="AttachmentClip">
-                        <Icon.AttachmentClip color="#0f0" />
+                        <Icon.AttachmentClip color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="Attribute">
                         <Icon.Attribute color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="BurgerMenu">
-                        <Icon.BurgerMenu color="#0f0" />
+                        <Icon.BurgerMenu color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="Close">
                         <Icon.Close color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="Dashboard">
-                        <Icon.Dashboard color="#f00" width={16} height={16} />
+                        <Icon.Dashboard color="#00f" width={16} height={16} />
                     </IconWrapper>
                     <IconWrapper name="Dataset">
-                        <Icon.Dataset color="#f00" />
+                        <Icon.Dataset color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="Expand">
-                        <Icon.Expand color="#f00" />
+                        <Icon.Expand color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="Fact">
                         <Icon.Fact color="#00f" />
@@ -179,13 +200,13 @@ const IconsTest: React.FC<{ children?: React.ReactNode }> = () => {
                         <Icon.Function color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="Insight">
-                        <Icon.Insight color="#0f0" />
+                        <Icon.Insight color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="Keyword">
-                        <Icon.Keyword color="#f00" />
+                        <Icon.Keyword color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="Label">
-                        <Icon.Label color="#f00" />
+                        <Icon.Label color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="LegendMenu">
                         <Icon.LegendMenu color="#00f" />
@@ -194,48 +215,90 @@ const IconsTest: React.FC<{ children?: React.ReactNode }> = () => {
                         <Icon.Many color="#00f" width={16} height={16} />
                     </IconWrapper>
                     <IconWrapper name="Metric">
-                        <Icon.Metric color="#f00" />
+                        <Icon.Metric color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="Minimize">
-                        <Icon.Minimize color="#0f0" />
+                        <Icon.Minimize color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="QuestionMark">
                         <Icon.QuestionMark color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="SettingsGear">
-                        <Icon.SettingsGear color="#f00" />
+                        <Icon.SettingsGear color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="EmbedCodeIcon">
-                        <Icon.EmbedCodeIcon color="#f00" />
+                        <Icon.EmbedCodeIcon color="#00f" />
+                    </IconWrapper>
+                    <IconWrapper name="BoldHyperlink">
+                        <Icon.BoldHyperlink color="#00f" />
+                    </IconWrapper>
+                    <IconWrapper name="Reset">
+                        <Icon.Reset color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="Error">
-                        <Icon.Error color="#f00" />
+                        <Icon.Error color="#00f" width={18} height={18} />
                     </IconWrapper>
                 </ColumnWrapper>
                 <ColumnWrapper>
                     <IconWrapper name="Aborted">
-                        <Icon.Aborted color="#0f0" />
+                        <Icon.Aborted color="#00f" width={18} height={18} />
                     </IconWrapper>
                     <IconWrapper name="Progress">
-                        <Icon.Progress color="#00f" />
+                        <Icon.Progress color="#00f" width={18} height={18} />
                     </IconWrapper>
                     <IconWrapper name="Success">
-                        <Icon.Success color="#00f" />
+                        <Icon.Success color="#00f" width={18} height={18} />
                     </IconWrapper>
                     <IconWrapper name="Origin">
-                        <Icon.Origin color="#f00" />
+                        <Icon.Origin color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="Token">
-                        <Icon.Token color="#0f0" />
+                        <Icon.Token color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="Leave">
                         <Icon.Leave color="#00f" width={18} height={18} />
                     </IconWrapper>
                     <IconWrapper name="Invite">
-                        <Icon.Invite color="#f00" />
+                        <Icon.Invite color="#00f" />
                     </IconWrapper>
                     <IconWrapper name="RichText">
-                        <Icon.RichText color="#ccc" />
+                        <Icon.RichText color="#00f" width={18} height={18} />
+                    </IconWrapper>
+                    <IconWrapper name="Copy">
+                        <Icon.Copy color="#00f" />
+                    </IconWrapper>
+                    <IconWrapper name="Run">
+                        <Icon.Run color="#00f" />
+                    </IconWrapper>
+                    <IconWrapper name="DataSource">
+                        <Icon.DataSource color="#00f" />
+                    </IconWrapper>
+                    <IconWrapper name="User">
+                        <Icon.User color="#00f" width={18} height={18} />
+                    </IconWrapper>
+                    <IconWrapper name="UserGroup">
+                        <Icon.UserGroup color="#00f" width={18} height={18} />
+                    </IconWrapper>
+                    <IconWrapper name="Image">
+                        <Icon.Image color="#00f" />
+                    </IconWrapper>
+                    <IconWrapper name="Hash">
+                        <Icon.Hash color="#00f" />
+                    </IconWrapper>
+                    <IconWrapper name="Magic">
+                        <Icon.Magic color="#00f" />
+                    </IconWrapper>
+                    <IconWrapper name="Webhook">
+                        <Icon.Webhook color="#00f" />
+                    </IconWrapper>
+                    <IconWrapper name="Schedule">
+                        <Icon.Schedule color="#00f" />
+                    </IconWrapper>
+                    <IconWrapper name="Website">
+                        <Icon.Website color="#00f" />
+                    </IconWrapper>
+                    <IconWrapper name="Widget">
+                        <Icon.Widget color="#00f" />
                     </IconWrapper>
                 </ColumnWrapper>
             </RowWrapper>
