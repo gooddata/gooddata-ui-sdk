@@ -19,6 +19,19 @@
         }
     }
 }
+.gd-single-selection-attribute-filter-elements-select-item {
+    .gd-item-title-tooltip-wrapper.gd-list-item-only {
+        margin-left: 5px;
+        flex-grow: 0;
+        &:hover {
+            text-decoration: none;
+        }
+
+        .gd-empty-list-item-tooltip {
+            color: var(--gd-palette-complementary-6, #94a1ad);
+        }
+    }
+}
 
 .gd-attribute-filter-elements-select-item__next {
     min-height: 28px;
@@ -32,9 +45,12 @@
         }
     }
 
-    .gd-item-title-tooltip-wrapper {
+    .gd-item-title-tooltip-wrapper.gd-list-item-only {
         margin-left: 5px;
         flex-grow: 0;
+        &:hover {
+            text-decoration: none;
+        }
 
         .gd-empty-list-item-tooltip {
             color: var(--gd-palette-complementary-6, #94a1ad);
