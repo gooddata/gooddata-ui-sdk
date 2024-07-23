@@ -12,7 +12,7 @@ import { DefaultUiSettings, DefaultUserSettings } from "../../uiSettings.js";
 import { unwrapSettingContent } from "../../../convertors/fromBackend/SettingsConverter.js";
 import { TigerSettingsService, mapTypeToKey } from "../../settings/index.js";
 import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "../constants.js";
-import { FeatureContext } from "@gooddata/api-client-tiger";
+import { FeatureContext, isLiveFeatures, isStaticFeatures } from "@gooddata/api-client-tiger";
 
 export class TigerWorkspaceSettings
     extends TigerSettingsService<IWorkspaceSettings>
@@ -146,41 +146,37 @@ export function getSettingsForCurrentUser(
 ): Promise<IUserWorkspaceSettings> {
     return authCall(async (client) => {
         const profile = await client.profile.getCurrent();
-
-        const [
-            {
-                data: {
-                    data: { meta: config, attributes: wsAttributes },
-                },
+        const {
+            data: {
+                data: { meta: config, attributes: wsAttributes },
             },
-            {
-                data: {
-                    data: { attributes: orgAttributes },
-                },
-            },
-        ] = await Promise.all([
-            client.entities.getEntityWorkspaces({
-                id: workspace,
-                ...GET_OPTIMIZED_WORKSPACE_PARAMS,
-            }),
-            client.entities.getEntityOrganizations({
-                id: profile.organizationId,
-            }),
-        ]);
+        } = await client.entities.getEntityWorkspaces({
+            id: workspace,
+            ...GET_OPTIMIZED_WORKSPACE_PARAMS,
+        });
 
         const resolvedSettings: ISettings = await resolveSettings(authCall, workspace);
 
         const context: Partial<FeatureContext> = {};
 
+        const staticFeaturesEarlyAccess = isStaticFeatures(profile.features)
+            ? profile.features?.static.context.earlyAccessValues
+            : [];
+
+        const liveFeaturesEarlyAccess = isLiveFeatures(profile.features)
+            ? profile.features?.live.context.earlyAccessValues
+            : [];
+
         if (profile?.organizationId) {
             context.organizationId = profile.organizationId;
         }
 
-        if (orgAttributes?.earlyAccessValues) {
-            context.earlyAccessValues = [
-                ...(context.earlyAccessValues || []),
-                ...orgAttributes.earlyAccessValues,
-            ];
+        if (staticFeaturesEarlyAccess.length > 0) {
+            context.earlyAccessValues = [...(context.earlyAccessValues || []), ...staticFeaturesEarlyAccess];
+        }
+
+        if (liveFeaturesEarlyAccess.length > 0) {
+            context.earlyAccessValues = [...(context.earlyAccessValues || []), ...liveFeaturesEarlyAccess];
         }
 
         if (wsAttributes?.earlyAccessValues) {

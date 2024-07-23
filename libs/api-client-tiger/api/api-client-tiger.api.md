@@ -7147,6 +7147,9 @@ function isFilterContext_2(filterContext: unknown): filterContext is IFilterCont
 // @public (undocumented)
 export function isFilterContextData(filterContext: unknown): filterContext is JsonApiFilterContextIn;
 
+// @internal (undocumented)
+export function isLiveFeatures(features: ILiveFeatures | IStaticFeatures | undefined): features is ILiveFeatures;
+
 // @public (undocumented)
 export function isResultAttributeHeader(header: ExecutionResultHeader): header is AttributeExecutionResultHeader;
 
@@ -7155,6 +7158,9 @@ export function isResultMeasureHeader(header: ExecutionResultHeader): header is 
 
 // @public (undocumented)
 export function isResultTotalHeader(header: ExecutionResultHeader): header is TotalExecutionResultHeader;
+
+// @internal (undocumented)
+export function isStaticFeatures(features: ILiveFeatures | IStaticFeatures | undefined): features is IStaticFeatures;
 
 // @public (undocumented)
 export interface IStaticFeatures {
