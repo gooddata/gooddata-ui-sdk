@@ -7,8 +7,8 @@ import {
     IExportDefinitionMetadataObject,
     IExportDefinitionMetadataObjectDefinition,
     IFilter,
-    isExportDefinitionDashboardContent,
-    isExportDefinitionVisualizationObjectContent,
+    isExportDefinitionDashboardRequestPayload,
+    isExportDefinitionVisualizationObjectRequestPayload,
     isFilter,
     isFilterContextItem,
 } from "@gooddata/sdk-model";
@@ -21,7 +21,7 @@ export const isDashboardAutomation = (
     }
 
     return automation.exportDefinitions?.some((exportDefinition) => {
-        return isExportDefinitionDashboardContent(exportDefinition.requestPayload.content);
+        return isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload);
     });
 };
 
@@ -33,7 +33,7 @@ export const isVisualisationAutomation = (
     }
 
     return automation.exportDefinitions?.some((exportDefinition) => {
-        return isExportDefinitionVisualizationObjectContent(exportDefinition.requestPayload.content);
+        return isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload);
     });
 };
 
@@ -55,7 +55,7 @@ export const isCsvVisualizationExportDefinition = (
     }
 
     return (
-        isExportDefinitionVisualizationObjectContent(exportDefinition.requestPayload.content) &&
+        isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload) &&
         exportDefinition.requestPayload.format === "CSV"
     );
 };
@@ -78,7 +78,7 @@ export const isXlsxVisualizationExportDefinition = (
     }
 
     return (
-        isExportDefinitionVisualizationObjectContent(exportDefinition.requestPayload.content) &&
+        isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload) &&
         exportDefinition.requestPayload.format === "XLSX"
     );
 };
@@ -92,7 +92,7 @@ export const getAutomationDashboardFilters = (
 
     return automation.exportDefinitions
         ?.find((exportDefinition) => {
-            return isExportDefinitionDashboardContent(exportDefinition.requestPayload.content);
+            return isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload);
         })
         ?.requestPayload?.content.filters?.filter(isFilterContextItem);
 };
@@ -106,7 +106,7 @@ export const getAutomationVisualizationFilters = (
 
     return automation.exportDefinitions
         ?.find((exportDefinition) => {
-            return isExportDefinitionVisualizationObjectContent(exportDefinition.requestPayload.content);
+            return isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload);
         })
         ?.requestPayload?.content.filters?.filter(isFilter);
 };

@@ -40,8 +40,8 @@ import isEqual from "lodash/isEqual.js";
 import {
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
-    isExportDefinitionDashboardContent,
-    isExportDefinitionVisualizationObjectContent,
+    isExportDefinitionDashboardRequestPayload,
+    isExportDefinitionVisualizationObjectRequestPayload,
 } from "@gooddata/sdk-model";
 import { getTimezoneByIdentifier, TIMEZONE_DEFAULT } from "./utils/timezone.js";
 import { DASHBOARD_TITLE_MAX_LENGTH } from "../../constants/index.js";
@@ -100,7 +100,7 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
 
     const isDashboardExportSelected =
         automation.exportDefinitions?.some((exportDefinition) => {
-            if (isExportDefinitionDashboardContent(exportDefinition.requestPayload.content)) {
+            if (isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload)) {
                 return exportDefinition.requestPayload.content.dashboard === dashboardId;
             }
 
@@ -109,7 +109,7 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
 
     const isCsvExportSelected =
         automation.exportDefinitions?.some((exportDefinition) => {
-            if (isExportDefinitionVisualizationObjectContent(exportDefinition.requestPayload.content)) {
+            if (isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload)) {
                 return exportDefinition.requestPayload.format === "CSV";
             }
 
@@ -118,7 +118,7 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
 
     const isXlsxExportSelected =
         automation.exportDefinitions?.some((exportDefinition) => {
-            if (isExportDefinitionVisualizationObjectContent(exportDefinition.requestPayload.content)) {
+            if (isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload)) {
                 return exportDefinition.requestPayload.format === "XLSX";
             }
 
@@ -128,7 +128,7 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
     const settings = {
         mergeHeaders:
             automation.exportDefinitions?.some((exportDefinition) => {
-                if (isExportDefinitionVisualizationObjectContent(exportDefinition.requestPayload.content)) {
+                if (isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload)) {
                     return exportDefinition.requestPayload.settings?.mergeHeaders;
                 }
 

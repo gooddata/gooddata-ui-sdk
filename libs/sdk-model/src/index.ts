@@ -888,19 +888,20 @@ export { DataSourceType, IDataSourceIdentifierDescriptor } from "./dataSources/i
 
 export {
     IExportDefinitionMetadataObject,
-    IExportDefinitionRequestPayload,
     IExportDefinitionBase,
-    IExportDefinitionPdfOptions,
-    IExportDefinitionSettings,
+    IExportDefinitionDashboardSettings,
+    IExportDefinitionDashboardRequestPayload,
+    IExportDefinitionVisualizationObjectSettings,
+    IExportDefinitionVisualizationObjectRequestPayload,
+    IExportDefinitionRequestPayload,
     exportDefinitionTitle,
     exportDefinitionCreated,
     exportDefinitionUpdated,
-    IExportDefinitionContent,
     IExportDefinitionDashboardContent,
     IExportDefinitionVisualizationObjectContent,
-    isExportDefinitionDashboardContent,
-    isExportDefinitionVisualizationObjectContent,
     IExportDefinitionMetadataObjectDefinition,
+    isExportDefinitionDashboardRequestPayload,
+    isExportDefinitionVisualizationObjectRequestPayload,
 } from "./exportDefinitions/index.js";
 
 export { IWorkspaceDataFilter, IWorkspaceDataFilterSetting } from "./dataFilter/index.js";

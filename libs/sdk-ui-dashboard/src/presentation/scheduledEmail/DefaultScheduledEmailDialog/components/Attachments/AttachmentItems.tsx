@@ -5,7 +5,7 @@ import cx from "classnames";
 import { Button, ContentDivider, Dropdown, IAlignPoint } from "@gooddata/sdk-ui-kit";
 import { AttachmentType, WidgetAttachmentType } from "../../types.js";
 import { FormattedMessage, useIntl } from "react-intl";
-import { IExportDefinitionSettings } from "@gooddata/sdk-model";
+import { IExportDefinitionVisualizationObjectSettings } from "@gooddata/sdk-model";
 
 const DROPDOWN_ALIGN_POINTS: IAlignPoint[] = [
     {
@@ -48,9 +48,9 @@ export const AttachmentDashboard: React.FC<{
 export const AttachmentWidgets: React.FC<{
     csvSelected: boolean;
     xlsxSelected: boolean;
-    settings: IExportDefinitionSettings;
+    settings: IExportDefinitionVisualizationObjectSettings;
     onSelectionChange: (format: WidgetAttachmentType) => void;
-    onSettingsChange: (obj: IExportDefinitionSettings) => void;
+    onSettingsChange: (obj: IExportDefinitionVisualizationObjectSettings) => void;
 }> = (props) => {
     const { csvSelected, xlsxSelected, settings, onSelectionChange, onSettingsChange } = props;
     const intl = useIntl();

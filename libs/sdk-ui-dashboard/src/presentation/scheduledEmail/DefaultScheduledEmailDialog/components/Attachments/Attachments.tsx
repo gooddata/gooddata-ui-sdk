@@ -4,7 +4,7 @@ import { FormattedMessage } from "react-intl";
 import {
     FilterContextItem,
     IAutomationMetadataObject,
-    IExportDefinitionSettings,
+    IExportDefinitionVisualizationObjectSettings,
     IWidget,
 } from "@gooddata/sdk-model";
 import { Message } from "@gooddata/sdk-ui-kit";
@@ -19,7 +19,7 @@ export interface IAttachmentsProps {
     dashboardSelected: boolean;
     csvSelected: boolean;
     xlsxSelected: boolean;
-    settings: IExportDefinitionSettings;
+    settings: IExportDefinitionVisualizationObjectSettings;
     onDashboardAttachmentsSelectionChange: (
         dashboardSelected: boolean,
         filters?: FilterContextItem[],
@@ -29,7 +29,7 @@ export interface IAttachmentsProps {
         format: WidgetAttachmentType,
         filters?: FilterContextItem[],
     ) => void;
-    onWidgetAttachmentsSettingsChange: (obj: IExportDefinitionSettings) => void;
+    onWidgetAttachmentsSettingsChange: (obj: IExportDefinitionVisualizationObjectSettings) => void;
     widget?: IWidget;
     editSchedule?: IAutomationMetadataObject;
 }
