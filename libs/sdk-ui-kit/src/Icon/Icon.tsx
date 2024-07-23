@@ -87,6 +87,7 @@ import { Webhook } from "./icons/Webhook.js";
 import { Schedule } from "./icons/Schedule.js";
 import { Website } from "./icons/Website.js";
 import { Widget } from "./icons/Widget.js";
+import { SimplifiedDashboard } from "./icons/SimplifiedDashboard.js";
 
 /**
  * @internal
@@ -177,6 +178,7 @@ export const Icon: Record<string, React.FC<IIconProps>> = {
     Schedule,
     Website,
     Widget,
+    SimplifiedDashboard,
 };
 
 export { IRowsIconProps, IColumnsIconProps };
