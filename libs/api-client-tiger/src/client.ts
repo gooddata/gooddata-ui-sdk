@@ -31,6 +31,8 @@ import {
     ILiveFeatures,
     IStaticFeatures,
     FeatureContext,
+    isLiveFeatures,
+    isStaticFeatures,
 } from "./profile.js";
 import {
     tigerExportClientFactory,
@@ -82,6 +84,8 @@ export {
     ILiveFeatures,
     IStaticFeatures,
     FeatureContext,
+    isLiveFeatures,
+    isStaticFeatures,
     ScanModelConfiguration,
     ScanModelConfigurationParameters,
     ScanModelBaseApi,
