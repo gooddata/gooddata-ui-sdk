@@ -23,7 +23,7 @@ export interface ILiveFeatures {
 export function isLiveFeatures(
     features: ILiveFeatures | IStaticFeatures | undefined,
 ): features is ILiveFeatures {
-    return (features as ILiveFeatures).live !== undefined;
+    return (features as ILiveFeatures)?.live !== undefined;
 }
 
 export interface IStaticFeatures {
@@ -39,7 +39,7 @@ export interface IStaticFeatures {
 export function isStaticFeatures(
     features: ILiveFeatures | IStaticFeatures | undefined,
 ): features is IStaticFeatures {
-    return (features as IStaticFeatures).static !== undefined;
+    return (features as IStaticFeatures)?.static !== undefined;
 }
 
 export interface IUserProfile {

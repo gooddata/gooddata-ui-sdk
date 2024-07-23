@@ -160,11 +160,11 @@ export function getSettingsForCurrentUser(
         const context: Partial<FeatureContext> = {};
 
         const staticFeaturesEarlyAccess = isStaticFeatures(profile.features)
-            ? profile.features?.static.context.earlyAccessValues
+            ? profile.features?.static?.context?.earlyAccessValues ?? []
             : [];
 
         const liveFeaturesEarlyAccess = isLiveFeatures(profile.features)
-            ? profile.features?.live.context.earlyAccessValues
+            ? profile.features?.live?.context?.earlyAccessValues ?? []
             : [];
 
         if (profile?.organizationId) {
