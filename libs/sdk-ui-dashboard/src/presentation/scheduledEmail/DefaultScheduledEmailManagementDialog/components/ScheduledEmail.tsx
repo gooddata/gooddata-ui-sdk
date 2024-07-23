@@ -35,7 +35,7 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
     const webhookTitle = webhooks.find((webhook) => webhook.id === scheduledEmail.webhook)?.name;
     const dashboardTitle = scheduledEmail.exportDefinitions?.[0]?.title;
     const isDashboard = isDashboardAutomation(scheduledEmail);
-    const IconComponent = isDashboard ? Icon.Website : Icon.Widget;
+    const IconComponent = isDashboard ? Icon.Dashboard : Icon.Insight;
 
     const subtitle = [cronDescription, webhookTitle, dashboardTitle].filter(Boolean).join(" • ");
 
