@@ -7,7 +7,14 @@ import { GenAISemanticSearchType, ISemanticSearchResultItem } from "@gooddata/sd
  * @alpha
  */
 export interface IGenAIService {
+    /**
+     * Get a semantic search query builder.
+     */
     getSemanticSearchQuery(): ISemanticSearchQuery;
+
+    /**
+     * Trigger a reindex of the semantic search index for the workspace.
+     */
     semanticSearchIndex(): Promise<void>;
 }
 
@@ -39,7 +46,7 @@ export interface ISemanticSearchQuery {
     /**
      * Execute the search.
      */
-    query(): Promise<ISemanticSearchResult>;
+    query(options?: { signal?: AbortSignal }): Promise<ISemanticSearchResult>;
 }
 
 /**

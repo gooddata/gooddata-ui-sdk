@@ -241,6 +241,13 @@
      */
     "projects": [
         {
+            "packageName": "@gooddata/sdk-ui-semantic-search",
+            "projectFolder": "libs/sdk-ui-semantic-search",
+            "reviewCategory": "production",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
+        },
+        {
             "packageName": "@gooddata/sdk-interactive-example-repeater",
             "projectFolder": "examples/sdk-interactive-examples/examples/example-repeater",
             "reviewCategory": "examples",

@@ -5,9 +5,21 @@
  * @alpha
  */
 export interface ISemanticSearchResultItem {
+    /**
+     * The type of the found metadata object
+     */
     type: GenAISemanticSearchType;
+    /**
+     * The identifier of the found metadata object
+     */
     id: string;
+    /**
+     * The title of the found metadata object
+     */
     title: string;
+    /**
+     * The description of the found metadata object
+     */
     description: string;
 }
 
@@ -16,12 +28,11 @@ export interface ISemanticSearchResultItem {
  * @alpha
  */
 export type GenAISemanticSearchType =
-    | "workspace"
     | "dataset"
     | "attribute"
     | "label"
     | "fact"
-    | "data"
+    | "date"
     | "metric"
     | "visualization"
     | "dashboard";

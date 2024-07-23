@@ -1,0 +1,49 @@
+// (C) 2024 GoodData Corporation
+
+@use "sass:color";
+@use "sass:meta";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.gd-semantic-search {
+    &__results-item {
+        $line-height: 45px;
+
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        cursor: pointer;
+        gap: 1em;
+        padding: 0 1em;
+        height: $line-height;
+
+        &--selected {
+            color: kit-variables.$is-focused-color;
+            background: kit-variables.$is-focused-background;
+        }
+
+        &__icon {
+            $icon_size: 16px;
+            width: $icon_size;
+            height: $icon_size;
+            display: flex;
+            align-items: center;
+
+            > svg {
+                // dashboard icon needs explicit size
+                width: $icon_size;
+                height: $icon_size;
+            }
+        }
+
+        &__text {
+            flex-grow: 1;
+            min-width: 0; // A hack to make ellipsis work in flexbox
+        }
+
+        &__text > p {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+}

@@ -179,6 +179,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "@gooddata/sdk-ui-semantic-search",
+      "allowedCategories": [ "examples", "production" ]
+    },
+    {
       "name": "@gooddata/sdk-ui-theme-provider",
       "allowedCategories": [ "examples", "production" ]
     },
@@ -249,6 +253,10 @@
     {
       "name": "@testing-library/react",
       "allowedCategories": [ "production", "tools" ]
+    },
+    {
+      "name": "@testing-library/react-hooks",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "@testing-library/user-event",

@@ -55,6 +55,9 @@ importers:
       '@gooddata/sdk-ui-pivot':
         specifier: workspace:*
         version: link:../../libs/sdk-ui-pivot
+      '@gooddata/sdk-ui-semantic-search':
+        specifier: workspace:*
+        version: link:../../libs/sdk-ui-semantic-search
       '@gooddata/sdk-ui-theme-provider':
         specifier: workspace:*
         version: link:../../libs/sdk-ui-theme-provider
@@ -3888,6 +3891,142 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@1.0.4)
 
+  ../../libs/sdk-ui-semantic-search:
+    dependencies:
+      '@gooddata/sdk-backend-spi':
+        specifier: workspace:*
+        version: link:../sdk-backend-spi
+      '@gooddata/sdk-model':
+        specifier: workspace:*
+        version: link:../sdk-model
+      '@gooddata/sdk-ui':
+        specifier: workspace:*
+        version: link:../sdk-ui
+      '@gooddata/sdk-ui-kit':
+        specifier: workspace:*
+        version: link:../sdk-ui-kit
+      classnames:
+        specifier: ^2.3.1
+        version: 2.3.2
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
+      react-intl:
+        specifier: ^6.4.1
+        version: 6.5.5(react@18.2.0)(typescript@5.3.3)
+      tslib:
+        specifier: ^2.5.0
+        version: 2.6.2
+    devDependencies:
+      '@gooddata/eslint-config':
+        specifier: ^4.1.0
+        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+      '@gooddata/sdk-backend-mockingbird':
+        specifier: workspace:*
+        version: link:../sdk-backend-mockingbird
+      '@microsoft/api-documenter':
+        specifier: ^7.17.0
+        version: 7.23.14(@types/node@18.19.3)
+      '@microsoft/api-extractor':
+        specifier: ^7.36.0
+        version: 7.38.5(@types/node@18.19.3)
+      '@testing-library/react':
+        specifier: ^14.0.0
+        version: 14.1.2(react-dom@18.2.0)(react@18.2.0)
+      '@types/lodash':
+        specifier: ^4.14.202
+        version: 4.14.202
+      '@types/raf':
+        specifier: ^3.4.0
+        version: 3.4.3
+      '@types/react':
+        specifier: ^18.2.0
+        version: 18.2.45
+      '@types/react-dom':
+        specifier: ^18.2.1
+        version: 18.2.17
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^5.57.1
+        version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.55.0)(typescript@5.3.3)
+      '@typescript-eslint/parser':
+        specifier: ^5.57.1
+        version: 5.62.0(eslint@8.55.0)(typescript@5.3.3)
+      concurrently:
+        specifier: ^6.0.2
+        version: 6.5.1
+      dependency-cruiser:
+        specifier: ^13.0.3
+        version: 13.1.5
+      eslint:
+        specifier: ^8.25.0
+        version: 8.55.0
+      eslint-plugin-header:
+        specifier: ^3.0.0
+        version: 3.1.1(eslint@8.55.0)
+      eslint-plugin-import:
+        specifier: ^2.22.0
+        version: 2.29.0(eslint@8.55.0)
+      eslint-plugin-import-esm:
+        specifier: ^1.2.1
+        version: 1.2.1(eslint@8.55.0)
+      eslint-plugin-jest:
+        specifier: ^27.1.1
+        version: 27.6.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint@8.55.0)(typescript@5.3.3)
+      eslint-plugin-no-only-tests:
+        specifier: ^2.4.0
+        version: 2.6.0
+      eslint-plugin-prettier:
+        specifier: ^4.0.0
+        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+      eslint-plugin-react:
+        specifier: ^7.31.10
+        version: 7.33.2(eslint@8.55.0)
+      eslint-plugin-react-hooks:
+        specifier: ^4.5.0
+        version: 4.6.0(eslint@8.55.0)
+      eslint-plugin-regexp:
+        specifier: ^1.9.0
+        version: 1.15.0(eslint@8.55.0)
+      eslint-plugin-sonarjs:
+        specifier: ^0.16.0
+        version: 0.16.0(eslint@8.55.0)
+      eslint-plugin-tsdoc:
+        specifier: ^0.2.14
+        version: 0.2.17
+      prettier:
+        specifier: ~2.5.0
+        version: 2.5.1
+      raf:
+        specifier: ^3.4.1
+        version: 3.4.1
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+      sass:
+        specifier: ^1.52.3
+        version: 1.69.5
+      stylelint:
+        specifier: ^13.8.0
+        version: 13.13.1
+      stylelint-checkstyle-formatter:
+        specifier: ^0.1.2
+        version: 0.1.2
+      stylelint-config-prettier:
+        specifier: ^8.0.2
+        version: 8.0.2(stylelint@13.13.1)
+      typescript:
+        specifier: 5.3.3
+        version: 5.3.3
+      vitest:
+        specifier: 1.0.4
+        version: 1.0.4(@types/node@18.19.3)(jsdom@22.1.0)(sass@1.69.5)
+      vitest-dom:
+        specifier: 0.1.1
+        version: 0.1.1(vitest@1.0.4)
+
   ../../libs/sdk-ui-tests:
     devDependencies:
       '@babel/core':
@@ -3953,6 +4092,9 @@ importers:
       '@gooddata/sdk-ui-pivot':
         specifier: workspace:*
         version: link:../sdk-ui-pivot
+      '@gooddata/sdk-ui-semantic-search':
+        specifier: workspace:*
+        version: link:../sdk-ui-semantic-search
       '@gooddata/sdk-ui-theme-provider':
         specifier: workspace:*
         version: link:../sdk-ui-theme-provider
@@ -8629,6 +8771,7 @@ packages:
   /@humanwhocodes/config-array@0.11.13:
     resolution: {integrity: sha512-JSBDMiDKSzQVngfRjOdFXgFfklaXI4K9nLF49Auh21lmBWRLIK3+xTErTWD4KU54pb6coM6ESE7Awz/FNU3zgQ==}
     engines: {node: '>=10.10.0'}
+    deprecated: Use @eslint/config-array instead
     dependencies:
       '@humanwhocodes/object-schema': 2.0.1
       debug: 4.3.4(supports-color@8.1.1)
@@ -8644,6 +8787,7 @@ packages:
 
   /@humanwhocodes/object-schema@2.0.1:
     resolution: {integrity: sha512-dvuCeX5fC9dXgJn9t+X5atfmgQAzUOWqS1254Gh0m6i8wKd10ebXkfNKiRK+1GWi/yTvvLDHpoxLr0xxxeslWw==}
+    deprecated: Use @eslint/object-schema instead
     dev: true
 
   /@isaacs/cliui@8.0.2:
@@ -12066,7 +12210,7 @@ packages:
     hasBin: true
     dependencies:
       browserslist: 4.23.1
-      caniuse-lite: 1.0.30001570
+      caniuse-lite: 1.0.30001632
       normalize-range: 0.1.2
       num2fraction: 1.2.2
       picocolors: 0.2.1
@@ -12667,10 +12811,6 @@ packages:
   /camelcase@6.3.0:
     resolution: {integrity: sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==}
     engines: {node: '>=10'}
-    dev: true
-
-  /caniuse-lite@1.0.30001570:
-    resolution: {integrity: sha512-+3e0ASu4sw1SWaoCtvPeyXp+5PsjigkSt8OXZbF9StH5pQWbxEjLAZE3n8Aup5udop1uRiKA7a4utUk/uoSpUw==}
     dev: true
 
   /caniuse-lite@1.0.30001632:
@@ -14434,11 +14574,6 @@ packages:
       '@esbuild/win32-arm64': 0.19.9
       '@esbuild/win32-ia32': 0.19.9
       '@esbuild/win32-x64': 0.19.9
-
-  /escalade@3.1.1:
-    resolution: {integrity: sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw==}
-    engines: {node: '>=6'}
-    dev: true
 
   /escalade@3.1.2:
     resolution: {integrity: sha512-ErCHMCae19vR8vQGe50xIsVomy19rg6gFu3+r3jkEO46suLMWBksvVyoGgQV+jOfl84ZSOSlmv6Gxa89PmTGmA==}
@@ -23840,7 +23975,7 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       cliui: 7.0.4
-      escalade: 3.1.1
+      escalade: 3.1.2
       get-caller-file: 2.0.5
       require-directory: 2.1.1
       string-width: 4.2.3

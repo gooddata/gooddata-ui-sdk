@@ -138,6 +138,15 @@ const ScenarioConfig = [
             delay: 1000, // wait for a bit for the async import to resolve
         },
     },
+    {
+        /*
+         * Tests for GenAI
+         */
+        idRegex: /(14).*/g,
+        config: {
+            misMatchThreshold: 0.01,
+        },
+    },
 ];
 
 // --------------------------------------------------------------------

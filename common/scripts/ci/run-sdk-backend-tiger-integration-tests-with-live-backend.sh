@@ -88,8 +88,6 @@ if [[ "$IS_AIO" == true ]]; then
     -d '{
         "data": {
         "attributes": {
-          "cachePath": ["TIGER_CACHE"],
-            "enableCaching": false,
           "name": "pg_staging-goodsales",
           "url": "jdbc:postgresql://localhost:5432/demo",
           "schema": "goodsales",

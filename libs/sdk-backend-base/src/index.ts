@@ -14,6 +14,7 @@ export {
     dummyBackendEmptyData,
     dummyDataView,
     DummyBackendConfig,
+    DummySemanticSearchQueryBuilder,
 } from "./dummyBackend/index.js";
 
 export {
