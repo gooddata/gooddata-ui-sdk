@@ -12,9 +12,7 @@ import {
 import {
     DefaultDashboardWidget,
     DefaultDashboardInsightMenuButton,
-    LegacyDashboardInsightMenuButton,
     DefaultDashboardInsightMenu,
-    LegacyDashboardInsightMenu,
     DefaultInsightBody,
     DefaultDashboardInsight,
     DefaultDashboardKpi,
@@ -80,7 +78,6 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         InsightComponentProvider,
         InsightBodyComponentProvider,
         InsightMenuButtonComponentProvider,
-        insightMenuItemsProvider,
         InsightMenuComponentProvider,
         InsightMenuTitleComponentProvider,
         InsightComponentSetProvider,
@@ -144,10 +141,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         (insight, widget) => {
             const userSpecified = InsightMenuButtonComponentProvider?.(insight, widget);
             // if user customizes the items, always use the "new" default menu button
-            const FallbackDashboardInsightMenuButtonInner = insightMenuItemsProvider
-                ? DefaultDashboardInsightMenuButton
-                : LegacyDashboardInsightMenuButton;
-            return userSpecified ?? FallbackDashboardInsightMenuButtonInner;
+            return userSpecified ?? DefaultDashboardInsightMenuButton;
         },
         [InsightMenuButtonComponentProvider],
     );
@@ -156,10 +150,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         (insight, widget) => {
             const userSpecified = InsightMenuComponentProvider?.(insight, widget);
             // if user customizes the items, always use the "new" default menu
-            const FallbackDashboardInsightMenuInner = insightMenuItemsProvider
-                ? DefaultDashboardInsightMenu
-                : LegacyDashboardInsightMenu;
-            return userSpecified ?? FallbackDashboardInsightMenuInner;
+            return userSpecified ?? DefaultDashboardInsightMenu;
         },
         [InsightMenuComponentProvider],
     );

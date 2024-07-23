@@ -885,27 +885,6 @@
         "comment": "",
         "limit": 0
     },
-    "options.button.bubble|insight": {
-        "value": "Export visualization data",
-        "comment": "Show this message when hovering on the options button",
-        "limit": 0
-    },
-    "options.button.bubble|report": {
-        "value": "Export report data",
-        "comment": "Show this message when hovering on the options button",
-        "limit": 0,
-        "translate": false
-    },
-    "options.menu.export.CSV": {
-        "value": "CSV",
-        "comment": "Export to file with CSV extension.",
-        "limit": 0
-    },
-    "options.menu.export.XLSX": {
-        "value": "XLSX",
-        "comment": "Export to file with XLSX extension.",
-        "limit": 0
-    },
     "options.menu.unsupported.error._measure|insight": {
         "value": "The visualization cannot be exported at the moment. Try applying different filters, or using different measures or attributes.",
         "comment": "Error popup. Visualization cannot be exported to the file because of wrong setting of filters, measures or attributes.",
