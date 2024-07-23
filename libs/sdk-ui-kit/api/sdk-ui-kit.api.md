@@ -861,9 +861,13 @@ export interface IAppHeaderProps {
     // (undocumented)
     onMenuItemClick?: (menuItem: IHeaderMenuItem, e?: React_2.MouseEvent) => void;
     // (undocumented)
+    onSearchButtonClick?: () => void;
+    // (undocumented)
     onUpsellButtonClick?: (e: React_2.MouseEvent) => void;
     // (undocumented)
     showInviteItem?: boolean;
+    // (undocumented)
+    showSearchButton?: boolean;
     // (undocumented)
     showStaticHelpMenu?: boolean;
     // (undocumented)

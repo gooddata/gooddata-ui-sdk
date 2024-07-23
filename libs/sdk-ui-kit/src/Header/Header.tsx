@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React, { Component, createRef } from "react";
 import { WrappedComponentProps, injectIntl, FormattedMessage } from "react-intl";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
@@ -29,6 +29,7 @@ import { HeaderAccount } from "./HeaderAccount.js";
 import { HeaderMenu } from "./HeaderMenu.js";
 import { HeaderUpsellButton } from "./HeaderUpsellButton.js";
 import { HeaderInvite } from "./HeaderInvite.js";
+import { HeaderSearch } from "./HeaderSearch.js";
 
 function getOuterWidth(element: HTMLDivElement) {
     const width = element.offsetWidth;
@@ -47,13 +48,19 @@ function getWidthOfChildren(element: HTMLDivElement, selector = "> *") {
 class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, IAppHeaderState> {
     public static defaultProps: Pick<
         IAppHeaderProps,
-        "logoHref" | "accountMenuItems" | "helpMenuItems" | "menuItemsGroups" | "helpMenuDropdownAlignPoints"
+        | "logoHref"
+        | "accountMenuItems"
+        | "helpMenuItems"
+        | "menuItemsGroups"
+        | "helpMenuDropdownAlignPoints"
+        | "showSearchButton"
     > = {
         logoHref: "/",
         helpMenuDropdownAlignPoints: "br tr",
         accountMenuItems: [],
         helpMenuItems: [],
         menuItemsGroups: [],
+        showSearchButton: false,
     };
 
     private nodeRef = createRef<HTMLDivElement>();
@@ -203,6 +210,21 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
         return !this.props.documentationUrl ? itemGroups : [...itemGroups, [this.getHelpMenuLink()]];
     };
 
+    private addSearchItemGroup = (itemGroup: IHeaderMenuItem[][]): IHeaderMenuItem[][] => {
+        return !this.props.showSearchButton
+            ? itemGroup
+            : [
+                  ...itemGroup,
+                  [
+                      {
+                          key: "gs.header.search",
+                          className: "gd-icon-header-search",
+                          onClick: this.props.onSearchButtonClick,
+                      },
+                  ],
+              ];
+    };
+
     private getHelpMenu = () => [
         [this.getHelpMenuLink("gd-icon-header-help-back"), ...this.props.helpMenuItems],
     ];
@@ -325,7 +347,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
         const menuItemsGroups = !this.state.isHelpMenuOpen
             ? this.props.showStaticHelpMenu
                 ? [[this.getHelpMenuLink()]]
-                : this.addHelpItemGroup(this.props.menuItemsGroups)
+                : this.addHelpItemGroup(this.addSearchItemGroup(this.props.menuItemsGroups))
             : this.getHelpMenu();
 
         return (
@@ -388,6 +410,10 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                 />
 
                 {this.renderTrialItems()}
+
+                {this.props.showSearchButton ? (
+                    <HeaderSearch className="gd-header-measure" onClick={this.props.onSearchButtonClick} />
+                ) : null}
 
                 {this.props.helpMenuItems.length ? (
                     <HeaderHelp

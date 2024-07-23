@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { storiesOf } from "../../../_infra/storyRepository.js";
 import { UiKit } from "../../../_infra/storyGroups.js";
 import { withIntl } from "@gooddata/sdk-ui";
+import { action } from "@storybook/addon-actions";
 import {
     AppHeader,
     IAppHeaderProps,
@@ -329,6 +330,7 @@ const messages = {
     "gs.header.load": "Load",
     "gs.header.manage": "Manage",
     "gs.header.help": "Help",
+    "gs.header.search": "Search",
     "gs.header.documentation": "Documentation",
     "gs.header.visitSupportPortal": "Visit Support Portal",
     "gs.header.submitTicket": "Submit Ticket",
@@ -423,4 +425,30 @@ storiesOf(`${UiKit}/AppHeader`)
             );
         },
         { screenshot: screenshotProps.openedHelp },
+    )
+    .add(
+        "with search menu item",
+        () => {
+            return (
+                <IntlProvider locale="en-US" messages={messages}>
+                    <div className="screenshot-target">
+                        <AppHeader
+                            className="s-default-header"
+                            showSearchButton
+                            onSearchButtonClick={action("search")}
+                            workspacePicker={null}
+                            userName={"undefined"}
+                            helpMenuItems={[
+                                {
+                                    key: "gs.header.helpMenu.manage.ws",
+                                    href: "https://www.gooddata.com/developers/cloud-native/doc/hosted/manage-deployment/manage-workspaces/",
+                                },
+                                ...info.headerHelpItems,
+                            ]}
+                        />
+                    </div>
+                </IntlProvider>
+            );
+        },
+        { screenshot: true },
     );
