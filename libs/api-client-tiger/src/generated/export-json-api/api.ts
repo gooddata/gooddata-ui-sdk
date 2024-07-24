@@ -1,3 +1,5 @@
+// (C) 2024 GoodData Corporation
+
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -215,6 +217,12 @@ export interface TabularExportRequest {
      * @memberof TabularExportRequest
      */
     visualizationObjectCustomFilters?: Array<object>;
+    /**
+     * Metadata definition in free-form JSON format.
+     * @type {object}
+     * @memberof TabularExportRequest
+     */
+    metadata?: object | null;
 }
 
 export const TabularExportRequestFormatEnum = {

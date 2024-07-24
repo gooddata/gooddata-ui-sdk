@@ -27,7 +27,8 @@ export type IEntitlementsName =
     | "UnlimitedAutomationRecipients"
     | "DailyScheduledActionCount"
     | "UnlimitedDailyScheduledActions"
-    | "ScheduledActionMinimumRecurrenceMinutes";
+    | "ScheduledActionMinimumRecurrenceMinutes"
+    | "FederatedIdentityManagement";
 /**
  * Entitlement descriptor
  *

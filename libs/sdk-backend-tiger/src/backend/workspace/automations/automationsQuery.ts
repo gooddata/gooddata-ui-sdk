@@ -75,6 +75,7 @@ export class AutomationsQuery implements IAutomationsQuery {
                             "recipients",
                             "exportDefinitions",
                         ],
+                        origin: "NATIVE", // ensures that no inherited automations are returned
                         size: limit,
                         page: offset / limit,
                     }),

@@ -466,20 +466,6 @@
                         "type": "string",
                         "description": "Passphrase for a encrypted version of a private key."
                     },
-                    "enableCaching": {
-                        "type": "boolean",
-                        "description": "Enable caching of intermediate results. The feature is deprecated. It is not possible to enable it anymore. Any input is interpreted as false.",
-                        "example": false,
-                        "deprecated": true
-                    },
-                    "cachePath": {
-                        "type": "array",
-                        "description": "Path to schema, where intermediate caches are stored. The feature is deprecated.",
-                        "deprecated": true,
-                        "items": {
-                            "type": "string"
-                        }
-                    },
                     "parameters": {
                         "type": "array",
                         "items": {
