@@ -1,19 +1,18 @@
 // (C) 2022-2024 GoodData Corporation
 
-import React, { useState } from "react";
+import React from "react";
 
 import { ScheduledEmailDialog, ScheduledEmailManagementDialog } from "../../scheduledEmail/index.js";
 
-import { useDashboardScheduledEmails, useDashboardScheduledEmailsData } from "../../../model/index.js";
+import { useDashboardScheduledEmails } from "../../../model/index.js";
 
 export const ScheduledEmailDialogProvider = () => {
-    const [reloadId, setReloadId] = useState(0);
-
-    const reloadAutomations = () => {
-        setReloadId((prev) => prev + 1);
-    };
-
     const {
+        users,
+        webhooks,
+        automations,
+        schedulingLoadError,
+        isScheduleLoading,
         isScheduleEmailingDialogOpen,
         scheduleEmailingDialogContext,
         isScheduleEmailingManagementDialogOpen,
@@ -29,13 +28,7 @@ export const ScheduledEmailDialogProvider = () => {
         onScheduleEmailingManagementClose,
         onScheduleEmailingManagementDeleteSuccess,
         onScheduleEmailingManagementDeleteError,
-        onScheduleEmailingManagementLoadingError,
-    } = useDashboardScheduledEmails({ onReload: reloadAutomations });
-
-    const { webhooks, users, automations, isLoading, loadError } = useDashboardScheduledEmailsData({
-        reloadId,
-        onLoadError: onScheduleEmailingManagementLoadingError,
-    });
+    } = useDashboardScheduledEmails();
 
     return (
         <>
@@ -48,10 +41,10 @@ export const ScheduledEmailDialogProvider = () => {
                     onClose={onScheduleEmailingManagementClose}
                     onDeleteSuccess={onScheduleEmailingManagementDeleteSuccess}
                     onDeleteError={onScheduleEmailingManagementDeleteError}
-                    isLoadingScheduleData={isLoading}
+                    isLoadingScheduleData={isScheduleLoading}
                     automations={automations}
                     webhooks={webhooks}
-                    scheduleDataError={loadError}
+                    scheduleDataError={schedulingLoadError}
                 />
             ) : null}
             {isScheduleEmailingDialogOpen ? (

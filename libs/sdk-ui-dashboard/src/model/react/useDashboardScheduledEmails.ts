@@ -4,7 +4,6 @@ import { useCallback, useState } from "react";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import { IAutomationMetadataObject, IWidget } from "@gooddata/sdk-model";
 
-import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider.js";
 import {
     selectCanExportPdf,
     selectCanManageWorkspace,
@@ -17,19 +16,33 @@ import {
     selectIsScheduleEmailDialogContext,
     selectIsScheduleEmailManagementDialogContext,
     selectMenuButtonItemsVisibility,
-    selectWebhooks,
     uiActions,
+    selectEntitlementMaxAutomations,
+    selectWebhooks,
+    selectAutomations,
+    selectUsers,
+    selectWebhooksIsLoading,
+    selectAutomationsIsLoading,
+    selectWebhooksError,
+    selectAutomationsError,
 } from "../store/index.js";
-
+import { refreshAutomations } from "../commands/index.js";
 import { messages } from "../../locales.js";
-import { useWorkspaceAutomations } from "./useWorkspaceAutomations.js";
+
+import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider.js";
+
+/**
+ * @alpha
+ * Default maximum number of automations.
+ */
+export const DEFAULT_MAX_AUTOMATIONS = "10";
 
 /**
  * Hook that handles schedule emailing dialogs.
  *
  * @alpha
  */
-export const useDashboardScheduledEmails = ({ onReload }: { onReload?: () => void } = {}) => {
+export const useDashboardScheduledEmails = () => {
     const { addSuccess, addError } = useToastMessage();
 
     const isScheduleEmailingDialogOpen = useDashboardSelector(selectIsScheduleEmailDialogOpen) || false;
@@ -42,22 +55,48 @@ export const useDashboardScheduledEmails = ({ onReload }: { onReload?: () => voi
 
     const dispatch = useDashboardDispatch();
     const dashboardRef = useDashboardSelector(selectDashboardRef);
+
+    const webhooks = useDashboardSelector(selectWebhooks);
+    const automations = useDashboardSelector(selectAutomations);
+    const users = useDashboardSelector(selectUsers);
+
+    const isScheduleLoading = [
+        useDashboardSelector(selectWebhooksIsLoading),
+        useDashboardSelector(selectAutomationsIsLoading),
+    ].some(Boolean);
+
+    const schedulingLoadError = [
+        useDashboardSelector(selectWebhooksError),
+        useDashboardSelector(selectAutomationsError),
+    ].find(Boolean);
+
     const isReadOnly = useDashboardSelector(selectIsReadOnly);
     const isInViewMode = useDashboardSelector(selectIsInViewMode);
     const menuButtonItemsVisibility = useDashboardSelector(selectMenuButtonItemsVisibility);
     const isScheduledEmailingEnabled = useDashboardSelector(selectEnableScheduling);
     const canExport = useDashboardSelector(selectCanExportPdf);
-    const webhooks = useDashboardSelector(selectWebhooks);
-    const numberOfAvailableWebhooks = webhooks.length;
     const isWorkspaceManager = useDashboardSelector(selectCanManageWorkspace);
+    const maxAutomationsEntitlement = useDashboardSelector(selectEntitlementMaxAutomations);
+    const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);
+
+    const numberOfAvailableWebhooks = webhooks.length;
+    const maxAutomationsReached = automations.length >= maxAutomations;
+
     /**
      * We want to hide scheduling when there are no webhooks unless the user is admin.
      */
     const showDueToNumberOfAvailableWebhooks = numberOfAvailableWebhooks > 0 || isWorkspaceManager;
 
-    const { result } = useWorkspaceAutomations({
-        enable: isScheduledEmailingEnabled,
-    });
+    const isSchedulingAvailable =
+        isInViewMode &&
+        !isReadOnly &&
+        isScheduledEmailingEnabled &&
+        canExport &&
+        showDueToNumberOfAvailableWebhooks &&
+        (menuButtonItemsVisibility.scheduleEmailButton ?? true);
+
+    const isScheduledEmailingVisible = isSchedulingAvailable && !maxAutomationsReached;
+    const isScheduledManagementEmailingVisible = isSchedulingAvailable && automations.length > 0;
 
     const openScheduleEmailingDialog = useCallback(
         (widget?: IWidget) =>
@@ -89,16 +128,6 @@ export const useDashboardScheduledEmails = ({ onReload }: { onReload?: () => voi
     );
 
     const [scheduledEmailToEdit, setScheduledEmailToEdit] = useState<IAutomationMetadataObject>();
-
-    const isScheduledEmailingVisible =
-        isInViewMode &&
-        !isReadOnly &&
-        isScheduledEmailingEnabled &&
-        canExport &&
-        showDueToNumberOfAvailableWebhooks &&
-        (menuButtonItemsVisibility.scheduleEmailButton ?? true);
-
-    const isScheduledManagementEmailingVisible = isScheduledEmailingVisible && (result ?? []).length > 0;
 
     /*
      * exports and scheduling are not available when rendering a dashboard that is not persisted.
@@ -152,9 +181,9 @@ export const useDashboardScheduledEmails = ({ onReload }: { onReload?: () => voi
             closeScheduleEmailingDialog();
             openScheduleEmailingManagementDialog(widget);
             addSuccess(messages.scheduleEmailSubmitSuccess);
-            onReload?.();
+            dispatch(refreshAutomations());
         },
-        [closeScheduleEmailingDialog, openScheduleEmailingManagementDialog, addSuccess, onReload],
+        [closeScheduleEmailingDialog, openScheduleEmailingManagementDialog, addSuccess, dispatch],
     );
 
     const onScheduleEmailingSaveError = useCallback(() => {
@@ -169,14 +198,14 @@ export const useDashboardScheduledEmails = ({ onReload }: { onReload?: () => voi
             openScheduleEmailingManagementDialog(widget);
             addSuccess(messages.scheduleEmailSaveSuccess);
             setScheduledEmailToEdit(undefined);
-            onReload?.();
+            dispatch(refreshAutomations());
         },
         [
             closeScheduleEmailingDialog,
             openScheduleEmailingManagementDialog,
             addSuccess,
             setScheduledEmailToEdit,
-            onReload,
+            dispatch,
         ],
     );
 
@@ -192,8 +221,8 @@ export const useDashboardScheduledEmails = ({ onReload }: { onReload?: () => voi
     const onScheduleEmailingManagementDeleteSuccess = useCallback(() => {
         closeScheduleEmailingDialog();
         addSuccess(messages.scheduleEmailDeleteSuccess);
-        onReload?.();
-    }, [addSuccess, closeScheduleEmailingDialog, onReload]);
+        dispatch(refreshAutomations());
+    }, [addSuccess, closeScheduleEmailingDialog, dispatch]);
 
     const onScheduleEmailingManagementAdd = useCallback(
         (widget?: IWidget) => {
@@ -228,6 +257,12 @@ export const useDashboardScheduledEmails = ({ onReload }: { onReload?: () => voi
     }, [closeScheduleEmailingDialog, closeScheduleEmailingManagementDialog, addError]);
 
     return {
+        webhooks,
+        automations,
+        users,
+        schedulingLoadError,
+        numberOfAvailableWebhooks,
+        isScheduleLoading,
         isScheduledEmailingVisible,
         isScheduledManagementEmailingVisible,
         defaultOnScheduleEmailing,
@@ -250,6 +285,5 @@ export const useDashboardScheduledEmails = ({ onReload }: { onReload?: () => voi
         onScheduleEmailingManagementLoadingError,
         onScheduleEmailingManagementDeleteSuccess,
         onScheduleEmailingManagementDeleteError,
-        numberOfAvailableWebhooks,
     };
 };

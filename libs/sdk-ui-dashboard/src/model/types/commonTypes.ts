@@ -9,6 +9,8 @@ import {
     ISeparators,
     IEntitlementDescriptor,
     IWebhookMetadataObject,
+    IAutomationMetadataObject,
+    IWorkspaceUser,
 } from "@gooddata/sdk-model";
 import { ILocale } from "@gooddata/sdk-ui";
 import keys from "lodash/keys.js";
@@ -465,3 +467,17 @@ export type FiltersInfo = {
  * @alpha
  */
 export type Webhooks = IWebhookMetadataObject[];
+
+/**
+ * Workspace automations
+ *
+ * @alpha
+ */
+export type Automations = IAutomationMetadataObject[];
+
+/**
+ * Workspace users
+ *
+ * @alpha
+ */
+export type Users = IWorkspaceUser[];

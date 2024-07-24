@@ -88,6 +88,7 @@ import { moveDateFilterHandler } from "./filterContext/dateFilter/moveDateFilter
 import { changeDateFilterWithDimensionModeHandler } from "./dashboard/changeDateFilterWithDimensionModeHandler.js";
 import { changeDateFilterTitleHandler } from "./dashboard/changeDateFilterTitleHandler.js";
 import { changeAttributeFilterLimitingItemsHandler } from "./dashboard/changeAttributeFilterLimitingItemsHandler.js";
+import { refreshAutomationsHandlers } from "./scheduledEmail/refreshAutomationsHandlers.js";
 
 function* notImplementedCommand(ctx: DashboardContext, cmd: IDashboardCommand): SagaIterator<void> {
     yield dispatchDashboardEvent(commandRejected(ctx, cmd.correlationId));
@@ -182,4 +183,5 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.DRILL_TARGETS.ADD": addDrillTargetsHandler,
     "GDC.DASH/CMD.RENDER.ASYNC.REQUEST": requestAsyncRenderHandler,
     "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE": resolveAsyncRenderHandler,
+    "GDC.DASH/CMD.AUTOMATIONS.REFRESH": refreshAutomationsHandlers,
 };

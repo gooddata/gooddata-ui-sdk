@@ -1,5 +1,6 @@
 // (C) 2024 GoodData Corporation
 
+import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { Webhooks } from "../../types/commonTypes.js";
 
 /**
@@ -7,6 +8,8 @@ import { Webhooks } from "../../types/commonTypes.js";
  */
 export interface WebhooksState {
     webhooks: Webhooks;
+    loading: boolean;
+    error?: GoodDataSdkError;
 }
 
-export const webhooksInitialState: WebhooksState = { webhooks: [] };
+export const webhooksInitialState: WebhooksState = { webhooks: [], loading: true };

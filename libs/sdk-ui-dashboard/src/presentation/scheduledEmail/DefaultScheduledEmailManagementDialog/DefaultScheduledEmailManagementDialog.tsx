@@ -13,11 +13,10 @@ import {
     selectCurrentUser,
     selectEntitlementMaxAutomations,
     useDashboardSelector,
+    DEFAULT_MAX_AUTOMATIONS,
 } from "../../../model/index.js";
 import { messages } from "../../../locales.js";
 import { isMobileView } from "../DefaultScheduledEmailDialog/utils/responsive.js";
-
-const DEFAULT_MAX_AUTOMATIONS = "10";
 
 /**
  * @alpha
