@@ -5,6 +5,8 @@ import classnames from "classnames";
 import { ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import { Icon, Typography } from "@gooddata/sdk-ui-kit";
 
+export const ITEM_HEIGHT = 45;
+
 /**
  * Props for the ResultsItem component.
  * @internal
@@ -56,7 +58,7 @@ export const ResultsItem: React.FC<ResultsItemProps> = ({ item, onHover, onClick
     });
 
     // Use mouse enter with the target check instead of hover to prevent multiple triggers
-    // Use mouse down instead of click to prevent the the dialog from disappearing before the click event is caught
+    // Use mouse down instead of click to prevent the dialog from disappearing before the click event is caught
     return (
         <div className={className} onMouseEnter={onMouseEnter} onMouseDown={onClick}>
             <div className="gd-semantic-search__results-item__icon">{renderItemIcon(item)}</div>

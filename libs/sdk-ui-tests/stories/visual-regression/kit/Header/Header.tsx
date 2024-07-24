@@ -434,10 +434,10 @@ storiesOf(`${UiKit}/AppHeader`)
                     <div className="screenshot-target">
                         <AppHeader
                             className="s-default-header"
-                            showSearchButton
-                            onSearchButtonClick={action("search")}
-                            workspacePicker={null}
-                            userName={"undefined"}
+                            onLogoClick={action("onLogoClick")}
+                            onMenuItemClick={action("onMenuItemClick")}
+                            menuItemsGroups={info.headerMenuSections}
+                            accountMenuItems={info.headerAccountItems}
                             helpMenuItems={[
                                 {
                                     key: "gs.header.helpMenu.manage.ws",
@@ -445,6 +445,15 @@ storiesOf(`${UiKit}/AppHeader`)
                                 },
                                 ...info.headerHelpItems,
                             ]}
+                            search={<div>I am search</div>}
+                            logoUrl={gd}
+                            logoTitle="GoodData"
+                            documentationUrl="https://help.gooddata.com/doc"
+                            userName="John Doe"
+                            workspacePicker={getPicker({
+                                title: "GoodSales",
+                                id: "0",
+                            })}
                         />
                     </div>
                 </IntlProvider>

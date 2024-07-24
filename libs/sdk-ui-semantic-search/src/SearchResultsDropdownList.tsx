@@ -3,13 +3,14 @@
 import * as React from "react";
 import { ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import { DropdownList } from "@gooddata/sdk-ui-kit";
-import { ResultsItem } from "./ResultsItem.js";
+import { ITEM_HEIGHT, ResultsItem } from "./ResultsItem.js";
+import { useListSelector } from "./hooks/index.js";
 
 /**
  * Search results props.
  * @internal
  */
-type SearchResultsProps = {
+type SearchResultsDropdownListProps = {
     /**
      * Search result items.
      */
@@ -36,51 +37,21 @@ type SearchResultsProps = {
  * A dropdown list with the search results.
  * @internal
  */
-export const SearchResults: React.FC<SearchResultsProps> = ({
+export const SearchResultsDropdownList: React.FC<SearchResultsDropdownListProps> = ({
     searchResults,
     searchLoading,
     isMobile,
     width,
     onSelect,
 }) => {
-    const [selected, setSelected] = React.useState<number>(0);
-    React.useEffect(() => {
-        setSelected(0);
-    }, [searchResults]);
-
-    React.useEffect(() => {
-        const listener = (event: KeyboardEvent) => {
-            if (["ArrowDown", "ArrowUp", "Enter"].indexOf(event.key) === -1) return;
-
-            event.preventDefault();
-            event.stopImmediatePropagation();
-
-            switch (event.key) {
-                case "ArrowDown":
-                    setSelected(Math.min(selected + 1, searchResults.length - 1));
-                    break;
-                case "ArrowUp":
-                    setSelected(Math.max(selected - 1, 0));
-                    break;
-                case "Enter":
-                    onSelect(searchResults[selected]);
-            }
-        };
-
-        // Listen to keyboard events while the component is mounted
-        document.addEventListener("keydown", listener);
-
-        return () => {
-            document.removeEventListener("keydown", listener);
-        };
-    }, [searchResults, onSelect, selected]);
+    const [selected, setSelected] = useListSelector(searchResults, onSelect);
 
     return (
         <DropdownList
             width={width}
             isMobile={isMobile}
             isLoading={searchLoading}
-            itemHeight={45}
+            itemHeight={ITEM_HEIGHT}
             renderItem={({ rowIndex, item, ...props }) => {
                 return (
                     <ResultsItem
