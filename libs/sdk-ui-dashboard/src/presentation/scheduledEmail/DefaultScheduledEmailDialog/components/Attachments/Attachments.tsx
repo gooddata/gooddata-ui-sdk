@@ -5,7 +5,6 @@ import {
     FilterContextItem,
     IAutomationMetadataObject,
     IExportDefinitionVisualizationObjectSettings,
-    IWidget,
 } from "@gooddata/sdk-model";
 import { Message } from "@gooddata/sdk-ui-kit";
 import { AttachmentFilters, AttachmentFilterType } from "./AttachmentFilters.js";
@@ -13,6 +12,7 @@ import { useAttachmentDashboardFilters } from "../../hooks/useAttachmentDashboar
 import { getAutomationDashboardFilters } from "../../utils/automationHelpers.js";
 import { AttachmentDashboard, AttachmentWidgets } from "./AttachmentItems.js";
 import { WidgetAttachmentType } from "../../types.js";
+import { ExtendedDashboardWidget } from "src/model/index.js";
 
 export interface IAttachmentsProps {
     dashboardTitle: string;
@@ -30,7 +30,7 @@ export interface IAttachmentsProps {
         filters?: FilterContextItem[],
     ) => void;
     onWidgetAttachmentsSettingsChange: (obj: IExportDefinitionVisualizationObjectSettings) => void;
-    widget?: IWidget;
+    widget?: ExtendedDashboardWidget;
     editSchedule?: IAutomationMetadataObject;
 }
 

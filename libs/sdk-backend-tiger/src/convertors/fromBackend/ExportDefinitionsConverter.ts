@@ -59,6 +59,8 @@ const convertExportDefinitionRequestPayload = (
         const { mergeHeaders, pdfPageSize } = exportRequest.settings ?? {};
         const orientation =
             pdfPageSize === "portrait" || pdfPageSize === "landscape" ? pdfPageSize : "portrait";
+        const { widget, dashboard } =
+            (exportRequest.metadata as { widget?: string; dashboard?: string }) ?? {};
 
         return {
             type: "visualizationObject",
@@ -67,6 +69,8 @@ const convertExportDefinitionRequestPayload = (
             content: {
                 visualizationObject: exportRequest.visualizationObject ?? "",
                 filters: exportRequest.visualizationObjectCustomFilters as IFilter[],
+                widget,
+                dashboard,
             },
             settings: {
                 ...(exportRequest.format === "PDF" ? { orientation } : {}),

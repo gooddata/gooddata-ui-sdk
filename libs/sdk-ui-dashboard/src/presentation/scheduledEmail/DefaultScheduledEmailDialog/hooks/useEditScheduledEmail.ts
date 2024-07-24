@@ -10,6 +10,7 @@ import {
     IExportDefinitionVisualizationObjectSettings,
     isExportDefinitionVisualizationObjectRequestPayload,
     isExportDefinitionDashboardRequestPayload,
+    IExportDefinitionVisualizationObjectContent,
 } from "@gooddata/sdk-model";
 import parseISO from "date-fns/parseISO/index.js";
 import { getUserTimezone } from "../utils/timezone.js";
@@ -17,8 +18,9 @@ import {
     useDashboardSelector,
     selectDashboardTitle,
     selectDashboardId,
-    selectAnalyticalWidgetByRef,
     selectInsightByWidgetRef,
+    selectWidgetByRef,
+    isCustomWidget,
 } from "../../../../model/index.js";
 import { Alignment, normalizeTime } from "@gooddata/sdk-ui-kit";
 import { IScheduledEmailDialogProps } from "../../types.js";
@@ -39,8 +41,15 @@ import { invariant } from "ts-invariant";
 
 export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
     const { editSchedule, webhooks, context } = props;
-    const widget = useDashboardSelector(selectAnalyticalWidgetByRef(context?.widgetRef));
+    const editWidgetId = (
+        editSchedule?.exportDefinitions?.find((exportDefinition) =>
+            isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload),
+        )?.requestPayload.content as IExportDefinitionVisualizationObjectContent
+    )?.widget;
+    const editWidgetRef = editWidgetId ? { identifier: editWidgetId } : undefined;
+    const widget = useDashboardSelector(selectWidgetByRef(context?.widgetRef ?? editWidgetRef));
     const insight = useDashboardSelector(selectInsightByWidgetRef(widget?.ref));
+    const widgetTitle = !isCustomWidget(widget) ? widget?.title : widget?.identifier;
     const isWidget = !!widget && !!insight;
 
     const dashboardId = useDashboardSelector(selectDashboardId);
@@ -52,13 +61,23 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
 
     const [state, setState] = useState<IAutomationMetadataObjectDefinition>(
         editSchedule ??
-            newAutomationMetadataObjectDefinition({
-                id: isWidget ? insight.insight.identifier : dashboardId!,
-                title: isWidget ? widget.title : dashboardTitle,
-                filters: areFiltersChanged ? filtersToStore : undefined,
-                isWidget,
-                webhook: webhooks[0]?.id,
-            }),
+            newAutomationMetadataObjectDefinition(
+                isWidget
+                    ? {
+                          id: insight.insight.identifier,
+                          title: widgetTitle ?? "",
+                          filters: areFiltersChanged ? filtersToStore : undefined,
+                          widgetId: widget.identifier,
+                          dashboardId: dashboardId,
+                          webhook: webhooks[0]?.id,
+                      }
+                    : {
+                          id: dashboardId!,
+                          title: dashboardTitle,
+                          filters: areFiltersChanged ? filtersToStore : undefined,
+                          webhook: webhooks[0]?.id,
+                      },
+            ),
     );
 
     const [originalState] = useState(state);
@@ -160,7 +179,9 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
             const filtersObj = transformedFilters ? { filters: transformedFilters } : {};
             const newExportDefinition = newWidgetExportDefinitionMetadataObjectDefinition({
                 insightId: insight.insight.identifier,
-                widgetTitle: widget.title,
+                widgetTitle: widgetTitle ?? "",
+                widgetId: widget.identifier,
+                dashboardId: dashboardId!,
                 format,
                 ...filtersObj,
             });
@@ -274,12 +295,16 @@ function newDashboardExportDefinitionMetadataObjectDefinition({
 
 function newWidgetExportDefinitionMetadataObjectDefinition({
     insightId,
+    widgetId,
     widgetTitle,
+    dashboardId,
     format,
     filters,
 }: {
     insightId: string;
+    widgetId: string;
     widgetTitle: string;
+    dashboardId: string;
     format: WidgetAttachmentType;
     filters?: IFilter[];
 }): IExportDefinitionMetadataObjectDefinition {
@@ -295,6 +320,8 @@ function newWidgetExportDefinitionMetadataObjectDefinition({
             format: format,
             content: {
                 visualizationObject: insightId,
+                widget: widgetId,
+                dashboard: dashboardId,
                 ...filtersObj,
             },
             ...settingsObj,
@@ -306,22 +333,26 @@ function newAutomationMetadataObjectDefinition({
     id,
     title,
     webhook,
-    isWidget,
+    widgetId,
+    dashboardId,
     filters,
 }: {
     id: string;
     title: string;
     webhook: string;
-    isWidget: boolean;
+    widgetId?: string;
+    dashboardId?: string;
     filters?: FilterContextItem[] | IFilter[];
 }): IAutomationMetadataObjectDefinition {
     const firstRun = parseISO(new Date().toISOString());
     const normalizedFirstRun = normalizeTime(firstRun, undefined, 60);
     const cron = getDefaultCronExpression(normalizedFirstRun);
-    const exportDefinition = isWidget
+    const exportDefinition = widgetId
         ? newWidgetExportDefinitionMetadataObjectDefinition({
               insightId: id,
               widgetTitle: title,
+              widgetId,
+              dashboardId: dashboardId!,
               format: "XLSX", // default checked format
               filters: filters?.filter(isDashboardFilter),
           })

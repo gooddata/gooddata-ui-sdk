@@ -55,27 +55,31 @@ const convertExportDefinitionRequestPayload = (
     exportRequest: IExportDefinitionRequestPayload,
 ): TabularExportRequest | VisualExportRequest => {
     if (isExportDefinitionDashboardRequestPayload(exportRequest)) {
-        const metadataObj = exportRequest.content.filters
-            ? { metadata: { filters: exportRequest.content.filters } }
-            : {};
+        const { filters, dashboard } = exportRequest.content;
+        const metadataObj = exportRequest.content.filters ? { metadata: { filters } } : {};
 
         return {
             fileName: exportRequest.fileName,
-            dashboardId: exportRequest.content.dashboard,
+            dashboardId: dashboard,
             ...metadataObj,
         };
     }
 
     const { mergeHeaders, orientation } = exportRequest.settings ?? {};
+    const { visualizationObject, filters, widget, dashboard } = exportRequest.content;
 
     return {
         fileName: exportRequest.fileName,
         format: exportRequest.format,
-        visualizationObject: exportRequest.content.visualizationObject,
-        visualizationObjectCustomFilters: exportRequest.content.filters,
+        visualizationObject,
+        visualizationObjectCustomFilters: filters,
         settings: {
             ...(mergeHeaders ? { mergeHeaders } : {}),
             ...(orientation ? { pdfPageSize: orientation } : {}),
+        },
+        metadata: {
+            dashboard,
+            widget,
         },
     };
 };

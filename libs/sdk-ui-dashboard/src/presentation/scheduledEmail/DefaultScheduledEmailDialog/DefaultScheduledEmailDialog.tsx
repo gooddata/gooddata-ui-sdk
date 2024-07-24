@@ -29,7 +29,7 @@ import {
     selectDashboardTitle,
     selectEntitlementMaxAutomationRecipients,
     selectEntitlementMinimumRecurrenceMinutes,
-    selectAnalyticalWidgetByRef,
+    selectWidgetByRef,
 } from "../../../model/index.js";
 import { IScheduledEmailDialogProps } from "../types.js";
 import { invariant } from "ts-invariant";
@@ -41,6 +41,7 @@ import {
     IAutomationMetadataObjectDefinition,
     isExportDefinitionDashboardRequestPayload,
     isExportDefinitionVisualizationObjectRequestPayload,
+    IExportDefinitionVisualizationObjectContent,
 } from "@gooddata/sdk-model";
 import { getTimezoneByIdentifier, TIMEZONE_DEFAULT } from "./utils/timezone.js";
 import { DASHBOARD_TITLE_MAX_LENGTH } from "../../constants/index.js";
@@ -56,7 +57,6 @@ const DEFAULT_MIN_RECURRENCE_MINUTES = "60";
 export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
     const { onCancel, onDeleteSuccess, onDeleteError, isVisible, editSchedule, users, webhooks, context } =
         props;
-    const widget = useDashboardSelector(selectAnalyticalWidgetByRef(context?.widgetRef));
     const intl = useIntl();
     const [scheduledEmailToDelete, setScheduledEmailToDelete] = useState<
         IAutomationMetadataObject | IAutomationMetadataObjectDefinition | null
@@ -95,6 +95,14 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
     } = useEditScheduledEmail(props);
     const { handleSaveScheduledEmail, isSavingScheduledEmail, savingErrorMessage } =
         useSaveScheduledEmailToBackend(automation, props);
+
+    const editWidgetId = (
+        automation.exportDefinitions?.find((exportDefinition) =>
+            isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload),
+        )?.requestPayload.content as IExportDefinitionVisualizationObjectContent
+    )?.widget;
+    const editWidgetRef = editWidgetId ? { identifier: editWidgetId } : undefined;
+    const widget = useDashboardSelector(selectWidgetByRef(context?.widgetRef ?? editWidgetRef));
 
     const isDashboardExportSelected =
         automation.exportDefinitions?.some((exportDefinition) =>

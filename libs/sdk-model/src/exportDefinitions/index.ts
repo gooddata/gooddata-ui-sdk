@@ -34,6 +34,14 @@ export interface IExportDefinitionVisualizationObjectSettings {
  */
 export interface IExportDefinitionVisualizationObjectContent {
     visualizationObject: Identifier;
+    /**
+     * Widget context of visualization object.
+     */
+    widget?: Identifier;
+    /**
+     * Dashboard context of visualization object.
+     */
+    dashboard?: Identifier;
     filters?: IFilter[];
 }
 
@@ -45,7 +53,7 @@ export interface IExportDefinitionVisualizationObjectContent {
  * @alpha
  */
 export interface IExportDefinitionDashboardContent {
-    dashboard: string;
+    dashboard: Identifier;
     filters?: FilterContextItem[];
 }
 
