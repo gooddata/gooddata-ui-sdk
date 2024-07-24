@@ -411,7 +411,6 @@ export interface ISettings {
     enableNewNavigationForResponsiveUi?: boolean;
     enableMySqlDataSource?: boolean;
     enableMariaDbDataSource?: boolean;
-    enableDirectQuery?: boolean;
     enableOracleDataSource?: boolean;
     enableSnowflakeKeyPairAuthentication?: boolean;
     enableMotherDuckDataSource?: boolean;

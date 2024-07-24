@@ -2771,8 +2771,6 @@ export interface ISettings {
     // (undocumented)
     enableDataSection?: boolean;
     enableDescriptions?: boolean;
-    // (undocumented)
-    enableDirectQuery?: boolean;
     enableDrilledInsightExport?: boolean;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     enableEmbedButtonInAD?: boolean;
