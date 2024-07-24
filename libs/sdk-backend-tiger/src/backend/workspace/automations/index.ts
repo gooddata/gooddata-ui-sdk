@@ -32,6 +32,7 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
                     "exportDefinitions",
                     ...(loadUserData ? (["createdBy", "modifiedBy"] as const) : []),
                 ],
+                origin: "NATIVE", // ensures that no inherited automations are returned
             });
 
             const automations = result.data?.data || [];
