@@ -29,7 +29,7 @@ export const AttributeFilterElementsSelectItemTooltip = ({
                 arrowStyle={{ display: "none" }}
             >
                 <p>{itemTitle}</p>
-                {primaryLabelTitle ? (
+                {primaryLabelTitle && itemPrimaryTitle ? (
                     <>
                         <h4>{primaryLabelTitle}</h4>
                         <p>{itemPrimaryTitle}</p>

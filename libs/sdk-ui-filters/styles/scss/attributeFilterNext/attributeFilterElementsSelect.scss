@@ -31,6 +31,9 @@
             color: var(--gd-palette-complementary-6, #94a1ad);
         }
     }
+    &.gd-list-item.is-selected .gd-customizable-checkmark-mobile-navigation {
+        right: 27px;
+    }
 }
 
 .gd-attribute-filter-elements-select-item__next {
