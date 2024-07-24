@@ -23,6 +23,7 @@ import { countItemsOnAxes } from "../pluggableVisualizations/baseChart/insightIn
 import { messages } from "../../../locales.js";
 import { NumberOfClustersControl } from "../configurationControls/clustering/NumberOfClustersControl.js";
 import { BucketNames } from "@gooddata/sdk-ui";
+import { ClusteringThresholdControl } from "../configurationControls/clustering/ClusteringThresholdControl.js";
 
 export default class ScatterPlotConfigurationPanel extends ConfigurationPanelContent {
     protected isControlDisabled(): boolean {
@@ -153,6 +154,12 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
                         >
                             <NumberOfClustersControl
                                 valuePath="clustering.numberOfClusters"
+                                disabled={controlsDisabled || isScatterPlotClusteringDisabled}
+                                properties={properties}
+                                pushData={pushData}
+                            />
+                            <ClusteringThresholdControl
+                                valuePath="clustering.threshold"
                                 disabled={controlsDisabled || isScatterPlotClusteringDisabled}
                                 properties={properties}
                                 pushData={pushData}

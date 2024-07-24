@@ -1046,6 +1046,21 @@
         "comment": "Placeholder of the input for configuring the number of clusters.",
         "limit": 0
     },
+    "properties.clustering.threshold": {
+        "value": "Threshold",
+        "comment": "Label of the input for configuring the clustering threshold.",
+        "limit": 0
+    },
+    "properties.clustering.threshold.placeholder": {
+        "value": "0.03",
+        "comment": "Placeholder of the input for configuring the clustering threshold.",
+        "limit": 0
+    },
+    "properties.clustering.threshold.tooltip": {
+        "value": "The threshold is a limit that determines when to group data. <link>Learn more</link>",
+        "comment": "Tooltip message of the clustering threshold input. Do not translate <link> and </link> tags",
+        "limit": 0
+    },
     "properties.clustering.amount.partial.title": {
         "value": "Showing partial clusters",
         "comment": "Message title that is shown when clustering amount is higher than the number of visualization data points.",
@@ -1057,7 +1072,7 @@
         "limit": 0
     },
     "properties.clustering.disabled": {
-        "value": "Clustering can be enabled only when the segmentBy bucket is empty.",
+        "value": "Clustering requires 2 Metrics and View by, without Segment by.",
         "comment": "Tooltip message of the disabled toggle that enables clustering",
         "limit": 0
     },

@@ -208,6 +208,7 @@ export const SCATTERPLOT_SUPPORTED_PROPERTIES = [
     "disableDrillDown",
     "clustering.enabled",
     "clustering.numberOfClusters",
+    "clustering.threshold",
 ];
 
 export const PIECHART_SUPPORTED_PROPERTIES = [

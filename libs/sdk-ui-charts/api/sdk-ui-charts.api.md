@@ -288,6 +288,7 @@ export interface IChartCallbacks extends IVisualizationCallbacks {
 export interface IChartClusteringConfig {
     enabled: boolean;
     numberOfClusters: number;
+    threshold?: number;
 }
 
 // @public

@@ -73,6 +73,11 @@ export interface IClusteringConfig {
      * Number of clusters - e.g. 3
      */
     numberOfClusters: number;
+
+    /**
+     * Threshold for clustering - e.g. 0.03
+     */
+    threshold?: number;
 }
 
 /**
