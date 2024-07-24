@@ -7,13 +7,9 @@ import { VisType } from "@gooddata/sdk-ui";
 
 import {
     useDashboardSelector,
+    selectSettings,
     isCustomWidget,
     useDashboardScheduledEmails,
-    useWorkspaceAutomations,
-    selectSettings,
-    selectWebhooks,
-    selectCanManageWorkspace,
-    selectEnableScheduling,
 } from "../../../../model/index.js";
 import {
     DashboardItem,
@@ -43,21 +39,12 @@ const DefaultDashboardInsightWidgetCore: React.FC<
 > = ({ widget, insight, screen, onError, onExportReady, onLoadingChanged, dashboardItemClasses }) => {
     const intl = useIntl();
 
-    const isScheduledEmailingEnabled = useDashboardSelector(selectEnableScheduling);
-    const webhooks = useDashboardSelector(selectWebhooks);
-    const isWorkspaceManager = useDashboardSelector(selectCanManageWorkspace);
-    const numberOfAvailableWebhooks = webhooks.length;
-
-    const { result: automations = [] } = useWorkspaceAutomations({
-        enable: isScheduledEmailingEnabled,
-    });
-
-    /**
-     * We want to hide scheduling when there are no webhooks unless the user is admin.
-     */
-    const isScheduleExportVisible =
-        isScheduledEmailingEnabled && (numberOfAvailableWebhooks > 0 || isWorkspaceManager);
-    const isScheduleExportManagementVisible = isScheduleExportVisible && automations.length > 0;
+    const {
+        onScheduleEmailingOpen,
+        onScheduleEmailingManagementOpen,
+        isScheduledEmailingVisible,
+        isScheduledManagementEmailingVisible,
+    } = useDashboardScheduledEmails();
 
     const visType = insightVisualizationType(insight) as VisType;
     const { ref: widgetRef } = widget;
@@ -67,8 +54,6 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         title: widgetTitle(widget) || intl.formatMessage({ id: "export.defaultTitle" }),
         insight,
     });
-
-    const { onScheduleEmailingOpen, onScheduleEmailingManagementOpen } = useDashboardScheduledEmails();
 
     const onScheduleExport = useCallback(() => {
         onScheduleEmailingOpen(widget);
@@ -92,8 +77,8 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         onExportXLSX,
         onScheduleExport,
         onScheduleManagementExport,
-        isScheduleExportVisible,
-        isScheduleExportManagementVisible,
+        isScheduleExportVisible: isScheduledEmailingVisible,
+        isScheduleExportManagementVisible: isScheduledManagementEmailingVisible,
     });
     const toggleMenu = useCallback(() => {
         if (isMenuOpen) {

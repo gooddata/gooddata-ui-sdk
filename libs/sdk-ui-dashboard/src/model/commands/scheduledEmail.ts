@@ -108,3 +108,31 @@ export function saveScheduledEmail(
         },
     };
 }
+
+/**
+ * Creates scheduled email.
+ *
+ * @beta
+ */
+export interface RefreshAutomations extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.AUTOMATIONS.REFRESH";
+    readonly payload: object;
+}
+
+/**
+ * Creates the RefreshAutomations command.
+ *
+ * Dispatching this command will result in the refresh of automations from the backend.
+ *
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+
+ * @beta
+ */
+export function refreshAutomations(correlationId?: string): RefreshAutomations {
+    return {
+        type: "GDC.DASH/CMD.AUTOMATIONS.REFRESH",
+        correlationId,
+        payload: {},
+    };
+}
