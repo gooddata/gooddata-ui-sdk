@@ -1,0 +1,27 @@
+// (C) 2024 GoodData Corporation
+
+@use "sass:color";
+@use "sass:meta";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "./main.scss";
+
+.gd-semantic-search {
+    &__overlay {
+        width: 440px;
+        background: white;
+        margin: 10px 0;
+    }
+
+    &__overlay-input {
+        margin: 0 10px;
+    }
+
+    &__overlay-error,
+    &__overlay-no-results {
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--gd-palette-complementary-6, #94a1ad);
+    }
+}

@@ -487,6 +487,7 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
 
 .gd-header-invite,
 .gd-header-account,
+.gd-header-search,
 .gd-header-help {
     height: 100%;
     margin: 0;
@@ -589,11 +590,42 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
     }
 }
 
-.gd-icon-header-search::before {
-    vertical-align: bottom;
+.gd-header-search {
+    position: relative;
+    box-sizing: border-box;
+    padding-right: 34px;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    &::after {
+        content: "\e612";
+        position: absolute;
+        top: 0;
+        right: 11px;
+        margin-left: 11px;
+        width: 12px;
+        opacity: 0.5;
+        text-align: center;
+        font-family: variables.$gd-font-indigo;
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    &.is-open::after {
+        content: "\e613";
+    }
+}
+
+.gd-icon-header-search {
+    vertical-align: middle;
     opacity: 0.8;
-    padding-right: 6px;
-    content: "\e62b";
+    margin-right: 6px;
+
+    &::before {
+        content: "\e62b";
+    }
 }
 
 .gd-header-username {
@@ -740,7 +772,8 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
     }
 }
 
-.gd-header-account-dropdown {
+.gd-header-account-dropdown,
+.gd-header-search-dropdown {
     overflow: hidden;
 
     .gd-list {

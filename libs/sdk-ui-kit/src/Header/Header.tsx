@@ -53,14 +53,14 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
         | "helpMenuItems"
         | "menuItemsGroups"
         | "helpMenuDropdownAlignPoints"
-        | "showSearchButton"
+        | "search"
     > = {
         logoHref: "/",
         helpMenuDropdownAlignPoints: "br tr",
         accountMenuItems: [],
         helpMenuItems: [],
         menuItemsGroups: [],
-        showSearchButton: false,
+        search: null,
     };
 
     private nodeRef = createRef<HTMLDivElement>();
@@ -210,21 +210,6 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
         return !this.props.documentationUrl ? itemGroups : [...itemGroups, [this.getHelpMenuLink()]];
     };
 
-    private addSearchItemGroup = (itemGroup: IHeaderMenuItem[][]): IHeaderMenuItem[][] => {
-        return !this.props.showSearchButton
-            ? itemGroup
-            : [
-                  ...itemGroup,
-                  [
-                      {
-                          key: "gs.header.search",
-                          className: "gd-icon-header-search",
-                          onClick: this.props.onSearchButtonClick,
-                      },
-                  ],
-              ];
-    };
-
     private getHelpMenu = () => [
         [this.getHelpMenuLink("gd-icon-header-help-back"), ...this.props.helpMenuItems],
     ];
@@ -347,7 +332,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
         const menuItemsGroups = !this.state.isHelpMenuOpen
             ? this.props.showStaticHelpMenu
                 ? [[this.getHelpMenuLink()]]
-                : this.addHelpItemGroup(this.addSearchItemGroup(this.props.menuItemsGroups))
+                : this.addHelpItemGroup(this.props.menuItemsGroups)
             : this.getHelpMenu();
 
         return (
@@ -411,8 +396,8 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
 
                 {this.renderTrialItems()}
 
-                {this.props.showSearchButton ? (
-                    <HeaderSearch className="gd-header-measure" onClick={this.props.onSearchButtonClick} />
+                {this.props.search ? (
+                    <HeaderSearch className="gd-header-measure">{this.props.search}</HeaderSearch>
                 ) : null}
 
                 {this.props.helpMenuItems.length ? (

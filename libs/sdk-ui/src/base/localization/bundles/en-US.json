@@ -3217,5 +3217,15 @@
         "value": "Cron expression",
         "comment": "Repeats the schedule email using custom cron expression defined by the user. Do not translate word 'Cron' as it is a name of technical specification.",
         "limit": 0
+    },
+    "semantic-search.error": {
+        "value": "Search failed. Please try again later.",
+        "comment": "Error message shown when semantic search failed.",
+        "limit": 0
+    },
+    "semantic-search.no-results": {
+        "value": "No results found for “{query}”.",
+        "comment": "Message shown when semantic search did not return any results.",
+        "limit": 0
     }
 }
