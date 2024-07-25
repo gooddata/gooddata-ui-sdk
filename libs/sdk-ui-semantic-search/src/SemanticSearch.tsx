@@ -4,7 +4,7 @@ import * as React from "react";
 import { useDebouncedState, Input, Dropdown } from "@gooddata/sdk-ui-kit";
 import { GenAISemanticSearchType, ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
-import { SearchResults } from "./SearchResults.js";
+import { SearchResultsDropdownList } from "./SearchResultsDropdownList.js";
 import { useSemanticSearch } from "./hooks/index.js";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import classnames from "classnames";
@@ -14,14 +14,42 @@ import classnames from "classnames";
  * @alpha
  */
 export type SemanticSearchCoreProps = {
+    /**
+     * An analytical backend to use for the search. Can be omitted and taken from context.
+     */
     backend?: IAnalyticalBackend;
+    /**
+     * A workspace to search in. Can be omitted and taken from context.
+     */
     workspace?: string;
+    /**
+     * A function called when the user selects an item from the search results.
+     */
     onSelect: (item: ISemanticSearchResultItem) => void;
+    /**
+     * A function called when an error occurs during the search.
+     */
     onError?: (errorMessage: string) => void;
+    /**
+     * Additional CSS class for the component.
+     */
     className?: string;
+    /**
+     * A list of object types to search for.
+     */
     objectTypes?: GenAISemanticSearchType[];
+    /**
+     * A flag to enable deep search, i.e. search dashboard by their contents.
+     */
     deepSearch?: boolean;
+    /**
+     * A limit of search results to return.
+     */
     limit?: number;
+    /**
+     * Placeholder text for the search input.
+     */
+    placeholder?: string;
 };
 
 /**
@@ -43,12 +71,13 @@ const SemanticSearchCore: React.FC<SemanticSearchCoreProps> = ({
     deepSearch = false,
     limit = 10,
     className,
+    placeholder,
 }) => {
     // Input value handling
     const [value, setValue, searchTerm] = useDebouncedState("", DEBOUNCE);
 
     // Search results
-    const { searchLoading, searchResults, searchError } = useSemanticSearch({
+    const { searchStatus, searchResults, searchError } = useSemanticSearch({
         backend,
         workspace,
         searchTerm,
@@ -76,10 +105,10 @@ const SemanticSearchCore: React.FC<SemanticSearchCoreProps> = ({
 
     // Report errors
     React.useEffect(() => {
-        if (onError && searchError) {
+        if (onError && searchStatus === "error") {
             onError(searchError);
         }
-    }, [onError, searchError]);
+    }, [onError, searchError, searchStatus]);
 
     return (
         <Dropdown
@@ -88,16 +117,16 @@ const SemanticSearchCore: React.FC<SemanticSearchCoreProps> = ({
             closeOnOutsideClick={false}
             closeOnParentScroll={false}
             renderBody={({ isMobile }) => {
-                if (!searchResults.length && !searchLoading) {
+                if (!searchResults.length && searchStatus !== "loading") {
                     return null;
                 }
 
                 return (
-                    <SearchResults
+                    <SearchResultsDropdownList
                         width={width}
                         isMobile={isMobile}
                         searchResults={searchResults}
-                        searchLoading={searchLoading}
+                        searchLoading={searchStatus === "loading"}
                         onSelect={onItemSelect}
                     />
                 );
@@ -106,6 +135,7 @@ const SemanticSearchCore: React.FC<SemanticSearchCoreProps> = ({
                 return (
                     <Input
                         ref={inputRef}
+                        placeholder={placeholder}
                         isSearch
                         clearOnEsc
                         value={value}

@@ -22,6 +22,7 @@ export type SemanticSearchCoreProps = {
     objectTypes?: GenAISemanticSearchType[];
     deepSearch?: boolean;
     limit?: number;
+    placeholder?: string;
 };
 
 // @alpha
@@ -36,7 +37,7 @@ export type SemanticSearchHookInput = {
 
 // @alpha
 export type SemanticSearchInputResult = {
-    searchLoading: boolean;
+    searchStatus: "idle" | "loading" | "error" | "success";
     searchError: string;
     searchResults: ISemanticSearchResultItem[];
 };
@@ -45,6 +46,9 @@ export type SemanticSearchInputResult = {
 export type SemanticSearchProps = SemanticSearchCoreProps & {
     locale?: string;
 };
+
+// @internal
+export const useListSelector: <T>(items: T[], onSelect: (item: T) => void) => [number, (index: number) => void];
 
 // @alpha
 export const useSemanticSearch: ({ searchTerm, objectTypes, deepSearch, limit, backend, workspace, }: SemanticSearchHookInput) => SemanticSearchInputResult;

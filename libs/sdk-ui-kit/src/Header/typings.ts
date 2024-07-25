@@ -61,8 +61,7 @@ export interface IAppHeaderProps {
     showInviteItem?: boolean;
     onInviteItemClick?: (e: React.MouseEvent) => void;
 
-    showSearchButton?: boolean;
-    onSearchButtonClick?: () => void;
+    search?: React.ReactNode;
 }
 
 /**
