@@ -242,13 +242,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableDirectQuery,
-            "enableDirectQuery",
-            "BOOLEAN",
-            FeatureFlagsValues.enableDirectQuery,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableMariaDbDataSource,
             "enableMariaDbDataSource",
             "BOOLEAN",

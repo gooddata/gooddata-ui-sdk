@@ -67,8 +67,6 @@ export enum TigerFeaturesNames {
     EnableAttributeFilterValuesValidation = "enableAttributeFilterValuesValidation",
     EnableMySqlDataSource = "enableMySqlDataSource",
     EnableCreateUser = "enableCreateUser",
-    //boolean + possible values: enabled, disabled
-    EnableDirectQuery = "enableDirectQuery",
     EnableMariaDbDataSource = "enableMariaDbDataSource",
     EnableRepeaterChart = "enableRepeaterChart",
     //boolean + possible values: enabled, disabled
@@ -133,7 +131,6 @@ export type ITigerFeatureFlags = {
     enableAttributeFilterValuesValidation: typeof FeatureFlagsValues["enableAttributeFilterValuesValidation"][number];
     enableMySqlDataSource: typeof FeatureFlagsValues["enableMySqlDataSource"][number];
     enableCreateUser: typeof FeatureFlagsValues["enableCreateUser"][number];
-    enableDirectQuery: typeof FeatureFlagsValues["enableDirectQuery"][number];
     enableMariaDbDataSource: typeof FeatureFlagsValues["enableMariaDbDataSource"][number];
     enableRepeaterChart: typeof FeatureFlagsValues["enableRepeaterChart"][number];
     enableKDAttributeFilterDatesValidation: typeof FeatureFlagsValues["enableKDAttributeFilterDatesValidation"][number];
@@ -195,7 +192,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAttributeFilterValuesValidation: true,
     enableMySqlDataSource: false,
     enableCreateUser: true,
-    enableDirectQuery: false,
     enableMariaDbDataSource: false,
     enableRepeaterChart: true,
     enableKDAttributeFilterDatesValidation: true,
@@ -262,7 +258,6 @@ export const FeatureFlagsValues = {
     enableMySqlDataSource: [true, false] as const,
     enableMotherDuckDataSource: [true, false] as const,
     enableCreateUser: [true, false] as const,
-    enableDirectQuery: [true, false] as const,
     enableMariaDbDataSource: [true, false] as const,
     enableRepeaterChart: [true, false] as const,
     enableKDAttributeFilterDatesValidation: [true, false] as const,
