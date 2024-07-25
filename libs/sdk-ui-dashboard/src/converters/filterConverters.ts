@@ -71,12 +71,14 @@ export function dashboardAttributeFilterToAttributeFilter(
         return newNegativeAttributeFilter(
             filter.attributeFilter.displayForm,
             filter.attributeFilter.attributeElements,
+            filter.attributeFilter.localIdentifier,
         );
     }
 
     return newPositiveAttributeFilter(
         filter.attributeFilter.displayForm,
         filter.attributeFilter.attributeElements,
+        filter.attributeFilter.localIdentifier,
     );
 }
 
