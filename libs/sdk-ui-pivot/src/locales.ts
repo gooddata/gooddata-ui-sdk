@@ -9,7 +9,6 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     max: { id: "visualizations.totals.dropdown.title.max" },
     nat: { id: "visualizations.totals.dropdown.title.nat" },
     med: { id: "visualizations.totals.dropdown.title.med" },
-    native: { id: "visualizations.totals.dropdown.title.nat" },
     "disabled.mvf": { id: "visualizations.totals.dropdown.tooltip.nat.disabled.mvf" },
     "disabled.ranking": { id: "visualizations.totals.dropdown.tooltip.nat.disabled.ranking" },
 });

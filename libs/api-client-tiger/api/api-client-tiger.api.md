@@ -15084,7 +15084,7 @@ export const TotalFunctionEnum: {
     readonly MAX: "MAX";
     readonly AVG: "AVG";
     readonly MED: "MED";
-    readonly NATIVE: "NATIVE";
+    readonly NAT: "NAT";
 };
 
 // @public (undocumented)

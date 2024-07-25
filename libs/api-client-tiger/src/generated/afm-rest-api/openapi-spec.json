@@ -2363,7 +2363,7 @@
                         "type": "string",
                         "description": "Aggregation function to compute the total.",
                         "example": "SUM",
-                        "enum": ["SUM", "MIN", "MAX", "AVG", "MED", "NATIVE"]
+                        "enum": ["SUM", "MIN", "MAX", "AVG", "MED", "NAT"]
                     },
                     "metric": {
                         "type": "string",
