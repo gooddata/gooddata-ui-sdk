@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 export {
     joinDrillUrlParts,
@@ -6,4 +6,5 @@ export {
     getAttributeIdentifiersPlaceholdersFromUrl,
     getDashboardAttributeFilterPlaceholdersFromUrl,
     getInsightAttributeFilterPlaceholdersFromUrl,
+    IDrillToUrlPlaceholder,
 } from "./dashboard/drillUrl.js";

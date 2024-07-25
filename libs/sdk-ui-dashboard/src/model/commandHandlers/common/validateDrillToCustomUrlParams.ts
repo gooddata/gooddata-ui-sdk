@@ -29,6 +29,7 @@ import { query } from "../../store/_infra/queryCall.js";
 import { dashboardAttributeFilterToAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
 import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
 import { selectFilterContextAttributeFilters } from "../../store/filterContext/filterContextSelectors.js";
+import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 
 interface IInvalidParamsInfo {
     widget: IInsightWidget;
@@ -79,6 +80,10 @@ function* validateWidgetDrillToCustomUrlParams(widget: IInsightWidget): SagaIter
         sanitizeAttributeFilter(filter, displayForms),
     );
 
+    const attributeFilterConfigs: ReturnType<typeof selectAttributeFilterConfigsOverrides> = yield select(
+        selectAttributeFilterConfigsOverrides,
+    );
+
     return widget.drills.filter(isDrillToCustomUrl).reduce(
         (acc: IInvalidParamsInfo, drillDefinition) => {
             const ids = extractDisplayFormIdentifiers([drillDefinition]);
@@ -105,8 +110,13 @@ function* validateWidgetDrillToCustomUrlParams(widget: IInsightWidget): SagaIter
                     return true;
                 }
 
-                return !sanitizedDashboardAttributeFilters.some((filter) =>
-                    areObjRefsEqual(filterObjRef(filter), identifier),
+                return (
+                    !sanitizedDashboardAttributeFilters.some((filter) =>
+                        areObjRefsEqual(filterObjRef(filter), identifier),
+                    ) &&
+                    !attributeFilterConfigs.some((config) => {
+                        return config.displayAsLabel && areObjRefsEqual(config.displayAsLabel, identifier);
+                    })
                 );
             });
 
