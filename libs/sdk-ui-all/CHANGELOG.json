@@ -2,6 +2,18 @@
   "name": "@gooddata/sdk-ui-all",
   "entries": [
     {
+      "version": "10.6.0",
+      "tag": "@gooddata/sdk-ui-all_v10.6.0",
+      "date": "Thu, 25 Jul 2024 08:35:32 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Allow specifying returnTo parameter with backend deauthenticate"
+          }
+        ]
+      }
+    },
+    {
       "version": "10.5.0",
       "tag": "@gooddata/sdk-ui-all_v10.5.0",
       "date": "Thu, 11 Jul 2024 08:01:45 GMT",

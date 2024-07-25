@@ -1,6 +1,13 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 11 Jul 2024 08:01:45 GMT and should not be manually modified.
+This log was last generated on Thu, 25 Jul 2024 08:35:32 GMT and should not be manually modified.
+
+## 10.6.0
+Thu, 25 Jul 2024 08:35:32 GMT
+
+### Updates
+
+- Allow specifying returnTo parameter with backend deauthenticate
 
 ## 10.5.0
 Thu, 11 Jul 2024 08:01:45 GMT
