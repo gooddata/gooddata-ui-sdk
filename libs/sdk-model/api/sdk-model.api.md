@@ -321,7 +321,7 @@ export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
 export type DatasetLoadStatus = "RUNNING" | "OK" | "ERROR" | "CANCELLED" | "ERROR_METADATA" | "REFRESHING";
 
 // @alpha (undocumented)
-export type DataSourceType = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "SINGLESTORE" | "MOTHERDUCK";
+export type DataSourceType = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "SINGLESTORE" | "MOTHERDUCK" | "FLIGHTRPC";
 
 // @public
 export type DataValue = null | string | number;
@@ -495,6 +495,9 @@ export type ForecastDataValue = {
     loading: boolean;
 };
 
+// @alpha
+export type GenAISemanticSearchType = "dataset" | "attribute" | "label" | "fact" | "date" | "metric" | "visualization" | "dashboard";
+
 // @internal
 export function getAttributeElementsItems(attributeElements: IAttributeElements): Array<string | null>;
 
@@ -625,6 +628,7 @@ export interface IAttributeDescriptorBody {
     labelType?: AttributeDisplayFormType;
     localIdentifier: string;
     name: string;
+    primaryLabel: ObjRef;
     ref: ObjRef;
     // (undocumented)
     totalItems?: ITotalDescriptor[];
@@ -1493,7 +1497,7 @@ export interface IEntitlementDescriptor {
 }
 
 // @public
-export type IEntitlementsName = "CacheStrategy" | "Contract" | "CustomTheming" | "ExtraCache" | "ManagedOIDC" | "UiLocalization" | "Tier" | "UserCount" | "PdfExports" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WhiteLabeling" | "WorkspaceCount" | "Hipaa" | "UserTelemetryDisabled" | "AutomationCount" | "UnlimitedAutomations" | "AutomationRecipientCount" | "UnlimitedAutomationRecipients" | "DailyScheduledActionCount" | "UnlimitedDailyScheduledActions" | "ScheduledActionMinimumRecurrenceMinutes";
+export type IEntitlementsName = "CacheStrategy" | "Contract" | "CustomTheming" | "ExtraCache" | "ManagedOIDC" | "UiLocalization" | "Tier" | "UserCount" | "PdfExports" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WhiteLabeling" | "WorkspaceCount" | "Hipaa" | "UserTelemetryDisabled" | "AutomationCount" | "UnlimitedAutomations" | "AutomationRecipientCount" | "UnlimitedAutomationRecipients" | "DailyScheduledActionCount" | "UnlimitedDailyScheduledActions" | "ScheduledActionMinimumRecurrenceMinutes" | "FederatedIdentityManagement";
 
 // @public
 export interface IExecutionConfig {
@@ -1532,7 +1536,7 @@ export interface IExportDefinitionDashboardContent {
     // (undocumented)
     dashboard: string;
     // (undocumented)
-    filters?: IFilter[];
+    filters?: FilterContextItem[];
 }
 
 // @alpha
@@ -1556,10 +1560,17 @@ export interface IExportDefinitionPdfOptions {
 // @alpha
 export type IExportDefinitionRequestPayload = {
     fileName: string;
-    format: "PDF";
+    format: "PDF" | "CSV" | "XLSX";
     pdfOptions?: IExportDefinitionPdfOptions;
+    settings?: IExportDefinitionSettings;
     content: IExportDefinitionContent;
 };
+
+// @alpha
+export interface IExportDefinitionSettings {
+    // (undocumented)
+    mergeHeaders: boolean;
+}
 
 // @alpha
 export interface IExportDefinitionVisualizationObjectContent {
@@ -2181,8 +2192,10 @@ export interface IOrganizationDescriptor {
     bootstrapUser?: ObjRef;
     // (undocumented)
     bootstrapUserGroup?: ObjRef;
-    // (undocumented)
+    // @deprecated (undocumented)
     earlyAccess?: string;
+    // (undocumented)
+    earlyAccessValues?: string[];
     // (undocumented)
     id: string;
     // (undocumented)
@@ -2191,8 +2204,10 @@ export interface IOrganizationDescriptor {
 
 // @public
 export interface IOrganizationDescriptorUpdate {
-    // (undocumented)
+    // @deprecated (undocumented)
     earlyAccess?: string | null;
+    // (undocumented)
+    earlyAccessValues?: string[] | null;
     // (undocumented)
     title?: string;
 }
@@ -2710,6 +2725,14 @@ export function isDrillToInsight(obj: unknown): obj is IDrillToInsight;
 // @alpha
 export function isDrillToLegacyDashboard(obj: unknown): obj is IDrillToLegacyDashboard;
 
+// @alpha
+export interface ISemanticSearchResultItem {
+    description: string;
+    id: string;
+    title: string;
+    type: GenAISemanticSearchType;
+}
+
 // @public
 export interface ISeparators {
     decimal: string;
@@ -2718,7 +2741,6 @@ export interface ISeparators {
 
 // @public
 export interface ISettings {
-    ["msf.enableTenantCustomModel"]?: boolean;
     // (undocumented)
     [key: string]: number | boolean | string | object | undefined;
     ADCatalogGroupsExpanded?: boolean;
@@ -2728,6 +2750,8 @@ export interface ISettings {
     enableADMultipleDateFilters?: boolean;
     enableAlternativeDisplayFormSelection?: boolean;
     enableAnalyticalDashboardPermissions?: boolean;
+    // (undocumented)
+    enableAnalyticalDashboards?: boolean;
     enableApproxCount?: boolean;
     enableAttributeFilterValuesValidation?: boolean;
     enableAxisLabelFormat?: boolean;
@@ -2740,8 +2764,12 @@ export interface ISettings {
     enableCompanyLogoInEmbeddedUI?: boolean;
     enableCompositeGrain?: boolean;
     enableCreateUser?: boolean;
+    // (undocumented)
+    enableCsvUploader?: boolean;
     enableCustomColorPicker?: boolean;
     enableDataSampling?: boolean;
+    // (undocumented)
+    enableDataSection?: boolean;
     enableDescriptions?: boolean;
     enableDrilledInsightExport?: boolean;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
@@ -2765,15 +2793,29 @@ export interface ISettings {
     enableKPIDashboardSaveAsNew?: boolean;
     enableKPIDashboardSchedule?: boolean;
     enableKPIDashboardScheduleRecipients?: boolean;
+    // (undocumented)
+    enableMariaDbDataSource?: boolean;
+    // (undocumented)
+    enableMotherDuckDataSource?: boolean;
     enableMultipleCSVs?: boolean;
     enableMultipleDataSourcesInWorkspace?: boolean;
     enableMultipleDateFilters?: boolean;
     enableMultipleDates?: boolean;
+    // (undocumented)
+    enableMySqlDataSource?: boolean;
     enableNewHeadline?: boolean;
+    // (undocumented)
+    enableNewNavigationForResponsiveUi?: boolean;
+    // (undocumented)
+    enableOracleDataSource?: boolean;
     enablePivotTableIncreaseBucketSize?: boolean;
     enablePivotTableTransposition?: boolean;
+    // (undocumented)
+    enablePixelPerfectExperience?: boolean;
     enablePushpinGeoChart?: boolean;
     enableRenamingMeasureToMetric?: boolean;
+    // (undocumented)
+    enableRenamingProjectToWorkspace?: boolean;
     enableReversedStacking?: boolean;
     enableRichTextDescriptions?: boolean;
     enableRollupTotals?: boolean;
@@ -2781,6 +2823,10 @@ export interface ISettings {
     enableScatterPlotSegmentation?: boolean;
     enableScheduling?: boolean;
     enableSeparateTotalLabels?: boolean;
+    // (undocumented)
+    enableSingleStoreDataSource?: boolean;
+    // (undocumented)
+    enableSnowflakeKeyPairAuthentication?: boolean;
     enableTableColumnsAutoResizing?: boolean;
     enableTableColumnsGrowToFit?: boolean;
     enableTableColumnsManualResizing?: boolean;
@@ -2791,6 +2837,8 @@ export interface ISettings {
     enableWorkspacesHierarchyView?: boolean;
     formatLocale?: string;
     hideKpiDrillInEmbedded?: boolean;
+    // (undocumented)
+    hidePixelPerfectExperience?: boolean;
     metadataTimeZone?: string;
     // @alpha
     openAiConfig?: IOpenAiConfig;
@@ -2818,6 +2866,9 @@ export function isFilterContext(obj: unknown): obj is IFilterContext;
 
 // @alpha
 export function isFilterContextDefinition(obj: unknown): obj is IFilterContextDefinition;
+
+// @alpha
+export function isFilterContextItem(obj: unknown): obj is FilterContextItem;
 
 // @alpha
 export const isGranularAccess: (obj: unknown) => obj is IGranularUserAccess | IGranularUserGroupAccess;
@@ -3453,6 +3504,7 @@ export interface IWebhookMetadataObject extends IWebhookMetadataObjectBase {
 // @alpha (undocumented)
 export interface IWebhookMetadataObjectBase {
     endpoint: string;
+    hasToken?: boolean;
     name: string;
     token?: string;
     triggers: IWebhookTrigger[];

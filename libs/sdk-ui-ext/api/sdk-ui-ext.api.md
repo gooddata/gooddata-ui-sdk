@@ -41,7 +41,7 @@ import { WrappedComponentProps } from 'react-intl';
 export const AddDataSourceToSubjects: React_2.FC<IAddDataSourceToSubjectsProps>;
 
 // @internal (undocumented)
-export function addIntersectionFiltersToInsight(source: IInsight, intersection: IDrillEventIntersectionElement[], backendSupportsElementUris: boolean): IInsight;
+export function addIntersectionFiltersToInsight(source: IInsight, intersection: IDrillEventIntersectionElement[], backendSupportsElementUris: boolean, enableDuplicatedLabelValuesInAttributeFilter: boolean): IInsight;
 
 // @internal (undocumented)
 export const AddUserGroupsToUsersDialog: React_2.FC<IAddUserGroupsToUsersDialogProps>;
@@ -129,7 +129,7 @@ export function getInsightSizeInfo(insight: IInsightDefinition, settings: ISetti
 export function getInsightVisualizationMeta(insight: IInsightDefinition): IVisualizationMeta;
 
 // @internal (undocumented)
-export function getInsightWithAppliedDrillDown(insight: IInsight, drillEvent: IDrillEvent, drillDefinition: IDrillDownDefinition, backendSupportsElementUris: boolean): IInsight;
+export function getInsightWithAppliedDrillDown(insight: IInsight, drillEvent: IDrillEvent, drillDefinition: IDrillDownDefinition, backendSupportsElementUris: boolean, enableDuplicatedLabelValuesInAttributeFilter: boolean): IInsight;
 
 // @internal (undocumented)
 export interface IAddDataSourceToSubjectsProps extends IWithTelemetryProps {

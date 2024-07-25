@@ -365,6 +365,11 @@ export interface IChartClusteringConfig {
      * Number of clusters.
      */
     numberOfClusters: number;
+
+    /**
+     * Threshold for clustering.
+     */
+    threshold?: number;
 }
 
 /**

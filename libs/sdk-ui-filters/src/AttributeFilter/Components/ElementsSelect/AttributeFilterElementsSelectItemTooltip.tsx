@@ -22,11 +22,14 @@ export const AttributeFilterElementsSelectItemTooltip = ({
                     { align: "cr cl", offset: { x: 0, y: 0 } },
                     { align: "cr bl", offset: { x: 0, y: 0 } },
                     { align: "cr tl", offset: { x: 0, y: 0 } },
+                    { align: "cl cr", offset: { x: 0, y: 0 } },
+                    { align: "cl br", offset: { x: 0, y: 0 } },
+                    { align: "cl tr", offset: { x: 0, y: 0 } },
                 ]}
                 arrowStyle={{ display: "none" }}
             >
                 <p>{itemTitle}</p>
-                {primaryLabelTitle ? (
+                {primaryLabelTitle && itemPrimaryTitle ? (
                     <>
                         <h4>{primaryLabelTitle}</h4>
                         <p>{itemPrimaryTitle}</p>

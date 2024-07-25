@@ -21,6 +21,10 @@ exports[`transformResultDimensions > should fill in totals 1`] = `
           "labelType": undefined,
           "localIdentifier": "localAttr1",
           "name": "event_date - Quarter/Year",
+          "primaryLabel": {
+            "identifier": "event_date.quarter",
+            "type": "displayForm",
+          },
           "ref": {
             "identifier": "event_date.quarter.label",
             "type": "displayForm",
@@ -52,6 +56,10 @@ exports[`transformResultDimensions > should fill in totals 1`] = `
           "labelType": undefined,
           "localIdentifier": "localAttr2",
           "name": "event_date - Quarter/Year",
+          "primaryLabel": {
+            "identifier": "event_date.quarter",
+            "type": "displayForm",
+          },
           "ref": {
             "identifier": "event_date.quarter.label",
             "type": "displayForm",
@@ -106,6 +114,10 @@ exports[`transformResultDimensions > should fill in totals 1`] = `
           "labelType": undefined,
           "localIdentifier": "localAttr3",
           "name": "event_date - Quarter/Year",
+          "primaryLabel": {
+            "identifier": "event_date.quarter",
+            "type": "displayForm",
+          },
           "ref": {
             "identifier": "event_date.quarter.label",
             "type": "displayForm",
@@ -141,6 +153,10 @@ exports[`transformResultDimensions > should fill in totals 1`] = `
           "labelType": "GDC.link",
           "localIdentifier": "localAttr4",
           "name": "Hyperlink",
+          "primaryLabel": {
+            "identifier": "hyperlink.label",
+            "type": "displayForm",
+          },
           "ref": {
             "identifier": "hyperlink.label",
             "type": "displayForm",
@@ -170,6 +186,10 @@ exports[`transformResultDimensions > should fill in totals 1`] = `
           "labelType": "GDC.image",
           "localIdentifier": "localAttr5",
           "name": "Image",
+          "primaryLabel": {
+            "identifier": "image.label",
+            "type": "displayForm",
+          },
           "ref": {
             "identifier": "image.label",
             "type": "displayForm",
@@ -204,6 +224,10 @@ exports[`transformResultDimensions > should fill in totals with multiple totals 
           "labelType": undefined,
           "localIdentifier": "localAttr1",
           "name": "event_date - Quarter/Year",
+          "primaryLabel": {
+            "identifier": "event_date.quarter",
+            "type": "displayForm",
+          },
           "ref": {
             "identifier": "event_date.quarter.label",
             "type": "displayForm",
@@ -235,6 +259,10 @@ exports[`transformResultDimensions > should fill in totals with multiple totals 
           "labelType": undefined,
           "localIdentifier": "localAttr2",
           "name": "event_date - Quarter/Year",
+          "primaryLabel": {
+            "identifier": "event_date.quarter",
+            "type": "displayForm",
+          },
           "ref": {
             "identifier": "event_date.quarter.label",
             "type": "displayForm",
@@ -289,6 +317,10 @@ exports[`transformResultDimensions > should fill in totals with multiple totals 
           "labelType": undefined,
           "localIdentifier": "localAttr3",
           "name": "event_date - Quarter/Year",
+          "primaryLabel": {
+            "identifier": "event_date.quarter",
+            "type": "displayForm",
+          },
           "ref": {
             "identifier": "event_date.quarter.label",
             "type": "displayForm",
@@ -324,6 +356,10 @@ exports[`transformResultDimensions > should fill in totals with multiple totals 
           "labelType": "GDC.link",
           "localIdentifier": "localAttr4",
           "name": "Hyperlink",
+          "primaryLabel": {
+            "identifier": "hyperlink.label",
+            "type": "displayForm",
+          },
           "ref": {
             "identifier": "hyperlink.label",
             "type": "displayForm",
@@ -353,6 +389,10 @@ exports[`transformResultDimensions > should fill in totals with multiple totals 
           "labelType": "GDC.image",
           "localIdentifier": "localAttr5",
           "name": "Image",
+          "primaryLabel": {
+            "identifier": "image.label",
+            "type": "displayForm",
+          },
           "ref": {
             "identifier": "image.label",
             "type": "displayForm",
@@ -406,6 +446,10 @@ exports[`transformResultDimensions > should fill in uris and refs for attribute 
           "labelType": undefined,
           "localIdentifier": "fd48e8fd32b54b1baba3e3ccdd719f26",
           "name": "event_date - Quarter/Year",
+          "primaryLabel": {
+            "identifier": "event_date.quarter",
+            "type": "displayForm",
+          },
           "ref": {
             "identifier": "event_date.quarter.label",
             "type": "displayForm",
@@ -462,6 +506,10 @@ exports[`transformResultDimensions > should fill in uris and refs for attribute 
           "labelType": undefined,
           "localIdentifier": "fd48e8fd32b54b1baba3e3ccdd719f26",
           "name": "event_date - Quarter/Year",
+          "primaryLabel": {
+            "identifier": "event_date.quarter",
+            "type": "displayForm",
+          },
           "ref": {
             "identifier": "event_date.quarter.label",
             "type": "displayForm",

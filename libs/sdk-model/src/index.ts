@@ -495,6 +495,7 @@ export {
     newAbsoluteDashboardDateFilter,
     newAllTimeDashboardDateFilter,
     newRelativeDashboardDateFilter,
+    isFilterContextItem,
 } from "./dashboard/filterContext.js";
 
 export {
@@ -890,6 +891,7 @@ export {
     IExportDefinitionRequestPayload,
     IExportDefinitionBase,
     IExportDefinitionPdfOptions,
+    IExportDefinitionSettings,
     exportDefinitionTitle,
     exportDefinitionCreated,
     exportDefinitionUpdated,
@@ -917,3 +919,5 @@ export {
     isAutomationUserGroupRecipient,
     isAutomationUserRecipient,
 } from "./automations/index.js";
+
+export { ISemanticSearchResultItem, GenAISemanticSearchType } from "./genAI/index.js";

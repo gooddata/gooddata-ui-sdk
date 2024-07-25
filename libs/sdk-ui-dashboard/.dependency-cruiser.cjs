@@ -149,6 +149,8 @@ options = {
             "src/presentation/dashboardContexts",
             "src/presentation/localization",
             "src/presentation/constants/*",
+            "src/converters",
+            "src/types.ts",
         ]),
         depCruiser.moduleWithDependencies("saveAs", "src/presentation/saveAs", [
             "src/model",

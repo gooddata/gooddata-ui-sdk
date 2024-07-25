@@ -262,6 +262,9 @@ export const EmptyElementsSearchBar: React_2.VFC<IAttributeFilterElementsSearchB
 // @public
 export function filterVisibleDateFilterOptions(dateFilterOptions: IDateFilterOptionsByType): IDateFilterOptionsByType;
 
+// @internal (undocumented)
+export function getAttributeFilterSubtitle(isCommittedSelectionInverted: boolean, committedSelectionElements: IAttributeElement[], intl: IntlShape): string;
+
 // @internal
 export const getLocalizedIcuDateFormatPattern: (locale: string) => string;
 
@@ -303,6 +306,7 @@ export interface IAttributeElementLoader {
     cancelIrrelevantElementsLoad(correlation?: Correlation): void;
     cancelNextElementsPageLoad(): void;
     getAllElements(): IAttributeElement[];
+    getDisplayAsLabel(): ObjRef | undefined;
     getElementsByKey(keys: AttributeElementKey[]): IAttributeElement[];
     getInitialElementsPageError(): GoodDataSdkError | undefined;
     getInitialElementsPageStatus(): AsyncOperationStatus;

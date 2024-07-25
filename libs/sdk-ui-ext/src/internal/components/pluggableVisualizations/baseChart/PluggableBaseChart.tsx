@@ -84,7 +84,7 @@ import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } 
 import { messages } from "../../../../locales.js";
 import { isForecastEnabled } from "../../../utils/forecastHelper.js";
 import omitBy from "lodash/omitBy.js";
-import { DEFAULT_NUMBER_OF_CLUSTERS } from "../../../constants/scatter.js";
+import { DEFAULT_NUMBER_OF_CLUSTERS, DEFAULT_CLUSTERING_THRESHOLD } from "../../../constants/scatter.js";
 
 export class PluggableBaseChart extends AbstractPluggableVisualization {
     protected projectId: string;
@@ -167,7 +167,12 @@ export class PluggableBaseChart extends AbstractPluggableVisualization {
         backendSupportsElementUris: boolean,
     ): IInsight {
         const intersection = drillDownContext.event.drillContext.intersection;
-        const withFilters = addIntersectionFiltersToInsight(source, intersection, backendSupportsElementUris);
+        const withFilters = addIntersectionFiltersToInsight(
+            source,
+            intersection,
+            backendSupportsElementUris,
+            this.featureFlags.enableDuplicatedLabelValuesInAttributeFilter,
+        );
         return modifyBucketsAttributesForDrillDown(withFilters, drillDownContext.drillDefinition);
     }
 
@@ -500,14 +505,24 @@ function enhancePropertiesMetaWithPartialClusteringInfo(data: any, type: ChartTy
 }
 
 function enhanceBaseChartWithClusteringConfiguration(fullConfig: IChartConfig) {
+    const threshold = fullConfig?.clustering?.threshold
+        ? {
+              threshold:
+                  typeof fullConfig?.clustering?.threshold === "string"
+                      ? parseFloat(fullConfig.clustering.threshold)
+                      : fullConfig?.clustering?.threshold ?? DEFAULT_CLUSTERING_THRESHOLD,
+          }
+        : {};
+
     return !isEmpty(fullConfig.clustering) && fullConfig.clustering.enabled
         ? {
               clusteringConfig: {
-                  ...fullConfig.clustering,
+                  ...(fullConfig.clustering ?? {}),
                   numberOfClusters:
-                      typeof fullConfig.clustering.numberOfClusters === "string"
+                      typeof fullConfig?.clustering?.numberOfClusters === "string"
                           ? parseInt(fullConfig.clustering.numberOfClusters, 10)
-                          : fullConfig.clustering.numberOfClusters ?? DEFAULT_NUMBER_OF_CLUSTERS,
+                          : fullConfig?.clustering?.numberOfClusters ?? DEFAULT_NUMBER_OF_CLUSTERS,
+                  ...threshold,
               },
           }
         : {};

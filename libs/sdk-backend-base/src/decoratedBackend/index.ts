@@ -26,6 +26,7 @@ export {
     SecuritySettingsDecoratorFactory,
     WorkspaceSettingsDecoratorFactory,
     AttributesDecoratorFactory,
+    AutomationsDecoratorFactory,
     DashboardsDecoratorFactory,
     DecoratorFactories,
 } from "./types.js";

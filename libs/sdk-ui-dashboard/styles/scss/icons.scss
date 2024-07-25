@@ -98,6 +98,27 @@
     }
 }
 
+.gd-list-item {
+    .gd-icon-list {
+        &::before {
+            content: "";
+            background: url("~@gooddata/sdk-ui-dashboard/esm/assets/list.svg") no-repeat center;
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+        }
+    }
+    .gd-icon-save-as-new {
+        &::before {
+            content: "";
+            background: url("~@gooddata/sdk-ui-dashboard/esm/assets/save-as-new.svg") no-repeat center;
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+        }
+    }
+}
+
 .dropdown-body .gd-list-item {
     &.type-growIsGood,
     &.type-growIsBad,

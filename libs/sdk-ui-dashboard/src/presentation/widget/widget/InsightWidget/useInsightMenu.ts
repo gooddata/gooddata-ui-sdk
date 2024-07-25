@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { useCallback, useMemo, useState, Dispatch, SetStateAction } from "react";
 import { useIntl } from "react-intl";
@@ -7,15 +7,8 @@ import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 import { selectExecutionResultByRef, useDashboardSelector } from "../../../../model/index.js";
 
 import { isDataError } from "../../../../_staging/errors/errorPredicates.js";
-import {
-    useDashboardCustomizationsContext,
-    InsightMenuItemsProvider,
-} from "../../../dashboardContexts/index.js";
-import {
-    getDefaultInsightMenuItems,
-    getDefaultLegacyInsightMenuItems,
-    IInsightMenuItem,
-} from "../../insightMenu/index.js";
+import { useDashboardCustomizationsContext } from "../../../dashboardContexts/index.js";
+import { getDefaultInsightMenuItems, IInsightMenuItem } from "../../insightMenu/index.js";
 
 type UseInsightMenuConfig = {
     insight: IInsight;
@@ -23,10 +16,13 @@ type UseInsightMenuConfig = {
     exportCSVEnabled: boolean;
     exportXLSXEnabled: boolean;
     scheduleExportEnabled: boolean;
+    scheduleExportManagementEnabled: boolean;
     onExportCSV: () => void;
     onExportXLSX: () => void;
     onScheduleExport: () => void;
+    onScheduleManagementExport: () => void;
     isScheduleExportVisible: boolean;
+    isScheduleExportManagementVisible: boolean;
 };
 
 export const useInsightMenu = (
@@ -39,7 +35,7 @@ export const useInsightMenu = (
     const openMenu = useCallback(() => setIsMenuOpen(true), []);
 
     const { insightMenuItemsProvider } = useDashboardCustomizationsContext();
-    const defaultMenuItems = useDefaultMenuItems(config, insightMenuItemsProvider, setIsMenuOpen);
+    const defaultMenuItems = useDefaultMenuItems(config, setIsMenuOpen);
 
     const menuItems = useMemo<IInsightMenuItem[]>(() => {
         return insightMenuItemsProvider
@@ -50,19 +46,18 @@ export const useInsightMenu = (
     return { menuItems, isMenuOpen, openMenu, closeMenu };
 };
 
-function useDefaultMenuItems(
-    config: UseInsightMenuConfig,
-    insightMenuItemsProvider: InsightMenuItemsProvider | undefined,
-    setIsMenuOpen: Dispatch<SetStateAction<boolean>>,
-) {
+function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispatch<SetStateAction<boolean>>) {
     const {
         exportCSVEnabled,
         exportXLSXEnabled,
         scheduleExportEnabled,
+        scheduleExportManagementEnabled,
         onExportCSV,
         onExportXLSX,
         onScheduleExport,
+        onScheduleManagementExport,
         isScheduleExportVisible,
+        isScheduleExportManagementVisible,
         widget,
     } = config;
 
@@ -70,14 +65,11 @@ function useDefaultMenuItems(
     const execution = useDashboardSelector(selectExecutionResultByRef(widget.ref));
 
     return useMemo<IInsightMenuItem[]>(() => {
-        const defaultMenuItemsGetter = !insightMenuItemsProvider
-            ? getDefaultLegacyInsightMenuItems
-            : getDefaultInsightMenuItems;
-
-        return defaultMenuItemsGetter(intl, {
+        return getDefaultInsightMenuItems(intl, {
             exportCSVDisabled: !exportCSVEnabled,
             exportXLSXDisabled: !exportXLSXEnabled,
             scheduleExportDisabled: !scheduleExportEnabled,
+            scheduleExportManagementDisabled: !scheduleExportManagementEnabled,
             onExportCSV: () => {
                 setIsMenuOpen(false);
                 onExportCSV();
@@ -90,19 +82,26 @@ function useDefaultMenuItems(
                 setIsMenuOpen(false);
                 onScheduleExport();
             },
+            onScheduleManagementExport: () => {
+                setIsMenuOpen(false);
+                onScheduleManagementExport();
+            },
             isScheduleExportVisible,
+            isScheduleExportManagementVisible,
             isDataError: isDataError(execution?.error),
         });
     }, [
-        insightMenuItemsProvider,
         execution,
         exportCSVEnabled,
         exportXLSXEnabled,
         scheduleExportEnabled,
+        scheduleExportManagementEnabled,
         onExportCSV,
         onExportXLSX,
         onScheduleExport,
+        onScheduleManagementExport,
         isScheduleExportVisible,
+        isScheduleExportManagementVisible,
         intl,
         setIsMenuOpen,
     ]);

@@ -153,11 +153,13 @@ export class TigerExecutionResult implements IExecutionResult {
         const workspaceId = this.workspace;
         const resultId = this.resultId;
         const numberOfClusters = clusteringConfig.numberOfClusters;
+        const threshold = clusteringConfig.threshold ? { threshold: clusteringConfig.threshold } : {};
 
         const clustering = await this.authCall((client) =>
             client.smartFunctions.clustering({
                 clusteringRequest: {
                     numberOfClusters,
+                    ...threshold,
                 },
                 resultId,
                 workspaceId,

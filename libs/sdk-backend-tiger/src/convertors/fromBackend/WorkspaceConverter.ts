@@ -15,6 +15,7 @@ export const workspaceConverter = (
         parentWorkspace,
         parentPrefixes,
         earlyAccess: attributes?.earlyAccess ?? undefined,
+        earlyAccessValues: attributes?.earlyAccessValues ?? undefined,
         childWorkspacesCount: meta?.hierarchy?.childrenCount,
     };
 };

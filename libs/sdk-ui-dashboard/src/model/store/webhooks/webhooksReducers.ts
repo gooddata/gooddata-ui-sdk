@@ -8,6 +8,7 @@ type WebhooksReducer<A extends Action> = CaseReducer<WebhooksState, A>;
 
 const setWebhooks: WebhooksReducer<PayloadAction<Webhooks>> = (state, action) => {
     state.webhooks = action.payload;
+    state.loading = false;
 };
 
 export const webhooksReducers = {

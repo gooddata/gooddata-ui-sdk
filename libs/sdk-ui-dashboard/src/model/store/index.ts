@@ -310,6 +310,8 @@ export { UiState, InvalidCustomUrlDrillParameterInfo } from "./ui/uiState.js";
 export {
     selectIsScheduleEmailDialogOpen,
     selectIsScheduleEmailManagementDialogOpen,
+    selectIsScheduleEmailDialogContext,
+    selectIsScheduleEmailManagementDialogContext,
     selectIsSaveAsDialogOpen,
     selectIsShareDialogOpen,
     selectFilterBarExpanded,
@@ -370,4 +372,18 @@ export {
 } from "./storeAccessors/index.js";
 
 export { WebhooksState } from "./webhooks/webhooksState.js";
-export { selectWebhooks } from "./webhooks/webhooksSelectors.js";
+export {
+    selectWebhooks,
+    selectWebhooksIsLoading,
+    selectWebhooksError,
+} from "./webhooks/webhooksSelectors.js";
+
+export { AutomationsState } from "./automations/automationsState.js";
+export {
+    selectAutomations,
+    selectAutomationsIsLoading,
+    selectAutomationsError,
+} from "./automations/automationsSelectors.js";
+
+export { UsersState } from "./users/usersState.js";
+export { selectUsers } from "./users/usersSelectors.js";

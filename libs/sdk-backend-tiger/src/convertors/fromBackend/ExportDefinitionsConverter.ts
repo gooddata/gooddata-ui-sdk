@@ -6,6 +6,7 @@ import {
     VisualExportRequest,
 } from "@gooddata/api-client-tiger";
 import {
+    FilterContextItem,
     idRef,
     IExportDefinitionMetadataObject,
     IExportDefinitionRequestPayload,
@@ -74,6 +75,7 @@ const convertExportDefinitionRequestPayload = (
             format: "PDF",
             content: {
                 dashboard: exportRequest.dashboardId,
+                filters: (exportRequest.metadata as any)?.filters as FilterContextItem[],
             },
         };
     } else {

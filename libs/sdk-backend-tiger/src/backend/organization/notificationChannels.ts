@@ -70,6 +70,20 @@ export class OrganizationNotificationChannelService implements IOrganizationNoti
      * @returns Promise resolved when the webhook is updated.
      */
     public updateWebhook = async (webhook: IWebhookMetadataObject): Promise<IWebhookMetadataObject> => {
+        //NOTE: If webhook has token but token is undefined, we need to patch the webhook
+        // instead of updating it because we want to keep the token on the backend
+        if (webhook.hasToken && webhook.token === undefined) {
+            return this.authCall(async (client: ITigerClient) => {
+                const channel = await client.entities.patchEntityNotificationChannels({
+                    id: webhook.id,
+                    jsonApiNotificationChannelPatchDocument: {
+                        data: convertWebhookToNotificationChannel(webhook),
+                    },
+                });
+                return convertWebhookFromNotificationChannel(channel.data.data);
+            });
+        }
+
         return this.authCall(async (client: ITigerClient) => {
             const channel = await client.entities.updateEntityNotificationChannels({
                 id: webhook.id,

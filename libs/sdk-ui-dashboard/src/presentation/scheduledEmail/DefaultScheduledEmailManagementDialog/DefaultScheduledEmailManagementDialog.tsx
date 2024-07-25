@@ -1,7 +1,7 @@
 // (C) 2022-2024 GoodData Corporation
 
 import React, { useCallback, useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage, defineMessage, useIntl } from "react-intl";
 import { AddButton, Button, Dialog, Hyperlink, Typography } from "@gooddata/sdk-ui-kit";
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 
@@ -13,11 +13,10 @@ import {
     selectCurrentUser,
     selectEntitlementMaxAutomations,
     useDashboardSelector,
+    DEFAULT_MAX_AUTOMATIONS,
 } from "../../../model/index.js";
 import { messages } from "../../../locales.js";
 import { isMobileView } from "../DefaultScheduledEmailDialog/utils/responsive.js";
-
-const DEFAULT_MAX_AUTOMATIONS = "10";
 
 /**
  * @alpha
@@ -60,8 +59,8 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
     const maxAutomationsReached = automations.length >= maxAutomations;
 
     const helpTextId = isMobileView()
-        ? "dialogs.schedule.email.footer.title.short"
-        : "dialogs.schedule.email.footer.title";
+        ? defineMessage({ id: "dialogs.schedule.email.footer.title.short" }).id
+        : defineMessage({ id: "dialogs.schedule.email.footer.title" }).id;
 
     return (
         <>

@@ -1,0 +1,115 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`useSemanticSearch hook > should cancel previous search 1`] = `
+{
+  "searchError": "",
+  "searchLoading": false,
+  "searchResults": [
+    {
+      "description": "test2",
+      "id": "dataset",
+      "title": "dataset title",
+      "type": "dataset",
+    },
+    {
+      "description": "test2",
+      "id": "attribute",
+      "title": "attribute title",
+      "type": "attribute",
+    },
+    {
+      "description": "test2",
+      "id": "label",
+      "title": "label title",
+      "type": "label",
+    },
+    {
+      "description": "test2",
+      "id": "fact",
+      "title": "fact title",
+      "type": "fact",
+    },
+    {
+      "description": "test2",
+      "id": "date",
+      "title": "date title",
+      "type": "date",
+    },
+    {
+      "description": "test2",
+      "id": "metric",
+      "title": "metric title",
+      "type": "metric",
+    },
+    {
+      "description": "test2",
+      "id": "visualization",
+      "title": "visualization title",
+      "type": "visualization",
+    },
+    {
+      "description": "test2",
+      "id": "dashboard",
+      "title": "dashboard title",
+      "type": "dashboard",
+    },
+  ],
+}
+`;
+
+exports[`useSemanticSearch hook > should return correct results 1`] = `
+{
+  "searchError": "",
+  "searchLoading": false,
+  "searchResults": [
+    {
+      "description": "test",
+      "id": "dataset",
+      "title": "dataset title",
+      "type": "dataset",
+    },
+    {
+      "description": "test",
+      "id": "attribute",
+      "title": "attribute title",
+      "type": "attribute",
+    },
+    {
+      "description": "test",
+      "id": "label",
+      "title": "label title",
+      "type": "label",
+    },
+    {
+      "description": "test",
+      "id": "fact",
+      "title": "fact title",
+      "type": "fact",
+    },
+    {
+      "description": "test",
+      "id": "date",
+      "title": "date title",
+      "type": "date",
+    },
+    {
+      "description": "test",
+      "id": "metric",
+      "title": "metric title",
+      "type": "metric",
+    },
+    {
+      "description": "test",
+      "id": "visualization",
+      "title": "visualization title",
+      "type": "visualization",
+    },
+    {
+      "description": "test",
+      "id": "dashboard",
+      "title": "dashboard title",
+      "type": "dashboard",
+    },
+  ],
+}
+`;

@@ -285,6 +285,13 @@
     },
     "components": {
         "schemas": {
+            "JsonNode": {
+                "maxLength": 15000,
+                "type": "object",
+                "description": "Metadata definition in free-form JSON format.",
+                "nullable": true,
+                "example": {}
+            },
             "VisualExportRequest": {
                 "required": ["dashboardId", "fileName"],
                 "type": "object",
@@ -493,6 +500,9 @@
                         "items": {
                             "type": "object"
                         }
+                    },
+                    "metadata": {
+                        "$ref": "#/components/schemas/JsonNode"
                     }
                 },
                 "description": "Export request object describing the export properties and overrides for tabular exports."

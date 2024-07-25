@@ -36,7 +36,11 @@ export const convertInsight = (
         buckets: cloneWithSanitizedIds(sanitizedInsight.insight.buckets),
         filters: cloneWithSanitizedIds(sanitizedInsight.insight.filters),
         ...(sanitizedInsight.insight.attributeFilterConfigs
-            ? { attributeFilterConfigs: sanitizedInsight.insight.attributeFilterConfigs }
+            ? {
+                  attributeFilterConfigs: cloneWithSanitizedIds(
+                      sanitizedInsight.insight.attributeFilterConfigs,
+                  ),
+              }
             : {}),
         sorts: cloneWithSanitizedIds(sanitizedInsight.insight.sorts),
         properties: sanitizedInsight.insight.properties,

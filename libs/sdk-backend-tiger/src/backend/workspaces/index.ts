@@ -126,7 +126,7 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
     private constructFilter(): string | undefined {
         const filterParam = compact([
             this.filter.description && `description==${this.filter.description}`,
-            this.filter.earlyAccess && `earlyAccess==${this.filter.earlyAccess}`,
+            this.filter.earlyAccess && `earlyAccessValues=containsic=${this.filter.earlyAccess}`,
             this.filter.prefix && `prefix==${this.filter.prefix}`,
             // get only workspaces that have no parent workspace
             this.filter.rootWorkspacesOnly && "parent.id=isnull=true",

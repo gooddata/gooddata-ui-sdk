@@ -267,11 +267,6 @@ export interface ISettings {
     openAiConfig?: IOpenAiConfig;
 
     /**
-     * Enable custom non-production dataset in AD/Modeler
-     */
-    ["msf.enableTenantCustomModel"]?: boolean;
-
-    /**
      * Enable usage of insights, widgets, kpis descriptions.
      */
     enableDescriptions?: boolean;
@@ -406,6 +401,20 @@ export interface ISettings {
      * Enables rollup (native) totals.
      */
     enableRollupTotals?: boolean;
+
+    enableDataSection?: boolean;
+    enableRenamingProjectToWorkspace?: boolean;
+    enableCsvUploader?: boolean;
+    enableAnalyticalDashboards?: boolean;
+    enablePixelPerfectExperience?: boolean;
+    hidePixelPerfectExperience?: boolean;
+    enableNewNavigationForResponsiveUi?: boolean;
+    enableMySqlDataSource?: boolean;
+    enableMariaDbDataSource?: boolean;
+    enableOracleDataSource?: boolean;
+    enableSnowflakeKeyPairAuthentication?: boolean;
+    enableMotherDuckDataSource?: boolean;
+    enableSingleStoreDataSource?: boolean;
 
     [key: string]: number | boolean | string | object | undefined;
 }

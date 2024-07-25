@@ -7,12 +7,12 @@ import {
 import { ISettings } from "@gooddata/sdk-model";
 
 import { TigerAuthenticatedCallGuard, TigerSettingsType } from "../../../types/index.js";
-import { TigerFeaturesService, pickContext } from "../../features/index.js";
+import { TigerFeaturesService } from "../../features/index.js";
 import { DefaultUiSettings, DefaultUserSettings } from "../../uiSettings.js";
 import { unwrapSettingContent } from "../../../convertors/fromBackend/SettingsConverter.js";
 import { TigerSettingsService, mapTypeToKey } from "../../settings/index.js";
 import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "../constants.js";
-import { DeclarativeWorkspace } from "@gooddata/api-client-tiger";
+import { FeatureContext, isLiveFeatures, isStaticFeatures } from "@gooddata/api-client-tiger";
 
 export class TigerWorkspaceSettings
     extends TigerSettingsService<IWorkspaceSettings>
@@ -145,22 +145,48 @@ export function getSettingsForCurrentUser(
     workspace: string,
 ): Promise<IUserWorkspaceSettings> {
     return authCall(async (client) => {
+        const profile = await client.profile.getCurrent();
         const {
-            data: { meta: config, attributes },
-        } = (
-            await client.entities.getEntityWorkspaces({
-                id: workspace,
-                ...GET_OPTIMIZED_WORKSPACE_PARAMS,
-            })
-        ).data;
+            data: {
+                data: { meta: config, attributes: wsAttributes },
+            },
+        } = await client.entities.getEntityWorkspaces({
+            id: workspace,
+            ...GET_OPTIMIZED_WORKSPACE_PARAMS,
+        });
 
         const resolvedSettings: ISettings = await resolveSettings(authCall, workspace);
 
-        const profile = await client.profile.getCurrent();
-        const features = await new TigerFeaturesService(authCall).getFeatures(
-            profile,
-            pickContext(attributes as Partial<DeclarativeWorkspace>, profile.organizationId),
-        );
+        const context: Partial<FeatureContext> = {};
+
+        const staticFeaturesEarlyAccess = isStaticFeatures(profile.features)
+            ? profile.features?.static?.context?.earlyAccessValues ?? []
+            : [];
+
+        const liveFeaturesEarlyAccess = isLiveFeatures(profile.features)
+            ? profile.features?.live?.context?.earlyAccessValues ?? []
+            : [];
+
+        if (profile?.organizationId) {
+            context.organizationId = profile.organizationId;
+        }
+
+        if (staticFeaturesEarlyAccess.length > 0) {
+            context.earlyAccessValues = [...(context.earlyAccessValues || []), ...staticFeaturesEarlyAccess];
+        }
+
+        if (liveFeaturesEarlyAccess.length > 0) {
+            context.earlyAccessValues = [...(context.earlyAccessValues || []), ...liveFeaturesEarlyAccess];
+        }
+
+        if (wsAttributes?.earlyAccessValues) {
+            context.earlyAccessValues = [
+                ...(context.earlyAccessValues || []),
+                ...wsAttributes.earlyAccessValues,
+            ];
+        }
+
+        const features = await new TigerFeaturesService(authCall).getFeatures(profile, context);
 
         return {
             ...DefaultUserSettings,

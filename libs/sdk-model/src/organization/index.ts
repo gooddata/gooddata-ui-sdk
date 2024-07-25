@@ -12,7 +12,11 @@ export interface IOrganizationDescriptor {
     title: string;
     bootstrapUser?: ObjRef;
     bootstrapUserGroup?: ObjRef;
+    /**
+     * @deprecated - use early access values instead
+     */
     earlyAccess?: string;
+    earlyAccessValues?: string[];
 }
 
 /**
@@ -24,7 +28,11 @@ export interface IOrganizationDescriptor {
  */
 export interface IOrganizationDescriptorUpdate {
     title?: string;
+    /**
+     * @deprecated - use early access values instead
+     */
     earlyAccess?: string | null;
+    earlyAccessValues?: string[] | null;
 }
 
 /**

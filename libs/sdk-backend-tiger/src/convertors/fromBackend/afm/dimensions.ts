@@ -53,6 +53,7 @@ function transformDimension(
                         granularity: h.attributeHeader.granularity,
                         format: h.attributeHeader.format,
                         labelType: convertLabelType(h.attributeHeader.valueType),
+                        primaryLabel: idRef(h.attributeHeader.primaryLabel.id, "displayForm"),
                     },
                 };
             } else {

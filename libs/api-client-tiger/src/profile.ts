@@ -4,7 +4,7 @@ import { ApiEntitlement } from "./generated/metadata-json-api/index.js";
 
 export type FeatureContext = {
     organizationId: string;
-    earlyAccess: string;
+    earlyAccessValues: string[];
 };
 
 export interface ILiveFeatures {
@@ -16,11 +16,30 @@ export interface ILiveFeatures {
         context: FeatureContext;
     };
 }
+
+/**
+ * @internal
+ */
+export function isLiveFeatures(
+    features: ILiveFeatures | IStaticFeatures | undefined,
+): features is ILiveFeatures {
+    return (features as ILiveFeatures)?.live !== undefined;
+}
+
 export interface IStaticFeatures {
     static: {
         items: Record<string, string>;
         context: FeatureContext;
     };
+}
+
+/**
+ * @internal
+ */
+export function isStaticFeatures(
+    features: ILiveFeatures | IStaticFeatures | undefined,
+): features is IStaticFeatures {
+    return (features as IStaticFeatures)?.static !== undefined;
 }
 
 export interface IUserProfile {

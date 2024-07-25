@@ -1,6 +1,6 @@
 // (C) 2019-2024 GoodData Corporation
 
-import { InMemoryPaging } from "@gooddata/sdk-backend-base";
+import { InMemoryPaging, DummySemanticSearchQueryBuilder } from "@gooddata/sdk-backend-base";
 import {
     IAnalyticalBackend,
     IAnalyticalWorkspace,
@@ -46,6 +46,7 @@ import {
     IWorkspaceLogicalModelService,
     IOrganizationNotificationChannelService,
     IWorkspaceAutomationService,
+    IGenAIService,
 } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
@@ -283,6 +284,16 @@ function recordedWorkspace(
         },
         automations(): IWorkspaceAutomationService {
             throw new NotSupported("not supported");
+        },
+        genAI(): IGenAIService {
+            return {
+                getSemanticSearchQuery: () => {
+                    return new DummySemanticSearchQueryBuilder();
+                },
+                semanticSearchIndex: () => {
+                    throw new NotSupported("not supported");
+                },
+            };
         },
     };
 }

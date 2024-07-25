@@ -1,6 +1,6 @@
 // (C) 2019-2024 GoodData Corporation
-import React from "react";
-import { WrappedComponentProps, injectIntl } from "react-intl";
+import React, { ComponentProps } from "react";
+import { FormattedMessage, WrappedComponentProps, injectIntl } from "react-intl";
 import noop from "lodash/noop.js";
 import set from "lodash/set.js";
 import cloneDeep from "lodash/cloneDeep.js";
@@ -28,6 +28,9 @@ export interface IInputControlProps {
     pushData?(data: any): void;
     validateAndPushDataCallback?(value: string): void;
     maxLength?: number;
+    description?: string;
+    descriptionValues?: ComponentProps<typeof FormattedMessage>["values"];
+
     /**
      * Optional function to validate the input value.
      * If the value is considered as invalid, it won't be set and emitted,
@@ -107,6 +110,8 @@ export class InputControl extends React.Component<
             intl,
             type,
             maxLength,
+            description,
+            descriptionValues,
         } = this.props;
 
         return (
@@ -115,20 +120,27 @@ export class InputControl extends React.Component<
                 messageId={disabledMessageId}
                 alignPoints={disabledMessageAlignPoints}
             >
-                <label className="adi-bucket-inputfield s-adi-bucket-inputfield gd-input gd-input-small">
-                    <span className="input-label-text">{getTranslation(labelText, intl)}</span>
-                    <input
-                        ref={(input) => (this.inputRef = input)}
-                        className={this.getInputClassNames()}
-                        value={this.state.value}
-                        placeholder={getTranslation(placeholder, intl)}
-                        disabled={disabled}
-                        onKeyPress={this.onKeyPress}
-                        onBlur={this.onBlur}
-                        onChange={this.onValueChanged}
-                        maxLength={type === "number" ? MAX_NUMBER_LENGTH : maxLength}
-                    />
-                </label>
+                <>
+                    <label className="adi-bucket-inputfield s-adi-bucket-inputfield gd-input gd-input-small">
+                        <span className="input-label-text">{getTranslation(labelText, intl)}</span>
+                        <input
+                            ref={(input) => (this.inputRef = input)}
+                            className={this.getInputClassNames()}
+                            value={this.state.value}
+                            placeholder={getTranslation(placeholder, intl)}
+                            disabled={disabled}
+                            onKeyPress={this.onKeyPress}
+                            onBlur={this.onBlur}
+                            onChange={this.onValueChanged}
+                            maxLength={type === "number" ? MAX_NUMBER_LENGTH : maxLength}
+                        />
+                    </label>
+                    {description ? (
+                        <div className="adi-bucket-inputfield-description">
+                            <FormattedMessage id={description} values={descriptionValues} />
+                        </div>
+                    ) : null}
+                </>
             </DisabledBubbleMessage>
         );
     }

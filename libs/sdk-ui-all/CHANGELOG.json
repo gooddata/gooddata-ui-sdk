@@ -1,35 +1,47 @@
 {
   "name": "@gooddata/sdk-ui-all",
   "entries": [
-    {
-      "version": "10.6.0",
-      "tag": "@gooddata/sdk-ui-all_v10.6.0",
-      "date": "Thu, 25 Jul 2024 08:35:32 GMT",
-      "comments": {
-        "none": [
-          {
-            "comment": "Allow specifying returnTo parameter with backend deauthenticate"
-          }
-        ]
-      }
+   {
+        "version": "10.6.0",
+        "tag": "@gooddata/sdk-ui-all_v10.6.0",
+        "date": "Thu, 25 Jul 2024 08:35:32 GMT",
+        "comments": {
+            "none": [
+                {
+                    "comment": "Allow specifying returnTo parameter with backend deauthenticate"
+                }
+            ]
+        }
     },
     {
-      "version": "10.5.0",
-      "tag": "@gooddata/sdk-ui-all_v10.5.0",
-      "date": "Thu, 11 Jul 2024 08:01:45 GMT",
-      "comments": {
-        "none": [
-          {
-            "comment": "Allow specifying returnTo parameter with backend deauthenticate"
-          },
-          {
-            "comment": "Adjusted export function to support pdf options."
-          },
-          {
-            "comment": "Using visualizationObject whenever provided as alternative to executionResult for export."
-          }
-        ]
-      }
+        "version": "10.5.1",
+        "tag": "@gooddata/sdk-ui-all_v10.5.1",
+        "date": "Fri, 12 Jul 2024 11:00:39 GMT",
+        "comments": {
+            "none": [
+                {
+                    "comment": "Fixed display of tooltips in drill dialog"
+                }
+            ]
+        }
+    },
+    {
+        "version": "10.5.0",
+        "tag": "@gooddata/sdk-ui-all_v10.5.0",
+        "date": "Thu, 11 Jul 2024 08:01:45 GMT",
+        "comments": {
+            "none": [
+                {
+                    "comment": "Allow specifying returnTo parameter with backend deauthenticate"
+                },
+                {
+                    "comment": "Adjusted export function to support pdf options."
+                },
+                {
+                    "comment": "Using visualizationObject whenever provided as alternative to executionResult for export."
+                }
+            ]
+        }
     },
     {
       "version": "10.4.0",

@@ -34,6 +34,10 @@ export interface IWebhookMetadataObjectBase {
      */
     token?: string;
     /**
+     * Flag indicating whether the webhook has setup a token.
+     */
+    hasToken?: boolean;
+    /**
      * Triggers that the webhook are used for.
      */
     triggers: IWebhookTrigger[];

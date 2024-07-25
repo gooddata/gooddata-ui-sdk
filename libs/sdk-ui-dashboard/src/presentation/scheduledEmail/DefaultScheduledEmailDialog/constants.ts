@@ -11,24 +11,3 @@ export const DEFAULT_DROPDOWN_ALIGN_POINTS = [
     },
 ];
 export const DEFAULT_DROPDOWN_ZINDEX = 5001;
-export const DEFAULT_REPEAT_PERIOD = 1;
-
-export const REPEAT_TYPES = {
-    WEEKLY: "weekly",
-    DAILY: "daily",
-    MONTHLY: "monthly",
-    CUSTOM: "custom",
-    CRON: "cron",
-};
-
-export const REPEAT_FREQUENCIES = {
-    DAY: "day",
-    MONTH: "month",
-    WEEK: "week",
-};
-export const FREQUENCY_TYPE = [REPEAT_FREQUENCIES.DAY, REPEAT_FREQUENCIES.WEEK, REPEAT_FREQUENCIES.MONTH];
-
-export const REPEAT_EXECUTE_ON = {
-    DAY_OF_MONTH: "dayOfMonth",
-    DAY_OF_WEEK: "dayOfWeek",
-} as const;

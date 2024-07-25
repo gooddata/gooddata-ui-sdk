@@ -20,6 +20,7 @@ import { IWorkspaceExportDefinitionsService } from "./exportDefinitions/index.js
 import { IDataFiltersService } from "./dataFilter/index.js";
 import { IWorkspaceLogicalModelService } from "./ldm/model.js";
 import { IWorkspaceAutomationService } from "./automations/index.js";
+import { IGenAIService } from "./genAI/index.js";
 
 /**
  * Represents an analytical workspace hosted on a backend.
@@ -161,6 +162,12 @@ export interface IAnalyticalWorkspace {
      * @internal
      */
     logicalModel(): IWorkspaceLogicalModelService;
+
+    /**
+     * Returns service that can be used to access GenAI services.
+     * @alpha
+     */
+    genAI(): IGenAIService;
 }
 
 /**
@@ -188,8 +195,15 @@ export interface IWorkspaceDescriptor {
     parentPrefixes?: string[];
     /**
      * Early access attribute value of the workspace
+     * @deprecated - use earlyAccessValues instead
      */
     earlyAccess?: string;
+
+    /**
+     * Early access flags of the workspace
+     */
+    earlyAccessValues?: string[];
+
     /**
      * Number of child workspaces
      */
@@ -208,6 +222,7 @@ export interface IWorkspaceDescriptorUpdate {
     description?: string;
     prefix?: string | null;
     earlyAccess?: string | null;
+    earlyAccessValues?: string[] | null;
 }
 
 /**
@@ -246,6 +261,7 @@ export interface IWorkspacesQueryFilter {
      * Filter by earlyAccess property on the workspace
      */
     earlyAccess?: string;
+
     /**
      * Filter by entity identifiers prefix in the workspace
      */

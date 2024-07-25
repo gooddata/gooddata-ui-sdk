@@ -163,7 +163,12 @@ export class PluggableHeatmap extends PluggableBaseChart {
                 isDrillIntersectionAttributeItem(i.header) &&
                 i.header.attributeHeader.localIdentifier === clicked,
         );
-        return addIntersectionFiltersToInsight(source, cutIntersection, backendSupportsElementUris);
+        return addIntersectionFiltersToInsight(
+            source,
+            cutIntersection,
+            backendSupportsElementUris,
+            this.featureFlags.enableDuplicatedLabelValuesInAttributeFilter,
+        );
     }
 
     public getInsightWithDrillDownApplied(

@@ -583,7 +583,7 @@ export interface SetDashboardAttributeFilterConfigDisplayAsLabelPayload {
     /**
      *  Display as label of the attribute filter. Used to present filter in UI
      */
-    displayAsLabel: ObjRef;
+    displayAsLabel: ObjRef | undefined;
 }
 
 /**

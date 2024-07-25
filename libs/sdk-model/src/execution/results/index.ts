@@ -233,6 +233,11 @@ export interface IAttributeDescriptorBody {
         locale: string;
         pattern: string;
     };
+
+    /**
+     * Primary label of the attribute from formOf
+     */
+    primaryLabel: ObjRef;
 }
 
 /**

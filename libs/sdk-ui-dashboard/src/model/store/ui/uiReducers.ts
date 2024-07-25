@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { Action, AnyAction, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import {
     areObjRefsEqual,
@@ -11,19 +11,25 @@ import {
     widgetUri,
 } from "@gooddata/sdk-model";
 import { InvalidCustomUrlDrillParameterInfo, UiState } from "./uiState.js";
-import { ILayoutCoordinates, IMenuButtonItemsVisibility } from "../../../types.js";
+import { ILayoutCoordinates, IMenuButtonItemsVisibility, IScheduleEmailContext } from "../../../types.js";
 import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
 import { IDashboardWidgetOverlay } from "../../types/commonTypes.js";
 import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/drillingUtils.js";
 
 type UiReducer<A extends Action = AnyAction> = CaseReducer<UiState, A>;
 
-const openScheduleEmailDialog: UiReducer = (state) => {
+const openScheduleEmailDialog: UiReducer<PayloadAction<IScheduleEmailContext>> = (state, action) => {
     state.scheduleEmailDialog.open = true;
+    if (action.payload.widgetRef) {
+        state.scheduleEmailDialog.context = {
+            widgetRef: action.payload.widgetRef,
+        };
+    }
 };
 
 const closeScheduleEmailDialog: UiReducer = (state) => {
     state.scheduleEmailDialog.open = false;
+    state.scheduleEmailDialog.context = undefined;
 };
 
 const setScheduleEmailDialogDefaultAttachment: UiReducer<PayloadAction<ObjRef>> = (state, action) => {
@@ -34,12 +40,21 @@ const resetScheduleEmailDialogDefaultAttachment: UiReducer = (state) => {
     state.scheduleEmailDialog.defaultAttachmentRef = undefined;
 };
 
-const openScheduleEmailManagementDialog: UiReducer = (state) => {
+const openScheduleEmailManagementDialog: UiReducer<PayloadAction<IScheduleEmailContext>> = (
+    state,
+    action,
+) => {
     state.scheduleEmailManagementDialog.open = true;
+    if (action.payload.widgetRef) {
+        state.scheduleEmailManagementDialog.context = {
+            widgetRef: action.payload.widgetRef,
+        };
+    }
 };
 
 const closeScheduleEmailManagementDialog: UiReducer = (state) => {
     state.scheduleEmailManagementDialog.open = false;
+    state.scheduleEmailManagementDialog.context = undefined;
 };
 
 const openSaveAsDialog: UiReducer = (state) => {

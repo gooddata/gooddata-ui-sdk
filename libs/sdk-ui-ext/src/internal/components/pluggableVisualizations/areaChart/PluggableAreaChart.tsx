@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import {
     bucketsItems,
     IInsight,
@@ -259,7 +259,12 @@ export class PluggableAreaChart extends PluggableBaseChart {
         backendSupportsElementUris: boolean,
     ) {
         const cutIntersection = reverseAndTrimIntersection(drillConfig, event.drillContext.intersection);
-        return addIntersectionFiltersToInsight(source, cutIntersection, backendSupportsElementUris);
+        return addIntersectionFiltersToInsight(
+            source,
+            cutIntersection,
+            backendSupportsElementUris,
+            this.featureFlags.enableDuplicatedLabelValuesInAttributeFilter,
+        );
     }
 
     private updateCustomSupportedProperties(insight: IInsightDefinition): void {

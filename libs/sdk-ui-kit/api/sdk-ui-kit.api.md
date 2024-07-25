@@ -861,9 +861,13 @@ export interface IAppHeaderProps {
     // (undocumented)
     onMenuItemClick?: (menuItem: IHeaderMenuItem, e?: React_2.MouseEvent) => void;
     // (undocumented)
+    onSearchButtonClick?: () => void;
+    // (undocumented)
     onUpsellButtonClick?: (e: React_2.MouseEvent) => void;
     // (undocumented)
     showInviteItem?: boolean;
+    // (undocumented)
+    showSearchButton?: boolean;
     // (undocumented)
     showStaticHelpMenu?: boolean;
     // (undocumented)
@@ -3569,11 +3573,13 @@ export interface ISettingItem {
     // (undocumented)
     onAction?: () => void;
     // (undocumented)
-    renderSubtitle?: () => React.ReactNode;
+    renderSubtitle?: () => ReactNode;
     // (undocumented)
     title: string;
     // (undocumented)
-    titleTooltipText?: string;
+    titleTooltipHideDelay?: number;
+    // (undocumented)
+    titleTooltipText?: ReactNode;
     // (undocumented)
     value: string | ReactNode;
 }
@@ -3807,7 +3813,7 @@ export interface ISingleSelectListItemProps {
     // (undocumented)
     hideDelayBubble?: number;
     // (undocumented)
-    icon?: string;
+    icon?: string | ReactNode;
     // (undocumented)
     info?: string | ReactNode;
     // (undocumented)
@@ -4749,6 +4755,22 @@ export type UnitsType = "px" | "%" | "rem" | "em";
 
 // @internal (undocumented)
 export const unrelatedHeader: IDateDatasetHeader;
+
+// @internal
+export const useDebouncedState: <T>(initialValue: T, delay: number) => UseDebouncedStateOutput<T>;
+
+// @internal
+export type UseDebouncedStateOutput<T> = [
+/**
+* The current value.
+*/
+T,
+(value: T) => void,
+/**
+* The debounced value.
+*/
+T
+];
 
 // @internal (undocumented)
 export function useInvertableSelectionStatusText<T>(selectedItems: T[], isInverted: boolean, getItemTitle: (item: T) => string): string;

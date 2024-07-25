@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
 import { areObjRefsEqual, ObjRef, objRefToString } from "@gooddata/sdk-model";
@@ -9,7 +9,11 @@ import { DashboardSelector, DashboardState } from "../types.js";
 import { createMemoizedSelector } from "../_infra/selectors.js";
 import { IDashboardWidgetOverlay } from "../../types/commonTypes.js";
 import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
-import { ILayoutCoordinates, IMenuButtonItemsVisibility } from "../../../types.js";
+import {
+    ILayoutCoordinates,
+    IMenuButtonItemsVisibility,
+    IScheduleEmailDialogContext,
+} from "../../../types.js";
 import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
 import { InvalidCustomUrlDrillParameterInfo } from "./uiState.js";
 
@@ -29,6 +33,12 @@ export const selectIsScheduleEmailDialogOpen: DashboardSelector<boolean> = creat
 /**
  * @alpha
  */
+export const selectIsScheduleEmailDialogContext: DashboardSelector<IScheduleEmailDialogContext> =
+    createSelector(selectSelf, (state) => state.scheduleEmailDialog.context ?? {});
+
+/**
+ * @alpha
+ */
 export const selectScheduleEmailDialogDefaultAttachment: DashboardSelector<ObjRef | undefined> =
     createSelector(selectSelf, (state) => state.scheduleEmailDialog.defaultAttachmentRef ?? undefined);
 
@@ -39,6 +49,12 @@ export const selectIsScheduleEmailManagementDialogOpen: DashboardSelector<boolea
     selectSelf,
     (state) => state.scheduleEmailManagementDialog.open,
 );
+
+/**
+ * @alpha
+ */
+export const selectIsScheduleEmailManagementDialogContext: DashboardSelector<IScheduleEmailDialogContext> =
+    createSelector(selectSelf, (state) => state.scheduleEmailManagementDialog.context ?? {});
 
 /**
  * @alpha

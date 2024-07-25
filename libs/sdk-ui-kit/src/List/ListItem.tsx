@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React, { Component, ReactNode, createRef } from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
@@ -17,7 +17,7 @@ export type SingleSelectListItemType = "header" | "separator";
  */
 export interface ISingleSelectListItemProps {
     title?: string;
-    icon?: string;
+    icon?: string | ReactNode;
     type?: SingleSelectListItemType;
     className?: string;
     info?: string | ReactNode;
@@ -125,12 +125,19 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
         return titleElement;
     };
 
-    private renderIcon = (icon: string) => {
-        if (icon) {
+    private renderIcon = (icon: string | ReactNode) => {
+        if (icon && typeof icon === "string") {
             const iconClasses = cx("gd-list-icon", icon);
             return <span role="icon" className={iconClasses} />;
         }
-
+        if (icon) {
+            const iconClasses = cx("gd-list-icon");
+            return (
+                <span role="icon" className={iconClasses}>
+                    {icon}
+                </span>
+            );
+        }
         return null;
     };
 

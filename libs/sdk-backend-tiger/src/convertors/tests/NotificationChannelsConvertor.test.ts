@@ -55,6 +55,7 @@ describe("NotificationChannelsConvertor", () => {
                 webhook: {
                     url: "endpoint",
                     token: "token",
+                    hasToken: true,
                 },
                 triggers: [
                     {
@@ -75,6 +76,7 @@ describe("NotificationChannelsConvertor", () => {
             name: "name",
             endpoint: "endpoint",
             token: "token",
+            hasToken: true,
             triggers: [
                 {
                     allowOn: ["dashboard", "visualization"],

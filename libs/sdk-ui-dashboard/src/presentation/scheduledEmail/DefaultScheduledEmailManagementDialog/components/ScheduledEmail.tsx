@@ -6,7 +6,8 @@ import cx from "classnames";
 import { IAutomationMetadataObject, IWebhookMetadataObject } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, Icon, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
-import { gdColorDisabled } from "../../../constants/colors.js";
+import { gdColorStateBlank } from "../../../constants/colors.js";
+import { isDashboardAutomation } from "../../DefaultScheduledEmailDialog/utils/automationHelpers.js";
 
 interface IScheduledEmailProps {
     onDelete: (scheduledEmail: IAutomationMetadataObject) => void;
@@ -33,6 +34,13 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
     const cronDescription = scheduledEmail.schedule?.cronDescription;
     const webhookTitle = webhooks.find((webhook) => webhook.id === scheduledEmail.webhook)?.name;
     const dashboardTitle = scheduledEmail.exportDefinitions?.[0]?.title;
+    const isDashboard = isDashboardAutomation(scheduledEmail);
+    const iconColor = theme?.palette?.complementary?.c6 ?? gdColorStateBlank;
+    const iconComponent = isDashboard ? (
+        <Icon.SimplifiedDashboard width={19} height={19} color={iconColor} />
+    ) : (
+        <Icon.Insight width={16} height={16} color={iconColor} />
+    );
 
     const subtitle = [cronDescription, webhookTitle, dashboardTitle].filter(Boolean).join(" • ");
 
@@ -54,13 +62,7 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
                 </BubbleHoverTrigger>
             </div>
             <div className="gd-scheduled-email-content" onClick={handleClick}>
-                <div className="gd-scheduled-email-icon">
-                    <Icon.Schedule
-                        color={theme?.palette?.complementary?.c5 ?? gdColorDisabled}
-                        width={14}
-                        height={14}
-                    />
-                </div>
+                <div className="gd-scheduled-email-icon">{iconComponent}</div>
                 <div className="gd-scheduled-email-text-content">
                     <div className="gd-scheduled-email-title">
                         <strong>

@@ -23,6 +23,7 @@ import {
     IWorkspaceDescriptorUpdate,
     IWorkspaceLogicalModelService,
     IWorkspaceAutomationService,
+    IGenAIService,
 } from "@gooddata/sdk-backend-spi";
 import { DecoratorFactories } from "./types.js";
 
@@ -156,6 +157,16 @@ export class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
     }
 
     public automations(): IWorkspaceAutomationService {
+        const { automations } = this.factories;
+
+        if (automations) {
+            return automations(this.decorated.automations(), this.workspace);
+        }
+
         return this.decorated.automations();
+    }
+
+    public genAI(): IGenAIService {
+        return this.decorated.genAI();
     }
 }

@@ -11,6 +11,7 @@ import {
     filterObjRef,
     isAttributeElementsByValue,
     isNegativeAttributeFilter,
+    objRefToString,
 } from "@gooddata/sdk-model";
 import { defaultImport } from "default-import";
 
@@ -106,7 +107,7 @@ export function createAttributeFilterHandlerStore(
             }).concat([sagaMiddleware, eventListeningMiddleware(context.eventListener)]);
         },
         devTools: {
-            name: "AttributeFilter state",
+            name: `AttributeFilter state: ${objRefToString(displayFormRef)}`,
         },
     });
 

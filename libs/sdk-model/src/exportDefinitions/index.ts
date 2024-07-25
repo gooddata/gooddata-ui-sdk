@@ -6,6 +6,7 @@ import { IFilter } from "../execution/filter/index.js";
 import { IMetadataObject, IMetadataObjectDefinition } from "../ldm/metadata/index.js";
 import { IAuditable } from "../base/metadata.js";
 import isEmpty from "lodash/isEmpty.js";
+import { FilterContextItem } from "../dashboard/filterContext.js";
 
 /**
  * Export definition PDF Options
@@ -14,6 +15,15 @@ import isEmpty from "lodash/isEmpty.js";
  */
 export interface IExportDefinitionPdfOptions {
     orientation: "portrait" | "landscape";
+}
+
+/**
+ * Export definition tabular settings
+ *
+ * @alpha
+ */
+export interface IExportDefinitionSettings {
+    mergeHeaders: boolean;
 }
 
 /**
@@ -42,11 +52,13 @@ export function isExportDefinitionVisualizationObjectContent(
 /**
  * Export definition dashboard content configuration.
  *
+ * @remarks Filter has to be in FilterContextItem shape so that dashboard can easily consume it.
+ *
  * @alpha
  */
 export interface IExportDefinitionDashboardContent {
     dashboard: string;
-    filters?: IFilter[];
+    filters?: FilterContextItem[];
 }
 
 /**
@@ -73,8 +85,9 @@ export type IExportDefinitionContent =
  */
 export type IExportDefinitionRequestPayload = {
     fileName: string;
-    format: "PDF";
+    format: "PDF" | "CSV" | "XLSX";
     pdfOptions?: IExportDefinitionPdfOptions;
+    settings?: IExportDefinitionSettings;
     content: IExportDefinitionContent;
 };
 

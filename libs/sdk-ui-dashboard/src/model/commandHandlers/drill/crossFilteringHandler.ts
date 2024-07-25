@@ -1,13 +1,6 @@
 // (C) 2023-2024 GoodData Corporation
 import { all, put, call, select } from "redux-saga/effects";
-import {
-    IDashboardAttributeFilter,
-    areObjRefsEqual,
-    filterAttributeElements,
-    filterObjRef,
-    isDashboardAttributeFilter,
-    isNegativeAttributeFilter,
-} from "@gooddata/sdk-model";
+import { IDashboardAttributeFilter, areObjRefsEqual, isDashboardAttributeFilter } from "@gooddata/sdk-model";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { selectFilterContextDraggableFilters } from "../../store/filterContext/filterContextSelectors.js";
 import { convertIntersectionToAttributeFilters } from "./common/intersectionUtils.js";
@@ -29,11 +22,17 @@ import {
 import { changeAttributeFilterSelectionHandler } from "../filterContext/attributeFilter/changeAttributeFilterSelectionHandler.js";
 import { removeAttributeFiltersHandler } from "../filterContext/attributeFilter/removeAttributeFiltersHandler.js";
 import isEmpty from "lodash/isEmpty.js";
+import { selectEnableDuplicatedLabelValuesInAttributeFilter } from "../../store/config/configSelectors.js";
+import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 
 export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFiltering) {
     yield put(
         crossFilteringRequested(ctx, cmd.payload.drillDefinition, cmd.payload.drillEvent, cmd.correlationId),
     );
+
+    const enableDuplicatedLabelValuesInAttributeFilter: ReturnType<
+        typeof selectEnableDuplicatedLabelValuesInAttributeFilter
+    > = yield select(selectEnableDuplicatedLabelValuesInAttributeFilter);
 
     const backendSupportsElementUris = !!ctx.backend.capabilities.supportsElementUris;
     const widgetRef = cmd.payload.drillEvent.widgetRef!;
@@ -60,7 +59,11 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
         cmd.payload.drillEvent.drillContext.intersection ?? [],
         dateDataSetsAttributesRefs,
         backendSupportsElementUris,
+        enableDuplicatedLabelValuesInAttributeFilter,
     );
+
+    const attributeFilterDisplayAsLabelMap: ReturnType<typeof selectAttributeFilterConfigsDisplayAsLabelMap> =
+        yield select(selectAttributeFilterConfigsDisplayAsLabelMap);
 
     const shouldUpdateExistingCrossFiltering =
         !isEmpty(crossFilteringItemByWidget) &&
@@ -71,12 +74,20 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
          */
         crossFilteringItemByWidget?.filterLocalIdentifiers.length <= drillIntersectionFilters.length;
 
-    const virtualFilters = drillIntersectionFilters.map((filter) => {
-        const displayForm = filterObjRef(filter);
-        const attributeElements = filterAttributeElements(filter);
-        const negativeSelection = isNegativeAttributeFilter(filter);
+    const virtualFilters = drillIntersectionFilters.map(({ attributeFilter, primaryLabel }) => {
+        const { displayForm, attributeElements, negativeSelection } = attributeFilter.attributeFilter;
+
         const existingVirtualFilter = shouldUpdateExistingCrossFiltering
             ? currentVirtualFilters.find((vf) => {
+                  if (enableDuplicatedLabelValuesInAttributeFilter) {
+                      const vfDisplayAsLabel = attributeFilterDisplayAsLabelMap.get(
+                          vf.attributeFilter.localIdentifier!,
+                      );
+                      // strict checking of both primary and secondary label means that cross filtering is able to create two filters using same primary label but different display as label. It was possible even before.
+                      return areObjRefsEqual(vf.attributeFilter.displayForm, displayForm) && vfDisplayAsLabel
+                          ? areObjRefsEqual(vfDisplayAsLabel, primaryLabel)
+                          : true;
+                  }
                   return areObjRefsEqual(vf.attributeFilter.displayForm, displayForm);
               })
             : undefined;
@@ -135,6 +146,7 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
                           vf.attributeFilter.attributeElements,
                           vf.attributeFilter.negativeSelection,
                           vf.attributeFilter.localIdentifier,
+                          drillIntersectionFilters[index].primaryLabel,
                       ),
                   )
                 : call(

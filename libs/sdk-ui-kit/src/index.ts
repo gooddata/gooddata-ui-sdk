@@ -16,6 +16,7 @@ export * from "./typings/overlay.js";
 export * from "./utils/constants.js";
 export * from "./utils/featureFlags.js";
 export * from "./utils/drag.js";
+export * from "./utils/debounce.js";
 export * from "./measureNumberFormat/index.js";
 export * from "./syntaxHighlightingInput/index.js";
 export * from "./Button/index.js";

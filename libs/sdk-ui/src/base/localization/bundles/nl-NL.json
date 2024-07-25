@@ -371,7 +371,7 @@
     "embed.dialog.numeric.input.validation": "De waarde moet een getal zijn dat groter is dan 0",
     "embed.dialog.numeric.input.warning": "Deze invoer accepteert alleen getallen groter dan 0",
     "embedInsightDialog.complete.list.props.message": "Volledig lijst van ingesloten eigenschappen",
-    "embedInsightDialog.emptyInsight.byReference": "De geknipte code wordt hier weergegeven zodra u de visualisatie opslaat</a>.",
+    "embedInsightDialog.emptyInsight.byReference": "De geknipte code wordt hier weergegeven zodra u <a> de visualisatie opslaat</a>.",
     "embedInsightDialog.emptyInsight.byDefinition": "Dit visualisatietype kan niet worden ingesloten als programmatische typecomponent.",
     "embedDialog.tab.react": "Reageren",
     "embedDialog.tab.webComponents": "Webcomponenten",

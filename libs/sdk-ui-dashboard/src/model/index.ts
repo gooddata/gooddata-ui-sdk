@@ -29,6 +29,8 @@ export {
     WidgetsOverlayFn,
     IDashboardWidgetOverlay,
     Webhooks,
+    Users,
+    Automations,
 } from "./types/commonTypes.js";
 export {
     ICustomWidget,

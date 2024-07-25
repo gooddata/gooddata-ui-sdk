@@ -295,7 +295,11 @@ $gd-dashboards-section-description-color: var(
             padding: 0;
             font-size: 14px;
             line-height: 19px;
-            color: kit-variables.$gd-color-state-blank;
+            color: var(--gd-palette-complementary-7, #6d7680);
+
+            &::placeholder {
+                color: var(--gd-palette-complementary-6, #94a1ad);
+            }
         }
 
         @include mixins.active-states {
@@ -312,9 +316,13 @@ $gd-dashboards-section-description-color: var(
             font-size: 14px;
             font-style: normal;
             font-weight: 400;
-            line-height: 21px;
+            line-height: 19px;
         }
     }
+}
+
+.gd-rich-text-content-view .gd-editable-label-richtext-empty {
+    color: var(--gd-palette-complementary-6, #94a1ad);
 }
 
 .gd-visualization-content {

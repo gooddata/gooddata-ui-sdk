@@ -24,6 +24,5 @@ export { useDashboardAsyncRender, UseDashboardAsyncRender } from "./useDashboard
 export { IDashboardStoreProviderProps } from "./types.js";
 export { useDispatchDashboardCommand } from "./useDispatchDashboardCommand.js";
 export { useWidgetExecutionsHandler } from "./useWidgetExecutionsHandler.js";
-export { useDashboardScheduledEmails } from "./useDashboardScheduledEmails.js";
-export { useDashboardScheduledEmailsData } from "./useDashboardScheduledEmailsData.js";
+export { useDashboardScheduledEmails, DEFAULT_MAX_AUTOMATIONS } from "./useDashboardScheduledEmails.js";
 export { useWidgetSelection, IUseWidgetSelectionResult } from "./useWidgetSelection.js";

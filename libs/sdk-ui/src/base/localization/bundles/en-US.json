@@ -14,6 +14,11 @@
         "comment": "",
         "limit": 0
     },
+    "gs.header.search": {
+        "value": "Search",
+        "comment": "A global semantic search button label in the main menu",
+        "limit": 0
+    },
     "gs.header.logout": {
         "value": "Logout",
         "comment": "",

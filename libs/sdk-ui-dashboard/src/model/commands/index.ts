@@ -78,7 +78,7 @@ import {
     RemoveSectionItemByWidgetRef,
 } from "./layout.js";
 import { CreateAlert, RemoveAlerts, UpdateAlert } from "./alerts.js";
-import { CreateScheduledEmail, SaveScheduledEmail } from "./scheduledEmail.js";
+import { CreateScheduledEmail, SaveScheduledEmail, RefreshAutomations } from "./scheduledEmail.js";
 import {
     Drill,
     DrillDown,
@@ -176,6 +176,8 @@ export {
     ChangeFilterContextSelectionPayload,
     DateFilterSelection,
     changeFilterContextSelection,
+    ChangeFilterContextSelectionParams,
+    changeFilterContextSelectionByParams,
     applyAttributeFilter,
     applyDateFilter,
     SetAttributeFilterDisplayForm,
@@ -260,6 +262,8 @@ export {
     SaveScheduledEmail,
     SaveScheduledEmailPayload,
     saveScheduledEmail,
+    RefreshAutomations,
+    refreshAutomations,
 } from "./scheduledEmail.js";
 
 export {
@@ -512,4 +516,5 @@ export type DashboardCommands =
     | MoveDateFilter
     | SetDashboardDateFilterWithDimensionConfigMode
     | SetDateFilterConfigTitle
+    | RefreshAutomations
     | SetAttributeFilterLimitingItems;

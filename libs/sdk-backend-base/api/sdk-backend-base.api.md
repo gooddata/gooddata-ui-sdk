@@ -13,6 +13,7 @@ import { ErrorConverter } from '@gooddata/sdk-backend-spi';
 import { ExplainConfig } from '@gooddata/sdk-backend-spi';
 import { ExplainType } from '@gooddata/sdk-backend-spi';
 import { FilterContextItem } from '@gooddata/sdk-model';
+import { GenAISemanticSearchType } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { IAnomalyDetectionConfig } from '@gooddata/sdk-backend-spi';
@@ -88,6 +89,7 @@ import { IResultHeader } from '@gooddata/sdk-model';
 import { IScheduledMail } from '@gooddata/sdk-model';
 import { IScheduledMailDefinition } from '@gooddata/sdk-model';
 import { ISecuritySettingsService } from '@gooddata/sdk-backend-spi';
+import { ISemanticSearchQuery } from '@gooddata/sdk-backend-spi';
 import { ISettings } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
@@ -99,6 +101,7 @@ import { IWidgetAlertCount } from '@gooddata/sdk-backend-spi';
 import { IWidgetAlertDefinition } from '@gooddata/sdk-model';
 import { IWidgetReferences } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceAttributesService } from '@gooddata/sdk-backend-spi';
+import { IWorkspaceAutomationService } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalog } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalogAvailableItemsFactory } from '@gooddata/sdk-backend-spi';
 import { IWorkspaceCatalogFactory } from '@gooddata/sdk-backend-spi';
@@ -209,6 +212,9 @@ export class AuthProviderCallGuard implements IAuthProviderCallGuard {
     reset: () => void;
 }
 
+// @alpha (undocumented)
+export type AutomationsDecoratorFactory = (automations: IWorkspaceAutomationService, workspace: string) => IWorkspaceAutomationService;
+
 // @beta
 export class Builder<T> implements IBuilder<T> {
     constructor(item: Partial<T>, validator?: ((item: Partial<T>) => void) | undefined);
@@ -254,6 +260,7 @@ export type CachingConfiguration = {
     maxSecuritySettingsOrgUrls?: number;
     maxSecuritySettingsOrgUrlsAge?: number;
     maxAttributeWorkspaces?: number;
+    maxAutomationsWorkspaces?: number;
     maxAttributeDisplayFormsPerWorkspace?: number;
     maxAttributesPerWorkspace?: number;
     maxAttributeElementResultsPerWorkspace?: number;
@@ -598,6 +605,7 @@ export type DecoratorFactories = {
     securitySettings?: SecuritySettingsDecoratorFactory;
     workspaceSettings?: WorkspaceSettingsDecoratorFactory;
     attributes?: AttributesDecoratorFactory;
+    automations?: AutomationsDecoratorFactory;
     dashboards?: DashboardsDecoratorFactory;
 };
 
@@ -624,6 +632,31 @@ export function dummyBackendEmptyData(): IAnalyticalBackend;
 
 // @internal
 export function dummyDataView(definition: IExecutionDefinition, result?: IExecutionResult, config?: DummyBackendConfig): IDataView;
+
+// @internal
+export class DummySemanticSearchQueryBuilder implements ISemanticSearchQuery {
+    // (undocumented)
+    query({ signal }?: {
+        signal?: AbortSignal;
+    }): Promise<{
+        results: {
+            id: string;
+            type: GenAISemanticSearchType;
+            title: string;
+            description: string;
+        }[];
+    }>;
+    // (undocumented)
+    question: string;
+    // (undocumented)
+    withDeepSearch(): this;
+    // (undocumented)
+    withLimit(): this;
+    // (undocumented)
+    withObjectTypes(): this;
+    // (undocumented)
+    withQuestion(question: string): this;
+}
 
 // @alpha (undocumented)
 export type ExecutionDecoratorFactory = (executionFactory: IExecutionFactory) => IExecutionFactory;

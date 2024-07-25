@@ -55,9 +55,14 @@ const convertExportDefinitionRequestPayload = (
     exportRequest: IExportDefinitionRequestPayload,
 ): TabularExportRequest | VisualExportRequest => {
     if (isExportDefinitionDashboardContent(exportRequest.content)) {
+        const metadataObj = exportRequest.content.filters
+            ? { metadata: { filters: exportRequest.content.filters } }
+            : {};
+
         return {
             fileName: exportRequest.fileName,
             dashboardId: exportRequest.content.dashboard,
+            ...metadataObj,
         };
     }
 

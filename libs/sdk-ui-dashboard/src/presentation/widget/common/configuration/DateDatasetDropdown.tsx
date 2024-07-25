@@ -1,7 +1,7 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { ICatalogDateDataset, ObjRef, objRefToString } from "@gooddata/sdk-model";
-import { FormattedMessage, MessageDescriptor, defineMessages, useIntl } from "react-intl";
+import { FormattedMessage, MessageDescriptor, defineMessage, defineMessages, useIntl } from "react-intl";
 import cx from "classnames";
 import {
     Dropdown,
@@ -220,8 +220,8 @@ export const DateDatasetDropdown: React.FC<IDateDatasetDropdownProps> = (props) 
                             className="gd-button-link-dimmed unrelated-date-button"
                             value={intl.formatMessage({
                                 id: showUnavailableItems
-                                    ? "gs.date.date-dataset.unrelated.hide"
-                                    : "gs.date.date-dataset.unrelated.show",
+                                    ? defineMessage({ id: "gs.date.date-dataset.unrelated.hide" }).id
+                                    : defineMessage({ id: "gs.date.date-dataset.unrelated.show" }).id,
                             })}
                         />
                     </div>

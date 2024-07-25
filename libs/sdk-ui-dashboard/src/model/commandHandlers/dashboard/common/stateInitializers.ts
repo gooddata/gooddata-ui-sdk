@@ -122,6 +122,17 @@ function* sanitizeFilterContext(
     );
 }
 
+function getDisplayAsLabels(dashboard: IDashboard): ObjRef[] {
+    return (
+        dashboard.attributeFilterConfigs?.reduce((labels: ObjRef[], config) => {
+            if (typeof config.displayAsLabel !== "undefined") {
+                labels.push(config.displayAsLabel);
+            }
+            return labels;
+        }, []) ?? []
+    );
+}
+
 /**
  * Returns a list of actions which when processed will initialize filter context, layout and meta parts
  * of the state for an existing dashboard.
@@ -175,10 +186,13 @@ export function* actionsToInitializeExistingDashboard(
 
     const filterContextDefinition = dashboardFilterContextDefinition(customizedDashboard, dateFilterConfig);
     const filterContextIdentity = dashboardFilterContextIdentity(customizedDashboard);
+    const displayAsLabels = getDisplayAsLabels(dashboard);
+    // load DFs for both filter refs and displayAsLabels
     const attributeFilterDisplayForms = yield call(
         resolveFilterDisplayForms,
         ctx,
         filterContextDefinition.filters,
+        displayAsLabels,
         displayForms,
     );
 

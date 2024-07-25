@@ -24,6 +24,8 @@ import { IInaccessibleDashboard } from "../types/inaccessibleDashboardTypes.js";
 import { AttributeFilterConfigsState } from "./attributeFilterConfigs/attributeFilterConfigsState.js";
 import { DateFilterConfigsState } from "./dateFilterConfigs/dateFilterConfigsState.js";
 import { WebhooksState } from "./webhooks/webhooksState.js";
+import { AutomationsState } from "./automations/automationsState.js";
+import { UsersState } from "./users/usersState.js";
 
 /*
  * This explicit typing is unfortunate but cannot find better way. Normally the typings get inferred from store,
@@ -84,6 +86,10 @@ export interface DashboardState {
     dashboardPermissions: DashboardPermissionsState;
     /** @alpha */
     webhooks: WebhooksState;
+    /** @alpha */
+    automations: AutomationsState;
+    /** @alpha */
+    users: UsersState;
 
     /**
      * State controlling how exactly the dashboard is rendered.
