@@ -1,7 +1,7 @@
 // (C) 2024 GoodData Corporation
 
 import * as React from "react";
-import { ISemanticSearchResultItem } from "@gooddata/sdk-model";
+import { ISemanticSearchResultItemWithUrl } from "@gooddata/sdk-model";
 import { List } from "@gooddata/sdk-ui-kit";
 import { ITEM_HEIGHT, ResultsItem } from "../ResultsItem.js";
 import { useListSelector } from "../hooks/index.js";
@@ -14,7 +14,7 @@ export type SearchResultsListProps = {
     /**
      * Search result items.
      */
-    searchResults: ISemanticSearchResultItem[];
+    searchResults: ISemanticSearchResultItemWithUrl[];
     /**
      * Width of the list.
      */
@@ -22,7 +22,7 @@ export type SearchResultsListProps = {
     /**
      * Callback for item selection.
      */
-    onSelect: (item: ISemanticSearchResultItem) => void;
+    onSelect: (item: ISemanticSearchResultItemWithUrl) => void;
 };
 
 /**
@@ -37,16 +37,15 @@ export const SearchResultsList: React.FC<SearchResultsListProps> = ({ searchResu
             width={width}
             height={ITEM_HEIGHT * searchResults.length}
             itemHeight={ITEM_HEIGHT}
-            renderItem={({ rowIndex, item, ...props }) => {
+            renderItem={({ item, width, height }) => {
                 return (
                     <ResultsItem
-                        onHover={() => setSelected(rowIndex)}
-                        onClick={() => {
-                            onSelect(item);
-                        }}
-                        selected={rowIndex === selected}
+                        onHover={setSelected}
+                        onSelect={onSelect}
+                        active={item === selected}
                         item={item}
-                        {...props}
+                        width={width}
+                        height={height}
                     />
                 );
             }}

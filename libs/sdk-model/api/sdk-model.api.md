@@ -2745,6 +2745,11 @@ export interface ISemanticSearchResultItem {
     type: GenAISemanticSearchType;
 }
 
+// @alpha
+export interface ISemanticSearchResultItemWithUrl extends ISemanticSearchResultItem {
+    url: string;
+}
+
 // @public
 export interface ISeparators {
     decimal: string;

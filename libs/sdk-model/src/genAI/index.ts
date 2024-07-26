@@ -24,6 +24,17 @@ export interface ISemanticSearchResultItem {
 }
 
 /**
+ * A single search result returned by semantic search, enriched with item URL.
+ * @alpha
+ */
+export interface ISemanticSearchResultItemWithUrl extends ISemanticSearchResultItem {
+    /**
+     * The UI URL of the found metadata object, i.e. deep link in KD, AD etc.
+     */
+    url: string;
+}
+
+/**
  * Type of the searchable object.
  * @alpha
  */

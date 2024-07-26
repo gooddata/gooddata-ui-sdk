@@ -3,9 +3,9 @@ import * as React from "react";
 import { Input, LoadingMask, useDebouncedState } from "@gooddata/sdk-ui-kit";
 import { useSemanticSearch } from "../hooks/index.js";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { GenAISemanticSearchType, ISemanticSearchResultItem } from "@gooddata/sdk-model";
+import { GenAISemanticSearchType, ISemanticSearchResultItemWithUrl } from "@gooddata/sdk-model";
 import { SearchResultsList } from "./SearchResultsList.js";
-import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
+import { FormattedMessage, WrappedComponentProps } from "react-intl";
 
 /**
  * A time in milliseconds to wait before sending a search request after the user stops typing.
@@ -15,16 +15,20 @@ const DEBOUNCE = 300;
  * A height of the loading mask.
  */
 const LOADING_HEIGHT = 100;
+/**
+ * A width of the search drop-down.
+ */
+const SEARCH_OVERLAY_WIDTH = 440;
 
 /**
  * Props for the SemanticSearchOverlay component.
  * @internal
  */
-export type SemanticSearchOverlayProps = {
+export type SearchOverlayProps = WrappedComponentProps & {
     /**
      * A function called when the user selects an item from the search results.
      */
-    onSelect: (item: ISemanticSearchResultItem) => void;
+    onSelect: (item: ISemanticSearchResultItemWithUrl) => void;
     /**
      * An analytical backend to use for the search. Can be omitted and taken from context.
      */
@@ -48,10 +52,11 @@ export type SemanticSearchOverlayProps = {
 };
 
 /**
- * Core implementation of the SemanticSearchOverlay component.
+ * A component that allows users to search for insights, metrics, attributes, and other objects using semantic search.
+ * The internal version is meant to be used in an overlay inside the Header.
  * @internal
  */
-const SemanticSearchOverlayCore: React.FC<SemanticSearchOverlayProps & WrappedComponentProps> = ({
+export const SearchOverlay: React.FC<SearchOverlayProps> = ({
     onSelect,
     backend,
     workspace,
@@ -95,7 +100,7 @@ const SemanticSearchOverlayCore: React.FC<SemanticSearchOverlayProps & WrappedCo
             {(() => {
                 switch (searchStatus) {
                     case "loading":
-                        return <LoadingMask width={440} height={LOADING_HEIGHT} />;
+                        return <LoadingMask width={SEARCH_OVERLAY_WIDTH} height={LOADING_HEIGHT} />;
                     case "error":
                         return (
                             <div className="gd-semantic-search__overlay-error">
@@ -117,7 +122,7 @@ const SemanticSearchOverlayCore: React.FC<SemanticSearchOverlayProps & WrappedCo
                         return (
                             <SearchResultsList
                                 searchResults={searchResults}
-                                width={440}
+                                width={SEARCH_OVERLAY_WIDTH}
                                 onSelect={onSelect}
                             />
                         );
@@ -129,10 +134,3 @@ const SemanticSearchOverlayCore: React.FC<SemanticSearchOverlayProps & WrappedCo
         </div>
     );
 };
-
-/**
- * A component that allows users to search for insights, metrics, attributes, and other objects using semantic search.
- * The internal version is meant to be used in an overlay inside the Header.
- * @internal
- */
-export const SemanticSearchOverlay = injectIntl(SemanticSearchOverlayCore);

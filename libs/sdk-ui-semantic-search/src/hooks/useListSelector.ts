@@ -12,26 +12,28 @@ export const useListSelector = <T>(items: Array<T>, onSelect: (item: T) => void)
     React.useEffect(() => {
         setSelected(0);
     }, [items]);
-    const doSetSelected = React.useCallback(
-        (newValue: number) => {
-            setSelected(Math.max(Math.min(newValue, items.length - 1), 0));
+    const setSelectedItem = React.useCallback(
+        (item: T) => {
+            setSelected(Math.max(Math.min(items.indexOf(item), items.length - 1), 0));
         },
-        [items.length],
+        [items],
     );
 
     React.useEffect(() => {
         const listener = (event: KeyboardEvent) => {
             if (["ArrowDown", "ArrowUp", "Enter"].indexOf(event.key) === -1) return;
 
+            const setIndex = (index: number) => setSelected(Math.max(Math.min(index, items.length - 1), 0));
+
             event.preventDefault();
             event.stopImmediatePropagation();
 
             switch (event.key) {
                 case "ArrowDown":
-                    doSetSelected(selected + 1);
+                    setIndex(selected + 1);
                     break;
                 case "ArrowUp":
-                    doSetSelected(selected - 1);
+                    setIndex(selected - 1);
                     break;
                 case "Enter":
                     onSelect(items[selected]);
@@ -44,7 +46,7 @@ export const useListSelector = <T>(items: Array<T>, onSelect: (item: T) => void)
         return () => {
             document.removeEventListener("keydown", listener);
         };
-    }, [items, onSelect, selected, doSetSelected]);
+    }, [items, onSelect, selected]);
 
-    return [selected, doSetSelected] as [number, (index: number) => void];
+    return [items[selected], setSelectedItem] as [T, (item: T) => void];
 };
