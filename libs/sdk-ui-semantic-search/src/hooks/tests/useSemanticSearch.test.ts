@@ -26,14 +26,14 @@ describe("useSemanticSearch hook", () => {
         );
 
         expect(result.current).toEqual({
-            searchLoading: true,
+            searchStatus: "loading",
             searchResults: [],
             searchError: "",
         });
 
         await act(() => vi.advanceTimersByTimeAsync(150));
 
-        expect(result.current.searchLoading).toEqual(false);
+        expect(result.current.searchStatus).toEqual("success");
         expect(result.current).toMatchSnapshot();
     });
 
@@ -53,7 +53,7 @@ describe("useSemanticSearch hook", () => {
         );
 
         expect(result.current).toEqual({
-            searchLoading: true,
+            searchStatus: "loading",
             searchResults: [],
             searchError: "",
         });
@@ -66,7 +66,7 @@ describe("useSemanticSearch hook", () => {
         await act(() => vi.advanceTimersByTimeAsync(DELAY * 0.5));
 
         expect(result.current).toEqual({
-            searchLoading: true,
+            searchStatus: "loading",
             searchResults: [],
             searchError: "",
         });
@@ -74,7 +74,7 @@ describe("useSemanticSearch hook", () => {
         // Let the second request complete
         await act(() => vi.advanceTimersByTimeAsync(DELAY * 0.5));
 
-        expect(result.current.searchLoading).toEqual(false);
+        expect(result.current.searchStatus).toEqual("success");
         expect(result.current).toMatchSnapshot();
     });
 });

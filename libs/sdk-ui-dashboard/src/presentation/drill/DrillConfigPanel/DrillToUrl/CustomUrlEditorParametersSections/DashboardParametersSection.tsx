@@ -2,20 +2,34 @@
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { DropdownSectionHeader } from "../DropdownSectionHeader.js";
-import { selectAllCatalogDisplayFormsMap, useDashboardSelector } from "../../../../../model/index.js";
+import {
+    selectAllCatalogDisplayFormsMap,
+    selectEnableDuplicatedLabelValuesInAttributeFilter,
+    useDashboardSelector,
+} from "../../../../../model/index.js";
 import { DisplayFormParam } from "./DisplayFormParam.js";
-import { IAttributeFilter, filterObjRef } from "@gooddata/sdk-model";
+import {
+    IAttributeFilter,
+    filterObjRef,
+    IDashboardAttributeFilterConfig,
+    filterLocalIdentifier,
+} from "@gooddata/sdk-model";
 import { IParametersPanelSectionsCommonProps } from "../types.js";
 
 export interface IDashboardParametersSectionProps extends IParametersPanelSectionsCommonProps {
     dashboardFilters?: IAttributeFilter[];
+    attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
 }
 
 export const DashboardParametersSection: React.FC<IDashboardParametersSectionProps> = ({
     dashboardFilters,
+    attributeFilterConfigs,
     onAdd,
 }) => {
     const catalogDisplayFormsMap = useDashboardSelector(selectAllCatalogDisplayFormsMap);
+    const enableDuplicatedLabelValuesInAttributeFilter = useDashboardSelector(
+        selectEnableDuplicatedLabelValuesInAttributeFilter,
+    );
 
     return dashboardFilters && dashboardFilters.length > 0 ? (
         <>
@@ -26,17 +40,42 @@ export const DashboardParametersSection: React.FC<IDashboardParametersSectionPro
                 const df = catalogDisplayFormsMap.get(filterObjRef(filter));
                 const filterIdentifier = df?.id;
 
-                return df ? (
-                    <DisplayFormParam
-                        key={index}
-                        item={df}
-                        iconClassName="gd-icon-filter"
-                        onAdd={() => {
-                            onAdd(`{dash_attribute_filter_selection(${filterIdentifier})}`);
-                        }}
-                        isFilter
-                    />
-                ) : null;
+                const config = attributeFilterConfigs?.find(
+                    (c) => c.localIdentifier === filterLocalIdentifier(filter),
+                );
+
+                const secondaryDf = config?.displayAsLabel
+                    ? catalogDisplayFormsMap.get(config?.displayAsLabel)
+                    : undefined;
+
+                const filterSecondaryIdentifier = secondaryDf?.id;
+
+                return (
+                    <>
+                        {df ? (
+                            <DisplayFormParam
+                                key={`df_${index}`}
+                                item={df}
+                                iconClassName="gd-icon-filter"
+                                onAdd={() => {
+                                    onAdd(`{dash_attribute_filter_selection(${filterIdentifier})}`);
+                                }}
+                                isFilter
+                            />
+                        ) : null}
+                        {enableDuplicatedLabelValuesInAttributeFilter && secondaryDf ? (
+                            <DisplayFormParam
+                                key={`df_${index}_secondary`}
+                                item={secondaryDf}
+                                iconClassName="gd-icon-filter"
+                                onAdd={() => {
+                                    onAdd(`{dash_attribute_filter_selection(${filterSecondaryIdentifier})}`);
+                                }}
+                                isFilter
+                            />
+                        ) : null}
+                    </>
+                );
             })}
         </>
     ) : null;

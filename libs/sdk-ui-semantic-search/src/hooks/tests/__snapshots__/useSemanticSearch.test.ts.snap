@@ -3,7 +3,6 @@
 exports[`useSemanticSearch hook > should cancel previous search 1`] = `
 {
   "searchError": "",
-  "searchLoading": false,
   "searchResults": [
     {
       "description": "test2",
@@ -54,13 +53,13 @@ exports[`useSemanticSearch hook > should cancel previous search 1`] = `
       "type": "dashboard",
     },
   ],
+  "searchStatus": "success",
 }
 `;
 
 exports[`useSemanticSearch hook > should return correct results 1`] = `
 {
   "searchError": "",
-  "searchLoading": false,
   "searchResults": [
     {
       "description": "test",
@@ -111,5 +110,6 @@ exports[`useSemanticSearch hook > should return correct results 1`] = `
       "type": "dashboard",
     },
   ],
+  "searchStatus": "success",
 }
 `;
