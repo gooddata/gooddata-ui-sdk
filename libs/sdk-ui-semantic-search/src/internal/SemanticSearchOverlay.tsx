@@ -5,7 +5,7 @@ import { useSemanticSearch } from "../hooks/index.js";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { GenAISemanticSearchType, ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import { SearchResultsList } from "./SearchResultsList.js";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
 
 /**
  * A time in milliseconds to wait before sending a search request after the user stops typing.
@@ -48,17 +48,17 @@ export type SemanticSearchOverlayProps = {
 };
 
 /**
- * A component that allows users to search for insights, metrics, attributes, and other objects using semantic search.
- * The internal version is meant to be used in an overlay inside the Header.
+ * Core implementation of the SemanticSearchOverlay component.
  * @internal
  */
-export const SemanticSearchOverlay: React.FC<SemanticSearchOverlayProps> = ({
+const SemanticSearchOverlayCore: React.FC<SemanticSearchOverlayProps & WrappedComponentProps> = ({
     onSelect,
     backend,
     workspace,
     objectTypes,
     deepSearch,
     limit = 6,
+    intl,
 }) => {
     // Input value handling
     const [value, setValue, searchTerm] = useDebouncedState("", DEBOUNCE);
@@ -86,7 +86,7 @@ export const SemanticSearchOverlay: React.FC<SemanticSearchOverlayProps> = ({
             <Input
                 className="gd-semantic-search__overlay-input"
                 autofocus
-                placeholder="Search..."
+                placeholder={intl.formatMessage({ id: "semantic-search.placeholder" })}
                 isSearch
                 clearOnEsc
                 value={value}
@@ -129,3 +129,10 @@ export const SemanticSearchOverlay: React.FC<SemanticSearchOverlayProps> = ({
         </div>
     );
 };
+
+/**
+ * A component that allows users to search for insights, metrics, attributes, and other objects using semantic search.
+ * The internal version is meant to be used in an overlay inside the Header.
+ * @internal
+ */
+export const SemanticSearchOverlay = injectIntl(SemanticSearchOverlayCore);
