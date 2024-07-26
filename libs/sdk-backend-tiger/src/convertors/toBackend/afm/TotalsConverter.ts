@@ -18,7 +18,7 @@ import flatMap from "lodash/flatMap.js";
 import { Total, TotalDimension, TotalFunctionEnum } from "@gooddata/api-client-tiger";
 import { dimensionLocalIdentifier } from "./DimensionsConverter.js";
 
-const TOTAL_ORDER: TotalFunctionEnum[] = ["SUM", "MAX", "MIN", "AVG", "MED", "NATIVE"];
+const TOTAL_ORDER: TotalFunctionEnum[] = ["SUM", "MAX", "MIN", "AVG", "MED", "NAT"];
 
 const ATTRIBUTE = "attribute";
 const COLUMNS = "columns";
@@ -385,7 +385,7 @@ function convertTotalType(type: TotalType): TotalFunctionEnum {
         return TotalFunctionEnum.MED;
     }
     if (type === "nat") {
-        return TotalFunctionEnum.NATIVE;
+        return TotalFunctionEnum.NAT;
     }
     throw new Error(`Unknown total type "${type}".`);
 }

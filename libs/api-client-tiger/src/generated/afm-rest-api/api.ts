@@ -2585,7 +2585,7 @@ export const TotalFunctionEnum = {
     MAX: "MAX",
     AVG: "AVG",
     MED: "MED",
-    NATIVE: "NATIVE",
+    NAT: "NAT",
 } as const;
 
 export type TotalFunctionEnum = typeof TotalFunctionEnum[keyof typeof TotalFunctionEnum];

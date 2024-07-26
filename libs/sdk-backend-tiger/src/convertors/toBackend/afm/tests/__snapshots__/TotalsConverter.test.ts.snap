@@ -163,7 +163,7 @@ exports[`convertTotals > should correctly convert multiple totals with various f
 exports[`convertTotals > should correctly convert native total 1`] = `
 [
   {
-    "function": "NATIVE",
+    "function": "NAT",
     "localIdentifier": "total_nat_m1_by_localAttr1_0",
     "metric": "m1",
     "totalDimensions": [
