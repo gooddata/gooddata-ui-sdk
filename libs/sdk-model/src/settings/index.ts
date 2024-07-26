@@ -420,6 +420,10 @@ export interface ISettings {
     enableSnowflakeKeyPairAuthentication?: boolean;
     enableMotherDuckDataSource?: boolean;
     enableSingleStoreDataSource?: boolean;
+    /**
+     * Enable GenAI-powered functionality, such as semantic-search
+     */
+    enableAIFunctions?: boolean;
 
     [key: string]: number | boolean | string | object | undefined;
 }
