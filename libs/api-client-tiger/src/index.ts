@@ -145,7 +145,6 @@ export {
     SortKeyValueValueDirectionEnum,
     SortKeyAttributeAttributeDirectionEnum,
     SortKeyAttributeAttributeSortTypeEnum,
-    SearchRelationshipObject,
     TotalExecutionResultHeader,
     TotalResultHeader,
     ActionsApiAxiosParamCreator as AfmActionsApiAxiosParamCreator,
@@ -199,6 +198,7 @@ export {
     SearchResult,
     SearchRequestObjectTypesEnum,
     SearchResultObject,
+    SearchRelationshipObject,
 } from "./generated/afm-rest-api/api.js";
 export {
     ActionsApiFactory as AuthActionsApiFactory,

@@ -77,6 +77,7 @@ import { IResultHeader } from '@gooddata/sdk-model';
 import { IResultWarning } from '@gooddata/sdk-model';
 import { IScheduledMail } from '@gooddata/sdk-model';
 import { IScheduledMailDefinition } from '@gooddata/sdk-model';
+import { ISemanticSearchRelationship } from '@gooddata/sdk-model';
 import { ISemanticSearchResultItem } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-model';
@@ -1024,6 +1025,8 @@ export interface ISemanticSearchQuery {
 
 // @alpha
 export interface ISemanticSearchResult {
+    // (undocumented)
+    relationships: ISemanticSearchRelationship[];
     // (undocumented)
     results: ISemanticSearchResultItem[];
 }

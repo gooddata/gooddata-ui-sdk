@@ -1,6 +1,10 @@
 // (C) 2023-2024 GoodData Corporation
 
-import { GenAISemanticSearchType, ISemanticSearchResultItem } from "@gooddata/sdk-model";
+import {
+    GenAISemanticSearchType,
+    ISemanticSearchRelationship,
+    ISemanticSearchResultItem,
+} from "@gooddata/sdk-model";
 
 /**
  * GenAI-powered semantic search service.
@@ -55,4 +59,5 @@ export interface ISemanticSearchQuery {
  */
 export interface ISemanticSearchResult {
     results: ISemanticSearchResultItem[];
+    relationships: ISemanticSearchRelationship[];
 }

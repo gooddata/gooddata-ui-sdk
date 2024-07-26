@@ -17,8 +17,6 @@ export {
     InsightListItemDate,
     IInsightListItemDateProps,
     IInsightListItemDateConfig,
-    IDateTimeConfigOptions,
-    getDateTimeConfig,
 } from "./InsightListItemDate.js";
 export { List, IListProps, ScrollCallback, IRenderListItemProps } from "./List.js";
 export { MultiSelectList, IMultiSelectListProps, IMultiSelectRenderItemProps } from "./MultiSelectList.js";

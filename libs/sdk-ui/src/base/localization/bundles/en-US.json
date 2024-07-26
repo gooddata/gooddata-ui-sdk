@@ -9,6 +9,16 @@
         "comment": "",
         "limit": 0
     },
+    "gs.date.today": {
+        "value": "Today",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.date.yesterday": {
+        "value": "Yesterday",
+        "comment": "",
+        "limit": 0
+    },
     "gs.header.help": {
         "value": "Help",
         "comment": "",
@@ -3236,6 +3246,11 @@
     "semantic-search.id": {
         "value": "ID",
         "comment": "Label of column that contains ID of the search results object.",
+        "limit": 0
+    },
+    "semantic-search.tags": {
+        "value": "Tags",
+        "comment": "Label of column that contains tags of the search results object.",
         "limit": 0
     }
 }

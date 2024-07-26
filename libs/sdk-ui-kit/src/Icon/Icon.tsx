@@ -88,6 +88,7 @@ import { Schedule } from "./icons/Schedule.js";
 import { Website } from "./icons/Website.js";
 import { Widget } from "./icons/Widget.js";
 import { SimplifiedDashboard } from "./icons/SimplifiedDashboard.js";
+import { HistoryBack } from "./icons/HistoryBack.js";
 
 /**
  * @internal
@@ -179,6 +180,7 @@ export const Icon: Record<string, React.FC<IIconProps>> = {
     Website,
     Widget,
     SimplifiedDashboard,
+    HistoryBack,
 };
 
 export { IRowsIconProps, IColumnsIconProps };

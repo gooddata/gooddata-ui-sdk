@@ -1724,6 +1724,9 @@ export function useInsightDataView(config: IUseInsightDataViewConfig & UseInsigh
 export type UseInsightDataViewCallbacks = UseCancelablePromiseCallbacks<DataViewFacade, GoodDataSdkError>;
 
 // @public
+export const useLocalStorage: <T>(key: string, initialValue: T) => [T, (value: T) => void];
+
+// @public
 export function usePagedResource<TParams, TItem>(resourceFactory: (params: TParams) => Promise<IPagedResource<TItem>>, fetchParams: TParams[], fetchDeps: React.DependencyList, resetDeps: React.DependencyList, getCacheKey?: (params: TParams) => string, initialState?: IUsePagedResourceState<TItem>, preventResetPromises?: boolean): IUsePagedResourceResult<TItem>;
 
 // @public

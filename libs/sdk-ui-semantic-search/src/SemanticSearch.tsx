@@ -8,6 +8,7 @@ import { SearchResultsDropdownList } from "./SearchResultsDropdownList.js";
 import { useSemanticSearch } from "./hooks/index.js";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import classnames from "classnames";
+import { ListItem } from "./types.js";
 
 /**
  * Core semantic search component props.
@@ -74,7 +75,7 @@ const SemanticSearchCore: React.FC<SemanticSearchCoreProps> = ({
     placeholder,
 }) => {
     // Input value handling
-    const [value, setValue, searchTerm] = useDebouncedState("", DEBOUNCE);
+    const [value, setValue, searchTerm, setImmediate] = useDebouncedState("", DEBOUNCE);
 
     // Search results
     const { searchStatus, searchResults, searchError } = useSemanticSearch({
@@ -86,14 +87,30 @@ const SemanticSearchCore: React.FC<SemanticSearchCoreProps> = ({
         limit,
     });
 
+    // Build list items for rendering
+    const listItems: ListItem<ISemanticSearchResultItem>[] = React.useMemo(
+        () => searchResults.map((item) => ({ item })),
+        [searchResults],
+    );
+
     // Match the width of the drop-down to the input field
     const [width, setWidth] = React.useState<number>(0);
     const inputRef = React.useRef<Input>(null);
     React.useLayoutEffect(() => {
-        const input = inputRef.current?.inputNodeRef?.inputNodeRef;
-        if (input) {
-            setWidth(input.offsetWidth);
-        }
+        const handleResize = () => {
+            const input = inputRef.current?.inputNodeRef?.inputNodeRef;
+            if (input) {
+                setWidth(input.offsetWidth);
+            }
+        };
+
+        handleResize();
+
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
     }, []);
 
     // Report errors
@@ -120,11 +137,19 @@ const SemanticSearchCore: React.FC<SemanticSearchCoreProps> = ({
                     <SearchResultsDropdownList
                         width={width}
                         isMobile={isMobile}
-                        searchResults={searchResults}
+                        searchResults={listItems}
                         searchLoading={searchStatus === "loading"}
                         onSelect={(item) => {
-                            onSelect(item);
+                            // Blur and clear the state
+                            const input = inputRef.current?.inputNodeRef?.inputNodeRef;
+                            if (input) {
+                                input.blur();
+                            }
+                            setImmediate("");
                             closeDropdown();
+
+                            // Report the selected item
+                            onSelect(item);
                         }}
                     />
                 );

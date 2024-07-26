@@ -64,6 +64,6 @@ describe("useResultSelector hook", () => {
 
         await act(() => fireEvent.keyDown(document, { key: "Enter" }));
 
-        expect(onSelect).toHaveBeenLastCalledWith("second");
+        expect(onSelect).toHaveBeenLastCalledWith("second", expect.anything());
     });
 });

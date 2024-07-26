@@ -1,11 +1,16 @@
 // (C) 2024 GoodData Corporation
 import * as React from "react";
-import { Input, LoadingMask, useDebouncedState } from "@gooddata/sdk-ui-kit";
-import { useSemanticSearch } from "../hooks/index.js";
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { GenAISemanticSearchType, ISemanticSearchResultItemWithUrl } from "@gooddata/sdk-model";
-import { SearchResultsList } from "./SearchResultsList.js";
 import { FormattedMessage, WrappedComponentProps } from "react-intl";
+import { GenAISemanticSearchType, ISemanticSearchResultItem } from "@gooddata/sdk-model";
+import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { Input, LoadingMask, useDebouncedState } from "@gooddata/sdk-ui-kit";
+import { useWorkspaceStrict, useLocalStorage } from "@gooddata/sdk-ui";
+import { useSemanticSearch } from "../hooks/index.js";
+import { ListItem } from "../types.js";
+import { getUIPath } from "../utils/getUIPath.js";
+import { SearchList } from "./SearchList.js";
+import { HistoryItem } from "./HistoryItem.js";
+import { AnnotatedResultsItem } from "./AnnotatedResultsItem.js";
 
 /**
  * A time in milliseconds to wait before sending a search request after the user stops typing.
@@ -19,6 +24,18 @@ const LOADING_HEIGHT = 100;
  * A width of the search drop-down.
  */
 const SEARCH_OVERLAY_WIDTH = 440;
+/**
+ * Max search history length.
+ */
+const MAX_SEARCH_HISTORY_LENGTH = 5;
+/**
+ * A key for the search history in the local storage.
+ */
+const SEARCH_HISTORY_KEY = "gd-semantic-search-history";
+/**
+ * An initial value for the search history.
+ */
+const SEARCH_HISTORY_EMPTY: string[] = [];
 
 /**
  * Props for the SemanticSearchOverlay component.
@@ -28,7 +45,7 @@ export type SearchOverlayProps = WrappedComponentProps & {
     /**
      * A function called when the user selects an item from the search results.
      */
-    onSelect: (item: ISemanticSearchResultItemWithUrl) => void;
+    onSelect: (item: ISemanticSearchResultItem, e: MouseEvent | KeyboardEvent, itemUrl?: string) => void;
     /**
      * An analytical backend to use for the search. Can be omitted and taken from context.
      */
@@ -66,17 +83,75 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({
     intl,
 }) => {
     // Input value handling
-    const [value, setValue, searchTerm] = useDebouncedState("", DEBOUNCE);
+    const [value, setValue, searchTerm, setImmediate] = useDebouncedState("", DEBOUNCE);
 
     // Search results
-    const { searchStatus, searchResults, searchError } = useSemanticSearch({
+    const effectiveWorkspace = useWorkspaceStrict(workspace);
+    const { searchStatus, searchResults, searchError, relationships } = useSemanticSearch({
         backend,
-        workspace,
+        workspace: effectiveWorkspace,
         searchTerm,
         objectTypes,
         deepSearch,
         limit,
     });
+
+    // Results wrapped into ListItems
+    const searchResultsItems: ListItem<ISemanticSearchResultItem>[] = React.useMemo(
+        (): ListItem<ISemanticSearchResultItem>[] =>
+            searchResults.flatMap((item) => {
+                // Look up parent items if available
+                const parents = relationships.filter(
+                    (rel) => rel.targetObjectId === item.id && rel.targetObjectType === item.type,
+                );
+
+                if (!parents.length)
+                    return {
+                        item,
+                        url: getUIPath(item.type, item.id, effectiveWorkspace),
+                    };
+
+                return parents.map((parent) => ({
+                    item,
+                    parentRef: parent,
+                    url: getUIPath(parent.sourceObjectType, parent.sourceObjectId, effectiveWorkspace),
+                }));
+            }),
+        [searchResults, effectiveWorkspace, relationships],
+    );
+
+    // Search history
+    const [searchHistory, setSearchHistory] = useLocalStorage(SEARCH_HISTORY_KEY, SEARCH_HISTORY_EMPTY);
+    const onResultSelect = React.useCallback(
+        (item: ListItem<ISemanticSearchResultItem>, e: MouseEvent | KeyboardEvent) => {
+            setSearchHistory(
+                [...new Set([searchTerm, ...searchHistory])].slice(0, MAX_SEARCH_HISTORY_LENGTH),
+            );
+
+            // Simulate browser behaviour - if user presses Ctrl or Cmd and clicks on the result, open it in a new tab
+            if (item.url && (e.ctrlKey || e.metaKey)) {
+                // Keyboard events do not navigate to the URL natively by the browser, do it artificially
+                if (e instanceof KeyboardEvent) {
+                    window.open(item.url, "_blank");
+                }
+                return;
+            }
+
+            // Call the onSelect callback
+            onSelect(item.item, e, item.url);
+
+            // If the default was not prevented - simulate browser navigation
+            if (item.url && e instanceof KeyboardEvent && !e.defaultPrevented) {
+                window.location.href = item.url;
+            }
+        },
+        [searchTerm, searchHistory, onSelect, setSearchHistory],
+    );
+    const onHistorySelect = (item: ListItem<string>) => setImmediate(item.item);
+    const searchHistoryItems: ListItem<string>[] = React.useMemo(
+        () => searchHistory.map((item) => ({ item })),
+        [searchHistory],
+    );
 
     React.useEffect(() => {
         if (searchStatus === "error") {
@@ -120,13 +195,25 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({
                         }
 
                         return (
-                            <SearchResultsList
-                                searchResults={searchResults}
+                            <SearchList
+                                items={searchResultsItems}
                                 width={SEARCH_OVERLAY_WIDTH}
-                                onSelect={onSelect}
+                                onSelect={onResultSelect}
+                                ItemComponent={AnnotatedResultsItem}
                             />
                         );
                     case "idle":
+                        if (searchHistory.length) {
+                            return (
+                                <SearchList
+                                    items={searchHistoryItems}
+                                    width={SEARCH_OVERLAY_WIDTH}
+                                    onSelect={onHistorySelect}
+                                    ItemComponent={HistoryItem}
+                                />
+                            );
+                        }
+                    // fallthrough
                     default:
                         return null;
                 }
