@@ -402,6 +402,11 @@ export interface ISettings {
      */
     enableRollupTotals?: boolean;
 
+    /**
+     * Enables storing widget identifiers.
+     */
+    enableWidgetIdentifiersRollout?: boolean;
+
     enableDataSection?: boolean;
     enableRenamingProjectToWorkspace?: boolean;
     enableCsvUploader?: boolean;

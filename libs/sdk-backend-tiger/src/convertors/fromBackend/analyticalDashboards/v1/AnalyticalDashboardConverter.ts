@@ -1,12 +1,12 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import {
     AnalyticalDashboardModelV1,
     JsonApiAnalyticalDashboardOutDocument,
     JsonApiFilterContextOutDocument,
 } from "@gooddata/api-client-tiger";
 import { LayoutPath, walkLayout } from "@gooddata/sdk-backend-spi";
+import { v4 as uuidv4 } from "uuid";
 import {
-    IdentifierRef,
     idRef,
     ObjectType,
     FilterContextItem,
@@ -36,15 +36,15 @@ function setWidgetRefsInLayout(layout: IDashboardLayout<IDashboardWidget> | unde
         widgetCallback: (_, widgetPath) => widgetsPaths.push(widgetPath),
     });
 
-    return widgetsPaths.reduce((layout, widgetPath, index) => {
+    return widgetsPaths.reduce((layout, widgetPath) => {
         return updateWith(layout, widgetPath, (widget: IInsightWidget) => {
-            const temporaryWidgetId = (widget.insight as IdentifierRef).identifier + "_widget-" + index;
+            const id = widget.localIdentifier ?? uuidv4();
 
             const convertedWidget: IInsightWidget = {
                 ...widget,
-                ref: idRef(temporaryWidgetId),
-                uri: temporaryWidgetId,
-                identifier: temporaryWidgetId,
+                ref: idRef(id),
+                uri: id,
+                identifier: id,
             };
 
             return fixWidgetLegacyElementUris(convertedWidget);
