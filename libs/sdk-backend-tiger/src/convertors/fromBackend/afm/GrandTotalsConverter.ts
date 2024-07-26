@@ -200,7 +200,7 @@ function stringToTotalType(type: string): TotalType {
             return "avg";
         case "med":
             return "med";
-        case "native":
+        case "nat":
             return "nat";
         default:
             throw new Error(`Unknown total type: ${type}`);
