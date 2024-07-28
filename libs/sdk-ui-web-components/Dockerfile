@@ -11,7 +11,8 @@ FROM ${REPO_PREFIX}nginxinc/nginx-unprivileged:1.25.3
 # BEGIN OF Mastercard security compliance - do not alter or remove
 USER 0
 RUN /usr/bin/rm -rf /etc/crontab /etc/cron.d /etc/cron.hourly /etc/cron.daily /etc/cron.weekly /etc/cron.monthly ; \
-    /usr/bin/sed -i '/^CREATE_HOME/ s/^CREATE_HOME.*/CREATE_HOME yes/; t; $ aCREATE_HOME yes' /etc/login.defs
+    /usr/bin/sed -i '/^CREATE_HOME/ s/^CREATE_HOME.*/CREATE_HOME yes/; t; $ aCREATE_HOME yes' /etc/login.defs ; \
+    /usr/bin/sed -i -e 's:/usr/sbin/nologin$:/sbin/nologin:' /etc/passwd
 ENV PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 USER 101
 # END OF Mastercard security compliance
