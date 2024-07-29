@@ -50,8 +50,8 @@ export const constructCronExpression = (
         case RECURRENCE_TYPES.WEEKLY:
             return `0 0 ${hours} ? * ${dayOfWeekName}`;
         case RECURRENCE_TYPES.MONTHLY:
-            return `0 0 ${hours} ? * ${dayOfWeekName}#${
-                isLastOccurrenceOfWeekdayInMonth(date) ? "L" : weekNumber
+            return `0 0 ${hours} ? * ${dayOfWeekName}${
+                isLastOccurrenceOfWeekdayInMonth(date) ? "L" : "#" + weekNumber
             }`;
         default:
             return cronExpression;
@@ -65,7 +65,7 @@ const dailyCronRegex = /^0 0 (\d{1,2}) \? \* \*$/; // Every day at the same hour
 // eslint-disable-next-line regexp/no-unused-capturing-group
 const weeklyCronRegex = /^0 0 (\d{1,2}) \? \* (SUN|MON|TUE|WED|THU|FRI|SAT)$/; // Every week at the same day and same hour
 // eslint-disable-next-line regexp/no-unused-capturing-group
-const monthlyCronRegex = /^0 0 (\d{1,2}) \? \* (SUN|MON|TUE|WED|THU|FRI|SAT)(#[1-5]|#L)$/; // Every month on the nth week day and same hour
+const monthlyCronRegex = /^0 0 (\d{1,2}) \? \* (SUN|MON|TUE|WED|THU|FRI|SAT)(#[1-5]|L)$/; // Every month on the nth week day and same hour
 
 export const transformCronExpressionToRecurrenceType = (
     cronExpression: string,

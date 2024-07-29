@@ -197,6 +197,7 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
                                     className="gd-button-link-dimmed"
                                     value={intl.formatMessage({ id: "delete" })}
                                     onClick={() => setScheduledEmailToDelete(automation)}
+                                    disabled={isSavingScheduledEmail}
                                 />
                             ) : null}
                         </div>
