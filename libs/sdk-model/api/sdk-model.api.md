@@ -841,6 +841,7 @@ export interface IAvailableUserGroupAccessGrantee {
 
 // @public
 export interface IBaseWidget {
+    readonly localIdentifier?: string;
     readonly type: string;
 }
 
@@ -2834,6 +2835,7 @@ export interface ISettings {
     enableUserManagement?: boolean;
     enableWaterfallChart?: boolean;
     enableWeekFilters?: boolean;
+    enableWidgetIdentifiersRollout?: boolean;
     enableWorkspacesHierarchyView?: boolean;
     formatLocale?: string;
     hideKpiDrillInEmbedded?: boolean;

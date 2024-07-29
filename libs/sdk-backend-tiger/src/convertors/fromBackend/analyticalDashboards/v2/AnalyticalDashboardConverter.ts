@@ -25,7 +25,6 @@ import {
     IDashboardPluginLink,
     IDashboardAttributeFilterConfig,
     IRichTextWidget,
-    isInsightWidget,
 } from "@gooddata/sdk-model";
 import updateWith from "lodash/updateWith.js";
 import { cloneWithSanitizedIds } from "../../IdSanitization.js";
@@ -46,16 +45,15 @@ function setWidgetRefsInLayout(layout: IDashboardLayout<IDashboardWidget> | unde
         widgetCallback: (_, widgetPath) => widgetsPaths.push(widgetPath),
     });
 
-    return widgetsPaths.reduce((layout, widgetPath, index) => {
+    return widgetsPaths.reduce((layout, widgetPath) => {
         return updateWith(layout, widgetPath, (widget: IInsightWidget | IRichTextWidget) => {
-            const baseId = isInsightWidget(widget) ? (widget.insight as IdentifierRef).identifier : uuidv4();
-            const temporaryWidgetId = baseId + "_widget-" + index;
+            const id = widget.localIdentifier ?? uuidv4();
 
             const convertedWidget: IInsightWidget | IRichTextWidget = {
                 ...widget,
-                ref: idRef(temporaryWidgetId),
-                uri: temporaryWidgetId,
-                identifier: temporaryWidgetId,
+                ref: idRef(id),
+                uri: id,
+                identifier: id,
             };
 
             return fixWidgetLegacyElementUris(convertedWidget);

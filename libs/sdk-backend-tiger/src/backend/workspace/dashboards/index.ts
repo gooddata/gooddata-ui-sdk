@@ -73,6 +73,7 @@ import { convertExportMetadata as convertFromBackendExportMetadata } from "../..
 import { parseNameFromContentDisposition } from "../../../utils/downloadFile.js";
 import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "../constants.js";
 import { DashboardsQuery } from "./dashboardsQuery.js";
+import { getSettingsForCurrentUser } from "../settings/index.js";
 
 const DEFAULT_POLL_DELAY = 5000;
 const MAX_POLL_ATTEMPTS = 50;
@@ -250,7 +251,14 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 : dashboard.filterContext;
         }
 
-        const dashboardContent = convertAnalyticalDashboard(dashboard, filterContext?.ref);
+        const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
+        const isWidgetIdentifiersEnabled = userSettings.enableWidgetIdentifiersRollout;
+
+        const dashboardContent = convertAnalyticalDashboard(
+            dashboard,
+            filterContext?.ref,
+            isWidgetIdentifiersEnabled,
+        );
         const result = await this.authCall((client) => {
             return client.entities.createEntityAnalyticalDashboards(
                 {
@@ -299,7 +307,13 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         );
 
         const objectId = await objRefToIdentifier(originalDashboard.ref, this.authCall);
-        const dashboardContent = convertAnalyticalDashboard(updatedDashboard, filterContext?.ref);
+        const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
+        const isWidgetIdentifiersEnabled = userSettings.enableWidgetIdentifiersRollout;
+        const dashboardContent = convertAnalyticalDashboard(
+            updatedDashboard,
+            filterContext?.ref,
+            isWidgetIdentifiersEnabled,
+        );
 
         const result = await this.authCall((client) => {
             return client.entities.updateEntityAnalyticalDashboards(
