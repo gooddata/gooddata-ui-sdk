@@ -27,7 +27,6 @@ import {
     selectWeekStart,
     selectEnableScheduling,
     selectDashboardTitle,
-    selectDashboardId,
     selectEntitlementMaxAutomationRecipients,
     selectEntitlementMinimumRecurrenceMinutes,
     selectAnalyticalWidgetByRef,
@@ -62,7 +61,6 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
     const [scheduledEmailToDelete, setScheduledEmailToDelete] = useState<
         IAutomationMetadataObject | IAutomationMetadataObjectDefinition | null
     >(null);
-    const dashboardId = useDashboardSelector(selectDashboardId);
     const locale = useDashboardSelector(selectLocale);
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
     const dateFormat = useDashboardSelector(selectDateFormat);
@@ -99,13 +97,9 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
         useSaveScheduledEmailToBackend(automation, props);
 
     const isDashboardExportSelected =
-        automation.exportDefinitions?.some((exportDefinition) => {
-            if (isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload)) {
-                return exportDefinition.requestPayload.content.dashboard === dashboardId;
-            }
-
-            return false;
-        }) ?? false;
+        automation.exportDefinitions?.some((exportDefinition) =>
+            isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload),
+        ) ?? false;
 
     const isCsvExportSelected =
         automation.exportDefinitions?.some((exportDefinition) => {
@@ -197,6 +191,7 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
                                     className="gd-button-link-dimmed"
                                     value={intl.formatMessage({ id: "delete" })}
                                     onClick={() => setScheduledEmailToDelete(automation)}
+                                    disabled={isSavingScheduledEmail}
                                 />
                             ) : null}
                         </div>
