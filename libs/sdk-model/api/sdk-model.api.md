@@ -1530,14 +1530,26 @@ export interface IExportDefinitionBase {
 }
 
 // @alpha
-export type IExportDefinitionContent = IExportDefinitionVisualizationObjectContent | IExportDefinitionDashboardContent;
-
-// @alpha
 export interface IExportDefinitionDashboardContent {
     // (undocumented)
     dashboard: string;
     // (undocumented)
     filters?: FilterContextItem[];
+}
+
+// @alpha
+export type IExportDefinitionDashboardRequestPayload = {
+    type: "dashboard";
+    fileName: string;
+    format: "PDF";
+    settings?: IExportDefinitionDashboardSettings;
+    content: IExportDefinitionDashboardContent;
+};
+
+// @alpha
+export interface IExportDefinitionDashboardSettings {
+    // (undocumented)
+    orientation: "portrait" | "landscape";
 }
 
 // @alpha
@@ -1553,25 +1565,7 @@ export interface IExportDefinitionMetadataObjectDefinition extends IExportDefini
 }
 
 // @alpha
-export interface IExportDefinitionPdfOptions {
-    // (undocumented)
-    orientation: "portrait" | "landscape";
-}
-
-// @alpha
-export type IExportDefinitionRequestPayload = {
-    fileName: string;
-    format: "PDF" | "CSV" | "XLSX";
-    pdfOptions?: IExportDefinitionPdfOptions;
-    settings?: IExportDefinitionSettings;
-    content: IExportDefinitionContent;
-};
-
-// @alpha
-export interface IExportDefinitionSettings {
-    // (undocumented)
-    mergeHeaders: boolean;
-}
+export type IExportDefinitionRequestPayload = IExportDefinitionDashboardRequestPayload | IExportDefinitionVisualizationObjectRequestPayload;
 
 // @alpha
 export interface IExportDefinitionVisualizationObjectContent {
@@ -1579,6 +1573,23 @@ export interface IExportDefinitionVisualizationObjectContent {
     filters?: IFilter[];
     // (undocumented)
     visualizationObject: Identifier;
+}
+
+// @alpha
+export type IExportDefinitionVisualizationObjectRequestPayload = {
+    type: "visualizationObject";
+    fileName: string;
+    format: "CSV" | "XLSX" | "HTML" | "PDF";
+    settings?: IExportDefinitionVisualizationObjectSettings;
+    content: IExportDefinitionVisualizationObjectContent;
+};
+
+// @alpha
+export interface IExportDefinitionVisualizationObjectSettings {
+    // (undocumented)
+    mergeHeaders?: boolean;
+    // (undocumented)
+    orientation?: "portrait" | "landscape";
 }
 
 // @alpha
@@ -2852,10 +2863,10 @@ export interface ISettings {
 }
 
 // @alpha
-export function isExportDefinitionDashboardContent(obj: unknown): obj is IExportDefinitionDashboardContent;
+export function isExportDefinitionDashboardRequestPayload(obj: unknown): obj is IExportDefinitionDashboardRequestPayload;
 
 // @alpha
-export function isExportDefinitionVisualizationObjectContent(obj: unknown): obj is IExportDefinitionVisualizationObjectContent;
+export function isExportDefinitionVisualizationObjectRequestPayload(obj: unknown): obj is IExportDefinitionVisualizationObjectRequestPayload;
 
 // @public
 export function isFactMetadataObject(obj: unknown): obj is IFactMetadataObject;

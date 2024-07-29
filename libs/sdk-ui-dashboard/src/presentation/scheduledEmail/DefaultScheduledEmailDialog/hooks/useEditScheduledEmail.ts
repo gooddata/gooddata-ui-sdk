@@ -1,15 +1,15 @@
 // (C) 2019-2024 GoodData Corporation
 import { useState } from "react";
 import {
-    IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
     IExportDefinitionMetadataObjectDefinition,
-    isExportDefinitionDashboardContent,
     IAutomationRecipient,
     FilterContextItem,
     IFilter,
     isFilterContextItem,
-    IExportDefinitionSettings,
+    IExportDefinitionVisualizationObjectSettings,
+    isExportDefinitionVisualizationObjectRequestPayload,
+    isExportDefinitionDashboardRequestPayload,
 } from "@gooddata/sdk-model";
 import parseISO from "date-fns/parseISO/index.js";
 import { getUserTimezone } from "../utils/timezone.js";
@@ -50,7 +50,7 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
         customFilters: dashboardEditFilters,
     });
 
-    const [state, setState] = useState<IAutomationMetadataObject | IAutomationMetadataObjectDefinition>(
+    const [state, setState] = useState<IAutomationMetadataObjectDefinition>(
         editSchedule ??
             newAutomationMetadataObjectDefinition({
                 id: isWidget ? insight.insight.identifier : dashboardId!,
@@ -120,7 +120,7 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
             const dashboardExportDefinitionExists = isDashboardAutomation(state);
             const updatedExportDefinitions = dashboardExportDefinitionExists
                 ? state.exportDefinitions?.map((exportDefinition) =>
-                      isExportDefinitionDashboardContent(exportDefinition.requestPayload.content)
+                      isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload)
                           ? dashboardExportDefinition
                           : exportDefinition,
                   )
@@ -135,7 +135,7 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
                 ...s,
                 exportDefinitions: s.exportDefinitions?.filter(
                     (exportDefinition) =>
-                        !isExportDefinitionDashboardContent(exportDefinition.requestPayload.content),
+                        !isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload),
                 ),
             }));
         }
@@ -186,16 +186,22 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
         }
     };
 
-    const onWidgetAttachmentsSettingsChange = ({ mergeHeaders }: IExportDefinitionSettings) => {
+    const onWidgetAttachmentsSettingsChange = ({
+        mergeHeaders,
+    }: IExportDefinitionVisualizationObjectSettings) => {
         setState((s) => ({
             ...s,
             exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
-                if (isXlsxVisualizationExportDefinition(exportDefinition)) {
+                if (
+                    isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload) &&
+                    exportDefinition.requestPayload.format === "XLSX"
+                ) {
                     return {
                         ...exportDefinition,
                         requestPayload: {
                             ...exportDefinition.requestPayload,
                             settings: {
+                                ...exportDefinition.requestPayload?.settings,
                                 mergeHeaders,
                             },
                         },
@@ -255,6 +261,7 @@ function newDashboardExportDefinitionMetadataObjectDefinition({
         type: "exportDefinition",
         title: dashboardTitle,
         requestPayload: {
+            type: "dashboard",
             fileName: dashboardTitle,
             format: "PDF",
             content: {
@@ -283,6 +290,7 @@ function newWidgetExportDefinitionMetadataObjectDefinition({
         type: "exportDefinition",
         title: widgetTitle,
         requestPayload: {
+            type: "visualizationObject",
             fileName: widgetTitle,
             format: format,
             content: {

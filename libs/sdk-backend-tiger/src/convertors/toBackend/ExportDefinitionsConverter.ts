@@ -10,8 +10,8 @@ import {
 } from "@gooddata/api-client-tiger";
 import {
     IExportDefinitionRequestPayload,
-    isExportDefinitionDashboardContent,
     IExportDefinitionMetadataObjectDefinition,
+    isExportDefinitionDashboardRequestPayload,
 } from "@gooddata/sdk-model";
 
 export const convertExportDefinitionMdObjectDefinition = (
@@ -19,7 +19,7 @@ export const convertExportDefinitionMdObjectDefinition = (
 ): JsonApiExportDefinitionPostOptionalIdDocument => {
     const { title, description, tags, requestPayload } = exportDefinition;
 
-    const relationships = isExportDefinitionDashboardContent(requestPayload.content)
+    const relationships = isExportDefinitionDashboardRequestPayload(requestPayload)
         ? {
               analyticalDashboard: {
                   data: {
@@ -54,7 +54,7 @@ export const convertExportDefinitionMdObjectDefinition = (
 const convertExportDefinitionRequestPayload = (
     exportRequest: IExportDefinitionRequestPayload,
 ): TabularExportRequest | VisualExportRequest => {
-    if (isExportDefinitionDashboardContent(exportRequest.content)) {
+    if (isExportDefinitionDashboardRequestPayload(exportRequest)) {
         const metadataObj = exportRequest.content.filters
             ? { metadata: { filters: exportRequest.content.filters } }
             : {};
@@ -66,13 +66,16 @@ const convertExportDefinitionRequestPayload = (
         };
     }
 
+    const { mergeHeaders, orientation } = exportRequest.settings ?? {};
+
     return {
         fileName: exportRequest.fileName,
         format: exportRequest.format,
         visualizationObject: exportRequest.content.visualizationObject,
         visualizationObjectCustomFilters: exportRequest.content.filters,
         settings: {
-            pdfPageSize: exportRequest.pdfOptions?.orientation,
+            ...(mergeHeaders ? { mergeHeaders } : {}),
+            ...(orientation ? { pdfPageSize: orientation } : {}),
         },
     };
 };

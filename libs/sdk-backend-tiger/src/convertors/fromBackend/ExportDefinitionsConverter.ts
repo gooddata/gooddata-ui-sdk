@@ -55,36 +55,32 @@ export const convertExportDefinitionMdObject = (
 const convertExportDefinitionRequestPayload = (
     exportRequest: VisualExportRequest | TabularExportRequest,
 ): IExportDefinitionRequestPayload => {
-    if (isTabularRequest(exportRequest) && exportRequest.format === "PDF") {
-        const pdfPageSize = exportRequest.settings?.pdfPageSize;
+    if (isTabularRequest(exportRequest)) {
+        const { mergeHeaders, pdfPageSize } = exportRequest.settings ?? {};
+        const orientation =
+            pdfPageSize === "portrait" || pdfPageSize === "landscape" ? pdfPageSize : "portrait";
+
         return {
+            type: "visualizationObject",
             fileName: exportRequest.fileName,
             format: exportRequest.format,
             content: {
                 visualizationObject: exportRequest.visualizationObject ?? "",
-                filters: (exportRequest.visualizationObjectCustomFilters as IFilter[]) ?? [],
+                filters: exportRequest.visualizationObjectCustomFilters as IFilter[],
             },
-            pdfOptions: {
-                orientation:
-                    pdfPageSize === "portrait" || pdfPageSize === "landscape" ? pdfPageSize : "portrait",
+            settings: {
+                ...(exportRequest.format === "PDF" ? { orientation } : {}),
+                ...(mergeHeaders ? { mergeHeaders } : {}),
             },
         };
-    } else if (isVisualRequest(exportRequest)) {
+    } else {
         return {
+            type: "dashboard",
             fileName: exportRequest.fileName,
             format: "PDF",
             content: {
                 dashboard: exportRequest.dashboardId,
                 filters: (exportRequest.metadata as any)?.filters as FilterContextItem[],
-            },
-        };
-    } else {
-        // to be expanded when more formats are supported
-        return {
-            fileName: "",
-            format: "PDF",
-            content: {
-                visualizationObject: "",
             },
         };
     }
@@ -94,10 +90,4 @@ const isTabularRequest = (
     request: VisualExportRequest | TabularExportRequest,
 ): request is TabularExportRequest => {
     return !isEmpty(request) && typeof (request as TabularExportRequest).visualizationObject === "string";
-};
-
-const isVisualRequest = (
-    request: VisualExportRequest | TabularExportRequest,
-): request is VisualExportRequest => {
-    return !isEmpty(request) && typeof (request as VisualExportRequest).dashboardId === "string";
 };
