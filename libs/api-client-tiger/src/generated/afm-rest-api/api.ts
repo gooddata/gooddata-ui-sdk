@@ -2265,6 +2265,12 @@ export interface SearchRequest {
      * @memberof SearchRequest
      */
     deepSearch?: boolean;
+    /**
+     * Maximum number of results to return. There is a hard limit and the actual number of returned results may be lower than what is requested.
+     * @type {number}
+     * @memberof SearchRequest
+     */
+    limit?: number;
 }
 
 export const SearchRequestObjectTypesEnum = {

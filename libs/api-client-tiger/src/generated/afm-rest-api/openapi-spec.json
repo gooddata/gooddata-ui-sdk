@@ -2684,6 +2684,12 @@
                         "type": "boolean",
                         "description": "Turn on deep search. If true, content of complex objects will be searched as well, e.g. metrics in visualizations.",
                         "default": false
+                    },
+                    "limit": {
+                        "type": "integer",
+                        "description": "Maximum number of results to return. There is a hard limit and the actual number of returned results may be lower than what is requested.",
+                        "format": "int32",
+                        "default": 10
                     }
                 }
             },

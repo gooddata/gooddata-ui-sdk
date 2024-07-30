@@ -3371,6 +3371,8 @@ export interface IRecurrenceFormProps {
     // (undocumented)
     onChange: (cronExpression: string, startDate: Date) => void;
     // (undocumented)
+    onTypeChange?: (type: RecurrenceType) => void;
+    // (undocumented)
     repeatLabel?: string;
     // (undocumented)
     startDate: Date;
@@ -3380,6 +3382,8 @@ export interface IRecurrenceFormProps {
     timeFormat?: string;
     // (undocumented)
     timezone?: string;
+    // (undocumented)
+    type?: RecurrenceType;
     // (undocumented)
     weekStart?: WeekStart;
 }
@@ -4425,7 +4429,19 @@ export enum PresetType {
 export const recommendedHeader: IDateDatasetHeader;
 
 // @internal (undocumented)
+export const RECURRENCE_TYPES: {
+    HOURLY: string;
+    DAILY: string;
+    WEEKLY: string;
+    MONTHLY: string;
+    CRON: string;
+};
+
+// @internal (undocumented)
 export const RecurrenceForm: React_2.FC<IRecurrenceFormProps>;
+
+// @internal (undocumented)
+export type RecurrenceType = typeof RECURRENCE_TYPES[keyof typeof RECURRENCE_TYPES];
 
 // @internal (undocumented)
 export const relatedHeader: IDateDatasetHeader;

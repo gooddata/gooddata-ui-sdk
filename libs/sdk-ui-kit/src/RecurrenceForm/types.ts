@@ -2,6 +2,7 @@
 
 import { RECURRENCE_TYPES } from "./constants.js";
 
-type RecurrenceTypeKey = keyof typeof RECURRENCE_TYPES;
-
-export type RecurrenceType = typeof RECURRENCE_TYPES[RecurrenceTypeKey];
+/**
+ * @internal
+ */
+export type RecurrenceType = typeof RECURRENCE_TYPES[keyof typeof RECURRENCE_TYPES];

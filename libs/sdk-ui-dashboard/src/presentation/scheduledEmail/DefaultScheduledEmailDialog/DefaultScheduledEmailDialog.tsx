@@ -13,6 +13,7 @@ import {
     normalizeTime,
     Alignment,
     Message,
+    RECURRENCE_TYPES,
 } from "@gooddata/sdk-ui-kit";
 import { Textarea } from "./components/Textarea.js";
 import { Input } from "./components/Input.js";
@@ -47,6 +48,7 @@ import { DASHBOARD_TITLE_MAX_LENGTH } from "../../constants/index.js";
 import parseISO from "date-fns/parseISO/index.js";
 import { isMobileView } from "./utils/responsive.js";
 import { DeleteScheduleConfirmDialog } from "../DefaultScheduledEmailManagementDialog/components/DeleteScheduleConfirmDialog.js";
+import { validateRecurrenceType } from "./utils/automationHelpers.js";
 
 const MAX_MESSAGE_LENGTH = 200;
 const MAX_SUBJECT_LENGTH = 200;
@@ -90,11 +92,15 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
         onMessageChange,
         onRecipientsChange,
         onRecurrenceChange,
+        onRecurrenceTypeChange,
         onSubjectChange,
         onTitleChange,
     } = useEditScheduledEmail(props);
     const { handleSaveScheduledEmail, isSavingScheduledEmail, savingErrorMessage } =
         useSaveScheduledEmailToBackend(automation, props);
+    const recurrenceType = validateRecurrenceType(
+        automation.metadata?.uiRecurrenceType ?? RECURRENCE_TYPES.DAILY,
+    );
 
     const isDashboardExportSelected =
         automation.exportDefinitions?.some((exportDefinition) =>
@@ -235,6 +241,8 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
                             locale={locale}
                             weekStart={weekStart}
                             onChange={onRecurrenceChange}
+                            type={recurrenceType}
+                            onTypeChange={onRecurrenceTypeChange}
                             allowHourlyRecurrence={allowHourlyRecurrence}
                         />
                         <ContentDivider className="gd-divider-with-margin" />

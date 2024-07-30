@@ -20,7 +20,7 @@ import {
     selectAnalyticalWidgetByRef,
     selectInsightByWidgetRef,
 } from "../../../../model/index.js";
-import { Alignment, normalizeTime } from "@gooddata/sdk-ui-kit";
+import { Alignment, normalizeTime, RECURRENCE_TYPES, RecurrenceType } from "@gooddata/sdk-ui-kit";
 import { IScheduledEmailDialogProps } from "../../types.js";
 import { WidgetAttachmentType } from "../types.js";
 import { toModifiedISOString } from "../../DefaultScheduledEmailManagementDialog/utils.js";
@@ -72,6 +72,16 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
                 ...(s.schedule ?? {}),
                 cron: cronExpression,
                 firstRun: toModifiedISOString(startDate),
+            },
+        }));
+    };
+
+    const onRecurrenceTypeChange = (value: RecurrenceType) => {
+        setState((s) => ({
+            ...s,
+            metadata: {
+                ...(s?.metadata ?? {}),
+                uiRecurrenceType: value,
             },
         }));
     };
@@ -218,6 +228,7 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
         automation: state,
         onTitleChange,
         onRecurrenceChange,
+        onRecurrenceTypeChange,
         onDestinationChange,
         onRecipientsChange,
         onSubjectChange,
@@ -348,6 +359,9 @@ function newAutomationMetadataObjectDefinition({
         exportDefinitions: [{ ...exportDefinition }],
         recipients: [],
         webhook,
+        metadata: {
+            uiRecurrenceType: RECURRENCE_TYPES.DAILY,
+        },
     };
 
     return automation;

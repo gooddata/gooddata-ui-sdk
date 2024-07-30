@@ -774,6 +774,10 @@ export interface IAutomationMetadataObjectBase {
         message?: string;
     };
     exportDefinitions?: IExportDefinitionMetadataObject[];
+    // (undocumented)
+    metadata?: {
+        uiRecurrenceType: string;
+    };
     recipients?: IAutomationRecipient[];
     schedule?: IAutomationSchedule;
     webhook?: string;

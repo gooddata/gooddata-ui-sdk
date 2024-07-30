@@ -67,6 +67,13 @@ const weeklyCronRegex = /^0 0 (\d{1,2}) \? \* (SUN|MON|TUE|WED|THU|FRI|SAT)$/; /
 // eslint-disable-next-line regexp/no-unused-capturing-group
 const monthlyCronRegex = /^0 0 (\d{1,2}) \? \* (SUN|MON|TUE|WED|THU|FRI|SAT)(#[1-5]|L)$/; // Every month on the nth week day and same hour
 
+/**
+ * Transforms a cron expression to a recurrence type.
+ *
+ * This method works only for our specific default cron expressions of each recurrence type and is poor for evaluating
+ * whether custom cron expression was provided. Therefore should only be used as a fallback when the actual recurrence
+ * type is not provided.
+ */
 export const transformCronExpressionToRecurrenceType = (
     cronExpression: string,
     allowHourlyRecurrence: boolean,

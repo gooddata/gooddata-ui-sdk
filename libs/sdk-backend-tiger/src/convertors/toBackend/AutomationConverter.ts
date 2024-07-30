@@ -9,7 +9,8 @@ export function convertAutomation(
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
     exportDefinitionIds?: string[],
 ): JsonApiAutomationIn {
-    const { id, type, description, schedule, tags, title, recipients, details, webhook } = automation;
+    const { id, type, description, schedule, tags, title, recipients, details, webhook, metadata } =
+        automation;
     const relationships = omitBy(
         {
             exportDefinitions: exportDefinitionIds?.length
@@ -44,6 +45,7 @@ export function convertAutomation(
             tags,
             schedule,
             details,
+            metadata,
         },
         isEmpty,
     );

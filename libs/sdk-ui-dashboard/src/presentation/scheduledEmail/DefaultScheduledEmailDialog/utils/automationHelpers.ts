@@ -12,6 +12,8 @@ import {
     isFilter,
     isFilterContextItem,
 } from "@gooddata/sdk-model";
+import { RECURRENCE_TYPES, RecurrenceType } from "@gooddata/sdk-ui-kit";
+import { invariant } from "ts-invariant";
 
 export const isDashboardAutomation = (
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | undefined,
@@ -109,4 +111,12 @@ export const getAutomationVisualizationFilters = (
             return isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload);
         })
         ?.requestPayload?.content.filters?.filter(isFilter);
+};
+
+export const validateRecurrenceType = (recurrenceType: string): RecurrenceType => {
+    const isValidRecurrenceType = Object.values(RECURRENCE_TYPES).includes(recurrenceType);
+
+    invariant(isValidRecurrenceType, "Invalid recurrence type in automation state");
+
+    return recurrenceType;
 };

@@ -10,7 +10,13 @@ import { transformCronExpressionToRecurrenceType, constructCronExpression } from
 import { DateTime } from "./DateTime.js";
 import { Recurrence } from "./Recurrence.js";
 import { messages } from "./locales.js";
-import { DEFAULT_DATE_FORMAT, DEFAULT_LOCALE, DEFAULT_TIME_FORMAT, DEFAULT_WEEK_START } from "./constants.js";
+import {
+    DEFAULT_DATE_FORMAT,
+    DEFAULT_LOCALE,
+    DEFAULT_TIME_FORMAT,
+    DEFAULT_WEEK_START,
+    RECURRENCE_TYPES,
+} from "./constants.js";
 
 /**
  * @internal
@@ -28,6 +34,8 @@ export interface IRecurrenceFormProps {
     repeatLabel?: string;
     className?: string;
     allowHourlyRecurrence?: boolean;
+    type?: RecurrenceType;
+    onTypeChange?: (type: RecurrenceType) => void;
 }
 
 const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
@@ -35,6 +43,7 @@ const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
         startDate,
         cronExpression,
         onChange,
+        onTypeChange,
         locale = DEFAULT_LOCALE,
         dateFormat = DEFAULT_DATE_FORMAT,
         timeFormat = DEFAULT_TIME_FORMAT,
@@ -44,13 +53,15 @@ const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
         repeatLabel,
         className,
         allowHourlyRecurrence = true,
+        type,
     } = props;
     const intl = useIntl();
+    const sanitizedType = type === RECURRENCE_TYPES.HOURLY && !allowHourlyRecurrence ? undefined : type;
 
     const [dateValue, setDateValue] = useState<Date>(startDate);
     const [cronValue, setCronValue] = useState<string>(cronExpression);
     const [recurrenceType, setRecurrenceType] = useState<RecurrenceType>(
-        transformCronExpressionToRecurrenceType(cronExpression, allowHourlyRecurrence),
+        sanitizedType ?? transformCronExpressionToRecurrenceType(cronExpression, allowHourlyRecurrence),
     );
 
     const onDateChange = useCallback(
@@ -64,9 +75,10 @@ const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
     const onRepeatTypeChange = useCallback(
         (type: RecurrenceType) => {
             setRecurrenceType(type);
+            onTypeChange?.(type);
             onChange(constructCronExpression(dateValue, type, cronValue), dateValue);
         },
-        [cronValue, dateValue, onChange],
+        [cronValue, dateValue, onChange, onTypeChange],
     );
 
     const onCronValueChange = useCallback(

@@ -48,6 +48,16 @@ export interface IAutomationMetadataObjectBase {
          */
         message?: string;
     };
+
+    /*
+     * Additional information for the automation.
+     */
+    metadata?: {
+        /**
+         * Recurrence type option for UI.
+         */
+        uiRecurrenceType: string;
+    };
 }
 
 /**

@@ -19,6 +19,9 @@ export const DEFAULT_DROPDOWN_ALIGN_POINTS = [
 export const DEFAULT_DROPDOWN_ZINDEX = 5001;
 export const DEFAULT_DROPDOWN_WIDTH = 199;
 
+/**
+ * @internal
+ */
 export const RECURRENCE_TYPES = {
     HOURLY: "hourly",
     DAILY: "daily",

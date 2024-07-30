@@ -44,7 +44,7 @@ export function convertAutomation(
     included: JsonApiAutomationOutIncludes[],
 ): IAutomationMetadataObject {
     const { id, attributes = {}, relationships = {} } = automation;
-    const { title, description, tags, schedule, details, createdAt, modifiedAt } = attributes;
+    const { title, description, tags, schedule, details, createdAt, modifiedAt, metadata = {} } = attributes;
     const { createdBy, modifiedBy } = relationships;
 
     const webhook = relationships?.notificationChannel?.data?.id;
@@ -63,6 +63,9 @@ export function convertAutomation(
         relationships?.recipients?.data
             ?.map((r) => convertRecipient(r, included))
             .filter(isAutomationUserRecipient) ?? [];
+
+    const uiRecurrenceType = (metadata as any)?.uiRecurrenceType;
+    const metadataObj = uiRecurrenceType ? { metadata: { uiRecurrenceType } } : {};
 
     return {
         // Common metadata object properties
@@ -88,6 +91,7 @@ export function convertAutomation(
         unlisted: false,
         production: true,
         deprecated: false,
+        ...metadataObj,
     };
 }
 
