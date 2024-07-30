@@ -3232,5 +3232,10 @@
         "value": "Search dashboards or visualization…",
         "comment": "Placeholder in the input box that is used in semantic search.",
         "limit": 0
+    },
+    "semantic-search.id": {
+        "value": "ID",
+        "comment": "Label of column that contains ID of the search results object.",
+        "limit": 0
     }
 }

@@ -5,6 +5,7 @@ import classnames from "classnames";
 import { ISemanticSearchResultItemWithUrl } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, EllipsisText, Icon, Typography } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+import { FormattedMessage } from "react-intl";
 
 export const ITEM_HEIGHT = 45;
 const BUBBLE_ALIGN_POINTS = [{ align: "bc tr", offset: { x: 2, y: -4 } }];
@@ -82,7 +83,7 @@ export const ResultsItem: React.FC<ResultsItemProps> = ({ item, onHover, onSelec
                         <div className="gd-semantic-search__results-item__details__contents">
                             <Typography tagName="h3">{item.title}</Typography>
                             {renderIfHasDescription(item)}
-                            <h4>ID</h4>
+                            <FormattedMessage tagName="h4" id="semantic-search.id" />
                             <Typography tagName={"p"}>{item.id}</Typography>
                         </div>
                     </Bubble>
