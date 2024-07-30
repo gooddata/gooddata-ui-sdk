@@ -255,7 +255,7 @@ export function useFiltersWithAddedPlaceholder(filters: FilterContextItem[]): [
                 // We allowed just one attributeFilter for one attribute,
                 if (!usedDisplayForm) {
                     setSelectedDisplayForm(ref);
-                    setAutoOpenFilter(ref);
+                    setAutoOpenFilter(primaryDisplayForm ? primaryDisplayForm.ref : ref);
                     dispatchAndWaitFor(
                         dispatch,
                         addAttributeFilterAction(
