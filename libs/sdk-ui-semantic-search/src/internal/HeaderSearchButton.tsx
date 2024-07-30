@@ -1,23 +1,18 @@
 // (C) 2007-2024 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
-import { Button } from "../Button/index.js";
-import { Overlay } from "../Overlay/index.js";
-
-type HeaderSearchCoreProps = React.PropsWithChildren<{
-    className?: string;
-}>;
+import { FormattedMessage, injectIntl } from "react-intl";
+import { Button, Overlay } from "@gooddata/sdk-ui-kit";
+import { SearchOverlay, SearchOverlayProps } from "./SearchOverlay.js";
+import { ISemanticSearchResultItemWithUrl } from "@gooddata/sdk-model";
 
 const ALIGN_POINTS = [{ align: "br tr" }];
 
-export const HeaderSearchCore: React.FC<HeaderSearchCoreProps & WrappedComponentProps> = ({
-    className,
-    children,
-    intl,
-}) => {
+export type HeaderSearchButtonProps = SearchOverlayProps;
+
+export const HeaderSearchButtonCore: React.FC<HeaderSearchButtonProps> = ({ onSelect, ...overlayProps }) => {
     const [isOpen, setIsOpen] = React.useState(false);
-    const classNames = cx("gd-header-button", "gd-header-search", { "is-open": isOpen }, className);
+    const classNames = cx("gd-header-measure", "gd-header-button", "gd-header-search", { "is-open": isOpen });
 
     React.useEffect(() => {
         const shortcutHandler = (event: KeyboardEvent) => {
@@ -35,9 +30,14 @@ export const HeaderSearchCore: React.FC<HeaderSearchCoreProps & WrappedComponent
         };
     }, [isOpen]);
 
+    const handleSelect = (item: ISemanticSearchResultItemWithUrl) => {
+        onSelect(item);
+        setIsOpen(false);
+    };
+
     return (
         <Button
-            title={intl.formatMessage({ id: "gs.header.search" })}
+            title={overlayProps.intl.formatMessage({ id: "gs.header.search" })}
             className={classNames}
             onClick={() => setIsOpen(true)}
         >
@@ -55,12 +55,15 @@ export const HeaderSearchCore: React.FC<HeaderSearchCoreProps & WrappedComponent
                     closeOnParentScroll={false}
                     closeOnMouseDrag={false}
                     onClose={() => setIsOpen(false)}
+                    ignoreClicksOnByClass={[".gd-bubble", ".gd-semantic-search__results-item"]}
                 >
-                    <div className="gd-dialog gd-dropdown overlay gd-header-search-dropdown">{children}</div>
+                    <div className="gd-dialog gd-dropdown overlay gd-header-search-dropdown">
+                        <SearchOverlay onSelect={handleSelect} {...overlayProps} />
+                    </div>
                 </Overlay>
             ) : null}
         </Button>
     );
 };
 
-export const HeaderSearch = injectIntl(HeaderSearchCore);
+export const HeaderSearchButton = injectIntl(HeaderSearchButtonCore);

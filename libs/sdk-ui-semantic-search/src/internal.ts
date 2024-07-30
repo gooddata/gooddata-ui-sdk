@@ -7,4 +7,4 @@
  * @internal
  */
 
-export * from "./internal/SemanticSearchOverlay.js";
+export * from "./internal/HeaderSearchButton.js";

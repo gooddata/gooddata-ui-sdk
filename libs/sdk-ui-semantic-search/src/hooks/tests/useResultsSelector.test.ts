@@ -12,7 +12,7 @@ describe("useResultSelector hook", () => {
 
         const [selected, setSelected] = result.current;
 
-        expect(selected).toEqual(0);
+        expect(selected).toEqual("first");
         expect(typeof setSelected).toEqual("function");
     });
 
@@ -23,25 +23,22 @@ describe("useResultSelector hook", () => {
 
         const [, setSelected] = result.current;
 
-        act(() => setSelected(2));
+        act(() => setSelected("third"));
 
         const [selected] = result.current;
 
-        expect(selected).toEqual(2);
+        expect(selected).toEqual("third");
     });
 
-    it("should not let the selection go out of bounds", async () => {
+    it("should not reset to 1st item when setting unknown item", async () => {
         const results = ["first", "second", "third"];
         const onSelect = vi.fn();
         const { result } = renderHook(() => useListSelector(results, onSelect));
 
         const [, setSelected] = result.current;
 
-        act(() => setSelected(10));
-        expect(result.current[0]).toEqual(2);
-
-        act(() => setSelected(-1));
-        expect(result.current[0]).toEqual(0);
+        act(() => setSelected("fourth"));
+        expect(result.current[0]).toEqual("first");
     });
 
     it("should navigate the list up and down", async () => {
@@ -51,10 +48,10 @@ describe("useResultSelector hook", () => {
 
         await act(() => fireEvent.keyDown(document, { key: "ArrowDown" }));
         await act(() => fireEvent.keyDown(document, { key: "ArrowDown" }));
-        expect(result.current[0]).toEqual(2);
+        expect(result.current[0]).toEqual("third");
 
         await act(() => fireEvent.keyDown(document, { key: "ArrowUp" }));
-        expect(result.current[0]).toEqual(1);
+        expect(result.current[0]).toEqual("second");
     });
 
     it("should return selected item on Enter", async () => {
@@ -63,7 +60,7 @@ describe("useResultSelector hook", () => {
         const { result } = renderHook(() => useListSelector(results, onSelect));
 
         const [, setSelected] = result.current;
-        act(() => setSelected(1));
+        act(() => setSelected("second"));
 
         await act(() => fireEvent.keyDown(document, { key: "Enter" }));
 

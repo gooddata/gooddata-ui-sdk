@@ -1,7 +1,7 @@
 // (C) 2024 GoodData Corporation
 
 import * as React from "react";
-import { ISemanticSearchResultItem } from "@gooddata/sdk-model";
+import { ISemanticSearchResultItemWithUrl } from "@gooddata/sdk-model";
 import { DropdownList } from "@gooddata/sdk-ui-kit";
 import { ITEM_HEIGHT, ResultsItem } from "./ResultsItem.js";
 import { useListSelector } from "./hooks/index.js";
@@ -14,7 +14,7 @@ type SearchResultsDropdownListProps = {
     /**
      * Search result items.
      */
-    searchResults: ISemanticSearchResultItem[];
+    searchResults: ISemanticSearchResultItemWithUrl[];
     /**
      * Loading flag.
      */
@@ -30,7 +30,7 @@ type SearchResultsDropdownListProps = {
     /**
      * Callback for item selection.
      */
-    onSelect: (item: ISemanticSearchResultItem) => void;
+    onSelect: (item: ISemanticSearchResultItemWithUrl) => void;
 };
 
 /**
@@ -44,7 +44,7 @@ export const SearchResultsDropdownList: React.FC<SearchResultsDropdownListProps>
     width,
     onSelect,
 }) => {
-    const [selected, setSelected] = useListSelector(searchResults, onSelect);
+    const [active, setActive] = useListSelector(searchResults, onSelect);
 
     return (
         <DropdownList
@@ -52,16 +52,15 @@ export const SearchResultsDropdownList: React.FC<SearchResultsDropdownListProps>
             isMobile={isMobile}
             isLoading={searchLoading}
             itemHeight={ITEM_HEIGHT}
-            renderItem={({ rowIndex, item, ...props }) => {
+            renderItem={({ item, width, height }) => {
                 return (
                     <ResultsItem
-                        onHover={() => setSelected(rowIndex)}
-                        onClick={() => {
-                            onSelect(item);
-                        }}
-                        selected={rowIndex === selected}
+                        onHover={setActive}
+                        onSelect={onSelect}
+                        active={item === active}
                         item={item}
-                        {...props}
+                        width={width}
+                        height={height}
                     />
                 );
             }}

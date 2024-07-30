@@ -97,6 +97,7 @@ export enum TigerFeaturesNames {
     EnableSchedulingRollout = "enableSchedulingRollout",
     EnableRollupTotals = "enableRollupTotals",
     EnableWidgetIdentifiersRollout = "enableWidgetIdentifiersRollout",
+    EnableAIFunctions = "enableAIFunctions",
 }
 
 export type ITigerFeatureFlags = {
@@ -159,6 +160,7 @@ export type ITigerFeatureFlags = {
     enableSchedulingRollout: typeof FeatureFlagsValues["enableSchedulingRollout"][number];
     enableRollupTotals: typeof FeatureFlagsValues["enableRollupTotals"][number];
     enableWidgetIdentifiersRollout: typeof FeatureFlagsValues["enableWidgetIdentifiersRollout"][number];
+    enableAIFunctions: typeof FeatureFlagsValues["enableAIFunctions"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -221,6 +223,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableSchedulingRollout: false,
     enableRollupTotals: false,
     enableWidgetIdentifiersRollout: false,
+    enableAIFunctions: false,
 };
 
 export const FeatureFlagsValues = {
@@ -287,4 +290,5 @@ export const FeatureFlagsValues = {
     enableSchedulingRollout: [true, false] as const,
     enableRollupTotals: [true, false] as const,
     enableWidgetIdentifiersRollout: [true, false] as const,
+    enableAIFunctions: [true, false] as const,
 };

@@ -29,7 +29,6 @@ import { HeaderAccount } from "./HeaderAccount.js";
 import { HeaderMenu } from "./HeaderMenu.js";
 import { HeaderUpsellButton } from "./HeaderUpsellButton.js";
 import { HeaderInvite } from "./HeaderInvite.js";
-import { HeaderSearch } from "./HeaderSearch.js";
 
 function getOuterWidth(element: HTMLDivElement) {
     const width = element.offsetWidth;
@@ -396,9 +395,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
 
                 {this.renderTrialItems()}
 
-                {this.props.search ? (
-                    <HeaderSearch className="gd-header-measure">{this.props.search}</HeaderSearch>
-                ) : null}
+                {this.props.search}
 
                 {this.props.helpMenuItems.length ? (
                     <HeaderHelp

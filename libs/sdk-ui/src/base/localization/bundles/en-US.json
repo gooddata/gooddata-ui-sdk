@@ -3227,5 +3227,15 @@
         "value": "No results found for “{query}”.",
         "comment": "Message shown when semantic search did not return any results. Do not translate placeholder {query}.",
         "limit": 0
+    },
+    "semantic-search.placeholder": {
+        "value": "Search dashboards or visualization…",
+        "comment": "Placeholder in the input box that is used in semantic search.",
+        "limit": 0
+    },
+    "semantic-search.id": {
+        "value": "ID",
+        "comment": "Label of column that contains ID of the search results object.",
+        "limit": 0
     }
 }

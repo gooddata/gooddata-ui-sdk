@@ -2745,6 +2745,11 @@ export interface ISemanticSearchResultItem {
     type: GenAISemanticSearchType;
 }
 
+// @alpha
+export interface ISemanticSearchResultItemWithUrl extends ISemanticSearchResultItem {
+    url: string;
+}
+
 // @public
 export interface ISeparators {
     decimal: string;
@@ -2760,6 +2765,7 @@ export interface ISettings {
     disableKpiDashboardHeadlineUnderline?: boolean;
     enableAdDescriptionEdit?: boolean;
     enableADMultipleDateFilters?: boolean;
+    enableAIFunctions?: boolean;
     enableAlternativeDisplayFormSelection?: boolean;
     enableAnalyticalDashboardPermissions?: boolean;
     // (undocumented)

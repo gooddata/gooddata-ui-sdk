@@ -1,9 +1,14 @@
 // (C) 2024 GoodData Corporation
 
 import { useState, useEffect } from "react";
-import { ISemanticSearchResultItem, GenAISemanticSearchType } from "@gooddata/sdk-model";
+import {
+    ISemanticSearchResultItem,
+    ISemanticSearchResultItemWithUrl,
+    GenAISemanticSearchType,
+} from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { getUIPath } from "../utils/getUIPath.js";
 
 /**
  * The result of the semantic search hook.
@@ -25,7 +30,7 @@ export type SemanticSearchInputResult = {
     /**
      * The search results.
      */
-    searchResults: ISemanticSearchResultItem[];
+    searchResults: ISemanticSearchResultItemWithUrl[];
 };
 
 /**
@@ -128,8 +133,7 @@ export const useSemanticSearch = ({
                 setState({
                     searchStatus: "success",
                     searchError: "",
-                    // TODO - limit does not work on backend
-                    searchResults: res.results.slice(0, limit),
+                    searchResults: res.results.map(withUrl(effectiveWorkspace)),
                 });
             })
             .catch((e) => {
@@ -161,3 +165,15 @@ const errorMessage = (e: unknown) => {
     }
     return String(e);
 };
+
+/**
+ * Enrich the result item with UI URL.
+ */
+const withUrl =
+    (workspaceId: string) =>
+    (item: ISemanticSearchResultItem): ISemanticSearchResultItemWithUrl => {
+        return {
+            ...item,
+            url: getUIPath(item.type, item.id, workspaceId),
+        };
+    };

@@ -95,13 +95,6 @@ const SemanticSearchCore: React.FC<SemanticSearchCoreProps> = ({
             setWidth(input.offsetWidth);
         }
     }, []);
-    const onItemSelect = React.useCallback(
-        (item: ISemanticSearchResultItem) => {
-            onSelect(item);
-            inputRef.current?.inputNodeRef?.inputNodeRef?.blur();
-        },
-        [onSelect],
-    );
 
     // Report errors
     React.useEffect(() => {
@@ -113,10 +106,12 @@ const SemanticSearchCore: React.FC<SemanticSearchCoreProps> = ({
     return (
         <Dropdown
             className={classnames("gd-semantic-search", className)}
-            closeOnMouseDrag={false}
-            closeOnOutsideClick={false}
-            closeOnParentScroll={false}
-            renderBody={({ isMobile }) => {
+            ignoreClicksOnByClass={[
+                ".gd-bubble",
+                ".gd-semantic-search__results-item",
+                ".gd-semantic-search__input",
+            ]}
+            renderBody={({ isMobile, closeDropdown }) => {
                 if (!searchResults.length && searchStatus !== "loading") {
                     return null;
                 }
@@ -127,13 +122,17 @@ const SemanticSearchCore: React.FC<SemanticSearchCoreProps> = ({
                         isMobile={isMobile}
                         searchResults={searchResults}
                         searchLoading={searchStatus === "loading"}
-                        onSelect={onItemSelect}
+                        onSelect={(item) => {
+                            onSelect(item);
+                            closeDropdown();
+                        }}
                     />
                 );
             }}
-            renderButton={({ openDropdown, closeDropdown }) => {
+            renderButton={({ openDropdown }) => {
                 return (
                     <Input
+                        className="gd-semantic-search__input"
                         ref={inputRef}
                         placeholder={placeholder}
                         isSearch
@@ -141,7 +140,6 @@ const SemanticSearchCore: React.FC<SemanticSearchCoreProps> = ({
                         value={value}
                         onChange={(e) => setValue(String(e))}
                         onFocus={openDropdown}
-                        onBlur={closeDropdown}
                     />
                 );
             }}
