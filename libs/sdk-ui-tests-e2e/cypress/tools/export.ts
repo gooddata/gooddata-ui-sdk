@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { join } from "path";
 import { Messages } from "./messages";
 import { Widget } from "./widget";
@@ -45,14 +45,14 @@ export class Export {
     exportInsightOnWidgetByIndexToCSV = (index: number) => {
         const widget = new Widget(index).waitChartLoaded();
         new WidgetOptionsMenu(widget).open();
-        new ExportOption(".s-options-menu-bubble").getExportToCSVButtonElement();
+        new ExportOption().getExportToCSVButtonElement();
         messages.hasSuccessMessage("Export successful.");
     };
 
     exportInsightOnWidgetByIndexToXLSX = (index: number) => {
         const widget = new Widget(index).waitChartLoaded();
         new WidgetOptionsMenu(widget).open();
-        new ExportOption(".s-options-menu-bubble").getExportToXLSXButtonElement();
+        new ExportOption().getExportToXLSXButtonElement();
         exportDialog.confirmExportXLSX();
         messages.hasSuccessMessage("Export successful.");
     };
