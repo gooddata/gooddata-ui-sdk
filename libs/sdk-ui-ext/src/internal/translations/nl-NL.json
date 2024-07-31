@@ -355,5 +355,9 @@
     "properties.clustering.amount.placeholder": "3",
     "properties.clustering.amount.partial.title": "Gedeeltelijke clusters weergeven",
     "properties.clustering.amount.partial.description": "De beschikbare gegevenspunten dekken niet het gehele geselecteerde bedrag.",
-    "properties.clustering.disabled": "Clustering kan alleen worden ingeschakeld als de segment 'Volgens bucket' leeg is."
+    "properties.clustering.disabled": "Clustering kan alleen worden ingeschakeld als de segment 'Volgens bucket' leeg is.",
+    "properties.clustering.threshold": "Drempel",
+    "properties.clustering.threshold.placeholder": "0.03",
+    "properties.clustering.threshold.tooltip": "De drempel is een limiet die bepaalt wanneer gegevens moeten worden gegroepeerd. <link>Lees meer</link>",
+    "visualizations.headline.tertiary.title": "Versus"
 }

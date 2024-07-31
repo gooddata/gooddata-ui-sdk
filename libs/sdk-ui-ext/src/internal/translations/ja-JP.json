@@ -355,5 +355,9 @@
     "properties.clustering.amount.placeholder": "3",
     "properties.clustering.amount.partial.title": "部分的なクラスタの表示",
     "properties.clustering.amount.partial.description": "利用可能なデータポイントは、選択した数量全体をカバーしていません。",
-    "properties.clustering.disabled": "クラスタリングは、セグメント・バイ・バケットが空の場合にのみ有効にすることができます。"
+    "properties.clustering.disabled": "クラスタリングは、セグメント・バイ・バケットが空の場合にのみ有効にすることができます。",
+    "properties.clustering.threshold": "しきい値",
+    "properties.clustering.threshold.placeholder": "0.03",
+    "properties.clustering.threshold.tooltip": "しきい値は、データをグループ化するタイミングを決定する制限値です。 <link>リンク>詳細リンク </link>",
+    "visualizations.headline.tertiary.title": "対"
 }

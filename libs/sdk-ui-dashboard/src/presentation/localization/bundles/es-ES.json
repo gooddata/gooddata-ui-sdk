@@ -453,5 +453,22 @@
     "dialogs.schedule.management.list.title": "Sus exportaciones programadas",
     "dialogs.schedule.management.create": "Crear",
     "dialogs.schedule.management.create.tooManyMessage": "Demasiados horarios. Puedes crear hasta 10 horarios.",
-    "filter.crossFilterResetButton.tooltip": "Restablecer filtros cruzados"
+    "filter.crossFilterResetButton.tooltip": "Restablecer filtros cruzados",
+    "options.menu.schedule.email.edit": "Mostrar horarios",
+    "dialogs.schedule.email.footer.title.short": "Ayuda",
+    "dialogs.schedule.management.attachments.xlsx.settings": "Opciones XLSX",
+    "dialogs.schedule.management.attachments.cells.merged": "Mantener fusionadas las celdas de atributos",
+    "dialogs.schedule.management.attachments.filters.title": "Filtros del cuadro de mandos",
+    "dialogs.schedule.management.attachments.filters.using": "usando",
+    "dialogs.schedule.management.attachments.filters.default": "filtros predeterminados del tablero",
+    "dialogs.schedule.management.attachments.filters.edited": "filtros editados del tablero",
+    "dialogs.schedule.management.attachments.filters.item.default": "Usar filtros predeterminados",
+    "dialogs.schedule.management.attachments.filters.item.edited": "Usar filtros editados",
+    "dialogs.schedule.management.attachments.filters.item.tooltip": "El estado predeterminado de los filtros del cuadro de mandos se utilizará en la exportación programada, incluso si los valores predeterminados cambian en el futuro.",
+    "dialogs.schedule.management.attachments.filters.item.tooltip.disabled": "Para programar una exportación con filtros predeterminados, cree una nueva exportación programada.",
+    "dialogs.schedule.management.attachments.message": "<strong>Nota</strong>: El filtrado cruzado no se aplicará en la exportación programada.",
+    "save": "Guardar",
+    "widget.options.menu.scheduleExport.edit": "Mostrar horarios",
+    "dateFilterDropdown.configuration": "Configuración",
+    "dateFilterDropdown.title": "Rango de fechas"
 }

@@ -355,5 +355,9 @@
     "properties.clustering.amount.placeholder": "3",
     "properties.clustering.amount.partial.title": "Teilcluster anzeigen",
     "properties.clustering.amount.partial.description": "Die verfügbaren Datenpunkte decken nicht die gesamte ausgewählte Anzahl ab.",
-    "properties.clustering.disabled": "Clustering kann nur aktiviert werden, wenn das Bucket segmentBy leer ist."
+    "properties.clustering.disabled": "Clustering kann nur aktiviert werden, wenn das Bucket segmentBy leer ist.",
+    "properties.clustering.threshold": "Schwellenwert",
+    "properties.clustering.threshold.placeholder": "0,03",
+    "properties.clustering.threshold.tooltip": "Der Schwellenwert ist ein Grenzwert, der bestimmt, wann Daten gruppiert werden sollen. <link>Mehr erfahren </link>",
+    "visualizations.headline.tertiary.title": "im Vergleich zu"
 }

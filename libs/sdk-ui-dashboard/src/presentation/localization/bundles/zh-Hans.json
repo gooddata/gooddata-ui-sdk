@@ -453,5 +453,22 @@
     "dialogs.schedule.management.list.title": "您的预定出口",
     "dialogs.schedule.management.create": "创建",
     "dialogs.schedule.management.create.tooManyMessage": "计划太多。您最多可以创建 10 个计划。",
-    "filter.crossFilterResetButton.tooltip": "重置交叉筛选器"
+    "filter.crossFilterResetButton.tooltip": "重置交叉筛选器",
+    "options.menu.schedule.email.edit": "显示计划",
+    "dialogs.schedule.email.footer.title.short": "帮助",
+    "dialogs.schedule.management.attachments.xlsx.settings": "XLSX 选项",
+    "dialogs.schedule.management.attachments.cells.merged": "保持属性单元格合并",
+    "dialogs.schedule.management.attachments.filters.title": "仪表板过滤器",
+    "dialogs.schedule.management.attachments.filters.using": "使用",
+    "dialogs.schedule.management.attachments.filters.default": "默认仪表板过滤器",
+    "dialogs.schedule.management.attachments.filters.edited": "编辑仪表板过滤器",
+    "dialogs.schedule.management.attachments.filters.item.default": "使用默认过滤器",
+    "dialogs.schedule.management.attachments.filters.item.edited": "使用已编辑的过滤器",
+    "dialogs.schedule.management.attachments.filters.item.tooltip": "仪表板过滤器的默认状态将在计划导出中使用，即使默认值将来发生变化。",
+    "dialogs.schedule.management.attachments.filters.item.tooltip.disabled": "要使用默认过滤器安排导出，请创建新的计划导出。",
+    "dialogs.schedule.management.attachments.message": "<strong>注意</strong>：交叉过滤不会应用于预定的导出。",
+    "save": "保存",
+    "widget.options.menu.scheduleExport.edit": "显示计划",
+    "dateFilterDropdown.configuration": "配置",
+    "dateFilterDropdown.title": "日期范围"
 }
