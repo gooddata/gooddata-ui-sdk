@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 /**
  * Mocking FeatureHub request to remove dependency on it
@@ -16,6 +16,15 @@ beforeEach(() => {
                     {
                         id: "d154cf37-9ffe-4cae-b892-017ff3429a7c",
                         key: "dashboardEditModeDevRollout",
+                        l: false,
+                        version: 42,
+                        type: "BOOLEAN",
+                        value: true,
+                        strategies: [],
+                    },
+                    {
+                        id: "d154cf37-9ffe-4cae-b892-123678340327",
+                        key: "enableWidgetIdentifiersRollout",
                         l: false,
                         version: 42,
                         type: "BOOLEAN",

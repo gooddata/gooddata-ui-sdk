@@ -7,6 +7,7 @@ import { DashboardMenu } from "./dashboardMenu";
 declare global {
     interface Window {
         customWorkspaceSettings: any;
+        useSafeWidgetLocalIdentifiersForE2e: boolean;
     }
 }
 
@@ -24,6 +25,7 @@ export function visit(componentName: string, workspaceSettings?: ISettings): voi
     visitUrl(`${getHost()}/gooddata-ui-sdk?scenario=${componentName}`, {
         onBeforeLoad(win: Cypress.AUTWindow) {
             win["customWorkspaceSettings"] = workspaceSettings;
+            win["useSafeWidgetLocalIdentifiersForE2e"] = true;
         },
     });
 }
