@@ -5,7 +5,7 @@ options = {
         ...depCruiser.DefaultRules,
         ...depCruiser.DefaultSdkRules,
         ...depCruiser.PublicLibraryRules,
-        depCruiser.moduleWithDependencies("convertors", "src/convertors", ["src/types/*"]),
+        depCruiser.moduleWithDependencies("convertors", "src/convertors", ["src/types/*", "src/utils/*"]),
     ],
     options: depCruiser.DefaultOptions,
 };

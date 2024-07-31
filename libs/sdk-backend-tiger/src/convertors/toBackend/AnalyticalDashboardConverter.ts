@@ -18,7 +18,7 @@ import omit from "lodash/omit.js";
 import { cloneWithSanitizedIds } from "./IdSanitization.js";
 import update from "lodash/fp/update.js";
 import { convertLayout } from "../shared/layoutConverter.js";
-import { v4 as uuidv4 } from "uuid";
+import { generateWidgetLocalIdentifier } from "../../utils/widgetLocalIdentifier.js";
 
 function removeIdentifiers(widget: IDashboardWidget, useWidgetLocalIdentifiers?: boolean) {
     /**
@@ -27,7 +27,7 @@ function removeIdentifiers(widget: IDashboardWidget, useWidgetLocalIdentifiers?:
      */
     const localIdentifierObj =
         useWidgetLocalIdentifiers && !isDashboardLayout(widget)
-            ? { localIdentifier: widget.localIdentifier ?? uuidv4() }
+            ? { localIdentifier: widget.localIdentifier ?? generateWidgetLocalIdentifier() }
             : {};
     const updatedWidget = {
         ...widget,
