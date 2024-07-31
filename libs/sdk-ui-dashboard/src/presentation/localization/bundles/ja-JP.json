@@ -453,5 +453,22 @@
     "dialogs.schedule.management.list.title": "スケジュールされたエクスポート",
     "dialogs.schedule.management.create": "作成",
     "dialogs.schedule.management.create.tooManyMessage": "スケジュールが多すぎます。スケジュールは10個まで作成できます。",
-    "filter.crossFilterResetButton.tooltip": "クロスフィルタのリセット"
+    "filter.crossFilterResetButton.tooltip": "クロスフィルタのリセット",
+    "options.menu.schedule.email.edit": "スケジュールを表示",
+    "dialogs.schedule.email.footer.title.short": "ヘルプ",
+    "dialogs.schedule.management.attachments.xlsx.settings": "XLSXオプション",
+    "dialogs.schedule.management.attachments.cells.merged": "アトリビュートセルのマージを維持します",
+    "dialogs.schedule.management.attachments.filters.title": "ダッシュボードフィルター",
+    "dialogs.schedule.management.attachments.filters.using": "使用して",
+    "dialogs.schedule.management.attachments.filters.default": "デフォルトのダッシュボードフィルター",
+    "dialogs.schedule.management.attachments.filters.edited": "編集されたダッシュボードのフィルター",
+    "dialogs.schedule.management.attachments.filters.item.default": "デフォルトフィルターを使用する",
+    "dialogs.schedule.management.attachments.filters.item.edited": "編集されたフィルターを使用する",
+    "dialogs.schedule.management.attachments.filters.item.tooltip": "ダッシュボードフィルターのデフォルト状態は、将来デフォルト値が変更された場合でも、スケジュールされたエクスポートで使用されます。",
+    "dialogs.schedule.management.attachments.filters.item.tooltip.disabled": "デフォルトのフィルタでエクスポートをスケジュールするには、新しいスケジュールされたエクスポートを作成します。",
+    "dialogs.schedule.management.attachments.message": "<strong>注意</strong>.スケジュールされたエクスポートでは、クロスフィルターは適用されません。",
+    "save": "保存",
+    "widget.options.menu.scheduleExport.edit": "スケジュールを表示",
+    "dateFilterDropdown.configuration": "設定",
+    "dateFilterDropdown.title": "日付範囲"
 }

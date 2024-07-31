@@ -453,5 +453,22 @@
     "dialogs.schedule.management.list.title": "Uw geplande export",
     "dialogs.schedule.management.create": "Creëren",
     "dialogs.schedule.management.create.tooManyMessage": "Te veel planningen. U kunt maximaal 10 planningen maken.",
-    "filter.crossFilterResetButton.tooltip": "Kruisfilters resetten"
+    "filter.crossFilterResetButton.tooltip": "Kruisfilters resetten",
+    "options.menu.schedule.email.edit": "Toon schema's",
+    "dialogs.schedule.email.footer.title.short": "Help",
+    "dialogs.schedule.management.attachments.xlsx.settings": "XLSX-opties",
+    "dialogs.schedule.management.attachments.cells.merged": "Attribuutcellen samengevoegd houden",
+    "dialogs.schedule.management.attachments.filters.title": "Dashboardfilters",
+    "dialogs.schedule.management.attachments.filters.using": "met",
+    "dialogs.schedule.management.attachments.filters.default": "standaard dashboardfilters",
+    "dialogs.schedule.management.attachments.filters.edited": "bewerkte dashboardfilters",
+    "dialogs.schedule.management.attachments.filters.item.default": "Standaardfilters gebruiken",
+    "dialogs.schedule.management.attachments.filters.item.edited": "Bewerkte filters gebruiken",
+    "dialogs.schedule.management.attachments.filters.item.tooltip": "De standaardstatus van dashboardfilters wordt gebruikt bij de geplande export, zelfs als de standaardwaarden in de toekomst veranderen.",
+    "dialogs.schedule.management.attachments.filters.item.tooltip.disabled": "Als u een export met standaardfilters wilt plannen, maakt u een nieuwe geplande export.",
+    "dialogs.schedule.management.attachments.message": "<strong>Noot</strong>. Kruisfiltering wordt niet toegepast in de geplande export.",
+    "save": "Opslaan",
+    "widget.options.menu.scheduleExport.edit": "Toon schema's",
+    "dateFilterDropdown.configuration": "Configuratie",
+    "dateFilterDropdown.title": "Datumbereik"
 }

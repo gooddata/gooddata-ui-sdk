@@ -355,5 +355,9 @@
     "properties.clustering.amount.placeholder": "3",
     "properties.clustering.amount.partial.title": "Mostrando clusters parciais",
     "properties.clustering.amount.partial.description": "Os pontos de dados disponíveis não cobrem todo o valor selecionado.",
-    "properties.clustering.disabled": "O clustering pode ser ativado somente quando o bucket segmentBy estiver vazio."
+    "properties.clustering.disabled": "O clustering pode ser ativado somente quando o bucket segmentBy estiver vazio.",
+    "properties.clustering.threshold": "Limiar",
+    "properties.clustering.threshold.placeholder": "0.03",
+    "properties.clustering.threshold.tooltip": "O limiar é um limite que determina quando agrupar dados. <link>Saiba mais</link>",
+    "visualizations.headline.tertiary.title": "Versus"
 }

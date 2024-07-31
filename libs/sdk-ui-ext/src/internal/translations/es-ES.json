@@ -355,5 +355,9 @@
     "properties.clustering.amount.placeholder": "3",
     "properties.clustering.amount.partial.title": "Mostrando grupos parciales",
     "properties.clustering.amount.partial.description": "Los puntos de datos disponibles no cubren toda la cantidad seleccionada.",
-    "properties.clustering.disabled": "El clustering sólo puede activarse cuando el cubo segmentBy está vacío."
+    "properties.clustering.disabled": "El clustering sólo puede activarse cuando el cubo segmentBy está vacío.",
+    "properties.clustering.threshold": "Umbral",
+    "properties.clustering.threshold.placeholder": "0.03",
+    "properties.clustering.threshold.tooltip": "El umbral es un límite que determina cuándo agrupar los datos. <link>Más información</link>",
+    "visualizations.headline.tertiary.title": "Frente a"
 }
