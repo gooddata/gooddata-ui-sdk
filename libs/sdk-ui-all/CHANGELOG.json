@@ -6,11 +6,6 @@
         "tag": "@gooddata/sdk-ui-all_v10.6.0",
         "date": "Thu, 25 Jul 2024 08:35:32 GMT",
         "comments": {
-            "none": [
-                {
-                    "comment": "Allow specifying returnTo parameter with backend deauthenticate"
-                }
-            ]
         }
     },
     {
