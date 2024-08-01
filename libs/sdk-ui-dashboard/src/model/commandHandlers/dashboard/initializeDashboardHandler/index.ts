@@ -4,7 +4,11 @@ import { all, call, put, SagaReturnType } from "redux-saga/effects";
 import { InitializeDashboard } from "../../../commands/dashboard.js";
 import { DashboardInitialized, dashboardInitialized } from "../../../events/dashboard.js";
 import { loadingActions } from "../../../store/loading/index.js";
-import { DashboardContext, PrivateDashboardContext } from "../../../types/commonTypes.js";
+import {
+    DashboardContext,
+    PrivateDashboardContext,
+    ResolvedDashboardConfig,
+} from "../../../types/commonTypes.js";
 import { IDashboardWithReferences, walkLayout } from "@gooddata/sdk-backend-spi";
 import { resolveDashboardConfig } from "./resolveDashboardConfig.js";
 import { configActions } from "../../../store/config/index.js";
@@ -34,6 +38,8 @@ import {
     isInsightWidget,
     ObjRef,
     serializeObjRef,
+    isFilterContext,
+    IDashboardFilterView,
 } from "@gooddata/sdk-model";
 import {
     actionsToInitializeExistingDashboard,
@@ -59,6 +65,8 @@ import { loadOrganizationWebhooks } from "../common/loadOrganizationWebhooks.js"
 import { webhooksActions } from "../../../store/webhooks/index.js";
 import { loadWorkspaceUsers } from "../common/loadWorkspaceUsers.js";
 import { usersActions } from "../../../store/users/index.js";
+import { filterViewsActions } from "../../../store/filterViews/index.js";
+import { loadFilterViews } from "./loadFilterViews.js";
 
 async function loadDashboardFromBackend(
     ctx: DashboardContext,
@@ -130,6 +138,25 @@ async function loadInsightsForPersistedDashboard(
     return Promise.all(uniqueRefs.map((ref) => backend.workspace(workspace).insights().getInsight(ref)));
 }
 
+function applyDefaultFilterView(
+    dashboard: IDashboard,
+    filterViews: IDashboardFilterView[],
+    config: ResolvedDashboardConfig,
+): IDashboard {
+    const defaultFilterView = filterViews.find((view) => view.isDefault);
+    const areFilterViewsEnabled = config.settings.enableDashboardFilterViews;
+    return areFilterViewsEnabled && defaultFilterView && isFilterContext(dashboard.filterContext)
+        ? {
+              ...dashboard,
+              filterContext: {
+                  ...dashboard.filterContext,
+                  // TODO merge filters more safely, do not just replace it (use some action?)
+                  filters: defaultFilterView.filterContext.filters,
+              },
+          }
+        : dashboard;
+}
+
 type DashboardLoadResult = {
     batch: BatchAction;
     event: DashboardInitialized;
@@ -156,6 +183,7 @@ function* loadExistingDashboard(
         call(loadLegacyDashboards, ctx),
         call(loadDashboardPermissions, ctx),
         call(loadDateHierarchyTemplates, ctx),
+        call(loadFilterViews, ctx),
     ];
 
     if (!usesStrictAccessControl) {
@@ -174,6 +202,7 @@ function* loadExistingDashboard(
         legacyDashboards,
         dashboardPermissions,
         dateHierarchyTemplates,
+        filterViews,
         accessibleDashboards,
     ]: [
         PromiseFnReturnType<typeof loadDashboardFromBackend>,
@@ -187,13 +216,16 @@ function* loadExistingDashboard(
         PromiseFnReturnType<typeof loadLegacyDashboards>,
         PromiseFnReturnType<typeof loadDashboardPermissions>,
         PromiseFnReturnType<typeof loadDateHierarchyTemplates>,
+        PromiseFnReturnType<typeof loadFilterViews>,
         PromiseFnReturnType<typeof loadAccessibleDashboardList>,
     ] = yield all(calls);
 
     const {
-        dashboard,
+        dashboard: loadedDashboard,
         references: { insights },
     } = dashboardWithReferences;
+
+    const dashboard = applyDefaultFilterView(loadedDashboard, filterViews, config);
 
     const effectiveDateFilterConfig: DateFilterMergeResult = yield call(
         mergeDateFilterConfigWithOverrides,
@@ -265,6 +297,10 @@ function* loadExistingDashboard(
             automationsActions.refreshAutomationsFingerprint(),
             webhooksActions.setWebhooks(webhooks),
             usersActions.setUsers(users),
+            filterViewsActions.setFilterViews({
+                dashboard: ctx.dashboardRef!, // should be defined already
+                filterViews,
+            }),
         ],
         "@@GDC.DASH/BATCH.INIT.EXISTING",
     );
@@ -312,6 +348,7 @@ function* initializeNewDashboard(
         call(loadAccessibleDashboardList, ctx),
         call(loadLegacyDashboards, ctx),
         call(loadDateHierarchyTemplates, ctx),
+        call(loadFilterViews, ctx),
     ]);
 
     const ffCalls = [

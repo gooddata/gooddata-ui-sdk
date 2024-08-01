@@ -511,3 +511,28 @@ export function dashboardFilterReferenceObjRef(ref: IDashboardFilterReference): 
 function hasFilterContextBaseProps(obj: unknown): boolean {
     return !isEmpty(obj) && !!(obj as IFilterContextBase).filters;
 }
+
+/**
+ * Interface that represents saved dashboard filter view created for a specific dashboard by a specific user.
+ *
+ * @alpha
+ */
+export interface IDashboardFilterView {
+    readonly ref: ObjRef;
+    readonly name: string;
+    readonly dashboard: ObjRef;
+    readonly user: ObjRef;
+    readonly filterContext: IFilterContextDefinition;
+    readonly isDefault?: boolean;
+}
+/**
+ * Interface that represents request to create dashboard filter view.
+ *
+ * @alpha
+ */
+export interface IDashboardFilterViewSaveRequest {
+    readonly name: string;
+    readonly dashboard: ObjRef;
+    readonly filterContext: IFilterContextDefinition;
+    readonly isDefault?: boolean;
+}

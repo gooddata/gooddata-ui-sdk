@@ -1087,3 +1087,214 @@ export function moveDateFilter(dataSet: ObjRef, index: number, correlationId?: s
         },
     };
 }
+
+/**
+ * Payload of the {@link SaveFilterView} command.
+ * @alpha
+ */
+export interface SaveFilterViewPayload {
+    readonly name: string;
+    readonly isDefault: boolean;
+}
+
+/**
+ * Command for snapshotting current filter context and saving it as a filter view.
+ *
+ * @remarks
+ * See {@link saveFilterView} for a factory function that will help you create this command.
+ *
+ * @alpha
+ */
+export interface SaveFilterView extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.SAVE";
+    readonly payload: SaveFilterViewPayload;
+}
+
+/**
+ * Creates the {@link SaveFilterView} command.
+ *
+ * @remarks
+ * Dispatching this command will result into snapshotting of the current dashboard filter context into a
+ * filter view that will be persisted. User can later apply it to the filter context to restore it to the
+ * saved state.
+ *
+ * @alpha
+ * @param name - name of the filter view under which it will be listed in UI.
+ * @param isDefault - determine if new filter view should be set as a default.
+ * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
+ * @returns save filter view command
+ */
+export function saveFilterView(name: string, isDefault: boolean, correlationId?: string): SaveFilterView {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.SAVE",
+        correlationId,
+        payload: {
+            name,
+            isDefault,
+        },
+    };
+}
+
+/**
+ * Payload of the {@link DeleteFilterView} command.
+ * @alpha
+ */
+export interface DeleteFilterViewPayload {
+    readonly ref: ObjRef;
+}
+
+/**
+ * Command for deletion of a saved filter view.
+ *
+ * @remarks
+ * See {@link saveFilterView} for a factory function that will help you create this command.
+ *
+ * @alpha
+ */
+export interface DeleteFilterView extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.DELETE";
+    readonly payload: DeleteFilterViewPayload;
+}
+
+/**
+ * Creates the {@link DeleteFilterView} command.
+ *
+ * @remarks
+ * Dispatching this command will result into deletion of the persisted filter view.
+ *
+ * @alpha
+ * @param ref - ref of the filter view that must be deleted
+ * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
+ * @returns delete filter view command
+ */
+export function deleteFilterView(ref: ObjRef, correlationId?: string): DeleteFilterView {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.DELETE",
+        correlationId,
+        payload: {
+            ref,
+        },
+    };
+}
+
+/**
+ * Payload of the {@link ApplyFilterView} command.
+ * @alpha
+ */
+export interface ApplyFilterViewPayload {
+    readonly ref: ObjRef;
+}
+
+/**
+ * Command for application of a saved filter view.
+ *
+ * @remarks
+ * See {@link applyFilterView} for a factory function that will help you create this command.
+ *
+ * @alpha
+ */
+export interface ApplyFilterView extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.APPLY";
+    readonly payload: ApplyFilterViewPayload;
+}
+
+/**
+ * Creates the {@link ApplyFilterView} command.
+ *
+ * @remarks
+ * Dispatching this command will result into application of the persisted filter view.
+ *
+ * @alpha
+ * @param ref - ref of the filter view that must be applied to the filter context.
+ * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
+ * @returns delete filter view command
+ */
+export function applyFilterView(ref: ObjRef, correlationId?: string): ApplyFilterView {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.APPLY",
+        correlationId,
+        payload: {
+            ref,
+        },
+    };
+}
+
+/**
+ * Payload of the {@link SetFilterViewAsDefault} command.
+ * @alpha
+ */
+export interface SetFilterViewAsDefaultPayload {
+    readonly ref: ObjRef;
+    readonly isDefault: boolean;
+}
+
+/**
+ * Command for setting a saved filter view as a default one.
+ *
+ * @remarks
+ * See {@link setFilterViewAsDefault} for a factory function that will help you create this command.
+ *
+ * @alpha
+ */
+export interface SetFilterViewAsDefault extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.SET_AS_DEFAULT";
+    readonly payload: SetFilterViewAsDefaultPayload;
+}
+
+/**
+ * Creates the {@link SetFilterViewAsDefault} command.
+ *
+ * @remarks
+ * Dispatching this command will result into setting of the persisted filter view as a default one when
+ * dashboard filter context is loaded.
+ *
+ * @alpha
+ * @param ref - ref of the filter view that must be set as a default one.
+ * @param isDefault - determine if filter view identified by the provided ref should be marked as default or unmarked.
+ * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
+ * @returns delete filter view command
+ */
+export function setFilterViewAsDefault(
+    ref: ObjRef,
+    isDefault: boolean,
+    correlationId?: string,
+): SetFilterViewAsDefault {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.SET_AS_DEFAULT",
+        correlationId,
+        payload: {
+            ref,
+            isDefault,
+        },
+    };
+}
+
+/**
+ * Command for reloading of the filter views from persistent storage.
+ *
+ * @remarks
+ * See {@link reloadFilterViews} for a factory function that will help you create this command.
+ *
+ * @alpha
+ */
+export interface ReloadFilterViews extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.RELOADS";
+}
+
+/**
+ * Creates the {@link SetFilterViewAsDefault} command.
+ *
+ * @remarks
+ * Dispatching this command will result into setting of the persisted filter view as a default one when
+ * dashboard filter context is loaded.
+ *
+ * @alpha
+ * @param correlationId - specify correlation id. It will be included in all events that will be emitted during the command processing.
+ * @returns delete filter view command
+ */
+export function reloadFilterViews(correlationId?: string): ReloadFilterViews {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.RELOADS",
+        correlationId,
+    };
+}

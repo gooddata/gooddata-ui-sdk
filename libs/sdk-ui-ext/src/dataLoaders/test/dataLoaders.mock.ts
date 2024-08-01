@@ -47,5 +47,8 @@ export const noopWorkspaceDashboardsService: IWorkspaceDashboardsService = {
     getDashboardPermissions: noop as any,
     validateDashboardsExistence: noop as any,
     getResolvedFiltersForWidgetWithMultipleDateFilters: noop as any,
+    getFilterViewsForCurrentUser: noop as any,
+    createFilterView: noop as any,
+    deleteFilterView: noop as any,
     workspace: "workspace",
 };

@@ -13,6 +13,7 @@ export type DashboardDescriptor = Pick<
     | "disableCrossFiltering"
     | "disableUserFilterReset"
     | "disableUserFilterSave"
+    | "disableFilterViews"
 > &
     IAccessControlAware;
 

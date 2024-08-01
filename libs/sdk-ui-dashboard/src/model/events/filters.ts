@@ -6,6 +6,7 @@ import {
     IDashboardDateFilterConfig,
     IFilterContextDefinition,
     ObjRef,
+    IDashboardFilterView,
 } from "@gooddata/sdk-model";
 import { IDashboardEvent } from "./base.js";
 import { DashboardContext } from "../types/commonTypes.js";
@@ -1026,4 +1027,305 @@ export function dateFilterMoved(
  */
 export const isDashboardDateFilterMoved = eventGuard<DashboardDateFilterMoved>(
     "GDC.DASH/EVT.FILTER_CONTEXT.DATE_FILTER.MOVED",
+);
+
+/**
+ * Payload of the {@link DashboardFilterViewCreationSucceeded} event.
+ *
+ * @alpha
+ */
+export interface DashboardFilterViewCreationSucceededPayload {
+    readonly filterView: IDashboardFilterView;
+}
+
+/**
+ * This event is emitted after a new dashboard filter view is successfully created.
+ *
+ * @alpha
+ */
+export interface DashboardFilterViewCreationSucceeded extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.CREATE.SUCCESS";
+    readonly payload: DashboardFilterViewCreationSucceededPayload;
+}
+
+export function filterViewCreationSucceeded(
+    ctx: DashboardContext,
+    filterView: IDashboardFilterView,
+    correlationId?: string,
+): DashboardFilterViewCreationSucceeded {
+    return {
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.CREATE.SUCCESS",
+        ctx,
+        correlationId,
+        payload: {
+            filterView,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardFilterViewCreationSucceeded}.
+ *
+ * @param obj - object to test
+ * @beta
+ */
+export const isDashboardFilterViewCreationSucceeded = eventGuard<DashboardFilterViewCreationSucceeded>(
+    "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.CREATE.SUCCESS",
+);
+
+/**
+ * This event is emitted after a new dashboard filter view creation failed.
+ *
+ * @alpha
+ */
+export interface DashboardFilterViewCreationFailed extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.CREATE.FAILURE";
+}
+
+export function filterViewCreationFailed(
+    ctx: DashboardContext,
+    correlationId?: string,
+): DashboardFilterViewCreationFailed {
+    return {
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.CREATE.FAILURE",
+        ctx,
+        correlationId,
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardFilterViewCreationFailed}.
+ *
+ * @param obj - object to test
+ *
+ * @alpha
+ */
+export const isDashboardFilterViewCreationFailed = eventGuard<DashboardFilterViewCreationFailed>(
+    "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.CREATE.FAILURE",
+);
+
+/**
+ * Payload of the {@link DashboardFilterViewDeletionSucceeded} event.
+ *
+ * @alpha
+ */
+export interface DashboardFilterViewDeletionSucceededPayload {
+    readonly filterView: IDashboardFilterView;
+}
+
+/**
+ * This event is emitted after a new dashboard filter view is successfully created.
+ *
+ * @alpha
+ */
+export interface DashboardFilterViewDeletionSucceeded extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.DELETE.SUCCESS";
+    readonly payload: DashboardFilterViewDeletionSucceededPayload;
+}
+
+export function filterViewDeletionSucceeded(
+    ctx: DashboardContext,
+    filterView: IDashboardFilterView,
+    correlationId?: string,
+): DashboardFilterViewDeletionSucceeded {
+    return {
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.DELETE.SUCCESS",
+        ctx,
+        correlationId,
+        payload: {
+            filterView,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardFilterViewDeletionSucceeded}.
+ *
+ * @param obj - object to test
+ * @beta
+ */
+export const isDashboardFilterViewDeletionSucceeded = eventGuard<DashboardFilterViewDeletionSucceeded>(
+    "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.DELETE.SUCCESS",
+);
+
+/**
+ * This event is emitted after a new dashboard filter view deletion failed.
+ *
+ * @alpha
+ */
+export interface DashboardFilterViewDeletionFailed extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.DELETE.FAILURE";
+}
+
+export function filterViewDeletionFailed(
+    ctx: DashboardContext,
+    correlationId?: string,
+): DashboardFilterViewDeletionFailed {
+    return {
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.DELETE.FAILURE",
+        ctx,
+        correlationId,
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardFilterViewDeletionFailed}.
+ *
+ * @param obj - object to test
+ *
+ * @alpha
+ */
+export const isDashboardFilterViewDeletionFailed = eventGuard<DashboardFilterViewDeletionFailed>(
+    "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.DELETE.FAILURE",
+);
+
+/**
+ * Payload of the {@link DashboardFilterViewApplicationSucceeded} event.
+ *
+ * @alpha
+ */
+export interface DashboardFilterViewApplicationSucceededPayload {
+    readonly filterView: IDashboardFilterView;
+}
+
+/**
+ * This event is emitted after a dashboard filter view is successfully applied.
+ *
+ * @alpha
+ */
+export interface DashboardFilterViewApplicationSucceeded extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.APPLY.SUCCESS";
+    readonly payload: DashboardFilterViewApplicationSucceededPayload;
+}
+
+export function filterViewApplicationSucceeded(
+    ctx: DashboardContext,
+    filterView: IDashboardFilterView,
+    correlationId?: string,
+): DashboardFilterViewApplicationSucceeded {
+    return {
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.APPLY.SUCCESS",
+        ctx,
+        correlationId,
+        payload: {
+            filterView,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardFilterViewApplicationSucceeded}.
+ *
+ * @param obj - object to test
+ * @beta
+ */
+export const isDashboardFilterViewApplicationSucceeded = eventGuard<DashboardFilterViewApplicationSucceeded>(
+    "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.APPLY.SUCCESS",
+);
+
+/**
+ * This event is emitted after a new dashboard filter view application failed.
+ *
+ * @alpha
+ */
+export interface DashboardFilterViewApplicationFailed extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.APPLY.FAILURE";
+}
+
+export function filterViewApplicationFailed(
+    ctx: DashboardContext,
+    correlationId?: string,
+): DashboardFilterViewApplicationFailed {
+    return {
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.APPLY.FAILURE",
+        ctx,
+        correlationId,
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardFilterViewApplicationFailed}.
+ *
+ * @param obj - object to test
+ *
+ * @alpha
+ */
+export const isDashboardFilterViewApplicationFailed = eventGuard<DashboardFilterViewApplicationFailed>(
+    "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.APPLY.FAILURE",
+);
+
+/**
+ * Payload of the {@link DashboardFilterViewSetAsDefaultSucceeded} event.
+ *
+ * @alpha
+ */
+export interface DashboardFilterViewSetAsDefaultSucceededPayload {
+    readonly filterView: IDashboardFilterView;
+}
+
+/**
+ * This event is emitted after a dashboard filter view is successfully set as the default.
+ *
+ * @alpha
+ */
+export interface DashboardFilterViewSetAsDefaultSucceeded extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.SET_AS_DEFAULT.SUCCESS";
+    readonly payload: DashboardFilterViewSetAsDefaultSucceededPayload;
+}
+
+export function filterViewSetAsDefaultSucceeded(
+    ctx: DashboardContext,
+    filterView: IDashboardFilterView,
+    correlationId?: string,
+): DashboardFilterViewSetAsDefaultSucceeded {
+    return {
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.SET_AS_DEFAULT.SUCCESS",
+        ctx,
+        correlationId,
+        payload: {
+            filterView,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardFilterViewSetAsDefaultSucceeded}.
+ *
+ * @param obj - object to test
+ * @beta
+ */
+export const isDashboardFilterViewSetAsDefaultSucceeded =
+    eventGuard<DashboardFilterViewSetAsDefaultSucceeded>(
+        "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.SET_AS_DEFAULT.SUCCESS",
+    );
+
+/**
+ * This event is emitted after a dashboard filter view set as default failed.
+ *
+ * @alpha
+ */
+export interface DashboardFilterViewSetAsDefaultFailed extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.SET_AS_DEFAULT.FAILURE";
+}
+
+export function filterViewSetAsDefaultFailed(
+    ctx: DashboardContext,
+    correlationId?: string,
+): DashboardFilterViewSetAsDefaultFailed {
+    return {
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.SET_AS_DEFAULT.FAILURE",
+        ctx,
+        correlationId,
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardFilterViewSetAsDefaultFailed}.
+ *
+ * @param obj - object to test
+ *
+ * @alpha
+ */
+export const isDashboardFilterViewSetAsDefaultFailed = eventGuard<DashboardFilterViewSetAsDefaultFailed>(
+    "GDC.DASH/EVT.FILTER_CONTEXT.FILTER_VIEW.SET_AS_DEFAULT.FAILURE",
 );

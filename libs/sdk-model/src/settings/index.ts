@@ -425,6 +425,7 @@ export interface ISettings {
     enableSnowflakeKeyPairAuthentication?: boolean;
     enableMotherDuckDataSource?: boolean;
     enableSingleStoreDataSource?: boolean;
+
     /**
      * Enable GenAI-powered functionality, such as semantic-search
      */
@@ -434,6 +435,11 @@ export interface ISettings {
      * Enable configuration of the drill intersection ignored attributes.
      */
     enableDrillIntersectionIgnoredAttributes?: boolean;
+
+    /**
+     * Enable multiple data sources to be used in a single workspace.
+     */
+    enableDashboardFilterViews?: boolean;
 
     [key: string]: number | boolean | string | object | undefined;
 }

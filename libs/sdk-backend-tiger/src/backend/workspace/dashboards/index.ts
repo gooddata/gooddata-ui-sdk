@@ -47,8 +47,11 @@ import {
     isAllTimeDashboardDateFilter,
     objRefToString,
     IDateFilter,
+    IDashboardFilterView,
+    IDashboardFilterViewSaveRequest,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
+import { v4 as uuid } from "uuid";
 import {
     convertAnalyticalDashboardToListItems,
     convertDashboard,
@@ -615,6 +618,109 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             identifier: objRefToString(ref),
             uri: "", // uri is not available in entities graph
         }));
+    };
+
+    // TODO temporary alpha implementation till backend supports this metadata object
+    // TODO currentUser is handled by API out of the box or by providing userId to API?
+    public getFilterViewsForCurrentUser = async (dashboardRef: ObjRef): Promise<IDashboardFilterView[]> => {
+        const blob = window.localStorage["filterViews"];
+        const filterViews: IDashboardFilterView[] = blob ? JSON.parse(blob) : [];
+        const dashboardFilterViews = filterViews
+            .filter((view) => areObjRefsEqual(view.dashboard, dashboardRef))
+            .sort((f1, f2) => f1.name.localeCompare(f2.name));
+        return Promise.resolve(dashboardFilterViews);
+    };
+
+    // TODO temporary alpha implementation till backend supports this metadata object
+    public createFilterView = async (
+        filterView: IDashboardFilterViewSaveRequest,
+    ): Promise<IDashboardFilterView> => {
+        return this.authCall(async (client) => {
+            const profile = await client.profile.getCurrent();
+            const userId = idRef(profile.userId, "user");
+
+            const blob = window.localStorage["filterViews"];
+            const filterViews: IDashboardFilterView[] = blob ? JSON.parse(blob) : [];
+
+            const newFilterView: IDashboardFilterView = {
+                ...filterView,
+                ref: idRef(uuid()),
+                user: userId,
+            };
+
+            // mark filter views for the dashboard and user as not default if new filter is a new default
+            const updatedFilterViews: IDashboardFilterView[] = filterViews.map((view) => ({
+                ...view,
+                isDefault:
+                    filterView.isDefault &&
+                    areObjRefsEqual(view.dashboard, filterView.dashboard) &&
+                    areObjRefsEqual(view.user, userId)
+                        ? false
+                        : view.isDefault,
+            }));
+
+            updatedFilterViews.push(newFilterView);
+
+            window.localStorage["filterViews"] = JSON.stringify(updatedFilterViews);
+
+            return Promise.resolve(newFilterView);
+        });
+    };
+
+    // TODO temporary alpha implementation till backend supports this metadata object
+    public deleteFilterView = async (ref: ObjRef): Promise<void> => {
+        const blob = window.localStorage["filterViews"];
+        const filterViews: IDashboardFilterView[] = blob ? JSON.parse(blob) : {};
+
+        window.localStorage["filterViews"] = JSON.stringify(
+            filterViews.filter((view) => !areObjRefsEqual(view.ref, ref)),
+        );
+
+        return Promise.resolve();
+    };
+
+    // TODO temporary alpha implementation till backend supports this metadata object
+    // TODO should be the un-marking logic be handled here or on backend? The default flag must be on view,
+    //  because dashboard cannot be modified in view mode by user that possibly do not have dashboard edit
+    //  permission. User must be taken into account as well.
+    public setFilterViewAsDefault = async (ref: ObjRef, isDefault: boolean): Promise<void> => {
+        return this.authCall(async (client) => {
+            const profile = await client.profile.getCurrent();
+
+            const blob = window.localStorage["filterViews"];
+            const filterViews: IDashboardFilterView[] = blob ? JSON.parse(blob) : {};
+
+            const updatedFilterView = filterViews.find((view) => areObjRefsEqual(view.ref, ref));
+
+            if (!updatedFilterView) {
+                throw Error("There is no such filter view.");
+            }
+
+            const userId = idRef(profile.userId, "user");
+
+            // find views for the same dashboard, same user, unmark them as non default, set the new one
+            // as the default one
+            const updatedFilterViews = filterViews
+                .filter((view) => areObjRefsEqual(view.dashboard, updatedFilterView.dashboard))
+                .filter((view) => areObjRefsEqual(view.user, userId))
+                .map((view) => {
+                    if (areObjRefsEqual(view.ref, ref)) {
+                        return {
+                            ...view,
+                            isDefault,
+                        };
+                    } else {
+                        return {
+                            ...view,
+                            isDefault: false,
+                        };
+                    }
+                });
+
+            window.localStorage["filterViews"] = JSON.stringify(updatedFilterViews);
+
+            return Promise.resolve();
+        });
     };
 
     //

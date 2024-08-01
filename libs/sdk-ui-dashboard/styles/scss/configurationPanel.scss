@@ -181,6 +181,15 @@
             padding: 3px 10px 3px 15px;
             background: kit-variables.$is-focused-background;
         }
+
+        .configuration-panel-footer {
+            padding: 10px 10px 0;
+
+            .configuration-panel-footer__content {
+                border-top: 1px solid kit-variables.$gd-border-color;
+                padding: 10px 0;
+            }
+        }
     }
 }
 

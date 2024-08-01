@@ -341,6 +341,18 @@ export const selectDisableDashboardUserFilterSave: DashboardSelector<boolean> = 
     },
 );
 
+/**
+ * Selects whether filter views are disabled.
+ *
+ * @public
+ */
+export const selectDisableFilterViews: DashboardSelector<boolean> = createSelector(
+    selectDashboardDescriptor,
+    (state) => {
+        return state.disableFilterViews ?? false;
+    },
+);
+
 //
 //
 //
@@ -448,6 +460,17 @@ const selectPersistedDashboardDisableUserFilterSave = createSelector(selectSelf,
 });
 
 /**
+ * Selects persisted  - that is the "disable filter views" value that was used to initialize the rest
+ * of the dashboard state of the dashboard component during the initial load of the dashboard.
+ *
+ * Note that this may be undefined when the dashboard component works with a dashboard that has not yet
+ * been persisted (typically newly created dashboard being edited).
+ */
+const selectPersistedDashboardDisableFilterViews = createSelector(selectSelf, (state) => {
+    return state.persistedDashboard?.disableFilterViews;
+});
+
+/**
  * Selects persisted layout - that is the IDashboardLayout object that was used to initialize the rest
  * of the dashboard state of the dashboard component during the initial load of the dashboard.
  *
@@ -493,7 +516,7 @@ const selectPersistedDashboardDateFilterConfigs = createSelector(selectSelf, (st
 });
 
 /**
- * Selects a boolean indication if he dashboard has any changes to the dashboard date filter configs compared to the persisted version (if any)
+ * Selects a boolean indication if the dashboard has any changes to the dashboard date filter configs compared to the persisted version (if any)
  *
  */
 export const selectIsDateFilterConfigsChanged: DashboardSelector<boolean> = createSelector(
@@ -505,7 +528,7 @@ export const selectIsDateFilterConfigsChanged: DashboardSelector<boolean> = crea
 );
 
 /**
- * Selects a boolean indication if he dashboard has any changes to the dashboard filter compared to the persisted version (if any)
+ * Selects a boolean indication if the dashboard has any changes to the dashboard filter compared to the persisted version (if any)
  *
  * @internal
  */
@@ -526,7 +549,7 @@ export const selectIsDateFilterConfigChanged: DashboardSelector<boolean> = creat
 );
 
 /**
- * Selects a boolean indication if he dashboard has any changes to the attribute filters compared to the persisted version (if any)
+ * Selects a boolean indication if the dashboard has any changes to the attribute filters compared to the persisted version (if any)
  *
  * @internal
  */
@@ -539,7 +562,7 @@ export const selectIsAttributeFiltersChanged: DashboardSelector<boolean> = creat
 );
 
 /**
- * Selects a boolean indication if he dashboard has any changes to the date filters with dimension compared to the persisted version (if any)
+ * Selects a boolean indication if the dashboard has any changes to the date filters with dimension compared to the persisted version (if any)
  *
  * @internal
  */
@@ -552,7 +575,7 @@ export const selectIsOtherFiltersChanged: DashboardSelector<boolean> = createSel
 );
 
 /**
- * Selects a boolean indication if he dashboard has any changes to the any of the filters compared to the persisted version (if any)
+ * Selects a boolean indication if the dashboard has any changes to any of the filters compared to the persisted version (if any)
  *
  * @internal
  */
@@ -577,7 +600,7 @@ export const selectIsFiltersChanged: DashboardSelector<boolean> = createSelector
 );
 
 /**
- * Selects a boolean indication if he dashboard has any changes to the cross filtering compared to the persisted version (if any)
+ * Selects a boolean indication if the dashboard has any changes to the cross filtering compared to the persisted version (if any)
  *
  * @internal
  */
@@ -590,7 +613,7 @@ export const selectIsDisableCrossFilteringChanged: DashboardSelector<boolean> = 
 );
 
 /**
- * Selects a boolean indication if he dashboard has any changes to the user filter reset compared to the persisted version (if any)
+ * Selects a boolean indication if the dashboard has any changes to the user filter reset compared to the persisted version (if any)
  *
  * @internal
  */
@@ -603,7 +626,7 @@ export const selectIsDisableUserFilterResetChanged: DashboardSelector<boolean> =
 );
 
 /**
- * Selects a boolean indication if he dashboard has any changes to the cross filtering compared to the persisted version (if any)
+ * Selects a boolean indication if the dashboard has any changes to the cross filtering compared to the persisted version (if any)
  *
  * @internal
  */
@@ -612,6 +635,19 @@ export const selectIsDisableUserFilterSaveChanged: DashboardSelector<boolean> = 
     selectDisableDashboardUserFilterSave,
     (persistedDisabledUserFilterSave = false, currentDisableUserFilterSave) => {
         return persistedDisabledUserFilterSave !== currentDisableUserFilterSave;
+    },
+);
+
+/**
+ * Selects a boolean indication if the dashboard has any changes to the filter views toggle compared to the persisted version (if any)
+ *
+ * @internal
+ */
+export const selectIsDisableFilterViewsChanged: DashboardSelector<boolean> = createSelector(
+    selectPersistedDashboardDisableFilterViews,
+    selectDisableFilterViews,
+    (persistedDisableFilterViews = false, currentDisableFilterViews) => {
+        return persistedDisableFilterViews !== currentDisableFilterViews;
     },
 );
 
@@ -656,6 +692,7 @@ export const selectIsDashboardDirty: DashboardSelector<boolean> = createSelector
     selectIsDisableCrossFilteringChanged,
     selectIsDisableUserFilterResetChanged,
     selectIsDisableUserFilterSaveChanged,
+    selectIsDisableFilterViewsChanged,
     (
         isNew,
         layout,
@@ -666,6 +703,7 @@ export const selectIsDashboardDirty: DashboardSelector<boolean> = createSelector
         isDisableCrossFilteringChanged,
         isDisableUserFilterResetChanged,
         isDisableUserFilterSaveChanged,
+        isDisableFilterViewsChanged,
     ) => {
         if (isNew) {
             return !isDashboardLayoutEmpty(layout);
@@ -679,6 +717,7 @@ export const selectIsDashboardDirty: DashboardSelector<boolean> = createSelector
             isDisableCrossFilteringChanged,
             isDisableUserFilterResetChanged,
             isDisableUserFilterSaveChanged,
+            isDisableFilterViewsChanged,
         ].some(Boolean);
     },
 );

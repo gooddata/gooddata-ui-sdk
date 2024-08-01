@@ -6981,6 +6981,8 @@ interface IAnalyticalDashboard_2 {
     // (undocumented)
     disableCrossFiltering?: boolean;
     // (undocumented)
+    disableFilterViews?: boolean;
+    // (undocumented)
     disableUserFilterReset?: boolean;
     // (undocumented)
     disableUserFilterSave?: boolean;

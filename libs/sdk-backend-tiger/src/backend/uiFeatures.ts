@@ -99,6 +99,7 @@ export enum TigerFeaturesNames {
     EnableWidgetIdentifiersRollout = "enableWidgetIdentifiersRollout",
     EnableAIFunctions = "enableAIFunctions",
     EnableDrillIntersectionIgnoredAttributes = "enableDrillIntersectionIgnoredAttributes",
+    EnableDashboardFilterViews = "enableDashboardFilterViews",
     EnableAlertingRollout = "enableAlertingRollout",
 }
 
@@ -165,6 +166,7 @@ export type ITigerFeatureFlags = {
     enableAIFunctions: typeof FeatureFlagsValues["enableAIFunctions"][number];
     enableDrillIntersectionIgnoredAttributes: typeof FeatureFlagsValues["enableDrillIntersectionIgnoredAttributes"][number];
     enableAlertingRollout: typeof FeatureFlagsValues["enableAlertingRollout"][number];
+    enableDashboardFilterViews: typeof FeatureFlagsValues["enableDashboardFilterViews"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -220,7 +222,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableInvalidValuesInAttributeFilter: false,
     enableDuplicatedLabelValuesInAttributeFilter: false,
     enableWorkspacesHierarchyView: false,
-    enableMultipleDataSourcesInWorkspace: false,
+    enableMultipleDataSourcesInWorkspace: true,
     enableScatterPlotSegmentation: true,
     enableScatterPlotClustering: true,
     enableRichTextDescriptions: true,
@@ -230,6 +232,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAIFunctions: false,
     enableDrillIntersectionIgnoredAttributes: false,
     enableAlertingRollout: false,
+    enableDashboardFilterViews: false,
 };
 
 export const FeatureFlagsValues = {
@@ -299,4 +302,5 @@ export const FeatureFlagsValues = {
     enableAIFunctions: [true, false] as const,
     enableDrillIntersectionIgnoredAttributes: [true, false] as const,
     enableAlertingRollout: [true, false] as const,
+    enableDashboardFilterViews: [true, false] as const,
 };

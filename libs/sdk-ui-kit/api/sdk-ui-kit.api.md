@@ -1452,6 +1452,8 @@ export interface IDropdownBodyRenderProps {
 // @internal (undocumented)
 export interface IDropdownButtonProps {
     // (undocumented)
+    children?: ReactNode;
+    // (undocumented)
     className?: string;
     // (undocumented)
     disabled?: boolean;
