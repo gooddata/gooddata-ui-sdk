@@ -10,6 +10,7 @@ import {
     selectLocale,
     selectSupportsCrossFiltering,
     useDashboardSelector,
+    selectDisableFilterViews,
 } from "../../../model/index.js";
 
 import { BulletsBar } from "../../dragAndDrop/index.js";
@@ -20,6 +21,7 @@ import { useFilterExpansionByDragAndDrop } from "./hooks/useFilterExpansionByDra
 import { defaultImport } from "default-import";
 import { createSelector } from "@reduxjs/toolkit";
 import { FiltersConfigurationPanel } from "./FiltersConfigurationPanel.js";
+import { FilterViews } from "./filterViews/FilterViews.js";
 
 const selectShowFiltersConfigurationPanel = createSelector(
     selectIsInEditMode,
@@ -27,6 +29,14 @@ const selectShowFiltersConfigurationPanel = createSelector(
     selectSupportsCrossFiltering,
     (isEdit, enableCrossFiltering, supportsCrossFiltering) => {
         return isEdit && enableCrossFiltering && supportsCrossFiltering;
+    },
+);
+
+const selectShowFilterViews = createSelector(
+    selectEnableKDCrossFiltering,
+    selectDisableFilterViews,
+    (isFeatureEnabled, isDisabledForDashboard) => {
+        return isFeatureEnabled && !isDisabledForDashboard;
     },
 );
 
@@ -46,6 +56,7 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
     );
 
     const showFiltersConfigurationPanel = useDashboardSelector(selectShowFiltersConfigurationPanel);
+    const showFilterViewsFeature = useDashboardSelector(selectShowFilterViews);
 
     return (
         <div className="dash-filters-wrapper s-gd-dashboard-filter-bar" ref={dropRef}>
@@ -58,7 +69,10 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
             >
                 <AllFiltersContainer setCalculatedRows={setCalculatedRows}>{children}</AllFiltersContainer>
                 <FiltersRows rows={rows} />
-                {showFiltersConfigurationPanel ? <FiltersConfigurationPanel /> : null}
+                <div className="filter-bar-configuration">
+                    {showFilterViewsFeature ? <FilterViews /> : null}
+                    {showFiltersConfigurationPanel ? <FiltersConfigurationPanel /> : null}
+                </div>
             </div>
             <ShowAllFiltersButton
                 isFilterBarExpanded={isFilterBarExpanded}

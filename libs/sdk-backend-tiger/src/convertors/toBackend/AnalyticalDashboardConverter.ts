@@ -79,6 +79,7 @@ export function convertAnalyticalDashboard(
         disableCrossFiltering: dashboard.disableCrossFiltering,
         disableUserFilterReset: dashboard.disableUserFilterReset,
         disableUserFilterSave: dashboard.disableUserFilterSave,
+        disableFilterViews: dashboard.disableFilterViews,
         version: "2",
     };
 }

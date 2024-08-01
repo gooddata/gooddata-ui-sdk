@@ -16,6 +16,10 @@ const playgroundDefinitions = {
         "https://staging.dev-latest.stg11.panther.intgdc.com",
         "4dc4e033e611421791adea58d34d958c"
     ],
+    "panther-stg": [
+        "https://internal-testing.staging.stg11.panther.intgdc.com",
+        "130ee9a3d69b4508aed431773a660706"
+    ],
 };
 
 module.exports = async (env, argv) => {

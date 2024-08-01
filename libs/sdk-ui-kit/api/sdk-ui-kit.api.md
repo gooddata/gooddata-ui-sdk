@@ -56,7 +56,7 @@ export const AddButton: React_2.FC<IAddButtonProps>;
 export const AddGranteeBase: React_2.FC<IAddGranteeBaseProps>;
 
 // @internal (undocumented)
-export type AddMessageType = (message: MessageDescriptor, options?: Pick<IMessageDefinition, "duration" | "intensive" | "values">) => string;
+export type AddMessageType = (message: MessageDescriptor, options?: MessageParameters) => string;
 
 // @internal (undocumented)
 export type Alignment = {
@@ -1451,6 +1451,8 @@ export interface IDropdownBodyRenderProps {
 
 // @internal (undocumented)
 export interface IDropdownButtonProps {
+    // (undocumented)
+    children?: ReactNode;
     // (undocumented)
     className?: string;
     // (undocumented)
@@ -4326,6 +4328,9 @@ export type MenuAlignment = ["bottom", "right"] | ["bottom", "left"] | ["top", "
 
 // @internal (undocumented)
 export const Message: React_2.FC<IMessageProps>;
+
+// @internal (undocumented)
+export type MessageParameters = Pick<IMessageDefinition, "duration" | "intensive" | "values">;
 
 // @internal (undocumented)
 export const Messages: React_2.FC<IMessagesProps>;

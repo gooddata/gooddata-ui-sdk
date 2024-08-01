@@ -511,3 +511,34 @@ export function dashboardFilterReferenceObjRef(ref: IDashboardFilterReference): 
 function hasFilterContextBaseProps(obj: unknown): boolean {
     return !isEmpty(obj) && !!(obj as IFilterContextBase).filters;
 }
+
+/**
+ * Interface that represents saved dashboard filter view created for a specific dashboard by a specific user.
+ *
+ * There should always be just one default filter view for the user and the dashboard at any given time.
+ * The consistency must be handled by backend or client. The reason why the flag cannot be on the dashboard
+ * is that each user can have a different default filter view per dashboard and also the filter views can be
+ * created by users that have only VIEW permission for the workspace and cannot modify the dashboard object.
+ *
+ * @alpha
+ */
+export interface IDashboardFilterView {
+    readonly ref: ObjRef;
+    readonly name: string;
+    readonly dashboard: ObjRef;
+    readonly user: ObjRef;
+    readonly filterContext: IFilterContextDefinition;
+    readonly isDefault?: boolean;
+}
+/**
+ * Interface that represents an entity provided to SPI function that creates a new dashboard filter view
+ * {@link IDashboardFilterView} entity.
+ *
+ * @alpha
+ */
+export interface IDashboardFilterViewSaveRequest {
+    readonly name: string;
+    readonly dashboard: ObjRef;
+    readonly filterContext: IFilterContextDefinition;
+    readonly isDefault?: boolean;
+}

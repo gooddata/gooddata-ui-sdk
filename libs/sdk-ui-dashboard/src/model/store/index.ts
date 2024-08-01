@@ -84,6 +84,7 @@ export {
     selectIsDisableUserFilterReset,
     selectEnableScheduling,
     selectEnableDrillIntersectionIgnoredAttributes,
+    selectEnableFilterViews,
 } from "./config/configSelectors.js";
 export { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {
@@ -285,6 +286,7 @@ export {
     selectDisableDashboardCrossFiltering,
     selectDisableDashboardUserFilterReset,
     selectDisableDashboardUserFilterSave,
+    selectDisableFilterViews,
 } from "./meta/metaSelectors.js";
 export {
     selectListedDashboards,
@@ -390,3 +392,5 @@ export {
 
 export { UsersState } from "./users/usersState.js";
 export { selectUsers } from "./users/usersSelectors.js";
+
+export { selectFilterViews, IFilterViews, FilterViewsState } from "./filterViews/index.js";
