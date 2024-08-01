@@ -69,6 +69,10 @@ export const DrillIntersectionIgnoredAttributes = ({
             },
         ) ?? [];
 
+    if (insightAttributes.length === 0) {
+        return null;
+    }
+
     return (
         <div className="gd-drill-intersection-ignored-attributes-select-section">
             <div className="gd-drill-intersection-ignored-attributes-select-label">
