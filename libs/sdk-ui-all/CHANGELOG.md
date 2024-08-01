@@ -5,9 +5,7 @@ This log was last generated on Thu, 25 Jul 2024 08:35:32 GMT and should not be m
 ## 10.6.0
 Thu, 25 Jul 2024 08:35:32 GMT
 
-### Updates
-
-- Allow specifying returnTo parameter with backend deauthenticate
+_Version update only_
 
 ## 10.5.1
 Fri, 12 Jul 2024 11:00:39 GMT
@@ -35,7 +33,7 @@ Thu, 13 Jun 2024 08:17:52 GMT
 
 ### Updates
 
-- Allow different position of ellipsis in ShortenedText component 
+- Allow different position of ellipsis in ShortenedText component
 - F1-349 Implement webhooks api in tiger functions
 - allow creating a workspace as a child
 
@@ -132,7 +130,7 @@ Thu, 30 Nov 2023 11:57:11 GMT
 ### Updates
 
 - Users can configure the dashboard filter to be interactive, locked, or hidden.
-- Remove `isDomainAdmin` method from Bear Legacy Functions. 
+- Remove `isDomainAdmin` method from Bear Legacy Functions.
 
 ## 9.3.0
 Thu, 02 Nov 2023 11:25:49 GMT
