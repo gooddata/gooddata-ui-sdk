@@ -47,6 +47,7 @@ export {
     IInvertableSelectStatusProps,
     InvertableSelectStatus,
     useInvertableSelectionStatusText,
+    IInvertableSelectItemRenderOnlyProps,
 } from "./InvertableSelect/index.js";
 export {
     SingleSelectListItem,

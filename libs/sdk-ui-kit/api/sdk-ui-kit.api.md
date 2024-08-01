@@ -2198,6 +2198,10 @@ export interface IInvertableSelectAllCheckboxProps {
 // @internal (undocumented)
 export interface IInvertableSelectItem {
     // (undocumented)
+    icon?: JSX.Element;
+    // (undocumented)
+    isDisabled?: boolean;
+    // (undocumented)
     isSelected?: boolean;
     // (undocumented)
     onClick?: () => void;
@@ -2208,7 +2212,15 @@ export interface IInvertableSelectItem {
     // (undocumented)
     onOnly?: () => void;
     // (undocumented)
+    renderOnly?: (props: IInvertableSelectItemRenderOnlyProps) => JSX.Element;
+    // (undocumented)
     title?: string;
+}
+
+// @internal (undocumented)
+export interface IInvertableSelectItemRenderOnlyProps {
+    // (undocumented)
+    onOnly?: () => void;
 }
 
 // @internal (undocumented)

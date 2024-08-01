@@ -694,3 +694,15 @@ export const selectEnableRichTextDescriptions: DashboardSelector<boolean> = crea
         return state.settings?.enableRichTextDescriptions ?? false;
     },
 );
+
+/**
+ * Returns whether drill intersection ignored attributes is enabled.
+ *
+ * @internal
+ */
+export const selectEnableDrillIntersectionIgnoredAttributes: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableDrillIntersectionIgnoredAttributes ?? false;
+    },
+);

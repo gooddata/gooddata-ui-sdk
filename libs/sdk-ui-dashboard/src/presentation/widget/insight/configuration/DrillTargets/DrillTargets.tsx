@@ -62,6 +62,7 @@ export const DrillTargets: React.FunctionComponent<IDrillTargetsProps> = (props)
             origin: getOrigin(item),
             type: "drillToInsight",
             target: targetItem.insight.ref,
+            drillIntersectionIgnoredAttributes: item.drillIntersectionIgnoredAttributes,
         };
         props.onSetup(drillConfigItem, { ...item, insightRef: targetItem.insight.ref });
     };
@@ -74,6 +75,7 @@ export const DrillTargets: React.FunctionComponent<IDrillTargetsProps> = (props)
             origin: getOrigin(item),
             type: "drillToDashboard",
             target: dashboard,
+            drillIntersectionIgnoredAttributes: item.drillIntersectionIgnoredAttributes,
         };
         props.onSetup(drillConfigItem, { ...item, dashboard });
     };

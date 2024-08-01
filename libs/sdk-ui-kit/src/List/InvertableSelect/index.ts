@@ -15,7 +15,11 @@ export {
     InvertableSelectLimitWarning,
     IInvertableSelectLimitWarningProps,
 } from "./InvertableSelectLimitWarning.js";
-export { IInvertableSelectItem, InvertableSelectItem } from "./InvertableSelectItem.js";
+export {
+    IInvertableSelectItem,
+    InvertableSelectItem,
+    IInvertableSelectItemRenderOnlyProps,
+} from "./InvertableSelectItem.js";
 export { InvertableSelectSearchBar, IInvertableSelectSearchBarProps } from "./InvertableSelectSearchBar.js";
 export {
     InvertableSelectAllCheckbox,

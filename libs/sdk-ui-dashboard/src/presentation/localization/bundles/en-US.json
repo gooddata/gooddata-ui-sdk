@@ -1651,6 +1651,31 @@
         "translate": false,
         "limit": 0
     },
+    "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.label": {
+        "value": "Pass as filter:",
+        "comment": "Label of the dropdown to select drill intersection ignored attributes.",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.title": {
+        "value": "Pass as filters",
+        "comment": "Title of the dropdown to select drill intersection ignored attributes.",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.tooltip": {
+        "value": "Disable the attribute or date to exclude its value from being passed as a filter to the drill destination.",
+        "comment": "Tooltip of the dropdown to select drill intersection ignored attributes.",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.all": {
+        "value": "All",
+        "comment": "Title of the dropdown, when all values are selected and none attribute is ignored.",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.none": {
+        "value": "None",
+        "comment": "Title of the dropdown, when no values are selected and all attributes are ignored.",
+        "limit": 0
+    },
     "configurationPanel.unlistedDashboardTab": {
         "value": "Unlisted dashboard",
         "comment": "",

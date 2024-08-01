@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import {
     IDrillToDashboard,
     IDrillToInsight,
@@ -90,6 +90,7 @@ const createInsightConfig = (
         insightRef: drillData.target,
         complete: true,
         widgetRef: widgetRef,
+        drillIntersectionIgnoredAttributes: drillData.drillIntersectionIgnoredAttributes,
     };
 };
 
@@ -112,6 +113,7 @@ const createDashboardConfig = (
         dashboard: drillData.target,
         complete: true,
         widgetRef: widgetRef,
+        drillIntersectionIgnoredAttributes: drillData.drillIntersectionIgnoredAttributes,
     };
 };
 
