@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { SagaIterator } from "redux-saga";
 import { call, SagaReturnType, select } from "redux-saga/effects";
@@ -13,7 +13,14 @@ import {
 } from "./insightDrillDefinitionUtils.js";
 import { IDrillTargets } from "../../../store/drillTargets/drillTargetsTypes.js";
 import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
-import { ObjRef, InsightDrillDefinition, IListedDashboard } from "@gooddata/sdk-model";
+import {
+    ObjRef,
+    InsightDrillDefinition,
+    IListedDashboard,
+    insightBuckets,
+    bucketsAttributes,
+    IAttribute,
+} from "@gooddata/sdk-model";
 import { IDashboardCommand } from "../../../commands/index.js";
 import { InsightResolutionResult, resolveInsights } from "../../../utils/insightResolver.js";
 import {
@@ -24,6 +31,7 @@ import { selectDrillTargetsByWidgetRef } from "../../../store/drillTargets/drill
 import { selectAccessibleDashboardsMap } from "../../../store/accessibleDashboards/accessibleDashboardsSelectors.js";
 import { selectInaccessibleDashboardsMap } from "../../../store/inaccessibleDashboards/inaccessibleDashboardsSelectors.js";
 import { IInaccessibleDashboard } from "../../../types/inaccessibleDashboardTypes.js";
+import { selectInsightByWidgetRef } from "../../../store/insights/insightsSelectors.js";
 
 export function validateDrillDefinition(
     drillDefinition: InsightDrillDefinition,
@@ -52,6 +60,7 @@ export function validateDrillDefinition(
 
     // validate drill
     const validationContext: InsightDrillDefinitionValidationData = {
+        widgetInsightAttributes: validationData.widgetInsightAttributes,
         dashboardsMap: validationData.accessibleDashboardMap,
         insightsMap: validationData.resolvedInsights.resolved,
         displayFormsMap: validationData.resolvedDisplayForms.resolved,
@@ -70,6 +79,7 @@ export function validateDrillDefinition(
 }
 
 export interface DrillDefinitionValidationData {
+    widgetInsightAttributes: IAttribute[];
     drillTargets: IDrillTargets | undefined;
     resolvedInsights: InsightResolutionResult;
     resolvedDisplayForms: DisplayFormResolutionResult;
@@ -82,6 +92,11 @@ export function* getValidationData(
     drillsToModify: InsightDrillDefinition[],
     ctx: DashboardContext,
 ): SagaIterator<DrillDefinitionValidationData> {
+    const widgetInsight: ReturnType<ReturnType<typeof selectInsightByWidgetRef>> = yield select(
+        selectInsightByWidgetRef(widgetRef),
+    );
+    const widgetInsightAttributes = widgetInsight ? bucketsAttributes(insightBuckets(widgetInsight)) : [];
+
     const selectDrillTargetsByWidgetRefSelector = selectDrillTargetsByWidgetRef(widgetRef);
     const drillTargets: ReturnType<typeof selectDrillTargetsByWidgetRefSelector> = yield select(
         selectDrillTargetsByWidgetRefSelector,
@@ -109,6 +124,7 @@ export function* getValidationData(
     );
 
     return {
+        widgetInsightAttributes,
         drillTargets,
         accessibleDashboardMap,
         resolvedInsights,

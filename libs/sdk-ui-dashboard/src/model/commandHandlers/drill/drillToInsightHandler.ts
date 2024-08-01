@@ -10,7 +10,11 @@ import {
 } from "../../events/drill.js";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
 import { addIntersectionFiltersToInsight } from "@gooddata/sdk-ui-ext";
-import { selectEnableDuplicatedLabelValuesInAttributeFilter } from "../../store/config/configSelectors.js";
+import {
+    selectEnableDrillIntersectionIgnoredAttributes,
+    selectEnableDuplicatedLabelValuesInAttributeFilter,
+} from "../../store/config/configSelectors.js";
+import { removeIgnoredValuesFromDrillIntersection } from "./common/intersectionUtils.js";
 
 export function* drillToInsightHandler(
     ctx: DashboardContext,
@@ -24,9 +28,20 @@ export function* drillToInsightHandler(
         typeof selectEnableDuplicatedLabelValuesInAttributeFilter
     > = yield select(selectEnableDuplicatedLabelValuesInAttributeFilter);
 
+    const enableDrillIntersectionIgnoredAttributes: ReturnType<
+        typeof selectEnableDrillIntersectionIgnoredAttributes
+    > = yield select(selectEnableDrillIntersectionIgnoredAttributes);
+
+    const filteredIntersection = enableDrillIntersectionIgnoredAttributes
+        ? removeIgnoredValuesFromDrillIntersection(
+              cmd.payload.drillEvent.drillContext.intersection ?? [],
+              cmd.payload.drillDefinition.drillIntersectionIgnoredAttributes ?? [],
+          )
+        : cmd.payload.drillEvent.drillContext.intersection!;
+
     const insightWithDrillsApplied = addIntersectionFiltersToInsight(
         insight,
-        drillEvent.drillContext.intersection!,
+        filteredIntersection!,
         ctx.backend.capabilities.supportsElementUris ?? true,
         enableDuplicatedLabelValuesInAttributeFilter,
     );

@@ -1407,6 +1407,7 @@ export function idRef(identifier: Identifier, type?: ObjectType): IdentifierRef;
 
 // @public
 export interface IDrill {
+    drillIntersectionIgnoredAttributes?: string[];
     localIdentifier?: string;
     origin: DrillOrigin;
     transition: DrillTransition;
@@ -2792,6 +2793,7 @@ export interface ISettings {
     enableDataSection?: boolean;
     enableDescriptions?: boolean;
     enableDrilledInsightExport?: boolean;
+    enableDrillIntersectionIgnoredAttributes?: boolean;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     enableEmbedButtonInAD?: boolean;
     enableEmbedButtonInKD?: boolean;

@@ -425,6 +425,11 @@ export interface ISettings {
      */
     enableAIFunctions?: boolean;
 
+    /**
+     * Enable configuration of the drill intersection ignored attributes.
+     */
+    enableDrillIntersectionIgnoredAttributes?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

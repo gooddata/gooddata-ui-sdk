@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import flatMap from "lodash/flatMap.js";
 import {
     idRef,
@@ -19,6 +19,7 @@ import {
     isDrillToInsight,
     IAttributeDisplayFormMetadataObject,
     IListedDashboard,
+    IAttribute,
 } from "@gooddata/sdk-model";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { typesUtils } from "@gooddata/util";
@@ -154,6 +155,7 @@ export function extractInsightFilterDisplayFormIdentifiers(
 }
 
 export interface InsightDrillDefinitionValidationData {
+    widgetInsightAttributes: IAttribute[];
     dashboardsMap: ObjRefMap<IListedDashboard>;
     insightsMap: ObjRefMap<IInsight>;
     displayFormsMap: ObjRefMap<IAttributeDisplayFormMetadataObject>;
@@ -188,7 +190,7 @@ function validateDrillToDashboardDefinition(
     drillDefinition: IDrillToDashboard,
     validationContext: InsightDrillDefinitionValidationData,
 ): IDrillToDashboard {
-    const { target } = drillDefinition;
+    const { target, drillIntersectionIgnoredAttributes } = drillDefinition;
     if (target) {
         let result: IDrillToDashboard | undefined = undefined;
         const targetDashboard =
@@ -202,6 +204,18 @@ function validateDrillToDashboardDefinition(
                 ...drillDefinition,
                 target: idRef(targetDashboard.identifier, "analyticalDashboard"),
             };
+        }
+
+        if (drillIntersectionIgnoredAttributes && drillIntersectionIgnoredAttributes.length > 0) {
+            const areAllIgnoredAttributesAvailable = drillIntersectionIgnoredAttributes.every((localId) =>
+                validationContext.widgetInsightAttributes.some(
+                    (attr) => attr.attribute.localIdentifier === localId,
+                ),
+            );
+
+            if (!areAllIgnoredAttributesAvailable) {
+                throw new Error("Not all drill intersection ignored attributes are available in the insight");
+            }
         }
 
         if (result) {
@@ -218,7 +232,7 @@ function validateDrillToInsightDefinition(
     drillDefinition: IDrillToInsight,
     validationContext: InsightDrillDefinitionValidationData,
 ): IDrillToInsight {
-    const { target } = drillDefinition;
+    const { target, drillIntersectionIgnoredAttributes } = drillDefinition;
     let result: IDrillToInsight | undefined = undefined;
 
     if (target) {
@@ -230,6 +244,18 @@ function validateDrillToInsightDefinition(
                 ...drillDefinition,
                 target: targetInsights.insight.ref,
             };
+        }
+
+        if (drillIntersectionIgnoredAttributes && drillIntersectionIgnoredAttributes.length > 0) {
+            const areAllIgnoredAttributesAvailable = drillIntersectionIgnoredAttributes.every((localId) =>
+                validationContext.widgetInsightAttributes.some(
+                    (attr) => attr.attribute.localIdentifier === localId,
+                ),
+            );
+
+            if (!areAllIgnoredAttributesAvailable) {
+                throw new Error("Not all drill intersection ignored attributes are available in the insight");
+            }
         }
     }
 
