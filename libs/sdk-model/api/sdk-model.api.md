@@ -1532,7 +1532,7 @@ export interface IExportDefinitionBase {
 // @alpha
 export interface IExportDefinitionDashboardContent {
     // (undocumented)
-    dashboard: string;
+    dashboard: Identifier;
     // (undocumented)
     filters?: FilterContextItem[];
 }
@@ -1569,10 +1569,12 @@ export type IExportDefinitionRequestPayload = IExportDefinitionDashboardRequestP
 
 // @alpha
 export interface IExportDefinitionVisualizationObjectContent {
+    dashboard?: Identifier;
     // (undocumented)
     filters?: IFilter[];
     // (undocumented)
     visualizationObject: Identifier;
+    widget?: Identifier;
 }
 
 // @alpha
