@@ -35,7 +35,6 @@ import { IScheduledEmailDialogProps } from "../types.js";
 import { invariant } from "ts-invariant";
 import { getDefaultCronExpression, useEditScheduledEmail } from "./hooks/useEditScheduledEmail.js";
 import { useSaveScheduledEmailToBackend } from "./hooks/useSaveScheduledEmailToBackend.js";
-import isEqual from "lodash/isEqual.js";
 import {
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
@@ -48,6 +47,7 @@ import { DASHBOARD_TITLE_MAX_LENGTH } from "../../constants/index.js";
 import parseISO from "date-fns/parseISO/index.js";
 import { isMobileView } from "./utils/responsive.js";
 import { DeleteScheduleConfirmDialog } from "../DefaultScheduledEmailManagementDialog/components/DeleteScheduleConfirmDialog.js";
+import { areAutomationsEqual } from "./utils/automationHelpers.js";
 
 const MAX_MESSAGE_LENGTH = 200;
 const MAX_SUBJECT_LENGTH = 200;
@@ -96,8 +96,10 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
     const { handleSaveScheduledEmail, isSavingScheduledEmail, savingErrorMessage } =
         useSaveScheduledEmailToBackend(automation, props);
 
+    // It is needed to use originalAutomation here instead of automation, as in edit mode, all attachments may be removed
+    // and no connection to widget would exist anymore and form would fallback to editing of dashboard variant.
     const editWidgetId = (
-        automation.exportDefinitions?.find((exportDefinition) =>
+        originalAutomation.exportDefinitions?.find((exportDefinition) =>
             isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload),
         )?.requestPayload.content as IExportDefinitionVisualizationObjectContent
     )?.widget;
@@ -141,7 +143,9 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
     const isValid = (automation.recipients?.length ?? 0) <= maxAutomationsRecipients;
     const isDestinationEmpty = !automation.webhook;
     const isSubmitDisabled =
-        !isValid || isDestinationEmpty || (editSchedule && isEqual(originalAutomation, automation));
+        !isValid ||
+        isDestinationEmpty ||
+        (editSchedule && areAutomationsEqual(automation, originalAutomation));
 
     const startDate = parseISO(
         automation.schedule?.firstRun ?? normalizeTime(new Date(), undefined, 60).toISOString(),
