@@ -10,6 +10,7 @@ import {
     idRef,
     IExportDefinitionMetadataObject,
     IExportDefinitionRequestPayload,
+    IExportDefinitionVisualizationObjectSettings,
     IFilter,
 } from "@gooddata/sdk-model";
 import { convertUserIdentifier } from "./UsersConverter.js";
@@ -56,11 +57,20 @@ const convertExportDefinitionRequestPayload = (
     exportRequest: VisualExportRequest | TabularExportRequest,
 ): IExportDefinitionRequestPayload => {
     if (isTabularRequest(exportRequest)) {
+        const { widget, dashboard } =
+            (exportRequest.metadata as { widget?: string; dashboard?: string }) ?? {};
+
+        const filters = exportRequest.visualizationObjectCustomFilters as IFilter[];
+        const filtersObj = filters ? { filters } : {};
+
         const { mergeHeaders, pdfPageSize } = exportRequest.settings ?? {};
         const orientation =
             pdfPageSize === "portrait" || pdfPageSize === "landscape" ? pdfPageSize : "portrait";
-        const { widget, dashboard } =
-            (exportRequest.metadata as { widget?: string; dashboard?: string }) ?? {};
+        const settings: IExportDefinitionVisualizationObjectSettings = {
+            ...(exportRequest.format === "PDF" ? { orientation } : {}),
+            ...(mergeHeaders ? { mergeHeaders } : {}),
+        };
+        const settingsObj = isEmpty(settings) ? {} : { settings };
 
         return {
             type: "visualizationObject",
@@ -68,23 +78,23 @@ const convertExportDefinitionRequestPayload = (
             format: exportRequest.format,
             content: {
                 visualizationObject: exportRequest.visualizationObject ?? "",
-                filters: exportRequest.visualizationObjectCustomFilters as IFilter[],
                 widget,
                 dashboard,
+                ...filtersObj,
             },
-            settings: {
-                ...(exportRequest.format === "PDF" ? { orientation } : {}),
-                ...(mergeHeaders ? { mergeHeaders } : {}),
-            },
+            ...settingsObj,
         };
     } else {
+        const filters = (exportRequest.metadata as any)?.filters as FilterContextItem[];
+        const filtersObj = filters ? { filters } : {};
+
         return {
             type: "dashboard",
             fileName: exportRequest.fileName,
             format: "PDF",
             content: {
                 dashboard: exportRequest.dashboardId,
-                filters: (exportRequest.metadata as any)?.filters as FilterContextItem[],
+                ...filtersObj,
             },
         };
     }

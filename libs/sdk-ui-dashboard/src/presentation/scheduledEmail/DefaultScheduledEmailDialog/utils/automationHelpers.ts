@@ -12,6 +12,9 @@ import {
     isFilter,
     isFilterContextItem,
 } from "@gooddata/sdk-model";
+import omit from "lodash/omit.js";
+import isEqual from "lodash/isEqual.js";
+import pick from "lodash/pick.js";
 
 export const isDashboardAutomation = (
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | undefined,
@@ -109,4 +112,32 @@ export const getAutomationVisualizationFilters = (
             return isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload);
         })
         ?.requestPayload?.content.filters?.filter(isFilter);
+};
+
+type ExportDefinitionSubset = Pick<IExportDefinitionMetadataObjectDefinition, "requestPayload" | "title">;
+
+const sortByFormat = (a: ExportDefinitionSubset, b: ExportDefinitionSubset) =>
+    a.requestPayload.format > b.requestPayload.format ? 1 : -1;
+
+export const areAutomationsEqual = (
+    automation: IAutomationMetadataObjectDefinition,
+    originalAutomation: IAutomationMetadataObjectDefinition,
+) => {
+    const automationWithoutExportDefinitions = omit(automation, "exportDefinitions");
+    const origAutomationWithoutExportDefinitions = omit(originalAutomation, "exportDefinitions");
+
+    // We only want to compare requestPayload and title of exportDefinitions, rest may be omitted as it is just arbitrary
+    // metadata that is not relevant for the comparison and causes false positive results when comparing new and old def.
+    // Sorting is done just to avoid false positive result of different order of export definitions.
+    const automationExportDefinitions = automation.exportDefinitions
+        ?.map((exportDefinition) => pick(exportDefinition, ["requestPayload", "title"]))
+        .sort(sortByFormat);
+    const origAutomationExportDefinitions = originalAutomation.exportDefinitions
+        ?.map((exportDefinition) => pick(exportDefinition, ["requestPayload", "title"]))
+        .sort(sortByFormat);
+
+    return (
+        isEqual(automationWithoutExportDefinitions, origAutomationWithoutExportDefinitions) &&
+        isEqual(automationExportDefinitions, origAutomationExportDefinitions)
+    );
 };
