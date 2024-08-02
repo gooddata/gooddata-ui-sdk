@@ -2,6 +2,7 @@
 
 import { v4 as uuidv4 } from "uuid";
 import {
+    areObjRefsEqual,
     DashboardAttributeFilterConfigMode,
     DashboardAttributeFilterConfigModeValues,
     DashboardDateFilterConfigMode,
@@ -12,6 +13,7 @@ import {
     isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
+    isDashboardDateFilterReference,
     isDashboardDateFilterWithDimension,
     serializeObjRef,
 } from "@gooddata/sdk-model";
@@ -19,6 +21,7 @@ import { invariant } from "ts-invariant";
 import isEqual from "lodash/isEqual.js";
 import { useIntl } from "react-intl";
 import {
+    ExtendedDashboardWidget,
     ICrossFilteringItem,
     selectAllCatalogAttributesMap,
     selectAttributeFilterDisplayFormsMap,
@@ -52,7 +55,7 @@ export interface IAttachmentFilterInfo {
     dateFilterOption?: DateFilterOption;
 }
 
-interface IUseAttachmentDashboardFilters {
+interface IUseAttachmentFilters {
     /**
      * Is there some ad-hoc change of filters on the dashboard compared to original filters state?
      *
@@ -75,12 +78,17 @@ interface IUseAttachmentDashboardFilters {
 
 export const useAttachmentDashboardFilters = ({
     customFilters,
+    widget,
 }: {
     /**
-     * Custom filters from metadata object to use instead of the current dashboard filters.
+     * Custom filters from metadata object to use instead of the current filters.
      */
     customFilters?: FilterContextItem[];
-}): IUseAttachmentDashboardFilters => {
+    /**
+     * Widget in case of widget attachments.
+     */
+    widget?: ExtendedDashboardWidget;
+}): IUseAttachmentFilters => {
     const intl = useIntl();
     const locale = useDashboardSelector(selectLocale);
     const settings = useDashboardSelector(selectSettings);
@@ -95,11 +103,14 @@ export const useAttachmentDashboardFilters = ({
     // remove cross-filtering to get filters for storing
     const crossFilteringItems = useDashboardSelector(selectCrossFilteringItems);
     const isCrossFiltering = crossFilteringItems.length > 0;
-    const filtersToStore = removeCrossFilteringFilters(effectiveFilters, crossFilteringItems);
+    const filtersWithoutCrossFiltering = removeCrossFilteringFilters(effectiveFilters, crossFilteringItems);
 
     // compare stored dashboard filters with filters to store
     const originalFilters = useDashboardSelector(selectOriginalFilterContextFilters);
-    const areFiltersChanged = !isEqual(filtersToStore, originalFilters);
+    const areFiltersChanged = !isEqual(filtersWithoutCrossFiltering, originalFilters);
+
+    // remove ignored widget filters
+    const filtersToStore = removeIgnoredWidgetFilters(filtersWithoutCrossFiltering, widget);
 
     // additionaly remove hidden filters to get filters suitable for display
     const commonDateFilterMode = useDashboardSelector(selectEffectiveDateFilterMode);
@@ -182,6 +193,32 @@ export const useAttachmentDashboardFilters = ({
         filtersToStore,
         filtersToDisplayInfo,
     };
+};
+
+const removeIgnoredWidgetFilters = (
+    filters: FilterContextItem[],
+    widget: ExtendedDashboardWidget | undefined,
+) => {
+    if (!widget) {
+        return filters;
+    }
+
+    const ignoredFilterReferences = widget.ignoreDashboardFilters ?? [];
+    const ignoredFilterRefs = ignoredFilterReferences.map((reference) => {
+        if (isDashboardDateFilterReference(reference)) {
+            return reference.dataSet;
+        }
+        return reference.displayForm;
+    });
+
+    return filters.filter((filter) => {
+        return !ignoredFilterRefs.some((ref) => {
+            if (isDashboardDateFilter(filter)) {
+                return areObjRefsEqual(filter.dateFilter.dataSet!, ref);
+            }
+            return areObjRefsEqual(filter.attributeFilter.displayForm, ref);
+        });
+    });
 };
 
 const removeCrossFilteringFilters = (
