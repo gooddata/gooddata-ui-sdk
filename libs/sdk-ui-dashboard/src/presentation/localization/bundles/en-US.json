@@ -544,7 +544,7 @@
         "limit": 0
     },
     "dialogs.schedule.management.create.tooManyMessage": {
-        "value": "Too many schedules. You can create up to {number} schedules.",
+        "value": "Too many schedules created in the workspace. A maximum of {number} schedules can be created in this workspace.",
         "comment": "Do no translate {number} variable",
         "limit": 0
     },

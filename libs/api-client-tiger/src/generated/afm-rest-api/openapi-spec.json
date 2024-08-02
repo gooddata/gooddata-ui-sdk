@@ -2684,11 +2684,70 @@
                         "type": "boolean",
                         "description": "Turn on deep search. If true, content of complex objects will be searched as well, e.g. metrics in visualizations.",
                         "default": false
+                    },
+                    "limit": {
+                        "type": "integer",
+                        "description": "Maximum number of results to return. There is a hard limit and the actual number of returned results may be lower than what is requested.",
+                        "format": "int32",
+                        "default": 10
+                    },
+                    "titleToDescriptorRatio": {
+                        "type": "number",
+                        "description": "Temporary for experiments. Ratio of title score to descriptor score.",
+                        "format": "double",
+                        "default": 0.7
+                    }
+                }
+            },
+            "SearchRelationshipObject": {
+                "required": [
+                    "sourceObjectId",
+                    "sourceObjectTitle",
+                    "sourceObjectType",
+                    "sourceWorkspaceId",
+                    "targetObjectId",
+                    "targetObjectTitle",
+                    "targetObjectType",
+                    "targetWorkspaceId"
+                ],
+                "type": "object",
+                "properties": {
+                    "sourceWorkspaceId": {
+                        "type": "string",
+                        "description": "Source workspace ID. If relationship is dashboard->visualization, this is the workspace where the dashboard is located."
+                    },
+                    "sourceObjectId": {
+                        "type": "string",
+                        "description": "Source object ID."
+                    },
+                    "sourceObjectType": {
+                        "type": "string",
+                        "description": "Source object type, e.g. dashboard."
+                    },
+                    "sourceObjectTitle": {
+                        "type": "string",
+                        "description": "Source object title."
+                    },
+                    "targetWorkspaceId": {
+                        "type": "string",
+                        "description": "Target workspace ID. If relationship is dashboard->visualization, this is the workspace where the visualization is located."
+                    },
+                    "targetObjectId": {
+                        "type": "string",
+                        "description": "Target object ID."
+                    },
+                    "targetObjectType": {
+                        "type": "string",
+                        "description": "Target object type, e.g. visualization."
+                    },
+                    "targetObjectTitle": {
+                        "type": "string",
+                        "description": "Target object title."
                     }
                 }
             },
             "SearchResult": {
-                "required": ["results"],
+                "required": ["relationships", "results"],
                 "type": "object",
                 "properties": {
                     "results": {
@@ -2696,24 +2755,87 @@
                         "items": {
                             "$ref": "#/components/schemas/SearchResultObject"
                         }
+                    },
+                    "relationships": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SearchRelationshipObject"
+                        }
                     }
                 }
             },
             "SearchResultObject": {
-                "required": ["description", "id", "title", "type"],
+                "required": [
+                    "createdAt",
+                    "description",
+                    "id",
+                    "modifiedAt",
+                    "score",
+                    "scoreDescriptor",
+                    "scoreExactMatch",
+                    "scoreTitle",
+                    "tags",
+                    "title",
+                    "type",
+                    "visualizationUrl"
+                ],
                 "type": "object",
                 "properties": {
                     "id": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Object ID."
                     },
                     "type": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Object type, e.g. dashboard."
                     },
                     "title": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Object title."
                     },
                     "description": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Object description."
+                    },
+                    "tags": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "description": "List of tags assigned to the object."
+                        }
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "description": "Timestamp when object was created."
+                    },
+                    "modifiedAt": {
+                        "type": "string",
+                        "description": "Timestamp when object was last modified."
+                    },
+                    "visualizationUrl": {
+                        "type": "string",
+                        "description": "If the object is visualization, this field defines the type of visualization."
+                    },
+                    "score": {
+                        "type": "number",
+                        "description": "Result score calculated by a similarity search algorithm (cosine_distance).",
+                        "format": "float"
+                    },
+                    "scoreTitle": {
+                        "type": "number",
+                        "description": "Result score for object title.",
+                        "format": "float"
+                    },
+                    "scoreDescriptor": {
+                        "type": "number",
+                        "description": "Result score for descriptor containing(now) description and tags.",
+                        "format": "float"
+                    },
+                    "scoreExactMatch": {
+                        "type": "integer",
+                        "description": "Result score for exact match(id/title). 1/1000. Other scores are multiplied by this.",
+                        "format": "int32"
                     }
                 }
             },

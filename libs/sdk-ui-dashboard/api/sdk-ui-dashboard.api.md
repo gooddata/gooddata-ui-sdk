@@ -508,9 +508,11 @@ export type Automations = IAutomationMetadataObject[];
 // @alpha (undocumented)
 export interface AutomationsState {
     // (undocumented)
-    automations: Automations;
+    automations: number;
     // (undocumented)
     error?: GoodDataSdkError;
+    // (undocumented)
+    fingerprint: string;
     // (undocumented)
     loading: boolean;
 }
@@ -3399,6 +3401,9 @@ export type FiltersInfo = {
 
 // @public (undocumented)
 export type FluidLayoutCustomizationFn = (layout: IDashboardLayout<ExtendedDashboardWidget>, customizer: IFluidLayoutCustomizer) => void;
+
+// @internal
+export function getAuthor(capabilities: IBackendCapabilities, user: IUser): string | undefined;
 
 // @internal (undocumented)
 export function getDefaultInsightEditMenuItems(widget: IInsightWidget, { intl, dispatch, eventDispatch, includeInteractions }: MenuItemDependencies): IInsightMenuItem[];
@@ -6583,10 +6588,13 @@ export const selectAttributeFilterDisplayFormsMap: DashboardSelector<ObjRefMap<I
 export const selectAttributesWithDrillDown: DashboardSelector<(ICatalogAttribute | ICatalogDateAttribute)[]>;
 
 // @alpha
-export const selectAutomations: DashboardSelector<Automations>;
+export const selectAutomationsCount: DashboardSelector<number>;
 
 // @alpha
 export const selectAutomationsError: DashboardSelector<GoodDataSdkError | undefined>;
+
+// @alpha
+export const selectAutomationsFingerprint: DashboardSelector<string>;
 
 // @alpha
 export const selectAutomationsIsLoading: DashboardSelector<boolean>;
@@ -6953,6 +6961,9 @@ export const selectEntitlementMaxAutomations: DashboardSelector<IEntitlementDesc
 
 // @alpha (undocumented)
 export const selectEntitlementMinimumRecurrenceMinutes: DashboardSelector<IEntitlementDescriptor | undefined>;
+
+// @alpha (undocumented)
+export const selectEntitlementUnlimitedAutomations: DashboardSelector<IEntitlementDescriptor | undefined>;
 
 // @alpha (undocumented)
 export const selectExecutionResult: (state: DashboardState, id: EntityId) => IExecutionResultEnvelope | undefined;
@@ -8380,11 +8391,14 @@ export type UseDashboardQueryProcessingResult<TQueryCreatorArgs extends any[], T
 };
 
 // @alpha
-export const useDashboardScheduledEmails: () => {
+export const useDashboardScheduledEmails: ({ dashboard }: {
+    dashboard?: string | undefined;
+}) => {
     webhooks: Webhooks_2;
-    automations: Automations_2;
     users: Users_2;
-    schedulingLoadError: GoodDataSdkError | undefined;
+    automations: Automations_2;
+    automationsCount: number;
+    schedulingLoadError: any;
     numberOfAvailableWebhooks: number;
     isScheduleLoading: boolean;
     isScheduledEmailingVisible: boolean;

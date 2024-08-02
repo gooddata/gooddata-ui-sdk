@@ -57,8 +57,7 @@ const convertExportDefinitionRequestPayload = (
     exportRequest: VisualExportRequest | TabularExportRequest,
 ): IExportDefinitionRequestPayload => {
     if (isTabularRequest(exportRequest)) {
-        const { widget, dashboard } =
-            (exportRequest.metadata as { widget?: string; dashboard?: string }) ?? {};
+        const { widget } = (exportRequest.metadata as { widget?: string }) ?? {};
 
         const filters = exportRequest.visualizationObjectCustomFilters as IFilter[];
         const filtersObj = filters ? { filters } : {};
@@ -78,8 +77,8 @@ const convertExportDefinitionRequestPayload = (
             format: exportRequest.format,
             content: {
                 visualizationObject: exportRequest.visualizationObject ?? "",
+                dashboard: exportRequest.relatedDashboardId ?? "",
                 widget,
-                dashboard,
                 ...filtersObj,
             },
             ...settingsObj,

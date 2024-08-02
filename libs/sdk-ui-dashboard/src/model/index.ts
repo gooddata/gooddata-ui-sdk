@@ -120,3 +120,4 @@ export * from "./headlessDashboard/index.js";
 
 export { isTemporaryIdentity } from "./utils/dashboardItemUtils.js";
 export { existBlacklistHierarchyPredicate } from "./utils/attributeHierarchyUtils.js";
+export { getAuthor } from "./utils/author.js";

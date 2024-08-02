@@ -299,6 +299,9 @@ export interface IAuthenticationProvider {
 // @public
 export interface IAutomationsQuery {
     query(): Promise<IAutomationsQueryResult>;
+    withAll(): IAutomationsQuery;
+    withAuthor(author: string): IAutomationsQuery;
+    withDashboard(dashboard: string): IAutomationsQuery;
     withFilter(filter: {
         title?: string;
     }): IAutomationsQuery;

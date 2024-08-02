@@ -12,6 +12,7 @@ import { IScheduledEmailManagementDialogProps } from "../types.js";
 import {
     selectCurrentUser,
     selectEntitlementMaxAutomations,
+    selectEntitlementUnlimitedAutomations,
     useDashboardSelector,
     DEFAULT_MAX_AUTOMATIONS,
 } from "../../../model/index.js";
@@ -37,6 +38,7 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
     );
     const currentUser = useDashboardSelector(selectCurrentUser);
     const maxAutomationsEntitlement = useDashboardSelector(selectEntitlementMaxAutomations);
+    const unlimitedAutomationsEntitlement = useDashboardSelector(selectEntitlementUnlimitedAutomations);
     const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);
     const intl = useIntl();
 
@@ -56,7 +58,7 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
         setScheduledEmailToDelete(null);
     }, [onDelete]);
 
-    const maxAutomationsReached = automations.length >= maxAutomations;
+    const maxAutomationsReached = automations.length >= maxAutomations && !unlimitedAutomationsEntitlement;
 
     const helpTextId = isMobileView()
         ? defineMessage({ id: "dialogs.schedule.email.footer.title.short" }).id

@@ -91,6 +91,7 @@ export {
     selectEntitlementMaxAutomationRecipients,
     selectEntitlementMaxAutomations,
     selectEntitlementMinimumRecurrenceMinutes,
+    selectEntitlementUnlimitedAutomations,
 } from "./entitlements/entitlementsSelectors.js";
 
 export { PermissionsState } from "./permissions/permissionsState.js";
@@ -381,9 +382,10 @@ export {
 
 export { AutomationsState } from "./automations/automationsState.js";
 export {
-    selectAutomations,
+    selectAutomationsCount,
     selectAutomationsIsLoading,
     selectAutomationsError,
+    selectAutomationsFingerprint,
 } from "./automations/automationsSelectors.js";
 
 export { UsersState } from "./users/usersState.js";
