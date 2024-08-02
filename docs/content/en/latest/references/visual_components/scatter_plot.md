@@ -62,6 +62,7 @@ const style = { height: 300 };
             clustering: {
                 enabled: true,
                 numberOfClusters: 3,
+                threshold: 0.03,
             },
         }}
     />
