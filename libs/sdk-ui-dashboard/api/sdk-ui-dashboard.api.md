@@ -3413,6 +3413,7 @@ export function getDefaultInsightMenuItems(intl: IntlShape, config: {
     exportXLSXDisabled: boolean;
     exportCSVDisabled: boolean;
     scheduleExportDisabled: boolean;
+    scheduleExportDisabledReason: "incompatibleWidget" | "oldWidget" | undefined;
     scheduleExportManagementDisabled: boolean;
     onExportXLSX: () => void;
     onExportCSV: () => void;

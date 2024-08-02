@@ -64,12 +64,23 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
     const intl = useIntl();
     const execution = useDashboardSelector(selectExecutionResultByRef(widget.ref));
 
+    //NOTE: Check if widget has localIdentifier, if not that is probably widget from old dashboard
+    // and we should not allow to schedule export because we need localIdentifier to create schedule
+    const noLocalIdentifier = !widget.localIdentifier;
+    const scheduleExportDisabled = !scheduleExportEnabled || noLocalIdentifier;
+    const scheduleExportManagementDisabled = !scheduleExportManagementEnabled;
+
     return useMemo<IInsightMenuItem[]>(() => {
         return getDefaultInsightMenuItems(intl, {
             exportCSVDisabled: !exportCSVEnabled,
             exportXLSXDisabled: !exportXLSXEnabled,
-            scheduleExportDisabled: !scheduleExportEnabled,
-            scheduleExportManagementDisabled: !scheduleExportManagementEnabled,
+            scheduleExportManagementDisabled,
+            scheduleExportDisabled,
+            scheduleExportDisabledReason: scheduleExportDisabled
+                ? noLocalIdentifier
+                    ? "oldWidget"
+                    : "incompatibleWidget"
+                : undefined,
             onExportCSV: () => {
                 setIsMenuOpen(false);
                 onExportCSV();
