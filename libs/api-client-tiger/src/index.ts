@@ -145,6 +145,7 @@ export {
     SortKeyValueValueDirectionEnum,
     SortKeyAttributeAttributeDirectionEnum,
     SortKeyAttributeAttributeSortTypeEnum,
+    SearchRelationshipObject,
     TotalExecutionResultHeader,
     TotalResultHeader,
     ActionsApiAxiosParamCreator as AfmActionsApiAxiosParamCreator,

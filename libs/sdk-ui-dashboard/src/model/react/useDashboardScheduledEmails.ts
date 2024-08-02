@@ -19,17 +19,24 @@ import {
     uiActions,
     selectEntitlementMaxAutomations,
     selectWebhooks,
-    selectAutomations,
+    selectAutomationsCount,
     selectUsers,
     selectWebhooksIsLoading,
     selectAutomationsIsLoading,
     selectWebhooksError,
     selectAutomationsError,
+    selectSettings,
+    selectCurrentUser,
+    selectAutomationsFingerprint,
 } from "../store/index.js";
 import { refreshAutomations } from "../commands/index.js";
 import { messages } from "../../locales.js";
 
 import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider.js";
+import { selectEntitlementUnlimitedAutomations } from "../store/entitlements/entitlementsSelectors.js";
+import { useCancelablePromise, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { loadContextAutomations } from "../commandHandlers/dashboard/common/loadWorkspaceAutomations.js";
+import { getAuthor } from "../utils/author.js";
 
 /**
  * @alpha
@@ -42,7 +49,7 @@ export const DEFAULT_MAX_AUTOMATIONS = "10";
  *
  * @alpha
  */
-export const useDashboardScheduledEmails = () => {
+export const useDashboardScheduledEmails = ({ dashboard }: { dashboard?: string }) => {
     const { addSuccess, addError } = useToastMessage();
 
     const isScheduleEmailingDialogOpen = useDashboardSelector(selectIsScheduleEmailDialogOpen) || false;
@@ -56,18 +63,24 @@ export const useDashboardScheduledEmails = () => {
     const dispatch = useDashboardDispatch();
     const dashboardRef = useDashboardSelector(selectDashboardRef);
 
+    const automationsCount = useDashboardSelector(selectAutomationsCount);
     const webhooks = useDashboardSelector(selectWebhooks);
-    const automations = useDashboardSelector(selectAutomations);
     const users = useDashboardSelector(selectUsers);
+
+    const { automations, automationsLoading, automationsError } = useContextAutomations({
+        dashboardId: dashboard,
+    });
 
     const isScheduleLoading = [
         useDashboardSelector(selectWebhooksIsLoading),
         useDashboardSelector(selectAutomationsIsLoading),
+        automationsLoading,
     ].some(Boolean);
 
     const schedulingLoadError = [
         useDashboardSelector(selectWebhooksError),
         useDashboardSelector(selectAutomationsError),
+        automationsError,
     ].find(Boolean);
 
     const isReadOnly = useDashboardSelector(selectIsReadOnly);
@@ -76,11 +89,13 @@ export const useDashboardScheduledEmails = () => {
     const isScheduledEmailingEnabled = useDashboardSelector(selectEnableScheduling);
     const canExport = useDashboardSelector(selectCanExportPdf);
     const isWorkspaceManager = useDashboardSelector(selectCanManageWorkspace);
+
     const maxAutomationsEntitlement = useDashboardSelector(selectEntitlementMaxAutomations);
+    const unlimitedAutomationsEntitlement = useDashboardSelector(selectEntitlementUnlimitedAutomations);
     const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);
 
     const numberOfAvailableWebhooks = webhooks.length;
-    const maxAutomationsReached = automations.length >= maxAutomations;
+    const maxAutomationsReached = automationsCount >= maxAutomations && !unlimitedAutomationsEntitlement;
 
     /**
      * We want to hide scheduling when there are no webhooks unless the user is admin.
@@ -258,8 +273,9 @@ export const useDashboardScheduledEmails = () => {
 
     return {
         webhooks,
-        automations,
         users,
+        automations,
+        automationsCount,
         schedulingLoadError,
         numberOfAvailableWebhooks,
         isScheduleLoading,
@@ -287,3 +303,30 @@ export const useDashboardScheduledEmails = () => {
         onScheduleEmailingManagementDeleteError,
     };
 };
+
+function useContextAutomations(opts: { dashboardId?: string }) {
+    const settings = useDashboardSelector(selectSettings);
+    const user = useDashboardSelector(selectCurrentUser);
+    const fingerprint = useDashboardSelector(selectAutomationsFingerprint);
+
+    const backend = useBackendStrict();
+    const workspace = useWorkspaceStrict();
+
+    const { result, status, error } = useCancelablePromise(
+        {
+            promise: async () => {
+                return loadContextAutomations(backend, workspace, settings, {
+                    author: getAuthor(backend.capabilities, user),
+                    dashboardId: opts.dashboardId,
+                });
+            },
+        },
+        [opts.dashboardId, backend, workspace, settings, user, fingerprint],
+    );
+
+    return {
+        automations: result ?? [],
+        automationsLoading: status === "loading",
+        automationsError: error,
+    };
+}

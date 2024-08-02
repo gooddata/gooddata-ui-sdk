@@ -10,6 +10,9 @@ import isNil from "lodash/isNil.js";
 export class AutomationsQuery implements IAutomationsQuery {
     private size = 50;
     private page = 0;
+    private all = false;
+    private author: string | null = null;
+    private dashboard: string | null = null;
     private filter: { title?: string } = {};
     private sort = {};
     private type: AutomationType | undefined = undefined;
@@ -24,12 +27,19 @@ export class AutomationsQuery implements IAutomationsQuery {
         this.totalCount = value;
     };
 
+    withAll(): IAutomationsQuery {
+        this.all = true;
+        return this;
+    }
+
     withSize(size: number): IAutomationsQuery {
+        this.all = false;
         this.size = size;
         return this;
     }
 
     withPage(page: number): IAutomationsQuery {
+        this.all = false;
         this.page = page;
         return this;
     }
@@ -51,7 +61,21 @@ export class AutomationsQuery implements IAutomationsQuery {
         return this;
     }
 
+    withAuthor(author: string): IAutomationsQuery {
+        this.author = author;
+        return this;
+    }
+
+    withDashboard(dashboard: string): IAutomationsQuery {
+        this.dashboard = dashboard;
+        return this;
+    }
+
     query(): Promise<IAutomationsQueryResult> {
+        const all = this.all;
+        const size = all ? Number.MAX_SAFE_INTEGER : this.size;
+        const offset = all ? 0 : this.page * this.size;
+
         return ServerPaging.for(
             async ({ limit, offset }) => {
                 /**
@@ -76,8 +100,8 @@ export class AutomationsQuery implements IAutomationsQuery {
                             "exportDefinitions",
                         ],
                         origin: "NATIVE", // ensures that no inherited automations are returned
-                        size: limit,
-                        page: offset / limit,
+                        // size and page are not needed when we want to get all automations
+                        ...(all ? {} : { size: limit, page: offset / limit }),
                     }),
                 )
                     .then((res) => MetadataUtilities.filterValidEntities(res.data))
@@ -89,8 +113,8 @@ export class AutomationsQuery implements IAutomationsQuery {
 
                 return { items, totalCount: this.totalCount! };
             },
-            this.size,
-            this.page * this.size,
+            size,
+            offset,
         );
     }
 
@@ -103,6 +127,14 @@ export class AutomationsQuery implements IAutomationsQuery {
 
         if (this.type) {
             allFilters.push(`${this.type}=isnull=false`);
+        }
+
+        if (this.author) {
+            allFilters.push(`createdBy.id=='${this.author}'`);
+        }
+
+        if (this.dashboard) {
+            allFilters.push(`exportDefinitions.analyticalDashboard.id=in=(${this.dashboard})`);
         }
 
         return allFilters.length > 0 ? { filter: allFilters.join(";") } : {};

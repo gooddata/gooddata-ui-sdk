@@ -1,10 +1,8 @@
 // (C) 2020-2024 GoodData Corporation
 import {
-    JsonApiAnalyticalDashboardLinkageTypeEnum,
     JsonApiExportDefinitionInDocument,
     JsonApiExportDefinitionOutWithLinksTypeEnum,
     JsonApiExportDefinitionPostOptionalIdDocument,
-    JsonApiVisualizationObjectLinkageTypeEnum,
     TabularExportRequest,
     VisualExportRequest,
 } from "@gooddata/api-client-tiger";
@@ -19,24 +17,6 @@ export const convertExportDefinitionMdObjectDefinition = (
 ): JsonApiExportDefinitionPostOptionalIdDocument => {
     const { title, description, tags, requestPayload } = exportDefinition;
 
-    const relationships = isExportDefinitionDashboardRequestPayload(requestPayload)
-        ? {
-              analyticalDashboard: {
-                  data: {
-                      id: requestPayload.content.dashboard,
-                      type: JsonApiAnalyticalDashboardLinkageTypeEnum.ANALYTICAL_DASHBOARD,
-                  },
-              },
-          }
-        : {
-              visualizationObject: {
-                  data: {
-                      id: requestPayload.content.visualizationObject,
-                      type: JsonApiVisualizationObjectLinkageTypeEnum.VISUALIZATION_OBJECT,
-                  },
-              },
-          };
-
     return {
         data: {
             type: JsonApiExportDefinitionOutWithLinksTypeEnum.EXPORT_DEFINITION,
@@ -46,7 +26,6 @@ export const convertExportDefinitionMdObjectDefinition = (
                 tags,
                 requestPayload: convertExportDefinitionRequestPayload(requestPayload),
             },
-            relationships,
         },
     };
 };
@@ -62,7 +41,7 @@ const convertExportDefinitionRequestPayload = (
             fileName: exportRequest.fileName,
             dashboardId: dashboard,
             ...metadataObj,
-        };
+        } as VisualExportRequest;
     }
 
     const { mergeHeaders, orientation } = exportRequest.settings ?? {};
@@ -73,15 +52,15 @@ const convertExportDefinitionRequestPayload = (
         format: exportRequest.format,
         visualizationObject,
         visualizationObjectCustomFilters: filters,
+        relatedDashboardId: dashboard,
         settings: {
             ...(mergeHeaders ? { mergeHeaders } : {}),
             ...(orientation ? { pdfPageSize: orientation } : {}),
         },
         metadata: {
-            dashboard,
             widget,
         },
-    };
+    } as TabularExportRequest;
 };
 
 export const convertExportDefinitionMdObject = (

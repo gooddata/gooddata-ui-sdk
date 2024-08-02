@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useIntl } from "react-intl";
 import {
@@ -7,7 +7,6 @@ import {
     IInsight,
     insightUpdated,
     insightIsLocked,
-    isUriRef,
     areObjRefsEqual,
     insightSummary,
     insightCreated,
@@ -27,9 +26,10 @@ import {
     selectInsightListLastUpdateRequested,
     selectSettings,
     useDashboardEventDispatch,
+    getAuthor,
     useDashboardSelector,
     selectCurrentUser,
-    selectSupportsObjectUris,
+    selectBackendCapabilities,
 } from "../../model/index.js";
 import { IInsightListProps } from "./types.js";
 import { messages } from "../../locales.js";
@@ -55,12 +55,9 @@ export function getInsightListSourceItem(insight: IInsight): IInsightListItem {
 const dropdownTabsTranslationIds = [messages.tabsMy, messages.tabsAll] as ITab[];
 
 const useAuthor = () => {
-    const isObjectUrisSupported = useDashboardSelector(selectSupportsObjectUris);
-    const user = useDashboardSelector(selectCurrentUser);
-    const userUri = isUriRef(user.ref) ? user.ref.uri : undefined;
-
-    // getInsights filter via user URI on Bear, via user's login on Tiger
-    return isObjectUrisSupported ? userUri : user.login;
+    const capabilities = useDashboardSelector(selectBackendCapabilities);
+    const currentUser = useDashboardSelector(selectCurrentUser);
+    return getAuthor(capabilities, currentUser);
 };
 
 /**

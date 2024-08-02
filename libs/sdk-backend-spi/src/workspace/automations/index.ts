@@ -125,6 +125,12 @@ export interface IWorkspaceAutomationService {
  */
 export interface IAutomationsQuery {
     /**
+     * Sets the query to return all automations.
+     *
+     * @returns automations query
+     */
+    withAll(): IAutomationsQuery;
+    /**
      * Sets number of automations to return per page.
      * Default size: 50
      *
@@ -166,6 +172,22 @@ export interface IAutomationsQuery {
      * @returns automations query
      */
     withType(type: AutomationType): IAutomationsQuery;
+
+    /**
+     * Sets author of the automation for the query.
+     *
+     * @param author - author of the automation
+     * @returns automations query
+     */
+    withAuthor(author: string): IAutomationsQuery;
+
+    /**
+     * Sets dashboard id for the query.
+     *
+     * @param dashboard - dashboard id
+     * @returns automations query
+     */
+    withDashboard(dashboard: string): IAutomationsQuery;
 
     /**
      * Starts the automations query.

@@ -1,13 +1,13 @@
 // (C) 2024 GoodData Corporation
 
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
-import { Automations } from "../../types/commonTypes.js";
 import { AutomationsState } from "./automationsState.js";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { v4 as uuid } from "uuid";
 
 type AutomationsReducer<A extends Action> = CaseReducer<AutomationsState, A>;
 
-const setAutomations: AutomationsReducer<PayloadAction<Automations>> = (state, action) => {
+const setAutomationsCount: AutomationsReducer<PayloadAction<number>> = (state, action) => {
     state.automations = action.payload;
     state.loading = false;
 };
@@ -21,8 +21,13 @@ const setAutomationsError: AutomationsReducer<PayloadAction<GoodDataSdkError>> =
     state.error = action.payload;
 };
 
+const refreshAutomationsFingerprint: AutomationsReducer<PayloadAction> = (state) => {
+    state.fingerprint = uuid();
+};
+
 export const automationsReducers = {
-    setAutomations,
+    setAutomationsCount,
     setAutomationsLoading,
     setAutomationsError,
+    refreshAutomationsFingerprint,
 };
