@@ -5,12 +5,12 @@ import {
     IExportDefinitionMetadataObjectDefinition,
     IAutomationRecipient,
     FilterContextItem,
-    IFilter,
-    isFilterContextItem,
     IExportDefinitionVisualizationObjectSettings,
     isExportDefinitionVisualizationObjectRequestPayload,
     isExportDefinitionDashboardRequestPayload,
     IExportDefinitionVisualizationObjectContent,
+    IInsight,
+    IAutomationMetadataObject,
 } from "@gooddata/sdk-model";
 import parseISO from "date-fns/parseISO/index.js";
 import { getUserTimezone } from "../utils/timezone.js";
@@ -21,6 +21,7 @@ import {
     selectInsightByWidgetRef,
     selectWidgetByRef,
     isCustomWidget,
+    ExtendedDashboardWidget,
 } from "../../../../model/index.js";
 import { Alignment, normalizeTime } from "@gooddata/sdk-ui-kit";
 import { IScheduledEmailDialogProps } from "../../types.js";
@@ -29,13 +30,13 @@ import { toModifiedISOString } from "../../DefaultScheduledEmailManagementDialog
 import { useAttachmentDashboardFilters } from "./useAttachmentDashboardFilters.js";
 import {
     getAutomationDashboardFilters,
+    getAutomationVisualizationFilters,
     isCsvVisualizationAutomation,
     isCsvVisualizationExportDefinition,
     isDashboardAutomation,
     isXlsxVisualizationAutomation,
     isXlsxVisualizationExportDefinition,
 } from "../utils/automationHelpers.js";
-import { isDashboardFilter } from "../../../../types.js";
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../../converters/index.js";
 import { invariant } from "ts-invariant";
 
@@ -49,14 +50,15 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
     const editWidgetRef = editWidgetId ? { identifier: editWidgetId } : undefined;
     const widget = useDashboardSelector(selectWidgetByRef(context?.widgetRef ?? editWidgetRef));
     const insight = useDashboardSelector(selectInsightByWidgetRef(widget?.ref));
-    const widgetTitle = !isCustomWidget(widget) ? widget?.title : widget?.identifier;
     const isWidget = !!widget && !!insight;
 
     const dashboardId = useDashboardSelector(selectDashboardId);
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
+
     const dashboardEditFilters = getAutomationDashboardFilters(editSchedule);
     const { areFiltersChanged, filtersToStore } = useAttachmentDashboardFilters({
         customFilters: dashboardEditFilters,
+        widget,
     });
 
     const [state, setState] = useState<IAutomationMetadataObjectDefinition>(
@@ -65,9 +67,13 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
                 isWidget
                     ? {
                           id: insight.insight.identifier,
-                          title: widgetTitle ?? "",
-                          filters: areFiltersChanged ? filtersToStore : undefined,
-                          widgetId: widget.identifier,
+                          /**
+                           * We always store all filters with widget attachment due to problems with
+                           * construction of AFM definition on BE.
+                           */
+                          filters: filtersToStore,
+                          insight,
+                          widget,
                           dashboardId: dashboardId,
                           webhook: webhooks[0]?.id,
                       }
@@ -173,16 +179,13 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
         invariant(isWidget, "Widget or insight is missing in scheduling dialog context.");
 
         if (selected) {
-            const transformedFilters = filters
-                ? filterContextItemsToDashboardFiltersByWidget(filters, widget)
-                : undefined;
-            const filtersObj = transformedFilters ? { filters: transformedFilters } : {};
+            const filtersObj = filters ? { filters } : {};
             const newExportDefinition = newWidgetExportDefinitionMetadataObjectDefinition({
-                insightId: insight.insight.identifier,
-                widgetTitle: widgetTitle ?? "",
-                widgetId: widget.identifier,
+                insight,
+                widget,
                 dashboardId: dashboardId!,
                 format,
+                editSchedule,
                 ...filtersObj,
             });
 
@@ -294,21 +297,33 @@ function newDashboardExportDefinitionMetadataObjectDefinition({
 }
 
 function newWidgetExportDefinitionMetadataObjectDefinition({
-    insightId,
-    widgetId,
-    widgetTitle,
+    insight,
+    widget,
     dashboardId,
     format,
     filters,
+    editSchedule,
 }: {
-    insightId: string;
-    widgetId: string;
-    widgetTitle: string;
+    insight: IInsight;
+    widget: ExtendedDashboardWidget;
     dashboardId: string;
     format: WidgetAttachmentType;
-    filters?: IFilter[];
+    filters?: FilterContextItem[];
+    editSchedule?: IAutomationMetadataObject | IAutomationMetadataObjectDefinition;
 }): IExportDefinitionMetadataObjectDefinition {
-    const filtersObj = filters ? { filters } : {};
+    const widgetTitle = !isCustomWidget(widget) ? widget?.title : widget?.identifier;
+
+    const transformedFilters = filters
+        ? filterContextItemsToDashboardFiltersByWidget(filters, widget)
+        : undefined;
+    const insightFilters = insight.insight.filters;
+    const newScheduleFilters = [...insightFilters, ...(transformedFilters ?? [])];
+    const existingScheduleFilters = [...(getAutomationVisualizationFilters(editSchedule) ?? [])];
+
+    // in case of editing widget schedule, we never overwrite already stored filters
+    const allFilters = editSchedule ? existingScheduleFilters : newScheduleFilters;
+
+    const filtersObj = allFilters.length > 0 ? { filters: allFilters } : {};
     const settingsObj = format === "XLSX" ? { settings: { mergeHeaders: true } } : {};
 
     return {
@@ -319,8 +334,8 @@ function newWidgetExportDefinitionMetadataObjectDefinition({
             fileName: widgetTitle,
             format: format,
             content: {
-                visualizationObject: insightId,
-                widget: widgetId,
+                visualizationObject: insight.insight.identifier,
+                widget: widget.identifier,
                 dashboard: dashboardId,
                 ...filtersObj,
             },
@@ -331,36 +346,38 @@ function newWidgetExportDefinitionMetadataObjectDefinition({
 
 function newAutomationMetadataObjectDefinition({
     id,
-    title,
     webhook,
-    widgetId,
+    title,
+    insight,
+    widget,
     dashboardId,
     filters,
 }: {
     id: string;
-    title: string;
     webhook: string;
-    widgetId?: string;
+    title?: string;
+    insight?: IInsight;
+    widget?: ExtendedDashboardWidget;
     dashboardId?: string;
-    filters?: FilterContextItem[] | IFilter[];
+    filters?: FilterContextItem[];
 }): IAutomationMetadataObjectDefinition {
     const firstRun = parseISO(new Date().toISOString());
     const normalizedFirstRun = normalizeTime(firstRun, undefined, 60);
     const cron = getDefaultCronExpression(normalizedFirstRun);
-    const exportDefinition = widgetId
-        ? newWidgetExportDefinitionMetadataObjectDefinition({
-              insightId: id,
-              widgetTitle: title,
-              widgetId,
-              dashboardId: dashboardId!,
-              format: "XLSX", // default checked format
-              filters: filters?.filter(isDashboardFilter),
-          })
-        : newDashboardExportDefinitionMetadataObjectDefinition({
-              dashboardId: id,
-              dashboardTitle: title,
-              filters: filters?.filter(isFilterContextItem),
-          });
+    const exportDefinition =
+        widget && insight
+            ? newWidgetExportDefinitionMetadataObjectDefinition({
+                  insight,
+                  widget,
+                  dashboardId: dashboardId!,
+                  format: "XLSX", // default checked format
+                  filters: filters,
+              })
+            : newDashboardExportDefinitionMetadataObjectDefinition({
+                  dashboardId: id,
+                  dashboardTitle: title ?? "",
+                  filters: filters,
+              });
 
     const automation: IAutomationMetadataObjectDefinition = {
         type: "automation",
