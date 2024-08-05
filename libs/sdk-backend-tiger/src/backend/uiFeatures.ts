@@ -99,6 +99,7 @@ export enum TigerFeaturesNames {
     EnableWidgetIdentifiersRollout = "enableWidgetIdentifiersRollout",
     EnableAIFunctions = "enableAIFunctions",
     EnableDrillIntersectionIgnoredAttributes = "enableDrillIntersectionIgnoredAttributes",
+    EnableAlertingRollout = "enableAlertingRollout",
 }
 
 export type ITigerFeatureFlags = {
@@ -163,6 +164,7 @@ export type ITigerFeatureFlags = {
     enableWidgetIdentifiersRollout: typeof FeatureFlagsValues["enableWidgetIdentifiersRollout"][number];
     enableAIFunctions: typeof FeatureFlagsValues["enableAIFunctions"][number];
     enableDrillIntersectionIgnoredAttributes: typeof FeatureFlagsValues["enableDrillIntersectionIgnoredAttributes"][number];
+    enableAlertingRollout: typeof FeatureFlagsValues["enableAlertingRollout"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -227,6 +229,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableWidgetIdentifiersRollout: false,
     enableAIFunctions: false,
     enableDrillIntersectionIgnoredAttributes: false,
+    enableAlertingRollout: false,
 };
 
 export const FeatureFlagsValues = {
@@ -295,4 +298,5 @@ export const FeatureFlagsValues = {
     enableWidgetIdentifiersRollout: [true, false] as const,
     enableAIFunctions: [true, false] as const,
     enableDrillIntersectionIgnoredAttributes: [true, false] as const,
+    enableAlertingRollout: [true, false] as const,
 };
