@@ -919,6 +919,9 @@ export {
     IAutomationUserRecipient,
     isAutomationUserGroupRecipient,
     isAutomationUserRecipient,
+    IAutomationAlert,
+    IAutomationAlertCondition,
+    IAutomationAlertExecutionDefinition,
 } from "./automations/index.js";
 
 export {

@@ -398,6 +398,11 @@ export interface ISettings {
     enableScheduling?: boolean;
 
     /**
+     * Enables alerting of the dashboard widgets.
+     */
+    enableAlerting?: boolean;
+
+    /**
      * Enables rollup (native) totals.
      */
     enableRollupTotals?: boolean;

@@ -762,6 +762,23 @@ export interface IAuditableUsers {
 }
 
 // @alpha (undocumented)
+export interface IAutomationAlert {
+    condition: IAutomationAlertCondition;
+    execution: IAutomationAlertExecutionDefinition;
+}
+
+// @alpha (undocumented)
+export interface IAutomationAlertCondition {
+    left: IMeasure;
+    operator: "LESS_THAN" | "LESS_THAN_OR_EQUALS" | "EQUALS" | "NOT_EQUALS" | "GREATER_THAN" | "GREATER_THAN_OR_EQUALS";
+    right: number;
+    type: "comparison";
+}
+
+// @alpha (undocumented)
+export type IAutomationAlertExecutionDefinition = Pick<IExecutionDefinition, "attributes" | "measures" | "filters">;
+
+// @alpha (undocumented)
 export interface IAutomationMetadataObject extends IAutomationMetadataObjectBase, IMetadataObject, IAuditable {
     // (undocumented)
     type: "automation";
@@ -769,6 +786,7 @@ export interface IAutomationMetadataObject extends IAutomationMetadataObjectBase
 
 // @alpha (undocumented)
 export interface IAutomationMetadataObjectBase {
+    alert?: IAutomationAlert;
     details?: {
         subject?: string;
         message?: string;
@@ -2769,6 +2787,7 @@ export interface ISettings {
     enableAdDescriptionEdit?: boolean;
     enableADMultipleDateFilters?: boolean;
     enableAIFunctions?: boolean;
+    enableAlerting?: boolean;
     enableAlternativeDisplayFormSelection?: boolean;
     enableAnalyticalDashboardPermissions?: boolean;
     // (undocumented)
