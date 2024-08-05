@@ -45,6 +45,7 @@ import {
 } from "@gooddata/sdk-ui-filters";
 import { useCommonDateFilterTitle } from "../../../../_staging/sharedHooks/useCommonDateFilterTitle.js";
 import { useDateFiltersTitles } from "../../../../_staging/sharedHooks/useDateFiltersTitles.js";
+import { ensureAllTimeFilterForExport } from "../../../../_staging/exportUtils/filterUtils.js";
 
 export interface IAttachmentFilterInfo {
     id: string;
@@ -130,7 +131,10 @@ export const useAttachmentDashboardFilters = ({
     const commonDateFilterTitle = useCommonDateFilterTitle(intl);
     const allDateFiltersTitlesObj = useDateFiltersTitles(dateFiltersToDisplay, intl);
 
-    const filtersToDisplayInfo = filtersToDisplay.map((filter) => {
+    // we want to show all time filter in the list of filters even if it is not stored
+    const extendedFiltersToDisplay = ensureAllTimeFilterForExport(filtersToDisplay);
+
+    const filtersToDisplayInfo = extendedFiltersToDisplay.map((filter) => {
         if (isDashboardAttributeFilter(filter)) {
             const displayForm = dfMap.get(filter.attributeFilter.displayForm);
             invariant(displayForm, "Inconsistent state in catalog");
