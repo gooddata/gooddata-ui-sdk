@@ -4,12 +4,18 @@ import { ListItem } from "../types.js";
 import { ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import * as React from "react";
 import { getDateTimeConfig } from "@gooddata/sdk-ui-kit";
-import { FormattedDate, FormattedMessage, FormattedTime } from "react-intl";
+import { defineMessages, FormattedDate, FormattedMessage, FormattedTime } from "react-intl";
 
 type UpdateDateProps = {
     listItem: ListItem<ISemanticSearchResultItem>;
     timezone?: string;
 };
+
+const messages = defineMessages({
+    today: { id: "gs.date.today" },
+    yesterday: { id: "gs.date.yesterday" },
+    at: { id: "gs.date.at" },
+});
 
 export const UpdatedDate = React.memo(function UpdatedDate({
     listItem: { item },
@@ -21,14 +27,14 @@ export const UpdatedDate = React.memo(function UpdatedDate({
 
     const config = getDateTimeConfig(timestamp, { dateTimezone: timezone });
 
-    const relativeDate = config.isToday ? "gs.date.today" : "gs.date.yesterday";
+    const relativeDate = config.isToday ? messages.today.id : messages.yesterday.id;
 
     if (config.isToday || config.isYesterday) {
         return (
             <span>
                 <FormattedMessage id={relativeDate} />
                 &nbsp;
-                <FormattedMessage id="gs.date.at" />
+                <FormattedMessage id={messages.at.id} />
                 &nbsp;
                 <FormattedTime value={config.date} hour="numeric" minute="2-digit" />
             </span>
