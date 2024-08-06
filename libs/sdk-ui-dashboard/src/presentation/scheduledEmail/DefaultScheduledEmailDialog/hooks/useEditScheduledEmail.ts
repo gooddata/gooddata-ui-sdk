@@ -36,8 +36,8 @@ import {
     isDashboardAutomation,
     isXlsxVisualizationAutomation,
     isXlsxVisualizationExportDefinition,
+    transformFilterContextToModelFilters,
 } from "../utils/automationHelpers.js";
-import { filterContextItemsToDashboardFiltersByWidget } from "../../../../converters/index.js";
 import { invariant } from "ts-invariant";
 
 export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
@@ -313,11 +313,9 @@ function newWidgetExportDefinitionMetadataObjectDefinition({
 }): IExportDefinitionMetadataObjectDefinition {
     const widgetTitle = !isCustomWidget(widget) ? widget?.title : widget?.identifier;
 
-    const transformedFilters = filters
-        ? filterContextItemsToDashboardFiltersByWidget(filters, widget)
-        : undefined;
+    const transformedFilters = transformFilterContextToModelFilters(filters, widget);
     const insightFilters = insight.insight.filters;
-    const newScheduleFilters = [...insightFilters, ...(transformedFilters ?? [])];
+    const newScheduleFilters = [...insightFilters, ...transformedFilters];
     const existingScheduleFilters = [...(getAutomationVisualizationFilters(editSchedule) ?? [])];
 
     // in case of editing widget schedule, we never overwrite already stored filters
