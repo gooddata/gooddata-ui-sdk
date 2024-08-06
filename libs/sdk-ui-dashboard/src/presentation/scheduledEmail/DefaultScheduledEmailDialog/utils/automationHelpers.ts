@@ -7,14 +7,19 @@ import {
     IExportDefinitionMetadataObject,
     IExportDefinitionMetadataObjectDefinition,
     IFilter,
+    isAbsoluteDateFilter,
     isExportDefinitionDashboardRequestPayload,
     isExportDefinitionVisualizationObjectRequestPayload,
     isFilter,
     isFilterContextItem,
+    isObjRef,
+    isRelativeDateFilter,
 } from "@gooddata/sdk-model";
 import omit from "lodash/omit.js";
 import isEqual from "lodash/isEqual.js";
 import pick from "lodash/pick.js";
+import { ExtendedDashboardWidget } from "../../../../model/index.js";
+import { filterContextItemsToDashboardFiltersByWidget } from "../../../../converters/index.js";
 
 export const isDashboardAutomation = (
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | undefined,
@@ -140,4 +145,29 @@ export const areAutomationsEqual = (
         isEqual(automationWithoutExportDefinitions, origAutomationWithoutExportDefinitions) &&
         isEqual(automationExportDefinitions, origAutomationExportDefinitions)
     );
+};
+
+export const transformFilterContextToModelFilters = (
+    filters: FilterContextItem[] | undefined,
+    widget: ExtendedDashboardWidget,
+): IFilter[] => {
+    if (!filters) {
+        return [];
+    }
+
+    const transformedFilters = filterContextItemsToDashboardFiltersByWidget(filters, widget);
+
+    /**
+     * When widget has no date dimension available, common date filter gets empty date data set.
+     * In this case, we rather filter it out and keep all other filters.
+     */
+    return transformedFilters.filter((filter) => {
+        if (isRelativeDateFilter(filter)) {
+            return isObjRef(filter.relativeDateFilter.dataSet);
+        } else if (isAbsoluteDateFilter(filter)) {
+            return isObjRef(filter.absoluteDateFilter.dataSet);
+        }
+
+        return filter;
+    });
 };
