@@ -50,6 +50,8 @@ export const DashboardParametersSection: React.FC<IDashboardParametersSectionPro
 
                 const filterSecondaryIdentifier = secondaryDf?.id;
 
+                const areDfsDifferent = filterIdentifier !== filterSecondaryIdentifier;
+
                 return (
                     <>
                         {df ? (
@@ -63,7 +65,7 @@ export const DashboardParametersSection: React.FC<IDashboardParametersSectionPro
                                 isFilter
                             />
                         ) : null}
-                        {enableDuplicatedLabelValuesInAttributeFilter && secondaryDf ? (
+                        {enableDuplicatedLabelValuesInAttributeFilter && secondaryDf && areDfsDifferent ? (
                             <DisplayFormParam
                                 key={`df_${index}_secondary`}
                                 item={secondaryDf}
