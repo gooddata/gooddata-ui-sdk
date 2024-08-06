@@ -134,7 +134,7 @@ export class AutomationsQuery implements IAutomationsQuery {
         }
 
         if (this.dashboard) {
-            allFilters.push(`exportDefinitions.analyticalDashboard.id=in=(${this.dashboard})`);
+            allFilters.push(`analyticalDashboard.id=='${this.dashboard}'`);
         }
 
         return allFilters.length > 0 ? { filter: allFilters.join(";") } : {};

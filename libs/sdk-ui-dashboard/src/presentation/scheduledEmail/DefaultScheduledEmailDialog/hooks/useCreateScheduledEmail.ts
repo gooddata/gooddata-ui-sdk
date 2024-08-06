@@ -1,33 +1,22 @@
 // (C) 2020-2024 GoodData Corporation
 import { useCallback } from "react";
-import {
-    FilterContextItem,
-    IAutomationMetadataObject,
-    IAutomationMetadataObjectDefinition,
-} from "@gooddata/sdk-model";
+import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 import {
     CommandProcessingStatus,
     createScheduledEmail,
     useDashboardCommandProcessing,
 } from "../../../../model/index.js";
-import { ensureAllTimeFilterForExport } from "../../../../_staging/exportUtils/filterUtils.js";
 
 export const useCreateScheduledEmail = ({
     onBeforeRun,
     onSuccess,
     onError,
 }: {
-    onBeforeRun?: (
-        scheduledEmailToCreate: IAutomationMetadataObjectDefinition,
-        filters?: FilterContextItem[],
-    ) => void;
+    onBeforeRun?: (scheduledEmailToCreate: IAutomationMetadataObjectDefinition) => void;
     onSuccess?: (scheduledEmail: IAutomationMetadataObject) => void;
     onError?: (error: any) => void;
 } = {}): {
-    create: (
-        scheduledEmailToCreate: IAutomationMetadataObjectDefinition,
-        filters?: FilterContextItem[],
-    ) => void;
+    create: (scheduledEmailToCreate: IAutomationMetadataObjectDefinition) => void;
     creationStatus?: CommandProcessingStatus;
 } => {
     const scheduledEmailCommandProcessing = useDashboardCommandProcessing({
@@ -41,14 +30,13 @@ export const useCreateScheduledEmail = ({
             onSuccess?.(event.payload.scheduledEmail);
         },
         onBeforeRun: (cmd) => {
-            onBeforeRun?.(cmd.payload.scheduledEmail, cmd.payload.filters);
+            onBeforeRun?.(cmd.payload.scheduledEmail);
         },
     });
 
     const create = useCallback(
-        (scheduledEmailToCreate: IAutomationMetadataObjectDefinition, filters?: FilterContextItem[]) => {
-            const sanitizedFilters = filters && ensureAllTimeFilterForExport(filters);
-            scheduledEmailCommandProcessing.run(scheduledEmailToCreate, sanitizedFilters);
+        (scheduledEmailToCreate: IAutomationMetadataObjectDefinition) => {
+            scheduledEmailCommandProcessing.run(scheduledEmailToCreate);
         },
         [scheduledEmailCommandProcessing],
     );

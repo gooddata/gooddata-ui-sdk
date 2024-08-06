@@ -787,6 +787,7 @@ export interface IAutomationMetadataObject extends IAutomationMetadataObjectBase
 // @alpha (undocumented)
 export interface IAutomationMetadataObjectBase {
     alert?: IAutomationAlert;
+    dashboard?: Identifier;
     details?: {
         subject?: string;
         message?: string;
