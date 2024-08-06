@@ -5,8 +5,6 @@ import {
     ILiveFeatures,
     FeatureContext,
     DeclarativeWorkspace,
-    ApiEntitlement,
-    ApiEntitlementNameEnum,
 } from "@gooddata/api-client-tiger";
 import { LRUCache } from "lru-cache";
 import { TigerAuthenticatedCallGuard } from "../../types/index.js";
@@ -77,10 +75,8 @@ function featuresAreStatic(item: any): item is IStaticFeatures {
 export function pickContext(
     attributes: Partial<DeclarativeWorkspace> | undefined,
     organizationId: string | undefined,
-    entitlements: ApiEntitlement[],
 ): Partial<FeatureContext> {
     const context: Partial<FeatureContext> = {};
-    const tier = getOrganizationTier(entitlements);
 
     if (attributes?.earlyAccessValues !== undefined) {
         context.earlyAccessValues = attributes.earlyAccessValues;
@@ -89,18 +85,5 @@ export function pickContext(
     if (organizationId !== undefined) {
         context.organizationId = organizationId;
     }
-
-    if (tier !== undefined) {
-        context.tier = tier;
-    }
-
     return context;
 }
-
-export const getOrganizationTier = (entitlements: ApiEntitlement[]) => {
-    const tierEntitlement = entitlements.find(
-        (entitlement) => entitlement.name === ApiEntitlementNameEnum.TIER,
-    );
-
-    return tierEntitlement?.value;
-};

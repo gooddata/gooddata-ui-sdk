@@ -1,20 +1,13 @@
 // (C) 2020-2024 GoodData Corporation
 
 import axios from "axios";
-import { ApiEntitlement, ILiveFeatures } from "@gooddata/api-client-tiger";
+import { ILiveFeatures } from "@gooddata/api-client-tiger";
 import { getFeatureHubFeatures, FeatureHubResponse } from "../hub.js";
 import { FeatureDef } from "../feature.js";
 import { pickContext } from "../index.js";
 import { describe, expect, it, vi } from "vitest";
 
 const axiosGetSpy = vi.spyOn(axios, "get");
-
-const entitlements: ApiEntitlement[] = [
-    {
-        name: "Tier",
-        value: "TRIAL",
-    },
-];
 
 describe("live features", () => {
     // TODO:
@@ -69,7 +62,7 @@ describe("live features", () => {
 
         await getFeatureHubFeatures(
             createFeatures(),
-            pickContext({ earlyAccessValues: ["omega"] }, "test-org", []),
+            pickContext({ earlyAccessValues: ["omega"] }, "test-org"),
         );
         expect(axiosGetSpy).toHaveBeenCalledWith("/features", {
             baseURL: "/",
@@ -108,13 +101,13 @@ describe("live features", () => {
 
         await getFeatureHubFeatures(
             createFeatures(["beta"], "org"),
-            pickContext({ earlyAccessValues: ["omega"] }, "test-org", entitlements),
+            pickContext({ earlyAccessValues: ["omega"] }, "test-org"),
         );
         expect(axiosGetSpy).toHaveBeenCalledWith("/features", {
             baseURL: "/",
             headers: {
                 "Content-type": "application/json",
-                "X-FeatureHub": "organizationId=test-org,earlyAccess=omega,tier=TRIAL",
+                "X-FeatureHub": "organizationId=test-org,earlyAccess=omega",
                 "if-none-match": expect.anything(),
             },
             method: "GET",

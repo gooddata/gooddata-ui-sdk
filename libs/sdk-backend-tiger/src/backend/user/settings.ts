@@ -21,7 +21,7 @@ export class TigerUserSettingsService
     public async getSettings(): Promise<IUserSettings> {
         return this.authCall(async (client) => {
             const profile = await client.profile.getCurrent();
-            const context = pickContext(undefined, profile.organizationId, profile.entitlements);
+            const context = pickContext(undefined, profile.organizationId);
             const features = await this.tigerFeatureService.getFeatures(profile, context);
             const { data } = await client.actions.resolveAllSettingsWithoutWorkspace();
             const resolvedSettings = data.reduce(
