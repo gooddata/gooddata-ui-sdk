@@ -7,7 +7,7 @@ import {
 import { ISettings } from "@gooddata/sdk-model";
 
 import { TigerAuthenticatedCallGuard, TigerSettingsType } from "../../../types/index.js";
-import { getOrganizationTier, TigerFeaturesService } from "../../features/index.js";
+import { TigerFeaturesService } from "../../features/index.js";
 import { DefaultUiSettings, DefaultUserSettings } from "../../uiSettings.js";
 import { unwrapSettingContent } from "../../../convertors/fromBackend/SettingsConverter.js";
 import { TigerSettingsService, mapTypeToKey } from "../../settings/index.js";
@@ -166,12 +166,6 @@ export function getSettingsForCurrentUser(
         const liveFeaturesEarlyAccess = isLiveFeatures(profile.features)
             ? profile.features?.live?.context?.earlyAccessValues ?? []
             : [];
-
-        const tier = getOrganizationTier(profile.entitlements);
-
-        if (tier) {
-            context.tier = tier;
-        }
 
         if (profile?.organizationId) {
             context.organizationId = profile.organizationId;

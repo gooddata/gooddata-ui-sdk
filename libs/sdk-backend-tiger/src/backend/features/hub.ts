@@ -100,10 +100,6 @@ async function getFeatureHubData(
                 .join(";")}`,
         );
     }
-    if (context.tier) {
-        featureHubFlags.push(`tier=${encodeURIComponent(context.tier)}`);
-    }
-
     return axios.get("/features", {
         method: "GET",
         baseURL: host,
