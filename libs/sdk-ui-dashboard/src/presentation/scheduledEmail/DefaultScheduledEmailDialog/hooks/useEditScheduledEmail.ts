@@ -66,22 +66,21 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
             newAutomationMetadataObjectDefinition(
                 isWidget
                     ? {
-                          id: insight.insight.identifier,
+                          dashboardId: dashboardId!,
+                          webhook: webhooks[0]?.id,
+                          insight,
+                          widget,
                           /**
                            * We always store all filters with widget attachment due to problems with
                            * construction of AFM definition on BE.
                            */
                           filters: filtersToStore,
-                          insight,
-                          widget,
-                          dashboardId: dashboardId,
-                          webhook: webhooks[0]?.id,
                       }
                     : {
-                          id: dashboardId!,
+                          dashboardId: dashboardId!,
+                          webhook: webhooks[0]?.id,
                           title: dashboardTitle,
                           filters: areFiltersChanged ? filtersToStore : undefined,
-                          webhook: webhooks[0]?.id,
                       },
             ),
     );
@@ -345,20 +344,18 @@ function newWidgetExportDefinitionMetadataObjectDefinition({
 }
 
 function newAutomationMetadataObjectDefinition({
-    id,
+    dashboardId,
     webhook,
     title,
     insight,
     widget,
-    dashboardId,
     filters,
 }: {
-    id: string;
+    dashboardId: string;
     webhook: string;
     title?: string;
     insight?: IInsight;
     widget?: ExtendedDashboardWidget;
-    dashboardId?: string;
     filters?: FilterContextItem[];
 }): IAutomationMetadataObjectDefinition {
     const firstRun = parseISO(new Date().toISOString());
@@ -369,12 +366,12 @@ function newAutomationMetadataObjectDefinition({
             ? newWidgetExportDefinitionMetadataObjectDefinition({
                   insight,
                   widget,
-                  dashboardId: dashboardId!,
+                  dashboardId,
                   format: "XLSX", // default checked format
                   filters: filters,
               })
             : newDashboardExportDefinitionMetadataObjectDefinition({
-                  dashboardId: id,
+                  dashboardId,
                   dashboardTitle: title ?? "",
                   filters: filters,
               });
@@ -396,6 +393,7 @@ function newAutomationMetadataObjectDefinition({
         exportDefinitions: [{ ...exportDefinition }],
         recipients: [],
         webhook,
+        dashboard: dashboardId,
     };
 
     return automation;

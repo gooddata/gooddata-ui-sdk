@@ -8,6 +8,7 @@ import {
 } from "../exportDefinitions/index.js";
 import { IExecutionDefinition } from "../execution/executionDefinition/index.js";
 import { IMeasure } from "../execution/measure/index.js";
+import { Identifier } from "../objRef/index.js";
 
 /**
  * @alpha
@@ -55,6 +56,11 @@ export interface IAutomationMetadataObjectBase {
          */
         message?: string;
     };
+
+    /**
+     * Dashboard that automation is related to.
+     */
+    dashboard?: Identifier;
 }
 
 /**
