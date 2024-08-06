@@ -126,6 +126,7 @@ import {
     GenAISemanticSearchType,
     IAutomationMetadataObjectDefinition,
     IAutomationMetadataObject,
+    ISemanticSearchRelationship,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
 import isEmpty from "lodash/isEmpty.js";
@@ -1159,7 +1160,12 @@ export class DummySemanticSearchQueryBuilder implements ISemanticSearchQuery {
                 type: type as GenAISemanticSearchType,
                 title: `${type} title`,
                 description: this.question,
+                tags: [] as string[],
+                createdAt: "2023-08-03T13:17:26.923537",
+                modifiedAt: "2023-08-03T13:17:26.923537",
+                visualizationUrl: type === "visualization" ? "local:line" : undefined,
             })),
+            relationships: [] as ISemanticSearchRelationship[],
         };
     }
 }

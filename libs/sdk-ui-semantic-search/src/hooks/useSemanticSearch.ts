@@ -3,12 +3,11 @@
 import { useState, useEffect } from "react";
 import {
     ISemanticSearchResultItem,
-    ISemanticSearchResultItemWithUrl,
     GenAISemanticSearchType,
+    ISemanticSearchRelationship,
 } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { getUIPath } from "../utils/getUIPath.js";
 
 /**
  * The result of the semantic search hook.
@@ -30,7 +29,8 @@ export type SemanticSearchInputResult = {
     /**
      * The search results.
      */
-    searchResults: ISemanticSearchResultItemWithUrl[];
+    searchResults: ISemanticSearchResultItem[];
+    relationships: ISemanticSearchRelationship[];
 };
 
 /**
@@ -40,6 +40,7 @@ const DEFAULT_STATE: SemanticSearchInputResult = {
     searchStatus: "idle",
     searchError: "",
     searchResults: [],
+    relationships: [],
 };
 
 /**
@@ -133,7 +134,8 @@ export const useSemanticSearch = ({
                 setState({
                     searchStatus: "success",
                     searchError: "",
-                    searchResults: res.results.map(withUrl(effectiveWorkspace)),
+                    searchResults: res.results,
+                    relationships: res.relationships,
                 });
             })
             .catch((e) => {
@@ -145,6 +147,7 @@ export const useSemanticSearch = ({
                     searchStatus: "error",
                     searchError: errorMessage(e),
                     searchResults: [],
+                    relationships: [],
                 });
             });
 
@@ -165,15 +168,3 @@ const errorMessage = (e: unknown) => {
     }
     return String(e);
 };
-
-/**
- * Enrich the result item with UI URL.
- */
-const withUrl =
-    (workspaceId: string) =>
-    (item: ISemanticSearchResultItem): ISemanticSearchResultItemWithUrl => {
-        return {
-            ...item,
-            url: getUIPath(item.type, item.id, workspaceId),
-        };
-    };

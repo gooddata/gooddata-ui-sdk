@@ -2759,16 +2759,27 @@ export function isDrillToInsight(obj: unknown): obj is IDrillToInsight;
 export function isDrillToLegacyDashboard(obj: unknown): obj is IDrillToLegacyDashboard;
 
 // @alpha
-export interface ISemanticSearchResultItem {
-    description: string;
-    id: string;
-    title: string;
-    type: GenAISemanticSearchType;
-}
+export type ISemanticSearchRelationship = {
+    sourceWorkspaceId: string;
+    sourceObjectId: string;
+    sourceObjectType: GenAISemanticSearchType;
+    sourceObjectTitle: string;
+    targetWorkspaceId: string;
+    targetObjectId: string;
+    targetObjectType: GenAISemanticSearchType;
+    targetObjectTitle: string;
+};
 
 // @alpha
-export interface ISemanticSearchResultItemWithUrl extends ISemanticSearchResultItem {
-    url: string;
+export interface ISemanticSearchResultItem {
+    createdAt: string;
+    description: string;
+    id: string;
+    modifiedAt?: string;
+    tags: string[];
+    title: string;
+    type: GenAISemanticSearchType;
+    visualizationUrl?: string;
 }
 
 // @public

@@ -4,16 +4,25 @@ import cx from "classnames";
 import { FormattedMessage, injectIntl } from "react-intl";
 import { Button, Overlay } from "@gooddata/sdk-ui-kit";
 import { SearchOverlay, SearchOverlayProps } from "./SearchOverlay.js";
-import { ISemanticSearchResultItemWithUrl } from "@gooddata/sdk-model";
+import { ISemanticSearchResultItem } from "@gooddata/sdk-model";
 
 const ALIGN_POINTS = [{ align: "br tr" }];
 
-export type HeaderSearchButtonProps = SearchOverlayProps;
+export type HeaderSearchButtonProps = SearchOverlayProps & {
+    /**
+     * Callback to be called when an item is selected.
+     * @param item - the selected item
+     * @param e - the event that triggered the selection
+     * @param itemUrl - the URL of the selected item, if available
+     */
+    onSelect: (item: ISemanticSearchResultItem, e: MouseEvent | KeyboardEvent, itemUrl?: string) => void;
+};
 
 export const HeaderSearchButtonCore: React.FC<HeaderSearchButtonProps> = ({ onSelect, ...overlayProps }) => {
     const [isOpen, setIsOpen] = React.useState(false);
     const classNames = cx("gd-header-measure", "gd-header-button", "gd-header-search", { "is-open": isOpen });
 
+    // Handle Cmd+K and Ctrl+K shortcuts
     React.useEffect(() => {
         const shortcutHandler = (event: KeyboardEvent) => {
             if (event.key === "k" && (event.ctrlKey || event.metaKey)) {
@@ -30,10 +39,14 @@ export const HeaderSearchButtonCore: React.FC<HeaderSearchButtonProps> = ({ onSe
         };
     }, [isOpen]);
 
-    const handleSelect = (item: ISemanticSearchResultItemWithUrl) => {
-        onSelect(item);
-        setIsOpen(false);
-    };
+    // Inject dialog closing into a callback
+    const handleSelect = React.useCallback(
+        (item: ISemanticSearchResultItem, e: MouseEvent | KeyboardEvent, url?: string) => {
+            setIsOpen(false);
+            return onSelect(item, e, url);
+        },
+        [onSelect, setIsOpen],
+    );
 
     return (
         <Button

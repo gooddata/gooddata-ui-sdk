@@ -7,7 +7,10 @@ import * as React from "react";
  * calls the onSelect callback when Enter is pressed.
  * @internal
  */
-export const useListSelector = <T>(items: Array<T>, onSelect: (item: T) => void) => {
+export const useListSelector = <T>(
+    items: Array<T>,
+    onSelect: (item: T, e: MouseEvent | KeyboardEvent) => void,
+) => {
     const [selected, setSelected] = React.useState<number>(0);
     React.useEffect(() => {
         setSelected(0);
@@ -25,9 +28,6 @@ export const useListSelector = <T>(items: Array<T>, onSelect: (item: T) => void)
 
             const setIndex = (index: number) => setSelected(Math.max(Math.min(index, items.length - 1), 0));
 
-            event.preventDefault();
-            event.stopImmediatePropagation();
-
             switch (event.key) {
                 case "ArrowDown":
                     setIndex(selected + 1);
@@ -36,8 +36,11 @@ export const useListSelector = <T>(items: Array<T>, onSelect: (item: T) => void)
                     setIndex(selected - 1);
                     break;
                 case "Enter":
-                    onSelect(items[selected]);
+                    onSelect(items[selected], event);
             }
+
+            event.stopImmediatePropagation();
+            event.preventDefault();
         };
 
         // Listen to keyboard events while the component is mounted

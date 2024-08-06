@@ -1,14 +1,15 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React, { Component, createRef } from "react";
 import cx from "classnames";
 import { injectIntl, WrappedComponentProps } from "react-intl";
 
 import { stringUtils } from "@gooddata/util";
 
-import { InsightListItemDate, getDateTimeConfig } from "./InsightListItemDate.js";
+import { InsightListItemDate } from "./InsightListItemDate.js";
 import { Button } from "../Button/index.js";
 import { ShortenedText } from "../ShortenedText/index.js";
 import { DescriptionPanel, DESCRIPTION_PANEL_ARROW_OFFSETS } from "../DescriptionPanel/index.js";
+import { getDateTimeConfig } from "../utils/dateTimeConfig.js";
 
 const VISUALIZATION_TYPE_UNKNOWN = "unknown";
 const WIDGET_TYPE_KPI = "kpi";

@@ -21,17 +21,22 @@ export interface ISemanticSearchResultItem {
      * The description of the found metadata object
      */
     description: string;
-}
-
-/**
- * A single search result returned by semantic search, enriched with item URL.
- * @alpha
- */
-export interface ISemanticSearchResultItemWithUrl extends ISemanticSearchResultItem {
     /**
-     * The UI URL of the found metadata object, i.e. deep link in KD, AD etc.
+     * The tags of the found metadata object
      */
-    url: string;
+    tags: string[];
+    /**
+     * The creation date of the found metadata object
+     */
+    createdAt: string;
+    /**
+     * The last modification date of the found metadata object
+     */
+    modifiedAt?: string;
+    /**
+     * Represents the type of chart for visualization objects
+     */
+    visualizationUrl?: string;
 }
 
 /**
@@ -47,3 +52,18 @@ export type GenAISemanticSearchType =
     | "metric"
     | "visualization"
     | "dashboard";
+
+/**
+ * Reference between two metadata objects.
+ * @alpha
+ */
+export type ISemanticSearchRelationship = {
+    sourceWorkspaceId: string;
+    sourceObjectId: string;
+    sourceObjectType: GenAISemanticSearchType;
+    sourceObjectTitle: string;
+    targetWorkspaceId: string;
+    targetObjectId: string;
+    targetObjectType: GenAISemanticSearchType;
+    targetObjectTitle: string;
+};

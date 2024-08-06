@@ -90,6 +90,7 @@ import { IScheduledMail } from '@gooddata/sdk-model';
 import { IScheduledMailDefinition } from '@gooddata/sdk-model';
 import { ISecuritySettingsService } from '@gooddata/sdk-backend-spi';
 import { ISemanticSearchQuery } from '@gooddata/sdk-backend-spi';
+import { ISemanticSearchRelationship } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
@@ -644,7 +645,12 @@ export class DummySemanticSearchQueryBuilder implements ISemanticSearchQuery {
             type: GenAISemanticSearchType;
             title: string;
             description: string;
+            tags: string[];
+            createdAt: string;
+            modifiedAt: string;
+            visualizationUrl: string | undefined;
         }[];
+        relationships: ISemanticSearchRelationship[];
     }>;
     // (undocumented)
     question: string;

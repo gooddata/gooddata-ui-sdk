@@ -1,26 +1,20 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React from "react";
-import toDate from "date-fns-tz/toDate";
-import subDays from "date-fns/subDays/index.js";
-import isSameDay from "date-fns/isSameDay/index.js";
-import isSameYear from "date-fns/isSameYear/index.js";
 import { FormattedMessage, FormattedTime, FormattedDate } from "react-intl";
+import { IDateConfig } from "../utils/dateTimeConfig.js";
 
 /**
+ * Keep the type for backward compatibility
  * @internal
+ * @deprecated use IDateConfig from sdk-ui-kit instead
  */
-export interface IInsightListItemDateConfig {
-    isCurrentYear: boolean;
-    isToday: boolean;
-    isYesterday: boolean;
-    date: Date;
-}
+export type IInsightListItemDateConfig = IDateConfig;
 
 /**
  * @internal
  */
 export interface IInsightListItemDateProps {
-    config: IInsightListItemDateConfig;
+    config: IDateConfig;
 }
 
 /**
@@ -45,43 +39,3 @@ export const InsightListItemDate: React.FC<IInsightListItemDateProps> = ({ confi
 
     return <FormattedDate value={config.date} format="shortWithYear" />;
 };
-
-export const META_DATA_TIMEZONE = "Europe/Prague";
-
-/**
- * @internal
- */
-export interface IDateTimeConfigOptions {
-    dateTimezone?: string;
-    now?: Date;
-}
-
-/**
- * Build date time config for InsightListItemDate component.
- *
- * @param date - string ISO date
- * @param options - optional options object
- * @returns date time config
- *
- * @internal
- */
-export function getDateTimeConfig(
-    date: string,
-    options: IDateTimeConfigOptions = {},
-): IInsightListItemDateConfig {
-    const { dateTimezone = META_DATA_TIMEZONE, now = new Date() } = options;
-
-    const dateInLocalTimezone = toDate(date, { timeZone: dateTimezone });
-    const yesterday = subDays(now, 1);
-
-    const isToday = isSameDay(dateInLocalTimezone, now);
-    const isYesterday = isSameDay(dateInLocalTimezone, yesterday);
-    const isCurrentYear = isSameYear(dateInLocalTimezone, now);
-
-    return {
-        date: dateInLocalTimezone,
-        isToday,
-        isYesterday,
-        isCurrentYear,
-    };
-}

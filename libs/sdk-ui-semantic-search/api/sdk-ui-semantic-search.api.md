@@ -6,8 +6,8 @@
 
 import { GenAISemanticSearchType } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import { ISemanticSearchRelationship } from '@gooddata/sdk-model';
 import { ISemanticSearchResultItem } from '@gooddata/sdk-model';
-import { ISemanticSearchResultItemWithUrl } from '@gooddata/sdk-model';
 import * as React_2 from 'react';
 
 // @alpha
@@ -40,7 +40,8 @@ export type SemanticSearchHookInput = {
 export type SemanticSearchInputResult = {
     searchStatus: "idle" | "loading" | "error" | "success";
     searchError: string;
-    searchResults: ISemanticSearchResultItemWithUrl[];
+    searchResults: ISemanticSearchResultItem[];
+    relationships: ISemanticSearchRelationship[];
 };
 
 // @alpha
@@ -49,7 +50,7 @@ export type SemanticSearchProps = SemanticSearchCoreProps & {
 };
 
 // @internal
-export const useListSelector: <T>(items: T[], onSelect: (item: T) => void) => [T, (item: T) => void];
+export const useListSelector: <T>(items: T[], onSelect: (item: T, e: MouseEvent | KeyboardEvent) => void) => [T, (item: T) => void];
 
 // @alpha
 export const useSemanticSearch: ({ searchTerm, objectTypes, deepSearch, limit, backend, workspace, }: SemanticSearchHookInput) => SemanticSearchInputResult;

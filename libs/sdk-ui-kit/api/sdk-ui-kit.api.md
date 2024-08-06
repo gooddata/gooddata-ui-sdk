@@ -626,7 +626,7 @@ export const getColorsPreviewFromColorPalette: (colorPalette: IColorPalette) => 
 export const getColorsPreviewFromTheme: (theme: ITheme) => string[];
 
 // @internal
-export function getDateTimeConfig(date: string, options?: IDateTimeConfigOptions): IInsightListItemDateConfig;
+export function getDateTimeConfig(date: string, options?: IDateTimeConfigOptions): IDateConfig;
 
 // @internal (undocumented)
 export const getDefaultEmbedTypeOptions: (embedType: EmbedType) => EmbedOptionsType;
@@ -1220,6 +1220,18 @@ export interface ICustomizableCheckmarkProps {
     height?: number;
     // (undocumented)
     width?: number;
+}
+
+// @internal (undocumented)
+export interface IDateConfig {
+    // (undocumented)
+    date: Date;
+    // (undocumented)
+    isCurrentYear: boolean;
+    // (undocumented)
+    isToday: boolean;
+    // (undocumented)
+    isYesterday: boolean;
 }
 
 // @internal (undocumented)
@@ -2129,22 +2141,13 @@ export interface IInsightIconProps {
     visualizationUrl?: string;
 }
 
-// @internal (undocumented)
-export interface IInsightListItemDateConfig {
-    // (undocumented)
-    date: Date;
-    // (undocumented)
-    isCurrentYear: boolean;
-    // (undocumented)
-    isToday: boolean;
-    // (undocumented)
-    isYesterday: boolean;
-}
+// @internal @deprecated
+export type IInsightListItemDateConfig = IDateConfig;
 
 // @internal (undocumented)
 export interface IInsightListItemDateProps {
     // (undocumented)
-    config: IInsightListItemDateConfig;
+    config: IDateConfig;
 }
 
 // @internal (undocumented)
@@ -4334,6 +4337,9 @@ export const Messages: React_2.FC<IMessagesProps>;
 export type MessageType = "success" | "progress" | "error" | "warning";
 
 // @internal (undocumented)
+export const META_DATA_TIMEZONE = "Europe/Prague";
+
+// @internal (undocumented)
 export const MetadataList: React_2.FC<IMetadataListProps>;
 
 // @internal (undocumented)
@@ -4779,7 +4785,8 @@ T,
 /**
 * The debounced value.
 */
-T
+T,
+(value: T) => void
 ];
 
 // @internal (undocumented)

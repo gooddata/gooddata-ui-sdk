@@ -29,6 +29,7 @@ describe("useSemanticSearch hook", () => {
             searchStatus: "loading",
             searchResults: [],
             searchError: "",
+            relationships: [],
         });
 
         await act(() => vi.advanceTimersByTimeAsync(150));
@@ -56,6 +57,7 @@ describe("useSemanticSearch hook", () => {
             searchStatus: "loading",
             searchResults: [],
             searchError: "",
+            relationships: [],
         });
 
         // Simulate user entering a different search query before the first request is completed
@@ -69,6 +71,7 @@ describe("useSemanticSearch hook", () => {
             searchStatus: "loading",
             searchResults: [],
             searchError: "",
+            relationships: [],
         });
 
         // Let the second request complete

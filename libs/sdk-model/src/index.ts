@@ -926,6 +926,6 @@ export {
 
 export {
     ISemanticSearchResultItem,
-    ISemanticSearchResultItemWithUrl,
     GenAISemanticSearchType,
+    ISemanticSearchRelationship,
 } from "./genAI/index.js";
