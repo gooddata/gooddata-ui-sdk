@@ -290,6 +290,17 @@
                 },
                 "description": "Base Structure for feature flags"
             },
+            "HeapService": {
+                "required": ["appId"],
+                "type": "object",
+                "properties": {
+                    "appId": {
+                        "type": "string",
+                        "description": "Heap app ID."
+                    }
+                },
+                "description": "Heap service."
+            },
             "LiveFeatureFlagConfiguration": {
                 "required": ["host", "key"],
                 "type": "object",
@@ -524,6 +535,9 @@
                     },
                     "openTelemetry": {
                         "$ref": "#/components/schemas/OpenTelemetryService"
+                    },
+                    "heap": {
+                        "$ref": "#/components/schemas/HeapService"
                     }
                 },
                 "description": "Available telemetry services."

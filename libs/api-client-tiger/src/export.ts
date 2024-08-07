@@ -1,11 +1,17 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { AxiosInstance } from "axios";
 import {
     ActionsApi,
     ActionsApiInterface,
-    ActionsApiCreateTabularExportRequest,
-    ActionsApiGetTabularExportRequest,
     TabularExportRequest,
+    TabularExportRequestFormatEnum,
+    Settings,
+    CustomOverride,
+    CustomLabel,
+    CustomMetric,
+    VisualExportRequest,
+    PdfTableStyle,
+    PdfTableStyleProperty,
 } from "./generated/export-json-api/index.js";
 
 export const tigerExportClientFactory = (axios: AxiosInstance): ActionsApiInterface =>
@@ -13,7 +19,13 @@ export const tigerExportClientFactory = (axios: AxiosInstance): ActionsApiInterf
 
 export {
     ActionsApiInterface as ExportActionsApiInterface,
-    ActionsApiCreateTabularExportRequest,
-    TabularExportRequest,
-    ActionsApiGetTabularExportRequest,
+    TabularExportRequest as TabularExportActionsRequest,
+    VisualExportRequest as VisualExportActionsRequest,
+    TabularExportRequestFormatEnum as TabularExportActionsRequestFormatEnum,
+    Settings as ExportActionsSettings,
+    CustomOverride as ExportActionsCustomOverride,
+    CustomLabel as ExportActionsCustomLabel,
+    CustomMetric as ExportActionsCustomMetric,
+    PdfTableStyle as ExportActionsPdfTableStyle,
+    PdfTableStyleProperty as ExportActionsPdfTableStyleProperty,
 };

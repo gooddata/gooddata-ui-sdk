@@ -37,9 +37,15 @@ import {
 import {
     tigerExportClientFactory,
     ExportActionsApiInterface,
-    ActionsApiCreateTabularExportRequest,
-    TabularExportRequest,
-    ActionsApiGetTabularExportRequest,
+    VisualExportActionsRequest,
+    ExportActionsCustomMetric,
+    ExportActionsCustomLabel,
+    TabularExportActionsRequestFormatEnum,
+    ExportActionsSettings,
+    ExportActionsPdfTableStyle,
+    ExportActionsPdfTableStyleProperty,
+    ExportActionsCustomOverride,
+    TabularExportActionsRequest,
 } from "./export.js";
 import {
     ScanModelConfiguration,
@@ -92,10 +98,16 @@ export {
     ScanModelRequestArgs,
     ScanModelActionsApiInterface,
     ExportActionsApiInterface,
-    ActionsApiCreateTabularExportRequest,
-    TabularExportRequest,
-    ActionsApiGetTabularExportRequest,
+    VisualExportActionsRequest,
+    ExportActionsCustomMetric,
+    ExportActionsCustomLabel,
+    TabularExportActionsRequestFormatEnum,
+    ExportActionsSettings,
+    ExportActionsPdfTableStyle,
+    ExportActionsCustomOverride,
+    TabularExportActionsRequest,
     ResultActionsApiInterface,
+    ExportActionsPdfTableStyleProperty,
 };
 
 export interface ITigerClient {

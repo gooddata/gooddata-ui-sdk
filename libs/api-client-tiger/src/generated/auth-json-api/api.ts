@@ -1,3 +1,5 @@
+// (C) 2024 GoodData Corporation
+
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -109,6 +111,19 @@ export interface Features {
      * @memberof Features
      */
     context: FeatureFlagsContext;
+}
+/**
+ * Heap service.
+ * @export
+ * @interface HeapService
+ */
+export interface HeapService {
+    /**
+     * Heap app ID.
+     * @type {string}
+     * @memberof HeapService
+     */
+    appId: string;
 }
 /**
  *
@@ -400,6 +415,12 @@ export interface TelemetryServices {
      * @memberof TelemetryServices
      */
     openTelemetry?: OpenTelemetryService;
+    /**
+     *
+     * @type {HeapService}
+     * @memberof TelemetryServices
+     */
+    heap?: HeapService;
 }
 
 /**
