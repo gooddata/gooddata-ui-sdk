@@ -3,7 +3,7 @@ import * as React from "react";
 import { FormattedMessage, WrappedComponentProps } from "react-intl";
 import { GenAISemanticSearchType, ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { Input, LoadingMask, useDebouncedState } from "@gooddata/sdk-ui-kit";
+import { Input, LoadingMask, Message, useDebouncedState } from "@gooddata/sdk-ui-kit";
 import { useWorkspaceStrict, useLocalStorage } from "@gooddata/sdk-ui";
 import { useSemanticSearch } from "../hooks/index.js";
 import { ListItem } from "../types.js";
@@ -179,7 +179,10 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({
                     case "error":
                         return (
                             <div className="gd-semantic-search__overlay-error">
-                                <FormattedMessage id="semantic-search.error" />
+                                <Message type="error">
+                                    <FormattedMessage tagName="strong" id="semantic-search.error.title" />{" "}
+                                    <FormattedMessage id="semantic-search.error.text" />
+                                </Message>
                             </div>
                         );
                     case "success":

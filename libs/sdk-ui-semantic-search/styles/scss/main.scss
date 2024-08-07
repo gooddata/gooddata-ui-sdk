@@ -38,13 +38,13 @@
         height: $line-height;
         text-decoration: none;
 
+        &:hover {
+            text-decoration: none;
+        }
+
         &--active {
             color: kit-variables.$is-focused-color;
             background: kit-variables.$is-focused-background;
-
-            &:hover {
-                text-decoration: none;
-            }
         }
 
         &__icon {
