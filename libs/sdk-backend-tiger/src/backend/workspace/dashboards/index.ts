@@ -47,8 +47,11 @@ import {
     isAllTimeDashboardDateFilter,
     objRefToString,
     IDateFilter,
+    IDashboardFilterView,
+    IDashboardFilterViewSaveRequest,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
+import { v4 as uuid } from "uuid";
 import {
     convertAnalyticalDashboardToListItems,
     convertDashboard,
@@ -615,6 +618,115 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             identifier: objRefToString(ref),
             uri: "", // uri is not available in entities graph
         }));
+    };
+
+    // TODO LX-422 Temporary alpha implementation that uses localStorage till backend supports a new metadata
+    //  object type to persist filterView
+    public getFilterViewsForCurrentUser = async (dashboardRef: ObjRef): Promise<IDashboardFilterView[]> => {
+        try {
+            const blob = window.localStorage["filterViews"];
+            const filterViews: IDashboardFilterView[] = blob ? JSON.parse(blob) : [];
+            const dashboardFilterViews = filterViews
+                .filter((view) => areObjRefsEqual(view.dashboard, dashboardRef))
+                .sort((f1, f2) => f1.name.localeCompare(f2.name));
+            return Promise.resolve(dashboardFilterViews);
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.error("Could not parse saved filter views from local storage", error);
+            return Promise.resolve([]);
+        }
+    };
+
+    // TODO LX-422 Temporary alpha implementation that uses localStorage till backend supports a new metadata
+    //  object type to persist filterView
+    public createFilterView = async (
+        filterView: IDashboardFilterViewSaveRequest,
+    ): Promise<IDashboardFilterView> => {
+        return this.authCall(async (client) => {
+            const profile = await client.profile.getCurrent();
+            const userId = idRef(profile.userId, "user");
+
+            const blob = window.localStorage["filterViews"];
+            const filterViews: IDashboardFilterView[] = blob ? JSON.parse(blob) : [];
+
+            const newFilterView: IDashboardFilterView = {
+                ...filterView,
+                ref: idRef(uuid()),
+                user: userId,
+            };
+
+            // mark filter views for the dashboard and user as not default if new filter is a new default
+            const updatedFilterViews: IDashboardFilterView[] = filterViews.map((view) => ({
+                ...view,
+                isDefault:
+                    filterView.isDefault &&
+                    areObjRefsEqual(view.dashboard, filterView.dashboard) &&
+                    areObjRefsEqual(view.user, userId)
+                        ? false
+                        : view.isDefault,
+            }));
+
+            updatedFilterViews.push(newFilterView);
+
+            window.localStorage["filterViews"] = JSON.stringify(updatedFilterViews);
+
+            return Promise.resolve(newFilterView);
+        });
+    };
+
+    // TODO LX-422 Temporary alpha implementation that uses localStorage till backend supports a new metadata
+    //  object type to persist filterView
+    public deleteFilterView = async (ref: ObjRef): Promise<void> => {
+        const blob = window.localStorage["filterViews"];
+        const filterViews: IDashboardFilterView[] = blob ? JSON.parse(blob) : {};
+
+        window.localStorage["filterViews"] = JSON.stringify(
+            filterViews.filter((view) => !areObjRefsEqual(view.ref, ref)),
+        );
+
+        return Promise.resolve();
+    };
+
+    // TODO LX-422 Temporary alpha implementation that uses localStorage till backend supports a new metadata
+    //  object type to persist filterView
+    public setFilterViewAsDefault = async (ref: ObjRef, isDefault: boolean): Promise<void> => {
+        return this.authCall(async (client) => {
+            const profile = await client.profile.getCurrent();
+
+            const blob = window.localStorage["filterViews"];
+            const filterViews: IDashboardFilterView[] = blob ? JSON.parse(blob) : {};
+
+            const updatedFilterView = filterViews.find((view) => areObjRefsEqual(view.ref, ref));
+
+            if (!updatedFilterView) {
+                throw Error("There is no such filter view.");
+            }
+
+            const userId = idRef(profile.userId, "user");
+
+            // find views for the same dashboard, same user, unmark them as non default, set the new one
+            // as the default one
+            const updatedFilterViews = filterViews
+                .filter((view) => areObjRefsEqual(view.dashboard, updatedFilterView.dashboard))
+                .filter((view) => areObjRefsEqual(view.user, userId))
+                .map((view) => {
+                    if (areObjRefsEqual(view.ref, ref)) {
+                        return {
+                            ...view,
+                            isDefault,
+                        };
+                    } else {
+                        return {
+                            ...view,
+                            isDefault: false,
+                        };
+                    }
+                });
+
+            window.localStorage["filterViews"] = JSON.stringify(updatedFilterViews);
+
+            return Promise.resolve();
+        });
     };
 
     //

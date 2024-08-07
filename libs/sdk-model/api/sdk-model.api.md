@@ -1033,6 +1033,7 @@ export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, 
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
     readonly dateFilterConfigs?: IDashboardDateFilterConfigItem[];
     readonly disableCrossFiltering?: boolean;
+    readonly disableFilterViews?: boolean;
     readonly disableUserFilterReset?: boolean;
     readonly disableUserFilterSave?: boolean;
     readonly filterContext?: IFilterContext | ITempFilterContext;
@@ -1148,6 +1149,7 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashb
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
     readonly dateFilterConfigs?: IDashboardDateFilterConfigItem[];
     readonly disableCrossFiltering?: boolean;
+    readonly disableFilterViews?: boolean;
     readonly disableUserFilterReset?: boolean;
     readonly disableUserFilterSave?: boolean;
     readonly filterContext?: IFilterContext | IFilterContextDefinition;
@@ -1159,6 +1161,34 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashb
 
 // @public
 export type IDashboardFilterReference = IDashboardDateFilterReference | IDashboardAttributeFilterReference;
+
+// @alpha
+export interface IDashboardFilterView {
+    // (undocumented)
+    readonly dashboard: ObjRef;
+    // (undocumented)
+    readonly filterContext: IFilterContextDefinition;
+    // (undocumented)
+    readonly isDefault?: boolean;
+    // (undocumented)
+    readonly name: string;
+    // (undocumented)
+    readonly ref: ObjRef;
+    // (undocumented)
+    readonly user: ObjRef;
+}
+
+// @alpha
+export interface IDashboardFilterViewSaveRequest {
+    // (undocumented)
+    readonly dashboard: ObjRef;
+    // (undocumented)
+    readonly filterContext: IFilterContextDefinition;
+    // (undocumented)
+    readonly isDefault?: boolean;
+    // (undocumented)
+    readonly name: string;
+}
 
 // @public
 export interface IDashboardLayout<TWidget = IDashboardWidget> {
@@ -2819,6 +2849,7 @@ export interface ISettings {
     // (undocumented)
     enableCsvUploader?: boolean;
     enableCustomColorPicker?: boolean;
+    enableDashboardFilterViews?: boolean;
     enableDataSampling?: boolean;
     // (undocumented)
     enableDataSection?: boolean;

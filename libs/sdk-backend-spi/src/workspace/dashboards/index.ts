@@ -20,6 +20,8 @@ import {
     IDashboardPermissions,
     IExistingDashboard,
     IDateFilter,
+    IDashboardFilterView,
+    IDashboardFilterViewSaveRequest,
 } from "@gooddata/sdk-model";
 import { IExportResult } from "../execution/export.js";
 import { IPagedResource } from "../../common/paging.js";
@@ -488,6 +490,38 @@ export interface IWorkspaceDashboardsService {
      * @param dashboardRefs - dashboard references to validate
      */
     validateDashboardsExistence(dashboardRefs: ObjRef[]): Promise<IExistingDashboard[]>;
+
+    /**
+     * Get a list of filter views for the current user.
+     *
+     * @param dashboardRef - ref of the dashboard for which we want to get the filter views.
+     */
+    getFilterViewsForCurrentUser(dashboardRef: ObjRef): Promise<IDashboardFilterView[]>;
+
+    /**
+     * Create a new filter view.
+     *
+     * @param filterView - filter view that must be created.
+     */
+    createFilterView(filterView: IDashboardFilterViewSaveRequest): Promise<IDashboardFilterView>;
+
+    /**
+     * Delete a filter view identified by the provided ref.
+     *
+     * @param ref - ref of the filter view that must be deleted.
+     */
+    deleteFilterView(ref: ObjRef): Promise<void>;
+
+    /**
+     * Set a filter view identified by the provided ref as the default one.
+     * The other filter views for the same dashboard that are marked as default ones will be unmarked.
+     *
+     * @param ref - ref of the filter view that must be set as default.
+     * @param isDefault - determine if filter view identified by the provided ref should be marked as a default
+     *      one. If yes, any existing filter view for the same user and dashboard will be marked as non default
+     *      as only one can be set as default at the same time.
+     */
+    setFilterViewAsDefault(ref: ObjRef, isDefault: boolean): Promise<void>;
 }
 
 /**

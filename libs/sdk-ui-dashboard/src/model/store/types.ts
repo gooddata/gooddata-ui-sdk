@@ -26,6 +26,7 @@ import { DateFilterConfigsState } from "./dateFilterConfigs/dateFilterConfigsSta
 import { WebhooksState } from "./webhooks/webhooksState.js";
 import { AutomationsState } from "./automations/automationsState.js";
 import { UsersState } from "./users/usersState.js";
+import { FilterViewsState } from "./filterViews/filterViewsState.js";
 
 /*
  * This explicit typing is unfortunate but cannot find better way. Normally the typings get inferred from store,
@@ -117,6 +118,8 @@ export interface DashboardState {
     _queryCache: {
         [queryName: string]: any;
     };
+
+    filterViews: FilterViewsState;
 }
 
 /**

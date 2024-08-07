@@ -706,3 +706,12 @@ export const selectEnableDrillIntersectionIgnoredAttributes: DashboardSelector<b
         return state.settings?.enableDrillIntersectionIgnoredAttributes ?? false;
     },
 );
+
+/**
+ * Returns whether filter views are enabled.
+ *
+ * @internal
+ */
+export const selectEnableFilterViews: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
+    return state.settings?.enableDashboardFilterViews ?? false;
+});

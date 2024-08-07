@@ -311,6 +311,11 @@ export interface IDashboard<TWidget = IDashboardWidget>
      * Disables save of user filters for this dashboard.
      */
     readonly disableUserFilterSave?: boolean;
+
+    /**
+     * Disables listing and saving of filter views for this dashboard.
+     */
+    readonly disableFilterViews?: boolean;
 }
 
 /**
@@ -368,6 +373,11 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget>
      * Disables save of user filters for this dashboard.
      */
     readonly disableUserFilterSave?: boolean;
+
+    /**
+     * Disables listing and saving of filter views for this dashboard.
+     */
+    readonly disableFilterViews?: boolean;
 }
 
 /**

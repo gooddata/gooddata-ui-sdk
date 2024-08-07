@@ -443,6 +443,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableDrillIntersectionIgnoredAttributes,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableDashboardFilterViews,
+            "enableDashboardFilterViews",
+            "BOOLEAN",
+            FeatureFlagsValues.enableDashboardFilterViews,
+        ),
     };
 }
 

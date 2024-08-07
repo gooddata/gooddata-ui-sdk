@@ -74,6 +74,7 @@ interface IAnalyticalDashboardContent {
     disableCrossFiltering?: boolean;
     disableUserFilterReset?: boolean;
     disableUserFilterSave?: boolean;
+    disableFilterViews?: boolean;
 }
 
 function convertDashboardPluginLink(
@@ -103,6 +104,7 @@ function getConvertedAnalyticalDashboardContent(
         disableCrossFiltering: analyticalDashboard.disableCrossFiltering,
         disableUserFilterReset: analyticalDashboard.disableUserFilterReset,
         disableUserFilterSave: analyticalDashboard.disableUserFilterSave,
+        disableFilterViews: analyticalDashboard.disableFilterViews,
     };
 }
 
@@ -125,6 +127,7 @@ export function convertDashboard(
         disableCrossFiltering,
         disableUserFilterReset,
         disableUserFilterSave,
+        disableFilterViews,
     } = getConvertedAnalyticalDashboardContent(content as AnalyticalDashboardModelV2.IAnalyticalDashboard);
 
     return {
@@ -152,6 +155,7 @@ export function convertDashboard(
         disableCrossFiltering,
         disableUserFilterReset,
         disableUserFilterSave,
+        disableFilterViews,
     };
 }
 
