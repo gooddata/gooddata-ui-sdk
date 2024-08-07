@@ -2766,18 +2766,14 @@
             },
             "SearchResultObject": {
                 "required": [
-                    "createdAt",
                     "description",
                     "id",
-                    "modifiedAt",
                     "score",
                     "scoreDescriptor",
                     "scoreExactMatch",
                     "scoreTitle",
-                    "tags",
                     "title",
-                    "type",
-                    "visualizationUrl"
+                    "type"
                 ],
                 "type": "object",
                 "properties": {

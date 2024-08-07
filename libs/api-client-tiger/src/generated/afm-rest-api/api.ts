@@ -2402,25 +2402,25 @@ export interface SearchResultObject {
      * @type {Array<string>}
      * @memberof SearchResultObject
      */
-    tags: Array<string>;
+    tags?: Array<string>;
     /**
      * Timestamp when object was created.
      * @type {string}
      * @memberof SearchResultObject
      */
-    createdAt: string;
+    createdAt?: string;
     /**
      * Timestamp when object was last modified.
      * @type {string}
      * @memberof SearchResultObject
      */
-    modifiedAt: string;
+    modifiedAt?: string;
     /**
      * If the object is visualization, this field defines the type of visualization.
      * @type {string}
      * @memberof SearchResultObject
      */
-    visualizationUrl: string;
+    visualizationUrl?: string;
     /**
      * Result score calculated by a similarity search algorithm (cosine_distance).
      * @type {number}

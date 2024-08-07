@@ -1,5 +1,5 @@
 // (C) 2022-2024 GoodData Corporation
-import { JsonApiNotificationChannelOut } from "@gooddata/api-client-tiger";
+import { JsonApiNotificationChannelOut, Webhook } from "@gooddata/api-client-tiger";
 import { IWebhookMetadataObject } from "@gooddata/sdk-model";
 
 /**
@@ -7,15 +7,16 @@ import { IWebhookMetadataObject } from "@gooddata/sdk-model";
  */
 type INotificationChannel = Omit<JsonApiNotificationChannelOut, "type">;
 
-export function convertWebhookFromNotificationChannel(webhook: INotificationChannel): IWebhookMetadataObject {
+export function convertWebhookFromNotificationChannel(channel: INotificationChannel): IWebhookMetadataObject {
+    const wh = channel.attributes?.destination as Webhook | undefined;
     return {
-        id: webhook.id,
-        name: webhook.attributes?.name ?? "",
-        endpoint: webhook.attributes?.webhook?.url ?? "",
-        token: webhook.attributes?.webhook?.token ?? "",
-        hasToken: webhook.attributes?.webhook?.hasToken ?? false,
+        id: channel.id,
+        name: channel.attributes?.name ?? "",
+        endpoint: wh?.url ?? "",
+        token: wh?.token ?? "",
+        hasToken: wh?.hasToken ?? false,
         triggers:
-            webhook.attributes?.triggers?.map((trigger) => ({
+            channel.attributes?.triggers?.map((trigger) => ({
                 type: trigger.type,
                 ...(isMetadataAllowedOn(trigger.metadata) ? { allowOn: trigger.metadata.allowedOn } : {}),
             })) ?? [],
