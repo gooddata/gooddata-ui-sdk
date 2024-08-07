@@ -11,6 +11,8 @@ import {
     IExportDefinitionMetadataObjectDefinition,
     isExportDefinitionDashboardRequestPayload,
 } from "@gooddata/sdk-model";
+import { convertFilter } from "./afm/FilterConverter.js";
+import compact from "lodash/compact.js";
 
 export const convertExportDefinitionMdObjectDefinition = (
     exportDefinition: IExportDefinitionMetadataObjectDefinition,
@@ -46,12 +48,13 @@ const convertExportDefinitionRequestPayload = (
 
     const { mergeHeaders, orientation } = exportRequest.settings ?? {};
     const { visualizationObject, filters, widget, dashboard } = exportRequest.content;
+    const convertedFilters = filters ? compact(filters.map(convertFilter)) : undefined;
 
     return {
         fileName: exportRequest.fileName,
         format: exportRequest.format,
         visualizationObject,
-        visualizationObjectCustomFilters: filters,
+        visualizationObjectCustomFilters: convertedFilters,
         relatedDashboardId: dashboard,
         settings: {
             ...(mergeHeaders ? { mergeHeaders } : {}),
