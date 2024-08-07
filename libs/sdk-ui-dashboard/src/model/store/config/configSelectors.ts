@@ -703,7 +703,7 @@ export const selectEnableRichTextDescriptions: DashboardSelector<boolean> = crea
 export const selectEnableDrillIntersectionIgnoredAttributes: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableDrillIntersectionIgnoredAttributes ?? false;
+        return state.settings?.enableDrillIntersectionIgnoredAttributes ?? true;
     },
 );
 

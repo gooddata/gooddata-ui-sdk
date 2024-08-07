@@ -230,7 +230,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableRollupTotals: false,
     enableWidgetIdentifiersRollout: false,
     enableAIFunctions: false,
-    enableDrillIntersectionIgnoredAttributes: false,
+    enableDrillIntersectionIgnoredAttributes: true,
     enableAlertingRollout: false,
     enableDashboardFilterViews: false,
 };
