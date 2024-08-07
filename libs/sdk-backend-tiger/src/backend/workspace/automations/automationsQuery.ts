@@ -98,6 +98,7 @@ export class AutomationsQuery implements IAutomationsQuery {
                             "notificationChannel",
                             "recipients",
                             "exportDefinitions",
+                            "analyticalDashboard",
                         ],
                         origin: "NATIVE", // ensures that no inherited automations are returned
                         // size and page are not needed when we want to get all automations
