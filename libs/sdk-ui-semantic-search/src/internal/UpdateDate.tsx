@@ -5,10 +5,10 @@ import { ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import * as React from "react";
 import { getDateTimeConfig } from "@gooddata/sdk-ui-kit";
 import { defineMessages, FormattedDate, FormattedMessage, FormattedTime } from "react-intl";
+import { useTimezone } from "./timezoneContext.js";
 
 type UpdateDateProps = {
     listItem: ListItem<ISemanticSearchResultItem>;
-    timezone?: string;
 };
 
 const messages = defineMessages({
@@ -17,10 +17,8 @@ const messages = defineMessages({
     at: { id: "gs.date.at" },
 });
 
-export const UpdatedDate = React.memo(function UpdatedDate({
-    listItem: { item },
-    timezone,
-}: UpdateDateProps) {
+export const UpdatedDate = React.memo(function UpdatedDate({ listItem: { item } }: UpdateDateProps) {
+    const timezone = useTimezone();
     const timestamp = item.modifiedAt ?? item.createdAt;
 
     if (!timestamp) return null;
