@@ -19,11 +19,18 @@
 
     &__overlay-error,
     &__overlay-no-results {
-        height: 100px;
         display: flex;
         justify-content: center;
         align-items: center;
         color: kit-variables.$gd-color-state-blank;
+    }
+
+    &__overlay-error {
+        padding: 10px 10px 0;
+    }
+
+    &__overlay-no-results {
+        height: 100px;
     }
 }
 
