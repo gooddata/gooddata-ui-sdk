@@ -37,7 +37,9 @@ describe("NotificationChannelsConvertor", () => {
                         type: "ALERT",
                     },
                 ],
-                webhook: {
+                destinationType: "WEBHOOK",
+                destination: {
+                    type: "WEBHOOK",
                     token: "token",
                     url: "endpoint",
                 },
@@ -52,7 +54,9 @@ describe("NotificationChannelsConvertor", () => {
             id: "id",
             attributes: {
                 name: "name",
-                webhook: {
+                destinationType: "WEBHOOK",
+                destination: {
+                    type: "WEBHOOK",
                     url: "endpoint",
                     token: "token",
                     hasToken: true,

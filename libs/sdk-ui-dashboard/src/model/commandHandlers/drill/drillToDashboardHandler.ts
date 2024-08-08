@@ -46,9 +46,14 @@ import {
 import { selectCatalogDateAttributes } from "../../store/catalog/catalogSelectors.js";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
 import { DashboardState } from "../../store/types.js";
-import { IConversionResult, convertIntersectionToAttributeFilters } from "./common/intersectionUtils.js";
+import {
+    IConversionResult,
+    convertIntersectionToAttributeFilters,
+    removeIgnoredValuesFromDrillIntersection,
+} from "./common/intersectionUtils.js";
 import { selectSupportsMultipleDateFilters } from "../../store/backendCapabilities/backendCapabilitiesSelectors.js";
 import {
+    selectEnableDrillIntersectionIgnoredAttributes,
     selectEnableDuplicatedLabelValuesInAttributeFilter,
     selectEnableMultipleDateFilters,
 } from "../../store/config/configSelectors.js";
@@ -115,8 +120,19 @@ export function* drillToDashboardHandler(
         typeof selectEnableDuplicatedLabelValuesInAttributeFilter
     > = yield select(selectEnableDuplicatedLabelValuesInAttributeFilter);
 
+    const enableDrillIntersectionIgnoredAttributes: ReturnType<
+        typeof selectEnableDrillIntersectionIgnoredAttributes
+    > = yield select(selectEnableDrillIntersectionIgnoredAttributes);
+
+    const filteredIntersection = enableDrillIntersectionIgnoredAttributes
+        ? removeIgnoredValuesFromDrillIntersection(
+              cmd.payload.drillEvent.drillContext.intersection ?? [],
+              cmd.payload.drillDefinition.drillIntersectionIgnoredAttributes ?? [],
+          )
+        : cmd.payload.drillEvent.drillContext.intersection!;
+
     const drillIntersectionFilters = convertIntersectionToAttributeFilters(
-        cmd.payload.drillEvent.drillContext.intersection!,
+        filteredIntersection,
         dateAttributes.map((dA) => dA.attribute.ref),
         ctx.backend.capabilities.supportsElementUris ?? true,
         enableDuplicatedLabelValuesInAttributeFilter,

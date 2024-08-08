@@ -398,9 +398,19 @@ export interface ISettings {
     enableScheduling?: boolean;
 
     /**
+     * Enables alerting of the dashboard widgets.
+     */
+    enableAlerting?: boolean;
+
+    /**
      * Enables rollup (native) totals.
      */
     enableRollupTotals?: boolean;
+
+    /**
+     * Enables storing widget identifiers.
+     */
+    enableWidgetIdentifiersRollout?: boolean;
 
     enableDataSection?: boolean;
     enableRenamingProjectToWorkspace?: boolean;
@@ -415,6 +425,21 @@ export interface ISettings {
     enableSnowflakeKeyPairAuthentication?: boolean;
     enableMotherDuckDataSource?: boolean;
     enableSingleStoreDataSource?: boolean;
+
+    /**
+     * Enable GenAI-powered functionality, such as semantic-search
+     */
+    enableAIFunctions?: boolean;
+
+    /**
+     * Enable configuration of the drill intersection ignored attributes.
+     */
+    enableDrillIntersectionIgnoredAttributes?: boolean;
+
+    /**
+     * Enable multiple data sources to be used in a single workspace.
+     */
+    enableDashboardFilterViews?: boolean;
 
     [key: string]: number | boolean | string | object | undefined;
 }

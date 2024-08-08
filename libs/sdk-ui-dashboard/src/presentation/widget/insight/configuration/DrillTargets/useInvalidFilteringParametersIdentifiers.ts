@@ -1,6 +1,12 @@
 // (C) 2020-2024 GoodData Corporation
 
-import { IAttributeFilter, areObjRefsEqual, filterObjRef, idRef } from "@gooddata/sdk-model";
+import {
+    IAttributeFilter,
+    IDashboardAttributeFilterConfig,
+    areObjRefsEqual,
+    filterObjRef,
+    idRef,
+} from "@gooddata/sdk-model";
 import { UrlDrillTarget, isDrillToCustomUrlConfig } from "../../../../drill/types.js";
 import { useDashboardSelector, selectAllCatalogDisplayFormsMap } from "../../../../../model/index.js";
 import { useMemo } from "react";
@@ -14,6 +20,7 @@ export function useInvalidFilteringParametersIdentifiers(
     urlDrillTarget: UrlDrillTarget | undefined,
     insightFilters: IAttributeFilter[] | undefined,
     dashboardFilters: IAttributeFilter[] | undefined,
+    attributeFilterConfigs: IDashboardAttributeFilterConfig[] | undefined,
 ) {
     const displayForms = useDashboardSelector(selectAllCatalogDisplayFormsMap);
 
@@ -34,9 +41,17 @@ export function useInvalidFilteringParametersIdentifiers(
                         return true;
                     }
 
-                    return !dashboardFilters?.some((filter) => {
-                        return areObjRefsEqual(filterObjRef(filter), idRef(identifier, "displayForm"));
-                    });
+                    return (
+                        !dashboardFilters?.some((filter) => {
+                            return areObjRefsEqual(filterObjRef(filter), idRef(identifier, "displayForm"));
+                        }) &&
+                        !attributeFilterConfigs?.some((config) => {
+                            return (
+                                config.displayAsLabel &&
+                                areObjRefsEqual(config.displayAsLabel, idRef(identifier, "displayForm"))
+                            );
+                        })
+                    );
                 })
                 .map(({ identifier }) => identifier);
 
@@ -57,5 +72,5 @@ export function useInvalidFilteringParametersIdentifiers(
             return uniq([...invalidDashboardParameters, ...invalidInsightParameters]);
         }
         return [];
-    }, [displayForms, urlDrillTarget, insightFilters, dashboardFilters]);
+    }, [displayForms, urlDrillTarget, insightFilters, dashboardFilters, attributeFilterConfigs]);
 }

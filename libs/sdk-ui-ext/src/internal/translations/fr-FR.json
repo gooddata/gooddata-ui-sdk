@@ -355,5 +355,9 @@
     "properties.clustering.amount.placeholder": "3",
     "properties.clustering.amount.partial.title": "Afficher les clusters partiels",
     "properties.clustering.amount.partial.description": "Les points de données disponibles ne couvrent pas la totalité du montant sélectionné.",
-    "properties.clustering.disabled": "Le clustering ne peut être activé que lorsque le compartiment du segmentBy est vide."
+    "properties.clustering.disabled": "Le clustering ne peut être activé que lorsque le compartiment du segmentBy est vide.",
+    "properties.clustering.threshold": "Seuil",
+    "properties.clustering.threshold.placeholder": "0.03",
+    "properties.clustering.threshold.tooltip": "Le seuil est une limite qui détermine quand regrouper les données. <link>En savoir plus</link>",
+    "visualizations.headline.tertiary.title": "Par rapport à"
 }

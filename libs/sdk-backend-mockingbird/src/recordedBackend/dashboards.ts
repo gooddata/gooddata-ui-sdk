@@ -44,6 +44,7 @@ import {
     IDashboardPermissions,
     IExistingDashboard,
     IDateFilter,
+    IDashboardFilterView,
 } from "@gooddata/sdk-model";
 import cloneDeep from "lodash/cloneDeep.js";
 import isEqual from "lodash/isEqual.js";
@@ -402,6 +403,22 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
 
     public validateDashboardsExistence(_dashboardRefs: ObjRef[]): Promise<IExistingDashboard[]> {
         return Promise.resolve([]);
+    }
+
+    public getFilterViewsForCurrentUser(_dashboardRef: ObjRef): Promise<IDashboardFilterView[]> {
+        return Promise.resolve([]);
+    }
+
+    public createFilterView(_filterView: IDashboardFilterView): Promise<IDashboardFilterView> {
+        throw new NotSupported("recorded backend does not support this call");
+    }
+
+    public deleteFilterView(_ref: ObjRef): Promise<void> {
+        throw new NotSupported("recorded backend does not support this call");
+    }
+
+    public setFilterViewAsDefault(_ref: ObjRef, _isDefault: boolean): Promise<void> {
+        throw new NotSupported("recorded backend does not support this call");
     }
 }
 

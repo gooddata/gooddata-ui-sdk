@@ -3,6 +3,7 @@ import {
     JsonApiNotificationChannelOutTypeEnum,
     JsonApiNotificationChannelOut,
     JsonApiNotificationChannelPostOptionalId,
+    DeclarativeNotificationChannelDestinationTypeEnum,
 } from "@gooddata/api-client-tiger";
 import { IWebhookMetadataObjectDefinition, IWebhookMetadataObject } from "@gooddata/sdk-model";
 
@@ -22,7 +23,9 @@ export function convertCreateWebhookToNotificationChannel(
         type: JsonApiNotificationChannelOutTypeEnum.NOTIFICATION_CHANNEL,
         attributes: {
             name: webhook.name,
-            webhook: {
+            destinationType: DeclarativeNotificationChannelDestinationTypeEnum.WEBHOOK,
+            destination: {
+                type: DeclarativeNotificationChannelDestinationTypeEnum.WEBHOOK,
                 url: webhook.endpoint ?? "",
                 token: webhook.token,
             },

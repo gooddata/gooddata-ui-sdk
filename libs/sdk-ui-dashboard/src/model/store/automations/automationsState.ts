@@ -1,15 +1,19 @@
 // (C) 2024 GoodData Corporation
 
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
-import { Automations } from "../../types/commonTypes.js";
 
 /**
  * @alpha
  */
 export interface AutomationsState {
-    automations: Automations;
+    fingerprint: string;
+    automations: number;
     loading: boolean;
     error?: GoodDataSdkError;
 }
 
-export const automationsInitialState: AutomationsState = { automations: [], loading: true };
+export const automationsInitialState: AutomationsState = {
+    automations: 0,
+    loading: true,
+    fingerprint: "initial",
+};

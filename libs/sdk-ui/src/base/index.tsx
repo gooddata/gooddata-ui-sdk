@@ -169,6 +169,7 @@ export {
 } from "./react/ClientWorkspaceContext/interfaces.js";
 export { resolveLCMWorkspaceIdentifiers } from "./react/ClientWorkspaceContext/resolveLCMWorkspaceIdentifiers.js";
 export { usePrevious } from "./react/usePrevious.js";
+export { useLocalStorage } from "./react/useLocalStorage.js";
 /*
  * Localization exports
  */

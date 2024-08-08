@@ -27,27 +27,27 @@ import {
     selectWeekStart,
     selectEnableScheduling,
     selectDashboardTitle,
-    selectDashboardId,
     selectEntitlementMaxAutomationRecipients,
     selectEntitlementMinimumRecurrenceMinutes,
-    selectAnalyticalWidgetByRef,
+    selectWidgetByRef,
 } from "../../../model/index.js";
 import { IScheduledEmailDialogProps } from "../types.js";
 import { invariant } from "ts-invariant";
 import { getDefaultCronExpression, useEditScheduledEmail } from "./hooks/useEditScheduledEmail.js";
 import { useSaveScheduledEmailToBackend } from "./hooks/useSaveScheduledEmailToBackend.js";
-import isEqual from "lodash/isEqual.js";
 import {
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
-    isExportDefinitionDashboardContent,
-    isExportDefinitionVisualizationObjectContent,
+    isExportDefinitionDashboardRequestPayload,
+    isExportDefinitionVisualizationObjectRequestPayload,
+    IExportDefinitionVisualizationObjectContent,
 } from "@gooddata/sdk-model";
 import { getTimezoneByIdentifier, TIMEZONE_DEFAULT } from "./utils/timezone.js";
 import { DASHBOARD_TITLE_MAX_LENGTH } from "../../constants/index.js";
 import parseISO from "date-fns/parseISO/index.js";
 import { isMobileView } from "./utils/responsive.js";
 import { DeleteScheduleConfirmDialog } from "../DefaultScheduledEmailManagementDialog/components/DeleteScheduleConfirmDialog.js";
+import { areAutomationsEqual } from "./utils/automationHelpers.js";
 
 const MAX_MESSAGE_LENGTH = 200;
 const MAX_SUBJECT_LENGTH = 200;
@@ -57,12 +57,10 @@ const DEFAULT_MIN_RECURRENCE_MINUTES = "60";
 export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
     const { onCancel, onDeleteSuccess, onDeleteError, isVisible, editSchedule, users, webhooks, context } =
         props;
-    const widget = useDashboardSelector(selectAnalyticalWidgetByRef(context?.widgetRef));
     const intl = useIntl();
     const [scheduledEmailToDelete, setScheduledEmailToDelete] = useState<
         IAutomationMetadataObject | IAutomationMetadataObjectDefinition | null
     >(null);
-    const dashboardId = useDashboardSelector(selectDashboardId);
     const locale = useDashboardSelector(selectLocale);
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
     const dateFormat = useDashboardSelector(selectDateFormat);
@@ -98,18 +96,24 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
     const { handleSaveScheduledEmail, isSavingScheduledEmail, savingErrorMessage } =
         useSaveScheduledEmailToBackend(automation, props);
 
-    const isDashboardExportSelected =
-        automation.exportDefinitions?.some((exportDefinition) => {
-            if (isExportDefinitionDashboardContent(exportDefinition.requestPayload.content)) {
-                return exportDefinition.requestPayload.content.dashboard === dashboardId;
-            }
+    // It is needed to use originalAutomation here instead of automation, as in edit mode, all attachments may be removed
+    // and no connection to widget would exist anymore and form would fallback to editing of dashboard variant.
+    const editWidgetId = (
+        originalAutomation.exportDefinitions?.find((exportDefinition) =>
+            isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload),
+        )?.requestPayload.content as IExportDefinitionVisualizationObjectContent
+    )?.widget;
+    const editWidgetRef = editWidgetId ? { identifier: editWidgetId } : undefined;
+    const widget = useDashboardSelector(selectWidgetByRef(context?.widgetRef ?? editWidgetRef));
 
-            return false;
-        }) ?? false;
+    const isDashboardExportSelected =
+        automation.exportDefinitions?.some((exportDefinition) =>
+            isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload),
+        ) ?? false;
 
     const isCsvExportSelected =
         automation.exportDefinitions?.some((exportDefinition) => {
-            if (isExportDefinitionVisualizationObjectContent(exportDefinition.requestPayload.content)) {
+            if (isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload)) {
                 return exportDefinition.requestPayload.format === "CSV";
             }
 
@@ -118,7 +122,7 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
 
     const isXlsxExportSelected =
         automation.exportDefinitions?.some((exportDefinition) => {
-            if (isExportDefinitionVisualizationObjectContent(exportDefinition.requestPayload.content)) {
+            if (isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload)) {
                 return exportDefinition.requestPayload.format === "XLSX";
             }
 
@@ -128,7 +132,7 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
     const settings = {
         mergeHeaders:
             automation.exportDefinitions?.some((exportDefinition) => {
-                if (isExportDefinitionVisualizationObjectContent(exportDefinition.requestPayload.content)) {
+                if (isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload)) {
                     return exportDefinition.requestPayload.settings?.mergeHeaders;
                 }
 
@@ -139,7 +143,9 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
     const isValid = (automation.recipients?.length ?? 0) <= maxAutomationsRecipients;
     const isDestinationEmpty = !automation.webhook;
     const isSubmitDisabled =
-        !isValid || isDestinationEmpty || (editSchedule && isEqual(originalAutomation, automation));
+        !isValid ||
+        isDestinationEmpty ||
+        (editSchedule && areAutomationsEqual(automation, originalAutomation));
 
     const startDate = parseISO(
         automation.schedule?.firstRun ?? normalizeTime(new Date(), undefined, 60).toISOString(),
@@ -197,6 +203,7 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
                                     className="gd-button-link-dimmed"
                                     value={intl.formatMessage({ id: "delete" })}
                                     onClick={() => setScheduledEmailToDelete(automation)}
+                                    disabled={isSavingScheduledEmail}
                                 />
                             ) : null}
                         </div>

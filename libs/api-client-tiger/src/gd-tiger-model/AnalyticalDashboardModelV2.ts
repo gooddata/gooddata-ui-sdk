@@ -30,6 +30,7 @@ export interface IAnalyticalDashboard {
     disableCrossFiltering?: boolean;
     disableUserFilterReset?: boolean;
     disableUserFilterSave?: boolean;
+    disableFilterViews?: boolean;
 }
 
 /**

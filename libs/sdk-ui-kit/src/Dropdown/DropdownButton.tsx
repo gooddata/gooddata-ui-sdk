@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React, { ReactNode } from "react";
 import cx from "classnames";
 import { Button } from "../Button/Button.js";
@@ -19,6 +19,8 @@ export interface IDropdownButtonProps {
     iconLeft?: string;
 
     onClick?: (e: React.MouseEvent) => void;
+
+    children?: ReactNode;
 }
 
 /**
@@ -37,6 +39,7 @@ export const DropdownButton: React.FC<IDropdownButtonProps> = ({
     iconLeft,
 
     onClick,
+    children,
 }) => {
     const buttonClasses = cx(
         "gd-button-primary",
@@ -60,6 +63,8 @@ export const DropdownButton: React.FC<IDropdownButtonProps> = ({
             iconRight={isOpen ? "gd-icon-navigateup" : "gd-icon-navigatedown"}
             disabled={disabled}
             onClick={onClick}
-        />
+        >
+            {children}
+        </Button>
     );
 };

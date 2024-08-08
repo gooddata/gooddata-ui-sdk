@@ -618,5 +618,6 @@
     "recurrence.types.weekly": "每周 {day}",
     "recurrence.types.monthly.last": "每月最后一天{day}",
     "recurrence.types.monthly": "每月 {week, select, 1 {第一个} 2 {第二个} 3 {第三个} 4 {第四个} other {最后一个}} {day}",
-    "recurrence.types.cron": "Cron 表达式"
+    "recurrence.types.cron": "Cron 表达式",
+    "gs.header.search": "搜索"
 }

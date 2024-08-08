@@ -7,6 +7,7 @@ id: scatter_plot_component
 
 A **scatter plot** shows data as points using Cartesian coordinates. Scatter plots typically have a minimum of two measures, one for the X-axis and the other for the Y-axis, and one attribute, which determines the meaning of each data point.
 Scatter plots are useful for analyzing trends between two measures or for tracking the magnitude of two measures from the same chart.
+Advanced configuration allows segmentation of the data by specified attribute and clustering.
 
 {{< embedded-image alt="Scatter Plot" src="/gd-ui/scatter_plot.png" >}}
 
@@ -39,6 +40,31 @@ const style = { height: 300 };
         xAxisMeasure={Md.$FranchiseFees}
         yAxisMeasure={Md.$FranchisedSales}
         attribute={Md.DateMonth.Short}
+    />
+</div>;
+```
+
+## Example with clustering
+
+```jsx
+import "@gooddata/sdk-ui-charts/styles/css/main.css";
+import { ScatterPlot } from "@gooddata/sdk-ui-charts";
+import * as Md from "./md/full";
+
+const style = { height: 300 };
+
+<div style={style}>
+    <ScatterPlot
+        xAxisMeasure={Md.$FranchiseFees}
+        yAxisMeasure={Md.$FranchisedSales}
+        attribute={Md.DateMonth.Short}
+        config={{
+            clustering: {
+                enabled: true,
+                numberOfClusters: 3,
+                threshold: 0.03,
+            },
+        }}
     />
 </div>;
 ```

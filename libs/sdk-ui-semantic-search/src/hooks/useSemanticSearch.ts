@@ -1,7 +1,11 @@
 // (C) 2024 GoodData Corporation
 
 import { useState, useEffect } from "react";
-import { ISemanticSearchResultItem, GenAISemanticSearchType } from "@gooddata/sdk-model";
+import {
+    ISemanticSearchResultItem,
+    GenAISemanticSearchType,
+    ISemanticSearchRelationship,
+} from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
@@ -12,8 +16,12 @@ import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 export type SemanticSearchInputResult = {
     /**
      * Flag indicating whether the search is in progress.
+     * - idle - means we did not search yet
+     * - loading - means we are currently searching
+     * - error - means the search failed
+     * - success - means the search succeeded
      */
-    searchLoading: boolean;
+    searchStatus: "idle" | "loading" | "error" | "success";
     /**
      * Error message if the search failed.
      */
@@ -22,15 +30,17 @@ export type SemanticSearchInputResult = {
      * The search results.
      */
     searchResults: ISemanticSearchResultItem[];
+    relationships: ISemanticSearchRelationship[];
 };
 
 /**
  * Default state of the semantic search hook.
  */
 const DEFAULT_STATE: SemanticSearchInputResult = {
-    searchLoading: false,
+    searchStatus: "idle",
     searchError: "",
     searchResults: [],
+    relationships: [],
 };
 
 /**
@@ -96,7 +106,7 @@ export const useSemanticSearch = ({
         setState((oldState) => ({
             // Keep the previous state of results/error, only update the loading flag
             ...oldState,
-            searchLoading: true,
+            searchStatus: "loading",
         }));
 
         // Construct the query
@@ -122,9 +132,10 @@ export const useSemanticSearch = ({
         })
             .then((res) => {
                 setState({
-                    searchLoading: false,
+                    searchStatus: "success",
                     searchError: "",
                     searchResults: res.results,
+                    relationships: res.relationships,
                 });
             })
             .catch((e) => {
@@ -133,9 +144,10 @@ export const useSemanticSearch = ({
                     return;
 
                 setState({
-                    searchLoading: false,
+                    searchStatus: "error",
                     searchError: errorMessage(e),
                     searchResults: [],
+                    relationships: [],
                 });
             });
 

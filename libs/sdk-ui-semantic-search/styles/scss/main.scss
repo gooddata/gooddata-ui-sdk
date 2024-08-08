@@ -4,9 +4,30 @@
 @use "sass:meta";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
+@mixin icon($icon_size) {
+    width: $icon_size;
+    height: $icon_size;
+    display: flex;
+    align-items: center;
+
+    > svg {
+        // dashboard icon needs explicit size
+        width: $icon_size;
+        height: $icon_size;
+    }
+}
+
+@mixin ellipsis($line-height) {
+    min-width: 0; // A hack to make ellipsis work in flexbox
+    line-height: $line-height;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .gd-semantic-search {
     &__results-item {
-        $line-height: 45px;
+        $line-height: 50px;
 
         display: flex;
         flex-direction: row;
@@ -15,35 +36,97 @@
         gap: 1em;
         padding: 0 1em;
         height: $line-height;
+        text-decoration: none;
 
-        &--selected {
+        &:hover {
+            text-decoration: none;
+        }
+
+        &--active {
             color: kit-variables.$is-focused-color;
             background: kit-variables.$is-focused-background;
         }
 
         &__icon {
-            $icon_size: 16px;
-            width: $icon_size;
-            height: $icon_size;
-            display: flex;
-            align-items: center;
+            @include icon(32px);
 
-            > svg {
-                // dashboard icon needs explicit size
-                width: $icon_size;
-                height: $icon_size;
+            &--history {
+                @include icon(17px);
             }
         }
 
         &__text {
             flex-grow: 1;
-            min-width: 0; // A hack to make ellipsis work in flexbox
+            font-weight: 400;
+            color: kit-variables.$gd-color-text;
+            font-size: 14px;
+
+            &--history {
+                @include ellipsis(1.4rem);
+            }
+
+            &--result {
+                display: flex;
+                flex-direction: column;
+            }
+
+            &__1 {
+                @include ellipsis(20px);
+            }
+
+            &__2 {
+                @include ellipsis(20px);
+                color: kit-variables.$gd-color-state-blank;
+            }
         }
 
-        &__text > p {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+        &__details {
+            width: 16px;
+            height: 16px;
+            align-items: center;
+
+            & .gd-ellipsis-text {
+                margin: 10px 0 0;
+            }
+
+            &__contents {
+                width: 190px;
+                padding: 5px;
+                box-sizing: border-box;
+                display: flex;
+                flex-direction: column;
+
+                h3 {
+                    font-size: 14px;
+                    margin: 0;
+                }
+
+                .gd-ellipsis-text-content {
+                    font-size: 12px;
+                }
+
+                h4 {
+                    margin: 10px 0 0;
+                    text-transform: uppercase;
+                    font-size: 10px;
+                    font-weight: 400;
+                    color: kit-variables.$gd-color-state-blank;
+                }
+            }
+        }
+
+        &__annotation {
+            &:after {
+                content: "\0000a0•\0000a0";
+            }
+
+            &:last-child:after {
+                content: "";
+            }
         }
     }
+}
+
+.gd-semantic-search__bubble.bubble.bubble-light {
+    background: kit-variables.$gd-color-white;
 }

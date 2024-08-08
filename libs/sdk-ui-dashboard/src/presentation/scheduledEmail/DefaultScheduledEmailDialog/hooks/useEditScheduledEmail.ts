@@ -1,15 +1,16 @@
 // (C) 2019-2024 GoodData Corporation
 import { useState } from "react";
 import {
-    IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
     IExportDefinitionMetadataObjectDefinition,
-    isExportDefinitionDashboardContent,
     IAutomationRecipient,
     FilterContextItem,
-    IFilter,
-    isFilterContextItem,
-    IExportDefinitionSettings,
+    IExportDefinitionVisualizationObjectSettings,
+    isExportDefinitionVisualizationObjectRequestPayload,
+    isExportDefinitionDashboardRequestPayload,
+    IExportDefinitionVisualizationObjectContent,
+    IInsight,
+    IAutomationMetadataObject,
 } from "@gooddata/sdk-model";
 import parseISO from "date-fns/parseISO/index.js";
 import { getUserTimezone } from "../utils/timezone.js";
@@ -17,8 +18,10 @@ import {
     useDashboardSelector,
     selectDashboardTitle,
     selectDashboardId,
-    selectAnalyticalWidgetByRef,
     selectInsightByWidgetRef,
+    selectWidgetByRef,
+    isCustomWidget,
+    ExtendedDashboardWidget,
 } from "../../../../model/index.js";
 import { Alignment, normalizeTime } from "@gooddata/sdk-ui-kit";
 import { IScheduledEmailDialogProps } from "../../types.js";
@@ -27,38 +30,59 @@ import { toModifiedISOString } from "../../DefaultScheduledEmailManagementDialog
 import { useAttachmentDashboardFilters } from "./useAttachmentDashboardFilters.js";
 import {
     getAutomationDashboardFilters,
+    getAutomationVisualizationFilters,
     isCsvVisualizationAutomation,
     isCsvVisualizationExportDefinition,
     isDashboardAutomation,
     isXlsxVisualizationAutomation,
     isXlsxVisualizationExportDefinition,
+    transformFilterContextToModelFilters,
 } from "../utils/automationHelpers.js";
-import { isDashboardFilter } from "../../../../types.js";
-import { filterContextItemsToDashboardFiltersByWidget } from "../../../../converters/index.js";
 import { invariant } from "ts-invariant";
 
 export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
     const { editSchedule, webhooks, context } = props;
-    const widget = useDashboardSelector(selectAnalyticalWidgetByRef(context?.widgetRef));
+    const editWidgetId = (
+        editSchedule?.exportDefinitions?.find((exportDefinition) =>
+            isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload),
+        )?.requestPayload.content as IExportDefinitionVisualizationObjectContent
+    )?.widget;
+    const editWidgetRef = editWidgetId ? { identifier: editWidgetId } : undefined;
+    const widget = useDashboardSelector(selectWidgetByRef(context?.widgetRef ?? editWidgetRef));
     const insight = useDashboardSelector(selectInsightByWidgetRef(widget?.ref));
     const isWidget = !!widget && !!insight;
 
     const dashboardId = useDashboardSelector(selectDashboardId);
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
+
     const dashboardEditFilters = getAutomationDashboardFilters(editSchedule);
     const { areFiltersChanged, filtersToStore } = useAttachmentDashboardFilters({
         customFilters: dashboardEditFilters,
+        widget,
     });
 
-    const [state, setState] = useState<IAutomationMetadataObject | IAutomationMetadataObjectDefinition>(
+    const [state, setState] = useState<IAutomationMetadataObjectDefinition>(
         editSchedule ??
-            newAutomationMetadataObjectDefinition({
-                id: isWidget ? insight.insight.identifier : dashboardId!,
-                title: isWidget ? widget.title : dashboardTitle,
-                filters: areFiltersChanged ? filtersToStore : undefined,
-                isWidget,
-                webhook: webhooks[0]?.id,
-            }),
+            newAutomationMetadataObjectDefinition(
+                isWidget
+                    ? {
+                          dashboardId: dashboardId!,
+                          webhook: webhooks[0]?.id,
+                          insight,
+                          widget,
+                          /**
+                           * We always store all filters with widget attachment due to problems with
+                           * construction of AFM definition on BE.
+                           */
+                          filters: filtersToStore,
+                      }
+                    : {
+                          dashboardId: dashboardId!,
+                          webhook: webhooks[0]?.id,
+                          title: dashboardTitle,
+                          filters: areFiltersChanged ? filtersToStore : undefined,
+                      },
+            ),
     );
 
     const [originalState] = useState(state);
@@ -120,7 +144,7 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
             const dashboardExportDefinitionExists = isDashboardAutomation(state);
             const updatedExportDefinitions = dashboardExportDefinitionExists
                 ? state.exportDefinitions?.map((exportDefinition) =>
-                      isExportDefinitionDashboardContent(exportDefinition.requestPayload.content)
+                      isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload)
                           ? dashboardExportDefinition
                           : exportDefinition,
                   )
@@ -135,7 +159,7 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
                 ...s,
                 exportDefinitions: s.exportDefinitions?.filter(
                     (exportDefinition) =>
-                        !isExportDefinitionDashboardContent(exportDefinition.requestPayload.content),
+                        !isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload),
                 ),
             }));
         }
@@ -154,14 +178,13 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
         invariant(isWidget, "Widget or insight is missing in scheduling dialog context.");
 
         if (selected) {
-            const transformedFilters = filters
-                ? filterContextItemsToDashboardFiltersByWidget(filters, widget)
-                : undefined;
-            const filtersObj = transformedFilters ? { filters: transformedFilters } : {};
+            const filtersObj = filters ? { filters } : {};
             const newExportDefinition = newWidgetExportDefinitionMetadataObjectDefinition({
-                insightId: insight.insight.identifier,
-                widgetTitle: widget.title,
+                insight,
+                widget,
+                dashboardId: dashboardId!,
                 format,
+                editSchedule,
                 ...filtersObj,
             });
 
@@ -186,16 +209,22 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
         }
     };
 
-    const onWidgetAttachmentsSettingsChange = ({ mergeHeaders }: IExportDefinitionSettings) => {
+    const onWidgetAttachmentsSettingsChange = ({
+        mergeHeaders,
+    }: IExportDefinitionVisualizationObjectSettings) => {
         setState((s) => ({
             ...s,
             exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
-                if (isXlsxVisualizationExportDefinition(exportDefinition)) {
+                if (
+                    isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload) &&
+                    exportDefinition.requestPayload.format === "XLSX"
+                ) {
                     return {
                         ...exportDefinition,
                         requestPayload: {
                             ...exportDefinition.requestPayload,
                             settings: {
+                                ...exportDefinition.requestPayload?.settings,
                                 mergeHeaders,
                             },
                         },
@@ -255,6 +284,7 @@ function newDashboardExportDefinitionMetadataObjectDefinition({
         type: "exportDefinition",
         title: dashboardTitle,
         requestPayload: {
+            type: "dashboard",
             fileName: dashboardTitle,
             format: "PDF",
             content: {
@@ -266,27 +296,44 @@ function newDashboardExportDefinitionMetadataObjectDefinition({
 }
 
 function newWidgetExportDefinitionMetadataObjectDefinition({
-    insightId,
-    widgetTitle,
+    insight,
+    widget,
+    dashboardId,
     format,
     filters,
+    editSchedule,
 }: {
-    insightId: string;
-    widgetTitle: string;
+    insight: IInsight;
+    widget: ExtendedDashboardWidget;
+    dashboardId: string;
     format: WidgetAttachmentType;
-    filters?: IFilter[];
+    filters?: FilterContextItem[];
+    editSchedule?: IAutomationMetadataObject | IAutomationMetadataObjectDefinition;
 }): IExportDefinitionMetadataObjectDefinition {
-    const filtersObj = filters ? { filters } : {};
+    const widgetTitle = !isCustomWidget(widget) ? widget?.title : widget?.identifier;
+
+    const transformedFilters = transformFilterContextToModelFilters(filters, widget);
+    const insightFilters = insight.insight.filters;
+    const newScheduleFilters = [...insightFilters, ...transformedFilters];
+    const existingScheduleFilters = [...(getAutomationVisualizationFilters(editSchedule) ?? [])];
+
+    // in case of editing widget schedule, we never overwrite already stored filters
+    const allFilters = editSchedule ? existingScheduleFilters : newScheduleFilters;
+
+    const filtersObj = allFilters.length > 0 ? { filters: allFilters } : {};
     const settingsObj = format === "XLSX" ? { settings: { mergeHeaders: true } } : {};
 
     return {
         type: "exportDefinition",
         title: widgetTitle,
         requestPayload: {
+            type: "visualizationObject",
             fileName: widgetTitle,
             format: format,
             content: {
-                visualizationObject: insightId,
+                visualizationObject: insight.insight.identifier,
+                widget: widget.identifier,
+                dashboard: dashboardId,
                 ...filtersObj,
             },
             ...settingsObj,
@@ -295,33 +342,37 @@ function newWidgetExportDefinitionMetadataObjectDefinition({
 }
 
 function newAutomationMetadataObjectDefinition({
-    id,
-    title,
+    dashboardId,
     webhook,
-    isWidget,
+    title,
+    insight,
+    widget,
     filters,
 }: {
-    id: string;
-    title: string;
+    dashboardId: string;
     webhook: string;
-    isWidget: boolean;
-    filters?: FilterContextItem[] | IFilter[];
+    title?: string;
+    insight?: IInsight;
+    widget?: ExtendedDashboardWidget;
+    filters?: FilterContextItem[];
 }): IAutomationMetadataObjectDefinition {
     const firstRun = parseISO(new Date().toISOString());
     const normalizedFirstRun = normalizeTime(firstRun, undefined, 60);
     const cron = getDefaultCronExpression(normalizedFirstRun);
-    const exportDefinition = isWidget
-        ? newWidgetExportDefinitionMetadataObjectDefinition({
-              insightId: id,
-              widgetTitle: title,
-              format: "XLSX", // default checked format
-              filters: filters?.filter(isDashboardFilter),
-          })
-        : newDashboardExportDefinitionMetadataObjectDefinition({
-              dashboardId: id,
-              dashboardTitle: title,
-              filters: filters?.filter(isFilterContextItem),
-          });
+    const exportDefinition =
+        widget && insight
+            ? newWidgetExportDefinitionMetadataObjectDefinition({
+                  insight,
+                  widget,
+                  dashboardId,
+                  format: "XLSX", // default checked format
+                  filters: filters,
+              })
+            : newDashboardExportDefinitionMetadataObjectDefinition({
+                  dashboardId,
+                  dashboardTitle: title ?? "",
+                  filters: filters,
+              });
 
     const automation: IAutomationMetadataObjectDefinition = {
         type: "automation",
@@ -340,6 +391,7 @@ function newAutomationMetadataObjectDefinition({
         exportDefinitions: [{ ...exportDefinition }],
         recipients: [],
         webhook,
+        dashboard: dashboardId,
     };
 
     return automation;

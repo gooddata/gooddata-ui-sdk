@@ -762,6 +762,23 @@ export interface IAuditableUsers {
 }
 
 // @alpha (undocumented)
+export interface IAutomationAlert {
+    condition: IAutomationAlertCondition;
+    execution: IAutomationAlertExecutionDefinition;
+}
+
+// @alpha (undocumented)
+export interface IAutomationAlertCondition {
+    left: IMeasure;
+    operator: "LESS_THAN" | "LESS_THAN_OR_EQUALS" | "EQUALS" | "NOT_EQUALS" | "GREATER_THAN" | "GREATER_THAN_OR_EQUALS";
+    right: number;
+    type: "comparison";
+}
+
+// @alpha (undocumented)
+export type IAutomationAlertExecutionDefinition = Pick<IExecutionDefinition, "attributes" | "measures" | "filters">;
+
+// @alpha (undocumented)
 export interface IAutomationMetadataObject extends IAutomationMetadataObjectBase, IMetadataObject, IAuditable {
     // (undocumented)
     type: "automation";
@@ -769,6 +786,8 @@ export interface IAutomationMetadataObject extends IAutomationMetadataObjectBase
 
 // @alpha (undocumented)
 export interface IAutomationMetadataObjectBase {
+    alert?: IAutomationAlert;
+    dashboard?: Identifier;
     details?: {
         subject?: string;
         message?: string;
@@ -841,6 +860,7 @@ export interface IAvailableUserGroupAccessGrantee {
 
 // @public
 export interface IBaseWidget {
+    readonly localIdentifier?: string;
     readonly type: string;
 }
 
@@ -1013,6 +1033,7 @@ export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, 
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
     readonly dateFilterConfigs?: IDashboardDateFilterConfigItem[];
     readonly disableCrossFiltering?: boolean;
+    readonly disableFilterViews?: boolean;
     readonly disableUserFilterReset?: boolean;
     readonly disableUserFilterSave?: boolean;
     readonly filterContext?: IFilterContext | ITempFilterContext;
@@ -1128,6 +1149,7 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashb
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
     readonly dateFilterConfigs?: IDashboardDateFilterConfigItem[];
     readonly disableCrossFiltering?: boolean;
+    readonly disableFilterViews?: boolean;
     readonly disableUserFilterReset?: boolean;
     readonly disableUserFilterSave?: boolean;
     readonly filterContext?: IFilterContext | IFilterContextDefinition;
@@ -1139,6 +1161,34 @@ export interface IDashboardDefinition<TWidget = IDashboardWidget> extends IDashb
 
 // @public
 export type IDashboardFilterReference = IDashboardDateFilterReference | IDashboardAttributeFilterReference;
+
+// @alpha
+export interface IDashboardFilterView {
+    // (undocumented)
+    readonly dashboard: ObjRef;
+    // (undocumented)
+    readonly filterContext: IFilterContextDefinition;
+    // (undocumented)
+    readonly isDefault?: boolean;
+    // (undocumented)
+    readonly name: string;
+    // (undocumented)
+    readonly ref: ObjRef;
+    // (undocumented)
+    readonly user: ObjRef;
+}
+
+// @alpha
+export interface IDashboardFilterViewSaveRequest {
+    // (undocumented)
+    readonly dashboard: ObjRef;
+    // (undocumented)
+    readonly filterContext: IFilterContextDefinition;
+    // (undocumented)
+    readonly isDefault?: boolean;
+    // (undocumented)
+    readonly name: string;
+}
 
 // @public
 export interface IDashboardLayout<TWidget = IDashboardWidget> {
@@ -1406,6 +1456,7 @@ export function idRef(identifier: Identifier, type?: ObjectType): IdentifierRef;
 
 // @public
 export interface IDrill {
+    drillIntersectionIgnoredAttributes?: string[];
     localIdentifier?: string;
     origin: DrillOrigin;
     transition: DrillTransition;
@@ -1529,14 +1580,26 @@ export interface IExportDefinitionBase {
 }
 
 // @alpha
-export type IExportDefinitionContent = IExportDefinitionVisualizationObjectContent | IExportDefinitionDashboardContent;
-
-// @alpha
 export interface IExportDefinitionDashboardContent {
     // (undocumented)
-    dashboard: string;
+    dashboard: Identifier;
     // (undocumented)
     filters?: FilterContextItem[];
+}
+
+// @alpha
+export type IExportDefinitionDashboardRequestPayload = {
+    type: "dashboard";
+    fileName: string;
+    format: "PDF";
+    settings?: IExportDefinitionDashboardSettings;
+    content: IExportDefinitionDashboardContent;
+};
+
+// @alpha
+export interface IExportDefinitionDashboardSettings {
+    // (undocumented)
+    orientation: "portrait" | "landscape";
 }
 
 // @alpha
@@ -1552,32 +1615,33 @@ export interface IExportDefinitionMetadataObjectDefinition extends IExportDefini
 }
 
 // @alpha
-export interface IExportDefinitionPdfOptions {
-    // (undocumented)
-    orientation: "portrait" | "landscape";
-}
-
-// @alpha
-export type IExportDefinitionRequestPayload = {
-    fileName: string;
-    format: "PDF" | "CSV" | "XLSX";
-    pdfOptions?: IExportDefinitionPdfOptions;
-    settings?: IExportDefinitionSettings;
-    content: IExportDefinitionContent;
-};
-
-// @alpha
-export interface IExportDefinitionSettings {
-    // (undocumented)
-    mergeHeaders: boolean;
-}
+export type IExportDefinitionRequestPayload = IExportDefinitionDashboardRequestPayload | IExportDefinitionVisualizationObjectRequestPayload;
 
 // @alpha
 export interface IExportDefinitionVisualizationObjectContent {
+    dashboard?: Identifier;
     // (undocumented)
     filters?: IFilter[];
     // (undocumented)
     visualizationObject: Identifier;
+    widget?: Identifier;
+}
+
+// @alpha
+export type IExportDefinitionVisualizationObjectRequestPayload = {
+    type: "visualizationObject";
+    fileName: string;
+    format: "CSV" | "XLSX" | "HTML" | "PDF";
+    settings?: IExportDefinitionVisualizationObjectSettings;
+    content: IExportDefinitionVisualizationObjectContent;
+};
+
+// @alpha
+export interface IExportDefinitionVisualizationObjectSettings {
+    // (undocumented)
+    mergeHeaders?: boolean;
+    // (undocumented)
+    orientation?: "portrait" | "landscape";
 }
 
 // @alpha
@@ -2726,11 +2790,27 @@ export function isDrillToInsight(obj: unknown): obj is IDrillToInsight;
 export function isDrillToLegacyDashboard(obj: unknown): obj is IDrillToLegacyDashboard;
 
 // @alpha
+export type ISemanticSearchRelationship = {
+    sourceWorkspaceId: string;
+    sourceObjectId: string;
+    sourceObjectType: GenAISemanticSearchType;
+    sourceObjectTitle: string;
+    targetWorkspaceId: string;
+    targetObjectId: string;
+    targetObjectType: GenAISemanticSearchType;
+    targetObjectTitle: string;
+};
+
+// @alpha
 export interface ISemanticSearchResultItem {
+    createdAt: string;
     description: string;
     id: string;
+    modifiedAt?: string;
+    tags: string[];
     title: string;
     type: GenAISemanticSearchType;
+    visualizationUrl?: string;
 }
 
 // @public
@@ -2748,6 +2828,8 @@ export interface ISettings {
     disableKpiDashboardHeadlineUnderline?: boolean;
     enableAdDescriptionEdit?: boolean;
     enableADMultipleDateFilters?: boolean;
+    enableAIFunctions?: boolean;
+    enableAlerting?: boolean;
     enableAlternativeDisplayFormSelection?: boolean;
     enableAnalyticalDashboardPermissions?: boolean;
     // (undocumented)
@@ -2767,11 +2849,13 @@ export interface ISettings {
     // (undocumented)
     enableCsvUploader?: boolean;
     enableCustomColorPicker?: boolean;
+    enableDashboardFilterViews?: boolean;
     enableDataSampling?: boolean;
     // (undocumented)
     enableDataSection?: boolean;
     enableDescriptions?: boolean;
     enableDrilledInsightExport?: boolean;
+    enableDrillIntersectionIgnoredAttributes?: boolean;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     enableEmbedButtonInAD?: boolean;
     enableEmbedButtonInKD?: boolean;
@@ -2834,6 +2918,7 @@ export interface ISettings {
     enableUserManagement?: boolean;
     enableWaterfallChart?: boolean;
     enableWeekFilters?: boolean;
+    enableWidgetIdentifiersRollout?: boolean;
     enableWorkspacesHierarchyView?: boolean;
     formatLocale?: string;
     hideKpiDrillInEmbedded?: boolean;
@@ -2850,10 +2935,10 @@ export interface ISettings {
 }
 
 // @alpha
-export function isExportDefinitionDashboardContent(obj: unknown): obj is IExportDefinitionDashboardContent;
+export function isExportDefinitionDashboardRequestPayload(obj: unknown): obj is IExportDefinitionDashboardRequestPayload;
 
 // @alpha
-export function isExportDefinitionVisualizationObjectContent(obj: unknown): obj is IExportDefinitionVisualizationObjectContent;
+export function isExportDefinitionVisualizationObjectRequestPayload(obj: unknown): obj is IExportDefinitionVisualizationObjectRequestPayload;
 
 // @public
 export function isFactMetadataObject(obj: unknown): obj is IFactMetadataObject;

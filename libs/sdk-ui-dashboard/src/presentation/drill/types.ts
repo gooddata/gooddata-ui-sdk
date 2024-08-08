@@ -162,6 +162,10 @@ export interface IDrillConfigItemBase {
     warning?: string;
     attributes: IAvailableDrillTargetMeasure["attributes"];
     widgetRef: ObjRef;
+    /**
+     * Local identifiers of attribute display forms that should be ignored in drill intersection.
+     */
+    drillIntersectionIgnoredAttributes?: string[];
 }
 
 export type IDrillConfigItem =

@@ -422,6 +422,34 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableRollupTotals,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableWidgetIdentifiersRollout,
+            "enableWidgetIdentifiersRollout",
+            "BOOLEAN",
+            FeatureFlagsValues.enableWidgetIdentifiersRollout,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableAIFunctions,
+            "enableAIFunctions",
+            "BOOLEAN",
+            FeatureFlagsValues.enableAIFunctions,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableDrillIntersectionIgnoredAttributes,
+            "enableDrillIntersectionIgnoredAttributes",
+            "BOOLEAN",
+            FeatureFlagsValues.enableDrillIntersectionIgnoredAttributes,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableDashboardFilterViews,
+            "enableDashboardFilterViews",
+            "BOOLEAN",
+            FeatureFlagsValues.enableDashboardFilterViews,
+        ),
     };
 }
 

@@ -2244,6 +2244,61 @@ export interface ResultSpec {
 /**
  *
  * @export
+ * @interface SearchRelationshipObject
+ */
+export interface SearchRelationshipObject {
+    /**
+     * Source workspace ID. If relationship is dashboard->visualization, this is the workspace where the dashboard is located.
+     * @type {string}
+     * @memberof SearchRelationshipObject
+     */
+    sourceWorkspaceId: string;
+    /**
+     * Source object ID.
+     * @type {string}
+     * @memberof SearchRelationshipObject
+     */
+    sourceObjectId: string;
+    /**
+     * Source object type, e.g. dashboard.
+     * @type {string}
+     * @memberof SearchRelationshipObject
+     */
+    sourceObjectType: string;
+    /**
+     * Source object title.
+     * @type {string}
+     * @memberof SearchRelationshipObject
+     */
+    sourceObjectTitle: string;
+    /**
+     * Target workspace ID. If relationship is dashboard->visualization, this is the workspace where the visualization is located.
+     * @type {string}
+     * @memberof SearchRelationshipObject
+     */
+    targetWorkspaceId: string;
+    /**
+     * Target object ID.
+     * @type {string}
+     * @memberof SearchRelationshipObject
+     */
+    targetObjectId: string;
+    /**
+     * Target object type, e.g. visualization.
+     * @type {string}
+     * @memberof SearchRelationshipObject
+     */
+    targetObjectType: string;
+    /**
+     * Target object title.
+     * @type {string}
+     * @memberof SearchRelationshipObject
+     */
+    targetObjectTitle: string;
+}
+/**
+ *
+ * @export
  * @interface SearchRequest
  */
 export interface SearchRequest {
@@ -2265,6 +2320,18 @@ export interface SearchRequest {
      * @memberof SearchRequest
      */
     deepSearch?: boolean;
+    /**
+     * Maximum number of results to return. There is a hard limit and the actual number of returned results may be lower than what is requested.
+     * @type {number}
+     * @memberof SearchRequest
+     */
+    limit?: number;
+    /**
+     * Temporary for experiments. Ratio of title score to descriptor score.
+     * @type {number}
+     * @memberof SearchRequest
+     */
+    titleToDescriptorRatio?: number;
 }
 
 export const SearchRequestObjectTypesEnum = {
@@ -2293,6 +2360,12 @@ export interface SearchResult {
      * @memberof SearchResult
      */
     results: Array<SearchResultObject>;
+    /**
+     *
+     * @type {Array<SearchRelationshipObject>}
+     * @memberof SearchResult
+     */
+    relationships: Array<SearchRelationshipObject>;
 }
 /**
  *
@@ -2301,29 +2374,77 @@ export interface SearchResult {
  */
 export interface SearchResultObject {
     /**
-     *
+     * Object ID.
      * @type {string}
      * @memberof SearchResultObject
      */
     id: string;
     /**
-     *
+     * Object type, e.g. dashboard.
      * @type {string}
      * @memberof SearchResultObject
      */
     type: string;
     /**
-     *
+     * Object title.
      * @type {string}
      * @memberof SearchResultObject
      */
     title: string;
     /**
-     *
+     * Object description.
      * @type {string}
      * @memberof SearchResultObject
      */
     description: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof SearchResultObject
+     */
+    tags?: Array<string>;
+    /**
+     * Timestamp when object was created.
+     * @type {string}
+     * @memberof SearchResultObject
+     */
+    createdAt?: string;
+    /**
+     * Timestamp when object was last modified.
+     * @type {string}
+     * @memberof SearchResultObject
+     */
+    modifiedAt?: string;
+    /**
+     * If the object is visualization, this field defines the type of visualization.
+     * @type {string}
+     * @memberof SearchResultObject
+     */
+    visualizationUrl?: string;
+    /**
+     * Result score calculated by a similarity search algorithm (cosine_distance).
+     * @type {number}
+     * @memberof SearchResultObject
+     */
+    score: number;
+    /**
+     * Result score for object title.
+     * @type {number}
+     * @memberof SearchResultObject
+     */
+    scoreTitle: number;
+    /**
+     * Result score for descriptor containing(now) description and tags.
+     * @type {number}
+     * @memberof SearchResultObject
+     */
+    scoreDescriptor: number;
+    /**
+     * Result score for exact match(id/title). 1/1000. Other scores are multiplied by this.
+     * @type {number}
+     * @memberof SearchResultObject
+     */
+    scoreExactMatch: number;
 }
 /**
  *

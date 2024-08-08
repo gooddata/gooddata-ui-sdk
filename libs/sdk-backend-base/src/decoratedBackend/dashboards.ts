@@ -31,6 +31,7 @@ import {
     IDashboardPermissions,
     IExistingDashboard,
     IDateFilter,
+    IDashboardFilterView,
 } from "@gooddata/sdk-model";
 
 /**
@@ -186,5 +187,21 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
 
     validateDashboardsExistence(dashboardRefs: ObjRef[]): Promise<IExistingDashboard[]> {
         return this.decorated.validateDashboardsExistence(dashboardRefs);
+    }
+
+    getFilterViewsForCurrentUser(dashboardRef: ObjRef): Promise<IDashboardFilterView[]> {
+        return this.decorated.getFilterViewsForCurrentUser(dashboardRef);
+    }
+
+    createFilterView(filterView: IDashboardFilterView): Promise<IDashboardFilterView> {
+        return this.decorated.createFilterView(filterView);
+    }
+
+    deleteFilterView(ref: ObjRef): Promise<void> {
+        return this.decorated.deleteFilterView(ref);
+    }
+
+    setFilterViewAsDefault(ref: ObjRef, isDefault: boolean): Promise<void> {
+        return this.decorated.setFilterViewAsDefault(ref, isDefault);
     }
 }

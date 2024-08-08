@@ -355,5 +355,9 @@
     "properties.clustering.amount.placeholder": "3",
     "properties.clustering.amount.partial.title": "Mostrar los clústers parciales",
     "properties.clustering.amount.partial.description": "Los puntos de datos disponibles no cubren toda la cantidad seleccionada.",
-    "properties.clustering.disabled": "La agrupación en clústeres solo se puede habilitar cuando el segmento segmentBy está vacío."
+    "properties.clustering.disabled": "La agrupación en clústeres solo se puede habilitar cuando el segmento segmentBy está vacío.",
+    "properties.clustering.threshold": "Umbral",
+    "properties.clustering.threshold.placeholder": "0.03",
+    "properties.clustering.threshold.tooltip": "El umbral es un límite que determina cuándo agrupar los datos. <link>Más información</link>",
+    "visualizations.headline.tertiary.title": "Frente a"
 }

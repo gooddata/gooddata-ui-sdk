@@ -496,6 +496,8 @@ export {
     newAllTimeDashboardDateFilter,
     newRelativeDashboardDateFilter,
     isFilterContextItem,
+    IDashboardFilterView,
+    IDashboardFilterViewSaveRequest,
 } from "./dashboard/filterContext.js";
 
 export {
@@ -888,19 +890,20 @@ export { DataSourceType, IDataSourceIdentifierDescriptor } from "./dataSources/i
 
 export {
     IExportDefinitionMetadataObject,
-    IExportDefinitionRequestPayload,
     IExportDefinitionBase,
-    IExportDefinitionPdfOptions,
-    IExportDefinitionSettings,
+    IExportDefinitionDashboardSettings,
+    IExportDefinitionDashboardRequestPayload,
+    IExportDefinitionVisualizationObjectSettings,
+    IExportDefinitionVisualizationObjectRequestPayload,
+    IExportDefinitionRequestPayload,
     exportDefinitionTitle,
     exportDefinitionCreated,
     exportDefinitionUpdated,
-    IExportDefinitionContent,
     IExportDefinitionDashboardContent,
     IExportDefinitionVisualizationObjectContent,
-    isExportDefinitionDashboardContent,
-    isExportDefinitionVisualizationObjectContent,
     IExportDefinitionMetadataObjectDefinition,
+    isExportDefinitionDashboardRequestPayload,
+    isExportDefinitionVisualizationObjectRequestPayload,
 } from "./exportDefinitions/index.js";
 
 export { IWorkspaceDataFilter, IWorkspaceDataFilterSetting } from "./dataFilter/index.js";
@@ -918,6 +921,13 @@ export {
     IAutomationUserRecipient,
     isAutomationUserGroupRecipient,
     isAutomationUserRecipient,
+    IAutomationAlert,
+    IAutomationAlertCondition,
+    IAutomationAlertExecutionDefinition,
 } from "./automations/index.js";
 
-export { ISemanticSearchResultItem, GenAISemanticSearchType } from "./genAI/index.js";
+export {
+    ISemanticSearchResultItem,
+    GenAISemanticSearchType,
+    ISemanticSearchRelationship,
+} from "./genAI/index.js";

@@ -1,17 +1,12 @@
 // (C) 2019-2024 GoodData Corporation
 import { useCallback, useState } from "react";
-import {
-    IAutomationMetadataObject,
-    IAutomationMetadataObjectDefinition,
-    FilterContextItem,
-} from "@gooddata/sdk-model";
+import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { useCreateScheduledEmail } from "./useCreateScheduledEmail.js";
 import { useUpdateScheduledEmail } from "./useUpdateScheduledEmail.js";
 import { IScheduledEmailDialogProps } from "../../types.js";
 import { IntlShape, useIntl } from "react-intl";
 import omit from "lodash/omit.js";
-import { getAutomationDashboardFilters } from "../utils/automationHelpers.js";
 
 export function useSaveScheduledEmailToBackend(
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
@@ -38,11 +33,8 @@ export function useSaveScheduledEmailToBackend(
         },
     });
     const handleCreateScheduledEmail = useCallback(
-        (
-            scheduledEmail: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
-            filters?: FilterContextItem[],
-        ) => {
-            scheduledEmailCreator.create(scheduledEmail as IAutomationMetadataObjectDefinition, filters);
+        (scheduledEmail: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => {
+            scheduledEmailCreator.create(scheduledEmail as IAutomationMetadataObjectDefinition);
         },
         [scheduledEmailCreator],
     );
@@ -67,11 +59,8 @@ export function useSaveScheduledEmailToBackend(
     });
 
     const handleUpdateScheduledEmail = useCallback(
-        (
-            scheduledEmail: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
-            filters?: FilterContextItem[],
-        ) => {
-            scheduledEmailUpdater.save(scheduledEmail as IAutomationMetadataObject, filters);
+        (scheduledEmail: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => {
+            scheduledEmailUpdater.save(scheduledEmail as IAutomationMetadataObject);
         },
         [scheduledEmailUpdater],
     );
@@ -79,13 +68,10 @@ export function useSaveScheduledEmailToBackend(
     const handleSaveScheduledEmail = (): void => {
         const sanitizedAutomation = sanitizeAutomation(automation, intl);
 
-        // Only filters from dashboard export definition are relevant for scheduled email for now
-        const filters = getAutomationDashboardFilters(sanitizedAutomation);
-
         if (sanitizedAutomation.id) {
-            handleUpdateScheduledEmail(sanitizedAutomation, filters);
+            handleUpdateScheduledEmail(sanitizedAutomation);
         } else {
-            handleCreateScheduledEmail(sanitizedAutomation, filters);
+            handleCreateScheduledEmail(sanitizedAutomation);
         }
     };
 

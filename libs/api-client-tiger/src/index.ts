@@ -198,6 +198,7 @@ export {
     SearchResult,
     SearchRequestObjectTypesEnum,
     SearchResultObject,
+    SearchRelationshipObject,
 } from "./generated/afm-rest-api/api.js";
 export {
     ActionsApiFactory as AuthActionsApiFactory,
@@ -211,15 +212,9 @@ export {
     ActionsApiCreatePdfExportRequest,
     ActionsApiGetExportedFileRequest,
     ActionsApiGetMetadataRequest,
+    ActionsApiCreateTabularExportRequest,
+    ActionsApiGetTabularExportRequest,
     ExportResponse,
-    TabularExportRequestFormatEnum,
-    Settings,
-    CustomOverride,
-    CustomLabel,
-    CustomMetric,
-    VisualExportRequest,
-    PdfTableStyle,
-    PdfTableStyleProperty,
 } from "./generated/export-json-api/api.js";
 
 export {

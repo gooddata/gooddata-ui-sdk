@@ -13,6 +13,9 @@ import { IAutomationMetadataObjectDefinition, IAutomationMetadataObject } from "
 export abstract class DecoratedAutomationsQuery implements IAutomationsQuery {
     protected constructor(protected readonly decorated: IAutomationsQuery) {}
 
+    withAll(): IAutomationsQuery {
+        return this.decorated.withAll();
+    }
     withSize(size: number): IAutomationsQuery {
         return this.decorated.withSize(size);
     }
@@ -27,6 +30,12 @@ export abstract class DecoratedAutomationsQuery implements IAutomationsQuery {
     }
     withType(type: AutomationType): IAutomationsQuery {
         return this.decorated.withType(type);
+    }
+    withAuthor(author: string): IAutomationsQuery {
+        return this.decorated.withAuthor(author);
+    }
+    withDashboard(dashboard: string): IAutomationsQuery {
+        return this.decorated.withDashboard(dashboard);
     }
     query(): Promise<IAutomationsQueryResult> {
         return this.decorated.query();

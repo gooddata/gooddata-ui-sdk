@@ -35,7 +35,6 @@
     * {
         margin-top: 0;
         color: var(--gd-palette-complementary-7, #6d7680);
-        font-weight: 400;
     }
 
     a {
@@ -101,7 +100,7 @@
 
 // known overrides inside other wrappers
 .bubble .bubble-content .content .gd-rich-text-content {
-    > a {
+    a {
         color: variables.$gd-palette-primary-base;
         font-size: 14px;
         line-height: 19px;

@@ -1,41 +1,23 @@
 // (C) 2020-2024 GoodData Corporation
 import {
-    JsonApiAnalyticalDashboardLinkageTypeEnum,
     JsonApiExportDefinitionInDocument,
     JsonApiExportDefinitionOutWithLinksTypeEnum,
     JsonApiExportDefinitionPostOptionalIdDocument,
-    JsonApiVisualizationObjectLinkageTypeEnum,
     TabularExportRequest,
     VisualExportRequest,
 } from "@gooddata/api-client-tiger";
 import {
     IExportDefinitionRequestPayload,
-    isExportDefinitionDashboardContent,
     IExportDefinitionMetadataObjectDefinition,
+    isExportDefinitionDashboardRequestPayload,
 } from "@gooddata/sdk-model";
+import { convertFilter } from "./afm/FilterConverter.js";
+import compact from "lodash/compact.js";
 
 export const convertExportDefinitionMdObjectDefinition = (
     exportDefinition: IExportDefinitionMetadataObjectDefinition,
 ): JsonApiExportDefinitionPostOptionalIdDocument => {
     const { title, description, tags, requestPayload } = exportDefinition;
-
-    const relationships = isExportDefinitionDashboardContent(requestPayload.content)
-        ? {
-              analyticalDashboard: {
-                  data: {
-                      id: requestPayload.content.dashboard,
-                      type: JsonApiAnalyticalDashboardLinkageTypeEnum.ANALYTICAL_DASHBOARD,
-                  },
-              },
-          }
-        : {
-              visualizationObject: {
-                  data: {
-                      id: requestPayload.content.visualizationObject,
-                      type: JsonApiVisualizationObjectLinkageTypeEnum.VISUALIZATION_OBJECT,
-                  },
-              },
-          };
 
     return {
         data: {
@@ -46,7 +28,6 @@ export const convertExportDefinitionMdObjectDefinition = (
                 tags,
                 requestPayload: convertExportDefinitionRequestPayload(requestPayload),
             },
-            relationships,
         },
     };
 };
@@ -54,27 +35,35 @@ export const convertExportDefinitionMdObjectDefinition = (
 const convertExportDefinitionRequestPayload = (
     exportRequest: IExportDefinitionRequestPayload,
 ): TabularExportRequest | VisualExportRequest => {
-    if (isExportDefinitionDashboardContent(exportRequest.content)) {
-        const metadataObj = exportRequest.content.filters
-            ? { metadata: { filters: exportRequest.content.filters } }
-            : {};
+    if (isExportDefinitionDashboardRequestPayload(exportRequest)) {
+        const { filters, dashboard } = exportRequest.content;
+        const metadataObj = exportRequest.content.filters ? { metadata: { filters } } : {};
 
         return {
             fileName: exportRequest.fileName,
-            dashboardId: exportRequest.content.dashboard,
+            dashboardId: dashboard,
             ...metadataObj,
-        };
+        } as VisualExportRequest;
     }
+
+    const { mergeHeaders, orientation } = exportRequest.settings ?? {};
+    const { visualizationObject, filters, widget, dashboard } = exportRequest.content;
+    const convertedFilters = filters ? compact(filters.map(convertFilter)) : undefined;
 
     return {
         fileName: exportRequest.fileName,
         format: exportRequest.format,
-        visualizationObject: exportRequest.content.visualizationObject,
-        visualizationObjectCustomFilters: exportRequest.content.filters,
+        visualizationObject,
+        visualizationObjectCustomFilters: convertedFilters,
+        relatedDashboardId: dashboard,
         settings: {
-            pdfPageSize: exportRequest.pdfOptions?.orientation,
+            ...(mergeHeaders ? { mergeHeaders } : {}),
+            ...(orientation ? { pdfPageSize: orientation } : {}),
         },
-    };
+        metadata: {
+            widget,
+        },
+    } as TabularExportRequest;
 };
 
 export const convertExportDefinitionMdObject = (

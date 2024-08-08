@@ -1,10 +1,6 @@
 // (C) 2021-2024 GoodData Corporation
 
-import {
-    IAutomationMetadataObjectDefinition,
-    IAutomationMetadataObject,
-    FilterContextItem,
-} from "@gooddata/sdk-model";
+import { IAutomationMetadataObjectDefinition, IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { IDashboardCommand } from "./base.js";
 
 /**
@@ -16,10 +12,6 @@ export interface CreateScheduledEmailPayload {
      * The scheduled email to create.
      */
     readonly scheduledEmail: IAutomationMetadataObjectDefinition;
-    /**
-     * Filter context filters to use for the scheduled email. If no filters are provided, stored dashboard filters will be used.
-     */
-    readonly filters?: FilterContextItem[];
 }
 
 /**
@@ -38,7 +30,6 @@ export interface CreateScheduledEmail extends IDashboardCommand {
  * Dispatching this command will result in the creating scheduled email on the backend.
  *
  * @param scheduledEmail - specify scheduled email to create.
- * @param filters - specify filter context filters to use for the scheduled email. If no filters are provided, stored dashboard filters will be used.
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
 
@@ -46,7 +37,6 @@ export interface CreateScheduledEmail extends IDashboardCommand {
  */
 export function createScheduledEmail(
     scheduledEmail: IAutomationMetadataObjectDefinition,
-    filters?: FilterContextItem[],
     correlationId?: string,
 ): CreateScheduledEmail {
     return {
@@ -54,7 +44,6 @@ export function createScheduledEmail(
         correlationId,
         payload: {
             scheduledEmail,
-            filters,
         },
     };
 }
@@ -78,10 +67,6 @@ export interface SaveScheduledEmailPayload {
      * The scheduled email to save.
      */
     readonly scheduledEmail: IAutomationMetadataObject;
-    /**
-     * optionally specify existing filter context filters to be used for all attachments
-     */
-    readonly filters?: FilterContextItem[];
 }
 
 /**
@@ -96,7 +81,6 @@ export interface SaveScheduledEmailPayload {
  */
 export function saveScheduledEmail(
     scheduledEmail: IAutomationMetadataObject,
-    filters?: FilterContextItem[],
     correlationId?: string,
 ): SaveScheduledEmail {
     return {
@@ -104,7 +88,6 @@ export function saveScheduledEmail(
         correlationId,
         payload: {
             scheduledEmail,
-            filters,
         },
     };
 }

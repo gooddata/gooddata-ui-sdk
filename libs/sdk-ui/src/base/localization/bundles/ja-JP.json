@@ -618,5 +618,6 @@
     "recurrence.types.weekly": "毎週 {day}",
     "recurrence.types.monthly.last": "毎月最後の{day}",
     "recurrence.types.monthly": "毎月 {week, select, 1 { 1番目の} 2 {、2 番目の} 3 {、3 番目の} 4 {、4 番目の} other {、最後の}} {day}",
-    "recurrence.types.cron": "クロン式"
+    "recurrence.types.cron": "クロン式",
+    "gs.header.search": "検索"
 }

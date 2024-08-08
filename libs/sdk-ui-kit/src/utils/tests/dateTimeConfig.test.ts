@@ -1,8 +1,7 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import toDate from "date-fns-tz/toDate";
 import { describe, it, expect } from "vitest";
-
-import { getDateTimeConfig, META_DATA_TIMEZONE } from "../InsightListItemDate.js";
+import { getDateTimeConfig, META_DATA_TIMEZONE } from "../dateTimeConfig.js";
 
 interface ITestOptions {
     now: Date;

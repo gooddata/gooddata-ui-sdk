@@ -1,6 +1,6 @@
 // (C) 2023-2024 GoodData Corporation
 
-import { ITigerClient } from "@gooddata/api-client-tiger";
+import { ITigerClient, DeclarativeNotificationChannelDestinationTypeEnum } from "@gooddata/api-client-tiger";
 import { IWebhookMetadataObject, IWebhookMetadataObjectDefinition } from "@gooddata/sdk-model";
 import { IOrganizationNotificationChannelService } from "@gooddata/sdk-backend-spi";
 
@@ -24,7 +24,12 @@ export class OrganizationNotificationChannelService implements IOrganizationNoti
             const result = await client.entities.getAllEntitiesNotificationChannels({});
             const channels = result.data?.data || [];
 
-            const webhooks = channels.filter((webhook) => webhook.attributes?.webhook);
+            const webhooks = channels.filter((channel) => {
+                return (
+                    channel.attributes?.destinationType ===
+                    DeclarativeNotificationChannelDestinationTypeEnum.WEBHOOK
+                );
+            });
             return webhooks.map((webhook) => convertWebhookFromNotificationChannel(webhook));
         });
     };

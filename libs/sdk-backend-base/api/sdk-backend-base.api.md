@@ -38,6 +38,7 @@ import { IClusteringResult } from '@gooddata/sdk-backend-spi';
 import { IDashboard } from '@gooddata/sdk-model';
 import { IDashboardDefinition } from '@gooddata/sdk-model';
 import { IDashboardFilterReference } from '@gooddata/sdk-model';
+import { IDashboardFilterView } from '@gooddata/sdk-model';
 import { IDashboardMetadataObject } from '@gooddata/sdk-model';
 import { IDashboardPermissions } from '@gooddata/sdk-model';
 import { IDashboardPlugin } from '@gooddata/sdk-model';
@@ -90,6 +91,7 @@ import { IScheduledMail } from '@gooddata/sdk-model';
 import { IScheduledMailDefinition } from '@gooddata/sdk-model';
 import { ISecuritySettingsService } from '@gooddata/sdk-backend-spi';
 import { ISemanticSearchQuery } from '@gooddata/sdk-backend-spi';
+import { ISemanticSearchRelationship } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
@@ -520,6 +522,8 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     // (undocumented)
     createDashboardPlugin(plugin: IDashboardPluginDefinition): Promise<IDashboardPlugin>;
     // (undocumented)
+    createFilterView(filterView: IDashboardFilterView): Promise<IDashboardFilterView>;
+    // (undocumented)
     createScheduledMail(scheduledMail: IScheduledMailDefinition, exportFilterContext?: IFilterContextDefinition): Promise<IScheduledMail>;
     // (undocumented)
     createWidgetAlert(alert: IWidgetAlertDefinition): Promise<IWidgetAlert>;
@@ -529,6 +533,8 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     deleteDashboard(ref: ObjRef): Promise<void>;
     // (undocumented)
     deleteDashboardPlugin(ref: ObjRef): Promise<void>;
+    // (undocumented)
+    deleteFilterView(ref: ObjRef): Promise<void>;
     // (undocumented)
     deleteScheduledMail(ref: ObjRef): Promise<void>;
     // (undocumented)
@@ -558,6 +564,8 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     // (undocumented)
     getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardWithReferences>;
     // (undocumented)
+    getFilterViewsForCurrentUser(dashboardRef: ObjRef): Promise<IDashboardFilterView[]>;
+    // (undocumented)
     getResolvedFiltersForWidget(widget: IWidget, filters: IFilter[]): Promise<IFilter[]>;
     // (undocumented)
     getResolvedFiltersForWidgetWithMultipleDateFilters(widget: IWidget, commonDateFilters: IDateFilter[], otherFilters: IFilter[]): Promise<IFilter[]>;
@@ -569,6 +577,8 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     getWidgetAlertsCountForWidgets(refs: ObjRef[]): Promise<IWidgetAlertCount[]>;
     // (undocumented)
     getWidgetReferencedObjects(widget: IWidget, types?: SupportedWidgetReferenceTypes[]): Promise<IWidgetReferences>;
+    // (undocumented)
+    setFilterViewAsDefault(ref: ObjRef, isDefault: boolean): Promise<void>;
     // (undocumented)
     updateDashboard(dashboard: IDashboard, updatedDashboard: IDashboardDefinition): Promise<IDashboard>;
     // (undocumented)
@@ -644,7 +654,12 @@ export class DummySemanticSearchQueryBuilder implements ISemanticSearchQuery {
             type: GenAISemanticSearchType;
             title: string;
             description: string;
+            tags: string[];
+            createdAt: string;
+            modifiedAt: string;
+            visualizationUrl: string | undefined;
         }[];
+        relationships: ISemanticSearchRelationship[];
     }>;
     // (undocumented)
     question: string;

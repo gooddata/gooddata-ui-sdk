@@ -97,6 +97,7 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
                     "notificationChannel",
                     "recipients",
                     "exportDefinitions",
+                    "analyticalDashboard",
                     ...(loadUserData ? (["createdBy", "modifiedBy"] as const) : []),
                 ],
             });
@@ -135,6 +136,7 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
                     "notificationChannel",
                     "recipients",
                     "exportDefinitions",
+                    "analyticalDashboard",
                     ...(loadUserData ? (["createdBy", "modifiedBy"] as const) : []),
                 ],
             });
