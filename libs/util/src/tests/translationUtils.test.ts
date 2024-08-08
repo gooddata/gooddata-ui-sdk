@@ -47,6 +47,10 @@ describe("sanitizeLocaleForMoment", () => {
         "es-419",
         "en-GB",
         "fr-CA",
+        "en-AU",
+        "fi-FI",
+        "zh-Hant",
+        "zh-Yue",
     ])("should not touch %s locale", (value: string) => {
         const expected = value;
         const actual = sanitizeLocaleForMoment(value);

@@ -50,6 +50,10 @@ export const LOCALES: ILocale[] = [
     "es-419",
     "fr-CA",
     "en-GB",
+    "en-AU",
+    "fi-FI",
+    "zh-Hant",
+    "zh-Yue",
 ];
 export const DEFAULT_LOCALE = "en-US";
 
