@@ -33,6 +33,18 @@ describe("sanitizeLocaleForMoment", () => {
         expect(actual).toEqual(expected);
     });
 
+    it("should sanitize the zh-Hant locale", () => {
+        const expected = "zh-CN";
+        const actual = sanitizeLocaleForMoment("zh-Hant");
+        expect(actual).toEqual(expected);
+    });
+
+    it("should sanitize the zh-Yue locale", () => {
+        const expected = "zh-CN";
+        const actual = sanitizeLocaleForMoment("zh-Yue");
+        expect(actual).toEqual(expected);
+    });
+
     it.each([
         "de-DE",
         "en-US",
@@ -49,8 +61,6 @@ describe("sanitizeLocaleForMoment", () => {
         "fr-CA",
         "en-AU",
         "fi-FI",
-        "zh-Hant",
-        "zh-Yue",
     ])("should not touch %s locale", (value: string) => {
         const expected = value;
         const actual = sanitizeLocaleForMoment(value);
