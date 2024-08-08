@@ -19,7 +19,11 @@ export type ILocale =
     | "it-IT"
     | "es-419"
     | "fr-CA"
-    | "en-GB";
+    | "en-GB"
+    | "en-AU"
+    | "fi-FI"
+    | "zh-Hant"
+    | "zh-Yue";
 
 /**
  * Array of locales for type-guard. It must be the same as {@link ILocale}
@@ -41,6 +45,10 @@ export const LOCALES = [
     "es-419",
     "fr-CA",
     "en-GB",
+    "en-AU",
+    "fi-FI",
+    "zh-Hant",
+    "zh-Yue",
 ];
 
 /**

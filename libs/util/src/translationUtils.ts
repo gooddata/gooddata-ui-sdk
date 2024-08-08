@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 
 /**
  * Given an object containing the parsed translation bundle, this function creates a new object which contains
@@ -25,7 +25,7 @@ export function removeMetadata(translationsWithMetadata: Record<string, any>): R
  * @internal
  */
 export const sanitizeLocaleForMoment = (intlLocale: string): string => {
-    if (intlLocale === "zh-Hans") {
+    if (intlLocale === "zh-Hans" || intlLocale === "zh-Hant" || intlLocale === "zh-Yue") {
         return "zh-CN";
     }
     return intlLocale;
