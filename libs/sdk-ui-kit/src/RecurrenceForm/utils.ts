@@ -58,28 +58,52 @@ export const constructCronExpression = (
     }
 };
 
-// eslint-disable-next-line regexp/no-unused-capturing-group
 const hourlyCronRegex = /^0 0 \* \? \* \*$/; // Every hour
-// eslint-disable-next-line regexp/no-unused-capturing-group
 const dailyCronRegex = /^0 0 (\d{1,2}) \? \* \*$/; // Every day at the same hour
-// eslint-disable-next-line regexp/no-unused-capturing-group
 const weeklyCronRegex = /^0 0 (\d{1,2}) \? \* (SUN|MON|TUE|WED|THU|FRI|SAT)$/; // Every week at the same day and same hour
-// eslint-disable-next-line regexp/no-unused-capturing-group
 const monthlyCronRegex = /^0 0 (\d{1,2}) \? \* (SUN|MON|TUE|WED|THU|FRI|SAT)(#[1-5]|L)$/; // Every month on the nth week day and same hour
 
 export const transformCronExpressionToRecurrenceType = (
+    date: Date,
     cronExpression: string,
     allowHourlyRecurrence: boolean,
 ): RecurrenceType => {
+    const hours = date.getHours();
+    const dayOfWeekName = getDayOfWeekName(date);
+    const weekNumber = isLastOccurrenceOfWeekdayInMonth(date) ? "L" : "#" + getWeekNumber(date);
+
     switch (true) {
         case allowHourlyRecurrence && hourlyCronRegex.test(cronExpression):
             return RECURRENCE_TYPES.HOURLY;
-        case dailyCronRegex.test(cronExpression):
-            return RECURRENCE_TYPES.DAILY;
-        case weeklyCronRegex.test(cronExpression):
-            return RECURRENCE_TYPES.WEEKLY;
-        case monthlyCronRegex.test(cronExpression):
-            return RECURRENCE_TYPES.MONTHLY;
+        case dailyCronRegex.test(cronExpression): {
+            const groups = cronExpression.match(dailyCronRegex);
+            const h = parseInt(groups[1], 10);
+            if (h === hours) {
+                return RECURRENCE_TYPES.DAILY;
+            }
+            return RECURRENCE_TYPES.CRON;
+        }
+        case weeklyCronRegex.test(cronExpression): {
+            const groups = cronExpression.match(weeklyCronRegex);
+            const h = parseInt(groups[1], 10);
+            const d = groups[2];
+
+            if (h === hours && d === dayOfWeekName) {
+                return RECURRENCE_TYPES.WEEKLY;
+            }
+            return RECURRENCE_TYPES.CRON;
+        }
+        case monthlyCronRegex.test(cronExpression): {
+            const groups = cronExpression.match(monthlyCronRegex);
+            const h = parseInt(groups[1], 10);
+            const d = groups[2];
+            const w = groups[3];
+
+            if (h === hours && d === dayOfWeekName && w === weekNumber) {
+                return RECURRENCE_TYPES.MONTHLY;
+            }
+            return RECURRENCE_TYPES.CRON;
+        }
         default:
             return RECURRENCE_TYPES.CRON;
     }
