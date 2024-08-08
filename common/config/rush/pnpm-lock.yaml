@@ -841,7 +841,7 @@ importers:
         specifier: workspace:*
         version: link:../../../../libs/sdk-ui-pivot
       default-import:
-        specifier: ^1.1.5
+        specifier: 1.1.5
         version: 1.1.5
       highcharts:
         specifier: 9.3.0
@@ -1964,7 +1964,7 @@ importers:
         specifier: workspace:*
         version: link:../util
       default-import:
-        specifier: ^1.1.5
+        specifier: 1.1.5
         version: 1.1.5
       hoist-non-react-statics:
         specifier: ^3.3.0
@@ -2269,7 +2269,7 @@ importers:
         specifier: ^2.22.1
         version: 2.30.0
       default-import:
-        specifier: ^1.1.5
+        specifier: 1.1.5
         version: 1.1.5
       highcharts:
         specifier: 9.3.0
@@ -2489,7 +2489,7 @@ importers:
         specifier: ^2.22.1
         version: 2.30.0
       default-import:
-        specifier: ^1.1.5
+        specifier: 1.1.5
         version: 1.1.5
       immer:
         specifier: ^9.0.3
@@ -2742,7 +2742,7 @@ importers:
         specifier: ^3.1.2
         version: 3.1.2
       default-import:
-        specifier: ^1.1.5
+        specifier: 1.1.5
         version: 1.1.5
       fixed-data-table-2:
         specifier: ^1.2.0
@@ -2965,7 +2965,7 @@ importers:
         specifier: ^2.22.1
         version: 2.30.0
       default-import:
-        specifier: ^1.1.5
+        specifier: 1.1.5
         version: 1.1.5
       downshift:
         specifier: ^3.4.7
@@ -3170,7 +3170,7 @@ importers:
         specifier: ^2.3.1
         version: 2.3.2
       default-import:
-        specifier: ^1.1.5
+        specifier: 1.1.5
         version: 1.1.5
       lodash:
         specifier: ^4.17.21
@@ -3357,7 +3357,7 @@ importers:
         specifier: ^3.1.2
         version: 3.1.2
       default-import:
-        specifier: ^1.1.5
+        specifier: 1.1.5
         version: 1.1.5
       fixed-data-table-2:
         specifier: ^1.2.0
@@ -4718,7 +4718,7 @@ importers:
         specifier: ^2.3.1
         version: 2.3.2
       default-import:
-        specifier: ^1.1.5
+        specifier: 1.1.5
         version: 1.1.5
       lodash:
         specifier: ^4.17.21
