@@ -84,9 +84,10 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
                           vf.attributeFilter.localIdentifier!,
                       );
                       // strict checking of both primary and secondary label means that cross filtering is able to create two filters using same primary label but different display as label. It was possible even before.
-                      return areObjRefsEqual(vf.attributeFilter.displayForm, displayForm) && vfDisplayAsLabel
-                          ? areObjRefsEqual(vfDisplayAsLabel, primaryLabel)
-                          : true;
+                      return (
+                          areObjRefsEqual(vf.attributeFilter.displayForm, primaryLabel) &&
+                          (vfDisplayAsLabel ? areObjRefsEqual(vfDisplayAsLabel, displayForm) : true)
+                      );
                   }
                   return areObjRefsEqual(vf.attributeFilter.displayForm, displayForm);
               })

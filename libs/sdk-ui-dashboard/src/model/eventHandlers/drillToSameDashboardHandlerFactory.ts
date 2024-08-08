@@ -1,7 +1,7 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { areObjRefsEqual, ObjRef } from "@gooddata/sdk-model";
 import { DashboardEventHandler } from "./eventHandler.js";
-import { changeFilterContextSelection } from "../commands/index.js";
+import { changeFilterContextSelectionByParams } from "../commands/index.js";
 import { newDashboardEventPredicate, DashboardDrillToDashboardResolved } from "../events/index.js";
 
 /**
@@ -27,6 +27,11 @@ export const newDrillToSameDashboardHandler = (
             areObjRefsEqual(e.payload.drillDefinition.target, dashboardRef),
     ),
     handler: (event, dispatch) => {
-        dispatch(changeFilterContextSelection(event.payload.filters));
+        dispatch(
+            changeFilterContextSelectionByParams({
+                filters: event.payload.filters,
+                attributeFilterConfigs: event.payload.attributeFilterConfigs,
+            }),
+        );
     },
 });

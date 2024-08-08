@@ -6,6 +6,9 @@ import {
     IExportDefinitionMetadataObject,
     IExportDefinitionMetadataObjectDefinition,
 } from "../exportDefinitions/index.js";
+import { IExecutionDefinition } from "../execution/executionDefinition/index.js";
+import { IMeasure } from "../execution/measure/index.js";
+import { Identifier } from "../objRef/index.js";
 
 /**
  * @alpha
@@ -16,6 +19,11 @@ export interface IAutomationMetadataObjectBase {
      * Object with cron expression, timezone and first run timestamp.
      */
     schedule?: IAutomationSchedule;
+
+    /**
+     * Alerting configuration of the automation.
+     */
+    alert?: IAutomationAlert;
 
     /**
      * Target webhook that automation will trigger.
@@ -48,6 +56,11 @@ export interface IAutomationMetadataObjectBase {
          */
         message?: string;
     };
+
+    /**
+     * Dashboard that automation is related to.
+     */
+    dashboard?: Identifier;
 }
 
 /**
@@ -196,3 +209,57 @@ export function isAutomationUserGroupRecipient(obj: unknown): obj is IAutomation
  * @alpha
  */
 export type IAutomationRecipient = IAutomationUserRecipient | IAutomationUserGroupRecipient;
+
+/**
+ * @alpha
+ */
+export type IAutomationAlertExecutionDefinition = Pick<
+    IExecutionDefinition,
+    "attributes" | "measures" | "filters"
+>;
+
+/**
+ * @alpha
+ */
+export interface IAutomationAlertCondition {
+    /**
+     * Type of the condition.
+     */
+    type: "comparison";
+
+    /**
+     * Operator of the condition.
+     */
+    operator:
+        | "LESS_THAN"
+        | "LESS_THAN_OR_EQUALS"
+        | "EQUALS"
+        | "NOT_EQUALS"
+        | "GREATER_THAN"
+        | "GREATER_THAN_OR_EQUALS";
+
+    /**
+     * Left side of the condition.
+     */
+    left: IMeasure;
+
+    /**
+     * Right side of the condition.
+     */
+    right: number;
+}
+
+/**
+ * @alpha
+ */
+export interface IAutomationAlert {
+    /**
+     * Execution definition of the alert.
+     */
+    execution: IAutomationAlertExecutionDefinition;
+
+    /**
+     * Condition of the alert.
+     */
+    condition: IAutomationAlertCondition;
+}

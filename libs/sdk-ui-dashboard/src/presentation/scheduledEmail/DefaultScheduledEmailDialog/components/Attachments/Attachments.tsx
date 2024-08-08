@@ -4,8 +4,7 @@ import { FormattedMessage } from "react-intl";
 import {
     FilterContextItem,
     IAutomationMetadataObject,
-    IExportDefinitionSettings,
-    IWidget,
+    IExportDefinitionVisualizationObjectSettings,
 } from "@gooddata/sdk-model";
 import { Message } from "@gooddata/sdk-ui-kit";
 import { AttachmentFilters, AttachmentFilterType } from "./AttachmentFilters.js";
@@ -13,13 +12,14 @@ import { useAttachmentDashboardFilters } from "../../hooks/useAttachmentDashboar
 import { getAutomationDashboardFilters } from "../../utils/automationHelpers.js";
 import { AttachmentDashboard, AttachmentWidgets } from "./AttachmentItems.js";
 import { WidgetAttachmentType } from "../../types.js";
+import { ExtendedDashboardWidget } from "src/model/index.js";
 
 export interface IAttachmentsProps {
     dashboardTitle: string;
     dashboardSelected: boolean;
     csvSelected: boolean;
     xlsxSelected: boolean;
-    settings: IExportDefinitionSettings;
+    settings: IExportDefinitionVisualizationObjectSettings;
     onDashboardAttachmentsSelectionChange: (
         dashboardSelected: boolean,
         filters?: FilterContextItem[],
@@ -29,8 +29,8 @@ export interface IAttachmentsProps {
         format: WidgetAttachmentType,
         filters?: FilterContextItem[],
     ) => void;
-    onWidgetAttachmentsSettingsChange: (obj: IExportDefinitionSettings) => void;
-    widget?: IWidget;
+    onWidgetAttachmentsSettingsChange: (obj: IExportDefinitionVisualizationObjectSettings) => void;
+    widget?: ExtendedDashboardWidget;
     editSchedule?: IAutomationMetadataObject;
 }
 
@@ -55,6 +55,7 @@ export const Attachments = (props: IAttachmentsProps) => {
     const { areFiltersChanged, isCrossFiltering, filtersToStore, filtersToDisplayInfo } =
         useAttachmentDashboardFilters({
             customFilters: dashboardEditFilters,
+            widget,
         });
     const isEditing = !!editSchedule;
 
@@ -87,17 +88,9 @@ export const Attachments = (props: IAttachmentsProps) => {
 
     const handleWidgetAttachmentSelectionChange = (format: WidgetAttachmentType) => {
         if (format === "CSV") {
-            onWidgetAttachmentsSelectionChange(
-                !csvSelected,
-                format,
-                includeFilters ? filtersToStore : undefined,
-            );
+            onWidgetAttachmentsSelectionChange(!csvSelected, format, filtersToStore);
         } else {
-            onWidgetAttachmentsSelectionChange(
-                !xlsxSelected,
-                format,
-                includeFilters ? filtersToStore : undefined,
-            );
+            onWidgetAttachmentsSelectionChange(!xlsxSelected, format, filtersToStore);
         }
     };
 
@@ -108,26 +101,36 @@ export const Attachments = (props: IAttachmentsProps) => {
             </label>
             <div className="gd-attachment-list">
                 {widget ? (
-                    <AttachmentWidgets
-                        csvSelected={csvSelected}
-                        xlsxSelected={xlsxSelected}
-                        settings={settings}
-                        onSelectionChange={handleWidgetAttachmentSelectionChange}
-                        onSettingsChange={onWidgetAttachmentsSettingsChange}
-                    />
+                    <>
+                        <AttachmentWidgets
+                            csvSelected={csvSelected}
+                            xlsxSelected={xlsxSelected}
+                            settings={settings}
+                            onSelectionChange={handleWidgetAttachmentSelectionChange}
+                            onSettingsChange={onWidgetAttachmentsSettingsChange}
+                        />
+                        {(isEditing || areFiltersChanged) && (csvSelected || xlsxSelected) ? (
+                            <div>
+                                <FormattedMessage id="dialogs.schedule.management.attachments.filters.using" />{" "}
+                                <FormattedMessage id="dialogs.schedule.management.attachments.filters.edited" />
+                            </div>
+                        ) : null}
+                    </>
                 ) : (
-                    <AttachmentDashboard
-                        pdfSelected={dashboardSelected}
-                        onSelectionChange={handleDashboardAttachmentSelectionChange}
-                    />
+                    <>
+                        <AttachmentDashboard
+                            pdfSelected={dashboardSelected}
+                            onSelectionChange={handleDashboardAttachmentSelectionChange}
+                        />
+                        <AttachmentFilters
+                            filterType={attachmentFilterType}
+                            onChange={handleAttachmentFilterTypeChange}
+                            hidden={!showAttachmentFilters}
+                            disabled={isEditing}
+                            filters={filtersToDisplayInfo}
+                        />
+                    </>
                 )}
-                <AttachmentFilters
-                    filterType={attachmentFilterType}
-                    onChange={handleAttachmentFilterTypeChange}
-                    hidden={!showAttachmentFilters}
-                    disabled={isEditing}
-                    filters={filtersToDisplayInfo}
-                />
                 {isCrossFiltering && props.dashboardSelected ? (
                     <Message type="progress" className="gd-attachment-list-message">
                         <FormattedMessage

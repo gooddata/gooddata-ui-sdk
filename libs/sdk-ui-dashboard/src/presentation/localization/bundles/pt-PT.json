@@ -453,5 +453,22 @@
     "dialogs.schedule.management.list.title": "As suas exportações programadas",
     "dialogs.schedule.management.create": "Criar",
     "dialogs.schedule.management.create.tooManyMessage": "Demasiadas programações. Pode criar um máximo de 10 programações.",
-    "filter.crossFilterResetButton.tooltip": "Redefinir filtros cruzados"
+    "filter.crossFilterResetButton.tooltip": "Redefinir filtros cruzados",
+    "options.menu.schedule.email.edit": "Horários dos espectáculos",
+    "dialogs.schedule.email.footer.title.short": "Ajuda",
+    "dialogs.schedule.management.attachments.xlsx.settings": "Opções XLSX",
+    "dialogs.schedule.management.attachments.cells.merged": "Manter células de atributo unidas",
+    "dialogs.schedule.management.attachments.filters.title": "Filtros do painel",
+    "dialogs.schedule.management.attachments.filters.using": "em uso",
+    "dialogs.schedule.management.attachments.filters.default": "filtros padrão do painel",
+    "dialogs.schedule.management.attachments.filters.edited": "filtros editados do painel",
+    "dialogs.schedule.management.attachments.filters.item.default": "Usar filtros padrão",
+    "dialogs.schedule.management.attachments.filters.item.edited": "Usar filtros editados",
+    "dialogs.schedule.management.attachments.filters.item.tooltip": "O estado predefinido dos filtros do painel será utilizado na exportação agendada, mesmo que os valores predefinidos sejam alterados no futuro.",
+    "dialogs.schedule.management.attachments.filters.item.tooltip.disabled": "Para agendar uma exportação com filtros padrão, crie uma nova exportação agendada.",
+    "dialogs.schedule.management.attachments.message": "<strong>Nota</strong>. A filtragem cruzada não será aplicada na exportação agendada.",
+    "save": "Guardar",
+    "widget.options.menu.scheduleExport.edit": "Horários dos espectáculos",
+    "dateFilterDropdown.configuration": "Configuração",
+    "dateFilterDropdown.title": "Intervalo de datas"
 }

@@ -206,7 +206,7 @@ export interface TabularExportRequest {
      */
     customOverride?: CustomOverride;
     /**
-     * Visualization object identifier. Alternative to executionResult property. (HTML/PDF only)
+     * Visualization object identifier. Alternative to executionResult property.
      * @type {string}
      * @memberof TabularExportRequest
      */
@@ -217,6 +217,12 @@ export interface TabularExportRequest {
      * @memberof TabularExportRequest
      */
     visualizationObjectCustomFilters?: Array<object>;
+    /**
+     * Analytical dashboard identifier. Optional identifier, which informs the system that the export is related to a specific dashboard.
+     * @type {string}
+     * @memberof TabularExportRequest
+     */
+    relatedDashboardId?: string;
     /**
      * Metadata definition in free-form JSON format.
      * @type {object}

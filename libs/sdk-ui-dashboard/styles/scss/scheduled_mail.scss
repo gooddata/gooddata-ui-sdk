@@ -37,6 +37,11 @@ $min-content-height: 110px;
 
     .gd-dialog-footer {
         display: flex;
+
+        .gd-loading-spinner {
+            top: 8px;
+            right: 6px;
+        }
     }
 }
 

@@ -83,6 +83,8 @@ export {
     selectIsDisabledCrossFiltering,
     selectIsDisableUserFilterReset,
     selectEnableScheduling,
+    selectEnableDrillIntersectionIgnoredAttributes,
+    selectEnableFilterViews,
 } from "./config/configSelectors.js";
 export { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {
@@ -90,6 +92,7 @@ export {
     selectEntitlementMaxAutomationRecipients,
     selectEntitlementMaxAutomations,
     selectEntitlementMinimumRecurrenceMinutes,
+    selectEntitlementUnlimitedAutomations,
 } from "./entitlements/entitlementsSelectors.js";
 
 export { PermissionsState } from "./permissions/permissionsState.js";
@@ -283,6 +286,7 @@ export {
     selectDisableDashboardCrossFiltering,
     selectDisableDashboardUserFilterReset,
     selectDisableDashboardUserFilterSave,
+    selectDisableFilterViews,
 } from "./meta/metaSelectors.js";
 export {
     selectListedDashboards,
@@ -380,10 +384,13 @@ export {
 
 export { AutomationsState } from "./automations/automationsState.js";
 export {
-    selectAutomations,
+    selectAutomationsCount,
     selectAutomationsIsLoading,
     selectAutomationsError,
+    selectAutomationsFingerprint,
 } from "./automations/automationsSelectors.js";
 
 export { UsersState } from "./users/usersState.js";
 export { selectUsers } from "./users/usersSelectors.js";
+
+export { selectFilterViews, IFilterViews, FilterViewsState } from "./filterViews/index.js";

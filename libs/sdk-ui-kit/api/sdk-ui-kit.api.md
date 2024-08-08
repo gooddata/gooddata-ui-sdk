@@ -56,7 +56,7 @@ export const AddButton: React_2.FC<IAddButtonProps>;
 export const AddGranteeBase: React_2.FC<IAddGranteeBaseProps>;
 
 // @internal (undocumented)
-export type AddMessageType = (message: MessageDescriptor, options?: Pick<IMessageDefinition, "duration" | "intensive" | "values">) => string;
+export type AddMessageType = (message: MessageDescriptor, options?: MessageParameters) => string;
 
 // @internal (undocumented)
 export type Alignment = {
@@ -626,7 +626,7 @@ export const getColorsPreviewFromColorPalette: (colorPalette: IColorPalette) => 
 export const getColorsPreviewFromTheme: (theme: ITheme) => string[];
 
 // @internal
-export function getDateTimeConfig(date: string, options?: IDateTimeConfigOptions): IInsightListItemDateConfig;
+export function getDateTimeConfig(date: string, options?: IDateTimeConfigOptions): IDateConfig;
 
 // @internal (undocumented)
 export const getDefaultEmbedTypeOptions: (embedType: EmbedType) => EmbedOptionsType;
@@ -861,13 +861,11 @@ export interface IAppHeaderProps {
     // (undocumented)
     onMenuItemClick?: (menuItem: IHeaderMenuItem, e?: React_2.MouseEvent) => void;
     // (undocumented)
-    onSearchButtonClick?: () => void;
-    // (undocumented)
     onUpsellButtonClick?: (e: React_2.MouseEvent) => void;
     // (undocumented)
-    showInviteItem?: boolean;
+    search?: React_2.ReactNode;
     // (undocumented)
-    showSearchButton?: boolean;
+    showInviteItem?: boolean;
     // (undocumented)
     showStaticHelpMenu?: boolean;
     // (undocumented)
@@ -1225,6 +1223,18 @@ export interface ICustomizableCheckmarkProps {
 }
 
 // @internal (undocumented)
+export interface IDateConfig {
+    // (undocumented)
+    date: Date;
+    // (undocumented)
+    isCurrentYear: boolean;
+    // (undocumented)
+    isToday: boolean;
+    // (undocumented)
+    isYesterday: boolean;
+}
+
+// @internal (undocumented)
 export interface IDateDataset {
     // (undocumented)
     id: string;
@@ -1453,6 +1463,8 @@ export interface IDropdownBodyRenderProps {
 
 // @internal (undocumented)
 export interface IDropdownButtonProps {
+    // (undocumented)
+    children?: ReactNode;
     // (undocumented)
     className?: string;
     // (undocumented)
@@ -2131,22 +2143,13 @@ export interface IInsightIconProps {
     visualizationUrl?: string;
 }
 
-// @internal (undocumented)
-export interface IInsightListItemDateConfig {
-    // (undocumented)
-    date: Date;
-    // (undocumented)
-    isCurrentYear: boolean;
-    // (undocumented)
-    isToday: boolean;
-    // (undocumented)
-    isYesterday: boolean;
-}
+// @internal @deprecated
+export type IInsightListItemDateConfig = IDateConfig;
 
 // @internal (undocumented)
 export interface IInsightListItemDateProps {
     // (undocumented)
-    config: IInsightListItemDateConfig;
+    config: IDateConfig;
 }
 
 // @internal (undocumented)
@@ -2200,6 +2203,10 @@ export interface IInvertableSelectAllCheckboxProps {
 // @internal (undocumented)
 export interface IInvertableSelectItem {
     // (undocumented)
+    icon?: JSX.Element;
+    // (undocumented)
+    isDisabled?: boolean;
+    // (undocumented)
     isSelected?: boolean;
     // (undocumented)
     onClick?: () => void;
@@ -2210,7 +2217,15 @@ export interface IInvertableSelectItem {
     // (undocumented)
     onOnly?: () => void;
     // (undocumented)
+    renderOnly?: (props: IInvertableSelectItemRenderOnlyProps) => JSX.Element;
+    // (undocumented)
     title?: string;
+}
+
+// @internal (undocumented)
+export interface IInvertableSelectItemRenderOnlyProps {
+    // (undocumented)
+    onOnly?: () => void;
 }
 
 // @internal (undocumented)
@@ -4318,10 +4333,16 @@ export type MenuAlignment = ["bottom", "right"] | ["bottom", "left"] | ["top", "
 export const Message: React_2.FC<IMessageProps>;
 
 // @internal (undocumented)
+export type MessageParameters = Pick<IMessageDefinition, "duration" | "intensive" | "values">;
+
+// @internal (undocumented)
 export const Messages: React_2.FC<IMessagesProps>;
 
 // @internal (undocumented)
 export type MessageType = "success" | "progress" | "error" | "warning";
+
+// @internal (undocumented)
+export const META_DATA_TIMEZONE = "Europe/Prague";
 
 // @internal (undocumented)
 export const MetadataList: React_2.FC<IMetadataListProps>;
@@ -4769,7 +4790,8 @@ T,
 /**
 * The debounced value.
 */
-T
+T,
+(value: T) => void
 ];
 
 // @internal (undocumented)

@@ -3,7 +3,6 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { DashboardSelector, DashboardState } from "../types.js";
-import { Automations } from "../../types/commonTypes.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -15,7 +14,7 @@ const selectSelf = createSelector(
  *
  * @alpha
  */
-export const selectAutomations: DashboardSelector<Automations> = createSelector(selectSelf, (state) => {
+export const selectAutomationsCount: DashboardSelector<number> = createSelector(selectSelf, (state) => {
     return state.automations;
 });
 
@@ -39,3 +38,12 @@ export const selectAutomationsError: DashboardSelector<GoodDataSdkError | undefi
         return state.error;
     },
 );
+
+/**
+ * Returns organization automations error
+ *
+ * @alpha
+ */
+export const selectAutomationsFingerprint: DashboardSelector<string> = createSelector(selectSelf, (state) => {
+    return state.fingerprint;
+});

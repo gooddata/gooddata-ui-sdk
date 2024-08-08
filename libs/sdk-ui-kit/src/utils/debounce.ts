@@ -19,6 +19,10 @@ export type UseDebouncedStateOutput<T> = [
      * The debounced value.
      */
     T,
+    /**
+     * A function to set the value immediately.
+     */
+    (value: T) => void,
 ];
 
 /**
@@ -49,5 +53,10 @@ export const useDebouncedState = <T>(initialValue: T, delay: number): UseDebounc
         };
     }, [value, delay]);
 
-    return [value, setValue, debouncedValue];
+    const setImmediate = (value: T) => {
+        setValue(value);
+        setDebouncedValue(value);
+    };
+
+    return [value, setValue, debouncedValue, setImmediate];
 };

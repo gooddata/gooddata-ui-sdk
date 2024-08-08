@@ -22,6 +22,7 @@ import {
     useDashboardDispatch,
     useDashboardScheduledEmails,
     useDashboardSelector,
+    selectDashboardId,
 } from "../../../model/index.js";
 import { downloadFile } from "../../../_staging/fileUtils/downloadFile.js";
 import { IMenuButtonItem } from "../types.js";
@@ -36,13 +37,17 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
     const isEmptyLayout = !useDashboardSelector(selectLayoutHasAnalyticalWidgets); // we need at least one non-custom widget there
     const { addSuccess, addError, addProgress, removeMessage } = useToastMessage();
+
+    const dashboard = useDashboardSelector(selectDashboardId);
     const {
         isScheduledEmailingVisible,
         isScheduledManagementEmailingVisible,
         defaultOnScheduleEmailing,
         defaultOnScheduleEmailingManagement,
         numberOfAvailableWebhooks,
-    } = useDashboardScheduledEmails();
+    } = useDashboardScheduledEmails({
+        dashboard,
+    });
 
     const dispatch = useDashboardDispatch();
     const openSaveAsDialog = useCallback(() => dispatch(uiActions.openSaveAsDialog()), [dispatch]);

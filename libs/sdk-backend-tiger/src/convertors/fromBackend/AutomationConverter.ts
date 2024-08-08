@@ -64,6 +64,8 @@ export function convertAutomation(
             ?.map((r) => convertRecipient(r, included))
             .filter(isAutomationUserRecipient) ?? [];
 
+    const dashboard = relationships?.analyticalDashboard?.data?.id;
+
     return {
         // Common metadata object properties
         type: "automation",
@@ -84,6 +86,7 @@ export function convertAutomation(
         updatedBy: convertUserIdentifier(modifiedBy, included),
         created: createdAt,
         updated: modifiedAt,
+        dashboard,
         // Bear legacy props
         unlisted: false,
         production: true,

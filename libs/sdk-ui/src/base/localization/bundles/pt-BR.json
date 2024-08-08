@@ -618,5 +618,6 @@
     "recurrence.types.weekly": "Semanalmente às {day}",
     "recurrence.types.monthly.last": "Mensalmente no último {day}",
     "recurrence.types.monthly": "Mensalmente ao {week, select, 1 {primeiro} 2 {segundo} 3 {terceiro} 4 {quarto} other {último}} {day}",
-    "recurrence.types.cron": "Expressão cron"
+    "recurrence.types.cron": "Expressão cron",
+    "gs.header.search": "Pesquisar"
 }

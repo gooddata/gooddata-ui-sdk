@@ -218,7 +218,7 @@ export class PluggablePivotTable extends AbstractPluggableVisualization {
             : [];
 
         const rowTotals = removeInvalidTotals(getTotalsFromBucket(buckets, BucketNames.ATTRIBUTE), filters);
-        const colTotals = getTotalsFromBucket(buckets, BucketNames.COLUMNS);
+        const colTotals = removeInvalidTotals(getTotalsFromBucket(buckets, BucketNames.COLUMNS), filters);
 
         newReferencePoint.buckets = removeDuplicateBucketItems([
             {

@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import compact from "lodash/compact.js";
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
@@ -40,6 +40,7 @@ export {
     getAttributeIdentifiersPlaceholdersFromUrl,
     getDashboardAttributeFilterPlaceholdersFromUrl,
     getInsightAttributeFilterPlaceholdersFromUrl,
+    IDrillToUrlPlaceholder,
 } from "@gooddata/sdk-model/internal";
 
 interface IImplicitDrillWithPredicates {

@@ -6,7 +6,12 @@ import {
     IDrillIntersectionAttributeItem,
     isDrillIntersectionAttributeItem,
 } from "@gooddata/sdk-ui";
-import { areObjRefsEqual, ObjRef, IDashboardAttributeFilter } from "@gooddata/sdk-model";
+import {
+    areObjRefsEqual,
+    ObjRef,
+    IDashboardAttributeFilter,
+    isAttributeDescriptor,
+} from "@gooddata/sdk-model";
 
 /**
  *  For correct drill intersection that should be converted into AttributeFilters must be drill intersection:
@@ -59,4 +64,20 @@ export function convertIntersectionToAttributeFilters(
             });
             return result;
         }, [] as IConversionResult[]);
+}
+
+/**
+ * @internal
+ */
+export function removeIgnoredValuesFromDrillIntersection(
+    intersection: IDrillEventIntersectionElement[],
+    drillIntersectionIgnoredAttributes: string[],
+): IDrillEventIntersectionElement[] {
+    return intersection!.filter((i) => {
+        if (isAttributeDescriptor(i.header) || isDrillIntersectionAttributeItem(i.header)) {
+            return !drillIntersectionIgnoredAttributes?.includes(i.header.attributeHeader.localIdentifier);
+        }
+
+        return true;
+    });
 }

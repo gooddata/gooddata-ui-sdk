@@ -10,6 +10,7 @@ import {
     idRef,
     IExportDefinitionMetadataObject,
     IExportDefinitionRequestPayload,
+    IExportDefinitionVisualizationObjectSettings,
     IFilter,
 } from "@gooddata/sdk-model";
 import { convertUserIdentifier } from "./UsersConverter.js";
@@ -55,36 +56,44 @@ export const convertExportDefinitionMdObject = (
 const convertExportDefinitionRequestPayload = (
     exportRequest: VisualExportRequest | TabularExportRequest,
 ): IExportDefinitionRequestPayload => {
-    if (isTabularRequest(exportRequest) && exportRequest.format === "PDF") {
-        const pdfPageSize = exportRequest.settings?.pdfPageSize;
+    if (isTabularRequest(exportRequest)) {
+        const { widget } = (exportRequest.metadata as { widget?: string }) ?? {};
+
+        const filters = exportRequest.visualizationObjectCustomFilters as IFilter[];
+        const filtersObj = filters ? { filters } : {};
+
+        const { mergeHeaders, pdfPageSize } = exportRequest.settings ?? {};
+        const orientation =
+            pdfPageSize === "portrait" || pdfPageSize === "landscape" ? pdfPageSize : "portrait";
+        const settings: IExportDefinitionVisualizationObjectSettings = {
+            ...(exportRequest.format === "PDF" ? { orientation } : {}),
+            ...(mergeHeaders ? { mergeHeaders } : {}),
+        };
+        const settingsObj = isEmpty(settings) ? {} : { settings };
+
         return {
+            type: "visualizationObject",
             fileName: exportRequest.fileName,
             format: exportRequest.format,
             content: {
                 visualizationObject: exportRequest.visualizationObject ?? "",
-                filters: (exportRequest.visualizationObjectCustomFilters as IFilter[]) ?? [],
+                dashboard: exportRequest.relatedDashboardId ?? "",
+                widget,
+                ...filtersObj,
             },
-            pdfOptions: {
-                orientation:
-                    pdfPageSize === "portrait" || pdfPageSize === "landscape" ? pdfPageSize : "portrait",
-            },
+            ...settingsObj,
         };
-    } else if (isVisualRequest(exportRequest)) {
+    } else {
+        const filters = (exportRequest.metadata as any)?.filters as FilterContextItem[];
+        const filtersObj = filters ? { filters } : {};
+
         return {
+            type: "dashboard",
             fileName: exportRequest.fileName,
             format: "PDF",
             content: {
                 dashboard: exportRequest.dashboardId,
-                filters: (exportRequest.metadata as any)?.filters as FilterContextItem[],
-            },
-        };
-    } else {
-        // to be expanded when more formats are supported
-        return {
-            fileName: "",
-            format: "PDF",
-            content: {
-                visualizationObject: "",
+                ...filtersObj,
             },
         };
     }
@@ -94,10 +103,4 @@ const isTabularRequest = (
     request: VisualExportRequest | TabularExportRequest,
 ): request is TabularExportRequest => {
     return !isEmpty(request) && typeof (request as TabularExportRequest).visualizationObject === "string";
-};
-
-const isVisualRequest = (
-    request: VisualExportRequest | TabularExportRequest,
-): request is VisualExportRequest => {
-    return !isEmpty(request) && typeof (request as VisualExportRequest).dashboardId === "string";
 };

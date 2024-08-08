@@ -404,33 +404,43 @@
         "limit": 0
     },
     "filters.configurationPanel.crossFiltering.toggle": {
-        "value": "Allow cross-filtering",
+        "value": "Cross-filtering",
         "comment": "Filters Configuration - label for toggle that disables or enables cross-filtering.",
         "limit": 0
     },
     "filters.configurationPanel.crossFiltering.toggle.tooltip": {
-        "value": "This will allow users to cross-filter between visualizations.",
+        "value": "Allow users to filter the dashboard by clicking data points in visualizations.",
         "comment": "Filters Configuration - tooltip for toggle that disables or enables cross-filtering.",
         "limit": 0
     },
     "filters.configurationPanel.userFilterReset.toggle": {
-        "value": "Allow users to reset",
+        "value": "Reset",
         "comment": "Filters Configuration - label for toggle that disables or enables user reset of filters.",
         "limit": 0
     },
     "filters.configurationPanel.userFilterReset.toggle.tooltip": {
-        "value": "Allow users to reset filters to the default state.",
+        "value": "Allow users to reset all filters to default.",
         "comment": "Filters Configuration - tooltip for toggle that disables or enables user reset of filters.",
         "limit": 0
     },
     "filters.configurationPanel.userFilterSave.toggle": {
-        "value": "Persist changes locally",
+        "value": "Auto-save last state",
         "comment": "Filters Configuration - label for toggle that disables or enables user save of filters.",
         "limit": 0
     },
     "filters.configurationPanel.userFilterSave.toggle.tooltip": {
-        "value": "This will allow to automatically save changes to filters locally.",
+        "value": "Allow auto-save of the filters' last state. When users return, their filters will remain as they left them.",
         "comment": "Filters Configuration - tooltip for toggle that disables or enables user save of filters.",
+        "limit": 0
+    },
+    "filters.configurationPanel.filterViews.toggle": {
+        "value": "Saved views",
+        "comment": "Filters Configuration - label for toggle that disables or enables filter views.",
+        "limit": 0
+    },
+    "filters.configurationPanel.filterViews.toggle.tooltip": {
+        "value": "<p>Allows users to save filters state as a personal views they can return to later.</p><p>Only the user who saved the view can access it and set it as their default view.</p>",
+        "comment": "Filters Configuration - tooltip for toggle that disables or enables filter views. Do not translate <p> and </p> tags.",
         "limit": 0
     },
     "kpi.noData": {
@@ -544,7 +554,7 @@
         "limit": 0
     },
     "dialogs.schedule.management.create.tooManyMessage": {
-        "value": "Too many schedules. You can create up to {number} schedules.",
+        "value": "Too many schedules created in the workspace. A maximum of {number} schedules can be created in this workspace.",
         "comment": "Do no translate {number} variable",
         "limit": 0
     },
@@ -915,6 +925,18 @@
     "options.menu.unsupported.loading|report": {
         "value": "The report cannot be exported at the moment.",
         "comment": "Error popup. Report cannot be exported to the file.",
+        "limit": 0,
+        "translate": false
+    },
+    "options.menu.unsupported.incompatibleWidget": {
+        "value": "Unable to schedule the export on custom widget.",
+        "comment": "",
+        "limit": 0,
+        "translate": false
+    },
+    "options.menu.unsupported.oldWidget": {
+        "value": "Unable to schedule the export. Please resave the dashboard or contact your administrator.",
+        "comment": "",
         "limit": 0,
         "translate": false
     },
@@ -1651,6 +1673,31 @@
         "translate": false,
         "limit": 0
     },
+    "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.label": {
+        "value": "Pass as filter:",
+        "comment": "Label of the dropdown to select drill intersection ignored attributes.",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.title": {
+        "value": "Pass as filters",
+        "comment": "Title of the dropdown to select drill intersection ignored attributes.",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.tooltip": {
+        "value": "Disable the attribute or date to exclude its value from being passed as a filter to the drill destination.",
+        "comment": "Tooltip of the dropdown to select drill intersection ignored attributes.",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.all": {
+        "value": "All",
+        "comment": "Title of the dropdown, when all values are selected and none attribute is ignored.",
+        "limit": 0
+    },
+    "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.none": {
+        "value": "None",
+        "comment": "Title of the dropdown, when no values are selected and all attributes are ignored.",
+        "limit": 0
+    },
     "configurationPanel.unlistedDashboardTab": {
         "value": "Unlisted dashboard",
         "comment": "",
@@ -2332,6 +2379,161 @@
     "attributesDropdown.valuesLimiting.disableDataSet": {
         "value": "Date dataset not available: The <strong>{dateFilterTitle}</strong> filter is already using this date dataset.",
         "comment": "Do not translate variable enclosed in {}.",
+        "limit": 0
+    },
+    "filters.filterViews.dropdown.buttonEmpty": {
+        "value": "My views",
+        "comment": "Title of the dropdown button that opens list of filter views (saved values) saved by the user.",
+        "limit": 0
+    },
+    "filters.filterViews.dropdown.button": {
+        "value": "My views ({count})",
+        "comment": "Title of the dropdown button that opens list of filter views (saved values) saved by the user. Do not translate {count} placeholder.",
+        "limit": 0
+    },
+    "filters.filterViews.dropdown.title": {
+        "value": "My saved views",
+        "comment": "Title of the dropdown with list of filter views (saved values) saved by the user.",
+        "limit": 0
+    },
+    "filters.filterViews.dropdown.setAsDefault": {
+        "value": "Set as default",
+        "comment": "Label of button that sets the filter view as default one.",
+        "limit": 0
+    },
+    "filters.filterViews.dropdown.unsetAsDefault": {
+        "value": "Unset as default",
+        "comment": "Label of button that unsets the filter view as default one.",
+        "limit": 0
+    },
+    "filters.filterViews.dropdown.isDefault": {
+        "value": "(default)",
+        "comment": "Text displayed next to the name of the filter view if it was marked as a default one.",
+        "limit": 0
+    },
+    "filters.filterViews.dropdown.tooltip": {
+        "value": "<p>Views are saved sets of filters that let you quickly return to a specific filter state.</p><p>If you set a view as the default, it will apply automatically every time you open the dashboard.</p>",
+        "comment": "Tooltip of saved views dropdown. Do not translate <p> and </p> tags.",
+        "limit": 0
+    },
+    "filters.filterViews.dropdown.newButton": {
+        "value": "Create view",
+        "comment": "Label of button that adds a new item to the list",
+        "limit": 0
+    },
+    "filters.filterViews.dropdown.emptyList": {
+        "value": "You haven't saved any views for this dashboard.",
+        "comment": "Text shown when list of views does not have any items in it.",
+        "limit": 0
+    },
+    "filters.filterViews.toast.viewSaved": {
+        "value": "Great! Your view is saved.",
+        "comment": "Text shown when filter view was saved.",
+        "limit": 0
+    },
+    "filters.filterViews.toast.viewDeleted": {
+        "value": "Great! We deleted your view.",
+        "comment": "Text shown when filter view was deleted.",
+        "limit": 0
+    },
+    "filters.filterViews.toast.viewApplied": {
+        "value": "Great! Your view is applied.",
+        "comment": "Text shown when filter view was applied.",
+        "limit": 0
+    },
+    "filters.filterViews.toast.viewSetAsDefault": {
+        "value": "Great! Your view is set as default.",
+        "comment": "Text shown when filter view was saved as a default one.",
+        "limit": 0
+    },
+    "filters.filterViews.toast.viewUnsetAsDefault": {
+        "value": "Great! Your view is no longer set as default.",
+        "comment": "Text shown when filter view was saved as a default one.",
+        "limit": 0
+    },
+    "filters.filterViews.toast.viewNotSaved": {
+        "value": "Failure! Your view was not saved. Please try again.",
+        "comment": "Text shown when filter view was not saved.",
+        "limit": 0
+    },
+    "filters.filterViews.toast.viewNotDeleted": {
+        "value": "Failure! Your view was not deleted. Please try again.",
+        "comment": "Text shown when filter view was not deleted.",
+        "limit": 0
+    },
+    "filters.filterViews.toast.viewNotSetAsDefault": {
+        "value": "Failure! Your view was not set as default. Please try again.",
+        "comment": "Text shown when filter view was not saved as a default one.",
+        "limit": 0
+    },
+    "filters.filterViews.toast.viewNotUnsetAsDefault": {
+        "value": "Failure! Your view is still set as default. Please try again.",
+        "comment": "Text shown when filter view was not saved as a default one.",
+        "limit": 0
+    },
+    "filters.filterViews.toast.viewNotApplied": {
+        "value": "Failure! Your view was not applied. Please try again.",
+        "comment": "Text shown when filter view was not applied.",
+        "limit": 0
+    },
+    "filters.filterViews.add.title": {
+        "value": "Create view",
+        "comment": "Title of the dropdown with form that creates a new saved filter view.",
+        "limit": 0
+    },
+    "filters.filterViews.add.nameLabel": {
+        "value": "Name",
+        "comment": "Label of the input field used to enter the name of the saved filter view.",
+        "limit": 0
+    },
+    "filters.filterViews.add.namePlaceholder": {
+        "value": "Untitled view",
+        "comment": "Placeholder of the input field used to enter the name of the saved filter view.",
+        "limit": 0
+    },
+    "filters.filterViews.add.setAsDefaultLabel": {
+        "value": "Set as default",
+        "comment": "Label of checkbox that marks the view as a default one.",
+        "limit": 0
+    },
+    "filters.filterViews.add.deleteTooltip": {
+        "value": "Delete",
+        "comment": "Tooltip shown when user hovers over delete item icon.",
+        "limit": 0
+    },
+    "filters.filterViews.add.hint": {
+        "value": "All current dashboard filters will be included.",
+        "comment": "Hint in the form that creates a new dashboard filter view.",
+        "limit": 0
+    },
+    "filters.filterViews.add.saveButton": {
+        "value": "Save",
+        "comment": "Label of the button that saves the form.",
+        "limit": 0
+    },
+    "filters.filterViews.add.cancelButton": {
+        "value": "Cancel",
+        "comment": "Label of the button that cancels the form changes.",
+        "limit": 0
+    },
+    "filters.filterViews.delete.title": {
+        "value": "Delete view?",
+        "comment": "Label of the dialog that confirms deletion of the filter view entity.",
+        "limit": 0
+    },
+    "filters.filterViews.delete.body": {
+        "value": "Your view <b>{view}</b> will be permanently deleted.",
+        "comment": "The text shown in the body of the dialog that confirms deletion of the filter view entity. Do not translate tags <b> and </b> and placeholder {view} that will be replaced with the name of the deleted filter view in the runtime.",
+        "limit": 0
+    },
+    "filters.filterViews.delete.deleteButton": {
+        "value": "Delete",
+        "comment": "Label of the button that deletes the filter view.",
+        "limit": 0
+    },
+    "filters.filterViews.delete.cancelButton": {
+        "value": "Cancel",
+        "comment": "Label of the button that cancels and closes the dialog.",
         "limit": 0
     }
 }

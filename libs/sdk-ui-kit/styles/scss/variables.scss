@@ -196,3 +196,4 @@ $measure_sequence_number_font: menlo, monaco, consolas, "Courier New", monospace
 //This is a temporary solution to introduce new design colors
 $default-gd-medium-gray: #687581;
 $gd-medium-gray: var(--gd-palette-complementary-7, $default-gd-medium-gray);
+$gd-delete-item-background: var(--gd-palette-error-lightest, #fff2f1);

@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { ObjRef } from "../objRef/index.js";
 import { DrillDefinition, IDrillDownReference } from "./drill.js";
 import { IDashboardFilterReference } from "./filterContext.js";
@@ -72,6 +72,10 @@ export interface IBaseWidget {
      * @remarks see {@link BuiltInWidgetTypes} for list of built-in widget types.
      */
     readonly type: string;
+    /**
+     * Local identifier of widget
+     */
+    readonly localIdentifier?: string;
 }
 
 /**

@@ -453,5 +453,22 @@
     "dialogs.schedule.management.list.title": "Le tue esportazioni programmate",
     "dialogs.schedule.management.create": "Crea",
     "dialogs.schedule.management.create.tooManyMessage": "Eccessivo numero di pianificazioni. È possibile creare fino a 10 pianificazioni.",
-    "filter.crossFilterResetButton.tooltip": "Azzeramento dei filtri incrociati"
+    "filter.crossFilterResetButton.tooltip": "Azzeramento dei filtri incrociati",
+    "options.menu.schedule.email.edit": "Mostra programmazione",
+    "dialogs.schedule.email.footer.title.short": "Guida",
+    "dialogs.schedule.management.attachments.xlsx.settings": "Opzioni XLSX",
+    "dialogs.schedule.management.attachments.cells.merged": "Mantieni unite le celle degli attributi",
+    "dialogs.schedule.management.attachments.filters.title": "Filtri del dashboard",
+    "dialogs.schedule.management.attachments.filters.using": "utilizzando",
+    "dialogs.schedule.management.attachments.filters.default": "filtri del dashboard predefiniti",
+    "dialogs.schedule.management.attachments.filters.edited": "filtri del dashboard modificati",
+    "dialogs.schedule.management.attachments.filters.item.default": "Utilizza i filtri predefiniti",
+    "dialogs.schedule.management.attachments.filters.item.edited": "Utilizza i filtri modificati",
+    "dialogs.schedule.management.attachments.filters.item.tooltip": "Lo stato predefinito dei filtri del dashboard verrà utilizzato nell'esportazione pianificata, anche se i valori predefiniti cambieranno in futuro.",
+    "dialogs.schedule.management.attachments.filters.item.tooltip.disabled": "Per pianificare un'esportazione con filtri predefiniti, creare una nuova esportazione pianificata.",
+    "dialogs.schedule.management.attachments.message": "<strong>Nota</strong>. Il filtraggio incrociato non verrà applicato all'esportazione pianificata.",
+    "save": "Salva",
+    "widget.options.menu.scheduleExport.edit": "Mostra programmazione",
+    "dateFilterDropdown.configuration": "Configurazione",
+    "dateFilterDropdown.title": "Intervallo di date"
 }

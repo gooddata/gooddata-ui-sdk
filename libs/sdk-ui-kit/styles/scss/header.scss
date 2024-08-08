@@ -589,13 +589,6 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
     }
 }
 
-.gd-icon-header-search::before {
-    vertical-align: bottom;
-    opacity: 0.8;
-    padding-right: 6px;
-    content: "\e62b";
-}
-
 .gd-header-username {
     &::before {
         margin-right: 8px;

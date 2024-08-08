@@ -453,5 +453,22 @@
     "dialogs.schedule.management.list.title": "Vos exportations planifiées",
     "dialogs.schedule.management.create": "Créer",
     "dialogs.schedule.management.create.tooManyMessage": "Trop de calendriers. Vous pouvez créer jusqu'à 10 calendriers.",
-    "filter.crossFilterResetButton.tooltip": "Réinitialiser les filtres croisés"
+    "filter.crossFilterResetButton.tooltip": "Réinitialiser les filtres croisés",
+    "options.menu.schedule.email.edit": "Afficher les horaires",
+    "dialogs.schedule.email.footer.title.short": "Aide",
+    "dialogs.schedule.management.attachments.xlsx.settings": "Options XLSX",
+    "dialogs.schedule.management.attachments.cells.merged": "Garder les cellules d'attributs fusionnées",
+    "dialogs.schedule.management.attachments.filters.title": "Filtres du tableau de bord",
+    "dialogs.schedule.management.attachments.filters.using": "en utilisant",
+    "dialogs.schedule.management.attachments.filters.default": "les filtres par défaut du tableau de bord",
+    "dialogs.schedule.management.attachments.filters.edited": "les filtres édités du tableau de bord",
+    "dialogs.schedule.management.attachments.filters.item.default": "Utiliser les filtres par défaut",
+    "dialogs.schedule.management.attachments.filters.item.edited": "Utiliser les filtres édités",
+    "dialogs.schedule.management.attachments.filters.item.tooltip": "L'état par défaut des filtres du tableau de bord sera utilisé dans l'exportation programmée, même si les valeurs par défaut changent à l'avenir.",
+    "dialogs.schedule.management.attachments.filters.item.tooltip.disabled": "Pour programmer une exportation avec des filtres par défaut, créez une nouvelle exportation programmée.",
+    "dialogs.schedule.management.attachments.message": "<strong>Note</strong> : Le filtrage croisé ne sera pas appliqué dans l'exportation programmée.",
+    "save": "Enregistrer",
+    "widget.options.menu.scheduleExport.edit": "Afficher les horaires",
+    "dateFilterDropdown.configuration": "Configuration",
+    "dateFilterDropdown.title": "Plage de dates"
 }

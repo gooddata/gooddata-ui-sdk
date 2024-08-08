@@ -10,6 +10,7 @@ import {
     selectSettings,
     isCustomWidget,
     useDashboardScheduledEmails,
+    selectDashboardId,
 } from "../../../../model/index.js";
 import {
     DashboardItem,
@@ -38,13 +39,16 @@ const DefaultDashboardInsightWidgetCore: React.FC<
     IDefaultDashboardInsightWidgetProps & { insight: IInsight }
 > = ({ widget, insight, screen, onError, onExportReady, onLoadingChanged, dashboardItemClasses }) => {
     const intl = useIntl();
+    const dashboard = useDashboardSelector(selectDashboardId);
 
     const {
         onScheduleEmailingOpen,
         onScheduleEmailingManagementOpen,
         isScheduledEmailingVisible,
         isScheduledManagementEmailingVisible,
-    } = useDashboardScheduledEmails();
+    } = useDashboardScheduledEmails({
+        dashboard,
+    });
 
     const visType = insightVisualizationType(insight) as VisType;
     const { ref: widgetRef } = widget;

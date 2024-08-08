@@ -9,21 +9,22 @@ import isEmpty from "lodash/isEmpty.js";
 import { FilterContextItem } from "../dashboard/filterContext.js";
 
 /**
- * Export definition PDF Options
+ * Export definition dashboard settings
  *
  * @alpha
  */
-export interface IExportDefinitionPdfOptions {
+export interface IExportDefinitionDashboardSettings {
     orientation: "portrait" | "landscape";
 }
 
 /**
- * Export definition tabular settings
+ * Export definition visualization object settings
  *
  * @alpha
  */
-export interface IExportDefinitionSettings {
-    mergeHeaders: boolean;
+export interface IExportDefinitionVisualizationObjectSettings {
+    mergeHeaders?: boolean;
+    orientation?: "portrait" | "landscape";
 }
 
 /**
@@ -33,20 +34,15 @@ export interface IExportDefinitionSettings {
  */
 export interface IExportDefinitionVisualizationObjectContent {
     visualizationObject: Identifier;
+    /**
+     * Widget context of visualization object.
+     */
+    widget?: Identifier;
+    /**
+     * Dashboard context of visualization object.
+     */
+    dashboard?: Identifier;
     filters?: IFilter[];
-}
-
-/**
- * Type guard to check if the object is of type IExportDefinitionVisualizationObjectContent.
- * @alpha
- */
-export function isExportDefinitionVisualizationObjectContent(
-    obj: unknown,
-): obj is IExportDefinitionVisualizationObjectContent {
-    return (
-        !isEmpty(obj) &&
-        typeof (obj as IExportDefinitionVisualizationObjectContent).visualizationObject === "string"
-    );
 }
 
 /**
@@ -57,39 +53,67 @@ export function isExportDefinitionVisualizationObjectContent(
  * @alpha
  */
 export interface IExportDefinitionDashboardContent {
-    dashboard: string;
+    dashboard: Identifier;
     filters?: FilterContextItem[];
 }
 
 /**
- * Type guard to check if the object is of type IExportDefinitionDashboardContent.
- * @alpha
- */
-export function isExportDefinitionDashboardContent(obj: unknown): obj is IExportDefinitionDashboardContent {
-    return !isEmpty(obj) && typeof (obj as IExportDefinitionDashboardContent).dashboard === "string";
-}
-
-/**
- * Export definition content configuration.
+ * Export definition dashboard request payload
  *
  * @alpha
  */
-export type IExportDefinitionContent =
-    | IExportDefinitionVisualizationObjectContent
-    | IExportDefinitionDashboardContent;
+export type IExportDefinitionDashboardRequestPayload = {
+    type: "dashboard";
+    fileName: string;
+    format: "PDF";
+    settings?: IExportDefinitionDashboardSettings;
+    content: IExportDefinitionDashboardContent;
+};
+
+/**
+ * Type guard to check if the object is of type IExportDefinitionDashboardRequestPayload.
+ * @alpha
+ */
+export function isExportDefinitionDashboardRequestPayload(
+    obj: unknown,
+): obj is IExportDefinitionDashboardRequestPayload {
+    return !isEmpty(obj) && (obj as IExportDefinitionDashboardRequestPayload).type === "dashboard";
+}
+
+/**
+ * Export definition visualization object request payload
+ *
+ * @alpha
+ */
+export type IExportDefinitionVisualizationObjectRequestPayload = {
+    type: "visualizationObject";
+    fileName: string;
+    format: "CSV" | "XLSX" | "HTML" | "PDF";
+    settings?: IExportDefinitionVisualizationObjectSettings;
+    content: IExportDefinitionVisualizationObjectContent;
+};
+
+/**
+ * Type guard to check if the object is of type IExportDefinitionVisualizationObjectRequestPayload.
+ * @alpha
+ */
+export function isExportDefinitionVisualizationObjectRequestPayload(
+    obj: unknown,
+): obj is IExportDefinitionVisualizationObjectRequestPayload {
+    return (
+        !isEmpty(obj) &&
+        (obj as IExportDefinitionVisualizationObjectRequestPayload).type === "visualizationObject"
+    );
+}
 
 /**
  * Export definition request payload
  *
  * @alpha
  */
-export type IExportDefinitionRequestPayload = {
-    fileName: string;
-    format: "PDF" | "CSV" | "XLSX";
-    pdfOptions?: IExportDefinitionPdfOptions;
-    settings?: IExportDefinitionSettings;
-    content: IExportDefinitionContent;
-};
+export type IExportDefinitionRequestPayload =
+    | IExportDefinitionDashboardRequestPayload
+    | IExportDefinitionVisualizationObjectRequestPayload;
 
 /**
  * Export definition base

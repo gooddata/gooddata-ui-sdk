@@ -2,7 +2,13 @@
 import { all, call, put, SagaReturnType, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import { invariant } from "ts-invariant";
-import { IDashboardAttributeFilter, ObjRef, objRefToString, isInsightWidget } from "@gooddata/sdk-model";
+import {
+    IDashboardAttributeFilter,
+    ObjRef,
+    objRefToString,
+    isInsightWidget,
+    areObjRefsEqual,
+} from "@gooddata/sdk-model";
 
 import { AddAttributeFilter } from "../../../commands/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
@@ -59,7 +65,11 @@ export function* addAttributeFilterHandler(
     const usedDisplayForm =
         enableDuplicatedLabelValuesInAttributeFilter && primaryDisplayForm ? primaryDisplayForm : displayForm;
     const displayAsLabel =
-        enableDuplicatedLabelValuesInAttributeFilter && primaryDisplayForm ? displayForm : undefined;
+        enableDuplicatedLabelValuesInAttributeFilter &&
+        primaryDisplayForm &&
+        !areObjRefsEqual(primaryDisplayForm, displayForm)
+            ? displayForm
+            : undefined;
 
     if (!isUnderFilterCountLimit) {
         throw invalidArgumentsProvided(

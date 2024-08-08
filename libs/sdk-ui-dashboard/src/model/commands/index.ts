@@ -33,6 +33,11 @@ import {
     RemoveDateFilters,
     MoveDateFilter,
     SetAttributeFilterDependentDateFilters,
+    SaveFilterView,
+    ApplyFilterView,
+    DeleteFilterView,
+    SetFilterViewAsDefault,
+    ReloadFilterViews,
 } from "./filters.js";
 import {
     ChangeInsightWidgetFilterSettings,
@@ -192,6 +197,20 @@ export {
     SetAttributeFilterDependentDateFilters,
     setAttributeFilterDependentDateFilters,
     SetAttributeFilterDependentDateFiltersPayload,
+    SaveFilterView,
+    SaveFilterViewPayload,
+    saveFilterView,
+    DeleteFilterView,
+    DeleteFilterViewPayload,
+    deleteFilterView,
+    ApplyFilterView,
+    ApplyFilterViewPayload,
+    applyFilterView,
+    SetFilterViewAsDefault,
+    SetFilterViewAsDefaultPayload,
+    setFilterViewAsDefault,
+    ReloadFilterViews,
+    reloadFilterViews,
 } from "./filters.js";
 
 export {
@@ -517,4 +536,9 @@ export type DashboardCommands =
     | SetDashboardDateFilterWithDimensionConfigMode
     | SetDateFilterConfigTitle
     | RefreshAutomations
-    | SetAttributeFilterLimitingItems;
+    | SetAttributeFilterLimitingItems
+    | SaveFilterView
+    | DeleteFilterView
+    | ApplyFilterView
+    | SetFilterViewAsDefault
+    | ReloadFilterViews;

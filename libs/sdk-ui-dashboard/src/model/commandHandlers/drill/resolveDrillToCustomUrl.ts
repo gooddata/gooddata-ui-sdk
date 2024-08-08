@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import { all, call, CallEffect, SagaReturnType, select } from "redux-saga/effects";
 import isNil from "lodash/isNil.js";
 import {
@@ -27,11 +27,12 @@ import { SagaIterator } from "redux-saga";
 import { selectDashboardId } from "../../store/meta/metaSelectors.js";
 import { selectAnalyticalWidgetByRef } from "../../store/layout/layoutSelectors.js";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
-import { getElementTitle } from "./getElementTitle.js";
+import { getElementsSecondaryTitles, getElementTitle } from "./getElementTitle.js";
 import {
     getAttributeIdentifiersPlaceholdersFromUrl,
     getDashboardAttributeFilterPlaceholdersFromUrl,
     getInsightAttributeFilterPlaceholdersFromUrl,
+    IDrillToUrlPlaceholder,
 } from "../../../_staging/drills/drillingUtils.js";
 import { DrillToCustomUrl } from "../../commands/drill.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
@@ -45,10 +46,11 @@ import { selectFilterContextAttributeFilters } from "../../store/filterContext/f
 import { query } from "../../store/_infra/queryCall.js";
 import { queryWidgetFilters } from "../../queries/widgets.js";
 import stringify from "json-stable-stringify";
+import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 
 interface IDrillToUrlPlaceholderReplacement {
     toBeReplaced: string;
-    replacement: string;
+    replacement: string | undefined;
     replaceGlobally?: boolean;
 }
 
@@ -74,6 +76,21 @@ export function* loadElementTitle(
         identifier: dfIdentifier,
         elementTitle,
     };
+}
+
+export function* loadSecondaryElementTitles(
+    dfRef: ObjRef,
+    attrElementValues: (string | null)[],
+    ctx: DashboardContext,
+): SagaIterator<Array<string | null>> {
+    const elementsTitles: PromiseFnReturnType<typeof getElementsSecondaryTitles> = yield call(
+        getElementsSecondaryTitles,
+        ctx.workspace,
+        dfRef,
+        attrElementValues,
+        ctx,
+    );
+    return elementsTitles;
 }
 
 function isInRefList(list: ObjRef[], ref: ObjRef) {
@@ -231,8 +248,57 @@ export function* getAttributeIdentifiersReplacements(
     );
 }
 
+function* resolveDashboardAttributeFilterReplacement(
+    { placeholder: toBeReplaced, ref }: IDrillToUrlPlaceholder,
+    attributeFilters: ReturnType<typeof selectFilterContextAttributeFilters>,
+    catalogDisplayForms: ReturnType<typeof selectAllCatalogDisplayFormsMap>,
+    attributeFilterConfigs: ReturnType<typeof selectAttributeFilterConfigsOverrides>,
+    ctx: DashboardContext,
+): SagaIterator<IDrillToUrlPlaceholderReplacement> {
+    let usedFilter = attributeFilters.find((filter) => {
+        const df = catalogDisplayForms.get(filter.attributeFilter.displayForm);
+        return df && areObjRefsEqual(idRef(df.id), ref);
+    });
+    let attributeElementsValues = [];
+
+    if (usedFilter) {
+        const elements = usedFilter?.attributeFilter.attributeElements;
+        attributeElementsValues = isAttributeElementsByValue(elements)
+            ? elements.values
+            : elements?.uris ?? [];
+    } else {
+        const usedConfig = attributeFilterConfigs.find((config) => {
+            return config.displayAsLabel && areObjRefsEqual(config.displayAsLabel, ref);
+        });
+        usedFilter = attributeFilters.find((filter) => {
+            return filter.attributeFilter.localIdentifier === usedConfig?.localIdentifier;
+        });
+        const elements = usedFilter?.attributeFilter.attributeElements;
+        const primaryElementsValues = !elements
+            ? []
+            : isAttributeElementsByValue(elements)
+            ? elements.values
+            : elements.uris;
+        attributeElementsValues = yield call(loadSecondaryElementTitles, ref, primaryElementsValues, ctx);
+    }
+
+    const isNegative = usedFilter?.attributeFilter.negativeSelection;
+
+    const parsedFilter = usedFilter
+        ? stringifyAttributeFilterSelection(attributeElementsValues, isNegative!)
+        : undefined;
+
+    const replacement = encodeParameterIfSet(parsedFilter);
+
+    return {
+        toBeReplaced,
+        replacement: replacement!,
+    };
+}
+
 export function* getDashboardAttributeFilterReplacements(
     url: string,
+    ctx: DashboardContext,
 ): SagaIterator<IDrillToUrlPlaceholderReplacement[]> {
     const attributeFilterPlaceholders = getDashboardAttributeFilterPlaceholdersFromUrl(url);
 
@@ -247,30 +313,21 @@ export function* getDashboardAttributeFilterReplacements(
         selectAllCatalogDisplayFormsMap,
     );
 
-    return attributeFilterPlaceholders.map(
-        ({ placeholder: toBeReplaced, ref }): IDrillToUrlPlaceholderReplacement => {
-            const usedFilter = attributeFilters.find((filter) => {
-                const df = catalogDisplayForms.get(filter.attributeFilter.displayForm);
-                return df && areObjRefsEqual(idRef(df.id), ref);
-            });
+    const attributeFilterConfigs: ReturnType<typeof selectAttributeFilterConfigsOverrides> = yield select(
+        selectAttributeFilterConfigsOverrides,
+    );
 
-            const elements = usedFilter?.attributeFilter.attributeElements;
-            const attributeElementsValues = isAttributeElementsByValue(elements)
-                ? elements.values
-                : elements?.uris ?? [];
-            const isNegative = usedFilter?.attributeFilter.negativeSelection;
-
-            const parsedFilter = usedFilter
-                ? stringifyAttributeFilterSelection(attributeElementsValues, isNegative!)
-                : undefined;
-
-            const replacement = encodeParameterIfSet(parsedFilter);
-
-            return {
-                toBeReplaced,
-                replacement: replacement!,
-            };
-        },
+    return yield all(
+        attributeFilterPlaceholders.map((placeholder) =>
+            call(
+                resolveDashboardAttributeFilterReplacement,
+                placeholder,
+                attributeFilters,
+                catalogDisplayForms,
+                attributeFilterConfigs,
+                ctx,
+            ),
+        ),
     );
 }
 
@@ -373,7 +430,7 @@ const applyReplacements = (url: string, replacements: IDrillToUrlPlaceholderRepl
         (customUrlWithReplacedPlaceholders, { toBeReplaced, replacement, replaceGlobally }) =>
             customUrlWithReplacedPlaceholders.replace(
                 replaceGlobally ? new RegExp(toBeReplaced, "g") : toBeReplaced,
-                replacement,
+                replacement!,
             ),
         url,
     );
@@ -397,6 +454,7 @@ export function* resolveDrillToCustomUrl(
     const dashboardAttributeFilterReplacements: IDrillToUrlPlaceholderReplacement[] = yield call(
         getDashboardAttributeFilterReplacements,
         customUrl,
+        ctx,
     );
 
     const insightAttributeFilterReplacements: IDrillToUrlPlaceholderReplacement[] = yield call(

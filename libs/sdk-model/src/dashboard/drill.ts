@@ -171,6 +171,15 @@ export interface IDrill {
      * Drill origin
      */
     origin: DrillOrigin;
+
+    /**
+     * Local identifiers of the attribute display forms to ignore
+     * in the drill intersection.
+     *
+     * Values of these display forms won't be included
+     * in the drill intersection.
+     */
+    drillIntersectionIgnoredAttributes?: string[];
 }
 
 /**

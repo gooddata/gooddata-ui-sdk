@@ -64,7 +64,7 @@ describe("SemanticSearch component", () => {
         const { baseElement, callback } = await renderAndType(WITH_DEBOUNCE | WITH_RESULTS);
 
         const firstItem = baseElement.querySelector(".gd-semantic-search__results-item");
-        fireEvent.mouseDown(firstItem);
+        fireEvent.click(firstItem);
 
         expect(callback).toHaveBeenCalledOnce();
     });
@@ -73,7 +73,7 @@ describe("SemanticSearch component", () => {
         const { baseElement } = await renderAndType(WITH_DEBOUNCE | WITH_RESULTS);
 
         const firstItem = baseElement.querySelector(".gd-semantic-search__results-item");
-        expect(firstItem.className).to.include("gd-semantic-search__results-item--selected");
+        expect(firstItem.className).to.include("gd-semantic-search__results-item--active");
     });
 
     it("should allow user to select with Enter key", async () => {
@@ -93,14 +93,6 @@ describe("SemanticSearch component", () => {
         fireEvent.keyDown(baseElement, { key: "ArrowUp" });
 
         const secondItem = baseElement.querySelectorAll(".gd-semantic-search__results-item")[1];
-        expect(secondItem.className).to.include("gd-semantic-search__results-item--selected");
-    });
-
-    it("should close the dropdown on input blur", async () => {
-        const { baseElement } = await renderAndType(WITH_DEBOUNCE | WITH_RESULTS);
-
-        fireEvent.blur(baseElement.querySelector("input")!);
-
-        expect(baseElement.querySelector(".gd-semantic-search__results-item")).toBe(null);
+        expect(secondItem.className).to.include("gd-semantic-search__results-item--active");
     });
 });
