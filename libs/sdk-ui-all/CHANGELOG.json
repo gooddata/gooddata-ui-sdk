@@ -2,6 +2,24 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "10.7.0",
+            "tag": "@gooddata/sdk-ui-all_v10.7.0",
+            "date": "Thu, 08 Aug 2024 09:46:36 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Introduced GenAI Service in sdk-backend-tiger to be able to consume semantic search feeds."
+                    },
+                    {
+                        "comment": "Introduced @gooddata/sdk-ui-semantic-search package in alpha stage"
+                    },
+                    {
+                        "comment": "Top menu UI component now supports a new search button"
+                    }
+                ]
+            }
+        },
+        {
             "version": "10.6.0",
             "tag": "@gooddata/sdk-ui-all_v10.6.0",
             "date": "Thu, 25 Jul 2024 08:35:32 GMT",
