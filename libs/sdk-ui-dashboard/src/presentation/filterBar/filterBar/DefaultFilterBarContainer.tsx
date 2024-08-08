@@ -11,6 +11,7 @@ import {
     selectSupportsCrossFiltering,
     useDashboardSelector,
     selectDisableFilterViews,
+    selectEnableFilterViews,
 } from "../../../model/index.js";
 
 import { BulletsBar } from "../../dragAndDrop/index.js";
@@ -33,7 +34,7 @@ const selectShowFiltersConfigurationPanel = createSelector(
 );
 
 const selectShowFilterViews = createSelector(
-    selectEnableKDCrossFiltering,
+    selectEnableFilterViews,
     selectDisableFilterViews,
     (isFeatureEnabled, isDisabledForDashboard) => {
         return isFeatureEnabled && !isDisabledForDashboard;
