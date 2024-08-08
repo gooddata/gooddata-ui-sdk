@@ -1,6 +1,15 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 25 Jul 2024 08:35:32 GMT and should not be manually modified.
+This log was last generated on Thu, 08 Aug 2024 09:46:36 GMT and should not be manually modified.
+
+## 10.7.0
+Thu, 08 Aug 2024 09:46:36 GMT
+
+### Updates
+
+- Introduced GenAI Service in sdk-backend-tiger to be able to consume semantic search feeds.
+- Introduced @gooddata/sdk-ui-semantic-search package in alpha stage
+- Top menu UI component now supports a new search button
 
 ## 10.6.0
 Thu, 25 Jul 2024 08:35:32 GMT
