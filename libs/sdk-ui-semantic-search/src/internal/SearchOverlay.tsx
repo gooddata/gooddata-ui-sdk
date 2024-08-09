@@ -103,17 +103,20 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({
         (): ListItem<ISemanticSearchResultItem>[] =>
             searchResults.flatMap((item) => {
                 // Look up parent items if available
-                const parents = relationships.filter(
-                    (rel) => rel.targetObjectId === item.id && rel.targetObjectType === item.type,
+                const parentDashboards = relationships.filter(
+                    (rel) =>
+                        rel.targetObjectId === item.id &&
+                        rel.targetObjectType === item.type &&
+                        rel.sourceObjectType === "dashboard",
                 );
 
-                if (!parents.length)
+                if (!parentDashboards.length)
                     return {
                         item,
                         url: getUIPath(item.type, item.id, effectiveWorkspace),
                     };
 
-                return parents.map((parent) => ({
+                return parentDashboards.map((parent) => ({
                     item,
                     parentRef: parent,
                     url: getUIPath(parent.sourceObjectType, parent.sourceObjectId, effectiveWorkspace),
