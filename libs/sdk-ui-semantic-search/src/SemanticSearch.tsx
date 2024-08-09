@@ -9,6 +9,7 @@ import { useSemanticSearch } from "./hooks/index.js";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import classnames from "classnames";
 import { ListItem } from "./types.js";
+import { useElementWidth } from "./hooks/useElementWidth.js";
 
 /**
  * Core semantic search component props.
@@ -76,6 +77,7 @@ const SemanticSearchCore: React.FC<SemanticSearchCoreProps> = ({
 }) => {
     // Input value handling
     const [value, setValue, searchTerm, setImmediate] = useDebouncedState("", DEBOUNCE);
+    const inputRef = React.useRef<Input>(null);
 
     // Search results
     const { searchStatus, searchResults, searchError } = useSemanticSearch({
@@ -93,25 +95,8 @@ const SemanticSearchCore: React.FC<SemanticSearchCoreProps> = ({
         [searchResults],
     );
 
-    // Match the width of the drop-down to the input field
-    const [width, setWidth] = React.useState<number>(0);
-    const inputRef = React.useRef<Input>(null);
-    React.useLayoutEffect(() => {
-        const handleResize = () => {
-            const input = inputRef.current?.inputNodeRef?.inputNodeRef;
-            if (input) {
-                setWidth(input.offsetWidth);
-            }
-        };
-
-        handleResize();
-
-        window.addEventListener("resize", handleResize);
-
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
+    // The List component requires explicit width
+    const [ref, width] = useElementWidth();
 
     // Report errors
     React.useEffect(() => {
@@ -156,16 +141,18 @@ const SemanticSearchCore: React.FC<SemanticSearchCoreProps> = ({
             }}
             renderButton={({ openDropdown }) => {
                 return (
-                    <Input
-                        className="gd-semantic-search__input"
-                        ref={inputRef}
-                        placeholder={placeholder}
-                        isSearch
-                        clearOnEsc
-                        value={value}
-                        onChange={(e) => setValue(String(e))}
-                        onFocus={openDropdown}
-                    />
+                    <div ref={ref}>
+                        <Input
+                            className="gd-semantic-search__input"
+                            ref={inputRef}
+                            placeholder={placeholder}
+                            isSearch
+                            clearOnEsc
+                            value={value}
+                            onChange={(e) => setValue(String(e))}
+                            onFocus={openDropdown}
+                        />
+                    </div>
                 );
             }}
         />

@@ -9,6 +9,10 @@ import { TimezoneProvider } from "./timezoneContext.js";
 
 const ALIGN_POINTS = [{ align: "br tr" }];
 
+/**
+ * Props for the HeaderSearchButton component.
+ * @internal
+ */
 export type HeaderSearchButtonProps = SearchOverlayProps & {
     /**
      * Callback to be called when an item is selected.
@@ -23,7 +27,7 @@ export type HeaderSearchButtonProps = SearchOverlayProps & {
     metadataTimezone?: string;
 };
 
-export const HeaderSearchButtonCore: React.FC<HeaderSearchButtonProps> = ({
+const HeaderSearchButtonCore: React.FC<HeaderSearchButtonProps> = ({
     onSelect,
     metadataTimezone,
     ...overlayProps
@@ -63,7 +67,7 @@ export const HeaderSearchButtonCore: React.FC<HeaderSearchButtonProps> = ({
             className={classNames}
             onClick={() => setIsOpen(true)}
         >
-            <span className="gd-icon-header-search"></span>
+            <span className="gd-icon-header-search-button"></span>
             <span className="gd-header-search-label">
                 <FormattedMessage id="gs.header.search" />
             </span>
@@ -81,7 +85,11 @@ export const HeaderSearchButtonCore: React.FC<HeaderSearchButtonProps> = ({
                 >
                     <TimezoneProvider value={metadataTimezone}>
                         <div className="gd-dialog gd-dropdown overlay gd-header-search-dropdown">
-                            <SearchOverlay onSelect={handleSelect} {...overlayProps} />
+                            <SearchOverlay
+                                onSelect={handleSelect}
+                                className="gd-semantic-search__overlay--fixed"
+                                {...overlayProps}
+                            />
                         </div>
                     </TimezoneProvider>
                 </Overlay>
@@ -90,4 +98,8 @@ export const HeaderSearchButtonCore: React.FC<HeaderSearchButtonProps> = ({
     );
 };
 
+/**
+ * A search button / drop down trigger for the Header menu
+ * @internal
+ */
 export const HeaderSearchButton = injectIntl(HeaderSearchButtonCore);

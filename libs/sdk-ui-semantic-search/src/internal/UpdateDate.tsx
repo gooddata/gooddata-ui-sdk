@@ -7,7 +7,11 @@ import { getDateTimeConfig } from "@gooddata/sdk-ui-kit";
 import { defineMessages, FormattedDate, FormattedMessage, FormattedTime } from "react-intl";
 import { useTimezone } from "./timezoneContext.js";
 
-type UpdateDateProps = {
+/**
+ * Props for the update date component.
+ * @internal
+ */
+export type UpdateDateProps = {
     listItem: ListItem<ISemanticSearchResultItem>;
 };
 
@@ -17,6 +21,12 @@ const messages = defineMessages({
     at: { id: "gs.date.at" },
 });
 
+/**
+ * Rendering the update date as memoized component.
+ * The list rendering was lagging and React Performance tools showed that
+ * the date formatting was one of the bottlenecks.
+ * @internal
+ */
 export const UpdatedDate = React.memo(function UpdatedDate({ listItem: { item } }: UpdateDateProps) {
     const timezone = useTimezone();
     const timestamp = item.modifiedAt ?? item.createdAt;
