@@ -10,8 +10,19 @@ import { wrapWithTheme } from "../themeWrapper.js";
 
 import "@gooddata/sdk-ui-semantic-search/styles/css/main.css";
 import { IBackstopScenarioConfig } from "../../_infra/backstopScenario.js";
+import { HeaderMobileSearch } from "@gooddata/sdk-ui-semantic-search/internal";
+import { IntlProvider } from "react-intl";
 
 const backend = StorybookBackend();
+
+const messages = {
+    "semantic-search.placeholder": "Search",
+    "semantic-search.error.title": "Error title",
+    "semantic-search.error.text": "Error text",
+    "semantic-search.no-results": "No results found",
+    "semantic-search.id": "ID",
+    "semantic-search.tags": "TAGS",
+};
 
 const SemanticSearchBase: React.FC<{ width?: number }> = ({ width = 200 }) => (
     <div className="library-component screenshot-target">
@@ -34,7 +45,7 @@ const SemanticSearchBase: React.FC<{ width?: number }> = ({ width = 200 }) => (
 const config: IBackstopScenarioConfig = {
     keyPressSelector: {
         keyPress: "test",
-        selector: ".semantic-search input",
+        selector: "input",
     },
     postInteractionWait: ".gd-semantic-search__results-item",
 };
@@ -42,4 +53,31 @@ const config: IBackstopScenarioConfig = {
 storiesOf(`${GenAIStories}/SemanticSearch`)
     .add("full-featured", () => <SemanticSearchBase />, { screenshot: config })
     .add("short", () => <SemanticSearchBase width={100} />, { screenshot: config })
-    .add("themed", () => wrapWithTheme(<SemanticSearchBase />), { screenshot: config });
+    .add("themed", () => wrapWithTheme(<SemanticSearchBase />), { screenshot: config })
+    .add(
+        "mobile",
+        () => (
+            <IntlProvider locale="en-US" messages={messages}>
+                <HeaderMobileSearch
+                    onSelect={action("onSelect")}
+                    backend={backend}
+                    workspace={ReferenceWorkspaceId}
+                />
+            </IntlProvider>
+        ),
+        { screenshot: config },
+    )
+    .add(
+        "mobile themed",
+        () =>
+            wrapWithTheme(
+                <IntlProvider locale="en-US" messages={messages}>
+                    <HeaderMobileSearch
+                        onSelect={action("onSelect")}
+                        backend={backend}
+                        workspace={ReferenceWorkspaceId}
+                    />
+                </IntlProvider>,
+            ),
+        { screenshot: config },
+    );

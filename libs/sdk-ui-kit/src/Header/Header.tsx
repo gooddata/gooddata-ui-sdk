@@ -29,6 +29,7 @@ import { HeaderAccount } from "./HeaderAccount.js";
 import { HeaderMenu } from "./HeaderMenu.js";
 import { HeaderUpsellButton } from "./HeaderUpsellButton.js";
 import { HeaderInvite } from "./HeaderInvite.js";
+import { Typography } from "../Typography/index.js";
 
 function getOuterWidth(element: HTMLDivElement) {
     const width = element.offsetWidth;
@@ -75,6 +76,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
             isOverlayMenuOpen: false,
             responsiveMode: false,
             isHelpMenuOpen: false,
+            isSearchMenuOpen: false,
         };
     }
 
@@ -187,12 +189,21 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
         this.setState({
             isOverlayMenuOpen,
             isHelpMenuOpen: false,
+            isSearchMenuOpen: false,
         });
+    };
+
+    private toggleSearchMenu = () => {
+        this.setState(({ isSearchMenuOpen }) => ({
+            isSearchMenuOpen: !isSearchMenuOpen,
+            isHelpMenuOpen: false,
+        }));
     };
 
     private setHelpMenu = (isHelpMenuOpen: boolean) => {
         this.setState({
             isHelpMenuOpen,
+            isSearchMenuOpen: false,
         });
     };
 
@@ -207,6 +218,23 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
 
     private addHelpItemGroup = (itemGroups: IHeaderMenuItem[][]): IHeaderMenuItem[][] => {
         return !this.props.documentationUrl ? itemGroups : [...itemGroups, [this.getHelpMenuLink()]];
+    };
+
+    private addSearchMenu = (itemGroups: IHeaderMenuItem[][]): IHeaderMenuItem[][] => {
+        if (!this.props.mobileSearch) {
+            return itemGroups;
+        }
+
+        return [
+            ...itemGroups,
+            [
+                {
+                    key: "gs.header.search",
+                    className: "gd-icon-header-search",
+                    onClick: this.toggleSearchMenu,
+                },
+            ],
+        ];
     };
 
     private getHelpMenu = () => [
@@ -261,6 +289,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
         const iconClasses = cx({
             "hamburger-icon": true,
             "is-open": this.state.isOverlayMenuOpen,
+            "search-open": this.state.isSearchMenuOpen,
         });
 
         return (
@@ -287,7 +316,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                 key="header-overlay-menu"
                 alignPoints={[
                     {
-                        align: "tr tr",
+                        align: this.state.isSearchMenuOpen ? "tl tl" : "tr tr",
                     },
                 ]}
                 closeOnOutsideClick={this.state.isOverlayMenuOpen}
@@ -299,10 +328,21 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
             >
                 <TransitionGroup>
                     <CSSTransition classNames="gd-header" timeout={300}>
-                        {this.renderVerticalMenu()}
+                        {this.state.isSearchMenuOpen ? this.renderSearchMenu() : this.renderVerticalMenu()}
                     </CSSTransition>
                 </TransitionGroup>
             </Overlay>
+        );
+    };
+
+    private renderSearchMenu = () => {
+        return (
+            <div className="gd-header-menu-search">
+                <Typography tagName="h3" className="gd-header-menu-search-title">
+                    <FormattedMessage id="gs.header.search" />
+                </Typography>
+                {this.props.mobileSearch}
+            </div>
         );
     };
 
@@ -331,7 +371,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
         const menuItemsGroups = !this.state.isHelpMenuOpen
             ? this.props.showStaticHelpMenu
                 ? [[this.getHelpMenuLink()]]
-                : this.addHelpItemGroup(this.props.menuItemsGroups)
+                : this.addHelpItemGroup(this.addSearchMenu(this.props.menuItemsGroups))
             : this.getHelpMenu();
 
         return (

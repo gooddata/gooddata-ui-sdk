@@ -19,7 +19,7 @@ export type SearchListProps<T> = {
     /**
      * Width of the list.
      */
-    width: number;
+    width?: number;
     /**
      * Callback for item selection.
      */

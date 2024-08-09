@@ -11,7 +11,7 @@ import {
     WorkspacePickerHomeFooter,
     HeaderBadge,
 } from "@gooddata/sdk-ui-kit";
-import { HeaderSearchButton } from "@gooddata/sdk-ui-semantic-search/internal";
+import { HeaderMobileSearch, HeaderSearchButton } from "@gooddata/sdk-ui-semantic-search/internal";
 import { wrapWithTheme } from "../../themeWrapper.js";
 import { IntlProvider } from "react-intl";
 
@@ -448,6 +448,7 @@ storiesOf(`${UiKit}/AppHeader`)
                                 ...info.headerHelpItems,
                             ]}
                             search={<HeaderSearchButton onSelect={action("searchSelect")} />}
+                            mobileSearch={<HeaderMobileSearch onSelect={action("searchSelect")} />}
                             logoUrl={gd}
                             logoTitle="GoodData"
                             documentationUrl="https://help.gooddata.com/doc"

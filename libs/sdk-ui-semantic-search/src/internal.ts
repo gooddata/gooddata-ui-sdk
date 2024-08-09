@@ -8,3 +8,4 @@
  */
 
 export * from "./internal/HeaderSearchButton.js";
+export * from "./internal/HeaderMobileSearch.js";
