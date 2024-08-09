@@ -339,7 +339,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
         return (
             <div className="gd-header-menu-search">
                 <Typography tagName="h3" className="gd-header-menu-search-title">
-                    Search
+                    <FormattedMessage id="gs.header.search" />
                 </Typography>
                 {this.props.mobileSearch}
             </div>
