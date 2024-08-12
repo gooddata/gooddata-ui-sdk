@@ -50,6 +50,9 @@ export type SemanticSearchProps = SemanticSearchCoreProps & {
 };
 
 // @internal
+export const useElementWidth: () => [React_2.RefCallback<HTMLElement>, number];
+
+// @internal
 export const useListSelector: <T>(items: T[], onSelect: (item: T, e: MouseEvent | KeyboardEvent) => void) => [T, (item: T) => void];
 
 // @alpha
