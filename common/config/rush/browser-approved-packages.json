@@ -995,10 +995,6 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "resize-observer-polyfill",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "rimraf",
       "allowedCategories": [ "tools" ]
     },

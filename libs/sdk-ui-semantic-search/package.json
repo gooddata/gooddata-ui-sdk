@@ -99,7 +99,6 @@
         "sass": "^1.52.3",
         "stylelint": "^13.8.0",
         "stylelint-checkstyle-formatter": "^0.1.2",
-        "stylelint-config-prettier": "^8.0.2",
-        "resize-observer-polyfill": "~1.5.1"
+        "stylelint-config-prettier": "^8.0.2"
     }
 }

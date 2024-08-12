@@ -7,7 +7,7 @@ import * as React from "react";
  * There are no UTs for this because jsdom does not compute element dimensions.
  * @internal
  */
-export const useElementWidth = () => {
+export const useElementWidth = (): [React.RefCallback<HTMLElement>, number] => {
     const [width, setWidth] = React.useState<number>(0);
     const observer = React.useMemo(() => {
         return new ResizeObserver((entries) => {
@@ -33,5 +33,5 @@ export const useElementWidth = () => {
         [observer],
     );
 
-    return [elementRef, width] as [React.RefCallback<HTMLElement>, number];
+    return [elementRef, width];
 };
