@@ -13,6 +13,7 @@ import { FilterContextItem } from '@gooddata/sdk-model';
 import { GenAISemanticSearchType } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAccessGrantee } from '@gooddata/sdk-model';
+import { IAlertDefault } from '@gooddata/sdk-model';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeElement } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
@@ -867,6 +868,7 @@ export interface IOrganizationSettingsService {
     deleteColorPalette(): Promise<void>;
     deleteTheme(): Promise<void>;
     getSettings(): Promise<ISettings>;
+    setAlertDefault(value: IAlertDefault): Promise<void>;
     setColorPalette(colorPaletteId: string): Promise<void>;
     setDateFormat(dateFormat: string): Promise<void>;
     setLocale(locale: string): Promise<void>;

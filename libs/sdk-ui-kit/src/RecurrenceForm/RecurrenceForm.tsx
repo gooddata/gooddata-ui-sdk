@@ -16,9 +16,9 @@ import { DEFAULT_DATE_FORMAT, DEFAULT_LOCALE, DEFAULT_TIME_FORMAT, DEFAULT_WEEK_
  * @internal
  */
 export interface IRecurrenceFormProps {
-    startDate: Date;
+    startDate?: Date | null;
     cronExpression: string;
-    onChange: (cronExpression: string, startDate: Date) => void;
+    onChange: (cronExpression: string, startDate: Date | null) => void;
     locale?: string;
     dateFormat?: string;
     timeFormat?: string;
@@ -32,7 +32,7 @@ export interface IRecurrenceFormProps {
 
 const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
     const {
-        startDate,
+        startDate = null,
         cronExpression,
         onChange,
         locale = DEFAULT_LOCALE,
@@ -47,26 +47,26 @@ const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
     } = props;
     const intl = useIntl();
 
-    const [dateValue, setDateValue] = useState<Date>(startDate);
+    const [dateValue, setDateValue] = useState<Date | null>(startDate);
     const [cronValue, setCronValue] = useState<string>(cronExpression);
     const [recurrenceType, setRecurrenceType] = useState<RecurrenceType>(
-        transformCronExpressionToRecurrenceType(dateValue, cronExpression, allowHourlyRecurrence),
+        transformCronExpressionToRecurrenceType(dateValue, cronExpression, allowHourlyRecurrence, weekStart),
     );
 
     const onDateChange = useCallback(
         (date: Date) => {
             setDateValue(date);
-            onChange(constructCronExpression(date, recurrenceType, cronExpression), date);
+            onChange(constructCronExpression(date, recurrenceType, cronExpression, weekStart), date);
         },
-        [cronExpression, onChange, recurrenceType],
+        [cronExpression, onChange, recurrenceType, weekStart],
     );
 
     const onRepeatTypeChange = useCallback(
         (type: RecurrenceType) => {
             setRecurrenceType(type);
-            onChange(constructCronExpression(dateValue, type, cronValue), dateValue);
+            onChange(constructCronExpression(dateValue, type, cronValue, weekStart), dateValue);
         },
-        [cronValue, dateValue, onChange],
+        [cronValue, dateValue, onChange, weekStart],
     );
 
     const onCronValueChange = useCallback(
@@ -79,16 +79,18 @@ const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
 
     return (
         <div className={cx("gd-recurrence-form s-recurrence-form", className)}>
-            <DateTime
-                label={startLabel ?? intl.formatMessage({ id: messages.starts.id })}
-                date={dateValue}
-                onDateChange={onDateChange}
-                locale={locale}
-                dateFormat={dateFormat}
-                timezone={timezone}
-                weekStart={weekStart}
-                timeFormat={timeFormat}
-            />
+            {Boolean(startDate) && (
+                <DateTime
+                    label={startLabel ?? intl.formatMessage({ id: messages.starts.id })}
+                    date={dateValue}
+                    onDateChange={onDateChange}
+                    locale={locale}
+                    dateFormat={dateFormat}
+                    timezone={timezone}
+                    weekStart={weekStart}
+                    timeFormat={timeFormat}
+                />
+            )}
             <Recurrence
                 label={repeatLabel ?? intl.formatMessage({ id: messages.repeats.id })}
                 recurrenceType={recurrenceType}

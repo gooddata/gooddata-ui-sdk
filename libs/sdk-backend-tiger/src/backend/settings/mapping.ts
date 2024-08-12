@@ -10,6 +10,8 @@ export function mapTypeToKey(
     switch (type) {
         case "WHITE_LABELING":
             return "whiteLabeling";
+        case "ALERT":
+            return "alertDefault";
         case "FORMAT_LOCALE":
             return "formatLocale";
         case "ACTIVE_COLOR_PALETTE":

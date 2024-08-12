@@ -261,6 +261,11 @@ export interface ISettings {
     whiteLabeling?: IWhiteLabeling;
 
     /**
+     * Represents alert default configuration
+     */
+    alertDefault?: IAlertDefault;
+
+    /**
      * Represents configuration for OpenAI integration
      * @alpha
      */
@@ -493,6 +498,22 @@ export interface IWhiteLabeling {
      * Whitelabeling of Apple touch icon url
      */
     appleTouchIconUrl?: string;
+}
+
+/**
+ * Alert Default
+ *
+ * @public
+ */
+export interface IAlertDefault {
+    /**
+     * Default evaluation frequency
+     */
+    defaultCron: string;
+    /**
+     * Default timezone
+     */
+    defaultTimezone: string;
 }
 
 /**

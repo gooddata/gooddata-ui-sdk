@@ -747,6 +747,7 @@ export {
     ISettings,
     PlatformEdition,
     IWhiteLabeling,
+    IAlertDefault,
     WeekStart,
     IOpenAiConfig,
 } from "./settings/index.js";

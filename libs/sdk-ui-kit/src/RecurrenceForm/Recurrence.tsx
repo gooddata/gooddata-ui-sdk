@@ -6,16 +6,25 @@ import { CronExpression } from "./CronExpression.js";
 import { RECURRENCE_TYPES } from "./constants.js";
 import { RecurrenceType } from "./types.js";
 
-interface IRecurrenceProps {
+/**
+ * @internal
+ */
+export interface IRecurrenceProps {
     label: string;
     recurrenceType: RecurrenceType;
-    startDate: Date;
+    startDate?: Date | null;
     cronValue: string;
     onRepeatTypeChange: (repeatType: string) => void;
     onCronValueChange: (cronValue: string) => void;
     allowHourlyRecurrence?: boolean;
 }
 
+/**
+ * @internal
+ *
+ * Recurrence component is used to select recurrence type and set cron expression.
+ * @param props - IRecurrenceProps
+ */
 export const Recurrence: React.FC<IRecurrenceProps> = (props) => {
     const {
         label,

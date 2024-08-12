@@ -2803,11 +2803,13 @@
                     },
                     "createdAt": {
                         "type": "string",
-                        "description": "Timestamp when object was created."
+                        "description": "Timestamp when object was created.",
+                        "format": "date-time"
                     },
                     "modifiedAt": {
                         "type": "string",
-                        "description": "Timestamp when object was last modified."
+                        "description": "Timestamp when object was last modified.",
+                        "format": "date-time"
                     },
                     "visualizationUrl": {
                         "type": "string",

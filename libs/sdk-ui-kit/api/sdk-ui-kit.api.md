@@ -3390,11 +3390,11 @@ export interface IRecurrenceFormProps {
     // (undocumented)
     locale?: string;
     // (undocumented)
-    onChange: (cronExpression: string, startDate: Date) => void;
+    onChange: (cronExpression: string, startDate: Date | null) => void;
     // (undocumented)
     repeatLabel?: string;
     // (undocumented)
-    startDate: Date;
+    startDate?: Date | null;
     // (undocumented)
     startLabel?: string;
     // (undocumented)
@@ -3403,6 +3403,24 @@ export interface IRecurrenceFormProps {
     timezone?: string;
     // (undocumented)
     weekStart?: WeekStart;
+}
+
+// @internal (undocumented)
+export interface IRecurrenceProps {
+    // (undocumented)
+    allowHourlyRecurrence?: boolean;
+    // (undocumented)
+    cronValue: string;
+    // (undocumented)
+    label: string;
+    // (undocumented)
+    onCronValueChange: (cronValue: string) => void;
+    // (undocumented)
+    onRepeatTypeChange: (repeatType: string) => void;
+    // (undocumented)
+    recurrenceType: RecurrenceType;
+    // (undocumented)
+    startDate?: Date | null;
 }
 
 // @internal (undocumented)
@@ -4451,8 +4469,26 @@ export enum PresetType {
 // @internal (undocumented)
 export const recommendedHeader: IDateDatasetHeader;
 
+// @internal
+export const Recurrence: React_2.FC<IRecurrenceProps>;
+
+// @internal
+export const RECURRENCE_TYPES: {
+    HOURLY: string;
+    DAILY: string;
+    WEEKLY: string;
+    MONTHLY: string;
+    CRON: string;
+};
+
 // @internal (undocumented)
 export const RecurrenceForm: React_2.FC<IRecurrenceFormProps>;
+
+// @internal
+export type RecurrenceType = typeof RECURRENCE_TYPES[RecurrenceTypeKey];
+
+// @internal
+export type RecurrenceTypeKey = keyof typeof RECURRENCE_TYPES;
 
 // @internal (undocumented)
 export const relatedHeader: IDateDatasetHeader;
@@ -4768,6 +4804,9 @@ export const ToastMessages: React_2.FC;
 
 // @internal (undocumented)
 export function transform2Dropdown<T extends IDateDataset>(dateDatasets: T[]): Array<T | IDateDatasetHeader>;
+
+// @internal
+export const transformCronExpressionToRecurrenceType: (date: Date | null, cronExpression: string, allowHourlyRecurrence: boolean, weekStart: WeekStart) => RecurrenceType;
 
 // @internal (undocumented)
 export type TUTMContent = "main_menu_help_documentation" | "main_menu_help_university" | "main_menu_help_community" | "main_menu_help_support" | "main_menu_help_ticket" | "main_menu_help_slack";

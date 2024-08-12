@@ -1,6 +1,6 @@
 // (C) 2022-2024 GoodData Corporation
 import { IOrganizationSettingsService } from "@gooddata/sdk-backend-spi";
-import { ISettings, IWhiteLabeling, IOpenAiConfig } from "@gooddata/sdk-model";
+import { ISettings, IWhiteLabeling, IOpenAiConfig, IAlertDefault } from "@gooddata/sdk-model";
 
 import { TigerAuthenticatedCallGuard, TigerSettingsType } from "../../types/index.js";
 import { unwrapSettingContent } from "../../convertors/fromBackend/SettingsConverter.js";
@@ -32,6 +32,10 @@ export class OrganizationSettingsService
 
     public async setTheme(activeThemeId: string) {
         return this.setSetting("ACTIVE_THEME", { id: activeThemeId, type: "theme" });
+    }
+
+    public async setAlertDefault(value: IAlertDefault): Promise<void> {
+        return this.setSetting("ALERT", value);
     }
 
     public async deleteTheme() {
