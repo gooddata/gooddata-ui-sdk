@@ -6752,6 +6752,7 @@ export interface FactsApiInterface {
 export type FeatureContext = {
     organizationId: string;
     earlyAccessValues: string[];
+    tier: string;
 };
 
 // @public

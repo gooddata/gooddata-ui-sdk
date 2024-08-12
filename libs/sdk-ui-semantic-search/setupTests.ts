@@ -44,3 +44,16 @@ document.createRange = () => {
 
     return range;
 };
+
+// Mock for ResizeObserver
+global.ResizeObserver = class ResizeObserver {
+    observe() {
+        return null;
+    }
+    unobserve() {
+        return null;
+    }
+    disconnect() {
+        return null;
+    }
+};

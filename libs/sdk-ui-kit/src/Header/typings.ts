@@ -62,6 +62,7 @@ export interface IAppHeaderProps {
     onInviteItemClick?: (e: React.MouseEvent) => void;
 
     search?: React.ReactNode;
+    mobileSearch?: React.ReactNode;
 }
 
 /**
@@ -73,6 +74,7 @@ export interface IAppHeaderState {
     isOverlayMenuOpen: boolean;
     responsiveMode: boolean;
     isHelpMenuOpen: boolean;
+    isSearchMenuOpen: boolean;
 }
 
 /**

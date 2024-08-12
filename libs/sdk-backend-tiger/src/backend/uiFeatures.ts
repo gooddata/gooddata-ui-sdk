@@ -228,7 +228,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableRichTextDescriptions: true,
     enableSchedulingRollout: false,
     enableRollupTotals: false,
-    enableWidgetIdentifiersRollout: false,
+    enableWidgetIdentifiersRollout: true,
     enableAIFunctions: false,
     enableDrillIntersectionIgnoredAttributes: true,
     enableAlertingRollout: false,

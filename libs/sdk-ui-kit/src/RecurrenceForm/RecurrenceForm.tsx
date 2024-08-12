@@ -50,7 +50,7 @@ const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
     const [dateValue, setDateValue] = useState<Date>(startDate);
     const [cronValue, setCronValue] = useState<string>(cronExpression);
     const [recurrenceType, setRecurrenceType] = useState<RecurrenceType>(
-        transformCronExpressionToRecurrenceType(cronExpression, allowHourlyRecurrence),
+        transformCronExpressionToRecurrenceType(dateValue, cronExpression, allowHourlyRecurrence),
     );
 
     const onDateChange = useCallback(

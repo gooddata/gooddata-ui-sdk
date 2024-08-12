@@ -1,11 +1,12 @@
 // (C) 2024 GoodData Corporation
 import * as React from "react";
+import classnames from "classnames";
 import { FormattedMessage, WrappedComponentProps } from "react-intl";
 import { GenAISemanticSearchType, ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { Input, LoadingMask, Message, useDebouncedState } from "@gooddata/sdk-ui-kit";
 import { useWorkspaceStrict, useLocalStorage } from "@gooddata/sdk-ui";
-import { useSemanticSearch } from "../hooks/index.js";
+import { useSemanticSearch, useElementWidth } from "../hooks/index.js";
 import { ListItem } from "../types.js";
 import { getUIPath } from "../utils/getUIPath.js";
 import { SearchList } from "./SearchList.js";
@@ -20,10 +21,6 @@ const DEBOUNCE = 300;
  * A height of the loading mask.
  */
 const LOADING_HEIGHT = 100;
-/**
- * A width of the search drop-down.
- */
-const SEARCH_OVERLAY_WIDTH = 440;
 /**
  * Max search history length.
  */
@@ -66,6 +63,10 @@ export type SearchOverlayProps = WrappedComponentProps & {
      * A limit of search results to return.
      */
     limit?: number;
+    /**
+     * Additional CSS class for the component.
+     */
+    className?: string;
 };
 
 /**
@@ -80,6 +81,7 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({
     objectTypes,
     deepSearch,
     limit = 6,
+    className,
     intl,
 }) => {
     // Input value handling
@@ -101,17 +103,20 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({
         (): ListItem<ISemanticSearchResultItem>[] =>
             searchResults.flatMap((item) => {
                 // Look up parent items if available
-                const parents = relationships.filter(
-                    (rel) => rel.targetObjectId === item.id && rel.targetObjectType === item.type,
+                const parentDashboards = relationships.filter(
+                    (rel) =>
+                        rel.targetObjectId === item.id &&
+                        rel.targetObjectType === item.type &&
+                        rel.sourceObjectType === "dashboard",
                 );
 
-                if (!parents.length)
+                if (!parentDashboards.length)
                     return {
                         item,
                         url: getUIPath(item.type, item.id, effectiveWorkspace),
                     };
 
-                return parents.map((parent) => ({
+                return parentDashboards.map((parent) => ({
                     item,
                     parentRef: parent,
                     url: getUIPath(parent.sourceObjectType, parent.sourceObjectId, effectiveWorkspace),
@@ -161,8 +166,11 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({
         }
     }, [searchStatus, searchError]);
 
+    // The List component requires explicit width
+    const [ref, width] = useElementWidth();
+
     return (
-        <div className="gd-semantic-search__overlay">
+        <div ref={ref} className={classnames("gd-semantic-search__overlay", className)}>
             <Input
                 className="gd-semantic-search__overlay-input"
                 autofocus
@@ -175,7 +183,7 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({
             {(() => {
                 switch (searchStatus) {
                     case "loading":
-                        return <LoadingMask width={SEARCH_OVERLAY_WIDTH} height={LOADING_HEIGHT} />;
+                        return <LoadingMask height={LOADING_HEIGHT} />;
                     case "error":
                         return (
                             <div className="gd-semantic-search__overlay-error">
@@ -200,17 +208,17 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({
                         return (
                             <SearchList
                                 items={searchResultsItems}
-                                width={SEARCH_OVERLAY_WIDTH}
+                                width={width}
                                 onSelect={onResultSelect}
                                 ItemComponent={AnnotatedResultsItem}
                             />
                         );
                     case "idle":
-                        if (searchHistory.length) {
+                        if (searchHistoryItems.length) {
                             return (
                                 <SearchList
                                     items={searchHistoryItems}
-                                    width={SEARCH_OVERLAY_WIDTH}
+                                    width={width}
                                     onSelect={onHistorySelect}
                                     ItemComponent={HistoryItem}
                                 />
