@@ -255,7 +255,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         }
 
         const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
-        const isWidgetIdentifiersEnabled = userSettings.enableWidgetIdentifiersRollout;
+        const isWidgetIdentifiersEnabled = userSettings.enableWidgetIdentifiersRollout ?? true;
 
         const dashboardContent = convertAnalyticalDashboard(
             dashboard,
@@ -311,7 +311,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
         const objectId = await objRefToIdentifier(originalDashboard.ref, this.authCall);
         const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
-        const isWidgetIdentifiersEnabled = userSettings.enableWidgetIdentifiersRollout;
+        const isWidgetIdentifiersEnabled = userSettings.enableWidgetIdentifiersRollout ?? true;
         const dashboardContent = convertAnalyticalDashboard(
             updatedDashboard,
             filterContext?.ref,
