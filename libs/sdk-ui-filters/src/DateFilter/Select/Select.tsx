@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 
 import React from "react";
 import Downshift, { ControllerStateAndHelpers, DownshiftProps, DownshiftState } from "downshift";
@@ -20,14 +20,17 @@ export interface ISelectProps<V> {
     style?: React.CSSProperties;
 }
 
+const DEFAULT_ITEMS = [];
+const DEFAULT_STYLES: React.CSSProperties = {};
+
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const Select = <V extends {}>({
-    onChange,
+    onChange = noop,
     value,
-    items,
-    initialIsOpen,
+    items = DEFAULT_ITEMS,
+    initialIsOpen = false,
     className,
-    style,
+    style = DEFAULT_STYLES,
 }: ISelectProps<V>): JSX.Element => {
     const selectableOptions = getSelectableItems(items);
 
@@ -65,12 +68,4 @@ export const Select = <V extends {}>({
             )}
         </TypedDownshift>
     );
-};
-
-Select.defaultProps = {
-    onChange: noop,
-    value: undefined,
-    items: [],
-    initialIsOpen: false,
-    style: {},
 };

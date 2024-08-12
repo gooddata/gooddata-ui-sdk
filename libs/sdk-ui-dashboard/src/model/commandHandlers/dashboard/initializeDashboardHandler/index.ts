@@ -143,6 +143,7 @@ function applyDefaultFilterView(
     filterViews: IDashboardFilterView[],
     config: ResolvedDashboardConfig,
 ): IDashboard {
+    // find first default filter view (in case metadata are not consistent and there are more than one)
     const defaultFilterView = filterViews.find((view) => view.isDefault);
     const areFilterViewsEnabled = config.settings.enableDashboardFilterViews;
     return areFilterViewsEnabled && defaultFilterView && isFilterContext(dashboard.filterContext)

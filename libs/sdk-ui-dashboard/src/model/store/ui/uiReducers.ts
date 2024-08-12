@@ -10,7 +10,7 @@ import {
     widgetRef,
     widgetUri,
 } from "@gooddata/sdk-model";
-import { InvalidCustomUrlDrillParameterInfo, UiState } from "./uiState.js";
+import { InvalidCustomUrlDrillParameterInfo, UiState, FilterViewDialogMode } from "./uiState.js";
 import { ILayoutCoordinates, IMenuButtonItemsVisibility, IScheduleEmailContext } from "../../../types.js";
 import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
 import { IDashboardWidgetOverlay } from "../../types/commonTypes.js";
@@ -79,6 +79,21 @@ const openDeleteDialog: UiReducer = (state) => {
 
 const closeDeleteDialog: UiReducer = (state) => {
     state.deleteDialog.open = false;
+};
+
+const toggleFilterViewsDialog: UiReducer<
+    PayloadAction<
+        | {
+              open?: boolean;
+              mode?: FilterViewDialogMode;
+          }
+        | undefined
+    >
+> = (state, action) => {
+    state.filterViews = {
+        open: action.payload?.open ?? !state.filterViews.open,
+        mode: action.payload?.mode ?? "list",
+    };
 };
 
 const openKpiDeleteDialog: UiReducer<PayloadAction<ILayoutCoordinates>> = (state, action) => {
@@ -348,4 +363,5 @@ export const uiReducers = {
     toggleWidgetsOverlay,
     setWidgetsOverlay,
     hideAllWidgetsOverlay,
+    toggleFilterViewsDialog,
 };

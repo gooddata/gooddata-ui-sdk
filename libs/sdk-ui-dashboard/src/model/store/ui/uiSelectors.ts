@@ -15,7 +15,7 @@ import {
     IScheduleEmailDialogContext,
 } from "../../../types.js";
 import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
-import { InvalidCustomUrlDrillParameterInfo } from "./uiState.js";
+import { InvalidCustomUrlDrillParameterInfo, FilterViewDialogMode } from "./uiState.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -409,3 +409,19 @@ export const selectIsSectionInsertedByPlugin: (refs: (ObjRef | undefined)[]) => 
                 modifications.length > 0 && modifications.every((m) => m === "insertedByPlugin"),
         ),
     );
+
+/**
+ * @internal
+ */
+export const selectIsFilterViewsDialogOpen: DashboardSelector<boolean> = createSelector(
+    selectSelf,
+    (state) => state.filterViews.open ?? false,
+);
+
+/**
+ * @internal
+ */
+export const selectFilterViewsDialogMode: DashboardSelector<FilterViewDialogMode> = createSelector(
+    selectSelf,
+    (state) => state.filterViews.mode ?? "list",
+);

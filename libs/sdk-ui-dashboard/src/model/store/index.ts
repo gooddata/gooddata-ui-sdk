@@ -310,7 +310,7 @@ export {
     selectIsExecutionResultReadyForExportByRef,
 } from "./executionResults/executionResultsSelectors.js";
 export { IExecutionResultEnvelope } from "./executionResults/types.js";
-export { UiState, InvalidCustomUrlDrillParameterInfo } from "./ui/uiState.js";
+export { UiState, InvalidCustomUrlDrillParameterInfo, FilterViewDialogMode } from "./ui/uiState.js";
 export {
     selectIsScheduleEmailDialogOpen,
     selectIsScheduleEmailManagementDialogOpen,
@@ -347,6 +347,8 @@ export {
     selectInvalidUrlDrillParameterDrillLocalIdsByWidgetRef,
     selectInvalidUrlDrillParameterWidgetRefs,
     selectInvalidUrlDrillParameterWidgetWarnings,
+    selectFilterViewsDialogMode,
+    selectIsFilterViewsDialogOpen,
 } from "./ui/uiSelectors.js";
 export { uiActions } from "./ui/index.js";
 export { RenderModeState } from "./renderMode/renderModeState.js";

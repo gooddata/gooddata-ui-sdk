@@ -142,6 +142,16 @@
         "comment": "Delete Dashboard",
         "limit": 0
     },
+    "options.menu.addFilterViews": {
+        "value": "Create view",
+        "comment": "Open menu with dialog with form to create a new filter view.",
+        "limit": 0
+    },
+    "options.menu.listFilterViews": {
+        "value": "Show my views",
+        "comment": "Open menu with my saved filter views.",
+        "limit": 0
+    },
     "dialogs.export.cells": {
         "value": "CELLS",
         "comment": "Cells of the table that is going to be exported to file",

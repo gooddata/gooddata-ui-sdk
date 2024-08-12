@@ -23,6 +23,11 @@ export interface InvalidCustomUrlDrillParameterInfo {
 /**
  * @beta
  */
+export type FilterViewDialogMode = "list" | "add";
+
+/**
+ * @beta
+ */
 export interface UiState {
     scheduleEmailManagementDialog: {
         open: boolean;
@@ -41,6 +46,10 @@ export interface UiState {
     };
     deleteDialog: {
         open: boolean;
+    };
+    filterViews: {
+        open: boolean;
+        mode: FilterViewDialogMode;
     };
     kpiDeleteDialog: {
         /**
@@ -96,6 +105,10 @@ export const uiInitialState: UiState = {
     },
     deleteDialog: {
         open: false,
+    },
+    filterViews: {
+        open: false,
+        mode: "list",
     },
     kpiDeleteDialog: {
         widgetCoordinates: undefined,

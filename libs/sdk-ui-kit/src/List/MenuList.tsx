@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React from "react";
 import classnames from "classnames";
 
@@ -15,7 +15,7 @@ export interface IItemsWrapperProps {
  * @internal
  */
 export const ItemsWrapper: React.FC<IItemsWrapperProps> = ({
-    smallItemsSpacing,
+    smallItemsSpacing = false,
     className,
     children,
     style,
@@ -33,9 +33,6 @@ export const ItemsWrapper: React.FC<IItemsWrapperProps> = ({
         {children}
     </div>
 );
-ItemsWrapper.defaultProps = {
-    smallItemsSpacing: false,
-};
 
 /**
  * @internal
@@ -76,9 +73,9 @@ export interface IItemProps {
  * @internal
  */
 export const Item: React.FC<IItemProps> = ({
-    checked,
-    subMenu,
-    disabled,
+    checked = false,
+    subMenu = false,
+    disabled = false,
     className,
     children,
     style,
@@ -101,8 +98,3 @@ export const Item: React.FC<IItemProps> = ({
         {children}
     </div>
 );
-Item.defaultProps = {
-    checked: false,
-    subMenu: false,
-    disabled: false,
-};
