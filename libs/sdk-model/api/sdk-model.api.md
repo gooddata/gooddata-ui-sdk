@@ -561,6 +561,12 @@ export interface IAccessControlAware {
 // @public
 export type IAccessGrantee = IUserGroupAccessGrantee | IUserAccessGrantee | IGranularAccessGrantee;
 
+// @public
+export interface IAlertDefault {
+    defaultCron: string;
+    defaultTimezone: string;
+}
+
 // @alpha
 export interface IAllTimeDateFilterOption extends IDateFilterOption {
     type: DateFilterOptionAllTimeType;
@@ -2825,6 +2831,7 @@ export interface ISettings {
     [key: string]: number | boolean | string | object | undefined;
     ADCatalogGroupsExpanded?: boolean;
     ADMeasureValueFilterNullAsZeroOption?: string;
+    alertDefault?: IAlertDefault;
     disableKpiDashboardHeadlineUnderline?: boolean;
     enableAdDescriptionEdit?: boolean;
     enableADMultipleDateFilters?: boolean;

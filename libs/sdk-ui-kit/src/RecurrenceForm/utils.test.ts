@@ -66,7 +66,7 @@ describe("isLastOccurrenceOfWeekdayInMonth", () => {
     });
 });
 
-describe("constructCronExpression", () => {
+describe("constructCronExpression with date", () => {
     it.each([
         ["hourly", sampleDate, sampleCronExp, "0 0 * ? * *", "every hour"],
         ["daily", sampleDate, sampleCronExp, "0 0 14 ? * *", "every day at the same time"],
@@ -81,14 +81,48 @@ describe("constructCronExpression", () => {
     ])(
         "should transform date and recurrence type to %s expression",
         (recurrenceType, date, defaultCronExpression, expectedCronExpression, _description) => {
-            expect(constructCronExpression(date, recurrenceType, defaultCronExpression)).toEqual(
+            expect(constructCronExpression(date, recurrenceType, defaultCronExpression, "Monday")).toEqual(
                 expectedCronExpression,
             );
         },
     );
 });
 
-describe("transformCronExpressionToRecurrenceType", () => {
+describe("constructCronExpression without date, default Monday", () => {
+    it.each([
+        ["hourly", sampleCronExp, "0 0 * ? * *", "every hour"],
+        ["daily", sampleCronExp, "0 0 0 ? * *", "every day at the same time"],
+        ["weekly", sampleCronExp, "0 0 0 ? * MON", "every week at the same day and time"],
+        ["monthly", sampleCronExp, "0 0 0 1 * *", "every month at first day"],
+        ["cron", sampleCronExp, sampleCronExp, "provided cron expression"],
+    ])(
+        "should transform date and recurrence type to %s expression",
+        (recurrenceType, defaultCronExpression, expectedCronExpression, _description) => {
+            expect(constructCronExpression(null, recurrenceType, defaultCronExpression, "Monday")).toEqual(
+                expectedCronExpression,
+            );
+        },
+    );
+});
+
+describe("constructCronExpression without date, default Sunday", () => {
+    it.each([
+        ["hourly", sampleCronExp, "0 0 * ? * *", "every hour"],
+        ["daily", sampleCronExp, "0 0 0 ? * *", "every day at the same time"],
+        ["weekly", sampleCronExp, "0 0 0 ? * SUN", "every week at the same day and time"],
+        ["monthly", sampleCronExp, "0 0 0 1 * *", "every month at first day"],
+        ["cron", sampleCronExp, sampleCronExp, "provided cron expression"],
+    ])(
+        "should transform date and recurrence type to %s expression",
+        (recurrenceType, defaultCronExpression, expectedCronExpression, _description) => {
+            expect(constructCronExpression(null, recurrenceType, defaultCronExpression, "Sunday")).toEqual(
+                expectedCronExpression,
+            );
+        },
+    );
+});
+
+describe("transformCronExpressionToRecurrenceType with date", () => {
     const universal = new Date();
     const D2024_01_01_01 = new Date(2024, 0, 1, 1, 0, 0);
     const D2024_01_01_09 = new Date(2024, 0, 1, 9, 0, 0);
@@ -135,12 +169,52 @@ describe("transformCronExpressionToRecurrenceType", () => {
         ["0 0 1 ? * 1-3", true, universal, "cron"],
         ["0 0 1 ? * 1,2", true, universal, "cron"],
         ["0 0 1 ? * 1/2", true, universal, "cron"],
+        ["0 0 0 1 * *", true, universal, "cron"],
     ])(
         "should correctly identify %s with hourly %s and date %s as %s",
         (cronExpression, allowHourly, date, expected) => {
-            expect(transformCronExpressionToRecurrenceType(date, cronExpression, allowHourly)).toEqual(
-                expected,
-            );
+            expect(
+                transformCronExpressionToRecurrenceType(date, cronExpression, allowHourly, "Monday"),
+            ).toEqual(expected);
         },
     );
+});
+
+describe("transformCronExpressionToRecurrenceType without date, default Monday", () => {
+    it.each([
+        ["0 0 * ? * *", true, "hourly"],
+        ["0 0 * ? * *", false, "cron"],
+        ["0 0 1 ? * *", true, "daily"],
+        ["0 0 9 ? * *", true, "daily"],
+        ["0 0 18 ? * *", true, "daily"],
+        ["0 0 10 ? * *", true, "daily"],
+        ["0 0 1 ? * SUN", true, "weekly"],
+        ["0 0 9 ? * MON", true, "weekly"],
+        ["0 0 12 ? * TUE", true, "weekly"],
+        ["0 0 18 ? * FRI", true, "weekly"],
+        ["0 0 23 ? * SAT", true, "weekly"],
+        ["0 0 23 ? * FRI", true, "weekly"],
+        ["0 0 10 ? * SAT", true, "weekly"],
+        ["0 0 15 ? * MON#1", true, "monthly", "every first monday"],
+        ["0 0 15 ? * FRI#1", true, "monthly", "every first friday"],
+        ["0 0 15 ? * TUE#2", true, "monthly", "every second tuesday"],
+        ["0 0 15 ? * WED#3", true, "monthly", "every third wednesday"],
+        ["0 0 15 ? * THUL", true, "monthly", "every last (fourth) thursday"],
+        ["0 0 15 ? * THU#5", true, "monthly"],
+        ["0 0 8 ? * TUE#2", true, "monthly"],
+        ["0 0 0 1 * *", true, "monthly"],
+        ["* * * * * *", true, "cron"],
+        ["* * * ? * *", true, "cron"],
+        ["1 1 1 1 1 1", true, "cron"],
+        ["1 1 1 ? 1 1", true, "cron"],
+        ["0 0 1 ? * 5", true, "cron"],
+        ["0 0 1 ? JAN SUN", true, "cron"],
+        ["0 0 1 ? * 1-3", true, "cron"],
+        ["0 0 1 ? * 1,2", true, "cron"],
+        ["0 0 1 ? * 1/2", true, "cron"],
+    ])("should correctly identify %s with hourly %s as %s", (cronExpression, allowHourly, expected) => {
+        expect(transformCronExpressionToRecurrenceType(null, cronExpression, allowHourly, "Monday")).toEqual(
+            expected,
+        );
+    });
 });

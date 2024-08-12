@@ -40,16 +40,29 @@ const getLocalizationKey = (id: RecurrenceType): MessageDescriptor => {
 
 const getRepeatItems = (
     intl: IntlShape,
-    startDate: Date,
+    startDate: Date | null,
     allowHourlyRecurrence?: boolean,
 ): IDropdownItem[] => {
-    const isLastOccurenceOfWeekDay = isLastOccurrenceOfWeekdayInMonth(startDate);
+    const isLastOccurrenceOfWeekDay = isLastOccurrenceOfWeekdayInMonth(startDate);
     const recurrenceTypes = allowHourlyRecurrence ? RECURRENCE_TYPES : RECURRENCE_TYPES_WITHOUT_HOURS;
 
     return Object.values(recurrenceTypes).map((id): IDropdownItem => {
         const localizationKey = getLocalizationKey(id);
 
-        if (id === recurrenceTypes.MONTHLY && isLastOccurenceOfWeekDay) {
+        if (id === recurrenceTypes.MONTHLY && !startDate) {
+            return {
+                id,
+                title: intl.formatMessage(messages.recurrence_monthly_first),
+            };
+        }
+        if (id === recurrenceTypes.WEEKLY && !startDate) {
+            return {
+                id,
+                title: intl.formatMessage(messages.recurrence_weekly_first),
+            };
+        }
+
+        if (id === recurrenceTypes.MONTHLY && isLastOccurrenceOfWeekDay) {
             return {
                 id,
                 title: intl.formatMessage(messages.recurrence_monthly_last, {
@@ -70,13 +83,13 @@ const getRepeatItems = (
 
 export interface IRepeatTypeSelectProps {
     repeatType: RecurrenceType;
-    startDate: Date;
+    startDate?: Date | null;
     onChange: (repeatType: string) => void;
     allowHourlyRecurrence?: boolean;
 }
 
 export const RepeatTypeSelect: React.FC<IRepeatTypeSelectProps> = (props) => {
-    const { onChange, repeatType, startDate, allowHourlyRecurrence } = props;
+    const { onChange, repeatType, startDate = null, allowHourlyRecurrence } = props;
     const intl = useIntl();
     const repeatItems = getRepeatItems(intl, startDate, allowHourlyRecurrence);
     const repeatTypeItem = repeatItems.find((item) => item.id === repeatType);

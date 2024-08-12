@@ -9,6 +9,8 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     recurrence_daily: { id: "recurrence.types.daily" },
     recurrence_monthly: { id: "recurrence.types.monthly" },
     recurrence_monthly_last: { id: "recurrence.types.monthly.last" },
+    recurrence_monthly_first: { id: "recurrence.types.monthly.first" },
     recurrence_weekly: { id: "recurrence.types.weekly" },
+    recurrence_weekly_first: { id: "recurrence.types.weekly.first" },
     recurrence_cron: { id: "recurrence.types.cron" },
 });
