@@ -5,7 +5,7 @@ name: Push ~ Build web component's container image
 
 on:
     push:
-        branches: ["master", "release", "hotfix/tiger", "hotfix/panther", "fast_track"]
+        branches: ["master"]
 
 concurrency:
     group: ${{ github.ref }}
