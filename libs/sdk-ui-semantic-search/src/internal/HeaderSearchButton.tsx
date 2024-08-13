@@ -6,6 +6,7 @@ import { Button, Overlay } from "@gooddata/sdk-ui-kit";
 import { SearchOverlay, SearchOverlayProps } from "./SearchOverlay.js";
 import { ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import { MetadataTimezoneProvider } from "./metadataTimezoneContext.js";
+import { IIntlWrapperProps, IntlWrapper } from "@gooddata/sdk-ui";
 
 const ALIGN_POINTS = [{ align: "br tr" }];
 
@@ -13,7 +14,7 @@ const ALIGN_POINTS = [{ align: "br tr" }];
  * Props for the HeaderSearchButton component.
  * @internal
  */
-export type HeaderSearchButtonProps = SearchOverlayProps & {
+export type HeaderSearchButtonCoreProps = SearchOverlayProps & {
     /**
      * Callback to be called when an item is selected.
      * @param item - the selected item
@@ -28,7 +29,7 @@ export type HeaderSearchButtonProps = SearchOverlayProps & {
     metadataTimezone?: string;
 };
 
-const HeaderSearchButtonCore: React.FC<HeaderSearchButtonProps> = ({
+const HeaderSearchButtonCore: React.FC<HeaderSearchButtonCoreProps> = ({
     onSelect,
     metadataTimezone,
     ...overlayProps
@@ -99,8 +100,22 @@ const HeaderSearchButtonCore: React.FC<HeaderSearchButtonProps> = ({
     );
 };
 
+const HeaderSearchButtonWithIntl = injectIntl(HeaderSearchButtonCore);
+
+export type HeaderSearchButtonProps = Omit<HeaderSearchButtonCoreProps, "intl"> &
+    Pick<IIntlWrapperProps, "locale">;
+
 /**
  * A search button / drop down trigger for the Header menu
  * @internal
  */
-export const HeaderSearchButton = injectIntl(HeaderSearchButtonCore);
+export const HeaderSearchButton = ({
+    locale,
+    ...props
+}: Omit<HeaderSearchButtonProps, "intl"> & { locale?: string }) => {
+    return (
+        <IntlWrapper locale={locale}>
+            <HeaderSearchButtonWithIntl {...props} />
+        </IntlWrapper>
+    );
+};

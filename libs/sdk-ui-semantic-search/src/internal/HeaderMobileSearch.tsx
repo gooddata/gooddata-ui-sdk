@@ -1,11 +1,12 @@
 // (C) 2007-2024 GoodData Corporation
 import * as React from "react";
-import { HeaderSearchButtonProps } from "./HeaderSearchButton.js";
+import { HeaderSearchButtonCoreProps, HeaderSearchButtonProps } from "./HeaderSearchButton.js";
 import { SearchOverlay } from "./SearchOverlay.js";
 import { MetadataTimezoneProvider } from "./metadataTimezoneContext.js";
 import { injectIntl } from "react-intl";
+import { IntlWrapper } from "@gooddata/sdk-ui";
 
-const HeaderMobileSearchCore: React.FC<HeaderSearchButtonProps> = ({
+const HeaderMobileSearchCore: React.FC<HeaderSearchButtonCoreProps> = ({
     onSelect,
     metadataTimezone,
     ...overlayProps
@@ -21,8 +22,14 @@ const HeaderMobileSearchCore: React.FC<HeaderSearchButtonProps> = ({
     );
 };
 
+const HeaderMobileSearchWithIntl = injectIntl(HeaderMobileSearchCore);
+
 /**
  * A version of the search overlay that is optimized for mobile devices.
  * @internal
  */
-export const HeaderMobileSearch = injectIntl(HeaderMobileSearchCore);
+export const HeaderMobileSearch = ({ locale, ...props }: HeaderSearchButtonProps) => (
+    <IntlWrapper locale={locale}>
+        <HeaderMobileSearchWithIntl {...props} />
+    </IntlWrapper>
+);
