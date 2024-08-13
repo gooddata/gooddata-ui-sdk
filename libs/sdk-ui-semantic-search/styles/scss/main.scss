@@ -120,6 +120,19 @@
                     font-weight: 400;
                     color: kit-variables.$gd-color-state-blank;
                 }
+
+                hr {
+                    margin: 10px 0;
+                    border: 0;
+                    border-top: 1px solid kit-variables.$gd-border-color;
+                }
+
+                &__match {
+                    h4 {
+                        text-transform: none;
+                        font-size: 12px;
+                    }
+                }
             }
         }
 

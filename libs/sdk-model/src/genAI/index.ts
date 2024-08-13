@@ -41,6 +41,11 @@ export interface ISemanticSearchResultItem {
      * Represents the type of chart for visualization objects
      */
     visualizationUrl?: string;
+    /**
+     * Overall similarity score of the found item.
+     * Larger is more similar.
+     */
+    score: number;
 }
 
 /**

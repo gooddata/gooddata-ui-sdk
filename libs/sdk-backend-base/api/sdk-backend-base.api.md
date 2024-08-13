@@ -660,6 +660,7 @@ export class DummySemanticSearchQueryBuilder implements ISemanticSearchQuery {
             createdAt: string;
             modifiedAt: string;
             visualizationUrl: string | undefined;
+            score: number;
         }[];
         relationships: ISemanticSearchRelationship[];
     }>;

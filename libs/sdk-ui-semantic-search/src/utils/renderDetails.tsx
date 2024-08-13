@@ -46,6 +46,17 @@ const renderDescription = (item: ISemanticSearchResultItem) => {
     return null;
 };
 
+const renderScore = (item: ISemanticSearchResultItem) => {
+    const score = Math.round(Math.min(1, Math.max(0, item.score)) * 100);
+
+    return (
+        <div className="gd-semantic-search__results-item__details__contents__match">
+            <hr />
+            <FormattedMessage id="semantic-search.match" tagName="h4" values={{ score }} />
+        </div>
+    );
+};
+
 /**
  * Render the details of the item in a bubble.
  */
@@ -66,6 +77,7 @@ export const renderDetails = (listItem: ListItem<ISemanticSearchResultItem>, the
                         <FormattedMessage tagName="h4" id="semantic-search.id" />
                         <Typography tagName={"p"}>{listItem.item.id}</Typography>
                         {renderTags(listItem.item)}
+                        {renderScore(listItem.item)}
                     </div>
                 </Bubble>
             </BubbleHoverTrigger>
