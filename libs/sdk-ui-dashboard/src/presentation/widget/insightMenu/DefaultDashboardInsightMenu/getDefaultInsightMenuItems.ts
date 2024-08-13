@@ -3,6 +3,7 @@ import { IntlShape } from "react-intl";
 import compact from "lodash/compact.js";
 
 import { IInsightMenuItem } from "../types.js";
+import { InsightAlerts } from "../../insight/configuration/InsightAlerts.js";
 
 /**
  * @internal
@@ -22,6 +23,7 @@ export function getDefaultInsightMenuItems(
         isScheduleExportVisible: boolean;
         isScheduleExportManagementVisible: boolean;
         isDataError: boolean;
+        isAlertingVisible: boolean;
     },
 ): IInsightMenuItem[] {
     const {
@@ -37,6 +39,7 @@ export function getDefaultInsightMenuItems(
         isScheduleExportVisible,
         isScheduleExportManagementVisible,
         isDataError,
+        isAlertingVisible,
     } = config;
 
     const defaultWidgetTooltip = isDataError
@@ -49,12 +52,11 @@ export function getDefaultInsightMenuItems(
         id: "options.menu.unsupported.incompatibleWidget",
     });
 
-    const isSomeExportVisible = !exportXLSXDisabled || !exportCSVDisabled;
     const isSomeScheduleVisible =
         (isScheduleExportVisible && !scheduleExportDisabled) ||
         (isScheduleExportManagementVisible && !scheduleExportManagementDisabled);
 
-    return compact([
+    const menuItems: (false | IInsightMenuItem)[] = [
         {
             type: "button",
             itemId: "ExportXLSXBubble",
@@ -75,11 +77,23 @@ export function getDefaultInsightMenuItems(
             icon: "gd-icon-download",
             className: "s-options-menu-export-csv",
         },
-        isSomeScheduleVisible &&
-            isSomeExportVisible && {
-                itemId: "ScheduleExportSeparator",
-                type: "separator",
-            },
+        isAlertingVisible && {
+            itemId: "AlertingSeparator",
+            type: "separator",
+        },
+        isAlertingVisible && {
+            type: "submenu",
+            itemId: "Alerts",
+            itemName: intl.formatMessage({ id: "widget.options.menu.alerts" }),
+            icon: "gd-icon-bell",
+            className: "s-options-menu-alerting",
+            SubmenuComponent: InsightAlerts,
+            renderSubmenuComponentOnly: true,
+        },
+        isSomeScheduleVisible && {
+            itemId: "SchedulingSeparator",
+            type: "separator",
+        },
         isScheduleExportVisible && {
             type: "button",
             itemId: "ScheduleExport",
@@ -105,5 +119,7 @@ export function getDefaultInsightMenuItems(
             icon: "gd-icon-list",
             className: "s-options-menu-schedule-export-edit",
         },
-    ]);
+    ];
+
+    return compact(menuItems);
 }

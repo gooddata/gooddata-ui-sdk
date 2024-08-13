@@ -561,11 +561,20 @@ export interface IAccessControlAware {
 // @public
 export type IAccessGrantee = IUserGroupAccessGrantee | IUserAccessGrantee | IGranularAccessGrantee;
 
+// @alpha (undocumented)
+export type IAlertComparisonOperator = "LESS_THAN" | "LESS_THAN_OR_EQUALS" | "GREATER_THAN" | "GREATER_THAN_OR_EQUALS";
+
 // @public
 export interface IAlertDefault {
     defaultCron: string;
     defaultTimezone: string;
 }
+
+// @alpha (undocumented)
+export type IAlertTriggerMode = "ALWAYS" | "ONCE";
+
+// @alpha (undocumented)
+export type IAlertTriggerState = "ACTIVE" | "PAUSED";
 
 // @alpha
 export interface IAllTimeDateFilterOption extends IDateFilterOption {
@@ -771,18 +780,25 @@ export interface IAuditableUsers {
 export interface IAutomationAlert {
     condition: IAutomationAlertCondition;
     execution: IAutomationAlertExecutionDefinition;
+    trigger: IAutomationAlertTrigger;
 }
 
 // @alpha (undocumented)
 export interface IAutomationAlertCondition {
     left: IMeasure;
-    operator: "LESS_THAN" | "LESS_THAN_OR_EQUALS" | "EQUALS" | "NOT_EQUALS" | "GREATER_THAN" | "GREATER_THAN_OR_EQUALS";
+    operator: IAlertComparisonOperator;
     right: number;
     type: "comparison";
 }
 
 // @alpha (undocumented)
 export type IAutomationAlertExecutionDefinition = Pick<IExecutionDefinition, "attributes" | "measures" | "filters">;
+
+// @alpha (undocumented)
+export interface IAutomationAlertTrigger {
+    mode?: IAlertTriggerMode;
+    state: IAlertTriggerState;
+}
 
 // @alpha (undocumented)
 export interface IAutomationMetadataObject extends IAutomationMetadataObjectBase, IMetadataObject, IAuditable {
