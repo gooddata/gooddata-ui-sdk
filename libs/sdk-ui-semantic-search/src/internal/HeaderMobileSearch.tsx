@@ -2,7 +2,7 @@
 import * as React from "react";
 import { HeaderSearchButtonProps } from "./HeaderSearchButton.js";
 import { SearchOverlay } from "./SearchOverlay.js";
-import { TimezoneProvider } from "./timezoneContext.js";
+import { MetadataTimezoneProvider } from "./metadataTimezoneContext.js";
 import { injectIntl } from "react-intl";
 
 const HeaderMobileSearchCore: React.FC<HeaderSearchButtonProps> = ({
@@ -11,13 +11,13 @@ const HeaderMobileSearchCore: React.FC<HeaderSearchButtonProps> = ({
     ...overlayProps
 }) => {
     return (
-        <TimezoneProvider value={metadataTimezone}>
+        <MetadataTimezoneProvider value={metadataTimezone}>
             <SearchOverlay
                 onSelect={onSelect}
                 className="gd-semantic-search__overlay--mobile"
                 {...overlayProps}
             />
-        </TimezoneProvider>
+        </MetadataTimezoneProvider>
     );
 };
 
