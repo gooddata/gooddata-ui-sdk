@@ -33,6 +33,7 @@ export const AlertsListItem: React.FC<IAlertsListItemProps> = ({
             </div>
             <div className="gd-alerts-list-item__actions">
                 <AlertActionsDropdown
+                    alert={alert}
                     onEdit={() => onEditAlert(alert)}
                     onPause={() => onPauseAlert(alert)}
                     onDelete={() => onDeleteAlert(alert)}

@@ -1,5 +1,5 @@
 // (C) 2024 GoodData Corporation
-import React from "react";
+import React, { useState } from "react";
 import {
     Dropdown,
     Button,
@@ -12,6 +12,8 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 import { DROPDOWN_ITEM_HEIGHT, DROPDOWN_SEPARATOR_ITEM_HEIGHT } from "./constants.js";
 import { messages } from "./messages.js";
+import { AlertDeleteDialog } from "./AlertDeleteDialog.js";
+import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 
 const ALERT_ACTIONS_DROPDOWN_OPTIONS: {
     title?: string;
@@ -40,6 +42,7 @@ const ALERT_ACTIONS_DROPDOWN_OPTIONS: {
 ];
 
 export interface IAlertActionsDropdownProps {
+    alert: IAutomationMetadataObject;
     onEdit: () => void;
     onPause: () => void;
     onResume: () => void;
@@ -48,6 +51,7 @@ export interface IAlertActionsDropdownProps {
 }
 
 export const AlertActionsDropdown = ({
+    alert,
     onEdit,
     onPause,
     onResume,
@@ -64,6 +68,7 @@ export const AlertActionsDropdown = ({
         }
         return true;
     });
+    const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
     return (
         <div className="gd-alert-actions-dropdown">
@@ -116,7 +121,7 @@ export const AlertActionsDropdown = ({
                                                 onPause();
                                                 break;
                                             case "delete":
-                                                onDelete();
+                                                setShowDeleteDialog(true);
                                                 break;
                                         }
 
@@ -128,6 +133,13 @@ export const AlertActionsDropdown = ({
                     );
                 }}
             />
+            {showDeleteDialog ? (
+                <AlertDeleteDialog
+                    title={alert.title}
+                    onDelete={onDelete}
+                    onCancel={() => setShowDeleteDialog(false)}
+                />
+            ) : null}
         </div>
     );
 };

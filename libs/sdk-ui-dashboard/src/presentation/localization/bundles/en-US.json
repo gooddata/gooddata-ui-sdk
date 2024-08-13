@@ -2650,5 +2650,15 @@
         "value": "Success. The alert has been added.",
         "comment": "Alert action success message",
         "limit": 0
+    },
+    "insightAlert.config.delete.title": {
+        "value": "Delete alert?",
+        "comment": "Alert action title",
+        "limit": 0
+    },
+    "insightAlert.config.delete.message": {
+        "value": "The alert for <b>{title}</b> will be permanently deleted.",
+        "comment": "Do not translate html tags <b>, </b> or {title} placeholder",
+        "limit": 0
     }
 }
