@@ -3394,6 +3394,8 @@ export interface IRecurrenceFormProps {
     // (undocumented)
     repeatLabel?: string;
     // (undocumented)
+    showRepeatTypeDescription?: boolean;
+    // (undocumented)
     startDate?: Date | null;
     // (undocumented)
     startLabel?: string;
@@ -3420,7 +3422,11 @@ export interface IRecurrenceProps {
     // (undocumented)
     recurrenceType: RecurrenceType;
     // (undocumented)
+    showRepeatTypeDescription?: boolean;
+    // (undocumented)
     startDate?: Date | null;
+    // (undocumented)
+    weekStart?: WeekStart;
 }
 
 // @internal (undocumented)

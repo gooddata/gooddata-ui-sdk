@@ -77,6 +77,15 @@ $input-width: 128px;
                 height: $input-height;
             }
         }
+
+        .gd-recurrence-form-repeat-type-description {
+            display: flex;
+            align-items: center;
+            color: variables.$gd-color-state-blank;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 19px;
+        }
     }
 
     @media #{variables.$small-only} {

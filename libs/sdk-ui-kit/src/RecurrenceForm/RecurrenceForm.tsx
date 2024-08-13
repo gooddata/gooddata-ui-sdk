@@ -28,6 +28,7 @@ export interface IRecurrenceFormProps {
     repeatLabel?: string;
     className?: string;
     allowHourlyRecurrence?: boolean;
+    showRepeatTypeDescription?: boolean;
 }
 
 const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
@@ -44,6 +45,7 @@ const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
         repeatLabel,
         className,
         allowHourlyRecurrence = true,
+        showRepeatTypeDescription,
     } = props;
     const intl = useIntl();
 
@@ -93,12 +95,14 @@ const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
             )}
             <Recurrence
                 label={repeatLabel ?? intl.formatMessage({ id: messages.repeats.id })}
+                showRepeatTypeDescription={showRepeatTypeDescription}
                 recurrenceType={recurrenceType}
                 startDate={dateValue}
                 cronValue={cronValue}
                 onRepeatTypeChange={onRepeatTypeChange}
                 onCronValueChange={onCronValueChange}
                 allowHourlyRecurrence={allowHourlyRecurrence}
+                weekStart={weekStart}
             />
         </div>
     );

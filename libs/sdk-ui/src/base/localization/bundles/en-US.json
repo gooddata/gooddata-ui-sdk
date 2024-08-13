@@ -3238,6 +3238,37 @@
         "comment": "Repeats the schedule email using custom cron expression defined by the user. Do not translate word 'Cron' as it is a name of technical specification.",
         "limit": 0
     },
+    "recurrence.description.hourly": {
+        "value": "At start of every hour",
+        "comment": "",
+        "limit": 0
+    },
+    "recurrence.description.daily": {
+        "value": "At {hour} every day",
+        "comment": "Do not translate placeholder {hour}.",
+        "limit": 0
+    },
+    "recurrence.description.weekly_first": {
+        "value": "At {hour} every week start",
+        "comment": "Do not translate placeholder {hour}.",
+        "limit": 0
+    },
+    "recurrence.description.weekly": {
+        "value": "At {hour} on {dayOfWeekName} every week",
+        "comment": "Do not translate placeholders {hour} and {dayOfWeekName}.",
+        "limit": 0
+    },
+    "recurrence.description.monthly_first": {
+        "value": "At {hour} every month start",
+        "comment": "Do not translate placeholder {hour}.",
+        "limit": 0
+    },
+    "recurrence.description.monthly": {
+        "value": "At {hour} on {dayOfWeekName} every {weekNumber}. week in month",
+        "comment": "Do not translate placeholders {hour}, {dayOfWeekName} and {weekNumber}.",
+        "limit": 0
+    },
+
     "semantic-search.error.title": {
         "value": "Our search service is temporarily down.",
         "comment": "Title for the error message shown when semantic search failed.",

@@ -2,9 +2,11 @@
 
 import { IntlShape } from "react-intl";
 import capitalize from "lodash/capitalize.js";
+import { WeekStart } from "@gooddata/sdk-model";
+
 import { RecurrenceType } from "./types.js";
 import { RECURRENCE_TYPES } from "./constants.js";
-import { WeekStart } from "@gooddata/sdk-model";
+import { messages } from "./locales.js";
 
 const weekdays = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
@@ -163,5 +165,65 @@ export const transformCronExpressionToRecurrenceType = (
         }
         default:
             return RECURRENCE_TYPES.CRON;
+    }
+};
+
+export const transformRecurrenceTypeToDescription = (
+    intl: IntlShape,
+    recurrenceType: RecurrenceType,
+    startDate: Date | null,
+    weekStart: WeekStart,
+): string => {
+    const empty =
+        weekStart === "Monday" ? new Date(2007, 0, 1, 0, 0, 0, 0) : new Date(2007, 0, 7, 0, 0, 0, 0);
+
+    const dayOfWeekName = getIntlDayName(intl, startDate ?? empty);
+    const weekNumber = getWeekNumber(startDate ?? empty);
+
+    switch (recurrenceType) {
+        case RECURRENCE_TYPES.HOURLY:
+            return intl.formatMessage(messages.description_recurrence_hourly);
+        case RECURRENCE_TYPES.DAILY:
+            return intl.formatMessage(messages.description_recurrence_daily, {
+                hour: intl.formatDate(startDate ?? empty, {
+                    hour: "numeric",
+                    hour12: true,
+                }),
+            });
+        case RECURRENCE_TYPES.WEEKLY:
+            if (!startDate) {
+                return intl.formatMessage(messages.description_recurrence_weekly_first, {
+                    hour: intl.formatDate(empty, {
+                        hour: "numeric",
+                        hour12: true,
+                    }),
+                });
+            }
+            return intl.formatMessage(messages.description_recurrence_weekly, {
+                hour: intl.formatDate(startDate, {
+                    hour: "numeric",
+                    hour12: true,
+                }),
+                dayOfWeekName,
+            });
+        case RECURRENCE_TYPES.MONTHLY:
+            if (!startDate) {
+                return intl.formatMessage(messages.description_recurrence_monthly_first, {
+                    hour: intl.formatDate(empty, {
+                        hour: "numeric",
+                        hour12: true,
+                    }),
+                });
+            }
+            return intl.formatMessage(messages.description_recurrence_monthly, {
+                hour: intl.formatDate(startDate, {
+                    hour: "numeric",
+                    hour12: true,
+                }),
+                dayOfWeekName,
+                weekNumber,
+            });
+        default:
+            return "";
     }
 };
