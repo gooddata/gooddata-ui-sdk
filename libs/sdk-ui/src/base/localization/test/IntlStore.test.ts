@@ -48,7 +48,7 @@ describe("IntlStore", () => {
                 "en-AU",
                 "fi-FI",
                 "zh-Hant",
-                "zh-Yue",
+                "yue",
             ];
 
             it("should return message in en-US", () => {

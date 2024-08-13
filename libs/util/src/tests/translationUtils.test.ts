@@ -39,9 +39,9 @@ describe("sanitizeLocaleForMoment", () => {
         expect(actual).toEqual(expected);
     });
 
-    it("should sanitize the zh-Yue locale", () => {
+    it("should sanitize the yue locale", () => {
         const expected = "zh-CN";
-        const actual = sanitizeLocaleForMoment("zh-Yue");
+        const actual = sanitizeLocaleForMoment("yue");
         expect(actual).toEqual(expected);
     });
 

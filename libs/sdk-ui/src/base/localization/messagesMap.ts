@@ -48,5 +48,5 @@ export const messagesMap: { [locale: string]: ITranslations } = {
     "en-AU": enAU,
     "fi-FI": fiFI,
     "zh-Hant": zhHant,
-    "zh-Yue": zhYue,
+    yue: zhYue,
 };

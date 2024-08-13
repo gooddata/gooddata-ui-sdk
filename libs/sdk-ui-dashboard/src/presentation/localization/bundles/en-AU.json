@@ -309,7 +309,7 @@
     "configurationPanel.drillConfig.measureValue._metric": "Metric value",
     "configurationPanel.drillConfig.attributeValue": "Attribute value",
     "configurationPanel.drillConfig.selectTarget": "I want to",
-    "configurationPanel.drillConfig.clickHintItem": "When I click on <add-on>(value of)</add-on>",
+    "configurationPanel.drillConfig.clickHintItem": "When I click on <addon>(value of)</addon>",
     "configurationPanel.drillConfig.drillIntoDashboard": "Drill into dashboard",
     "configurationPanel.drillConfig.drillIntoInsight": "Drill into insight",
     "configurationPanel.drillConfig.drillDown": "Drill down",
