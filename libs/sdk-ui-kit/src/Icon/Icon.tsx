@@ -89,6 +89,9 @@ import { Website } from "./icons/Website.js";
 import { Widget } from "./icons/Widget.js";
 import { SimplifiedDashboard } from "./icons/SimplifiedDashboard.js";
 import { HistoryBack } from "./icons/HistoryBack.js";
+import { Alert } from "./icons/Alert.js";
+import { AlertPaused } from "./icons/AlertPaused.js";
+import { Ellipsis } from "./icons/Ellipsis.js";
 
 /**
  * @internal
@@ -181,6 +184,9 @@ export const Icon: Record<string, React.FC<IIconProps>> = {
     Widget,
     SimplifiedDashboard,
     HistoryBack,
+    Alert,
+    AlertPaused,
+    Ellipsis,
 };
 
 export { IRowsIconProps, IColumnsIconProps };

@@ -162,6 +162,7 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
                 className={cx("gd-list-item", "gd-list-item-header", "s-list-header", this.props.className)}
             >
                 {this.props.title}
+                {this.renderInfo()}
             </div>
         );
     };

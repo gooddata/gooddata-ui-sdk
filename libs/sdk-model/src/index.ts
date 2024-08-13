@@ -925,6 +925,10 @@ export {
     IAutomationAlert,
     IAutomationAlertCondition,
     IAutomationAlertExecutionDefinition,
+    IAlertComparisonOperator,
+    IAlertTriggerMode,
+    IAlertTriggerState,
+    IAutomationAlertTrigger,
 } from "./automations/index.js";
 
 export {

@@ -976,6 +976,11 @@
         "comment": "Export to file with XLSX extension.",
         "limit": 0
     },
+    "widget.options.menu.alerts": {
+        "value": "Alerts",
+        "comment": "Item in the widget options menu",
+        "limit": 0
+    },
     "widget.options.menu.scheduleExport": {
         "value": "Schedule export",
         "comment": "",

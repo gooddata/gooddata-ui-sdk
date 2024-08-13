@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import React, { useState } from "react";
 import { Separator } from "@gooddata/sdk-ui-kit";
 
@@ -20,14 +20,22 @@ const DashboardInsightMenuBody: React.FC<
 > = (props) => {
     const { items, widget, insight, submenu, setSubmenu, onClose, renderMode } = props;
 
+    const renderSubmenuComponent = submenu ? (
+        <submenu.SubmenuComponent widget={widget} onClose={onClose} onGoBack={() => setSubmenu(null)} />
+    ) : null;
+
     return submenu ? (
-        <DashboardInsightSubmenuContainer
-            onClose={onClose}
-            title={submenu.itemName}
-            onBack={() => setSubmenu(null)}
-        >
-            <submenu.SubmenuComponent widget={widget} />
-        </DashboardInsightSubmenuContainer>
+        submenu.renderSubmenuComponentOnly ? (
+            renderSubmenuComponent
+        ) : (
+            <DashboardInsightSubmenuContainer
+                onClose={onClose}
+                title={submenu.itemName}
+                onBack={() => setSubmenu(null)}
+            >
+                {renderSubmenuComponent}
+            </DashboardInsightSubmenuContainer>
+        )
     ) : (
         <DashboardInsightMenuContainer
             onClose={onClose}

@@ -239,6 +239,45 @@ $base_path: "~@gooddata/sdk-ui-kit/styles";
     }
 }
 
+.gd-icon-increases-by {
+    @extend .gd-icon-measure-value-filter;
+    @include gd-svg-icon("increases-by");
+
+    &.gd-button-small::before {
+        margin-top: -1px;
+    }
+
+    &.gd-button-link::before {
+        margin-top: -2px;
+    }
+}
+
+.gd-icon-decreases-by {
+    @extend .gd-icon-measure-value-filter;
+    @include gd-svg-icon("decreases-by");
+
+    &.gd-button-small::before {
+        margin-top: -1px;
+    }
+
+    &.gd-button-link::before {
+        margin-top: -2px;
+    }
+}
+
+.gd-icon-changes-by {
+    @extend .gd-icon-measure-value-filter;
+    @include gd-svg-icon("changes-by");
+
+    &.gd-button-small::before {
+        margin-top: -1px;
+    }
+
+    &.gd-button-link::before {
+        margin-top: -2px;
+    }
+}
+
 .gd-icon-label {
     @include gd-svg-icon("label");
 
