@@ -1,5 +1,5 @@
 // (C) 2020-2024 GoodData Corporation
-import { ComponentType, MouseEvent } from "react";
+import { ComponentType, MouseEvent, ReactNode } from "react";
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 import { RenderMode } from "../../../types.js";
 
@@ -18,7 +18,7 @@ export interface IInsightMenuItemButton {
     /**
      * If specified, the value is shown on hover of the item as a tooltip.
      */
-    tooltip?: string;
+    tooltip?: string | ReactNode;
     disabled?: boolean;
     icon?: JSX.Element | string;
     /**
@@ -71,7 +71,7 @@ export interface IInsightMenuSubmenu {
     /**
      * If specified, the value is shown on hover of the item as a tooltip.
      */
-    tooltip?: string;
+    tooltip?: string | ReactNode;
     disabled?: boolean;
     icon?: JSX.Element | string;
     /**

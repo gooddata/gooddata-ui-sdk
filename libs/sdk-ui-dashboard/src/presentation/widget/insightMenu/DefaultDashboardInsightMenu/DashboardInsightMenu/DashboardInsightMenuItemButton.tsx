@@ -1,5 +1,5 @@
-// (C) 2020-2022 GoodData Corporation
-import React from "react";
+// (C) 2020-2024 GoodData Corporation
+import React, { ReactNode } from "react";
 import cx from "classnames";
 import { Bubble, BubbleHoverTrigger, IAlignPoint, Item } from "@gooddata/sdk-ui-kit";
 import { IInsightMenuItemButton } from "../../types.js";
@@ -30,7 +30,12 @@ export const DashboardInsightMenuItemButton: React.FC<
     );
 };
 
-function renderButtonWithTooltip(button: JSX.Element, id: string, disabled?: boolean, tooltip?: string) {
+function renderButtonWithTooltip(
+    button: JSX.Element,
+    id: string,
+    disabled?: boolean,
+    tooltip?: string | ReactNode,
+) {
     if (tooltip && disabled) {
         return (
             <BubbleHoverTrigger className="s-gd-bubble-trigger-options-menu-item">

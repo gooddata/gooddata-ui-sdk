@@ -28,7 +28,7 @@ export const AlertDestinationSelect: React.FC<IAlertDestinationSelectProps> = ({
                             size="small"
                             variant="primary"
                             className={cx(
-                                "gd-alert-destination-select__button",
+                                "gd-alert-destination-select__button s-alert-destination-select",
                                 "button-dropdown",
                                 "dropdown-button",
                                 {
@@ -44,7 +44,7 @@ export const AlertDestinationSelect: React.FC<IAlertDestinationSelectProps> = ({
                 renderBody={({ closeDropdown }) => {
                     return (
                         <List
-                            className="gd-alert-destination-select__list"
+                            className="gd-alert-destination-select__list s-alert-destination-select-list"
                             items={destinations}
                             itemHeight={DROPDOWN_ITEM_HEIGHT}
                             renderItem={(i) => (

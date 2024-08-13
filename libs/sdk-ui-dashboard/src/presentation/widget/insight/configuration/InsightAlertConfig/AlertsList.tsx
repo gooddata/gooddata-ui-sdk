@@ -4,6 +4,7 @@ import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { Button, SeparatorLine } from "@gooddata/sdk-ui-kit";
 import { AlertsListItem } from "./AlertsListItem.js";
 import { DashboardInsightSubmenuContainer } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightSubmenuContainer.js";
+import { FormattedMessage, useIntl } from "react-intl";
 
 interface IAlertsListProps {
     alerts: IAutomationMetadataObject[];
@@ -26,8 +27,13 @@ export const AlertsList: React.FC<IAlertsListProps> = ({
     onClose,
     onGoBack,
 }) => {
+    const intl = useIntl();
     return (
-        <DashboardInsightSubmenuContainer title="Alerts" onClose={onClose} onBack={onGoBack}>
+        <DashboardInsightSubmenuContainer
+            title={intl.formatMessage({ id: "insightAlert.config.alerts" })}
+            onClose={onClose}
+            onBack={onGoBack}
+        >
             <div className="gd-alerts-list">
                 <div className="gd-alerts-list__items">
                     {alerts.map((alert) => {
@@ -45,8 +51,11 @@ export const AlertsList: React.FC<IAlertsListProps> = ({
                 </div>
                 <SeparatorLine pL={10} pR={10} />
                 <div className="gd-alerts-list__buttons">
-                    <Button className="gd-button gd-button-link gd-icon-plus" onClick={() => onCreateAlert()}>
-                        Add alert
+                    <Button
+                        className="gd-button gd-button-link gd-icon-plus s-alert-add"
+                        onClick={() => onCreateAlert()}
+                    >
+                        <FormattedMessage id="insightAlert.config.addAlert" />
                     </Button>
                 </div>
             </div>

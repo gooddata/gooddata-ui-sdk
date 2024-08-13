@@ -1,8 +1,16 @@
 // (C) 2022-2024 GoodData Corporation
 import React, { useState } from "react";
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
-import { Button, Icon } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, Button, Icon } from "@gooddata/sdk-ui-kit";
 import { AlertTriggerModeSelect } from "./AlertTriggerModeSelect.js";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+import { FormattedMessage } from "react-intl";
+import { gdColorStateBlank } from "../../../../constants/index.js";
+
+const TOOLTIP_ALIGN_POINTS = [
+    { align: "cr cl", offset: { x: 0, y: -1 } },
+    { align: "cl cr", offset: { x: 0, y: -1 } },
+];
 
 interface IEditAlertConfigurationProps {
     alert: IAutomationMetadataObject;
@@ -17,16 +25,24 @@ export const EditAlertConfiguration: React.FC<IEditAlertConfigurationProps> = ({
 }) => {
     const [updatedAlert, setUpdatedAlert] = useState<IAutomationMetadataObject>(alert);
     const canSubmit = updatedAlert.alert?.trigger.mode !== alert.alert?.trigger.mode;
+    const theme = useTheme();
 
     return (
         <div className="gd-edit-alert-configuration">
             <div className="gd-edit-alert-configuration__form">
                 <div className="gd-edit-alert-configuration__trigger-label">
-                    Trigger{" "}
-                    <Icon.QuestionMark
-                        className="gd-edit-alert-configuration__trigger-label-icon"
-                        color={"#94A1AD"} // com-6
-                    />
+                    <FormattedMessage id="insightAlert.config.trigger" />{" "}
+                    <BubbleHoverTrigger>
+                        <Icon.QuestionMark
+                            className="gd-edit-alert-configuration__trigger-label-icon"
+                            color={theme?.palette?.complementary?.c6 ?? gdColorStateBlank}
+                            width={14}
+                            height={14}
+                        />
+                        <Bubble alignPoints={TOOLTIP_ALIGN_POINTS}>
+                            <FormattedMessage id="insightAlert.config.trigger.tooltip" />
+                        </Bubble>
+                    </BubbleHoverTrigger>
                 </div>
                 <div className="gd-edit-alert-configuration__trigger-select">
                     <AlertTriggerModeSelect
@@ -55,7 +71,7 @@ export const EditAlertConfiguration: React.FC<IEditAlertConfigurationProps> = ({
                             onCancel();
                         }}
                     >
-                        Cancel
+                        <FormattedMessage id="cancel" />
                     </Button>
                     <Button
                         intent="action"
@@ -63,7 +79,7 @@ export const EditAlertConfiguration: React.FC<IEditAlertConfigurationProps> = ({
                         disabled={!canSubmit}
                         onClick={() => onUpdate(updatedAlert)}
                     >
-                        Save
+                        <FormattedMessage id="save" />
                     </Button>
                 </div>
             </div>

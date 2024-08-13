@@ -648,6 +648,11 @@
         "comment": "",
         "limit": 0
     },
+    "add": {
+        "value": "Add",
+        "comment": "",
+        "limit": 0
+    },
     "gs.date.today": {
         "value": "Today",
         "comment": "",
@@ -2539,6 +2544,131 @@
     "filters.filterViews.delete.cancelButton": {
         "value": "Cancel",
         "comment": "Label of the button that cancels and closes the dialog.",
+        "limit": 0
+    },
+    "insightAlert.config.action.edit": {
+        "value": "Edit",
+        "comment": "Action in alert configuration",
+        "limit": 0
+    },
+    "insightAlert.config.action.pause": {
+        "value": "Pause",
+        "comment": "Action in alert configuration",
+        "limit": 0
+    },
+    "insightAlert.config.action.resume": {
+        "value": "Resume",
+        "comment": "Action in alert configuration",
+        "limit": 0
+    },
+    "insightAlert.config.action.delete": {
+        "value": "Delete",
+        "comment": "Action in alert configuration",
+        "limit": 0
+    },
+    "insightAlert.config.comparisonOperator.lessThan": {
+        "value": "Is less than",
+        "comment": "Comparison operator in alert configuration",
+        "limit": 0
+    },
+    "insightAlert.config.comparisonOperator.lessThanOrEquals": {
+        "value": "Is less than or equal to",
+        "comment": "Comparison operator in alert configuration",
+        "limit": 0
+    },
+    "insightAlert.config.comparisonOperator.greaterThan": {
+        "value": "Is greater than",
+        "comment": "Comparison operator in alert configuration",
+        "limit": 0
+    },
+    "insightAlert.config.comparisonOperator.greaterThanOrEquals": {
+        "value": "Is greater than or equal to",
+        "comment": "Comparison operator in alert configuration",
+        "limit": 0
+    },
+    "insightAlert.config.alerts": {
+        "value": "Alerts",
+        "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.alert": {
+        "value": "Alert",
+        "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.title": {
+        "value": "Configuration",
+        "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.trigger": {
+        "value": "Trigger",
+        "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.trigger.tooltip": {
+        "value": "Configure when to trigger the alert if the condition is met.",
+        "comment": "Tooltip for alert trigger configuration",
+        "limit": 0
+    },
+    "insightAlert.config.when": {
+        "value": "When",
+        "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.addAlert": {
+        "value": "Add alert",
+        "comment": "Action to create new alert",
+        "limit": 0
+    },
+    "insightAlert.config.triggerMode.always": {
+        "value": "Always",
+        "comment": "How many times alert should be triggered",
+        "limit": 0
+    },
+    "insightAlert.config.triggerMode.once": {
+        "value": "Once",
+        "comment": "How many times alert should be triggered",
+        "limit": 0
+    },
+    "insightAlert.config.delete.success": {
+        "value": "Success. The alert has been deleted.",
+        "comment": "Alert action success message",
+        "limit": 0
+    },
+    "insightAlert.config.resume.success": {
+        "value": "Success. The alert has been resumed.",
+        "comment": "Alert action success message",
+        "limit": 0
+    },
+    "insightAlert.config.pause.success": {
+        "value": "Success. The alert has been paused.",
+        "comment": "Alert action success message",
+        "limit": 0
+    },
+    "insightAlert.config.update.success": {
+        "value": "Success. The alert has been updated.",
+        "comment": "Alert action success message",
+        "limit": 0
+    },
+    "insightAlert.config.add.success": {
+        "value": "Success. The alert has been added.",
+        "comment": "Alert action success message",
+        "limit": 0
+    },
+    "insightAlert.config.delete.title": {
+        "value": "Delete alert?",
+        "comment": "Alert action title",
+        "limit": 0
+    },
+    "insightAlert.config.delete.message": {
+        "value": "The alert for <b>{title}</b> will be permanently deleted.",
+        "comment": "Do not translate html tags <b>, </b> or {title} placeholder",
+        "limit": 0
+    },
+    "insightAlert.noDestination.tooltip": {
+        "value": "No destination available. To add an alert, <a>create destination</a>.",
+        "comment": "Do not translate html tags <a>, </a>",
         "limit": 0
     }
 }

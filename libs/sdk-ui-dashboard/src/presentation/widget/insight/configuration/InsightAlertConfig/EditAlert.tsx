@@ -13,6 +13,7 @@ import { AlertDestinationSelect } from "./AlertDestinationSelect.js";
 import { EditAlertConfiguration } from "./EditAlertConfiguration.js";
 import { INotificationChannel } from "./constants.js";
 import { useEditAlert } from "./useEditAlert.js";
+import { FormattedMessage, useIntl } from "react-intl";
 
 interface IEditAlertProps {
     alert: IAutomationMetadataObject;
@@ -58,17 +59,20 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
         onCreate,
         onUpdate,
     });
+    const intl = useIntl();
 
     return viewMode === "edit" ? (
         <DashboardInsightSubmenuContainer
-            title="Alert"
+            title={intl.formatMessage({ id: "insightAlert.config.alert" })}
             onClose={onClose}
             onBack={hasAlerts ? onCancel : undefined}
         >
             <div className="gd-edit-alert">
                 <div className="gd-edit-alert__form">
                     <div className="gd-edit-alert__form-content">
-                        <div className="gd-edit-alert__measure-label">When</div>
+                        <div className="gd-edit-alert__measure-label">
+                            <FormattedMessage id="insightAlert.config.when" />
+                        </div>
                         <AlertMeasureSelect
                             selectedMeasure={updatedAlert.alert!.condition.left}
                             onMeasureChange={changeMeasure}
@@ -79,7 +83,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                             onComparisonOperatorChange={changeComparisonOperator}
                         />
                         <Input
-                            className="gd-edit-alert__value-input"
+                            className="gd-edit-alert__value-input s-alert-value-input"
                             isSmall
                             autofocus
                             value={updatedAlert.alert!.condition.right}
@@ -97,7 +101,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                 </div>
                 <div className="gd-edit-alert__buttons">
                     <Button
-                        className="gd-edit-alert__configuration-button gd-button-link gd-button-icon-only gd-icon-settings gd-button-small"
+                        className="gd-edit-alert__configuration-button gd-button-link gd-button-icon-only gd-icon-settings gd-button-small s-alert-configuration"
                         onClick={configureAlert}
                     />
                     <div>
@@ -108,7 +112,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                                 onCancel();
                             }}
                         >
-                            Cancel
+                            <FormattedMessage id="cancel" />
                         </Button>
                         <Button
                             intent="action"
@@ -116,7 +120,9 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                             disabled={!canSubmit}
                             onClick={isNewAlert ? createAlert : updateAlert}
                         >
-                            {isNewAlert ? "Add" : "Save"}
+                            {isNewAlert
+                                ? intl.formatMessage({ id: "add" })
+                                : intl.formatMessage({ id: "save" })}
                         </Button>
                     </div>
                 </div>
@@ -124,7 +130,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
         </DashboardInsightSubmenuContainer>
     ) : (
         <DashboardInsightSubmenuContainer
-            title="Configuration"
+            title={intl.formatMessage({ id: "insightAlert.config.title" })}
             onClose={onClose}
             onBack={cancelAlertConfiguration}
         >

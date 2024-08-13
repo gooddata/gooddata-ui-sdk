@@ -4,17 +4,19 @@ import { Dropdown, Button, List, SingleSelectListItem } from "@gooddata/sdk-ui-k
 import cx from "classnames";
 import { DROPDOWN_ITEM_HEIGHT } from "./constants.js";
 import { IAlertTriggerMode } from "@gooddata/sdk-model";
+import { useIntl } from "react-intl";
+import { messages } from "./messages.js";
 
 const options: {
     title: string;
     id: IAlertTriggerMode;
 }[] = [
     {
-        title: "Always",
+        title: messages.alertTriggerModeAlways.id,
         id: "ALWAYS",
     },
     {
-        title: "Once",
+        title: messages.alertTriggerModeOnce.id,
         id: "ONCE",
     },
 ];
@@ -29,6 +31,7 @@ export const AlertTriggerModeSelect = ({
     onTriggerModeChange,
 }: IAlertTriggerModeSelectProps) => {
     const selectedOption = options.find((o) => o.id === selectedTriggerMode);
+    const intl = useIntl();
 
     return (
         <div className="gd-alert-trigger-mode-select">
@@ -40,24 +43,27 @@ export const AlertTriggerModeSelect = ({
                             iconRight={isOpen ? "gd-icon-navigateup" : "gd-icon-navigatedown"}
                             size="small"
                             variant="secondary"
-                            className={cx("gd-edit-alert-trigger-mode-select__button", {
-                                "is-active": isOpen,
-                            })}
+                            className={cx(
+                                "gd-edit-alert-trigger-mode-select__button s-alert-trigger-mode-select",
+                                {
+                                    "is-active": isOpen,
+                                },
+                            )}
                         >
-                            {selectedOption?.title}
+                            {selectedOption ? intl.formatMessage({ id: selectedOption.title }) : ""}
                         </Button>
                     );
                 }}
                 renderBody={({ closeDropdown }) => {
                     return (
                         <List
-                            className="gd-alert-trigger-mode-select__list"
+                            className="gd-alert-trigger-mode-select__list s-alert-trigger-mode-select-list"
                             items={options}
                             itemHeight={DROPDOWN_ITEM_HEIGHT}
                             renderItem={(i) => (
                                 <SingleSelectListItem
                                     key={i.rowIndex}
-                                    title={i.item.title}
+                                    title={intl.formatMessage({ id: i.item.title })}
                                     isSelected={i.item === selectedOption}
                                     onClick={() => {
                                         if (selectedTriggerMode !== i.item.id) {

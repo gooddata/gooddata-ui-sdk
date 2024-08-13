@@ -8,6 +8,7 @@ import {
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
 import { getComparisonOperatorTitle, getMeasureTitle } from "./utils.js";
+import { useIntl } from "react-intl";
 
 export interface IUseEditAlertProps {
     alert: IAutomationMetadataObject;
@@ -18,12 +19,13 @@ export interface IUseEditAlertProps {
 export const useEditAlert = ({ alert, onCreate, onUpdate }: IUseEditAlertProps) => {
     const [viewMode, setViewMode] = useState<"edit" | "configuration">("edit");
     const [updatedAlert, setUpdatedAlert] = useState<IAutomationMetadataObject>(alert);
+    const intl = useIntl();
 
     const changeMeasure = (measure: IMeasure) => {
         setUpdatedAlert((alert) => ({
             ...alert,
             title: getMeasureTitle(measure) ?? "",
-            description: `${getComparisonOperatorTitle(updatedAlert.alert!.condition.operator)} ${
+            description: `${getComparisonOperatorTitle(updatedAlert.alert!.condition.operator, intl)} ${
                 alert.alert!.condition.right
             }`,
             alert: {
@@ -43,7 +45,7 @@ export const useEditAlert = ({ alert, onCreate, onUpdate }: IUseEditAlertProps) 
     const changeComparisonOperator = (comparisonOperator: IAlertComparisonOperator) => {
         setUpdatedAlert((alert) => ({
             ...alert,
-            description: `${getComparisonOperatorTitle(comparisonOperator)} ${
+            description: `${getComparisonOperatorTitle(comparisonOperator, intl)} ${
                 updatedAlert.alert!.condition.right
             }`,
             alert: {
@@ -59,7 +61,7 @@ export const useEditAlert = ({ alert, onCreate, onUpdate }: IUseEditAlertProps) 
     const changeValue = (value: number) => {
         setUpdatedAlert((alert) => ({
             ...alert,
-            description: `${getComparisonOperatorTitle(updatedAlert.alert!.condition.operator)} ${
+            description: `${getComparisonOperatorTitle(updatedAlert.alert!.condition.operator, intl)} ${
                 alert.alert!.condition.right
             }`,
             alert: {
