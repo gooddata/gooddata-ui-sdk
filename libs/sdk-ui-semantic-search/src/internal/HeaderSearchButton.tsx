@@ -5,7 +5,8 @@ import { FormattedMessage, injectIntl } from "react-intl";
 import { Button, Overlay } from "@gooddata/sdk-ui-kit";
 import { SearchOverlay, SearchOverlayProps } from "./SearchOverlay.js";
 import { ISemanticSearchResultItem } from "@gooddata/sdk-model";
-import { TimezoneProvider } from "./timezoneContext.js";
+import { MetadataTimezoneProvider } from "./metadataTimezoneContext.js";
+import { IIntlWrapperProps, IntlWrapper } from "@gooddata/sdk-ui";
 
 const ALIGN_POINTS = [{ align: "br tr" }];
 
@@ -13,7 +14,7 @@ const ALIGN_POINTS = [{ align: "br tr" }];
  * Props for the HeaderSearchButton component.
  * @internal
  */
-export type HeaderSearchButtonProps = SearchOverlayProps & {
+export type HeaderSearchButtonCoreProps = SearchOverlayProps & {
     /**
      * Callback to be called when an item is selected.
      * @param item - the selected item
@@ -22,12 +23,13 @@ export type HeaderSearchButtonProps = SearchOverlayProps & {
      */
     onSelect: (item: ISemanticSearchResultItem, e: MouseEvent | KeyboardEvent, itemUrl?: string) => void;
     /**
-     * Timezone to use for formatting dates.
+     * Timezone in which metadata created and updated dates are saved.
+     * It's used to convert the date to the user's local timezone for display.
      */
     metadataTimezone?: string;
 };
 
-const HeaderSearchButtonCore: React.FC<HeaderSearchButtonProps> = ({
+const HeaderSearchButtonCore: React.FC<HeaderSearchButtonCoreProps> = ({
     onSelect,
     metadataTimezone,
     ...overlayProps
@@ -83,7 +85,7 @@ const HeaderSearchButtonCore: React.FC<HeaderSearchButtonProps> = ({
                     onClose={() => setIsOpen(false)}
                     ignoreClicksOnByClass={[".gd-bubble", ".gd-semantic-search__results-item"]}
                 >
-                    <TimezoneProvider value={metadataTimezone}>
+                    <MetadataTimezoneProvider value={metadataTimezone}>
                         <div className="gd-dialog gd-dropdown overlay gd-header-search-dropdown">
                             <SearchOverlay
                                 onSelect={handleSelect}
@@ -91,15 +93,29 @@ const HeaderSearchButtonCore: React.FC<HeaderSearchButtonProps> = ({
                                 {...overlayProps}
                             />
                         </div>
-                    </TimezoneProvider>
+                    </MetadataTimezoneProvider>
                 </Overlay>
             ) : null}
         </Button>
     );
 };
 
+const HeaderSearchButtonWithIntl = injectIntl(HeaderSearchButtonCore);
+
+export type HeaderSearchButtonProps = Omit<HeaderSearchButtonCoreProps, "intl"> &
+    Pick<IIntlWrapperProps, "locale">;
+
 /**
  * A search button / drop down trigger for the Header menu
  * @internal
  */
-export const HeaderSearchButton = injectIntl(HeaderSearchButtonCore);
+export const HeaderSearchButton = ({
+    locale,
+    ...props
+}: Omit<HeaderSearchButtonProps, "intl"> & { locale?: string }) => {
+    return (
+        <IntlWrapper locale={locale}>
+            <HeaderSearchButtonWithIntl {...props} />
+        </IntlWrapper>
+    );
+};

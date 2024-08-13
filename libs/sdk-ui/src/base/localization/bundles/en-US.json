@@ -3298,5 +3298,10 @@
         "value": "Tags",
         "comment": "Label of column that contains tags of the search results object.",
         "limit": 0
+    },
+    "semantic-search.match": {
+        "value": "{score}% match",
+        "comment": "Label of column that contains match score of the search results object. Do not translate placeholder {score}.",
+        "limit": 0
     }
 }

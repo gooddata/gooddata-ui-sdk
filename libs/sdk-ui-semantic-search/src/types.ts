@@ -10,6 +10,7 @@ export type ListItem<T> = {
     item: T;
     url?: string;
     parentRef?: ISemanticSearchRelationship;
+    isLocked?: boolean;
 };
 
 /**

@@ -645,6 +645,7 @@ export function dummyDataView(definition: IExecutionDefinition, result?: IExecut
 
 // @internal
 export class DummySemanticSearchQueryBuilder implements ISemanticSearchQuery {
+    constructor(workspaceId: string);
     // (undocumented)
     query({ signal }?: {
         signal?: AbortSignal;
@@ -652,12 +653,14 @@ export class DummySemanticSearchQueryBuilder implements ISemanticSearchQuery {
         results: {
             id: string;
             type: GenAISemanticSearchType;
+            workspaceId: string;
             title: string;
             description: string;
             tags: string[];
             createdAt: string;
             modifiedAt: string;
             visualizationUrl: string | undefined;
+            score: number;
         }[];
         relationships: ISemanticSearchRelationship[];
     }>;

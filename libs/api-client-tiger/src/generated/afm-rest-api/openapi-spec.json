@@ -2773,7 +2773,8 @@
                     "scoreExactMatch",
                     "scoreTitle",
                     "title",
-                    "type"
+                    "type",
+                    "workspaceId"
                 ],
                 "type": "object",
                 "properties": {
@@ -2784,6 +2785,10 @@
                     "type": {
                         "type": "string",
                         "description": "Object type, e.g. dashboard."
+                    },
+                    "workspaceId": {
+                        "type": "string",
+                        "description": "Workspace ID."
                     },
                     "title": {
                         "type": "string",

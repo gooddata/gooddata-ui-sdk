@@ -2829,10 +2829,12 @@ export interface ISemanticSearchResultItem {
     description: string;
     id: string;
     modifiedAt?: string;
+    score: number;
     tags: string[];
     title: string;
     type: GenAISemanticSearchType;
     visualizationUrl?: string;
+    workspaceId: string;
 }
 
 // @public
