@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { Button, Icon } from "@gooddata/sdk-ui-kit";
 import { AlertTriggerModeSelect } from "./AlertTriggerModeSelect.js";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+import { FormattedMessage } from "react-intl";
 
 interface IEditAlertConfigurationProps {
     alert: IAutomationMetadataObject;
@@ -17,15 +19,16 @@ export const EditAlertConfiguration: React.FC<IEditAlertConfigurationProps> = ({
 }) => {
     const [updatedAlert, setUpdatedAlert] = useState<IAutomationMetadataObject>(alert);
     const canSubmit = updatedAlert.alert?.trigger.mode !== alert.alert?.trigger.mode;
+    const theme = useTheme();
 
     return (
         <div className="gd-edit-alert-configuration">
             <div className="gd-edit-alert-configuration__form">
                 <div className="gd-edit-alert-configuration__trigger-label">
-                    Trigger{" "}
+                    <FormattedMessage id="insightAlert.config.trigger" />{" "}
                     <Icon.QuestionMark
                         className="gd-edit-alert-configuration__trigger-label-icon"
-                        color={"#94A1AD"} // com-6
+                        color={theme?.palette?.complementary?.c6}
                     />
                 </div>
                 <div className="gd-edit-alert-configuration__trigger-select">
@@ -55,7 +58,7 @@ export const EditAlertConfiguration: React.FC<IEditAlertConfigurationProps> = ({
                             onCancel();
                         }}
                     >
-                        Cancel
+                        <FormattedMessage id="cancel" />
                     </Button>
                     <Button
                         intent="action"
@@ -63,7 +66,7 @@ export const EditAlertConfiguration: React.FC<IEditAlertConfigurationProps> = ({
                         disabled={!canSubmit}
                         onClick={() => onUpdate(updatedAlert)}
                     >
-                        Save
+                        <FormattedMessage id="save" />
                     </Button>
                 </div>
             </div>

@@ -14,6 +14,8 @@ import {
 } from "@gooddata/sdk-model";
 import { COMPARISON_OPERATORS } from "./constants.js";
 import { BucketNames } from "@gooddata/sdk-ui";
+import { messages } from "./messages.js";
+import { IntlShape } from "react-intl";
 
 /**
  * @internal
@@ -25,15 +27,17 @@ export const getMeasureTitle = (measure: IMeasure) => {
 /**
  * @internal
  */
-export const getComparisonOperatorTitle = (operator: IAlertComparisonOperator): string => {
+export const getComparisonOperatorTitle = (operator: IAlertComparisonOperator, intl: IntlShape): string => {
     const titleByOperator: Record<IAlertComparisonOperator, string> = {
-        [COMPARISON_OPERATORS.COMPARISON_OPERATOR_LESS_THAN]: "Is less than",
-        [COMPARISON_OPERATORS.COMPARISON_OPERATOR_LESS_THAN_OR_EQUALS]: "Is less than or equal to",
-        [COMPARISON_OPERATORS.COMPARISON_OPERATOR_GREATER_THAN]: "Is greater than",
-        [COMPARISON_OPERATORS.COMPARISON_OPERATOR_GREATER_THAN_OR_EQUALS]: "Is greater than or equal to",
+        [COMPARISON_OPERATORS.COMPARISON_OPERATOR_LESS_THAN]: messages.comparisonOperatorLessThan.id,
+        [COMPARISON_OPERATORS.COMPARISON_OPERATOR_LESS_THAN_OR_EQUALS]:
+            messages.comparisonOperatorLessThanOrEquals.id,
+        [COMPARISON_OPERATORS.COMPARISON_OPERATOR_GREATER_THAN]: messages.comparisonOperatorGreaterThan.id,
+        [COMPARISON_OPERATORS.COMPARISON_OPERATOR_GREATER_THAN_OR_EQUALS]:
+            messages.comparisonOperatorGreaterThanOrEquals.id,
     };
 
-    return titleByOperator[operator];
+    return intl.formatMessage({ id: titleByOperator[operator] });
 };
 
 /**

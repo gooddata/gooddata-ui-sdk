@@ -11,6 +11,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useDashboardSelector, selectInsightByWidgetRef } from "../../../../../model/index.js";
 import { createDefaultAlert, getSupportedInsightMeasuresByInsight } from "./utils.js";
 import { INotificationChannel } from "./constants.js";
+import { messages } from "./messages.js";
 // import { useWidgetFilters } from "../../../common/useWidgetFilters.js";
 
 type InsightWidgetAlertingViewMode = "list" | "edit" | "create";
@@ -66,7 +67,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
                     uri: id,
                 } as IAutomationMetadataObject,
             ];
-            addSuccess({ id: "Success. The alert has been added." });
+            addSuccess({ id: messages.alertAddSuccess.id });
             return updatedAlerts;
         });
         setCreatingAlert(defaultAlert);
@@ -90,7 +91,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     const updateExistingAlert = (alert: IAutomationMetadataObject) => {
         setAlerts((alertsToUpdate) => {
             const updatedAlerts = alertsToUpdate.map((a) => (a.id === alert.id ? alert : a));
-            addSuccess({ id: "Success. The alert has been updated." });
+            addSuccess({ id: messages.alertUpdateSuccess.id });
             return updatedAlerts;
         });
         cancelAlertEditing();
@@ -111,7 +112,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
                       } as IAutomationMetadataObject)
                     : a,
             );
-            addSuccess({ id: "Success. The alert has been paused." });
+            addSuccess({ id: messages.alertPauseSuccess.id });
             return updatedAlerts;
         });
     };
@@ -126,7 +127,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
                       } as IAutomationMetadataObject)
                     : a,
             );
-            addSuccess({ id: "Success. The alert has been resumed." });
+            addSuccess({ id: messages.alertResumeSuccess.id });
             return updatedAlerts;
         });
     };
@@ -137,7 +138,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             if (updatedAlerts.length === 0) {
                 closeInsightWidgetMenu();
             }
-            addSuccess({ id: "Success. The alert has been deleted." });
+            addSuccess({ id: messages.alertDeleteSuccess.id });
             return updatedAlerts;
         });
     };

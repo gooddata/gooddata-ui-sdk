@@ -9,7 +9,9 @@ import {
     Icon,
 } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
+import { useIntl } from "react-intl";
 import { DROPDOWN_ITEM_HEIGHT, DROPDOWN_SEPARATOR_ITEM_HEIGHT } from "./constants.js";
+import { messages } from "./messages.js";
 
 const ALERT_ACTIONS_DROPDOWN_OPTIONS: {
     title?: string;
@@ -17,22 +19,22 @@ const ALERT_ACTIONS_DROPDOWN_OPTIONS: {
     type?: SingleSelectListItemType;
 }[] = [
     {
-        title: "Edit",
+        title: messages.alertActionEdit.id,
         id: "edit",
     },
     {
-        title: "Pause",
+        title: messages.alertActionPause.id,
         id: "pause",
     },
     {
-        title: "Resume",
+        title: messages.alertActionResume.id,
         id: "resume",
     },
     {
         type: "separator",
     },
     {
-        title: "Delete",
+        title: messages.alertActionDelete.id,
         id: "delete",
     },
 ];
@@ -52,6 +54,7 @@ export const AlertActionsDropdown = ({
     onDelete,
     isPaused,
 }: IAlertActionsDropdownProps) => {
+    const intl = useIntl();
     const options = ALERT_ACTIONS_DROPDOWN_OPTIONS.filter((option) => {
         if (option.id === "pause") {
             return !isPaused;
@@ -98,7 +101,7 @@ export const AlertActionsDropdown = ({
                             renderItem={(i) => (
                                 <SingleSelectListItem
                                     key={i.rowIndex}
-                                    title={i.item.title}
+                                    title={i.item.id ? intl.formatMessage({ id: i.item.title }) : ""}
                                     className={`gd-alert-actions-dropdown__list-item-${i.item.id}`}
                                     type={i.item.type}
                                     onClick={() => {

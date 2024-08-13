@@ -4,6 +4,7 @@ import { Dropdown, Button, List, SingleSelectListItem } from "@gooddata/sdk-ui-k
 import { IAlertComparisonOperator } from "@gooddata/sdk-model";
 import cx from "classnames";
 import { COMPARISON_OPERATOR_OPTIONS, DROPDOWN_ITEM_HEIGHT } from "./constants.js";
+import { useIntl } from "react-intl";
 
 export interface IAlertComparisonOperatorSelectProps {
     selectedComparisonOperator: IAlertComparisonOperator;
@@ -15,6 +16,7 @@ export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSel
     const selectedItem = COMPARISON_OPERATOR_OPTIONS.find(
         (option) => option.id === selectedComparisonOperator,
     )!;
+    const intl = useIntl();
 
     return (
         <div className="gd-alert-comparison-operator-select">
@@ -31,7 +33,7 @@ export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSel
                             iconRight={`gd-icon-navigate${isOpen ? "up" : "down"}`}
                             onClick={toggleDropdown}
                         >
-                            {selectedItem.title}
+                            {intl.formatMessage({ id: selectedItem.title })}
                         </Button>
                     );
                 }}
@@ -54,7 +56,7 @@ export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSel
                                             />
                                         ) : undefined
                                     }
-                                    title={i.item.title}
+                                    title={intl.formatMessage({ id: i.item.title })}
                                     isSelected={i.item === selectedItem}
                                     onClick={() => {
                                         if (i.item.id) {
