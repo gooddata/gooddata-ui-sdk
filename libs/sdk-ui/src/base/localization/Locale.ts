@@ -23,7 +23,7 @@ export type ILocale =
     | "en-AU"
     | "fi-FI"
     | "zh-Hant"
-    | "zh-Yue";
+    | "yue";
 
 /**
  * Array of locales for type-guard. It must be the same as {@link ILocale}
@@ -48,7 +48,7 @@ export const LOCALES = [
     "en-AU",
     "fi-FI",
     "zh-Hant",
-    "zh-Yue",
+    "yue",
 ];
 
 /**

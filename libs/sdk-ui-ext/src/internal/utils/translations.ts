@@ -59,7 +59,7 @@ const sdkUiExtTranslations: { [locale: string]: Record<string, string> } = {
     "en-AU": enAU,
     "fi-FI": fiFI,
     "zh-Hant": zhHant,
-    "zh-Yue": zhYue,
+    yue: zhYue,
 };
 
 /**
