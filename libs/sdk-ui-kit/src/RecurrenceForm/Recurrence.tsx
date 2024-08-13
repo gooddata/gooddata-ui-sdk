@@ -5,15 +5,19 @@ import { RepeatTypeSelect } from "./RepeatTypeSelect.js";
 import { CronExpression } from "./CronExpression.js";
 import { RECURRENCE_TYPES } from "./constants.js";
 import { RecurrenceType } from "./types.js";
+import { RepeatTypeDescription } from "./RepeatTypeDescription.js";
+import { WeekStart } from "@gooddata/sdk-model";
 
 /**
  * @internal
  */
 export interface IRecurrenceProps {
     label: string;
+    showRepeatTypeDescription?: boolean;
     recurrenceType: RecurrenceType;
     startDate?: Date | null;
     cronValue: string;
+    weekStart?: WeekStart;
     onRepeatTypeChange: (repeatType: string) => void;
     onCronValueChange: (cronValue: string) => void;
     allowHourlyRecurrence?: boolean;
@@ -34,11 +38,13 @@ export const Recurrence: React.FC<IRecurrenceProps> = (props) => {
         onRepeatTypeChange,
         onCronValueChange,
         allowHourlyRecurrence,
+        showRepeatTypeDescription,
+        weekStart = "Sunday",
     } = props;
 
     return (
         <div className="gd-recurrence-form-repeat gd-input-component">
-            <label className="gd-label">{label}</label>
+            {Boolean(label) && <label className="gd-input-label">{label}</label>}
             <div className="gd-recurrence-form-repeat-inner">
                 <RepeatTypeSelect
                     repeatType={recurrenceType}
@@ -46,6 +52,13 @@ export const Recurrence: React.FC<IRecurrenceProps> = (props) => {
                     onChange={onRepeatTypeChange}
                     allowHourlyRecurrence={allowHourlyRecurrence}
                 />
+                {recurrenceType !== RECURRENCE_TYPES.CRON && showRepeatTypeDescription ? (
+                    <RepeatTypeDescription
+                        repeatType={recurrenceType}
+                        startDate={startDate}
+                        weekStart={weekStart}
+                    />
+                ) : null}
                 {recurrenceType === RECURRENCE_TYPES.CRON ? (
                     <CronExpression expression={cronValue} onChange={onCronValueChange} />
                 ) : null}

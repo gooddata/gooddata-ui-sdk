@@ -1,11 +1,15 @@
 // (C) 2024 GoodData Corporation
 
 import { describe, it, expect } from "vitest";
+import { WeekStart } from "@gooddata/sdk-model";
+import { createIntlMock } from "@gooddata/sdk-ui";
 import {
     constructCronExpression,
     isLastOccurrenceOfWeekdayInMonth,
     transformCronExpressionToRecurrenceType,
+    transformRecurrenceTypeToDescription,
 } from "./utils.js";
+import { RECURRENCE_TYPES } from "./constants.js";
 
 const sampleCronExp = "0 0 1 ? * 2";
 const sampleDate = new Date("2023-04-05T14:34:21");
@@ -216,5 +220,36 @@ describe("transformCronExpressionToRecurrenceType without date, default Monday",
         expect(transformCronExpressionToRecurrenceType(null, cronExpression, allowHourly, "Monday")).toEqual(
             expected,
         );
+    });
+});
+
+describe("transformRecurrenceTypeToDescription", () => {
+    const intl = createIntlMock();
+    const d1 = new Date(2024, 7, 13, 22, 0, 0);
+
+    it.each([
+        [RECURRENCE_TYPES.HOURLY, null, "Monday", "At start of every hour"],
+        [RECURRENCE_TYPES.HOURLY, null, "Sunday", "At start of every hour"],
+        [RECURRENCE_TYPES.DAILY, null, "Monday", "At 12 AM every day"],
+        [RECURRENCE_TYPES.DAILY, null, "Sunday", "At 12 AM every day"],
+        [RECURRENCE_TYPES.WEEKLY, null, "Monday", "At 12 AM every week start"],
+        [RECURRENCE_TYPES.WEEKLY, null, "Sunday", "At 12 AM every week start"],
+        [RECURRENCE_TYPES.MONTHLY, null, "Monday", "At 12 AM every month start"],
+        [RECURRENCE_TYPES.MONTHLY, null, "Sunday", "At 12 AM every month start"],
+        [RECURRENCE_TYPES.CRON, null, "Monday", ""],
+        [RECURRENCE_TYPES.CRON, null, "Sunday", ""],
+
+        [RECURRENCE_TYPES.HOURLY, d1, "Monday", "At start of every hour"],
+        [RECURRENCE_TYPES.HOURLY, d1, "Sunday", "At start of every hour"],
+        [RECURRENCE_TYPES.DAILY, d1, "Monday", "At 10 PM every day"],
+        [RECURRENCE_TYPES.DAILY, d1, "Sunday", "At 10 PM every day"],
+        [RECURRENCE_TYPES.WEEKLY, d1, "Monday", "At 10 PM on Tuesday every week"],
+        [RECURRENCE_TYPES.WEEKLY, d1, "Sunday", "At 10 PM on Tuesday every week"],
+        [RECURRENCE_TYPES.MONTHLY, d1, "Monday", "At 10 PM on Tuesday every 2. week in month"],
+        [RECURRENCE_TYPES.MONTHLY, d1, "Sunday", "At 10 PM on Tuesday every 2. week in month"],
+        [RECURRENCE_TYPES.CRON, d1, "Monday", ""],
+        [RECURRENCE_TYPES.CRON, d1, "Sunday", ""],
+    ])("should correctly describe %s", (recurrenceType, date, weekStart: WeekStart, expected) => {
+        expect(transformRecurrenceTypeToDescription(intl, recurrenceType, date, weekStart)).toEqual(expected);
     });
 });
