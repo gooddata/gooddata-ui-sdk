@@ -283,6 +283,7 @@
     "configurationPanel.measure._measure": "メジャー",
     "configurationPanel.measure._metric": "メトリック",
     "configurationPanel.filterBy": "次によりフィルター:",
+    "configurationPanel.date": "日付",
     "configurationPanel.dateAs": "として",
     "configurationPanel.vizCantBeFilteredByAttribute": "ビジュアライゼーションは{attributeName} でフィルターできません。チェックボックスをオフにします。",
     "configurationPanel.kpiCantBeFilteredByAttribute": "KPIは{attributeName}でフィルターできません。チェックボックスの選択を解除してください。",

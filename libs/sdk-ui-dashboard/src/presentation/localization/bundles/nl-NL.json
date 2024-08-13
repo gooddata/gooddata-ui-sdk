@@ -283,6 +283,7 @@
     "configurationPanel.measure._measure": "Maat",
     "configurationPanel.measure._metric": "Meetgegeven",
     "configurationPanel.filterBy": "Filteren volgens",
+    "configurationPanel.date": "Datum",
     "configurationPanel.dateAs": "als",
     "configurationPanel.vizCantBeFilteredByAttribute": "De visualisatie kan niet worden gefilterd op {attributeName}. Schakel het selectievakje uit.",
     "configurationPanel.kpiCantBeFilteredByAttribute": "De KPI kan niet worden gefilterd op {attributeName}. Vink het selectievakje af.",

@@ -283,6 +283,7 @@
     "configurationPanel.measure._measure": "Messung",
     "configurationPanel.measure._metric": "Metrik",
     "configurationPanel.filterBy": "Filtern nach",
+    "configurationPanel.date": "Datum",
     "configurationPanel.dateAs": "als",
     "configurationPanel.vizCantBeFilteredByAttribute": "Die Visualisierung kann nicht nach {attributeName} gefiltert werden. Markierung des Kontrollfelds entfernen.",
     "configurationPanel.kpiCantBeFilteredByAttribute": "KPI kann nicht nach {attributeName} gefiltert werden. Markierung des Kontrollfelds entfernen.",
