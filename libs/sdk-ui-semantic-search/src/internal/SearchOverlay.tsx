@@ -109,17 +109,20 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({
                         rel.targetObjectType === item.type &&
                         rel.sourceObjectType === "dashboard",
                 );
+                const isLocked = item.workspaceId !== effectiveWorkspace;
 
                 if (!parentDashboards.length)
                     return {
                         item,
                         url: getUIPath(item.type, item.id, effectiveWorkspace),
+                        isLocked,
                     };
 
                 return parentDashboards.map((parent) => ({
                     item,
                     parentRef: parent,
                     url: getUIPath(parent.sourceObjectType, parent.sourceObjectId, effectiveWorkspace),
+                    isLocked,
                 }));
             }),
         [searchResults, effectiveWorkspace, relationships],

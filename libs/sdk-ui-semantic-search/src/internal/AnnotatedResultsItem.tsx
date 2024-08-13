@@ -8,6 +8,7 @@ import classnames from "classnames";
 import { renderDetails } from "../utils/renderDetails.js";
 import { renderItemIcon } from "../utils/renderItemIcon.js";
 import { UpdatedDate } from "./UpdateDate.js";
+import { renderLock } from "../utils/renderLoack.js";
 
 /**
  * A single result item in the search results.
@@ -37,7 +38,10 @@ const CoreAnnotatedResultsItem: React.FC<ListItemProps<ISemanticSearchResultItem
                 {renderItemIcon(listItem, { color: theme?.palette?.complementary?.c5 ?? "#B0BECA" })}
             </span>
             <span className="gd-semantic-search__results-item__text gd-semantic-search__results-item__text--result">
-                <span className="gd-semantic-search__results-item__text__1">{listItem.item.title}</span>
+                <span className="gd-semantic-search__results-item__text__1">
+                    {renderLock(listItem)}
+                    {listItem.item.title}
+                </span>
                 <span className="gd-semantic-search__results-item__text__2">
                     {listItem.parentRef ? (
                         <span className="gd-semantic-search__results-item__annotation">
