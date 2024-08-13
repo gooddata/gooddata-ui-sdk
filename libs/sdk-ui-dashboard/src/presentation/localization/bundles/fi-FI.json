@@ -289,7 +289,7 @@
     "configurationPanel.kpiCantBeFilteredByAttribute": "KPI:ta ei voi suodattaa  {attributeName}. Poista valintamerkki.",
     "configurationPanel.vizCantBeFilteredByDate": "Visualisointia ei voida suodattaa päivämäärän mukaan. Poista valinta valintaruudusta.",
     "configurationPanel.kpiCantBeFilteredByDate": "KPI:ta ei voi suodattaa päivämäärällä. Poista valintamerkki.",
-    "configurationPanel.unrelatedVizDateInfo": "{dateDataSet}\"\" ei voida enää soveltaa visualisointiin. Valitse toinen ulottuvuus tai muokkaa visualisointia.",
+    "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" ei voida enää soveltaa visualisointiin. Valitse toinen ulottuvuus tai muokkaa visualisointia.",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" ei voi enää soveltaa KPI:hin. Valitse eri ulottuvuus tai muokkaa KPI:tä.",
     "configurationPanel.breakAlertWarning": "\n            Käyttäjät ovat asettaneet {numAlerts} {numAlerts, select, 1 {hälytyksen} other {hälytyksiä}}\n            tälle KPI:lle. KPI:n muokkaaminen vaikuttaa {numAlerts, select, 1 {tähän hälytykseen} other {näihin hälytyksiin}}.\n        ",
     "configurationPanel.drillIntoDashboard": "Poraa kojelautaan",

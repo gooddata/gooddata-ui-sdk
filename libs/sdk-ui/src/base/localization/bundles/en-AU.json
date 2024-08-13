@@ -420,7 +420,7 @@
     "attributeHierarchyEditor.attribute.dropdown.title": "Select attribute…",
     "attributeHierarchyEditor.attribute.dropdown.search": "Search…",
     "attributeHierarchyEditor.note.title": "Memo:",
-    "attributeHierarchyEditor.note.message": "Note: The attribute hierarchy you define is applied globally to all visualisations. This enables drill down interactions not just for the {br}current visualisation, but for all visualisations that include any of the attributes within the hierarchy.",
+    "attributeHierarchyEditor.note.message": "<b>Note:</b> The attribute hierarchy you define is applied globally to all visualisations. This enables drill down interactions not just for the {br}current visualisation, but for all visualisations that include any of the attributes within the hierarchy.",
     "attributeHierarchyEditor.howItWorks.title": "How it functions",
     "attributeHierarchyEditor.howItWorks.message.heading": "Hierarchy is applied to all visualisations.",
     "attributeHierarchyEditor.message.create.success": "Great! We've created the attribute hierarchy!",
