@@ -14,4 +14,5 @@ export {
     IInsightMenuSubmenu,
     IInsightMenuItemButton,
     IInsightMenuItemSeparator,
+    IInsightMenuSubmenuComponentProps,
 } from "./types.js";

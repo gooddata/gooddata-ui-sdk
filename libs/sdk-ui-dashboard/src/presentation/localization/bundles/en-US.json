@@ -122,6 +122,11 @@
         "comment": "Export whole KPI dashboard to PDF",
         "limit": 0
     },
+    "options.menu.alert": {
+        "value": "Alert",
+        "comment": "Widget options menu item",
+        "limit": 0
+    },
     "options.menu.schedule.email": {
         "value": "Schedule export",
         "comment": "Translate as imperative. Schedule emailing whole KPI dashboard",
@@ -974,6 +979,11 @@
     "widget.options.menu.exportToXLSX": {
         "value": "Export to XLSX",
         "comment": "Export to file with XLSX extension.",
+        "limit": 0
+    },
+    "widget.options.menu.alerts": {
+        "value": "Alerts",
+        "comment": "Item in the widget options menu",
         "limit": 0
     },
     "widget.options.menu.scheduleExport": {

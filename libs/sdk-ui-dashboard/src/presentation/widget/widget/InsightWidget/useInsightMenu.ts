@@ -23,6 +23,7 @@ type UseInsightMenuConfig = {
     onScheduleManagementExport: () => void;
     isScheduleExportVisible: boolean;
     isScheduleExportManagementVisible: boolean;
+    isAlertingVisible: boolean;
 };
 
 export const useInsightMenu = (
@@ -58,6 +59,7 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
         onScheduleManagementExport,
         isScheduleExportVisible,
         isScheduleExportManagementVisible,
+        isAlertingVisible,
         widget,
     } = config;
 
@@ -100,6 +102,7 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
             isScheduleExportVisible,
             isScheduleExportManagementVisible,
             isDataError: isDataError(execution?.error),
+            isAlertingVisible,
         });
     }, [
         execution,
@@ -115,5 +118,6 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
         isScheduleExportManagementVisible,
         intl,
         setIsMenuOpen,
+        isAlertingVisible,
     ]);
 }

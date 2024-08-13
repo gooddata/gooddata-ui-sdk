@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import React from "react";
 import { Button } from "@gooddata/sdk-ui-kit";
 
@@ -8,7 +8,7 @@ interface IDashboardInsightSubmenuContainerProps {
     children: React.ReactNode;
     title: string;
     onClose: () => void;
-    onBack: () => void;
+    onBack?: () => void;
 }
 
 const screenWrapperStyle: React.CSSProperties = { width: "100%" };

@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import { ComponentType, MouseEvent } from "react";
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 import { RenderMode } from "../../../types.js";
@@ -35,6 +35,24 @@ export interface IInsightMenuItemSeparator {
 }
 
 /**
+ * @alpha
+ */
+export interface IInsightMenuSubmenuComponentProps {
+    /**
+     * The widget for which the menu is rendered.
+     */
+    widget: IInsightWidget;
+    /**
+     * Closes the insight menu.
+     */
+    onClose: () => void;
+    /**
+     * Go back to the root menu.
+     */
+    onGoBack: () => void;
+}
+
+/**
  * @beta
  */
 export interface IInsightMenuSubmenu {
@@ -42,7 +60,14 @@ export interface IInsightMenuSubmenu {
     itemId: string;
     itemName: string;
     /** @alpha */
-    SubmenuComponent: ComponentType<{ widget: IInsightWidget }>;
+    SubmenuComponent: ComponentType<IInsightMenuSubmenuComponentProps>;
+    /**
+     * Should the submenu component be rendered only?
+     * If so, it won't be wrapped inside the default container
+     * and the default header won't be rendered.
+     * @alpha
+     */
+    renderSubmenuComponentOnly?: boolean;
     /**
      * If specified, the value is shown on hover of the item as a tooltip.
      */
