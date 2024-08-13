@@ -3553,6 +3553,7 @@ export function getDefaultInsightMenuItems(intl: IntlShape, config: {
     isScheduleExportManagementVisible: boolean;
     isDataError: boolean;
     isAlertingVisible: boolean;
+    alertingDisabled: boolean;
 }): IInsightMenuItem[];
 
 // @internal (undocumented)
@@ -4512,7 +4513,7 @@ export interface IInsightMenuItemButton {
     itemName: string;
     // (undocumented)
     onClick?: (e: MouseEvent_2) => void;
-    tooltip?: string;
+    tooltip?: string | ReactNode;
     // (undocumented)
     type: "button";
 }
@@ -4542,7 +4543,7 @@ export interface IInsightMenuSubmenu {
     renderSubmenuComponentOnly?: boolean;
     // @alpha (undocumented)
     SubmenuComponent: ComponentType<IInsightMenuSubmenuComponentProps>;
-    tooltip?: string;
+    tooltip?: string | ReactNode;
     // (undocumented)
     type: "submenu";
 }

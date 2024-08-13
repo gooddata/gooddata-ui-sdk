@@ -47,6 +47,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         onScheduleEmailingManagementOpen,
         isScheduledEmailingVisible,
         isScheduledManagementEmailingVisible,
+        numberOfAvailableWebhooks,
     } = useDashboardScheduledEmails({
         dashboard,
     });
@@ -73,6 +74,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
 
     const isHeadline = visType === "headline";
     const isAlertingVisible = isHeadline && !isCustomWidget(widget) && settings.enableAlerting === true;
+    const alertingDisabled = numberOfAvailableWebhooks === 0;
 
     const { closeMenu, isMenuOpen, menuItems, openMenu } = useInsightMenu({
         insight,
@@ -88,6 +90,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         isScheduleExportVisible: isScheduledEmailingVisible,
         isScheduleExportManagementVisible: isScheduledManagementEmailingVisible,
         isAlertingVisible,
+        alertingDisabled,
     });
     const toggleMenu = useCallback(() => {
         if (isMenuOpen) {

@@ -1,11 +1,16 @@
 // (C) 2022-2024 GoodData Corporation
 import React, { useState } from "react";
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
-import { Button, Icon } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, Button, Icon } from "@gooddata/sdk-ui-kit";
 import { AlertTriggerModeSelect } from "./AlertTriggerModeSelect.js";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { FormattedMessage } from "react-intl";
-import { gdColorStateBlank } from "src/presentation/constants/colors.js";
+import { gdColorStateBlank } from "../../../../constants/index.js";
+
+const TOOLTIP_ALIGN_POINTS = [
+    { align: "cr cl", offset: { x: 0, y: -1 } },
+    { align: "cl cr", offset: { x: 0, y: -1 } },
+];
 
 interface IEditAlertConfigurationProps {
     alert: IAutomationMetadataObject;
@@ -27,10 +32,17 @@ export const EditAlertConfiguration: React.FC<IEditAlertConfigurationProps> = ({
             <div className="gd-edit-alert-configuration__form">
                 <div className="gd-edit-alert-configuration__trigger-label">
                     <FormattedMessage id="insightAlert.config.trigger" />{" "}
-                    <Icon.QuestionMark
-                        className="gd-edit-alert-configuration__trigger-label-icon"
-                        color={theme?.palette?.complementary?.c6 ?? gdColorStateBlank}
-                    />
+                    <BubbleHoverTrigger>
+                        <Icon.QuestionMark
+                            className="gd-edit-alert-configuration__trigger-label-icon"
+                            color={theme?.palette?.complementary?.c6 ?? gdColorStateBlank}
+                            width={14}
+                            height={14}
+                        />
+                        <Bubble alignPoints={TOOLTIP_ALIGN_POINTS}>
+                            <FormattedMessage id="insightAlert.config.trigger.tooltip" />
+                        </Bubble>
+                    </BubbleHoverTrigger>
                 </div>
                 <div className="gd-edit-alert-configuration__trigger-select">
                     <AlertTriggerModeSelect

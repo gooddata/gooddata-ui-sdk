@@ -2606,6 +2606,11 @@
         "comment": "Title of the section in insight configuration",
         "limit": 0
     },
+    "insightAlert.config.trigger.tooltip": {
+        "value": "Configure when to trigger the alert if the condition is met.",
+        "comment": "Tooltip for alert trigger configuration",
+        "limit": 0
+    },
     "insightAlert.config.when": {
         "value": "When",
         "comment": "Title of the section in insight configuration",
@@ -2659,6 +2664,11 @@
     "insightAlert.config.delete.message": {
         "value": "The alert for <b>{title}</b> will be permanently deleted.",
         "comment": "Do not translate html tags <b>, </b> or {title} placeholder",
+        "limit": 0
+    },
+    "insightAlert.noDestination.tooltip": {
+        "value": "No destination available. To add an alert, <a>create destination</a>.",
+        "comment": "Do not translate html tags <a>, </a>",
         "limit": 0
     }
 }

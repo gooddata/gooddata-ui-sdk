@@ -1,4 +1,5 @@
 // (C) 2021-2024 GoodData Corporation
+import React from "react";
 import { IntlShape } from "react-intl";
 import compact from "lodash/compact.js";
 
@@ -24,6 +25,7 @@ export function getDefaultInsightMenuItems(
         isScheduleExportManagementVisible: boolean;
         isDataError: boolean;
         isAlertingVisible: boolean;
+        alertingDisabled: boolean;
     },
 ): IInsightMenuItem[] {
     const {
@@ -40,6 +42,7 @@ export function getDefaultInsightMenuItems(
         isScheduleExportManagementVisible,
         isDataError,
         isAlertingVisible,
+        alertingDisabled,
     } = config;
 
     const defaultWidgetTooltip = isDataError
@@ -89,6 +92,19 @@ export function getDefaultInsightMenuItems(
             className: "s-options-menu-alerting",
             SubmenuComponent: InsightAlerts,
             renderSubmenuComponentOnly: true,
+            tooltip: alertingDisabled
+                ? intl.formatMessage(
+                      { id: "insightAlert.noDestination.tooltip" },
+                      {
+                          a: (chunk: React.ReactNode) => (
+                              <a href="/settings" rel="noopener noreferrer" target="_blank">
+                                  {chunk}
+                              </a>
+                          ),
+                      },
+                  )
+                : undefined,
+            disabled: alertingDisabled,
         },
         isSomeScheduleVisible && {
             itemId: "SchedulingSeparator",
