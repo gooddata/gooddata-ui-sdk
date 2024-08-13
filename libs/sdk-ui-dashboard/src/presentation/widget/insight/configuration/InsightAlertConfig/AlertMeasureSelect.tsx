@@ -27,7 +27,7 @@ export const AlertMeasureSelect = ({
                 renderButton={({ isOpen, toggleDropdown }) => {
                     return (
                         <Button
-                            className={cx("gd-alert-measure-select__button", {
+                            className={cx("gd-alert-measure-select__button s-alert-measure-select", {
                                 "is-active": isOpen,
                             })}
                             size="small"
@@ -43,7 +43,7 @@ export const AlertMeasureSelect = ({
                 renderBody={({ closeDropdown }) => {
                     return (
                         <List
-                            className="gd-alert-measure-select__list"
+                            className="gd-alert-measure-select__list s-alert-measure-select-list"
                             items={measures}
                             itemHeight={DROPDOWN_ITEM_HEIGHT}
                             renderItem={(i) => (

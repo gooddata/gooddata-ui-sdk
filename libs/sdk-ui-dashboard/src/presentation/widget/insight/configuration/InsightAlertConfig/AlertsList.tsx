@@ -51,7 +51,10 @@ export const AlertsList: React.FC<IAlertsListProps> = ({
                 </div>
                 <SeparatorLine pL={10} pR={10} />
                 <div className="gd-alerts-list__buttons">
-                    <Button className="gd-button gd-button-link gd-icon-plus" onClick={() => onCreateAlert()}>
+                    <Button
+                        className="gd-button gd-button-link gd-icon-plus s-alert-add"
+                        onClick={() => onCreateAlert()}
+                    >
                         <FormattedMessage id="insightAlert.config.addAlert" />
                     </Button>
                 </div>

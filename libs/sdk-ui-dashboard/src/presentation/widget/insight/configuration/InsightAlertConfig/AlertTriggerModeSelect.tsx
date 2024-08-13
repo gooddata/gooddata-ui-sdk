@@ -43,9 +43,12 @@ export const AlertTriggerModeSelect = ({
                             iconRight={isOpen ? "gd-icon-navigateup" : "gd-icon-navigatedown"}
                             size="small"
                             variant="secondary"
-                            className={cx("gd-edit-alert-trigger-mode-select__button", {
-                                "is-active": isOpen,
-                            })}
+                            className={cx(
+                                "gd-edit-alert-trigger-mode-select__button s-alert-trigger-mode-select",
+                                {
+                                    "is-active": isOpen,
+                                },
+                            )}
                         >
                             {selectedOption ? intl.formatMessage({ id: selectedOption.title }) : ""}
                         </Button>
@@ -54,7 +57,7 @@ export const AlertTriggerModeSelect = ({
                 renderBody={({ closeDropdown }) => {
                     return (
                         <List
-                            className="gd-alert-trigger-mode-select__list"
+                            className="gd-alert-trigger-mode-select__list s-alert-trigger-mode-select-list"
                             items={options}
                             itemHeight={DROPDOWN_ITEM_HEIGHT}
                             renderItem={(i) => (

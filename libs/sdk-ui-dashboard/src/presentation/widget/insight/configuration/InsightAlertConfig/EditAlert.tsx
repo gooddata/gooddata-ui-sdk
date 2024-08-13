@@ -83,7 +83,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                             onComparisonOperatorChange={changeComparisonOperator}
                         />
                         <Input
-                            className="gd-edit-alert__value-input"
+                            className="gd-edit-alert__value-input s-alert-value-input"
                             isSmall
                             autofocus
                             value={updatedAlert.alert!.condition.right}
@@ -101,7 +101,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                 </div>
                 <div className="gd-edit-alert__buttons">
                     <Button
-                        className="gd-edit-alert__configuration-button gd-button-link gd-button-icon-only gd-icon-settings gd-button-small"
+                        className="gd-edit-alert__configuration-button gd-button-link gd-button-icon-only gd-icon-settings gd-button-small s-alert-configuration"
                         onClick={configureAlert}
                     />
                     <div>

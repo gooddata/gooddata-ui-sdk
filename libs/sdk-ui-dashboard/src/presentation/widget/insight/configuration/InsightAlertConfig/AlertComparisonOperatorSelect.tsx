@@ -24,9 +24,12 @@ export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSel
                 renderButton={({ isOpen, toggleDropdown }) => {
                     return (
                         <Button
-                            className={cx("gd-alert-comparison-operator-select__button", {
-                                "is-active": isOpen,
-                            })}
+                            className={cx(
+                                "gd-alert-comparison-operator-select__button s-alert-operator-select",
+                                {
+                                    "is-active": isOpen,
+                                },
+                            )}
                             size="small"
                             variant="secondary"
                             iconLeft={selectedItem.icon}
@@ -40,7 +43,7 @@ export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSel
                 renderBody={({ closeDropdown }) => {
                     return (
                         <List
-                            className="gd-alert-comparison-operator-select__list"
+                            className="gd-alert-comparison-operator-select__list s-alert-operator-select-list"
                             items={COMPARISON_OPERATOR_OPTIONS}
                             itemHeight={DROPDOWN_ITEM_HEIGHT}
                             renderItem={(i) => (

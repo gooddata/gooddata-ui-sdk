@@ -22,7 +22,7 @@ export const AlertsListItem: React.FC<IAlertsListItemProps> = ({
     const isPaused = alert.alert?.trigger?.state === "PAUSED";
     return (
         <div className="gd-alerts-list-item" key={alert.id} onClick={() => onEditAlert(alert)}>
-            <div className="gd-alerts-list-item__content">
+            <div className="gd-alerts-list-item__content s-alert-list-item">
                 <div className="gd-alerts-list-item__icon">
                     {isPaused ? <Icon.AlertPaused /> : <Icon.Alert />}
                 </div>

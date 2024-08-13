@@ -72,7 +72,7 @@ export const AlertActionsDropdown = ({
                     return (
                         <Button
                             className={cx(
-                                "gd-alert-actions-dropdown__button gd-button-link gd-button-icon-only",
+                                "gd-alert-actions-dropdown__button gd-button-link gd-button-icon-only s-alert-actions-button",
                                 {
                                     "gd-alert-actions-dropdown__button--open": isOpen,
                                 },
@@ -91,7 +91,7 @@ export const AlertActionsDropdown = ({
                         <List
                             width={80}
                             height={94}
-                            className="gd-alert-actions-dropdown__list"
+                            className="gd-alert-actions-dropdown__list s-alert-actions-list"
                             items={options}
                             itemHeightGetter={(idx) =>
                                 options[idx].type === "separator"
