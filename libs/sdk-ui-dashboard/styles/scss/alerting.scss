@@ -1,5 +1,7 @@
 // (C) 2024 GoodData Corporation
 
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
 //
 // Alerts list
 //
@@ -25,7 +27,7 @@
     transition: background-color 100ms ease-in-out;
 
     &:hover {
-        background-color: #ebeff4; // var(--gray-200-ebeff-4-com-2, #EBEFF4);
+        background-color: kit-variables.$is-focused-background;
     }
 }
 
@@ -38,7 +40,7 @@
 }
 
 .gd-alerts-list-item__icon {
-    background-color: #ebeff4; //var(--gray-200-ebeff-4-com-2, #EBEFF4);
+    background-color: kit-variables.$is-focused-background;
     width: 26px;
     height: 26px;
     border-radius: 51%;
@@ -60,14 +62,14 @@
 .gd-alerts-list-item__title {
     overflow: hidden;
     text-overflow: ellipsis;
-    color: #464e56; // var(--gray-800464-e-56-com-8, #464E56);
+    color: kit-variables.$gd-color-text;
     font-weight: 700;
 }
 
 .gd-alerts-list-item__description {
     overflow: hidden;
     text-overflow: ellipsis;
-    color: #94a1ad; // var(--gray-60094-a-1-ad-com-6, #94A1AD);
+    color: kit-variables.$gd-color-state-blank;
     font-weight: 400;
     white-space: nowrap;
 }
@@ -78,7 +80,7 @@
 .gd-edit-alert {
     font-size: 12px;
     line-height: 14px;
-    color: #464e56;
+    color: kit-variables.$gd-color-text;
     width: 100%;
 }
 
@@ -112,11 +114,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-top: 1px solid #dde4eb; // com-3
+    border-top: 1px solid kit-variables.$gd-border-color;
 }
 
 .gd-edit-alert__configuration-button {
-    color: #94a1ad; // com-6
+    color: kit-variables.$gd-color-state-blank;
 }
 
 //
@@ -152,7 +154,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    border-top: 1px solid #dde4eb; // com-3
+    border-top: 1px solid kit-variables.$gd-border-color;
 }
 
 //
@@ -229,7 +231,7 @@
 
     &:hover,
     &.gd-alert-actions-dropdown__button--open {
-        background-color: #ccd8e2; // var(--gray-400-ccd-8-e-2-com-4, #CCD8E2);
+        background-color: kit-variables.$gd-input-text-border;
     }
 
     .gd-button-text {
@@ -243,7 +245,7 @@
 
 .gd-alert-actions-dropdown__list-item-delete {
     &:hover {
-        color: #e54d40; // var(--error-red-e-54-d-42, #E54D40);
-        background-color: #fcedec; // var(--error-red-light-fcedec, #FCEDEC);
+        color: kit-variables.$gd-color-negative;
+        background-color: kit-variables.$gd-palette-error-dimmed;
     }
 }

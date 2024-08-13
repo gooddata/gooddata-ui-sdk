@@ -5,6 +5,7 @@ import { Button, Icon } from "@gooddata/sdk-ui-kit";
 import { AlertTriggerModeSelect } from "./AlertTriggerModeSelect.js";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { FormattedMessage } from "react-intl";
+import { gdColorStateBlank } from "src/presentation/constants/colors.js";
 
 interface IEditAlertConfigurationProps {
     alert: IAutomationMetadataObject;
@@ -28,7 +29,7 @@ export const EditAlertConfiguration: React.FC<IEditAlertConfigurationProps> = ({
                     <FormattedMessage id="insightAlert.config.trigger" />{" "}
                     <Icon.QuestionMark
                         className="gd-edit-alert-configuration__trigger-label-icon"
-                        color={theme?.palette?.complementary?.c6}
+                        color={theme?.palette?.complementary?.c6 ?? gdColorStateBlank}
                     />
                 </div>
                 <div className="gd-edit-alert-configuration__trigger-select">
