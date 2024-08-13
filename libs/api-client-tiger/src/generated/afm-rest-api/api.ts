@@ -2386,6 +2386,12 @@ export interface SearchResultObject {
      */
     type: string;
     /**
+     * Workspace ID.
+     * @type {string}
+     * @memberof SearchResultObject
+     */
+    workspaceId: string;
+    /**
      * Object title.
      * @type {string}
      * @memberof SearchResultObject

@@ -378,7 +378,7 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
         genAI(): IGenAIService {
             return {
                 getSemanticSearchQuery(): ISemanticSearchQuery {
-                    return new DummySemanticSearchQueryBuilder();
+                    return new DummySemanticSearchQueryBuilder(workspace);
                 },
                 async semanticSearchIndex(): Promise<void> {
                     throw new NotSupported("not supported");
@@ -1130,6 +1130,7 @@ class DummyWorkspaceMeasuresService implements IWorkspaceMeasuresService {
  * @internal
  */
 export class DummySemanticSearchQueryBuilder implements ISemanticSearchQuery {
+    constructor(private readonly workspaceId: string) {}
     question = "";
     withQuestion(question: string) {
         this.question = question;
@@ -1159,6 +1160,7 @@ export class DummySemanticSearchQueryBuilder implements ISemanticSearchQuery {
             ].map((type) => ({
                 id: type,
                 type: type as GenAISemanticSearchType,
+                workspaceId: this.workspaceId,
                 title: `${type} title`,
                 description: this.question,
                 tags: [] as string[],

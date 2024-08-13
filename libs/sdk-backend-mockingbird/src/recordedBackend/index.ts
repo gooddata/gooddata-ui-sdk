@@ -288,7 +288,7 @@ function recordedWorkspace(
         genAI(): IGenAIService {
             return {
                 getSemanticSearchQuery: () => {
-                    return new DummySemanticSearchQueryBuilder();
+                    return new DummySemanticSearchQueryBuilder(workspace);
                 },
                 semanticSearchIndex: () => {
                     throw new NotSupported("not supported");

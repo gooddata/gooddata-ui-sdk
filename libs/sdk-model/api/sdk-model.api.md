@@ -2833,6 +2833,7 @@ export interface ISemanticSearchResultItem {
     title: string;
     type: GenAISemanticSearchType;
     visualizationUrl?: string;
+    workspaceId: string;
 }
 
 // @public
