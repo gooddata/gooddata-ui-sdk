@@ -283,6 +283,7 @@
     "configurationPanel.measure._measure": "度量",
     "configurationPanel.measure._metric": "指标",
     "configurationPanel.filterBy": "筛选条件",
+    "configurationPanel.date": "日期",
     "configurationPanel.dateAs": "作为",
     "configurationPanel.vizCantBeFilteredByAttribute": "可视化无法按 {attributeName} 筛选。请取消选中该复选框。",
     "configurationPanel.kpiCantBeFilteredByAttribute": "KPI 无法按 {attributeName} 筛选。请取消选中该复选框。",

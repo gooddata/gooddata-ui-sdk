@@ -283,6 +283,7 @@
     "configurationPanel.measure._measure": "Misura",
     "configurationPanel.measure._metric": "Metrica",
     "configurationPanel.filterBy": "Filtra per",
+    "configurationPanel.date": "Data",
     "configurationPanel.dateAs": "come",
     "configurationPanel.vizCantBeFilteredByAttribute": "La visualizzazione non può essere filtrata da {attributeName}. Deselezionare la casella di controllo.",
     "configurationPanel.kpiCantBeFilteredByAttribute": "Il KPI non può essere filtrato per {attributeName}. Deselezionare la casella di controllo.",

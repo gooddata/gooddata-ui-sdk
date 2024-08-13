@@ -283,6 +283,7 @@
     "configurationPanel.measure._measure": "Mesure",
     "configurationPanel.measure._metric": "Métrique",
     "configurationPanel.filterBy": "Filtrer par",
+    "configurationPanel.date": "Date",
     "configurationPanel.dateAs": "comme",
     "configurationPanel.vizCantBeFilteredByAttribute": "La visualisation ne peut pas être filtrée par {attributeName}. Désélectionnez la case à cocher.",
     "configurationPanel.kpiCantBeFilteredByAttribute": "Le KPI ne peut pas être filtré par {attributeName}. Décochez la case.",
