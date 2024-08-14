@@ -436,6 +436,12 @@ export function disableComputeRatio<T extends IAttributeOrMeasure>(item: T): T;
 // @public
 export type DrillDefinition = InsightDrillDefinition | KpiDrillDefinition;
 
+// @alpha
+export function drillDownReferenceAttributeRef(drillDownReference: IDrillDownReference): ObjRef;
+
+// @alpha
+export function drillDownReferenceHierarchyRef(drillDownReference: IDrillDownReference): ObjRef;
+
 // @public
 export type DrillOrigin = IDrillFromMeasure | IDrillFromAttribute;
 
@@ -1471,9 +1477,17 @@ export interface IDrill {
 
 // @public
 export interface IDrillableWidget {
+    // @alpha
+    readonly drillDownIntersectionIgnoredAttributes?: IDrillDownIntersectionIgnoredAttributes[];
     readonly drills: DrillDefinition[];
     // @alpha
     readonly ignoredDrillDownHierarchies?: IDrillDownReference[];
+}
+
+// @alpha
+export interface IDrillDownIntersectionIgnoredAttributes {
+    readonly drillDownReference: IDrillDownReference;
+    readonly ignoredAttributes: string[];
 }
 
 // @alpha (undocumented)
@@ -2861,6 +2875,7 @@ export interface ISettings {
     // (undocumented)
     enableDataSection?: boolean;
     enableDescriptions?: boolean;
+    enableDrillDownIntersectionIgnoredAttributes?: boolean;
     enableDrilledInsightExport?: boolean;
     enableDrillIntersectionIgnoredAttributes?: boolean;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;

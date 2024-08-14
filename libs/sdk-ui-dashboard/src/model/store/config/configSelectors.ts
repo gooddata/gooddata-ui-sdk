@@ -708,6 +708,18 @@ export const selectEnableDrillIntersectionIgnoredAttributes: DashboardSelector<b
 );
 
 /**
+ * Returns whether drill down intersection ignored attributes is enabled.
+ *
+ * @internal
+ */
+export const selectEnableDrillDownIntersectionIgnoredAttributes: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableDrillDownIntersectionIgnoredAttributes ?? false;
+    },
+);
+
+/**
  * Returns whether filter views are enabled.
  *
  * @internal

@@ -442,6 +442,11 @@ export interface ISettings {
     enableDrillIntersectionIgnoredAttributes?: boolean;
 
     /**
+     * Enable configuration of the drill intersection ignored attributes for drill down.
+     */
+    enableDrillDownIntersectionIgnoredAttributes?: boolean;
+
+    /**
      * Enable multiple data sources to be used in a single workspace.
      */
     enableDashboardFilterViews?: boolean;

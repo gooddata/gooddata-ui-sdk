@@ -16,6 +16,7 @@ import {
     ICatalogDateAttributeHierarchy,
     idRef,
     getHierarchyAttributes,
+    getHierarchyRef,
 } from "@gooddata/sdk-model";
 
 import {
@@ -193,9 +194,33 @@ export const selectAttributesWithDrillDown: DashboardSelector<(ICatalogAttribute
     );
 
 /**
+ * Descendant of the attribute hierarchy.
  * @alpha
  */
-export const selectAttributesWithHierarchyDescendants: DashboardSelector<Record<string, ObjRef[]>> =
+export type HierarchyDescendant = {
+    /**
+     * Reference to the hierarchy.
+     */
+    hierarchyRef: ObjRef;
+    /**
+     * Reference to the hierarchy descendant - attribute or date attribute.
+     */
+    descendantRef: ObjRef;
+};
+
+/**
+ * Dictionary of the hierarchy descendants grouped by particular attribute.
+ * Key is the attribute id.
+ * Value is the array of the descendants with their respective hierarchy ref.
+ *
+ * @alpha
+ */
+export type HierarchyDescendantsByAttributeId = Record<string, HierarchyDescendant[]>;
+
+/**
+ * @alpha
+ */
+export const selectAttributesWithHierarchyDescendants: DashboardSelector<HierarchyDescendantsByAttributeId> =
     createSelector(
         [selectCatalogAttributes, selectCatalogDateAttributes, selectAllCatalogAttributeHierarchies],
         (attributes = [], dateAttributes = [], attributeHierarchies = []) => {
@@ -295,17 +320,19 @@ export const selectCatalogDateAttributeToDataset: DashboardSelector<
     );
 });
 
+//
 function getAttributesWithHierarchyDescendants(
     attributes: ICatalogAttribute[],
     dateAttributes: ICatalogDateAttribute[],
     attributeHierarchies: (ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy)[],
-): Record<string, ObjRef[]> {
+): HierarchyDescendantsByAttributeId {
     const allCatalogAttributes = [...attributes, ...dateAttributes];
-    const attributeDescendants: Record<string, ObjRef[]> = {};
+    const attributeDescendants: HierarchyDescendantsByAttributeId = {};
 
     allCatalogAttributes.forEach((attribute) => {
         const attributeRef = attribute.attribute.ref;
         attributeHierarchies.forEach((hierarchy) => {
+            const hierarchyRef = getHierarchyRef(hierarchy);
             const attributes = getHierarchyAttributes(hierarchy);
             const foundAttributeIndex = attributes.findIndex((ref) => areObjRefsEqual(ref, attributeRef));
 
@@ -320,10 +347,14 @@ function getAttributesWithHierarchyDescendants(
             }
 
             const attributeRefAsString = objRefToString(attributeRef);
+            const descendantWithHierarchy: HierarchyDescendant = {
+                hierarchyRef,
+                descendantRef: foundDescendant,
+            };
             if (attributeDescendants[attributeRefAsString]) {
-                attributeDescendants[attributeRefAsString].push(foundDescendant);
+                attributeDescendants[attributeRefAsString].push(descendantWithHierarchy);
             } else {
-                attributeDescendants[attributeRefAsString] = [foundDescendant];
+                attributeDescendants[attributeRefAsString] = [descendantWithHierarchy];
             }
         });
     });

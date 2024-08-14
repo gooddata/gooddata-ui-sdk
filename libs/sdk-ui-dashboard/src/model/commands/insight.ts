@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { IDashboardCommand } from "./base.js";
 import {
@@ -678,6 +678,7 @@ export interface RemoveDrillDownForInsightWidgetPayload {
 
     /**
      * Specify drill localIdentifier and its hierarchy should be removed.
+     * Ignored intersection attributes for specified herarchies will be removed as well.
      */
     readonly blacklistHierarchies: IDrillDownReference[];
 }
@@ -744,6 +745,11 @@ export interface AddDrillDownForInsightWidgetPayload {
      * Specify drill down hierarchy reference that should be added.
      */
     readonly drillDownAttributeHierarchyRef: ObjRef;
+
+    /**
+     * Specify local identifiers of attributes that should be ignored in drill intersection.
+     */
+    readonly intersectionIgnoredAttributes: string[];
 }
 
 /**
@@ -754,6 +760,7 @@ export interface AddDrillDownForInsightWidgetPayload {
  * @param attributeIdentifier - drill localIdentifier that should be added.
  * @param drillDownIdentifier - drill down hierarchy localIdentifier that should be added.
  * @param drillDownAttributeHierarchyRef - drill down hierarchy reference that should be added.
+ * @param intersectionIgnoredAttributes - specify local identifiers of attributes that should be ignored in drill intersection during drill down.
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
@@ -764,6 +771,7 @@ export function addDrillDownForInsightWidget(
     attributeIdentifier: ObjRef,
     drillDownIdentifier: string,
     drillDownAttributeHierarchyRef: ObjRef,
+    intersectionIgnoredAttributes: string[] = [],
     correlationId?: string,
 ): AddDrillDownForInsightWidget {
     return {
@@ -774,6 +782,7 @@ export function addDrillDownForInsightWidget(
             attributeIdentifier,
             drillDownIdentifier,
             drillDownAttributeHierarchyRef,
+            intersectionIgnoredAttributes,
         },
     };
 }
@@ -811,9 +820,17 @@ export interface ModifyDrillDownForInsightWidgetPayload {
     readonly attributeHierarchyRef: ObjRef;
 
     /**
-     * Specify drill localIdentifier and its hierarchy should be modified.
+     * Specify hierarchies that should be added to the ignored hierarchies of the widget.
+     * If no blacklistHierarchies are provided, ignored hierarchies keep unchanged.
      */
     readonly blacklistHierarchies: IDrillDownReference[];
+
+    /**
+     * Specify local identifiers of attributes that should be ignored in drill intersection
+     * during drill down.
+     * If no intersectionIgnoredAttributes are provided, ignored attributes keep unchanged.
+     */
+    readonly intersectionIgnoredAttributes?: string[];
 }
 
 /**
@@ -824,6 +841,7 @@ export interface ModifyDrillDownForInsightWidgetPayload {
  * @param attributeIdentifier - drill localIdentifier and its hierarchy should be modified.
  * @param attributeHierarchyRef - drill attribute hierarchy ref to be modified.
  * @param blacklistHierarchies - drill localIdentifiers and its hierarchy should be modified
+ * @param intersectionIgnoredAttributes - specify local identifiers of attributes that should be ignored in drill intersection during drill down.
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
@@ -834,6 +852,7 @@ export function modifyDrillDownForInsightWidget(
     attributeIdentifier: ObjRef,
     attributeHierarchyRef: ObjRef,
     blacklistHierarchies: IDrillDownReference[],
+    intersectionIgnoredAttributes?: string[],
     correlationId?: string,
 ): ModifyDrillDownForInsightWidget {
     return {
@@ -844,6 +863,7 @@ export function modifyDrillDownForInsightWidget(
             attributeIdentifier,
             attributeHierarchyRef,
             blacklistHierarchies,
+            intersectionIgnoredAttributes,
         },
     };
 }

@@ -542,6 +542,8 @@ export {
     isAttributeHierarchyReference,
     isDateHierarchyReference,
     isCrossFiltering,
+    drillDownReferenceHierarchyRef,
+    drillDownReferenceAttributeRef,
 } from "./dashboard/drill.js";
 
 export {
@@ -550,6 +552,7 @@ export {
     IDrillableWidget,
     IFilterableWidget,
     IWidgetDescription,
+    IDrillDownIntersectionIgnoredAttributes,
 } from "./dashboard/baseWidget.js";
 
 export {

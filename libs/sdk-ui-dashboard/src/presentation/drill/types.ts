@@ -278,6 +278,7 @@ export interface IDrillDownAttributeHierarchyDefinition {
     attributeHierarchyRef: ObjRef;
     originLocalIdentifier?: string;
     attributes: IAvailableDrillTargetMeasure["attributes"];
+    drillIntersectionIgnoredAttributes: string[];
 }
 
 export function isDrillDownToAttributeHierarchyDefinition(

@@ -361,13 +361,14 @@ export interface AddDrillDownForInsightWidget extends IDashboardCommand {
 }
 
 // @alpha
-export function addDrillDownForInsightWidget(ref: ObjRef, attributeIdentifier: ObjRef, drillDownIdentifier: string, drillDownAttributeHierarchyRef: ObjRef, correlationId?: string): AddDrillDownForInsightWidget;
+export function addDrillDownForInsightWidget(ref: ObjRef, attributeIdentifier: ObjRef, drillDownIdentifier: string, drillDownAttributeHierarchyRef: ObjRef, intersectionIgnoredAttributes?: string[], correlationId?: string): AddDrillDownForInsightWidget;
 
 // @alpha
 export interface AddDrillDownForInsightWidgetPayload {
     readonly attributeIdentifier: ObjRef;
     readonly drillDownAttributeHierarchyRef: ObjRef;
     readonly drillDownIdentifier: string;
+    readonly intersectionIgnoredAttributes: string[];
     readonly ref: ObjRef;
 }
 
@@ -4332,6 +4333,7 @@ export interface IDrillDownContext {
 
 // @beta
 export interface IDrillDownDefinition {
+    hierarchyRef?: ObjRef;
     origin: LocalIdRef;
     target: ObjRef;
     title?: string;
@@ -5599,13 +5601,14 @@ export interface ModifyDrillDownForInsightWidget extends IDashboardCommand {
 }
 
 // @alpha
-export function modifyDrillDownForInsightWidget(ref: ObjRef, attributeIdentifier: ObjRef, attributeHierarchyRef: ObjRef, blacklistHierarchies: IDrillDownReference[], correlationId?: string): ModifyDrillDownForInsightWidget;
+export function modifyDrillDownForInsightWidget(ref: ObjRef, attributeIdentifier: ObjRef, attributeHierarchyRef: ObjRef, blacklistHierarchies: IDrillDownReference[], intersectionIgnoredAttributes?: string[], correlationId?: string): ModifyDrillDownForInsightWidget;
 
 // @alpha
 export interface ModifyDrillDownForInsightWidgetPayload {
     readonly attributeHierarchyRef: ObjRef;
     readonly attributeIdentifier: ObjRef;
     readonly blacklistHierarchies: IDrillDownReference[];
+    readonly intersectionIgnoredAttributes?: string[];
     readonly ref: ObjRef;
 }
 
@@ -7070,6 +7073,9 @@ export const selectEnableClickableAttributeURL: DashboardSelector<boolean>;
 
 // @public
 export const selectEnableCompanyLogoInEmbeddedUI: DashboardSelector<boolean>;
+
+// @internal
+export const selectEnableDrillDownIntersectionIgnoredAttributes: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableDrillIntersectionIgnoredAttributes: DashboardSelector<boolean>;

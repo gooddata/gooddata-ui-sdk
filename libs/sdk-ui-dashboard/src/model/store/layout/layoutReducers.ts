@@ -31,6 +31,7 @@ import {
     IDrillDownReference,
     isDashboardAttributeFilterReference,
     isRichTextWidget,
+    IDrillDownIntersectionIgnoredAttributes,
 } from "@gooddata/sdk-model";
 import { WidgetDescription, WidgetHeader } from "../../types/widgetTypes.js";
 import flatMap from "lodash/flatMap.js";
@@ -429,6 +430,7 @@ type ReplaceWidgetBlacklistHierarchies = {
     blacklistHierarchies: IDrillDownReference[];
 };
 
+//
 const replaceWidgetBlacklistHierarchies: LayoutReducer<ReplaceWidgetBlacklistHierarchies> = (
     state,
     action,
@@ -441,6 +443,29 @@ const replaceWidgetBlacklistHierarchies: LayoutReducer<ReplaceWidgetBlacklistHie
     invariant(widget && (isKpiWidget(widget) || isInsightWidget(widget)));
 
     widget.ignoredDrillDownHierarchies = blacklistHierarchies ?? [];
+};
+
+//
+//
+//
+
+type ReplaceWidgetDrillDownIntersectionIgnoredAttributes = {
+    ref: ObjRef;
+    ignoredDrillDownIntersectionIgnoredAttributes: IDrillDownIntersectionIgnoredAttributes[];
+};
+
+//
+const replaceWidgetDrillDownIntersectionIgnoredAttributes: LayoutReducer<
+    ReplaceWidgetDrillDownIntersectionIgnoredAttributes
+> = (state, action) => {
+    invariant(state.layout);
+
+    const { ignoredDrillDownIntersectionIgnoredAttributes, ref } = action.payload;
+    const widget = getWidgetByRef(state, ref);
+
+    invariant(widget && (isKpiWidget(widget) || isInsightWidget(widget)));
+
+    widget.drillDownIntersectionIgnoredAttributes = ignoredDrillDownIntersectionIgnoredAttributes ?? [];
 };
 
 //
@@ -748,6 +773,9 @@ export const layoutReducers = {
     replaceWidgetDrillWithoutUndo: replaceWidgetDrill, // useful in internal sanitization use cases
     replaceWidgetDrills: withUndo(replaceWidgetDrill),
     replaceWidgetBlacklistHierarchies: withUndo(replaceWidgetBlacklistHierarchies),
+    replaceWidgetDrillDownIntersectionIgnoredAttributes: withUndo(
+        replaceWidgetDrillDownIntersectionIgnoredAttributes,
+    ),
     replaceInsightWidgetVisProperties: withUndo(replaceInsightWidgetVisProperties),
     replaceInsightWidgetVisConfiguration: withUndo(replaceInsightWidgetVisConfiguration),
     replaceInsightWidgetInsight: withUndo(replaceInsightWidgetInsight),

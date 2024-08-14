@@ -25,6 +25,24 @@ export interface IFilterableWidget {
 }
 
 /**
+ * Defines mapping between particular drill down hierarchy
+ * and attributes to ignore in the intersection during the drill down for this hierarchy.
+ *
+ * @alpha
+ */
+export interface IDrillDownIntersectionIgnoredAttributes {
+    /**
+     * Local identifiers of the attribute display forms to ignore for the drill down intersection.
+     */
+    readonly ignoredAttributes: string[];
+
+    /**
+     * Drill down hierarchy reference for which the ignored attributes are defined.
+     */
+    readonly drillDownReference: IDrillDownReference;
+}
+
+/**
  * Defines properties that are used for drillable widgets. Such widgets allow user clicking on
  * different parts of the widget and through this interaction navigate to other insights or dashboards.
  *
@@ -41,6 +59,13 @@ export interface IDrillableWidget {
      * @alpha
      */
     readonly ignoredDrillDownHierarchies?: IDrillDownReference[];
+
+    /**
+     * List of mappings between drill down hierarchies
+     * and attributes to ignore in the intersection during the drill down for this hierarchy.
+     * @alpha
+     */
+    readonly drillDownIntersectionIgnoredAttributes?: IDrillDownIntersectionIgnoredAttributes[];
 }
 
 /**
