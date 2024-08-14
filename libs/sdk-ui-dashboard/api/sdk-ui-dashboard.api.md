@@ -125,6 +125,7 @@ import { EntityId } from '@reduxjs/toolkit';
 import { EntityState } from '@reduxjs/toolkit';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
 import { FilterContextItem } from '@gooddata/sdk-model';
+import { FilterViewDialogMode as FilterViewDialogMode_2 } from './uiState.js';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAccessControlAware } from '@gooddata/sdk-model';
@@ -3522,6 +3523,9 @@ export type FiltersInfo = {
     filters: IDashboardFilter[];
     resolvedFilterValues?: IResolvedFilterValues;
 };
+
+// @beta (undocumented)
+export type FilterViewDialogMode = "list" | "add";
 
 // @alpha (undocumented)
 export interface FilterViewsState {
@@ -7210,6 +7214,9 @@ export const selectFilterContextIdentity: DashboardSelector<IDashboardObjectIden
 export const selectFilterViews: DashboardSelector<IDashboardFilterView[]>;
 
 // @internal (undocumented)
+export const selectFilterViewsDialogMode: DashboardSelector<FilterViewDialogMode>;
+
+// @internal (undocumented)
 export const selectGlobalDrillsDownAttributeHierarchyByWidgetRef: (ref: ObjRef) => DashboardSelector<IGlobalDrillDownAttributeHierarchyDefinition[]>;
 
 // @alpha (undocumented)
@@ -7349,6 +7356,9 @@ export const selectIsFilterAttributeSelectionOpen: DashboardSelector<boolean>;
 
 // @beta (undocumented)
 export const selectIsFilterFromCrossFilteringByLocalIdentifier: (localIdentifier: string) => DashboardSelector<boolean>;
+
+// @internal (undocumented)
+export const selectIsFilterViewsDialogOpen: DashboardSelector<boolean>;
 
 // @public
 export const selectIsInEditMode: DashboardSelector<boolean>;
@@ -8047,6 +8057,13 @@ payload: Record<string, IDashboardWidgetOverlay_2>;
 type: string;
 }) => void | UiState_2 | WritableDraft<UiState_2>;
 hideAllWidgetsOverlay: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+toggleFilterViewsDialog: (state: WritableDraft<UiState_2>, action: {
+payload: {
+open?: boolean | undefined;
+mode?: FilterViewDialogMode_2 | undefined;
+} | undefined;
+type: string;
+}) => void | UiState_2 | WritableDraft<UiState_2>;
 }, "uiSlice">;
 
 // @beta (undocumented)
@@ -8077,6 +8094,11 @@ export interface UiState {
     // (undocumented)
     filterBar: {
         expanded: boolean;
+    };
+    // (undocumented)
+    filterViews: {
+        open: boolean;
+        mode: FilterViewDialogMode;
     };
     // (undocumented)
     insightListLastUpdateRequested: number;

@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React, { useState, useCallback } from "react";
 import { Button, BubbleHoverTrigger, Bubble } from "@gooddata/sdk-ui-kit";
 import { IRankingFilter, newRankingFilter, ObjRefInScope, areObjRefsEqual } from "@gooddata/sdk-model";
@@ -48,7 +48,7 @@ const RankingFilterDropdownBodyComponent: React.FC<RankingFilterDropdownBodyComp
     attributeItems,
     filter,
     onApply,
-    onCancel,
+    onCancel = noop,
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,
     customGranularitySelection,
@@ -141,10 +141,6 @@ const RankingFilterDropdownBodyComponent: React.FC<RankingFilterDropdownBodyComp
             </div>
         </div>
     );
-};
-
-RankingFilterDropdownBodyComponent.defaultProps = {
-    onCancel: noop,
 };
 
 export const RankingFilterDropdownBody = injectIntl(RankingFilterDropdownBodyComponent);

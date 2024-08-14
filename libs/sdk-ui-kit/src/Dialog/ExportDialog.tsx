@@ -1,7 +1,10 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React from "react";
+import noop from "lodash/noop.js";
+
 import { Overlay } from "../Overlay/index.js";
 import { IAlignPoint } from "../typings/positioning.js";
+
 import { ExportDialogBase } from "./ExportDialogBase.js";
 import { IExportDialogBaseProps } from "./typings.js";
 
@@ -13,27 +16,27 @@ const alignPoints: IAlignPoint[] = [{ align: "cc cc" }];
 export const ExportDialog = (props: IExportDialogBaseProps): JSX.Element => {
     const {
         className,
-        displayCloseButton,
-        isPositive,
-        isSubmitDisabled,
+        displayCloseButton = true,
+        isPositive = true,
+        isSubmitDisabled = false,
         containerClassName,
 
-        headline,
-        cancelButtonText,
-        submitButtonText,
+        headline = "Export to XLSX",
+        cancelButtonText = "Cancel",
+        submitButtonText = "Export",
 
-        filterContextText,
-        filterContextTitle,
-        filterContextVisible,
-        includeFilterContext,
+        filterContextText = "Include applied filters",
+        filterContextTitle = "INSIGHT CONTEXT",
+        filterContextVisible = true,
+        includeFilterContext = true,
 
-        mergeHeaders,
-        mergeHeadersDisabled,
-        mergeHeadersText,
-        mergeHeadersTitle,
+        mergeHeaders = true,
+        mergeHeadersDisabled = false,
+        mergeHeadersText = "Keep attribute cells merged",
+        mergeHeadersTitle = "CELLS",
 
-        onCancel,
-        onSubmit,
+        onCancel = noop,
+        onSubmit = noop,
     } = props;
     return (
         <Overlay
@@ -64,5 +67,3 @@ export const ExportDialog = (props: IExportDialogBaseProps): JSX.Element => {
         </Overlay>
     );
 };
-
-ExportDialog.defaultProps = ExportDialogBase.defaultProps;

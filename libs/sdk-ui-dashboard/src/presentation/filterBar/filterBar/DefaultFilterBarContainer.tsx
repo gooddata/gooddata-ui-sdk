@@ -2,6 +2,8 @@
 import React, { useRef } from "react";
 import DefaultMeasure from "react-measure";
 import cx from "classnames";
+import { createSelector } from "@reduxjs/toolkit";
+import { defaultImport } from "default-import";
 
 import { IntlWrapper } from "../../localization/index.js";
 import {
@@ -10,17 +12,14 @@ import {
     selectLocale,
     selectSupportsCrossFiltering,
     useDashboardSelector,
-    selectDisableFilterViews,
     selectEnableFilterViews,
 } from "../../../model/index.js";
-
 import { BulletsBar } from "../../dragAndDrop/index.js";
+
 import { ShowAllFiltersButton } from "./ShowAllFiltersButton.js";
 import { useRowsCalculator, CalculatedRows } from "./hooks/useRowsCalculator.js";
 import { useFilterBarState } from "./hooks/useFilterBarState.js";
 import { useFilterExpansionByDragAndDrop } from "./hooks/useFilterExpansionByDragAndDrop.js";
-import { defaultImport } from "default-import";
-import { createSelector } from "@reduxjs/toolkit";
 import { FiltersConfigurationPanel } from "./FiltersConfigurationPanel.js";
 import { FilterViews } from "./filterViews/FilterViews.js";
 
@@ -30,14 +29,6 @@ const selectShowFiltersConfigurationPanel = createSelector(
     selectSupportsCrossFiltering,
     (isEdit, enableCrossFiltering, supportsCrossFiltering) => {
         return isEdit && enableCrossFiltering && supportsCrossFiltering;
-    },
-);
-
-const selectShowFilterViews = createSelector(
-    selectEnableFilterViews,
-    selectDisableFilterViews,
-    (isFeatureEnabled, isDisabledForDashboard) => {
-        return isFeatureEnabled && !isDisabledForDashboard;
     },
 );
 
@@ -57,7 +48,7 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
     );
 
     const showFiltersConfigurationPanel = useDashboardSelector(selectShowFiltersConfigurationPanel);
-    const showFilterViewsFeature = useDashboardSelector(selectShowFilterViews);
+    const isFilterViewsFeatureFlagEnabled = useDashboardSelector(selectEnableFilterViews);
 
     return (
         <div className="dash-filters-wrapper s-gd-dashboard-filter-bar" ref={dropRef}>
@@ -71,7 +62,7 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
                 <AllFiltersContainer setCalculatedRows={setCalculatedRows}>{children}</AllFiltersContainer>
                 <FiltersRows rows={rows} />
                 <div className="filter-bar-configuration">
-                    {showFilterViewsFeature ? <FilterViews /> : null}
+                    {isFilterViewsFeatureFlagEnabled ? <FilterViews /> : null}
                     {showFiltersConfigurationPanel ? <FiltersConfigurationPanel /> : null}
                 </div>
             </div>

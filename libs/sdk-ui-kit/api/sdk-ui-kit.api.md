@@ -531,10 +531,7 @@ export class ErrorOverlay extends React_2.PureComponent<IErrorOverlayProps> {
 }
 
 // @internal (undocumented)
-export const ExportDialog: {
-    (props: IExportDialogBaseProps): JSX.Element;
-    defaultProps: IExportDialogBaseProps;
-};
+export const ExportDialog: (props: IExportDialogBaseProps) => JSX.Element;
 
 // @internal (undocumented)
 export class ExportDialogBase extends DialogBase<IExportDialogBaseProps> {
