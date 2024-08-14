@@ -19,6 +19,7 @@ export const DEFAULT_LOCALE = "en-US";
 export const localizedIcuDateFormatPatterns: Record<string, string> = {
     "en-US": "M/d/y",
     "en-GB": "dd/MM/y",
+    "en-AU": "dd/MM/y",
     "cs-CZ": "d. M. y",
     "de-DE": "d.M.y",
     "es-ES": "d/M/y",
@@ -28,10 +29,13 @@ export const localizedIcuDateFormatPatterns: Record<string, string> = {
     "pt-BR": "dd/MM/y",
     "pt-PT": "dd/MM/y",
     "zh-Hans": "y/M/d",
+    "zh-Hant": "y/M/d",
+    yue: "y/M/d",
     "ru-RU": "dd.MM.y",
     "it-IT": "dd/MM/y",
     "es-419": "d/M/y",
     "fr-CA": "dd/MM/y",
+    "fi-FI": "d-M-y",
 };
 
 /**
