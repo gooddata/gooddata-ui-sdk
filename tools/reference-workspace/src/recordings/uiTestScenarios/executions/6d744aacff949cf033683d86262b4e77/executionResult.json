@@ -9,6 +9,7 @@
                         "identifier": "attr.f_owner.salesrep",
                         "localIdentifier": "a_attr.f_owner.salesrep",
                         "name": "Sales Rep",
+                        "primaryLabel": { "identifier": "attr.f_owner.salesrep", "type": "displayForm" },
                         "totalItems": [
                             { "totalHeaderItem": { "name": "sum" } },
                             { "totalHeaderItem": { "name": "min" } },
@@ -32,6 +33,10 @@
                         "identifier": "f_opportunitysnapshot.forecastcategory_id",
                         "localIdentifier": "a_f_opportunitysnapshot.forecastcategory_id",
                         "name": "Forecast Category",
+                        "primaryLabel": {
+                            "identifier": "f_opportunitysnapshot.forecastcategory_id",
+                            "type": "displayForm"
+                        },
                         "totalItems": [
                             { "totalHeaderItem": { "name": "sum" } },
                             { "totalHeaderItem": { "name": "min" } },

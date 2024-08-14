@@ -9,6 +9,7 @@
                         "identifier": "label.f_product.product.name",
                         "localIdentifier": "a_label.f_product.product.name",
                         "name": "Product Name",
+                        "primaryLabel": { "identifier": "attr.f_product.product", "type": "displayForm" },
                         "totalItems": [
                             { "totalHeaderItem": { "name": "sum" } },
                             { "totalHeaderItem": { "name": "min" } },
@@ -24,6 +25,7 @@
                         "identifier": "f_owner.department_id",
                         "localIdentifier": "a_f_owner.department_id",
                         "name": "Department",
+                        "primaryLabel": { "identifier": "f_owner.department_id", "type": "displayForm" },
                         "totalItems": [
                             { "totalHeaderItem": { "name": "sum" } },
                             { "totalHeaderItem": { "name": "med" } }
@@ -46,6 +48,10 @@
                         "identifier": "f_opportunitysnapshot.forecastcategory_id",
                         "localIdentifier": "a_f_opportunitysnapshot.forecastcategory_id",
                         "name": "Forecast Category",
+                        "primaryLabel": {
+                            "identifier": "f_opportunitysnapshot.forecastcategory_id",
+                            "type": "displayForm"
+                        },
                         "totalItems": [],
                         "uri": ""
                     }
@@ -57,6 +63,7 @@
                         "identifier": "f_owner.region_id",
                         "localIdentifier": "a_f_owner.region_id",
                         "name": "Region",
+                        "primaryLabel": { "identifier": "f_owner.region_id", "type": "displayForm" },
                         "totalItems": [],
                         "uri": ""
                     }

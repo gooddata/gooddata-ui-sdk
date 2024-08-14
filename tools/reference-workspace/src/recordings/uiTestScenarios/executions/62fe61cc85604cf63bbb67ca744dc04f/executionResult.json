@@ -40,6 +40,10 @@
                         "identifier": "dt_closedate_timestamp.year",
                         "localIdentifier": "a_dt_closedate_timestamp.year",
                         "name": "Closed - Year",
+                        "primaryLabel": {
+                            "identifier": "dt_closedate_timestamp.year",
+                            "type": "displayForm"
+                        },
                         "totalItems": [],
                         "uri": ""
                     }

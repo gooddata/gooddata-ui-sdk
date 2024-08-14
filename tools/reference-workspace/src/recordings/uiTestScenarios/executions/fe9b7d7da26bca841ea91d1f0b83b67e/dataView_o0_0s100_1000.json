@@ -50,22 +50,6 @@
             108422.01, 2567375.43, 841972.46, 3115079.79, 1557539.895, 475197.235
         ],
         [
-            1299451.475,
-            519199.83499999996,
-            3570881.325,
-            1548065.935,
-            null,
-            2530754.0949999997,
-            1052433.155,
-            2007659.76,
-            634530.785,
-            4595455.175,
-            1727006.975,
-            null,
-            3017495.295,
-            1001306.01
-        ],
-        [
             2598902.95,
             null,
             7141762.65,
@@ -80,6 +64,22 @@
             13206229.870000001,
             null,
             null
+        ],
+        [
+            1299451.475,
+            519199.83499999996,
+            3570881.325,
+            1548065.935,
+            null,
+            2530754.0949999997,
+            1052433.155,
+            2007659.76,
+            634530.785,
+            4595455.175,
+            1727006.975,
+            null,
+            3017495.295,
+            1001306.01
         ],
         [
             2610784.51, 989426.6, 6011398.61, 2305188, 8622183.120000001, 4311091.5600000005, 1647307.3,
@@ -277,8 +277,8 @@
                 { "totalHeaderItem": { "name": "med", "type": "MED" } },
                 { "attributeHeaderItem": { "name": "Direct Sales", "uri": "Direct Sales" } },
                 { "attributeHeaderItem": { "name": "Inside Sales", "uri": "Inside Sales" } },
-                { "totalHeaderItem": { "name": "med", "type": "MED" } },
                 { "totalHeaderItem": { "name": "sum", "type": "SUM" } },
+                { "totalHeaderItem": { "name": "med", "type": "MED" } },
                 { "attributeHeaderItem": { "name": "Direct Sales", "uri": "Direct Sales" } },
                 { "attributeHeaderItem": { "name": "Inside Sales", "uri": "Inside Sales" } },
                 { "totalHeaderItem": { "name": "sum", "type": "SUM" } },

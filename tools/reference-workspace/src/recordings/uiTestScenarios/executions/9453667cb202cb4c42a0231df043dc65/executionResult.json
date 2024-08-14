@@ -28,6 +28,7 @@
                         "identifier": "dt_timeline_timestamp.year",
                         "localIdentifier": "a_dt_timeline_timestamp.year",
                         "name": "Timeline - Year",
+                        "primaryLabel": { "identifier": "dt_timeline_timestamp.year", "type": "displayForm" },
                         "totalItems": [],
                         "uri": ""
                     }
