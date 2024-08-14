@@ -17,6 +17,7 @@ interface ICreateAlertProps {
     destinations: INotificationChannel[];
     hasAlerts: boolean;
     measures: IMeasure[];
+    maxAutomationsReached: boolean;
 }
 
 export const CreateAlert: React.FC<ICreateAlertProps> = ({
@@ -27,6 +28,7 @@ export const CreateAlert: React.FC<ICreateAlertProps> = ({
     destinations,
     hasAlerts,
     measures,
+    maxAutomationsReached,
 }) => {
     return (
         <EditAlert
@@ -38,6 +40,7 @@ export const CreateAlert: React.FC<ICreateAlertProps> = ({
             destinations={destinations}
             hasAlerts={hasAlerts}
             measures={measures}
+            maxAutomationsReached={maxAutomationsReached}
         />
     );
 };

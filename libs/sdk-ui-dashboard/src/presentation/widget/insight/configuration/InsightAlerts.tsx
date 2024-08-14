@@ -29,6 +29,7 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
         destinations,
         viewMode,
         supportedMeasures,
+        maxAutomationsReached,
         //
         creatingAlert,
         initiateAlertCreation,
@@ -57,6 +58,7 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
                 onDeleteAlert={deleteExistingAlert}
                 onClose={onClose}
                 onGoBack={onGoBack}
+                maxAutomationsReached={maxAutomationsReached}
             />
         );
     } else if (viewMode === "edit" && editingAlert) {
@@ -81,6 +83,7 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
                 onCreate={saveNewAlert}
                 onCancel={cancelAlertCreation}
                 onClose={onClose}
+                maxAutomationsReached={maxAutomationsReached}
             />
         );
     }
