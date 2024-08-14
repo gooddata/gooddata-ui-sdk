@@ -564,8 +564,8 @@
         "limit": 0
     },
     "dialogs.schedule.management.create.tooManyMessage": {
-        "value": "Too many schedules created in the workspace. A maximum of {number} schedules can be created in this workspace.",
-        "comment": "Do no translate {number} variable",
+        "value": "Your organization has reached the limit of scheduled exports. Contact your administrator to create more.",
+        "comment": "",
         "limit": 0
     },
     "dialogs.schedule.management.noSchedules": {
@@ -658,8 +658,8 @@
         "comment": "",
         "limit": 0
     },
-    "add": {
-        "value": "Add",
+    "create": {
+        "value": "Create",
         "comment": "",
         "limit": 0
     },
@@ -2567,7 +2567,7 @@
         "limit": 0
     },
     "insightAlert.config.action.resume": {
-        "value": "Resume",
+        "value": "Unpause",
         "comment": "Action in alert configuration",
         "limit": 0
     },
@@ -2601,8 +2601,13 @@
         "comment": "Title of the section in insight configuration",
         "limit": 0
     },
-    "insightAlert.config.alert": {
-        "value": "Alert",
+    "insightAlert.config.createAlert": {
+        "value": "Create alert",
+        "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.editAlert": {
+        "value": "Edit alert",
         "comment": "Title of the section in insight configuration",
         "limit": 0
     },
@@ -2617,7 +2622,7 @@
         "limit": 0
     },
     "insightAlert.config.trigger.tooltip": {
-        "value": "Configure when to trigger the alert if the condition is met.",
+        "value": "How often to trigger the alert when the condition is met.",
         "comment": "Tooltip for alert trigger configuration",
         "limit": 0
     },
@@ -2632,12 +2637,12 @@
         "limit": 0
     },
     "insightAlert.config.triggerMode.always": {
-        "value": "Always",
+        "value": "Every time",
         "comment": "How many times alert should be triggered",
         "limit": 0
     },
     "insightAlert.config.triggerMode.once": {
-        "value": "Once",
+        "value": "Once, then pause",
         "comment": "How many times alert should be triggered",
         "limit": 0
     },
@@ -2677,8 +2682,13 @@
         "limit": 0
     },
     "insightAlert.noDestination.tooltip": {
-        "value": "No destination available. To add an alert, <a>create destination</a>.",
+        "value": "No destination available. <a>Create a destination</a> to set up an alert.",
         "comment": "Do not translate html tags <a>, </a>",
+        "limit": 0
+    },
+    "insightAlert.maxAlertsReached": {
+        "value": "Your organization has reached the limit of alerts. Contact your administrator to create more.",
+        "comment": "",
         "limit": 0
     }
 }

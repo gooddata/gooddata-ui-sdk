@@ -115,6 +115,10 @@
     align-items: center;
     justify-content: space-between;
     border-top: 1px solid kit-variables.$gd-border-color;
+
+    .gd-button-left-margin {
+        margin-left: 10px;
+    }
 }
 
 .gd-edit-alert__configuration-button {

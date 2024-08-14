@@ -1,7 +1,7 @@
 // (C) 2022-2024 GoodData Corporation
 import React from "react";
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
-import { Button, SeparatorLine } from "@gooddata/sdk-ui-kit";
+import { AddButton, SeparatorLine } from "@gooddata/sdk-ui-kit";
 import { AlertsListItem } from "./AlertsListItem.js";
 import { DashboardInsightSubmenuContainer } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightSubmenuContainer.js";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -15,6 +15,7 @@ interface IAlertsListProps {
     onDeleteAlert: (alert: IAutomationMetadataObject) => void;
     onClose: () => void;
     onGoBack: () => void;
+    maxAutomationsReached: boolean;
 }
 
 export const AlertsList: React.FC<IAlertsListProps> = ({
@@ -26,6 +27,7 @@ export const AlertsList: React.FC<IAlertsListProps> = ({
     onDeleteAlert,
     onClose,
     onGoBack,
+    maxAutomationsReached,
 }) => {
     const intl = useIntl();
     return (
@@ -51,12 +53,16 @@ export const AlertsList: React.FC<IAlertsListProps> = ({
                 </div>
                 <SeparatorLine pL={10} pR={10} />
                 <div className="gd-alerts-list__buttons">
-                    <Button
-                        className="gd-button gd-button-link gd-icon-plus s-alert-add"
-                        onClick={() => onCreateAlert()}
-                    >
-                        <FormattedMessage id="insightAlert.config.addAlert" />
-                    </Button>
+                    <AddButton
+                        onClick={onCreateAlert}
+                        title={<FormattedMessage id="insightAlert.config.addAlert" />}
+                        isDisabled={maxAutomationsReached}
+                        tooltip={
+                            maxAutomationsReached ? (
+                                <FormattedMessage id="insightAlert.maxAlertsReached" />
+                            ) : undefined
+                        }
+                    />
                 </div>
             </div>
         </DashboardInsightSubmenuContainer>

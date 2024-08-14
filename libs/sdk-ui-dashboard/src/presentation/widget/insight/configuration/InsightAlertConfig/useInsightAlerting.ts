@@ -8,7 +8,14 @@ import {
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { useDashboardSelector, selectInsightByWidgetRef } from "../../../../../model/index.js";
+import {
+    useDashboardSelector,
+    selectInsightByWidgetRef,
+    selectEntitlementMaxAutomations,
+    selectEntitlementUnlimitedAutomations,
+    DEFAULT_MAX_AUTOMATIONS,
+    selectAutomationsCount,
+} from "../../../../../model/index.js";
 import { createDefaultAlert, getSupportedInsightMeasuresByInsight } from "./utils.js";
 import { INotificationChannel } from "./constants.js";
 import { messages } from "./messages.js";
@@ -37,6 +44,12 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     // TODO: load from backend
     const widgetFilters: IFilter[] = [];
     // const widgetFilters = useWidgetFilters(widget, insight);
+
+    const automationsCount = useDashboardSelector(selectAutomationsCount);
+    const maxAutomationsEntitlement = useDashboardSelector(selectEntitlementMaxAutomations);
+    const unlimitedAutomationsEntitlement = useDashboardSelector(selectEntitlementUnlimitedAutomations);
+    const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);
+    const maxAutomationsReached = automationsCount >= maxAutomations && !unlimitedAutomationsEntitlement;
 
     const insight = useDashboardSelector(selectInsightByWidgetRef(widget.ref))!;
     const supportedMeasures = getSupportedInsightMeasuresByInsight(insight);
@@ -160,5 +173,6 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         cancelAlertCreation,
         hasAlerts,
         supportedMeasures,
+        maxAutomationsReached,
     };
 };

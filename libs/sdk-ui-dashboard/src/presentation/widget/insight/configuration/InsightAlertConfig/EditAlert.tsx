@@ -5,7 +5,7 @@ import {
     IAutomationMetadataObjectDefinition,
     IMeasure,
 } from "@gooddata/sdk-model";
-import { Button, Input } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, Button, Input } from "@gooddata/sdk-ui-kit";
 import { DashboardInsightSubmenuContainer } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightSubmenuContainer.js";
 import { AlertMeasureSelect } from "./AlertMeasureSelect.js";
 import { AlertComparisonOperatorSelect } from "./AlertComparisonOperatorSelect.js";
@@ -14,6 +14,8 @@ import { EditAlertConfiguration } from "./EditAlertConfiguration.js";
 import { INotificationChannel } from "./constants.js";
 import { useEditAlert } from "./useEditAlert.js";
 import { FormattedMessage, useIntl } from "react-intl";
+
+const TOOLTIP_ALIGN_POINTS = [{ align: "cl cr" }, { align: "cr cl" }];
 
 interface IEditAlertProps {
     alert: IAutomationMetadataObject;
@@ -25,6 +27,7 @@ interface IEditAlertProps {
     onCancel: () => void;
     onCreate?: (alert: IAutomationMetadataObjectDefinition) => void;
     onUpdate?: (alert: IAutomationMetadataObject) => void;
+    maxAutomationsReached?: boolean;
 }
 
 export const EditAlert: React.FC<IEditAlertProps> = ({
@@ -37,6 +40,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
     onCancel,
     onCreate,
     onUpdate,
+    maxAutomationsReached = false,
 }) => {
     const {
         viewMode,
@@ -60,10 +64,15 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
         onUpdate,
     });
     const intl = useIntl();
+    const disableCreateButtonDueToLimits = isNewAlert && maxAutomationsReached;
 
     return viewMode === "edit" ? (
         <DashboardInsightSubmenuContainer
-            title={intl.formatMessage({ id: "insightAlert.config.alert" })}
+            title={
+                isNewAlert
+                    ? intl.formatMessage({ id: "insightAlert.config.createAlert" })
+                    : intl.formatMessage({ id: "insightAlert.config.editAlert" })
+            }
             onClose={onClose}
             onBack={hasAlerts ? onCancel : undefined}
         >
@@ -114,16 +123,24 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                         >
                             <FormattedMessage id="cancel" />
                         </Button>
-                        <Button
-                            intent="action"
-                            size="small"
-                            disabled={!canSubmit}
-                            onClick={isNewAlert ? createAlert : updateAlert}
-                        >
-                            {isNewAlert
-                                ? intl.formatMessage({ id: "add" })
-                                : intl.formatMessage({ id: "save" })}
-                        </Button>
+                        <BubbleHoverTrigger hideDelay={0} showDelay={0}>
+                            <Button
+                                intent="action"
+                                size="small"
+                                disabled={!canSubmit || disableCreateButtonDueToLimits}
+                                onClick={isNewAlert ? createAlert : updateAlert}
+                                className="gd-button-left-margin"
+                            >
+                                {isNewAlert
+                                    ? intl.formatMessage({ id: "create" })
+                                    : intl.formatMessage({ id: "save" })}
+                            </Button>
+                            {disableCreateButtonDueToLimits ? (
+                                <Bubble alignPoints={TOOLTIP_ALIGN_POINTS}>
+                                    <FormattedMessage id="insightAlert.maxAlertsReached" />
+                                </Bubble>
+                            ) : null}
+                        </BubbleHoverTrigger>
                     </div>
                 </div>
             </div>
