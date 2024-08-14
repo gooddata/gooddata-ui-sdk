@@ -85,6 +85,7 @@ export {
     selectEnableScheduling,
     selectEnableDrillIntersectionIgnoredAttributes,
     selectEnableFilterViews,
+    selectEnableDrillDownIntersectionIgnoredAttributes,
 } from "./config/configSelectors.js";
 export { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {

@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import { SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
@@ -12,6 +12,8 @@ import {
 import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
 import { layoutActions } from "../../store/layout/index.js";
+import { selectEnableDrillDownIntersectionIgnoredAttributes } from "../../store/config/configSelectors.js";
+import isEqual from "lodash/isEqual.js";
 
 export function* removeDrillDownForInsightWidgetHandler(
     ctx: DashboardContext,
@@ -23,7 +25,11 @@ export function* removeDrillDownForInsightWidgetHandler(
     } = cmd;
     const widgets: ReturnType<typeof selectWidgetsMap> = yield select(selectWidgetsMap);
     const insightWidget = validateExistingInsightWidget(widgets, cmd, ctx);
-    const { ref: widgetRef, ignoredDrillDownHierarchies: currentBlacklistHierarchies } = insightWidget;
+    const {
+        ref: widgetRef,
+        ignoredDrillDownHierarchies: currentBlacklistHierarchies,
+        drillDownIntersectionIgnoredAttributes: currentDrillDownIntersectionIgnoredAttributes,
+    } = insightWidget;
 
     const newBlacklistHierarchies = [...(currentBlacklistHierarchies || []), ...blacklistHierarchies];
 
@@ -36,6 +42,31 @@ export function* removeDrillDownForInsightWidgetHandler(
             },
         }),
     );
+
+    const enableDrillDownIntersectionIgnoredAttributes: ReturnType<
+        typeof selectEnableDrillDownIntersectionIgnoredAttributes
+    > = yield select(selectEnableDrillDownIntersectionIgnoredAttributes);
+
+    if (enableDrillDownIntersectionIgnoredAttributes) {
+        const drillIntersectionIgnoredAttributesWithoutBlacklistedHierarchies =
+            currentDrillDownIntersectionIgnoredAttributes?.filter(
+                (ignoredIntersectionAttributes) =>
+                    !newBlacklistHierarchies.some((hierarchy) =>
+                        isEqual(hierarchy, ignoredIntersectionAttributes.drillDownReference),
+                    ),
+            );
+
+        yield put(
+            layoutActions.replaceWidgetDrillDownIntersectionIgnoredAttributes({
+                ref: widgetRef,
+                ignoredDrillDownIntersectionIgnoredAttributes:
+                    drillIntersectionIgnoredAttributesWithoutBlacklistedHierarchies ?? [],
+                undo: {
+                    cmd,
+                },
+            }),
+        );
+    }
 
     return insightWidgetDrillDownRemoved(ctx, widgetRef, blacklistHierarchies, correlationId);
 }

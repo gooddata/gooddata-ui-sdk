@@ -12,18 +12,30 @@ import { layoutActions } from "../../store/layout/index.js";
 import { existBlacklistHierarchyPredicate } from "../../utils/attributeHierarchyUtils.js";
 import { selectAllCatalogAttributeHierarchies } from "../../store/catalog/catalogSelectors.js";
 import { getHierarchyRef } from "@gooddata/sdk-model";
+import { selectEnableDrillDownIntersectionIgnoredAttributes } from "../../store/config/configSelectors.js";
+import isEqual from "lodash/isEqual.js";
+import { hierarchyToDrillDownReference } from "./common/drillDown.js";
 
 export function* addDrillDownForInsightWidgetHandler(
     ctx: DashboardContext,
     cmd: AddDrillDownForInsightWidget,
 ): SagaIterator<DashboardInsightWidgetDrillDownAdded> {
     const {
-        payload: { attributeIdentifier, drillDownIdentifier, drillDownAttributeHierarchyRef },
+        payload: {
+            attributeIdentifier,
+            drillDownIdentifier,
+            drillDownAttributeHierarchyRef,
+            intersectionIgnoredAttributes,
+        },
         correlationId,
     } = cmd;
     const widgets: ReturnType<typeof selectWidgetsMap> = yield select(selectWidgetsMap);
     const insightWidget = validateExistingInsightWidget(widgets, cmd, ctx);
-    const { ref: widgetRef, ignoredDrillDownHierarchies: currentBlacklistHierarchies } = insightWidget;
+    const {
+        ref: widgetRef,
+        ignoredDrillDownHierarchies: currentBlacklistHierarchies,
+        drillDownIntersectionIgnoredAttributes: currentDrillDownIntersectionIgnoredAttributes,
+    } = insightWidget;
 
     const hierarchies: ReturnType<typeof selectAllCatalogAttributeHierarchies> = yield select(
         selectAllCatalogAttributeHierarchies,
@@ -64,6 +76,34 @@ export function* addDrillDownForInsightWidgetHandler(
             },
         }),
     );
+
+    const enableDrillDownIntersectionIgnoredAttributes: ReturnType<
+        typeof selectEnableDrillDownIntersectionIgnoredAttributes
+    > = yield select(selectEnableDrillDownIntersectionIgnoredAttributes);
+
+    if (enableDrillDownIntersectionIgnoredAttributes && hierarchy && intersectionIgnoredAttributes) {
+        const drillDownReference = hierarchyToDrillDownReference(hierarchy, attributeIdentifier);
+        const existingIgnoredAttributesWithoutChangedItem =
+            currentDrillDownIntersectionIgnoredAttributes?.filter((item) =>
+                isEqual(item.drillDownReference, drillDownReference),
+            ) ?? [];
+
+        yield put(
+            layoutActions.replaceWidgetDrillDownIntersectionIgnoredAttributes({
+                ref: widgetRef,
+                ignoredDrillDownIntersectionIgnoredAttributes: [
+                    ...existingIgnoredAttributesWithoutChangedItem,
+                    {
+                        ignoredAttributes: intersectionIgnoredAttributes,
+                        drillDownReference,
+                    },
+                ],
+                undo: {
+                    cmd,
+                },
+            }),
+        );
+    }
 
     return insightWidgetDrillDownAdded(
         ctx,

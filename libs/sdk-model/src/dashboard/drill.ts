@@ -383,6 +383,26 @@ export function isDateHierarchyReference(obj: unknown): obj is IDateHierarchyRef
 export type IDrillDownReference = IAttributeHierarchyReference | IDateHierarchyReference;
 
 /**
+ * Returns the attribute hierarchy reference for the provided drill down reference.
+ * @alpha
+ */
+export function drillDownReferenceHierarchyRef(drillDownReference: IDrillDownReference) {
+    return drillDownReference.type === "attributeHierarchyReference"
+        ? drillDownReference.attributeHierarchy
+        : drillDownReference.dateHierarchyTemplate;
+}
+
+/**
+ * Returns the attribute or date dataset attribute reference for the provided drill down reference.
+ * @alpha
+ */
+export function drillDownReferenceAttributeRef(drillDownReference: IDrillDownReference) {
+    return drillDownReference.type === "attributeHierarchyReference"
+        ? drillDownReference.attribute
+        : drillDownReference.dateDatasetAttribute;
+}
+
+/**
  * Cross-filtering
  * @public
  */

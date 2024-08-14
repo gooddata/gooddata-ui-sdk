@@ -2,6 +2,7 @@
 import {
     IDrillToDashboard,
     IDrillToInsight,
+    IInsightWidget,
     InsightDrillDefinition,
     isDrillFromAttribute,
     isDrillToAttributeUrl,
@@ -10,6 +11,9 @@ import {
     isDrillToInsight,
     ObjRef,
     objRefToString,
+    areObjRefsEqual,
+    drillDownReferenceHierarchyRef,
+    drillDownReferenceAttributeRef,
 } from "@gooddata/sdk-model";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import { defineMessage } from "react-intl";
@@ -190,7 +194,7 @@ export const getMappedConfigForWidget = (
 export const getGlobalDrillDownMappedConfigForWidget = (
     widgetGlobalDrillDowns: IGlobalDrillDownAttributeHierarchyDefinition[],
     supportedItemsForWidget: IAvailableDrillTargets,
-    widgetRef: ObjRef,
+    widget: IInsightWidget,
 ): IDrillDownAttributeHierarchyConfig[] => {
     return widgetGlobalDrillDowns.map((globalDrillDown) => {
         const originLocalIdentifier = getDrillOriginLocalIdentifier(globalDrillDown);
@@ -203,9 +207,55 @@ export const getGlobalDrillDownMappedConfigForWidget = (
             originLocalIdentifier: originLocalIdentifier,
             title: getTitleFromDrillableItemPushData(supportedItemsForWidget, originLocalIdentifier),
             attributes: getValidDrillOriginAttributes(supportedItemsForWidget, originLocalIdentifier),
+            drillIntersectionIgnoredAttributes: getIntersectionIgnoredAttributeLocalIdentifiersForDrillDown(
+                widget,
+                globalDrillDown,
+                supportedItemsForWidget,
+            ),
             localIdentifier,
             complete: true,
-            widgetRef: widgetRef,
+            widgetRef: widget.ref,
         };
     });
 };
+
+function getIntersectionIgnoredAttributeLocalIdentifiersForDrillDown(
+    widget: IInsightWidget,
+    globalDrillDownDefinition: IGlobalDrillDownAttributeHierarchyDefinition,
+    supportedItemsForWidget: IAvailableDrillTargets,
+): string[] {
+    const attributeOriginLocalIdentifier = getDrillOriginLocalIdentifier(globalDrillDownDefinition);
+    const attribute = supportedItemsForWidget.attributes?.find(
+        (attribute) => attribute.attribute.attributeHeader.localIdentifier === attributeOriginLocalIdentifier,
+    );
+
+    const drillIntersectionIgnoredAttributes = attribute
+        ? widget.drillDownIntersectionIgnoredAttributes?.find((drillDownIgnoredDrillIntersection) => {
+              const hierarchyRef = drillDownReferenceHierarchyRef(
+                  drillDownIgnoredDrillIntersection.drillDownReference,
+              );
+              const attributeRef = drillDownReferenceAttributeRef(
+                  drillDownIgnoredDrillIntersection.drillDownReference,
+              );
+
+              // Global date drill down origin does not contain proper date attribute,
+              // so we need to check it differently
+              const isDateGlobalDrillDown =
+                  (globalDrillDownDefinition.target as { type: string; identifier: string }).type ===
+                  "dateAttributeHierarchy";
+              const isDateDrillDownReference =
+                  drillDownIgnoredDrillIntersection.drillDownReference.type === "dateHierarchyReference";
+              const isSameHierarchy =
+                  isDateGlobalDrillDown && isDateDrillDownReference
+                      ? true
+                      : areObjRefsEqual(hierarchyRef, globalDrillDownDefinition.target);
+
+              return (
+                  areObjRefsEqual(attributeRef, attribute.attribute.attributeHeader.formOf.ref) &&
+                  isSameHierarchy
+              );
+          })
+        : undefined;
+
+    return drillIntersectionIgnoredAttributes?.ignoredAttributes ?? [];
+}
