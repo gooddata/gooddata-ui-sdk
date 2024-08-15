@@ -3,7 +3,7 @@
 import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
-import { IAutomationMetadataObject, IWebhookMetadataObject } from "@gooddata/sdk-model";
+import { IAutomationMetadataObject, IWebhookDefinitionObject } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, Icon, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { gdColorStateBlank } from "../../../constants/colors.js";
@@ -13,7 +13,7 @@ interface IScheduledEmailProps {
     onDelete: (scheduledEmail: IAutomationMetadataObject) => void;
     onEdit: (scheduledEmail: IAutomationMetadataObject) => void;
     scheduledEmail: IAutomationMetadataObject;
-    webhooks: IWebhookMetadataObject[];
+    webhooks: IWebhookDefinitionObject[];
 }
 
 const ICON_TOOLTIP_ALIGN_POINTS = [
@@ -32,7 +32,7 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
 
     const intl = useIntl();
     const cronDescription = scheduledEmail.schedule?.cronDescription;
-    const webhookTitle = webhooks.find((webhook) => webhook.id === scheduledEmail.webhook)?.name;
+    const webhookTitle = webhooks.find((webhook) => webhook.id === scheduledEmail.webhook)?.destination?.name;
     const dashboardTitle = scheduledEmail.exportDefinitions?.[0]?.title;
     const isWidget = isVisualisationAutomation(scheduledEmail);
     const iconColor = theme?.palette?.complementary?.c6 ?? gdColorStateBlank;

@@ -2117,6 +2117,28 @@ export class InlineMeasureBuilder extends MeasureBuilderBase<IInlineMeasureDefin
 // @public
 export type InlineMeasureBuilderInput = string | IMeasure<IInlineMeasureDefinition>;
 
+// @alpha (undocumented)
+export interface INotificationChannelDefinitionObject extends INotificationChannelMetadataObject {
+}
+
+// @alpha (undocumented)
+export interface INotificationChannelMetadataObject extends INotificationChannelMetadataObjectBase {
+    id: string;
+}
+
+// @alpha (undocumented)
+export interface INotificationChannelMetadataObjectBase {
+    destination: IWebhookDestination | ISmtpDestination;
+    triggers: INotificationChannelTrigger[];
+    type: "webhook" | "smtp";
+}
+
+// @alpha (undocumented)
+export interface INotificationChannelTrigger {
+    allowOn?: ("dashboard" | "visualization")[];
+    type: "SCHEDULE" | "ALERT";
+}
+
 // @public
 export function insightAttributeFilterConfigs(insight: IInsightDefinition): IAttributeFilterConfigs | undefined;
 
@@ -3094,6 +3116,29 @@ export function isMeasureValueFilter(obj: unknown): obj is IMeasureValueFilter;
 // @public
 export function isMetadataObject(obj: unknown): obj is IMetadataObject;
 
+// @alpha (undocumented)
+export interface ISmtpDefinition extends INotificationChannelMetadataObjectBase {
+    // (undocumented)
+    destination: ISmtpDestination;
+    // (undocumented)
+    type: "smtp";
+}
+
+// @alpha (undocumented)
+export interface ISmtpDefinitionObject extends Partial<ISmtpDefinition>, Pick<INotificationChannelMetadataObject, "id"> {
+}
+
+// @alpha (undocumented)
+export interface ISmtpDestination {
+    address: string;
+    from: string;
+    hasPassword?: boolean;
+    login: string;
+    name: string;
+    password?: string;
+    port: 25 | 465 | 587 | 2525;
+}
+
 // @public
 export function isNegativeAttributeFilter(obj: unknown): obj is INegativeAttributeFilter;
 
@@ -3622,27 +3667,23 @@ export interface IVisualizationClassBody {
 }
 
 // @alpha (undocumented)
-export interface IWebhookMetadataObject extends IWebhookMetadataObjectBase {
-    id: string;
+export interface IWebhookDefinition extends INotificationChannelMetadataObjectBase {
+    // (undocumented)
+    destination: IWebhookDestination;
+    // (undocumented)
+    type: "webhook";
 }
 
 // @alpha (undocumented)
-export interface IWebhookMetadataObjectBase {
+export interface IWebhookDefinitionObject extends Partial<IWebhookDefinition>, Pick<INotificationChannelMetadataObject, "id"> {
+}
+
+// @alpha (undocumented)
+export interface IWebhookDestination {
     endpoint: string;
     hasToken?: boolean;
     name: string;
     token?: string;
-    triggers: IWebhookTrigger[];
-}
-
-// @alpha (undocumented)
-export interface IWebhookMetadataObjectDefinition extends Partial<IWebhookMetadataObjectBase>, Partial<Pick<IWebhookMetadataObject, "id">> {
-}
-
-// @alpha (undocumented)
-export interface IWebhookTrigger {
-    allowOn?: ("dashboard" | "visualization")[];
-    type: "SCHEDULE" | "ALERT";
 }
 
 // @public

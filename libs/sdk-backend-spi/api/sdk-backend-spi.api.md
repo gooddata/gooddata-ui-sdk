@@ -67,6 +67,7 @@ import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureMetadataObject } from '@gooddata/sdk-model';
 import { IMeasureMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { IMetadataObject } from '@gooddata/sdk-model';
+import { INotificationChannelDefinitionObject } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
 import { IOpenAiConfig } from '@gooddata/sdk-model';
 import { IOrganizationAssignee } from '@gooddata/sdk-model';
@@ -84,6 +85,8 @@ import { ISemanticSearchRelationship } from '@gooddata/sdk-model';
 import { ISemanticSearchResultItem } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-model';
+import { ISmtpDefinition } from '@gooddata/sdk-model';
+import { ISmtpDefinitionObject } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
 import { IThemeDefinition } from '@gooddata/sdk-model';
@@ -91,8 +94,8 @@ import { IThemeMetadataObject } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
 import { IUserGroup } from '@gooddata/sdk-model';
 import { IVisualizationClass } from '@gooddata/sdk-model';
-import { IWebhookMetadataObject } from '@gooddata/sdk-model';
-import { IWebhookMetadataObjectDefinition } from '@gooddata/sdk-model';
+import { IWebhookDefinition } from '@gooddata/sdk-model';
+import { IWebhookDefinitionObject } from '@gooddata/sdk-model';
 import { IWhiteLabeling } from '@gooddata/sdk-model';
 import { IWidget } from '@gooddata/sdk-model';
 import { IWidgetAlert } from '@gooddata/sdk-model';
@@ -834,11 +837,18 @@ export interface IOrganization {
 
 // @alpha
 export interface IOrganizationNotificationChannelService {
-    createWebhook(webhook: IWebhookMetadataObjectDefinition): Promise<IWebhookMetadataObject>;
+    createEmail(smtp: ISmtpDefinition): Promise<ISmtpDefinitionObject>;
+    createWebhook(webhook: IWebhookDefinition): Promise<IWebhookDefinitionObject>;
+    deleteChannel(id: string): Promise<void>;
+    deleteEmail(id: string): Promise<void>;
     deleteWebhook(id: string): Promise<void>;
-    getWebhook(id: string): Promise<IWebhookMetadataObject>;
-    getWebhooks(): Promise<IWebhookMetadataObject[]>;
-    updateWebhook(webhook: IWebhookMetadataObject): Promise<IWebhookMetadataObject>;
+    getAll(): Promise<INotificationChannelDefinitionObject[]>;
+    getEmail(id: string): Promise<ISmtpDefinitionObject>;
+    getEmails(): Promise<ISmtpDefinitionObject[]>;
+    getWebhook(id: string): Promise<IWebhookDefinitionObject>;
+    getWebhooks(): Promise<IWebhookDefinitionObject[]>;
+    updateEmail(smtp: ISmtpDefinitionObject): Promise<ISmtpDefinitionObject>;
+    updateWebhook(webhook: IWebhookDefinitionObject): Promise<IWebhookDefinitionObject>;
 }
 
 // @alpha

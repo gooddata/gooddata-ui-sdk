@@ -74,9 +74,12 @@ describe("recordedBackend", () => {
                     .organization(ORGANIZATION_ID)
                     .notificationChannels()
                     .createWebhook({
-                        name: "name",
-                        endpoint: "endpoint",
-                        token: "token",
+                        type: "webhook",
+                        destination: {
+                            name: "name",
+                            endpoint: "endpoint",
+                            token: "token",
+                        },
                         triggers: [
                             {
                                 type: "SCHEDULE",
@@ -89,10 +92,13 @@ describe("recordedBackend", () => {
                     });
 
                 expect(data).toEqual({
-                    endpoint: "endpoint",
-                    id: "webhook-id",
-                    name: "name",
-                    token: "token",
+                    id: "dummyWebhook",
+                    type: "webhook",
+                    destination: {
+                        endpoint: "endpoint",
+                        name: "name",
+                        token: "token",
+                    },
                     triggers: [
                         {
                             allowOn: ["dashboard", "visualization"],
@@ -111,9 +117,12 @@ describe("recordedBackend", () => {
                     .notificationChannels()
                     .updateWebhook({
                         id: "webhook-id",
-                        name: "name",
-                        endpoint: "endpoint",
-                        token: "token",
+                        type: "webhook",
+                        destination: {
+                            name: "name",
+                            endpoint: "endpoint",
+                            token: "token",
+                        },
                         triggers: [
                             {
                                 type: "SCHEDULE",
@@ -126,10 +135,13 @@ describe("recordedBackend", () => {
                     });
 
                 expect(data).toEqual({
-                    endpoint: "endpoint",
                     id: "webhook-id",
-                    name: "name",
-                    token: "token",
+                    type: "webhook",
+                    destination: {
+                        endpoint: "endpoint",
+                        name: "name",
+                        token: "token",
+                    },
                     triggers: [
                         {
                             allowOn: ["dashboard", "visualization"],

@@ -8,7 +8,7 @@ import {
     ISettings,
     ISeparators,
     IEntitlementDescriptor,
-    IWebhookMetadataObject,
+    IWebhookDefinitionObject,
     IAutomationMetadataObject,
     IWorkspaceUser,
 } from "@gooddata/sdk-model";
@@ -466,7 +466,7 @@ export type FiltersInfo = {
  *
  * @alpha
  */
-export type Webhooks = IWebhookMetadataObject[];
+export type Webhooks = IWebhookDefinitionObject[];
 
 /**
  * Workspace automations
