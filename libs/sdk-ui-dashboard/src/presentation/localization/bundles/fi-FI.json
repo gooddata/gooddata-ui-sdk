@@ -225,7 +225,7 @@
     "attributesDropdown.details.values": "Arvot",
     "attributesDropdown.details.shortening_decoration": "…ja {count} lisää",
     "attributesDropdown.removeTooltip": "Poista kojelaudalta",
-    "layout.header.characters.left": "{currentCharactersCount} /{maximumCharactersCount}merkkiä jäljellä",
+    "layout.header.characters.left": "{currentCharactersCount} /{maximumCharactersCount} merkkiä jäljellä",
     "layout.header.add.title.placeholder": "Lisää otsikko tähän...",
     "layout.header.add.description.placeholder": "Lisää kuvaus tähän...",
     "error": "Virhe",
