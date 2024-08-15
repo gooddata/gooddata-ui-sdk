@@ -174,6 +174,7 @@ export const transformRecurrenceTypeToDescription = (
     startDate: Date | null,
     weekStart: WeekStart,
 ): string => {
+    // 1/1/2007 is a reference date which has Monday on the first day of the year for simplicity of use
     const empty =
         weekStart === "Monday" ? new Date(2007, 0, 1, 0, 0, 0, 0) : new Date(2007, 0, 7, 0, 0, 0, 0);
 
