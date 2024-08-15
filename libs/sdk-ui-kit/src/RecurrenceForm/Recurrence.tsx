@@ -44,7 +44,7 @@ export const Recurrence: React.FC<IRecurrenceProps> = (props) => {
 
     return (
         <div className="gd-recurrence-form-repeat gd-input-component">
-            {Boolean(label) && <label className="gd-input-label">{label}</label>}
+            {label ? <label className="gd-label">{label}</label> : null}
             <div className="gd-recurrence-form-repeat-inner">
                 <RepeatTypeSelect
                     repeatType={recurrenceType}
