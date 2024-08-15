@@ -2690,5 +2690,10 @@
         "value": "Your organization has reached the limit of alerts. Contact your administrator to create more.",
         "comment": "",
         "limit": 0
+    },
+    "insightAlert.config.loading.error": {
+        "value": "Failed to load necessary information. Try again later.",
+        "comment": "",
+        "limit": 0
     }
 }

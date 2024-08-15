@@ -24,6 +24,7 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
     );
 
     const {
+        isLoading,
         alerts,
         hasAlerts,
         destinations,
@@ -76,6 +77,7 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
     } else if (viewMode === "create") {
         content = (
             <CreateAlert
+                isLoading={isLoading}
                 alert={creatingAlert}
                 measures={supportedMeasures}
                 hasAlerts={hasAlerts}
