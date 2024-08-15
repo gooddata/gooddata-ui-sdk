@@ -8,9 +8,13 @@ import {
 
 import { EditAlert } from "./EditAlert.js";
 import { INotificationChannel } from "./constants.js";
+import { LoadingMask } from "@gooddata/sdk-ui-kit";
+
+const LOADING_MASK_HEIGHT = 100;
 
 interface ICreateAlertProps {
-    alert: IAutomationMetadataObjectDefinition;
+    isLoading: boolean;
+    alert: IAutomationMetadataObjectDefinition | null;
     onClose: () => void;
     onCancel: () => void;
     onCreate?: (alert: IAutomationMetadataObjectDefinition) => void;
@@ -21,6 +25,7 @@ interface ICreateAlertProps {
 }
 
 export const CreateAlert: React.FC<ICreateAlertProps> = ({
+    isLoading,
     alert,
     onClose,
     onCancel,
@@ -30,6 +35,10 @@ export const CreateAlert: React.FC<ICreateAlertProps> = ({
     measures,
     maxAutomationsReached,
 }) => {
+    if (isLoading) {
+        return <LoadingMask height={LOADING_MASK_HEIGHT} />;
+    }
+
     return (
         <EditAlert
             alert={alert as IAutomationMetadataObject}

@@ -48,4 +48,7 @@ export const messages = defineMessages({
     alertResumeSuccess: {
         id: "insightAlert.config.resume.success",
     },
+    alertLoadingError: {
+        id: "insightAlert.config.loading.error",
+    },
 });

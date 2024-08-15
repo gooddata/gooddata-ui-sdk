@@ -2,11 +2,10 @@
 import {
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
-    IFilter,
     IInsightWidget,
 } from "@gooddata/sdk-model";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
     useDashboardSelector,
@@ -19,7 +18,7 @@ import {
 import { createDefaultAlert, getSupportedInsightMeasuresByInsight } from "./utils.js";
 import { INotificationChannel } from "./constants.js";
 import { messages } from "./messages.js";
-// import { useWidgetFilters } from "../../../common/useWidgetFilters.js";
+import { useWidgetFilters } from "../../../common/useWidgetFilters.js";
 
 type InsightWidgetAlertingViewMode = "list" | "edit" | "create";
 
@@ -29,7 +28,8 @@ export interface IInsightWidgetAlertingProps {
 }
 
 export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IInsightWidgetAlertingProps) => {
-    const { addSuccess } = useToastMessage();
+    const { addSuccess, addError } = useToastMessage();
+    const [isLoading, setIsLoading] = useState(true);
 
     // TODO: load from backend
     const [alerts, setAlerts] = useState<IAutomationMetadataObject[]>([]);
@@ -41,9 +41,31 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         { id: "webhook", title: "Webhook" },
     ];
 
-    // TODO: load from backend
-    const widgetFilters: IFilter[] = [];
-    // const widgetFilters = useWidgetFilters(widget, insight);
+    const insight = useDashboardSelector(selectInsightByWidgetRef(widget.ref))!;
+    const { result: widgetFilters, status: widgetFiltersStatus } = useWidgetFilters(widget, insight);
+    const supportedMeasures = getSupportedInsightMeasuresByInsight(insight);
+    const defaultMeasure = supportedMeasures[0];
+    const defaultNotificationChannelId = destinations[0].id;
+
+    // Handle async widget filters state
+    useEffect(() => {
+        if (widgetFiltersStatus === "success") {
+            setIsLoading(false);
+            setDefaultAlert(createDefaultAlert(widgetFilters, defaultMeasure!, defaultNotificationChannelId));
+        } else if (widgetFiltersStatus === "error") {
+            setIsLoading(false);
+            closeInsightWidgetMenu();
+            addError(messages.alertLoadingError);
+        }
+        // Avoid infinite loop by ignoring addError
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [
+        closeInsightWidgetMenu,
+        defaultMeasure,
+        defaultNotificationChannelId,
+        widgetFilters,
+        widgetFiltersStatus,
+    ]);
 
     const automationsCount = useDashboardSelector(selectAutomationsCount);
     const maxAutomationsEntitlement = useDashboardSelector(selectEntitlementMaxAutomations);
@@ -51,20 +73,16 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);
     const maxAutomationsReached = automationsCount >= maxAutomations && !unlimitedAutomationsEntitlement;
 
-    const insight = useDashboardSelector(selectInsightByWidgetRef(widget.ref))!;
-    const supportedMeasures = getSupportedInsightMeasuresByInsight(insight);
-    const defaultMeasure = supportedMeasures[0];
-    const defaultNotificationChannelId = destinations[0].id;
-    const defaultAlert = createDefaultAlert(widgetFilters, defaultMeasure!, defaultNotificationChannelId);
-
     const [viewMode, setViewMode] = useState<InsightWidgetAlertingViewMode>(
         alerts.length > 0 ? "list" : "create",
     );
+
+    const [defaultAlert, setDefaultAlert] = useState<
+        IAutomationMetadataObject | IAutomationMetadataObjectDefinition | null
+    >(null);
     const [editingAlert, setEditingAlert] = useState<IAutomationMetadataObject | null>(null);
-    const [creatingAlert, setCreatingAlert] = useState<IAutomationMetadataObjectDefinition>(defaultAlert);
 
     const initiateAlertCreation = () => {
-        setCreatingAlert(defaultAlert);
         setViewMode("create");
     };
 
@@ -80,15 +98,13 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
                     uri: id,
                 } as IAutomationMetadataObject,
             ];
-            addSuccess({ id: messages.alertAddSuccess.id });
+            addSuccess(messages.alertAddSuccess);
             return updatedAlerts;
         });
-        setCreatingAlert(defaultAlert);
         setViewMode("list");
     };
 
     const cancelAlertCreation = () => {
-        setCreatingAlert(defaultAlert);
         if (hasAlerts) {
             setViewMode("list");
         } else {
@@ -104,7 +120,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     const updateExistingAlert = (alert: IAutomationMetadataObject) => {
         setAlerts((alertsToUpdate) => {
             const updatedAlerts = alertsToUpdate.map((a) => (a.id === alert.id ? alert : a));
-            addSuccess({ id: messages.alertUpdateSuccess.id });
+            addSuccess(messages.alertUpdateSuccess);
             return updatedAlerts;
         });
         cancelAlertEditing();
@@ -125,7 +141,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
                       } as IAutomationMetadataObject)
                     : a,
             );
-            addSuccess({ id: messages.alertPauseSuccess.id });
+            addSuccess(messages.alertPauseSuccess);
             return updatedAlerts;
         });
     };
@@ -140,7 +156,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
                       } as IAutomationMetadataObject)
                     : a,
             );
-            addSuccess({ id: messages.alertResumeSuccess.id });
+            addSuccess(messages.alertResumeSuccess);
             return updatedAlerts;
         });
     };
@@ -151,17 +167,18 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             if (updatedAlerts.length === 0) {
                 closeInsightWidgetMenu();
             }
-            addSuccess({ id: messages.alertDeleteSuccess.id });
+            addSuccess(messages.alertDeleteSuccess);
             return updatedAlerts;
         });
     };
 
     return {
+        isLoading,
         destinations,
         alerts,
         viewMode,
         editingAlert,
-        creatingAlert,
+        creatingAlert: defaultAlert,
         initiateAlertCreation,
         initiateAlertEditing,
         updateExistingAlert,
