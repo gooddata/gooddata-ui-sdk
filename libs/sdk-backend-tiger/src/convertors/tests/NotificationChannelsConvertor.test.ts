@@ -9,9 +9,12 @@ describe("NotificationChannelsConvertor", () => {
     it("should convert webhook to notification channel", () => {
         const data = convertWebhookToNotificationChannel({
             id: "id",
-            name: "name",
-            token: "token",
-            endpoint: "endpoint",
+            type: "webhook",
+            destination: {
+                name: "name",
+                token: "token",
+                endpoint: "endpoint",
+            },
             triggers: [
                 {
                     type: "SCHEDULE",
@@ -77,10 +80,13 @@ describe("NotificationChannelsConvertor", () => {
 
         expect(data).toEqual({
             id: "id",
-            name: "name",
-            endpoint: "endpoint",
-            token: "token",
-            hasToken: true,
+            type: "webhook",
+            destination: {
+                name: "name",
+                endpoint: "endpoint",
+                token: "token",
+                hasToken: true,
+            },
             triggers: [
                 {
                     allowOn: ["dashboard", "visualization"],

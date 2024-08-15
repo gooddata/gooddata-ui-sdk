@@ -39,10 +39,16 @@ export {
 } from "./execution/attribute/factory.js";
 
 export {
-    IWebhookTrigger,
-    IWebhookMetadataObjectDefinition,
-    IWebhookMetadataObjectBase,
-    IWebhookMetadataObject,
+    IWebhookDestination,
+    ISmtpDestination,
+    IWebhookDefinition,
+    ISmtpDefinition,
+    ISmtpDefinitionObject,
+    IWebhookDefinitionObject,
+    INotificationChannelTrigger,
+    INotificationChannelMetadataObject,
+    INotificationChannelDefinitionObject,
+    INotificationChannelMetadataObjectBase,
 } from "./notificationChannels/index.js";
 
 export {

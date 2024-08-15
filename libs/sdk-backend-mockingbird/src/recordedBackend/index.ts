@@ -59,7 +59,10 @@ import {
     IThemeMetadataObject,
     IUser,
     IWorkspacePermissions,
-    IWebhookMetadataObject,
+    IWebhookDefinition,
+    IWebhookDefinitionObject,
+    ISmtpDefinition,
+    ISmtpDefinitionObject,
     idRef,
 } from "@gooddata/sdk-model";
 import RecordedAttributeHierarchiesService from "./attributeHierarchies.js";
@@ -406,22 +409,52 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
         },
         notificationChannels(): IOrganizationNotificationChannelService {
             return {
-                getWebhooks: () => Promise.resolve([]),
+                getAll: () => Promise.resolve([]),
+                deleteChannel: () => Promise.resolve(),
+                //emails
+                createEmail: (webhook: ISmtpDefinition) =>
+                    Promise.resolve({
+                        ...(webhook as ISmtpDefinitionObject),
+                        id: "dummySmtp",
+                    }),
+                deleteEmail: () => Promise.resolve(),
+                getEmail: () =>
+                    Promise.resolve({
+                        id: "dummySmtp",
+                        type: "smtp",
+                        triggers: [],
+                        destination: {
+                            name: "",
+                            address: "",
+                            login: "",
+                            password: "",
+                            from: "",
+                            hasPassword: true,
+                            port: 25,
+                        },
+                    }),
+                getEmails: () => Promise.resolve([]),
+                updateEmail: (smtp) => Promise.resolve(smtp),
+                //webhooks
+                createWebhook: (webhook: IWebhookDefinition) =>
+                    Promise.resolve({
+                        ...(webhook as IWebhookDefinitionObject),
+                        id: "dummyWebhook",
+                    }),
+                deleteWebhook: () => Promise.resolve(),
                 getWebhook: () =>
                     Promise.resolve({
-                        id: "webhook-id",
-                        name: "webhook-name",
-                        token: "webhook-token",
-                        endpoint: "webhook-endpoint",
+                        id: "dummyWebhook",
+                        type: "webhook",
+                        destination: {
+                            name: "Dummy webhook",
+                            endpoint: "https://dummy.webhook",
+                            token: "dummyToken",
+                        },
                         triggers: [],
                     }),
-                createWebhook: (webhook) =>
-                    Promise.resolve({
-                        ...webhook,
-                        id: "webhook-id",
-                    } as IWebhookMetadataObject),
+                getWebhooks: () => Promise.resolve([]),
                 updateWebhook: (webhook) => Promise.resolve(webhook),
-                deleteWebhook: () => Promise.resolve(),
             };
         },
         permissions(): IOrganizationPermissionService {

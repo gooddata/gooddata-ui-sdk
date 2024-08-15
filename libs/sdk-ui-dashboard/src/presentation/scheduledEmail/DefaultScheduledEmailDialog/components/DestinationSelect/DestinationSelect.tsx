@@ -11,7 +11,7 @@ import {
     SingleSelectListItem,
 } from "@gooddata/sdk-ui-kit";
 import { DEFAULT_DROPDOWN_ALIGN_POINTS, DEFAULT_DROPDOWN_ZINDEX } from "../../constants.js";
-import { IWebhookMetadataObject } from "@gooddata/sdk-model";
+import { IWebhookDefinitionObject } from "@gooddata/sdk-model";
 
 const DROPDOWN_WIDTH = 199;
 
@@ -21,7 +21,7 @@ interface IDestinationItem {
 }
 
 interface IDestinationSelectProps {
-    webhooks: IWebhookMetadataObject[];
+    webhooks: IWebhookDefinitionObject[];
     selectedItemId: string | undefined;
     onChange: (selectedItemId: string) => void;
 }
@@ -37,7 +37,7 @@ export const DestinationSelect: React.FC<IDestinationSelectProps> = ({
             webhooks?.map(
                 (wh): IDestinationItem => ({
                     id: wh.id,
-                    title: wh.name,
+                    title: wh.destination?.name ?? wh.id,
                 }),
             ) ?? []
         );

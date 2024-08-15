@@ -246,7 +246,7 @@ import { ITranslations } from '@gooddata/sdk-ui';
 import { IUser } from '@gooddata/sdk-model';
 import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
-import { IWebhookMetadataObject } from '@gooddata/sdk-model';
+import { IWebhookDefinitionObject } from '@gooddata/sdk-model';
 import { IWidget } from '@gooddata/sdk-model';
 import { IWidgetAlert } from '@gooddata/sdk-model';
 import { IWidgetAlertDefinition } from '@gooddata/sdk-model';
@@ -4924,7 +4924,7 @@ export interface IScheduledEmailDialogProps {
     onSubmit?: (scheduledEmailDefinition: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => void;
     onSuccess?: () => void;
     users: IWorkspaceUser[];
-    webhooks: IWebhookMetadataObject[];
+    webhooks: IWebhookDefinitionObject[];
 }
 
 // @internal (undocumented)
@@ -4945,7 +4945,7 @@ export interface IScheduledEmailManagementDialogProps {
     onDeleteSuccess?: () => void;
     onEdit?: (scheduledMail: IAutomationMetadataObject) => void;
     scheduleDataError?: GoodDataSdkError;
-    webhooks: IWebhookMetadataObject[];
+    webhooks: IWebhookDefinitionObject[];
 }
 
 // @internal (undocumented)
@@ -8905,7 +8905,7 @@ export function useWidgetSelection(widgetRef?: ObjRef): IUseWidgetSelectionResul
 export type ValuesLimitingItem = IDashboardAttributeFilterParentItem | ObjRef | IDashboardDependentDateFilter;
 
 // @alpha
-export type Webhooks = IWebhookMetadataObject[];
+export type Webhooks = IWebhookDefinitionObject[];
 
 // @alpha (undocumented)
 export interface WebhooksState {
