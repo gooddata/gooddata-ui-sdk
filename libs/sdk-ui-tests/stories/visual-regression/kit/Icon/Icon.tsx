@@ -303,6 +303,20 @@ const IconsTest: React.FC<{ children?: React.ReactNode }> = () => {
                     <IconWrapper name="SimplifiedDashboard">
                         <Icon.SimplifiedDashboard color="#00f" />
                     </IconWrapper>
+                    <IconWrapper name="HistoryBack">
+                        <Icon.HistoryBack color="#00f" />
+                    </IconWrapper>
+                </ColumnWrapper>
+                <ColumnWrapper>
+                    <IconWrapper name="Alert">
+                        <Icon.Alert color="#00f" />
+                    </IconWrapper>
+                    <IconWrapper name="AlertPaused">
+                        <Icon.AlertPaused color="#00f" />
+                    </IconWrapper>
+                    <IconWrapper name="Ellipsis">
+                        <Icon.Ellipsis color="#00f" />
+                    </IconWrapper>
                 </ColumnWrapper>
             </RowWrapper>
         </div>
