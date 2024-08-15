@@ -617,7 +617,7 @@
     "recurrence.types.daily": "Päivittäin",
     "recurrence.types.weekly": "Viikoittain {day}",
     "recurrence.types.monthly.last": "Kuukausittain viimeisenä {day}",
-    "recurrence.types.monthly": "Kuukausittain {week, select, 1 {ensimmäinen} 2 {toinen} 3 {kolmas} 4 {neljäs} other {viimeinen}}{day}",
+    "recurrence.types.monthly": "Kuukausittain {week, select, 1 {ensimmäinen} 2 {toinen} 3 {kolmas} 4 {neljäs} other {viimeinen}} {day}",
     "recurrence.types.cron": "CRON-ilmentymä",
     "gs.header.search": "Hae"
 }

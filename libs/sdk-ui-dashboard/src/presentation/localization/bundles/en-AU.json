@@ -291,7 +291,7 @@
     "configurationPanel.kpiCantBeFilteredByDate": "The kpi can't be filtered by Date. Untick the check box.",
     "configurationPanel.unrelatedVizDateInfo": "\"{dateDataSet}\" can no longer be applied to the visualisation. Select a different dimension or edit the visualisation.",
     "configurationPanel.unrelatedKpiDateInfo": "\"{dateDataSet}\" can no longer be applied to the kpi. Select a different dimension or edit the kpi.",
-    "configurationPanel.breakAlertWarning": "Users have set up {numAlerts} {numAlerts, select, 1 {alert} other {alerts}}\nfor this KPI. Modifying the KPI will affect {numAlerts, select, 1 {this alert} other {these alerts}}.",
+    "configurationPanel.breakAlertWarning": "\n            Users have set up {numAlerts} {numAlerts, select, 1 {alert} other {alerts}}\n            for this KPI. Modifying the KPI will affect {numAlerts, select, 1 {this alert} other {these alerts}}.\n",
     "configurationPanel.drillIntoDashboard": "Drill into dashboard",
     "configurationPanel.noLinkableDashboards": "No dashboard to link to",
     "configurationPanel.selectDashboard": "SELECT a Dashboard",
