@@ -68,7 +68,7 @@ const localeConversions = {
     "zh-Hant": zhCN,
     "en-AU": enAU,
     "fi-FI": fi,
-    yue: zhCN,
+    "zh-HK": zhCN,
 };
 
 export type FormattingLocale = keyof typeof localeConversions;

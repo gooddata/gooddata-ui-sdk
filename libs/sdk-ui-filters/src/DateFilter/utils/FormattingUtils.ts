@@ -30,7 +30,7 @@ export const localizedIcuDateFormatPatterns: Record<string, string> = {
     "pt-PT": "dd/MM/y",
     "zh-Hans": "y/M/d",
     "zh-Hant": "y/M/d",
-    yue: "y/M/d",
+    "zh-HK": "y/M/d",
     "ru-RU": "dd.MM.y",
     "it-IT": "dd/MM/y",
     "es-419": "d/M/y",

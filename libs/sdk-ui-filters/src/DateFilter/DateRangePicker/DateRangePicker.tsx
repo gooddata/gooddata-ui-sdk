@@ -54,7 +54,7 @@ const convertedLocales: Record<string, Locale> = {
     "zh-Hant": zhCN,
     "en-AU": enAU,
     "fi-FI": fi,
-    yue: zhCN,
+    "zh-HK": zhCN,
 };
 
 const ALIGN_POINTS = [{ align: "bl tl", offset: { x: 0, y: 1 } }];
