@@ -53,7 +53,7 @@ export const LOCALES: ILocale[] = [
     "en-AU",
     "fi-FI",
     "zh-Hant",
-    "yue",
+    "zh-HK",
 ];
 export const DEFAULT_LOCALE = "en-US";
 

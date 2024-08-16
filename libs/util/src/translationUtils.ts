@@ -25,7 +25,7 @@ export function removeMetadata(translationsWithMetadata: Record<string, any>): R
  * @internal
  */
 export const sanitizeLocaleForMoment = (intlLocale: string): string => {
-    if (intlLocale === "zh-Hans" || intlLocale === "zh-Hant" || intlLocale === "yue") {
+    if (intlLocale === "zh-Hans" || intlLocale === "zh-Hant" || intlLocale === "zh-HK") {
         return "zh-CN";
     }
     return intlLocale;
