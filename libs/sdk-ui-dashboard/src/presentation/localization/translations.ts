@@ -19,7 +19,7 @@ import frCA from "./bundles/fr-CA.json";
 import enGB from "./bundles/en-GB.json";
 import enAU from "./bundles/en-AU.json";
 import zhHant from "./bundles/zh-Hant.json";
-import zhYue from "./bundles/zh-Yue.json";
+import zhHK from "./bundles/zh-HK.json";
 import fiFI from "./bundles/fi-FI.json";
 
 const sdkUiDashboardTranslations: { [locale: string]: Record<string, string> } = {
@@ -40,7 +40,7 @@ const sdkUiDashboardTranslations: { [locale: string]: Record<string, string> } =
     "en-AU": enAU,
     "fi-FI": fiFI,
     "zh-Hant": zhHant,
-    yue: zhYue,
+    "zh-HK": zhHK,
 };
 
 /**
