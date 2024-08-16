@@ -80,7 +80,7 @@ const convertedLocales: Record<string, Locale> = {
     "en-GB": enGB,
     "fr-CA": frCA,
     "zh-Hant": zhCN,
-    yue: zhCN,
+    "zh-HK": zhCN,
     "en-AU": enAU,
     "fi-FI": fi,
 };

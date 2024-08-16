@@ -20,7 +20,7 @@ import enGB from "./bundles/en-GB.json";
 import enAU from "./bundles/en-AU.json";
 import fiFI from "./bundles/fi-FI.json";
 import zhHant from "./bundles/zh-Hant.json";
-import zhYue from "./bundles/zh-Yue.json";
+import zhHK from "./bundles/zh-HK.json";
 
 const sdkUiDashboardTranslations: { [locale: string]: Record<string, string> } = {
     "en-US": translationUtils.removeMetadata(enUS),
@@ -40,7 +40,7 @@ const sdkUiDashboardTranslations: { [locale: string]: Record<string, string> } =
     "en-AU": enAU,
     "fi-FI": fiFI,
     "zh-Hant": zhHant,
-    yue: zhYue,
+    "zh-HK": zhHK,
 };
 
 /**

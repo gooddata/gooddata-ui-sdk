@@ -21,7 +21,7 @@ import enGB from "../translations/en-GB.json";
 import enAU from "../translations/en-AU.json";
 import fiFI from "../translations/fi-FI.json";
 import zhHant from "../translations/zh-Hant.json";
-import zhYue from "../translations/zh-Yue.json";
+import zhHK from "../translations/zh-HK.json";
 
 import { IDropdownItem } from "../interfaces/Dropdown.js";
 
@@ -59,7 +59,7 @@ const sdkUiExtTranslations: { [locale: string]: Record<string, string> } = {
     "en-AU": enAU,
     "fi-FI": fiFI,
     "zh-Hant": zhHant,
-    yue: zhYue,
+    "zh-HK": zhHK,
 };
 
 /**
