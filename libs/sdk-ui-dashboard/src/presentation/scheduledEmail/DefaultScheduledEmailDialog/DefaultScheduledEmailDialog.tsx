@@ -341,7 +341,7 @@ export function useScheduledEmailDialogAlignment() {
         },
     ];
     const onAlign = (alignment: Alignment) => {
-        if (alignment.top < 0) {
+        if (alignment.top <= 0) {
             setAlignState("tc tc");
         } else {
             setAlignState("cc cc");

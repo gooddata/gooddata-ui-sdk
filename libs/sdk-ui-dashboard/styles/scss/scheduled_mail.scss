@@ -537,7 +537,6 @@ $min-content-height: 110px;
 
         @media #{kit-variables.$small-only} {
             > strong {
-                display: block;
                 overflow: hidden;
                 line-height: 20px;
                 white-space: nowrap;
@@ -645,6 +644,13 @@ $min-content-height: 110px;
     display: flex;
     flex: 1;
     padding-bottom: $vertical-space;
+    overflow: hidden;
+
+    .gd-editable-label-inner {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 }
 
 .gd-schedule-email-dialog-title {
