@@ -24,6 +24,19 @@ export class TigerWorkspaceSettings
 
     public getSettings(): Promise<IWorkspaceSettings> {
         return this.authCall(async (client) => {
+            const { data } = await this.authCall(async (client) =>
+                client.entities.getAllEntitiesWorkspaceSettings({ workspaceId: this.workspace }),
+            );
+
+            const settings = data.data.reduce((result: ISettings, setting) => {
+                return {
+                    ...result,
+                    [mapTypeToKey(setting.attributes?.type, setting.id)]: unwrapSettingContent(
+                        setting.attributes?.content,
+                    ),
+                };
+            }, {});
+
             const {
                 data: { meta: config },
             } = (
@@ -37,12 +50,25 @@ export class TigerWorkspaceSettings
                 workspace: this.workspace,
                 ...DefaultUiSettings,
                 ...config?.config,
+                ...settings,
             };
         });
     }
 
     public async setLocale(locale: string): Promise<void> {
         return this.setSetting("LOCALE", { value: locale });
+    }
+
+    public async setTimezone(timezone: string): Promise<void> {
+        return this.setSetting("TIMEZONE", { value: timezone });
+    }
+
+    public async setDateFormat(dateFormat: string): Promise<void> {
+        return this.setSetting("FORMAT_LOCALE", { value: dateFormat });
+    }
+
+    public async setWeekStart(weekStart: string): Promise<void> {
+        return this.setSetting("WEEK_START", { value: weekStart });
     }
 
     public async setTheme(activeThemeId: string): Promise<void> {

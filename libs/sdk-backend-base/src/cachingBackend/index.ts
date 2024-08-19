@@ -448,6 +448,18 @@ class WithWorkspaceSettingsCaching extends DecoratedWorkspaceSettingsService {
         return super.setLocale(locale);
     }
 
+    public async setTimezone(timezone: string): Promise<void> {
+        return super.setTimezone(timezone);
+    }
+
+    public async setDateFormat(dateFormat: string): Promise<void> {
+        return super.setDateFormat(dateFormat);
+    }
+
+    public async setWeekStart(weekStart: string): Promise<void> {
+        return super.setWeekStart(weekStart);
+    }
+
     public async setColorPalette(colorPaletteId: string): Promise<void> {
         return super.setColorPalette(colorPaletteId);
     }
