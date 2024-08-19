@@ -59,7 +59,7 @@ export function convertEmailFromNotificationChannel(channel: INotificationChanne
         destination: {
             name: channel.attributes?.name ?? "",
             address: wh?.address ?? "",
-            from: wh?.from ?? "",
+            from: wh?.fromEmail ?? "",
             port: wh?.port ?? 25,
             login: wh?.login ?? "",
             password: wh?.password ?? "",

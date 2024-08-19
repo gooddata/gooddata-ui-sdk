@@ -82,7 +82,7 @@ import {
     ResizeWidth,
     RemoveSectionItemByWidgetRef,
 } from "./layout.js";
-import { CreateAlert, RemoveAlerts, UpdateAlert } from "./alerts.js";
+import { CreateAlert, SaveAlert } from "./alerts.js";
 import { CreateScheduledEmail, SaveScheduledEmail, RefreshAutomations } from "./scheduledEmail.js";
 import {
     Drill,
@@ -266,12 +266,9 @@ export {
     CreateAlert,
     CreateAlertPayload,
     createAlert,
-    RemoveAlerts,
-    RemoveAlertsPayload,
-    removeAlerts,
-    UpdateAlert,
-    UpdateAlertPayload,
-    updateAlert,
+    SaveAlert,
+    SaveAlertPayload,
+    saveAlert,
 } from "./alerts.js";
 
 export {
@@ -503,8 +500,7 @@ export type DashboardCommands =
     | RefreshInsightWidget
     | ExportInsightWidget
     | CreateAlert
-    | UpdateAlert
-    | RemoveAlerts
+    | SaveAlert
     | CreateScheduledEmail
     | SaveScheduledEmail
     | ChangeSharing
