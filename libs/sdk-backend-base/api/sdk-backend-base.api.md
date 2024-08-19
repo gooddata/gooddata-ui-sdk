@@ -603,9 +603,15 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     // (undocumented)
     setColorPalette(colorPaletteId: string): Promise<void>;
     // (undocumented)
+    setDateFormat(dateFormat: string): Promise<void>;
+    // (undocumented)
     setLocale(locale: string): Promise<void>;
     // (undocumented)
     setTheme(themeId: string): Promise<void>;
+    // (undocumented)
+    setTimezone(timezone: string): Promise<void>;
+    // (undocumented)
+    setWeekStart(weekStart: string): Promise<void>;
 }
 
 // @alpha

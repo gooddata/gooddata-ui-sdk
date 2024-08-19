@@ -234,6 +234,15 @@ function recordedWorkspace(
                 async setLocale(): Promise<void> {
                     return Promise.resolve();
                 },
+                async setTimezone(): Promise<void> {
+                    return Promise.resolve();
+                },
+                async setDateFormat(): Promise<void> {
+                    return Promise.resolve();
+                },
+                async setWeekStart(): Promise<void> {
+                    return Promise.resolve();
+                },
                 async setColorPalette(): Promise<void> {
                     return Promise.resolve();
                 },
