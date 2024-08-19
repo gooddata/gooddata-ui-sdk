@@ -86,6 +86,7 @@ export {
     selectEnableDrillIntersectionIgnoredAttributes,
     selectEnableFilterViews,
     selectEnableDrillDownIntersectionIgnoredAttributes,
+    selectEnableAlerting,
 } from "./config/configSelectors.js";
 export { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {
@@ -350,6 +351,8 @@ export {
     selectInvalidUrlDrillParameterWidgetWarnings,
     selectFilterViewsDialogMode,
     selectIsFilterViewsDialogOpen,
+    selectIsAlertingDialogOpen,
+    selectIsAlertsManagementDialogOpen,
 } from "./ui/uiSelectors.js";
 export { uiActions } from "./ui/index.js";
 export { RenderModeState } from "./renderMode/renderModeState.js";

@@ -1351,6 +1351,8 @@ export interface IDialogBaseProps {
     // (undocumented)
     onSubmit?: (data?: any) => void;
     // (undocumented)
+    shouldCloseOnClick?: (e: Event) => boolean;
+    // (undocumented)
     submitOnEnterKey?: boolean;
 }
 

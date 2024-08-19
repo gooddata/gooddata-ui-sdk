@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 export * from "./componentDefinition/index.js";
 export * from "./dashboard/index.js";
@@ -14,6 +14,7 @@ export * from "./drill/index.js";
 export * from "./filterBar/index.js";
 export * from "./layout/index.js";
 export * from "./scheduledEmail/index.js";
+export * from "./alerting/index.js";
 export * from "./saveAs/index.js";
 export * from "./topBar/index.js";
 export * from "./toolbar/index.js";

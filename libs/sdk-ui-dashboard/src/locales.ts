@@ -23,6 +23,18 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     scheduleManagementCreateTooMany: { id: "dialogs.schedule.management.create.tooManyMessage" },
     scheduleManagementListTitle: { id: "dialogs.schedule.management.list.title" },
 
+    alertingManagementLoadError: { id: "dialogs.alerting.management.load.error" },
+    alertingManagementDeleteError: { id: "dialogs.alerting.management.delete.error" },
+    alertingManagementPauseError: { id: "dialogs.alerting.management.pause.error" },
+    alertingManagementActivateError: { id: "dialogs.alerting.management.activate.error" },
+    alertingManagementPauseSuccess: { id: "dialogs.alerting.management.pause.success" },
+    alertingManagementActivateSuccess: { id: "dialogs.alerting.management.activate.success" },
+    alertingManagementListTitle: { id: "dialogs.alerting.management.list.title" },
+    alertingManagementNoAlerts: { id: "dialogs.alerting.management.noAlerts" },
+    alertingDeleteSuccess: { id: "dialogs.alerting.delete.success" },
+    alertingSaveError: { id: "dialogs.alerting.save.error" },
+    alertingSaveSuccess: { id: "dialogs.alerting.save.success" },
+
     saveAsNewAlertsAndEmailsMessage: { id: "dialogs.save.as.new.alertsAndEmailsMessage" },
     saveAsNewAlertsMessage: { id: "dialogs.save.as.new.alertsMessage" },
     saveAsNewEmailsMessage: { id: "dialogs.save.as.new.emailsMessage" },

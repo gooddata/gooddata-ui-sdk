@@ -10,7 +10,6 @@
 import { AccessGranularPermission } from '@gooddata/sdk-model';
 import { Action } from '@reduxjs/toolkit';
 import { AnyAction } from '@reduxjs/toolkit';
-import { Automations as Automations_2 } from '../index.js';
 import { CaseReducer } from '@reduxjs/toolkit';
 import { CaseReducerActions } from '@reduxjs/toolkit';
 import { CatalogState as CatalogState_2 } from './catalogState.js';
@@ -427,6 +426,12 @@ export interface AddSectionItemsPayload {
     readonly items: DashboardItemDefinition[];
     readonly sectionIndex: number;
 }
+
+// @internal (undocumented)
+export const AlertingDialog: (_props: IAlertingDialogProps) => JSX.Element;
+
+// @internal (undocumented)
+export const AlertingManagementDialog: (props: IAlertingManagementDialogProps) => JSX.Element;
 
 // @internal (undocumented)
 export type AlertsState = EntityState<IWidgetAlert>;
@@ -1094,6 +1099,12 @@ export interface CrossFilteringPayload {
     readonly drillEvent: IDashboardDrillEvent;
     readonly insight: IInsight;
 }
+
+// @alpha (undocumented)
+export type CustomAlertingDialogComponent = ComponentType<IAlertingDialogProps>;
+
+// @alpha (undocumented)
+export type CustomAlertingManagementDialogComponent = ComponentType<IAlertingManagementDialogProps>;
 
 // @beta (undocumented)
 export type CustomButtonBarComponent = ComponentType<IButtonBarProps>;
@@ -2897,6 +2908,9 @@ export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | Date
 export const DEFAULT_MAX_AUTOMATIONS = "10";
 
 // @alpha (undocumented)
+export const DefaultAlertingManagementDialog: React_2.FC<IAlertingManagementDialogProps>;
+
+// @alpha (undocumented)
 export const DefaultButtonBar: React_2.FC<IButtonBarProps>;
 
 // @internal (undocumented)
@@ -3627,6 +3641,36 @@ export interface IAddAttributeFilterButtonProps {
     title?: string;
 }
 
+// @alpha (undocumented)
+export interface IAlertingDialogProps {
+    automations: IAutomationMetadataObject[];
+    editAlert?: IAutomationMetadataObject;
+    isVisible?: boolean;
+    onCancel?: () => void;
+    onDeleteError?: (error: GoodDataSdkError) => void;
+    onDeleteSuccess?: () => void;
+    onSave?: (alertingDefinition: IAutomationMetadataObject) => void;
+    onSaveError?: (error: GoodDataSdkError) => void;
+    onSaveSuccess?: () => void;
+    onSubmit?: (alertingDefinition: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => void;
+    webhooks: IWebhookDefinitionObject[];
+}
+
+// @alpha (undocumented)
+export interface IAlertingManagementDialogProps {
+    alertingDataError?: GoodDataSdkError;
+    automations: IAutomationMetadataObject[];
+    isLoadingAlertingData: boolean;
+    isVisible?: boolean;
+    onClose?: () => void;
+    onDeleteError?: (error: GoodDataSdkError) => void;
+    onDeleteSuccess?: (alert: IAutomationMetadataObject) => void;
+    onEdit?: (alertingDefinition: IAutomationMetadataObject) => void;
+    onPauseError: (error: GoodDataSdkError, pause: boolean) => void;
+    onPauseSuccess: (alert: IAutomationMetadataObject, pause: boolean) => void;
+    webhooks: IWebhookDefinitionObject[];
+}
+
 // @internal (undocumented)
 export type IAttributeFilterDraggingComponentProps = {
     itemType: "attributeFilter";
@@ -3828,6 +3872,8 @@ export interface IDashboardContentCustomizer {
 
 // @public
 export interface IDashboardCustomComponentProps {
+    // @alpha
+    AlertingManagementDialogComponent?: CustomAlertingManagementDialogComponent;
     // @alpha
     ButtonBarComponent?: CustomButtonBarComponent;
     // @alpha
@@ -4614,6 +4660,7 @@ export interface IMenuButtonItemSeparator extends IMenuItemCommonProps {
 
 // @beta (undocumented)
 export interface IMenuButtonItemsVisibility {
+    alertingButton?: boolean;
     deleteButton?: boolean;
     pdfExportButton?: boolean;
     saveAsNewButton?: boolean;
@@ -7050,6 +7097,9 @@ export const selectEffectiveDateFiltersModeMap: DashboardSelector<Map<string, Da
 // @alpha
 export const selectEffectiveDateFilterTitle: DashboardSelector<string | undefined>;
 
+// @alpha (undocumented)
+export const selectEnableAlerting: DashboardSelector<boolean>;
+
 // @internal
 export const selectEnableAnalyticalDashboardPermissions: DashboardSelector<boolean>;
 
@@ -7271,6 +7321,12 @@ export const selectInvalidUrlDrillParameterWidgetRefs: DashboardSelector<ObjRef[
 
 // @internal (undocumented)
 export const selectInvalidUrlDrillParameterWidgetWarnings: DashboardSelector<ObjRef[]>;
+
+// @alpha (undocumented)
+export const selectIsAlertingDialogOpen: DashboardSelector<boolean>;
+
+// @alpha (undocumented)
+export const selectIsAlertsManagementDialogOpen: DashboardSelector<boolean>;
 
 // @internal
 export const selectIsAlternativeDisplayFormSelectionEnabled: DashboardSelector<boolean>;
@@ -7922,6 +7978,16 @@ payload: IScheduleEmailContext_2;
 type: string;
 }) => void | UiState_2 | WritableDraft<UiState_2>;
 closeScheduleEmailManagementDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+openAlertingManagementDialog: (state: WritableDraft<UiState_2>, action: {
+payload: void;
+type: string;
+}) => void | UiState_2 | WritableDraft<UiState_2>;
+closeAlertingManagementDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+openAlertingDialog: (state: WritableDraft<UiState_2>, action: {
+payload: void;
+type: string;
+}) => void | UiState_2 | WritableDraft<UiState_2>;
+closeAlertingDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
 openSaveAsDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
 closeSaveAsDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
 setFilterBarExpanded: (state: WritableDraft<UiState_2>, action: {
@@ -8051,6 +8117,14 @@ type: string;
 export interface UiState {
     // (undocumented)
     activeSectionIndex: number | undefined;
+    // (undocumented)
+    alertsDialog: {
+        open: boolean;
+    };
+    // (undocumented)
+    alertsManagementDialog: {
+        open: boolean;
+    };
     // (undocumented)
     cancelEditModeDialog: {
         open: boolean;
@@ -8202,6 +8276,32 @@ export function useCustomWidgetInsightDataView({ widget, insight, onCancel, onEr
 
 // @public
 export type UseCustomWidgetInsightDataViewCallbacks = UseCancelablePromiseCallbacks<DataViewFacade, GoodDataSdkError>;
+
+// @alpha
+export const useDashboardAlerts: ({ dashboard }: {
+    dashboard?: string | undefined;
+}) => {
+    webhooks: Webhooks_2;
+    automations: IAutomationMetadataObject[];
+    alertingLoadError: any;
+    alertingToEdit: IAutomationMetadataObject | undefined;
+    defaultOnAlerting: () => void;
+    defaultOnAlertsManagement: () => void;
+    isAlertingLoading: boolean;
+    isAlertsManagementVisible: boolean;
+    isAlertingDialogOpen: boolean;
+    isAlertingManagementDialogOpen: boolean;
+    onAlertingManagementEdit: (alert: IAutomationMetadataObject) => void;
+    onAlertingManagementClose: () => void;
+    onAlertingManagementDeleteSuccess: () => void;
+    onAlertingManagementDeleteError: () => void;
+    onAlertingManagementLoadingError: () => void;
+    onAlertingManagementPauseSuccess: (_alert: IAutomationMetadataObject, pause: boolean) => void;
+    onAlertingManagementPauseError: (_err: GoodDataSdkError, pause: boolean) => void;
+    onAlertingSaveError: () => void;
+    onAlertingSaveSuccess: () => void;
+    onAlertingCancel: () => void;
+};
 
 // @public
 export interface UseDashboardAsyncRender {
@@ -8606,7 +8706,7 @@ export const useDashboardScheduledEmails: ({ dashboard }: {
 }) => {
     webhooks: Webhooks_2;
     users: Users_2;
-    automations: Automations_2;
+    automations: IAutomationMetadataObject[];
     automationsCount: number;
     schedulingLoadError: any;
     numberOfAvailableWebhooks: number;

@@ -46,6 +46,7 @@ import {
 import { CustomSidebarComponent } from "./DashboardSidebar/types.js";
 import { InsightComponentSetProvider } from "../componentDefinition/types.js";
 import { CustomToolbarComponent } from "../toolbar/index.js";
+import { CustomAlertingManagementDialogComponent } from "../alerting/types.js";
 
 /**
  * These props allow you to specify custom components or custom component providers that the Dashboard
@@ -232,6 +233,13 @@ export interface IDashboardCustomComponentProps {
      * @alpha
      */
     ScheduledEmailManagementDialogComponent?: CustomScheduledEmailManagementDialogComponent;
+
+    /**
+     * Specify component to use for rendering the alerting management dialog.
+     *
+     * @alpha
+     */
+    AlertingManagementDialogComponent?: CustomAlertingManagementDialogComponent;
 
     /**
      * Specify component to use for rendering the share dialog.

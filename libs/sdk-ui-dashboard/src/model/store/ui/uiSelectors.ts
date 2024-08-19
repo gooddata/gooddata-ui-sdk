@@ -59,6 +59,22 @@ export const selectIsScheduleEmailManagementDialogContext: DashboardSelector<ISc
 /**
  * @alpha
  */
+export const selectIsAlertingDialogOpen: DashboardSelector<boolean> = createSelector(
+    selectSelf,
+    (state) => state.alertsDialog.open,
+);
+
+/**
+ * @alpha
+ */
+export const selectIsAlertsManagementDialogOpen: DashboardSelector<boolean> = createSelector(
+    selectSelf,
+    (state) => state.alertsManagementDialog.open,
+);
+
+/**
+ * @alpha
+ */
 export const selectIsSaveAsDialogOpen: DashboardSelector<boolean> = createSelector(
     selectSelf,
     (state) => state.saveAsDialog.open,

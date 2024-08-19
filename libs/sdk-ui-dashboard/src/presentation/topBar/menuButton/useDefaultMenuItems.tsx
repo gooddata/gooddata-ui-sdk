@@ -22,6 +22,7 @@ import {
     useDashboardDispatch,
     useDashboardScheduledEmails,
     useDashboardSelector,
+    useDashboardAlerts,
     selectDashboardId,
     selectEnableFilterViews,
     selectDisableFilterViews,
@@ -103,6 +104,9 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         defaultOnScheduleEmailingManagement,
         numberOfAvailableWebhooks,
     } = useDashboardScheduledEmails({
+        dashboard,
+    });
+    const { defaultOnAlertsManagement, isAlertsManagementVisible } = useDashboardAlerts({
         dashboard,
     });
 
@@ -203,7 +207,18 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                     icon: "gd-icon-save-as-new",
                 },
             ],
-            // alerts & schedules section
+            // alerts section
+            [
+                {
+                    type: "button",
+                    itemId: "alerts-edit-item", // careful, this is also used as a selector in tests, do not change
+                    itemName: intl.formatMessage({ id: "options.menu.alerts.edit" }),
+                    onClick: defaultOnAlertsManagement,
+                    visible: isAlertsManagementVisible,
+                    icon: "gd-icon-bell",
+                },
+            ],
+            // schedules section
             [
                 {
                     type: "button",
