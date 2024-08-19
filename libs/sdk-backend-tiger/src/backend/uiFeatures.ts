@@ -102,6 +102,7 @@ export enum TigerFeaturesNames {
     EnableDrillDownIntersectionIgnoredAttributes = "enableDrillDownIntersectionIgnoredAttributes",
     EnableDashboardFilterViews = "enableDashboardFilterViews",
     EnableAlertingRollout = "enableAlertingRollout",
+    EnableWorkspaceHierarchySettings = "enableWorkspaceHierarchySettings",
 }
 
 export type ITigerFeatureFlags = {
@@ -169,6 +170,7 @@ export type ITigerFeatureFlags = {
     enableDrillDownIntersectionIgnoredAttributes: typeof FeatureFlagsValues["enableDrillDownIntersectionIgnoredAttributes"][number];
     enableAlertingRollout: typeof FeatureFlagsValues["enableAlertingRollout"][number];
     enableDashboardFilterViews: typeof FeatureFlagsValues["enableDashboardFilterViews"][number];
+    enableWorkspaceHierarchySettings: typeof FeatureFlagsValues["enableWorkspaceHierarchySettings"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -236,6 +238,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAlertingRollout: false,
     enableDashboardFilterViews: false,
     enableDrillDownIntersectionIgnoredAttributes: false,
+    enableWorkspaceHierarchySettings: false,
 };
 
 export const FeatureFlagsValues = {
@@ -307,4 +310,5 @@ export const FeatureFlagsValues = {
     enableDrillDownIntersectionIgnoredAttributes: [true, false] as const,
     enableAlertingRollout: [true, false] as const,
     enableDashboardFilterViews: [true, false] as const,
+    enableWorkspaceHierarchySettings: [true, false] as const,
 };

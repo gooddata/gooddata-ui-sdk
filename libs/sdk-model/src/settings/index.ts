@@ -451,6 +451,11 @@ export interface ISettings {
      */
     enableDashboardFilterViews?: boolean;
 
+    /**
+     * Enable configuration workspace hierarchy settings in Home UI.
+     */
+    enableWorkspaceHierarchySettings?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 
