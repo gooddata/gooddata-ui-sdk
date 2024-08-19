@@ -609,6 +609,48 @@
                 }
             }
         },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/route": {
+            "post": {
+                "tags": ["Smart Functions", "actions"],
+                "summary": "(BETA) Route to supported use cases based on this input query.",
+                "description": "(BETA) Uses similarity (e.g. cosine distance) to find most similar use cases.",
+                "operationId": "aiRoute",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RouteRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RouteResult"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/actions/workspaces/{workspaceId}/execution/functions/forecast/result/{resultId}": {
             "get": {
                 "tags": ["Smart Functions", "actions"],
@@ -1889,7 +1931,7 @@
                     },
                     "dependsOn": {
                         "type": "array",
-                        "description": "Return only items, whose are not filtered out by the parent filters.",
+                        "description": "Return only items that are not filtered-out by the parent filters.",
                         "items": {
                             "oneOf": [
                                 {
@@ -1903,7 +1945,7 @@
                     },
                     "validateBy": {
                         "type": "array",
-                        "description": "Return only items, what are computable on metric.",
+                        "description": "Return only items that are computable on metric.",
                         "items": {
                             "$ref": "#/components/schemas/ValidateByItem"
                         }
@@ -2659,6 +2701,7 @@
                 "type": "object",
                 "properties": {
                     "question": {
+                        "maxLength": 1000,
                         "type": "string",
                         "description": "Keyword/sentence is input for search."
                     },
@@ -2842,6 +2885,44 @@
                     }
                 }
             },
+            "RouteRequest": {
+                "required": ["question"],
+                "type": "object",
+                "properties": {
+                    "question": {
+                        "maxLength": 1000,
+                        "type": "string",
+                        "description": "Route to supported use cases based on this input query."
+                    }
+                }
+            },
+            "RouteResult": {
+                "required": ["results"],
+                "type": "object",
+                "properties": {
+                    "results": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/RouteResultObject"
+                        }
+                    }
+                }
+            },
+            "RouteResultObject": {
+                "required": ["score", "useCase"],
+                "type": "object",
+                "properties": {
+                    "useCase": {
+                        "type": "string",
+                        "description": "Use case where to route, e.g. 'list dashboards' or 'create visualization'."
+                    },
+                    "score": {
+                        "type": "number",
+                        "description": "Similarity score between input query and use case.",
+                        "format": "float"
+                    }
+                }
+            },
             "ForecastResult": {
                 "required": ["attribute", "lowerBound", "origin", "prediction", "upperBound"],
                 "type": "object",
@@ -2916,13 +2997,13 @@
                             "nullable": true
                         }
                     },
-                    "xcoord": {
+                    "ycoord": {
                         "type": "array",
                         "items": {
                             "type": "number"
                         }
                     },
-                    "ycoord": {
+                    "xcoord": {
                         "type": "array",
                         "items": {
                             "type": "number"
