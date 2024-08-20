@@ -165,7 +165,7 @@ export interface IAnalyticalWorkspace {
 
     /**
      * Returns service that can be used to access GenAI services.
-     * @alpha
+     * @beta
      */
     genAI(): IGenAIService;
 }

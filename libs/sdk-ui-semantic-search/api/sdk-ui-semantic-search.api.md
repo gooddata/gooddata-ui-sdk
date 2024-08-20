@@ -10,23 +10,10 @@ import { ISemanticSearchRelationship } from '@gooddata/sdk-model';
 import { ISemanticSearchResultItem } from '@gooddata/sdk-model';
 import * as React_2 from 'react';
 
-// @alpha
+// @beta
 export const SemanticSearch: React_2.FC<SemanticSearchProps>;
 
-// @alpha
-export type SemanticSearchCoreProps = {
-    backend?: IAnalyticalBackend;
-    workspace?: string;
-    onSelect: (item: ISemanticSearchResultItem) => void;
-    onError?: (errorMessage: string) => void;
-    className?: string;
-    objectTypes?: GenAISemanticSearchType[];
-    deepSearch?: boolean;
-    limit?: number;
-    placeholder?: string;
-};
-
-// @alpha
+// @beta
 export type SemanticSearchHookInput = {
     searchTerm: string;
     objectTypes?: GenAISemanticSearchType[];
@@ -36,7 +23,7 @@ export type SemanticSearchHookInput = {
     workspace?: string;
 };
 
-// @alpha
+// @beta
 export type SemanticSearchInputResult = {
     searchStatus: "idle" | "loading" | "error" | "success";
     searchError: string;
@@ -44,18 +31,21 @@ export type SemanticSearchInputResult = {
     relationships: ISemanticSearchRelationship[];
 };
 
-// @alpha
-export type SemanticSearchProps = SemanticSearchCoreProps & {
+// @beta
+export type SemanticSearchProps = {
+    backend?: IAnalyticalBackend;
+    workspace?: string;
     locale?: string;
+    onSelect: (item: ISemanticSearchResultItem) => void;
+    onError?: (errorMessage: string) => void;
+    className?: string;
+    objectTypes?: GenAISemanticSearchType[];
+    deepSearch?: boolean;
+    limit?: number;
+    placeholder?: string;
 };
 
-// @internal
-export const useElementWidth: () => [React_2.RefCallback<HTMLElement>, number];
-
-// @internal
-export const useListSelector: <T>(items: T[], onSelect: (item: T, e: MouseEvent | KeyboardEvent) => void) => [T, (item: T) => void];
-
-// @alpha
+// @beta
 export const useSemanticSearch: ({ searchTerm, objectTypes, deepSearch, limit, backend, workspace, }: SemanticSearchHookInput) => SemanticSearchInputResult;
 
 ```
