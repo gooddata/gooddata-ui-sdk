@@ -1363,6 +1363,8 @@ export interface IWorkspaceSettings extends ISettings {
 
 // @public
 export interface IWorkspaceSettingsService {
+    deleteColorPalette(): Promise<void>;
+    deleteTheme(): Promise<void>;
     getSettings(): Promise<IWorkspaceSettings>;
     getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings>;
     setColorPalette(colorPaletteId: string): Promise<void>;

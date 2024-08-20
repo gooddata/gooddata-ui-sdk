@@ -966,6 +966,14 @@ class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
     setColorPalette(_colorPaletteId: string): Promise<void> {
         return Promise.resolve();
     }
+
+    deleteTheme(): Promise<void> {
+        return Promise.resolve();
+    }
+
+    deleteColorPalette(): Promise<void> {
+        return Promise.resolve();
+    }
 }
 
 class DummyElementsQueryResult implements IElementsQueryResult {

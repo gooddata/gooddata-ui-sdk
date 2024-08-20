@@ -75,4 +75,18 @@ export interface IWorkspaceSettingsService {
      * @returns promise
      */
     setTheme(themeId: string): Promise<void>;
+
+    /**
+     * Deletes theme from workspace settings returning workspace styling to default.
+     *
+     * @returns promise
+     */
+    deleteTheme(): Promise<void>;
+
+    /**
+     * Deletes color palette from workspace settings returning chart colors to default.
+     *
+     * @returns promise
+     */
+    deleteColorPalette(): Promise<void>;
 }

@@ -249,6 +249,12 @@ function recordedWorkspace(
                 async setTheme(): Promise<void> {
                     return Promise.resolve();
                 },
+                async deleteColorPalette(): Promise<void> {
+                    return Promise.resolve();
+                },
+                async deleteTheme(): Promise<void> {
+                    return Promise.resolve();
+                },
             };
         },
         styling(): IWorkspaceStylingService {

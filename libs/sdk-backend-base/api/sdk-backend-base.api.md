@@ -597,6 +597,10 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     // (undocumented)
     protected decorated: IWorkspaceSettingsService;
     // (undocumented)
+    deleteColorPalette(): Promise<void>;
+    // (undocumented)
+    deleteTheme(): Promise<void>;
+    // (undocumented)
     getSettings(): Promise<IWorkspaceSettings>;
     // (undocumented)
     getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings>;
