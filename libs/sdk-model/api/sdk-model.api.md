@@ -495,7 +495,7 @@ export type ForecastDataValue = {
     loading: boolean;
 };
 
-// @alpha
+// @beta
 export type GenAISemanticSearchType = "dataset" | "attribute" | "label" | "fact" | "date" | "metric" | "visualization" | "dashboard";
 
 // @internal
@@ -2789,7 +2789,7 @@ export function isDrillToInsight(obj: unknown): obj is IDrillToInsight;
 // @alpha
 export function isDrillToLegacyDashboard(obj: unknown): obj is IDrillToLegacyDashboard;
 
-// @alpha
+// @beta
 export type ISemanticSearchRelationship = {
     sourceWorkspaceId: string;
     sourceObjectId: string;
@@ -2801,7 +2801,7 @@ export type ISemanticSearchRelationship = {
     targetObjectTitle: string;
 };
 
-// @alpha
+// @beta
 export interface ISemanticSearchResultItem {
     createdAt: string;
     description: string;

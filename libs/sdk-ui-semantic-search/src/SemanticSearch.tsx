@@ -11,10 +11,10 @@ import classnames from "classnames";
 import { ListItem } from "./types.js";
 
 /**
- * Core semantic search component props.
- * @alpha
+ * Semantic search component props.
+ * @beta
  */
-export type SemanticSearchCoreProps = {
+export type SemanticSearchProps = {
     /**
      * An analytical backend to use for the search. Can be omitted and taken from context.
      */
@@ -23,6 +23,10 @@ export type SemanticSearchCoreProps = {
      * A workspace to search in. Can be omitted and taken from context.
      */
     workspace?: string;
+    /**
+     * A locale to use for the search. Can be omitted and taken from context.
+     */
+    locale?: string;
     /**
      * A function called when the user selects an item from the search results.
      */
@@ -61,9 +65,9 @@ const DEBOUNCE = 300;
 
 /**
  * Semantic search component core.
- * @alpha
+ * @beta
  */
-const SemanticSearchCore: React.FC<SemanticSearchCoreProps> = ({
+const SemanticSearchCore: React.FC<Omit<SemanticSearchProps, "locale">> = ({
     backend,
     workspace,
     onSelect,
@@ -173,16 +177,8 @@ const SemanticSearchCore: React.FC<SemanticSearchCoreProps> = ({
 };
 
 /**
- * Semantic search component props.
- * @alpha
- */
-export type SemanticSearchProps = SemanticSearchCoreProps & {
-    locale?: string;
-};
-
-/**
  * Semantic search filed with dropdown for selecting items.
- * @alpha
+ * @beta
  */
 export const SemanticSearch: React.FC<SemanticSearchProps> = ({ locale, ...coreProps }) => {
     return (
