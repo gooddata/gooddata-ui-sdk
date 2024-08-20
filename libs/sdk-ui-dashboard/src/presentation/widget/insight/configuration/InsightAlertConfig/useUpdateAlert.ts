@@ -8,6 +8,12 @@ import {
     useDashboardCommandProcessing,
 } from "../../../../../model/index.js";
 
+/**
+ * @internal
+ * @param onBeforeRun - callback to be called before the command is run
+ * @param onSuccess - callback to be called when the command is successfully processed
+ * @param onError - callback to be called when the command processing fails
+ */
 export const useUpdateAlert = ({
     onBeforeRun,
     onSuccess,

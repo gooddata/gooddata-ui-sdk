@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import { useEffect, useMemo, useState } from "react";
 import {
     areObjRefsEqual,
@@ -43,7 +43,7 @@ import { safeSerializeObjRef } from "../../../_staging/metadata/safeSerializeObj
  * @public
  */
 export function useWidgetFilters(
-    widget: ExtendedDashboardWidget | undefined,
+    widget: ExtendedDashboardWidget | undefined | null,
     insight?: IInsightDefinition,
 ): QueryProcessingState<IFilter[]> {
     const [effectiveFiltersState, setEffectiveFiltersState] = useState<{
@@ -124,7 +124,7 @@ export function useWidgetFilters(
  *
  * @param widget - widget to get the non-ignored filters for
  */
-function useNonIgnoredFilters(widget: ExtendedDashboardWidget | undefined) {
+function useNonIgnoredFilters(widget: ExtendedDashboardWidget | undefined | null) {
     const dashboardFilters = useDashboardSelector(selectFilterContextFilters);
     const crossFilteringLocalIdentifiersForThisWidget = useDashboardSelector(
         selectCrossFilteringFiltersLocalIdentifiersByWidgetRef(widget?.ref),

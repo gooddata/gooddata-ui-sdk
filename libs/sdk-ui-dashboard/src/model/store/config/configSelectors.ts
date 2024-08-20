@@ -400,6 +400,13 @@ export const selectEnableInsightExportScheduling: DashboardSelector<boolean> = c
 export const selectEnableScheduling: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
     return state.settings?.enableScheduling ?? false;
 });
+
+/**
+ * @alpha
+ */
+export const selectEnableAlerting: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
+    return state.settings?.enableAlerting ?? false;
+});
 /**
  * Returns whether analytical dashboard permissions are enabled
  *

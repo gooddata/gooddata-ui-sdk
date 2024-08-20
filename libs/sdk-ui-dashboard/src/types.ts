@@ -192,6 +192,10 @@ export interface IMenuButtonItemsVisibility {
      */
     scheduleEmailButton?: boolean;
     /**
+     * If set to true, the Alerting button will be visible. Defaults to true.
+     */
+    alertingButton?: boolean;
+    /**
      * If set to true, the Delete button will be visible. Defaults to true.
      */
     deleteButton?: boolean;

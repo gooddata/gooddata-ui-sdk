@@ -325,7 +325,7 @@ function useContextAutomations(opts: { dashboardId?: string }) {
     );
 
     return {
-        automations: result ?? [],
+        automations: (result ?? []).filter((automation) => automation.schedule),
         automationsLoading: status === "loading",
         automationsError: error,
     };
