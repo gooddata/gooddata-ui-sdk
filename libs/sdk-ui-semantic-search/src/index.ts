@@ -3,8 +3,8 @@
 /**
  * This package provides React hooks and components for semantic search.
  * @packageDocumentation
- * @alpha
+ * @beta
  */
 
-export * from "./hooks/index.js";
+export * from "./hooks/useSemanticSearch.js";
 export * from "./SemanticSearch.js";

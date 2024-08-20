@@ -2,7 +2,7 @@
 
 /**
  * A single search result returned by semantic search.
- * @alpha
+ * @beta
  */
 export interface ISemanticSearchResultItem {
     /**
@@ -41,7 +41,7 @@ export interface ISemanticSearchResultItem {
 
 /**
  * Type of the searchable object.
- * @alpha
+ * @beta
  */
 export type GenAISemanticSearchType =
     | "dataset"
@@ -55,7 +55,7 @@ export type GenAISemanticSearchType =
 
 /**
  * Reference between two metadata objects.
- * @alpha
+ * @beta
  */
 export type ISemanticSearchRelationship = {
     sourceWorkspaceId: string;

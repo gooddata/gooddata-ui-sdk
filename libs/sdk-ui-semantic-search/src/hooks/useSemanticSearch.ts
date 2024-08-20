@@ -11,7 +11,7 @@ import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 /**
  * The result of the semantic search hook.
- * @alpha
+ * @beta
  */
 export type SemanticSearchInputResult = {
     /**
@@ -45,7 +45,7 @@ const DEFAULT_STATE: SemanticSearchInputResult = {
 
 /**
  * Input parameters for the semantic search hook.
- * @alpha
+ * @beta
  */
 export type SemanticSearchHookInput = {
     /**
@@ -83,7 +83,7 @@ const DEFAULT_OBJECT_TYPES: GenAISemanticSearchType[] = [];
  * Hook to perform semantic search.
  * Makes the request to server and returns the search results.
  * The request is cancellable and auto-updates when the search term changes.
- * @alpha
+ * @beta
  */
 export const useSemanticSearch = ({
     searchTerm,

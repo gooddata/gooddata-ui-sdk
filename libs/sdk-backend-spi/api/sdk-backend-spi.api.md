@@ -229,7 +229,7 @@ export interface IAnalyticalWorkspace {
     // @alpha
     exportDefinitions(): IWorkspaceExportDefinitionsService;
     facts(): IWorkspaceFactsService;
-    // @alpha
+    // @beta
     genAI(): IGenAIService;
     getDescriptor(includeParentPrefixes?: boolean): Promise<IWorkspaceDescriptor>;
     getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined>;
@@ -701,7 +701,7 @@ export interface IForecastView {
     prediction: DataValue[][];
 }
 
-// @alpha
+// @beta
 export interface IGenAIService {
     getSemanticSearchQuery(): ISemanticSearchQuery;
     semanticSearchIndex(): Promise<void>;
@@ -1014,7 +1014,7 @@ export function isElementsQueryOptionsElementsByPrimaryDisplayFormValue(obj: unk
 // @public
 export function isElementsQueryOptionsElementsByValue(obj: unknown): obj is IElementsQueryOptionsElementsByValue;
 
-// @alpha
+// @beta
 export interface ISemanticSearchQuery {
     query(options?: {
         signal?: AbortSignal;
@@ -1025,7 +1025,7 @@ export interface ISemanticSearchQuery {
     withQuestion(question: string): ISemanticSearchQuery;
 }
 
-// @alpha
+// @beta
 export interface ISemanticSearchResult {
     // (undocumented)
     relationships: ISemanticSearchRelationship[];

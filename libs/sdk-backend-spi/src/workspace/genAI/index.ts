@@ -8,7 +8,7 @@ import {
 
 /**
  * GenAI-powered semantic search service.
- * @alpha
+ * @beta
  */
 export interface IGenAIService {
     /**
@@ -24,7 +24,7 @@ export interface IGenAIService {
 
 /**
  * Semantic search query.
- * @alpha
+ * @beta
  */
 export interface ISemanticSearchQuery {
     /**
@@ -55,7 +55,7 @@ export interface ISemanticSearchQuery {
 
 /**
  * A single search result returned by semantic search.
- * @alpha
+ * @beta
  */
 export interface ISemanticSearchResult {
     results: ISemanticSearchResultItem[];
