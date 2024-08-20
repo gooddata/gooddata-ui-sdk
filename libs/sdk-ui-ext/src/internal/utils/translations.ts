@@ -18,6 +18,10 @@ import itIT from "../translations/it-IT.json";
 import es419 from "../translations/es-419.json";
 import frCA from "../translations/fr-CA.json";
 import enGB from "../translations/en-GB.json";
+import enAU from "../translations/en-AU.json";
+import fiFI from "../translations/fi-FI.json";
+import zhHant from "../translations/zh-Hant.json";
+import zhHK from "../translations/zh-HK.json";
 
 import { IDropdownItem } from "../interfaces/Dropdown.js";
 
@@ -52,6 +56,10 @@ const sdkUiExtTranslations: { [locale: string]: Record<string, string> } = {
     "es-419": es419,
     "fr-CA": frCA,
     "en-GB": enGB,
+    "en-AU": enAU,
+    "fi-FI": fiFI,
+    "zh-Hant": zhHant,
+    "zh-HK": zhHK,
 };
 
 /**

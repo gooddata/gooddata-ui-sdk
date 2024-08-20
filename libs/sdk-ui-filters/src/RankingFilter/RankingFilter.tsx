@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React, { useState } from "react";
 import { IRankingFilter, ObjRefInScope } from "@gooddata/sdk-model";
 import { RankingFilterButton } from "./RankingFilterButton.js";
@@ -31,7 +31,7 @@ export const RankingFilter: React.FC<IRankingFilterProps> = ({
     attributeItems,
     filter,
     onApply,
-    onCancel,
+    onCancel = noop,
     buttonTitle,
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,
@@ -80,8 +80,4 @@ export const RankingFilter: React.FC<IRankingFilterProps> = ({
             ) : null}
         </>
     );
-};
-
-RankingFilter.defaultProps = {
-    onCancel: noop,
 };

@@ -436,6 +436,12 @@ export function disableComputeRatio<T extends IAttributeOrMeasure>(item: T): T;
 // @public
 export type DrillDefinition = InsightDrillDefinition | KpiDrillDefinition;
 
+// @alpha
+export function drillDownReferenceAttributeRef(drillDownReference: IDrillDownReference): ObjRef;
+
+// @alpha
+export function drillDownReferenceHierarchyRef(drillDownReference: IDrillDownReference): ObjRef;
+
 // @public
 export type DrillOrigin = IDrillFromMeasure | IDrillFromAttribute;
 
@@ -560,6 +566,21 @@ export interface IAccessControlAware {
 
 // @public
 export type IAccessGrantee = IUserGroupAccessGrantee | IUserAccessGrantee | IGranularAccessGrantee;
+
+// @alpha (undocumented)
+export type IAlertComparisonOperator = "LESS_THAN" | "LESS_THAN_OR_EQUALS" | "GREATER_THAN" | "GREATER_THAN_OR_EQUALS";
+
+// @public
+export interface IAlertDefault {
+    defaultCron: string;
+    defaultTimezone: string;
+}
+
+// @alpha (undocumented)
+export type IAlertTriggerMode = "ALWAYS" | "ONCE";
+
+// @alpha (undocumented)
+export type IAlertTriggerState = "ACTIVE" | "PAUSED";
 
 // @alpha
 export interface IAllTimeDateFilterOption extends IDateFilterOption {
@@ -765,18 +786,25 @@ export interface IAuditableUsers {
 export interface IAutomationAlert {
     condition: IAutomationAlertCondition;
     execution: IAutomationAlertExecutionDefinition;
+    trigger: IAutomationAlertTrigger;
 }
 
 // @alpha (undocumented)
 export interface IAutomationAlertCondition {
     left: IMeasure;
-    operator: "LESS_THAN" | "LESS_THAN_OR_EQUALS" | "EQUALS" | "NOT_EQUALS" | "GREATER_THAN" | "GREATER_THAN_OR_EQUALS";
+    operator: IAlertComparisonOperator;
     right: number;
     type: "comparison";
 }
 
 // @alpha (undocumented)
 export type IAutomationAlertExecutionDefinition = Pick<IExecutionDefinition, "attributes" | "measures" | "filters">;
+
+// @alpha (undocumented)
+export interface IAutomationAlertTrigger {
+    mode?: IAlertTriggerMode;
+    state: IAlertTriggerState;
+}
 
 // @alpha (undocumented)
 export interface IAutomationMetadataObject extends IAutomationMetadataObjectBase, IMetadataObject, IAuditable {
@@ -1465,9 +1493,17 @@ export interface IDrill {
 
 // @public
 export interface IDrillableWidget {
+    // @alpha
+    readonly drillDownIntersectionIgnoredAttributes?: IDrillDownIntersectionIgnoredAttributes[];
     readonly drills: DrillDefinition[];
     // @alpha
     readonly ignoredDrillDownHierarchies?: IDrillDownReference[];
+}
+
+// @alpha
+export interface IDrillDownIntersectionIgnoredAttributes {
+    readonly drillDownReference: IDrillDownReference;
+    readonly ignoredAttributes: string[];
 }
 
 // @alpha (undocumented)
@@ -2080,6 +2116,28 @@ export class InlineMeasureBuilder extends MeasureBuilderBase<IInlineMeasureDefin
 
 // @public
 export type InlineMeasureBuilderInput = string | IMeasure<IInlineMeasureDefinition>;
+
+// @alpha (undocumented)
+export interface INotificationChannelDefinitionObject extends INotificationChannelMetadataObject {
+}
+
+// @alpha (undocumented)
+export interface INotificationChannelMetadataObject extends INotificationChannelMetadataObjectBase {
+    id: string;
+}
+
+// @alpha (undocumented)
+export interface INotificationChannelMetadataObjectBase {
+    destination: IWebhookDestination | ISmtpDestination;
+    triggers: INotificationChannelTrigger[];
+    type: "webhook" | "smtp";
+}
+
+// @alpha (undocumented)
+export interface INotificationChannelTrigger {
+    allowOn?: ("dashboard" | "visualization")[];
+    type: "SCHEDULE" | "ALERT";
+}
 
 // @public
 export function insightAttributeFilterConfigs(insight: IInsightDefinition): IAttributeFilterConfigs | undefined;
@@ -2807,10 +2865,12 @@ export interface ISemanticSearchResultItem {
     description: string;
     id: string;
     modifiedAt?: string;
+    score: number;
     tags: string[];
     title: string;
     type: GenAISemanticSearchType;
     visualizationUrl?: string;
+    workspaceId: string;
 }
 
 // @public
@@ -2825,6 +2885,7 @@ export interface ISettings {
     [key: string]: number | boolean | string | object | undefined;
     ADCatalogGroupsExpanded?: boolean;
     ADMeasureValueFilterNullAsZeroOption?: string;
+    alertDefault?: IAlertDefault;
     disableKpiDashboardHeadlineUnderline?: boolean;
     enableAdDescriptionEdit?: boolean;
     enableADMultipleDateFilters?: boolean;
@@ -2854,6 +2915,7 @@ export interface ISettings {
     // (undocumented)
     enableDataSection?: boolean;
     enableDescriptions?: boolean;
+    enableDrillDownIntersectionIgnoredAttributes?: boolean;
     enableDrilledInsightExport?: boolean;
     enableDrillIntersectionIgnoredAttributes?: boolean;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
@@ -2919,6 +2981,7 @@ export interface ISettings {
     enableWaterfallChart?: boolean;
     enableWeekFilters?: boolean;
     enableWidgetIdentifiersRollout?: boolean;
+    enableWorkspaceHierarchySettings?: boolean;
     enableWorkspacesHierarchyView?: boolean;
     formatLocale?: string;
     hideKpiDrillInEmbedded?: boolean;
@@ -3053,6 +3116,29 @@ export function isMeasureValueFilter(obj: unknown): obj is IMeasureValueFilter;
 
 // @public
 export function isMetadataObject(obj: unknown): obj is IMetadataObject;
+
+// @alpha (undocumented)
+export interface ISmtpDefinition extends INotificationChannelMetadataObjectBase {
+    // (undocumented)
+    destination: ISmtpDestination;
+    // (undocumented)
+    type: "smtp";
+}
+
+// @alpha (undocumented)
+export interface ISmtpDefinitionObject extends Partial<ISmtpDefinition>, Pick<INotificationChannelMetadataObject, "id"> {
+}
+
+// @alpha (undocumented)
+export interface ISmtpDestination {
+    address: string;
+    from: string;
+    hasPassword?: boolean;
+    login: string;
+    name: string;
+    password?: string;
+    port: 25 | 465 | 587 | 2525;
+}
 
 // @public
 export function isNegativeAttributeFilter(obj: unknown): obj is INegativeAttributeFilter;
@@ -3582,27 +3668,23 @@ export interface IVisualizationClassBody {
 }
 
 // @alpha (undocumented)
-export interface IWebhookMetadataObject extends IWebhookMetadataObjectBase {
-    id: string;
+export interface IWebhookDefinition extends INotificationChannelMetadataObjectBase {
+    // (undocumented)
+    destination: IWebhookDestination;
+    // (undocumented)
+    type: "webhook";
 }
 
 // @alpha (undocumented)
-export interface IWebhookMetadataObjectBase {
+export interface IWebhookDefinitionObject extends Partial<IWebhookDefinition>, Pick<INotificationChannelMetadataObject, "id"> {
+}
+
+// @alpha (undocumented)
+export interface IWebhookDestination {
     endpoint: string;
     hasToken?: boolean;
     name: string;
     token?: string;
-    triggers: IWebhookTrigger[];
-}
-
-// @alpha (undocumented)
-export interface IWebhookMetadataObjectDefinition extends Partial<IWebhookMetadataObjectBase>, Partial<Pick<IWebhookMetadataObject, "id">> {
-}
-
-// @alpha (undocumented)
-export interface IWebhookTrigger {
-    allowOn?: ("dashboard" | "visualization")[];
-    type: "SCHEDULE" | "ALERT";
 }
 
 // @public

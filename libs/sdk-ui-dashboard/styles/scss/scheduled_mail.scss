@@ -384,7 +384,8 @@ $min-content-height: 110px;
         height: 50px;
         cursor: default;
 
-        &:hover {
+        &:hover,
+        &.hover {
             background: kit-variables.$is-focused-background;
 
             .gd-scheduled-email-icon {
@@ -395,8 +396,13 @@ $min-content-height: 110px;
                 display: block;
             }
         }
-        &.editable:hover {
+        &.editable:hover,
+        &.editable.hover {
             cursor: pointer;
+        }
+
+        .gd-scheduled-email-menu-icon {
+            display: block;
         }
     }
 
@@ -463,6 +469,10 @@ $min-content-height: 110px;
         .gd-scheduled-email-delete-icon::after {
             color: kit-variables.$gd-palette-error-base;
         }
+
+        .gd-scheduled-email-menu-icon::after {
+            color: kit-variables.$default-gd-medium-gray;
+        }
     }
 
     .gd-scheduled-email-delete-icon {
@@ -480,6 +490,46 @@ $min-content-height: 110px;
             color: kit-variables.$gd-color-disabled;
             font-size: 16px;
             font-weight: 400;
+        }
+    }
+
+    .gd-scheduled-email-menu {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50px;
+        height: 100%;
+        cursor: pointer;
+        flex-shrink: 0;
+        position: relative;
+    }
+
+    .gd-scheduled-email-menu:hover {
+        background-color: kit-variables.$gd-input-text-border;
+    }
+
+    .gd-scheduled-email-menu-icon {
+        display: block;
+        margin: auto;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+
+        &::after {
+            content: "";
+            background-image: url("~@gooddata/sdk-ui-dashboard/esm/assets/ellipsis.svg");
+            background-color: transparent;
+            background-position: center center;
+            border: none;
+            box-shadow: none;
+            position: absolute;
+            font-family: kit-variables.$gd-font-indigo;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
         }
     }
 
@@ -537,7 +587,6 @@ $min-content-height: 110px;
 
         @media #{kit-variables.$small-only} {
             > strong {
-                display: block;
                 overflow: hidden;
                 line-height: 20px;
                 white-space: nowrap;
@@ -645,6 +694,13 @@ $min-content-height: 110px;
     display: flex;
     flex: 1;
     padding-bottom: $vertical-space;
+    overflow: hidden;
+
+    .gd-editable-label-inner {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 }
 
 .gd-schedule-email-dialog-title {
@@ -688,5 +744,15 @@ $min-content-height: 110px;
 
     .gd-button {
         padding: 0 10px;
+    }
+}
+
+.gd-schedule-email-dialog-menu {
+    min-width: 100px;
+    .deleteItem {
+        &:hover {
+            background-color: kit-variables.$gd-palette-error-dimmed;
+            color: kit-variables.$gd-palette-error-base;
+        }
     }
 }

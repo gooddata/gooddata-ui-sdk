@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React, { Component } from "react";
 import { Overlay } from "../Overlay/index.js";
 import { DialogBase } from "./DialogBase.js";
@@ -9,7 +9,8 @@ import { IDialogBaseProps } from "./typings.js";
  */
 export class Dialog extends Component<IDialogBaseProps> {
     public render(): JSX.Element {
-        const { containerClassName, onClick, onMouseUp, onMouseOver, ...dialogProps } = this.props;
+        const { containerClassName, onClick, onMouseUp, onMouseOver, shouldCloseOnClick, ...dialogProps } =
+            this.props;
 
         return (
             <Overlay
@@ -24,6 +25,8 @@ export class Dialog extends Component<IDialogBaseProps> {
                 onMouseUp={onMouseUp}
                 onMouseOver={onMouseOver}
                 onClick={onClick}
+                closeOnOutsideClick={Boolean(shouldCloseOnClick)}
+                shouldCloseOnClick={shouldCloseOnClick}
             >
                 <DialogBase {...dialogProps} />
             </Overlay>

@@ -387,6 +387,24 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
     align-items: center;
 }
 
+.gd-header-menu-search {
+    display: flex;
+    flex-direction: column;
+    background-color: variables.$gd-color-white;
+    width: 100vw;
+    height: 100vh;
+
+    &-title {
+        height: 45px;
+        line-height: 45px;
+        background-color: variables.$gd-color-white;
+        // TODO - looks like these are colors from the old palette
+        border-bottom: 1px solid var(--gd-palette-complementary-4, #c9d5e0);
+        box-shadow: 0 1px 2px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.1));
+        padding: 0 15px;
+    }
+}
+
 .gd-header-expiration-date {
     font-weight: 400;
     font-size: 12px;
@@ -589,6 +607,13 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
     }
 }
 
+.gd-header-menu-vertical span.gd-icon-header-search::before {
+    content: "\e62b";
+    vertical-align: bottom;
+    opacity: 0.8;
+    padding-right: 6px;
+}
+
 .gd-header-username {
     &::before {
         margin-right: 8px;
@@ -663,6 +688,10 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
             opacity: 0;
             border-color: var(--gd-palette-complementary-6, inherit);
         }
+    }
+
+    &.search-open {
+        color: var(--gd-palette-complementary-8, variables.$gd-color-text);
     }
 }
 

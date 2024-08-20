@@ -1040,7 +1040,7 @@ export interface ILoadingState {
 }
 
 // @public
-export type ILocale = "en-US" | "de-DE" | "es-ES" | "fr-FR" | "ja-JP" | "nl-NL" | "pt-BR" | "pt-PT" | "zh-Hans" | "ru-RU" | "it-IT" | "es-419" | "fr-CA" | "en-GB";
+export type ILocale = "en-US" | "de-DE" | "es-ES" | "fr-FR" | "ja-JP" | "nl-NL" | "pt-BR" | "pt-PT" | "zh-Hans" | "ru-RU" | "it-IT" | "es-419" | "fr-CA" | "en-GB" | "en-AU" | "fi-FI" | "zh-Hant" | "zh-HK";
 
 // @public (undocumented)
 export type IMappingHeader = IAttributeDescriptor | IResultAttributeHeader | IMeasureDescriptor | ITotalDescriptor | IColorDescriptor;

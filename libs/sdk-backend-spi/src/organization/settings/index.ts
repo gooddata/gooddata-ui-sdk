@@ -1,6 +1,6 @@
 // (C) 2022-2024 GoodData Corporation
 
-import { ISettings, IWhiteLabeling, IOpenAiConfig } from "@gooddata/sdk-model";
+import { ISettings, IWhiteLabeling, IOpenAiConfig, IAlertDefault } from "@gooddata/sdk-model";
 
 /**
  * This service provides access to organization settings
@@ -62,6 +62,15 @@ export interface IOrganizationSettingsService {
      * @returns promise
      */
     setTheme(themeId: string): Promise<void>;
+
+    /**
+     * Sets alert default
+     *
+     * @param value - describes parameters for alerting.
+     *
+     * @returns promise
+     */
+    setAlertDefault(value: IAlertDefault): Promise<void>;
 
     /**
      * Sets color palette for organization.

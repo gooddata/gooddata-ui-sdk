@@ -23,6 +23,18 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
         return this.decorated.setLocale(locale);
     }
 
+    async setTimezone(timezone: string): Promise<void> {
+        return this.decorated.setTimezone(timezone);
+    }
+
+    async setDateFormat(dateFormat: string): Promise<void> {
+        return this.decorated.setDateFormat(dateFormat);
+    }
+
+    async setWeekStart(weekStart: string): Promise<void> {
+        return this.decorated.setWeekStart(weekStart);
+    }
+
     async setTheme(themeId: string): Promise<void> {
         return this.decorated.setTheme(themeId);
     }

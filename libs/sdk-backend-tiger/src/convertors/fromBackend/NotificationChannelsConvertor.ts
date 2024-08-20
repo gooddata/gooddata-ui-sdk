@@ -1,32 +1,82 @@
 // (C) 2022-2024 GoodData Corporation
-import { JsonApiNotificationChannelOut, Webhook } from "@gooddata/api-client-tiger";
-import { IWebhookMetadataObject } from "@gooddata/sdk-model";
+import {
+    DeclarativeNotificationChannelDestinationTypeEnum,
+    JsonApiNotificationChannelOut,
+    Webhook,
+    Smtp,
+} from "@gooddata/api-client-tiger";
+import {
+    IWebhookDefinitionObject,
+    INotificationChannelTrigger,
+    ISmtpDefinitionObject,
+    INotificationChannelDefinitionObject,
+} from "@gooddata/sdk-model";
 
 /**
  * @internal
  */
 type INotificationChannel = Omit<JsonApiNotificationChannelOut, "type">;
 
-export function convertWebhookFromNotificationChannel(channel: INotificationChannel): IWebhookMetadataObject {
+export function convertChannelFromNotificationChannel(
+    channel: INotificationChannel,
+): INotificationChannelDefinitionObject {
+    switch (channel.attributes?.destinationType) {
+        case DeclarativeNotificationChannelDestinationTypeEnum.WEBHOOK:
+            return convertWebhookFromNotificationChannel(channel) as INotificationChannelDefinitionObject;
+        case DeclarativeNotificationChannelDestinationTypeEnum.SMTP:
+            return convertEmailFromNotificationChannel(channel) as INotificationChannelDefinitionObject;
+        default:
+            throw new Error(`Unknown notification channel type: ${channel.attributes?.destinationType}`);
+    }
+}
+
+export function convertWebhookFromNotificationChannel(
+    channel: INotificationChannel,
+): IWebhookDefinitionObject {
     const wh = channel.attributes?.destination as Webhook | undefined;
     return {
         id: channel.id,
-        name: channel.attributes?.name ?? "",
-        endpoint: wh?.url ?? "",
-        token: wh?.token ?? "",
-        hasToken: wh?.hasToken ?? false,
+        type: "webhook",
+        destination: {
+            name: channel.attributes?.name ?? "",
+            endpoint: wh?.url ?? "",
+            token: wh?.token ?? "",
+            hasToken: wh?.hasToken ?? false,
+        },
         triggers:
             channel.attributes?.triggers?.map((trigger) => ({
                 type: trigger.type,
-                ...(isMetadataAllowedOn(trigger.metadata) ? { allowOn: trigger.metadata.allowedOn } : {}),
+                ...(isAllowedOn(trigger.metadata) ? { allowOn: trigger.metadata.allowedOn } : {}),
             })) ?? [],
     };
 }
 
-interface IWebhookMetadataAllowedOn {
-    allowedOn: IWebhookMetadataObject["triggers"][number]["allowOn"];
+export function convertEmailFromNotificationChannel(channel: INotificationChannel): ISmtpDefinitionObject {
+    const wh = channel.attributes?.destination as Smtp | undefined;
+    return {
+        id: channel.id,
+        type: "smtp",
+        destination: {
+            name: channel.attributes?.name ?? "",
+            address: wh?.address ?? "",
+            from: wh?.fromEmail ?? "",
+            port: wh?.port ?? 25,
+            login: wh?.login ?? "",
+            password: wh?.password ?? "",
+            hasPassword: true,
+        },
+        triggers:
+            channel.attributes?.triggers?.map((trigger) => ({
+                type: trigger.type,
+                ...(isAllowedOn(trigger.metadata) ? { allowOn: trigger.metadata.allowedOn } : {}),
+            })) ?? [],
+    };
 }
 
-function isMetadataAllowedOn(obj: any): obj is IWebhookMetadataAllowedOn {
+interface INotificationChannelAllowedOn {
+    allowedOn: INotificationChannelTrigger["allowOn"];
+}
+
+function isAllowedOn(obj: any): obj is INotificationChannelAllowedOn {
     return !!(typeof obj === "object" && obj.allowedOn && Array.isArray(obj.allowedOn));
 }

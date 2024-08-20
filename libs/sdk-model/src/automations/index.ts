@@ -221,6 +221,15 @@ export type IAutomationAlertExecutionDefinition = Pick<
 /**
  * @alpha
  */
+export type IAlertComparisonOperator =
+    | "LESS_THAN"
+    | "LESS_THAN_OR_EQUALS"
+    | "GREATER_THAN"
+    | "GREATER_THAN_OR_EQUALS";
+
+/**
+ * @alpha
+ */
 export interface IAutomationAlertCondition {
     /**
      * Type of the condition.
@@ -230,13 +239,7 @@ export interface IAutomationAlertCondition {
     /**
      * Operator of the condition.
      */
-    operator:
-        | "LESS_THAN"
-        | "LESS_THAN_OR_EQUALS"
-        | "EQUALS"
-        | "NOT_EQUALS"
-        | "GREATER_THAN"
-        | "GREATER_THAN_OR_EQUALS";
+    operator: IAlertComparisonOperator;
 
     /**
      * Left side of the condition.
@@ -262,4 +265,34 @@ export interface IAutomationAlert {
      * Condition of the alert.
      */
     condition: IAutomationAlertCondition;
+
+    /**
+     * Trigger state of the alert.
+     */
+    trigger: IAutomationAlertTrigger;
 }
+
+/**
+ * @alpha
+ */
+export interface IAutomationAlertTrigger {
+    /**
+     * Overrides the default trigger mode, set on organization settings level.
+     */
+    mode?: IAlertTriggerMode;
+
+    /**
+     * State of the trigger.
+     */
+    state: IAlertTriggerState;
+}
+
+/**
+ * @alpha
+ */
+export type IAlertTriggerMode = "ALWAYS" | "ONCE";
+
+/**
+ * @alpha
+ */
+export type IAlertTriggerState = "ACTIVE" | "PAUSED";

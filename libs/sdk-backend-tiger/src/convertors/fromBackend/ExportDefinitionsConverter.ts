@@ -15,6 +15,7 @@ import {
 } from "@gooddata/sdk-model";
 import { convertUserIdentifier } from "./UsersConverter.js";
 import isEmpty from "lodash/isEmpty.js";
+import { cloneWithSanitizedIds } from "./IdSanitization.js";
 
 export const convertExportDefinitionMdObject = (
     exportDefinitionOut: JsonApiExportDefinitionOutWithLinks,
@@ -60,7 +61,7 @@ const convertExportDefinitionRequestPayload = (
         const { widget } = (exportRequest.metadata as { widget?: string }) ?? {};
 
         const filters = exportRequest.visualizationObjectCustomFilters as IFilter[];
-        const filtersObj = filters ? { filters } : {};
+        const filtersObj = filters ? { filters: filters.map(cloneWithSanitizedIds) } : {};
 
         const { mergeHeaders, pdfPageSize } = exportRequest.settings ?? {};
         const orientation =

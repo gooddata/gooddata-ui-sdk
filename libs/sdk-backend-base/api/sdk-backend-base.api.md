@@ -603,9 +603,15 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     // (undocumented)
     setColorPalette(colorPaletteId: string): Promise<void>;
     // (undocumented)
+    setDateFormat(dateFormat: string): Promise<void>;
+    // (undocumented)
     setLocale(locale: string): Promise<void>;
     // (undocumented)
     setTheme(themeId: string): Promise<void>;
+    // (undocumented)
+    setTimezone(timezone: string): Promise<void>;
+    // (undocumented)
+    setWeekStart(weekStart: string): Promise<void>;
 }
 
 // @alpha
@@ -645,6 +651,7 @@ export function dummyDataView(definition: IExecutionDefinition, result?: IExecut
 
 // @internal
 export class DummySemanticSearchQueryBuilder implements ISemanticSearchQuery {
+    constructor(workspaceId: string);
     // (undocumented)
     query({ signal }?: {
         signal?: AbortSignal;
@@ -652,12 +659,14 @@ export class DummySemanticSearchQueryBuilder implements ISemanticSearchQuery {
         results: {
             id: string;
             type: GenAISemanticSearchType;
+            workspaceId: string;
             title: string;
             description: string;
             tags: string[];
             createdAt: string;
             modifiedAt: string;
             visualizationUrl: string | undefined;
+            score: number;
         }[];
         relationships: ISemanticSearchRelationship[];
     }>;

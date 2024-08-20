@@ -43,8 +43,7 @@ import { removeDrillsForInsightWidgetHandler } from "./widgets/removeDrillsForIn
 import { changeRichTextWidgetContentHandler } from "./widgets/changeRichTextWidgetContentHandler.js";
 import { exportInsightWidgetHandler } from "./widgets/exportInsightWidgetHandler.js";
 import { createAlertHandler } from "./alerts/createAlertHandler.js";
-import { updateAlertHandler } from "./alerts/updateAlertHandler.js";
-import { removeAlertsHandler } from "./alerts/removeAlertsHandler.js";
+import { saveAlertHandler } from "./alerts/saveAlertHandler.js";
 import { createScheduledEmailHandler } from "./scheduledEmail/createScheduledEmailHandler.js";
 import { saveScheduledEmailHandler } from "./scheduledEmail/saveScheduledEmailHandler.js";
 import { drillHandler } from "./drill/drillHandler.js";
@@ -174,8 +173,7 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT": exportInsightWidgetHandler,
     "GDC.DASH/CMD.RICH_TEXT_WIDGET.CHANGE_CONTENT": changeRichTextWidgetContentHandler,
     "GDC.DASH/CMD.ALERT.CREATE": createAlertHandler,
-    "GDC.DASH/CMD.ALERT.UPDATE": updateAlertHandler,
-    "GDC.DASH/CMD.ALERTS.REMOVE": removeAlertsHandler,
+    "GDC.DASH/CMD.ALERT.SAVE": saveAlertHandler,
     "GDC.DASH/CMD.SCHEDULED_EMAIL.CREATE": createScheduledEmailHandler,
     "GDC.DASH/CMD.SCHEDULED_EMAIL.SAVE": saveScheduledEmailHandler,
     "GDC.DASH/CMD.DRILL": drillHandler,

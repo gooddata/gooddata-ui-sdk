@@ -33,6 +33,11 @@ export interface IWidgetConvertCallback {
         path: LayoutPath,
         pathConverterPairs: IPathConverterPair[],
     ) => void;
+    drillDownIntersectionIgnoredAttributesCallback: (
+        widget: IInsightWidget | IInsightWidgetDefinition,
+        path: LayoutPath,
+        pathConverterPairs: IPathConverterPair[],
+    ) => void;
 }
 
 export function collectPathConverterPairs(
@@ -47,8 +52,14 @@ export function collectPathConverterPairs(
             }
             converterCallback.drillToCustomUrlCallback(widget, widgetPath, pathConverterPairs);
             converterCallback.ignoredAttributeHierarchiesCallback(widget, widgetPath, pathConverterPairs);
+            converterCallback.drillDownIntersectionIgnoredAttributesCallback(
+                widget,
+                widgetPath,
+                pathConverterPairs,
+            );
         },
     });
+
     return pathConverterPairs;
 }
 
@@ -61,10 +72,14 @@ export function convertLayout(fromBackend: boolean, layout?: IDashboardLayout) {
         ? {
               drillToCustomUrlCallback: getPathConverterForDrillToCustomUrlFromBackend,
               ignoredAttributeHierarchiesCallback: getPathConverterForIgnoredAttributeHierarchiesFromBackend,
+              drillDownIntersectionIgnoredAttributesCallback:
+                  getPathConverterForDrillDownIntersectionIgnoredAttributesFromBackend,
           }
         : {
               drillToCustomUrlCallback: getPathConverterForDrillToCustomUrlToBackend,
               ignoredAttributeHierarchiesCallback: getPathConverterForIgnoredAttributeHierarchiesToBackend,
+              drillDownIntersectionIgnoredAttributesCallback:
+                  getPathConverterForDrillDownIntersectionIgnoredAttributesToBackend,
           };
 
     const paths = collectPathConverterPairs(layout, callbacks);
@@ -97,6 +112,7 @@ export function getPathConverterForDrillToCustomUrlFromBackend(
     });
 }
 
+//
 export function getPathConverterForIgnoredAttributeHierarchiesFromBackend(
     widget: IInsightWidget | IInsightWidgetDefinition,
     widgetPath: LayoutPath,
@@ -111,6 +127,38 @@ export function getPathConverterForIgnoredAttributeHierarchiesFromBackend(
         } else {
             pathConverterPairs.push({
                 path: [...widgetPath, "ignoredDrillDownHierarchies", index, "dateHierarchyTemplate"],
+                converter: (id: string) => idRef(id, "dateHierarchyTemplate"),
+            });
+        }
+    });
+}
+
+export function getPathConverterForDrillDownIntersectionIgnoredAttributesFromBackend(
+    widget: IInsightWidget | IInsightWidgetDefinition,
+    widgetPath: LayoutPath,
+    pathConverterPairs: IPathConverterPair[],
+) {
+    widget.drillDownIntersectionIgnoredAttributes?.forEach((ignoredIntersectionAttributes, index) => {
+        if (isAttributeHierarchyReference(ignoredIntersectionAttributes.drillDownReference)) {
+            pathConverterPairs.push({
+                path: [
+                    ...widgetPath,
+                    "drillDownIntersectionIgnoredAttributes",
+                    index,
+                    "drillDownReference",
+                    "attributeHierarchy",
+                ],
+                converter: (id: string) => idRef(id, "attributeHierarchy"),
+            });
+        } else {
+            pathConverterPairs.push({
+                path: [
+                    ...widgetPath,
+                    "drillDownIntersectionIgnoredAttributes",
+                    index,
+                    "drillDownReference",
+                    "dateHierarchyTemplate",
+                ],
                 converter: (id: string) => idRef(id, "dateHierarchyTemplate"),
             });
         }
@@ -137,6 +185,7 @@ export function getPathConverterForDrillToCustomUrlToBackend(
     });
 }
 
+//
 export function getPathConverterForIgnoredAttributeHierarchiesToBackend(
     widget: IInsightWidget | IInsightWidgetDefinition,
     widgetPath: LayoutPath,
@@ -151,6 +200,40 @@ export function getPathConverterForIgnoredAttributeHierarchiesToBackend(
         } else {
             pathConverterPairs.push({
                 path: [...widgetPath, "ignoredDrillDownHierarchies", index, "dateHierarchyTemplate"],
+                // DateHierarchyTemplate is not valid MD type yet so we can not store full objRef but just id string
+                converter: objRefToString,
+            });
+        }
+    });
+}
+
+//
+export function getPathConverterForDrillDownIntersectionIgnoredAttributesToBackend(
+    widget: IInsightWidget | IInsightWidgetDefinition,
+    widgetPath: LayoutPath,
+    pathConverterPairs: IPathConverterPair[],
+) {
+    widget.drillDownIntersectionIgnoredAttributes?.forEach((ignoredIntersectionAttributes, index) => {
+        if (isAttributeHierarchyReference(ignoredIntersectionAttributes.drillDownReference)) {
+            pathConverterPairs.push({
+                path: [
+                    ...widgetPath,
+                    "drillDownIntersectionIgnoredAttributes",
+                    index,
+                    "drillDownReference",
+                    "attributeHierarchy",
+                ],
+                converter: objRefToString,
+            });
+        } else {
+            pathConverterPairs.push({
+                path: [
+                    ...widgetPath,
+                    "drillDownIntersectionIgnoredAttributes",
+                    index,
+                    "drillDownReference",
+                    "dateHierarchyTemplate",
+                ],
                 // DateHierarchyTemplate is not valid MD type yet so we can not store full objRef but just id string
                 converter: objRefToString,
             });

@@ -39,10 +39,16 @@ export {
 } from "./execution/attribute/factory.js";
 
 export {
-    IWebhookTrigger,
-    IWebhookMetadataObjectDefinition,
-    IWebhookMetadataObjectBase,
-    IWebhookMetadataObject,
+    IWebhookDestination,
+    ISmtpDestination,
+    IWebhookDefinition,
+    ISmtpDefinition,
+    ISmtpDefinitionObject,
+    IWebhookDefinitionObject,
+    INotificationChannelTrigger,
+    INotificationChannelMetadataObject,
+    INotificationChannelDefinitionObject,
+    INotificationChannelMetadataObjectBase,
 } from "./notificationChannels/index.js";
 
 export {
@@ -542,6 +548,8 @@ export {
     isAttributeHierarchyReference,
     isDateHierarchyReference,
     isCrossFiltering,
+    drillDownReferenceHierarchyRef,
+    drillDownReferenceAttributeRef,
 } from "./dashboard/drill.js";
 
 export {
@@ -550,6 +558,7 @@ export {
     IDrillableWidget,
     IFilterableWidget,
     IWidgetDescription,
+    IDrillDownIntersectionIgnoredAttributes,
 } from "./dashboard/baseWidget.js";
 
 export {
@@ -747,6 +756,7 @@ export {
     ISettings,
     PlatformEdition,
     IWhiteLabeling,
+    IAlertDefault,
     WeekStart,
     IOpenAiConfig,
 } from "./settings/index.js";
@@ -924,6 +934,10 @@ export {
     IAutomationAlert,
     IAutomationAlertCondition,
     IAutomationAlertExecutionDefinition,
+    IAlertComparisonOperator,
+    IAlertTriggerMode,
+    IAlertTriggerState,
+    IAutomationAlertTrigger,
 } from "./automations/index.js";
 
 export {

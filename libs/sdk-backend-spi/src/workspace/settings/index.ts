@@ -31,6 +31,34 @@ export interface IWorkspaceSettingsService {
     setLocale(locale: string): Promise<void>;
 
     /**
+     * Sets timezone for current workspace.
+     *
+     * @param timezone - the value based on IANA time zone database naming convention.
+     * for example: "America/Los_Angeles", etc.
+     *
+     * @returns promise
+     */
+    setTimezone(timezone: string): Promise<void>;
+
+    /**
+     * Sets date format for current workspace.
+     *
+     * @param dateFormat - the format based on the ICU standard, for example: "en-US", "cs-CZ", etc.
+     *
+     * @returns promise
+     */
+    setDateFormat(dateFormat: string): Promise<void>;
+
+    /**
+     * Sets first day of week for current workspace.
+     *
+     * @param weekStart - "Sunday | "Monday"
+     *
+     * @returns promise
+     */
+    setWeekStart(weekStart: string): Promise<void>;
+
+    /**
      * Sets color palette for current workspace.
      *
      * @param colorPaletteId - ID of the color palette to apply to charts in workspace.

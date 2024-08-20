@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
 import React from "react";
 import { ArrowOffsets } from "../Bubble/index.js";
@@ -19,6 +19,7 @@ export interface IDialogBaseProps {
      * These properties will be placed to the container, which wraps overlay background and dialog content elements
      */
     containerClassName?: string;
+    shouldCloseOnClick?: (e: Event) => boolean;
     onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     onMouseOver?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     onMouseUp?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;

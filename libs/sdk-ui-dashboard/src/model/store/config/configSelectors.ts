@@ -400,6 +400,13 @@ export const selectEnableInsightExportScheduling: DashboardSelector<boolean> = c
 export const selectEnableScheduling: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
     return state.settings?.enableScheduling ?? false;
 });
+
+/**
+ * @alpha
+ */
+export const selectEnableAlerting: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
+    return state.settings?.enableAlerting ?? false;
+});
 /**
  * Returns whether analytical dashboard permissions are enabled
  *
@@ -704,6 +711,18 @@ export const selectEnableDrillIntersectionIgnoredAttributes: DashboardSelector<b
     selectConfig,
     (state) => {
         return state.settings?.enableDrillIntersectionIgnoredAttributes ?? true;
+    },
+);
+
+/**
+ * Returns whether drill down intersection ignored attributes is enabled.
+ *
+ * @internal
+ */
+export const selectEnableDrillDownIntersectionIgnoredAttributes: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableDrillDownIntersectionIgnoredAttributes ?? false;
     },
 );
 

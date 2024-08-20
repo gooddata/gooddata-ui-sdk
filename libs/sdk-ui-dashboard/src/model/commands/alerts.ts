@@ -1,6 +1,6 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
-import { ObjRef, IWidgetAlert, IWidgetAlertDefinition } from "@gooddata/sdk-model";
+import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 import { IDashboardCommand } from "./base.js";
 
 /**
@@ -11,11 +11,11 @@ export interface CreateAlertPayload {
     /**
      * The alert to be created.
      */
-    readonly alert: IWidgetAlertDefinition;
+    readonly alert: IAutomationMetadataObjectDefinition;
 }
 
 /**
- * Creates Kpi alert.
+ * Creates alert.
  *
  * @beta
  */
@@ -25,14 +25,14 @@ export interface CreateAlert extends IDashboardCommand {
 }
 
 /**
- * Creates the SaveAlert command. Dispatching this command will result in the creating Kpi alert on the backend.
+ * Creates the SaveAlert command. Dispatching this command will result in the creating alert on the backend.
  *
  * @param alert - specify alert to create.
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  * @beta
  */
-export function createAlert(alert: IWidgetAlertDefinition, correlationId?: string): CreateAlert {
+export function createAlert(alert: IAutomationMetadataObjectDefinition, correlationId?: string): CreateAlert {
     return {
         type: "GDC.DASH/CMD.ALERT.CREATE",
         correlationId,
@@ -47,85 +47,41 @@ export function createAlert(alert: IWidgetAlertDefinition, correlationId?: strin
 //
 
 /**
- * Payload of the {@link UpdateAlert} command.
+ * Payload of the {@link SaveAlert} command.
  * @beta
  */
-export interface UpdateAlertPayload {
+export interface SaveAlertPayload {
     /**
-     * The alert to be updated.
+     * The alert to be saved.
      */
-    readonly alert: IWidgetAlert;
+    readonly alert: IAutomationMetadataObject;
 }
 
 /**
- * Updates Kpi alert.
+ * Saves alert.
  *
  * @beta
  */
-export interface UpdateAlert extends IDashboardCommand {
-    readonly type: "GDC.DASH/CMD.ALERT.UPDATE";
-    readonly payload: UpdateAlertPayload;
+export interface SaveAlert extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.ALERT.SAVE";
+    readonly payload: SaveAlertPayload;
 }
 
 /**
- * Creates the UpdateAlert command. Dispatching this command will result in the updating Kpi alert on the backend.
+ * Creates the SaveAlert command. Dispatching this command will result in the saving alert on the backend.
  *
- * @param alert - specify alert to update.
+ * @param alert - specify alert to save.
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
 
  * @beta
  */
-export function updateAlert(alert: IWidgetAlert, correlationId?: string): UpdateAlert {
+export function saveAlert(alert: IAutomationMetadataObject, correlationId?: string): SaveAlert {
     return {
-        type: "GDC.DASH/CMD.ALERT.UPDATE",
+        type: "GDC.DASH/CMD.ALERT.SAVE",
         correlationId,
         payload: {
             alert,
-        },
-    };
-}
-
-//
-//
-//
-
-/**
- * Payload of the {@link RemoveAlerts} command.
- * @beta
- */
-export interface RemoveAlertsPayload {
-    /**
-     * References to Kpi alerts that should be removed.
-     */
-    readonly refs: ObjRef[];
-}
-
-/**
- * Removes Kpi alerts.
- *
- * @beta
- */
-export interface RemoveAlerts extends IDashboardCommand {
-    readonly type: "GDC.DASH/CMD.ALERTS.REMOVE";
-    readonly payload: RemoveAlertsPayload;
-}
-
-/**
- * Creates the RemoveAlerts command. Dispatching this command will result in the removing Kpi alerts on the backend.
- *
- * @param refs - specify ObjRef of the alerts to remove
- * @param correlationId - specify correlation id to use for this command. this will be included in all
- *  events that will be emitted during the command processing
-
- * @beta
- */
-export function removeAlerts(refs: ObjRef[], correlationId?: string): RemoveAlerts {
-    return {
-        type: "GDC.DASH/CMD.ALERTS.REMOVE",
-        correlationId,
-        payload: {
-            refs,
         },
     };
 }

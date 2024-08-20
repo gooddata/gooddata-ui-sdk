@@ -40,12 +40,14 @@ const DefaultDashboardInsightWidgetCore: React.FC<
 > = ({ widget, insight, screen, onError, onExportReady, onLoadingChanged, dashboardItemClasses }) => {
     const intl = useIntl();
     const dashboard = useDashboardSelector(selectDashboardId);
+    const settings = useDashboardSelector(selectSettings);
 
     const {
         onScheduleEmailingOpen,
         onScheduleEmailingManagementOpen,
         isScheduledEmailingVisible,
         isScheduledManagementEmailingVisible,
+        numberOfAvailableWebhooks,
     } = useDashboardScheduledEmails({
         dashboard,
     });
@@ -70,6 +72,10 @@ const DefaultDashboardInsightWidgetCore: React.FC<
     const scheduleExportEnabled = !isCustomWidget(widget);
     const scheduleExportManagementEnabled = !isCustomWidget(widget);
 
+    const isHeadline = visType === "headline";
+    const isAlertingVisible = isHeadline && !isCustomWidget(widget) && settings.enableAlerting === true;
+    const alertingDisabled = numberOfAvailableWebhooks === 0;
+
     const { closeMenu, isMenuOpen, menuItems, openMenu } = useInsightMenu({
         insight,
         widget,
@@ -83,6 +89,8 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         onScheduleManagementExport,
         isScheduleExportVisible: isScheduledEmailingVisible,
         isScheduleExportManagementVisible: isScheduledManagementEmailingVisible,
+        isAlertingVisible,
+        alertingDisabled,
     });
     const toggleMenu = useCallback(() => {
         if (isMenuOpen) {
@@ -108,8 +116,6 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         () => InsightMenuComponentProvider(insight, widget),
         [InsightMenuComponentProvider, insight, widget],
     );
-
-    const settings = useDashboardSelector(selectSettings);
 
     return (
         <DashboardItem

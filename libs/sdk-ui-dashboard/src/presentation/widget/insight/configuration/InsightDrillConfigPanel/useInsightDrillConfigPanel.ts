@@ -164,11 +164,7 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
 
     const globalDrillDownItems = useMemo(() => {
         return availableDrillTargets
-            ? getGlobalDrillDownMappedConfigForWidget(
-                  widgetGlobalDrillDowns,
-                  availableDrillTargets,
-                  widgetRef,
-              )
+            ? getGlobalDrillDownMappedConfigForWidget(widgetGlobalDrillDowns, availableDrillTargets, widget)
             : [];
     }, [widgetGlobalDrillDowns, availableDrillTargets]);
 
@@ -197,13 +193,13 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
         (
             drill: InsightDrillDefinition | IDrillDownAttributeHierarchyDefinition,
             changedItem: IDrillConfigItem,
+            isIgnoredDrillDownInteresectionAttributesChange?: boolean,
         ) => {
             const isNew = isItemNew(changedItem);
             if (!isDrillDownToAttributeHierarchyDefinition(drill)) {
                 const blacklistHierarchiesToUpdate = isDrillDownToAttributeHierarchyConfig(changedItem)
                     ? buildBlacklistHierarchies(changedItem, attributeHierarchies)
                     : [];
-
                 dispatch(modifyDrillsForInsightWidget(widgetRef, [drill], blacklistHierarchiesToUpdate));
             }
 
@@ -218,15 +214,18 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
                 );
 
                 if (changedItem.complete) {
+                    const blacklistHierarchies = buildBlacklistHierarchies(
+                        drill as IDrillDownAttributeHierarchyDefinition,
+                        attributeHierarchies,
+                    );
+
                     dispatch(
                         modifyDrillDownForInsightWidget(
                             widgetRef,
                             attributeDescriptor!.attributeHeader.formOf.ref,
                             (changedItem as IDrillDownAttributeHierarchyConfig).attributeHierarchyRef,
-                            buildBlacklistHierarchies(
-                                drill as IDrillDownAttributeHierarchyDefinition,
-                                attributeHierarchies,
-                            ),
+                            isIgnoredDrillDownInteresectionAttributesChange ? [] : blacklistHierarchies,
+                            changedItem.drillIntersectionIgnoredAttributes ?? [],
                         ),
                     );
                 } else {
@@ -236,6 +235,7 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
                             attributeDescriptor!.attributeHeader.formOf.ref,
                             changedItem.localIdentifier,
                             (changedItem as IDrillDownAttributeHierarchyConfig).attributeHierarchyRef,
+                            changedItem.drillIntersectionIgnoredAttributes ?? [],
                         ),
                     );
                 }

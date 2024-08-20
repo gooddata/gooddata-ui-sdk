@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React from "react";
 
 import { GD_COLOR_HIGHLIGHT } from "../utils/constants.js";
@@ -19,8 +19,8 @@ export interface ICustomizableCheckmarkProps {
 
 export const CustomizableCheckmark: React.FC<ICustomizableCheckmarkProps> = ({
     className,
-    width,
-    height,
+    width = 13,
+    height = 10,
 }) => {
     const backgroundColor = `var(--gd-palette-primary-base, ${GD_COLOR_HIGHLIGHT})`;
 
@@ -44,9 +44,4 @@ export const CustomizableCheckmark: React.FC<ICustomizableCheckmarkProps> = ({
             </g>
         </svg>
     );
-};
-
-CustomizableCheckmark.defaultProps = {
-    width: 13,
-    height: 10,
 };

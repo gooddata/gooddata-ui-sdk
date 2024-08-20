@@ -89,13 +89,13 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
 
     const onTitleChange = (value: string) => setState((s) => ({ ...s, title: value }));
 
-    const onRecurrenceChange = (cronExpression: string, startDate: Date) => {
+    const onRecurrenceChange = (cronExpression: string, startDate: Date | null) => {
         setState((s) => ({
             ...s,
             schedule: {
                 ...(s.schedule ?? {}),
                 cron: cronExpression,
-                firstRun: toModifiedISOString(startDate),
+                firstRun: toModifiedISOString(startDate ?? new Date()),
             },
         }));
     };
