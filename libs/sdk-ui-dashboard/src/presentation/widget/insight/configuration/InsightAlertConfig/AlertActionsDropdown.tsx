@@ -136,7 +136,10 @@ export const AlertActionsDropdown = ({
             {showDeleteDialog ? (
                 <AlertDeleteDialog
                     title={alert.title}
-                    onDelete={onDelete}
+                    onDelete={() => {
+                        onDelete();
+                        setShowDeleteDialog(false);
+                    }}
                     onCancel={() => setShowDeleteDialog(false)}
                 />
             ) : null}

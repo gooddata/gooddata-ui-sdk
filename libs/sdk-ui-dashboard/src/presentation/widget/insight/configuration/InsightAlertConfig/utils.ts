@@ -30,10 +30,10 @@ export const getMeasureTitle = (measure: IMeasure) => {
 export const getComparisonOperatorTitle = (operator: IAlertComparisonOperator, intl: IntlShape): string => {
     const titleByOperator: Record<IAlertComparisonOperator, string> = {
         [COMPARISON_OPERATORS.COMPARISON_OPERATOR_LESS_THAN]: messages.comparisonOperatorLessThan.id,
-        [COMPARISON_OPERATORS.COMPARISON_OPERATOR_LESS_THAN_OR_EQUALS]:
+        [COMPARISON_OPERATORS.COMPARISON_OPERATOR_LESS_THAN_OR_EQUAL_TO]:
             messages.comparisonOperatorLessThanOrEquals.id,
         [COMPARISON_OPERATORS.COMPARISON_OPERATOR_GREATER_THAN]: messages.comparisonOperatorGreaterThan.id,
-        [COMPARISON_OPERATORS.COMPARISON_OPERATOR_GREATER_THAN_OR_EQUALS]:
+        [COMPARISON_OPERATORS.COMPARISON_OPERATOR_GREATER_THAN_OR_EQUAL_TO]:
             messages.comparisonOperatorGreaterThanOrEquals.id,
     };
 
@@ -57,7 +57,7 @@ export const createDefaultAlert = (
         alert: {
             condition: {
                 type: "comparison",
-                left: measure,
+                left: measure.measure.localIdentifier,
                 operator: comparisonOperator,
                 right: undefined!,
             },

@@ -11,9 +11,9 @@ import { AlertMeasureSelect } from "./AlertMeasureSelect.js";
 import { AlertComparisonOperatorSelect } from "./AlertComparisonOperatorSelect.js";
 import { AlertDestinationSelect } from "./AlertDestinationSelect.js";
 import { EditAlertConfiguration } from "./EditAlertConfiguration.js";
-import { INotificationChannel } from "./constants.js";
-import { useEditAlert } from "./useEditAlert.js";
+import { useEditAlert } from "./hooks/useEditAlert.js";
 import { FormattedMessage, useIntl } from "react-intl";
+import { Webhooks } from "../../../../../model/index.js";
 
 const TOOLTIP_ALIGN_POINTS = [{ align: "cl cr" }, { align: "cr cl" }];
 
@@ -21,7 +21,7 @@ interface IEditAlertProps {
     alert: IAutomationMetadataObject;
     isNewAlert?: boolean;
     hasAlerts: boolean;
-    destinations: INotificationChannel[];
+    destinations: Webhooks;
     measures: IMeasure[];
     onClose: () => void;
     onCancel: () => void;
@@ -83,7 +83,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                             <FormattedMessage id="insightAlert.config.when" />
                         </div>
                         <AlertMeasureSelect
-                            selectedMeasure={updatedAlert.alert!.condition.left}
+                            selectedMeasureIdentifier={updatedAlert.alert!.condition.left}
                             onMeasureChange={changeMeasure}
                             measures={measures}
                         />

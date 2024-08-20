@@ -2,16 +2,18 @@
 import { IAlertComparisonOperator } from "@gooddata/sdk-model";
 import { messages } from "./messages.js";
 
+export const LOADING_MASK_HEIGHT = 100;
+
 export const COMPARISON_OPERATOR_LESS_THAN = "LESS_THAN";
-export const COMPARISON_OPERATOR_LESS_THAN_OR_EQUALS = "LESS_THAN_OR_EQUALS";
+export const COMPARISON_OPERATOR_LESS_THAN_OR_EQUAL_TO = "LESS_THAN_OR_EQUAL_TO";
 export const COMPARISON_OPERATOR_GREATER_THAN = "GREATER_THAN";
-export const COMPARISON_OPERATOR_GREATER_THAN_OR_EQUALS = "GREATER_THAN_OR_EQUALS";
+export const COMPARISON_OPERATOR_GREATER_THAN_OR_EQUAL_TO = "GREATER_THAN_OR_EQUAL_TO";
 
 export const COMPARISON_OPERATORS = {
     COMPARISON_OPERATOR_LESS_THAN,
-    COMPARISON_OPERATOR_LESS_THAN_OR_EQUALS,
+    COMPARISON_OPERATOR_LESS_THAN_OR_EQUAL_TO,
     COMPARISON_OPERATOR_GREATER_THAN,
-    COMPARISON_OPERATOR_GREATER_THAN_OR_EQUALS,
+    COMPARISON_OPERATOR_GREATER_THAN_OR_EQUAL_TO,
 } as const;
 
 export const COMPARISON_OPERATOR_OPTIONS: {
@@ -27,7 +29,7 @@ export const COMPARISON_OPERATOR_OPTIONS: {
     {
         title: messages.comparisonOperatorGreaterThanOrEquals.id,
         icon: "gd-icon-greater-than-equal-to",
-        id: COMPARISON_OPERATORS.COMPARISON_OPERATOR_GREATER_THAN_OR_EQUALS,
+        id: COMPARISON_OPERATORS.COMPARISON_OPERATOR_GREATER_THAN_OR_EQUAL_TO,
     },
     {
         title: messages.comparisonOperatorLessThan.id,
@@ -37,15 +39,9 @@ export const COMPARISON_OPERATOR_OPTIONS: {
     {
         title: messages.comparisonOperatorLessThanOrEquals.id,
         icon: "gd-icon-less-than-equal-to",
-        id: COMPARISON_OPERATORS.COMPARISON_OPERATOR_LESS_THAN_OR_EQUALS,
+        id: COMPARISON_OPERATORS.COMPARISON_OPERATOR_LESS_THAN_OR_EQUAL_TO,
     },
 ];
 
 export const DROPDOWN_ITEM_HEIGHT = 28;
 export const DROPDOWN_SEPARATOR_ITEM_HEIGHT = 10;
-
-// TODO: replace with proper notification channels once we refactor IWebhookMetadataObject -> INotificationChannelMetadataObject channel in sdk-model & sdk-backend-spi
-export interface INotificationChannel {
-    id: string;
-    title: string;
-}

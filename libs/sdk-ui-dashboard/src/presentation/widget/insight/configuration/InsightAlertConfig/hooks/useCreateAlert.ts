@@ -5,7 +5,7 @@ import {
     CommandProcessingStatus,
     createAlert,
     useDashboardCommandProcessing,
-} from "../../../../../model/index.js";
+} from "../../../../../../model/index.js";
 
 export const useCreateAlert = ({
     onBeforeRun,

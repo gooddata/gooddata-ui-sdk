@@ -51,4 +51,10 @@ export const messages = defineMessages({
     alertLoadingError: {
         id: "insightAlert.config.loading.error",
     },
+    alertSaveError: {
+        id: "insightAlert.config.save.error",
+    },
+    alertDeleteError: {
+        id: "insightAlert.config.delete.error",
+    },
 });

@@ -7,7 +7,7 @@ import {
     IMeasure,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
-import { getComparisonOperatorTitle, getMeasureTitle } from "./utils.js";
+import { getComparisonOperatorTitle, getMeasureTitle } from "../utils.js";
 import { useIntl } from "react-intl";
 
 export interface IUseEditAlertProps {
@@ -32,7 +32,7 @@ export const useEditAlert = ({ alert, onCreate, onUpdate }: IUseEditAlertProps) 
                 ...alert.alert!,
                 condition: {
                     ...alert.alert!.condition,
-                    left: measure,
+                    left: measure.measure.localIdentifier,
                 },
                 execution: {
                     ...alert.alert!.execution,

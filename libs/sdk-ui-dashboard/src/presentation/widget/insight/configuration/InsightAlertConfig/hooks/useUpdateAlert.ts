@@ -6,7 +6,7 @@ import {
     CommandProcessingStatus,
     saveAlert,
     useDashboardCommandProcessing,
-} from "../../../../../model/index.js";
+} from "../../../../../../model/index.js";
 
 /**
  * @internal

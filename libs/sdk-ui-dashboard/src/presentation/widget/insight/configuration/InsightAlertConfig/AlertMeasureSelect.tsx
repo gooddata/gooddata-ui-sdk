@@ -7,7 +7,7 @@ import { getMeasureTitle } from "./utils.js";
 import { DROPDOWN_ITEM_HEIGHT } from "./constants.js";
 
 export interface IAlertMetricSelectProps {
-    selectedMeasure: IMeasure;
+    selectedMeasureIdentifier: string;
     onMeasureChange: (measure: IMeasure) => void;
     measures: IMeasure[];
 }
@@ -15,10 +15,18 @@ export interface IAlertMetricSelectProps {
 const measureIcon = <div className="gd-alert-measure-select__icon gd-icon-metric" />;
 
 export const AlertMeasureSelect = ({
-    selectedMeasure,
+    selectedMeasureIdentifier,
     onMeasureChange,
     measures,
 }: IAlertMetricSelectProps) => {
+    const selectedMeasure = measures.find(
+        (measure) => measure.measure.localIdentifier === selectedMeasureIdentifier,
+    );
+
+    if (!selectedMeasure) {
+        return null;
+    }
+
     const selectedMeasureTitle = getMeasureTitle(selectedMeasure);
 
     return (

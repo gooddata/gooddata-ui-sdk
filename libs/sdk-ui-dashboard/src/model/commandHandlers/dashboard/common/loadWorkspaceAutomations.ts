@@ -1,22 +1,25 @@
 // (C) 2021-2024 GoodData Corporation
-import { ISettings } from "@gooddata/sdk-model";
+import { IAutomationMetadataObject, ISettings } from "@gooddata/sdk-model";
 import { DashboardContext, Automations } from "../../../types/commonTypes.js";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
-export function loadWorkspaceAutomationsCount(ctx: DashboardContext, settings: ISettings): Promise<number> {
+export function loadWorkspaceAutomations(
+    ctx: DashboardContext,
+    settings: ISettings,
+): Promise<IAutomationMetadataObject[]> {
     const { backend, workspace } = ctx;
 
     if (!settings?.enableScheduling) {
-        return Promise.resolve(0);
+        return Promise.resolve([]);
     }
 
     return backend
         .workspace(workspace)
         .automations()
         .getAutomationsQuery()
-        .withSize(1)
+        .withAll()
         .query()
-        .then((result) => result.totalCount);
+        .then((result) => result.items);
 }
 
 export function loadContextAutomations(

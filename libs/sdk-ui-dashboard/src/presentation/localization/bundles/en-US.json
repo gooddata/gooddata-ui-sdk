@@ -2815,5 +2815,15 @@
         "value": "Failed to load necessary information. Try again later.",
         "comment": "",
         "limit": 0
+    },
+    "insightAlert.config.save.error": {
+        "value": "Failed to save alert. Try again later.",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.delete.error": {
+        "value": "Failed to delete alert. Try again later.",
+        "comment": "",
+        "limit": 0
     }
 }
