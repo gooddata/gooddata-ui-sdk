@@ -821,6 +821,9 @@ export interface IAutomationMetadataObjectBase {
         message?: string;
     };
     exportDefinitions?: IExportDefinitionMetadataObject[];
+    metadata?: {
+        widget?: string;
+    };
     recipients?: IAutomationRecipient[];
     schedule?: IAutomationSchedule;
     webhook?: string;

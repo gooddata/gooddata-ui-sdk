@@ -51,7 +51,8 @@ export function convertAutomation(
     included: JsonApiAutomationOutIncludes[],
 ): IAutomationMetadataObject {
     const { id, attributes = {}, relationships = {} } = automation;
-    const { title, description, tags, schedule, alert, details, createdAt, modifiedAt } = attributes;
+    const { title, description, tags, schedule, alert, details, createdAt, modifiedAt, metadata } =
+        attributes;
     const { createdBy, modifiedBy } = relationships;
 
     const webhook = relationships?.notificationChannel?.data?.id;
@@ -76,11 +77,13 @@ export function convertAutomation(
     const convertedAlert = convertAlert(alert);
     const alertObj = convertedAlert ? { alert: convertedAlert } : {};
     const scheduleObj = schedule ? { schedule } : {};
+    const metadataObj = metadata ? { metadata } : {};
 
     return {
         // Core
         ...scheduleObj,
         ...alertObj,
+        ...metadataObj,
         // Common metadata object properties
         type: "automation",
         id,

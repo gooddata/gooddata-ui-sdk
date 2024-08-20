@@ -60,6 +60,13 @@ export interface IAutomationMetadataObjectBase {
      * Dashboard that automation is related to.
      */
     dashboard?: Identifier;
+
+    /**
+     * Additional metadata of the automation.
+     */
+    metadata?: {
+        widget?: string;
+    };
 }
 
 /**

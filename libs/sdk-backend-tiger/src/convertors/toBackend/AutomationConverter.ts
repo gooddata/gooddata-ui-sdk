@@ -20,8 +20,20 @@ export function convertAutomation(
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
     exportDefinitionIds?: string[],
 ): JsonApiAutomationIn {
-    const { id, type, description, schedule, alert, tags, title, recipients, details, webhook, dashboard } =
-        automation;
+    const {
+        id,
+        type,
+        description,
+        schedule,
+        alert,
+        tags,
+        title,
+        recipients,
+        details,
+        webhook,
+        dashboard,
+        metadata,
+    } = automation;
     const relationships = omitBy(
         {
             exportDefinitions: exportDefinitionIds?.length
@@ -58,6 +70,7 @@ export function convertAutomation(
               alert: convertAlert(alert),
           }
         : {};
+    const metadataObj = metadata ? { metadata } : {};
 
     const attributes = omitBy(
         {
@@ -65,6 +78,7 @@ export function convertAutomation(
             description,
             tags,
             details,
+            ...metadataObj,
             ...scheduleObj,
             ...alertObj,
         },
