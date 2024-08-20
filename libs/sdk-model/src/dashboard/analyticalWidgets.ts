@@ -11,7 +11,7 @@ import { IKpi } from "./kpi.js";
  *
  * @public
  */
-export type AnalyticalWidgetType = "kpi" | "insight" | "richText";
+export type AnalyticalWidgetType = "kpi" | "insight" | "richText" | "stack";
 
 /**
  * Analytical Widgets are a sub-type of dashboard widgets that display analytics. Be it charts rendering
@@ -159,6 +159,28 @@ export interface IInsightWidget extends IInsightWidgetBase, IDashboardObjectIden
  * @public
  */
 export interface IInsightWidgetDefinition extends IInsightWidgetBase, Partial<IDashboardObjectIdentity> {}
+
+/**
+ * @public
+ */
+export interface IStackWidgetBase extends IAnalyticalWidget {
+    readonly type: "stack";
+
+    /**
+     * Markdown text of the rich text widget.
+     */
+    readonly content: string;
+}
+
+/**
+ * @public
+ */
+export interface IStackWidget extends IStackWidgetBase, IDashboardObjectIdentity {}
+
+/**
+ * @public
+ */
+export interface IStackWidgetDefinition extends IStackWidgetBase, Partial<IDashboardObjectIdentity> {}
 
 /**
  * @public

@@ -93,6 +93,15 @@ export type IKpiDraggingComponentProps = {
 /**
  * @internal
  */
+export type IStackDraggingComponentProps = {
+    itemType: "stack";
+    // TODO
+    item: InsightDraggableItem[];
+};
+
+/**
+ * @internal
+ */
 export type IRichTextDraggingComponentProps = {
     itemType: "richText";
     item: RichTextDraggableItem;
@@ -125,6 +134,11 @@ export type InsightDraggingComponent = ComponentType<IInsightDraggingComponentPr
  * @internal
  */
 export type KpiDraggingComponent = ComponentType<IKpiDraggingComponentProps>;
+
+/**
+ * @internal
+ */
+export type StackDraggingComponent = ComponentType<IStackDraggingComponentProps>;
 
 /**
  * @internal
@@ -171,6 +185,14 @@ export type KpiDraggableComponent = {
 /**
  * @internal
  */
+export type StackDraggableComponent = {
+    DraggingComponent?: StackDraggableComponent;
+    type: "stack";
+};
+
+/**
+ * @internal
+ */
 export type RichTextDraggableComponent = {
     DraggingComponent?: RichTextDraggingComponent;
     type: "richText";
@@ -195,6 +217,7 @@ export type DraggableComponent = {
         | KpiDraggableComponent
         | InsightDraggableComponent
         | RichTextDraggableComponent
+        | StackDraggableComponent
         | CustomDraggableComponent;
 };
 
@@ -331,6 +354,20 @@ export type KpiWidgetComponentSet = CustomComponentBase<
  * @internal
  */
 export type InsightWidgetComponentSet = CustomComponentBase<
+    IDashboardInsightProps,
+    Parameters<InsightComponentProvider>
+> &
+    DraggableComponent &
+    Partial<CreatableByDragComponent> &
+    Partial<CreatablePlaceholderComponent<IDashboardWidgetProps>> &
+    ConfigurableWidget<IInsightWidget>;
+
+/**
+ * Definition of Stack widget
+ * // NESTOR
+ * @internal
+ */
+export type StackWidgetComponentSet = CustomComponentBase<
     IDashboardInsightProps,
     Parameters<InsightComponentProvider>
 > &

@@ -57,6 +57,21 @@ export const RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo =
 
 /**
  * @internal
+ * // NESTOR
+ */
+export const STACK_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo = {
+    width: {
+        min: 2,
+        default: 6,
+    },
+    height: {
+        default: 22,
+        min: 6,
+        max: 40,
+    },
+};
+/**
+ * @internal
  */
 export const KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationDefaultSizeInfo = {
     width: {

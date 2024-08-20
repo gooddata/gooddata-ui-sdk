@@ -21,7 +21,7 @@ export type AccessGranularPermission = "VIEW" | "EDIT" | "SHARE";
 export type AllTimeGranularity = "ALL_TIME_GRANULARITY";
 
 // @public
-export type AnalyticalWidgetType = "kpi" | "insight" | "richText";
+export type AnalyticalWidgetType = "kpi" | "insight" | "richText" | "stack";
 
 // @public
 export const anyAttribute: AttributePredicate;
@@ -3225,6 +3225,27 @@ export function isSimpleMeasureFilter(obj: unknown): obj is IMeasureFilter;
 export function isSingleSelectionFilter(filter: IDashboardAttributeFilter): boolean;
 
 // @alpha
+export function isStackWidget(obj: unknown): obj is IStackWidget;
+
+// @alpha
+export function isStackWidgetDefinition(obj: unknown): obj is IStackWidgetDefinition;
+
+// @public (undocumented)
+export interface IStackWidget extends IStackWidgetBase, IDashboardObjectIdentity {
+}
+
+// @public (undocumented)
+export interface IStackWidgetBase extends IAnalyticalWidget {
+    readonly content: string;
+    // (undocumented)
+    readonly type: "stack";
+}
+
+// @public (undocumented)
+export interface IStackWidgetDefinition extends IStackWidgetBase, Partial<IDashboardObjectIdentity> {
+}
+
+// @alpha
 export function isTempFilterContext(obj: unknown): obj is ITempFilterContext;
 
 // @public
@@ -3703,7 +3724,7 @@ export interface IWhiteLabeling {
 }
 
 // @public (undocumented)
-export type IWidget = IKpiWidget | IInsightWidget | IRichTextWidget;
+export type IWidget = IKpiWidget | IInsightWidget | IRichTextWidget | IStackWidget;
 
 // @alpha
 export interface IWidgetAlert extends IWidgetAlertBase, IDashboardObjectIdentity {
@@ -3737,7 +3758,7 @@ export interface IWidgetAttachment {
 }
 
 // @public
-export type IWidgetDefinition = IKpiWidgetDefinition | IInsightWidgetDefinition | IRichTextWidgetDefinition;
+export type IWidgetDefinition = IKpiWidgetDefinition | IInsightWidgetDefinition | IRichTextWidgetDefinition | IStackWidgetDefinition;
 
 // @public
 export interface IWidgetDescription {

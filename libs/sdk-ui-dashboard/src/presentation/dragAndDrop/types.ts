@@ -16,6 +16,7 @@ export type DraggableContentItemType =
     | "kpi-placeholder"
     | "richText"
     | "richTextListItem"
+    | "stack"
     | "custom";
 
 /**
@@ -118,6 +119,21 @@ export type InsightDraggableItem = BaseDraggableMovingItem & {
  */
 export function isInsightDraggableItem(item: any): item is InsightDraggableItem {
     return item.type === "insight";
+}
+
+/**
+ * @internal
+ */
+export type StackDraggableItem = BaseDraggableMovingItem & {
+    type: "stack";
+    insight: IInsight;
+};
+
+/**
+ * @internal
+ */
+export function isStackDraggableItem(item: any): item is StackDraggableItem {
+    return item.type === "stack";
 }
 
 /**
@@ -291,6 +307,7 @@ export type DraggableItemComponentTypeMapping = {
     "insight-placeholder": InsightPlaceholderDraggableItem;
     kpi: KpiDraggableItem;
     "kpi-placeholder": KpiPlaceholderDraggableItem;
+    stack: StackDraggableItem;
     richText: RichTextDraggableItem;
     richTextListItem: RichTextDraggableListItem;
     custom: CustomDraggableItem;

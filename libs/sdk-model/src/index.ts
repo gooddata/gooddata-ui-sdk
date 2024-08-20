@@ -594,6 +594,9 @@ export {
     IRichTextWidget,
     IRichTextWidgetBase,
     IRichTextWidgetDefinition,
+    IStackWidget,
+    IStackWidgetBase,
+    IStackWidgetDefinition,
 } from "./dashboard/analyticalWidgets.js";
 
 export {
@@ -686,6 +689,8 @@ export {
     isInsightWidget,
     isRichTextWidget,
     isRichTextWidgetDefinition,
+    isStackWidget,
+    isStackWidgetDefinition,
 } from "./dashboard/widget.js";
 
 export {

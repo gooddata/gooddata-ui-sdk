@@ -51,6 +51,7 @@ export {
     KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY,
     WIDGET_DROPZONE_SIZE_INFO_DEFAULT,
     RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT,
+    STACK_WIDGET_SIZE_INFO_DEFAULT,
     EmbedInsightDialog,
     IEmbedInsightDialogProps,
 } from "./internal/index.js";

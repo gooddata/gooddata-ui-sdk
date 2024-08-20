@@ -2,8 +2,10 @@
 export * from "./DraggableInsightListItem.js";
 export * from "./DraggableKpiCreatePanelItem.js";
 export * from "./DraggableRichTextCreatePanelItem.js";
+export * from "./DraggableStackCreatePanelItem.js";
 export * from "./AddKpiWidgetButton.js";
 export * from "./AddRichTextWidgetButton.js";
+export * from "./AddStackWidgetButton.js";
 export * from "./SectionHotspot.js";
 export * from "./RowEndHotspot.js";
 export * from "./Hotspot.js";
@@ -20,3 +22,4 @@ export * from "./DefaultEmptyLayoutDropZoneBody.js";
 export * from "./InsightDraggingComponent.js";
 export * from "./KpiDraggingComponent.js";
 export * from "./RichTextDraggingComponent.js";
+export * from "./StackDraggingComponent.js";

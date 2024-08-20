@@ -11,18 +11,24 @@ import {
     AnalyticalWidgetType,
     IRichTextWidget,
     IRichTextWidgetDefinition,
+    IStackWidget,
+    IStackWidgetDefinition,
 } from "./analyticalWidgets.js";
 
 /**
  * See {@link IWidget}]
  * @public
  */
-export type IWidgetDefinition = IKpiWidgetDefinition | IInsightWidgetDefinition | IRichTextWidgetDefinition;
+export type IWidgetDefinition =
+    | IKpiWidgetDefinition
+    | IInsightWidgetDefinition
+    | IRichTextWidgetDefinition
+    | IStackWidgetDefinition;
 
 /**
  * @public
  */
-export type IWidget = IKpiWidget | IInsightWidget | IRichTextWidget;
+export type IWidget = IKpiWidget | IInsightWidget | IRichTextWidget | IStackWidget;
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IWidgetDefinition}.
@@ -46,7 +52,7 @@ export function isWidget(obj: unknown): obj is IWidget {
 function hasWidgetProps(obj: unknown): boolean {
     return (
         !isEmpty(obj) &&
-        (["kpi", "richText", "insight"] as IAnalyticalWidget["type"][]).some(
+        (["kpi", "richText", "insight", "stack"] as IAnalyticalWidget["type"][]).some(
             (x) => (obj as IAnalyticalWidget).type === x,
         )
     );
@@ -163,4 +169,20 @@ export function isRichTextWidget(obj: unknown): obj is IRichTextWidget {
  */
 export function isRichTextWidgetDefinition(obj: unknown): obj is IRichTextWidgetDefinition {
     return isWidgetDefinition(obj) && (obj as IRichTextWidgetDefinition).type === "richText";
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IStackWidget}.
+ * @alpha
+ */
+export function isStackWidget(obj: unknown): obj is IStackWidget {
+    return isWidget(obj) && (obj as IStackWidget).type === "stack";
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IStackWidgetDefinition}.
+ * @alpha
+ */
+export function isStackWidgetDefinition(obj: unknown): obj is IStackWidgetDefinition {
+    return isWidgetDefinition(obj) && (obj as IStackWidgetDefinition).type === "stack";
 }
