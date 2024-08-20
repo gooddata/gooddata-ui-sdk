@@ -79,6 +79,14 @@ export class TigerWorkspaceSettings
         return this.setSetting("ACTIVE_COLOR_PALETTE", { id: activeColorPaletteId, type: "colorPalette" });
     }
 
+    public async deleteTheme() {
+        return this.deleteSettingByType("ACTIVE_THEME");
+    }
+
+    public async deleteColorPalette() {
+        return this.deleteSettingByType("ACTIVE_COLOR_PALETTE");
+    }
+
     public getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings> {
         return getSettingsForCurrentUser(this.authCall, this.workspace);
     }
