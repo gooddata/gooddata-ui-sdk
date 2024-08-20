@@ -531,7 +531,7 @@ export type Automations = IAutomationMetadataObject[];
 // @alpha (undocumented)
 export interface AutomationsState {
     // (undocumented)
-    automations: number;
+    automations: IAutomationMetadataObject[];
     // (undocumented)
     error?: GoodDataSdkError;
     // (undocumented)
@@ -6816,6 +6816,15 @@ export const selectAttributeFilterDisplayFormsMap: DashboardSelector<ObjRefMap<I
 export const selectAttributesWithDrillDown: DashboardSelector<(ICatalogAttribute | ICatalogDateAttribute)[]>;
 
 // @alpha
+export const selectAutomations: DashboardSelector<IAutomationMetadataObject[]>;
+
+// @alpha
+export const selectAutomationsAlerts: DashboardSelector<IAutomationMetadataObject[]>;
+
+// @alpha
+export const selectAutomationsAlertsInContext: DashboardSelector<IAutomationMetadataObject[]>;
+
+// @alpha
 export const selectAutomationsCount: DashboardSelector<number>;
 
 // @alpha
@@ -6826,6 +6835,12 @@ export const selectAutomationsFingerprint: DashboardSelector<string>;
 
 // @alpha
 export const selectAutomationsIsLoading: DashboardSelector<boolean>;
+
+// @alpha
+export const selectAutomationsSchedules: DashboardSelector<IAutomationMetadataObject[]>;
+
+// @alpha
+export const selectAutomationsSchedulesInContext: DashboardSelector<IAutomationMetadataObject[]>;
 
 // @public
 export const selectBackendCapabilities: DashboardSelector<IBackendCapabilities>;

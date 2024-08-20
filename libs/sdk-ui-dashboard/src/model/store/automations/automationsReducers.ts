@@ -4,10 +4,11 @@ import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { AutomationsState } from "./automationsState.js";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { v4 as uuid } from "uuid";
+import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 
 type AutomationsReducer<A extends Action> = CaseReducer<AutomationsState, A>;
 
-const setAutomationsCount: AutomationsReducer<PayloadAction<number>> = (state, action) => {
+const setAutomations: AutomationsReducer<PayloadAction<IAutomationMetadataObject[]>> = (state, action) => {
     state.automations = action.payload;
     state.loading = false;
 };
@@ -26,7 +27,7 @@ const refreshAutomationsFingerprint: AutomationsReducer<PayloadAction> = (state)
 };
 
 export const automationsReducers = {
-    setAutomationsCount,
+    setAutomations,
     setAutomationsLoading,
     setAutomationsError,
     refreshAutomationsFingerprint,

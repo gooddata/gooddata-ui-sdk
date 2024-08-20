@@ -59,7 +59,7 @@ import { resolveEntitlements } from "./resolveEntitlements.js";
 import { attributeFilterConfigsActions } from "../../../store/attributeFilterConfigs/index.js";
 import { dateFilterConfigsActions } from "../../../store/dateFilterConfigs/index.js";
 import { loadDateHierarchyTemplates } from "./loadDateHierarchyTemplates.js";
-import { loadWorkspaceAutomationsCount } from "../common/loadWorkspaceAutomations.js";
+import { loadWorkspaceAutomations } from "../common/loadWorkspaceAutomations.js";
 import { automationsActions } from "../../../store/automations/index.js";
 import { loadOrganizationWebhooks } from "../common/loadOrganizationWebhooks.js";
 import { webhooksActions } from "../../../store/webhooks/index.js";
@@ -250,13 +250,13 @@ function* loadExistingDashboard(
     );
 
     const ffCalls = [
-        call(loadWorkspaceAutomationsCount, ctx, config.settings),
+        call(loadWorkspaceAutomations, ctx, config.settings),
         call(loadWorkspaceUsers, ctx, config.settings),
         call(loadOrganizationWebhooks, ctx, config.settings),
     ];
 
     const [automations, users, webhooks]: [
-        PromiseFnReturnType<typeof loadWorkspaceAutomationsCount>,
+        PromiseFnReturnType<typeof loadWorkspaceAutomations>,
         PromiseFnReturnType<typeof loadWorkspaceUsers>,
         PromiseFnReturnType<typeof loadOrganizationWebhooks>,
     ] = yield all(ffCalls);
@@ -295,7 +295,7 @@ function* loadExistingDashboard(
             uiActions.setMenuButtonItemsVisibility(config.menuButtonItemsVisibility),
             renderModeActions.setRenderMode(config.initialRenderMode),
             dashboardPermissionsActions.setDashboardPermissions(dashboardPermissions),
-            automationsActions.setAutomationsCount(automations),
+            automationsActions.setAutomations(automations),
             automationsActions.refreshAutomationsFingerprint(),
             webhooksActions.setWebhooks(webhooks),
             usersActions.setUsers(users),
@@ -354,13 +354,13 @@ function* initializeNewDashboard(
     ]);
 
     const ffCalls = [
-        call(loadWorkspaceAutomationsCount, ctx, config.settings),
+        call(loadWorkspaceAutomations, ctx, config.settings),
         call(loadWorkspaceUsers, ctx, config.settings),
         call(loadOrganizationWebhooks, ctx, config.settings),
     ];
 
     const [automations, users, webhooks]: [
-        PromiseFnReturnType<typeof loadWorkspaceAutomationsCount>,
+        PromiseFnReturnType<typeof loadWorkspaceAutomations>,
         PromiseFnReturnType<typeof loadWorkspaceUsers>,
         PromiseFnReturnType<typeof loadOrganizationWebhooks>,
     ] = yield all(ffCalls);
@@ -399,7 +399,7 @@ function* initializeNewDashboard(
                 canEditDashboard: true,
                 canEditLockedDashboard: true,
             }),
-            automationsActions.setAutomationsCount(automations),
+            automationsActions.setAutomations(automations),
             automationsActions.refreshAutomationsFingerprint(),
             webhooksActions.setWebhooks(webhooks),
             usersActions.setUsers(users),

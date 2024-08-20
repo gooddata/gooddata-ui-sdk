@@ -7,7 +7,6 @@ import {
     IExportDefinitionMetadataObjectDefinition,
 } from "../exportDefinitions/index.js";
 import { IExecutionDefinition } from "../execution/executionDefinition/index.js";
-import { IMeasure } from "../execution/measure/index.js";
 import { Identifier } from "../objRef/index.js";
 
 /**
@@ -223,9 +222,9 @@ export type IAutomationAlertExecutionDefinition = Pick<
  */
 export type IAlertComparisonOperator =
     | "LESS_THAN"
-    | "LESS_THAN_OR_EQUALS"
+    | "LESS_THAN_OR_EQUAL_TO"
     | "GREATER_THAN"
-    | "GREATER_THAN_OR_EQUALS";
+    | "GREATER_THAN_OR_EQUAL_TO";
 
 /**
  * @alpha
@@ -242,9 +241,9 @@ export interface IAutomationAlertCondition {
     operator: IAlertComparisonOperator;
 
     /**
-     * Left side of the condition.
+     * Indetifier of left side of the condition.
      */
-    left: IMeasure;
+    left: string;
 
     /**
      * Right side of the condition.

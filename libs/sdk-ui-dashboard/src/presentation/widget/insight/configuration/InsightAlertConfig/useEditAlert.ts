@@ -32,7 +32,7 @@ export const useEditAlert = ({ alert, onCreate, onUpdate }: IUseEditAlertProps) 
                 ...alert.alert!,
                 condition: {
                     ...alert.alert!.condition,
-                    left: measure,
+                    left: measure.measure.localIdentifier,
                 },
                 execution: {
                     ...alert.alert!.execution,

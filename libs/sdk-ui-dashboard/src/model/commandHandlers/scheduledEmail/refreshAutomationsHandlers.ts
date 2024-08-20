@@ -6,7 +6,7 @@ import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
 import { RefreshAutomations } from "../../commands/scheduledEmail.js";
-import { loadWorkspaceAutomationsCount } from "../dashboard/common/loadWorkspaceAutomations.js";
+import { loadWorkspaceAutomations } from "../dashboard/common/loadWorkspaceAutomations.js";
 import { selectConfig } from "../../store/config/configSelectors.js";
 import { automationsActions } from "../../store/automations/index.js";
 
@@ -16,13 +16,13 @@ export function* refreshAutomationsHandlers(ctx: DashboardContext, _cmd: Refresh
     yield put(automationsActions.refreshAutomationsFingerprint());
     try {
         const config = yield select(selectConfig);
-        const automations: PromiseFnReturnType<typeof loadWorkspaceAutomationsCount> = yield call(
-            loadWorkspaceAutomationsCount,
+        const automations: PromiseFnReturnType<typeof loadWorkspaceAutomations> = yield call(
+            loadWorkspaceAutomations,
             ctx,
             config?.settings ?? {},
         );
 
-        yield put(automationsActions.setAutomationsCount(automations));
+        yield put(automationsActions.setAutomations(automations));
     } catch (e) {
         yield put(automationsActions.setAutomationsError(e as GoodDataSdkError));
     }

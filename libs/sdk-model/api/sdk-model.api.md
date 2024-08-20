@@ -568,7 +568,7 @@ export interface IAccessControlAware {
 export type IAccessGrantee = IUserGroupAccessGrantee | IUserAccessGrantee | IGranularAccessGrantee;
 
 // @alpha (undocumented)
-export type IAlertComparisonOperator = "LESS_THAN" | "LESS_THAN_OR_EQUALS" | "GREATER_THAN" | "GREATER_THAN_OR_EQUALS";
+export type IAlertComparisonOperator = "LESS_THAN" | "LESS_THAN_OR_EQUAL_TO" | "GREATER_THAN" | "GREATER_THAN_OR_EQUAL_TO";
 
 // @public
 export interface IAlertDefault {
@@ -791,7 +791,7 @@ export interface IAutomationAlert {
 
 // @alpha (undocumented)
 export interface IAutomationAlertCondition {
-    left: IMeasure;
+    left: string;
     operator: IAlertComparisonOperator;
     right: number;
     type: "comparison";

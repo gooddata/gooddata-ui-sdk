@@ -390,7 +390,12 @@ export {
 
 export { AutomationsState } from "./automations/automationsState.js";
 export {
+    selectAutomations,
     selectAutomationsCount,
+    selectAutomationsAlerts,
+    selectAutomationsSchedules,
+    selectAutomationsAlertsInContext,
+    selectAutomationsSchedulesInContext,
     selectAutomationsIsLoading,
     selectAutomationsError,
     selectAutomationsFingerprint,

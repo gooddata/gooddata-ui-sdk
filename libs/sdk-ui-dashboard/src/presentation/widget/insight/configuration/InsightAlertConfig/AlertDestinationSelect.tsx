@@ -2,12 +2,13 @@
 import React from "react";
 import { Dropdown, Button, List, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
-import { DROPDOWN_ITEM_HEIGHT, INotificationChannel } from "./constants.js";
+import { DROPDOWN_ITEM_HEIGHT } from "./constants.js";
+import { Webhooks } from "../../../../../model/index.js";
 
 export interface IAlertDestinationSelectProps {
     selectedDestination: string;
     onDestinationChange: (destinationId: string) => void;
-    destinations: INotificationChannel[];
+    destinations: Webhooks;
 }
 
 export const AlertDestinationSelect: React.FC<IAlertDestinationSelectProps> = ({
@@ -37,7 +38,7 @@ export const AlertDestinationSelect: React.FC<IAlertDestinationSelectProps> = ({
                                 },
                             )}
                         >
-                            {selectedOption?.title}
+                            {selectedOption?.destination?.name}
                         </Button>
                     );
                 }}
@@ -50,7 +51,7 @@ export const AlertDestinationSelect: React.FC<IAlertDestinationSelectProps> = ({
                             renderItem={(i) => (
                                 <SingleSelectListItem
                                     key={i.rowIndex}
-                                    title={i.item.title}
+                                    title={i.item.destination?.name}
                                     isSelected={i.item.id === selectedDestination}
                                     onClick={() => {
                                         if (i.item.id !== selectedDestination) {

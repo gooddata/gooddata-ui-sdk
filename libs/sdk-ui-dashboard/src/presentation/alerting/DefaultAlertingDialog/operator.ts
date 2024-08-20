@@ -22,11 +22,11 @@ export function translateOperator(intl: IntlShape, operator?: IAlertComparisonOp
     switch (operator) {
         case "GREATER_THAN":
             return intl.formatMessage(messages.greaterThan);
-        case "GREATER_THAN_OR_EQUALS":
+        case "GREATER_THAN_OR_EQUAL_TO":
             return intl.formatMessage(messages.greaterThanOrEquals);
         case "LESS_THAN":
             return intl.formatMessage(messages.lessThan);
-        case "LESS_THAN_OR_EQUALS":
+        case "LESS_THAN_OR_EQUAL_TO":
             return intl.formatMessage(messages.lessThanOrEquals);
         default:
             return String(operator).toLowerCase();

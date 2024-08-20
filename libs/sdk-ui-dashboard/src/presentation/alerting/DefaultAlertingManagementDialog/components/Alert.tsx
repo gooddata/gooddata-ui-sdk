@@ -120,7 +120,7 @@ export const Alert: React.FC<IAlertProps> = (props) => {
                                 className="gd-scheduled-email-shortened-text"
                                 tooltipAlignPoints={TEXT_TOOLTIP_ALIGN_POINTS}
                             >
-                                {alert.alert?.condition?.left?.measure.title ??
+                                {alert.alert?.condition?.left ??
                                     alert.title ??
                                     intl.formatMessage({ id: "dialogs.alerting.title.placeholder" })}
                             </ShortenedText>
