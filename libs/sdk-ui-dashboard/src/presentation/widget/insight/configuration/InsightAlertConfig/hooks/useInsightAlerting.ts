@@ -181,6 +181,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         try {
             await effectiveBackend.workspace(effectiveWorkspace).automations().deleteAutomation(alert.id);
             addSuccess(messages.alertDeleteSuccess);
+            setViewMode(alerts.length === 1 ? "create" : "list");
             handleRefreshAutomations();
         } catch (err) {
             addError(messages.alertDeleteError);
