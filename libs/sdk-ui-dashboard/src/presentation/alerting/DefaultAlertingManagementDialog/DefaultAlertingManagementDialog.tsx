@@ -3,7 +3,11 @@
 import React, { useCallback, useState } from "react";
 import { defineMessage, FormattedMessage, useIntl } from "react-intl";
 import { Button, Dialog, Hyperlink, Typography } from "@gooddata/sdk-ui-kit";
-import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
+import {
+    IAutomationMetadataObject,
+    IAutomationMetadataObjectDefinition,
+    IInsightWidget,
+} from "@gooddata/sdk-model";
 
 import { IAlertingManagementDialogProps } from "../types.js";
 import { isMobileView } from "../DefaultAlertingDialog/utils/responsive.js";
@@ -37,8 +41,13 @@ export const AlertingManagementDialog: React.FC<IAlertingManagementDialogProps> 
     }, []);
 
     const handleAlertEdit = useCallback(
-        (alert: IAutomationMetadataObject) => {
-            onEdit?.(alert);
+        (
+            alert: IAutomationMetadataObject,
+            widget: IInsightWidget | undefined,
+            anchor: HTMLElement | null,
+            onClosed: () => void,
+        ) => {
+            onEdit?.(alert, widget, anchor, onClosed);
         },
         [onEdit],
     );

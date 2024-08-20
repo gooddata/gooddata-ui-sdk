@@ -2,7 +2,9 @@
 
 import React, { useCallback, useEffect } from "react";
 import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
-import { GoodDataSdkError, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { GoodDataSdkError } from "@gooddata/sdk-ui";
+
+import { useUpdateAlert } from "../../../widget/index.js";
 
 interface IPauseAlertRunnerProps {
     alert: IAutomationMetadataObject | null;
@@ -17,36 +19,36 @@ interface IPauseAlertRunnerProps {
 export const PauseAlertRunner: React.FC<IPauseAlertRunnerProps> = (props) => {
     const { alert, pause, onSuccess, onError } = props;
 
-    const effectiveBackend = useBackendStrict();
-    const effectiveWorkspace = useWorkspaceStrict();
+    const { save } = useUpdateAlert({
+        onSuccess: () => {
+            if (alert) {
+                onSuccess?.(alert, pause);
+            }
+        },
+        onError: (error) => {
+            onError?.(error as GoodDataSdkError, pause);
+        },
+    });
 
     const handlerPauseAlert = useCallback(async () => {
         if (!alert) {
             return;
         }
-        try {
-            await effectiveBackend
-                .workspace(effectiveWorkspace)
-                .automations()
-                .updateAutomation({
-                    ...alert,
-                    ...(alert.alert
-                        ? {
-                              alert: {
-                                  ...alert.alert,
-                                  trigger: {
-                                      ...alert.alert?.trigger,
-                                      state: pause ? "PAUSED" : "ACTIVE",
-                                  },
-                              },
-                          }
-                        : {}),
-                });
-            onSuccess?.(alert, pause);
-        } catch (err) {
-            onError?.(err as GoodDataSdkError, pause);
-        }
-    }, [alert, effectiveBackend, effectiveWorkspace, onError, onSuccess, pause]);
+        save({
+            ...alert,
+            ...(alert.alert
+                ? {
+                      alert: {
+                          ...alert.alert,
+                          trigger: {
+                              ...alert.alert?.trigger,
+                              state: pause ? "PAUSED" : "ACTIVE",
+                          },
+                      },
+                  }
+                : {}),
+        });
+    }, [alert, pause, save]);
 
     useEffect(() => {
         void handlerPauseAlert();

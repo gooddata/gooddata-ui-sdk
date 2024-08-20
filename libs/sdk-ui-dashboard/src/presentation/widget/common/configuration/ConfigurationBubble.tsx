@@ -9,6 +9,7 @@ interface IConfigurationBubbleProps {
     children?: React.ReactNode;
     alignTo?: string;
     alignPoints?: IAlignPoint[];
+    arrowOffsets?: ArrowOffsets;
 }
 
 const defaultAlignPoints: IAlignPoint[] = [
@@ -19,7 +20,7 @@ const defaultAlignPoints: IAlignPoint[] = [
     { align: "br br" },
 ];
 
-const arrowOffsets: ArrowOffsets = {
+const defaultArrowOffsets: ArrowOffsets = {
     "tr tl": [7, 28],
     "br bl": [7, -28],
     "tl tr": [-7, 28],
@@ -32,9 +33,6 @@ const arrowDirections: ArrowDirections = {
     "br br": "right",
 };
 
-const alignTo = ".s-dash-item.is-selected";
-const ignoreClicksOnByClass = [alignTo]; // do not close on click to the widget
-
 export const ConfigurationBubble: React.FC<IConfigurationBubbleProps> = (props) => {
     const {
         children,
@@ -42,7 +40,9 @@ export const ConfigurationBubble: React.FC<IConfigurationBubbleProps> = (props) 
         onClose,
         alignTo = ".s-dash-item.is-selected",
         alignPoints = defaultAlignPoints,
+        arrowOffsets = defaultArrowOffsets,
     } = props;
+    const ignoreClicksOnByClass = [alignTo]; // do not close on click to the widget
 
     return (
         <Bubble

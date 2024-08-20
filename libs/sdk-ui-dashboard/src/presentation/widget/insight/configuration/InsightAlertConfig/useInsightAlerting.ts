@@ -23,7 +23,7 @@ import { useWidgetFilters } from "../../../common/useWidgetFilters.js";
 type InsightWidgetAlertingViewMode = "list" | "edit" | "create";
 
 export interface IInsightWidgetAlertingProps {
-    widget: IInsightWidget;
+    widget?: IInsightWidget | null;
     closeInsightWidgetMenu: () => void;
 }
 
@@ -41,7 +41,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         { id: "webhook", title: "Webhook" },
     ];
 
-    const insight = useDashboardSelector(selectInsightByWidgetRef(widget.ref))!;
+    const insight = useDashboardSelector(selectInsightByWidgetRef(widget?.ref));
     const { result: widgetFilters, status: widgetFiltersStatus } = useWidgetFilters(widget, insight);
     const supportedMeasures = getSupportedInsightMeasuresByInsight(insight);
     const defaultMeasure = supportedMeasures[0];

@@ -96,7 +96,7 @@ type InsightType =
     | "waterfall"
     | "repeater";
 
-export const getSupportedInsightMeasuresByInsight = (insight: IInsight) => {
+export const getSupportedInsightMeasuresByInsight = (insight: IInsight | null | undefined) => {
     const visualizationUrl = insight?.insight.visualizationUrl;
     const insightType = visualizationUrl?.split(":")[1] as InsightType;
 

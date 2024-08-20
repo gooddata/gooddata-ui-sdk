@@ -1,10 +1,6 @@
 // (C) 2019-2024 GoodData Corporation
 import { ComponentType } from "react";
-import {
-    IAutomationMetadataObject,
-    IAutomationMetadataObjectDefinition,
-    IWebhookDefinitionObject,
-} from "@gooddata/sdk-model";
+import { IAutomationMetadataObject, IInsightWidget, IWebhookDefinitionObject } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 ///
@@ -16,59 +12,34 @@ import { GoodDataSdkError } from "@gooddata/sdk-ui";
  */
 export interface IAlertingDialogProps {
     /**
-     * Is scheduled e-mail dialog visible?
+     * Is alerting e-mail dialog visible?
      */
     isVisible?: boolean;
 
     /**
-     * Callback to be called, when user submits the scheduled email dialog.
+     * Callback to be called, when user save the existing alert.
      */
-    onSubmit?: (alertingDefinition: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => void;
+    onUpdate?: (alertingDefinition: IAutomationMetadataObject) => void;
 
     /**
-     * Callback to be called, when user save the existing scheduled email.
-     */
-    onSave?: (alertingDefinition: IAutomationMetadataObject) => void;
-
-    /**
-     * Callback to be called, when user closes the scheduled email dialog.
+     * Callback to be called, when user closes the alerting dialog.
      */
     onCancel?: () => void;
 
     /**
-     * Callback to be called, when error occurs.
-     */
-    onSaveError?: (error: GoodDataSdkError) => void;
-
-    /**
-     * Callback to be called, when scheduling finishes successfully.
-     */
-    onSaveSuccess?: () => void;
-
-    /**
-     * Callback to be called, when scheduled email is deleted.
-     */
-    onDeleteSuccess?: () => void;
-
-    /**
-     * Callback to be called, when schedule fails to delete.
-     */
-    onDeleteError?: (error: GoodDataSdkError) => void;
-
-    /**
-     * Schedule to be edited in the dialog.
+     * Alert to be edited in the dialog.
      */
     editAlert?: IAutomationMetadataObject;
 
     /**
-     * Webhooks in organization
+     * Widget to be edited in the dialog.
      */
-    webhooks: IWebhookDefinitionObject[];
+    editWidget?: IInsightWidget;
 
     /**
-     * Automations in workspace
+     * Anchor element for the dialog.
      */
-    automations: IAutomationMetadataObject[];
+    anchorEl?: HTMLElement | null;
 }
 
 /**
@@ -76,27 +47,32 @@ export interface IAlertingDialogProps {
  */
 export interface IAlertingManagementDialogProps {
     /**
-     * Is scheduled email management dialog visible?
+     * Is alerting management dialog visible?
      */
     isVisible?: boolean;
 
     /**
-     * Callback to be called, when user clicks scheduled email item for editing.
+     * Callback to be called, when user clicks alert item for editing.
      */
-    onEdit?: (alertingDefinition: IAutomationMetadataObject) => void;
+    onEdit?: (
+        alertingDefinition: IAutomationMetadataObject,
+        widget: IInsightWidget | undefined,
+        anchor: HTMLElement | null,
+        onClosed: () => void,
+    ) => void;
 
     /**
-     * Callback to be called, when user closes the scheduled email management dialog.
+     * Callback to be called, when user closes the alert management dialog.
      */
     onClose?: () => void;
 
     /**
-     * Is loading schedule data?
+     * Is loading alert data?
      */
     isLoadingAlertingData: boolean;
 
     /**
-     * Error occurred while loading schedule data?
+     * Error occurred while loading alert data?
      */
     alertingDataError?: GoodDataSdkError;
 
@@ -111,13 +87,13 @@ export interface IAlertingManagementDialogProps {
     automations: IAutomationMetadataObject[];
 
     /**
-     * Callback to be called, when scheduled email is deleted.
+     * Callback to be called, when alert is deleted.
      * @param alert - alert that was deleted
      */
     onDeleteSuccess?: (alert: IAutomationMetadataObject) => void;
 
     /**
-     * Callback to be called, when schedule fails to delete.
+     * Callback to be called, when alert fails to delete.
      */
     onDeleteError?: (error: GoodDataSdkError) => void;
 
@@ -160,5 +136,5 @@ export interface IAlertDropdownProps {
     onDelete: () => void;
     onPause: () => void;
     onEdit: () => void;
-    onActivate: () => void;
+    onResume: () => void;
 }

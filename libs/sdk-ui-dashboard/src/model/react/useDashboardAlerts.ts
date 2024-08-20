@@ -21,7 +21,7 @@ import {
     selectAutomationsError,
 } from "../store/index.js";
 import { useCallback, useState } from "react";
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { IAutomationMetadataObject, IInsightWidget } from "@gooddata/sdk-model";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import { messages } from "../../locales.js";
 import {
@@ -45,7 +45,14 @@ export const useDashboardAlerts = ({ dashboard }: { dashboard?: string }) => {
     const isAlertingDialogOpen = useDashboardSelector(selectIsAlertingDialogOpen) || false;
     const isAlertingManagementDialogOpen = useDashboardSelector(selectIsAlertsManagementDialogOpen) || false;
 
-    const [alertingToEdit, setAlertingToEdit] = useState<IAutomationMetadataObject>();
+    const [alertingToEdit, setAlertingToEdit] = useState<{
+        alert: IAutomationMetadataObject;
+        widget: IInsightWidget | undefined;
+        anchor: HTMLElement | null;
+    } | null>(null);
+    const [onEditAlertingClosed, setOnEditAlertingClosed] = useState<{ handler: (() => void) | null }>({
+        handler: null,
+    });
 
     const isReadOnly = useDashboardSelector(selectIsReadOnly);
     const isInViewMode = useDashboardSelector(selectIsInViewMode);
@@ -123,12 +130,21 @@ export const useDashboardAlerts = ({ dashboard }: { dashboard?: string }) => {
     }, [dashboardRef, openAlertingManagementDialog]);
 
     const onAlertingManagementEdit = useCallback(
-        (alert: IAutomationMetadataObject) => {
-            closeAlertingManagementDialog();
-            setAlertingToEdit(alert);
+        (
+            alert: IAutomationMetadataObject,
+            widget: IInsightWidget | undefined,
+            anchor: HTMLElement | null,
+            onClosed: () => void,
+        ) => {
+            setAlertingToEdit({
+                alert,
+                anchor,
+                widget,
+            });
+            setOnEditAlertingClosed({ handler: onClosed });
             openAlertingDialog();
         },
-        [closeAlertingManagementDialog, openAlertingDialog],
+        [openAlertingDialog],
     );
 
     const onAlertingManagementClose = useCallback(() => {
@@ -176,25 +192,21 @@ export const useDashboardAlerts = ({ dashboard }: { dashboard?: string }) => {
         [closeAlertingDialog, addError],
     );
 
-    const onAlertingSaveError = useCallback(() => {
-        closeAlertingDialog();
-        addError(messages.alertingSaveError);
-        setAlertingToEdit(undefined);
-    }, [addError, setAlertingToEdit, closeAlertingDialog]);
-
-    const onAlertingSaveSuccess = useCallback(() => {
-        closeAlertingDialog();
-        openAlertingManagementDialog();
-        addSuccess(messages.alertingSaveSuccess);
-        setAlertingToEdit(undefined);
-        dispatch(refreshAutomations());
-    }, [addSuccess, closeAlertingDialog, openAlertingManagementDialog, dispatch]);
+    const onAlertingUpdate = useCallback(
+        (_alert: IAutomationMetadataObject) => {
+            closeAlertingDialog();
+            setAlertingToEdit(null);
+            dispatch(refreshAutomations());
+        },
+        [closeAlertingDialog, dispatch],
+    );
 
     const onAlertingCancel = useCallback(() => {
         closeAlertingDialog();
-        setAlertingToEdit(undefined);
-        openAlertingManagementDialog();
-    }, [openAlertingManagementDialog, closeAlertingDialog, setAlertingToEdit]);
+        onEditAlertingClosed.handler?.();
+        setAlertingToEdit(null);
+        setOnEditAlertingClosed({ handler: null });
+    }, [closeAlertingDialog, onEditAlertingClosed]);
 
     return {
         webhooks,
@@ -214,9 +226,8 @@ export const useDashboardAlerts = ({ dashboard }: { dashboard?: string }) => {
         onAlertingManagementLoadingError,
         onAlertingManagementPauseSuccess,
         onAlertingManagementPauseError,
-        onAlertingSaveError,
-        onAlertingSaveSuccess,
         onAlertingCancel,
+        onAlertingUpdate,
     };
 };
 
@@ -241,43 +252,7 @@ function useContextAutomations(opts: { dashboardId?: string }) {
     );
 
     return {
-        automations: [
-            ...(result ?? []).filter((automation) => automation.alert),
-            {
-                id: "automation-1",
-                alert: {
-                    execution: {},
-                    condition: {
-                        operator: "LESS_THAN",
-                        left: {
-                            measure: {
-                                title: "# Amount",
-                            },
-                        },
-                        right: 100,
-                    },
-                    trigger: {
-                        mode: "ONCE",
-                        state: "ACTIVE",
-                    },
-                },
-                exportDefinitions: [
-                    {
-                        requestPayload: {
-                            type: "visualizationObject",
-                            fileName: "",
-                            format: "PDF",
-                            content: {
-                                visualizationObject: "",
-                                widget: "64b0678a-cc32-4c9e-8a43-893c70d006da",
-                            },
-                        },
-                    },
-                ],
-                details: {},
-                dashboard: "dashboard/03019990-2e1e-4f29-a7b5-d91082975bf8",
-            },
-        ] as IAutomationMetadataObject[],
+        automations: (result ?? []).filter((automation) => automation.alert),
         automationsLoading: status === "loading",
         automationsError: error,
     };

@@ -22,9 +22,8 @@ export const AlertingDialogProvider = () => {
         onAlertingManagementDeleteError,
         onAlertingManagementPauseSuccess,
         onAlertingManagementPauseError,
-        onAlertingSaveError,
         onAlertingCancel,
-        onAlertingSaveSuccess,
+        onAlertingUpdate,
     } = useDashboardAlerts({
         dashboard,
     });
@@ -48,15 +47,12 @@ export const AlertingDialogProvider = () => {
             ) : null}
             {isAlertingDialogOpen ? (
                 <AlertingDialog
+                    anchorEl={alertingToEdit?.anchor}
+                    editAlert={alertingToEdit?.alert}
+                    editWidget={alertingToEdit?.widget}
                     isVisible={isAlertingDialogOpen}
                     onCancel={onAlertingCancel}
-                    editAlert={alertingToEdit}
-                    onSaveError={onAlertingSaveError}
-                    onSaveSuccess={onAlertingSaveSuccess}
-                    onDeleteSuccess={onAlertingManagementDeleteSuccess}
-                    onDeleteError={onAlertingManagementDeleteError}
-                    automations={automations}
-                    webhooks={webhooks}
+                    onUpdate={onAlertingUpdate}
                 />
             ) : null}
         </>

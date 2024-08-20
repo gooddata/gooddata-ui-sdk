@@ -25,12 +25,12 @@ const DropdownItem: React.FC<IDropdownItemProps> = ({ onClick, labelIntlKey, cla
 const labelMessages = defineMessages({
     delete: { id: "alerting.alert.menu.delete" },
     pause: { id: "alerting.alert.menu.pause" },
-    activate: { id: "alerting.alert.menu.activate" },
+    resume: { id: "alerting.alert.menu.resume" },
     edit: { id: "alerting.alert.menu.edit" },
 });
 
 export const AlertDropdown: React.FC<IAlertDropdownProps> = (props) => {
-    const { paused, alignTo, onClose, onEdit, onPause, onDelete, onActivate } = props;
+    const { paused, alignTo, onClose, onEdit, onPause, onDelete, onResume } = props;
 
     const dropdownActions: IDropdownItemProps[] = [
         {
@@ -40,9 +40,9 @@ export const AlertDropdown: React.FC<IAlertDropdownProps> = (props) => {
         },
         paused
             ? {
-                  labelIntlKey: labelMessages.activate.id,
-                  classNames: "s-activate-alert-button",
-                  onClick: onActivate,
+                  labelIntlKey: labelMessages.resume.id,
+                  classNames: "s-resume-alert-button",
+                  onClick: onResume,
               }
             : {
                   labelIntlKey: labelMessages.pause.id,

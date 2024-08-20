@@ -1,6 +1,5 @@
 // (C) 2020-2024 GoodData Corporation
-//TODO
-// export { DefaultScheduledEmailDialog } from "./DefaultScheduledEmailDialog/index.js";
+export { DefaultAlertingDialog } from "./DefaultAlertingDialog/index.js";
 export { DefaultAlertingManagementDialog } from "./DefaultAlertingManagementDialog/index.js";
 export { AlertingDialog } from "./AlertingDialog.js";
 export { AlertingManagementDialog } from "./AlertingManagementDialog.js";

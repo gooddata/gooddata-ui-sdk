@@ -45,7 +45,7 @@ import {
     RichTextWidgetComponentSet,
 } from "../componentDefinition/types.js";
 import { CustomToolbarComponent } from "../toolbar/types.js";
-import { CustomAlertingManagementDialogComponent } from "../alerting/types.js";
+import { CustomAlertingDialogComponent, CustomAlertingManagementDialogComponent } from "../alerting/types.js";
 
 /**
  * @internal
@@ -70,6 +70,7 @@ interface IDashboardComponentsContext {
     ScheduledEmailDialogComponent: CustomScheduledEmailDialogComponent;
     ScheduledEmailManagementDialogComponent: CustomScheduledEmailManagementDialogComponent;
     AlertingManagementDialogComponent: CustomAlertingManagementDialogComponent;
+    AlertingDialogComponent: CustomAlertingDialogComponent;
     ShareDialogComponent: CustomShareDialogComponent;
     SaveAsDialogComponent: CustomSaveAsDialogComponent;
     DashboardAttributeFilterComponentProvider: AttributeFilterComponentProvider;
@@ -117,6 +118,7 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
         "ScheduledEmailManagementDialogComponent",
     ),
     AlertingManagementDialogComponent: ThrowMissingComponentError("AlertingManagementDialogComponent"),
+    AlertingDialogComponent: ThrowMissingComponentError("AlertingDialogComponent"),
     ShareDialogComponent: ThrowMissingComponentError("ShareDialogComponent"),
     SaveAsDialogComponent: ThrowMissingComponentError("SaveAsDialogComponent"),
     DashboardAttributeFilterComponentProvider: ThrowMissingComponentError(

@@ -1,7 +1,7 @@
 // (C) 2022-2024 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import { IAutomationMetadataObject, IWebhookDefinitionObject } from "@gooddata/sdk-model";
+import { IAutomationMetadataObject, IInsightWidget, IWebhookDefinitionObject } from "@gooddata/sdk-model";
 import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
@@ -9,7 +9,12 @@ import { Alert } from "./Alert.js";
 
 interface IAlertsProps {
     onDelete: (alert: IAutomationMetadataObject) => void;
-    onEdit: (alert: IAutomationMetadataObject) => void;
+    onEdit: (
+        alert: IAutomationMetadataObject,
+        widget: IInsightWidget | undefined,
+        anchor: HTMLElement | null,
+        onClosed: () => void,
+    ) => void;
     onPause: (alert: IAutomationMetadataObject, pause: boolean) => void;
     isLoading: boolean;
     alerts: IAutomationMetadataObject[];

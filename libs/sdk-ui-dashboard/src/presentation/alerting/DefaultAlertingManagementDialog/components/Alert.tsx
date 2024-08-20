@@ -6,6 +6,7 @@ import cx from "classnames";
 import {
     IAutomationMetadataObject,
     IExportDefinitionVisualizationObjectContent,
+    IInsightWidget,
     isExportDefinitionVisualizationObjectRequestPayload,
     isInsightWidget,
     IWebhookDefinitionObject,
@@ -20,7 +21,12 @@ import { AlertDropdown } from "./AlertDropdown.js";
 
 interface IAlertProps {
     onDelete: (alert: IAutomationMetadataObject) => void;
-    onEdit: (alert: IAutomationMetadataObject) => void;
+    onEdit: (
+        alert: IAutomationMetadataObject,
+        widget: IInsightWidget | undefined,
+        anchor: HTMLElement | null,
+        onClosed: () => void,
+    ) => void;
     onPause: (alert: IAutomationMetadataObject, pause: boolean) => void;
     alert: IAutomationMetadataObject;
     webhooks: IWebhookDefinitionObject[];
@@ -53,7 +59,8 @@ export const Alert: React.FC<IAlertProps> = (props) => {
     )?.widget;
     const editWidgetRef = editWidgetId ? { identifier: editWidgetId } : undefined;
     const widget = useDashboardSelector(selectWidgetByRef(editWidgetRef));
-    const widgetName = isInsightWidget(widget) ? widget.title : "";
+    const insightWidget = isInsightWidget(widget) ? widget : undefined;
+    const widgetName = insightWidget?.title ?? "";
 
     const subtitle = [`${translateOperator(intl, operator)} ${threshold}`, widgetName]
         .filter(Boolean)
@@ -76,8 +83,11 @@ export const Alert: React.FC<IAlertProps> = (props) => {
     };
 
     const handleEdit = useCallback(() => {
-        onEdit(alert);
+        onEdit(alert, insightWidget, buttonRef.current, () => {
+            setHover(false);
+        });
         closeDropdown();
+        setHover(true);
     }, [alert, onEdit]);
     const handleRemove = useCallback(() => {
         onDelete(alert);
@@ -87,7 +97,7 @@ export const Alert: React.FC<IAlertProps> = (props) => {
         onPause(alert, true);
         closeDropdown();
     }, [alert, onPause]);
-    const handleActivate = useCallback(() => {
+    const handleResume = useCallback(() => {
         onPause(alert, false);
         closeDropdown();
     }, [alert, onPause]);
@@ -95,7 +105,11 @@ export const Alert: React.FC<IAlertProps> = (props) => {
     return (
         <div className={cx("gd-scheduled-email", "s-alert", { editable: true, hover })}>
             <div className="gd-scheduled-email-menu">
-                <span className="gd-scheduled-email-menu-icon s-alert-menu-icon" onClick={openDropdown} />
+                <span
+                    className="gd-scheduled-email-menu-icon s-alert-menu-icon"
+                    id={`alert-menu-${alert.id}`}
+                    onClick={openDropdown}
+                />
             </div>
             <div className="gd-scheduled-email-content" onClick={handleEdit}>
                 <div className="gd-scheduled-email-icon">{paused ? iconPaused : iconActive}</div>
@@ -132,7 +146,7 @@ export const Alert: React.FC<IAlertProps> = (props) => {
                     onEdit={handleEdit}
                     onDelete={handleRemove}
                     onPause={handlePause}
-                    onActivate={handleActivate}
+                    onResume={handleResume}
                 />
             ) : null}
         </div>

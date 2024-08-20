@@ -161,6 +161,7 @@ options = {
             "src/presentation/dashboardContexts",
             "src/presentation/localization",
             "src/presentation/constants/*",
+            "src/presentation/widget/*",
             "src/converters",
             "src/types.ts",
         ]),

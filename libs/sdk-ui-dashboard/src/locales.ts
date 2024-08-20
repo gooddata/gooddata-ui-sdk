@@ -32,8 +32,6 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     alertingManagementListTitle: { id: "dialogs.alerting.management.list.title" },
     alertingManagementNoAlerts: { id: "dialogs.alerting.management.noAlerts" },
     alertingDeleteSuccess: { id: "dialogs.alerting.delete.success" },
-    alertingSaveError: { id: "dialogs.alerting.save.error" },
-    alertingSaveSuccess: { id: "dialogs.alerting.save.success" },
 
     saveAsNewAlertsAndEmailsMessage: { id: "dialogs.save.as.new.alertsAndEmailsMessage" },
     saveAsNewAlertsMessage: { id: "dialogs.save.as.new.alertsMessage" },

@@ -428,7 +428,7 @@ export interface AddSectionItemsPayload {
 }
 
 // @internal (undocumented)
-export const AlertingDialog: (_props: IAlertingDialogProps) => JSX.Element;
+export const AlertingDialog: (props: IAlertingDialogProps) => JSX.Element;
 
 // @internal (undocumented)
 export const AlertingManagementDialog: (props: IAlertingManagementDialogProps) => JSX.Element;
@@ -2908,6 +2908,9 @@ export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | Date
 export const DEFAULT_MAX_AUTOMATIONS = "10";
 
 // @alpha (undocumented)
+export const DefaultAlertingDialog: React_2.FC<IAlertingDialogProps>;
+
+// @alpha (undocumented)
 export const DefaultAlertingManagementDialog: React_2.FC<IAlertingManagementDialogProps>;
 
 // @alpha (undocumented)
@@ -3643,17 +3646,12 @@ export interface IAddAttributeFilterButtonProps {
 
 // @alpha (undocumented)
 export interface IAlertingDialogProps {
-    automations: IAutomationMetadataObject[];
+    anchorEl?: HTMLElement | null;
     editAlert?: IAutomationMetadataObject;
+    editWidget?: IInsightWidget;
     isVisible?: boolean;
     onCancel?: () => void;
-    onDeleteError?: (error: GoodDataSdkError) => void;
-    onDeleteSuccess?: () => void;
-    onSave?: (alertingDefinition: IAutomationMetadataObject) => void;
-    onSaveError?: (error: GoodDataSdkError) => void;
-    onSaveSuccess?: () => void;
-    onSubmit?: (alertingDefinition: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => void;
-    webhooks: IWebhookDefinitionObject[];
+    onUpdate?: (alertingDefinition: IAutomationMetadataObject) => void;
 }
 
 // @alpha (undocumented)
@@ -3665,7 +3663,7 @@ export interface IAlertingManagementDialogProps {
     onClose?: () => void;
     onDeleteError?: (error: GoodDataSdkError) => void;
     onDeleteSuccess?: (alert: IAutomationMetadataObject) => void;
-    onEdit?: (alertingDefinition: IAutomationMetadataObject) => void;
+    onEdit?: (alertingDefinition: IAutomationMetadataObject, widget: IInsightWidget | undefined, anchor: HTMLElement | null, onClosed: () => void) => void;
     onPauseError: (error: GoodDataSdkError, pause: boolean) => void;
     onPauseSuccess: (alert: IAutomationMetadataObject, pause: boolean) => void;
     webhooks: IWebhookDefinitionObject[];
@@ -3872,6 +3870,8 @@ export interface IDashboardContentCustomizer {
 
 // @public
 export interface IDashboardCustomComponentProps {
+    // @alpha
+    AlertingDialogComponent?: CustomAlertingDialogComponent;
     // @alpha
     AlertingManagementDialogComponent?: CustomAlertingManagementDialogComponent;
     // @alpha
@@ -8284,23 +8284,26 @@ export const useDashboardAlerts: ({ dashboard }: {
     webhooks: Webhooks_2;
     automations: IAutomationMetadataObject[];
     alertingLoadError: any;
-    alertingToEdit: IAutomationMetadataObject | undefined;
+    alertingToEdit: {
+        alert: IAutomationMetadataObject;
+        widget: IInsightWidget | undefined;
+        anchor: HTMLElement | null;
+    } | null;
     defaultOnAlerting: () => void;
     defaultOnAlertsManagement: () => void;
     isAlertingLoading: boolean;
     isAlertsManagementVisible: boolean;
     isAlertingDialogOpen: boolean;
     isAlertingManagementDialogOpen: boolean;
-    onAlertingManagementEdit: (alert: IAutomationMetadataObject) => void;
+    onAlertingManagementEdit: (alert: IAutomationMetadataObject, widget: IInsightWidget | undefined, anchor: HTMLElement | null, onClosed: () => void) => void;
     onAlertingManagementClose: () => void;
     onAlertingManagementDeleteSuccess: () => void;
     onAlertingManagementDeleteError: () => void;
     onAlertingManagementLoadingError: () => void;
     onAlertingManagementPauseSuccess: (_alert: IAutomationMetadataObject, pause: boolean) => void;
     onAlertingManagementPauseError: (_err: GoodDataSdkError, pause: boolean) => void;
-    onAlertingSaveError: () => void;
-    onAlertingSaveSuccess: () => void;
     onAlertingCancel: () => void;
+    onAlertingUpdate: (_alert: IAutomationMetadataObject) => void;
 };
 
 // @public
@@ -8940,6 +8943,16 @@ export function useShareButtonProps(): IShareButtonProps;
 export const useTopBarProps: () => ITopBarProps;
 
 // @internal (undocumented)
+export const useUpdateAlert: ({ onBeforeRun, onSuccess, onError, }?: {
+    onBeforeRun?: ((alertToSave: IAutomationMetadataObject) => void) | undefined;
+    onSuccess?: (() => void) | undefined;
+    onError?: ((error: any) => void) | undefined;
+}) => {
+    save: (alertToSave: IAutomationMetadataObject) => void;
+    savingStatus?: CommandProcessingStatus | undefined;
+};
+
+// @internal (undocumented)
 export function useWidgetDragEndHandler(): () => void;
 
 // @internal
@@ -8951,7 +8964,7 @@ export function useWidgetExecutionsHandler(widgetRef: ObjRef): {
 };
 
 // @public
-export function useWidgetFilters(widget: ExtendedDashboardWidget | undefined, insight?: IInsightDefinition): QueryProcessingState<IFilter[]>;
+export function useWidgetFilters(widget: ExtendedDashboardWidget | undefined | null, insight?: IInsightDefinition): QueryProcessingState<IFilter[]>;
 
 // @internal (undocumented)
 export function useWidgetSelection(widgetRef?: ObjRef): IUseWidgetSelectionResult;

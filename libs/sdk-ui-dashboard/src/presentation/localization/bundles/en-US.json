@@ -713,16 +713,6 @@
         "comment": "Do not translate html tags <b>, </b>",
         "limit": 0
     },
-    "dialogs.alerting.save.error": {
-        "value": "Failed to save the alert. Try again later.",
-        "comment": "",
-        "limit": 0
-    },
-    "dialogs.alerting.save.success": {
-        "value": "Success! Your alert has been saved.",
-        "comment": "",
-        "limit": 0
-    },
     "dialogs.alerting.delete.success": {
         "value": "Success! Your alert was deleted.",
         "comment": "",
@@ -758,7 +748,7 @@
         "comment": "",
         "limit": 0
     },
-    "alerting.alert.menu.activate": {
+    "alerting.alert.menu.resume": {
         "value": "Unpause",
         "comment": "",
         "limit": 0
