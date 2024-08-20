@@ -11,11 +11,10 @@ import {
 } from "@gooddata/sdk-model";
 import omitBy from "lodash/omitBy.js";
 import isEmpty from "lodash/isEmpty.js";
+import omit from "lodash/omit.js";
 import { v4 as uuidv4 } from "uuid";
 import { convertMeasure } from "./afm/MeasureConverter.js";
-import { convertFilter } from "./afm/FilterConverter.js";
-import compact from "lodash/compact.js";
-import omit from "lodash/omit.js";
+import { convertAfmFilters } from "./afm/AfmFiltersConverter.js";
 
 export function convertAutomation(
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
@@ -95,10 +94,12 @@ const convertAlert = (alert: IAutomationAlert): JsonApiAutomationPatchAttributes
         },
     };
 
+    const { filters: convertedFilters } = convertAfmFilters(execution.measures, execution.filters);
+
     return {
         condition: convertedCondition,
         execution: {
-            filters: compact(execution.filters.map(convertFilter)),
+            filters: convertedFilters,
             measures: execution.measures.map((measure) => {
                 return omit(convertMeasure(measure), "alias", "format", "title");
             }),

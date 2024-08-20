@@ -21,7 +21,8 @@ import {
 import { convertExportDefinitionMdObject as convertExportDefinitionMdObjectFromBackend } from "./ExportDefinitionsConverter.js";
 import compact from "lodash/compact.js";
 import { convertUserIdentifier } from "./UsersConverter.js";
-import { cloneWithSanitizedIds } from "./IdSanitization.js";
+import { convertFilter } from "./afm/FilterConverter.js";
+import { convertMeasure } from "./afm/MeasureConverter.js";
 
 function convertRecipient(
     userLinkage: JsonApiUserLinkage,
@@ -139,8 +140,8 @@ const convertAlert = (
         },
         execution: {
             attributes: [], // TODO: not implemented on BE yet
-            measures: execution.measures.map(cloneWithSanitizedIds),
-            filters: execution.filters.map(cloneWithSanitizedIds),
+            measures: execution.measures.map(convertMeasure),
+            filters: execution.filters.map(convertFilter),
         },
         trigger: {
             // TODO: not implemented on BE yet

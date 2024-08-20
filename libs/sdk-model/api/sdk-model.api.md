@@ -3214,6 +3214,9 @@ export function isRichTextWidgetDefinition(obj: unknown): obj is IRichTextWidget
 // @public
 export function isSimpleMeasure(obj: unknown): obj is IMeasure<IMeasureDefinition>;
 
+// @public
+export function isSimpleMeasureFilter(obj: unknown): obj is IMeasureFilter;
+
 // @alpha
 export function isSingleSelectionFilter(filter: IDashboardAttributeFilter): boolean;
 
