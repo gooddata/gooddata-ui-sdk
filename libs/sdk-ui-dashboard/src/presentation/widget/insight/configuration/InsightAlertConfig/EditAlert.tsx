@@ -11,7 +11,7 @@ import { AlertMeasureSelect } from "./AlertMeasureSelect.js";
 import { AlertComparisonOperatorSelect } from "./AlertComparisonOperatorSelect.js";
 import { AlertDestinationSelect } from "./AlertDestinationSelect.js";
 import { EditAlertConfiguration } from "./EditAlertConfiguration.js";
-import { useEditAlert } from "./useEditAlert.js";
+import { useEditAlert } from "./hooks/useEditAlert.js";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Webhooks } from "../../../../../model/index.js";
 

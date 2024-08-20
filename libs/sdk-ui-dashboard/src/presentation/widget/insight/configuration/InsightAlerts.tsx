@@ -13,7 +13,7 @@ import { IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.js";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/index.js";
 import { AlertsList } from "./InsightAlertConfig/AlertsList.js";
 import { EditAlert } from "./InsightAlertConfig/EditAlert.js";
-import { useInsightWidgetAlerting } from "./InsightAlertConfig/useInsightAlerting.js";
+import { useInsightWidgetAlerting } from "./InsightAlertConfig/hooks/useInsightAlerting.js";
 import { CreateAlert } from "./InsightAlertConfig/CreateAlert.js";
 import { LOADING_MASK_HEIGHT } from "./InsightAlertConfig/constants.js";
 

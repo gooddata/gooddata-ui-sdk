@@ -7,7 +7,7 @@ import {
     IMeasure,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
-import { getComparisonOperatorTitle, getMeasureTitle } from "./utils.js";
+import { getComparisonOperatorTitle, getMeasureTitle } from "../utils.js";
 import { useIntl } from "react-intl";
 
 export interface IUseEditAlertProps {

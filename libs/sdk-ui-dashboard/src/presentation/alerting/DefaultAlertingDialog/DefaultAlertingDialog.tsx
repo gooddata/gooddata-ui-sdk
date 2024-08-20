@@ -15,7 +15,7 @@ import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
 import { ConfigurationBubble } from "../../widget/common/index.js";
 import { IAlertingDialogProps } from "../types.js";
 import { EditAlert } from "../../widget/insight/configuration/InsightAlertConfig/EditAlert.js";
-import { useInsightWidgetAlerting } from "../../widget/insight/configuration/InsightAlertConfig/useInsightAlerting.js";
+import { useInsightWidgetAlerting } from "../../widget/insight/configuration/InsightAlertConfig/hooks/useInsightAlerting.js";
 import noop from "lodash/noop.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);

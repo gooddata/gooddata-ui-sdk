@@ -3,7 +3,6 @@ import { useCallback } from "react";
 import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 import { useCreateAlert } from "./useCreateAlert.js";
 import { useUpdateAlert } from "./useUpdateAlert.js";
-// import { dispatchAndWaitFor } from "src/model/index.js";
 
 export function useSaveAlertToBackend({
     onCreateSuccess,

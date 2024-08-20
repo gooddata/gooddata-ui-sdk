@@ -20,10 +20,10 @@ import {
     dispatchAndWaitFor,
     selectAutomationsAlertsInContext,
     selectDashboardId,
-} from "../../../../../model/index.js";
-import { createDefaultAlert, getSupportedInsightMeasuresByInsight } from "./utils.js";
-import { messages } from "./messages.js";
-import { useWidgetFilters } from "../../../common/useWidgetFilters.js";
+} from "../../../../../../model/index.js";
+import { createDefaultAlert, getSupportedInsightMeasuresByInsight } from "../utils.js";
+import { messages } from "../messages.js";
+import { useWidgetFilters } from "../../../../common/useWidgetFilters.js";
 import { useSaveAlertToBackend } from "./useSaveAlertToBackend.js";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
