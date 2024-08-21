@@ -54,7 +54,8 @@ export const PauseAlertRunner: React.FC<IPauseAlertRunnerProps> = (props) => {
 
     useEffect(() => {
         void handlerPauseAlert();
-    }, [handlerPauseAlert, alert]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [alert]);
 
     return null;
 };
