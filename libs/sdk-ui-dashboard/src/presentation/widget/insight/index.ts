@@ -4,7 +4,7 @@ export * from "./DefaultInsightBody/index.js";
 export { DashboardInsight } from "./DashboardInsight.js";
 export { DefaultDashboardInsight } from "./DefaultDashboardInsight.js";
 export { DefaultDashboardInsightComponentSetFactory } from "./DefaultDashboardInsightComponentSetFactory.js";
-export { useUpdateAlert } from "./configuration/InsightAlertConfig/hooks/useUpdateAlert.js";
+export { useSaveAlertToBackend } from "./configuration/InsightAlertConfig/hooks/useSaveAlertToBackend.js";
 export {
     IDashboardInsightProps,
     CustomDashboardInsightComponent,

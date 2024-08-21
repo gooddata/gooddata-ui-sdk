@@ -1,6 +1,10 @@
 // (C) 2022-2024 GoodData Corporation
 
-import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider.js";
+import { useCallback, useState } from "react";
+import { IAutomationMetadataObject, IInsightWidget } from "@gooddata/sdk-model";
+import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { useToastMessage } from "@gooddata/sdk-ui-kit";
+
 import {
     uiActions,
     selectCanManageWorkspace,
@@ -14,32 +18,21 @@ import {
     selectEnableAlerting,
     selectWebhooksIsLoading,
     selectAutomationsIsLoading,
-    selectSettings,
-    selectCurrentUser,
-    selectAutomationsFingerprint,
     selectWebhooksError,
     selectAutomationsError,
+    selectAutomationsAlertsInContext,
 } from "../store/index.js";
-import { useCallback, useState } from "react";
-import { IAutomationMetadataObject, IInsightWidget } from "@gooddata/sdk-model";
-import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import { messages } from "../../locales.js";
-import {
-    GoodDataSdkError,
-    useBackendStrict,
-    useCancelablePromise,
-    useWorkspaceStrict,
-} from "@gooddata/sdk-ui";
-import { loadContextAutomations } from "../commandHandlers/dashboard/common/loadWorkspaceAutomations.js";
-import { getAuthor } from "../utils/author.js";
 import { refreshAutomations } from "../commands/index.js";
+
+import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider.js";
 
 /**
  * Hook that handles alerts dialog
  *
  * @alpha
  */
-export const useDashboardAlerts = ({ dashboard }: { dashboard?: string }) => {
+export const useDashboardAlerts = () => {
     const { addSuccess, addError } = useToastMessage();
 
     const isAlertingDialogOpen = useDashboardSelector(selectIsAlertingDialogOpen) || false;
@@ -66,9 +59,9 @@ export const useDashboardAlerts = ({ dashboard }: { dashboard?: string }) => {
     const webhooks = useDashboardSelector(selectWebhooks);
     const numberOfAvailableWebhooks = webhooks.length;
 
-    const { automations, automationsLoading, automationsError } = useContextAutomations({
-        dashboardId: dashboard,
-    });
+    const automations = useDashboardSelector(selectAutomationsAlertsInContext(undefined));
+    const automationsLoading = useDashboardSelector(selectAutomationsIsLoading);
+    const automationsError = useDashboardSelector(selectAutomationsError);
 
     const isAlertingLoading = [
         useDashboardSelector(selectWebhooksIsLoading),
@@ -230,30 +223,3 @@ export const useDashboardAlerts = ({ dashboard }: { dashboard?: string }) => {
         onAlertingUpdate,
     };
 };
-
-function useContextAutomations(opts: { dashboardId?: string }) {
-    const settings = useDashboardSelector(selectSettings);
-    const user = useDashboardSelector(selectCurrentUser);
-    const fingerprint = useDashboardSelector(selectAutomationsFingerprint);
-
-    const backend = useBackendStrict();
-    const workspace = useWorkspaceStrict();
-
-    const { result, status, error } = useCancelablePromise(
-        {
-            promise: async () => {
-                return loadContextAutomations(backend, workspace, settings, {
-                    author: getAuthor(backend.capabilities, user),
-                    dashboardId: opts.dashboardId,
-                });
-            },
-        },
-        [opts.dashboardId, backend, workspace, settings, user, fingerprint],
-    );
-
-    return {
-        automations: (result ?? []).filter((automation) => automation.alert),
-        automationsLoading: status === "loading",
-        automationsError: error,
-    };
-}

@@ -23,7 +23,6 @@ import {
     useDashboardScheduledEmails,
     useDashboardSelector,
     useDashboardAlerts,
-    selectDashboardId,
     selectEnableFilterViews,
     selectDisableFilterViews,
 } from "../../../model/index.js";
@@ -96,19 +95,14 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
     const isEmptyLayout = !useDashboardSelector(selectLayoutHasAnalyticalWidgets); // we need at least one non-custom widget there
 
-    const dashboard = useDashboardSelector(selectDashboardId);
     const {
         isScheduledEmailingVisible,
         isScheduledManagementEmailingVisible,
         defaultOnScheduleEmailing,
         defaultOnScheduleEmailingManagement,
         numberOfAvailableWebhooks,
-    } = useDashboardScheduledEmails({
-        dashboard,
-    });
-    const { defaultOnAlertsManagement, isAlertsManagementVisible } = useDashboardAlerts({
-        dashboard,
-    });
+    } = useDashboardScheduledEmails();
+    const { defaultOnAlertsManagement, isAlertsManagementVisible } = useDashboardAlerts();
 
     const dispatch = useDashboardDispatch();
     const openSaveAsDialog = useCallback(() => dispatch(uiActions.openSaveAsDialog()), [dispatch]);

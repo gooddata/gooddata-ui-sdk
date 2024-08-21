@@ -76,7 +76,7 @@ export const selectAutomationsAlertsInContext: (
                     (alert) =>
                         alert.dashboard === dashboardId &&
                         alert.createdBy?.login === currentUser.login &&
-                        alert.metadata?.widget === widgetLocalIdentifier,
+                        (alert.metadata?.widget === widgetLocalIdentifier || !widgetLocalIdentifier),
                 );
             },
         ),

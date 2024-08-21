@@ -4,10 +4,9 @@ import React from "react";
 
 import { AlertingDialog, AlertingManagementDialog } from "../../alerting/index.js";
 
-import { useDashboardAlerts, useDashboardSelector, selectDashboardId } from "../../../model/index.js";
+import { useDashboardAlerts } from "../../../model/index.js";
 
 export const AlertingDialogProvider = () => {
-    const dashboard = useDashboardSelector(selectDashboardId);
     const {
         automations,
         webhooks,
@@ -24,9 +23,7 @@ export const AlertingDialogProvider = () => {
         onAlertingManagementPauseError,
         onAlertingCancel,
         onAlertingUpdate,
-    } = useDashboardAlerts({
-        dashboard,
-    });
+    } = useDashboardAlerts();
 
     return (
         <>
