@@ -29,7 +29,7 @@ const specs = [
         name: "metadata-json-api",
         // Remove when openapi-generator correctly generates null values in arrays
         apiOverrides: (api) => {
-            // Replace AttributeFilterElements and DependsOn values
+            // Replace AttributeFilterElements and DependsOn values;
             return api.replaceAll("'values': Array<string>", "'values': Array<string | null>");
         },
     },
