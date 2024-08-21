@@ -1,6 +1,7 @@
 // (C) 2024 GoodData Corporation
 
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "react-loading-skeleton/dist/skeleton.css";
 
 //
 // Alerts list
@@ -11,10 +12,44 @@
 
 .gd-alerts-list__items {
     padding: 10px 0 10px 0;
+
+    .skeleton-flex {
+        flex: 1;
+    }
+
+    .skeleton-margin {
+        margin-left: 10px;
+    }
+
+    .gd-react-loading-skeleton-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+    }
+
+    .gd-react-loading-skeleton.react-loading-skeleton {
+        --base-color: var(--gd-dashboards-title-borderColor, var(--gd-palette-complementary-2, #ebeff4));
+        --highlight-color: var(
+            --gd-dashboards-content-backgroundColor,
+            var(--gd-palette-complementary-0, #fff)
+        );
+    }
 }
 
 .gd-alerts-list__buttons {
     padding: 10px 0;
+
+    .gd-alerts-list__add-button {
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 18px;
+        padding-left: 28px;
+
+        &::before {
+            font-size: 15px;
+        }
+    }
 }
 
 //

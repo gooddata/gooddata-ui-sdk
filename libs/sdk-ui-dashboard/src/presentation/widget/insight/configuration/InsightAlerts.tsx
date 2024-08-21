@@ -1,12 +1,7 @@
 // (C) 2022-2024 GoodData Corporation
 import React from "react";
 import { isInsightWidget, objRefToString } from "@gooddata/sdk-model";
-import {
-    ScrollablePanel,
-    OverlayControllerProvider,
-    OverlayController,
-    LoadingMask,
-} from "@gooddata/sdk-ui-kit";
+import { ScrollablePanel, OverlayControllerProvider, OverlayController } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 import cx from "classnames";
 import { IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.js";
@@ -15,7 +10,6 @@ import { AlertsList } from "./InsightAlertConfig/AlertsList.js";
 import { EditAlert } from "./InsightAlertConfig/EditAlert.js";
 import { useInsightWidgetAlerting } from "./InsightAlertConfig/hooks/useInsightAlerting.js";
 import { CreateAlert } from "./InsightAlertConfig/CreateAlert.js";
-import { LOADING_MASK_HEIGHT } from "./InsightAlertConfig/constants.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 
@@ -53,14 +47,11 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
         deleteExistingAlert,
     } = useInsightWidgetAlerting({ closeInsightWidgetMenu: onClose, widget });
 
-    if (isLoading) {
-        return <LoadingMask height={LOADING_MASK_HEIGHT} />;
-    }
-
     let content = null;
-    if (viewMode === "list") {
+    if (isLoading || viewMode === "list") {
         content = (
             <AlertsList
+                isLoading={isLoading}
                 alerts={alerts}
                 onCreateAlert={initiateAlertCreation}
                 onEditAlert={initiateAlertEditing}
@@ -69,6 +60,7 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
                 onDeleteAlert={deleteExistingAlert}
                 onClose={onClose}
                 onGoBack={onGoBack}
+                measures={supportedMeasures}
                 maxAutomationsReached={maxAutomationsReached}
             />
         );

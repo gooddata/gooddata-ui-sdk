@@ -248,7 +248,7 @@ export interface IAutomationAlertCondition {
     operator: IAlertComparisonOperator;
 
     /**
-     * Indetifier of left side of the condition.
+     * Identifier of left side of the condition.
      */
     left: string;
 
