@@ -40,9 +40,9 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     const effectiveBackend = useBackendStrict();
     const effectiveWorkspace = useWorkspaceStrict();
     const destinations = useDashboardSelector(selectWebhooks);
-    const alerts = useDashboardSelector(selectAutomationsAlertsInContext);
+    const alerts = useDashboardSelector(selectAutomationsAlertsInContext(widget?.localIdentifier));
     const dashboard = useDashboardSelector(selectDashboardId);
-    const insight = useDashboardSelector(selectInsightByWidgetRef(widget?.ref))!;
+    const insight = useDashboardSelector(selectInsightByWidgetRef(widget?.ref));
     const automationsCount = useDashboardSelector(selectAutomationsCount);
     const maxAutomationsEntitlement = useDashboardSelector(selectEntitlementMaxAutomations);
     const unlimitedAutomationsEntitlement = useDashboardSelector(selectEntitlementUnlimitedAutomations);
@@ -150,6 +150,9 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             ref: { identifier: id, type: "automation" },
             uri: id,
             dashboard,
+            metadata: {
+                widget: widget?.localIdentifier,
+            },
         } as IAutomationMetadataObject;
         setIsLoading(true);
         handleCreateAlert(alertToCreate);
@@ -181,6 +184,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         try {
             await effectiveBackend.workspace(effectiveWorkspace).automations().deleteAutomation(alert.id);
             addSuccess(messages.alertDeleteSuccess);
+            setViewMode(alerts.length === 1 ? "create" : "list");
             handleRefreshAutomations();
         } catch (err) {
             addError(messages.alertDeleteError);

@@ -6822,7 +6822,7 @@ export const selectAutomations: DashboardSelector<IAutomationMetadataObject[]>;
 export const selectAutomationsAlerts: DashboardSelector<IAutomationMetadataObject[]>;
 
 // @alpha
-export const selectAutomationsAlertsInContext: DashboardSelector<IAutomationMetadataObject[]>;
+export const selectAutomationsAlertsInContext: (widgetLocalIdentifier: string | undefined) => DashboardSelector<IAutomationMetadataObject[]>;
 
 // @alpha
 export const selectAutomationsCount: DashboardSelector<number>;

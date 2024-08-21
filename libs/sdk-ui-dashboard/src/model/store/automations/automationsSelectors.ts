@@ -6,6 +6,7 @@ import { DashboardSelector, DashboardState } from "../types.js";
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { selectDashboardId } from "../meta/metaSelectors.js";
 import { selectCurrentUser } from "../user/userSelectors.js";
+import { createMemoizedSelector } from "../_infra/selectors.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -58,21 +59,28 @@ export const selectAutomationsSchedules: DashboardSelector<IAutomationMetadataOb
 );
 
 /**
- * Returns workspace alerts for current dashboard and user context.
+ * Returns workspace alerts for current dashboard, widget and user context.
  *
  * @alpha
  */
-export const selectAutomationsAlertsInContext: DashboardSelector<IAutomationMetadataObject[]> =
-    createSelector(
-        selectAutomationsAlerts,
-        selectDashboardId,
-        selectCurrentUser,
-        (alerts, dashboardId, currentUser) => {
-            return alerts.filter(
-                (alert) => alert.dashboard === dashboardId && alert.createdBy?.login === currentUser.login,
-            );
-        },
-    );
+export const selectAutomationsAlertsInContext: (
+    widgetLocalIdentifier: string | undefined,
+) => DashboardSelector<IAutomationMetadataObject[]> = createMemoizedSelector(
+    (widgetLocalIdentifier: string | undefined) =>
+        createSelector(
+            selectAutomationsAlerts,
+            selectDashboardId,
+            selectCurrentUser,
+            (alerts, dashboardId, currentUser) => {
+                return alerts.filter(
+                    (alert) =>
+                        alert.dashboard === dashboardId &&
+                        alert.createdBy?.login === currentUser.login &&
+                        alert.metadata?.widget === widgetLocalIdentifier,
+                );
+            },
+        ),
+);
 
 /**
  * Returns workspace schedules for current dashboard and user context.

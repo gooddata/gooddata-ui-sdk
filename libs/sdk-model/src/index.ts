@@ -154,6 +154,7 @@ export {
     attributeElementsCount,
     updateAttributeElementsItems,
     getAttributeElementsItems,
+    isSimpleMeasureFilter,
     isPositiveAttributeFilter,
     isNegativeAttributeFilter,
     isDateFilter,
