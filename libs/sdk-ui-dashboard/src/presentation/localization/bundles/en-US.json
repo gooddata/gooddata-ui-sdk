@@ -2825,5 +2825,15 @@
         "value": "Failed to delete alert. Try again later.",
         "comment": "",
         "limit": 0
+    },
+    "insightAlert.config.invalid": {
+        "value": "This alert configuration is incorrect. Please update it or contact your administrator.",
+        "comment": "Error message for alert configuration",
+        "limit": 0
+    },
+    "insightAlert.config.selectMetric": {
+        "value": "Select a metric",
+        "comment": "Label of metric select dropdown",
+        "limit": 0
     }
 }

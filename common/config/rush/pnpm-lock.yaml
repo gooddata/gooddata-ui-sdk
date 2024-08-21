@@ -2518,6 +2518,9 @@ importers:
       react-lines-ellipsis:
         specifier: ^0.15.0
         version: 0.15.4(react-dom@18.2.0)(react@18.2.0)
+      react-loading-skeleton:
+        specifier: ^3.4.0
+        version: 3.4.0(react@18.2.0)
       react-measure:
         specifier: ^2.5.2
         version: 2.5.2(react-dom@18.2.0)(react@18.2.0)
@@ -20028,6 +20031,14 @@ packages:
     dependencies:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /react-loading-skeleton@3.4.0(react@18.2.0):
+    resolution: {integrity: sha512-1oJEBc9+wn7BbkQQk7YodlYEIjgeR+GrRjD+QXkVjwZN7LGIcAFHrx4NhT7UHGBxNY1+zax3c+Fo6XQM4R7CgA==}
+    peerDependencies:
+      react: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /react-markdown@9.0.1(@types/react@18.2.45)(react@18.2.0):

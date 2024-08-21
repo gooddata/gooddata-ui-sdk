@@ -5,9 +5,10 @@ import { IMeasure } from "@gooddata/sdk-model";
 import cx from "classnames";
 import { getMeasureTitle } from "./utils.js";
 import { DROPDOWN_ITEM_HEIGHT } from "./constants.js";
+import { useIntl } from "react-intl";
 
 export interface IAlertMetricSelectProps {
-    selectedMeasureIdentifier: string;
+    selectedMeasure: IMeasure | undefined;
     onMeasureChange: (measure: IMeasure) => void;
     measures: IMeasure[];
 }
@@ -15,19 +16,14 @@ export interface IAlertMetricSelectProps {
 const measureIcon = <div className="gd-alert-measure-select__icon gd-icon-metric" />;
 
 export const AlertMeasureSelect = ({
-    selectedMeasureIdentifier,
+    selectedMeasure,
     onMeasureChange,
     measures,
 }: IAlertMetricSelectProps) => {
-    const selectedMeasure = measures.find(
-        (measure) => measure.measure.localIdentifier === selectedMeasureIdentifier,
-    );
-
-    if (!selectedMeasure) {
-        return null;
-    }
-
-    const selectedMeasureTitle = getMeasureTitle(selectedMeasure);
+    const intl = useIntl();
+    const selectedMeasureTitle = selectedMeasure
+        ? getMeasureTitle(selectedMeasure)
+        : intl.formatMessage({ id: "insightAlert.config.selectMetric" });
 
     return (
         <div className="gd-alert-measure-select">
@@ -40,7 +36,7 @@ export const AlertMeasureSelect = ({
                             })}
                             size="small"
                             variant="secondary"
-                            iconLeft="gd-icon-metric"
+                            iconLeft={selectedMeasure ? "gd-icon-metric" : undefined}
                             iconRight={`gd-icon-navigate${isOpen ? "up" : "down"}`}
                             onClick={toggleDropdown}
                         >

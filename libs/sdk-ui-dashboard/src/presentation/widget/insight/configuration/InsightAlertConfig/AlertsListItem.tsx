@@ -10,6 +10,7 @@ interface IAlertsListItemProps {
     onPauseAlert: (alert: IAutomationMetadataObject) => void;
     onDeleteAlert: (alert: IAutomationMetadataObject) => void;
     onResumeAlert: (alert: IAutomationMetadataObject) => void;
+    isInvalid?: boolean;
 }
 
 export const AlertsListItem: React.FC<IAlertsListItemProps> = ({
@@ -18,13 +19,14 @@ export const AlertsListItem: React.FC<IAlertsListItemProps> = ({
     onPauseAlert,
     onDeleteAlert,
     onResumeAlert,
+    isInvalid = false,
 }) => {
     const isPaused = alert.alert?.trigger?.state === "PAUSED";
     return (
         <div className="gd-alerts-list-item" key={alert.id} onClick={() => onEditAlert(alert)}>
             <div className="gd-alerts-list-item__content s-alert-list-item">
                 <div className="gd-alerts-list-item__icon">
-                    {isPaused ? <Icon.AlertPaused /> : <Icon.Alert />}
+                    {isInvalid ? <Icon.Warning /> : isPaused ? <Icon.AlertPaused /> : <Icon.Alert />}
                 </div>
                 <div className="gd-alerts-list-item__details">
                     <div className="gd-alerts-list-item__title">{alert.title}</div>
