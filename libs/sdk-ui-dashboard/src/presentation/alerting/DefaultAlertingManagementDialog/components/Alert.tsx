@@ -5,9 +5,7 @@ import { useIntl } from "react-intl";
 import cx from "classnames";
 import {
     IAutomationMetadataObject,
-    IExportDefinitionVisualizationObjectContent,
     IInsightWidget,
-    isExportDefinitionVisualizationObjectRequestPayload,
     isInsightWidget,
     IWebhookDefinitionObject,
 } from "@gooddata/sdk-model";
@@ -52,12 +50,9 @@ export const Alert: React.FC<IAlertProps> = (props) => {
 
     const paused = alert.alert?.trigger.state === "PAUSED";
 
-    const editWidgetId = (
-        alert.exportDefinitions?.find((exportDefinition) =>
-            isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload),
-        )?.requestPayload.content as IExportDefinitionVisualizationObjectContent
-    )?.widget;
+    const editWidgetId = alert.metadata?.widget;
     const editWidgetRef = editWidgetId ? { identifier: editWidgetId } : undefined;
+
     const widget = useDashboardSelector(selectWidgetByRef(editWidgetRef));
     const insightWidget = isInsightWidget(widget) ? widget : undefined;
     const widgetName = insightWidget?.title ?? "";
@@ -88,7 +83,7 @@ export const Alert: React.FC<IAlertProps> = (props) => {
         });
         closeDropdown();
         setHover(true);
-    }, [alert, onEdit]);
+    }, [alert, insightWidget, onEdit]);
     const handleRemove = useCallback(() => {
         onDelete(alert);
         closeDropdown();
@@ -120,8 +115,7 @@ export const Alert: React.FC<IAlertProps> = (props) => {
                                 className="gd-scheduled-email-shortened-text"
                                 tooltipAlignPoints={TEXT_TOOLTIP_ALIGN_POINTS}
                             >
-                                {alert.alert?.condition?.left ??
-                                    alert.title ??
+                                {alert.title ??
                                     intl.formatMessage({ id: "dialogs.alerting.title.placeholder" })}
                             </ShortenedText>
                         </strong>

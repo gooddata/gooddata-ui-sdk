@@ -4,6 +4,17 @@ import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "
 import { useCreateAlert } from "./useCreateAlert.js";
 import { useUpdateAlert } from "./useUpdateAlert.js";
 
+/**
+ * @internal
+ * @param onCreateSuccess - callback to be called when alert is created successfully
+ * @param onCreateError - callback to be called when alert creation fails
+ * @param onUpdateSuccess - callback to be called when alert is updated successfully
+ * @param onUpdateError - callback to be called when alert update fails
+ * @param onPauseSuccess - callback to be called when alert is paused successfully
+ * @param onPauseError - callback to be called when alert pausing fails
+ * @param onResumeSuccess - callback to be called when alert is resumed successfully
+ * @param onResumeError - callback to be called when alert resuming fails
+ */
 export function useSaveAlertToBackend({
     onCreateSuccess,
     onCreateError,
@@ -14,14 +25,14 @@ export function useSaveAlertToBackend({
     onResumeSuccess,
     onResumeError,
 }: {
-    onCreateSuccess: () => void;
-    onCreateError: () => void;
-    onUpdateSuccess: () => void;
-    onUpdateError: () => void;
-    onPauseSuccess: () => void;
-    onPauseError: () => void;
-    onResumeSuccess: () => void;
-    onResumeError: () => void;
+    onCreateSuccess?: () => void;
+    onCreateError?: (error: Error) => void;
+    onUpdateSuccess?: () => void;
+    onUpdateError?: (error: Error) => void;
+    onPauseSuccess?: () => void;
+    onPauseError?: (error: Error) => void;
+    onResumeSuccess?: () => void;
+    onResumeError?: (error: Error) => void;
 }) {
     const alertCreator = useCreateAlert({
         onSuccess: onCreateSuccess,

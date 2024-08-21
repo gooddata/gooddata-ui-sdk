@@ -4,7 +4,7 @@ import React, { useCallback, useEffect } from "react";
 import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { useUpdateAlert } from "../../../widget/index.js";
+import { useSaveAlertToBackend } from "../../../widget/index.js";
 
 interface IPauseAlertRunnerProps {
     alert: IAutomationMetadataObject | null;
@@ -19,14 +19,24 @@ interface IPauseAlertRunnerProps {
 export const PauseAlertRunner: React.FC<IPauseAlertRunnerProps> = (props) => {
     const { alert, pause, onSuccess, onError } = props;
 
-    const { save } = useUpdateAlert({
-        onSuccess: () => {
+    const { handlePauseAlert, handleResumeAlert } = useSaveAlertToBackend({
+        onPauseSuccess: () => {
             if (alert) {
-                onSuccess?.(alert, pause);
+                onSuccess?.(alert, true);
             }
         },
-        onError: (error) => {
-            onError?.(error as GoodDataSdkError, pause);
+        onPauseError: (error) => {
+            onError?.(error as GoodDataSdkError, true);
+        },
+        onResumeSuccess: () => {
+            if (alert) {
+                onSuccess?.(alert, false);
+            }
+        },
+        onResumeError: () => {
+            if (alert) {
+                onSuccess?.(alert, false);
+            }
         },
     });
 
@@ -34,21 +44,13 @@ export const PauseAlertRunner: React.FC<IPauseAlertRunnerProps> = (props) => {
         if (!alert) {
             return;
         }
-        save({
-            ...alert,
-            ...(alert.alert
-                ? {
-                      alert: {
-                          ...alert.alert,
-                          trigger: {
-                              ...alert.alert?.trigger,
-                              state: pause ? "PAUSED" : "ACTIVE",
-                          },
-                      },
-                  }
-                : {}),
-        });
-    }, [alert, pause, save]);
+
+        if (pause) {
+            handlePauseAlert(alert);
+        } else {
+            handleResumeAlert(alert);
+        }
+    }, [alert, handlePauseAlert, handleResumeAlert, pause]);
 
     useEffect(() => {
         void handlerPauseAlert();

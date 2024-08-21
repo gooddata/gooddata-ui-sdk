@@ -8293,12 +8293,10 @@ export function useCustomWidgetInsightDataView({ widget, insight, onCancel, onEr
 export type UseCustomWidgetInsightDataViewCallbacks = UseCancelablePromiseCallbacks<DataViewFacade, GoodDataSdkError>;
 
 // @alpha
-export const useDashboardAlerts: ({ dashboard }: {
-    dashboard?: string | undefined;
-}) => {
+export const useDashboardAlerts: () => {
     webhooks: Webhooks_2;
     automations: IAutomationMetadataObject[];
-    alertingLoadError: any;
+    alertingLoadError: GoodDataSdkError | undefined;
     alertingToEdit: {
         alert: IAutomationMetadataObject;
         widget: IInsightWidget | undefined;
@@ -8719,14 +8717,12 @@ export type UseDashboardQueryProcessingResult<TQueryCreatorArgs extends any[], T
 };
 
 // @alpha
-export const useDashboardScheduledEmails: ({ dashboard }: {
-    dashboard?: string | undefined;
-}) => {
+export const useDashboardScheduledEmails: () => {
     webhooks: Webhooks_2;
     users: Users_2;
     automations: IAutomationMetadataObject[];
     automationsCount: number;
-    schedulingLoadError: any;
+    schedulingLoadError: GoodDataSdkError | undefined;
     numberOfAvailableWebhooks: number;
     isScheduleLoading: boolean;
     isScheduledEmailingVisible: boolean;
@@ -8943,6 +8939,24 @@ export interface UserState {
 }
 
 // @internal (undocumented)
+export function useSaveAlertToBackend({ onCreateSuccess, onCreateError, onUpdateSuccess, onUpdateError, onPauseSuccess, onPauseError, onResumeSuccess, onResumeError, }: {
+    onCreateSuccess?: () => void;
+    onCreateError?: (error: Error) => void;
+    onUpdateSuccess?: () => void;
+    onUpdateError?: (error: Error) => void;
+    onPauseSuccess?: () => void;
+    onPauseError?: (error: Error) => void;
+    onResumeSuccess?: () => void;
+    onResumeError?: (error: Error) => void;
+}): {
+    handleCreateAlert: (alert: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => void;
+    handleUpdateAlert: (alert: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => void;
+    handlePauseAlert: (alert: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => void;
+    handleResumeAlert: (alert: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => void;
+    isSavingAlert: boolean;
+};
+
+// @internal (undocumented)
 export function useSaveAsDialogProps(): ISaveAsDialogProps;
 
 // @internal (undocumented)
@@ -8956,16 +8970,6 @@ export function useShareButtonProps(): IShareButtonProps;
 
 // @alpha (undocumented)
 export const useTopBarProps: () => ITopBarProps;
-
-// @internal (undocumented)
-export const useUpdateAlert: ({ onBeforeRun, onSuccess, onError, }?: {
-    onBeforeRun?: ((alertToSave: IAutomationMetadataObject) => void) | undefined;
-    onSuccess?: (() => void) | undefined;
-    onError?: ((error: any) => void) | undefined;
-}) => {
-    save: (alertToSave: IAutomationMetadataObject) => void;
-    savingStatus?: CommandProcessingStatus | undefined;
-};
 
 // @internal (undocumented)
 export function useWidgetDragEndHandler(): () => void;

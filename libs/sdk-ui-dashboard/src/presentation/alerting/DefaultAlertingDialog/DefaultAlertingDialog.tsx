@@ -4,7 +4,6 @@ import React from "react";
 import {
     ArrowOffsets,
     IAlignPoint,
-    LoadingSpinner,
     OverlayController,
     OverlayControllerProvider,
     ScrollablePanel,
@@ -33,7 +32,7 @@ const defaultArrowOffsets: ArrowOffsets = {
 export const AlertingDialog: React.FC<IAlertingDialogProps> = (props) => {
     const { editAlert, editWidget, anchorEl, onCancel = () => noop, onUpdate = () => noop } = props;
 
-    const { isLoading, hasAlerts, destinations, supportedMeasures, cancelAlertEditing, updateExistingAlert } =
+    const { hasAlerts, destinations, supportedMeasures, cancelAlertEditing, updateExistingAlert } =
         useInsightWidgetAlerting({ closeInsightWidgetMenu: onCancel, widget: editWidget });
 
     if (!anchorEl?.id || !editAlert) {
@@ -55,25 +54,21 @@ export const AlertingDialog: React.FC<IAlertingDialogProps> = (props) => {
         >
             <ScrollablePanel className={classes}>
                 <OverlayControllerProvider overlayController={overlayController}>
-                    {isLoading ? (
-                        <LoadingSpinner />
-                    ) : (
-                        <EditAlert
-                            alert={editAlert}
-                            hasAlerts={hasAlerts}
-                            destinations={destinations}
-                            measures={supportedMeasures}
-                            onUpdate={(alert) => {
-                                updateExistingAlert(alert);
-                                onUpdate(alert);
-                            }}
-                            onCancel={() => {
-                                cancelAlertEditing();
-                                onCancel();
-                            }}
-                            onClose={onCancel}
-                        />
-                    )}
+                    <EditAlert
+                        alert={editAlert}
+                        hasAlerts={hasAlerts}
+                        destinations={destinations}
+                        measures={supportedMeasures}
+                        onUpdate={(alert) => {
+                            updateExistingAlert(alert);
+                            onUpdate(alert);
+                        }}
+                        onCancel={() => {
+                            cancelAlertEditing();
+                            onCancel();
+                        }}
+                        onClose={onCancel}
+                    />
                 </OverlayControllerProvider>
             </ScrollablePanel>
         </ConfigurationBubble>
