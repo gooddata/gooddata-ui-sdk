@@ -4564,6 +4564,150 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
       "type": "fact",
     },
     {
+      "attribute": {
+        "description": "",
+        "displayForms": [
+          {
+            "attribute": {
+              "identifier": "user_id",
+              "type": "attribute",
+            },
+            "description": "",
+            "id": "user_id",
+            "isDefault": true,
+            "isPrimary": true,
+            "ref": {
+              "identifier": "user_id",
+              "type": "displayForm",
+            },
+            "title": "User Id",
+            "type": "displayForm",
+            "uri": "sanitize_uri",
+          },
+          {
+            "attribute": {
+              "identifier": "user_id",
+              "type": "attribute",
+            },
+            "description": "",
+            "id": "user_id.useremail",
+            "isDefault": false,
+            "isPrimary": false,
+            "ref": {
+              "identifier": "user_id.useremail",
+              "type": "displayForm",
+            },
+            "title": "User Email",
+            "type": "displayForm",
+            "uri": "sanitize_uri",
+          },
+          {
+            "attribute": {
+              "identifier": "user_id",
+              "type": "attribute",
+            },
+            "description": "",
+            "id": "user_id.username",
+            "isDefault": false,
+            "isPrimary": false,
+            "ref": {
+              "identifier": "user_id.username",
+              "type": "displayForm",
+            },
+            "title": "User Name",
+            "type": "displayForm",
+            "uri": "sanitize_uri",
+          },
+        ],
+        "id": "user_id",
+        "ref": {
+          "identifier": "user_id",
+          "type": "attribute",
+        },
+        "title": "User Id",
+        "type": "attribute",
+        "uri": "sanitize_uri",
+      },
+      "defaultDisplayForm": {
+        "attribute": {
+          "identifier": "user_id",
+          "type": "attribute",
+        },
+        "description": "",
+        "id": "user_id",
+        "isDefault": true,
+        "isPrimary": true,
+        "ref": {
+          "identifier": "user_id",
+          "type": "displayForm",
+        },
+        "title": "User Id",
+        "type": "displayForm",
+        "uri": "sanitize_uri",
+      },
+      "displayForms": [
+        {
+          "attribute": {
+            "identifier": "user_id",
+            "type": "attribute",
+          },
+          "description": "",
+          "id": "user_id",
+          "isDefault": true,
+          "isPrimary": true,
+          "ref": {
+            "identifier": "user_id",
+            "type": "displayForm",
+          },
+          "title": "User Id",
+          "type": "displayForm",
+          "uri": "sanitize_uri",
+        },
+        {
+          "attribute": {
+            "identifier": "user_id",
+            "type": "attribute",
+          },
+          "description": "",
+          "id": "user_id.useremail",
+          "isDefault": false,
+          "isPrimary": false,
+          "ref": {
+            "identifier": "user_id.useremail",
+            "type": "displayForm",
+          },
+          "title": "User Email",
+          "type": "displayForm",
+          "uri": "sanitize_uri",
+        },
+        {
+          "attribute": {
+            "identifier": "user_id",
+            "type": "attribute",
+          },
+          "description": "",
+          "id": "user_id.username",
+          "isDefault": false,
+          "isPrimary": false,
+          "ref": {
+            "identifier": "user_id.username",
+            "type": "displayForm",
+          },
+          "title": "User Name",
+          "type": "displayForm",
+          "uri": "sanitize_uri",
+        },
+      ],
+      "geoPinDisplayForms": [],
+      "groups": [
+        {
+          "identifier": "owner",
+          "type": "tag",
+        },
+      ],
+      "type": "attribute",
+    },
+    {
       "fact": {
         "description": "Velocity",
         "id": "f_stagehistory.f_velocity",
@@ -12534,6 +12678,150 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
       "type": "fact",
     },
     {
+      "attribute": {
+        "description": "",
+        "displayForms": [
+          {
+            "attribute": {
+              "identifier": "user_id",
+              "type": "attribute",
+            },
+            "description": "",
+            "id": "user_id",
+            "isDefault": true,
+            "isPrimary": true,
+            "ref": {
+              "identifier": "user_id",
+              "type": "displayForm",
+            },
+            "title": "User Id",
+            "type": "displayForm",
+            "uri": "sanitize_uri",
+          },
+          {
+            "attribute": {
+              "identifier": "user_id",
+              "type": "attribute",
+            },
+            "description": "",
+            "id": "user_id.useremail",
+            "isDefault": false,
+            "isPrimary": false,
+            "ref": {
+              "identifier": "user_id.useremail",
+              "type": "displayForm",
+            },
+            "title": "User Email",
+            "type": "displayForm",
+            "uri": "sanitize_uri",
+          },
+          {
+            "attribute": {
+              "identifier": "user_id",
+              "type": "attribute",
+            },
+            "description": "",
+            "id": "user_id.username",
+            "isDefault": false,
+            "isPrimary": false,
+            "ref": {
+              "identifier": "user_id.username",
+              "type": "displayForm",
+            },
+            "title": "User Name",
+            "type": "displayForm",
+            "uri": "sanitize_uri",
+          },
+        ],
+        "id": "user_id",
+        "ref": {
+          "identifier": "user_id",
+          "type": "attribute",
+        },
+        "title": "User Id",
+        "type": "attribute",
+        "uri": "sanitize_uri",
+      },
+      "defaultDisplayForm": {
+        "attribute": {
+          "identifier": "user_id",
+          "type": "attribute",
+        },
+        "description": "",
+        "id": "user_id",
+        "isDefault": true,
+        "isPrimary": true,
+        "ref": {
+          "identifier": "user_id",
+          "type": "displayForm",
+        },
+        "title": "User Id",
+        "type": "displayForm",
+        "uri": "sanitize_uri",
+      },
+      "displayForms": [
+        {
+          "attribute": {
+            "identifier": "user_id",
+            "type": "attribute",
+          },
+          "description": "",
+          "id": "user_id",
+          "isDefault": true,
+          "isPrimary": true,
+          "ref": {
+            "identifier": "user_id",
+            "type": "displayForm",
+          },
+          "title": "User Id",
+          "type": "displayForm",
+          "uri": "sanitize_uri",
+        },
+        {
+          "attribute": {
+            "identifier": "user_id",
+            "type": "attribute",
+          },
+          "description": "",
+          "id": "user_id.useremail",
+          "isDefault": false,
+          "isPrimary": false,
+          "ref": {
+            "identifier": "user_id.useremail",
+            "type": "displayForm",
+          },
+          "title": "User Email",
+          "type": "displayForm",
+          "uri": "sanitize_uri",
+        },
+        {
+          "attribute": {
+            "identifier": "user_id",
+            "type": "attribute",
+          },
+          "description": "",
+          "id": "user_id.username",
+          "isDefault": false,
+          "isPrimary": false,
+          "ref": {
+            "identifier": "user_id.username",
+            "type": "displayForm",
+          },
+          "title": "User Name",
+          "type": "displayForm",
+          "uri": "sanitize_uri",
+        },
+      ],
+      "geoPinDisplayForms": [],
+      "groups": [
+        {
+          "identifier": "owner",
+          "type": "tag",
+        },
+      ],
+      "type": "attribute",
+    },
+    {
       "fact": {
         "description": "Velocity",
         "id": "f_stagehistory.f_velocity",
@@ -16596,7 +16884,7 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
       "attributeHierarchy",
     ],
   },
-  "workspace": "e52649f53eaf49d09a1588c91dd3bef7",
+  "workspace": "ef5b548074ed4e9cbbb267caea8a9926",
 }
 `;
 
@@ -20470,6 +20758,6 @@ exports[`tiger catalog > should read catalog for reference workspace with additi
       "dateDataset",
     ],
   },
-  "workspace": "e52649f53eaf49d09a1588c91dd3bef7",
+  "workspace": "ef5b548074ed4e9cbbb267caea8a9926",
 }
 `;
