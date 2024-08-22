@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2024-05-17T07:58:37.948Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2024-08-13T16:35:03.950Z; */
 const fp_004031cbc9081950b7284311b004fe11 = {
     definition: require("./uiTestScenarios/executions/004031cbc9081950b7284311b004fe11/definition.json"),
     executionResult: require("./uiTestScenarios/executions/004031cbc9081950b7284311b004fe11/executionResult.json"),
@@ -1020,6 +1020,12 @@ const fp_cd90f05d3866c307575d70866a88b1de = {
     dataView_o0_0s100_1000: require("./uiTestScenarios/executions/cd90f05d3866c307575d70866a88b1de/dataView_o0_0s100_1000.json"),
     scenarios: require("./uiTestScenarios/executions/cd90f05d3866c307575d70866a88b1de/scenarios.json"),
 };
+const fp_cfa87f64d11e0f72705ca631d6d73a52 = {
+    definition: require("./uiTestScenarios/executions/cfa87f64d11e0f72705ca631d6d73a52/definition.json"),
+    executionResult: require("./uiTestScenarios/executions/cfa87f64d11e0f72705ca631d6d73a52/executionResult.json"),
+    dataView_all: require("./uiTestScenarios/executions/cfa87f64d11e0f72705ca631d6d73a52/dataView_all.json"),
+    scenarios: require("./uiTestScenarios/executions/cfa87f64d11e0f72705ca631d6d73a52/scenarios.json"),
+};
 const fp_d0ce98c16101df0c8b103babf6a85a4c = {
     definition: require("./uiTestScenarios/executions/d0ce98c16101df0c8b103babf6a85a4c/definition.json"),
     executionResult: require("./uiTestScenarios/executions/d0ce98c16101df0c8b103babf6a85a4c/executionResult.json"),
@@ -1243,12 +1249,6 @@ const fp_ffefe1e672ff7d55be2bb41581749dd4 = {
     definition: require("./uiTestScenarios/executions/ffefe1e672ff7d55be2bb41581749dd4/definition.json"),
     executionResult: require("./uiTestScenarios/executions/ffefe1e672ff7d55be2bb41581749dd4/executionResult.json"),
     dataView_all: require("./uiTestScenarios/executions/ffefe1e672ff7d55be2bb41581749dd4/dataView_all.json"),
-};
-const fp_cfa87f64d11e0f72705ca631d6d73a52 = {
-    definition: require("./uiTestScenarios/executions/cfa87f64d11e0f72705ca631d6d73a52/definition.json"),
-    executionResult: require("./uiTestScenarios/executions/cfa87f64d11e0f72705ca631d6d73a52/executionResult.json"),
-    dataView_all: require("./uiTestScenarios/executions/cfa87f64d11e0f72705ca631d6d73a52/dataView_all.json"),
-    scenarios: require("./uiTestScenarios/executions/cfa87f64d11e0f72705ca631d6d73a52/scenarios.json"),
 };
 export const Scenarios = {
     ColumnChart: {
@@ -1947,6 +1947,16 @@ const df_label_f_account_account_name = {
     elements: require("./metadata/displayForms/label.f_account.account.name/elements.json"),
     obj: require("./metadata/displayForms/label.f_account.account.name/obj.json"),
     req: require("./metadata/displayForms/label.f_account.account.name/request.json"),
+};
+const df_user_id = {
+    elements: require("./metadata/displayForms/user_id/elements.json"),
+    obj: require("./metadata/displayForms/user_id/obj.json"),
+    req: require("./metadata/displayForms/user_id/request.json"),
+};
+const df_user_id_username = {
+    elements: require("./metadata/displayForms/user_id.username/elements.json"),
+    obj: require("./metadata/displayForms/user_id.username/obj.json"),
+    req: require("./metadata/displayForms/user_id.username/request.json"),
 };
 const i_AreaChart_0229f24b92f336871eeb04e1e16c4e68 = {
     obj: require("./uiTestScenarios/insights/AreaChart.0229f24b92f336871eeb04e1e16c4e68/obj.json"),
@@ -6883,6 +6893,7 @@ export const Recordings = {
         fp_c4fde85b0451ca50074d2b871a914cc2,
         fp_c669c516467718db4b1e2d4f23e0b3fa,
         fp_cd90f05d3866c307575d70866a88b1de,
+        fp_cfa87f64d11e0f72705ca631d6d73a52,
         fp_d0ce98c16101df0c8b103babf6a85a4c,
         fp_d1a4099ac31a568a7e645ed36a71e9a7,
         fp_d20a64ba596c5eebd0274f558d75ea8a,
@@ -6921,7 +6932,6 @@ export const Recordings = {
         fp_fe88554dffc6b1cb444799b63bdbef5d,
         fp_fe9b7d7da26bca841ea91d1f0b83b67e,
         fp_ffefe1e672ff7d55be2bb41581749dd4,
-        fp_cfa87f64d11e0f72705ca631d6d73a52,
     },
     metadata: {
         catalog,
@@ -6935,6 +6945,8 @@ export const Recordings = {
             df_f_opportunitysnapshot_forecastcategory_id,
             df_attr_f_stage_stagename,
             df_label_f_account_account_name,
+            df_user_id,
+            df_user_id_username,
         },
         insights: {
             i_AreaChart_0229f24b92f336871eeb04e1e16c4e68,

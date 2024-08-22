@@ -9,6 +9,7 @@
                         "identifier": "f_owner.region_id",
                         "localIdentifier": "a_f_owner.region_id",
                         "name": "Region",
+                        "primaryLabel": { "identifier": "f_owner.region_id", "type": "displayForm" },
                         "totalItems": [],
                         "uri": ""
                     }
@@ -29,6 +30,10 @@
                         "identifier": "dt_oppcreated_timestamp.quarter",
                         "localIdentifier": "a_dt_oppcreated_timestamp.quarter",
                         "name": "Created - Quarter/Year",
+                        "primaryLabel": {
+                            "identifier": "dt_oppcreated_timestamp.quarter",
+                            "type": "displayForm"
+                        },
                         "totalItems": [],
                         "uri": ""
                     }

@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable header/header */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2024-05-17T07:58:37.948Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2024-08-13T16:35:03.950Z; */
 const df_label_f_activity_subject = require("./metadata/displayForms/label.f_activity.subject/elements.json");
 const df_label_f_product_product_name = require("./metadata/displayForms/label.f_product.product.name/elements.json");
 const df_f_owner_department_id = require("./metadata/displayForms/f_owner.department_id/elements.json");
@@ -11,6 +11,8 @@ const df_f_stage_status_id = require("./metadata/displayForms/f_stage.status_id/
 const df_f_opportunitysnapshot_forecastcategory_id = require("./metadata/displayForms/f_opportunitysnapshot.forecastcategory_id/elements.json");
 const df_attr_f_stage_stagename = require("./metadata/displayForms/attr.f_stage.stagename/elements.json");
 const df_label_f_account_account_name = require("./metadata/displayForms/label.f_account.account.name/elements.json");
+const df_user_id = require("./metadata/displayForms/user_id/elements.json");
+const df_user_id_username = require("./metadata/displayForms/user_id.username/elements.json");
 export const DataSamples = {
     Department: { DirectSales: df_f_owner_department_id[0], InsideSales: df_f_owner_department_id[1] },
     ForecastCategory: {
@@ -106,5 +108,53 @@ export const DataSamples = {
         EmailWithAddVenturesOnOct2708: df_label_f_activity_subject[7],
         EmailWithMtMediaTempleOnApr2210: df_label_f_activity_subject[8],
         EmailWithMtMediaTempleOnAug0110: df_label_f_activity_subject[9],
+    },
+    UserId: {
+        $10001: df_user_id[0],
+        $10002: df_user_id[1],
+        $10003: df_user_id[2],
+        $10004: df_user_id[3],
+        $10005: df_user_id[4],
+        $10006: df_user_id[5],
+        $10007: df_user_id[6],
+        $10008: df_user_id[7],
+        $10009: df_user_id[8],
+        $10010: df_user_id[9],
+        $10011: df_user_id[10],
+        $10012: df_user_id[11],
+        $10013: df_user_id[12],
+        $10014: df_user_id[13],
+        $10015: df_user_id[14],
+        $10016: df_user_id[15],
+        $10017: df_user_id[16],
+        $10018: df_user_id[17],
+        $10019: df_user_id[18],
+        $10020: df_user_id[19],
+        $10021: df_user_id[20],
+        $10022: df_user_id[21],
+    },
+    UserName: {
+        AndrewHarris: df_user_id_username[0],
+        BrianClark: df_user_id_username[1],
+        ChristopherThomas: df_user_id_username[2],
+        DanielJackson: df_user_id_username[3],
+        DavidWilson: df_user_id_username[4],
+        JohnSmith: df_user_id_username[5],
+        JohnSmith_$10007: df_user_id_username[6],
+        JosephMoore: df_user_id_username[7],
+        JosephMoore_$10009: df_user_id_username[8],
+        JoshuaMartin: df_user_id_username[9],
+        JoshuaMartin_$10011: df_user_id_username[10],
+        JoshuaMartin_$10010: df_user_id_username[11],
+        MatthewWhite: df_user_id_username[12],
+        NicholasMartinez: df_user_id_username[13],
+        NicholasMartinez_$10015: df_user_id_username[14],
+        SamuelLewis: df_user_id_username[15],
+        SamuelLewis_$10016: df_user_id_username[16],
+        SamuelLewis_$10017: df_user_id_username[17],
+        ThomasAnderson: df_user_id_username[18],
+        WilliamBrown: df_user_id_username[19],
+        WilliamBrown_$10021: df_user_id_username[20],
+        WilliamBrown_$10022: df_user_id_username[21],
     },
 };

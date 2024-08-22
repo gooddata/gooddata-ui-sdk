@@ -22,19 +22,26 @@ function validateEnv() {
     return true;
 }
 
-function replaceWorkspaceIdInEnv(createdWorkSpaceId) {
+function addOrReplaceWorkspaceIdInEnv(createdWorkspaceId) {
+    const { WORKSPACE_ID } = process.env;
+
     const pathToFile = path.resolve(".env");
 
     // Read .env file
     let envData = fs.readFileSync(pathToFile, "utf8");
 
-    // Replace WORKSPACE_ID value
-    envData = envData.replace(/(WORKSPACE_ID=).*/, `$1${createdWorkSpaceId}`);
+    if (WORKSPACE_ID) {
+        // Replace WORKSPACE_ID value
+        envData = envData.replace(/(WORKSPACE_ID=).*/, `$1${createdWorkspaceId}`);
+    } else {
+        // Append WORKSPACE_ID value
+        envData += `\nWORKSPACE_ID=${createdWorkspaceId}`;
+    }
 
     // Write the updated data back to the .env file
     fs.writeFileSync(pathToFile, envData);
 
-    logLn("WORKSPACE_ID: " + createdWorkSpaceId + " set in .env file successfully");
+    logLn("WORKSPACE_ID: " + createdWorkspaceId + " set in .env file successfully");
 }
 
 async function createFixture() {
@@ -68,7 +75,7 @@ export async function import_fixture() {
 
         const createdWorkSpaceId = await createFixture();
 
-        replaceWorkspaceIdInEnv(createdWorkSpaceId);
+        addOrReplaceWorkspaceIdInEnv(createdWorkSpaceId);
 
         logLn("Import workspace fixtures successfully WORKSPACE_ID: " + createdWorkSpaceId);
     } catch (e) {

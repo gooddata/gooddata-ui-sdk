@@ -319,4 +319,32 @@ storiesOf(`${FilterStories}@next/AttributeFilter`)
                 },
             },
         },
+    )
+    .add(
+        "filter with display as label",
+        () => {
+            return (
+                <div style={wrapperStyle} className="screenshot-target">
+                    <AttributeFilter
+                        backend={backend}
+                        workspace={ReferenceWorkspaceId}
+                        filter={newPositiveAttributeFilter(ReferenceMd.UserId.Default, {
+                            uris: [ReferenceData.UserId.$10006.uri],
+                        })}
+                        enableDuplicatedLabelValuesInAttributeFilter={true}
+                        displayAsLabel={ReferenceMd.UserId.UserName.attribute.displayForm}
+                        onApply={action("on-apply")}
+                        titleWithSelection={true}
+                    />
+                </div>
+            );
+        },
+        {
+            screenshots: {
+                opened: {
+                    clickSelector: ".gd-attribute-filter__next",
+                    postInteractionWait: LongPostInteractionTimeout,
+                },
+            },
+        },
     );

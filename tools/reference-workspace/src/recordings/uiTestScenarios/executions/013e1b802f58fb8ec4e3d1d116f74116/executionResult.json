@@ -9,6 +9,7 @@
                         "identifier": "f_city.id.cityname",
                         "localIdentifier": "a_f_city.id.cityname",
                         "name": "City name",
+                        "primaryLabel": { "identifier": "f_city.id", "type": "displayForm" },
                         "totalItems": [],
                         "uri": ""
                     }
@@ -20,6 +21,7 @@
                         "identifier": "f_city.id.cityname",
                         "localIdentifier": "a_f_city.id.cityname_1",
                         "name": "City name",
+                        "primaryLabel": { "identifier": "f_city.id", "type": "displayForm" },
                         "totalItems": [],
                         "uri": ""
                     }
@@ -35,6 +37,7 @@
                         "identifier": "attr.f_product.product",
                         "localIdentifier": "a_attr.f_product.product",
                         "name": "Product",
+                        "primaryLabel": { "identifier": "attr.f_product.product", "type": "displayForm" },
                         "totalItems": [],
                         "uri": ""
                     }
