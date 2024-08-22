@@ -24,5 +24,5 @@ runs:
     - name: Create and push branch
       run: |
         git checkout -b ${{ inputs.target-branch }}
-        git push --force-with-lease origin ${{ inputs.target-branch }}
+        git push -f origin ${{ inputs.target-branch }}
       shell: bash
