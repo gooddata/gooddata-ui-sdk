@@ -3140,6 +3140,7 @@ export interface ISmtpDestination {
     login: string;
     name: string;
     password?: string;
+    person: string;
     port: 25 | 465 | 587 | 2525;
 }
 
