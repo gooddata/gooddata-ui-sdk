@@ -1,10 +1,11 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React from "react";
 import { Typography } from "@gooddata/sdk-ui-kit";
+import cx from "classnames";
 
 interface IDashboardInsightSubmenuHeaderProps {
     title: string;
-    onHeaderClick: () => void;
+    onHeaderClick?: () => void;
 }
 
 export const DashboardInsightSubmenuHeader: React.FC<IDashboardInsightSubmenuHeaderProps> = ({
@@ -14,10 +15,10 @@ export const DashboardInsightSubmenuHeader: React.FC<IDashboardInsightSubmenuHea
     return (
         <Typography
             tagName="h3"
-            className="configuration-panel-header-title clickable"
+            className={cx("configuration-panel-header-title", { clickable: onHeaderClick })}
             onClick={onHeaderClick}
         >
-            <i className="gd-icon-navigateleft" />
+            {onHeaderClick ? <i className="gd-icon-navigateleft" /> : null}
             {title}
         </Typography>
     );

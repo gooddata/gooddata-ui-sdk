@@ -31,6 +31,8 @@ import ru from "date-fns/locale/ru/index.js";
 import it from "date-fns/locale/it/index.js";
 import enGB from "date-fns/locale/en-GB/index.js";
 import frCA from "date-fns/locale/fr-CA/index.js";
+import fi from "date-fns/locale/fi/index.js";
+import enAU from "date-fns/locale/en-AU/index.js";
 
 const DATEPICKER_OUTSIDE_DAY_SELECTOR = "rdp-day_outside";
 
@@ -77,6 +79,10 @@ const convertedLocales: Record<string, Locale> = {
     "es-419": es,
     "en-GB": enGB,
     "fr-CA": frCA,
+    "zh-Hant": zhCN,
+    "zh-HK": zhCN,
+    "en-AU": enAU,
+    "fi-FI": fi,
 };
 
 function formatDate(date: Date, dateFormat: string): string {

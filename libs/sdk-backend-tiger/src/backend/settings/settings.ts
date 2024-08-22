@@ -1,5 +1,6 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
+import { IAlertDefault } from "@gooddata/sdk-model";
 import { v4 as uuidv4 } from "uuid";
 
 import { convertApiError } from "../../utils/errorHandling.js";
@@ -18,6 +19,10 @@ export class TigerSettingsService<T> {
 
     public async setTheme(themeId: string): Promise<void> {
         return this.setSetting("ACTIVE_THEME", { value: themeId });
+    }
+
+    public async setAlertDefault(value: IAlertDefault): Promise<void> {
+        return this.setSetting("ALERT", { value });
     }
 
     public async setColorPalette(colorPaletteId: string): Promise<void> {

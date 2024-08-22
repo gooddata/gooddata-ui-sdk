@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import dotenv from "dotenv";
 import { program } from "commander";
 import axios from "axios";
@@ -24,7 +24,15 @@ program
     .parse(process.argv);
 
 const specs = [
-    { path: "/api/v1/schemas/metadata", name: "metadata-json-api" },
+    {
+        path: "/api/v1/schemas/metadata",
+        name: "metadata-json-api",
+        // Remove when openapi-generator correctly generates null values in arrays
+        apiOverrides: (api) => {
+            // Replace AttributeFilterElements and DependsOn values;
+            return api.replaceAll("'values': Array<string>", "'values': Array<string | null>");
+        },
+    },
     {
         path: "/api/v1/schemas/afm",
         name: "afm-rest-api",
@@ -39,7 +47,7 @@ const specs = [
         apiOverrides: (api) => {
             // Replace AttributeFilterElements and DependsOn values
             return api.replaceAll("'values': Array<string>", "'values': Array<string | null>");
-        }
+        },
     },
     { path: "/api/v1/schemas/scan", name: "scan-json-api" },
     { path: "/api/v1/schemas/auth", name: "auth-json-api" },

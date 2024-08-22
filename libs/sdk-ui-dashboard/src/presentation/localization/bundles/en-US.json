@@ -137,9 +137,24 @@
         "comment": "Translate as imperative. Schedule emailing edit whole KPI dashboard",
         "limit": 0
     },
+    "options.menu.alerts.edit": {
+        "value": "Show alerts",
+        "comment": "Translate as imperative. Schedule alerts for dashboard or widget",
+        "limit": 0
+    },
     "options.menu.delete": {
         "value": "Delete",
         "comment": "Delete Dashboard",
+        "limit": 0
+    },
+    "options.menu.addFilterViews": {
+        "value": "Create view",
+        "comment": "Open menu with dialog with form to create a new filter view.",
+        "limit": 0
+    },
+    "options.menu.listFilterViews": {
+        "value": "Show my views",
+        "comment": "Open menu with my saved filter views.",
         "limit": 0
     },
     "dialogs.export.cells": {
@@ -554,8 +569,8 @@
         "limit": 0
     },
     "dialogs.schedule.management.create.tooManyMessage": {
-        "value": "Too many schedules created in the workspace. A maximum of {number} schedules can be created in this workspace.",
-        "comment": "Do no translate {number} variable",
+        "value": "Your organization has reached the limit of scheduled exports. Contact your administrator to create more.",
+        "comment": "",
         "limit": 0
     },
     "dialogs.schedule.management.noSchedules": {
@@ -628,6 +643,121 @@
         "comment": "",
         "limit": 0
     },
+    "dialogs.alerting.management.title": {
+        "value": "Alerts",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.alerting.management.load.error": {
+        "value": "Failed to load. Try again later.",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.alerting.management.delete.error": {
+        "value": "Failed to delete alert. Try again later.",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.alerting.management.pause.error": {
+        "value": "Failed to pause alert. Try again later.",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.alerting.management.pause.success": {
+        "value": "Your alert has been paused.",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.alerting.management.activate.error": {
+        "value": "Failed to un-pause alert. Try again later.",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.alerting.management.activate.success": {
+        "value": "Your alert has been un-paused.",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.alerting.footer.title": {
+        "value": "How to create alert?",
+        "comment": "Title of a link to documentation",
+        "limit": 0
+    },
+    "dialogs.alerting.footer.title.short": {
+        "value": "Help",
+        "comment": "Title of a link to documentation",
+        "limit": 0
+    },
+    "dialogs.alerting.management.list.title": {
+        "value": "Your alerts",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.alerting.management.noAlerts": {
+        "value": "There are no alerts.",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.alerting.title.placeholder": {
+        "value": "Untitled alert",
+        "comment": "Placeholder for alert title input",
+        "limit": 0
+    },
+    "dialogs.alerting.management.delete.dialog": {
+        "value": "Delete alert?",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.alerting.management.delete.dialog.confirm": {
+        "value": "<b>The alert</b> will be permanently deleted.",
+        "comment": "Do not translate html tags <b>, </b>",
+        "limit": 0
+    },
+    "dialogs.alerting.delete.success": {
+        "value": "Success! Your alert was deleted.",
+        "comment": "",
+        "limit": 0
+    },
+    "alerting.comparisonOperator.greaterThan": {
+        "value": "greater than",
+        "comment": "",
+        "limit": 0
+    },
+    "alerting.comparisonOperator.greaterThanOrEquals": {
+        "value": "greater than or equals",
+        "comment": "",
+        "limit": 0
+    },
+    "alerting.comparisonOperator.lessThan": {
+        "value": "less than",
+        "comment": "",
+        "limit": 0
+    },
+    "alerting.comparisonOperator.lessThanOrEquals": {
+        "value": "less than or equals",
+        "comment": "",
+        "limit": 0
+    },
+    "alerting.alert.menu.delete": {
+        "value": "Delete",
+        "comment": "",
+        "limit": 0
+    },
+    "alerting.alert.menu.pause": {
+        "value": "Pause",
+        "comment": "",
+        "limit": 0
+    },
+    "alerting.alert.menu.resume": {
+        "value": "Unpause",
+        "comment": "",
+        "limit": 0
+    },
+    "alerting.alert.menu.edit": {
+        "value": "Edit",
+        "comment": "",
+        "limit": 0
+    },
     "delete": {
         "value": "Delete",
         "comment": "",
@@ -645,6 +775,11 @@
     },
     "save": {
         "value": "Save",
+        "comment": "",
+        "limit": 0
+    },
+    "create": {
+        "value": "Create",
         "comment": "",
         "limit": 0
     },
@@ -974,6 +1109,11 @@
     "widget.options.menu.exportToXLSX": {
         "value": "Export to XLSX",
         "comment": "Export to file with XLSX extension.",
+        "limit": 0
+    },
+    "widget.options.menu.alerts": {
+        "value": "Alerts",
+        "comment": "Item in the widget options menu",
         "limit": 0
     },
     "widget.options.menu.scheduleExport": {
@@ -2534,6 +2674,166 @@
     "filters.filterViews.delete.cancelButton": {
         "value": "Cancel",
         "comment": "Label of the button that cancels and closes the dialog.",
+        "limit": 0
+    },
+    "insightAlert.config.action.edit": {
+        "value": "Edit",
+        "comment": "Action in alert configuration",
+        "limit": 0
+    },
+    "insightAlert.config.action.pause": {
+        "value": "Pause",
+        "comment": "Action in alert configuration",
+        "limit": 0
+    },
+    "insightAlert.config.action.resume": {
+        "value": "Unpause",
+        "comment": "Action in alert configuration",
+        "limit": 0
+    },
+    "insightAlert.config.action.delete": {
+        "value": "Delete",
+        "comment": "Action in alert configuration",
+        "limit": 0
+    },
+    "insightAlert.config.comparisonOperator.lessThan": {
+        "value": "Is less than",
+        "comment": "Comparison operator in alert configuration",
+        "limit": 0
+    },
+    "insightAlert.config.comparisonOperator.lessThanOrEquals": {
+        "value": "Is less than or equal to",
+        "comment": "Comparison operator in alert configuration",
+        "limit": 0
+    },
+    "insightAlert.config.comparisonOperator.greaterThan": {
+        "value": "Is greater than",
+        "comment": "Comparison operator in alert configuration",
+        "limit": 0
+    },
+    "insightAlert.config.comparisonOperator.greaterThanOrEquals": {
+        "value": "Is greater than or equal to",
+        "comment": "Comparison operator in alert configuration",
+        "limit": 0
+    },
+    "insightAlert.config.alerts": {
+        "value": "Alerts",
+        "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.createAlert": {
+        "value": "Create alert",
+        "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.editAlert": {
+        "value": "Edit alert",
+        "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.title": {
+        "value": "Configuration",
+        "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.trigger": {
+        "value": "Trigger",
+        "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.trigger.tooltip": {
+        "value": "How often to trigger the alert when the condition is met.",
+        "comment": "Tooltip for alert trigger configuration",
+        "limit": 0
+    },
+    "insightAlert.config.when": {
+        "value": "When",
+        "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.addAlert": {
+        "value": "Add alert",
+        "comment": "Action to create new alert",
+        "limit": 0
+    },
+    "insightAlert.config.triggerMode.always": {
+        "value": "Every time",
+        "comment": "How many times alert should be triggered",
+        "limit": 0
+    },
+    "insightAlert.config.triggerMode.once": {
+        "value": "Once, then pause",
+        "comment": "How many times alert should be triggered",
+        "limit": 0
+    },
+    "insightAlert.config.delete.success": {
+        "value": "Success. The alert has been deleted.",
+        "comment": "Alert action success message",
+        "limit": 0
+    },
+    "insightAlert.config.resume.success": {
+        "value": "Success. The alert has been resumed.",
+        "comment": "Alert action success message",
+        "limit": 0
+    },
+    "insightAlert.config.pause.success": {
+        "value": "Success. The alert has been paused.",
+        "comment": "Alert action success message",
+        "limit": 0
+    },
+    "insightAlert.config.update.success": {
+        "value": "Success. The alert has been updated.",
+        "comment": "Alert action success message",
+        "limit": 0
+    },
+    "insightAlert.config.add.success": {
+        "value": "Success. The alert has been added.",
+        "comment": "Alert action success message",
+        "limit": 0
+    },
+    "insightAlert.config.delete.title": {
+        "value": "Delete alert?",
+        "comment": "Alert action title",
+        "limit": 0
+    },
+    "insightAlert.config.delete.message": {
+        "value": "The alert for <b>{title}</b> will be permanently deleted.",
+        "comment": "Do not translate html tags <b>, </b> or {title} placeholder",
+        "limit": 0
+    },
+    "insightAlert.noDestination.tooltip": {
+        "value": "No destination available. <a>Create a destination</a> to set up an alert.",
+        "comment": "Do not translate html tags <a>, </a>",
+        "limit": 0
+    },
+    "insightAlert.maxAlertsReached": {
+        "value": "Your organization has reached the limit of alerts. Contact your administrator to create more.",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.loading.error": {
+        "value": "Failed to load necessary information. Try again later.",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.save.error": {
+        "value": "Failed to save alert. Try again later.",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.delete.error": {
+        "value": "Failed to delete alert. Try again later.",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.invalid": {
+        "value": "This alert configuration is incorrect. Please update it or contact your administrator.",
+        "comment": "Error message for alert configuration",
+        "limit": 0
+    },
+    "insightAlert.config.selectMetric": {
+        "value": "Select a metric",
+        "comment": "Label of metric select dropdown",
         "limit": 0
     }
 }

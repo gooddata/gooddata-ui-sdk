@@ -261,6 +261,11 @@ export interface ISettings {
     whiteLabeling?: IWhiteLabeling;
 
     /**
+     * Represents alert default configuration
+     */
+    alertDefault?: IAlertDefault;
+
+    /**
      * Represents configuration for OpenAI integration
      * @alpha
      */
@@ -437,9 +442,19 @@ export interface ISettings {
     enableDrillIntersectionIgnoredAttributes?: boolean;
 
     /**
+     * Enable configuration of the drill intersection ignored attributes for drill down.
+     */
+    enableDrillDownIntersectionIgnoredAttributes?: boolean;
+
+    /**
      * Enable multiple data sources to be used in a single workspace.
      */
     enableDashboardFilterViews?: boolean;
+
+    /**
+     * Enable configuration workspace hierarchy settings in Home UI.
+     */
+    enableWorkspaceHierarchySettings?: boolean;
 
     [key: string]: number | boolean | string | object | undefined;
 }
@@ -493,6 +508,22 @@ export interface IWhiteLabeling {
      * Whitelabeling of Apple touch icon url
      */
     appleTouchIconUrl?: string;
+}
+
+/**
+ * Alert Default
+ *
+ * @public
+ */
+export interface IAlertDefault {
+    /**
+     * Default evaluation frequency
+     */
+    defaultCron: string;
+    /**
+     * Default timezone
+     */
+    defaultTimezone: string;
 }
 
 /**

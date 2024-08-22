@@ -98,6 +98,12 @@ export interface IDrillDownDefinition {
      * Title for the target attribute.
      */
     title?: string;
+
+    /**
+     * Reference to the attribute hierarchy that triggered the drill down.
+     * Is required if enableDrillDownIntersectionIgnoredAttributes feature flag is set to true.
+     */
+    hierarchyRef?: ObjRef;
 }
 
 /**
@@ -185,6 +191,10 @@ export interface IMenuButtonItemsVisibility {
      * If set to true, the Schedule emailing button will be visible. Defaults to true.
      */
     scheduleEmailButton?: boolean;
+    /**
+     * If set to true, the Alerting button will be visible. Defaults to true.
+     */
+    alertingButton?: boolean;
     /**
      * If set to true, the Delete button will be visible. Defaults to true.
      */

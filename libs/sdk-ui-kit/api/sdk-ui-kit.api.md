@@ -531,10 +531,7 @@ export class ErrorOverlay extends React_2.PureComponent<IErrorOverlayProps> {
 }
 
 // @internal (undocumented)
-export const ExportDialog: {
-    (props: IExportDialogBaseProps): JSX.Element;
-    defaultProps: IExportDialogBaseProps;
-};
+export const ExportDialog: (props: IExportDialogBaseProps) => JSX.Element;
 
 // @internal (undocumented)
 export class ExportDialogBase extends DialogBase<IExportDialogBaseProps> {
@@ -853,6 +850,8 @@ export interface IAppHeaderProps {
     // (undocumented)
     menuItemsGroups?: IHeaderMenuItem[][];
     // (undocumented)
+    mobileSearch?: React_2.ReactNode;
+    // (undocumented)
     onHelpClick?: (isOpen: boolean) => void;
     // (undocumented)
     onInviteItemClick?: (e: React_2.MouseEvent) => void;
@@ -888,6 +887,8 @@ export interface IAppHeaderState {
     isHelpMenuOpen: boolean;
     // (undocumented)
     isOverlayMenuOpen: boolean;
+    // (undocumented)
+    isSearchMenuOpen: boolean;
     // (undocumented)
     responsiveMode: boolean;
 }
@@ -1349,6 +1350,8 @@ export interface IDialogBaseProps {
     onMouseUp?: (e: React_2.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     // (undocumented)
     onSubmit?: (data?: any) => void;
+    // (undocumented)
+    shouldCloseOnClick?: (e: Event) => boolean;
     // (undocumented)
     submitOnEnterKey?: boolean;
 }
@@ -3386,17 +3389,41 @@ export interface IRecurrenceFormProps {
     // (undocumented)
     locale?: string;
     // (undocumented)
-    onChange: (cronExpression: string, startDate: Date) => void;
+    onChange: (cronExpression: string, startDate: Date | null) => void;
     // (undocumented)
     repeatLabel?: string;
     // (undocumented)
-    startDate: Date;
+    showRepeatTypeDescription?: boolean;
+    // (undocumented)
+    startDate?: Date | null;
     // (undocumented)
     startLabel?: string;
     // (undocumented)
     timeFormat?: string;
     // (undocumented)
     timezone?: string;
+    // (undocumented)
+    weekStart?: WeekStart;
+}
+
+// @internal (undocumented)
+export interface IRecurrenceProps {
+    // (undocumented)
+    allowHourlyRecurrence?: boolean;
+    // (undocumented)
+    cronValue: string;
+    // (undocumented)
+    label: string;
+    // (undocumented)
+    onCronValueChange: (cronValue: string) => void;
+    // (undocumented)
+    onRepeatTypeChange: (repeatType: string) => void;
+    // (undocumented)
+    recurrenceType: RecurrenceType;
+    // (undocumented)
+    showRepeatTypeDescription?: boolean;
+    // (undocumented)
+    startDate?: Date | null;
     // (undocumented)
     weekStart?: WeekStart;
 }
@@ -4447,8 +4474,26 @@ export enum PresetType {
 // @internal (undocumented)
 export const recommendedHeader: IDateDatasetHeader;
 
+// @internal
+export const Recurrence: React_2.FC<IRecurrenceProps>;
+
+// @internal
+export const RECURRENCE_TYPES: {
+    HOURLY: string;
+    DAILY: string;
+    WEEKLY: string;
+    MONTHLY: string;
+    CRON: string;
+};
+
 // @internal (undocumented)
 export const RecurrenceForm: React_2.FC<IRecurrenceFormProps>;
+
+// @internal
+export type RecurrenceType = typeof RECURRENCE_TYPES[RecurrenceTypeKey];
+
+// @internal
+export type RecurrenceTypeKey = keyof typeof RECURRENCE_TYPES;
 
 // @internal (undocumented)
 export const relatedHeader: IDateDatasetHeader;
@@ -4764,6 +4809,9 @@ export const ToastMessages: React_2.FC;
 
 // @internal (undocumented)
 export function transform2Dropdown<T extends IDateDataset>(dateDatasets: T[]): Array<T | IDateDatasetHeader>;
+
+// @internal
+export const transformCronExpressionToRecurrenceType: (date: Date | null, cronExpression: string, allowHourlyRecurrence: boolean, weekStart: WeekStart) => RecurrenceType;
 
 // @internal (undocumented)
 export type TUTMContent = "main_menu_help_documentation" | "main_menu_help_university" | "main_menu_help_community" | "main_menu_help_support" | "main_menu_help_ticket" | "main_menu_help_slack";

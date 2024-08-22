@@ -10,7 +10,7 @@ import {
     widgetRef,
     widgetUri,
 } from "@gooddata/sdk-model";
-import { InvalidCustomUrlDrillParameterInfo, UiState } from "./uiState.js";
+import { InvalidCustomUrlDrillParameterInfo, UiState, FilterViewDialogMode } from "./uiState.js";
 import { ILayoutCoordinates, IMenuButtonItemsVisibility, IScheduleEmailContext } from "../../../types.js";
 import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
 import { IDashboardWidgetOverlay } from "../../types/commonTypes.js";
@@ -57,6 +57,22 @@ const closeScheduleEmailManagementDialog: UiReducer = (state) => {
     state.scheduleEmailManagementDialog.context = undefined;
 };
 
+const openAlertingManagementDialog: UiReducer<PayloadAction> = (state) => {
+    state.alertsManagementDialog.open = true;
+};
+
+const closeAlertingManagementDialog: UiReducer = (state) => {
+    state.alertsManagementDialog.open = false;
+};
+
+const openAlertingDialog: UiReducer<PayloadAction> = (state) => {
+    state.alertsDialog.open = true;
+};
+
+const closeAlertingDialog: UiReducer = (state) => {
+    state.alertsDialog.open = false;
+};
+
 const openSaveAsDialog: UiReducer = (state) => {
     state.saveAsDialog.open = true;
 };
@@ -79,6 +95,21 @@ const openDeleteDialog: UiReducer = (state) => {
 
 const closeDeleteDialog: UiReducer = (state) => {
     state.deleteDialog.open = false;
+};
+
+const toggleFilterViewsDialog: UiReducer<
+    PayloadAction<
+        | {
+              open?: boolean;
+              mode?: FilterViewDialogMode;
+          }
+        | undefined
+    >
+> = (state, action) => {
+    state.filterViews = {
+        open: action.payload?.open ?? !state.filterViews.open,
+        mode: action.payload?.mode ?? "list",
+    };
 };
 
 const openKpiDeleteDialog: UiReducer<PayloadAction<ILayoutCoordinates>> = (state, action) => {
@@ -307,6 +338,10 @@ export const uiReducers = {
     resetScheduleEmailDialogDefaultAttachment,
     openScheduleEmailManagementDialog,
     closeScheduleEmailManagementDialog,
+    openAlertingManagementDialog,
+    closeAlertingManagementDialog,
+    openAlertingDialog,
+    closeAlertingDialog,
     openSaveAsDialog,
     closeSaveAsDialog,
     setFilterBarExpanded,
@@ -348,4 +383,5 @@ export const uiReducers = {
     toggleWidgetsOverlay,
     setWidgetsOverlay,
     hideAllWidgetsOverlay,
+    toggleFilterViewsDialog,
 };

@@ -132,6 +132,11 @@
             .input-label-text {
                 display: flex;
             }
+
+            // Same selector and rule as in KD to have consistent look in Dashboard component and in KD.
+            label .gd-bubble-trigger {
+                margin: 0 5px;
+            }
         }
 
         .configuration-panel-header-title {

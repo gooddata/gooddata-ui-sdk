@@ -5,10 +5,17 @@ import { ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import * as React from "react";
 import { getDateTimeConfig } from "@gooddata/sdk-ui-kit";
 import { defineMessages, FormattedDate, FormattedMessage, FormattedTime } from "react-intl";
+import { useMetadataTimezone } from "./metadataTimezoneContext.js";
 
-type UpdateDateProps = {
+// In Tiger, it's always UTC
+const DEFAULT_MD_TIMEZONE = "UTC";
+
+/**
+ * Props for the update date component.
+ * @internal
+ */
+export type UpdateDateProps = {
     listItem: ListItem<ISemanticSearchResultItem>;
-    timezone?: string;
 };
 
 const messages = defineMessages({
@@ -17,10 +24,14 @@ const messages = defineMessages({
     at: { id: "gs.date.at" },
 });
 
-export const UpdatedDate = React.memo(function UpdatedDate({
-    listItem: { item },
-    timezone,
-}: UpdateDateProps) {
+/**
+ * Rendering the update date as memoized component.
+ * The list rendering was lagging and React Performance tools showed that
+ * the date formatting was one of the bottlenecks.
+ * @internal
+ */
+export const UpdatedDate = React.memo(function UpdatedDate({ listItem: { item } }: UpdateDateProps) {
+    const timezone = useMetadataTimezone() ?? DEFAULT_MD_TIMEZONE;
     const timestamp = item.modifiedAt ?? item.createdAt;
 
     if (!timestamp) return null;

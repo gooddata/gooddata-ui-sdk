@@ -4,14 +4,9 @@ import React from "react";
 
 import { ScheduledEmailDialog, ScheduledEmailManagementDialog } from "../../scheduledEmail/index.js";
 
-import {
-    useDashboardScheduledEmails,
-    useDashboardSelector,
-    selectDashboardId,
-} from "../../../model/index.js";
+import { useDashboardScheduledEmails } from "../../../model/index.js";
 
 export const ScheduledEmailDialogProvider = () => {
-    const dashboard = useDashboardSelector(selectDashboardId);
     const {
         users,
         webhooks,
@@ -33,9 +28,7 @@ export const ScheduledEmailDialogProvider = () => {
         onScheduleEmailingManagementClose,
         onScheduleEmailingManagementDeleteSuccess,
         onScheduleEmailingManagementDeleteError,
-    } = useDashboardScheduledEmails({
-        dashboard,
-    });
+    } = useDashboardScheduledEmails();
 
     return (
         <>

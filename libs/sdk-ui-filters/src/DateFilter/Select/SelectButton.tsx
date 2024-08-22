@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { ISelectItemOption } from "./types.js";
@@ -6,7 +6,7 @@ import { itemToString } from "./utils.js";
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export const SelectButton = <V extends {}>({
-    selectedItem,
+    selectedItem = null,
     isOpen,
     getToggleButtonProps,
 }: {
@@ -31,6 +31,3 @@ export const SelectButton = <V extends {}>({
         <span className={cx("gd-button-icon", isOpen ? "gd-icon-navigateup" : "gd-icon-navigatedown")} />
     </button>
 );
-SelectButton.defaultProps = {
-    selectedItem: null,
-};

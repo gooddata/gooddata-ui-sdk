@@ -117,6 +117,15 @@
             display: inline-block;
         }
     }
+    .gd-icon-filter {
+        &::before {
+            content: "";
+            background: url("~@gooddata/sdk-ui-dashboard/esm/assets/filter.svg") no-repeat center;
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+        }
+    }
 }
 
 .dropdown-body .gd-list-item {

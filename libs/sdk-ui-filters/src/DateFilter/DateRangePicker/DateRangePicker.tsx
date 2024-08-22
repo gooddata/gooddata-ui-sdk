@@ -33,6 +33,8 @@ import ru from "date-fns/locale/ru/index.js";
 import it from "date-fns/locale/it/index.js";
 import enGB from "date-fns/locale/en-GB/index.js";
 import frCA from "date-fns/locale/fr-CA/index.js";
+import enAU from "date-fns/locale/en-AU/index.js";
+import fi from "date-fns/locale/fi/index.js";
 
 const convertedLocales: Record<string, Locale> = {
     "en-US": enUS,
@@ -49,6 +51,10 @@ const convertedLocales: Record<string, Locale> = {
     "es-419": es,
     "en-GB": enGB,
     "fr-CA": frCA,
+    "zh-Hant": zhCN,
+    "en-AU": enAU,
+    "fi-FI": fi,
+    "zh-HK": zhCN,
 };
 
 const ALIGN_POINTS = [{ align: "bl tl", offset: { x: 0, y: 1 } }];

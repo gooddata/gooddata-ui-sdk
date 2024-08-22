@@ -1,7 +1,7 @@
 // (C) 2022-2024 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import { IAutomationMetadataObject, IWebhookMetadataObject } from "@gooddata/sdk-model";
+import { IAutomationMetadataObject, IWebhookDefinitionObject } from "@gooddata/sdk-model";
 import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
@@ -14,7 +14,7 @@ interface IScheduledEmailsProps {
     scheduledEmails: IAutomationMetadataObject[];
     currentUserEmail?: string;
     noSchedulesMessageId: string;
-    webhooks: IWebhookMetadataObject[];
+    webhooks: IWebhookDefinitionObject[];
 }
 
 export const ScheduledEmails: React.FC<IScheduledEmailsProps> = (props) => {

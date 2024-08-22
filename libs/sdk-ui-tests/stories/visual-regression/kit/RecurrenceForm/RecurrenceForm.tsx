@@ -55,6 +55,30 @@ const RecurrenceFormTest: React.FC = () => {
                         onChange={onChange}
                     />
                 </div>
+                <div>
+                    <h3 style={headerStyle}>No date provided</h3>
+                    <RecurrenceForm
+                        cronExpression={dailyCronExpression}
+                        onChange={onChange}
+                        timeFormat={"hh:mm A"}
+                        dateFormat="dd.mm.yyyy"
+                        timezone="America/New_York"
+                        weekStart="Sunday"
+                    />
+                </div>
+                <div>
+                    <h3 style={headerStyle}>No recurrence label provided with occurence description</h3>
+                    <RecurrenceForm
+                        cronExpression={dailyCronExpression}
+                        onChange={onChange}
+                        timeFormat={"hh:mm A"}
+                        dateFormat="dd.mm.yyyy"
+                        timezone="America/New_York"
+                        weekStart="Sunday"
+                        repeatLabel=""
+                        showRepeatTypeDescription={true}
+                    />
+                </div>
             </div>
         </IntlWrapper>
     );

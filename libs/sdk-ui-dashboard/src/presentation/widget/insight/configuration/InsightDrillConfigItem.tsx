@@ -5,12 +5,13 @@ import { FormattedMessage, IntlShape, useIntl } from "react-intl";
 import cloneDeep from "lodash/cloneDeep.js";
 import { invariant } from "ts-invariant";
 import isEqual from "lodash/isEqual.js";
-
+import compact from "lodash/compact.js";
 import { stringUtils } from "@gooddata/util";
 import { messages } from "@gooddata/sdk-ui";
 import {
     DRILL_TARGET_TYPE,
     IDrillConfigItem,
+    IDrillDownAttributeHierarchyConfig,
     IDrillDownAttributeHierarchyDefinition,
 } from "../../../drill/types.js";
 import { DrillOriginItem } from "./DrillOriginItem.js";
@@ -29,6 +30,7 @@ import {
 import {
     selectCatalogDateDatasets,
     selectDrillTargetsByWidgetRef,
+    selectEnableDrillDownIntersectionIgnoredAttributes,
     selectEnableDrillIntersectionIgnoredAttributes,
     selectSelectedWidgetRef,
     selectWidgetDrills,
@@ -43,6 +45,7 @@ export interface IDrillConfigItemProps {
     onSetup: (
         drill: InsightDrillDefinition | IDrillDownAttributeHierarchyDefinition,
         changedItem: IDrillConfigItem,
+        isOnlyIgnoredDrillDownInteresectionAttributesChange?: boolean,
     ) => void;
     onIncompleteChange: (changedItem: IDrillConfigItem) => void;
 }
@@ -101,6 +104,9 @@ const DrillConfigItem: React.FunctionComponent<IDrillConfigItemProps> = ({
     const enableDrillIntersectionIgnoredAttributes = useDashboardSelector(
         selectEnableDrillIntersectionIgnoredAttributes,
     );
+    const enableDrillDownIntersectionIgnoredAttributes = useDashboardSelector(
+        selectEnableDrillDownIntersectionIgnoredAttributes,
+    );
     invariant(widgetRef, "mush have widget selected");
 
     const { isFromDateAttribute, showDateFilterTransferWarning } = useDateAttributeOptions(item, widgetRef);
@@ -110,20 +116,38 @@ const DrillConfigItem: React.FunctionComponent<IDrillConfigItemProps> = ({
         intl,
     );
 
-    const isAllowedDrillTypeForDrillIntersectionIgnoredAttributes = [
+    const isAllowedDrillTypeForDrillIntersectionIgnoredAttributes = compact([
         DRILL_TARGET_TYPE.DRILL_TO_DASHBOARD,
         DRILL_TARGET_TYPE.DRILL_TO_INSIGHT,
-    ].some((drillTarget) => drillTarget === item?.drillTargetType);
+        enableDrillDownIntersectionIgnoredAttributes ? DRILL_TARGET_TYPE.DRILL_DOWN : undefined,
+    ]).some((drillTarget) => drillTarget === item?.drillTargetType);
+
     const showDrillIntersectionIgnoredAttributes =
         enableDrillIntersectionIgnoredAttributes && isAllowedDrillTypeForDrillIntersectionIgnoredAttributes;
 
     const onDrillIntersectionIgnoredAttributesChange = (ignoredAttributeLocalIds: string[]) => {
         const targetDrill = widgetDrills.find((d) => d.localIdentifier === item.localIdentifier);
+        const currentIgnoredAttributes = item.drillIntersectionIgnoredAttributes ?? [];
+        const isDrillDown = item.drillTargetType === DRILL_TARGET_TYPE.DRILL_DOWN;
+        const isChanged = !isEqual(currentIgnoredAttributes, ignoredAttributeLocalIds);
+        if (enableDrillDownIntersectionIgnoredAttributes && isDrillDown && isChanged) {
+            const drillDownItem: IDrillDownAttributeHierarchyDefinition = {
+                attributeHierarchyRef: (item as IDrillDownAttributeHierarchyConfig).attributeHierarchyRef,
+                type: "drillDownAttributeHierarchy",
+                attributes: item.attributes,
+                originLocalIdentifier: item.originLocalIdentifier,
+                drillIntersectionIgnoredAttributes: ignoredAttributeLocalIds,
+            };
 
-        if (
-            targetDrill &&
-            !isEqual(targetDrill.drillIntersectionIgnoredAttributes, ignoredAttributeLocalIds)
-        ) {
+            onSetup(
+                drillDownItem,
+                {
+                    ...item,
+                    drillIntersectionIgnoredAttributes: ignoredAttributeLocalIds,
+                } as IDrillConfigItem,
+                true,
+            );
+        } else if (targetDrill && isChanged) {
             onSetup(
                 {
                     ...targetDrill,

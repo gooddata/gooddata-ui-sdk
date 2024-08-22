@@ -331,6 +331,20 @@ export type IMeasureFilter =
  *
  * @public
  */
+export function isSimpleMeasureFilter(obj: unknown): obj is IMeasureFilter {
+    return (
+        isPositiveAttributeFilter(obj) ||
+        isNegativeAttributeFilter(obj) ||
+        isAbsoluteDateFilter(obj) ||
+        isRelativeDateFilter(obj)
+    );
+}
+
+/**
+ * Type guard checking whether the provided object is a positive attribute filter.
+ *
+ * @public
+ */
 export function isPositiveAttributeFilter(obj: unknown): obj is IPositiveAttributeFilter {
     return !isEmpty(obj) && (obj as IPositiveAttributeFilter).positiveAttributeFilter !== undefined;
 }

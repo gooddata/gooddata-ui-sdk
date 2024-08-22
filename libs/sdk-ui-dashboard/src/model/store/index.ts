@@ -85,6 +85,8 @@ export {
     selectEnableScheduling,
     selectEnableDrillIntersectionIgnoredAttributes,
     selectEnableFilterViews,
+    selectEnableDrillDownIntersectionIgnoredAttributes,
+    selectEnableAlerting,
 } from "./config/configSelectors.js";
 export { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {
@@ -310,7 +312,7 @@ export {
     selectIsExecutionResultReadyForExportByRef,
 } from "./executionResults/executionResultsSelectors.js";
 export { IExecutionResultEnvelope } from "./executionResults/types.js";
-export { UiState, InvalidCustomUrlDrillParameterInfo } from "./ui/uiState.js";
+export { UiState, InvalidCustomUrlDrillParameterInfo, FilterViewDialogMode } from "./ui/uiState.js";
 export {
     selectIsScheduleEmailDialogOpen,
     selectIsScheduleEmailManagementDialogOpen,
@@ -347,6 +349,10 @@ export {
     selectInvalidUrlDrillParameterDrillLocalIdsByWidgetRef,
     selectInvalidUrlDrillParameterWidgetRefs,
     selectInvalidUrlDrillParameterWidgetWarnings,
+    selectFilterViewsDialogMode,
+    selectIsFilterViewsDialogOpen,
+    selectIsAlertingDialogOpen,
+    selectIsAlertsManagementDialogOpen,
 } from "./ui/uiSelectors.js";
 export { uiActions } from "./ui/index.js";
 export { RenderModeState } from "./renderMode/renderModeState.js";
@@ -384,7 +390,12 @@ export {
 
 export { AutomationsState } from "./automations/automationsState.js";
 export {
+    selectAutomations,
     selectAutomationsCount,
+    selectAutomationsAlerts,
+    selectAutomationsSchedules,
+    selectAutomationsAlertsInContext,
+    selectAutomationsSchedulesInContext,
     selectAutomationsIsLoading,
     selectAutomationsError,
     selectAutomationsFingerprint,

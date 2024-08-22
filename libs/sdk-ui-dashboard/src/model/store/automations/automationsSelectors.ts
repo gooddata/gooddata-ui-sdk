@@ -3,6 +3,10 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { DashboardSelector, DashboardState } from "../types.js";
+import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { selectDashboardId } from "../meta/metaSelectors.js";
+import { selectCurrentUser } from "../user/userSelectors.js";
+import { createMemoizedSelector } from "../_infra/selectors.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -14,9 +18,87 @@ const selectSelf = createSelector(
  *
  * @alpha
  */
+export const selectAutomations: DashboardSelector<IAutomationMetadataObject[]> = createSelector(
+    selectSelf,
+    (state) => {
+        return state.automations;
+    },
+);
+
+/**
+ * Returns workspace automations count.
+ *
+ * @alpha
+ */
 export const selectAutomationsCount: DashboardSelector<number> = createSelector(selectSelf, (state) => {
-    return state.automations;
+    return state.automations.length;
 });
+
+/**
+ * Returns workspace alerts.
+ *
+ * @alpha
+ */
+export const selectAutomationsAlerts: DashboardSelector<IAutomationMetadataObject[]> = createSelector(
+    selectSelf,
+    (state) => {
+        return state.automations.filter((automation) => !!automation.alert);
+    },
+);
+
+/**
+ * Returns workspace schedules.
+ *
+ * @alpha
+ */
+export const selectAutomationsSchedules: DashboardSelector<IAutomationMetadataObject[]> = createSelector(
+    selectSelf,
+    (state) => {
+        return state.automations.filter((automation) => !!automation.schedule);
+    },
+);
+
+/**
+ * Returns workspace alerts for current dashboard, widget and user context.
+ *
+ * @alpha
+ */
+export const selectAutomationsAlertsInContext: (
+    widgetLocalIdentifier: string | undefined,
+) => DashboardSelector<IAutomationMetadataObject[]> = createMemoizedSelector(
+    (widgetLocalIdentifier: string | undefined) =>
+        createSelector(
+            selectAutomationsAlerts,
+            selectDashboardId,
+            selectCurrentUser,
+            (alerts, dashboardId, currentUser) => {
+                return alerts.filter(
+                    (alert) =>
+                        alert.dashboard === dashboardId &&
+                        alert.createdBy?.login === currentUser.login &&
+                        (alert.metadata?.widget === widgetLocalIdentifier || !widgetLocalIdentifier),
+                );
+            },
+        ),
+);
+
+/**
+ * Returns workspace schedules for current dashboard and user context.
+ *
+ * @alpha
+ */
+export const selectAutomationsSchedulesInContext: DashboardSelector<IAutomationMetadataObject[]> =
+    createSelector(
+        selectAutomationsSchedules,
+        selectDashboardId,
+        selectCurrentUser,
+        (schedules, dashboardId, currentUser) => {
+            return schedules.filter(
+                (schedule) =>
+                    schedule.dashboard === dashboardId && schedule.createdBy?.login === currentUser.login,
+            );
+        },
+    );
 
 /**
  * Returns workspace automations loading

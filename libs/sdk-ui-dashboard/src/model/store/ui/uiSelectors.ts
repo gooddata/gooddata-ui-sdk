@@ -15,7 +15,7 @@ import {
     IScheduleEmailDialogContext,
 } from "../../../types.js";
 import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
-import { InvalidCustomUrlDrillParameterInfo } from "./uiState.js";
+import { InvalidCustomUrlDrillParameterInfo, FilterViewDialogMode } from "./uiState.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -55,6 +55,22 @@ export const selectIsScheduleEmailManagementDialogOpen: DashboardSelector<boolea
  */
 export const selectIsScheduleEmailManagementDialogContext: DashboardSelector<IScheduleEmailDialogContext> =
     createSelector(selectSelf, (state) => state.scheduleEmailManagementDialog.context ?? {});
+
+/**
+ * @alpha
+ */
+export const selectIsAlertingDialogOpen: DashboardSelector<boolean> = createSelector(
+    selectSelf,
+    (state) => state.alertsDialog.open,
+);
+
+/**
+ * @alpha
+ */
+export const selectIsAlertsManagementDialogOpen: DashboardSelector<boolean> = createSelector(
+    selectSelf,
+    (state) => state.alertsManagementDialog.open,
+);
 
 /**
  * @alpha
@@ -409,3 +425,19 @@ export const selectIsSectionInsertedByPlugin: (refs: (ObjRef | undefined)[]) => 
                 modifications.length > 0 && modifications.every((m) => m === "insertedByPlugin"),
         ),
     );
+
+/**
+ * @internal
+ */
+export const selectIsFilterViewsDialogOpen: DashboardSelector<boolean> = createSelector(
+    selectSelf,
+    (state) => state.filterViews.open ?? false,
+);
+
+/**
+ * @internal
+ */
+export const selectFilterViewsDialogMode: DashboardSelector<FilterViewDialogMode> = createSelector(
+    selectSelf,
+    (state) => state.filterViews.mode ?? "list",
+);

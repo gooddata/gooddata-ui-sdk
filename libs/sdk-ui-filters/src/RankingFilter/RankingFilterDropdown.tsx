@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React, { useState } from "react";
 import { IRankingFilter, ObjRefInScope } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
@@ -50,7 +50,7 @@ const RankingFilterDropdownComponent: React.FC<RankingFilterDropdownComponentPro
     attributeItems,
     filter,
     onApply,
-    onCancel,
+    onCancel = noop,
     anchorEl,
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,
@@ -87,10 +87,6 @@ const RankingFilterDropdownComponent: React.FC<RankingFilterDropdownComponentPro
             />
         </Overlay>
     );
-};
-
-RankingFilterDropdownComponent.defaultProps = {
-    onCancel: noop,
 };
 
 const RankingFilterDropdownWithIntl = injectIntl(RankingFilterDropdownComponent);

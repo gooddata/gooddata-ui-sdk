@@ -1,0 +1,292 @@
+// (C) 2024 GoodData Corporation
+
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "react-loading-skeleton/dist/skeleton.css";
+
+//
+// Alerts list
+//
+.gd-alerts-list {
+    width: 100%;
+}
+
+.gd-alerts-list__items {
+    padding: 10px 0 10px 0;
+
+    .skeleton-flex {
+        flex: 1;
+    }
+
+    .skeleton-margin {
+        margin-left: 10px;
+    }
+
+    .gd-react-loading-skeleton-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+    }
+
+    .gd-react-loading-skeleton.react-loading-skeleton {
+        --base-color: var(--gd-dashboards-title-borderColor, var(--gd-palette-complementary-2, #ebeff4));
+        --highlight-color: var(
+            --gd-dashboards-content-backgroundColor,
+            var(--gd-palette-complementary-0, #fff)
+        );
+    }
+}
+
+.gd-alerts-list__buttons {
+    padding: 10px 0;
+
+    .gd-alerts-list__add-button {
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 18px;
+        padding-left: 28px;
+
+        &::before {
+            font-size: 15px;
+        }
+    }
+}
+
+//
+// Alerts list item
+//
+.gd-alerts-list-item {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 100ms ease-in-out;
+
+    &:hover {
+        background-color: kit-variables.$is-focused-background;
+    }
+}
+
+.gd-alerts-list-item__content {
+    padding: 5px 0 5px 10px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-width: 0;
+}
+
+.gd-alerts-list-item__icon {
+    background-color: kit-variables.$is-focused-background;
+    width: 26px;
+    height: 26px;
+    border-radius: 51%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.gd-alerts-list-item__details {
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 12px;
+    line-height: normal;
+    width: 100%;
+    min-width: 0;
+}
+
+.gd-alerts-list-item__title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: kit-variables.$gd-color-text;
+    font-weight: 700;
+}
+
+.gd-alerts-list-item__description {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: kit-variables.$gd-color-state-blank;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+//
+// Edit alert
+//
+.gd-edit-alert {
+    font-size: 12px;
+    line-height: 14px;
+    color: kit-variables.$gd-color-text;
+    width: 100%;
+}
+
+.gd-edit-alert__form {
+    padding: 10px 10px 0 10px;
+}
+
+.gd-edit-alert__measure-label {
+    margin-bottom: 5px;
+}
+
+.gd-edit-alert__value-input {
+    margin-bottom: 10px;
+
+    /* Removes number input arrows for Chrome, Safari, Edge, Opera */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Removes number input arrows for Firefox */
+    input[type="number"] {
+        appearance: textfield;
+        -moz-appearance: textfield;
+    }
+}
+
+.gd-edit-alert__buttons {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid kit-variables.$gd-border-color;
+
+    .gd-button-left-margin {
+        margin-left: 10px;
+    }
+}
+
+.gd-edit-alert__configuration-button {
+    color: kit-variables.$gd-color-state-blank;
+}
+
+//
+// Edit alert configuration
+//
+.gd-edit-alert-configuration {
+    width: 100%;
+}
+
+.gd-edit-alert-configuration__form {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.gd-edit-alert-configuration__trigger-label {
+    display: flex;
+    align-items: center;
+    width: 50%;
+}
+
+.gd-edit-alert-configuration__trigger-label-icon {
+    margin-left: 5px;
+    position: relative;
+    top: 2px;
+}
+
+.gd-edit-alert-configuration__trigger-select {
+    width: 50%;
+}
+
+.gd-edit-alert-configuration__buttons {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    border-top: 1px solid kit-variables.$gd-border-color;
+}
+
+//
+// Measure select
+//
+.gd-alert-measure-select {
+    margin-bottom: 10px;
+}
+
+.gd-alert-measure-select__button {
+    width: 100%;
+}
+
+.gd-alert-measure-select__list {
+    height: 100%;
+}
+
+.gd-alert-measure-select__icon {
+    height: 100%;
+
+    &::before {
+        height: 100%;
+    }
+}
+
+//
+// Comparison operator select
+//
+.gd-alert-comparison-operator-select {
+    margin-bottom: 10px;
+}
+
+.gd-alert-comparison-operator-select__button {
+    width: 100%;
+}
+
+//
+// Alert destination select
+//
+.gd-alert-destination-select {
+    margin-bottom: 10px;
+}
+
+// TODO: support "invisible" styling of the Button on sdk-ui-kit component level.
+// For now overload because of clash with other config panel css
+.gd-button.gd-alert-destination-select__button {
+    margin-top: 0;
+    width: 105px;
+
+    &:not(&--open, &:hover, &:active, &:focus) {
+        box-shadow: none;
+        border-color: transparent;
+    }
+
+    &:not(&--open, &:active, &:focus) {
+        background: transparent;
+    }
+}
+
+//
+// Trigger mode select
+//
+.gd-edit-alert-trigger-mode-select__button {
+    width: 100%;
+}
+
+//
+// Alert actions dropdown
+//
+.gd-button.gd-alert-actions-dropdown__button {
+    width: 42px;
+    height: 42px;
+    padding: 0;
+
+    &:hover,
+    &.gd-alert-actions-dropdown__button--open {
+        background-color: kit-variables.$gd-input-text-border;
+    }
+
+    .gd-button-text {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.gd-alert-actions-dropdown__list-item-delete {
+    &:hover {
+        color: kit-variables.$gd-color-negative;
+        background-color: kit-variables.$gd-palette-error-dimmed;
+    }
+}

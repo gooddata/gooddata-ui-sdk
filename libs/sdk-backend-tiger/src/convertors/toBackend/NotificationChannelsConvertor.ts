@@ -5,10 +5,15 @@ import {
     JsonApiNotificationChannelPostOptionalId,
     DeclarativeNotificationChannelDestinationTypeEnum,
 } from "@gooddata/api-client-tiger";
-import { IWebhookMetadataObjectDefinition, IWebhookMetadataObject } from "@gooddata/sdk-model";
+import {
+    ISmtpDefinition,
+    ISmtpDefinitionObject,
+    IWebhookDefinition,
+    IWebhookDefinitionObject,
+} from "@gooddata/sdk-model";
 
 export function convertWebhookToNotificationChannel(
-    webhook: Partial<IWebhookMetadataObject> & Pick<IWebhookMetadataObject, "id">,
+    webhook: Partial<IWebhookDefinitionObject> & Pick<IWebhookDefinitionObject, "id">,
 ): JsonApiNotificationChannelOut {
     return {
         id: webhook.id,
@@ -17,20 +22,60 @@ export function convertWebhookToNotificationChannel(
 }
 
 export function convertCreateWebhookToNotificationChannel(
-    webhook: IWebhookMetadataObjectDefinition,
+    webhook: Partial<IWebhookDefinition>,
 ): JsonApiNotificationChannelPostOptionalId {
     return {
         type: JsonApiNotificationChannelOutTypeEnum.NOTIFICATION_CHANNEL,
         attributes: {
-            name: webhook.name,
+            name: webhook.destination?.name,
             destinationType: DeclarativeNotificationChannelDestinationTypeEnum.WEBHOOK,
             destination: {
                 type: DeclarativeNotificationChannelDestinationTypeEnum.WEBHOOK,
-                url: webhook.endpoint ?? "",
-                token: webhook.token,
+                url: webhook.destination?.endpoint ?? "",
+                token: webhook.destination?.token,
             },
             triggers:
                 webhook.triggers?.map((trigger) => ({
+                    type: trigger.type,
+                    ...(trigger?.allowOn
+                        ? {
+                              metadata: {
+                                  allowedOn: trigger.allowOn,
+                              },
+                          }
+                        : {}),
+                })) ?? [],
+        },
+    };
+}
+
+export function convertEmailToNotificationChannel(
+    smtp: Partial<ISmtpDefinitionObject> & Pick<ISmtpDefinitionObject, "id">,
+): JsonApiNotificationChannelOut {
+    return {
+        id: smtp.id,
+        ...convertCreateEmailToNotificationChannel(smtp),
+    };
+}
+
+export function convertCreateEmailToNotificationChannel(
+    smtp: Partial<ISmtpDefinition>,
+): JsonApiNotificationChannelPostOptionalId {
+    return {
+        type: JsonApiNotificationChannelOutTypeEnum.NOTIFICATION_CHANNEL,
+        attributes: {
+            name: smtp.destination?.name,
+            destinationType: DeclarativeNotificationChannelDestinationTypeEnum.SMTP,
+            destination: {
+                type: DeclarativeNotificationChannelDestinationTypeEnum.SMTP,
+                address: smtp.destination?.address ?? "",
+                fromEmail: smtp.destination?.from ?? "",
+                login: smtp.destination?.login ?? "",
+                port: smtp.destination?.port ?? 25,
+                password: smtp.destination?.password,
+            },
+            triggers:
+                smtp.triggers?.map((trigger) => ({
                     type: trigger.type,
                     ...(trigger?.allowOn
                         ? {

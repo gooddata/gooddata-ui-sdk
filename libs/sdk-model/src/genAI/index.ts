@@ -14,6 +14,10 @@ export interface ISemanticSearchResultItem {
      */
     id: string;
     /**
+     * The identifier of the workspace where the found metadata object is located
+     */
+    workspaceId: string;
+    /**
      * The title of the found metadata object
      */
     title: string;
@@ -37,6 +41,11 @@ export interface ISemanticSearchResultItem {
      * Represents the type of chart for visualization objects
      */
     visualizationUrl?: string;
+    /**
+     * Overall similarity score of the found item.
+     * Larger is more similar.
+     */
+    score: number;
 }
 
 /**

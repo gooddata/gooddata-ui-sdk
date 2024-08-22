@@ -121,8 +121,10 @@ import {
     defWithBuckets,
     IRelativeDateFilter,
     IAbsoluteDateFilter,
-    IWebhookMetadataObjectDefinition,
-    IWebhookMetadataObject,
+    IWebhookDefinitionObject,
+    IWebhookDefinition,
+    ISmtpDefinitionObject,
+    ISmtpDefinition,
     GenAISemanticSearchType,
     IAutomationMetadataObjectDefinition,
     IAutomationMetadataObject,
@@ -378,7 +380,7 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
         genAI(): IGenAIService {
             return {
                 getSemanticSearchQuery(): ISemanticSearchQuery {
-                    return new DummySemanticSearchQueryBuilder();
+                    return new DummySemanticSearchQueryBuilder(workspace);
                 },
                 async semanticSearchIndex(): Promise<void> {
                     throw new NotSupported("not supported");
@@ -821,6 +823,7 @@ class DummyOrganization implements IOrganization {
             deleteTheme: () => Promise.resolve(),
             deleteColorPalette: () => Promise.resolve(),
             getSettings: () => Promise.resolve({}),
+            setAlertDefault: () => Promise.resolve(),
         };
     }
 
@@ -867,18 +870,48 @@ class DummyOrganization implements IOrganization {
 
     notificationChannels(): IOrganizationNotificationChannelService {
         return {
-            createWebhook: (webhook: IWebhookMetadataObjectDefinition) =>
+            getAll: () => Promise.resolve([]),
+            deleteChannel: () => Promise.resolve(),
+            //emails
+            createEmail: (webhook: ISmtpDefinition) =>
                 Promise.resolve({
-                    ...(webhook as IWebhookMetadataObject),
+                    ...(webhook as ISmtpDefinitionObject),
+                    id: "dummySmtp",
+                }),
+            deleteEmail: () => Promise.resolve(),
+            getEmail: () =>
+                Promise.resolve({
+                    id: "dummySmtp",
+                    type: "smtp",
+                    triggers: [],
+                    destination: {
+                        name: "",
+                        address: "",
+                        login: "",
+                        password: "",
+                        from: "",
+                        hasPassword: true,
+                        port: 25,
+                    },
+                }),
+            getEmails: () => Promise.resolve([]),
+            updateEmail: (smtp) => Promise.resolve(smtp),
+            //webhooks
+            createWebhook: (webhook: IWebhookDefinition) =>
+                Promise.resolve({
+                    ...(webhook as IWebhookDefinitionObject),
                     id: "dummyWebhook",
                 }),
             deleteWebhook: () => Promise.resolve(),
             getWebhook: () =>
                 Promise.resolve({
                     id: "dummyWebhook",
-                    name: "Dummy webhook",
-                    endpoint: "https://dummy.webhook",
-                    token: "dummyToken",
+                    type: "webhook",
+                    destination: {
+                        name: "Dummy webhook",
+                        endpoint: "https://dummy.webhook",
+                        token: "dummyToken",
+                    },
                     triggers: [],
                 }),
             getWebhooks: () => Promise.resolve([]),
@@ -914,14 +947,6 @@ class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
         return Promise.resolve();
     }
 
-    setTheme(_themeId: string): Promise<void> {
-        return Promise.resolve();
-    }
-
-    setColorPalette(_colorPaletteId: string): Promise<void> {
-        return Promise.resolve();
-    }
-
     setTimezone(_timezone: string): Promise<void> {
         return Promise.resolve();
     }
@@ -931,6 +956,14 @@ class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
     }
 
     setWeekStart(_weekStart: string): Promise<void> {
+        return Promise.resolve();
+    }
+
+    setTheme(_themeId: string): Promise<void> {
+        return Promise.resolve();
+    }
+
+    setColorPalette(_colorPaletteId: string): Promise<void> {
         return Promise.resolve();
     }
 }
@@ -1129,6 +1162,7 @@ class DummyWorkspaceMeasuresService implements IWorkspaceMeasuresService {
  * @internal
  */
 export class DummySemanticSearchQueryBuilder implements ISemanticSearchQuery {
+    constructor(private readonly workspaceId: string) {}
     question = "";
     withQuestion(question: string) {
         this.question = question;
@@ -1158,12 +1192,14 @@ export class DummySemanticSearchQueryBuilder implements ISemanticSearchQuery {
             ].map((type) => ({
                 id: type,
                 type: type as GenAISemanticSearchType,
+                workspaceId: this.workspaceId,
                 title: `${type} title`,
                 description: this.question,
                 tags: [] as string[],
                 createdAt: "2023-08-03T13:17:26.923537",
                 modifiedAt: "2023-08-03T13:17:26.923537",
                 visualizationUrl: type === "visualization" ? "local:line" : undefined,
+                score: 0.5,
             })),
             relationships: [] as ISemanticSearchRelationship[],
         };

@@ -8,9 +8,18 @@
 
 .gd-semantic-search {
     &__overlay {
-        width: 440px;
         background: kit-variables.$gd-color-white;
         margin: 10px 0;
+
+        &--fixed {
+            width: 440px;
+        }
+
+        &--mobile {
+            .gd-semantic-search__overlay-input {
+                margin-bottom: 10px;
+            }
+        }
     }
 
     &__overlay-input {
@@ -43,27 +52,15 @@
     transition: all 0.2s;
     font-size: 14px;
     font-weight: 400;
-    padding: 0 13px 2px;
+    position: relative;
+    box-sizing: border-box;
+    padding: 0 34px 2px 13px;
 
     @include kit-mixins.text-overflow;
 
     &:hover,
     &.is-open {
         opacity: 1;
-    }
-
-    &.is-open {
-        background-color: rgba(255, 255, 255, 0.3);
-    }
-}
-
-.gd-header-search {
-    position: relative;
-    box-sizing: border-box;
-    padding-right: 34px;
-
-    &:hover {
-        background: rgba(255, 255, 255, 0.3);
     }
 
     &::after {
@@ -83,27 +80,35 @@
     &.is-open::after {
         content: "\e613";
     }
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    &.is-open {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    &-dropdown {
+        overflow: hidden;
+
+        .gd-list {
+            min-width: 210px;
+
+            .gd-list-item {
+                font-family: kit-variables.$gd-font-primary;
+                font-weight: 400;
+            }
+        }
+    }
 }
 
-.gd-icon-header-search {
+.gd-icon-header-search-button {
     vertical-align: middle;
     opacity: 0.8;
     margin-right: 6px;
 
     &::before {
         content: "\e62b";
-    }
-}
-
-.gd-header-search-dropdown {
-    overflow: hidden;
-
-    .gd-list {
-        min-width: 210px;
-
-        .gd-list-item {
-            font-family: kit-variables.$gd-font-primary;
-            font-weight: 400;
-        }
     }
 }

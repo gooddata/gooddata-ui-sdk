@@ -51,6 +51,7 @@ export const DrillTargets: React.FunctionComponent<IDrillTargetsProps> = (props)
             type: "drillDownAttributeHierarchy",
             attributes: item.attributes,
             originLocalIdentifier: item.originLocalIdentifier,
+            drillIntersectionIgnoredAttributes: item.drillIntersectionIgnoredAttributes ?? [],
         };
 
         props.onSetup(drillDownItem, { ...item, attributeHierarchyRef: hierarchyRef } as IDrillConfigItem);
