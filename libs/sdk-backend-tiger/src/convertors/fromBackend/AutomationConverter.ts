@@ -1,10 +1,10 @@
 // (C) 2024 GoodData Corporation
 import {
     Comparison,
+    JsonApiAutomationOutAttributesAlert,
     JsonApiAutomationOutIncludes,
     JsonApiAutomationOutList,
     JsonApiAutomationOutWithLinks,
-    JsonApiAutomationPatchAttributesAlert,
     JsonApiExportDefinitionOutWithLinks,
     JsonApiUserLinkage,
     JsonApiUserOutWithLinks,
@@ -119,7 +119,7 @@ export const convertAutomationListToAutomations = (
 };
 
 const convertAlert = (
-    alert: JsonApiAutomationPatchAttributesAlert | undefined,
+    alert: JsonApiAutomationOutAttributesAlert | undefined,
 ): IAutomationAlert | undefined => {
     if (!alert) {
         return undefined;

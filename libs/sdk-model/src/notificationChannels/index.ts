@@ -124,6 +124,10 @@ export interface ISmtpDestination {
      */
     address: string;
     /**
+     * Who the email is from.
+     */
+    person: string;
+    /**
      * Port of the SMTP server.
      */
     port: 25 | 465 | 587 | 2525;

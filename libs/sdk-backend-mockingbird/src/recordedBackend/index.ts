@@ -435,6 +435,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                         destination: {
                             name: "",
                             address: "",
+                            person: "",
                             login: "",
                             password: "",
                             from: "",
