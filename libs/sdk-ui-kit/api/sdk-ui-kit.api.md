@@ -3980,6 +3980,8 @@ export interface IStylingSettingWidgetProps<T extends StylingPickerItemContent> 
     // (undocumented)
     footerMobileMessage?: string;
     // (undocumented)
+    isEditingSupported?: boolean;
+    // (undocumented)
     isLoading?: boolean;
     // (undocumented)
     itemToColorPreview: (itemContent: T) => string[];
