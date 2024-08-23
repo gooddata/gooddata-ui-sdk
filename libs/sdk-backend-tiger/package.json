@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-tiger",
-    "version": "10.9.0-alpha.22",
+    "version": "10.10.0-alpha.2",
     "author": "GoodData",
     "description": "GoodData Backend SPI implementation for GoodData Cloud and GoodData.CN",
     "repository": {
@@ -69,7 +69,7 @@
         "@gooddata/catalog-export": "workspace:*",
         "@gooddata/eslint-config": "^4.1.0",
         "@gooddata/reference-workspace": "workspace:*",
-        "@gooddata/fixtures": "1.32.23",
+        "@gooddata/fixtures": "1.32.25",
         "@microsoft/api-documenter": "^7.17.0",
         "@microsoft/api-extractor": "^7.36.0",
         "@types/lodash": "^4.14.202",

@@ -1,13 +1,18 @@
 // (C) 2024 GoodData Corporation
 import {
+    Comparison,
+    JsonApiAutomationOutAttributesAlert,
     JsonApiAutomationOutIncludes,
     JsonApiAutomationOutList,
     JsonApiAutomationOutWithLinks,
     JsonApiExportDefinitionOutWithLinks,
     JsonApiUserLinkage,
     JsonApiUserOutWithLinks,
+    Range,
 } from "@gooddata/api-client-tiger";
 import {
+    IAlertComparisonOperator,
+    IAutomationAlert,
     IAutomationMetadataObject,
     IAutomationRecipient,
     idRef,
@@ -16,6 +21,8 @@ import {
 import { convertExportDefinitionMdObject as convertExportDefinitionMdObjectFromBackend } from "./ExportDefinitionsConverter.js";
 import compact from "lodash/compact.js";
 import { convertUserIdentifier } from "./UsersConverter.js";
+import { convertFilter } from "./afm/FilterConverter.js";
+import { convertMeasure } from "./afm/MeasureConverter.js";
 
 function convertRecipient(
     userLinkage: JsonApiUserLinkage,
@@ -44,7 +51,8 @@ export function convertAutomation(
     included: JsonApiAutomationOutIncludes[],
 ): IAutomationMetadataObject {
     const { id, attributes = {}, relationships = {} } = automation;
-    const { title, description, tags, schedule, details, createdAt, modifiedAt } = attributes;
+    const { title, description, tags, schedule, alert, details, createdAt, modifiedAt, metadata } =
+        attributes;
     const { createdBy, modifiedBy } = relationships;
 
     const webhook = relationships?.notificationChannel?.data?.id;
@@ -66,7 +74,16 @@ export function convertAutomation(
 
     const dashboard = relationships?.analyticalDashboard?.data?.id;
 
+    const convertedAlert = convertAlert(alert);
+    const alertObj = convertedAlert ? { alert: convertedAlert } : {};
+    const scheduleObj = schedule ? { schedule } : {};
+    const metadataObj = metadata ? { metadata } : {};
+
     return {
+        // Core
+        ...scheduleObj,
+        ...alertObj,
+        ...metadataObj,
         // Common metadata object properties
         type: "automation",
         id,
@@ -76,7 +93,6 @@ export function convertAutomation(
         description: description ?? "",
         tags,
         // Details
-        schedule,
         details,
         // Relationships
         exportDefinitions,
@@ -100,4 +116,40 @@ export const convertAutomationListToAutomations = (
     return automationList.data.map((automationObject) =>
         convertAutomation(automationObject, automationList.included ?? []),
     );
+};
+
+const convertAlert = (
+    alert: JsonApiAutomationOutAttributesAlert | undefined,
+): IAutomationAlert | undefined => {
+    if (!alert) {
+        return undefined;
+    }
+
+    const { condition, execution } = alert;
+    const comparison = (condition as Comparison)?.comparison;
+    const range = (condition as Range)?.range;
+
+    // TODO: we do not support RANGE for now
+    if (range || !comparison) {
+        return undefined;
+    }
+
+    return {
+        condition: {
+            type: "comparison",
+            operator: comparison.operator as IAlertComparisonOperator,
+            left: comparison.left.localIdentifier,
+            right: (comparison.right as any)?.value,
+        },
+        execution: {
+            attributes: [], // TODO: not implemented on BE yet
+            measures: execution.measures.map(convertMeasure),
+            filters: execution.filters.map(convertFilter),
+        },
+        trigger: {
+            // TODO: not implemented on BE yet
+            state: "ACTIVE",
+            mode: "ALWAYS",
+        },
+    };
 };

@@ -73,7 +73,7 @@ import {
     DashboardWidgetExecutionSucceeded,
     DashboardWidgetExecutionFailed,
 } from "./widget.js";
-import { DashboardAlertCreated, DashboardAlertUpdated, DashboardAlertsRemoved } from "./alerts.js";
+import { DashboardAlertCreated, DashboardAlertSaved } from "./alerts.js";
 import { DashboardScheduledEmailCreated, DashboardScheduledEmailSaved } from "./scheduledEmail.js";
 import { DashboardUserInteractionTriggered } from "./userInteraction.js";
 import { Action } from "@reduxjs/toolkit";
@@ -353,13 +353,9 @@ export {
 export {
     DashboardAlertCreated,
     DashboardAlertCreatedPayload,
-    DashboardAlertsRemoved,
-    DashboardAlertsRemovedPayload,
-    DashboardAlertUpdated,
-    DashboardAlertUpdatedPayload,
     isDashboardAlertCreated,
-    isDashboardAlertsRemoved,
-    isDashboardAlertUpdated,
+    DashboardAlertSaved,
+    isDashboardAlertSaved,
 } from "./alerts.js";
 
 export {
@@ -543,8 +539,7 @@ export type DashboardEvents =
     | DashboardWidgetExecutionSucceeded
     | DashboardWidgetExecutionFailed
     | DashboardAlertCreated
-    | DashboardAlertsRemoved
-    | DashboardAlertUpdated
+    | DashboardAlertSaved
     | DashboardScheduledEmailCreated
     | DashboardScheduledEmailSaved
     //alpha

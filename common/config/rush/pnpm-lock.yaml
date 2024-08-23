@@ -1701,8 +1701,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/fixtures':
-        specifier: 1.32.23
-        version: 1.32.23
+        specifier: 1.32.25
+        version: 1.32.25
       '@gooddata/reference-workspace':
         specifier: workspace:*
         version: link:../../tools/reference-workspace
@@ -2518,6 +2518,9 @@ importers:
       react-lines-ellipsis:
         specifier: ^0.15.0
         version: 0.15.4(react-dom@18.2.0)(react@18.2.0)
+      react-loading-skeleton:
+        specifier: ^3.4.0
+        version: 3.4.0(react@18.2.0)
       react-measure:
         specifier: ^2.5.2
         version: 2.5.2(react-dom@18.2.0)(react@18.2.0)
@@ -4166,7 +4169,7 @@ importers:
         version: 5.62.0(eslint@8.55.0)(typescript@5.3.3)
       babel-loader:
         specifier: ^8.0.5
-        version: 8.3.0(@babel/core@7.23.6)(webpack@5.89.0)
+        version: 8.3.0(@babel/core@7.23.6)(webpack@4.47.0)
       babel-plugin-require-context-hook:
         specifier: ^1.0.0
         version: 1.0.0
@@ -4339,8 +4342,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/fixtures':
-        specifier: 1.32.23
-        version: 1.32.23
+        specifier: 1.32.25
+        version: 1.32.25
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../sdk-backend-spi
@@ -6439,8 +6442,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
       '@gooddata/fixtures':
-        specifier: 1.32.23
-        version: 1.32.23
+        specifier: 1.32.25
+        version: 1.32.25
       '@types/lodash':
         specifier: ^4.14.202
         version: 4.14.202
@@ -8702,8 +8705,8 @@ packages:
       - typescript
     dev: true
 
-  /@gooddata/fixtures@1.32.23:
-    resolution: {integrity: sha512-YvXpOvzy4xKkHXh4SuPuNqUftRxGbs6p3kgFScRaRWfTZklZLkBDqWMwIk3TSL2u/oAgw+wzBsJQl7tWQZxnUw==}
+  /@gooddata/fixtures@1.32.25:
+    resolution: {integrity: sha512-fg6F8LHitq1RZzpY89qlXnCTmPC+HzroST2TSocBcvXasddBmGZyWQHo2F02jbnOoPjsFwDZbqk7CkWVQTscMg==}
     dependencies:
       '@gooddata/api-client-bear': 8.12.3
       '@gooddata/api-client-tiger': 8.12.3
@@ -20028,6 +20031,14 @@ packages:
     dependencies:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /react-loading-skeleton@3.4.0(react@18.2.0):
+    resolution: {integrity: sha512-1oJEBc9+wn7BbkQQk7YodlYEIjgeR+GrRjD+QXkVjwZN7LGIcAFHrx4NhT7UHGBxNY1+zax3c+Fo6XQM4R7CgA==}
+    peerDependencies:
+      react: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /react-markdown@9.0.1(@types/react@18.2.45)(react@18.2.0):

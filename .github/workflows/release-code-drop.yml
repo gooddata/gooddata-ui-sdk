@@ -27,6 +27,7 @@ jobs:
         with:
           source-branch: 'master'
           target-branch: 'release'
+          token: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}
 
   prepare-versions-release:
     needs: prepare-branch

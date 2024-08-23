@@ -1,135 +1,95 @@
-# Reference Workspace for tests
+# Reference Workspace for Tests
 
-[![npm version](https://img.shields.io/npm/v/@gooddata/reference-workspace)](https://www.npmjs.com/@gooddata/reference-workspace)&nbsp;
-[![npm monthly downloads](https://img.shields.io/npm/dm/@gooddata/reference-workspace)](https://npmcharts.com/compare/@gooddata/reference-workspace?minimal=true)&nbsp;
+[![npm version](https://img.shields.io/npm/v/@gooddata/reference-workspace)](https://www.npmjs.com/@gooddata/reference-workspace)
+[![npm monthly downloads](https://img.shields.io/npm/dm/@gooddata/reference-workspace)](https://npmcharts.com/compare/@gooddata/reference-workspace?minimal=true)
 ![typescript](https://img.shields.io/badge/typescript-first-blue?logo=typescript)
 
-This package is a part of the [GoodData.UI SDK](https://sdk.gooddata.com/gooddata-ui/docs/about_gooddataui.html).
-To learn more, check [the source monorepo](https://github.com/gooddata/gooddata-ui-sdk).
+This package is part of the [GoodData.UI SDK](https://sdk.gooddata.com/gooddata-ui/docs/about_gooddataui.html). To learn more, go to the [source monorepo](https://github.com/gooddata/gooddata-ui-sdk).
 
-This project defines LDM and test data recordings to use for all types of tests in GoodData.UI SDK. The
-LDM and recordings are obtained from a live workspace in a GoodData Platform.
+This project defines a Logical Data Model (LDM) and test data recordings for use in various tests within the GoodData.UI SDK. The LDM and recordings are sourced from a live workspace in the GoodData Platform.
 
-## How to create reference workspace
+## Creating the Reference Workspace
 
-Workspace can be created by script import-ref-workspace running `npm run import-ref-workspace`.
+To create a reference workspace, set up the `/reference-workspace-mgmt/.env` file and define variables using the template at `/reference-workspace-mgmt/.env.template`.
 
-All scripts are defined in `reference-workspace-mgmt` package.
+After a successful import, the `WORKSPACE_ID` will be automatically updated in the `.env` file.
 
-Import is using `@gooddata/fixtures`package.
+To create the workspace, run the `import-ref-workspace` script using `npm run import-ref-workspace`. All scripts are defined in the `reference-workspace-mgmt` package.
 
-Workspace metadata like Dashboards, visualization etc are defined in `/reference-workspace-mgmt/fixtures/tiger_metadata_extension.json`
-This json is source of true of reference workspace that is than recorded.
+The import process uses the `@gooddata/fixtures` package.
 
-You need to set `/reference-workspace-mgmt/.env` file and defined variables. Use `/reference-workspace-mgmt/.env.template`
+Workspace metadata, such as dashboards and visualizations, are defined in `/reference-workspace-mgmt/fixtures/tiger_metadata_extension.json`. This JSON file serves as the source of truth for the reference workspace.
 
-`WORKSPACE_ID` will be automatically updated in .env file after success import.
+## Exporting the Reference Workspace
 
-## How to export reference workspace
+After making changes in the live workspace, you need to export the workspace into the `/reference-workspace-mgmt/fixtures/tiger_metadata_extension.json` file by running the `npm run export-ref-workspace` command and committing the changes to Git.
 
-After your changes in live workspace you need to export workspace into `/reference-workspace-mgmt/fixtures/tiger_metadata_extension.json`
+All scripts are defined in the `reference-workspace-mgmt` package.
 
-by command `npm run export-ref-workspace` and commit changes to git.
+## Creating and Updating Recordings
 
-All scripts are defined in `reference-workspace-mgmt` package.
+### Prerequisites
 
-## How to create/ update recordings
+Set the `TIGER_API_TOKEN`, `HOST_NAME`, and `WORKSPACE_ID` in the `/reference-workspace-mgmt/.env` file.
 
-NOTE: you need set TIGER_API_TOKEN and HOST_NAME and WORKSPACE_ID in `/reference-workspace-mgmt/.env`
+All recordings are defined in the `reference-workspace/src/recordings` directory.
 
-All recordings are defined in `reference-workspace/src/recordings` directory
+### Updating the Catalog
 
-### Update Catalogue
+The standard GoodData catalog is defined in the `src/md` directory. To update it, run the `npm run refresh-md` command and build the `refresh-md` package.
 
-In dir `src/md` theres is defined standard GD catalog to update it call `npm run refresh-md` and build `refresh-md` package.
+### Updating Recordings Metadata
 
-### Update recordings metadata
+Workspace metadata, such as dashboards, catalogs, display forms, and visualization classes, are recorded in the `/reference-workspace/src/recordings/metadata` directory.
 
-NOTE: you need set TIGER_API_TOKEN and HOST_NAME and WORKSPACE_ID in `/reference-workspace-mgmt/.env`
+To update the recording metadata:
 
-In `/reference-workspace/src/recordings/metadata` are recorded workspace metadata, like Dashboards, Catalog, Display Forms and list of VisClasses.
+- **Catalog**: Delete the `src/recordings/metadata/catalog` directory and run the `npm run refresh-recordings` script to record fresh data.
+- **Dashboards**: Delete the corresponding directory (named by dashboard GUID) in the `dashboards.json` file and run `npm run refresh-recordings`. To record a new dashboard, add an entry to `dashboards.json`.
+- **Display Forms and Elements**: In `displayForms.json`, list the display forms to be recorded. Each display form includes its definition and associated elements. If a display form contains many elements, you can set a limit, such as { "elementCount": 10 }.To update a recording, delete the directory named after the display form’s ID and run `npm run refresh-recordings`. To record a new display form, add it to displayForms.json.
+- **Visualization Classes**: Delete the `visClasses` directory and run `npm run refresh-recordings`.
 
-### Update recordings metadata catalog
+**NOTE:**Do not try to delete or update the empty hardcoded dashboard, as it does not exist in the reference workspace.
 
-Just delete `src/recordings/metadata/catalog` and rush `npm run refresh-recordings` script will record fresh recordings
+### Updating UI Test Scenarios
 
-### Update recordings metadata dashboard
+The `src/recordings/uiTestScenarios` directory defines recordings for storybook scenarios (sdk-ui-tests). To update these recordings, follow these steps:
 
-In `dashboards.json` is defined list of recorded dashboard, to update recording just delete corresponding directory named by dashboard GUID
-and run `npm run refresh-recordings`
+1. Run `rush build`.
+2. Run `npm run clear-recordings`.
+3. Run `npm run populate-ref` (from the sdk-ui-tests directory).
+4. Run `npm run refresh-recordings`.
 
-To record new dashboard just add item to `dashboards.json`
+## Working with Reference Workspace LDM
 
-NOTE: Do not try delete or update empty dashboard its hardcoded dashboard and this dashboard not exists in reference workspace
+The Logical Data Model (LDM) is stored in the [src/md](src/md) directory and consists of two files:
 
-### Update recordings metadata displayForms
+- **full.ts**: An auto-generated file created by running the `npm run refresh-md` script.
+  > Note: The script is hardcoded with an existing workspace. You may need to request access to this workspace or modify the script to use your own.
 
-In displayForms.json there is list of recorded display forms, each display form record its definition and also its elements.
-In case display forms has large amount of elements you can defined limit like `{ "elementCount": 10 }`
+- **ext.ts**: A file holding extensions to the standard LDM. This file stores custom LDM and analytical objects built on top of standard objects, such as PoP measures, Previous Period Measures, and Arithmetic Measures.
+  > Note: Objects in `ext.ts` must be related to the reference workspace. Avoid using dummy or mock declarations.
 
-To update recording just delete corresponding directory named by display forms id and run `npm run refresh-recordings`
-To record new dashboard just add item to `displayForms.json`
+## Working with Recordings
 
-### Update recordings metadata visClasses
+### Executions
 
-Just delete visClasses dir and run `npm run refresh-recordings`
+Execution recordings are in the [src/recordings/executions](src/recordings/executions) directory. Each execution recording must be stored in its own directory. The directories can be organized as needed. 
 
-### Update uiTestScenarios
+> **Note:** The `uiTestScenarios` directory is managed via automation. Do not store custom recordings here, as they will be overwritten.
 
-In dir `src/recordings/uiTestScenarios` are defined recordings for storybook scenarios (sdk-ui-tests)
+Rules for recording entries:
 
-To update this recordings run
+- **Unique Recordings**: Must be stored in a directory named after the fingerprint of their execution definition (obtained using the `defFingerprint` function).
+- **definition.json**: Must exist and contain a valid execution definition (obtained by serializing the `IExecutionDefinition` to JSON).
+- **Optional Metadata Files**:
+  - `scenarios.json`: Contains an array of `{ vis: string, scenario: string }` objects to create a `Scenarios` mapping in the recording index.
+  - `requests.json`: This specifies which data views to obtain and store. Examples are in the `uiTestScenarios` directory.
 
-`rush build`
-`npm run clear-recordings`
-`npm run populate-ref` (script defined in sdk-ui-tests must be run from this dir) see readme there
-`npm run refresh-recordings`
-
-## Working with reference workspace LDM
-
-This is stored in [src/md](src/md) and consists of two files:
-
--   The auto-generated `full.ts` - this is created by running `npm run refresh-md` script
-
-    Note: the script has an existing workspace hardcoded; either ask for access to this workspace or
-    change the script to use your own workspace.
-
--   The `ext.ts` file holding extensions to the standard LDM - this is where we store custom LDM
-    and analytical objects built on top of the standard objects. For instance PoP measures,
-    Previous Period Measures, Arithmetic Measures and so on.
-
-    Note: the objects in `ext.ts` MUST be related to the reference workspace. We do not want 'dummy', 'mock'
-    and other types of 'fake' declarations.
-
-## Working with recordings
-
-#### Executions
-
-Execution recordings fall under [src/recordings/executions](src/recordings/executions) directory. Each
-execution recording MUST be stored in its own directory. The recording directories can be organized in
-any way we see fit. Note: the `uiTestScenarios` directory is managed via automation, you MUST NOT
-store any custom recordings here - because they WILL be lost.
-
-The rules for recording entries are as follows:
-
--   Unique recordings MUST be stored in a directory named after _fingerprint_ of their execution definition
-    -   This can be obtained using `defFingerprint` function
--   The `definition.json` file MUST exist and MUST contain a valid execution definition
-    -   This can be obtained by serializing the `IExecutionDefinition` to JSON
--   On top of this you MAY specify two additional metadata files:
-    -   `scenarios.json` - this should contain an array of `{ vis: string, scenario: string }` objects. If present,
-        it will be used to create `Scenarios` mapping in the recording index. This mapping is useful
-        for tests that need to work with full execution result / data view but do not want to concern
-        themselves with driving execution through recordedBackend()
-    -   `requests.json` - this should contain an object that specifies what data views should be obtained
-        and stored. Sometimes tests need all the data from backend, sometimes they work with particular
-        windows. This is specified here. Check out existing files in `uiTestScenarios` for examples.
-
-Once you create this, run `npm run refresh-md` script. This will invoke the mock handling tool to obtain the
-data from the live reference workspace.
+After creating this, run the `npm run refresh-md` script to obtain data from the live reference workspace.
 
 ## License
 
-(C) 2017-2022 GoodData Corporation
+(C) 2017-2024 GoodData Corporation
 
-This project is under MIT License. See [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/tools/reference-workspace/LICENSE).
+This project is licensed under the MIT License. See [LICENSE](https://github.com/gooddata/gooddata-ui-sdk/blob/master/tools/reference-workspace/LICENSE).

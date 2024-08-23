@@ -889,6 +889,7 @@ class DummyOrganization implements IOrganization {
                         address: "",
                         login: "",
                         password: "",
+                        person: "",
                         from: "",
                         hasPassword: true,
                         port: 25,

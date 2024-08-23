@@ -68,9 +68,10 @@ export function convertCreateEmailToNotificationChannel(
             destinationType: DeclarativeNotificationChannelDestinationTypeEnum.SMTP,
             destination: {
                 type: DeclarativeNotificationChannelDestinationTypeEnum.SMTP,
-                address: smtp.destination?.address ?? "",
-                from: smtp.destination?.from ?? "",
-                login: smtp.destination?.login ?? "",
+                host: smtp.destination?.from ?? "",
+                fromEmailName: smtp.destination?.person ?? "",
+                fromEmail: smtp.destination?.address ?? "",
+                username: smtp.destination?.login ?? "",
                 port: smtp.destination?.port ?? 25,
                 password: smtp.destination?.password,
             },

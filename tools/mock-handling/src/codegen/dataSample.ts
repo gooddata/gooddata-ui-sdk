@@ -1,22 +1,49 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import { OptionalKind, VariableDeclarationKind, VariableStatementStructure } from "ts-morph";
 import * as path from "path";
-import { createUniqueVariableName } from "../base/variableNaming.js";
+import { TakenNamesSet, createUniqueVariableName } from "../base/variableNaming.js";
 import { DisplayFormRecording } from "../recordings/displayForms.js";
 import groupBy from "lodash/groupBy.js";
+import has from "lodash/has.js";
 
 const DataSampleConstName = "DataSamples";
 
 type DataSampleRecording = [string, DisplayFormRecording];
 
+function createUniqueElementName(elementTitle: string, elementUri: string, scope: any): string {
+    const sanitizedVariableName = createUniqueVariableName(elementTitle);
+    if (has(scope, sanitizedVariableName)) {
+        return `${sanitizedVariableName}_${createUniqueVariableName(elementUri)}`;
+    }
+
+    return createUniqueVariableName(elementTitle);
+}
+
+function compareUris(uri1?: string | null, uri2?: string | null): number {
+    if (!uri1 || !uri2) {
+        return uri1 ? 1 : uri2 ? -1 : 0;
+    }
+
+    return uri1.localeCompare(uri2);
+}
+
 function generateRecordingForDataSample(entries: DataSampleRecording[]): string {
+    const scope: TakenNamesSet = {};
     const entryRows = entries
         .map(([_, entryRecording]) => {
-            return entryRecording.getAttributeElements().map((element, index) => {
-                return `${createUniqueVariableName(
-                    element.title ?? "NULL",
-                )} : ${entryRecording.getRecordingName()}[${index}]`;
-            });
+            return entryRecording
+                .getAttributeElements()
+                .sort((a, b) => compareUris(a.uri, b.uri))
+                .map((element, index) => {
+                    const variableName = createUniqueElementName(
+                        element.title ?? "NULL",
+                        element.uri ?? "NULL",
+                        scope,
+                    );
+
+                    scope[variableName] = true;
+                    return `${variableName} : ${entryRecording.getRecordingName()}[${index}]`;
+                });
         })
         .join(",");
 

@@ -501,7 +501,7 @@ export type ForecastDataValue = {
     loading: boolean;
 };
 
-// @alpha
+// @beta
 export type GenAISemanticSearchType = "dataset" | "attribute" | "label" | "fact" | "date" | "metric" | "visualization" | "dashboard";
 
 // @internal
@@ -568,7 +568,7 @@ export interface IAccessControlAware {
 export type IAccessGrantee = IUserGroupAccessGrantee | IUserAccessGrantee | IGranularAccessGrantee;
 
 // @alpha (undocumented)
-export type IAlertComparisonOperator = "LESS_THAN" | "LESS_THAN_OR_EQUALS" | "GREATER_THAN" | "GREATER_THAN_OR_EQUALS";
+export type IAlertComparisonOperator = "LESS_THAN" | "LESS_THAN_OR_EQUAL_TO" | "GREATER_THAN" | "GREATER_THAN_OR_EQUAL_TO";
 
 // @public
 export interface IAlertDefault {
@@ -791,7 +791,7 @@ export interface IAutomationAlert {
 
 // @alpha (undocumented)
 export interface IAutomationAlertCondition {
-    left: IMeasure;
+    left: string;
     operator: IAlertComparisonOperator;
     right: number;
     type: "comparison";
@@ -821,6 +821,9 @@ export interface IAutomationMetadataObjectBase {
         message?: string;
     };
     exportDefinitions?: IExportDefinitionMetadataObject[];
+    metadata?: {
+        widget?: string;
+    };
     recipients?: IAutomationRecipient[];
     schedule?: IAutomationSchedule;
     webhook?: string;
@@ -2847,7 +2850,7 @@ export function isDrillToInsight(obj: unknown): obj is IDrillToInsight;
 // @alpha
 export function isDrillToLegacyDashboard(obj: unknown): obj is IDrillToLegacyDashboard;
 
-// @alpha
+// @beta
 export type ISemanticSearchRelationship = {
     sourceWorkspaceId: string;
     sourceObjectId: string;
@@ -2859,7 +2862,7 @@ export type ISemanticSearchRelationship = {
     targetObjectTitle: string;
 };
 
-// @alpha
+// @beta
 export interface ISemanticSearchResultItem {
     createdAt: string;
     description: string;
@@ -3137,6 +3140,7 @@ export interface ISmtpDestination {
     login: string;
     name: string;
     password?: string;
+    person: string;
     port: 25 | 465 | 587 | 2525;
 }
 
@@ -3213,6 +3217,9 @@ export function isRichTextWidgetDefinition(obj: unknown): obj is IRichTextWidget
 
 // @public
 export function isSimpleMeasure(obj: unknown): obj is IMeasure<IMeasureDefinition>;
+
+// @public
+export function isSimpleMeasureFilter(obj: unknown): obj is IMeasureFilter;
 
 // @alpha
 export function isSingleSelectionFilter(filter: IDashboardAttributeFilter): boolean;

@@ -320,7 +320,8 @@
                     "localIdentifier": "measures"
                 },
                 { "items": [], "localIdentifier": "secondary_measures" },
-                { "items": [], "localIdentifier": "attribute" }
+                { "items": [], "localIdentifier": "attribute" },
+                { "items": [], "localIdentifier": "segment" }
             ],
             "dimensions": [{ "itemIdentifiers": [] }, { "itemIdentifiers": ["measureGroup"] }],
             "filters": [],

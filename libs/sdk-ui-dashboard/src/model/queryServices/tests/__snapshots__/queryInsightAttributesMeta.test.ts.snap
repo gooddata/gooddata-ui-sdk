@@ -13,6 +13,8 @@ exports[`query insight attributes meta > should return metadata for insight with
           },
           "description": "Product",
           "id": "attr.f_product.product",
+          "isDefault": false,
+          "isPrimary": true,
           "ref": {
             "identifier": "attr.f_product.product",
             "type": "displayForm",
@@ -28,6 +30,8 @@ exports[`query insight attributes meta > should return metadata for insight with
           },
           "description": "",
           "id": "label.f_product.product.name",
+          "isDefault": true,
+          "isPrimary": false,
           "ref": {
             "identifier": "label.f_product.product.name",
             "type": "displayForm",
@@ -35,6 +39,42 @@ exports[`query insight attributes meta > should return metadata for insight with
           "title": "Product Name",
           "type": "displayForm",
           "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.name",
+        },
+        {
+          "attribute": {
+            "identifier": "attr.f_product.product",
+            "type": "attribute",
+          },
+          "description": "",
+          "displayFormType": "GDC.image",
+          "id": "label.f_product.product.image",
+          "isDefault": false,
+          "isPrimary": false,
+          "ref": {
+            "identifier": "label.f_product.product.image",
+            "type": "displayForm",
+          },
+          "title": "Product Image",
+          "type": "displayForm",
+          "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.image",
+        },
+        {
+          "attribute": {
+            "identifier": "attr.f_product.product",
+            "type": "attribute",
+          },
+          "description": "",
+          "displayFormType": "GDC.link",
+          "id": "label.f_product.product.link",
+          "isDefault": false,
+          "isPrimary": false,
+          "ref": {
+            "identifier": "label.f_product.product.link",
+            "type": "displayForm",
+          },
+          "title": "Product Link",
+          "type": "displayForm",
+          "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.link",
         },
       ],
       "id": "attr.f_product.product",
@@ -55,6 +95,8 @@ exports[`query insight attributes meta > should return metadata for insight with
       },
       "description": "",
       "id": "label.f_product.product.name",
+      "isDefault": true,
+      "isPrimary": false,
       "ref": {
         "identifier": "label.f_product.product.name",
         "type": "displayForm",
@@ -95,6 +137,8 @@ exports[`query insight attributes meta > should return metadata for insight with
           },
           "description": "Year",
           "id": "dt_closedate_timestamp.year",
+          "isDefault": false,
+          "isPrimary": true,
           "ref": {
             "identifier": "dt_closedate_timestamp.year",
             "type": "displayForm",
@@ -123,6 +167,8 @@ exports[`query insight attributes meta > should return metadata for insight with
           },
           "description": "Year",
           "id": "dt_oppcreated_timestamp.year",
+          "isDefault": false,
+          "isPrimary": true,
           "ref": {
             "identifier": "dt_oppcreated_timestamp.year",
             "type": "displayForm",
@@ -150,6 +196,8 @@ exports[`query insight attributes meta > should return metadata for insight with
       },
       "description": "Year",
       "id": "dt_closedate_timestamp.year",
+      "isDefault": false,
+      "isPrimary": true,
       "ref": {
         "identifier": "dt_closedate_timestamp.year",
         "type": "displayForm",
@@ -165,6 +213,8 @@ exports[`query insight attributes meta > should return metadata for insight with
       },
       "description": "Year",
       "id": "dt_oppcreated_timestamp.year",
+      "isDefault": false,
+      "isPrimary": true,
       "ref": {
         "identifier": "dt_oppcreated_timestamp.year",
         "type": "displayForm",
@@ -204,6 +254,8 @@ exports[`query insight attributes meta > should return metadata for insight with
           },
           "description": "Product",
           "id": "attr.f_product.product",
+          "isDefault": false,
+          "isPrimary": true,
           "ref": {
             "identifier": "attr.f_product.product",
             "type": "displayForm",
@@ -219,6 +271,8 @@ exports[`query insight attributes meta > should return metadata for insight with
           },
           "description": "",
           "id": "label.f_product.product.name",
+          "isDefault": true,
+          "isPrimary": false,
           "ref": {
             "identifier": "label.f_product.product.name",
             "type": "displayForm",
@@ -226,6 +280,42 @@ exports[`query insight attributes meta > should return metadata for insight with
           "title": "Product Name",
           "type": "displayForm",
           "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.name",
+        },
+        {
+          "attribute": {
+            "identifier": "attr.f_product.product",
+            "type": "attribute",
+          },
+          "description": "",
+          "displayFormType": "GDC.image",
+          "id": "label.f_product.product.image",
+          "isDefault": false,
+          "isPrimary": false,
+          "ref": {
+            "identifier": "label.f_product.product.image",
+            "type": "displayForm",
+          },
+          "title": "Product Image",
+          "type": "displayForm",
+          "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.image",
+        },
+        {
+          "attribute": {
+            "identifier": "attr.f_product.product",
+            "type": "attribute",
+          },
+          "description": "",
+          "displayFormType": "GDC.link",
+          "id": "label.f_product.product.link",
+          "isDefault": false,
+          "isPrimary": false,
+          "ref": {
+            "identifier": "label.f_product.product.link",
+            "type": "displayForm",
+          },
+          "title": "Product Link",
+          "type": "displayForm",
+          "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_product.product.link",
         },
       ],
       "id": "attr.f_product.product",
@@ -247,6 +337,8 @@ exports[`query insight attributes meta > should return metadata for insight with
           },
           "description": "Department",
           "id": "f_owner.department_id",
+          "isDefault": true,
+          "isPrimary": true,
           "ref": {
             "identifier": "f_owner.department_id",
             "type": "displayForm",
@@ -263,6 +355,8 @@ exports[`query insight attributes meta > should return metadata for insight with
           "description": "",
           "displayFormType": "GDC.link",
           "id": "f_owner.department_id.departmenthyperlink",
+          "isDefault": false,
+          "isPrimary": false,
           "ref": {
             "identifier": "f_owner.department_id.departmenthyperlink",
             "type": "displayForm",
@@ -289,23 +383,10 @@ exports[`query insight attributes meta > should return metadata for insight with
             "identifier": "attr.f_stage.stagename",
             "type": "attribute",
           },
-          "description": "",
-          "id": "label.f_stage.stagename.order",
-          "ref": {
-            "identifier": "label.f_stage.stagename.order",
-            "type": "displayForm",
-          },
-          "title": "Order",
-          "type": "displayForm",
-          "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_stage.stagename.order",
-        },
-        {
-          "attribute": {
-            "identifier": "attr.f_stage.stagename",
-            "type": "attribute",
-          },
           "description": "Stage Name",
           "id": "attr.f_stage.stagename",
+          "isDefault": true,
+          "isPrimary": true,
           "ref": {
             "identifier": "attr.f_stage.stagename",
             "type": "displayForm",
@@ -321,6 +402,8 @@ exports[`query insight attributes meta > should return metadata for insight with
           },
           "description": "",
           "id": "label.f_stage.stagename.stagename",
+          "isDefault": false,
+          "isPrimary": false,
           "ref": {
             "identifier": "label.f_stage.stagename.stagename",
             "type": "displayForm",
@@ -328,6 +411,23 @@ exports[`query insight attributes meta > should return metadata for insight with
           "title": "Stage Name",
           "type": "displayForm",
           "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_stage.stagename.stagename",
+        },
+        {
+          "attribute": {
+            "identifier": "attr.f_stage.stagename",
+            "type": "attribute",
+          },
+          "description": "",
+          "id": "label.f_stage.stagename.order",
+          "isDefault": false,
+          "isPrimary": false,
+          "ref": {
+            "identifier": "label.f_stage.stagename.order",
+            "type": "displayForm",
+          },
+          "title": "Order",
+          "type": "displayForm",
+          "uri": "/api/v1/entities/workspaces/referenceworkspace/labels/label.f_stage.stagename.order",
         },
       ],
       "id": "attr.f_stage.stagename",
@@ -350,6 +450,8 @@ exports[`query insight attributes meta > should return metadata for insight with
           "description": "",
           "displayFormType": "GDC.link",
           "id": "f_owner.region_id.regionhyperlink",
+          "isDefault": false,
+          "isPrimary": false,
           "ref": {
             "identifier": "f_owner.region_id.regionhyperlink",
             "type": "displayForm",
@@ -365,6 +467,8 @@ exports[`query insight attributes meta > should return metadata for insight with
           },
           "description": "Region",
           "id": "f_owner.region_id",
+          "isDefault": true,
+          "isPrimary": true,
           "ref": {
             "identifier": "f_owner.region_id",
             "type": "displayForm",
@@ -392,6 +496,8 @@ exports[`query insight attributes meta > should return metadata for insight with
       },
       "description": "",
       "id": "label.f_product.product.name",
+      "isDefault": true,
+      "isPrimary": false,
       "ref": {
         "identifier": "label.f_product.product.name",
         "type": "displayForm",
@@ -407,6 +513,8 @@ exports[`query insight attributes meta > should return metadata for insight with
       },
       "description": "Department",
       "id": "f_owner.department_id",
+      "isDefault": true,
+      "isPrimary": true,
       "ref": {
         "identifier": "f_owner.department_id",
         "type": "displayForm",
@@ -422,6 +530,8 @@ exports[`query insight attributes meta > should return metadata for insight with
       },
       "description": "Stage Name",
       "id": "attr.f_stage.stagename",
+      "isDefault": true,
+      "isPrimary": true,
       "ref": {
         "identifier": "attr.f_stage.stagename",
         "type": "displayForm",
@@ -437,6 +547,8 @@ exports[`query insight attributes meta > should return metadata for insight with
       },
       "description": "Region",
       "id": "f_owner.region_id",
+      "isDefault": true,
+      "isPrimary": true,
       "ref": {
         "identifier": "f_owner.region_id",
         "type": "displayForm",

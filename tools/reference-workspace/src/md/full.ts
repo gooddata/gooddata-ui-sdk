@@ -1,7 +1,7 @@
 // (C) 2024 GoodData Corporation
 
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2024-03-21T13:43:34.778Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2024-08-13T15:44:54.689Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -87,14 +87,22 @@ export const SalesRep = {
  */
 export const Product = {
     /**
-     * Display Form Title: Product
-     * Display Form ID: attr.f_product.product
+     * Display Form Title: Product Link
+     * Display Form ID: label.f_product.product.link
      */
-    Default: newAttribute("attr.f_product.product"),
+    Link: newAttribute("label.f_product.product.link"),
     /**
      * Display Form Title: Product Name
      * Display Form ID: label.f_product.product.name
      */ Name: newAttribute("label.f_product.product.name"),
+    /**
+     * Display Form Title: Product
+     * Display Form ID: attr.f_product.product
+     */ Default: newAttribute("attr.f_product.product"),
+    /**
+     * Display Form Title: Product Image
+     * Display Form ID: label.f_product.product.image
+     */ Image: newAttribute("label.f_product.product.image"),
 };
 /**
  * Attribute Title: Stage History
@@ -166,18 +174,22 @@ export const Status: IAttribute = newAttribute("f_activity.status_id");
  */
 export const City = {
     /**
-     * Display Form Title: Longitude
-     * Display Form ID: f_city.id.longitude
-     */
-    Longitude: newAttribute("f_city.id.longitude"),
-    /**
      * Display Form Title: City short name
      * Display Form ID: f_city.id.cityshortname
-     */ ShortName: newAttribute("f_city.id.cityshortname"),
+     */
+    ShortName: newAttribute("f_city.id.cityshortname"),
+    /**
+     * Display Form Title: Longitude
+     * Display Form ID: f_city.id.longitude
+     */ Longitude: newAttribute("f_city.id.longitude"),
     /**
      * Display Form Title: City
      * Display Form ID: f_city.id
      */ Default: newAttribute("f_city.id"),
+    /**
+     * Display Form Title: City ascii name
+     * Display Form ID: f_city.id.cityasciiname
+     */ AsciiName: newAttribute("f_city.id.cityasciiname"),
     /**
      * Display Form Title: Latitude
      * Display Form ID: f_city.id.latitude
@@ -190,10 +202,6 @@ export const City = {
      * Display Form Title: Location
      * Display Form ID: f_city.id.location
      */ Location: newAttribute("f_city.id.location"),
-    /**
-     * Display Form Title: City ascii name
-     * Display Form ID: f_city.id.cityasciiname
-     */ AsciiName: newAttribute("f_city.id.cityasciiname"),
 };
 /**
  * Attribute Title: Opportunity Id
@@ -236,14 +244,14 @@ export const OwnerId: IAttribute = newAttribute("f_owner.id");
  */
 export const Region = {
     /**
-     * Display Form Title: Region
-     * Display Form ID: f_owner.region_id
-     */
-    Default: newAttribute("f_owner.region_id"),
-    /**
      * Display Form Title: Region hyperlink
      * Display Form ID: f_owner.region_id.regionhyperlink
-     */ Hyperlink: newAttribute("f_owner.region_id.regionhyperlink"),
+     */
+    Hyperlink: newAttribute("f_owner.region_id.regionhyperlink"),
+    /**
+     * Display Form Title: Region
+     * Display Form ID: f_owner.region_id
+     */ Default: newAttribute("f_owner.region_id"),
 };
 /**
  * Attribute Title: Product Id
@@ -286,45 +294,56 @@ export const Status_1: IAttribute = newAttribute("f_stage.status_id");
  */
 export const Timeline: IAttribute = newAttribute("f_timeline.id");
 /**
- * Attribute Title: Product that is renamed to test the long attribute name
- * Attribute ID: productthatisrenamedtotestthelongattributename
- */
-export const ProductThatIsRenamedToTestTheLongAttributeName = {
-    /**
-     * Display Form Title: Product that is renamed to test the long attribute name
-     * Display Form ID: productthatisrenamedtotestthelongattributename
-     */
-    Default: newAttribute("productthatisrenamedtotestthelongattributename"),
-    /**
-     * Display Form Title: Product that is renamed to test the long attribute name hyperlink
-     * Display Form ID: productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink
-     */ Hyperlink: newAttribute(
-        "productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink",
-    ),
-};
-/**
  * Attribute Title: State
  * Attribute ID: state_id
  */
 export const State = {
     /**
-     * Display Form Title: State name
-     * Display Form ID: state_id.statename
-     */
-    Name: newAttribute("state_id.statename"),
-    /**
      * Display Form Title: State
      * Display Form ID: state_id
-     */ Default: newAttribute("state_id"),
+     */
+    Default: newAttribute("state_id"),
+    /**
+     * Display Form Title: State name
+     * Display Form ID: state_id.statename
+     */ Name: newAttribute("state_id.statename"),
 };
 /**
- * Metric Title: 2 literals in datetime_diff
- * Metric ID: 2_literals_in_datetime_diff
- * Metric Type: MAQL Metric
+ * Attribute Title: User Id
+ * Attribute ID: user_id
  */
-export const _2LiteralsInDatetimeDiff: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("2_literals_in_datetime_diff", "measure"),
-);
+export const UserId = {
+    /**
+     * Display Form Title: User Id
+     * Display Form ID: user_id
+     */
+    Default: newAttribute("user_id"),
+    /**
+     * Display Form Title: User Name
+     * Display Form ID: user_id.username
+     */ UserName: newAttribute("user_id.username"),
+    /**
+     * Display Form Title: User Email
+     * Display Form ID: user_id.useremail
+     */ UserEmail: newAttribute("user_id.useremail"),
+};
+/**
+ * Attribute Title: Product that is renamed to test the long attribute name
+ * Attribute ID: productthatisrenamedtotestthelongattributename
+ */
+export const ProductThatIsRenamedToTestTheLongAttributeName = {
+    /**
+     * Display Form Title: Product that is renamed to test the long attribute name hyperlink
+     * Display Form ID: productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink
+     */
+    Hyperlink: newAttribute(
+        "productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink",
+    ),
+    /**
+     * Display Form Title: Product that is renamed to test the long attribute name
+     * Display Form ID: productthatisrenamedtotestthelongattributename
+     */ Default: newAttribute("productthatisrenamedtotestthelongattributename"),
+};
 /**
  * Metric Title: _Timeline [EOP]
  * Metric ID: 6b1411d5-e253-418e-8fd3-137a9f56ea92
@@ -372,14 +391,6 @@ export const WinRate: IMeasure<IMeasureDefinition> = newMeasure(
  */
 export const AmountBOP: IMeasure<IMeasureDefinition> = newMeasure(idRef("amount_bop", "measure"));
 /**
- * Metric Title: Argument bigger granularity
- * Metric ID: argument_bigger_granularity
- * Metric Type: MAQL Metric
- */
-export const ArgumentBiggerGranularity: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("argument_bigger_granularity", "measure"),
-);
-/**
  * Metric Title: Avg. Amount
  * Metric ID: avg._amount
  * Metric Type: MAQL Metric
@@ -420,286 +431,6 @@ export const CloseBOP: IMeasure<IMeasureDefinition> = newMeasure(idRef("close_bo
  */
 export const CloseEOP: IMeasure<IMeasureDefinition> = newMeasure(idRef("close_eop", "measure"));
 /**
- * Metric Title: Count of sales rep and datetime condition
- * Metric ID: count_of_sales_rep_and_datetime_condition
- * Metric Type: MAQL Metric
- */
-export const CountOfSalesRepAndDatetimeCondition: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("count_of_sales_rep_and_datetime_condition", "measure"),
-);
-/**
- * Metric Title: Count of sales rep with datetime add and max
- * Metric ID: count_of_sales_rep_with_datetime_add_and_max
- * Metric Type: MAQL Metric
- */
-export const CountOfSalesRepWithDatetimeAddAndMax: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("count_of_sales_rep_with_datetime_add_and_max", "measure"),
-);
-/**
- * Metric Title: Count of sales rep with datetime and previous
- * Metric ID: count_of_sales_rep_with_datetime_and_previous
- * Metric Type: MAQL Metric
- */
-export const CountOfSalesRepWithDatetimeAndPrevious: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("count_of_sales_rep_with_datetime_and_previous", "measure"),
-);
-/**
- * Metric Title: Count of sales rep with diff and 3 difference params
- * Metric ID: count_of_sales_rep_with_diff_and_3_difference_params
- * Metric Type: MAQL Metric
- */
-export const CountOfSalesRepWithDiffAnd3DifferenceParams: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("count_of_sales_rep_with_diff_and_3_difference_params", "measure"),
-);
-/**
- * Metric Title: Count of sales rep with diff and add
- * Metric ID: count_of_sales_rep_with_diff_and_add
- * Metric Type: MAQL Metric
- */
-export const CountOfSalesRepWithDiffAndAdd: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("count_of_sales_rep_with_diff_and_add", "measure"),
-);
-/**
- * Metric Title: Count of sales rep with diff and max by all other
- * Metric ID: count_of_sales_rep_with_diff_and_max_by_all_other
- * Metric Type: MAQL Metric
- */
-export const CountOfSalesRepWithDiffAndMaxByAllOther: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("count_of_sales_rep_with_diff_and_max_by_all_other", "measure"),
-);
-/**
- * Metric Title: Count of sales reps with diff and max condition
- * Metric ID: count_sales_reps_with_diff_and_max_condition
- * Metric Type: MAQL Metric
- */
-export const CountOfSalesRepsWithDiffAndMaxCondition: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("count_sales_reps_with_diff_and_max_condition", "measure"),
-);
-/**
- * Metric Title: Datetime add of day
- * Metric ID: datetime_add_of_day
- * Metric Type: MAQL Metric
- */
-export const DatetimeAddOfDay: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("datetime_add_of_day", "measure"),
-);
-/**
- * Metric Title: Datetime add of hour
- * Metric ID: datetime_add_of_hour
- * Metric Type: MAQL Metric
- */
-export const DatetimeAddOfHour: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("datetime_add_of_hour", "measure"),
-);
-/**
- * Metric Title: Datetime add of minute
- * Metric ID: datetime_add_of_minute
- * Metric Type: MAQL Metric
- */
-export const DatetimeAddOfMinute: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("datetime_add_of_minute", "measure"),
-);
-/**
- * Metric Title: Datetime add of month
- * Metric ID: datetime_add_of_month
- * Metric Type: MAQL Metric
- */
-export const DatetimeAddOfMonth: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("datetime_add_of_month", "measure"),
-);
-/**
- * Metric Title: Datetime add of this year
- * Metric ID: datetime_add_of_this_year
- * Metric Type: MAQL Metric
- */
-export const DatetimeAddOfThisYear: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("datetime_add_of_this_year", "measure"),
-);
-/**
- * Metric Title: Datetime add of week
- * Metric ID: datetime_add_of_week
- * Metric Type: MAQL Metric
- */
-export const DatetimeAddOfWeek: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("datetime_add_of_week", "measure"),
-);
-/**
- * Metric Title: Datetime add of year
- * Metric ID: datetime_add_of_year
- * Metric Type: MAQL Metric
- */
-export const DatetimeAddOfYear: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("datetime_add_of_year", "measure"),
-);
-/**
- * Metric Title: Datetime add with if else
- * Metric ID: datetime_add_with_if_else
- * Metric Type: MAQL Metric
- */
-export const DatetimeAddWithIfElse: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("datetime_add_with_if_else", "measure"),
-);
-/**
- * Metric Title: Datetime_add with quarter
- * Metric ID: datetime_add_with_quarter
- * Metric Type: MAQL Metric
- */
-export const DatetimeAddWithQuarter: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("datetime_add_with_quarter", "measure"),
-);
-/**
- * Metric Title: Diff of month (2 difference params)
- * Metric ID: datetime_diff_of_month_2_diffrence_params
- * Metric Type: MAQL Metric
- */
-export const DiffOfMonth2DifferenceParams: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("datetime_diff_of_month_2_diffrence_params", "measure"),
-);
-/**
- * Metric Title: Diff of month (2 params and string)
- * Metric ID: datetime_diff_of_month_2_params_string
- * Metric Type: MAQL Metric
- */
-export const DiffOfMonth2ParamsAndString: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("datetime_diff_of_month_2_params_string", "measure"),
-);
-/**
- * Metric Title: Diff of month (2 same params)
- * Metric ID: datetime_diff_of_month_2_same_params
- * Metric Type: MAQL Metric
- */
-export const DiffOfMonth2SameParams: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("datetime_diff_of_month_2_same_params", "measure"),
-);
-/**
- * Metric Title: Diff of month (3 difference params)
- * Metric ID: datetime_diff_of_month_3_diffenrence_params
- * Metric Type: MAQL Metric
- */
-export const DiffOfMonth3DifferenceParams: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("datetime_diff_of_month_3_diffenrence_params", "measure"),
-);
-/**
- * Metric Title: Diff of month (3 parameters)
- * Metric ID: datetime_diff_of_month_3_parameters
- * Metric Type: MAQL Metric
- */
-export const DiffOfMonth3Parameters: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("datetime_diff_of_month_3_parameters", "measure"),
-);
-/**
- * Metric Title: Diff of month (3 params and string)
- * Metric ID: datetime_diff_of_month_3_params_string
- * Metric Type: MAQL Metric
- */
-export const DiffOfMonth3ParamsAndString: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("datetime_diff_of_month_3_params_string", "measure"),
-);
-/**
- * Metric Title: Diff of week (2 same params)
- * Metric ID: datetime_diff_of_week_2_same_params
- * Metric Type: MAQL Metric
- */
-export const DiffOfWeek2SameParams: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("datetime_diff_of_week_2_same_params", "measure"),
-);
-/**
- * Metric Title: Diff of week (3 parameters)
- * Metric ID: datetime_diff_of_week_3_parameters
- * Metric Type: MAQL Metric
- */
-export const DiffOfWeek3Parameters: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("datetime_diff_of_week_3_parameters", "measure"),
-);
-/**
- * Metric Title: Diff of week (month week)
- * Metric ID: datetime_diff_of_week_month_week
- * Metric Type: MAQL Metric
- */
-export const DiffOfWeekMonthWeek: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("datetime_diff_of_week_month_week", "measure"),
-);
-/**
- * Metric Title: Diff of week (week year)
- * Metric ID: datetime_diff_of_week_week_year
- * Metric Type: MAQL Metric
- */
-export const DiffOfWeekWeekYear: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("datetime_diff_of_week_week_year", "measure"),
-);
-/**
- * Metric Title: Diff of year (2 parameters)
- * Metric ID: datetime_diff_of_year_2_parameters
- * Metric Type: MAQL Metric
- */
-export const DiffOfYear2Parameters: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("datetime_diff_of_year_2_parameters", "measure"),
-);
-/**
- * Metric Title: Diff of year (3 parameters)
- * Metric ID: datetime_diff_of_year_3_parameters
- * Metric Type: MAQL Metric
- */
-export const DiffOfYear3Parameters: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("datetime_diff_of_year_3_parameters", "measure"),
-);
-/**
- * Metric Title: Diff of year (next)
- * Metric ID: datetime_diff_of_year_next
- * Metric Type: MAQL Metric
- */
-export const DiffOfYearNext: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("datetime_diff_of_year_next", "measure"),
-);
-/**
- * Metric Title: Diff of year (previous)
- * Metric ID: datetime_diff_of_year_previous
- * Metric Type: MAQL Metric
- */
-export const DiffOfYearPrevious: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("datetime_diff_of_year_previous", "measure"),
-);
-/**
- * Metric Title: Diff of year (previous and next)
- * Metric ID: datetime_diff_of_year_previous_next
- * Metric Type: MAQL Metric
- */
-export const DiffOfYearPreviousAndNext: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("datetime_diff_of_year_previous_next", "measure"),
-);
-/**
- * Metric Title: Diff of year (string)
- * Metric ID: datetime_diff_of_year_string
- * Metric Type: MAQL Metric
- */
-export const DiffOfYearString: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("datetime_diff_of_year_string", "measure"),
-);
-/**
- * Metric Title: Diff of year (string and this)
- * Metric ID: datetime_diff_of_year_string_and_this
- * Metric Type: MAQL Metric
- */
-export const DiffOfYearStringAndThis: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("datetime_diff_of_year_string_and_this", "measure"),
-);
-/**
- * Metric Title: Datetime_diff with quarter
- * Metric ID: datetime_diff_with_quarter
- * Metric Type: MAQL Metric
- */
-export const DatetimeDiffWithQuarter: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("datetime_diff_with_quarter", "measure"),
-);
-/**
- * Metric Title: Diff of week (string)
- * Metric ID: diff_of_week_string
- * Metric Type: MAQL Metric
- */
-export const DiffOfWeekString: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("diff_of_week_string", "measure"),
-);
-/**
  * Metric Title: Parent metric
  * Metric ID: e519fa2a-86c3-4e32-8313-0c03061626b1
  * Metric Type: MAQL Metric
@@ -716,182 +447,6 @@ export const Won: IMeasure<IMeasureDefinition> = newMeasure(
     idRef("e519fa2a-86c3-4e32-8313-0c03062348j3", "measure"),
 );
 /**
- * Metric Title: Filter time transformation (datetime add)
- * Metric ID: filter_time_transformation_datetime_add
- * Metric Type: MAQL Metric
- */
-export const FilterTimeTransformationDatetimeAdd: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("filter_time_transformation_datetime_add", "measure"),
-);
-/**
- * Metric Title: First value of amount by quarter
- * Metric ID: first_value_of_amount_by_quarter
- * Metric Type: MAQL Metric
- */
-export const FirstValueOfAmountByQuarter: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("first_value_of_amount_by_quarter", "measure"),
-);
-/**
- * Metric Title: First value of amount by sales rep
- * Metric ID: first_value_of_amount_by_sales_rep
- * Metric Type: MAQL Metric
- */
-export const FirstValueOfAmountBySalesRep: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("first_value_of_amount_by_sales_rep", "measure"),
-);
-/**
- * Metric Title: First value of amount order asc
- * Metric ID: first_value_of_amount_order_asc
- * Metric Type: MAQL Metric
- */
-export const FirstValueOfAmountOrderAsc: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("first_value_of_amount_order_asc", "measure"),
-);
-/**
- * Metric Title: First value of amount order desc
- * Metric ID: first_value_of_amount_order_desc
- * Metric Type: MAQL Metric
- */
-export const FirstValueOfAmountOrderDesc: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("first_value_of_amount_order_desc", "measure"),
-);
-/**
- * Metric Title: First value of amount with previous
- * Metric ID: first_value_of_amount_with_previous
- * Metric Type: MAQL Metric
- */
-export const FirstValueOfAmountWithPrevious: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("first_value_of_amount_with_previous", "measure"),
-);
-/**
- * Metric Title: First value of rank amount
- * Metric ID: first_value_of_rank_amount
- * Metric Type: MAQL Metric
- */
-export const FirstValueOfRankAmount: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("first_value_of_rank_amount", "measure"),
-);
-/**
- * Metric Title: Last value of runvar amount
- * Metric ID: first_value_of_runvar_amount
- * Metric Type: MAQL Metric
- */
-export const LastValueOfRunvarAmount: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("first_value_of_runvar_amount", "measure"),
-);
-/**
- * Metric Title: First value of runvar amount
- * Metric ID: first_value_of_runvar_amount_2
- * Metric Type: MAQL Metric
- */
-export const FirstValueOfRunvarAmount: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("first_value_of_runvar_amount_2", "measure"),
-);
-/**
- * Metric Title: For Next first value of amount
- * Metric ID: for_next_first_value_of_amount
- * Metric Type: MAQL Metric
- */
-export const ForNextFirstValueOfAmount: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("for_next_first_value_of_amount", "measure"),
-);
-/**
- * Metric Title: For Next last value of amount
- * Metric ID: for_next_last_value_of_amount
- * Metric Type: MAQL Metric
- */
-export const ForNextLastValueOfAmount: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("for_next_last_value_of_amount", "measure"),
-);
-/**
- * Metric Title: For Previous first value of amount
- * Metric ID: for_previous_first_value_of_amount
- * Metric Type: MAQL Metric
- */
-export const ForPreviousFirstValueOfAmount: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("for_previous_first_value_of_amount", "measure"),
-);
-/**
- * Metric Title: For Previous last value of amount
- * Metric ID: for_previous_last_value_of_amount
- * Metric Type: MAQL Metric
- */
-export const ForPreviousLastValueOfAmount: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("for_previous_last_value_of_amount", "measure"),
-);
-/**
- * Metric Title: Incorrect literal string with datetime_add with day
- * Metric ID: incorrect_literal_string_with_datetime_add_with_day
- * Metric Type: MAQL Metric
- */
-export const IncorrectLiteralStringWithDatetimeAddWithDay: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("incorrect_literal_string_with_datetime_add_with_day", "measure"),
-);
-/**
- * Metric Title: Incorrect literal string with datetime_add with month
- * Metric ID: incorrect_literal_string_with_datetime_add_with_month
- * Metric Type: MAQL Metric
- */
-export const IncorrectLiteralStringWithDatetimeAddWithMonth: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("incorrect_literal_string_with_datetime_add_with_month", "measure"),
-);
-/**
- * Metric Title: Incorrect literal string with datetime_diff
- * Metric ID: incorrect_literal_string_with_datetime_diff
- * Metric Type: MAQL Metric
- */
-export const IncorrectLiteralStringWithDatetimeDiff: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("incorrect_literal_string_with_datetime_diff", "measure"),
-);
-/**
- * Metric Title: Last value of amount by quarter
- * Metric ID: last_value_of_amount_by_quarter
- * Metric Type: MAQL Metric
- */
-export const LastValueOfAmountByQuarter: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("last_value_of_amount_by_quarter", "measure"),
-);
-/**
- * Metric Title: Last value of amount by sales rep
- * Metric ID: last_value_of_amount_by_sales_rep
- * Metric Type: MAQL Metric
- */
-export const LastValueOfAmountBySalesRep: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("last_value_of_amount_by_sales_rep", "measure"),
-);
-/**
- * Metric Title: Last value of amount order asc
- * Metric ID: last_value_of_amount_order_asc
- * Metric Type: MAQL Metric
- */
-export const LastValueOfAmountOrderAsc: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("last_value_of_amount_order_asc", "measure"),
-);
-/**
- * Metric Title: Last value of amount order desc
- * Metric ID: last_value_of_amount_order_desc
- * Metric Type: MAQL Metric
- */
-export const LastValueOfAmountOrderDesc: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("last_value_of_amount_order_desc", "measure"),
-);
-/**
- * Metric Title: Last value of amount with previous
- * Metric ID: last_value_of_amount_with_previous
- * Metric Type: MAQL Metric
- */
-export const LastValueOfAmountWithPrevious: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("last_value_of_amount_with_previous", "measure"),
-);
-/**
- * Metric Title: Last value of rank amount
- * Metric ID: last_value_of_rank_amount
- * Metric Type: MAQL Metric
- */
-export const LastValueOfRankAmount: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("last_value_of_rank_amount", "measure"),
-);
-/**
  * Metric Title: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor i
  * Metric ID: lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt_ut_labore_et_dolore_magna_aliqua._ut_enim_ad_minim_veniam_quis_nostrud_exercitation_ullamco_laboris_nisi_ut_aliquip_ex_ea_commodo_consequat._duis_aute_irure_dolor_i
  * Metric Type: MAQL Metric
@@ -904,20 +459,6 @@ export const LoremIpsumDolorSitAmetConsecteturAdipiscingElitSedDoEiusmodTemporIn
         ),
     );
 /**
- * Metric Title: Maximum literal of datetime_add
- * Metric ID: maximum_literal_of_datetime_add
- * Metric Type: MAQL Metric
- */
-export const MaximumLiteralOfDatetimeAdd: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("maximum_literal_of_datetime_add", "measure"),
-);
-/**
- * Metric Title: Max of top level
- * Metric ID: max_of_top_level
- * Metric Type: MAQL Metric
- */
-export const MaxOfTopLevel: IMeasure<IMeasureDefinition> = newMeasure(idRef("max_of_top_level", "measure"));
-/**
  * Metric Title: Metric has null value
  * Metric ID: metric_has_null_value
  * Metric Type: MAQL Metric
@@ -926,51 +467,11 @@ export const MetricHasNullValue: IMeasure<IMeasureDefinition> = newMeasure(
     idRef("metric_has_null_value", "measure"),
 );
 /**
- * Metric Title: Missing required datetime_add granularity
- * Metric ID: missing_required_datetime_add_granularity
- * Metric Type: MAQL Metric
- */
-export const MissingRequiredDatetimeAddGranularity: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("missing_required_datetime_add_granularity", "measure"),
-);
-/**
  * Metric Title: Negative Metric
  * Metric ID: negative_metric
  * Metric Type: MAQL Metric
  */
 export const NegativeMetric: IMeasure<IMeasureDefinition> = newMeasure(idRef("negative_metric", "measure"));
-/**
- * Metric Title: Not allow datetime types for datetime_diff
- * Metric ID: not_allow_datetime_types_for_datetime_diff
- * Metric Type: MAQL Metric
- */
-export const NotAllowDatetimeTypesForDatetimeDiff: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("not_allow_datetime_types_for_datetime_diff", "measure"),
-);
-/**
- * Metric Title: Not enough context for MAX
- * Metric ID: not_enough_context_for_max
- * Metric Type: MAQL Metric
- */
-export const NotEnoughContextForMAX: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("not_enough_context_for_max", "measure"),
-);
-/**
- * Metric Title: Not enough context for MIN
- * Metric ID: not_enough_context_for_min
- * Metric Type: MAQL Metric
- */
-export const NotEnoughContextForMIN: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("not_enough_context_for_min", "measure"),
-);
-/**
- * Metric Title: No Time transformation
- * Metric ID: no_time_transformation
- * Metric Type: MAQL Metric
- */
-export const NoTimeTransformation: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("no_time_transformation", "measure"),
-);
 /**
  * Metric Title: # of Activities
  * Metric ID: of_activities
@@ -998,22 +499,6 @@ export const OppFirstSnapshot: IMeasure<IMeasureDefinition> = newMeasure(
     idRef("opp._first_snapshot", "measure"),
 );
 /**
- * Metric Title: Runsum first value of amount with condition
- * Metric ID: runsum_first_value_of_amount_with_condition
- * Metric Type: MAQL Metric
- */
-export const RunsumFirstValueOfAmountWithCondition: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("runsum_first_value_of_amount_with_condition", "measure"),
-);
-/**
- * Metric Title: Runsum last value of amount with condition
- * Metric ID: runsum_last_value_of_amount_with_condition
- * Metric Type: MAQL Metric
- */
-export const RunsumLastValueOfAmountWithCondition: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("runsum_last_value_of_amount_with_condition", "measure"),
-);
-/**
  * Metric Title: Sample XIRR
  * Metric ID: sample_xirr
  * Metric Type: MAQL Metric
@@ -1026,115 +511,11 @@ export const SampleXIRR: IMeasure<IMeasureDefinition> = newMeasure(idRef("sample
  */
 export const SnapshotBOP: IMeasure<IMeasureDefinition> = newMeasure(idRef("snapshot_bop", "measure"));
 /**
- * Metric Title: Sum amount with datetime_add and between
- * Metric ID: sum_amount_with_datetime_add_and_between
- * Metric Type: MAQL Metric
- */
-export const SumAmountWithDatetimeAddAndBetween: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("sum_amount_with_datetime_add_and_between", "measure"),
-);
-/**
- * Metric Title: Sum amount with datetime_add and not between
- * Metric ID: sum_amount_with_datetime_add_and_not_between
- * Metric Type: MAQL Metric
- */
-export const SumAmountWithDatetimeAddAndNotBetween: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("sum_amount_with_datetime_add_and_not_between", "measure"),
-);
-/**
- * Metric Title: Sum of amount between max created year and previous year
- * Metric ID: sum_of_amount_between_max_created_year_and_previous_year
- * Metric Type: MAQL Metric
- */
-export const SumOfAmountBetweenMaxCreatedYearAndPreviousYear: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("sum_of_amount_between_max_created_year_and_previous_year", "measure"),
-);
-/**
- * Metric Title: Sum of amount not between max created year and this year
- * Metric ID: sum_of_amount_not_between_max_created_year_and_this_year
- * Metric Type: MAQL Metric
- */
-export const SumOfAmountNotBetweenMaxCreatedYearAndThisYear: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("sum_of_amount_not_between_max_created_year_and_this_year", "measure"),
-);
-/**
- * Metric Title: Sum of amount with case and max
- * Metric ID: sum_of_amount_with_case_and_max
- * Metric Type: MAQL Metric
- */
-export const SumOfAmountWithCaseAndMax: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("sum_of_amount_with_case_and_max", "measure"),
-);
-/**
- * Metric Title: Sum of amount with if, having and min
- * Metric ID: sum_of_amount_with_if_having_and_min
- * Metric Type: MAQL Metric
- */
-export const SumOfAmountWithIfHavingAndMin: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("sum_of_amount_with_if_having_and_min", "measure"),
-);
-/**
- * Metric Title: Sum of amount with min and by all other
- * Metric ID: sum_of_amount_with_min_and_by_all_other
- * Metric Type: MAQL Metric
- */
-export const SumOfAmountWithMinAndByAllOther: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("sum_of_amount_with_min_and_by_all_other", "measure"),
-);
-/**
- * Metric Title: Sum of amount with min and by all other except
- * Metric ID: sum_of_amount_with_min_and_by_all_other_except
- * Metric Type: MAQL Metric
- */
-export const SumOfAmountWithMinAndByAllOtherExcept: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("sum_of_amount_with_min_and_by_all_other_except", "measure"),
-);
-/**
  * Metric Title: _Timeline [BOP]
  * Metric ID: timeline_bop
  * Metric Type: MAQL Metric
  */
 export const TimelineBOP: IMeasure<IMeasureDefinition> = newMeasure(idRef("timeline_bop", "measure"));
-/**
- * Metric Title: Top level of datetime_add
- * Metric ID: top_level_of_datetime_add
- * Metric Type: MAQL Metric
- */
-export const TopLevelOfDatetimeAdd: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("top_level_of_datetime_add", "measure"),
-);
-/**
- * Metric Title: Top level metric for MAX
- * Metric ID: top_level_metric_for_max
- * Metric Type: MAQL Metric
- */
-export const TopLevelMetricForMAX: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("top_level_metric_for_max", "measure"),
-);
-/**
- * Metric Title: Top level metric for MIN
- * Metric ID: top_level_metric_for_min
- * Metric Type: MAQL Metric
- */
-export const TopLevelMetricForMIN: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("top_level_metric_for_min", "measure"),
-);
-/**
- * Metric Title: Time transformation (combined)
- * Metric ID: time_transformation_combined
- * Metric Type: MAQL Metric
- */
-export const TimeTransformationCombined: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("time_transformation_combined", "measure"),
-);
-/**
- * Metric Title: Time transformation
- * Metric ID: time_transformation
- * Metric Type: MAQL Metric
- */
-export const TimeTransformation: IMeasure<IMeasureDefinition> = newMeasure(
-    idRef("time_transformation", "measure"),
-);
 /**
  * Fact Title: Activity (Date)
  * Fact ID: fact.f_activity.activitydate
@@ -2477,10 +1858,14 @@ export const DateDatasets = {
 };
 export const Insights = {
     /**
+     * Insight Title: Amount
+     * Insight ID: 04b8cd47-35d6-4e82-b24d-7a98647e0374
+     */
+    Amount_2: "04b8cd47-35d6-4e82-b24d-7a98647e0374",
+    /**
      * Insight Title: Table using long name metric
      * Insight ID: 1e17f8cf-aa34-4474-8dd5-c1249c688225
-     */
-    TableUsingLongNameMetric: "1e17f8cf-aa34-4474-8dd5-c1249c688225",
+     */ TableUsingLongNameMetric: "1e17f8cf-aa34-4474-8dd5-c1249c688225",
     /**
      * Insight Title: Table has AM metric
      * Insight ID: 343b329b-e2b0-43b2-9724-de8cd664ebac
@@ -2489,6 +1874,10 @@ export const Insights = {
      * Insight Title: merge cells insight
      * Insight ID: 3ef94acb-1e15-49ef-88d5-e9e2931be959
      */ MergeCellsInsight: "3ef94acb-1e15-49ef-88d5-e9e2931be959",
+    /**
+     * Insight Title: Sum of Days to Close
+     * Insight ID: 4eb2f130-e36e-4d8d-834e-14780366edfd
+     */ SumOfDaysToClose: "4eb2f130-e36e-4d8d-834e-14780366edfd",
     /**
      * Insight Title: big insight
      * Insight ID: 5517045e-661f-4d6b-b0b0-98030ab9f68c
@@ -2502,9 +1891,17 @@ export const Insights = {
      * Insight ID: 6ecba0d9-8fff-4c78-8adf-7f33cc1956c8
      */ ColumnChartOnlyMeasures: "6ecba0d9-8fff-4c78-8adf-7f33cc1956c8",
     /**
+     * Insight Title: drillToAttributeUrl
+     * Insight ID: 7837806a-a406-4dcd-a8a2-902c64587e63
+     */ DrillToAttributeUrl: "7837806a-a406-4dcd-a8a2-902c64587e63",
+    /**
      * Insight Title: invalid insight
      * Insight ID: 81452cc9-558b-4b4e-a70b-0a80f3bd2924
      */ InvalidInsight: "81452cc9-558b-4b4e-a70b-0a80f3bd2924",
+    /**
+     * Insight Title: my heatmap
+     * Insight ID: 83804893-45f6-476a-ac69-fef969a791d7
+     */ MyHeatmap: "83804893-45f6-476a-ac69-fef969a791d7",
     /**
      * Insight Title: Insight using long name metric
      * Insight ID: 843701ee-8f24-4942-8522-872a96575f8e
@@ -2514,21 +1911,37 @@ export const Insights = {
      * Insight ID: 84d13bd9-f976-4e03-8b00-fec9497d580b
      */ ColumnChartHasNotHyperlink: "84d13bd9-f976-4e03-8b00-fec9497d580b",
     /**
+     * Insight Title: table
+     * Insight ID: 86be2337-968a-40f1-9fa4-4b3bb809da4b
+     */ Table: "86be2337-968a-40f1-9fa4-4b3bb809da4b",
+    /**
      * Insight Title: Column chart long attribute has hyperlink
      * Insight ID: 87c466b7-e3e0-4a1a-a45a-4ae333bce863
      */ ColumnChartLongAttributeHasHyperlink: "87c466b7-e3e0-4a1a-a45a-4ae333bce863",
     /**
-     * Insight Title: test
-     * Insight ID: 92530bf9-c150-4b52-85e7-ae39bcd32ce2
-     */ Test: "92530bf9-c150-4b52-85e7-ae39bcd32ce2",
+     * Insight Title: Sum of Probability
+     * Insight ID: 986add04-6568-4834-a635-e42982650c54
+     */ SumOfProbability: "986add04-6568-4834-a635-e42982650c54",
     /**
      * Insight Title: Column chart has many hyperlinks
      * Insight ID: 9a2ab62b-587a-4b16-9682-1b7962340354
      */ ColumnChartHasManyHyperlinks: "9a2ab62b-587a-4b16-9682-1b7962340354",
     /**
+     * Insight Title: Sum of Opp. Snapshot (Date)
+     * Insight ID: a04af4cb-94e2-4cdb-aa21-c95bbb0b3ab8
+     */ SumOfOppSnapshotDate: "a04af4cb-94e2-4cdb-aa21-c95bbb0b3ab8",
+    /**
+     * Insight Title: Sum of Opp. Close (Date)
+     * Insight ID: afa75538-ea5f-4cfc-a10f-dce95929a68d
+     */ SumOfOppCloseDate: "afa75538-ea5f-4cfc-a10f-dce95929a68d",
+    /**
      * Insight Title: Column chart with Department attribute
      * Insight ID: b1614db1-3058-4071-a2fe-64a017d318c5
      */ ColumnChartWithDepartmentAttribute: "b1614db1-3058-4071-a2fe-64a017d318c5",
+    /**
+     * Insight Title: Test insight
+     * Insight ID: b2cfe70f-59a6-4b04-b7ca-f01c8e47df0a
+     */ TestInsight: "b2cfe70f-59a6-4b04-b7ca-f01c8e47df0a",
     /**
      * Insight Title: AD has null value
      * Insight ID: b3b665b7-bca2-0322-82f1-b86ky73k90f8afe
@@ -2537,6 +1950,10 @@ export const Insights = {
      * Insight Title: Parent Insight
      * Insight ID: b3b665b7-bca2-4462-82f1-b0e01dff8afe
      */ ParentInsight: "b3b665b7-bca2-4462-82f1-b0e01dff8afe",
+    /**
+     * Insight Title: Sum of Duration
+     * Insight ID: b75ccd1a-4489-44fd-8cd5-83ec122e3288
+     */ SumOfDuration: "b75ccd1a-4489-44fd-8cd5-83ec122e3288",
     /**
      * Insight Title: Combine with all filter types
      * Insight ID: ba13041b-87bc-458c-a514-fcc0074c9973
@@ -2553,6 +1970,10 @@ export const Insights = {
      * Insight Title: No data
      * Insight ID: f00bd5d5-91da-4139-9e7e-5498d9fe49b5
      */ NoData: "f00bd5d5-91da-4139-9e7e-5498d9fe49b5",
+    /**
+     * Insight Title: Simple Sorted Table
+     * Insight ID: f615b2cd-024c-4cc8-9db9-b6f08150b0b3
+     */ SimpleSortedTable: "f615b2cd-024c-4cc8-9db9-b6f08150b0b3",
     /**
      * Insight Title: Column chart has hyperlink
      * Insight ID: f7a50db1-5d2d-4b1a-82e6-e1648836985c
@@ -2572,6 +1993,10 @@ export const Dashboards = {
      * Dashboard Title: Dashboard column chart has hyperlinks
      * Dashboard ID: 2c269aba-2a5a-4d54-8bdb-bbf037645f0f
      */ DashboardColumnChartHasHyperlinks: "2c269aba-2a5a-4d54-8bdb-bbf037645f0f",
+    /**
+     * Dashboard Title: Simple dashboard no drills
+     * Dashboard ID: 44a9d0ed-8a06-4ffd-b16c-6281707acfcf
+     */ SimpleDashboardNoDrills: "44a9d0ed-8a06-4ffd-b16c-6281707acfcf",
     /**
      * Dashboard Title: KD has null value
      * Dashboard ID: 5a224af3-902c-4acd-ac75-bfa88d80e044
@@ -2597,6 +2022,14 @@ export const Dashboards = {
      * Dashboard ID: a87209e0-c53f-4a6f-abf3-17c7d8d4079e
      */ TargetKDHasNullValue: "a87209e0-c53f-4a6f-abf3-17c7d8d4079e",
     /**
+     * Dashboard Title: Simple dashboard
+     * Dashboard ID: adb4fefa-c5ad-410e-bb2c-d6933e0ec7a0
+     */ SimpleDashboard: "adb4fefa-c5ad-410e-bb2c-d6933e0ec7a0",
+    /**
+     * Dashboard Title: Locked dashboard
+     * Dashboard ID: b8bbf78e-e3ad-4bcf-98a6-0142ea7fa8a2
+     */ LockedDashboard: "b8bbf78e-e3ad-4bcf-98a6-0142ea7fa8a2",
+    /**
      * Dashboard Title: Parent Dashboard
      * Dashboard ID: d1965687-f7bd-41ba-9fa2-f63793d62a62
      */ ParentDashboard: "d1965687-f7bd-41ba-9fa2-f63793d62a62",
@@ -2608,6 +2041,10 @@ export const Dashboards = {
      * Dashboard Title: KD with many data insight
      * Dashboard ID: e1e6e5fe-95bc-41b9-bd8c-d9cf5e88a5d0
      */ KDWithManyDataInsight: "e1e6e5fe-95bc-41b9-bd8c-d9cf5e88a5d0",
+    /**
+     * Dashboard Title: Dashboard With 3 Sections
+     * Dashboard ID: e6473e57-1914-46ec-9cb9-5611f1298100
+     */ DashboardWith3Sections: "e6473e57-1914-46ec-9cb9-5611f1298100",
     /**
      * Dashboard Title: KD with invalid insight
      * Dashboard ID: f50c7076-1d45-4031-a4fd-564459254b12

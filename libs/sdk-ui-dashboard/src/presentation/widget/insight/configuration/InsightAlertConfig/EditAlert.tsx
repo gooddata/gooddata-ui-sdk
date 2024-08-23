@@ -5,15 +5,15 @@ import {
     IAutomationMetadataObjectDefinition,
     IMeasure,
 } from "@gooddata/sdk-model";
-import { Bubble, BubbleHoverTrigger, Button, Input } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, Button, Input, Message } from "@gooddata/sdk-ui-kit";
 import { DashboardInsightSubmenuContainer } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightSubmenuContainer.js";
 import { AlertMeasureSelect } from "./AlertMeasureSelect.js";
 import { AlertComparisonOperatorSelect } from "./AlertComparisonOperatorSelect.js";
 import { AlertDestinationSelect } from "./AlertDestinationSelect.js";
 import { EditAlertConfiguration } from "./EditAlertConfiguration.js";
-import { INotificationChannel } from "./constants.js";
-import { useEditAlert } from "./useEditAlert.js";
+import { useEditAlert } from "./hooks/useEditAlert.js";
 import { FormattedMessage, useIntl } from "react-intl";
+import { Webhooks } from "../../../../../model/index.js";
 
 const TOOLTIP_ALIGN_POINTS = [{ align: "cl cr" }, { align: "cr cl" }];
 
@@ -21,7 +21,7 @@ interface IEditAlertProps {
     alert: IAutomationMetadataObject;
     isNewAlert?: boolean;
     hasAlerts: boolean;
-    destinations: INotificationChannel[];
+    destinations: Webhooks;
     measures: IMeasure[];
     onClose: () => void;
     onCancel: () => void;
@@ -65,6 +65,10 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
     });
     const intl = useIntl();
     const disableCreateButtonDueToLimits = isNewAlert && maxAutomationsReached;
+    const selectedMeasureIdentifier = updatedAlert.alert!.condition.left;
+    const selectedMeasure = measures.find(
+        (measure) => measure.measure.localIdentifier === selectedMeasureIdentifier,
+    );
 
     return viewMode === "edit" ? (
         <DashboardInsightSubmenuContainer
@@ -83,7 +87,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                             <FormattedMessage id="insightAlert.config.when" />
                         </div>
                         <AlertMeasureSelect
-                            selectedMeasure={updatedAlert.alert!.condition.left}
+                            selectedMeasure={selectedMeasure}
                             onMeasureChange={changeMeasure}
                             measures={measures}
                         />
@@ -107,6 +111,11 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                             />
                         )}
                     </div>
+                    {!selectedMeasure ? (
+                        <Message type="error">
+                            <FormattedMessage id="insightAlert.config.invalid" />
+                        </Message>
+                    ) : null}
                 </div>
                 <div className="gd-edit-alert__buttons">
                     <Button

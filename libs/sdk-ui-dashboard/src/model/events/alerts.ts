@@ -1,5 +1,5 @@
-// (C) 2021-2023 GoodData Corporation
-import { IWidgetAlert } from "@gooddata/sdk-model";
+// (C) 2021-2024 GoodData Corporation
+import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 
 import { DashboardContext } from "../types/commonTypes.js";
 import { IDashboardEvent } from "./base.js";
@@ -13,11 +13,11 @@ export interface DashboardAlertCreatedPayload {
     /**
      * The alert created.
      */
-    readonly alert: IWidgetAlert;
+    readonly alert: IAutomationMetadataObject;
 }
 
 /**
- * This event is emitted after the Kpi alert is successfully saved.
+ * This event is emitted after the alert is successfully saved.
  *
  * @beta
  */
@@ -28,7 +28,7 @@ export interface DashboardAlertCreated extends IDashboardEvent {
 
 export function alertCreated(
     ctx: DashboardContext,
-    alert: IWidgetAlert,
+    alert: IAutomationMetadataObject,
     correlationId?: string,
 ): DashboardAlertCreated {
     return {
@@ -50,89 +50,26 @@ export function alertCreated(
 export const isDashboardAlertCreated = eventGuard<DashboardAlertCreated>("GDC.DASH/EVT.ALERT.CREATED");
 
 /**
- * Payload of the {@link DashboardAlertsRemoved} event.
- * @beta
- */
-export interface DashboardAlertsRemovedPayload {
-    /**
-     * The alerts removed.
-     */
-    readonly alerts: IWidgetAlert[];
-}
-
-/**
- * This event is emitted after the Kpi alerts are successfully removed.
+ * This event is emitted after the alert is saved.
  *
  * @beta
  */
-export interface DashboardAlertsRemoved extends IDashboardEvent {
-    readonly type: "GDC.DASH/EVT.ALERTS.REMOVED";
-    readonly payload: DashboardAlertsRemovedPayload;
+export interface DashboardAlertSaved extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.ALERT.SAVED";
 }
 
-export function alertsRemoved(
-    ctx: DashboardContext,
-    alerts: IWidgetAlert[],
-    correlationId?: string,
-): DashboardAlertsRemoved {
+export function alertSaved(ctx: DashboardContext, correlationId?: string): DashboardAlertSaved {
     return {
-        type: "GDC.DASH/EVT.ALERTS.REMOVED",
+        type: "GDC.DASH/EVT.ALERT.SAVED",
         ctx,
         correlationId,
-        payload: {
-            alerts,
-        },
     };
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardAlertsRemoved}.
+ * Tests whether the provided object is an instance of {@link DashboardAlertSaved}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardAlertsRemoved = eventGuard<DashboardAlertsRemoved>("GDC.DASH/EVT.ALERTS.REMOVED");
-
-/**
- * Payload of the {@link DashboardAlertUpdated} event.
- * @beta
- */
-export interface DashboardAlertUpdatedPayload {
-    /**
-     * The alert updated.
-     */
-    readonly updated: IWidgetAlert;
-}
-
-/**
- * This event is emitted after the Kpi alert is updated.
- *
- * @beta
- */
-export interface DashboardAlertUpdated extends IDashboardEvent {
-    readonly type: "GDC.DASH/EVT.ALERT.UPDATED";
-    readonly payload: DashboardAlertUpdatedPayload;
-}
-
-export function alertUpdated(
-    ctx: DashboardContext,
-    updated: IWidgetAlert,
-    correlationId?: string,
-): DashboardAlertUpdated {
-    return {
-        type: "GDC.DASH/EVT.ALERT.UPDATED",
-        ctx,
-        correlationId,
-        payload: {
-            updated,
-        },
-    };
-}
-
-/**
- * Tests whether the provided object is an instance of {@link DashboardAlertUpdated}.
- *
- * @param obj - object to test
- * @beta
- */
-export const isDashboardAlertUpdated = eventGuard<DashboardAlertUpdated>("GDC.DASH/EVT.ALERT.UPDATED");
+export const isDashboardAlertSaved = eventGuard<DashboardAlertSaved>("GDC.DASH/EVT.ALERT.SAVED");

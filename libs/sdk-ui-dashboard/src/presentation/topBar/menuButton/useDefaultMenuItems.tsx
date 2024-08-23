@@ -22,7 +22,7 @@ import {
     useDashboardDispatch,
     useDashboardScheduledEmails,
     useDashboardSelector,
-    selectDashboardId,
+    useDashboardAlerts,
     selectEnableFilterViews,
     selectDisableFilterViews,
 } from "../../../model/index.js";
@@ -95,16 +95,14 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
     const isEmptyLayout = !useDashboardSelector(selectLayoutHasAnalyticalWidgets); // we need at least one non-custom widget there
 
-    const dashboard = useDashboardSelector(selectDashboardId);
     const {
         isScheduledEmailingVisible,
         isScheduledManagementEmailingVisible,
         defaultOnScheduleEmailing,
         defaultOnScheduleEmailingManagement,
         numberOfAvailableWebhooks,
-    } = useDashboardScheduledEmails({
-        dashboard,
-    });
+    } = useDashboardScheduledEmails();
+    const { defaultOnAlertsManagement, isAlertsManagementVisible } = useDashboardAlerts();
 
     const dispatch = useDashboardDispatch();
     const openSaveAsDialog = useCallback(() => dispatch(uiActions.openSaveAsDialog()), [dispatch]);
@@ -203,7 +201,18 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                     icon: "gd-icon-save-as-new",
                 },
             ],
-            // alerts & schedules section
+            // alerts section
+            [
+                {
+                    type: "button",
+                    itemId: "alerts-edit-item", // careful, this is also used as a selector in tests, do not change
+                    itemName: intl.formatMessage({ id: "options.menu.alerts.edit" }),
+                    onClick: defaultOnAlertsManagement,
+                    visible: isAlertsManagementVisible,
+                    icon: "gd-icon-bell",
+                },
+            ],
+            // schedules section
             [
                 {
                     type: "button",

@@ -57,6 +57,22 @@ const closeScheduleEmailManagementDialog: UiReducer = (state) => {
     state.scheduleEmailManagementDialog.context = undefined;
 };
 
+const openAlertingManagementDialog: UiReducer<PayloadAction> = (state) => {
+    state.alertsManagementDialog.open = true;
+};
+
+const closeAlertingManagementDialog: UiReducer = (state) => {
+    state.alertsManagementDialog.open = false;
+};
+
+const openAlertingDialog: UiReducer<PayloadAction> = (state) => {
+    state.alertsDialog.open = true;
+};
+
+const closeAlertingDialog: UiReducer = (state) => {
+    state.alertsDialog.open = false;
+};
+
 const openSaveAsDialog: UiReducer = (state) => {
     state.saveAsDialog.open = true;
 };
@@ -322,6 +338,10 @@ export const uiReducers = {
     resetScheduleEmailDialogDefaultAttachment,
     openScheduleEmailManagementDialog,
     closeScheduleEmailManagementDialog,
+    openAlertingManagementDialog,
+    closeAlertingManagementDialog,
+    openAlertingDialog,
+    closeAlertingDialog,
     openSaveAsDialog,
     closeSaveAsDialog,
     setFilterBarExpanded,

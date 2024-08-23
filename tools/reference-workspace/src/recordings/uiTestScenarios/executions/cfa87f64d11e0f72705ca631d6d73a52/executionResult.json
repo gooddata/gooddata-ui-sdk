@@ -9,6 +9,7 @@
                         "identifier": "f_city.id.cityname",
                         "localIdentifier": "a_f_city.id.cityname",
                         "name": "City name",
+                        "primaryLabel": { "identifier": "f_city.id", "type": "displayForm" },
                         "totalItems": [],
                         "uri": ""
                     }
@@ -20,6 +21,7 @@
                         "identifier": "state_id.statename",
                         "localIdentifier": "a_state_id.statename",
                         "name": "State name",
+                        "primaryLabel": { "identifier": "state_id", "type": "displayForm" },
                         "totalItems": [],
                         "uri": ""
                     }

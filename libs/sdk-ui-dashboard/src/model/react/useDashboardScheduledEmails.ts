@@ -25,18 +25,13 @@ import {
     selectAutomationsIsLoading,
     selectWebhooksError,
     selectAutomationsError,
-    selectSettings,
-    selectCurrentUser,
-    selectAutomationsFingerprint,
+    selectAutomationsSchedulesInContext,
 } from "../store/index.js";
 import { refreshAutomations } from "../commands/index.js";
 import { messages } from "../../locales.js";
+import { selectEntitlementUnlimitedAutomations } from "../store/entitlements/entitlementsSelectors.js";
 
 import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider.js";
-import { selectEntitlementUnlimitedAutomations } from "../store/entitlements/entitlementsSelectors.js";
-import { useCancelablePromise, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { loadContextAutomations } from "../commandHandlers/dashboard/common/loadWorkspaceAutomations.js";
-import { getAuthor } from "../utils/author.js";
 
 /**
  * @alpha
@@ -49,7 +44,7 @@ export const DEFAULT_MAX_AUTOMATIONS = "10";
  *
  * @alpha
  */
-export const useDashboardScheduledEmails = ({ dashboard }: { dashboard?: string }) => {
+export const useDashboardScheduledEmails = () => {
     const { addSuccess, addError } = useToastMessage();
 
     const isScheduleEmailingDialogOpen = useDashboardSelector(selectIsScheduleEmailDialogOpen) || false;
@@ -67,9 +62,9 @@ export const useDashboardScheduledEmails = ({ dashboard }: { dashboard?: string 
     const webhooks = useDashboardSelector(selectWebhooks);
     const users = useDashboardSelector(selectUsers);
 
-    const { automations, automationsLoading, automationsError } = useContextAutomations({
-        dashboardId: dashboard,
-    });
+    const automations = useDashboardSelector(selectAutomationsSchedulesInContext);
+    const automationsLoading = useDashboardSelector(selectAutomationsIsLoading);
+    const automationsError = useDashboardSelector(selectAutomationsError);
 
     const isScheduleLoading = [
         useDashboardSelector(selectWebhooksIsLoading),
@@ -303,30 +298,3 @@ export const useDashboardScheduledEmails = ({ dashboard }: { dashboard?: string 
         onScheduleEmailingManagementDeleteError,
     };
 };
-
-function useContextAutomations(opts: { dashboardId?: string }) {
-    const settings = useDashboardSelector(selectSettings);
-    const user = useDashboardSelector(selectCurrentUser);
-    const fingerprint = useDashboardSelector(selectAutomationsFingerprint);
-
-    const backend = useBackendStrict();
-    const workspace = useWorkspaceStrict();
-
-    const { result, status, error } = useCancelablePromise(
-        {
-            promise: async () => {
-                return loadContextAutomations(backend, workspace, settings, {
-                    author: getAuthor(backend.capabilities, user),
-                    dashboardId: opts.dashboardId,
-                });
-            },
-        },
-        [opts.dashboardId, backend, workspace, settings, user, fingerprint],
-    );
-
-    return {
-        automations: result ?? [],
-        automationsLoading: status === "loading",
-        automationsError: error,
-    };
-}

@@ -92,6 +92,7 @@ jobs:
           with:
               source-branch: ${{ inputs.source-branch }}
               target-branch: ${{ needs.prepare-variables.outputs.rel-branch }}
+              token: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}
 
     back-merge-release-to-master:
       needs: [create-rel-branch]

@@ -92,6 +92,7 @@ import { HistoryBack } from "./icons/HistoryBack.js";
 import { Alert } from "./icons/Alert.js";
 import { AlertPaused } from "./icons/AlertPaused.js";
 import { Ellipsis } from "./icons/Ellipsis.js";
+import { Warning } from "./icons/Warning.js";
 
 /**
  * @internal
@@ -187,6 +188,7 @@ export const Icon: Record<string, React.FC<IIconProps>> = {
     Alert,
     AlertPaused,
     Ellipsis,
+    Warning,
 };
 
 export { IRowsIconProps, IColumnsIconProps };

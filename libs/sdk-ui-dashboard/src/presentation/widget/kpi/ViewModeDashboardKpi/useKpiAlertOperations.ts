@@ -1,15 +1,6 @@
-// (C) 2020-2022 GoodData Corporation
-import { useCallback, useState } from "react";
-import { IWidgetAlert, IWidgetAlertDefinition } from "@gooddata/sdk-model";
-
-import {
-    createAlert,
-    updateAlert,
-    removeAlerts,
-    dispatchAndWaitFor,
-    useDashboardDispatch,
-    DashboardCommands,
-} from "../../../../model/index.js";
+// (C) 2020-2024 GoodData Corporation
+import { useCallback } from "react";
+import { IWidgetAlert, IWidgetAlertDefinition, ObjRef } from "@gooddata/sdk-model";
 
 import { KpiAlertOperationStatus } from "../common/index.js";
 
@@ -25,33 +16,14 @@ interface UseKpiAlertOperations {
     removingStatus: KpiAlertOperationStatus;
 }
 
-function useKpiAlertOperation<TCommand extends DashboardCommands, TArgs extends any[]>(
-    commandCreator: (...args: TArgs) => TCommand,
-    onSuccess: () => void,
-): [status: KpiAlertOperationStatus, run: (...args: TArgs) => void] {
-    const [status, setStatus] = useState<KpiAlertOperationStatus>("idle");
-    const dispatch = useDashboardDispatch();
-
-    const run = useCallback(
-        (...args: Parameters<typeof commandCreator>) => {
-            setStatus("inProgress");
-            dispatchAndWaitFor(dispatch, commandCreator(...args))
-                .then(() => {
-                    setStatus("idle");
-                    onSuccess();
-                })
-                .catch(() => setStatus("error"));
-        },
-        [onSuccess],
-    );
-
-    return [status, run];
-}
-
 export const useKpiAlertOperations = (closeAlertDialog: () => void): UseKpiAlertOperations => {
-    const [creatingStatus, onCreateAlert] = useKpiAlertOperation(createAlert, closeAlertDialog);
-    const [updatingStatus, onUpdateAlert] = useKpiAlertOperation(updateAlert, closeAlertDialog);
-    const [removingStatus, onRemoveAlerts] = useKpiAlertOperation(removeAlerts, closeAlertDialog);
+    // Disconnected as we changed the original alert methods for generic insight alerting (KPI is not used in Tiger)
+    const [creatingStatus, onCreateAlert] = ["idle" as KpiAlertOperationStatus, closeAlertDialog];
+    const [updatingStatus, onUpdateAlert] = ["idle" as KpiAlertOperationStatus, closeAlertDialog];
+    const [removingStatus, onRemoveAlerts] = [
+        "idle" as KpiAlertOperationStatus,
+        (_: ObjRef[]) => closeAlertDialog,
+    ];
 
     const onRemoveAlert = useCallback(
         (alert: IWidgetAlert) => {

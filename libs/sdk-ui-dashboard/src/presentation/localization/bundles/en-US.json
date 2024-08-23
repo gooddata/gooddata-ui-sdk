@@ -137,6 +137,11 @@
         "comment": "Translate as imperative. Schedule emailing edit whole KPI dashboard",
         "limit": 0
     },
+    "options.menu.alerts.edit": {
+        "value": "Show alerts",
+        "comment": "Translate as imperative. Schedule alerts for dashboard or widget",
+        "limit": 0
+    },
     "options.menu.delete": {
         "value": "Delete",
         "comment": "Delete Dashboard",
@@ -635,6 +640,121 @@
     },
     "dialogs.schedule.management.delete.error": {
         "value": "Failed to delete schedule. Try again later.",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.alerting.management.title": {
+        "value": "Alerts",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.alerting.management.load.error": {
+        "value": "Failed to load. Try again later.",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.alerting.management.delete.error": {
+        "value": "Failed to delete alert. Try again later.",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.alerting.management.pause.error": {
+        "value": "Failed to pause alert. Try again later.",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.alerting.management.pause.success": {
+        "value": "Your alert has been paused.",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.alerting.management.activate.error": {
+        "value": "Failed to un-pause alert. Try again later.",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.alerting.management.activate.success": {
+        "value": "Your alert has been un-paused.",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.alerting.footer.title": {
+        "value": "How to create alert?",
+        "comment": "Title of a link to documentation",
+        "limit": 0
+    },
+    "dialogs.alerting.footer.title.short": {
+        "value": "Help",
+        "comment": "Title of a link to documentation",
+        "limit": 0
+    },
+    "dialogs.alerting.management.list.title": {
+        "value": "Your alerts",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.alerting.management.noAlerts": {
+        "value": "There are no alerts.",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.alerting.title.placeholder": {
+        "value": "Untitled alert",
+        "comment": "Placeholder for alert title input",
+        "limit": 0
+    },
+    "dialogs.alerting.management.delete.dialog": {
+        "value": "Delete alert?",
+        "comment": "",
+        "limit": 0
+    },
+    "dialogs.alerting.management.delete.dialog.confirm": {
+        "value": "<b>The alert</b> will be permanently deleted.",
+        "comment": "Do not translate html tags <b>, </b>",
+        "limit": 0
+    },
+    "dialogs.alerting.delete.success": {
+        "value": "Success! Your alert was deleted.",
+        "comment": "",
+        "limit": 0
+    },
+    "alerting.comparisonOperator.greaterThan": {
+        "value": "greater than",
+        "comment": "",
+        "limit": 0
+    },
+    "alerting.comparisonOperator.greaterThanOrEquals": {
+        "value": "greater than or equals",
+        "comment": "",
+        "limit": 0
+    },
+    "alerting.comparisonOperator.lessThan": {
+        "value": "less than",
+        "comment": "",
+        "limit": 0
+    },
+    "alerting.comparisonOperator.lessThanOrEquals": {
+        "value": "less than or equals",
+        "comment": "",
+        "limit": 0
+    },
+    "alerting.alert.menu.delete": {
+        "value": "Delete",
+        "comment": "",
+        "limit": 0
+    },
+    "alerting.alert.menu.pause": {
+        "value": "Pause",
+        "comment": "",
+        "limit": 0
+    },
+    "alerting.alert.menu.resume": {
+        "value": "Unpause",
+        "comment": "",
+        "limit": 0
+    },
+    "alerting.alert.menu.edit": {
+        "value": "Edit",
         "comment": "",
         "limit": 0
     },
@@ -2694,6 +2814,26 @@
     "insightAlert.config.loading.error": {
         "value": "Failed to load necessary information. Try again later.",
         "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.save.error": {
+        "value": "Failed to save alert. Try again later.",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.delete.error": {
+        "value": "Failed to delete alert. Try again later.",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.invalid": {
+        "value": "This alert configuration is incorrect. Please update it or contact your administrator.",
+        "comment": "Error message for alert configuration",
+        "limit": 0
+    },
+    "insightAlert.config.selectMetric": {
+        "value": "Select a metric",
+        "comment": "Label of metric select dropdown",
         "limit": 0
     }
 }

@@ -178,7 +178,8 @@
                         }
                     ],
                     "localIdentifier": "attribute"
-                }
+                },
+                { "items": [], "localIdentifier": "segment" }
             ],
             "dimensions": [
                 { "itemIdentifiers": ["a_label.f_product.product.name"] },
@@ -288,7 +289,8 @@
                         }
                     ],
                     "localIdentifier": "attribute"
-                }
+                },
+                { "items": [], "localIdentifier": "segment" }
             ],
             "dimensions": [
                 { "itemIdentifiers": ["a_label.f_product.product.name"] },
@@ -398,7 +400,8 @@
                         }
                     ],
                     "localIdentifier": "attribute"
-                }
+                },
+                { "items": [], "localIdentifier": "segment" }
             ],
             "dimensions": [
                 { "itemIdentifiers": ["a_label.f_product.product.name"] },

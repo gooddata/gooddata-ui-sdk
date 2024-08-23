@@ -8,7 +8,7 @@ import { IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.js";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/index.js";
 import { AlertsList } from "./InsightAlertConfig/AlertsList.js";
 import { EditAlert } from "./InsightAlertConfig/EditAlert.js";
-import { useInsightWidgetAlerting } from "./InsightAlertConfig/useInsightAlerting.js";
+import { useInsightWidgetAlerting } from "./InsightAlertConfig/hooks/useInsightAlerting.js";
 import { CreateAlert } from "./InsightAlertConfig/CreateAlert.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
@@ -48,9 +48,10 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
     } = useInsightWidgetAlerting({ closeInsightWidgetMenu: onClose, widget });
 
     let content = null;
-    if (viewMode === "list") {
+    if (isLoading || viewMode === "list") {
         content = (
             <AlertsList
+                isLoading={isLoading}
                 alerts={alerts}
                 onCreateAlert={initiateAlertCreation}
                 onEditAlert={initiateAlertEditing}
@@ -59,6 +60,7 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
                 onDeleteAlert={deleteExistingAlert}
                 onClose={onClose}
                 onGoBack={onGoBack}
+                measures={supportedMeasures}
                 maxAutomationsReached={maxAutomationsReached}
             />
         );
@@ -77,7 +79,6 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
     } else if (viewMode === "create") {
         content = (
             <CreateAlert
-                isLoading={isLoading}
                 alert={creatingAlert}
                 measures={supportedMeasures}
                 hasAlerts={hasAlerts}

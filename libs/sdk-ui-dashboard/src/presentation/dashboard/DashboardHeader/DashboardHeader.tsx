@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import React from "react";
 
 import { ExportDialogProvider } from "../../dialogs/index.js";
@@ -7,6 +7,7 @@ import { SaveAsDialog, useSaveAsDialogProps } from "../../saveAs/index.js";
 import { FilterBar, useFilterBarProps } from "../../filterBar/index.js";
 import { ShareDialogDashboardHeader } from "./ShareDialogDashboardHeader.js";
 import { ScheduledEmailDialogProvider } from "./ScheduledEmailDialogProvider.js";
+import { AlertingDialogProvider } from "./AlertingDialogProvider.js";
 import { DeleteDialog, useDeleteDialogProps } from "../../deleteDialog/index.js";
 import { KpiDeleteDialog, useKpiDeleteDialogProps } from "../../kpiDeleteDialog/index.js";
 import { CancelEditDialog, useCancelEditDialog } from "../../cancelEditDialog/index.js";
@@ -52,6 +53,7 @@ export const DashboardHeader = (): JSX.Element => {
             <ToastMessages />
             <ExportDialogProvider />
             <ScheduledEmailDialogProvider />
+            <AlertingDialogProvider />
             <ShareDialogDashboardHeader />
             <DeleteDialogWrapper />
             <KpiDeleteDialogWrapper />

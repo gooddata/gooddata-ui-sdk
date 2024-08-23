@@ -927,6 +927,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "react-loading-skeleton",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "react-markdown",
       "allowedCategories": [ "production" ]
     },
