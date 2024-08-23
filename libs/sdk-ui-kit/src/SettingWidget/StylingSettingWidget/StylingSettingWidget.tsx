@@ -74,7 +74,7 @@ const StylingSettingWidgetCore = <T extends StylingPickerItemContent>(
         onHelpClick,
         onItemSelect = noop,
         onItemMenuToggle,
-        isEditingSupported,
+        isEditingSupported = true,
     } = props;
     const intl = useIntl();
     const isMobileDevice = useMediaQuery("mobileDevice");
