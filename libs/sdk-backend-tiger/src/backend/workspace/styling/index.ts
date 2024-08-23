@@ -4,18 +4,26 @@ import { ApiEntitlementNameEnum } from "@gooddata/api-client-tiger";
 import {
     IColorPaletteItem,
     IColorPaletteMetadataObject,
+    idRef,
     ITheme,
     IThemeMetadataObject,
+    ObjRef,
 } from "@gooddata/sdk-model";
 
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
-import { getSettingsForCurrentUser } from "../settings/index.js";
+import { getSettingsForCurrentUser, TigerWorkspaceSettings } from "../settings/index.js";
 import { DefaultColorPalette } from "./mocks/colorPalette.js";
 import { DefaultTheme } from "./mocks/theme.js";
 import { unwrapColorPaletteContent } from "../../../convertors/fromBackend/ColorPaletteConverter.js";
+import { JsonApiId } from "../../../convertors/fromBackend/ObjRefConverter.js";
+import { objRefToIdentifier } from "../../../utils/api.js";
 
 export class TigerWorkspaceStyling implements IWorkspaceStylingService {
-    constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
+    private settingsService: TigerWorkspaceSettings;
+
+    constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {
+        this.settingsService = new TigerWorkspaceSettings(authCall, workspace);
+    }
 
     /**
      * Checks if Theming needs to be loaded.
@@ -87,4 +95,24 @@ export class TigerWorkspaceStyling implements IWorkspaceStylingService {
               )
             : DefaultTheme;
     };
+
+    private async getActiveSetting(setting: string): Promise<ObjRef | undefined> {
+        const settings = await this.settingsService.getSettings();
+        const foundSetting = settings?.[setting] as JsonApiId;
+        return foundSetting?.id ? idRef(foundSetting.id) : undefined;
+    }
+
+    public getActiveTheme = () => this.getActiveSetting("activeTheme");
+
+    public async setActiveTheme(themeRef: ObjRef): Promise<void> {
+        const themeId = await objRefToIdentifier(themeRef, this.authCall);
+        await this.settingsService.setTheme(themeId);
+    }
+
+    public getActiveColorPalette = () => this.getActiveSetting("activeColorPalette");
+
+    public async setActiveColorPalette(colorPaletteRef: ObjRef): Promise<void> {
+        const colorPaletteId = await objRefToIdentifier(colorPaletteRef, this.authCall);
+        await this.settingsService.setColorPalette(colorPaletteId);
+    }
 }

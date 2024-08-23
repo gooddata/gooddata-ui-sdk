@@ -45,6 +45,7 @@ export interface IStylingSettingWidgetProps<T extends StylingPickerItemContent> 
     onHelpClick?: () => void;
     onItemMenuToggle?: (ref: ObjRef) => void;
     onItemSelect?: (ref: ObjRef) => void;
+    isEditingSupported?: boolean;
 }
 
 const StylingSettingWidgetCore = <T extends StylingPickerItemContent>(
@@ -73,6 +74,7 @@ const StylingSettingWidgetCore = <T extends StylingPickerItemContent>(
         onHelpClick,
         onItemSelect = noop,
         onItemMenuToggle,
+        isEditingSupported,
     } = props;
     const intl = useIntl();
     const isMobileDevice = useMediaQuery("mobileDevice");
@@ -132,6 +134,7 @@ const StylingSettingWidgetCore = <T extends StylingPickerItemContent>(
                 onItemEdit={onItemEdit}
                 onItemDelete={onItemDelete}
                 onItemMenuToggle={onItemMenuToggle}
+                isEditingSupported={isEditingSupported}
             />
             <Separator />
             <Footer>
