@@ -1,5 +1,5 @@
 // (C) 2019-2022 GoodData Corporation
-import { IColorPalette, ITheme } from "@gooddata/sdk-model";
+import { IColorPalette, ITheme, ObjRef } from "@gooddata/sdk-model";
 
 /**
  * This service provides access to workspace styling settings such as color palette.
@@ -25,4 +25,34 @@ export interface IWorkspaceStylingService {
      * @returns promise of theme
      */
     getTheme(): Promise<ITheme>;
+
+    /**
+     * Request active theme setting from workspace.
+     *
+     * @returns promise of theme object reference
+     */
+    getActiveTheme(): Promise<ObjRef | undefined>;
+
+    /**
+     * Set active theme setting in workspace.
+     *
+     * @param themeRef - active theme reference
+     * @returns promise
+     */
+    setActiveTheme(themeRef: ObjRef): Promise<void>;
+
+    /**
+     * Request active color palette setting from workspace.
+     *
+     * @returns promise of color palette object reference
+     */
+    getActiveColorPalette(): Promise<ObjRef | undefined>;
+
+    /**
+     * Set active color palette setting in workspace.
+     *
+     * @param colorPaletteRef - active color palette reference
+     * @returns promise
+     */
+    setActiveColorPalette(colorPaletteRef: ObjRef): Promise<void>;
 }

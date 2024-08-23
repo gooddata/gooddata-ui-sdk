@@ -1363,6 +1363,8 @@ export interface IWorkspaceSettings extends ISettings {
 
 // @public
 export interface IWorkspaceSettingsService {
+    deleteColorPalette(): Promise<void>;
+    deleteTheme(): Promise<void>;
     getSettings(): Promise<IWorkspaceSettings>;
     getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings>;
     setColorPalette(colorPaletteId: string): Promise<void>;
@@ -1410,8 +1412,12 @@ export type IWorkspacesQueryResult = IPagedResource<IAnalyticalWorkspace>;
 
 // @public
 export interface IWorkspaceStylingService {
+    getActiveColorPalette(): Promise<ObjRef | undefined>;
+    getActiveTheme(): Promise<ObjRef | undefined>;
     getColorPalette(): Promise<IColorPalette>;
     getTheme(): Promise<ITheme>;
+    setActiveColorPalette(colorPaletteRef: ObjRef): Promise<void>;
+    setActiveTheme(themeRef: ObjRef): Promise<void>;
 }
 
 // @alpha
