@@ -64,6 +64,7 @@ import {
     ISmtpDefinition,
     ISmtpDefinitionObject,
     idRef,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import RecordedAttributeHierarchiesService from "./attributeHierarchies.js";
 import { RecordedAttributes } from "./attributes.js";
@@ -264,6 +265,18 @@ function recordedWorkspace(
                 },
                 async getTheme(): Promise<ITheme> {
                     return implConfig.theme ?? {};
+                },
+                async getActiveTheme(): Promise<ObjRef | undefined> {
+                    return Promise.resolve(undefined);
+                },
+                async setActiveTheme(): Promise<void> {
+                    return Promise.resolve(undefined);
+                },
+                async getActiveColorPalette(): Promise<ObjRef | undefined> {
+                    return Promise.resolve(undefined);
+                },
+                async setActiveColorPalette(): Promise<void> {
+                    return Promise.resolve(undefined);
                 },
             };
         },
