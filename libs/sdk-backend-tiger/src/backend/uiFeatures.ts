@@ -103,6 +103,7 @@ export enum TigerFeaturesNames {
     EnableDashboardFilterViews = "enableDashboardFilterViews",
     EnableAlertingRollout = "enableAlertingRollout",
     EnableWorkspaceHierarchySettings = "enableWorkspaceHierarchySettings",
+    EnableNewInsightChangedPostMessageEvent = "enableNewInsightChangedPostMessageEvent",
 }
 
 export type ITigerFeatureFlags = {
@@ -171,6 +172,7 @@ export type ITigerFeatureFlags = {
     enableAlertingRollout: typeof FeatureFlagsValues["enableAlertingRollout"][number];
     enableDashboardFilterViews: typeof FeatureFlagsValues["enableDashboardFilterViews"][number];
     enableWorkspaceHierarchySettings: typeof FeatureFlagsValues["enableWorkspaceHierarchySettings"][number];
+    enableNewInsightChangedPostMessageEvent: typeof FeatureFlagsValues["enableNewInsightChangedPostMessageEvent"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -239,6 +241,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDashboardFilterViews: false,
     enableDrillDownIntersectionIgnoredAttributes: false,
     enableWorkspaceHierarchySettings: false,
+    enableNewInsightChangedPostMessageEvent: false,
 };
 
 export const FeatureFlagsValues = {
@@ -311,4 +314,5 @@ export const FeatureFlagsValues = {
     enableAlertingRollout: [true, false] as const,
     enableDashboardFilterViews: [true, false] as const,
     enableWorkspaceHierarchySettings: [true, false] as const,
+    enableNewInsightChangedPostMessageEvent: [true, false] as const,
 };
