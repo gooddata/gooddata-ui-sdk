@@ -34,6 +34,7 @@ import {
     InsightMenuTitleComponentProvider,
     KpiComponentProvider,
     RichTextComponentProvider,
+    StackComponentProvider,
     WidgetComponentProvider,
 } from "./types.js";
 import { CustomSidebarComponent } from "../dashboard/DashboardSidebar/types.js";
@@ -43,6 +44,7 @@ import {
     InsightWidgetComponentSet,
     KpiWidgetComponentSet,
     RichTextWidgetComponentSet,
+    StackWidgetComponentSet,
 } from "../componentDefinition/types.js";
 import { CustomToolbarComponent } from "../toolbar/types.js";
 import { CustomAlertingDialogComponent, CustomAlertingManagementDialogComponent } from "../alerting/types.js";
@@ -62,6 +64,7 @@ interface IDashboardComponentsContext {
     InsightMenuTitleComponentProvider: InsightMenuTitleComponentProvider;
     KpiComponentProvider: KpiComponentProvider;
     RichTextComponentProvider: RichTextComponentProvider;
+    StackComponentProvider: StackComponentProvider;
     ButtonBarComponent: CustomButtonBarComponent;
     MenuButtonComponent: CustomMenuButtonComponent;
     TitleComponent: CustomTitleComponent;
@@ -80,6 +83,7 @@ interface IDashboardComponentsContext {
     InsightWidgetComponentSet: InsightWidgetComponentSet;
     KpiWidgetComponentSet: KpiWidgetComponentSet;
     RichTextWidgetComponentSet: RichTextWidgetComponentSet;
+    StackWidgetComponentSet: StackWidgetComponentSet;
     AttributeFilterComponentSet: AttributeFilterComponentSet;
     DateFilterComponentSet: DateFilterComponentSet;
     EmptyLayoutDropZoneBodyComponent: CustomEmptyLayoutDropZoneBodyComponent;
@@ -107,6 +111,7 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     InsightMenuTitleComponentProvider: ThrowMissingComponentError("InsightMenuTitleComponent"),
     KpiComponentProvider: ThrowMissingComponentError("KpiComponent"),
     RichTextComponentProvider: ThrowMissingComponentError("RichTextComponent"),
+    StackComponentProvider: ThrowMissingComponentError("StackComponent"),
     WidgetComponentProvider: ThrowMissingComponentError("WidgetComponent"),
     ButtonBarComponent: ThrowMissingComponentError("ButtonBarComponent"),
     MenuButtonComponent: ThrowMissingComponentError("MenuButtonComponent"),
@@ -130,6 +135,7 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     InsightWidgetComponentSet: null as any, // TODO how to throw here
     KpiWidgetComponentSet: null as any, // TODO how to throw here
     RichTextWidgetComponentSet: null as any, // TODO how to throw here
+    StackWidgetComponentSet: null as any, // TODO how to throw here
     AttributeFilterComponentSet: null as any, // TODO how to throw here
     DateFilterComponentSet: null as any, // TODO how to throw here
     EmptyLayoutDropZoneBodyComponent: ThrowMissingComponentError("EmptyLayoutDropZoneBodyComponent"),

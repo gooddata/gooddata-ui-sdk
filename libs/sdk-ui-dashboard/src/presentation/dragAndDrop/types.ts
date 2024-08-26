@@ -17,6 +17,7 @@ export type DraggableContentItemType =
     | "richText"
     | "richTextListItem"
     | "stack"
+    | "stackListItem"
     | "custom";
 
 /**
@@ -121,12 +122,19 @@ export function isInsightDraggableItem(item: any): item is InsightDraggableItem 
     return item.type === "insight";
 }
 
+// NESTOR
 /**
  * @internal
  */
 export type StackDraggableItem = BaseDraggableMovingItem & {
     type: "stack";
-    insight: IInsight;
+};
+
+/**
+ * @internal
+ */
+export type StackDraggableListItem = BaseDraggableLayoutItem & {
+    type: "stackListItem";
 };
 
 /**
@@ -134,6 +142,13 @@ export type StackDraggableItem = BaseDraggableMovingItem & {
  */
 export function isStackDraggableItem(item: any): item is StackDraggableItem {
     return item.type === "stack";
+}
+
+/**
+ * @internal
+ */
+export function isStackDraggableListItem(item: any): item is StackDraggableListItem {
+    return item.type === "stackListItem";
 }
 
 /**
@@ -268,6 +283,8 @@ export type DraggableContentItem =
     | KpiPlaceholderDraggableItem
     | RichTextDraggableItem
     | RichTextDraggableListItem
+    | StackDraggableItem
+    | StackDraggableListItem
     | CustomWidgetDraggableItem
     | CustomDraggableItem;
 
@@ -278,6 +295,7 @@ export type DraggableLayoutItem =
     | InsightDraggableItem
     | KpiDraggableItem
     | RichTextDraggableItem
+    | StackDraggableItem
     | CustomWidgetDraggableItem;
 
 /**
@@ -308,6 +326,7 @@ export type DraggableItemComponentTypeMapping = {
     kpi: KpiDraggableItem;
     "kpi-placeholder": KpiPlaceholderDraggableItem;
     stack: StackDraggableItem;
+    stackListItem: StackDraggableListItem;
     richText: RichTextDraggableItem;
     richTextListItem: RichTextDraggableListItem;
     custom: CustomDraggableItem;

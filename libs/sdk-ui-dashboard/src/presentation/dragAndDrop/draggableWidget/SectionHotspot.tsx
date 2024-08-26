@@ -11,6 +11,8 @@ import {
     isKpiPlaceholderDraggableItem,
     isRichTextDraggableItem,
     isRichTextDraggableListItem,
+    isStackDraggableItem,
+    isStackDraggableListItem,
 } from "../types.js";
 import { getDropZoneDebugStyle } from "../debug.js";
 import { useDashboardDrop } from "../useDashboardDrop.js";
@@ -21,6 +23,7 @@ import { useNewSectionInsightPlaceholderDropHandler } from "./useNewSectionInsig
 import { useNewSectionKpiPlaceholderDropHandler } from "./useNewSectionKpiPlaceholderDropHandler.js";
 import { useWidgetDragHoverHandlers } from "./useWidgetDragHoverHandlers.js";
 import { useNewSectionRichTextPlaceholderDropHandler } from "./useNewSectionRichTextPlaceholderDropHandler.js";
+import { useNewSectionStackPlaceholderDropHandler } from "./useNewSectionStackPlaceholderDropHandler.js";
 
 export type RowPosition = "above" | "below";
 
@@ -38,6 +41,7 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
     const handleKpiPlaceholderDrop = useNewSectionKpiPlaceholderDropHandler(index);
     const handleInsightPlaceholderDrop = useNewSectionInsightPlaceholderDropHandler(index);
     const handleRichTextPlaceholderDrop = useNewSectionRichTextPlaceholderDropHandler(index);
+    const handleStackPlaceholderDrop = useNewSectionStackPlaceholderDropHandler(index);
     const moveWidgetToNewSection = useMoveWidgetToNewSectionDropHandler(index);
     const { handleDragHoverEnd } = useWidgetDragHoverHandlers();
 
@@ -50,6 +54,8 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
             "insight",
             "richText",
             "richTextListItem",
+            "stack",
+            "stackListItem",
         ],
         {
             drop: (item) => {
@@ -74,6 +80,12 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
                 if (isKpiPlaceholderDraggableItem(item)) {
                     handleKpiPlaceholderDrop();
                 }
+                if (isStackDraggableListItem(item)) {
+                    handleStackPlaceholderDrop();
+                }
+                if (isStackDraggableItem(item)) {
+                    moveWidgetToNewSection(item);
+                }
             },
             canDrop: (item) => {
                 if (isBaseDraggableMovingItem(item)) {
@@ -83,7 +95,14 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
                 return true;
             },
         },
-        [dispatch, index, handleInsightListItemDrop, handleKpiPlaceholderDrop, handleInsightPlaceholderDrop],
+        [
+            dispatch,
+            index,
+            handleInsightListItemDrop,
+            handleKpiPlaceholderDrop,
+            handleInsightPlaceholderDrop,
+            handleStackPlaceholderDrop,
+        ],
     );
 
     useEffect(() => {

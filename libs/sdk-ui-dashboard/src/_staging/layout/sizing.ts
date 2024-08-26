@@ -26,6 +26,7 @@ import {
     KPI_WIDGET_SIZE_INFO_DEFAULT,
     KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY,
     RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT,
+    STACK_WIDGET_SIZE_INFO_DEFAULT,
 } from "@gooddata/sdk-ui-ext";
 
 import { ObjRefMap } from "../metadata/objRefMap.js";
@@ -53,6 +54,8 @@ export function getSizeInfo(
         return getKpiSizeInfo(settings, widgetContent);
     } else if (widgetType === "richText") {
         return RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT;
+    } else if (widgetType === "stack") {
+        return STACK_WIDGET_SIZE_INFO_DEFAULT;
     }
 
     return getVisualizationSizeInfo(settings, widgetContent);

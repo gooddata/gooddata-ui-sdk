@@ -1,7 +1,7 @@
 // (C) 2022-2024 GoodData Corporation
 import React from "react";
 
-import { RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
+import { STACK_WIDGET_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
 import { CustomCreatePanelItemComponent } from "../../componentDefinition/index.js";
 import { DraggableCreatePanelItem } from "../DraggableCreatePanelItem.js";
 import { DraggableItem, IWrapCreatePanelItemWithDragComponent } from "../types.js";
@@ -9,23 +9,23 @@ import { DraggableItem, IWrapCreatePanelItemWithDragComponent } from "../types.j
 /**
  * @internal
  */
-interface IDraggableRichTextCreatePanelItemProps {
+interface IDraggableStackCreatePanelItemProps {
     CreatePanelItemComponent: CustomCreatePanelItemComponent;
     WrapCreatePanelItemWithDragComponent?: IWrapCreatePanelItemWithDragComponent;
 }
 
 const dragItem: DraggableItem = {
-    type: "richTextListItem",
+    type: "stackListItem",
     size: {
-        gridHeight: RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT.height.default,
-        gridWidth: RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT.width.default,
+        gridHeight: STACK_WIDGET_SIZE_INFO_DEFAULT.height.default,
+        gridWidth: STACK_WIDGET_SIZE_INFO_DEFAULT.width.default,
     },
 };
 
 /**
  * @internal
  */
-export const DraggableStackCreatePanelItem: React.FC<IDraggableRichTextCreatePanelItemProps> = ({
+export const DraggableStackCreatePanelItem: React.FC<IDraggableStackCreatePanelItemProps> = ({
     CreatePanelItemComponent,
     WrapCreatePanelItemWithDragComponent,
 }) => {

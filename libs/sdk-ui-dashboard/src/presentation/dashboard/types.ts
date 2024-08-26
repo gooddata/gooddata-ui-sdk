@@ -42,6 +42,7 @@ import {
     OptionalInsightMenuTitleComponentProvider,
     OptionalDashboardContentComponentProvider,
     OptionalRichTextComponentProvider,
+    OptionalStackComponentProvider,
 } from "../dashboardContexts/index.js";
 import { CustomSidebarComponent } from "./DashboardSidebar/types.js";
 import { InsightComponentSetProvider } from "../componentDefinition/types.js";
@@ -206,6 +207,19 @@ export interface IDashboardCustomComponentProps {
      * @public
      */
     KpiComponentProvider?: OptionalKpiComponentProvider;
+
+    /**
+     * Specify function to obtain custom component to use for rendering a stack.
+     *
+     * @remarks
+     * -  If not provided, the default implementation {@link DefaultDashboardKpi} will be used.
+     * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardKpi}.
+     *    This is useful if you want to customize just one particular KPI and keep default rendering for
+     *    the other insights.
+     *
+     * @public
+     */
+    StackComponentProvider?: OptionalStackComponentProvider;
 
     /**
      * Specify function to obtain custom component to use for rendering a rich text.

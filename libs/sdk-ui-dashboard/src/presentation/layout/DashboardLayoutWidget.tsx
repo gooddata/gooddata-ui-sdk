@@ -6,6 +6,7 @@ import {
     isInsightWidget,
     isKpiWidget,
     isRichTextWidget,
+    isStackWidget,
 } from "@gooddata/sdk-model";
 import { IVisualizationSizeInfo, WIDGET_DROPZONE_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
 import React, { useRef } from "react";
@@ -309,6 +310,17 @@ function createDraggableItem(
 
         return {
             type: "richText",
+            sectionIndex,
+            itemIndex,
+            title: widget.title,
+            isOnlyItemInSection,
+            size: getFilledSize(size, sizeInfo),
+        };
+    } else if (isStackWidget(widget)) {
+        const sizeInfo = getSizeInfo(settings, "stack");
+
+        return {
+            type: "stack",
             sectionIndex,
             itemIndex,
             title: widget.title,

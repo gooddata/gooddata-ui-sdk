@@ -25,6 +25,7 @@ import {
     InsightWidgetComponentSet,
     KpiWidgetComponentSet,
     RichTextWidgetComponentSet,
+    StackWidgetComponentSet,
 } from "../../componentDefinition/index.js";
 
 interface ICreationPanelProps {
@@ -35,6 +36,7 @@ interface ICreationPanelProps {
     AttributeFilterComponentSet?: AttributeFilterComponentSet;
     InsightWidgetComponentSet?: InsightWidgetComponentSet;
     RichTextWidgetComponentSet?: RichTextWidgetComponentSet;
+    StackWidgetComponentSet?: StackWidgetComponentSet;
 }
 
 export const CreationPanel: React.FC<ICreationPanelProps> = (props) => {
@@ -49,6 +51,7 @@ export const CreationPanel: React.FC<ICreationPanelProps> = (props) => {
     const AttributeFilterComponentSet = props.AttributeFilterComponentSet!;
     const InsightWidgetComponentSet = props.InsightWidgetComponentSet!;
     const RichTextWidgetComponentSet = props.RichTextWidgetComponentSet!;
+    const StackWidgetComponentSet = props.StackWidgetComponentSet!;
 
     const addItemPanelItems = useMemo(() => {
         const items = compact([
@@ -56,6 +59,7 @@ export const CreationPanel: React.FC<ICreationPanelProps> = (props) => {
             AttributeFilterComponentSet.creating,
             InsightWidgetComponentSet.creating,
             supportsRichText && enableRichText && RichTextWidgetComponentSet.creating,
+            StackWidgetComponentSet.creating,
         ]);
 
         return sortBy(items, (item) => item.priority ?? 0).map(({ CreatePanelListItemComponent, type }) => {
@@ -71,6 +75,7 @@ export const CreationPanel: React.FC<ICreationPanelProps> = (props) => {
         KpiWidgetComponentSet,
         InsightWidgetComponentSet,
         RichTextWidgetComponentSet,
+        StackWidgetComponentSet,
         supportsKpis,
         supportsRichText,
         enableRichText,

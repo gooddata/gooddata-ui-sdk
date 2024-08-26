@@ -24,6 +24,8 @@ export const DashboardMainContent = forwardRef(function DashboardMainContent(_: 
             "kpi-placeholder",
             "richText",
             "richTextListItem",
+            "stack",
+            "stackListItem",
         ],
         {},
     );

@@ -32,6 +32,7 @@ export const ContentDragPreview: FC<DragPreviewProps<DraggableContentItem>> = (p
         KpiWidgetComponentSet,
         DateFilterComponentSet,
         RichTextWidgetComponentSet,
+        StackWidgetComponentSet,
     } = useDashboardComponentsContext();
     const previewComponentsMap = useMemo<Partial<Record<DraggableContentItemType, any>>>(
         () => ({
@@ -40,6 +41,7 @@ export const ContentDragPreview: FC<DragPreviewProps<DraggableContentItem>> = (p
             insight: InsightWidgetComponentSet.dragging.DraggingComponent,
             kpi: KpiWidgetComponentSet.dragging.DraggingComponent,
             richText: RichTextWidgetComponentSet.dragging.DraggingComponent,
+            stack: StackWidgetComponentSet.dragging.DraggingComponent,
         }),
         [
             AttributeFilterComponentSet.dragging.DraggingComponent,
@@ -47,6 +49,7 @@ export const ContentDragPreview: FC<DragPreviewProps<DraggableContentItem>> = (p
             KpiWidgetComponentSet.dragging.DraggingComponent,
             DateFilterComponentSet.dragging.DraggingComponent,
             RichTextWidgetComponentSet.dragging.DraggingComponent,
+            StackWidgetComponentSet.dragging.DraggingComponent,
         ],
     );
 

@@ -162,14 +162,17 @@ export interface IInsightWidgetDefinition extends IInsightWidgetBase, Partial<ID
 
 /**
  * @public
+ * // NESTOR
  */
 export interface IStackWidgetBase extends IAnalyticalWidget {
     readonly type: "stack";
 
     /**
-     * Markdown text of the rich text widget.
+     * Insights part of the stack.
      */
-    readonly content: string;
+    readonly insights: IInsightWidgetBase[];
+
+    readonly insight?: IInsightWidget;
 }
 
 /**

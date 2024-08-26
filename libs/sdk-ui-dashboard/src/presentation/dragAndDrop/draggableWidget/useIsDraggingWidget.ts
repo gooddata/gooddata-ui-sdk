@@ -12,6 +12,8 @@ export function useIsDraggingWidget() {
             "insight",
             "richText",
             "richTextListItem",
+            "stack",
+            "stackListItem",
         ],
         {},
         [],

@@ -16,6 +16,7 @@ export const DashboardSidebar = (props: ISidebarProps): JSX.Element => {
         AttributeFilterComponentSet,
         InsightWidgetComponentSet,
         RichTextWidgetComponentSet,
+        StackWidgetComponentSet,
     } = useDashboardComponentsContext();
 
     return (
@@ -25,6 +26,7 @@ export const DashboardSidebar = (props: ISidebarProps): JSX.Element => {
             AttributeFilterComponentSet={AttributeFilterComponentSet}
             InsightWidgetComponentSet={InsightWidgetComponentSet}
             RichTextWidgetComponentSet={RichTextWidgetComponentSet}
+            StackWidgetComponentSet={StackWidgetComponentSet}
             WrapCreatePanelItemWithDragComponent={WrapCreatePanelItemWithDragComponent}
             WrapInsightListItemWithDragComponent={WrapInsightListItemWithDragComponent}
             DeleteDropZoneComponent={DeleteDropZoneComponent}

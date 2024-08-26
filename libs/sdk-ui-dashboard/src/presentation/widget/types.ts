@@ -19,3 +19,4 @@ export {
 export { IDashboardKpiProps, CustomDashboardKpiComponent } from "./kpi/types.js";
 export { IDashboardWidgetProps, CustomDashboardWidgetComponent } from "./widget/types.js";
 export { CustomDashboardRichTextComponent, IDashboardRichTextProps } from "../widget/richText/types.js";
+export { CustomDashboardStackComponent, IDashboardStackProps } from "../widget/stack/types.js";

@@ -8,6 +8,7 @@ import {
     widgetRef,
     isKpiWidget,
     isRichTextWidget,
+    isStackWidget,
 } from "@gooddata/sdk-model";
 import { BackendProvider, convertError, useBackendStrict } from "@gooddata/sdk-ui";
 import { withEventing } from "@gooddata/sdk-backend-base";
@@ -23,6 +24,7 @@ import { safeSerializeObjRef } from "../../../_staging/metadata/safeSerializeObj
 import { DefaultDashboardKpiWidget } from "./DefaultDashboardKpiWidget.js";
 import { RenderModeAwareDashboardInsightWidget } from "./InsightWidget/index.js";
 import { RenderModeAwareDashboardRichTextWidget } from "./RichTextWidget/index.js";
+import { RenderModeAwareDashboardStackWidget } from "./StackWidget/index.js";
 
 /**
  * @internal
@@ -109,6 +111,14 @@ export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget
             renderWidget = (
                 <RenderModeAwareDashboardRichTextWidget
                     widget={widget}
+                    screen={screen}
+                    dashboardItemClasses={dashboardItemClasses}
+                />
+            );
+        } else if (isStackWidget(widget)) {
+            renderWidget = (
+                <RenderModeAwareDashboardStackWidget
+                    widget={widget as any}
                     screen={screen}
                     dashboardItemClasses={dashboardItemClasses}
                 />

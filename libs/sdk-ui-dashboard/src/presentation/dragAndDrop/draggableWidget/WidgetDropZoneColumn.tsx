@@ -24,8 +24,11 @@ import {
     isKpiPlaceholderDraggableItem,
     isRichTextDraggableItem,
     isRichTextDraggableListItem,
+    isStackDraggableItem,
+    isStackDraggableListItem,
 } from "../types.js";
 import { useRichTextPlaceholderDropHandler } from "./useRichTextPlaceholderDropHandler.js";
+import { useStackPlaceholderDropHandler } from "./useStackPlaceholderDropHandler.js";
 
 export type WidgetDropZoneColumnProps = {
     screen: ScreenSize;
@@ -43,6 +46,7 @@ export const WidgetDropZoneColumn = (props: WidgetDropZoneColumnProps) => {
     const handleInsightPlaceholderDrop = useInsightPlaceholderDropHandler(sectionIndex, itemIndex);
     const handleKpiPlaceholderDrop = useKpiPlaceholderDropHandler(sectionIndex, itemIndex);
     const handleRichTextPlaceholderDrop = useRichTextPlaceholderDropHandler(sectionIndex, itemIndex);
+    const handleStackPlaceholderDrop = useStackPlaceholderDropHandler(sectionIndex, itemIndex);
     const handleWidgetDrop = useMoveWidgetDropHandler(sectionIndex, itemIndex);
 
     const dispatch = useDashboardDispatch();
@@ -56,6 +60,8 @@ export const WidgetDropZoneColumn = (props: WidgetDropZoneColumnProps) => {
             "insight",
             "richText",
             "richTextListItem",
+            "stack",
+            "stackListItem",
         ],
         {
             drop: (item) => {
@@ -71,16 +77,28 @@ export const WidgetDropZoneColumn = (props: WidgetDropZoneColumnProps) => {
                 if (isRichTextDraggableListItem(item)) {
                     handleRichTextPlaceholderDrop();
                 }
+
+                if (isStackDraggableListItem(item)) {
+                    handleStackPlaceholderDrop();
+                }
+
                 if (
                     isInsightDraggableItem(item) ||
                     isKpiDraggableItem(item) ||
-                    isRichTextDraggableItem(item)
+                    isRichTextDraggableItem(item) ||
+                    isStackDraggableItem(item)
                 ) {
                     handleWidgetDrop(item);
                 }
             },
         },
-        [dispatch, handleInsightListItemDrop, handleInsightPlaceholderDrop, handleKpiPlaceholderDrop],
+        [
+            dispatch,
+            handleInsightListItemDrop,
+            handleInsightPlaceholderDrop,
+            handleKpiPlaceholderDrop,
+            handleStackPlaceholderDrop,
+        ],
     );
 
     const showDropZone = useMemo(

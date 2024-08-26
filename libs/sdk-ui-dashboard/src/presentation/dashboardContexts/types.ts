@@ -10,6 +10,7 @@ import {
     CustomInsightBodyComponent,
     IInsightMenuItem,
     CustomDashboardRichTextComponent,
+    CustomDashboardStackComponent,
 } from "../widget/types.js";
 import { DashboardConfig, ExtendedDashboardWidget } from "../../model/index.js";
 import {
@@ -28,6 +29,7 @@ import {
     IDashboard,
     IWorkspacePermissions,
     IRichTextWidget,
+    IStackWidget,
 } from "@gooddata/sdk-model";
 import { ComponentType } from "react";
 
@@ -133,6 +135,20 @@ export type KpiComponentProvider = (kpi: IKpi, widget: IKpiWidget) => CustomDash
  * @public
  */
 export type OptionalKpiComponentProvider = OptionalProvider<KpiComponentProvider>;
+
+// NESTOR
+/**
+ * @public
+ */
+export type StackComponentProvider = (
+    stack: IStackWidget,
+    widget: IInsightWidget,
+) => CustomDashboardStackComponent;
+
+/**
+ * @public
+ */
+export type OptionalStackComponentProvider = OptionalProvider<StackComponentProvider>;
 
 /**
  * @public

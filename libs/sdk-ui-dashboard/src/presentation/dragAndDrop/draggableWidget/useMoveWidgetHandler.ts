@@ -5,13 +5,18 @@ import {
     useDashboardDispatch,
     moveSectionItemAndRemoveOriginalSectionIfEmpty,
 } from "../../../model/index.js";
-import { InsightDraggableItem, KpiDraggableItem, RichTextDraggableItem } from "../types.js";
+import {
+    InsightDraggableItem,
+    KpiDraggableItem,
+    RichTextDraggableItem,
+    StackDraggableItem,
+} from "../types.js";
 
 export function useMoveWidgetDropHandler(sectionIndex: number, itemIndex: number) {
     const dispatch = useDashboardDispatch();
 
     return useCallback(
-        (item: KpiDraggableItem | InsightDraggableItem | RichTextDraggableItem) => {
+        (item: KpiDraggableItem | InsightDraggableItem | RichTextDraggableItem | StackDraggableItem) => {
             let targetIndex = itemIndex;
 
             if (item.sectionIndex === sectionIndex) {

@@ -1,10 +1,10 @@
 // (C) 2024 GoodData Corporation
 import { StackWidgetComponentSet } from "../../componentDefinition/index.js";
-import { KpiComponentProvider } from "../../dashboardContexts/index.js";
-import { KpiDraggingComponent } from "../../dragAndDrop/index.js";
-import { DefaultDashboardKpiPlaceholderWidget } from "../kpiPlaceholder/index.js";
+import { StackComponentProvider } from "../../dashboardContexts/index.js";
+import { StackDraggingComponent } from "../../dragAndDrop/index.js";
 import { CreatableStack } from "./CreatableStack.js";
-import { DefaultKpiConfigurationPanel } from "./DefaultKpiConfigurationPanel/DefaultKpiConfigurationPanel.js";
+import { DefaultStackConfigurationPanel } from "./DefaultStackConfigurationPanel.js";
+import { DefaultDashboardStackPlaceholderWidget } from "./stackPlaceholder/DefaultDashboardStackPlaceholderWidget.js";
 
 /**
  * @internal
@@ -13,19 +13,19 @@ export function DefaultDashboardStackComponentSetFactory(
     stackProvider: StackComponentProvider,
 ): StackWidgetComponentSet {
     return {
-        MainComponentProvider: StackComponentProvider,
+        MainComponentProvider: stackProvider,
         creating: {
-            CreatingPlaceholderComponent: DefaultDashboardKpiPlaceholderWidget,
+            CreatingPlaceholderComponent: DefaultDashboardStackPlaceholderWidget,
             CreatePanelListItemComponent: CreatableStack,
             type: "stack",
             priority: 5,
         },
         dragging: {
-            DraggingComponent: KpiDraggingComponent,
-            type: "kpi",
+            DraggingComponent: StackDraggingComponent,
+            type: "stack",
         },
         configuration: {
-            WidgetConfigPanelComponent: DefaultKpiConfigurationPanel,
+            WidgetConfigPanelComponent: DefaultStackConfigurationPanel,
         },
     };
 }

@@ -18,6 +18,7 @@ export const SidebarConfigurationPanel: React.FC<Omit<ISidebarProps, "DefaultSid
         AttributeFilterComponentSet,
         InsightWidgetComponentSet,
         RichTextWidgetComponentSet,
+        StackWidgetComponentSet,
     } = props;
     const { deselectWidgets } = useWidgetSelection();
     const DeleteDropZoneComponent = props.DeleteDropZoneComponent!;
@@ -33,6 +34,7 @@ export const SidebarConfigurationPanel: React.FC<Omit<ISidebarProps, "DefaultSid
                     AttributeFilterComponentSet={AttributeFilterComponentSet}
                     InsightWidgetComponentSet={InsightWidgetComponentSet}
                     RichTextWidgetComponentSet={RichTextWidgetComponentSet}
+                    StackWidgetComponentSet={StackWidgetComponentSet}
                 />
             </div>
             <DeleteDropZoneComponent />

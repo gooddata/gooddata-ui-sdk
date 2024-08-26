@@ -5,6 +5,7 @@ import {
     InsightWidgetComponentSet,
     KpiWidgetComponentSet,
     RichTextWidgetComponentSet,
+    StackWidgetComponentSet,
 } from "../../componentDefinition/index.js";
 import {
     IWrapCreatePanelItemWithDragComponent,
@@ -49,6 +50,14 @@ export interface ISidebarProps {
      * @internal
      */
     KpiWidgetComponentSet?: KpiWidgetComponentSet;
+
+    /**
+     * Stack widget component set.
+     * Do not set or override this property, it's injected by the Dashboard.
+     *
+     * @internal
+     */
+    StackWidgetComponentSet?: StackWidgetComponentSet;
 
     /**
      * Attribute filter component set.

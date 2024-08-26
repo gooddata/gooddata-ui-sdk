@@ -13,6 +13,7 @@ import {
     isInsightPlaceholderDraggableItem,
     isKpiPlaceholderDraggableItem,
     isRichTextDraggableListItem,
+    isStackDraggableListItem,
 } from "../types.js";
 import { useDashboardDispatch, useDashboardSelector, selectWidgetPlaceholder } from "../../../model/index.js";
 import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
@@ -21,12 +22,14 @@ import { useNewSectionKpiPlaceholderDropHandler } from "./useNewSectionKpiPlaceh
 import { useNewSectionInsightPlaceholderDropHandler } from "./useNewSectionInsightPlaceholderDropHandler.js";
 import { getDashboardLayoutItemHeightForGrid } from "../../../_staging/layout/sizing.js";
 import { useNewSectionRichTextPlaceholderDropHandler } from "./useNewSectionRichTextPlaceholderDropHandler.js";
+import { useNewSectionStackPlaceholderDropHandler } from "./useNewSectionStackPlaceholderDropHandler.js";
 
 const widgetCategoryMapping: Partial<{ [D in DraggableItemType]: string }> = {
     "insight-placeholder": "insight",
     insightListItem: "visualization",
     "kpi-placeholder": "kpi",
     richTextListItem: "richText",
+    stackListItem: "stack",
 };
 
 export const EmptyDashboardDropZone: React.FC = () => {
@@ -39,9 +42,10 @@ export const EmptyDashboardDropZone: React.FC = () => {
     const handleKpiPlaceholderDrop = useNewSectionKpiPlaceholderDropHandler(0);
     const handleInsightPlaceholderDrop = useNewSectionInsightPlaceholderDropHandler(0);
     const handleRichTextPlaceholderDrop = useNewSectionRichTextPlaceholderDropHandler(0);
+    const handleStackPlaceholderDrop = useNewSectionStackPlaceholderDropHandler(0);
 
     const [{ canDrop, isOver, itemType, item }, dropRef] = useDashboardDrop(
-        ["insightListItem", "kpi-placeholder", "insight-placeholder", "richTextListItem"],
+        ["insightListItem", "kpi-placeholder", "insight-placeholder", "richTextListItem", "stackListItem"],
         {
             drop: (item) => {
                 if (isInsightDraggableListItem(item)) {
@@ -56,6 +60,9 @@ export const EmptyDashboardDropZone: React.FC = () => {
                 if (isRichTextDraggableListItem(item)) {
                     handleRichTextPlaceholderDrop();
                 }
+                if (isStackDraggableListItem(item)) {
+                    handleStackPlaceholderDrop();
+                }
             },
         },
         [
@@ -64,6 +71,7 @@ export const EmptyDashboardDropZone: React.FC = () => {
             handleInsightListItemDrop,
             handleKpiPlaceholderDrop,
             handleInsightPlaceholderDrop,
+            handleStackPlaceholderDrop,
         ],
     );
 
@@ -95,6 +103,9 @@ export const EmptyDashboardDropZone: React.FC = () => {
                 <EmptyLayoutDropZoneBodyComponent />
                 <div className="drag-info-placeholder-drop-target s-drag-info-placeholder-drop-target">
                     <div className="drop-target-inner">
+                        <Typography tagName="p" className="drop-target-message stack-drop-target">
+                            {message}
+                        </Typography>
                         <Typography tagName="p" className="drop-target-message richText-drop-target">
                             {message}
                         </Typography>

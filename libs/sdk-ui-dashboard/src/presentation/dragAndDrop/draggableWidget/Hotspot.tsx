@@ -11,6 +11,8 @@ import {
     isKpiPlaceholderDraggableItem,
     isRichTextDraggableItem,
     isRichTextDraggableListItem,
+    isStackDraggableItem,
+    isStackDraggableListItem,
 } from "../types.js";
 import { useDashboardDrop } from "../useDashboardDrop.js";
 import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler.js";
@@ -19,6 +21,7 @@ import { useKpiPlaceholderDropHandler } from "./useKpiPlaceholderDropHandler.js"
 import { useMoveWidgetDropHandler } from "./useMoveWidgetHandler.js";
 import { useWidgetDragHoverHandlers } from "./useWidgetDragHoverHandlers.js";
 import { useRichTextPlaceholderDropHandler } from "./useRichTextPlaceholderDropHandler.js";
+import { useStackPlaceholderDropHandler } from "./useStackPlaceholderDropHandler.js";
 
 interface IHotspotProps {
     sectionIndex: number;
@@ -40,6 +43,7 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
     const handleInsightPlaceholderDrop = useInsightPlaceholderDropHandler(sectionIndex, targetItemIndex);
     const handleKpiPlaceholderDrop = useKpiPlaceholderDropHandler(sectionIndex, targetItemIndex);
     const handleRichTextPlaceholderDrop = useRichTextPlaceholderDropHandler(sectionIndex, targetItemIndex);
+    const handleStackPlaceholderDrop = useStackPlaceholderDropHandler(sectionIndex, targetItemIndex);
     const handleWidgetDrop = useMoveWidgetDropHandler(sectionIndex, targetItemIndex);
     const { handleDragHoverStart } = useWidgetDragHoverHandlers();
 
@@ -52,6 +56,8 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
             "insight",
             "richText",
             "richTextListItem",
+            "stack",
+            "stackListItem",
         ],
         {
             drop: (item) => {
@@ -68,10 +74,15 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
                     handleRichTextPlaceholderDrop();
                 }
 
+                if (isStackDraggableListItem(item)) {
+                    handleStackPlaceholderDrop();
+                }
+
                 if (
                     isInsightDraggableItem(item) ||
                     isKpiDraggableItem(item) ||
-                    isRichTextDraggableItem(item)
+                    isRichTextDraggableItem(item) ||
+                    isStackDraggableItem(item)
                 ) {
                     handleWidgetDrop(item);
                 }
@@ -83,6 +94,7 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
             handleInsightListItemDrop,
             handleInsightPlaceholderDrop,
             handleKpiPlaceholderDrop,
+            handleStackPlaceholderDrop,
             handleWidgetDrop,
         ],
     );
@@ -101,7 +113,12 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
                 return false;
             }
 
-            if (isInsightDraggableItem(item) || isKpiDraggableItem(item) || isRichTextDraggableItem(item)) {
+            if (
+                isInsightDraggableItem(item) ||
+                isKpiDraggableItem(item) ||
+                isRichTextDraggableItem(item) ||
+                isStackDraggableItem(item)
+            ) {
                 return isEndingHotspot || item.sectionIndex !== sectionIndex || item.itemIndex !== itemIndex;
             }
 

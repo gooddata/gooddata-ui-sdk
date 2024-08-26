@@ -10,6 +10,7 @@ import {
     IDashboardKpiProps,
     IDashboardRichTextProps,
     IDashboardWidgetProps,
+    IDashboardStackProps,
 } from "../widget/types.js";
 import {
     AttributeFilterDraggableItem,
@@ -27,9 +28,10 @@ import {
     InsightComponentProvider,
     KpiComponentProvider,
     RichTextComponentProvider,
+    StackComponentProvider,
     WidgetComponentProvider,
 } from "../dashboardContexts/types.js";
-import { IInsightWidget, IKpiWidget, IRichTextWidget } from "@gooddata/sdk-model";
+import { IInsightWidget, IKpiWidget, IRichTextWidget, IStackWidget } from "@gooddata/sdk-model";
 import { ICustomWidget } from "../../model/index.js";
 
 /**
@@ -186,7 +188,7 @@ export type KpiDraggableComponent = {
  * @internal
  */
 export type StackDraggableComponent = {
-    DraggingComponent?: StackDraggableComponent;
+    DraggingComponent?: StackDraggingComponent;
     type: "stack";
 };
 
@@ -362,19 +364,19 @@ export type InsightWidgetComponentSet = CustomComponentBase<
     Partial<CreatablePlaceholderComponent<IDashboardWidgetProps>> &
     ConfigurableWidget<IInsightWidget>;
 
+// NESTOR
 /**
  * Definition of Stack widget
- * // NESTOR
  * @internal
  */
 export type StackWidgetComponentSet = CustomComponentBase<
-    IDashboardInsightProps,
-    Parameters<InsightComponentProvider>
+    IDashboardStackProps,
+    Parameters<StackComponentProvider>
 > &
     DraggableComponent &
     Partial<CreatableByDragComponent> &
     Partial<CreatablePlaceholderComponent<IDashboardWidgetProps>> &
-    ConfigurableWidget<IInsightWidget>;
+    ConfigurableWidget<IStackWidget>;
 
 /**
  * Definition of RichText widget

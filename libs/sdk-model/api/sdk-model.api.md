@@ -3234,9 +3234,9 @@ export function isStackWidgetDefinition(obj: unknown): obj is IStackWidgetDefini
 export interface IStackWidget extends IStackWidgetBase, IDashboardObjectIdentity {
 }
 
-// @public (undocumented)
+// @public
 export interface IStackWidgetBase extends IAnalyticalWidget {
-    readonly content: string;
+    readonly insights: IInsightWidgetBase[];
     // (undocumented)
     readonly type: "stack";
 }

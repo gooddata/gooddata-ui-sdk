@@ -72,6 +72,8 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
         dateFilterComponentSet,
         richTextProvider,
         richTextWidgetComponentSet,
+        stackProvider,
+        stackWidgetComponentSet,
     } = useDashboard(props);
 
     const dashboardRender = (
@@ -109,6 +111,7 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                         InsightMenuComponentProvider={insightMenuProvider}
                                         KpiComponentProvider={kpiProvider}
                                         RichTextComponentProvider={richTextProvider}
+                                        StackComponentProvider={stackProvider}
                                         WidgetComponentProvider={widgetProvider}
                                         ButtonBarComponent={props.ButtonBarComponent ?? DefaultButtonBar}
                                         MenuButtonComponent={props.MenuButtonComponent ?? DefaultMenuButton}
@@ -144,6 +147,7 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                         InsightWidgetComponentSet={insightWidgetComponentSet}
                                         KpiWidgetComponentSet={kpiWidgetComponentSet}
                                         RichTextWidgetComponentSet={richTextWidgetComponentSet}
+                                        StackWidgetComponentSet={stackWidgetComponentSet}
                                         AttributeFilterComponentSet={attributeFilterComponentSet}
                                         DateFilterComponentSet={dateFilterComponentSet}
                                         EmptyLayoutDropZoneBodyComponent={
