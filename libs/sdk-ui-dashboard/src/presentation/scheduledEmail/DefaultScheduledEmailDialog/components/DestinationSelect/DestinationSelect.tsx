@@ -48,12 +48,12 @@ export const DestinationSelect: React.FC<IDestinationSelectProps> = ({
     }, [items, selectedItemId]);
 
     return (
-        <div className="gd-input-component gd-destination-field s-gd-schedule-email-dialog-destination">
+        <div className="gd-input-component gd-destination-field s-gd-notifications-channels-dialog-destination">
             <label className="gd-label">
                 <FormattedMessage id="dialogs.schedule.email.destination" />
             </label>
             {items.length === 0 ? (
-                <div className="gd-schedule-email-dialog-destination-empty">
+                <div className="gd-notifications-channels-dialog-destination-empty">
                     <span>
                         <span className="gd-icon-warning" />
                         <FormattedMessage id="dialogs.schedule.email.destination.missing" />
@@ -66,12 +66,12 @@ export const DestinationSelect: React.FC<IDestinationSelectProps> = ({
             ) : (
                 <Dropdown
                     alignPoints={DEFAULT_DROPDOWN_ALIGN_POINTS}
-                    className="gd-schedule-email-dialog-destination s-gd-schedule-email-dialog-destination"
+                    className="gd-notifications-channels-dialog-destination s-gd-notifications-channels-dialog-destination"
                     renderButton={({ toggleDropdown }) => (
                         <DropdownButton
                             value={selectedItem?.title}
                             onClick={toggleDropdown}
-                            className="gd-schedule-email-dialog-destination-button"
+                            className="gd-notifications-channels-dialog-destination-button"
                         />
                     )}
                     renderBody={({ closeDropdown, isMobile }) => (

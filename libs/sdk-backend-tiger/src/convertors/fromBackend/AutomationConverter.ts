@@ -1,7 +1,8 @@
 // (C) 2024 GoodData Corporation
 import {
     Comparison,
-    JsonApiAutomationOutAttributesAlert,
+    JsonApiAutomationInAttributesAlert,
+    JsonApiAutomationOutAttributesStateEnum,
     JsonApiAutomationOutIncludes,
     JsonApiAutomationOutList,
     JsonApiAutomationOutWithLinks,
@@ -51,7 +52,7 @@ export function convertAutomation(
     included: JsonApiAutomationOutIncludes[],
 ): IAutomationMetadataObject {
     const { id, attributes = {}, relationships = {} } = automation;
-    const { title, description, tags, schedule, alert, details, createdAt, modifiedAt, metadata } =
+    const { title, description, tags, schedule, alert, details, createdAt, modifiedAt, metadata, state } =
         attributes;
     const { createdBy, modifiedBy } = relationships;
 
@@ -74,7 +75,7 @@ export function convertAutomation(
 
     const dashboard = relationships?.analyticalDashboard?.data?.id;
 
-    const convertedAlert = convertAlert(alert);
+    const convertedAlert = convertAlert(alert, state);
     const alertObj = convertedAlert ? { alert: convertedAlert } : {};
     const scheduleObj = schedule ? { schedule } : {};
     const metadataObj = metadata ? { metadata } : {};
@@ -119,7 +120,8 @@ export const convertAutomationListToAutomations = (
 };
 
 const convertAlert = (
-    alert: JsonApiAutomationOutAttributesAlert | undefined,
+    alert: JsonApiAutomationInAttributesAlert | undefined,
+    state: JsonApiAutomationOutAttributesStateEnum | undefined,
 ): IAutomationAlert | undefined => {
     if (!alert) {
         return undefined;
@@ -147,9 +149,8 @@ const convertAlert = (
             filters: execution.filters.map(convertFilter),
         },
         trigger: {
-            // TODO: not implemented on BE yet
-            state: "ACTIVE",
-            mode: "ALWAYS",
+            state: state ?? "ACTIVE",
+            mode: alert.trigger,
         },
     };
 };

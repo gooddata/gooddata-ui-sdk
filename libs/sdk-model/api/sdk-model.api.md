@@ -2974,6 +2974,7 @@ export interface ISettings {
     enableSeparateTotalLabels?: boolean;
     // (undocumented)
     enableSingleStoreDataSource?: boolean;
+    enableSmtp?: boolean;
     // (undocumented)
     enableSnowflakeKeyPairAuthentication?: boolean;
     enableTableColumnsAutoResizing?: boolean;

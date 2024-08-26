@@ -98,21 +98,21 @@ export const Alert: React.FC<IAlertProps> = (props) => {
     }, [alert, onPause]);
 
     return (
-        <div className={cx("gd-scheduled-email", "s-alert", { editable: true, hover })}>
-            <div className="gd-scheduled-email-menu">
+        <div className={cx("gd-notifications-channel", "s-alert", { editable: true, hover })}>
+            <div className="gd-notifications-channel-menu">
                 <span
-                    className="gd-scheduled-email-menu-icon s-alert-menu-icon"
+                    className="gd-notifications-channel-menu-icon s-alert-menu-icon"
                     id={`alert-menu-${alert.id}`}
                     onClick={openDropdown}
                 />
             </div>
-            <div className="gd-scheduled-email-content" onClick={handleEdit}>
-                <div className="gd-scheduled-email-icon">{paused ? iconPaused : iconActive}</div>
-                <div className="gd-scheduled-email-text-content">
-                    <div className="gd-scheduled-email-title">
+            <div className="gd-notifications-channel-content" onClick={handleEdit}>
+                <div className="gd-notifications-channel-icon">{paused ? iconPaused : iconActive}</div>
+                <div className="gd-notifications-channel-text-content">
+                    <div className="gd-notifications-channel-title">
                         <strong>
                             <ShortenedText
-                                className="gd-scheduled-email-shortened-text"
+                                className="gd-notifications-channel-shortened-text"
                                 tooltipAlignPoints={TEXT_TOOLTIP_ALIGN_POINTS}
                             >
                                 {alert.title ??
@@ -121,9 +121,9 @@ export const Alert: React.FC<IAlertProps> = (props) => {
                         </strong>
                     </div>
                     <div>
-                        <span className="gd-scheduled-email-subtitle">
+                        <span className="gd-notifications-channel-subtitle">
                             <ShortenedText
-                                className="gd-scheduled-email-shortened-text"
+                                className="gd-notifications-channel-shortened-text"
                                 tooltipAlignPoints={TEXT_TOOLTIP_ALIGN_POINTS}
                             >
                                 {subtitle}

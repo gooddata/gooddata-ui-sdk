@@ -39,15 +39,15 @@ export const DeleteAlertConfirmDialog: React.FC<IDeleteAlertConfirmDialogProps> 
             onSubmit={handleDeleteAlert}
             onClose={onCancel}
             onCancel={onCancel}
-            className="gd-scheduled-email-delete-dialog s-alert-delete-dialog"
-            containerClassName="gd-scheduled-email-delete-dialog-overlay"
+            className="gd-notifications-channel-delete-dialog s-alert-delete-dialog"
+            containerClassName="gd-notifications-channel-delete-dialog-overlay"
         >
             <span className="s-alert-delete-dialog-content">
                 <FormattedMessage
                     id="dialogs.alerting.management.delete.dialog.confirm"
                     values={{
                         b: (chunks: ReactNode) => (
-                            <span className="gd-scheduled-email-delete-dialog-text">
+                            <span className="gd-notifications-channel-delete-dialog-text">
                                 {chunks} <strong>{alert.title}</strong>
                             </span>
                         ),

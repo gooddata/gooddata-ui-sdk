@@ -86,15 +86,15 @@ export const AlertingManagementDialog: React.FC<IAlertingManagementDialogProps> 
                 displayCloseButton={true}
                 onCancel={onClose}
                 shouldCloseOnClick={() => false}
-                className="gd-scheduled-email-management-dialog s-alerting-management-dialog"
+                className="gd-notifications-channels-management-dialog s-alerting-management-dialog"
             >
-                <div className="gd-scheduled-email-management-dialog-title">
+                <div className="gd-notifications-channels-management-dialog-title">
                     <Typography tagName="h3" className="gd-dialog-header">
                         <FormattedMessage id="dialogs.alerting.management.title" />
                     </Typography>
                 </div>
-                <div className="gd-scheduled-emails-content">
-                    <div className="gd-scheduled-emails-content-header">
+                <div className="gd-notifications-channels-content">
+                    <div className="gd-notifications-channels-content-header">
                         <Typography tagName="h3">
                             <FormattedMessage id={messages.alertingManagementListTitle.id!} />
                         </Typography>

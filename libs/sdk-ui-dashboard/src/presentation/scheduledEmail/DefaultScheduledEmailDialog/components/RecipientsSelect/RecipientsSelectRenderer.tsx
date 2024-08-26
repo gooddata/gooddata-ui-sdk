@@ -120,7 +120,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
         const maxRecipientsError = maxRecipients && value.length > maxRecipients;
 
         return (
-            <div className="gd-input-component gd-recipients-field s-gd-schedule-email-dialog-recipients">
+            <div className="gd-input-component gd-recipients-field s-gd-notifications-channels-dialog-recipients">
                 <label className="gd-label">
                     <FormattedMessage id="dialogs.schedule.email.to.label" />
                 </label>

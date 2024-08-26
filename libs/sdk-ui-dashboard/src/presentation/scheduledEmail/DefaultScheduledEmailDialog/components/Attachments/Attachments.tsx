@@ -95,7 +95,7 @@ export const Attachments = (props: IAttachmentsProps) => {
     };
 
     return (
-        <div className="gd-input-component gd-schedule-email-attachments s-schedule-email-attachments">
+        <div className="gd-input-component gd-notifications-channels-attachments s-notifications-channels-attachments">
             <label className="gd-label">
                 <FormattedMessage id="dialogs.schedule.email.attachments.label" />
             </label>

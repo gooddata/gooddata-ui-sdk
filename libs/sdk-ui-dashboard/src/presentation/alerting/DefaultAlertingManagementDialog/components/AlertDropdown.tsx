@@ -67,7 +67,7 @@ export const AlertDropdown: React.FC<IAlertDropdownProps> = (props) => {
         >
             <div
                 className={cx(
-                    "gd-schedule-email-dialog-menu",
+                    "gd-notifications-channels-dialog-menu",
                     "gd-dropdown gd-menu-wrapper gd-menu-wrapper-small-spacing",
                 )}
             >

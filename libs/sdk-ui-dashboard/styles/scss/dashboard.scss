@@ -6,7 +6,7 @@
 @use "layout";
 @use "kpi";
 @use "kpi_alert_dialog";
-@use "scheduled_mail";
+@use "notifications_channels_dialog";
 @use "scheduled_mail_recipients";
 @use "item-states";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
