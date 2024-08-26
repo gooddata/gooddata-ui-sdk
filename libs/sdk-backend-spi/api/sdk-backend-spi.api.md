@@ -1413,6 +1413,8 @@ export type IWorkspacesQueryResult = IPagedResource<IAnalyticalWorkspace>;
 
 // @public
 export interface IWorkspaceStylingService {
+    clearActiveColorPalette(): Promise<void>;
+    clearActiveTheme(): Promise<void>;
     getActiveColorPalette(): Promise<ObjRef | undefined>;
     getActiveTheme(): Promise<ObjRef | undefined>;
     getColorPalette(): Promise<IColorPalette>;
