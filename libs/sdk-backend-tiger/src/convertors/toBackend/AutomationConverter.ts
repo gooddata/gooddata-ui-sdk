@@ -2,7 +2,7 @@
 import {
     ComparisonComparisonOperatorEnum,
     JsonApiAutomationIn,
-    JsonApiAutomationOutAttributesAlert,
+    JsonApiAutomationInAttributesAlert,
 } from "@gooddata/api-client-tiger";
 import {
     IAutomationAlert,
@@ -70,6 +70,7 @@ export function convertAutomation(
               alert: convertAlert(alert),
           }
         : {};
+    const state = alert ? alert.trigger.state : undefined;
     const metadataObj = metadata ? { metadata } : {};
 
     const attributes = omitBy(
@@ -78,6 +79,7 @@ export function convertAutomation(
             description,
             tags,
             details,
+            state,
             ...metadataObj,
             ...scheduleObj,
             ...alertObj,
@@ -97,7 +99,7 @@ export function convertAutomation(
     };
 }
 
-const convertAlert = (alert: IAutomationAlert): JsonApiAutomationOutAttributesAlert => {
+const convertAlert = (alert: IAutomationAlert): JsonApiAutomationInAttributesAlert => {
     const { condition, execution } = alert;
 
     const convertedCondition = {
@@ -118,5 +120,6 @@ const convertAlert = (alert: IAutomationAlert): JsonApiAutomationOutAttributesAl
                 return omit(convertMeasure(measure), "alias", "format", "title");
             }),
         },
+        trigger: alert.trigger.mode,
     };
 };
