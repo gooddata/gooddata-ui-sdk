@@ -619,5 +619,22 @@
     "recurrence.types.monthly.last": "Monatlich am letzten {day}",
     "recurrence.types.monthly": "Monatlich am {week, select, 1 {ersten} 2 {zweiten} 3 {dritten} 4 {vierten} other {letzten}} {day}",
     "recurrence.types.cron": "Cron-Ausdruck",
-    "gs.header.search": "Suche"
+    "gs.header.search": "Suche",
+    "gs.date.today": "Heute",
+    "gs.date.yesterday": "Gestern",
+    "recurrence.types.monthly.first": "Monatlich am ersten Tag",
+    "recurrence.types.weekly.first": "Wöchentlich am ersten Tag",
+    "recurrence.description.hourly": "Zu Beginn jeder Stunde",
+    "recurrence.description.daily": "Jeden Tag am {hour}",
+    "recurrence.description.weekly_first": "Am {hour} zu Beginn jeder Woche",
+    "recurrence.description.weekly": "Am {dayOfWeekName} jede Woche um {hour} ",
+    "recurrence.description.monthly_first": "Um {hour} zu Beginn jeden Monats",
+    "recurrence.description.monthly": "Um {hour} am {dayOfWeekName} jeder {weekNumber}. Woche im Monat",
+    "semantic-search.error.title": "Unser Suchdienst ist vorübergehend nicht verfügbar.",
+    "semantic-search.error.text": "Wir arbeiten daran, das Problem zu lösen.",
+    "semantic-search.no-results": "Keine Ergebnisse für „{query}“ gefunden.",
+    "semantic-search.placeholder": "Dashboards oder Visualisierung durchsuchen…",
+    "semantic-search.id": "ID",
+    "semantic-search.tags": "Tags",
+    "semantic-search.match": "{score}% Übereinstimmung"
 }

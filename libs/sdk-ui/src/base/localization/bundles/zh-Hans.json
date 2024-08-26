@@ -619,5 +619,22 @@
     "recurrence.types.monthly.last": "每月最后一天{day}",
     "recurrence.types.monthly": "每月 {week, select, 1 {第一个} 2 {第二个} 3 {第三个} 4 {第四个} other {最后一个}} {day}",
     "recurrence.types.cron": "Cron 表达式",
-    "gs.header.search": "搜索"
+    "gs.header.search": "搜索",
+    "gs.date.today": "今天",
+    "gs.date.yesterday": "昨天",
+    "recurrence.types.monthly.first": "每月第一天",
+    "recurrence.types.weekly.first": "每周第一天",
+    "recurrence.description.hourly": "每小时开始时",
+    "recurrence.description.daily": "在{hour} 每天",
+    "recurrence.description.weekly_first": "在{hour} 每周开始",
+    "recurrence.description.weekly": "在{hour} 在{dayOfWeekName} 每周",
+    "recurrence.description.monthly_first": "在{hour} 每个月开始",
+    "recurrence.description.monthly": "在{hour} 在{dayOfWeekName} 每一个{weekNumber}. 月中的第几周",
+    "semantic-search.error.title": "我们的搜索服务暂时中断。",
+    "semantic-search.error.text": "我们正在努力解决该问题。",
+    "semantic-search.no-results": "没有找到“的结果{query}”。",
+    "semantic-search.placeholder": "搜索仪表板或可视化…",
+    "semantic-search.id": "ID",
+    "semantic-search.tags": "标签",
+    "semantic-search.match": "{score}％ 匹配"
 }

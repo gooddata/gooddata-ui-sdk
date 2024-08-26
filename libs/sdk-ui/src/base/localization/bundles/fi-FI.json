@@ -619,5 +619,22 @@
     "recurrence.types.monthly.last": "Kuukausittain viimeisenä {day}",
     "recurrence.types.monthly": "Kuukausittain {week, select, 1 {ensimmäinen} 2 {toinen} 3 {kolmas} 4 {neljäs} other {viimeinen}} {day}",
     "recurrence.types.cron": "CRON-ilmentymä",
-    "gs.header.search": "Hae"
+    "gs.header.search": "Hae",
+    "gs.date.today": "Tänään",
+    "gs.date.yesterday": "Eilen",
+    "recurrence.types.monthly.first": "Kuukausittain ensimmäisenä päivänä",
+    "recurrence.types.weekly.first": "Viikoittain ensimmäisenä päivänä",
+    "recurrence.description.hourly": "Jokaisen tunnin alussa",
+    "recurrence.description.daily": "Klo {hour} joka päivä",
+    "recurrence.description.weekly_first": "Klo {hour} joka viikon alussa",
+    "recurrence.description.weekly": "Klo {hour} {dayOfWeekName} joka viikko",
+    "recurrence.description.monthly_first": "Klo {hour} joka kuukauden alussa",
+    "recurrence.description.monthly": "Klo  {hour} {dayOfWeekName} kuukauden joka {weekNumber}. viikko",
+    "semantic-search.error.title": "Hakupalvelumme on tilapäisesti pois käytöstä.",
+    "semantic-search.error.text": "Pyrimme ratkaisemaan ongelman.",
+    "semantic-search.no-results": "Tuloksia ei löytynyt haulle “{query}“.",
+    "semantic-search.placeholder": "Hae koontinäytöistä tai visualisoinnista…",
+    "semantic-search.id": "ID",
+    "semantic-search.tags": "Tagit",
+    "semantic-search.match": "{score}% täsmää"
 }
