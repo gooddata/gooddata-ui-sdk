@@ -176,13 +176,13 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
         <>
             <Overlay
                 alignPoints={alignPoints}
-                className="gd-schedule-email-dialog-overlay"
+                className="gd-notifications-channels-dialog-overlay"
                 isModal={true}
                 positionType="fixed"
                 onAlign={onAlign}
             >
                 <ConfirmDialogBase
-                    className="gd-schedule-email-dialog s-gd-schedule-email-dialog"
+                    className="gd-notifications-channels-dialog s-gd-notifications-channels-dialog"
                     isPositive={true}
                     cancelButtonText={intl.formatMessage({ id: "cancel" })}
                     submitButtonText={
@@ -192,7 +192,7 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
                     }
                     showProgressIndicator={isSavingScheduledEmail}
                     footerLeftRenderer={() => (
-                        <div className="gd-schedule-email-dialog-footer-link">
+                        <div className="gd-notifications-channels-dialog-footer-link">
                             <Hyperlink
                                 text={intl.formatMessage({ id: helpTextId })}
                                 href="https://www.gooddata.com/docs/cloud/create-dashboards/export/schedule-emailing/"
@@ -214,7 +214,7 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
                     onSubmit={handleSaveScheduledEmail}
                     headline={undefined}
                     headerLeftButtonRenderer={() => (
-                        <div className="gd-schedule-email-dialog-header">
+                        <div className="gd-notifications-channels-dialog-header">
                             <Button
                                 className="gd-button-primary gd-button-icon-only gd-icon-navigateleft s-schedule-email-dialog-button"
                                 onClick={onCancel}
@@ -225,7 +225,7 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
                                 onChange={onTitleChange}
                                 maxRows={1}
                                 maxLength={40}
-                                className="gd-schedule-email-dialog-title s-gd-schedule-email-dialog-title"
+                                className="gd-notifications-channels-dialog-title s-gd-notifications-channels-dialog-title"
                                 autofocus={!automation.title}
                                 placeholder={intl.formatMessage({
                                     id: "dialogs.schedule.email.title.placeholder",
@@ -234,7 +234,7 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
                         </div>
                     )}
                 >
-                    <div className="gd-schedule-mail-dialog-content-wrapper">
+                    <div className="gd-notifications-channel-dialog-content-wrapper">
                         <ContentDivider className="gd-divider-with-margin gd-divider-full-row" />
                         <RecurrenceForm
                             startDate={startDate}
@@ -265,7 +265,7 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
                             maxRecipients={maxAutomationsRecipients}
                         />
                         <Input
-                            className="gd-schedule-email-dialog-subject s-gd-schedule-email-dialog-subject"
+                            className="gd-notifications-channels-dialog-subject s-gd-notifications-channels-dialog-subject"
                             label={intl.formatMessage({ id: "dialogs.schedule.email.subject.label" })}
                             maxlength={MAX_SUBJECT_LENGTH}
                             placeholder={
@@ -277,7 +277,7 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
                             onChange={onSubjectChange}
                         />
                         <Textarea
-                            className="gd-schedule-email-dialog-message s-gd-schedule-email-dialog-message"
+                            className="gd-notifications-channels-dialog-message s-gd-notifications-channels-dialog-message"
                             label={intl.formatMessage({ id: "dialogs.schedule.email.message.label" })}
                             maxlength={MAX_MESSAGE_LENGTH}
                             placeholder={intl.formatMessage({
@@ -300,7 +300,7 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
                             editSchedule={editSchedule}
                         />
                         {savingErrorMessage ? (
-                            <Message type="error" className="gd-schedule-email-dialog-error">
+                            <Message type="error" className="gd-notifications-channels-dialog-error">
                                 {savingErrorMessage}
                             </Message>
                         ) : null}

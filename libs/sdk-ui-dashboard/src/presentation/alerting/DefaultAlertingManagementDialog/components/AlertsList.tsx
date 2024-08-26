@@ -28,7 +28,7 @@ export const Alerts: React.FC<IAlertsProps> = (props) => {
 
     if (isLoading) {
         return (
-            <div className="gd-loading-equalizer-wrap gd-scheduled-emails-message">
+            <div className="gd-loading-equalizer-wrap gd-notifications-channels-message">
                 <div className="gd-loading-equalizer gd-loading-equalizer-fade">
                     <LoadingSpinner
                         className="large gd-loading-equalizer-spinner"
@@ -41,7 +41,7 @@ export const Alerts: React.FC<IAlertsProps> = (props) => {
 
     if (alerts.length === 0) {
         return (
-            <div className="gd-scheduled-emails-message s-no-alerts-message">
+            <div className="gd-notifications-channels-message s-no-alerts-message">
                 <FormattedMessage id={noAlertsMessageId} values={{ br: <br /> }} />
             </div>
         );

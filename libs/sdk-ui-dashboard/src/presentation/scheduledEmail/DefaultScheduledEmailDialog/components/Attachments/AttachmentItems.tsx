@@ -24,7 +24,7 @@ const AttachmentItem: React.FC<{
     onChange: () => void;
     className?: string;
 }> = ({ format, checked, onChange, className }) => (
-    <label className="gd-schedule-mail-attachment-checkbox input-checkbox-label">
+    <label className="gd-notifications-channels-attachment-checkbox input-checkbox-label">
         <input type="checkbox" className="input-checkbox" checked={checked} onChange={onChange} />
         <span className="input-label-text" />
         <div

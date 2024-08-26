@@ -16,14 +16,14 @@ $min-content-height: 110px;
 }
 
 @media #{kit-variables.$small-only} {
-    .gd-schedule-email-dialog-overlay {
+    .gd-notifications-channels-dialog-overlay {
         // override the static position in case of dialog with long content, on mobile view
         // stylelint-disable-next-line declaration-no-important
         position: absolute !important;
     }
 }
 
-.gd-dialog:not(.gd-dropdown).gd-schedule-email-dialog {
+.gd-dialog:not(.gd-dropdown).gd-notifications-channels-dialog {
     // TODO: test this with IE https://caniuse.com/#search=calc
     // responsive layout: viewport's width - $dialog-padding
     width: calc(100vw - $dialog-padding);
@@ -91,7 +91,7 @@ $min-content-height: 110px;
     }
 }
 
-.gd-schedule-email-attachments {
+.gd-notifications-channels-attachments {
     @media #{kit-variables.$medium-up} {
         align-items: flex-start;
     }
@@ -291,7 +291,7 @@ $min-content-height: 110px;
     }
 }
 
-.gd-scheduled-email-management-dialog {
+.gd-notifications-channels-management-dialog {
     display: flex;
     flex-direction: column;
     width: 540px;
@@ -302,7 +302,7 @@ $min-content-height: 110px;
         max-height: none;
     }
 
-    .gd-scheduled-email-management-dialog-title {
+    .gd-notifications-channels-management-dialog-title {
         display: flex;
         margin-bottom: 10px;
 
@@ -315,7 +315,7 @@ $min-content-height: 110px;
         }
     }
 
-    .gd-scheduled-emails-content {
+    .gd-notifications-channels-content {
         overflow-x: hidden;
         width: calc(100% + 20px);
         margin: 0 -20px 0 0;
@@ -330,7 +330,7 @@ $min-content-height: 110px;
         }
     }
 
-    .gd-scheduled-emails-content-header {
+    .gd-notifications-channels-content-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -361,7 +361,7 @@ $min-content-height: 110px;
         }
     }
 
-    .gd-scheduled-emails-message {
+    .gd-notifications-channels-message {
         height: 100%;
         min-height: $min-content-height;
         display: flex;
@@ -376,7 +376,7 @@ $min-content-height: 110px;
         margin: auto;
     }
 
-    .gd-scheduled-email {
+    .gd-notifications-channel {
         display: inline-flex;
         flex-direction: row-reverse;
         overflow: hidden;
@@ -388,11 +388,11 @@ $min-content-height: 110px;
         &.hover {
             background: kit-variables.$is-focused-background;
 
-            .gd-scheduled-email-icon {
+            .gd-notifications-channel-icon {
                 background: transparent;
             }
 
-            .gd-scheduled-email-delete-icon {
+            .gd-notifications-channel-delete-icon {
                 display: block;
             }
         }
@@ -401,12 +401,12 @@ $min-content-height: 110px;
             cursor: pointer;
         }
 
-        .gd-scheduled-email-menu-icon {
+        .gd-notifications-channel-menu-icon {
             display: block;
         }
     }
 
-    .gd-scheduled-email-icon {
+    .gd-notifications-channel-icon {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -418,13 +418,13 @@ $min-content-height: 110px;
         flex-shrink: 0;
     }
 
-    .gd-scheduled-email-content {
+    .gd-notifications-channel-content {
         display: flex;
         flex: 1;
         overflow: hidden;
     }
 
-    .gd-scheduled-email-text-content {
+    .gd-notifications-channel-text-content {
         display: flex;
         flex: 1;
         flex-direction: column;
@@ -435,21 +435,21 @@ $min-content-height: 110px;
         white-space: nowrap;
     }
 
-    .gd-scheduled-email-title {
+    .gd-notifications-channel-title {
         white-space: nowrap;
     }
 
-    .gd-scheduled-email-subtitle {
+    .gd-notifications-channel-subtitle {
         white-space: nowrap;
         color: kit-variables.$gd-color-state-blank;
     }
 
-    .gd-scheduled-email-shortened-text {
+    .gd-notifications-channel-shortened-text {
         display: block;
         overflow: hidden;
     }
 
-    .gd-scheduled-email-delete {
+    .gd-notifications-channel-delete {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -459,23 +459,23 @@ $min-content-height: 110px;
         flex-shrink: 0;
     }
 
-    .gd-scheduled-email-delete:hover {
+    .gd-notifications-channel-delete:hover {
         background-color: var(--gd-palette-error-lightest, #fff2f1);
 
-        ~ .gd-scheduled-email-content {
+        ~ .gd-notifications-channel-content {
             background-color: var(--gd-palette-error-lightest, #fff2f1);
         }
 
-        .gd-scheduled-email-delete-icon::after {
+        .gd-notifications-channel-delete-icon::after {
             color: kit-variables.$gd-palette-error-base;
         }
 
-        .gd-scheduled-email-menu-icon::after {
+        .gd-notifications-channel-menu-icon::after {
             color: kit-variables.$default-gd-medium-gray;
         }
     }
 
-    .gd-scheduled-email-delete-icon {
+    .gd-notifications-channel-delete-icon {
         display: none;
         margin: auto;
 
@@ -493,7 +493,7 @@ $min-content-height: 110px;
         }
     }
 
-    .gd-scheduled-email-menu {
+    .gd-notifications-channel-menu {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -504,11 +504,11 @@ $min-content-height: 110px;
         position: relative;
     }
 
-    .gd-scheduled-email-menu:hover {
+    .gd-notifications-channel-menu:hover {
         background-color: kit-variables.$gd-input-text-border;
     }
 
-    .gd-scheduled-email-menu-icon {
+    .gd-notifications-channel-menu-icon {
         display: block;
         margin: auto;
         position: absolute;
@@ -561,7 +561,7 @@ $min-content-height: 110px;
     }
 }
 
-.gd-scheduled-email-delete-dialog {
+.gd-notifications-channel-delete-dialog {
     width: 440px;
 
     @media #{kit-variables.$small-only} {
@@ -579,7 +579,7 @@ $min-content-height: 110px;
         }
     }
 
-    .gd-scheduled-email-delete-dialog-text {
+    .gd-notifications-channel-delete-dialog-text {
         overflow: hidden;
         line-height: 20px;
         white-space: nowrap;
@@ -596,7 +596,7 @@ $min-content-height: 110px;
     }
 }
 
-.gd-scheduled-email-delete-dialog-overlay {
+.gd-notifications-channel-delete-dialog-overlay {
     .modalityPlugin-mask {
         z-index: zIndexes.$scheduled-email-mask;
     }
@@ -608,7 +608,7 @@ $min-content-height: 110px;
     }
 }
 
-.gd-schedule-mail-dialog-content-wrapper {
+.gd-notifications-channel-dialog-content-wrapper {
     background: variables.$dialog-background;
     margin: 0 (-$dialog-padding);
     padding: 0 $dialog-padding;
@@ -629,7 +629,7 @@ $min-content-height: 110px;
     margin-right: -$dialog-padding;
 }
 
-.gd-schedule-email-dialog-destination-empty {
+.gd-notifications-channels-dialog-destination-empty {
     display: flex;
     flex-direction: row;
     align-items: baseline;
@@ -657,14 +657,14 @@ $min-content-height: 110px;
     }
 }
 
-.gd-schedule-email-dialog-destination {
+.gd-notifications-channels-dialog-destination {
     button {
         width: 200px;
         height: $input-height;
     }
 }
 
-.gd-schedule-email-dialog-message {
+.gd-notifications-channels-dialog-message {
     textarea {
         padding: 6px 8px;
         font-size: 13px;
@@ -674,13 +674,13 @@ $min-content-height: 110px;
     }
 }
 
-.gd-schedule-email-dialog-error {
+.gd-notifications-channels-dialog-error {
     max-height: 70px;
     overflow: auto;
     margin-bottom: $vertical-space;
 }
 
-.gd-schedule-email-dialog-subject {
+.gd-notifications-channels-dialog-subject {
     input {
         height: $input-height;
         font-size: 13px;
@@ -690,7 +690,7 @@ $min-content-height: 110px;
     }
 }
 
-.gd-schedule-email-dialog-header {
+.gd-notifications-channels-dialog-header {
     display: flex;
     flex: 1;
     padding-bottom: $vertical-space;
@@ -703,7 +703,7 @@ $min-content-height: 110px;
     }
 }
 
-.gd-schedule-email-dialog-title {
+.gd-notifications-channels-dialog-title {
     margin-left: 15px;
     width: 100%;
     height: 29px;
@@ -727,13 +727,13 @@ $min-content-height: 110px;
     }
 }
 
-.gd-schedule-mail-attachment-checkbox {
+.gd-notifications-channels-attachment-checkbox {
     height: 100%;
     margin-left: 2px;
     margin-top: 8px;
 }
 
-.gd-schedule-email-dialog-footer-link {
+.gd-notifications-channels-dialog-footer-link {
     display: inline-flex;
     flex: 1;
     justify-content: space-between;
@@ -747,7 +747,7 @@ $min-content-height: 110px;
     }
 }
 
-.gd-schedule-email-dialog-menu {
+.gd-notifications-channels-dialog-menu {
     min-width: 100px;
     .deleteItem {
         &:hover {

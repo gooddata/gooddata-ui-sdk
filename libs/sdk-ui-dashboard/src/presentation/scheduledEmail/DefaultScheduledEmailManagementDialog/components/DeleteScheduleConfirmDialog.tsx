@@ -42,15 +42,15 @@ export const DeleteScheduleConfirmDialog: React.FC<IDeleteScheduleConfirmDialogP
             onSubmit={handleDeleteScheduledMail}
             onClose={onCancel}
             onCancel={onCancel}
-            className="gd-scheduled-email-delete-dialog s-scheduled-email-delete-dialog"
-            containerClassName="gd-scheduled-email-delete-dialog-overlay"
+            className="gd-notifications-channel-delete-dialog s-scheduled-email-delete-dialog"
+            containerClassName="gd-notifications-channel-delete-dialog-overlay"
         >
-            <span className="s-scheduled-email-delete-dialog-content">
+            <span className="s-notifications-channel-delete-dialog-content">
                 <FormattedMessage
                     id="dialogs.schedule.management.delete.dialog.confirm"
                     values={{
                         b: (chunks: ReactNode) => (
-                            <span className="gd-scheduled-email-delete-dialog-text">
+                            <span className="gd-notifications-channel-delete-dialog-text">
                                 {chunks} <strong>{scheduledEmail.title}</strong>
                             </span>
                         ),
