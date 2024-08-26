@@ -408,6 +408,11 @@ export interface ISettings {
     enableAlerting?: boolean;
 
     /**
+     * Enables smtp settings.
+     */
+    enableSmtp?: boolean;
+
+    /**
      * Enables rollup (native) totals.
      */
     enableRollupTotals?: boolean;
