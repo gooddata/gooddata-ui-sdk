@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { ExtendedDashboardItem } from "../../../types/layoutTypes.js";
 import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
 import {
@@ -12,6 +12,7 @@ import {
     IInsightWidget,
     isKpiWidget,
     isInsightWidget,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import { InsightResolutionResult, resolveInsights } from "../../../utils/insightResolver.js";
@@ -37,6 +38,7 @@ import {
 } from "../../widgets/validation/filterValidation.js";
 import { ItemResolutionResult } from "./stashValidation.js";
 import { selectFilterContextAttributeFilters } from "../../../store/filterContext/filterContextSelectors.js";
+import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 
 function normalizeItems(
     items: ExtendedDashboardItem[],
@@ -179,12 +181,17 @@ function* validateAndResolveKpiFilters(
 function removeObsoleteAttributeFilterIgnores<T extends IKpiWidget | IInsightWidget>(
     widget: T,
     attributeFilters: IDashboardAttributeFilter[],
+    displayAsLabelMap: Map<string, ObjRef>,
 ): T {
     const onlyExistingFilterIgnores = widget.ignoreDashboardFilters.filter((filterRef) => {
         if (isDashboardAttributeFilterReference(filterRef)) {
-            return attributeFilters.find((filter) =>
-                areObjRefsEqual(filter.attributeFilter.displayForm, filterRef.displayForm),
-            );
+            return attributeFilters.find((filter) => {
+                const displayAsLabel = displayAsLabelMap.get(filter.attributeFilter.localIdentifier!);
+                return (
+                    areObjRefsEqual(filter.attributeFilter.displayForm, filterRef.displayForm) ||
+                    areObjRefsEqual(filter.attributeFilter.displayForm, displayAsLabel)
+                );
+            });
         }
 
         return true;
@@ -222,6 +229,9 @@ export function* validateAndResolveItemFilterSettings(
     const attributeFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
         selectFilterContextAttributeFilters,
     );
+    const displayAsLabelMap: ReturnType<typeof selectAttributeFilterConfigsDisplayAsLabelMap> = yield select(
+        selectAttributeFilterConfigsDisplayAsLabelMap,
+    );
     const { resolvedInsights, normalizedItems } = items;
     const updatedItems: ExtendedDashboardItem[] = [];
     let i = 0;
@@ -245,7 +255,11 @@ export function* validateAndResolveItemFilterSettings(
                  *
                  * Any ignored filters that are obsolete can be safely removed.
                  */
-                const updatedWidget = removeObsoleteAttributeFilterIgnores(widget, attributeFilters);
+                const updatedWidget = removeObsoleteAttributeFilterIgnores(
+                    widget,
+                    attributeFilters,
+                    displayAsLabelMap,
+                );
 
                 updatedItems.push({
                     ...item,

@@ -49,6 +49,7 @@ import {
     IDateFilter,
     IDashboardFilterView,
     IDashboardFilterViewSaveRequest,
+    IDashboardAttributeFilterConfig,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
 import { v4 as uuid } from "uuid";
@@ -488,9 +489,17 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         throw new NotSupported("Tiger backend does not support alerting.");
     };
 
-    public getResolvedFiltersForWidget = async (widget: IWidget, filters: IFilter[]): Promise<IFilter[]> => {
-        return resolveWidgetFilters(filters, widget.ignoreDashboardFilters, widget.dateDataSet, (refs) =>
-            objRefsToIdentifiers(refs, this.authCall),
+    public getResolvedFiltersForWidget = async (
+        widget: IWidget,
+        filters: IFilter[],
+        attributeFilterConfigs: IDashboardAttributeFilterConfig[],
+    ): Promise<IFilter[]> => {
+        return resolveWidgetFilters(
+            filters,
+            widget.ignoreDashboardFilters,
+            widget.dateDataSet,
+            (refs) => objRefsToIdentifiers(refs, this.authCall),
+            attributeFilterConfigs,
         );
     };
 
@@ -498,6 +507,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         widget: IWidget,
         commonDateFilters: IDateFilter[],
         otherFilters: IFilter[],
+        attributeFilterConfigs: IDashboardAttributeFilterConfig[],
     ): Promise<IFilter[]> => {
         return resolveWidgetFiltersWithMultipleDateFilters(
             commonDateFilters,
@@ -505,6 +515,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             widget.ignoreDashboardFilters,
             widget.dateDataSet,
             (refs) => objRefsToIdentifiers(refs, this.authCall),
+            attributeFilterConfigs,
         );
     };
 

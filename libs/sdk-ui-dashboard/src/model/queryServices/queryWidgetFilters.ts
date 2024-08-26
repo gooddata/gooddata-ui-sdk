@@ -30,6 +30,7 @@ import {
     isInsightWidget,
     isDashboardDateFilterReference,
     IRichTextWidget,
+    filterLocalIdentifier,
 } from "@gooddata/sdk-model";
 import { QueryWidgetFilters } from "../queries/widgets.js";
 import { selectAllFiltersForWidgetByRef, selectWidgetByRef } from "../store/layout/layoutSelectors.js";
@@ -43,6 +44,7 @@ import { invariant } from "ts-invariant";
 import isEmpty from "lodash/isEmpty.js";
 import { ExtendedDashboardWidget, ICustomWidget } from "../types/layoutTypes.js";
 import { selectSupportsMultipleDateFilters } from "../store/backendCapabilities/backendCapabilitiesSelectors.js";
+import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 
 export const QueryWidgetFiltersService = createQueryService("GDC.DASH/QUERY.WIDGET.FILTERS", queryService);
 
@@ -127,10 +129,14 @@ function* getResolvedAttributeFilters(
 ): SagaIterator<IAttributeFilter[]> {
     const attributeFilterDisplayFormPairs: SagaReturnType<typeof loadDisplayFormsForAttributeFilters> =
         yield call(loadDisplayFormsForAttributeFilters, ctx, attributeFilters);
+    const displayAsLabelMap: ReturnType<typeof selectAttributeFilterConfigsDisplayAsLabelMap> = yield select(
+        selectAttributeFilterConfigsDisplayAsLabelMap,
+    );
 
     const attributeFilterDisplayFormPairsWithIgnoreResolved = resolveWidgetFilterIgnore(
         widget,
         attributeFilterDisplayFormPairs,
+        displayAsLabelMap,
     );
 
     return attributeFilterDisplayFormPairsWithIgnoreResolved.map((item) => item.filter);
@@ -139,13 +145,19 @@ function* getResolvedAttributeFilters(
 function resolveWidgetFilterIgnore(
     widget: ExtendedDashboardWidget,
     dashboardNonDateFilterDisplayFormPairs: IFilterDisplayFormPair[],
+    displayAsLabelMap: Map<string, ObjRef>,
 ): IFilterDisplayFormPair[] {
-    return dashboardNonDateFilterDisplayFormPairs.filter(({ displayForm }) => {
+    return dashboardNonDateFilterDisplayFormPairs.filter(({ filter, displayForm }) => {
         const matches =
             displayForm &&
-            widget.ignoreDashboardFilters
-                ?.filter(isDashboardAttributeFilterReference)
-                .some((ignored) => refMatchesMdObject(ignored.displayForm, displayForm, "displayForm"));
+            widget.ignoreDashboardFilters?.filter(isDashboardAttributeFilterReference).some((ignored) => {
+                const filterLocalId = filterLocalIdentifier(filter);
+                const displayAsLabel = filterLocalId ? displayAsLabelMap.get(filterLocalId) : undefined;
+                return (
+                    refMatchesMdObject(ignored.displayForm, displayForm, "displayForm") ||
+                    areObjRefsEqual(ignored.displayForm, displayAsLabel)
+                );
+            });
 
         return !matches;
     });

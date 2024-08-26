@@ -32,6 +32,7 @@ import {
     IExistingDashboard,
     IDateFilter,
     IDashboardFilterView,
+    IDashboardAttributeFilterConfig,
 } from "@gooddata/sdk-model";
 
 /**
@@ -153,16 +154,25 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
         return this.decorated.getWidgetReferencedObjects(widget, types);
     }
 
-    getResolvedFiltersForWidget(widget: IWidget, filters: IFilter[]): Promise<IFilter[]> {
-        return this.decorated.getResolvedFiltersForWidget(widget, filters);
+    getResolvedFiltersForWidget(
+        widget: IWidget,
+        filters: IFilter[],
+        attributeFilterConfigs: IDashboardAttributeFilterConfig[],
+    ): Promise<IFilter[]> {
+        return this.decorated.getResolvedFiltersForWidget(widget, filters, attributeFilterConfigs);
     }
 
     getResolvedFiltersForWidgetWithMultipleDateFilters(
         widget: IWidget,
         commonDateFilters: IDateFilter[],
         otherFilters: IFilter[],
+        attributeFilterConfigs: IDashboardAttributeFilterConfig[],
     ): Promise<IFilter[]> {
-        return this.decorated.getResolvedFiltersForWidget(widget, [...commonDateFilters, ...otherFilters]);
+        return this.decorated.getResolvedFiltersForWidget(
+            widget,
+            [...commonDateFilters, ...otherFilters],
+            attributeFilterConfigs,
+        );
     }
 
     getDashboardPlugins(options?: IGetDashboardPluginOptions): Promise<IDashboardPlugin[]> {

@@ -57,7 +57,10 @@ import {
     selectEnableDuplicatedLabelValuesInAttributeFilter,
     selectEnableMultipleDateFilters,
 } from "../../store/config/configSelectors.js";
-import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import {
+    selectAttributeFilterConfigsDisplayAsLabelMap,
+    selectAttributeFilterConfigsOverrides,
+} from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 
 export function* drillToDashboardHandler(
     ctx: DashboardContext,
@@ -253,6 +256,10 @@ function* getWidgetAwareDashboardFilters(
         includeOtherDateFilters ? selectFilterContextDraggableFilters : selectFilterContextAttributeFilters,
     );
 
+    const attributeFilterConfigs: ReturnType<typeof selectAttributeFilterConfigsOverrides> = yield select(
+        selectAttributeFilterConfigsOverrides,
+    );
+
     const filtersPairs = filterContextItems.map((filter) => ({
         filter: convertFilterItemsToFilters(filter, widget),
         originalFilter: filter,
@@ -263,6 +270,7 @@ function* getWidgetAwareDashboardFilters(
         ctx,
         widget,
         filtersPairs.map((pair) => pair.filter),
+        attributeFilterConfigs,
     );
     return filtersPairs
         .filter((pair) => widgetFilters.some((wf: IFilter) => isEqual(wf, pair.filter)))
@@ -287,9 +295,10 @@ function getResolvedFiltersForWidget(
     ctx: DashboardContext,
     widget: IInsightWidget,
     filters: IDashboardFilter[],
+    attributeFilterConfigs: IDashboardAttributeFilterConfig[],
 ): Promise<IFilter[]> {
     return ctx.backend
         .workspace(ctx.workspace)
         .dashboards()
-        .getResolvedFiltersForWidgetWithMultipleDateFilters(widget, [], filters);
+        .getResolvedFiltersForWidgetWithMultipleDateFilters(widget, [], filters, attributeFilterConfigs);
 }

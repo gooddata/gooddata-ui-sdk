@@ -15,6 +15,7 @@ import {
     isDashboardDateFilter,
     isDashboardDateFilterReference,
     isDashboardDateFilterWithDimension,
+    ObjRef,
     serializeObjRef,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
@@ -24,6 +25,7 @@ import {
     ExtendedDashboardWidget,
     ICrossFilteringItem,
     selectAllCatalogAttributesMap,
+    selectAttributeFilterConfigsDisplayAsLabelMap,
     selectAttributeFilterDisplayFormsMap,
     selectCrossFilteringItems,
     selectEffectiveAttributeFiltersModeMap,
@@ -111,7 +113,12 @@ export const useAttachmentDashboardFilters = ({
     const areFiltersChanged = !isEqual(filtersWithoutCrossFiltering, originalFilters);
 
     // remove ignored widget filters
-    const filtersToStore = removeIgnoredWidgetFilters(filtersWithoutCrossFiltering, widget);
+    const displayAsLabelMap = useDashboardSelector(selectAttributeFilterConfigsDisplayAsLabelMap);
+    const filtersToStore = removeIgnoredWidgetFilters(
+        filtersWithoutCrossFiltering,
+        widget,
+        displayAsLabelMap,
+    );
 
     // additionaly remove hidden filters to get filters suitable for display
     const commonDateFilterMode = useDashboardSelector(selectEffectiveDateFilterMode);
@@ -202,6 +209,7 @@ export const useAttachmentDashboardFilters = ({
 const removeIgnoredWidgetFilters = (
     filters: FilterContextItem[],
     widget: ExtendedDashboardWidget | undefined,
+    displayAsLabelMap: Map<string, ObjRef>,
 ) => {
     if (!widget) {
         return filters;
@@ -220,7 +228,13 @@ const removeIgnoredWidgetFilters = (
             if (isDashboardDateFilter(filter)) {
                 return areObjRefsEqual(filter.dateFilter.dataSet!, ref);
             }
-            return areObjRefsEqual(filter.attributeFilter.displayForm, ref);
+            const displayAsLabel = filter.attributeFilter.localIdentifier
+                ? displayAsLabelMap.get(filter.attributeFilter.localIdentifier)
+                : undefined;
+            return (
+                areObjRefsEqual(filter.attributeFilter.displayForm, ref) ||
+                areObjRefsEqual(displayAsLabel, ref)
+            );
         });
     });
 };
