@@ -1058,6 +1058,19 @@ export interface ICrossFiltering extends IDrill {
     type: "crossFiltering";
 }
 
+// @alpha (undocumented)
+export type ICustomSmtpDestination = {
+    type: "custom";
+    name: string;
+    from: string;
+    address: string;
+    person: string;
+    port: 25 | 465 | 587 | 2525;
+    login: string;
+    password?: string;
+    hasPassword?: boolean;
+};
+
 // @alpha
 export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, IDashboardObjectIdentity, Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers>, IAccessControlAware {
     readonly attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
@@ -1448,6 +1461,14 @@ export interface IDateHierarchyTemplate extends IMetadataObjectIdentity, IMetada
     // (undocumented)
     type: "dateHierarchyTemplate";
 }
+
+// @alpha (undocumented)
+export type IDefaultSmtpDestination = {
+    type: "default";
+    name: string;
+    address: string;
+    person: string;
+};
 
 // @public
 export type Identifier = string;
@@ -3134,16 +3155,7 @@ export interface ISmtpDefinitionObject extends Partial<ISmtpDefinition>, Pick<IN
 }
 
 // @alpha (undocumented)
-export interface ISmtpDestination {
-    address: string;
-    from: string;
-    hasPassword?: boolean;
-    login: string;
-    name: string;
-    password?: string;
-    person: string;
-    port: 25 | 465 | 587 | 2525;
-}
+export type ISmtpDestination = ICustomSmtpDestination | IDefaultSmtpDestination;
 
 // @public
 export function isNegativeAttributeFilter(obj: unknown): obj is INegativeAttributeFilter;

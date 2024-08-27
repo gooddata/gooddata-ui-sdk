@@ -24,7 +24,11 @@ export function convertChannelFromNotificationChannel(
         case DeclarativeNotificationChannelDestinationTypeEnum.WEBHOOK:
             return convertWebhookFromNotificationChannel(channel) as INotificationChannelDefinitionObject;
         case DeclarativeNotificationChannelDestinationTypeEnum.SMTP:
-            return convertEmailFromNotificationChannel(channel) as INotificationChannelDefinitionObject;
+            return convertCustomEmailFromNotificationChannel(channel) as INotificationChannelDefinitionObject;
+        case DeclarativeNotificationChannelDestinationTypeEnum.DEFAULT_SMTP:
+            return convertDefaultEmailFromNotificationChannel(
+                channel,
+            ) as INotificationChannelDefinitionObject;
         default:
             throw new Error(`Unknown notification channel type: ${channel.attributes?.destinationType}`);
     }
@@ -52,11 +56,25 @@ export function convertWebhookFromNotificationChannel(
 }
 
 export function convertEmailFromNotificationChannel(channel: INotificationChannel): ISmtpDefinitionObject {
+    switch (channel.attributes?.destinationType) {
+        case DeclarativeNotificationChannelDestinationTypeEnum.SMTP:
+            return convertCustomEmailFromNotificationChannel(channel);
+        case DeclarativeNotificationChannelDestinationTypeEnum.DEFAULT_SMTP:
+            return convertDefaultEmailFromNotificationChannel(channel);
+        default:
+            throw new Error(`Unknown email channel type: ${channel.attributes?.destinationType}`);
+    }
+}
+
+export function convertCustomEmailFromNotificationChannel(
+    channel: INotificationChannel,
+): ISmtpDefinitionObject {
     const wh = channel.attributes?.destination as Smtp | undefined;
     return {
         id: channel.id,
         type: "smtp",
         destination: {
+            type: "custom",
             name: channel.attributes?.name ?? "",
             address: wh?.fromEmail ?? "",
             person: wh?.fromEmailName ?? "",
@@ -65,6 +83,27 @@ export function convertEmailFromNotificationChannel(channel: INotificationChanne
             login: wh?.username ?? "",
             password: wh?.password ?? "",
             hasPassword: true,
+        },
+        triggers:
+            channel.attributes?.triggers?.map((trigger) => ({
+                type: trigger.type,
+                ...(isAllowedOn(trigger.metadata) ? { allowOn: trigger.metadata.allowedOn } : {}),
+            })) ?? [],
+    };
+}
+
+export function convertDefaultEmailFromNotificationChannel(
+    channel: INotificationChannel,
+): ISmtpDefinitionObject {
+    const wh = channel.attributes?.destination as Smtp | undefined;
+    return {
+        id: channel.id,
+        type: "smtp",
+        destination: {
+            type: "default",
+            name: channel.attributes?.name ?? "",
+            address: wh?.fromEmail ?? "",
+            person: wh?.fromEmailName ?? "",
         },
         triggers:
             channel.attributes?.triggers?.map((trigger) => ({
