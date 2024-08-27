@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { DashboardContext } from "../../types/commonTypes.js";
 import { ChangeKpiWidgetFilterSettings } from "../../commands/index.js";
@@ -69,7 +69,7 @@ export function* changeKpiWidgetFilterSettingsHandler(
         layoutActions.replaceWidgetFilterSettings({
             ref: kpiWidget.ref,
             dateDataSet: dateDataSet?.dataSet.ref,
-            ignoreDashboardFilters: ignoreDashboardFilters,
+            ignoreDashboardFilters,
             undo: {
                 cmd,
             },

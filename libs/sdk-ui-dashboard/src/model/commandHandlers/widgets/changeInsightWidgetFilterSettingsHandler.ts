@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { DashboardContext } from "../../types/commonTypes.js";
 import { ChangeInsightWidgetFilterSettings } from "../../commands/index.js";
@@ -78,7 +78,7 @@ export function* changeInsightWidgetFilterSettingsHandler(
         layoutActions.replaceWidgetFilterSettings({
             ref: insightWidget.ref,
             dateDataSet: dateDataSet?.dataSet.ref,
-            ignoreDashboardFilters: ignoreDashboardFilters,
+            ignoreDashboardFilters,
             undo: {
                 cmd,
             },

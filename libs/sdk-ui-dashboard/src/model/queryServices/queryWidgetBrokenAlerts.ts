@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import {
     ObjRef,
@@ -26,6 +26,7 @@ import { IBrokenAlertFilterBasicInfo } from "../types/alertTypes.js";
 import { DashboardContext } from "../types/commonTypes.js";
 import { resolveDisplayFormMetadata } from "../utils/displayFormResolver.js";
 import { getBrokenAlertFiltersBasicInfo } from "../utils/alertsUtils.js";
+import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 
 export const QueryWidgetBrokenAlertService = createQueryService(
     "GDC.DASH/QUERY.WIDGET.BROKEN_ALERTS",
@@ -65,7 +66,17 @@ function* queryService(
         kpiWidget,
     );
 
-    return getBrokenAlertFiltersBasicInfo(alert, kpiWidget, appliedFilters, displayFormsMap);
+    const displayAsLabelMap: ReturnType<typeof selectAttributeFilterConfigsDisplayAsLabelMap> = yield select(
+        selectAttributeFilterConfigsDisplayAsLabelMap,
+    );
+
+    return getBrokenAlertFiltersBasicInfo(
+        alert,
+        kpiWidget,
+        appliedFilters,
+        displayFormsMap,
+        displayAsLabelMap,
+    );
 }
 
 interface GetKpiWidgetAndAlertResult {

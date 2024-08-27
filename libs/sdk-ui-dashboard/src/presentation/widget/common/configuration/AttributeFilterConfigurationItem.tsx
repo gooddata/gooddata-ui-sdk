@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
@@ -22,11 +22,12 @@ const tooltipAlignPoints: IAlignPoint[] = [{ align: "cl cr", offset: { x: -20, y
 interface IAttributeFilterConfigurationItemProps {
     widget: IWidget;
     displayFormRef: ObjRef;
+    displayAsLabel?: ObjRef;
     title: string;
 }
 
 export const AttributeFilterConfigurationItem: React.FC<IAttributeFilterConfigurationItemProps> = (props) => {
-    const { widget, displayFormRef, title } = props;
+    const { widget, displayFormRef, displayAsLabel, title } = props;
 
     const dfMap = useDashboardSelector(selectAttributeFilterDisplayFormsMap);
 
@@ -37,7 +38,7 @@ export const AttributeFilterConfigurationItem: React.FC<IAttributeFilterConfigur
                     return false;
                 }
                 const df = dfMap.get(reference.displayForm);
-                return areObjRefsEqual(df?.ref, displayFormRef);
+                return areObjRefsEqual(df?.ref, displayFormRef) || areObjRefsEqual(df?.ref, displayAsLabel);
             }),
     );
 

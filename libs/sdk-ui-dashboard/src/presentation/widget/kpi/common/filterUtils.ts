@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
     areObjRefsEqual,
@@ -14,7 +14,6 @@ import {
     FilterContextItem,
     IDashboardAttributeFilter,
     IDashboardDateFilter,
-    isDashboardAttributeFilterReference,
     isDashboardDateFilter,
     isDashboardDateFilterReference,
     IWidgetDefinition,
@@ -93,13 +92,6 @@ export function stripDateDatasets(filter: FilterContextItem): FilterContextItem 
     return {
         dateFilter: rest,
     };
-}
-
-export function isAttributeFilterIgnored(widget: IWidgetDefinition, displayForm: ObjRef): boolean {
-    return widget.ignoreDashboardFilters.some(
-        (filter) =>
-            isDashboardAttributeFilterReference(filter) && areObjRefsEqual(filter.displayForm, displayForm),
-    );
 }
 
 export function isDateFilterIgnored(widget: IWidgetDefinition, displayForm: ObjRef): boolean {

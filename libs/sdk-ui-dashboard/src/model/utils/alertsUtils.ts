@@ -38,6 +38,7 @@ export function getBrokenAlertFiltersBasicInfo(
     kpi: IWidgetDefinition,
     appliedFilters: IFilter[],
     displayFormsMap: ObjRefMap<IAttributeDisplayFormMetadataObject>,
+    displayAsLabelMap: Map<string, ObjRef>,
 ): IBrokenAlertFilterBasicInfo[] {
     const alertFilters = alert?.filterContext?.filters;
 
@@ -63,7 +64,11 @@ export function getBrokenAlertFiltersBasicInfo(
         );
 
         // ignored attribute filters are broken even if they are noop
-        const isIgnored = isAttributeFilterIgnored(kpi, attributeFilterDisplayForm.ref);
+        const isIgnored = isAttributeFilterIgnored(
+            kpi,
+            attributeFilterDisplayForm.ref,
+            displayAsLabelMap.get(alertFilter.attributeFilter.localIdentifier!),
+        );
         if (isIgnored) {
             result.push({
                 alertFilter,
@@ -107,10 +112,16 @@ export function getBrokenAlertFiltersBasicInfo(
     return result;
 }
 
-function isAttributeFilterIgnored(widget: IWidgetDefinition, displayForm: ObjRef): boolean {
+function isAttributeFilterIgnored(
+    widget: IWidgetDefinition,
+    displayForm: ObjRef,
+    displayAsLabel?: ObjRef,
+): boolean {
     return widget.ignoreDashboardFilters.some(
         (filter) =>
-            isDashboardAttributeFilterReference(filter) && areObjRefsEqual(filter.displayForm, displayForm),
+            isDashboardAttributeFilterReference(filter) &&
+            (areObjRefsEqual(filter.displayForm, displayForm) ||
+                areObjRefsEqual(filter.displayForm, displayAsLabel)),
     );
 }
 

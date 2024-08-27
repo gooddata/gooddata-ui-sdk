@@ -15,19 +15,11 @@ import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js
 import { validateFilterDisplayForm } from "./validation/filterDisplayFormValidation.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { selectAllCatalogDisplayFormsMap } from "../../../store/catalog/catalogSelectors.js";
-import {
-    areObjRefsEqual,
-    IAttributeMetadataObject,
-    IDashboardAttributeFilter,
-    isDashboardAttributeFilterReference,
-} from "@gooddata/sdk-model";
+import { IAttributeMetadataObject } from "@gooddata/sdk-model";
 import { query } from "../../../store/_infra/queryCall.js";
 import { queryAttributeByDisplayForm } from "../../../queries/index.js";
 import { newDisplayFormMap } from "../../../../_staging/metadata/objRefMap.js";
 import { selectEnableDuplicatedLabelValuesInAttributeFilter } from "../../../store/config/configSelectors.js";
-import { selectWidgets } from "../../../store/layout/layoutSelectors.js";
-import { ignoreFilterOnInsightWidget, unignoreFilterOnInsightWidget } from "../../../commands/insight.js";
-import { ExtendedDashboardWidget } from "src/model/types/layoutTypes.js";
 
 export function* changeAttributeDisplayFormHandler(
     ctx: DashboardContext,
@@ -39,9 +31,6 @@ export function* changeAttributeDisplayFormHandler(
             capabilities: { supportsElementUris },
         },
     } = ctx;
-
-    const originalFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByLocalId>> =
-        yield select(selectFilterContextAttributeFilterByLocalId(filterLocalId));
 
     const catalogDisplayFormsMap: ReturnType<typeof selectAllCatalogDisplayFormsMap> = yield select(
         selectAllCatalogDisplayFormsMap,
@@ -104,40 +93,6 @@ export function* changeAttributeDisplayFormHandler(
         "Inconsistent state in changeAttributeDisplayFormHandler, cannot update attribute filter for given local identifier.",
     );
 
-    if (enableDuplicatedLabelValuesInAttributeFilter) {
-        // sync change of filter's DF with potential ignoreDashboardFilters on insight widgets
-        const widgets: ReturnType<typeof selectWidgets> = yield select(selectWidgets);
-        for (const widget of widgets) {
-            const isWidgetReferencingChangedFilter = getIsWidgetReferencingChangedFilter(
-                widget,
-                originalFilter,
-            );
-
-            if (originalFilter && isWidgetReferencingChangedFilter) {
-                yield put(
-                    unignoreFilterOnInsightWidget(widget.ref, originalFilter.attributeFilter.displayForm),
-                );
-                yield put(ignoreFilterOnInsightWidget(widget.ref, changedFilter.attributeFilter.displayForm));
-            }
-        }
-    }
-
     yield dispatchDashboardEvent(attributeDisplayFormChanged(ctx, changedFilter, cmd.correlationId));
     yield call(dispatchFilterContextChanged, ctx, cmd);
-}
-
-function getIsWidgetReferencingChangedFilter(
-    widget: ExtendedDashboardWidget,
-    originalFilter?: IDashboardAttributeFilter,
-) {
-    return (
-        originalFilter &&
-        widget.ignoreDashboardFilters?.some((reference) => {
-            if (!isDashboardAttributeFilterReference(reference)) {
-                return false;
-            }
-
-            return areObjRefsEqual(reference.displayForm, originalFilter.attributeFilter.displayForm);
-        })
-    );
 }

@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import {
     InsightDateDatasets,
     MeasureDateDatasets,
@@ -36,6 +36,7 @@ import {
     selectAllCatalogDateDatasetsMap,
     selectCatalogDateDatasets,
 } from "../../../store/catalog/catalogSelectors.js";
+import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 
 /**
  * This generator validates that a date dataset with the provided ref can be used for date filtering of insight in
@@ -179,13 +180,20 @@ export function* validateAttributeFiltersToIgnore(
     const existingFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
         selectFilterContextAttributeFilters,
     );
+    const displayAsLabelMap: ReturnType<typeof selectAttributeFilterConfigsDisplayAsLabelMap> = yield select(
+        selectAttributeFilterConfigsDisplayAsLabelMap,
+    );
     const badIgnores: ObjRef[] = [];
     const filtersToIgnore: IDashboardAttributeFilter[] = [];
 
     for (const toIgnore of resolved.values()) {
-        const filterForDisplayForm = existingFilters.find((filter) =>
-            areObjRefsEqual(filter.attributeFilter.displayForm, toIgnore.ref),
-        );
+        const filterForDisplayForm = existingFilters.find((filter) => {
+            const displayAsLabel = displayAsLabelMap.get(filter.attributeFilter.localIdentifier!);
+            return (
+                areObjRefsEqual(filter.attributeFilter.displayForm, toIgnore.ref) ||
+                areObjRefsEqual(displayAsLabel, toIgnore.ref)
+            );
+        });
 
         if (!filterForDisplayForm) {
             badIgnores.push(toIgnore.ref);

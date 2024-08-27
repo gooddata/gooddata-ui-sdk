@@ -43,6 +43,7 @@ import {
     queryDateDatasetsForInsight,
     queryDateDatasetsForMeasure,
 } from "../../../queries/index.js";
+import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 
 function toAttributeDisplayFormRefs(references: IDashboardFilterReference[]) {
     return references.filter(isDashboardAttributeFilterReference).map((reference) => reference.displayForm);
@@ -63,12 +64,19 @@ function toRefs(references: IDashboardFilterReference[]) {
 
 function getIgnoredAttributeFilters(
     filters: IDashboardAttributeFilter[],
+    displayAsLabelMap: Map<string, ObjRef>,
     ignored: IDashboardFilterReference[],
 ): IDashboardAttributeFilter[] {
     const ignoredRefs = toAttributeDisplayFormRefs(ignored);
 
     return filters.filter((filter) => {
-        return ignoredRefs.some((ref) => areObjRefsEqual(filter.attributeFilter.displayForm, ref));
+        return ignoredRefs.some((ref) => {
+            const displayAsLabel = displayAsLabelMap.get(filter.attributeFilter.localIdentifier!);
+            return (
+                areObjRefsEqual(filter.attributeFilter.displayForm, ref) ||
+                areObjRefsEqual(displayAsLabel, ref)
+            );
+        });
     });
 }
 
@@ -85,6 +93,7 @@ function getIgnoredDateFilters(
 
 function getIgnoredFilters(
     filters: Array<IDashboardDateFilter | IDashboardAttributeFilter>,
+    displayAsLabelMap: Map<string, ObjRef>,
     ignored: IDashboardFilterReference[],
 ): Array<IDashboardDateFilter | IDashboardAttributeFilter> {
     const ignoredRefs = toRefs(ignored);
@@ -94,7 +103,11 @@ function getIgnoredFilters(
             if (isDashboardDateFilter(filter)) {
                 return areObjRefsEqual(filter.dateFilter.dataSet!, ref);
             }
-            return areObjRefsEqual(filter.attributeFilter.displayForm, ref);
+            const displayAsLabel = displayAsLabelMap.get(filter.attributeFilter.localIdentifier!);
+            return (
+                areObjRefsEqual(filter.attributeFilter.displayForm, ref) ||
+                areObjRefsEqual(displayAsLabel, ref)
+            );
         });
     });
 }
@@ -152,7 +165,10 @@ function* changeDateFilterIgnore(
     const filters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
         selectFilterContextDraggableFilters,
     );
-    const ignoredFilters = getIgnoredFilters(filters, widget.ignoreDashboardFilters);
+    const displayAsLabelMap: ReturnType<typeof selectAttributeFilterConfigsDisplayAsLabelMap> = yield select(
+        selectAttributeFilterConfigsDisplayAsLabelMap,
+    );
+    const ignoredFilters = getIgnoredFilters(filters, displayAsLabelMap, widget.ignoreDashboardFilters);
 
     return {
         dateDataSet,
@@ -266,7 +282,10 @@ function* getIgnoredAttributeFiltersWorWidget(widget: IAnalyticalWidget) {
     const attributeFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
         selectFilterContextAttributeFilters,
     );
-    return getIgnoredAttributeFilters(attributeFilters, widget.ignoreDashboardFilters);
+    const displayAsLabelMap: ReturnType<typeof selectAttributeFilterConfigsDisplayAsLabelMap> = yield select(
+        selectAttributeFilterConfigsDisplayAsLabelMap,
+    );
+    return getIgnoredAttributeFilters(attributeFilters, displayAsLabelMap, widget.ignoreDashboardFilters);
 }
 
 function* ignoreAttributeFilter(
