@@ -232,7 +232,7 @@
     "controlButtons.saveAndPublish.disable.noChanges.title": "無需保存任何更改",
     "controlButtons.saving.value": "儲蓄。。。",
     "gs.visualizationsList.tabs.all": "都",
-    "gs.visualizationsList.tabs.my": "創建者me",
+    "gs.visualizationsList.tabs.my": "由我創造",
     "visualizationsList.noInsights": "此工作區唔包含任何可視化效果。",
     "visualizationsList.create": "創建可視化效果",
     "visualizationsList.noUserInsights": "未創建任何可視化效果。",
