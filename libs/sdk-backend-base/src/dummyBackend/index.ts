@@ -885,6 +885,7 @@ class DummyOrganization implements IOrganization {
                     type: "smtp",
                     triggers: [],
                     destination: {
+                        type: "custom",
                         name: "",
                         address: "",
                         login: "",

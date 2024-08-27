@@ -452,6 +452,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                         type: "smtp",
                         triggers: [],
                         destination: {
+                            type: "custom",
                             name: "",
                             address: "",
                             person: "",
