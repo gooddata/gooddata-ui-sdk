@@ -29,6 +29,7 @@ export const DraggableStackCreatePanelItem: React.FC<IDraggableStackCreatePanelI
     CreatePanelItemComponent,
     WrapCreatePanelItemWithDragComponent,
 }) => {
+    console.log("STACK", STACK_WIDGET_SIZE_INFO_DEFAULT);
     return (
         <DraggableCreatePanelItem
             Component={CreatePanelItemComponent}

@@ -17,7 +17,7 @@ export const DefaultDashboardStackWidget: React.FC<IDefaultDashboardStackWidgetP
             screen={screen}
         >
             <DashboardItemBase visualizationClassName="gd-stack-widget-wrapper">
-                {() => <div> Default Stack Widget </div>}
+                {() => <div> No visualisations in stack. </div>}
             </DashboardItemBase>
         </DashboardItem>
     );

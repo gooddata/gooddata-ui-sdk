@@ -551,7 +551,7 @@ export interface Root {
     unmount(): void;
 }
 
-// @internal
+// @internal (undocumented)
 export const STACK_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo;
 
 // @internal (undocumented)

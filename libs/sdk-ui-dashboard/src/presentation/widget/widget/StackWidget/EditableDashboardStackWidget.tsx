@@ -10,6 +10,7 @@ import {
 } from "../../../../model/index.js";
 import { IDefaultDashboardStackWidgetProps } from "./types.js";
 import { widgetRef } from "@gooddata/sdk-model";
+import { ConfigurationBubble } from "../../common/index.js";
 
 /**
  * @internal
@@ -41,7 +42,7 @@ export const EditableDashboardStackWidget: React.FC<IDefaultDashboardStackWidget
                 contentClassName={cx({ "is-editable": isEditable })}
                 visualizationClassName="gd-stack-widget-wrapper"
             >
-                {() => <div> Stack Widget </div>}
+                {() => <ConfigurationBubble>Tete</ConfigurationBubble>}
             </DashboardItemBase>
         </DashboardItem>
     );

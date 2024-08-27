@@ -168,11 +168,14 @@ export interface IStackWidgetBase extends IAnalyticalWidget {
     readonly type: "stack";
 
     /**
-     * Insights part of the stack.
+     * Insights which are  part of the stack.
      */
     readonly insights: IInsightWidgetBase[];
 
-    readonly insight?: IInsightWidget;
+    /**
+     * Selected insight
+     */
+    readonly selectedInsight?: ObjRef;
 }
 
 /**

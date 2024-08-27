@@ -3237,6 +3237,7 @@ export interface IStackWidget extends IStackWidgetBase, IDashboardObjectIdentity
 // @public
 export interface IStackWidgetBase extends IAnalyticalWidget {
     readonly insights: IInsightWidgetBase[];
+    readonly selectedInsight?: ObjRef;
     // (undocumented)
     readonly type: "stack";
 }

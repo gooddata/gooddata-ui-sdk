@@ -55,9 +55,9 @@ export const RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo =
     },
 };
 
+// NESTOR
 /**
  * @internal
- * // NESTOR
  */
 export const STACK_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo = {
     width: {
