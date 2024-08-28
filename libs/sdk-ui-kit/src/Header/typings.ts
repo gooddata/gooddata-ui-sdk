@@ -62,7 +62,6 @@ export interface IAppHeaderProps {
     onInviteItemClick?: (e: React.MouseEvent) => void;
 
     search?: React.ReactNode;
-    mobileSearch?: React.ReactNode;
 }
 
 /**

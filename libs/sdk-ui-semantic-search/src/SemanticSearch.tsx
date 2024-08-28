@@ -5,11 +5,10 @@ import { useDebouncedState, Input, Dropdown } from "@gooddata/sdk-ui-kit";
 import { GenAISemanticSearchType, ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { SearchResultsDropdownList } from "./SearchResultsDropdownList.js";
-import { useSemanticSearch } from "./hooks/index.js";
+import { useSemanticSearch, useElementWidth } from "./hooks/index.js";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import classnames from "classnames";
 import { ListItem } from "./types.js";
-import { useElementWidth } from "./hooks/useElementWidth.js";
 
 /**
  * Semantic search component props.

@@ -33,6 +33,9 @@ const CoreAnnotatedResultsItem: React.FC<ListItemProps<ISemanticSearchResultItem
             })}
             onPointerOver={() => setActive(listItem)}
             onClick={(e) => onSelect(listItem, e.nativeEvent)}
+            onAuxClick={(e) => {
+                e.button === 1 && onSelect(listItem, e.nativeEvent);
+            }}
         >
             <span className="gd-semantic-search__results-item__icon">
                 {renderItemIcon(listItem, { color: theme?.palette?.complementary?.c5 ?? "#B0BECA" })}
