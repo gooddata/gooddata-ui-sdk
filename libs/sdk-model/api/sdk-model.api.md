@@ -3769,6 +3769,8 @@ export interface IWorkspaceDataFilter {
     // (undocumented)
     id: string;
     // (undocumented)
+    isInherited: boolean;
+    // (undocumented)
     settings: IWorkspaceDataFilterSetting[];
     // (undocumented)
     title?: string;

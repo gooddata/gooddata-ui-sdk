@@ -115,4 +115,12 @@ export class TigerWorkspaceStyling implements IWorkspaceStylingService {
         const colorPaletteId = await objRefToIdentifier(colorPaletteRef, this.authCall);
         await this.settingsService.setColorPalette(colorPaletteId);
     }
+
+    public async clearActiveTheme(): Promise<void> {
+        await this.settingsService.deleteTheme();
+    }
+
+    public async clearActiveColorPalette(): Promise<void> {
+        await this.settingsService.deleteColorPalette();
+    }
 }

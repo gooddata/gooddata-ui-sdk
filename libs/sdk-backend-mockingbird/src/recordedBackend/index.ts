@@ -278,6 +278,12 @@ function recordedWorkspace(
                 async setActiveColorPalette(): Promise<void> {
                     return Promise.resolve(undefined);
                 },
+                clearActiveColorPalette(): Promise<void> {
+                    return Promise.resolve(undefined);
+                },
+                clearActiveTheme(): Promise<void> {
+                    return Promise.resolve(undefined);
+                },
             };
         },
         dateFilterConfigs(): IDateFilterConfigsQuery {

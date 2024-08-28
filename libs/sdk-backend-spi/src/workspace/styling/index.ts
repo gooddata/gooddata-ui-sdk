@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { IColorPalette, ITheme, ObjRef } from "@gooddata/sdk-model";
 
 /**
@@ -42,6 +42,13 @@ export interface IWorkspaceStylingService {
     setActiveTheme(themeRef: ObjRef): Promise<void>;
 
     /**
+     * Clear active theme setting from workspace.
+     *
+     * @returns promise
+     */
+    clearActiveTheme(): Promise<void>;
+
+    /**
      * Request active color palette setting from workspace.
      *
      * @returns promise of color palette object reference
@@ -55,4 +62,11 @@ export interface IWorkspaceStylingService {
      * @returns promise
      */
     setActiveColorPalette(colorPaletteRef: ObjRef): Promise<void>;
+
+    /**
+     * Clear active color palette setting from workspace.
+     *
+     * @returns promise
+     */
+    clearActiveColorPalette(): Promise<void>;
 }
