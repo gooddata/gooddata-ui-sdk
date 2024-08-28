@@ -9,6 +9,7 @@ export interface IWorkspaceDataFilter {
     id: string;
     title?: string;
     settings: IWorkspaceDataFilterSetting[];
+    isInherited: boolean;
 }
 
 /**

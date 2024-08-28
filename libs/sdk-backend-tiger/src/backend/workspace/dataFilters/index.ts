@@ -4,7 +4,10 @@ import { IDataFiltersService } from "@gooddata/sdk-backend-spi";
 import { IWorkspaceDataFilter, IWorkspaceDataFilterSetting } from "@gooddata/sdk-model";
 
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
-import { JsonApiWorkspaceDataFilterSettingOutWithLinks } from "@gooddata/api-client-tiger";
+import {
+    JsonApiWorkspaceDataFilterSettingOutWithLinks,
+    JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum,
+} from "@gooddata/api-client-tiger";
 
 export class TigerDataFiltersService implements IDataFiltersService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -33,6 +36,9 @@ export class TigerDataFiltersService implements IDataFiltersService {
                         id: filter.id,
                         title: filter.attributes?.title,
                         settings: settingsMap[filter.id] || [],
+                        isInherited:
+                            filter.meta?.origin?.originType ===
+                            JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum.PARENT,
                     };
                 }) || []
             );
