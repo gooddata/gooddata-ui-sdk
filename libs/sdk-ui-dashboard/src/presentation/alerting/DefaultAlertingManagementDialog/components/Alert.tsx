@@ -99,6 +99,17 @@ export const Alert: React.FC<IAlertProps> = (props) => {
 
     return (
         <div className={cx("gd-notifications-channel", "s-alert", { editable: true, hover })}>
+            {dropdownOpened && buttonRef.current ? (
+                <AlertDropdown
+                    paused={paused}
+                    alignTo={buttonRef.current}
+                    onClose={closeDropdown}
+                    onEdit={handleEdit}
+                    onDelete={handleRemove}
+                    onPause={handlePause}
+                    onResume={handleResume}
+                />
+            ) : null}
             <div className="gd-notifications-channel-menu">
                 <span
                     className="gd-notifications-channel-menu-icon s-alert-menu-icon"
@@ -132,17 +143,6 @@ export const Alert: React.FC<IAlertProps> = (props) => {
                     </div>
                 </div>
             </div>
-            {dropdownOpened && buttonRef.current ? (
-                <AlertDropdown
-                    paused={paused}
-                    alignTo={buttonRef.current}
-                    onClose={closeDropdown}
-                    onEdit={handleEdit}
-                    onDelete={handleRemove}
-                    onPause={handlePause}
-                    onResume={handleResume}
-                />
-            ) : null}
         </div>
     );
 };

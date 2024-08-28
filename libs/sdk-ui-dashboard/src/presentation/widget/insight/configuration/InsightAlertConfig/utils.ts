@@ -9,11 +9,12 @@ import {
     IInsight,
     IMeasure,
     insightBucket,
+    insightVisualizationType,
     measureAlias,
     measureTitle,
 } from "@gooddata/sdk-model";
 import { COMPARISON_OPERATORS } from "./constants.js";
-import { BucketNames } from "@gooddata/sdk-ui";
+import { BucketNames, VisType } from "@gooddata/sdk-ui";
 import { messages } from "./messages.js";
 import { IntlShape } from "react-intl";
 
@@ -101,24 +102,42 @@ export const getSupportedInsightMeasuresByInsight = (insight: IInsight | null | 
     const insightType = visualizationUrl?.split(":")[1] as InsightType;
 
     switch (insightType) {
-        case "headline": {
+        case "headline":
+        case "bar":
+        case "column":
+        case "line":
+        case "area": {
             const insightMeasuresBucket: IBucket | undefined = insight
                 ? insightBucket(insight, BucketNames.MEASURES)
                 : undefined;
             return insightMeasuresBucket ? bucketMeasures(insightMeasuresBucket) : [];
         }
+        case "combo2":
         case "scatter":
+        case "bubble": {
+            const insightMeasuresBucket: IBucket | undefined = insight
+                ? insightBucket(insight, BucketNames.MEASURES)
+                : undefined;
+            const insightSecondaryMeasuresBucket: IBucket | undefined = insight
+                ? insightBucket(insight, BucketNames.SECONDARY_MEASURES)
+                : undefined;
+            return [
+                ...(insightMeasuresBucket ? bucketMeasures(insightMeasuresBucket) : []),
+                ...(insightSecondaryMeasuresBucket ? bucketMeasures(insightSecondaryMeasuresBucket) : []),
+            ];
+        }
+        case "repeater": {
+            const insightColumnsBucket: IBucket | undefined = insight
+                ? insightBucket(insight, BucketNames.COLUMNS)
+                : undefined;
+
+            return insightColumnsBucket ? bucketMeasures(insightColumnsBucket) : [];
+        }
         case "donut":
         case "treemap":
-        case "combo2":
         case "heatmap":
-        case "bubble":
         case "bullet":
-        case "bar":
         case "table":
-        case "area":
-        case "column":
-        case "line":
         case "pushpin":
         case "pie":
         case "sankey":
@@ -126,9 +145,27 @@ export const getSupportedInsightMeasuresByInsight = (insight: IInsight | null | 
         case "funnel":
         case "pyramid":
         case "waterfall":
-        case "repeater":
         default: {
             return [];
         }
+    }
+};
+
+export const isSupportedInsightVisType = (insight: IInsight | null | undefined): boolean => {
+    const type = insight ? (insightVisualizationType(insight) as VisType) : null;
+
+    switch (type) {
+        case "headline":
+        case "bar":
+        case "column":
+        case "line":
+        case "area":
+        case "combo2":
+        case "scatter":
+        case "bubble":
+        case "repeater":
+            return true;
+        default:
+            return false;
     }
 };
