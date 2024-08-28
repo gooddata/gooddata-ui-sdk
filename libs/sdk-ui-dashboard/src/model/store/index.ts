@@ -388,6 +388,9 @@ export {
     selectWebhooksError,
 } from "./webhooks/webhooksSelectors.js";
 
+export { SmtpsState } from "./smtps/smtpsState.js";
+export { selectSmtps, selectSmtpsIsLoading, selectSmtpsError } from "./smtps/smtpsSelectors.js";
+
 export { AutomationsState } from "./automations/automationsState.js";
 export {
     selectAutomations,

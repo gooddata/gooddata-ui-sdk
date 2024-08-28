@@ -32,6 +32,7 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
         isLoadingScheduleData,
         automations,
         webhooks,
+        emails,
     } = props;
     const [scheduledEmailToDelete, setScheduledEmailToDelete] = useState<IAutomationMetadataObject | null>(
         null,
@@ -100,6 +101,7 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
                         currentUserEmail={currentUser?.email}
                         noSchedulesMessageId={messages.scheduleManagementNoSchedules.id!}
                         webhooks={webhooks}
+                        emails={emails}
                     />
                 </div>
                 <div className="gd-content-divider"></div>

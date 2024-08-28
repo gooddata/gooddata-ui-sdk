@@ -5,7 +5,7 @@ import {
     IInsightWidget,
 } from "@gooddata/sdk-model";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
     useDashboardSelector,
@@ -20,6 +20,7 @@ import {
     dispatchAndWaitFor,
     selectAutomationsAlertsInContext,
     selectDashboardId,
+    selectSmtps,
 } from "../../../../../../model/index.js";
 import { createDefaultAlert, getSupportedInsightMeasuresByInsight } from "../utils.js";
 import { messages } from "../messages.js";
@@ -39,7 +40,8 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     const dispatch = useDashboardDispatch();
     const effectiveBackend = useBackendStrict();
     const effectiveWorkspace = useWorkspaceStrict();
-    const destinations = useDashboardSelector(selectWebhooks);
+    const webhooks = useDashboardSelector(selectWebhooks);
+    const emails = useDashboardSelector(selectSmtps);
     const alerts = useDashboardSelector(selectAutomationsAlertsInContext(widget?.localIdentifier));
     const dashboard = useDashboardSelector(selectDashboardId);
     const insight = useDashboardSelector(selectInsightByWidgetRef(widget?.ref));
@@ -86,7 +88,8 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     const { result: widgetFilters, status: widgetFiltersStatus } = useWidgetFilters(widget, insight);
     const supportedMeasures = getSupportedInsightMeasuresByInsight(insight);
     const defaultMeasure = supportedMeasures[0];
-    const defaultNotificationChannelId = destinations[0].id;
+    const destinations = useMemo(() => [...emails, ...webhooks], [emails, webhooks]);
+    const defaultNotificationChannelId = destinations[0]?.id;
     const hasAlerts = alerts.length > 0;
     const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);
     const maxAutomationsReached = automationsCount >= maxAutomations && !unlimitedAutomationsEntitlement;

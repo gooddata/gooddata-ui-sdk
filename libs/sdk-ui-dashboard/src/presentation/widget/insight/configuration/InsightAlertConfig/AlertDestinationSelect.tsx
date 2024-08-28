@@ -3,12 +3,12 @@ import React from "react";
 import { Dropdown, Button, List, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import { DROPDOWN_ITEM_HEIGHT } from "./constants.js";
-import { Webhooks } from "../../../../../model/index.js";
+import { Smtps, Webhooks } from "../../../../../model/index.js";
 
 export interface IAlertDestinationSelectProps {
     selectedDestination: string;
     onDestinationChange: (destinationId: string) => void;
-    destinations: Webhooks;
+    destinations: (Webhooks[number] | Smtps[number])[];
 }
 
 export const AlertDestinationSelect: React.FC<IAlertDestinationSelectProps> = ({

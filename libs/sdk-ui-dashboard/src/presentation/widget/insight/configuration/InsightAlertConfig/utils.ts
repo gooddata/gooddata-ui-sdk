@@ -54,7 +54,7 @@ export const createDefaultAlert = (
         type: "automation",
         title: getMeasureTitle(measure),
         description: "",
-        webhook: notificationChannelId,
+        notificationChannel: notificationChannelId,
         alert: {
             condition: {
                 type: "comparison",

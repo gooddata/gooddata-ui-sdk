@@ -19,6 +19,7 @@ import {
     uiActions,
     selectEntitlementMaxAutomations,
     selectWebhooks,
+    selectSmtps,
     selectAutomationsCount,
     selectUsers,
     selectWebhooksIsLoading,
@@ -60,6 +61,7 @@ export const useDashboardScheduledEmails = () => {
 
     const automationsCount = useDashboardSelector(selectAutomationsCount);
     const webhooks = useDashboardSelector(selectWebhooks);
+    const emails = useDashboardSelector(selectSmtps);
     const users = useDashboardSelector(selectUsers);
 
     const automations = useDashboardSelector(selectAutomationsSchedulesInContext);
@@ -268,6 +270,7 @@ export const useDashboardScheduledEmails = () => {
 
     return {
         webhooks,
+        emails,
         users,
         automations,
         automationsCount,

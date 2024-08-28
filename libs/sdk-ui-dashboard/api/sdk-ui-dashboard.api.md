@@ -237,6 +237,7 @@ import { ISettings } from '@gooddata/sdk-model';
 import { IShareDialogInteractionData } from '@gooddata/sdk-ui-kit';
 import { ISharedObject } from '@gooddata/sdk-ui-kit';
 import { ISharingApplyPayload as ISharingApplyPayload_2 } from '@gooddata/sdk-ui-kit';
+import { ISmtpDefinitionObject } from '@gooddata/sdk-model';
 import { ITempFilterContext } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
 import { ITitleProps as ITitleProps_2 } from './types.js';
@@ -278,6 +279,7 @@ import { Selector } from '@reduxjs/toolkit';
 import { SetCatalogItemsPayload } from './catalogReducers.js';
 import { SetCatalogMeasuresAndFactsPayload } from './catalogReducers.js';
 import { ShareStatus } from '@gooddata/sdk-model';
+import { Smtps as Smtps_2 } from '../index.js';
 import { TypedUseSelectorHook } from 'react-redux';
 import { UiState as UiState_2 } from './uiState.js';
 import { Uri } from '@gooddata/sdk-model';
@@ -2727,6 +2729,8 @@ export interface DashboardState {
     renderMode: RenderModeState;
     // (undocumented)
     saving: SavingState;
+    // @alpha (undocumented)
+    smtps: SmtpsState;
     // @beta
     ui: UiState;
     // (undocumented)
@@ -4938,6 +4942,7 @@ export interface IScheduledEmailDialogProps {
     automations: IAutomationMetadataObject[];
     context?: IScheduledEmailDialogPropsContext;
     editSchedule?: IAutomationMetadataObject;
+    emails: ISmtpDefinitionObject[];
     isVisible?: boolean;
     onCancel?: () => void;
     onDeleteError?: (error: GoodDataSdkError) => void;
@@ -4962,6 +4967,7 @@ export interface IScheduledEmailDialogPropsContext {
 export interface IScheduledEmailManagementDialogProps {
     automations: IAutomationMetadataObject[];
     context?: IScheduledEmailDialogPropsContext;
+    emails: ISmtpDefinitionObject[];
     isLoadingScheduleData: boolean;
     isVisible?: boolean;
     onAdd?: () => void;
@@ -7556,6 +7562,15 @@ export const selectSettings: DashboardSelector<ISettings>;
 // @internal
 export const selectShouldHidePixelPerfectExperience: DashboardSelector<string | number | boolean | object>;
 
+// @alpha
+export const selectSmtps: DashboardSelector<Smtps>;
+
+// @alpha
+export const selectSmtpsError: DashboardSelector<GoodDataSdkError | undefined>;
+
+// @alpha
+export const selectSmtpsIsLoading: DashboardSelector<boolean>;
+
 // @internal
 export const selectStash: DashboardSelector<LayoutStash>;
 
@@ -7937,6 +7952,19 @@ export class SingleDashboardStoreAccessor {
 
 // @public
 export function singleEventTypeHandler(type: (DashboardEvents | ICustomDashboardEvent)["type"], handler: DashboardEventHandler["handler"]): DashboardEventHandler;
+
+// @alpha
+export type Smtps = ISmtpDefinitionObject[];
+
+// @alpha (undocumented)
+export interface SmtpsState {
+    // (undocumented)
+    error?: GoodDataSdkError;
+    // (undocumented)
+    loading: boolean;
+    // (undocumented)
+    smtps: Smtps;
+}
 
 // @beta
 export type StashedDashboardItemsId = string;
@@ -8719,6 +8747,7 @@ export type UseDashboardQueryProcessingResult<TQueryCreatorArgs extends any[], T
 // @alpha
 export const useDashboardScheduledEmails: () => {
     webhooks: Webhooks_2;
+    emails: Smtps_2;
     users: Users_2;
     automations: IAutomationMetadataObject[];
     automationsCount: number;

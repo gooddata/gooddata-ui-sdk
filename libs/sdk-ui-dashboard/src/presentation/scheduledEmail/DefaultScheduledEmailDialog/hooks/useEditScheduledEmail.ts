@@ -41,7 +41,7 @@ import {
 import { invariant } from "ts-invariant";
 
 export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
-    const { editSchedule, webhooks, context } = props;
+    const { editSchedule, webhooks, emails, context } = props;
     const editWidgetId = (
         editSchedule?.exportDefinitions?.find((exportDefinition) =>
             isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload),
@@ -61,13 +61,15 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
         widget,
     });
 
+    const firstChannel = emails[0]?.id ?? webhooks[0]?.id;
+
     const [state, setState] = useState<IAutomationMetadataObjectDefinition>(
         editSchedule ??
             newAutomationMetadataObjectDefinition(
                 isWidget
                     ? {
                           dashboardId: dashboardId!,
-                          webhook: webhooks[0]?.id,
+                          notificationChannel: firstChannel,
                           insight,
                           widget,
                           /**
@@ -78,7 +80,7 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
                       }
                     : {
                           dashboardId: dashboardId!,
-                          webhook: webhooks[0]?.id,
+                          notificationChannel: firstChannel,
                           title: dashboardTitle,
                           filters: areFiltersChanged ? filtersToStore : undefined,
                       },
@@ -343,14 +345,14 @@ function newWidgetExportDefinitionMetadataObjectDefinition({
 
 function newAutomationMetadataObjectDefinition({
     dashboardId,
-    webhook,
+    notificationChannel,
     title,
     insight,
     widget,
     filters,
 }: {
     dashboardId: string;
-    webhook: string;
+    notificationChannel: string;
     title?: string;
     insight?: IInsight;
     widget?: ExtendedDashboardWidget;
@@ -390,7 +392,7 @@ function newAutomationMetadataObjectDefinition({
         },
         exportDefinitions: [{ ...exportDefinition }],
         recipients: [],
-        webhook,
+        notificationChannel,
         dashboard: dashboardId,
     };
 

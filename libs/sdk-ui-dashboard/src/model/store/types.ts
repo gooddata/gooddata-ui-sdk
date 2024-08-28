@@ -24,6 +24,7 @@ import { IInaccessibleDashboard } from "../types/inaccessibleDashboardTypes.js";
 import { AttributeFilterConfigsState } from "./attributeFilterConfigs/attributeFilterConfigsState.js";
 import { DateFilterConfigsState } from "./dateFilterConfigs/dateFilterConfigsState.js";
 import { WebhooksState } from "./webhooks/webhooksState.js";
+import { SmtpsState } from "./smtps/smtpsState.js";
 import { AutomationsState } from "./automations/automationsState.js";
 import { UsersState } from "./users/usersState.js";
 import { FilterViewsState } from "./filterViews/filterViewsState.js";
@@ -87,6 +88,8 @@ export interface DashboardState {
     dashboardPermissions: DashboardPermissionsState;
     /** @alpha */
     webhooks: WebhooksState;
+    /** @alpha */
+    smtps: SmtpsState;
     /** @alpha */
     automations: AutomationsState;
     /** @alpha */

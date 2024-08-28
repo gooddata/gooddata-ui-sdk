@@ -56,7 +56,7 @@ export function convertAutomation(
         attributes;
     const { createdBy, modifiedBy } = relationships;
 
-    const webhook = relationships?.notificationChannel?.data?.id;
+    const notificationChannel = relationships?.notificationChannel?.data?.id;
     const exportDefinitionsIds = relationships?.exportDefinitions?.data?.map((ed) => ed.id) ?? [];
     const includedExportDefinitions = compact(
         exportDefinitionsIds.map((exportDefinitionId) =>
@@ -98,7 +98,7 @@ export function convertAutomation(
         // Relationships
         exportDefinitions,
         recipients,
-        webhook,
+        notificationChannel,
         createdBy: convertUserIdentifier(createdBy, included),
         updatedBy: convertUserIdentifier(modifiedBy, included),
         created: createdAt,

@@ -11,7 +11,7 @@ import {
     SingleSelectListItem,
 } from "@gooddata/sdk-ui-kit";
 import { DEFAULT_DROPDOWN_ALIGN_POINTS, DEFAULT_DROPDOWN_ZINDEX } from "../../constants.js";
-import { IWebhookDefinitionObject } from "@gooddata/sdk-model";
+import { ISmtpDefinitionObject, IWebhookDefinitionObject } from "@gooddata/sdk-model";
 
 const DROPDOWN_WIDTH = 199;
 
@@ -21,27 +21,27 @@ interface IDestinationItem {
 }
 
 interface IDestinationSelectProps {
-    webhooks: IWebhookDefinitionObject[];
+    notificationChannels: (IWebhookDefinitionObject | ISmtpDefinitionObject)[];
     selectedItemId: string | undefined;
     onChange: (selectedItemId: string) => void;
 }
 
 export const DestinationSelect: React.FC<IDestinationSelectProps> = ({
-    webhooks,
+    notificationChannels,
     selectedItemId,
     onChange,
 }) => {
     const intl = useIntl();
     const items = useMemo(() => {
         return (
-            webhooks?.map(
+            notificationChannels?.map(
                 (wh): IDestinationItem => ({
                     id: wh.id,
                     title: wh.destination?.name ?? wh.id,
                 }),
             ) ?? []
         );
-    }, [webhooks]);
+    }, [notificationChannels]);
 
     const selectedItem = useMemo(() => {
         return items.find((item) => item.id === selectedItemId);
