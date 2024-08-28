@@ -1,5 +1,5 @@
 // (C) 2019-2024 GoodData Corporation
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import noop from "lodash/noop.js";
 import { defineMessage, useIntl } from "react-intl";
 import {
@@ -55,8 +55,17 @@ const DEFAULT_MAX_RECIPIENTS = "10";
 const DEFAULT_MIN_RECURRENCE_MINUTES = "60";
 
 export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
-    const { onCancel, onDeleteSuccess, onDeleteError, isVisible, editSchedule, users, webhooks, context } =
-        props;
+    const {
+        onCancel,
+        onDeleteSuccess,
+        onDeleteError,
+        isVisible,
+        editSchedule,
+        users,
+        webhooks,
+        emails,
+        context,
+    } = props;
     const intl = useIntl();
     const [scheduledEmailToDelete, setScheduledEmailToDelete] = useState<
         IAutomationMetadataObject | IAutomationMetadataObjectDefinition | null
@@ -78,6 +87,8 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
     );
     const allowHourlyRecurrence =
         parseInt(minimumRecurrenceMinutesEntitlement?.value ?? DEFAULT_MIN_RECURRENCE_MINUTES, 10) === 60;
+
+    const notificationChannels = useMemo(() => [...emails, ...webhooks], [webhooks, emails]);
 
     const { alignPoints, onAlign } = useScheduledEmailDialogAlignment();
     const {
@@ -141,7 +152,7 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
     };
 
     const isValid = (automation.recipients?.length ?? 0) <= maxAutomationsRecipients;
-    const isDestinationEmpty = !automation.webhook;
+    const isDestinationEmpty = !automation.notificationChannel;
     const isSubmitDisabled =
         !isValid ||
         isDestinationEmpty ||
@@ -251,8 +262,8 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
                         />
                         <ContentDivider className="gd-divider-with-margin" />
                         <DestinationSelect
-                            webhooks={webhooks}
-                            selectedItemId={automation.webhook}
+                            notificationChannels={notificationChannels}
+                            selectedItemId={automation.notificationChannel}
                             onChange={onDestinationChange}
                         />
                         <ContentDivider className="gd-divider-with-margin" />

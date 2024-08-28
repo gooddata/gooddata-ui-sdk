@@ -6,15 +6,16 @@ import {
     IMeasure,
 } from "@gooddata/sdk-model";
 
+import { Smtps, Webhooks } from "../../../../../model/index.js";
+
 import { EditAlert } from "./EditAlert.js";
-import { Webhooks } from "../../../../../model/index.js";
 
 interface ICreateAlertProps {
     alert: IAutomationMetadataObjectDefinition | null;
     onClose: () => void;
     onCancel: () => void;
     onCreate?: (alert: IAutomationMetadataObjectDefinition) => void;
-    destinations: Webhooks;
+    destinations: (Webhooks[number] | Smtps[number])[];
     hasAlerts: boolean;
     measures: IMeasure[];
     maxAutomationsReached: boolean;

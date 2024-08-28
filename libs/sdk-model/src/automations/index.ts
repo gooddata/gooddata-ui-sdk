@@ -25,10 +25,10 @@ export interface IAutomationMetadataObjectBase {
     alert?: IAutomationAlert;
 
     /**
-     * Target webhook that automation will trigger.
+     * Target notificationChannel that automation will trigger.
      * String with webhook (notificationChannel) id.
      */
-    webhook?: string;
+    notificationChannel?: string;
 
     /**
      * Export definitions of the automation (attachments).

@@ -51,6 +51,7 @@ import { automationsSliceReducer } from "./automations/index.js";
 import { usersSliceReducer } from "./users/index.js";
 import { objRefToString } from "@gooddata/sdk-model";
 import { filterViewsSliceReducer } from "./filterViews/index.js";
+import { smtpsSliceReducer } from "./smtps/index.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
@@ -325,6 +326,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
         ui: uiSliceReducer,
         dashboardPermissions: dashboardPermissionsSliceReducer,
         webhooks: webhooksSliceReducer,
+        smtps: smtpsSliceReducer,
         automations: automationsSliceReducer,
         users: usersSliceReducer,
         filterViews: filterViewsSliceReducer,

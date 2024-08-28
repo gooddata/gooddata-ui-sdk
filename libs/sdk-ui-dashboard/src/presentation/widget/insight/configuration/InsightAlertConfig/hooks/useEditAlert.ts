@@ -77,7 +77,7 @@ export const useEditAlert = ({ alert, onCreate, onUpdate }: IUseEditAlertProps) 
     const changeDestination = (destinationId: string) => {
         setUpdatedAlert((alert) => ({
             ...alert,
-            webhook: destinationId,
+            notificationChannel: destinationId,
         }));
     };
 

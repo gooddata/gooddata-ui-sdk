@@ -824,9 +824,9 @@ export interface IAutomationMetadataObjectBase {
     metadata?: {
         widget?: string;
     };
+    notificationChannel?: string;
     recipients?: IAutomationRecipient[];
     schedule?: IAutomationSchedule;
-    webhook?: string;
 }
 
 // @alpha (undocumented)

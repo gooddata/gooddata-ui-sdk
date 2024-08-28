@@ -30,7 +30,7 @@ export function convertAutomation(
         title,
         recipients,
         details,
-        webhook,
+        notificationChannel,
         dashboard,
         metadata,
     } = automation;
@@ -50,9 +50,9 @@ export function convertAutomation(
                       data: recipients?.map((r) => ({ type: "user", id: r.id })) ?? [],
                   }
                 : undefined,
-            notificationChannel: webhook
+            notificationChannel: notificationChannel
                 ? {
-                      data: { type: "notificationChannel", id: webhook },
+                      data: { type: "notificationChannel", id: notificationChannel },
                   }
                 : undefined,
             analyticalDashboard: dashboard

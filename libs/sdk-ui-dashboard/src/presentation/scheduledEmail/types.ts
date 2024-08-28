@@ -3,6 +3,7 @@ import { ComponentType } from "react";
 import {
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
+    ISmtpDefinitionObject,
     IWebhookDefinitionObject,
     IWorkspaceUser,
     ObjRef,
@@ -97,6 +98,11 @@ export interface IScheduledEmailDialogProps {
     webhooks: IWebhookDefinitionObject[];
 
     /**
+     * Emails in organization
+     */
+    emails: ISmtpDefinitionObject[];
+
+    /**
      * Automations in workspace
      */
     automations: IAutomationMetadataObject[];
@@ -145,6 +151,11 @@ export interface IScheduledEmailManagementDialogProps {
      * Webhooks in organization
      */
     webhooks: IWebhookDefinitionObject[];
+
+    /**
+     * Emails in organization
+     */
+    emails: ISmtpDefinitionObject[];
 
     /**
      * Automations in workspace

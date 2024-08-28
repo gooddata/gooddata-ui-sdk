@@ -67,6 +67,8 @@ import { loadWorkspaceUsers } from "../common/loadWorkspaceUsers.js";
 import { usersActions } from "../../../store/users/index.js";
 import { filterViewsActions } from "../../../store/filterViews/index.js";
 import { loadFilterViews } from "./loadFilterViews.js";
+import { smtpsActions } from "../../../store/smtps/index.js";
+import { loadOrganizationSmtps } from "../common/loadOrganizationSmtps.js";
 
 async function loadDashboardFromBackend(
     ctx: DashboardContext,
@@ -253,12 +255,14 @@ function* loadExistingDashboard(
         call(loadWorkspaceAutomations, ctx, config.settings),
         call(loadWorkspaceUsers, ctx, config.settings),
         call(loadOrganizationWebhooks, ctx, config.settings),
+        call(loadOrganizationSmtps, ctx, config.settings),
     ];
 
-    const [automations, users, webhooks]: [
+    const [automations, users, webhooks, smtps]: [
         PromiseFnReturnType<typeof loadWorkspaceAutomations>,
         PromiseFnReturnType<typeof loadWorkspaceUsers>,
         PromiseFnReturnType<typeof loadOrganizationWebhooks>,
+        PromiseFnReturnType<typeof loadOrganizationSmtps>,
     ] = yield all(ffCalls);
 
     const batch: BatchAction = batchActions(
@@ -298,6 +302,7 @@ function* loadExistingDashboard(
             automationsActions.setAutomations(automations),
             automationsActions.refreshAutomationsFingerprint(),
             webhooksActions.setWebhooks(webhooks),
+            smtpsActions.setSmtps(smtps),
             usersActions.setUsers(users),
             filterViewsActions.setFilterViews({
                 dashboard: ctx.dashboardRef!, // should be defined as we are in existing dashboard load fn
@@ -357,12 +362,14 @@ function* initializeNewDashboard(
         call(loadWorkspaceAutomations, ctx, config.settings),
         call(loadWorkspaceUsers, ctx, config.settings),
         call(loadOrganizationWebhooks, ctx, config.settings),
+        call(loadOrganizationSmtps, ctx, config.settings),
     ];
 
-    const [automations, users, webhooks]: [
+    const [automations, users, webhooks, smtps]: [
         PromiseFnReturnType<typeof loadWorkspaceAutomations>,
         PromiseFnReturnType<typeof loadWorkspaceUsers>,
         PromiseFnReturnType<typeof loadOrganizationWebhooks>,
+        PromiseFnReturnType<typeof loadOrganizationSmtps>,
     ] = yield all(ffCalls);
 
     const batch: BatchAction = batchActions(
@@ -402,6 +409,7 @@ function* initializeNewDashboard(
             automationsActions.setAutomations(automations),
             automationsActions.refreshAutomationsFingerprint(),
             webhooksActions.setWebhooks(webhooks),
+            smtpsActions.setSmtps(smtps),
             usersActions.setUsers(users),
         ],
         "@@GDC.DASH/BATCH.INIT.NEW",

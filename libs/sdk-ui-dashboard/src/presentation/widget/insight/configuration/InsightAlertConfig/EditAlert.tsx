@@ -13,7 +13,7 @@ import { AlertDestinationSelect } from "./AlertDestinationSelect.js";
 import { EditAlertConfiguration } from "./EditAlertConfiguration.js";
 import { useEditAlert } from "./hooks/useEditAlert.js";
 import { FormattedMessage, useIntl } from "react-intl";
-import { Webhooks } from "../../../../../model/index.js";
+import { Smtps, Webhooks } from "../../../../../model/index.js";
 
 const TOOLTIP_ALIGN_POINTS = [{ align: "cl cr" }, { align: "cr cl" }];
 
@@ -21,7 +21,7 @@ interface IEditAlertProps {
     alert: IAutomationMetadataObject;
     isNewAlert?: boolean;
     hasAlerts: boolean;
-    destinations: Webhooks;
+    destinations: (Webhooks[number] | Smtps[number])[];
     measures: IMeasure[];
     onClose: () => void;
     onCancel: () => void;
@@ -105,7 +105,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                         />
                         {destinations.length > 1 && (
                             <AlertDestinationSelect
-                                selectedDestination={updatedAlert.webhook!}
+                                selectedDestination={updatedAlert.notificationChannel!}
                                 onDestinationChange={changeDestination}
                                 destinations={destinations}
                             />

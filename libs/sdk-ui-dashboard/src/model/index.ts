@@ -29,6 +29,7 @@ export {
     WidgetsOverlayFn,
     IDashboardWidgetOverlay,
     Webhooks,
+    Smtps,
     Users,
     Automations,
 } from "./types/commonTypes.js";
