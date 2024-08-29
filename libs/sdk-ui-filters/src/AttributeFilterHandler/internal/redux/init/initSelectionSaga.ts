@@ -37,7 +37,7 @@ export function* initSelectionSaga(correlation: Correlation): SagaIterator<void>
             options: {
                 elements,
                 offset: 0,
-                limit: 550,
+                limit: Math.max(550, elementKeys.length),
                 search: undefined,
                 excludePrimaryLabel: shouldExcludePrimaryLabel(context, elementsForm),
             },
