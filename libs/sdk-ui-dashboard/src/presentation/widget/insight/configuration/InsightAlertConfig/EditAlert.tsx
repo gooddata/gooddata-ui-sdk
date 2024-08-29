@@ -100,7 +100,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                             isSmall
                             autofocus
                             value={updatedAlert.alert!.condition.right}
-                            onChange={(e) => changeValue(e !== "" ? parseInt(e as string, 10) : undefined!)}
+                            onChange={(e) => changeValue(e !== "" ? parseFloat(e as string) : undefined!)}
                             type="number"
                         />
                         {destinations.length > 1 && (
