@@ -72,15 +72,19 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
                 addError(messages.alertSaveError);
             },
             onPauseSuccess: () => {
+                handleRefreshAutomations();
                 addSuccess(messages.alertPauseSuccess);
             },
             onPauseError: () => {
+                setIsLoading(false);
                 addError(messages.alertSaveError);
             },
             onResumeSuccess: () => {
+                handleRefreshAutomations();
                 addSuccess(messages.alertResumeSuccess);
             },
             onResumeError: () => {
+                setIsLoading(false);
                 addError(messages.alertSaveError);
             },
         });
@@ -171,6 +175,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             ...alert,
             alert: { ...alert.alert, trigger: { ...alert.alert?.trigger, state: "PAUSED" } },
         } as IAutomationMetadataObject;
+        setIsLoading(true);
         handlePauseAlert(alertToPause);
     };
 
@@ -179,6 +184,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             ...alert,
             alert: { ...alert.alert, trigger: { ...alert.alert?.trigger, state: "ACTIVE" } },
         } as IAutomationMetadataObject;
+        setIsLoading(true);
         handleResumeAlert(alertToResume);
     };
 
