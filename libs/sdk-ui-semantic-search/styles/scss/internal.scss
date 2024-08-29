@@ -4,18 +4,20 @@
 @use "sass:meta";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins" as kit-mixins;
-@use "./main.scss";
+@use "./main.scss" as main;
 
 .gd-semantic-search {
     &__overlay {
         background: kit-variables.$gd-color-white;
         margin: 10px 0;
 
-        &--fixed {
+        // Desktop view
+        .gd-header-search-dropdown & {
             width: 440px;
         }
 
-        &--mobile {
+        // Mobile view
+        .gd-header-menu-search & {
             .gd-semantic-search__overlay-input {
                 margin-bottom: 10px;
             }
@@ -40,5 +42,28 @@
 
     &__overlay-no-results {
         height: 100px;
+    }
+
+    &__results-item {
+        &--history &__icon {
+            @include main.icon(17px);
+        }
+
+        &__text {
+            &__lock-icon {
+                width: 14px;
+
+                & svg {
+                    width: 14px;
+                    height: 14px;
+                }
+            }
+
+            &__row:not(:first-child) {
+                :not(:first-child):before {
+                    content: "•\0000a0";
+                }
+            }
+        }
     }
 }

@@ -2,33 +2,30 @@
 
 import * as React from "react";
 import { Icon } from "@gooddata/sdk-ui-kit";
-import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { ListItemProps } from "../types.js";
-import classnames from "classnames";
+import { SearchListItem } from "../SearchListItem.js";
+import { ITheme } from "@gooddata/sdk-model";
+
+const renderIcon = (_: any, theme?: ITheme) => (
+    <Icon.HistoryBack color={theme?.palette?.complementary?.c5 ?? "#B0BECA"} />
+);
 
 /**
- * A single result item in the search results.
+ * A single history item.
  * @internal
  */
-export const HistoryItem: React.FC<ListItemProps<string>> = ({ listItem, onSelect, isActive, setActive }) => {
-    const theme = useTheme();
-
-    // Use mouse enter with the target check instead of hover to prevent multiple triggers
+export const HistoryItem: React.FC<ListItemProps<string>> = (props) => {
     return (
-        <span
-            className={classnames({
-                "gd-semantic-search__results-item": true,
-                "gd-semantic-search__results-item--active": isActive,
-            })}
-            onPointerOver={() => setActive(listItem)}
-            onClick={(e) => onSelect(listItem, e.nativeEvent)}
+        <SearchListItem
+            {...props}
+            renderIcon={renderIcon}
+            className="gd-semantic-search__results-item--history"
         >
-            <span className="gd-semantic-search__results-item__icon gd-semantic-search__results-item__icon--history">
-                <Icon.HistoryBack color={theme?.palette?.complementary?.c5 ?? "#B0BECA"} />
+            <span className="gd-semantic-search__results-item__text__row">
+                <span className="gd-semantic-search__results-item__text__ellipsis">
+                    {props.listItem.item}
+                </span>
             </span>
-            <span className="gd-semantic-search__results-item__text gd-semantic-search__results-item__text--history">
-                {listItem.item}
-            </span>
-        </span>
+        </SearchListItem>
     );
 };
