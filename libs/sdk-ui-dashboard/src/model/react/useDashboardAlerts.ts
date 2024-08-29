@@ -21,6 +21,7 @@ import {
     selectWebhooksError,
     selectAutomationsError,
     selectAutomationsAlertsInContext,
+    selectSmtps,
 } from "../store/index.js";
 import { messages } from "../../locales.js";
 import { refreshAutomations } from "../commands/index.js";
@@ -57,7 +58,9 @@ export const useDashboardAlerts = () => {
     const dashboardRef = useDashboardSelector(selectDashboardRef);
 
     const webhooks = useDashboardSelector(selectWebhooks);
-    const numberOfAvailableWebhooks = webhooks.length;
+    const emails = useDashboardSelector(selectSmtps);
+
+    const numberOfAvailableDestinations = webhooks.length + emails.length;
 
     const automations = useDashboardSelector(selectAutomationsAlertsInContext(undefined));
     const automationsLoading = useDashboardSelector(selectAutomationsIsLoading);
@@ -78,12 +81,12 @@ export const useDashboardAlerts = () => {
     /**
      * We want to hide scheduling when there are no webhooks unless the user is admin.
      */
-    const showDueToNumberOfAvailableWebhooks = numberOfAvailableWebhooks > 0 || isWorkspaceManager;
+    const showDueToNumberOfAvailableDestinations = numberOfAvailableDestinations > 0 || isWorkspaceManager;
 
     const isAlertingAvailable =
         isInViewMode &&
         !isReadOnly &&
-        showDueToNumberOfAvailableWebhooks &&
+        showDueToNumberOfAvailableDestinations &&
         (menuButtonItemsVisibility.alertingButton ?? true);
     const isAlertsManagementVisible = isAlertingAvailable && isAlertingEnabled;
 
