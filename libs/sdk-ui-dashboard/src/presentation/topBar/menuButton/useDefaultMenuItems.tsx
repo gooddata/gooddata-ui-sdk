@@ -100,7 +100,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         isScheduledManagementEmailingVisible,
         defaultOnScheduleEmailing,
         defaultOnScheduleEmailingManagement,
-        numberOfAvailableWebhooks,
+        numberOfAvailableDestinations,
     } = useDashboardScheduledEmails();
     const { defaultOnAlertsManagement, isAlertsManagementVisible } = useDashboardAlerts();
 
@@ -221,7 +221,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                     onClick: defaultOnScheduleEmailing,
                     visible: isScheduledEmailingVisible,
                     tooltip:
-                        numberOfAvailableWebhooks === 0
+                        numberOfAvailableDestinations === 0
                             ? intl.formatMessage(
                                   { id: "options.menu.schedule.email.tooltip" },
                                   {
@@ -302,7 +302,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         isSaveAsVisible,
         isScheduledEmailingVisible,
         isScheduledManagementEmailingVisible,
-        numberOfAvailableWebhooks,
+        numberOfAvailableDestinations,
         openDeleteDialog,
         openFilterViewsAddDialog,
         openFilterViewsListDialog,

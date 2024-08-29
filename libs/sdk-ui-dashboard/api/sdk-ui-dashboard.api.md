@@ -8752,7 +8752,7 @@ export const useDashboardScheduledEmails: () => {
     automations: IAutomationMetadataObject[];
     automationsCount: number;
     schedulingLoadError: GoodDataSdkError | undefined;
-    numberOfAvailableWebhooks: number;
+    numberOfAvailableDestinations: number;
     isScheduleLoading: boolean;
     isScheduledEmailingVisible: boolean;
     isScheduledManagementEmailingVisible: boolean;

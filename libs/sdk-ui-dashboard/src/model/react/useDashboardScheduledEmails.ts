@@ -27,10 +27,10 @@ import {
     selectWebhooksError,
     selectAutomationsError,
     selectAutomationsSchedulesInContext,
+    selectEntitlementUnlimitedAutomations,
 } from "../store/index.js";
 import { refreshAutomations } from "../commands/index.js";
 import { messages } from "../../locales.js";
-import { selectEntitlementUnlimitedAutomations } from "../store/entitlements/entitlementsSelectors.js";
 
 import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider.js";
 
@@ -91,20 +91,20 @@ export const useDashboardScheduledEmails = () => {
     const unlimitedAutomationsEntitlement = useDashboardSelector(selectEntitlementUnlimitedAutomations);
     const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);
 
-    const numberOfAvailableWebhooks = webhooks.length;
+    const numberOfAvailableDestinations = webhooks.length + emails.length;
     const maxAutomationsReached = automationsCount >= maxAutomations && !unlimitedAutomationsEntitlement;
 
     /**
      * We want to hide scheduling when there are no webhooks unless the user is admin.
      */
-    const showDueToNumberOfAvailableWebhooks = numberOfAvailableWebhooks > 0 || isWorkspaceManager;
+    const showDueToNumberOfAvailableDestinations = numberOfAvailableDestinations > 0 || isWorkspaceManager;
 
     const isSchedulingAvailable =
         isInViewMode &&
         !isReadOnly &&
         isScheduledEmailingEnabled &&
         canExport &&
-        showDueToNumberOfAvailableWebhooks &&
+        showDueToNumberOfAvailableDestinations &&
         (menuButtonItemsVisibility.scheduleEmailButton ?? true);
 
     const isScheduledEmailingVisible = isSchedulingAvailable && !maxAutomationsReached;
@@ -275,7 +275,7 @@ export const useDashboardScheduledEmails = () => {
         automations,
         automationsCount,
         schedulingLoadError,
-        numberOfAvailableWebhooks,
+        numberOfAvailableDestinations,
         isScheduleLoading,
         isScheduledEmailingVisible,
         isScheduledManagementEmailingVisible,

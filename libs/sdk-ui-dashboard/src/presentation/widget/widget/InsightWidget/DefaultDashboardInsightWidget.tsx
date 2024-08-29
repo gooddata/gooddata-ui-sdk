@@ -47,7 +47,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         onScheduleEmailingManagementOpen,
         isScheduledEmailingVisible,
         isScheduledManagementEmailingVisible,
-        numberOfAvailableWebhooks,
+        numberOfAvailableDestinations,
     } = useDashboardScheduledEmails();
 
     const visType = insightVisualizationType(insight) as VisType;
@@ -72,7 +72,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
 
     const isSupported = isSupportedInsightVisType(insight);
     const isAlertingVisible = isSupported && !isCustomWidget(widget) && settings.enableAlerting === true;
-    const alertingDisabled = numberOfAvailableWebhooks === 0;
+    const alertingDisabled = numberOfAvailableDestinations === 0;
 
     const { closeMenu, isMenuOpen, menuItems, openMenu } = useInsightMenu({
         insight,
