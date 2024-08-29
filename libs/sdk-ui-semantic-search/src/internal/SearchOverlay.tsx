@@ -1,17 +1,18 @@
 // (C) 2024 GoodData Corporation
 import * as React from "react";
 import classnames from "classnames";
-import { FormattedMessage, WrappedComponentProps } from "react-intl";
+import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
 import { GenAISemanticSearchType, ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { Input, LoadingMask, Message, useDebouncedState } from "@gooddata/sdk-ui-kit";
-import { useWorkspaceStrict, useLocalStorage } from "@gooddata/sdk-ui";
+import { useWorkspaceStrict, useLocalStorage, IntlWrapper } from "@gooddata/sdk-ui";
 import { useSemanticSearch, useElementWidth } from "../hooks/index.js";
 import { ListItem } from "../types.js";
 import { getUIPath } from "../utils/getUIPath.js";
 import { SearchList } from "./SearchList.js";
 import { HistoryItem } from "./HistoryItem.js";
 import { AnnotatedResultsItem } from "./AnnotatedResultsItem.js";
+import { MetadataTimezoneProvider } from "./metadataTimezoneContext.js";
 
 /**
  * A time in milliseconds to wait before sending a search request after the user stops typing.
@@ -34,15 +35,26 @@ const SEARCH_HISTORY_KEY = "gd-semantic-search-history";
  */
 const SEARCH_HISTORY_EMPTY: string[] = [];
 
+export type SearchOnSelect = {
+    item: ISemanticSearchResultItem;
+    preventDefault: () => void;
+    itemUrl?: string;
+    newTab?: boolean;
+};
+
 /**
  * Props for the SemanticSearchOverlay component.
  * @internal
  */
-export type SearchOverlayProps = WrappedComponentProps & {
+export type SearchOverlayProps = {
     /**
      * A function called when the user selects an item from the search results.
      */
-    onSelect: (item: ISemanticSearchResultItem, e: MouseEvent | KeyboardEvent, itemUrl?: string) => void;
+    onSelect: (selection: SearchOnSelect) => void;
+    /**
+     * A function called when the search request is triggered.
+     */
+    onSearch?: (query: string) => void;
     /**
      * An analytical backend to use for the search. Can be omitted and taken from context.
      */
@@ -67,23 +79,22 @@ export type SearchOverlayProps = WrappedComponentProps & {
      * Additional CSS class for the component.
      */
     className?: string;
+    /**
+     * Locale to use for translations.
+     */
+    locale?: string;
+    /**
+     * Timezone in which metadata created and updated dates are saved.
+     */
+    metadataTimezone?: string;
 };
 
 /**
- * A component that allows users to search for insights, metrics, attributes, and other objects using semantic search.
- * The internal version is meant to be used in an overlay inside the Header.
- * @internal
+ * Core implementation of the SemanticSearchOverlay component.
  */
-export const SearchOverlay: React.FC<SearchOverlayProps> = ({
-    onSelect,
-    backend,
-    workspace,
-    objectTypes,
-    deepSearch,
-    limit = 6,
-    className,
-    intl,
-}) => {
+const SearchOverlayCore: React.FC<
+    WrappedComponentProps & Omit<SearchOverlayProps, "locale" | "metadataTimezone">
+> = ({ onSelect, onSearch, backend, workspace, objectTypes, deepSearch, limit = 6, className, intl }) => {
     // Input value handling
     const [value, setValue, searchTerm, setImmediate] = useDebouncedState("", DEBOUNCE);
 
@@ -97,6 +108,11 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({
         deepSearch,
         limit,
     });
+
+    // Report metrics
+    React.useEffect(() => {
+        onSearch?.(searchTerm);
+    }, [onSearch, searchTerm]);
 
     // Results wrapped into ListItems
     const searchResultsItems: ListItem<ISemanticSearchResultItem>[] = React.useMemo(
@@ -136,21 +152,23 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({
                 [...new Set([searchTerm, ...searchHistory])].slice(0, MAX_SEARCH_HISTORY_LENGTH),
             );
 
-            // Simulate browser behaviour - if user presses Ctrl or Cmd and clicks on the result, open it in a new tab
-            if (item.url && (e.ctrlKey || e.metaKey)) {
-                // Keyboard events do not navigate to the URL natively by the browser, do it artificially
-                if (e instanceof KeyboardEvent) {
-                    window.open(item.url, "_blank");
-                }
-                return;
-            }
+            const newTab = e.ctrlKey || e.metaKey || (e as MouseEvent).button === 1;
 
             // Call the onSelect callback
-            onSelect(item.item, e, item.url);
+            onSelect({
+                item: item.item,
+                preventDefault: e.preventDefault.bind(e),
+                itemUrl: item.url,
+                newTab,
+            });
 
-            // If the default was not prevented - simulate browser navigation
-            if (item.url && e instanceof KeyboardEvent && !e.defaultPrevented) {
-                window.location.href = item.url;
+            // If the default was not prevented - simulate browser navigation for keyboard event
+            if (item.url && !e.defaultPrevented && e instanceof KeyboardEvent) {
+                if (newTab) {
+                    window.open(item.url, "_blank");
+                } else {
+                    window.location.href = item.url;
+                }
             }
         },
         [searchTerm, searchHistory, onSelect, setSearchHistory],
@@ -233,5 +251,25 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({
                 }
             })()}
         </div>
+    );
+};
+
+/**
+ * Inject `intl` prop to the component.
+ */
+const SearchOverlayWithIntl = injectIntl(SearchOverlayCore);
+
+/**
+ * A component that allows users to search for insights, metrics, attributes, and other objects using semantic search.
+ * The internal version is meant to be used in an overlay inside the Header.
+ * @internal
+ */
+export const SearchOverlay: React.FC<SearchOverlayProps> = ({ locale, metadataTimezone, ...props }) => {
+    return (
+        <MetadataTimezoneProvider value={metadataTimezone}>
+            <IntlWrapper locale={locale}>
+                <SearchOverlayWithIntl {...props} />
+            </IntlWrapper>
+        </MetadataTimezoneProvider>
     );
 };

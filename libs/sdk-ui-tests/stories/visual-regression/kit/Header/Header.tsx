@@ -11,12 +11,10 @@ import {
     WorkspacePickerHomeFooter,
     HeaderBadge,
 } from "@gooddata/sdk-ui-kit";
-import { HeaderMobileSearch, HeaderSearchButton } from "@gooddata/sdk-ui-semantic-search/internal";
 import { wrapWithTheme } from "../../themeWrapper.js";
 import { IntlProvider } from "react-intl";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
-import "@gooddata/sdk-ui-semantic-search/styles/css/internal.css";
 import "./styles.scss";
 import times from "lodash/times.js";
 import { gd, custom } from "./logos.js";
@@ -447,8 +445,7 @@ storiesOf(`${UiKit}/AppHeader`)
                                 },
                                 ...info.headerHelpItems,
                             ]}
-                            search={<HeaderSearchButton onSelect={action("searchSelect")} />}
-                            mobileSearch={<HeaderMobileSearch onSelect={action("searchSelect")} />}
+                            search={<div>Search contents mock</div>}
                             logoUrl={gd}
                             logoTitle="GoodData"
                             documentationUrl="https://help.gooddata.com/doc"

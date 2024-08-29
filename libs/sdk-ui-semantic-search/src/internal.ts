@@ -7,5 +7,5 @@
  * @internal
  */
 
-export * from "./internal/HeaderSearchButton.js";
-export * from "./internal/HeaderMobileSearch.js";
+export * from "./internal/SearchOverlay.js";
+export * from "./hooks/useSearchMetrics.js";

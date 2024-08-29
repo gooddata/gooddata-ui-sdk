@@ -850,8 +850,6 @@ export interface IAppHeaderProps {
     // (undocumented)
     menuItemsGroups?: IHeaderMenuItem[][];
     // (undocumented)
-    mobileSearch?: React_2.ReactNode;
-    // (undocumented)
     onHelpClick?: (isOpen: boolean) => void;
     // (undocumented)
     onInviteItemClick?: (e: React_2.MouseEvent) => void;
