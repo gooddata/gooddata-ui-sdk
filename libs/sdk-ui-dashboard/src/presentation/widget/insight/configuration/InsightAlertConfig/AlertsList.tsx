@@ -1,11 +1,12 @@
 // (C) 2022-2024 GoodData Corporation
 import React from "react";
-import { IAutomationMetadataObject, IMeasure } from "@gooddata/sdk-model";
+import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { AddButton, SeparatorLine } from "@gooddata/sdk-ui-kit";
 import { AlertsListItem } from "./AlertsListItem.js";
 import { DashboardInsightSubmenuContainer } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightSubmenuContainer.js";
 import { FormattedMessage, useIntl } from "react-intl";
 import Skeleton from "react-loading-skeleton";
+import { AlertMetric } from "../../types.js";
 
 interface IAlertsListProps {
     isLoading: boolean;
@@ -17,8 +18,7 @@ interface IAlertsListProps {
     onDeleteAlert: (alert: IAutomationMetadataObject) => void;
     onClose: () => void;
     onGoBack: () => void;
-    measures: IMeasure[];
-
+    measures: AlertMetric[];
     maxAutomationsReached: boolean;
 }
 
@@ -53,7 +53,7 @@ export const AlertsList: React.FC<IAlertsListProps> = ({
                                 const selectedMeasureIdentifier = alert.alert!.condition.left;
                                 const measureExists = measures.some(
                                     (measure) =>
-                                        measure.measure.localIdentifier === selectedMeasureIdentifier,
+                                        measure.measure.measure.localIdentifier === selectedMeasureIdentifier,
                                 );
 
                                 return (

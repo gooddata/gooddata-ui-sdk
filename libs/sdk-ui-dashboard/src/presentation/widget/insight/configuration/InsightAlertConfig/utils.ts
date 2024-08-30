@@ -10,6 +10,12 @@ import {
     IMeasure,
     insightBucket,
     insightVisualizationType,
+    IPoPMeasureDefinition,
+    IPreviousPeriodMeasureDefinition,
+    isArithmeticMeasure,
+    isPoPMeasure,
+    isPreviousPeriodMeasure,
+    isSimpleMeasure,
     measureAlias,
     measureTitle,
 } from "@gooddata/sdk-model";
@@ -17,6 +23,7 @@ import { COMPARISON_OPERATORS } from "./constants.js";
 import { BucketNames, VisType } from "@gooddata/sdk-ui";
 import { messages } from "./messages.js";
 import { IntlShape } from "react-intl";
+import { AlertMetric, AlertMetricComparatorType } from "../../types.js";
 
 /**
  * @internal
@@ -46,24 +53,24 @@ export const getComparisonOperatorTitle = (operator: IAlertComparisonOperator, i
  */
 export const createDefaultAlert = (
     filters: IFilter[],
-    measure: IMeasure,
+    measure: AlertMetric,
     notificationChannelId: string,
     comparisonOperator: IAlertComparisonOperator = "GREATER_THAN",
 ): IAutomationMetadataObjectDefinition => {
     return {
         type: "automation",
-        title: getMeasureTitle(measure),
+        title: getMeasureTitle(measure.measure),
         notificationChannel: notificationChannelId,
         alert: {
             condition: {
                 type: "comparison",
-                left: measure.measure.localIdentifier,
+                left: measure.measure.measure.localIdentifier,
                 operator: comparisonOperator,
                 right: undefined!,
             },
             execution: {
                 attributes: [],
-                measures: [measure],
+                measures: [measure.measure],
                 filters,
             },
             trigger: {
@@ -96,7 +103,78 @@ type InsightType =
     | "waterfall"
     | "repeater";
 
-export const getSupportedInsightMeasuresByInsight = (insight: IInsight | null | undefined) => {
+export const getSupportedInsightMeasuresByInsight = (insight: IInsight | null | undefined): AlertMetric[] => {
+    const allMetrics = collectAllMetric(insight);
+
+    const simpleMetrics = allMetrics
+        .map<AlertMetric | undefined>((measure) => {
+            if (isSimpleMeasure(measure) || isArithmeticMeasure(measure)) {
+                return {
+                    measure,
+                    comparators: [],
+                };
+            }
+            return undefined;
+        })
+        .filter(Boolean) as AlertMetric[];
+
+    const previousPeriodMetrics = allMetrics.filter((measure) =>
+        isPreviousPeriodMeasure(measure),
+    ) as IMeasure<IPreviousPeriodMeasureDefinition>[];
+    previousPeriodMetrics.forEach((measure) => {
+        const found = simpleMetrics.find(
+            (simpleMetric) =>
+                simpleMetric.measure.measure.localIdentifier ===
+                measure.measure.definition.previousPeriodMeasure.measureIdentifier,
+        );
+        if (found) {
+            found.comparators.push({
+                measure,
+                comparator: AlertMetricComparatorType.PreviousPeriod,
+            });
+        }
+    });
+
+    const popMetrics = allMetrics.filter((measure) =>
+        isPoPMeasure(measure),
+    ) as IMeasure<IPoPMeasureDefinition>[];
+    popMetrics.forEach((measure) => {
+        const found = simpleMetrics.find(
+            (simpleMetric) =>
+                simpleMetric.measure.measure.localIdentifier ===
+                measure.measure.definition.popMeasureDefinition.measureIdentifier,
+        );
+        if (found) {
+            found.comparators.push({
+                measure,
+                comparator: AlertMetricComparatorType.SamePeriodPreviousYear,
+            });
+        }
+    });
+
+    return simpleMetrics;
+};
+
+export const isSupportedInsightVisType = (insight: IInsight | null | undefined): boolean => {
+    const type = insight ? (insightVisualizationType(insight) as VisType) : null;
+
+    switch (type) {
+        case "headline":
+        case "bar":
+        case "column":
+        case "line":
+        case "area":
+        case "combo2":
+        case "scatter":
+        case "bubble":
+        case "repeater":
+            return true;
+        default:
+            return false;
+    }
+};
+
+function collectAllMetric(insight: IInsight | null | undefined) {
     const visualizationUrl = insight?.insight.visualizationUrl;
     const insightType = visualizationUrl?.split(":")[1] as InsightType;
 
@@ -120,9 +198,13 @@ export const getSupportedInsightMeasuresByInsight = (insight: IInsight | null | 
             const insightSecondaryMeasuresBucket: IBucket | undefined = insight
                 ? insightBucket(insight, BucketNames.SECONDARY_MEASURES)
                 : undefined;
+            const insightTertiaryMeasuresBucket: IBucket | undefined = insight
+                ? insightBucket(insight, BucketNames.TERTIARY_MEASURES)
+                : undefined;
             return [
                 ...(insightMeasuresBucket ? bucketMeasures(insightMeasuresBucket) : []),
                 ...(insightSecondaryMeasuresBucket ? bucketMeasures(insightSecondaryMeasuresBucket) : []),
+                ...(insightTertiaryMeasuresBucket ? bucketMeasures(insightTertiaryMeasuresBucket) : []),
             ];
         }
         case "repeater": {
@@ -148,23 +230,4 @@ export const getSupportedInsightMeasuresByInsight = (insight: IInsight | null | 
             return [];
         }
     }
-};
-
-export const isSupportedInsightVisType = (insight: IInsight | null | undefined): boolean => {
-    const type = insight ? (insightVisualizationType(insight) as VisType) : null;
-
-    switch (type) {
-        case "headline":
-        case "bar":
-        case "column":
-        case "line":
-        case "area":
-        case "combo2":
-        case "scatter":
-        case "bubble":
-        case "repeater":
-            return true;
-        default:
-            return false;
-    }
-};
+}
