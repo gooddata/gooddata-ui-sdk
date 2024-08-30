@@ -3,6 +3,7 @@ import {
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
     IInsightWidget,
+    isAllTimeDateFilter,
 } from "@gooddata/sdk-model";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -102,7 +103,10 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     useEffect(() => {
         if (widgetFiltersStatus === "success") {
             setIsLoading(false);
-            setDefaultAlert(createDefaultAlert(widgetFilters, defaultMeasure!, defaultNotificationChannelId));
+            const sanitizedFilters = widgetFilters.filter((filter) => !isAllTimeDateFilter(filter));
+            setDefaultAlert(
+                createDefaultAlert(sanitizedFilters, defaultMeasure!, defaultNotificationChannelId),
+            );
         } else if (widgetFiltersStatus === "error") {
             setIsLoading(false);
             closeInsightWidgetMenu();
