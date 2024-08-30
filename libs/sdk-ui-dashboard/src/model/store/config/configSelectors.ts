@@ -686,7 +686,7 @@ export const selectEnableKDAttributeFilterDatesValidation: DashboardSelector<boo
 export const selectEnableDuplicatedLabelValuesInAttributeFilter: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableDuplicatedLabelValuesInAttributeFilter ?? false;
+        return state.settings?.enableDuplicatedLabelValuesInAttributeFilter ?? true;
     },
 );
 
