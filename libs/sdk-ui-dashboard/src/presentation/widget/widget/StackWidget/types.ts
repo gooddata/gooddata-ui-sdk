@@ -1,8 +1,10 @@
 // (C) 2022-2024 GoodData Corporation
-import { IStackWidget, ScreenSize } from "@gooddata/sdk-model";
+import { IInsight, IInsightWidget, IStackWidget, ScreenSize } from "@gooddata/sdk-model";
 
 export interface IDefaultDashboardStackWidgetProps {
-    widget: IStackWidget;
+    stack: IStackWidget;
+    widget?: IInsightWidget;
+    insight?: IInsight;
     screen: ScreenSize;
     dashboardItemClasses: string;
 }

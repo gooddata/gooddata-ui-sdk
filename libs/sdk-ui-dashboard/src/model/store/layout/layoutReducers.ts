@@ -32,6 +32,9 @@ import {
     isDashboardAttributeFilterReference,
     isRichTextWidget,
     IDrillDownIntersectionIgnoredAttributes,
+    isStackWidget,
+    IInsight,
+    IInsightWidget,
 } from "@gooddata/sdk-model";
 import { WidgetDescription, WidgetHeader } from "../../types/widgetTypes.js";
 import flatMap from "lodash/flatMap.js";
@@ -755,6 +758,31 @@ const replaceRichTextWidgetContent: LayoutReducer<ReplaceRichTextWidgetContent> 
     setOrDelete(widget, "content", content);
 };
 
+//
+//
+//
+
+type AddStackWidgetInsight = {
+    ref: ObjRef;
+    // NESTOR
+    widget: IInsightWidget;
+    insight: IInsight;
+    selectedInsight: string;
+};
+
+const addStackWidgetInsight: LayoutReducer<AddStackWidgetInsight> = (state, action) => {
+    invariant(state.layout);
+
+    const { insight, widget, selectedInsight, ref } = action.payload;
+    const widgetRef = getWidgetByRef(state, ref);
+
+    invariant(widgetRef && isStackWidget(widgetRef));
+
+    widgetRef.widgets.push(widget);
+    widgetRef.insights.push(insight);
+    widgetRef.selectedInsight = selectedInsight;
+};
+
 export const layoutReducers = {
     setLayout,
     updateWidgetIdentities,
@@ -787,6 +815,7 @@ export const layoutReducers = {
     replaceKpiWidgetDrill: withUndo(replaceKpiWidgetDrill),
     replaceKpiWidgetConfiguration: withUndo(replaceKpiWidgetConfiguration),
     replaceRichTextWidgetContent: withUndo(replaceRichTextWidgetContent),
+    addStackWidgetInsight: withUndo(addStackWidgetInsight),
     undoLayout: undoReducer,
     clearLayoutHistory: resetUndoReducer,
     changeItemsHeight: changeItemsHeight,

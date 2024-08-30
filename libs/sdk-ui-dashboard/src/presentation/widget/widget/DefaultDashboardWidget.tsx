@@ -118,7 +118,7 @@ export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget
         } else if (isStackWidget(widget)) {
             renderWidget = (
                 <RenderModeAwareDashboardStackWidget
-                    widget={widget as any}
+                    stack={widget as any}
                     screen={screen}
                     dashboardItemClasses={dashboardItemClasses}
                 />

@@ -68,6 +68,7 @@ import {
     DashboardInsightWidgetRefreshed,
 } from "./insight.js";
 import { DashboardRichTextWidgetContentChanged } from "./richText.js";
+import { DashboardStackWidgetAddInsight } from "./stack.js";
 import {
     DashboardWidgetExecutionStarted,
     DashboardWidgetExecutionSucceeded,
@@ -339,6 +340,13 @@ export {
 } from "./richText.js";
 
 export {
+    DashboardStackWidgetAddInsight,
+    DashboardStackWidgetAddInsightPayload,
+    stackWidgetAddInsight,
+    isDashboardStackAddInsight,
+} from "./stack.js";
+
+export {
     DashboardWidgetExecutionStarted,
     DashboardWidgetExecutionStartedPayload,
     DashboardWidgetExecutionSucceeded,
@@ -535,6 +543,7 @@ export type DashboardEvents =
     | DashboardInsightWidgetExportResolved
     | DashboardInsightWidgetRefreshed
     | DashboardRichTextWidgetContentChanged
+    | DashboardStackWidgetAddInsight
     | DashboardWidgetExecutionStarted
     | DashboardWidgetExecutionSucceeded
     | DashboardWidgetExecutionFailed

@@ -67,6 +67,7 @@ import {
     RemoveDrillForKpiWidget,
 } from "./kpi.js";
 import { ChangeRichTextWidgetContent } from "./richText.js";
+import { AddInsightToStackWidgetContent } from "./stack.js";
 import {
     AddLayoutSection,
     AddSectionItems,
@@ -415,6 +416,12 @@ export {
 } from "./richText.js";
 
 export {
+    AddInsightToStackWidgetContent,
+    AddInsightToStackWidgetContentPayload,
+    addInsightToStackWidgetContent,
+} from "./stack.js";
+
+export {
     RequestAsyncRender,
     RequestAsyncRenderPayload,
     ResolveAsyncRender,
@@ -508,6 +515,7 @@ export type DashboardCommands =
     | SetAttributeFilterTitle
     | SetAttributeFilterSelectionMode
     | ChangeRichTextWidgetContent
+    | AddInsightToStackWidgetContent
     //alpha
     | Drill
     | DrillDown

@@ -25,6 +25,7 @@ import {
     IDashboardPluginLink,
     IDashboardAttributeFilterConfig,
     IRichTextWidget,
+    IStackWidget,
 } from "@gooddata/sdk-model";
 import updateWith from "lodash/updateWith.js";
 import { cloneWithSanitizedIds } from "../../IdSanitization.js";
@@ -46,10 +47,10 @@ function setWidgetRefsInLayout(layout: IDashboardLayout<IDashboardWidget> | unde
     });
 
     return widgetsPaths.reduce((layout, widgetPath) => {
-        return updateWith(layout, widgetPath, (widget: IInsightWidget | IRichTextWidget) => {
+        return updateWith(layout, widgetPath, (widget: IInsightWidget | IRichTextWidget | IStackWidget) => {
             const id = widget.localIdentifier ?? uuidv4();
 
-            const convertedWidget: IInsightWidget | IRichTextWidget = {
+            const convertedWidget: IInsightWidget | IRichTextWidget | IStackWidget = {
                 ...widget,
                 ref: idRef(id),
                 uri: id,

@@ -1,18 +1,17 @@
-// // (C) 2024 GoodData Corporation
-// import React, { useMemo } from "react";
-// import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
-// import { IDashboardStackProps } from "./types.js";
+// (C) 2024 GoodData Corporation
+import React, { useMemo } from "react";
+import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
 
-// /**
-//  * @internal
-//  */
-// export const DashboardStack = (props: IDashboardStackProps): JSX.Element => {
-//     const { StackWidgetComponentSet } = useDashboardComponentsContext();
-//     const { widget, st } = props;
-//     const StackComponent = useMemo(
-//         () => StackWidgetComponentSet.MainComponentProvider(widget),
-//         [StackWidgetComponentSet, kpiWidget],
-//     );
+/**
+ * @internal
+ */
+export const DashboardStack = (props: any): JSX.Element => {
+    const { StackWidgetComponentSet } = useDashboardComponentsContext();
+    const { stack } = props;
+    const StackComponent = useMemo(
+        () => StackWidgetComponentSet.MainComponentProvider(stack),
+        [StackWidgetComponentSet, stack],
+    );
 
-//     return <StackComponent {...props} />;
-// };
+    return <StackComponent {...props} />;
+};

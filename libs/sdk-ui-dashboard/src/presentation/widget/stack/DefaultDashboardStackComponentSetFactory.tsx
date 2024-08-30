@@ -3,8 +3,6 @@ import { StackWidgetComponentSet } from "../../componentDefinition/index.js";
 import { StackComponentProvider } from "../../dashboardContexts/index.js";
 import { StackDraggingComponent } from "../../dragAndDrop/index.js";
 import { CreatableStack } from "./CreatableStack.js";
-import { DefaultStackConfigurationPanel } from "./DefaultStackConfigurationPanel.js";
-import { DefaultDashboardStackPlaceholderWidget } from "./stackPlaceholder/DefaultDashboardStackPlaceholderWidget.js";
 
 /**
  * @internal
@@ -15,7 +13,6 @@ export function DefaultDashboardStackComponentSetFactory(
     return {
         MainComponentProvider: stackProvider,
         creating: {
-            CreatingPlaceholderComponent: DefaultDashboardStackPlaceholderWidget,
             CreatePanelListItemComponent: CreatableStack,
             type: "stack",
             priority: 5,
@@ -25,7 +22,7 @@ export function DefaultDashboardStackComponentSetFactory(
             type: "stack",
         },
         configuration: {
-            WidgetConfigPanelComponent: DefaultStackConfigurationPanel,
+            WidgetConfigPanelComponent: () => null,
         },
     };
 }

@@ -2,6 +2,7 @@
 import { ComponentType } from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IStackWidget } from "@gooddata/sdk-model";
+import { IDashboardInsightProps } from "../types.js";
 
 ///
 /// Component props
@@ -13,7 +14,7 @@ import { IStackWidget } from "@gooddata/sdk-model";
  *
  * @public
  */
-export interface IDashboardStackProps {
+export interface IDashboardStackProps extends IDashboardInsightProps {
     /**
      * Backend to work with.
      *
@@ -41,7 +42,7 @@ export interface IDashboardStackProps {
      *
      * @public
      */
-    widget: IStackWidget;
+    stack: IStackWidget;
 
     /**
      * Height of the rich text widget container.

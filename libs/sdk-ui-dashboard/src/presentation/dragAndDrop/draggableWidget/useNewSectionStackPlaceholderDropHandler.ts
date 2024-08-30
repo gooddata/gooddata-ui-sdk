@@ -44,10 +44,12 @@ export function useNewSectionStackPlaceholderDropHandler(sectionIndex: number) {
                 },
                 widget: {
                     type: "stack",
+                    selectedInsight: "",
+                    widgets: [],
                     insights: [],
-                    description: "",
                     drills: [],
                     ignoreDashboardFilters: [],
+                    description: "",
                     title: "",
                     identifier: id,
                     ref: idRef(id),

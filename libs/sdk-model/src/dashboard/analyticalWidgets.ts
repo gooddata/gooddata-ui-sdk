@@ -1,5 +1,5 @@
 // (C) 2021-2024 GoodData Corporation
-import { VisualizationProperties } from "../insight/index.js";
+import { IInsight, VisualizationProperties } from "../insight/index.js";
 import { ObjRef } from "../objRef/index.js";
 import { IBaseWidget, IWidgetDescription, IFilterableWidget, IDrillableWidget } from "./baseWidget.js";
 import { IDashboardObjectIdentity } from "./common.js";
@@ -162,20 +162,21 @@ export interface IInsightWidgetDefinition extends IInsightWidgetBase, Partial<ID
 
 /**
  * @public
- * // NESTOR
  */
 export interface IStackWidgetBase extends IAnalyticalWidget {
     readonly type: "stack";
 
     /**
-     * Insights which are  part of the stack.
+     * Selected insight.
      */
-    readonly insights: IInsightWidgetBase[];
+    readonly selectedInsight?: string;
 
     /**
-     * Selected insight
+     * Insight widgets which are part of the stack.
      */
-    readonly selectedInsight?: ObjRef;
+    readonly widgets: IInsightWidget[];
+
+    readonly insights: IInsight[];
 }
 
 /**

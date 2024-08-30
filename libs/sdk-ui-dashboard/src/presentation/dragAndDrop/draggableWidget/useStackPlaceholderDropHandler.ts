@@ -43,6 +43,7 @@ export function useStackPlaceholderDropHandler(sectionIndex: number, itemIndex: 
             },
             widget: {
                 type: "stack",
+                widgets: [],
                 insights: [],
                 description: "",
                 drills: [],

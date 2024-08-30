@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React, { useMemo } from "react";
 import cx from "classnames";
 import { IInsight, insightVisualizationType, widgetRef } from "@gooddata/sdk-model";
@@ -30,7 +30,7 @@ export const EditableDashboardInsightWidget: React.FC<
 /**
  * @internal
  */
-const EditableDashboardInsightWidgetCore: React.FC<
+export const EditableDashboardInsightWidgetCore: React.FC<
     IDefaultDashboardInsightWidgetProps & { insight: IInsight }
 > = ({ widget, insight, screen, onError, onExportReady, onLoadingChanged, dashboardItemClasses }) => {
     const visType = insightVisualizationType(insight) as VisType;

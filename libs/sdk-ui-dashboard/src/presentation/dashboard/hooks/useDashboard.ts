@@ -214,8 +214,8 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
     }, [richTextProvider]);
 
     const stackProvider = useCallback<StackComponentProvider>(
-        (stack, widget) => {
-            const userSpecified = StackComponentProvider?.(stack, widget);
+        (stack) => {
+            const userSpecified = StackComponentProvider?.(stack);
             return userSpecified ?? DefaultDashboardStack;
         },
         [StackComponentProvider],

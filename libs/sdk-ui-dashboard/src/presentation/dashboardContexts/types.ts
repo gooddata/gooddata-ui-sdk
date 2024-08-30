@@ -140,10 +140,7 @@ export type OptionalKpiComponentProvider = OptionalProvider<KpiComponentProvider
 /**
  * @public
  */
-export type StackComponentProvider = (
-    stack: IStackWidget,
-    widget: IInsightWidget,
-) => CustomDashboardStackComponent;
+export type StackComponentProvider = (stack: IStackWidget) => CustomDashboardStackComponent;
 
 /**
  * @public

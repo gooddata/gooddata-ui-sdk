@@ -41,6 +41,7 @@ import { changeInsightWidgetVisPropertiesHandler } from "./widgets/changeInsight
 import { modifyDrillsForInsightWidgetHandler } from "./widgets/modifyDrillsForInsightWidgetHandler.js";
 import { removeDrillsForInsightWidgetHandler } from "./widgets/removeDrillsForInsightWidgetHandler.js";
 import { changeRichTextWidgetContentHandler } from "./widgets/changeRichTextWidgetContentHandler.js";
+import { addInsightToStackWidgetContentHandler } from "./widgets/addInsightToStackWidgetContentHandler.js";
 import { exportInsightWidgetHandler } from "./widgets/exportInsightWidgetHandler.js";
 import { createAlertHandler } from "./alerts/createAlertHandler.js";
 import { saveAlertHandler } from "./alerts/saveAlertHandler.js";
@@ -172,6 +173,7 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH": refreshInsightWidgetHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT": exportInsightWidgetHandler,
     "GDC.DASH/CMD.RICH_TEXT_WIDGET.CHANGE_CONTENT": changeRichTextWidgetContentHandler,
+    "GDC.DASH/CMD.STACK_WIDGET.ADD_INSIGHT": addInsightToStackWidgetContentHandler,
     "GDC.DASH/CMD.ALERT.CREATE": createAlertHandler,
     "GDC.DASH/CMD.ALERT.SAVE": saveAlertHandler,
     "GDC.DASH/CMD.SCHEDULED_EMAIL.CREATE": createScheduledEmailHandler,

@@ -10,40 +10,61 @@ import {
 } from "../../../../model/index.js";
 import { IDefaultDashboardStackWidgetProps } from "./types.js";
 import { widgetRef } from "@gooddata/sdk-model";
-import { ConfigurationBubble } from "../../common/index.js";
+import { DashboardStack } from "../../stack/DashboardStack.js";
+import { EditableDashboardInsightWidgetCore } from "../InsightWidget/EditableDashboardInsightWidget.js";
 
 /**
  * @internal
  */
 export const EditableDashboardStackWidget: React.FC<IDefaultDashboardStackWidgetProps> = ({
-    widget,
+    stack,
     screen,
     dashboardItemClasses,
 }) => {
-    const { isSelectable, isSelected, onSelected } = useWidgetSelection(widgetRef(widget));
+    const { isSelectable, isSelected, onSelected } = useWidgetSelection(widgetRef(stack));
     const isSaving = useDashboardSelector(selectIsDashboardSaving);
     const isEditable = !isSaving;
 
     return (
-        <DashboardItem
-            className={cx(
-                dashboardItemClasses,
-                "type-visualization",
-                "gd-dashboard-view-widget",
-                "is-edit-mode",
-                { "is-selected": isSelected },
+        <>
+            {stack.widgets && stack.widgets.length > 0 ? (
+                <>
+                    <DashboardStack stack={stack} />
+                    <EditableDashboardInsightWidgetCore
+                        screen={screen}
+                        dashboardItemClasses={dashboardItemClasses}
+                        widget={stack.widgets[0]}
+                        insight={stack.insights[0]}
+                    />
+                </>
+            ) : (
+                <DashboardItem
+                    className={cx(
+                        dashboardItemClasses,
+                        "type-visualization",
+                        "gd-dashboard-view-widget",
+                        "is-edit-mode",
+                        { "is-selected": isSelected },
+                    )}
+                    screen={screen}
+                >
+                    <DashboardItemBase
+                        isSelectable={isSelectable}
+                        isSelected={isSelected}
+                        onSelected={onSelected}
+                        contentClassName={cx({ "is-editable": isEditable })}
+                        visualizationClassName="gd-stack-widget-wrapper"
+                    >
+                        {({ clientWidth, clientHeight }) => (
+                            <DashboardStack
+                                stack={stack}
+                                clientWidth={clientWidth}
+                                clientHeight={clientHeight}
+                            />
+                        )}
+                    </DashboardItemBase>
+                </DashboardItem>
             )}
-            screen={screen}
-        >
-            <DashboardItemBase
-                isSelectable={isSelectable}
-                isSelected={isSelected}
-                onSelected={onSelected}
-                contentClassName={cx({ "is-editable": isEditable })}
-                visualizationClassName="gd-stack-widget-wrapper"
-            >
-                {() => <ConfigurationBubble>Tete</ConfigurationBubble>}
-            </DashboardItemBase>
-        </DashboardItem>
+        </>
     );
 };
