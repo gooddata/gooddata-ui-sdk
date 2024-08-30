@@ -53,7 +53,6 @@ export const createDefaultAlert = (
     return {
         type: "automation",
         title: getMeasureTitle(measure),
-        description: "",
         notificationChannel: notificationChannelId,
         alert: {
             condition: {
