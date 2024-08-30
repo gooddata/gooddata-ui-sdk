@@ -2,6 +2,7 @@
 
 import { IntlShape } from "react-intl";
 import capitalize from "lodash/capitalize.js";
+import compact from "lodash/compact.js";
 import { WeekStart } from "@gooddata/sdk-model";
 
 import { RecurrenceType } from "./types.js";
@@ -227,4 +228,20 @@ export const transformRecurrenceTypeToDescription = (
         default:
             return "";
     }
+};
+
+export const isCronExpressionValid = (expression: string, allowHourlyRecurrence: boolean): boolean => {
+    const invalidExpressions = compact([
+        /^(\S+) \* \* \* \* \*$/, // every second / every nth second
+        /^\* (\S+) \* \* \* \*$/, // every second at nth minute
+        allowHourlyRecurrence ? undefined : /^(\S+) (\S+) \* \* \* \*$/, // every hour
+    ]);
+
+    for (const regex of invalidExpressions) {
+        if (regex.test(expression)) {
+            return false;
+        }
+    }
+
+    return true;
 };

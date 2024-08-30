@@ -6,7 +6,11 @@ import { IntlWrapper } from "@gooddata/sdk-ui";
 import { WeekStart } from "@gooddata/sdk-model";
 import cx from "classnames";
 import { RecurrenceType } from "./types.js";
-import { transformCronExpressionToRecurrenceType, constructCronExpression } from "./utils.js";
+import {
+    transformCronExpressionToRecurrenceType,
+    constructCronExpression,
+    isCronExpressionValid,
+} from "./utils.js";
 import { DateTime } from "./DateTime.js";
 import { Recurrence } from "./Recurrence.js";
 import { messages } from "./locales.js";
@@ -18,7 +22,7 @@ import { DEFAULT_DATE_FORMAT, DEFAULT_LOCALE, DEFAULT_TIME_FORMAT, DEFAULT_WEEK_
 export interface IRecurrenceFormProps {
     startDate?: Date | null;
     cronExpression: string;
-    onChange: (cronExpression: string, startDate: Date | null) => void;
+    onChange: (cronExpression: string, startDate: Date | null, isValid: boolean) => void;
     locale?: string;
     dateFormat?: string;
     timeFormat?: string;
@@ -58,23 +62,25 @@ const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
     const onDateChange = useCallback(
         (date: Date) => {
             setDateValue(date);
-            onChange(constructCronExpression(date, recurrenceType, cronExpression, weekStart), date);
+            const newExpression = constructCronExpression(date, recurrenceType, cronExpression, weekStart);
+            onChange(newExpression, date, isCronExpressionValid(newExpression, allowHourlyRecurrence));
         },
-        [cronExpression, onChange, recurrenceType, weekStart],
+        [cronExpression, onChange, recurrenceType, weekStart, allowHourlyRecurrence],
     );
 
     const onRepeatTypeChange = useCallback(
         (type: RecurrenceType) => {
             setRecurrenceType(type);
-            onChange(constructCronExpression(dateValue, type, cronValue, weekStart), dateValue);
+            const newExpression = constructCronExpression(dateValue, type, cronValue, weekStart);
+            onChange(newExpression, dateValue, isCronExpressionValid(newExpression, allowHourlyRecurrence));
         },
-        [cronValue, dateValue, onChange, weekStart],
+        [cronValue, dateValue, onChange, weekStart, allowHourlyRecurrence],
     );
 
     const onCronValueChange = useCallback(
-        (cron: string) => {
+        (cron: string, isValid: boolean) => {
             setCronValue(cron);
-            onChange(cron, dateValue);
+            onChange(cron, dateValue, isValid);
         },
         [dateValue, onChange],
     );
