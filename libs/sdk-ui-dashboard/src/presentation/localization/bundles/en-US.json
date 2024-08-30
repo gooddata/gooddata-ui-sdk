@@ -273,23 +273,28 @@
         "comment": "",
         "limit": 0
     },
-    "deleteDashboardDialog.alertsAndEmailsMessage": {
-        "value": "All alerts and scheduled emails set up for this dashboard will also be deleted.",
+    "deleteDashboardDialog.defaultMessage": {
+        "value": "Are you sure you want to delete dashboard {title}?",
+        "comment": "Do not translate placeholder {title}",
+        "limit": 0
+    },
+    "deleteDashboardDialog.objectsMessage": {
+        "value": "Following objects associated with the dashboard {title} will be permanently deleted:",
+        "comment": "Do not translate placeholder {title}",
+        "limit": 0
+    },
+    "deleteDashboardDialog.alerts": {
+        "value": "alerts",
         "comment": "",
         "limit": 0
     },
-    "deleteDashboardDialog.alertsMessage": {
-        "value": "All alerts set up for this dashboard will also be deleted.",
+    "deleteDashboardDialog.schedules": {
+        "value": "scheduled exports",
         "comment": "",
         "limit": 0
     },
-    "deleteDashboardDialog.emailsMessage": {
-        "value": "All scheduled emails set up for this dashboard will also be deleted.",
-        "comment": "",
-        "limit": 0
-    },
-    "deleteDashboardDialog.drillMessage": {
-        "value": "All drilling into this dashboard from other dashboards will be removed.",
+    "deleteDashboardDialog.drills": {
+        "value": "drilling",
         "comment": "",
         "limit": 0
     },
