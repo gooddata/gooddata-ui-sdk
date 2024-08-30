@@ -102,8 +102,8 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
         }));
     };
 
-    const onDestinationChange = (webhookId: string): void => {
-        setState((s) => ({ ...s, webhook: webhookId }));
+    const onDestinationChange = (notificationChannelId: string): void => {
+        setState((s) => ({ ...s, notificationChannel: notificationChannelId }));
     };
 
     const onRecipientsChange = (updatedRecipients: IAutomationRecipient[]): void => {
