@@ -146,6 +146,9 @@ export const westCoastHeader: IDrillIntersectionAttributeItem = {
         },
         identifier: null,
         formOf: null,
+        primaryLabel: {
+            uri: regionUri,
+        },
     },
 };
 
@@ -163,6 +166,9 @@ export const directSalesHeader: IDrillIntersectionAttributeItem = {
         },
         identifier: null,
         formOf: null,
+        primaryLabel: {
+            uri: departmentUri,
+        },
     },
 };
 
