@@ -48,7 +48,7 @@ export const AttributeFilterProviders: React.FC<IAttributeFilterBaseProps & { ch
         ElementsSelectActionsComponent,
         EmptyResultComponent,
         StatusBarComponent,
-        enableDuplicatedLabelValuesInAttributeFilter,
+        enableDuplicatedLabelValuesInAttributeFilter = true,
     } = props;
 
     const DefaultComponents = getAttributeFilterDefaultComponents(props);
