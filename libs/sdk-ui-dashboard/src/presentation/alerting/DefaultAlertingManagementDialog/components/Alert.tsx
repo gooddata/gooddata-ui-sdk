@@ -66,8 +66,7 @@ export const Alert: React.FC<IAlertProps> = (props) => {
     const [dropdownOpened, toggleDropdownOpened] = useState(false);
     const buttonRef = useRef<HTMLElement | null>(null);
 
-    const openDropdown = (e: React.SyntheticEvent) => {
-        buttonRef.current = e.currentTarget as HTMLElement;
+    const openDropdown = () => {
         toggleDropdownOpened(true);
         setHover(true);
     };
@@ -114,6 +113,7 @@ export const Alert: React.FC<IAlertProps> = (props) => {
                 <span
                     className="gd-notifications-channel-menu-icon s-alert-menu-icon"
                     id={`alert-menu-${alert.id}`}
+                    ref={buttonRef}
                     onClick={openDropdown}
                 />
             </div>
