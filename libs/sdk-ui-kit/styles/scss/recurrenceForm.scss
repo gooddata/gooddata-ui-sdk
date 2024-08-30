@@ -72,10 +72,28 @@ $input-width: 128px;
         }
 
         .gd-recurrence-form-cron {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+
             input {
                 max-width: $input-width;
                 height: $input-height;
             }
+
+            .gd-recurrence-form-cron-error-message {
+                color: variables.$gd-color-negative;
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 13px;
+            }
+        }
+
+        .gd-recurrence-form-cron-icon {
+            display: flex;
+            align-items: center;
+            height: $input-height;
         }
 
         .gd-recurrence-form-repeat-type-description {

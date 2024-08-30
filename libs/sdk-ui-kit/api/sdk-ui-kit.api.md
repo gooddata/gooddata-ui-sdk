@@ -596,6 +596,9 @@ export class FullScreenOverlay extends Overlay<IOverlayState> {
 export const GD_COLOR_HIGHLIGHT = "#14b2e2";
 
 // @internal (undocumented)
+export const GD_COLOR_STATE_BLANK = "#94a1ad";
+
+// @internal (undocumented)
 export const GD_COLOR_WHITE = "#fff";
 
 // @internal (undocumented)
@@ -3387,7 +3390,7 @@ export interface IRecurrenceFormProps {
     // (undocumented)
     locale?: string;
     // (undocumented)
-    onChange: (cronExpression: string, startDate: Date | null) => void;
+    onChange: (cronExpression: string, startDate: Date | null, isValid: boolean) => void;
     // (undocumented)
     repeatLabel?: string;
     // (undocumented)
@@ -3413,7 +3416,7 @@ export interface IRecurrenceProps {
     // (undocumented)
     label: string;
     // (undocumented)
-    onCronValueChange: (cronValue: string) => void;
+    onCronValueChange: (cronValue: string, isValid: boolean) => void;
     // (undocumented)
     onRepeatTypeChange: (repeatType: string) => void;
     // (undocumented)

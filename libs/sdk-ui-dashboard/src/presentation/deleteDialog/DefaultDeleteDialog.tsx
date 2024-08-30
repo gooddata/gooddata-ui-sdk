@@ -1,33 +1,37 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React, { useCallback } from "react";
-import { ConfirmDialog, Typography } from "@gooddata/sdk-ui-kit";
+import { ConfirmDialog } from "@gooddata/sdk-ui-kit";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 import compact from "lodash/compact.js";
 import { IDeleteDialogProps } from "./types.js";
 import {
     deleteDashboard,
     dispatchAndWaitFor,
+    selectDashboardTitle,
+    selectEnableAlerting,
     selectEnableKPIDashboardDrillToDashboard,
-    selectEnableKPIDashboardScheduleRecipients,
+    selectEnableScheduling,
     selectIsDeleteDialogOpen,
-    selectSupportsKpiWidgetCapability,
     uiActions,
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../model/index.js";
 
 const deleteMessages = defineMessages({
-    alertsAndEmails: {
-        id: "deleteDashboardDialog.alertsAndEmailsMessage",
+    default: {
+        id: "deleteDashboardDialog.defaultMessage",
+    },
+    objects: {
+        id: "deleteDashboardDialog.objectsMessage",
     },
     alerts: {
-        id: "deleteDashboardDialog.alertsMessage",
+        id: "deleteDashboardDialog.alerts",
     },
-    emails: {
-        id: "deleteDashboardDialog.emailsMessage",
+    schedules: {
+        id: "deleteDashboardDialog.schedules",
     },
     drills: {
-        id: "deleteDashboardDialog.drillMessage",
+        id: "deleteDashboardDialog.drills",
     },
 });
 
@@ -37,6 +41,7 @@ const deleteMessages = defineMessages({
 export function useDeleteDialogProps(): IDeleteDialogProps {
     const dispatch = useDashboardDispatch();
     const onCancel = useCallback(() => dispatch(uiActions.closeDeleteDialog()), [dispatch]);
+    const dashboardTitle = useDashboardSelector(selectDashboardTitle);
 
     const onDelete = useCallback(
         () =>
@@ -47,18 +52,20 @@ export function useDeleteDialogProps(): IDeleteDialogProps {
     );
 
     const isVisible = useDashboardSelector(selectIsDeleteDialogOpen);
-    const isKpiWidgetEnabled = useDashboardSelector(selectSupportsKpiWidgetCapability);
-    const isScheduleEmailsEnabled = useDashboardSelector(selectEnableKPIDashboardScheduleRecipients);
+    const isSchedulingEnabled = useDashboardSelector(selectEnableScheduling);
+    const isAlertingEnabled = useDashboardSelector(selectEnableAlerting);
     const isDrillToDashboardEnabled = useDashboardSelector(selectEnableKPIDashboardDrillToDashboard);
 
     return {
         isVisible,
-        isKpiWidgetEnabled,
-        isScheduleEmailsEnabled,
+        isSchedulingEnabled,
+        isAlertingEnabled,
         isDrillToDashboardEnabled,
 
         onCancel,
         onDelete,
+
+        dashboardTitle,
     };
 }
 
@@ -68,11 +75,12 @@ export function useDeleteDialogProps(): IDeleteDialogProps {
 export const DefaultDeleteDialog = (props: IDeleteDialogProps): JSX.Element | null => {
     const {
         isVisible,
-        isKpiWidgetEnabled,
-        isScheduleEmailsEnabled,
+        isSchedulingEnabled,
+        isAlertingEnabled,
         isDrillToDashboardEnabled,
         onDelete,
         onCancel,
+        dashboardTitle,
     } = props;
 
     const intl = useIntl();
@@ -82,9 +90,8 @@ export const DefaultDeleteDialog = (props: IDeleteDialogProps): JSX.Element | nu
     }
 
     const messages = compact([
-        isKpiWidgetEnabled && isScheduleEmailsEnabled && deleteMessages.alertsAndEmails,
-        isKpiWidgetEnabled && !isScheduleEmailsEnabled && deleteMessages.alerts,
-        !isKpiWidgetEnabled && isScheduleEmailsEnabled && deleteMessages.emails,
+        isAlertingEnabled && deleteMessages.alerts,
+        isSchedulingEnabled && deleteMessages.schedules,
         isDrillToDashboardEnabled && deleteMessages.drills,
     ]);
 
@@ -98,14 +105,20 @@ export const DefaultDeleteDialog = (props: IDeleteDialogProps): JSX.Element | nu
             cancelButtonText={intl.formatMessage({ id: "cancel" })}
             submitButtonText={intl.formatMessage({ id: "deleteDashboardDialog.submitButtonText" })}
         >
-            {messages.map((message, index) => (
-                <React.Fragment key={message.id}>
-                    {index !== 0 && <br />}
-                    <Typography tagName="p">
-                        <FormattedMessage {...message} />
-                    </Typography>
-                </React.Fragment>
-            ))}
+            {messages.length > 0 ? (
+                <div>
+                    <FormattedMessage id={deleteMessages.objects.id} values={{ title: dashboardTitle }} />
+                    <ul className="gd-delete-dialog-objects-list">
+                        {messages.map((message) => (
+                            <li key={message.id}>
+                                <FormattedMessage {...message} />
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            ) : (
+                <FormattedMessage id={deleteMessages.default.id} values={{ title: dashboardTitle }} />
+            )}
         </ConfirmDialog>
     );
 };

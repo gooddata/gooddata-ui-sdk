@@ -42,6 +42,7 @@ import { invariant } from "ts-invariant";
 
 export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
     const { editSchedule, webhooks, emails, context } = props;
+    const [isCronValid, setIsCronValid] = useState(true);
     const editWidgetId = (
         editSchedule?.exportDefinitions?.find((exportDefinition) =>
             isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload),
@@ -91,7 +92,8 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
 
     const onTitleChange = (value: string) => setState((s) => ({ ...s, title: value }));
 
-    const onRecurrenceChange = (cronExpression: string, startDate: Date | null) => {
+    const onRecurrenceChange = (cronExpression: string, startDate: Date | null, isValid: boolean) => {
+        setIsCronValid(isValid);
         setState((s) => ({
             ...s,
             schedule: {
@@ -250,6 +252,7 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
         onDashboardAttachmentsChange,
         onWidgetAttachmentsChange,
         onWidgetAttachmentsSettingsChange,
+        isCronValid,
     };
 }
 

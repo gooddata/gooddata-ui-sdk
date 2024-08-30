@@ -103,6 +103,7 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
         onRecurrenceChange,
         onSubjectChange,
         onTitleChange,
+        isCronValid,
     } = useEditScheduledEmail(props);
     const { handleSaveScheduledEmail, isSavingScheduledEmail, savingErrorMessage } =
         useSaveScheduledEmailToBackend(automation, props);
@@ -151,7 +152,7 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
             }) ?? true,
     };
 
-    const isValid = (automation.recipients?.length ?? 0) <= maxAutomationsRecipients;
+    const isValid = (automation.recipients?.length ?? 0) <= maxAutomationsRecipients && isCronValid;
     const isDestinationEmpty = !automation.notificationChannel;
     const isSubmitDisabled =
         !isValid ||
