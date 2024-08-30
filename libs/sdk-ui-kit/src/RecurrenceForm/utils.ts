@@ -232,9 +232,9 @@ export const transformRecurrenceTypeToDescription = (
 
 export const isCronExpressionValid = (expression: string, allowHourlyRecurrence: boolean): boolean => {
     const invalidExpressions = compact([
-        /^(\S+) \* \* \* \* \*$/, // every second / every nth second
-        /^\* (\S+) \* \* \* \*$/, // every second at nth minute
-        allowHourlyRecurrence ? undefined : /^(\S+) (\S+) \* \* \* \*$/, // every hour
+        /^\* (\S+) (\S+) (\S+) (\S+) (\S+)$/, // every second
+        /^(\S+) \* (\S+) (\S+) (\S+) (\S+)$/, // every minute
+        allowHourlyRecurrence ? undefined : /^(\S+) (\S+) \* (\S+) (\S+) (\S+)$/, // every hour
     ]);
 
     for (const regex of invalidExpressions) {
