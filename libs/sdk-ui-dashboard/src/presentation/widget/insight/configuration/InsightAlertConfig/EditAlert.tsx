@@ -1,10 +1,6 @@
 // (C) 2022-2024 GoodData Corporation
 import React from "react";
-import {
-    IAutomationMetadataObject,
-    IAutomationMetadataObjectDefinition,
-    IMeasure,
-} from "@gooddata/sdk-model";
+import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, Button, Input, Message } from "@gooddata/sdk-ui-kit";
 import { DashboardInsightSubmenuContainer } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightSubmenuContainer.js";
 import { AlertMeasureSelect } from "./AlertMeasureSelect.js";
@@ -14,6 +10,7 @@ import { EditAlertConfiguration } from "./EditAlertConfiguration.js";
 import { useEditAlert } from "./hooks/useEditAlert.js";
 import { FormattedMessage, useIntl } from "react-intl";
 import { Smtps, Webhooks } from "../../../../../model/index.js";
+import { AlertMetric } from "../../types.js";
 
 const TOOLTIP_ALIGN_POINTS = [{ align: "cl cr" }, { align: "cr cl" }];
 
@@ -22,7 +19,7 @@ interface IEditAlertProps {
     isNewAlert?: boolean;
     hasAlerts: boolean;
     destinations: (Webhooks[number] | Smtps[number])[];
-    measures: IMeasure[];
+    measures: AlertMetric[];
     onClose: () => void;
     onCancel: () => void;
     onCreate?: (alert: IAutomationMetadataObjectDefinition) => void;
@@ -67,7 +64,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
     const disableCreateButtonDueToLimits = isNewAlert && maxAutomationsReached;
     const selectedMeasureIdentifier = updatedAlert.alert!.condition.left;
     const selectedMeasure = measures.find(
-        (measure) => measure.measure.localIdentifier === selectedMeasureIdentifier,
+        (measure) => measure.measure.measure.localIdentifier === selectedMeasureIdentifier,
     );
 
     return viewMode === "edit" ? (

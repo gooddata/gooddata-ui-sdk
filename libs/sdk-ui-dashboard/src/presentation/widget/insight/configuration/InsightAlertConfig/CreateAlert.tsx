@@ -1,12 +1,9 @@
 // (C) 2022-2024 GoodData Corporation
 import React from "react";
-import {
-    IAutomationMetadataObject,
-    IAutomationMetadataObjectDefinition,
-    IMeasure,
-} from "@gooddata/sdk-model";
+import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 
 import { Smtps, Webhooks } from "../../../../../model/index.js";
+import { AlertMetric } from "../../types.js";
 
 import { EditAlert } from "./EditAlert.js";
 
@@ -17,7 +14,7 @@ interface ICreateAlertProps {
     onCreate?: (alert: IAutomationMetadataObjectDefinition) => void;
     destinations: (Webhooks[number] | Smtps[number])[];
     hasAlerts: boolean;
-    measures: IMeasure[];
+    measures: AlertMetric[];
     maxAutomationsReached: boolean;
 }
 

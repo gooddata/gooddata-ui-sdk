@@ -1,7 +1,7 @@
 // (C) 2020-2024 GoodData Corporation
 import { ComponentType } from "react";
 import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { IColorPalette, IInsight, IInsightWidget, ISeparators } from "@gooddata/sdk-model";
+import { IColorPalette, IInsight, IInsightWidget, IMeasure, ISeparators } from "@gooddata/sdk-model";
 import {
     ExplicitDrill,
     IDrillEventIntersectionElement,
@@ -245,3 +245,27 @@ export type CustomDashboardInsightComponent = ComponentType<IDashboardInsightPro
  * @public
  */
 export type CustomInsightBodyComponent = ComponentType<IInsightBodyProps>;
+
+/**
+ * @internal
+ */
+export enum AlertMetricComparatorType {
+    PreviousPeriod,
+    SamePeriodPreviousYear,
+}
+
+/**
+ * @internal
+ */
+export type AlertMetricComparator = {
+    measure: IMeasure;
+    comparator: AlertMetricComparatorType;
+};
+
+/**
+ * @internal
+ */
+export type AlertMetric = {
+    measure: IMeasure;
+    comparators: AlertMetricComparator[];
+};

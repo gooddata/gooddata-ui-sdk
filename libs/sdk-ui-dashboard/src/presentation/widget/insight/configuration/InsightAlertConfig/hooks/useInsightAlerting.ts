@@ -91,9 +91,9 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         });
 
     const { result: widgetFilters, status: widgetFiltersStatus } = useWidgetFilters(widget, insight);
-    const supportedMeasures = getSupportedInsightMeasuresByInsight(insight);
-    const defaultMeasure = supportedMeasures[0];
     const destinations = useMemo(() => [...emails, ...webhooks], [emails, webhooks]);
+    const supportedMeasures = useMemo(() => getSupportedInsightMeasuresByInsight(insight), [insight]);
+    const defaultMeasure = supportedMeasures[0];
     const defaultNotificationChannelId = destinations[0]?.id;
     const hasAlerts = alerts.length > 0;
     const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);

@@ -4,10 +4,10 @@ import {
     IAlertComparisonOperator,
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
-    IMeasure,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
 import { getMeasureTitle } from "../utils.js";
+import { AlertMetric } from "../../../types.js";
 
 export interface IUseEditAlertProps {
     alert: IAutomationMetadataObject;
@@ -19,19 +19,19 @@ export const useEditAlert = ({ alert, onCreate, onUpdate }: IUseEditAlertProps) 
     const [viewMode, setViewMode] = useState<"edit" | "configuration">("edit");
     const [updatedAlert, setUpdatedAlert] = useState<IAutomationMetadataObject>(alert);
 
-    const changeMeasure = (measure: IMeasure) => {
+    const changeMeasure = (measure: AlertMetric) => {
         setUpdatedAlert((alert) => ({
             ...alert,
-            title: getMeasureTitle(measure) ?? "",
+            title: getMeasureTitle(measure.measure) ?? "",
             alert: {
                 ...alert.alert!,
                 condition: {
                     ...alert.alert!.condition,
-                    left: measure.measure.localIdentifier,
+                    left: measure.measure.measure.localIdentifier,
                 },
                 execution: {
                     ...alert.alert!.execution,
-                    measures: [measure],
+                    measures: [measure.measure],
                 },
             },
         }));
