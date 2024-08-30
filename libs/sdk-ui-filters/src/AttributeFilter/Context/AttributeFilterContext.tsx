@@ -38,7 +38,7 @@ export const AttributeFilterContextProvider: React.FC<
         selectFirst,
         disabled,
         customIcon,
-        enableDuplicatedLabelValuesInAttributeFilter,
+        enableDuplicatedLabelValuesInAttributeFilter = true,
     } = props;
 
     const controller = useAttributeFilterController(props);
