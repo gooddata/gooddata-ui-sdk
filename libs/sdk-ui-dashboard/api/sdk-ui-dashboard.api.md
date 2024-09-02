@@ -3540,7 +3540,7 @@ export type FluidLayoutCustomizationFn = (layout: IDashboardLayout<ExtendedDashb
 export function getAuthor(capabilities: IBackendCapabilities, user: IUser): string | undefined;
 
 // @internal (undocumented)
-export function getDefaultInsightEditMenuItems(widget: IInsightWidget, { intl, dispatch, eventDispatch, includeInteractions }: MenuItemDependencies): IInsightMenuItem[];
+export function getDefaultInsightEditMenuItems(widget: IInsightWidget, { intl, dispatch, eventDispatch, includeInteractions, useWidgetDeleteDialog, }: MenuItemDependencies): IInsightMenuItem[];
 
 // @internal (undocumented)
 export function getDefaultInsightMenuItems(intl: IntlShape, config: {
@@ -5631,6 +5631,7 @@ export type MenuItemDependencies = {
     dispatch: ReturnType<typeof useDashboardDispatch>;
     eventDispatch: ReturnType<typeof useDashboardEventDispatch>;
     includeInteractions?: boolean;
+    useWidgetDeleteDialog?: boolean;
 };
 
 // @alpha (undocumented)
@@ -6846,7 +6847,7 @@ export const selectAutomationsIsLoading: DashboardSelector<boolean>;
 export const selectAutomationsSchedules: DashboardSelector<IAutomationMetadataObject[]>;
 
 // @alpha
-export const selectAutomationsSchedulesInContext: DashboardSelector<IAutomationMetadataObject[]>;
+export const selectAutomationsSchedulesInContext: (widgetLocalIdentifier: string | undefined) => DashboardSelector<IAutomationMetadataObject[]>;
 
 // @public
 export const selectBackendCapabilities: DashboardSelector<IBackendCapabilities>;
@@ -7482,6 +7483,9 @@ export const selectIsShareDialogOpen: DashboardSelector<boolean>;
 export const selectIsWhiteLabeled: DashboardSelector<boolean>;
 
 // @internal (undocumented)
+export const selectIsWidgetDeleteDialogOpen: DashboardSelector<boolean>;
+
+// @internal (undocumented)
 export const selectIsWidgetLoadingAdditionalDataByWidgetRef: (refs: ObjRef) => DashboardSelector<boolean>;
 
 // @internal (undocumented)
@@ -7639,6 +7643,9 @@ export const selectWidgetCoordinatesByRef: (ref: ObjRef) => DashboardSelector<IL
 
 // @internal (undocumented)
 export const selectWidgetDateDatasetAutoSelect: DashboardSelector<boolean>;
+
+// @internal (undocumented)
+export const selectWidgetDeleteDialogWidgetRef: DashboardSelector<ObjRef | undefined>;
 
 // @alpha
 export const selectWidgetDrills: (ref: ObjRef | undefined) => DashboardSelector<IDrillToLegacyDashboard[] | InsightDrillDefinition[] | DrillDefinition[]>;
@@ -8154,6 +8161,11 @@ mode?: FilterViewDialogMode_2 | undefined;
 } | undefined;
 type: string;
 }) => void | UiState_2 | WritableDraft<UiState_2>;
+openWidgetDeleteDialog: (state: WritableDraft<UiState_2>, action: {
+payload: ObjRef;
+type: string;
+}) => void | UiState_2 | WritableDraft<UiState_2>;
+closeWidgetDeleteDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
 }, "uiSlice">;
 
 // @beta (undocumented)
@@ -8238,6 +8250,11 @@ export interface UiState {
     };
     // (undocumented)
     widgetDateDatasetAutoSelect: boolean;
+    // (undocumented)
+    widgetDeleteDialog: {
+        open: boolean;
+        widgetRef: ObjRef | undefined;
+    };
     // (undocumented)
     widgetsLoadingAdditionalData: ObjRef[];
     // (undocumented)

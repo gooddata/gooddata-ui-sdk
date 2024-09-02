@@ -97,6 +97,16 @@ const closeDeleteDialog: UiReducer = (state) => {
     state.deleteDialog.open = false;
 };
 
+const openWidgetDeleteDialog: UiReducer<PayloadAction<ObjRef>> = (state, action) => {
+    state.widgetDeleteDialog.open = true;
+    state.widgetDeleteDialog.widgetRef = action.payload;
+};
+
+const closeWidgetDeleteDialog: UiReducer = (state) => {
+    state.widgetDeleteDialog.open = false;
+    state.widgetDeleteDialog.widgetRef = undefined;
+};
+
 const toggleFilterViewsDialog: UiReducer<
     PayloadAction<
         | {
@@ -384,4 +394,6 @@ export const uiReducers = {
     setWidgetsOverlay,
     hideAllWidgetsOverlay,
     toggleFilterViewsDialog,
+    openWidgetDeleteDialog,
+    closeWidgetDeleteDialog,
 };

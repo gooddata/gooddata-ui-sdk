@@ -64,7 +64,7 @@ export const useDashboardScheduledEmails = () => {
     const emails = useDashboardSelector(selectSmtps);
     const users = useDashboardSelector(selectUsers);
 
-    const automations = useDashboardSelector(selectAutomationsSchedulesInContext);
+    const automations = useDashboardSelector(selectAutomationsSchedulesInContext(undefined));
     const automationsLoading = useDashboardSelector(selectAutomationsIsLoading);
     const automationsError = useDashboardSelector(selectAutomationsError);
 

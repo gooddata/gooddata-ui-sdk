@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import React from "react";
 import { IntlShape } from "react-intl";
 import compact from "lodash/compact.js";
@@ -10,9 +10,10 @@ import { InsightInteractions } from "../../insight/configuration/InsightInteract
 import { Icon } from "@gooddata/sdk-ui-kit";
 import {
     useDashboardDispatch,
-    eagerRemoveSectionItemByWidgetRef,
     useDashboardEventDispatch,
     userInteractionTriggered,
+    uiActions,
+    eagerRemoveSectionItemByWidgetRef,
 } from "../../../../model/index.js";
 import { IInsightWidget } from "@gooddata/sdk-model";
 
@@ -24,6 +25,7 @@ export type MenuItemDependencies = {
     dispatch: ReturnType<typeof useDashboardDispatch>;
     eventDispatch: ReturnType<typeof useDashboardEventDispatch>;
     includeInteractions?: boolean;
+    useWidgetDeleteDialog?: boolean;
 };
 
 /**
@@ -31,7 +33,13 @@ export type MenuItemDependencies = {
  */
 export function getDefaultInsightEditMenuItems(
     widget: IInsightWidget,
-    { intl, dispatch, eventDispatch, includeInteractions = true }: MenuItemDependencies,
+    {
+        intl,
+        dispatch,
+        eventDispatch,
+        includeInteractions = true,
+        useWidgetDeleteDialog = false,
+    }: MenuItemDependencies,
 ): IInsightMenuItem[] {
     return compact([
         {
@@ -67,7 +75,10 @@ export function getDefaultInsightEditMenuItems(
             icon: "gd-icon-trash",
             disabled: false,
             className: "s-delete-insight-item",
-            onClick: () => dispatch(eagerRemoveSectionItemByWidgetRef(widget.ref)),
+            onClick: () =>
+                useWidgetDeleteDialog
+                    ? dispatch(uiActions.openWidgetDeleteDialog(widget.ref))
+                    : dispatch(eagerRemoveSectionItemByWidgetRef(widget.ref)),
         },
     ]);
 }

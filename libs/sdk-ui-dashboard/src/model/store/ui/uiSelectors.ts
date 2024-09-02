@@ -99,6 +99,22 @@ export const selectIsDeleteDialogOpen: DashboardSelector<boolean> = createSelect
 /**
  * @internal
  */
+export const selectIsWidgetDeleteDialogOpen: DashboardSelector<boolean> = createSelector(
+    selectSelf,
+    (state) => state.widgetDeleteDialog.open,
+);
+
+/**
+ * @internal
+ */
+export const selectWidgetDeleteDialogWidgetRef: DashboardSelector<ObjRef | undefined> = createSelector(
+    selectSelf,
+    (state) => state.widgetDeleteDialog.widgetRef,
+);
+
+/**
+ * @internal
+ */
 export const selectIsKpiDeleteDialogOpen: DashboardSelector<boolean> = createSelector(
     selectSelf,
     (state) => !!state.kpiDeleteDialog.widgetCoordinates,
