@@ -12,7 +12,6 @@ import {
     ObjRef,
     objRefToString,
     areObjRefsEqual,
-    drillDownReferenceHierarchyRef,
     drillDownReferenceAttributeRef,
 } from "@gooddata/sdk-model";
 import { IAvailableDrillTargets } from "@gooddata/sdk-ui";
@@ -21,6 +20,7 @@ import {
     getDrillOriginLocalIdentifier,
     getLocalIdentifierOrDie,
     getValidDrillOriginAttributes,
+    isDrillDownIntersectionIgnoredAttributesForHierarchy,
 } from "../../../../../_staging/drills/drillingUtils.js";
 import {
     DRILL_TARGET_TYPE,
@@ -231,28 +231,16 @@ function getIntersectionIgnoredAttributeLocalIdentifiersForDrillDown(
 
     const drillIntersectionIgnoredAttributes = attribute
         ? widget.drillDownIntersectionIgnoredAttributes?.find((drillDownIgnoredDrillIntersection) => {
-              const hierarchyRef = drillDownReferenceHierarchyRef(
-                  drillDownIgnoredDrillIntersection.drillDownReference,
-              );
               const attributeRef = drillDownReferenceAttributeRef(
                   drillDownIgnoredDrillIntersection.drillDownReference,
               );
 
-              // Global date drill down origin does not contain proper date attribute,
-              // so we need to check it differently
-              const isDateGlobalDrillDown =
-                  (globalDrillDownDefinition.target as { type: string; identifier: string }).type ===
-                  "dateAttributeHierarchy";
-              const isDateDrillDownReference =
-                  drillDownIgnoredDrillIntersection.drillDownReference.type === "dateHierarchyReference";
-              const isSameHierarchy =
-                  isDateGlobalDrillDown && isDateDrillDownReference
-                      ? true
-                      : areObjRefsEqual(hierarchyRef, globalDrillDownDefinition.target);
-
               return (
                   areObjRefsEqual(attributeRef, attribute.attribute.attributeHeader.formOf.ref) &&
-                  isSameHierarchy
+                  isDrillDownIntersectionIgnoredAttributesForHierarchy(
+                      drillDownIgnoredDrillIntersection,
+                      globalDrillDownDefinition.target,
+                  )
               );
           })
         : undefined;

@@ -10,8 +10,9 @@ import {
     selectEnableDuplicatedLabelValuesInAttributeFilter,
 } from "../../store/config/configSelectors.js";
 import { selectWidgetByRef } from "../../store/layout/layoutSelectors.js";
-import { areObjRefsEqual, isInsightWidget, drillDownReferenceHierarchyRef } from "@gooddata/sdk-model";
+import { isInsightWidget } from "@gooddata/sdk-model";
 import { removeIgnoredValuesFromDrillIntersection } from "./common/intersectionUtils.js";
+import { isDrillDownIntersectionIgnoredAttributesForHierarchy } from "../../../_staging/drills/drillingUtils.js";
 
 export function* drillDownHandler(
     ctx: DashboardContext,
@@ -41,12 +42,12 @@ export function* drillDownHandler(
             : undefined;
 
         const drillDownIntersectionIgnoredAttributesForCurrentHierarchy =
-            drillDownIntersectionIgnoredAttributes?.find((ignored) =>
-                areObjRefsEqual(
-                    drillDownReferenceHierarchyRef(ignored.drillDownReference),
-                    drillDefinition.hierarchyRef,
-                ),
-            );
+            drillDownIntersectionIgnoredAttributes?.find((ignored) => {
+                return isDrillDownIntersectionIgnoredAttributesForHierarchy(
+                    ignored,
+                    drillDefinition.hierarchyRef!,
+                );
+            });
 
         const ignoredAttributesLocalIdentifiers =
             drillDownIntersectionIgnoredAttributesForCurrentHierarchy?.ignoredAttributes ?? [];

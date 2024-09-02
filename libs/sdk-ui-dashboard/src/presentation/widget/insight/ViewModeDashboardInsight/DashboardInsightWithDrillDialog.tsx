@@ -1,18 +1,23 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React, { useCallback, useMemo, useState } from "react";
 import last from "lodash/last.js";
-import { selectLocale, useDashboardSelector } from "../../../../model/index.js";
+import {
+    selectCatalogAttributeDisplayFormsById,
+    selectEnableDrillDownIntersectionIgnoredAttributes,
+    selectLocale,
+    useDashboardSelector,
+} from "../../../../model/index.js";
 import {
     DrillStep,
-    getDrillDownAttributeTitle,
+    getDrillDownTitle,
     OnDrillDownSuccess,
     OnDrillToInsightSuccess,
 } from "../../../drill/index.js";
 import { IDrillDownDefinition, isDrillDownDefinition } from "../../../../types.js";
-import { getDrillOriginLocalIdentifier } from "../../../../_staging/drills/drillingUtils.js";
 import { DashboardInsightWithDrillSelect } from "./Insight/DashboardInsightWithDrillSelect.js";
 import { InsightDrillDialog } from "./InsightDrillDialog/InsightDrillDialog.js";
 import { IDashboardInsightProps } from "../types.js";
+import { isIdentifierRef } from "@gooddata/sdk-model";
 
 /**
  * @internal
@@ -22,6 +27,10 @@ export const DashboardInsightWithDrillDialog = (props: IDashboardInsightProps): 
     const activeDrillStep = last(drillSteps);
     const insight = activeDrillStep?.insight;
     const widget = props.widget;
+    const attributeDisplayForms = useDashboardSelector(selectCatalogAttributeDisplayFormsById);
+    const enableDrillDownIntersectionIgnoredAttributes = useDashboardSelector(
+        selectEnableDrillDownIntersectionIgnoredAttributes,
+    );
 
     const breadcrumbs = useMemo(
         () =>
@@ -29,12 +38,27 @@ export const DashboardInsightWithDrillDialog = (props: IDashboardInsightProps): 
                 .filter((s) => isDrillDownDefinition(s.drillDefinition))
                 .map(
                     (s) =>
-                        getDrillDownAttributeTitle(
-                            getDrillOriginLocalIdentifier(s.drillDefinition as IDrillDownDefinition),
+                        getDrillDownTitle(
+                            s.drillDefinition as IDrillDownDefinition,
                             s.drillEvent,
+                            enableDrillDownIntersectionIgnoredAttributes
+                                ? widget.drillDownIntersectionIgnoredAttributes
+                                : undefined,
+                            enableDrillDownIntersectionIgnoredAttributes
+                                ? attributeDisplayForms[
+                                      isIdentifierRef(s.drillDefinition.target)
+                                          ? s.drillDefinition.target.identifier
+                                          : s.drillDefinition.target.uri
+                                  ]
+                                : undefined,
                         ) ?? "NULL", // TODO localize this? drilldown is currently only on bear and that does not support nulls anyway
                 ),
-        [drillSteps],
+        [
+            drillSteps,
+            enableDrillDownIntersectionIgnoredAttributes,
+            attributeDisplayForms,
+            widget.drillDownIntersectionIgnoredAttributes,
+        ],
     );
 
     const locale = useDashboardSelector(selectLocale);

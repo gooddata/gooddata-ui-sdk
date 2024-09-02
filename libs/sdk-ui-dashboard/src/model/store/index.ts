@@ -244,6 +244,7 @@ export {
     selectDateHierarchyTemplates,
     selectAdhocDateHierarchies,
     selectAllCatalogAttributeHierarchies,
+    selectCatalogAttributeDisplayFormsById,
 } from "./catalog/catalogSelectors.js";
 export { catalogActions } from "./catalog/index.js";
 export { drillActions } from "./drill/index.js";

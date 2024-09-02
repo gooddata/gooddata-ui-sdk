@@ -18,15 +18,25 @@ import {
     IListedDashboard,
     isCrossFiltering,
     isAttributeDescriptor,
+    IAttributeDisplayFormMetadataObject,
+    isIdentifierRef,
+    IWidget,
 } from "@gooddata/sdk-model";
 import { isDrillToUrl } from "../types.js";
 import { DrillSelectListBody } from "./DrillSelectListBody.js";
-import { getDrillDownAttributeTitle, getTotalDrillToUrlCount } from "../utils/drillDownUtils.js";
+import {
+    getDrillDownTitle,
+    getDrillOriginAttributeElementTitle,
+    getTotalDrillToUrlCount,
+} from "../utils/drillDownUtils.js";
 import { DrillSelectContext, DrillType, DrillSelectItem } from "./types.js";
 import {
     selectAccessibleDashboards,
+    selectCatalogAttributeDisplayFormsById,
     selectDashboardTitle,
+    selectEnableDrillDownIntersectionIgnoredAttributes,
     selectInsightsMap,
+    selectWidgetByRef,
     useDashboardSelector,
 } from "../../../model/index.js";
 import { dashboardMatch } from "../utils/dashboardPredicate.js";
@@ -43,23 +53,40 @@ export interface DrillSelectDropdownProps extends DrillSelectContext {
 
 export const DrillSelectDropdown: React.FC<DrillSelectDropdownProps> = (props) => {
     const { isOpen, dropDownAnchorClass, onClose, onSelect, drillDefinitions, drillEvent } = props;
-
     const intl = useIntl();
-    const listedDashboards = useDashboardSelector(selectAccessibleDashboards);
+    const dashboardList = useDashboardSelector(selectAccessibleDashboards);
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
     const insights = useDashboardSelector(selectInsightsMap);
+    const widget = useDashboardSelector(selectWidgetByRef(drillEvent.widgetRef));
+    const attributeDisplayForms = useDashboardSelector(selectCatalogAttributeDisplayFormsById);
+    const enableDrillDownIntersectionIgnoredAttributes = useDashboardSelector(
+        selectEnableDrillDownIntersectionIgnoredAttributes,
+    );
 
     const drillSelectItems = useMemo(
         () =>
-            createDrillSelectItems(
+            createDrillSelectItems({
                 drillDefinitions,
                 drillEvent,
                 insights,
-                listedDashboards,
+                dashboardList,
                 dashboardTitle,
+                attributeDisplayForms,
+                enableDrillDownIntersectionIgnoredAttributes,
                 intl,
-            ),
-        [drillDefinitions, drillEvent, insights, listedDashboards, dashboardTitle, intl],
+                widget: widget as IWidget,
+            }),
+        [
+            drillDefinitions,
+            drillEvent,
+            insights,
+            dashboardList,
+            dashboardTitle,
+            intl,
+            widget,
+            attributeDisplayForms,
+            enableDrillDownIntersectionIgnoredAttributes,
+        ],
     );
 
     return isOpen ? (
@@ -83,14 +110,27 @@ const getDashboardTitle = (dashboardRef: ObjRef, dashboardList: IListedDashboard
     return dashboard ? dashboard.title : null;
 };
 
-export const createDrillSelectItems = (
-    drillDefinitions: DashboardDrillDefinition[],
-    drillEvent: IDrillEvent,
-    insights: ObjRefMap<IInsight>,
-    dashboardList: IListedDashboard[],
-    dashboardTitle: string,
-    intl: IntlShape,
-): DrillSelectItem[] => {
+export const createDrillSelectItems = ({
+    drillDefinitions,
+    drillEvent,
+    insights,
+    dashboardList,
+    dashboardTitle,
+    intl,
+    widget,
+    attributeDisplayForms,
+    enableDrillDownIntersectionIgnoredAttributes,
+}: {
+    drillDefinitions: DashboardDrillDefinition[];
+    drillEvent: IDrillEvent;
+    insights: ObjRefMap<IInsight>;
+    dashboardList: IListedDashboard[];
+    dashboardTitle: string;
+    intl: IntlShape;
+    widget?: IWidget;
+    attributeDisplayForms: Record<string, IAttributeDisplayFormMetadataObject>;
+    enableDrillDownIntersectionIgnoredAttributes: boolean;
+}): DrillSelectItem[] => {
     const totalDrillToUrls = getTotalDrillToUrlCount(drillDefinitions);
 
     return drillDefinitions.map((drillDefinition): DrillSelectItem => {
@@ -101,8 +141,21 @@ export const createDrillSelectItems = (
 
         if (isDrillDownDefinition(drillDefinition)) {
             const { title: drillTitle } = drillDefinition;
-            const drillDownOrigin = getDrillOriginLocalIdentifier(drillDefinition);
-            const title = getDrillDownAttributeTitle(drillDownOrigin, drillEvent);
+            const drillTargetIdentifier = isIdentifierRef(drillDefinition.target)
+                ? drillDefinition.target.identifier
+                : drillDefinition.target.uri;
+            const drillTargetDisplayForm = enableDrillDownIntersectionIgnoredAttributes
+                ? attributeDisplayForms[drillTargetIdentifier]
+                : undefined;
+
+            const title = getDrillDownTitle(
+                drillDefinition,
+                drillEvent,
+                enableDrillDownIntersectionIgnoredAttributes
+                    ? widget?.drillDownIntersectionIgnoredAttributes
+                    : undefined,
+                drillTargetDisplayForm,
+            );
 
             return {
                 type: DrillType.DRILL_DOWN,
@@ -140,7 +193,7 @@ export const createDrillSelectItems = (
 
             const attributeValue =
                 isDrillFromAttribute(drillDefinition.origin) && totalDrillToUrls > 1
-                    ? getDrillDownAttributeTitle(drillToUrlOrigin, drillEvent)
+                    ? getDrillOriginAttributeElementTitle(drillToUrlOrigin, drillEvent)
                     : undefined;
 
             return {

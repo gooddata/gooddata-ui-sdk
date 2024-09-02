@@ -183,6 +183,7 @@ import { IDateHierarchyTemplate } from '@gooddata/sdk-model';
 import { Identifier } from '@gooddata/sdk-model';
 import { IdentifierRef } from '@gooddata/sdk-model';
 import { IDrillDownDefinition as IDrillDownDefinition_2 } from '../../../types.js';
+import { IDrillDownIntersectionIgnoredAttributes } from '@gooddata/sdk-model';
 import { IDrillDownReference } from '@gooddata/sdk-model';
 import { IDrillEvent } from '@gooddata/sdk-ui';
 import { IDrillEventIntersectionElement } from '@gooddata/sdk-ui';
@@ -3561,7 +3562,7 @@ export function getDefaultInsightMenuItems(intl: IntlShape, config: {
 }): IInsightMenuItem[];
 
 // @internal (undocumented)
-export function getDrillDownAttributeTitle(localIdentifier: string, drillEvent: IDrillEvent): string | null;
+export function getDrillDownTitle(drillDefinition: IDrillDownDefinition, drillEvent: IDrillEvent, drillDownIntersectionIgnoredAttributes?: IDrillDownIntersectionIgnoredAttributes[], drillTargetDisplayForm?: IAttributeDisplayFormMetadataObject): string | null;
 
 // @internal (undocumented)
 export class HeadlessDashboard {
@@ -4382,6 +4383,9 @@ export interface IDrillTargets {
     ref: ObjRef;
     uri: string;
 }
+
+// @internal (undocumented)
+export type IDrillToUrl = IDrillToCustomUrl | IDrillToAttributeUrl;
 
 // @internal (undocumented)
 export interface IDrillToUrlPlaceholder {
@@ -6932,6 +6936,9 @@ export const selectCanViewDashboardPermission: DashboardSelector<boolean>;
 
 // @public (undocumented)
 export const selectCatalogAttributeDisplayForms: DashboardSelector<IAttributeDisplayFormMetadataObject[]>;
+
+// @public (undocumented)
+export const selectCatalogAttributeDisplayFormsById: DashboardSelector<Record<string, IAttributeDisplayFormMetadataObject>>;
 
 // @beta (undocumented)
 export const selectCatalogAttributeHierarchies: DashboardSelector<ICatalogAttributeHierarchy[]>;

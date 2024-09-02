@@ -9,6 +9,11 @@ import {
     isMeasureDescriptor,
     IAttributeDescriptor,
     isCrossFiltering,
+    IDrillDownIntersectionIgnoredAttributes,
+    ObjRef,
+    drillDownReferenceHierarchyRef,
+    isIdentifierRef,
+    areObjRefsEqual,
 } from "@gooddata/sdk-model";
 import { getMappingHeaderLocalIdentifier, IDrillEvent, IAvailableDrillTargets } from "@gooddata/sdk-ui";
 import first from "lodash/first.js";
@@ -144,4 +149,28 @@ export function getValidDrillOriginAttributes(
     );
 
     return attributeSupportedItems?.intersectionAttributes ?? [];
+}
+
+/**
+ * Check whether drill intersection ignored attributes belong to a particular hierarchy.
+ *
+ * Date drill down does not contain a proper date attribute reference (date hierarchy is global),
+ * so we just check that the hierarchy and its reference are date hierarchies.
+ *
+ * For other drill downs, we check reference equality as usual.
+ *
+ * @internal
+ */
+export function isDrillDownIntersectionIgnoredAttributesForHierarchy(
+    drillDownIgnoredDrillIntersection: IDrillDownIntersectionIgnoredAttributes,
+    targetHierarchyRef: ObjRef,
+) {
+    const hierarchyRef = drillDownReferenceHierarchyRef(drillDownIgnoredDrillIntersection.drillDownReference);
+    const targetRefType = isIdentifierRef(targetHierarchyRef) ? targetHierarchyRef.type : undefined;
+    const isDateDrillDown = targetRefType === "dateAttributeHierarchy";
+    const isDateDrillDownReference =
+        drillDownIgnoredDrillIntersection.drillDownReference.type === "dateHierarchyReference";
+    return isDateDrillDown && isDateDrillDownReference
+        ? true
+        : areObjRefsEqual(hierarchyRef, targetHierarchyRef);
 }
