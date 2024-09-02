@@ -4,7 +4,7 @@ import classnames from "classnames";
 import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
 import { GenAISemanticSearchType, ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { Input, LoadingMask, Message, useDebouncedState } from "@gooddata/sdk-ui-kit";
+import { Input, LoadingMask, Message, useDebouncedState, useHeaderSearch } from "@gooddata/sdk-ui-kit";
 import { useWorkspaceStrict, useLocalStorage, IntlWrapper } from "@gooddata/sdk-ui";
 import { useSemanticSearch, useElementWidth } from "../hooks/index.js";
 import { ListItem } from "../types.js";
@@ -99,6 +99,8 @@ export type SearchOverlayProps = {
 const SearchOverlayCore: React.FC<
     WrappedComponentProps & Omit<SearchOverlayProps, "locale" | "metadataTimezone">
 > = ({ onSelect, onSearch, backend, workspace, objectTypes, deepSearch, limit = LIMIT, className, intl }) => {
+    const { toggleOpen } = useHeaderSearch();
+
     // Input value handling
     const [value, setValue, searchTerm, setImmediate] = useDebouncedState("", DEBOUNCE);
 
@@ -174,8 +176,13 @@ const SearchOverlayCore: React.FC<
                     window.location.href = item.url;
                 }
             }
+
+            // Trigger the dialog closing unless it's opening in a new tab
+            if (newTab) {
+                toggleOpen();
+            }
         },
-        [searchTerm, searchHistory, onSelect, setSearchHistory],
+        [searchTerm, searchHistory, onSelect, setSearchHistory, toggleOpen],
     );
     const onHistorySelect = (item: ListItem<string>) => setImmediate(item.item);
     const searchHistoryItems: ListItem<string>[] = React.useMemo(
