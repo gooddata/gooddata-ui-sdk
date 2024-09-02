@@ -133,19 +133,31 @@ const SearchOverlayCore: React.FC<
                 );
                 const isLocked = item.workspaceId !== effectiveWorkspace;
 
-                if (!parentDashboards.length)
-                    return {
+                // The item itself
+                const listItems: ListItem<ISemanticSearchResultItem>[] = [
+                    {
                         item,
                         url: getUIPath(item.type, item.id, effectiveWorkspace),
                         isLocked,
-                    };
+                    },
+                ];
 
-                return parentDashboards.map((parent) => ({
-                    item,
-                    parentRef: parent,
-                    url: getUIPath(parent.sourceObjectType, parent.sourceObjectId, effectiveWorkspace),
-                    isLocked,
-                }));
+                // Potentially, the item's parent dashboards
+                if (parentDashboards.length)
+                    listItems.push(
+                        ...parentDashboards.map((parent) => ({
+                            item,
+                            parentRef: parent,
+                            url: getUIPath(
+                                parent.sourceObjectType,
+                                parent.sourceObjectId,
+                                effectiveWorkspace,
+                            ),
+                            isLocked,
+                        })),
+                    );
+
+                return listItems;
             }),
         [searchResults, effectiveWorkspace, relationships],
     );
