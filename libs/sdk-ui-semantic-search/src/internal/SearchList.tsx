@@ -6,6 +6,7 @@ import { useListSelector } from "../hooks/index.js";
 import { ListItem, ListItemProps } from "../types.js";
 
 const ITEM_HEIGHT = 50;
+const MAX_ITEMS_UNSCROLLED = 10;
 
 /**
  * Search results props.
@@ -40,7 +41,7 @@ export const SearchList = <T,>({ items, width, onSelect, ItemComponent }: Search
     return (
         <List
             width={width}
-            height={ITEM_HEIGHT * items.length}
+            height={ITEM_HEIGHT * Math.min(items.length, MAX_ITEMS_UNSCROLLED)}
             itemHeight={ITEM_HEIGHT}
             renderItem={({ item }) => {
                 return (

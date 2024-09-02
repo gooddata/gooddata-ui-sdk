@@ -34,6 +34,10 @@ const SEARCH_HISTORY_KEY = "gd-semantic-search-history";
  * An initial value for the search history.
  */
 const SEARCH_HISTORY_EMPTY: string[] = [];
+/**
+ * Default limit of search results.
+ */
+const LIMIT = 10;
 
 export type SearchOnSelect = {
     item: ISemanticSearchResultItem;
@@ -94,7 +98,7 @@ export type SearchOverlayProps = {
  */
 const SearchOverlayCore: React.FC<
     WrappedComponentProps & Omit<SearchOverlayProps, "locale" | "metadataTimezone">
-> = ({ onSelect, onSearch, backend, workspace, objectTypes, deepSearch, limit = 6, className, intl }) => {
+> = ({ onSelect, onSearch, backend, workspace, objectTypes, deepSearch, limit = LIMIT, className, intl }) => {
     // Input value handling
     const [value, setValue, searchTerm, setImmediate] = useDebouncedState("", DEBOUNCE);
 
