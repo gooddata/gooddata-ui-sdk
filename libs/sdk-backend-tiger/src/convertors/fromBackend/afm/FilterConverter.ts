@@ -11,7 +11,7 @@ import {
     RelativeDateFilter,
     AfmObjectIdentifier,
 } from "@gooddata/api-client-tiger";
-import { IFilter } from "@gooddata/sdk-model";
+import { IFilter, ObjRefInScope } from "@gooddata/sdk-model";
 import { toObjRef } from "../ObjRefConverter.js";
 import { toSdkGranularity } from "../dateGranularityConversions.js";
 
@@ -103,7 +103,7 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
     } else if (isRankingFilter(filter)) {
         return {
             rankingFilter: {
-                measure: toObjRef(filter.rankingFilter.measures[0] as AfmObjectIdentifier),
+                measure: filter.rankingFilter.measures[0] as ObjRefInScope,
                 operator: filter.rankingFilter.operator,
                 value: filter.rankingFilter.value,
             },
