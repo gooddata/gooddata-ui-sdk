@@ -13,6 +13,8 @@ export interface IDeleteDialogProps {
     onDelete: () => void;
     onCancel: () => void;
     dashboardTitle: string;
+    showAlertsMessage: boolean;
+    showSchedulesMessage: boolean;
 }
 
 /**

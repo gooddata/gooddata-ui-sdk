@@ -7,6 +7,8 @@ import { IDeleteDialogProps } from "./types.js";
 import {
     deleteDashboard,
     dispatchAndWaitFor,
+    selectAutomationsAlerts,
+    selectAutomationsSchedules,
     selectDashboardTitle,
     selectEnableAlerting,
     selectEnableKPIDashboardDrillToDashboard,
@@ -56,11 +58,17 @@ export function useDeleteDialogProps(): IDeleteDialogProps {
     const isAlertingEnabled = useDashboardSelector(selectEnableAlerting);
     const isDrillToDashboardEnabled = useDashboardSelector(selectEnableKPIDashboardDrillToDashboard);
 
+    const alerts = useDashboardSelector(selectAutomationsAlerts);
+    const schedules = useDashboardSelector(selectAutomationsSchedules);
+
     return {
         isVisible,
         isSchedulingEnabled,
         isAlertingEnabled,
         isDrillToDashboardEnabled,
+
+        showAlertsMessage: alerts.length > 0,
+        showSchedulesMessage: schedules.length > 0,
 
         onCancel,
         onDelete,
@@ -81,6 +89,8 @@ export const DefaultDeleteDialog = (props: IDeleteDialogProps): JSX.Element | nu
         onDelete,
         onCancel,
         dashboardTitle,
+        showAlertsMessage,
+        showSchedulesMessage,
     } = props;
 
     const intl = useIntl();
@@ -90,8 +100,8 @@ export const DefaultDeleteDialog = (props: IDeleteDialogProps): JSX.Element | nu
     }
 
     const messages = compact([
-        isAlertingEnabled && deleteMessages.alerts,
-        isSchedulingEnabled && deleteMessages.schedules,
+        isAlertingEnabled && showAlertsMessage && deleteMessages.alerts,
+        isSchedulingEnabled && showSchedulesMessage && deleteMessages.schedules,
         isDrillToDashboardEnabled && deleteMessages.drills,
     ]);
 
