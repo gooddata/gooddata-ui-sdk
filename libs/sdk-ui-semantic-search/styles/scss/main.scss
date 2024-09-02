@@ -30,7 +30,10 @@
         height: $line-height;
         text-decoration: none;
 
-        &:hover {
+        &:hover,
+        &:focus,
+        &:active,
+        &:visited {
             text-decoration: none;
         }
 
