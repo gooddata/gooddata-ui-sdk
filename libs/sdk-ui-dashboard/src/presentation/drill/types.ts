@@ -139,6 +139,9 @@ export type OnCrossFilteringError = OnDashboardDrillError;
 
 /////
 
+/**
+ * @internal
+ */
 export type IDrillToUrl = IDrillToCustomUrl | IDrillToAttributeUrl;
 
 export function isDrillToUrl(drillDefinition: unknown): drillDefinition is IDrillToUrl {
