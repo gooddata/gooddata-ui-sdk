@@ -298,6 +298,26 @@
         "comment": "",
         "limit": 0
     },
+    "deleteWidgetDialog.headline": {
+        "value": "Remove widget?",
+        "comment": "",
+        "limit": 0
+    },
+    "deleteWidgetDialog.objectsMessage": {
+        "value": "Following types objects associated with the widget {title} will no longer work:",
+        "comment": "Do not translate placeholder {title}",
+        "limit": 0
+    },
+    "deleteWidgetDialog.alerts": {
+        "value": "alerts",
+        "comment": "",
+        "limit": 0
+    },
+    "deleteWidgetDialog.schedules": {
+        "value": "scheduled exports",
+        "comment": "",
+        "limit": 0
+    },
     "create.dashboard": {
         "value": "Create dashboard",
         "comment": "",

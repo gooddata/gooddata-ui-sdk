@@ -3,7 +3,10 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { DashboardSelector, DashboardState } from "../types.js";
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import {
+    IAutomationMetadataObject,
+    isExportDefinitionVisualizationObjectRequestPayload,
+} from "@gooddata/sdk-model";
 import { selectDashboardId } from "../meta/metaSelectors.js";
 import { selectCurrentUser } from "../user/userSelectors.js";
 import { createMemoizedSelector } from "../_infra/selectors.js";
@@ -83,22 +86,37 @@ export const selectAutomationsAlertsInContext: (
 );
 
 /**
- * Returns workspace schedules for current dashboard and user context.
+ * Returns workspace schedules for current dashboard, widget and user context.
  *
  * @alpha
  */
-export const selectAutomationsSchedulesInContext: DashboardSelector<IAutomationMetadataObject[]> =
-    createSelector(
-        selectAutomationsSchedules,
-        selectDashboardId,
-        selectCurrentUser,
-        (schedules, dashboardId, currentUser) => {
-            return schedules.filter(
-                (schedule) =>
-                    schedule.dashboard === dashboardId && schedule.createdBy?.login === currentUser.login,
-            );
-        },
-    );
+export const selectAutomationsSchedulesInContext: (
+    widgetLocalIdentifier: string | undefined,
+) => DashboardSelector<IAutomationMetadataObject[]> = createMemoizedSelector(
+    (widgetLocalIdentifier: string | undefined) =>
+        createSelector(
+            selectAutomationsSchedules,
+            selectDashboardId,
+            selectCurrentUser,
+            (schedules, dashboardId, currentUser) => {
+                return schedules.filter((schedule) => {
+                    const isTiedToWidget = schedule.exportDefinitions?.some((exportDefinition) => {
+                        const requestPayload = exportDefinition.requestPayload;
+                        return (
+                            isExportDefinitionVisualizationObjectRequestPayload(requestPayload) &&
+                            requestPayload.content.widget === widgetLocalIdentifier
+                        );
+                    });
+
+                    return (
+                        schedule.dashboard === dashboardId &&
+                        schedule.createdBy?.login === currentUser.login &&
+                        (isTiedToWidget || !widgetLocalIdentifier)
+                    );
+                });
+            },
+        ),
+);
 
 /**
  * Returns workspace automations loading

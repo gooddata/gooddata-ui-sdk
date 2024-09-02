@@ -353,6 +353,8 @@ export {
     selectIsFilterViewsDialogOpen,
     selectIsAlertingDialogOpen,
     selectIsAlertsManagementDialogOpen,
+    selectIsWidgetDeleteDialogOpen,
+    selectWidgetDeleteDialogWidgetRef,
 } from "./ui/uiSelectors.js";
 export { uiActions } from "./ui/index.js";
 export { RenderModeState } from "./renderMode/renderModeState.js";

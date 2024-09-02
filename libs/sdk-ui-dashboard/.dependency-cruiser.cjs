@@ -41,6 +41,7 @@ options = {
                 "src/presentation/scheduledEmail",
                 "src/presentation/shareDialog",
                 "src/presentation/deleteDialog",
+                "src/presentation/widgetDeleteDialog",
                 "src/presentation/cancelEditDialog",
                 "src/presentation/saveAs",
                 "src/presentation/alerting",

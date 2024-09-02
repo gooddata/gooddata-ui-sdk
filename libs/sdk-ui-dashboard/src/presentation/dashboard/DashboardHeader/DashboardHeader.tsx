@@ -9,6 +9,7 @@ import { ShareDialogDashboardHeader } from "./ShareDialogDashboardHeader.js";
 import { ScheduledEmailDialogProvider } from "./ScheduledEmailDialogProvider.js";
 import { AlertingDialogProvider } from "./AlertingDialogProvider.js";
 import { DeleteDialog, useDeleteDialogProps } from "../../deleteDialog/index.js";
+import { WidgetDeleteDialog, useWidgetDeleteDialogProps } from "../../widgetDeleteDialog/index.js";
 import { KpiDeleteDialog, useKpiDeleteDialogProps } from "../../kpiDeleteDialog/index.js";
 import { CancelEditDialog, useCancelEditDialog } from "../../cancelEditDialog/index.js";
 import { ToastMessages } from "../components/ToastMessages.js";
@@ -18,6 +19,11 @@ import { ToastMessages } from "../components/ToastMessages.js";
 const DeleteDialogWrapper = () => {
     const deleteDialogProps = useDeleteDialogProps();
     return <DeleteDialog {...deleteDialogProps} />;
+};
+
+const WidgetDeleteDialogWrapper = () => {
+    const widgetDeleteDialogProps = useWidgetDeleteDialogProps();
+    return <WidgetDeleteDialog {...widgetDeleteDialogProps} />;
 };
 
 const KpiDeleteDialogWrapper = () => {
@@ -56,6 +62,7 @@ export const DashboardHeader = (): JSX.Element => {
             <AlertingDialogProvider />
             <ShareDialogDashboardHeader />
             <DeleteDialogWrapper />
+            <WidgetDeleteDialogWrapper />
             <KpiDeleteDialogWrapper />
             <SaveAsDialogWrapper />
             <TopBarWrapper />

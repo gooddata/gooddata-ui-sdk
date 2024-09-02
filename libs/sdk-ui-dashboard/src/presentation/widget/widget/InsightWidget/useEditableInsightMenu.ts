@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
@@ -6,7 +6,11 @@ import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 import { useDashboardCustomizationsContext } from "../../../dashboardContexts/index.js";
 import { getDefaultInsightEditMenuItems, IInsightMenuItem } from "../../insightMenu/index.js";
 import {
+    selectAutomationsAlertsInContext,
+    selectAutomationsSchedulesInContext,
     selectDrillTargetsByWidgetRef,
+    selectEnableAlerting,
+    selectEnableScheduling,
     selectSettings,
     useDashboardDispatch,
     useDashboardEventDispatch,
@@ -46,6 +50,18 @@ export const useEditableInsightMenu = (
 
     const includeInteractions = someDrillingEnabled && someAvailableDrillTargetsExist;
 
+    const isSchedulingEnabled = useDashboardSelector(selectEnableScheduling);
+    const isAlertingEnabled = useDashboardSelector(selectEnableAlerting);
+    const alerts = useDashboardSelector(selectAutomationsAlertsInContext(widget.localIdentifier));
+    const schedules = useDashboardSelector(selectAutomationsSchedulesInContext(widget.localIdentifier));
+    const useWidgetDeleteDialog = useMemo(
+        () =>
+            // new widgets in edit mode do not have localIdentifier, so should be deleted without confirmation dialog
+            !!widget.localIdentifier &&
+            ((isAlertingEnabled && alerts.length > 0) || (isSchedulingEnabled && schedules.length > 0)),
+        [alerts.length, isAlertingEnabled, isSchedulingEnabled, schedules.length, widget.localIdentifier],
+    );
+
     const { insightMenuItemsProvider } = useDashboardCustomizationsContext();
     const defaultMenuItems = useMemo<IInsightMenuItem[]>(() => {
         return getDefaultInsightEditMenuItems(widget, {
@@ -53,8 +69,9 @@ export const useEditableInsightMenu = (
             dispatch,
             eventDispatch,
             includeInteractions,
+            useWidgetDeleteDialog,
         });
-    }, [dispatch, eventDispatch, intl, widget, includeInteractions]);
+    }, [dispatch, eventDispatch, intl, widget, includeInteractions, useWidgetDeleteDialog]);
 
     const menuItems = useMemo<IInsightMenuItem[]>(() => {
         return insightMenuItemsProvider
