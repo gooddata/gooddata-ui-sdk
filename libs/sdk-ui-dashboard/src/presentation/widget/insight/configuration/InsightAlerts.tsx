@@ -60,7 +60,6 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
                 onDeleteAlert={deleteExistingAlert}
                 onClose={onClose}
                 onGoBack={onGoBack}
-                measures={supportedMeasures}
                 maxAutomationsReached={maxAutomationsReached}
             />
         );

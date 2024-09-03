@@ -188,7 +188,7 @@ options = {
             "src/model",
             "src/model/events/widget.ts",
             "src/presentation/componentDefinition",
-            "src/presentation/constants",
+            "src/presentation/constants/*",
             "src/presentation/dashboardContexts",
             "src/presentation/dragAndDrop",
             "src/presentation/drill",

@@ -12,10 +12,11 @@ import {
 import { Icon, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { gdColorStateBlank } from "../../../constants/colors.js";
+import { gdColorNegative, gdColorStateBlank } from "../../../constants/colors.js";
 import { selectWidgetByRef, useDashboardSelector } from "../../../../model/index.js";
 import { translateOperator } from "../../DefaultAlertingDialog/operator.js";
 import { AlertDropdown } from "./AlertDropdown.js";
+import { useAlertValidation } from "../../../widget/insight/configuration/InsightAlertConfig/hooks/useAlertValidation.js";
 
 interface IAlertProps {
     onDelete: (alert: IAutomationMetadataObject) => void;
@@ -41,12 +42,15 @@ export const Alert: React.FC<IAlertProps> = (props) => {
     const { alert, onDelete, onEdit, onPause } = props;
 
     const intl = useIntl();
+    const { isValid } = useAlertValidation(alert);
     const operator = alert.alert?.condition.operator;
     const threshold = alert.alert?.condition.right;
     const iconColor = theme?.palette?.complementary?.c6 ?? gdColorStateBlank;
+    const iconColorError = theme?.palette?.error?.base ?? gdColorNegative;
 
     const iconActive = <Icon.Alert width={16} height={16} color={iconColor} />;
     const iconPaused = <Icon.AlertPaused width={16} height={16} color={iconColor} />;
+    const iconError = <Icon.Warning width={16} height={16} color={iconColorError} />;
 
     const paused = alert.alert?.trigger.state === "PAUSED";
 
@@ -118,7 +122,13 @@ export const Alert: React.FC<IAlertProps> = (props) => {
                 />
             </div>
             <div className="gd-notifications-channel-content" onClick={handleEdit}>
-                <div className="gd-notifications-channel-icon">{paused ? iconPaused : iconActive}</div>
+                <div
+                    className={cx("gd-notifications-channel-icon", {
+                        "gd-notifications-channel-icon-invalid": !isValid,
+                    })}
+                >
+                    {!isValid ? iconError : paused ? iconPaused : iconActive}
+                </div>
                 <div className="gd-notifications-channel-text-content">
                     <div className="gd-notifications-channel-title">
                         <strong>

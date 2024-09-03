@@ -83,6 +83,10 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+
+    &.gd-alerts-list-item__icon-invalid {
+        background-color: kit-variables.$gd-palette-error-dimmed;
+    }
 }
 
 .gd-alerts-list-item__details {

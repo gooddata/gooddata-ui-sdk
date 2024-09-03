@@ -8,11 +8,26 @@ import { AlertComparisonOperatorSelect } from "./AlertComparisonOperatorSelect.j
 import { AlertDestinationSelect } from "./AlertDestinationSelect.js";
 import { EditAlertConfiguration } from "./EditAlertConfiguration.js";
 import { useEditAlert } from "./hooks/useEditAlert.js";
-import { FormattedMessage, useIntl } from "react-intl";
+import { defineMessages, FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 import { Smtps, Webhooks } from "../../../../../model/index.js";
 import { AlertMetric } from "../../types.js";
+import { useAlertValidation, AlertInvalidityReason } from "./hooks/useAlertValidation.js";
 
 const TOOLTIP_ALIGN_POINTS = [{ align: "cl cr" }, { align: "cr cl" }];
+
+const messages = defineMessages({
+    invalidDefault: {
+        id: "insightAlert.config.invalid",
+    },
+    invalidWidget: {
+        id: "insightAlert.config.invalidWidget",
+    },
+});
+
+const invalidMessagesObj: Record<AlertInvalidityReason, MessageDescriptor> = {
+    missingMetric: messages.invalidDefault,
+    missingWidget: messages.invalidWidget,
+};
 
 interface IEditAlertProps {
     alert: IAutomationMetadataObject;
@@ -66,6 +81,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
     const selectedMeasure = measures.find(
         (measure) => measure.measure.measure.localIdentifier === selectedMeasureIdentifier,
     );
+    const { isValid, invalidityReason } = useAlertValidation(alert, isNewAlert);
 
     return viewMode === "edit" ? (
         <DashboardInsightSubmenuContainer
@@ -108,9 +124,9 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                             />
                         )}
                     </div>
-                    {!selectedMeasure ? (
+                    {!isValid ? (
                         <Message type="error">
-                            <FormattedMessage id="insightAlert.config.invalid" />
+                            <FormattedMessage id={invalidMessagesObj[invalidityReason!].id} />
                         </Message>
                     ) : null}
                 </div>

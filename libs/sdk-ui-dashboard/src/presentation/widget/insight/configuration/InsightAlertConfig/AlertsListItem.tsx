@@ -1,10 +1,14 @@
 // (C) 2022-2024 GoodData Corporation
 import React from "react";
+import { useIntl } from "react-intl";
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { Icon } from "@gooddata/sdk-ui-kit";
+import cx from "classnames";
 import { AlertActionsDropdown } from "./AlertActionsDropdown.js";
 import { getComparisonOperatorTitle } from "./utils.js";
-import { useIntl } from "react-intl";
+import { gdColorNegative } from "../../../../constants/colors.js";
+import { useAlertValidation } from "./hooks/useAlertValidation.js";
 
 interface IAlertsListItemProps {
     alert: IAutomationMetadataObject;
@@ -12,7 +16,6 @@ interface IAlertsListItemProps {
     onPauseAlert: (alert: IAutomationMetadataObject) => void;
     onDeleteAlert: (alert: IAutomationMetadataObject) => void;
     onResumeAlert: (alert: IAutomationMetadataObject) => void;
-    isInvalid?: boolean;
 }
 
 export const AlertsListItem: React.FC<IAlertsListItemProps> = ({
@@ -21,19 +24,30 @@ export const AlertsListItem: React.FC<IAlertsListItemProps> = ({
     onPauseAlert,
     onDeleteAlert,
     onResumeAlert,
-    isInvalid = false,
 }) => {
+    const theme = useTheme();
     const intl = useIntl();
     const isPaused = alert.alert?.trigger?.state === "PAUSED";
     const description = `${getComparisonOperatorTitle(alert.alert!.condition.operator, intl)} ${
         alert.alert!.condition.right
     }`;
+    const { isValid } = useAlertValidation(alert);
 
     return (
         <div className="gd-alerts-list-item" key={alert.id} onClick={() => onEditAlert(alert)}>
             <div className="gd-alerts-list-item__content s-alert-list-item">
-                <div className="gd-alerts-list-item__icon">
-                    {isInvalid ? <Icon.Warning /> : isPaused ? <Icon.AlertPaused /> : <Icon.Alert />}
+                <div
+                    className={cx("gd-alerts-list-item__icon", {
+                        "gd-alerts-list-item__icon-invalid": !isValid,
+                    })}
+                >
+                    {!isValid ? (
+                        <Icon.Warning color={theme?.palette?.error?.base ?? gdColorNegative} />
+                    ) : isPaused ? (
+                        <Icon.AlertPaused />
+                    ) : (
+                        <Icon.Alert />
+                    )}
                 </div>
                 <div className="gd-alerts-list-item__details">
                     <div className="gd-alerts-list-item__title">{alert.title}</div>
