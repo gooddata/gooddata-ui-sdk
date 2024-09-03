@@ -24,8 +24,11 @@ import {
     isKpiPlaceholderDraggableItem,
     isRichTextDraggableItem,
     isRichTextDraggableListItem,
+    isVisualizationSwitcherDraggableItem,
+    isVisualizationSwitcherDraggableListItem,
 } from "../types.js";
 import { useRichTextPlaceholderDropHandler } from "./useRichTextPlaceholderDropHandler.js";
+import { useVisualizationSwitcherPlaceholderDropHandler } from "./useVisualizationSwitcherPlaceholderDropHandler.js";
 
 export type WidgetDropZoneColumnProps = {
     screen: ScreenSize;
@@ -43,6 +46,10 @@ export const WidgetDropZoneColumn = (props: WidgetDropZoneColumnProps) => {
     const handleInsightPlaceholderDrop = useInsightPlaceholderDropHandler(sectionIndex, itemIndex);
     const handleKpiPlaceholderDrop = useKpiPlaceholderDropHandler(sectionIndex, itemIndex);
     const handleRichTextPlaceholderDrop = useRichTextPlaceholderDropHandler(sectionIndex, itemIndex);
+    const handleVisualizationSwitcherPlaceholderDrop = useVisualizationSwitcherPlaceholderDropHandler(
+        sectionIndex,
+        itemIndex,
+    );
     const handleWidgetDrop = useMoveWidgetDropHandler(sectionIndex, itemIndex);
 
     const dispatch = useDashboardDispatch();
@@ -56,6 +63,8 @@ export const WidgetDropZoneColumn = (props: WidgetDropZoneColumnProps) => {
             "insight",
             "richText",
             "richTextListItem",
+            "visualizationSwitcher",
+            "visualizationSwitcherListItem",
         ],
         {
             drop: (item) => {
@@ -71,16 +80,26 @@ export const WidgetDropZoneColumn = (props: WidgetDropZoneColumnProps) => {
                 if (isRichTextDraggableListItem(item)) {
                     handleRichTextPlaceholderDrop();
                 }
+                if (isVisualizationSwitcherDraggableListItem(item)) {
+                    handleVisualizationSwitcherPlaceholderDrop();
+                }
                 if (
                     isInsightDraggableItem(item) ||
                     isKpiDraggableItem(item) ||
-                    isRichTextDraggableItem(item)
+                    isRichTextDraggableItem(item) ||
+                    isVisualizationSwitcherDraggableItem(item)
                 ) {
                     handleWidgetDrop(item);
                 }
             },
         },
-        [dispatch, handleInsightListItemDrop, handleInsightPlaceholderDrop, handleKpiPlaceholderDrop],
+        [
+            dispatch,
+            handleInsightListItemDrop,
+            handleInsightPlaceholderDrop,
+            handleKpiPlaceholderDrop,
+            handleVisualizationSwitcherPlaceholderDrop,
+        ],
     );
 
     const showDropZone = useMemo(

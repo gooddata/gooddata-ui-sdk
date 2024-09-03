@@ -9,6 +9,7 @@ import {
     IDashboardInsightProps,
     IDashboardKpiProps,
     IDashboardRichTextProps,
+    IDashboardVisualizationSwitcherProps,
     IDashboardWidgetProps,
 } from "../widget/types.js";
 import {
@@ -20,6 +21,7 @@ import {
     InsightDraggableItem,
     KpiDraggableItem,
     RichTextDraggableItem,
+    VisualizationSwitcherDraggableItem,
 } from "../dragAndDrop/types.js";
 import {
     AttributeFilterComponentProvider,
@@ -28,8 +30,14 @@ import {
     KpiComponentProvider,
     RichTextComponentProvider,
     WidgetComponentProvider,
+    VisualizationSwitcherComponentProvider,
 } from "../dashboardContexts/types.js";
-import { IInsightWidget, IKpiWidget, IRichTextWidget } from "@gooddata/sdk-model";
+import {
+    IInsightWidget,
+    IKpiWidget,
+    IRichTextWidget,
+    IVisualizationSwitcherWidget,
+} from "@gooddata/sdk-model";
 import { ICustomWidget } from "../../model/index.js";
 
 /**
@@ -101,6 +109,14 @@ export type IRichTextDraggingComponentProps = {
 /**
  * @internal
  */
+export type IVisualizationSwitcherDraggingComponentProps = {
+    itemType: "visualizationSwitcher";
+    item: VisualizationSwitcherDraggableItem;
+};
+
+/**
+ * @internal
+ */
 export type ICustomDraggingComponentProps = {
     itemType: "custom";
     item: CustomDraggableItem;
@@ -130,6 +146,12 @@ export type KpiDraggingComponent = ComponentType<IKpiDraggingComponentProps>;
  * @internal
  */
 export type RichTextDraggingComponent = ComponentType<IRichTextDraggingComponentProps>;
+
+/**
+ * @internal
+ */
+export type VisualizationSwitcherDraggingComponent =
+    ComponentType<IVisualizationSwitcherDraggingComponentProps>;
 
 /**
  * @internal
@@ -179,6 +201,14 @@ export type RichTextDraggableComponent = {
 /**
  * @internal
  */
+export type VisualizationSwitcherDraggableComponent = {
+    DraggingComponent?: VisualizationSwitcherDraggingComponent;
+    type: "visualizationSwitcher";
+};
+
+/**
+ * @internal
+ */
 export type CustomDraggableComponent = {
     DraggingComponent: CustomDraggingComponent;
     type: "custom";
@@ -195,6 +225,7 @@ export type DraggableComponent = {
         | KpiDraggableComponent
         | InsightDraggableComponent
         | RichTextDraggableComponent
+        | VisualizationSwitcherDraggableComponent
         | CustomDraggableComponent;
 };
 
@@ -351,6 +382,19 @@ export type RichTextWidgetComponentSet = CustomComponentBase<
     Partial<CreatableByDragComponent> &
     Partial<CreatablePlaceholderComponent<IDashboardWidgetProps>> &
     ConfigurableWidget<IRichTextWidget>;
+
+/**
+ * Definition of VisualizationSwitcher widget
+ * @internal
+ */
+export type VisualizationSwitcherWidgetComponentSet = CustomComponentBase<
+    IDashboardVisualizationSwitcherProps,
+    Parameters<VisualizationSwitcherComponentProvider>
+> &
+    DraggableComponent &
+    Partial<CreatableByDragComponent> &
+    Partial<CreatablePlaceholderComponent<IDashboardWidgetProps>> &
+    ConfigurableWidget<IVisualizationSwitcherWidget>;
 
 /**
  * Definition of widget

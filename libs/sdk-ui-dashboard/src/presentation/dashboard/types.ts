@@ -42,6 +42,7 @@ import {
     OptionalInsightMenuTitleComponentProvider,
     OptionalDashboardContentComponentProvider,
     OptionalRichTextComponentProvider,
+    OptionalVisualizationSwitcherComponentProvider,
 } from "../dashboardContexts/index.js";
 import { CustomSidebarComponent } from "./DashboardSidebar/types.js";
 import { InsightComponentSetProvider } from "../componentDefinition/types.js";
@@ -219,6 +220,19 @@ export interface IDashboardCustomComponentProps {
      * @public
      */
     RichTextComponentProvider?: OptionalRichTextComponentProvider;
+
+    /**
+     * Specify function to obtain custom component to use for rendering a visualization switcher.
+     *
+     * @remarks
+     * -  If not provided, the default implementation {@link DefaultDashboardVisualizationSwitcher} will be used.
+     * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardVisualizationSwitcher}.
+     *    This is useful if you want to customize just one particular visualization switcher and keep default rendering for
+     *    the other visualization switchers.
+     *
+     * @public
+     */
+    VisualizationSwitcherComponentProvider?: OptionalVisualizationSwitcherComponentProvider;
 
     /**
      * Specify component to use for rendering the scheduled email dialog.

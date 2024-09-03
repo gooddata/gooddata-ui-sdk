@@ -71,6 +71,32 @@
         content: none;
     }
 
+    &-visualization-switcher {
+        padding: 0 10px 0 0;
+
+        svg {
+            margin: 0 14px;
+        }
+
+        &:hover {
+            .gd-add-visualization-switcher {
+                display: block;
+                cursor: help;
+            }
+        }
+
+        .gd-add-visualization-switcher {
+            display: none;
+            flex: 0 0 auto;
+            margin-left: 20px;
+            font-weight: normal;
+        }
+    }
+
+    &-visualization-switcher::before {
+        content: none;
+    }
+
     span {
         flex: 1 1 auto;
     }

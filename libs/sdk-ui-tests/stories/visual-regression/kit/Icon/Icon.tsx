@@ -264,6 +264,9 @@ const IconsTest: React.FC<{ children?: React.ReactNode }> = () => {
                     <IconWrapper name="RichText">
                         <Icon.RichText color="#00f" width={18} height={18} />
                     </IconWrapper>
+                    <IconWrapper name="VisualizationSwitcher">
+                        <Icon.VisualizationSwitcher color="#00f" width={18} height={18} />
+                    </IconWrapper>
                     <IconWrapper name="Copy">
                         <Icon.Copy color="#00f" />
                     </IconWrapper>
@@ -303,11 +306,11 @@ const IconsTest: React.FC<{ children?: React.ReactNode }> = () => {
                     <IconWrapper name="SimplifiedDashboard">
                         <Icon.SimplifiedDashboard color="#00f" />
                     </IconWrapper>
+                </ColumnWrapper>
+                <ColumnWrapper>
                     <IconWrapper name="HistoryBack">
                         <Icon.HistoryBack color="#00f" />
                     </IconWrapper>
-                </ColumnWrapper>
-                <ColumnWrapper>
                     <IconWrapper name="Alert">
                         <Icon.Alert color="#00f" />
                     </IconWrapper>

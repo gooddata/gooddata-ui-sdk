@@ -10,6 +10,7 @@ import {
     isInsightWidget,
     isKpiWidget,
     isRichTextWidget,
+    isVisualizationSwitcherWidget,
 } from "@gooddata/sdk-model";
 import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
 
@@ -73,7 +74,12 @@ export function isItemWithBaseWidget(
 ): obj is IDashboardLayoutItem<IWidget> {
     const widget = obj.widget;
 
-    return isInsightWidget(widget) || isKpiWidget(widget) || isRichTextWidget(widget);
+    return (
+        isInsightWidget(widget) ||
+        isKpiWidget(widget) ||
+        isRichTextWidget(widget) ||
+        isVisualizationSwitcherWidget(widget)
+    );
 }
 
 export function resizeInsightWidget(

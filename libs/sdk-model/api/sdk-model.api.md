@@ -21,7 +21,7 @@ export type AccessGranularPermission = "VIEW" | "EDIT" | "SHARE";
 export type AllTimeGranularity = "ALL_TIME_GRANULARITY";
 
 // @public
-export type AnalyticalWidgetType = "kpi" | "insight" | "richText";
+export type AnalyticalWidgetType = "kpi" | "insight" | "richText" | "visualizationSwitcher";
 
 // @public
 export const anyAttribute: AttributePredicate;
@@ -2953,6 +2953,7 @@ export interface ISettings {
     enableKDAttributeFilterDatesValidation?: boolean;
     enableKDCrossFiltering?: boolean;
     enableKDRichText?: boolean;
+    enableKDVisualizationSwitcher?: boolean;
     enableKDWidgetCustomHeight?: boolean;
     enableKDZooming?: boolean;
     enableKPIDashboardDrillFromAttribute?: boolean;
@@ -3278,6 +3279,12 @@ export function isVirtualArithmeticMeasure(obj: unknown): obj is IMeasure<IVirtu
 
 // @internal
 export function isVirtualArithmeticMeasureDefinition(obj: unknown): obj is IVirtualArithmeticMeasureDefinition;
+
+// @alpha
+export function isVisualizationSwitcherWidget(obj: unknown): obj is IVisualizationSwitcherWidget;
+
+// @alpha
+export function isVisualizationSwitcherWidgetDefinition(obj: unknown): obj is IVisualizationSwitcherWidgetDefinition;
 
 // @alpha
 export function isWidget(obj: unknown): obj is IWidget;
@@ -3687,6 +3694,22 @@ export interface IVisualizationClassBody {
     url: string;
 }
 
+// @public (undocumented)
+export interface IVisualizationSwitcherWidget extends IVisualizationSwitcherWidgetBase, IDashboardObjectIdentity {
+}
+
+// @public (undocumented)
+export interface IVisualizationSwitcherWidgetBase extends IAnalyticalWidget {
+    readonly selectedVisualizationIdentifier: string;
+    // (undocumented)
+    readonly type: "visualizationSwitcher";
+    readonly visualizations: IInsightWidget[];
+}
+
+// @public (undocumented)
+export interface IVisualizationSwitcherWidgetDefinition extends IVisualizationSwitcherWidgetBase, Partial<IDashboardObjectIdentity> {
+}
+
 // @alpha (undocumented)
 export interface IWebhookDefinition extends INotificationChannelMetadataObjectBase {
     // (undocumented)
@@ -3716,7 +3739,7 @@ export interface IWhiteLabeling {
 }
 
 // @public (undocumented)
-export type IWidget = IKpiWidget | IInsightWidget | IRichTextWidget;
+export type IWidget = IKpiWidget | IInsightWidget | IRichTextWidget | IVisualizationSwitcherWidget;
 
 // @alpha
 export interface IWidgetAlert extends IWidgetAlertBase, IDashboardObjectIdentity {
@@ -3750,7 +3773,7 @@ export interface IWidgetAttachment {
 }
 
 // @public
-export type IWidgetDefinition = IKpiWidgetDefinition | IInsightWidgetDefinition | IRichTextWidgetDefinition;
+export type IWidgetDefinition = IKpiWidgetDefinition | IInsightWidgetDefinition | IRichTextWidgetDefinition | IVisualizationSwitcherWidgetDefinition;
 
 // @public
 export interface IWidgetDescription {

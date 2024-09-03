@@ -342,6 +342,11 @@ export interface ISettings {
     enableKDRichText?: boolean;
 
     /**
+     * Enables visualization switcher widgets on dashboards.
+     */
+    enableKDVisualizationSwitcher?: boolean;
+
+    /**
      * Enable attribute filter values validation by metric, attribute, fact.
      * The configuration of filter values validation is merged with parent filters UI.
      */

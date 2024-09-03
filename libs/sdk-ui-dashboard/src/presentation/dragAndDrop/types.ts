@@ -16,6 +16,8 @@ export type DraggableContentItemType =
     | "kpi-placeholder"
     | "richText"
     | "richTextListItem"
+    | "visualizationSwitcher"
+    | "visualizationSwitcherListItem"
     | "custom";
 
 /**
@@ -166,6 +168,36 @@ export function isRichTextDraggableListItem(item: any): item is RichTextDraggabl
 /**
  * @internal
  */
+export type VisualizationSwitcherDraggableItem = BaseDraggableMovingItem & {
+    type: "visualizationSwitcher";
+};
+
+/**
+ * @internal
+ */
+export function isVisualizationSwitcherDraggableItem(item: any): item is VisualizationSwitcherDraggableItem {
+    return item.type === "visualizationSwitcher";
+}
+
+/**
+ * @internal
+ */
+export type VisualizationSwitcherDraggableListItem = BaseDraggableLayoutItem & {
+    type: "visualizationSwitcherListItem";
+};
+
+/**
+ * @internal
+ */
+export function isVisualizationSwitcherDraggableListItem(
+    item: any,
+): item is VisualizationSwitcherDraggableListItem {
+    return item.type === "visualizationSwitcherListItem";
+}
+
+/**
+ * @internal
+ */
 export type CustomWidgetDraggableItem = BaseDraggableMovingItem & {
     type: "customWidget";
     widget: ICustomWidget;
@@ -252,6 +284,8 @@ export type DraggableContentItem =
     | KpiPlaceholderDraggableItem
     | RichTextDraggableItem
     | RichTextDraggableListItem
+    | VisualizationSwitcherDraggableItem
+    | VisualizationSwitcherDraggableListItem
     | CustomWidgetDraggableItem
     | CustomDraggableItem;
 
@@ -262,6 +296,7 @@ export type DraggableLayoutItem =
     | InsightDraggableItem
     | KpiDraggableItem
     | RichTextDraggableItem
+    | VisualizationSwitcherDraggableItem
     | CustomWidgetDraggableItem;
 
 /**
@@ -293,6 +328,8 @@ export type DraggableItemComponentTypeMapping = {
     "kpi-placeholder": KpiPlaceholderDraggableItem;
     richText: RichTextDraggableItem;
     richTextListItem: RichTextDraggableListItem;
+    visualizationSwitcher: VisualizationSwitcherDraggableItem;
+    visualizationSwitcherListItem: VisualizationSwitcherDraggableListItem;
     custom: CustomDraggableItem;
 };
 

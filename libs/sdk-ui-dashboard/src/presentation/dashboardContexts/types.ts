@@ -10,6 +10,7 @@ import {
     CustomInsightBodyComponent,
     IInsightMenuItem,
     CustomDashboardRichTextComponent,
+    CustomDashboardVisualizationSwitcherComponent,
 } from "../widget/types.js";
 import { DashboardConfig, ExtendedDashboardWidget } from "../../model/index.js";
 import {
@@ -28,6 +29,7 @@ import {
     IDashboard,
     IWorkspacePermissions,
     IRichTextWidget,
+    IVisualizationSwitcherWidget,
 } from "@gooddata/sdk-model";
 import { ComponentType } from "react";
 
@@ -143,6 +145,19 @@ export type RichTextComponentProvider = (widget: IRichTextWidget) => CustomDashb
  * @public
  */
 export type OptionalRichTextComponentProvider = OptionalProvider<RichTextComponentProvider>;
+
+/**
+ * @public
+ */
+export type VisualizationSwitcherComponentProvider = (
+    visualizationSwitcher: IVisualizationSwitcherWidget,
+) => CustomDashboardVisualizationSwitcherComponent;
+
+/**
+ * @public
+ */
+export type OptionalVisualizationSwitcherComponentProvider =
+    OptionalProvider<VisualizationSwitcherComponentProvider>;
 
 /**
  * @public

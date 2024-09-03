@@ -570,6 +570,9 @@ export const UserGroupEditDialog: React_2.FC<IUserGroupEditDialogProps>;
 export type UserGroupEditDialogMode = "VIEW" | "WORKSPACE" | "USERS" | "DATA_SOURCES" | "DETAIL";
 
 // @internal (undocumented)
+export const VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo;
+
+// @internal (undocumented)
 export const WIDGET_DROPZONE_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo;
 
 // @internal (undocumented)

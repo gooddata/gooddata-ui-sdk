@@ -596,6 +596,9 @@ export {
     IRichTextWidget,
     IRichTextWidgetBase,
     IRichTextWidgetDefinition,
+    IVisualizationSwitcherWidget,
+    IVisualizationSwitcherWidgetBase,
+    IVisualizationSwitcherWidgetDefinition,
 } from "./dashboard/analyticalWidgets.js";
 
 export {
@@ -688,6 +691,8 @@ export {
     isInsightWidget,
     isRichTextWidget,
     isRichTextWidgetDefinition,
+    isVisualizationSwitcherWidget,
+    isVisualizationSwitcherWidgetDefinition,
 } from "./dashboard/widget.js";
 
 export {

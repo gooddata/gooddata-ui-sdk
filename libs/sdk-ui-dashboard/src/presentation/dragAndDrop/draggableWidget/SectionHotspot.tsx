@@ -11,6 +11,8 @@ import {
     isKpiPlaceholderDraggableItem,
     isRichTextDraggableItem,
     isRichTextDraggableListItem,
+    isVisualizationSwitcherDraggableItem,
+    isVisualizationSwitcherDraggableListItem,
 } from "../types.js";
 import { getDropZoneDebugStyle } from "../debug.js";
 import { useDashboardDrop } from "../useDashboardDrop.js";
@@ -21,6 +23,7 @@ import { useNewSectionInsightPlaceholderDropHandler } from "./useNewSectionInsig
 import { useNewSectionKpiPlaceholderDropHandler } from "./useNewSectionKpiPlaceholderDropHandler.js";
 import { useWidgetDragHoverHandlers } from "./useWidgetDragHoverHandlers.js";
 import { useNewSectionRichTextPlaceholderDropHandler } from "./useNewSectionRichTextPlaceholderDropHandler.js";
+import { useNewSectionVisualizationSwitcherPlaceholderDropHandler } from "./useNewSectionVisualizationSwitcherPlaceholderDropHandler.js";
 
 export type RowPosition = "above" | "below";
 
@@ -38,6 +41,8 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
     const handleKpiPlaceholderDrop = useNewSectionKpiPlaceholderDropHandler(index);
     const handleInsightPlaceholderDrop = useNewSectionInsightPlaceholderDropHandler(index);
     const handleRichTextPlaceholderDrop = useNewSectionRichTextPlaceholderDropHandler(index);
+    const handleVisualizationSwitcherPlaceholderDrop =
+        useNewSectionVisualizationSwitcherPlaceholderDropHandler(index);
     const moveWidgetToNewSection = useMoveWidgetToNewSectionDropHandler(index);
     const { handleDragHoverEnd } = useWidgetDragHoverHandlers();
 
@@ -50,6 +55,8 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
             "insight",
             "richText",
             "richTextListItem",
+            "visualizationSwitcher",
+            "visualizationSwitcherListItem",
         ],
         {
             drop: (item) => {
@@ -68,6 +75,12 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
                 if (isRichTextDraggableItem(item)) {
                     moveWidgetToNewSection(item);
                 }
+                if (isVisualizationSwitcherDraggableItem(item)) {
+                    moveWidgetToNewSection(item);
+                }
+                if (isVisualizationSwitcherDraggableListItem(item)) {
+                    handleVisualizationSwitcherPlaceholderDrop();
+                }
                 if (isKpiDraggableItem(item)) {
                     moveWidgetToNewSection(item);
                 }
@@ -83,7 +96,14 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
                 return true;
             },
         },
-        [dispatch, index, handleInsightListItemDrop, handleKpiPlaceholderDrop, handleInsightPlaceholderDrop],
+        [
+            dispatch,
+            index,
+            handleInsightListItemDrop,
+            handleKpiPlaceholderDrop,
+            handleInsightPlaceholderDrop,
+            handleVisualizationSwitcherPlaceholderDrop,
+        ],
     );
 
     useEffect(() => {

@@ -73,6 +73,8 @@ export enum TigerFeaturesNames {
     EnableKDAttributeFilterDatesValidation = "enableKDAttributeFilterDatesValidation",
     //boolean + possible values: enabled, disabled
     EnableMultipleCSVs = "enableMultipleCSVs",
+    //boolean + possible values: enabled, disabled
+    EnableKDVisualizationSwitcher = "enableKDVisualizationSwitcher",
     //boolean
     EnableOracleDataSource = "enableOracleDataSource",
     EnableAnalyticalCatalog = "enableAnalyticalCatalog",
@@ -175,6 +177,7 @@ export type ITigerFeatureFlags = {
     enableDashboardFilterViews: typeof FeatureFlagsValues["enableDashboardFilterViews"][number];
     enableWorkspaceHierarchySettings: typeof FeatureFlagsValues["enableWorkspaceHierarchySettings"][number];
     enableNewInsightChangedPostMessageEvent: typeof FeatureFlagsValues["enableNewInsightChangedPostMessageEvent"][number];
+    enableKDVisualizationSwitcher: typeof FeatureFlagsValues["enableKDVisualizationSwitcher"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -245,6 +248,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDrillDownIntersectionIgnoredAttributes: false,
     enableWorkspaceHierarchySettings: false,
     enableNewInsightChangedPostMessageEvent: false,
+    enableKDVisualizationSwitcher: false,
 };
 
 export const FeatureFlagsValues = {
@@ -319,4 +323,5 @@ export const FeatureFlagsValues = {
     enableDashboardFilterViews: [true, false] as const,
     enableWorkspaceHierarchySettings: [true, false] as const,
     enableNewInsightChangedPostMessageEvent: [true, false] as const,
+    enableKDVisualizationSwitcher: [true, false] as const,
 };
