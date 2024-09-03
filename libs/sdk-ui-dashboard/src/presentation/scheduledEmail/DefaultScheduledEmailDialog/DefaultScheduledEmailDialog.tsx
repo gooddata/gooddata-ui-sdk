@@ -48,6 +48,7 @@ import parseISO from "date-fns/parseISO/index.js";
 import { isMobileView } from "./utils/responsive.js";
 import { DeleteScheduleConfirmDialog } from "../DefaultScheduledEmailManagementDialog/components/DeleteScheduleConfirmDialog.js";
 import { areAutomationsEqual } from "./utils/automationHelpers.js";
+import { useScheduleValidation } from "./hooks/useScheduleValidation.js";
 
 const MAX_MESSAGE_LENGTH = 200;
 const MAX_SUBJECT_LENGTH = 200;
@@ -107,6 +108,12 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
     } = useEditScheduledEmail(props);
     const { handleSaveScheduledEmail, isSavingScheduledEmail, savingErrorMessage } =
         useSaveScheduledEmailToBackend(automation, props);
+    const { isValid: isAutomationValid } = useScheduleValidation(originalAutomation);
+    const errorMessage = savingErrorMessage
+        ? savingErrorMessage
+        : !isAutomationValid
+        ? intl.formatMessage({ id: "dialogs.schedule.email.widgetError" })
+        : undefined;
 
     // It is needed to use originalAutomation here instead of automation, as in edit mode, all attachments may be removed
     // and no connection to widget would exist anymore and form would fallback to editing of dashboard variant.
@@ -311,9 +318,9 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
                             widget={widget}
                             editSchedule={editSchedule}
                         />
-                        {savingErrorMessage ? (
+                        {errorMessage ? (
                             <Message type="error" className="gd-notifications-channels-dialog-error">
-                                {savingErrorMessage}
+                                {errorMessage}
                             </Message>
                         ) : null}
                         <ContentDivider className="gd-divider-with-margin gd-divider-full-row" />

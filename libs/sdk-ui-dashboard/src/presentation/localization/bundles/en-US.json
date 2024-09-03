@@ -563,6 +563,11 @@
         "comment": "Translate as imperative. It's caption of a button for saving scheduled mail",
         "limit": 0
     },
+    "dialogs.schedule.email.widgetError": {
+        "value": "The alert is not working because the source widget was deleted. Delete the alert or contact your administrator.",
+        "comment": "Invalid schedule error message",
+        "limit": 0
+    },
     "dialogs.schedule.management.title": {
         "value": "Scheduled exports",
         "comment": "",
