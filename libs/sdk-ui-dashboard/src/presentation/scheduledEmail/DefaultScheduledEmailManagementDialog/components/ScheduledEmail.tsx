@@ -10,8 +10,9 @@ import {
 } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, Icon, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
-import { gdColorStateBlank } from "../../../constants/colors.js";
+import { gdColorNegative, gdColorStateBlank } from "../../../constants/colors.js";
 import { isVisualisationAutomation } from "../../DefaultScheduledEmailDialog/utils/automationHelpers.js";
+import { useScheduleValidation } from "../../DefaultScheduledEmailDialog/hooks/useScheduleValidation.js";
 
 interface IScheduledEmailProps {
     onDelete: (scheduledEmail: IAutomationMetadataObject) => void;
@@ -35,6 +36,7 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
 
     const { scheduledEmail, onDelete, onEdit, webhooks, emails } = props;
 
+    const { isValid } = useScheduleValidation(scheduledEmail);
     const intl = useIntl();
     const cronDescription = scheduledEmail.schedule?.cronDescription;
     const webhookTitle = [...webhooks, ...emails].find(
@@ -43,7 +45,10 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
     const dashboardTitle = scheduledEmail.exportDefinitions?.[0]?.title;
     const isWidget = isVisualisationAutomation(scheduledEmail);
     const iconColor = theme?.palette?.complementary?.c6 ?? gdColorStateBlank;
-    const iconComponent = isWidget ? (
+    const iconColorError = theme?.palette?.error?.base ?? gdColorNegative;
+    const iconComponent = !isValid ? (
+        <Icon.Warning width={16} height={16} color={iconColorError} />
+    ) : isWidget ? (
         <Icon.Insight width={16} height={16} color={iconColor} />
     ) : (
         <Icon.SimplifiedDashboard width={19} height={19} color={iconColor} />
@@ -69,7 +74,13 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
                 </BubbleHoverTrigger>
             </div>
             <div className="gd-notifications-channel-content" onClick={handleClick}>
-                <div className="gd-notifications-channel-icon">{iconComponent}</div>
+                <div
+                    className={cx("gd-notifications-channel-icon", {
+                        "gd-notifications-channel-icon-invalid": !isValid,
+                    })}
+                >
+                    {iconComponent}
+                </div>
                 <div className="gd-notifications-channel-text-content">
                     <div className="gd-notifications-channel-title">
                         <strong>

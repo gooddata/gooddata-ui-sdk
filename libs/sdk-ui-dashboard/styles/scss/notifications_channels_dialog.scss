@@ -416,6 +416,10 @@ $min-content-height: 110px;
         background-color: kit-variables.$is-focused-background;
         border-radius: 100px;
         flex-shrink: 0;
+
+        &.gd-notifications-channel-icon-invalid {
+            background-color: kit-variables.$gd-palette-error-dimmed;
+        }
     }
 
     .gd-notifications-channel-content {

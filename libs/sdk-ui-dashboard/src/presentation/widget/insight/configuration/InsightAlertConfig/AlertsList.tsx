@@ -6,7 +6,6 @@ import { AlertsListItem } from "./AlertsListItem.js";
 import { DashboardInsightSubmenuContainer } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightSubmenuContainer.js";
 import { FormattedMessage, useIntl } from "react-intl";
 import Skeleton from "react-loading-skeleton";
-import { AlertMetric } from "../../types.js";
 
 interface IAlertsListProps {
     isLoading: boolean;
@@ -18,7 +17,6 @@ interface IAlertsListProps {
     onDeleteAlert: (alert: IAutomationMetadataObject) => void;
     onClose: () => void;
     onGoBack: () => void;
-    measures: AlertMetric[];
     maxAutomationsReached: boolean;
 }
 
@@ -32,7 +30,6 @@ export const AlertsList: React.FC<IAlertsListProps> = ({
     onDeleteAlert,
     onClose,
     onGoBack,
-    measures,
     maxAutomationsReached,
 }) => {
     const intl = useIntl();
@@ -50,12 +47,6 @@ export const AlertsList: React.FC<IAlertsListProps> = ({
                     ) : (
                         <>
                             {alerts.map((alert) => {
-                                const selectedMeasureIdentifier = alert.alert!.condition.left;
-                                const measureExists = measures.some(
-                                    (measure) =>
-                                        measure.measure.measure.localIdentifier === selectedMeasureIdentifier,
-                                );
-
                                 return (
                                     <AlertsListItem
                                         key={alert.id}
@@ -64,7 +55,6 @@ export const AlertsList: React.FC<IAlertsListProps> = ({
                                         onPauseAlert={onPauseAlert}
                                         onResumeAlert={onResumeAlert}
                                         onDeleteAlert={onDeleteAlert}
-                                        isInvalid={!measureExists}
                                     />
                                 );
                             })}
