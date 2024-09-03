@@ -4,7 +4,7 @@ import classnames from "classnames";
 import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
 import { GenAISemanticSearchType, ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { Input, LoadingMask, Message, useDebouncedState } from "@gooddata/sdk-ui-kit";
+import { Input, LoadingMask, Message, useDebouncedState, useHeaderSearch } from "@gooddata/sdk-ui-kit";
 import { useWorkspaceStrict, useLocalStorage, IntlWrapper } from "@gooddata/sdk-ui";
 import { useSemanticSearch, useElementWidth } from "../hooks/index.js";
 import { ListItem } from "../types.js";
@@ -34,6 +34,10 @@ const SEARCH_HISTORY_KEY = "gd-semantic-search-history";
  * An initial value for the search history.
  */
 const SEARCH_HISTORY_EMPTY: string[] = [];
+/**
+ * Default limit of search results.
+ */
+const LIMIT = 10;
 
 export type SearchOnSelect = {
     item: ISemanticSearchResultItem;
@@ -94,7 +98,9 @@ export type SearchOverlayProps = {
  */
 const SearchOverlayCore: React.FC<
     WrappedComponentProps & Omit<SearchOverlayProps, "locale" | "metadataTimezone">
-> = ({ onSelect, onSearch, backend, workspace, objectTypes, deepSearch, limit = 6, className, intl }) => {
+> = ({ onSelect, onSearch, backend, workspace, objectTypes, deepSearch, limit = LIMIT, className, intl }) => {
+    const { toggleOpen } = useHeaderSearch();
+
     // Input value handling
     const [value, setValue, searchTerm, setImmediate] = useDebouncedState("", DEBOUNCE);
 
@@ -127,19 +133,31 @@ const SearchOverlayCore: React.FC<
                 );
                 const isLocked = item.workspaceId !== effectiveWorkspace;
 
-                if (!parentDashboards.length)
-                    return {
+                // The item itself
+                const listItems: ListItem<ISemanticSearchResultItem>[] = [
+                    {
                         item,
                         url: getUIPath(item.type, item.id, effectiveWorkspace),
                         isLocked,
-                    };
+                    },
+                ];
 
-                return parentDashboards.map((parent) => ({
-                    item,
-                    parentRef: parent,
-                    url: getUIPath(parent.sourceObjectType, parent.sourceObjectId, effectiveWorkspace),
-                    isLocked,
-                }));
+                // Potentially, the item's parent dashboards
+                if (parentDashboards.length)
+                    listItems.push(
+                        ...parentDashboards.map((parent) => ({
+                            item,
+                            parentRef: parent,
+                            url: getUIPath(
+                                parent.sourceObjectType,
+                                parent.sourceObjectId,
+                                effectiveWorkspace,
+                            ),
+                            isLocked,
+                        })),
+                    );
+
+                return listItems;
             }),
         [searchResults, effectiveWorkspace, relationships],
     );
@@ -170,8 +188,13 @@ const SearchOverlayCore: React.FC<
                     window.location.href = item.url;
                 }
             }
+
+            // Trigger the dialog closing unless it's opening in a new tab
+            if (newTab) {
+                toggleOpen();
+            }
         },
-        [searchTerm, searchHistory, onSelect, setSearchHistory],
+        [searchTerm, searchHistory, onSelect, setSearchHistory, toggleOpen],
     );
     const onHistorySelect = (item: ListItem<string>) => setImmediate(item.item);
     const searchHistoryItems: ListItem<string>[] = React.useMemo(

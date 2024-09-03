@@ -31,6 +31,7 @@ import { HeaderUpsellButton } from "./HeaderUpsellButton.js";
 import { HeaderInvite } from "./HeaderInvite.js";
 import { Typography } from "../Typography/index.js";
 import { HeaderSearchButton } from "./HeaderSearchButton.js";
+import { HeaderSearchProvider } from "./headerSearchContext.js";
 
 function getOuterWidth(element: HTMLDivElement) {
     const width = element.offsetWidth;
@@ -343,7 +344,9 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                 <Typography tagName="h3" className="gd-header-menu-search-title">
                     <FormattedMessage id="gs.header.search" />
                 </Typography>
-                {this.props.search}
+                <HeaderSearchProvider isOpen={this.state.isSearchMenuOpen} toggleOpen={this.toggleSearchMenu}>
+                    {this.props.search}
+                </HeaderSearchProvider>
             </div>
         );
     };
@@ -438,13 +441,14 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                 {this.renderTrialItems()}
 
                 {this.props.search ? (
-                    <HeaderSearchButton
-                        title={this.props.intl.formatMessage({ id: "gs.header.search" })}
+                    <HeaderSearchProvider
                         isOpen={this.state.isSearchMenuOpen}
                         toggleOpen={this.toggleSearchMenu}
                     >
-                        {this.props.search}
-                    </HeaderSearchButton>
+                        <HeaderSearchButton title={this.props.intl.formatMessage({ id: "gs.header.search" })}>
+                            {this.props.search}
+                        </HeaderSearchButton>
+                    </HeaderSearchProvider>
                 ) : null}
 
                 {this.props.helpMenuItems.length ? (

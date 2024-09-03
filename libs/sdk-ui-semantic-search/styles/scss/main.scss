@@ -30,7 +30,10 @@
         height: $line-height;
         text-decoration: none;
 
-        &:hover {
+        &:hover,
+        &:focus,
+        &:active,
+        &:visited {
             text-decoration: none;
         }
 
@@ -119,8 +122,12 @@
             }
         }
     }
-}
 
-.gd-semantic-search__bubble.bubble.bubble-light {
-    background: kit-variables.$gd-color-white;
+    &__bubble.bubble.bubble-light {
+        background: kit-variables.$gd-color-white;
+    }
+
+    &__bubble_trigger {
+        display: flex;
+    }
 }

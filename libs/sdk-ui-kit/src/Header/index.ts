@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 export { AppHeader } from "./Header.js";
 export { WorkspacePickerHomeFooter, IWorkspacePickerHomeFooterProps } from "./WorkspacePickerHomeFooter.js";
 export {
@@ -15,3 +15,4 @@ export { HeaderBadgeWithModal, IHeaderBadgeWithModalProps } from "./HeaderBadgeW
 export * from "./generateHeaderMenuItemsGroups.js";
 export * from "./activateHeaderMenuItems.js";
 export * from "./typings.js";
+export * from "./headerSearchContext.js";

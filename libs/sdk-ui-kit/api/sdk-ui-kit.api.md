@@ -36,6 +36,7 @@ import { ObjRef } from '@gooddata/sdk-model';
 import { OverlayController as OverlayController_2 } from './OverlayController.js';
 import { PureComponent } from 'react';
 import { default as React_2 } from 'react';
+import * as React_3 from 'react';
 import { ReactNode } from 'react';
 import { ShareStatus } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
@@ -727,6 +728,15 @@ export const HeaderBadgeWithModal: React_2.FC<IHeaderBadgeWithModalProps>;
 export const HeaderDataMenu: React_2.FC<WithIntlProps<IHeaderDataMenuProps>> & {
     WrappedComponent: React_2.ComponentType<IHeaderDataMenuProps>;
 };
+
+// @internal
+export type HeaderSearchContext = {
+    isOpen: boolean;
+    toggleOpen: () => void;
+};
+
+// @internal
+export const HeaderSearchProvider: ({ children, ...rest }: React_3.PropsWithChildren<HeaderSearchContext>) => React_3.JSX.Element;
 
 // @internal (undocumented)
 export const HeaderWorkspacePicker: React_2.FC<WithIntlProps<IHeaderWorkspacePickerProps>> & {
@@ -4844,6 +4854,9 @@ T,
 T,
 (value: T) => void
 ];
+
+// @internal
+export const useHeaderSearch: () => HeaderSearchContext;
 
 // @internal (undocumented)
 export function useInvertableSelectionStatusText<T>(selectedItems: T[], isInverted: boolean, getItemTitle: (item: T) => string): string;

@@ -4,19 +4,20 @@ import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 import { Overlay } from "../Overlay/index.js";
 import { Button } from "../Button/index.js";
+import { useHeaderSearch } from "./headerSearchContext.js";
 
 export type HeaderSearchProps = React.PropsWithChildren<{
     /**
      * Button title.
      */
     title: string;
-    isOpen: boolean;
-    toggleOpen: () => void;
 }>;
 
 const ALIGN_POINTS = [{ align: "br tr" }];
 
-export const HeaderSearchButton: React.FC<HeaderSearchProps> = ({ children, title, isOpen, toggleOpen }) => {
+export const HeaderSearchButton: React.FC<HeaderSearchProps> = ({ children, title }) => {
+    const { isOpen, toggleOpen } = useHeaderSearch();
+
     // Handle Cmd+K and Ctrl+K shortcuts
     React.useEffect(() => {
         const shortcutHandler = (event: KeyboardEvent) => {
