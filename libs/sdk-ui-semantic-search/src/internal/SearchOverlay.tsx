@@ -190,7 +190,7 @@ const SearchOverlayCore: React.FC<
             }
 
             // Trigger the dialog closing unless it's opening in a new tab
-            if (newTab) {
+            if (!newTab) {
                 toggleOpen();
             }
         },
