@@ -38,6 +38,10 @@ const SEARCH_HISTORY_EMPTY: string[] = [];
  * Default limit of search results.
  */
 const LIMIT = 10;
+/**
+ * A threshold for search results to be shown to user.
+ */
+const THRESHOLD = 0.5;
 
 export type SearchOnSelect = {
     item: ISemanticSearchResultItem;
@@ -80,6 +84,10 @@ export type SearchOverlayProps = {
      */
     limit?: number;
     /**
+     * A minimum similarity score for search result to be shown to user.
+     */
+    threshold?: number;
+    /**
      * Additional CSS class for the component.
      */
     className?: string;
@@ -98,7 +106,18 @@ export type SearchOverlayProps = {
  */
 const SearchOverlayCore: React.FC<
     WrappedComponentProps & Omit<SearchOverlayProps, "locale" | "metadataTimezone">
-> = ({ onSelect, onSearch, backend, workspace, objectTypes, deepSearch, limit = LIMIT, className, intl }) => {
+> = ({
+    onSelect,
+    onSearch,
+    backend,
+    workspace,
+    objectTypes,
+    deepSearch,
+    limit = LIMIT,
+    className,
+    intl,
+    threshold = THRESHOLD,
+}) => {
     const { toggleOpen } = useHeaderSearch();
 
     // Input value handling
@@ -123,43 +142,48 @@ const SearchOverlayCore: React.FC<
     // Results wrapped into ListItems
     const searchResultsItems: ListItem<ISemanticSearchResultItem>[] = React.useMemo(
         (): ListItem<ISemanticSearchResultItem>[] =>
-            searchResults.flatMap((item) => {
-                // Look up parent items if available
-                const parentDashboards = relationships.filter(
-                    (rel) =>
-                        rel.targetObjectId === item.id &&
-                        rel.targetObjectType === item.type &&
-                        rel.sourceObjectType === "dashboard",
-                );
-                const isLocked = item.workspaceId !== effectiveWorkspace;
-
-                // The item itself
-                const listItems: ListItem<ISemanticSearchResultItem>[] = [
-                    {
-                        item,
-                        url: getUIPath(item.type, item.id, effectiveWorkspace),
-                        isLocked,
-                    },
-                ];
-
-                // Potentially, the item's parent dashboards
-                if (parentDashboards.length)
-                    listItems.push(
-                        ...parentDashboards.map((parent) => ({
-                            item,
-                            parentRef: parent,
-                            url: getUIPath(
-                                parent.sourceObjectType,
-                                parent.sourceObjectId,
-                                effectiveWorkspace,
-                            ),
-                            isLocked,
-                        })),
+            searchResults
+                .filter((item) => {
+                    // Filter out items with similarity score below the threshold
+                    return item.score >= threshold;
+                })
+                .flatMap((item) => {
+                    // Look up parent items if available
+                    const parentDashboards = relationships.filter(
+                        (rel) =>
+                            rel.targetObjectId === item.id &&
+                            rel.targetObjectType === item.type &&
+                            rel.sourceObjectType === "dashboard",
                     );
+                    const isLocked = item.workspaceId !== effectiveWorkspace;
 
-                return listItems;
-            }),
-        [searchResults, effectiveWorkspace, relationships],
+                    // The item itself
+                    const listItems: ListItem<ISemanticSearchResultItem>[] = [
+                        {
+                            item,
+                            url: getUIPath(item.type, item.id, effectiveWorkspace),
+                            isLocked,
+                        },
+                    ];
+
+                    // Potentially, the item's parent dashboards
+                    if (parentDashboards.length)
+                        listItems.push(
+                            ...parentDashboards.map((parent) => ({
+                                item,
+                                parentRef: parent,
+                                url: getUIPath(
+                                    parent.sourceObjectType,
+                                    parent.sourceObjectId,
+                                    effectiveWorkspace,
+                                ),
+                                isLocked,
+                            })),
+                        );
+
+                    return listItems;
+                }),
+        [searchResults, effectiveWorkspace, relationships, threshold],
     );
 
     // Search history
