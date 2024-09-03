@@ -442,9 +442,14 @@ export interface ISettings {
     enableSingleStoreDataSource?: boolean;
 
     /**
-     * Enable GenAI-powered functionality, such as semantic-search
+     * Enable GenAI-powered functionality, such as semantic-search.
      */
     enableAIFunctions?: boolean;
+
+    /**
+     * Enable Semantic Search in the UI.
+     */
+    enableSemanticSearch?: boolean;
 
     /**
      * Enable configuration of the drill intersection ignored attributes.
