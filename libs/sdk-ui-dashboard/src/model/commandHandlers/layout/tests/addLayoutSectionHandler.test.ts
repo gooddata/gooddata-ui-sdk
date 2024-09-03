@@ -24,6 +24,7 @@ import {
     testItemWithFilterIgnoreList,
     TestKpiPlaceholderItem,
     TestRichTextItem,
+    TestVisualizationSwitcherItem,
 } from "../../../tests/fixtures/Layout.fixtures.js";
 import { ActivityDateDatasetRef } from "../../../tests/fixtures/CatalogAvailability.fixtures.js";
 
@@ -86,6 +87,7 @@ describe("add layout section handler", () => {
                     TestKpiPlaceholderItem,
                     TestInsightPlaceholderItem,
                     TestRichTextItem,
+                    TestVisualizationSwitcherItem,
                 ]),
                 "GDC.DASH/EVT.FLUID_LAYOUT.SECTION_ADDED",
             );
@@ -93,6 +95,7 @@ describe("add layout section handler", () => {
                 TestKpiPlaceholderItem,
                 TestInsightPlaceholderItem,
                 TestRichTextItem,
+                TestVisualizationSwitcherItem,
             ]);
 
             const layout = selectLayout(Tester.state());

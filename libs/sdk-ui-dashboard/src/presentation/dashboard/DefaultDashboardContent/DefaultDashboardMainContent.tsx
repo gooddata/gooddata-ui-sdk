@@ -27,6 +27,8 @@ export const DefaultDashboardMainContent = (_: IDashboardProps) => {
             "kpi-placeholder",
             "richText",
             "richTextListItem",
+            "visualizationSwitcher",
+            "visualizationSwitcherListItem",
         ],
         {},
     );

@@ -4,6 +4,7 @@ import {
     IInsightWidget,
     IKpiWidget,
     IRichTextWidget,
+    IVisualizationSwitcherWidget,
     InsightDrillDefinition,
     isInsightWidget,
     widgetRef,
@@ -30,7 +31,7 @@ interface IInvalidDrillInfo {
 export function* validateDrills(
     ctx: DashboardContext,
     cmd: IDashboardCommand,
-    widgets: (IKpiWidget | IInsightWidget | IRichTextWidget)[],
+    widgets: (IKpiWidget | IInsightWidget | IRichTextWidget | IVisualizationSwitcherWidget)[],
 ) {
     const possibleInvalidDrills: SagaReturnType<typeof validateInsightDrillDefinitions>[] = yield all(
         widgets

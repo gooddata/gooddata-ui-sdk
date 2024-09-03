@@ -74,6 +74,12 @@ describe("sizing", () => {
             it("should get default height for unknown widget", () => {
                 expect(getDashboardLayoutWidgetDefaultHeight(settings, "unknown" as any)).toMatchSnapshot();
             });
+
+            it("should get default height for visualization switcher widget", () => {
+                expect(
+                    getDashboardLayoutWidgetDefaultHeight(settings, "visualizationSwitcher"),
+                ).toMatchSnapshot();
+            });
         });
     });
 
@@ -111,6 +117,12 @@ describe("sizing", () => {
             it("should get min height for unknown widget", () => {
                 expect(getDashboardLayoutWidgetMinGridHeight(settings, "unknown" as any)).toMatchSnapshot();
             });
+
+            it("should get min height for visualization switcher widget", () => {
+                expect(
+                    getDashboardLayoutWidgetMinGridHeight(settings, "visualizationSwitcher"),
+                ).toMatchSnapshot();
+            });
         });
     });
 
@@ -140,6 +152,12 @@ describe("sizing", () => {
             it("should get max height for unknown widget", () => {
                 expect(getDashboardLayoutWidgetMaxGridHeight(settings, "unknown" as any)).toMatchSnapshot();
             });
+
+            it("should get max height for visualization switcher widget", () => {
+                expect(
+                    getDashboardLayoutWidgetMaxGridHeight(settings, "visualizationSwitcher"),
+                ).toMatchSnapshot();
+            });
         });
     });
 
@@ -158,6 +176,10 @@ describe("sizing", () => {
 
             it("should get minimum width for rich text widget", () => {
                 expect(getDashboardLayoutWidgetMinGridWidth(settings, "richText")).toBe(2);
+            });
+
+            it("should get minimum width for visualization switcher widget", () => {
+                expect(getDashboardLayoutWidgetMinGridWidth(settings, "visualizationSwitcher")).toBe(4);
             });
 
             type Scenario = [string, string, VisType | undefined, number];

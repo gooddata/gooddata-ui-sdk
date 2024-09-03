@@ -14,6 +14,7 @@ import {
     selectSettings,
     selectEnableKDRichText,
     selectSupportsRichTextWidgets,
+    selectEnableVisualizationSwitcher,
 } from "../../../model/index.js";
 import cx from "classnames";
 import {
@@ -25,6 +26,7 @@ import {
     InsightWidgetComponentSet,
     KpiWidgetComponentSet,
     RichTextWidgetComponentSet,
+    VisualizationSwitcherWidgetComponentSet,
 } from "../../componentDefinition/index.js";
 
 interface ICreationPanelProps {
@@ -35,6 +37,7 @@ interface ICreationPanelProps {
     AttributeFilterComponentSet?: AttributeFilterComponentSet;
     InsightWidgetComponentSet?: InsightWidgetComponentSet;
     RichTextWidgetComponentSet?: RichTextWidgetComponentSet;
+    VisualizationSwitcherWidgetComponentSet?: VisualizationSwitcherWidgetComponentSet;
 }
 
 export const CreationPanel: React.FC<ICreationPanelProps> = (props) => {
@@ -42,6 +45,7 @@ export const CreationPanel: React.FC<ICreationPanelProps> = (props) => {
     const supportsKpis = useDashboardSelector(selectSupportsKpiWidgetCapability);
     const supportsRichText = useDashboardSelector(selectSupportsRichTextWidgets);
     const enableRichText = useDashboardSelector(selectEnableKDRichText);
+    const enableVisualizationSwitcher = useDashboardSelector(selectEnableVisualizationSwitcher);
     const isAnalyticalDesignerEnabled = useDashboardSelector(selectIsAnalyticalDesignerEnabled);
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
     const settings = useDashboardSelector(selectSettings);
@@ -49,12 +53,14 @@ export const CreationPanel: React.FC<ICreationPanelProps> = (props) => {
     const AttributeFilterComponentSet = props.AttributeFilterComponentSet!;
     const InsightWidgetComponentSet = props.InsightWidgetComponentSet!;
     const RichTextWidgetComponentSet = props.RichTextWidgetComponentSet!;
+    const VisualizationSwitcherWidgetComponentSet = props.VisualizationSwitcherWidgetComponentSet!;
 
     const addItemPanelItems = useMemo(() => {
         const items = compact([
             supportsKpis && KpiWidgetComponentSet.creating,
             AttributeFilterComponentSet.creating,
             InsightWidgetComponentSet.creating,
+            enableVisualizationSwitcher && VisualizationSwitcherWidgetComponentSet.creating,
             supportsRichText && enableRichText && RichTextWidgetComponentSet.creating,
         ]);
 
@@ -71,6 +77,7 @@ export const CreationPanel: React.FC<ICreationPanelProps> = (props) => {
         KpiWidgetComponentSet,
         InsightWidgetComponentSet,
         RichTextWidgetComponentSet,
+        VisualizationSwitcherWidgetComponentSet,
         supportsKpis,
         supportsRichText,
         enableRichText,

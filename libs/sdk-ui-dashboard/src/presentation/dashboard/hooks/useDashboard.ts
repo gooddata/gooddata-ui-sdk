@@ -21,6 +21,8 @@ import {
     DefaultDashboardInsightMenuTitle,
     DefaultDashboardRichText,
     DefaultDashboardRichTextComponentSetFactory,
+    DefaultDashboardVisualizationSwitcher,
+    DefaultDashboardVisualizationSwitcherComponentSetFactory,
 } from "../../widget/index.js";
 import { IDashboardProps } from "../types.js";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -36,6 +38,7 @@ import {
     InsightMenuTitleComponentProvider,
     DashboardContentComponentProvider,
     RichTextComponentProvider,
+    VisualizationSwitcherComponentProvider,
 } from "../../dashboardContexts/index.js";
 import {
     AttributeFilterComponentSet,
@@ -43,6 +46,7 @@ import {
     InsightWidgetComponentSet,
     KpiWidgetComponentSet,
     RichTextWidgetComponentSet,
+    VisualizationSwitcherWidgetComponentSet,
 } from "../../componentDefinition/index.js";
 import { DefaultDashboardMainContent } from "../DefaultDashboardContent/DefaultDashboardMainContent.js";
 
@@ -67,6 +71,8 @@ interface IUseDashboardResult {
     dateFilterComponentSet: DateFilterComponentSet;
     richTextProvider: RichTextComponentProvider;
     richTextWidgetComponentSet: RichTextWidgetComponentSet;
+    visualizationSwitcherProvider: VisualizationSwitcherComponentProvider;
+    visualizationSwitcherWidgetComponentSet: VisualizationSwitcherWidgetComponentSet;
 }
 
 export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
@@ -84,6 +90,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         KpiComponentProvider,
         DashboardContentComponentProvider,
         RichTextComponentProvider,
+        VisualizationSwitcherComponentProvider,
     } = props;
 
     const backend = useBackendStrict(props.backend);
@@ -206,6 +213,18 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         return DefaultDashboardRichTextComponentSetFactory(richTextProvider);
     }, [richTextProvider]);
 
+    const visualizationSwitcherProvider = useCallback<VisualizationSwitcherComponentProvider>(
+        (visualizationSwitcher) => {
+            const userSpecified = VisualizationSwitcherComponentProvider?.(visualizationSwitcher);
+            return userSpecified ?? DefaultDashboardVisualizationSwitcher;
+        },
+        [VisualizationSwitcherComponentProvider],
+    );
+
+    const visualizationSwitcherWidgetComponentSet = useMemo<VisualizationSwitcherWidgetComponentSet>(() => {
+        return DefaultDashboardVisualizationSwitcherComponentSetFactory(visualizationSwitcherProvider);
+    }, [visualizationSwitcherProvider]);
+
     const isThemeLoading = useThemeIsLoading();
     const hasThemeProvider = isThemeLoading !== undefined;
 
@@ -230,5 +249,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         dateFilterComponentSet,
         richTextProvider,
         richTextWidgetComponentSet,
+        visualizationSwitcherProvider,
+        visualizationSwitcherWidgetComponentSet,
     };
 };

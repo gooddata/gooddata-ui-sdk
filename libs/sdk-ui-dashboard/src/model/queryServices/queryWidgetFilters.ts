@@ -31,6 +31,7 @@ import {
     isDashboardDateFilterReference,
     IRichTextWidget,
     filterLocalIdentifier,
+    IVisualizationSwitcherWidget,
 } from "@gooddata/sdk-model";
 import { QueryWidgetFilters } from "../queries/widgets.js";
 import { selectAllFiltersForWidgetByRef, selectWidgetByRef } from "../store/layout/layoutSelectors.js";
@@ -344,7 +345,7 @@ function* queryWithInsight(
 
 function* queryWithoutInsight(
     ctx: DashboardContext,
-    widget: IKpiWidget | ICustomWidget | IRichTextWidget,
+    widget: IKpiWidget | ICustomWidget | IRichTextWidget | IVisualizationSwitcherWidget,
 ): SagaIterator<IFilter[]> {
     const widgetAwareDashboardFiltersSelector = selectAllFiltersForWidgetByRef(widget.ref);
     const [widgetAwareDashboardCommonDateFilters, widgetAwareDashboardOtherFilters]: ReturnType<

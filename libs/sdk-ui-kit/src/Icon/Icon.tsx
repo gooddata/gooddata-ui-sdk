@@ -94,6 +94,7 @@ import { AlertPaused } from "./icons/AlertPaused.js";
 import { Ellipsis } from "./icons/Ellipsis.js";
 import { Warning } from "./icons/Warning.js";
 import { Email } from "./icons/Email.js";
+import { VisualizationSwitcher } from "./icons/VisualizationSwitcher.js";
 
 /**
  * @internal
@@ -173,6 +174,7 @@ export const Icon: Record<string, React.FC<IIconProps>> = {
     Pyramid,
     Funnel,
     RichText,
+    VisualizationSwitcher,
     DataSource,
     User,
     UserGroup,

@@ -173,6 +173,7 @@ import { IDashboardLayoutSizeByScreenSize } from '@gooddata/sdk-model';
 import { IDashboardObjectIdentity } from '@gooddata/sdk-model';
 import { IDashboardPermissions } from '@gooddata/sdk-model';
 import { IDashboardRichTextProps as IDashboardRichTextProps_2 } from './types.js';
+import { IDashboardVisualizationSwitcherProps as IDashboardVisualizationSwitcherProps_2 } from './types.js';
 import { IDashboardWidget } from '@gooddata/sdk-model';
 import { IDashboardWidgetOverlay as IDashboardWidgetOverlay_2 } from '../../index.js';
 import { IDataView } from '@gooddata/sdk-backend-spi';
@@ -245,6 +246,7 @@ import { ITranslations } from '@gooddata/sdk-ui';
 import { IUser } from '@gooddata/sdk-model';
 import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
+import { IVisualizationSwitcherWidget } from '@gooddata/sdk-model';
 import { IWebhookDefinitionObject } from '@gooddata/sdk-model';
 import { IWidget } from '@gooddata/sdk-model';
 import { IWidgetAlert } from '@gooddata/sdk-model';
@@ -1167,6 +1169,9 @@ export type CustomDashboardLayoutComponent = ComponentType<IDashboardLayoutProps
 
 // @public (undocumented)
 export type CustomDashboardRichTextComponent = ComponentType<IDashboardRichTextProps>;
+
+// @public (undocumented)
+export type CustomDashboardVisualizationSwitcherComponent = ComponentType<IDashboardVisualizationSwitcherProps>;
 
 // @public (undocumented)
 export type CustomDashboardWidgetComponent = ComponentType<IDashboardWidgetProps>;
@@ -2986,6 +2991,12 @@ export const DefaultDashboardToolbarButton: React_2.FC<IDefaultDashboardToolbarB
 // @internal (undocumented)
 export const DefaultDashboardToolbarGroup: React_2.FC<IDefaultDashboardToolbarGroupProps>;
 
+// @public
+export const DefaultDashboardVisualizationSwitcher: ComponentType<IDashboardVisualizationSwitcherProps_2>;
+
+// @internal (undocumented)
+export function DefaultDashboardVisualizationSwitcherComponentSetFactory(visualizationSwitcherComponentProvider: VisualizationSwitcherComponentProvider): VisualizationSwitcherWidgetComponentSet;
+
 // @internal (undocumented)
 export const DefaultDashboardWidget: React_2.NamedExoticComponent<IDashboardWidgetProps>;
 
@@ -3096,14 +3107,14 @@ export function dispatchAndWaitFor<TCommand extends DashboardCommands, TResult>(
 
 // @internal
 export type DraggableComponent = {
-    dragging: AttributeFilterDraggableComponent | DateFilterDraggableComponent | KpiDraggableComponent | InsightDraggableComponent | RichTextDraggableComponent | CustomDraggableComponent;
+    dragging: AttributeFilterDraggableComponent | DateFilterDraggableComponent | KpiDraggableComponent | InsightDraggableComponent | RichTextDraggableComponent | VisualizationSwitcherDraggableComponent | CustomDraggableComponent;
 };
 
 // @internal (undocumented)
-export type DraggableContentItem = AttributeFilterDraggableItem | AttributeFilterPlaceholderDraggableItem | DateFilterDraggableItem | InsightDraggableItem | InsightDraggableListItem | InsightPlaceholderDraggableItem | KpiDraggableItem | KpiPlaceholderDraggableItem | RichTextDraggableItem | RichTextDraggableListItem | CustomWidgetDraggableItem | CustomDraggableItem;
+export type DraggableContentItem = AttributeFilterDraggableItem | AttributeFilterPlaceholderDraggableItem | DateFilterDraggableItem | InsightDraggableItem | InsightDraggableListItem | InsightPlaceholderDraggableItem | KpiDraggableItem | KpiPlaceholderDraggableItem | RichTextDraggableItem | RichTextDraggableListItem | VisualizationSwitcherDraggableItem | VisualizationSwitcherDraggableListItem | CustomWidgetDraggableItem | CustomDraggableItem;
 
 // @internal (undocumented)
-export type DraggableContentItemType = "attributeFilter" | "dateFilter" | "attributeFilter-placeholder" | "insightListItem" | "insight" | "insight-placeholder" | "kpi" | "kpi-placeholder" | "richText" | "richTextListItem" | "custom";
+export type DraggableContentItemType = "attributeFilter" | "dateFilter" | "attributeFilter-placeholder" | "insightListItem" | "insight" | "insight-placeholder" | "kpi" | "kpi-placeholder" | "richText" | "richTextListItem" | "visualizationSwitcher" | "visualizationSwitcherListItem" | "custom";
 
 // @internal (undocumented)
 export const DraggableCreatePanelItem: React_2.FC<IDraggableCreatePanelItemProps>;
@@ -3129,6 +3140,8 @@ export type DraggableItemComponentTypeMapping = {
     "kpi-placeholder": KpiPlaceholderDraggableItem;
     richText: RichTextDraggableItem;
     richTextListItem: RichTextDraggableListItem;
+    visualizationSwitcher: VisualizationSwitcherDraggableItem;
+    visualizationSwitcherListItem: VisualizationSwitcherDraggableListItem;
     custom: CustomDraggableItem;
 };
 
@@ -3145,7 +3158,7 @@ export type DraggableItemType = DraggableContentItemType | DraggableInternalItem
 export type DraggableItemTypeMapping = DraggableItemComponentTypeMapping & DraggableItemInternalTypeMapping;
 
 // @internal (undocumented)
-export type DraggableLayoutItem = InsightDraggableItem | KpiDraggableItem | RichTextDraggableItem | CustomWidgetDraggableItem;
+export type DraggableLayoutItem = InsightDraggableItem | KpiDraggableItem | RichTextDraggableItem | VisualizationSwitcherDraggableItem | CustomWidgetDraggableItem;
 
 // @internal (undocumented)
 export interface DraggingComponentProps {
@@ -3929,6 +3942,7 @@ export interface IDashboardCustomComponentProps {
     ToolbarComponent?: CustomToolbarComponent;
     // @alpha
     TopBarComponent?: CustomTopBarComponent;
+    VisualizationSwitcherComponentProvider?: OptionalVisualizationSwitcherComponentProvider;
     WidgetComponentProvider?: OptionalWidgetComponentProvider;
 }
 
@@ -4264,6 +4278,19 @@ export interface IDashboardThemingProps {
     disableThemeLoading?: boolean;
     theme?: ITheme;
     themeModifier?: (theme: ITheme) => ITheme;
+}
+
+// @public
+export interface IDashboardVisualizationSwitcherProps {
+    // @alpha
+    backend?: IAnalyticalBackend;
+    // @alpha
+    clientHeight?: number;
+    // @alpha
+    clientWidth?: number;
+    widget: IVisualizationSwitcherWidget;
+    // @alpha
+    workspace?: string;
 }
 
 // @public
@@ -5388,6 +5415,8 @@ export interface ISidebarProps {
     // @internal
     RichTextWidgetComponentSet?: RichTextWidgetComponentSet;
     // @internal
+    VisualizationSwitcherWidgetComponentSet?: VisualizationSwitcherWidgetComponentSet;
+    // @internal
     WrapCreatePanelItemWithDragComponent?: IWrapCreatePanelItemWithDragComponent;
     // @internal
     WrapInsightListItemWithDragComponent?: IWrapInsightListItemWithDragComponent;
@@ -5431,6 +5460,12 @@ export function isRichTextDraggableListItem(item: any): item is RichTextDraggabl
 
 // @internal
 export function isTemporaryIdentity(obj: IDashboardObjectIdentity): boolean;
+
+// @internal (undocumented)
+export function isVisualizationSwitcherDraggableItem(item: any): item is VisualizationSwitcherDraggableItem;
+
+// @internal (undocumented)
+export function isVisualizationSwitcherDraggableListItem(item: any): item is VisualizationSwitcherDraggableListItem;
 
 // @alpha (undocumented)
 export interface ITitleProps {
@@ -5496,6 +5531,12 @@ export interface IUseWidgetSelectionResult {
     isSelected: boolean;
     onSelected: (e?: MouseEvent_2) => void;
 }
+
+// @internal (undocumented)
+export type IVisualizationSwitcherDraggingComponentProps = {
+    itemType: "visualizationSwitcher";
+    item: VisualizationSwitcherDraggableItem;
+};
 
 // @internal (undocumented)
 export type IWrapCreatePanelItemWithDragComponent = React.ComponentType<IWrapCreatePanelItemWithDragProps>;
@@ -5941,6 +5982,9 @@ export type OptionalProvider<T> = T extends (...args: infer TArgs) => infer TRes
 
 // @public (undocumented)
 export type OptionalRichTextComponentProvider = OptionalProvider<RichTextComponentProvider>;
+
+// @public (undocumented)
+export type OptionalVisualizationSwitcherComponentProvider = OptionalProvider<VisualizationSwitcherComponentProvider>;
 
 // @public (undocumented)
 export type OptionalWidgetComponentProvider = OptionalProvider<WidgetComponentProvider>;
@@ -7207,6 +7251,9 @@ export const selectEnableScheduling: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableUnavailableItemsVisibility: DashboardSelector<boolean>;
+
+// @internal
+export const selectEnableVisualizationSwitcher: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableWidgetCustomHeight: DashboardSelector<boolean>;
@@ -9019,6 +9066,31 @@ export function useWidgetSelection(widgetRef?: ObjRef): IUseWidgetSelectionResul
 
 // @internal (undocumented)
 export type ValuesLimitingItem = IDashboardAttributeFilterParentItem | ObjRef | IDashboardDependentDateFilter;
+
+// @public (undocumented)
+export type VisualizationSwitcherComponentProvider = (visualizationSwitcher: IVisualizationSwitcherWidget) => CustomDashboardVisualizationSwitcherComponent;
+
+// @internal (undocumented)
+export type VisualizationSwitcherDraggableComponent = {
+    DraggingComponent?: VisualizationSwitcherDraggingComponent;
+    type: "visualizationSwitcher";
+};
+
+// @internal (undocumented)
+export type VisualizationSwitcherDraggableItem = BaseDraggableMovingItem & {
+    type: "visualizationSwitcher";
+};
+
+// @internal (undocumented)
+export type VisualizationSwitcherDraggableListItem = BaseDraggableLayoutItem & {
+    type: "visualizationSwitcherListItem";
+};
+
+// @internal (undocumented)
+export type VisualizationSwitcherDraggingComponent = ComponentType<IVisualizationSwitcherDraggingComponentProps>;
+
+// @internal
+export type VisualizationSwitcherWidgetComponentSet = CustomComponentBase<IDashboardVisualizationSwitcherProps, Parameters<VisualizationSwitcherComponentProvider>> & DraggableComponent & Partial<CreatableByDragComponent> & Partial<CreatablePlaceholderComponent<IDashboardWidgetProps>> & ConfigurableWidget<IVisualizationSwitcherWidget>;
 
 // @alpha
 export type Webhooks = IWebhookDefinitionObject[];

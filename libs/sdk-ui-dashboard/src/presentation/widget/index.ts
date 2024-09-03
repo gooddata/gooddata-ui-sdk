@@ -17,4 +17,5 @@ export * from "./insightMenu/index.js";
 export * from "./kpi/index.js";
 export * from "./kpiPlaceholder/index.js";
 export * from "./richText/index.js";
+export * from "./visualizationSwitcher/index.js";
 export * from "./widget/index.js";
