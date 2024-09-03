@@ -3,6 +3,8 @@
 import {
     bucketMeasures,
     IAlertComparisonOperator,
+    IAutomationAlert,
+    IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
     IBucket,
     IFilter,
@@ -19,11 +21,18 @@ import {
     measureAlias,
     measureTitle,
 } from "@gooddata/sdk-model";
-import { COMPARISON_OPERATORS } from "./constants.js";
 import { BucketNames, VisType } from "@gooddata/sdk-ui";
-import { messages } from "./messages.js";
 import { IntlShape } from "react-intl";
+
 import { AlertMetric, AlertMetricComparatorType } from "../../types.js";
+
+import {
+    COMPARISON_OPERATORS,
+    COMPARISON_OPERATOR_OPTIONS,
+    CHANGE_COMPARISON_OPERATOR_OPTIONS,
+    DIFFERENCE_COMPARISON_OPERATOR_OPTIONS,
+} from "./constants.js";
+import { messages } from "./messages.js";
 
 /**
  * @internal
@@ -183,12 +192,7 @@ function collectAllMetric(insight: IInsight | null | undefined) {
         case "bar":
         case "column":
         case "line":
-        case "area": {
-            const insightMeasuresBucket: IBucket | undefined = insight
-                ? insightBucket(insight, BucketNames.MEASURES)
-                : undefined;
-            return insightMeasuresBucket ? bucketMeasures(insightMeasuresBucket) : [];
-        }
+        case "area":
         case "combo2":
         case "scatter":
         case "bubble": {
@@ -230,4 +234,105 @@ function collectAllMetric(insight: IInsight | null | undefined) {
             return [];
         }
     }
+}
+
+export function getValueSuffix(alert?: IAutomationAlert): string | undefined {
+    if (isChangeOperator(alert)) {
+        return "%";
+    }
+    if (isDifferenceOperator(alert)) {
+        return undefined;
+    }
+    return undefined;
+}
+
+export function isChangeOperator(alert?: IAutomationAlert): boolean {
+    const changeOperators = CHANGE_COMPARISON_OPERATOR_OPTIONS.map((operator) => operator.id);
+    return Boolean(alert && changeOperators.includes(alert.condition.operator));
+}
+
+export function isDifferenceOperator(alert?: IAutomationAlert): boolean {
+    const changeOperators = DIFFERENCE_COMPARISON_OPERATOR_OPTIONS.map((operator) => operator.id);
+    return Boolean(alert && changeOperators.includes(alert.condition.operator));
+}
+
+export function isChangeOrDifferenceOperator(alert?: IAutomationAlert): boolean {
+    return isChangeOperator(alert) || isDifferenceOperator(alert);
+}
+
+//alerts transformations
+
+export function transformAlertByMetric(
+    alert: IAutomationMetadataObject,
+    measure: AlertMetric,
+): IAutomationMetadataObject {
+    const isChangeOperator = isChangeOrDifferenceOperator(alert.alert);
+    const hasComparisonOperator = measure.comparators.find(
+        (c) =>
+            c.comparator === AlertMetricComparatorType.PreviousPeriod ||
+            c.comparator === AlertMetricComparatorType.SamePeriodPreviousYear,
+    );
+
+    return {
+        ...alert,
+        title: getMeasureTitle(measure.measure) ?? "",
+        alert: {
+            ...alert.alert!,
+            condition: {
+                ...alert.alert!.condition,
+                ...(isChangeOperator && !hasComparisonOperator
+                    ? {
+                          operator: COMPARISON_OPERATOR_OPTIONS[0].id,
+                      }
+                    : {}),
+                left: measure.measure.measure.localIdentifier,
+            },
+            execution: {
+                ...alert.alert!.execution,
+                measures: [measure.measure],
+            },
+        },
+    };
+}
+
+export function transformAlertByComparisonOperator(
+    alert: IAutomationMetadataObject,
+    comparisonOperator: IAlertComparisonOperator,
+): IAutomationMetadataObject {
+    return {
+        ...alert,
+        alert: {
+            ...alert.alert!,
+            condition: {
+                ...alert.alert!.condition,
+                operator: comparisonOperator,
+            },
+        },
+    };
+}
+
+export function transformAlertByValue(
+    alert: IAutomationMetadataObject,
+    value: number,
+): IAutomationMetadataObject {
+    return {
+        ...alert,
+        alert: {
+            ...alert.alert!,
+            condition: {
+                ...alert.alert!.condition,
+                right: value,
+            },
+        },
+    };
+}
+
+export function transformAlertByDestination(
+    alert: IAutomationMetadataObject,
+    notificationChannel: string,
+): IAutomationMetadataObject {
+    return {
+        ...alert,
+        notificationChannel,
+    };
 }

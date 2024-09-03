@@ -133,6 +133,15 @@
     margin-bottom: 5px;
 }
 
+.gd-edit-alert__measure-info {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 5px;
+    line-height: 21px;
+    color: kit-variables.$gd-color-link;
+}
+
 .gd-edit-alert__value-input {
     margin-bottom: 10px;
 
@@ -225,6 +234,14 @@
     &::before {
         height: 100%;
     }
+}
+
+.gd-alert-comparison-operator-select__list .gd-list-item-header {
+    display: flex;
+}
+
+.gd-alert-comparison-operator-tooltip-spacer {
+    margin-bottom: 10px;
 }
 
 //

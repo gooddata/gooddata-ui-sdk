@@ -17,7 +17,8 @@ import { EditAlertConfiguration } from "./EditAlertConfiguration.js";
 import { useEditAlert } from "./hooks/useEditAlert.js";
 import { defineMessages, FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 import { Smtps, Webhooks } from "../../../../../model/index.js";
-import { AlertMetric } from "../../types.js";
+import { AlertMetric, AlertMetricComparatorType } from "../../types.js";
+import { getValueSuffix, isChangeOrDifferenceOperator } from "./utils.js";
 import { useAlertValidation, AlertInvalidityReason } from "./hooks/useAlertValidation.js";
 
 const TOOLTIP_ALIGN_POINTS = [{ align: "cl cr" }, { align: "cr cl" }];
@@ -91,6 +92,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
         (measure) => measure.measure.measure.localIdentifier === selectedMeasureIdentifier,
     );
     const { isValid, invalidityReason } = useAlertValidation(alert, isNewAlert);
+    const filters = alert.alert?.execution?.filters ?? [];
 
     return viewMode === "edit" ? (
         <DashboardInsightSubmenuContainer
@@ -114,7 +116,42 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                             measures={measures}
                             overlayPositionType={overlayPositionType}
                         />
+                        {filters.length > 0 && (
+                            <div className="gd-edit-alert__measure-info">
+                                <FormattedMessage
+                                    id="insightAlert.config.filters"
+                                    values={{
+                                        n: filters.length,
+                                    }}
+                                />
+                                <div role="item-info" className="gd-list-item-bubble">
+                                    <BubbleHoverTrigger
+                                        tagName="div"
+                                        showDelay={200}
+                                        hideDelay={0}
+                                        eventsOnBubble={false}
+                                    >
+                                        <div className="inlineBubbleHelp" />
+                                        <Bubble
+                                            className="bubble-primary"
+                                            alignPoints={[{ align: "cr cl" }]}
+                                            arrowOffsets={{ "cr cl": [15, 0] }}
+                                        >
+                                            <FormattedMessage
+                                                id="insightAlert.config.filters.info"
+                                                values={{
+                                                    spacer: (
+                                                        <div className="gd-alert-comparison-operator-tooltip-spacer" />
+                                                    ),
+                                                }}
+                                            />
+                                        </Bubble>
+                                    </BubbleHoverTrigger>
+                                </div>
+                            </div>
+                        )}
                         <AlertComparisonOperatorSelect
+                            measure={selectedMeasure}
                             selectedComparisonOperator={updatedAlert.alert!.condition.operator}
                             onComparisonOperatorChange={changeComparisonOperator}
                             overlayPositionType={overlayPositionType}
@@ -126,7 +163,26 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                             value={updatedAlert.alert!.condition.right}
                             onChange={(e) => changeValue(e !== "" ? parseFloat(e as string) : undefined!)}
                             type="number"
+                            suffix={getValueSuffix(updatedAlert.alert)}
                         />
+                        {selectedMeasure?.comparators.some(
+                            (a) => a.comparator === AlertMetricComparatorType.SamePeriodPreviousYear,
+                        ) &&
+                            isChangeOrDifferenceOperator(updatedAlert.alert) && (
+                                <div className="gd-edit-alert__measure-info">
+                                    <FormattedMessage id="insightAlert.config.compare_with" />{" "}
+                                    <FormattedMessage id="insightAlert.config.compare_with_sp" />
+                                </div>
+                            )}
+                        {selectedMeasure?.comparators.some(
+                            (a) => a.comparator === AlertMetricComparatorType.PreviousPeriod,
+                        ) &&
+                            isChangeOrDifferenceOperator(updatedAlert.alert) && (
+                                <div className="gd-edit-alert__measure-info">
+                                    <FormattedMessage id="insightAlert.config.compare_with" />{" "}
+                                    <FormattedMessage id="insightAlert.config.compare_with_pp" />
+                                </div>
+                            )}
                         {destinations.length > 1 && (
                             <AlertDestinationSelect
                                 selectedDestination={updatedAlert.notificationChannel!}

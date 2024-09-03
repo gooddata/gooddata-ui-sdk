@@ -6,7 +6,12 @@ import {
     IAutomationMetadataObjectDefinition,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
-import { getMeasureTitle } from "../utils.js";
+import {
+    transformAlertByComparisonOperator,
+    transformAlertByDestination,
+    transformAlertByMetric,
+    transformAlertByValue,
+} from "../utils.js";
 import { AlertMetric } from "../../../types.js";
 
 export interface IUseEditAlertProps {
@@ -20,54 +25,19 @@ export const useEditAlert = ({ alert, onCreate, onUpdate }: IUseEditAlertProps) 
     const [updatedAlert, setUpdatedAlert] = useState<IAutomationMetadataObject>(alert);
 
     const changeMeasure = (measure: AlertMetric) => {
-        setUpdatedAlert((alert) => ({
-            ...alert,
-            title: getMeasureTitle(measure.measure) ?? "",
-            alert: {
-                ...alert.alert!,
-                condition: {
-                    ...alert.alert!.condition,
-                    left: measure.measure.measure.localIdentifier,
-                },
-                execution: {
-                    ...alert.alert!.execution,
-                    measures: [measure.measure],
-                },
-            },
-        }));
+        setUpdatedAlert((alert) => transformAlertByMetric(alert, measure));
     };
 
     const changeComparisonOperator = (comparisonOperator: IAlertComparisonOperator) => {
-        setUpdatedAlert((alert) => ({
-            ...alert,
-            alert: {
-                ...alert.alert!,
-                condition: {
-                    ...alert.alert!.condition,
-                    operator: comparisonOperator,
-                },
-            },
-        }));
+        setUpdatedAlert((alert) => transformAlertByComparisonOperator(alert, comparisonOperator));
     };
 
     const changeValue = (value: number) => {
-        setUpdatedAlert((alert) => ({
-            ...alert,
-            alert: {
-                ...alert.alert!,
-                condition: {
-                    ...alert.alert!.condition,
-                    right: value,
-                },
-            },
-        }));
+        setUpdatedAlert((alert) => transformAlertByValue(alert, value));
     };
 
     const changeDestination = (destinationId: string) => {
-        setUpdatedAlert((alert) => ({
-            ...alert,
-            notificationChannel: destinationId,
-        }));
+        setUpdatedAlert((alert) => transformAlertByDestination(alert, destinationId));
     };
 
     const configureAlert = () => {

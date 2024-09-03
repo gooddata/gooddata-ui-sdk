@@ -2759,6 +2759,56 @@
         "comment": "Comparison operator in alert configuration",
         "limit": 0
     },
+    "insightAlert.config.changeOperator.header": {
+        "value": "CHANGE %",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.changeOperator.header.info": {
+        "value": "Change{spacer}Calculates the relative change between primary (current time period) and secondary (previous time period) metric values.{spacer}FORMULA{spacer}(Primary - Secondary) / Secondary",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.differenceOperator.header": {
+        "value": "DIFFERENCE #",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.differenceOperator.header.info": {
+        "value": "Difference{spacer}Calculates the net difference between primary (current time period) and secondary (previous time period) metric values.{spacer}FORMULA{spacer}Primary - Secondary",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.changeOperator.increasesBy": {
+        "value": "Increases by",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.changeOperator.decreasesBy": {
+        "value": "Decreases by",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.changeOperator.changesBy": {
+        "value": "Changes by",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.differenceOperator.increasesBy": {
+        "value": "Increases by",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.differenceOperator.decreasesBy": {
+        "value": "Decreases by",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.differenceOperator.changesBy": {
+        "value": "Changes by",
+        "comment": "",
+        "limit": 0
+    },
     "insightAlert.config.alerts": {
         "value": "Alerts",
         "comment": "Title of the section in insight configuration",
@@ -2792,6 +2842,31 @@
     "insightAlert.config.when": {
         "value": "When",
         "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.filters": {
+        "value": "using {n} {n, plural, one {filter} other {filters}}",
+        "comment": "In 'USING {n} {n, plural, one {FILTER} other {FILTERS}}' translate only uppercase word.",
+        "limit": 0
+    },
+    "insightAlert.config.filters.info": {
+        "value": "Alerts respect the dashboard filters as set at the time of their creation.{spacer}To modify the time period used for comparison, adjust the date filter.",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.compare_with": {
+        "value": "compared with",
+        "comment": "This is a part of the sentence 'When {metric} {comparisonOperator} {value} compared with {comparisonType}'",
+        "limit": 0
+    },
+    "insightAlert.config.compare_with_sp": {
+        "value": "Same period previous year",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.compare_with_pp": {
+        "value": "Previous period",
+        "comment": "",
         "limit": 0
     },
     "insightAlert.config.addAlert": {
