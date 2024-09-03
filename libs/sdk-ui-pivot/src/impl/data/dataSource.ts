@@ -268,7 +268,12 @@ export class AgGridDatasource implements IDatasource {
             !isEqual(currentTotals, desiredTotals) ||
             !isEqual(currentRowTotals, desiredRowTotals)
         ) {
-            this.transformResult(params, desiredSorts, desiredTotals, desiredRowTotals);
+            // Due to timing issues in react18, transform result needs to be deferred so that remaining
+            // re-renders can finish in the meantime -- this fixes the immediate undo after
+            // performing sort (note that due to other timeouts, setTimeout(...,0) is not enough).
+            setTimeout(() => {
+                this.transformResult(params, desiredSorts, desiredTotals, desiredRowTotals);
+            }, 100);
         } else if (!startRow && result.definition === this.initialDv.definition) {
             /*
              * > Loading first page of data
