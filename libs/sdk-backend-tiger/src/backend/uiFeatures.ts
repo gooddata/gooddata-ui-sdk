@@ -101,6 +101,7 @@ export enum TigerFeaturesNames {
     EnableRollupTotals = "enableRollupTotals",
     EnableWidgetIdentifiersRollout = "enableWidgetIdentifiersRollout",
     EnableAIFunctions = "enableAIFunctions",
+    EnableSemanticSearch = "enableSemanticSearch",
     EnableDrillIntersectionIgnoredAttributes = "enableDrillIntersectionIgnoredAttributes",
     EnableDrillDownIntersectionIgnoredAttributes = "enableDrillDownIntersectionIgnoredAttributes",
     EnableDashboardFilterViews = "enableDashboardFilterViews",
@@ -171,6 +172,7 @@ export type ITigerFeatureFlags = {
     enableRollupTotals: typeof FeatureFlagsValues["enableRollupTotals"][number];
     enableWidgetIdentifiersRollout: typeof FeatureFlagsValues["enableWidgetIdentifiersRollout"][number];
     enableAIFunctions: typeof FeatureFlagsValues["enableAIFunctions"][number];
+    enableSemanticSearch: typeof FeatureFlagsValues["enableSemanticSearch"][number];
     enableDrillIntersectionIgnoredAttributes: typeof FeatureFlagsValues["enableDrillIntersectionIgnoredAttributes"][number];
     enableDrillDownIntersectionIgnoredAttributes: typeof FeatureFlagsValues["enableDrillDownIntersectionIgnoredAttributes"][number];
     enableAlertingRollout: typeof FeatureFlagsValues["enableAlertingRollout"][number];
@@ -242,6 +244,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableRollupTotals: false,
     enableWidgetIdentifiersRollout: true,
     enableAIFunctions: false,
+    enableSemanticSearch: false,
     enableDrillIntersectionIgnoredAttributes: true,
     enableAlertingRollout: false,
     enableDashboardFilterViews: false,
@@ -317,6 +320,7 @@ export const FeatureFlagsValues = {
     enableRollupTotals: [true, false] as const,
     enableWidgetIdentifiersRollout: [true, false] as const,
     enableAIFunctions: [true, false] as const,
+    enableSemanticSearch: [true, false] as const,
     enableDrillIntersectionIgnoredAttributes: [true, false] as const,
     enableDrillDownIntersectionIgnoredAttributes: [true, false] as const,
     enableAlertingRollout: [true, false] as const,

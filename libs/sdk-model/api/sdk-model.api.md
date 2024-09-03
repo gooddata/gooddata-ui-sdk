@@ -2993,6 +2993,7 @@ export interface ISettings {
     enableScatterPlotClustering?: boolean;
     enableScatterPlotSegmentation?: boolean;
     enableScheduling?: boolean;
+    enableSemanticSearch?: boolean;
     enableSeparateTotalLabels?: boolean;
     // (undocumented)
     enableSingleStoreDataSource?: boolean;

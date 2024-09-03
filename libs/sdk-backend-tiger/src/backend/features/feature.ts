@@ -445,6 +445,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableSemanticSearch,
+            "enableSemanticSearch",
+            "BOOLEAN",
+            FeatureFlagsValues.enableSemanticSearch,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableDrillIntersectionIgnoredAttributes,
             "enableDrillIntersectionIgnoredAttributes",
             "BOOLEAN",
