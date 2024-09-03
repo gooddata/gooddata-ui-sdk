@@ -22,12 +22,13 @@ import {
     selectAutomationsAlertsInContext,
     selectDashboardId,
     selectSmtps,
+    selectLocale,
 } from "../../../../../../model/index.js";
 import { createDefaultAlert, getSupportedInsightMeasuresByInsight } from "../utils.js";
 import { messages } from "../messages.js";
 import { useWidgetFilters } from "../../../../common/useWidgetFilters.js";
 import { useSaveAlertToBackend } from "./useSaveAlertToBackend.js";
-import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { fillMissingTitles, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 type InsightWidgetAlertingViewMode = "list" | "edit" | "create";
 
@@ -92,7 +93,14 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
 
     const { result: widgetFilters, status: widgetFiltersStatus } = useWidgetFilters(widget, insight);
     const destinations = useMemo(() => [...emails, ...webhooks], [emails, webhooks]);
-    const supportedMeasures = useMemo(() => getSupportedInsightMeasuresByInsight(insight), [insight]);
+    const locale = useDashboardSelector(selectLocale);
+    const supportedMeasures = useMemo(
+        () =>
+            getSupportedInsightMeasuresByInsight(
+                insight ? fillMissingTitles(insight, locale, 9999) : insight,
+            ),
+        [insight, locale],
+    );
     const defaultMeasure = supportedMeasures[0];
     const defaultNotificationChannelId = destinations[0]?.id;
     const hasAlerts = alerts.length > 0;
