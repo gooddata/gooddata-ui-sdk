@@ -11,6 +11,7 @@ import "@gooddata/sdk-ui-kit/styles/scss/main.scss";
 import "@gooddata/sdk-ui-ext/styles/scss/main.scss";
 import "@gooddata/sdk-ui-dashboard/styles/scss/main.scss";
 import "@gooddata/sdk-ui-semantic-search/styles/scss/main.scss";
+import "@gooddata/sdk-ui-gen-ai/styles/scss/main.scss";
 
 import { App } from "./App.js";
 

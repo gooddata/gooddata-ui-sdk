@@ -10,12 +10,10 @@
  * @packageDocumentation
  */
 export type { DummyBackendConfig } from "./dummyBackend/index.js";
-export {
-    dummyBackend,
-    dummyBackendEmptyData,
-    dummyDataView,
-    DummySemanticSearchQueryBuilder,
-} from "./dummyBackend/index.js";
+export { dummyBackend, dummyBackendEmptyData, dummyDataView } from "./dummyBackend/index.js";
+
+export { DummySemanticSearchQueryBuilder } from "./dummyBackend/DummySemanticSearch.js";
+export { DummyGenAIChatThread } from "./dummyBackend/DummyGenAIChatThread.js";
 
 export type {
     DecoratorFactories,

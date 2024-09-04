@@ -95,7 +95,12 @@ export {
 
 export type { IExportConfig, IExportResult, IExportPdfConfig } from "./workspace/execution/export.js";
 
-export type { IGenAIService, ISemanticSearchQuery, ISemanticSearchResult } from "./workspace/genAI/index.js";
+export type {
+    IGenAIService,
+    ISemanticSearchQuery,
+    ISemanticSearchResult,
+    IChatThread,
+} from "./workspace/genAI/index.js";
 
 export type { IWorkspaceStylingService } from "./workspace/styling/index.js";
 export type { NotAuthenticatedReason, ErrorConverter, AuthenticationFlow } from "./errors/index.js";

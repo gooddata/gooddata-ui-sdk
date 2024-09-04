@@ -774,6 +774,12 @@ export interface ChatRequest {
      */
     limitSearch?: number;
     /**
+     * Maximum number of relevant objects included into context for LLM (for each object type).
+     * @type {number}
+     * @memberof ChatRequest
+     */
+    limitCreateContext?: number;
+    /**
      * Maximum number of created results.
      * @type {number}
      * @memberof ChatRequest
@@ -979,14 +985,15 @@ export type ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum
  */
 export interface ConversationInteraction {
     /**
-     *
-     * @type {CreatedVisualizationInteractionWithContext | FoundObjectInteractionWithContext | TextInteractionWithContext}
+     * Interaction content.
+     * @type {Array<CreatedVisualizationInteractionWithContext | FoundObjectInteractionWithContext | TextInteractionWithContext>}
      * @memberof ConversationInteraction
      */
-    content:
+    content: Array<
         | CreatedVisualizationInteractionWithContext
         | FoundObjectInteractionWithContext
-        | TextInteractionWithContext;
+        | TextInteractionWithContext
+    >;
     /**
      * Role of actor.
      * @type {string}
@@ -1047,6 +1054,7 @@ export const CreatedVisualizationVisualizationTypeEnum = {
     BAR: "BAR",
     LINE: "LINE",
     PIE: "PIE",
+    COLUMN: "COLUMN",
 } as const;
 
 export type CreatedVisualizationVisualizationTypeEnum =
@@ -1063,13 +1071,13 @@ export interface CreatedVisualizationInteractionWithContext {
      * @type {boolean}
      * @memberof CreatedVisualizationInteractionWithContext
      */
-    includeToChatContext: boolean;
+    includeToChatContext?: boolean;
     /**
      * User feedback
      * @type {string}
      * @memberof CreatedVisualizationInteractionWithContext
      */
-    userFeedback: CreatedVisualizationInteractionWithContextUserFeedbackEnum;
+    userFeedback?: CreatedVisualizationInteractionWithContextUserFeedbackEnum;
     /**
      *
      * @type {CreatedVisualization}
@@ -1711,13 +1719,13 @@ export interface FoundObjectInteractionWithContext {
      * @type {boolean}
      * @memberof FoundObjectInteractionWithContext
      */
-    includeToChatContext: boolean;
+    includeToChatContext?: boolean;
     /**
      * User feedback
      * @type {string}
      * @memberof FoundObjectInteractionWithContext
      */
-    userFeedback: FoundObjectInteractionWithContextUserFeedbackEnum;
+    userFeedback?: FoundObjectInteractionWithContextUserFeedbackEnum;
     /**
      *
      * @type {SearchResultObject}
@@ -1830,13 +1838,13 @@ export interface InteractionWithContext {
      * @type {boolean}
      * @memberof InteractionWithContext
      */
-    includeToChatContext: boolean;
+    includeToChatContext?: boolean;
     /**
      * User feedback
      * @type {string}
      * @memberof InteractionWithContext
      */
-    userFeedback: InteractionWithContextUserFeedbackEnum;
+    userFeedback?: InteractionWithContextUserFeedbackEnum;
 }
 
 export const InteractionWithContextUserFeedbackEnum = {
@@ -3153,13 +3161,13 @@ export interface TextInteractionWithContext {
      * @type {boolean}
      * @memberof TextInteractionWithContext
      */
-    includeToChatContext: boolean;
+    includeToChatContext?: boolean;
     /**
      * User feedback
      * @type {string}
      * @memberof TextInteractionWithContext
      */
-    userFeedback: TextInteractionWithContextUserFeedbackEnum;
+    userFeedback?: TextInteractionWithContextUserFeedbackEnum;
     /**
      * Object found by similarity search.
      * @type {string}

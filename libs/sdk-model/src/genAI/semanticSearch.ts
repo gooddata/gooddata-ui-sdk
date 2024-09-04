@@ -1,5 +1,7 @@
 // (C) 2023-2024 GoodData Corporation
 
+import { GenAIObjectType } from "./common.js";
+
 /**
  * A single search result returned by semantic search.
  * @beta
@@ -8,7 +10,7 @@ export interface ISemanticSearchResultItem {
     /**
      * The type of the found metadata object
      */
-    type: GenAISemanticSearchType;
+    type: GenAIObjectType;
     /**
      * The identifier of the found metadata object
      */
@@ -50,29 +52,46 @@ export interface ISemanticSearchResultItem {
 
 /**
  * Type of the searchable object.
+ * @deprecated Use GenAIObjectType instead.
  * @beta
  */
-export type GenAISemanticSearchType =
-    | "dataset"
-    | "attribute"
-    | "label"
-    | "fact"
-    | "date"
-    | "metric"
-    | "visualization"
-    | "dashboard";
+export type GenAISemanticSearchType = GenAIObjectType;
 
 /**
  * Reference between two metadata objects.
  * @beta
  */
-export type ISemanticSearchRelationship = {
+export interface ISemanticSearchRelationship {
+    /**
+     * Workspace id of the source object
+     */
     sourceWorkspaceId: string;
+    /**
+     * Object id of the source
+     */
     sourceObjectId: string;
-    sourceObjectType: GenAISemanticSearchType;
+    /**
+     * Type of the source object
+     */
+    sourceObjectType: GenAIObjectType;
+    /**
+     * Title of the source object
+     */
     sourceObjectTitle: string;
+    /**
+     * Workspace id of the target object
+     */
     targetWorkspaceId: string;
+    /**
+     * Object id of the target
+     */
     targetObjectId: string;
-    targetObjectType: GenAISemanticSearchType;
+    /**
+     * Type of the target object
+     */
+    targetObjectType: GenAIObjectType;
+    /**
+     * Title of the target object
+     */
     targetObjectTitle: string;
-};
+}
