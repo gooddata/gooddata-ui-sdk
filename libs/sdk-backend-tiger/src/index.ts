@@ -120,3 +120,4 @@ export {
     TigerCompatibleObjectType,
 } from "./types/refTypeMapping.js";
 export { getIdOrigin, OriginInfoWithId } from "./convertors/fromBackend/ObjectInheritance.js";
+export { toAfmExecution } from "./convertors/toBackend/afm/toAfmResultSpec.js";

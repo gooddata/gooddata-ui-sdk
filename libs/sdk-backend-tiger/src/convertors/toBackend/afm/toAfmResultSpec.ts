@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { IExecutionDefinition } from "@gooddata/sdk-model";
 import { AFM, AfmExecution, AttributeItem, MeasureItem, ResultSpec } from "@gooddata/api-client-tiger";
 import { convertMeasure } from "./MeasureConverter.js";
@@ -38,6 +38,8 @@ function convertResultSpec(def: IExecutionDefinition): ResultSpec {
  *
  * @param def - execution definition
  * @returns AFM Execution
+ *
+ * @public
  */
 export function toAfmExecution(def: IExecutionDefinition): AfmExecution {
     return {
