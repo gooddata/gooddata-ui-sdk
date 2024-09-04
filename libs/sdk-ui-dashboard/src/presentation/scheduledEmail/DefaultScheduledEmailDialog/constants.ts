@@ -10,4 +10,3 @@ export const DEFAULT_DROPDOWN_ALIGN_POINTS = [
         align: "tl bl",
     },
 ];
-export const DEFAULT_DROPDOWN_ZINDEX = 5001;

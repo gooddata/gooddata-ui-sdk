@@ -10,7 +10,7 @@ import {
     Hyperlink,
     SingleSelectListItem,
 } from "@gooddata/sdk-ui-kit";
-import { DEFAULT_DROPDOWN_ALIGN_POINTS, DEFAULT_DROPDOWN_ZINDEX } from "../../constants.js";
+import { DEFAULT_DROPDOWN_ALIGN_POINTS } from "../../constants.js";
 import { ISmtpDefinitionObject, IWebhookDefinitionObject } from "@gooddata/sdk-model";
 
 const DROPDOWN_WIDTH = 199;
@@ -92,7 +92,6 @@ export const DestinationSelect: React.FC<IDestinationSelectProps> = ({
                         />
                     )}
                     overlayPositionType="sameAsTarget"
-                    overlayZIndex={DEFAULT_DROPDOWN_ZINDEX}
                 />
             )}
         </div>
