@@ -12,6 +12,8 @@
 
 .gd-alerts-list__items {
     padding: 10px 0 10px 0;
+    overflow-y: auto;
+    max-height: 365px;
 
     .skeleton-flex {
         flex: 1;
