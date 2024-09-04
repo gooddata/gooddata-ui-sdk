@@ -17,8 +17,16 @@ import { EditAlertConfiguration } from "./EditAlertConfiguration.js";
 import { useEditAlert } from "./hooks/useEditAlert.js";
 import { defineMessages, FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 import { Smtps, Webhooks } from "../../../../../model/index.js";
-import { AlertMetric } from "../../types.js";
+import { AlertMetric, AlertMetricComparatorType } from "../../types.js";
 import { useAlertValidation, AlertInvalidityReason } from "./hooks/useAlertValidation.js";
+import {
+    getAlertCompareOperator,
+    getAlertMeasure,
+    getAlertRelativeOperator,
+    getAlertThreshold,
+    getValueSuffix,
+    isChangeOrDifferenceOperator,
+} from "./utils.js";
 
 const TOOLTIP_ALIGN_POINTS = [{ align: "cl cr" }, { align: "cr cl" }];
 
@@ -69,6 +77,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
         canSubmit,
         //
         changeComparisonOperator,
+        changeRelativeOperator,
         changeMeasure,
         changeValue,
         changeDestination,
@@ -86,11 +95,12 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
     });
     const intl = useIntl();
     const disableCreateButtonDueToLimits = isNewAlert && maxAutomationsReached;
-    const selectedMeasureIdentifier = updatedAlert.alert!.condition.left;
+    const selectedMeasureIdentifier = getAlertMeasure(updatedAlert.alert);
     const selectedMeasure = measures.find(
         (measure) => measure.measure.measure.localIdentifier === selectedMeasureIdentifier,
     );
     const { isValid, invalidityReason } = useAlertValidation(alert, isNewAlert);
+    const filters = alert.alert?.execution?.filters ?? [];
 
     return viewMode === "edit" ? (
         <DashboardInsightSubmenuContainer
@@ -114,19 +124,75 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                             measures={measures}
                             overlayPositionType={overlayPositionType}
                         />
+                        {filters.length > 0 && (
+                            <div className="gd-edit-alert__measure-info">
+                                <FormattedMessage
+                                    id="insightAlert.config.filters"
+                                    values={{
+                                        n: filters.length,
+                                    }}
+                                />
+                                <div role="item-info" className="gd-list-item-bubble">
+                                    <BubbleHoverTrigger
+                                        tagName="div"
+                                        showDelay={200}
+                                        hideDelay={0}
+                                        eventsOnBubble={false}
+                                    >
+                                        <div className="inlineBubbleHelp" />
+                                        <Bubble
+                                            className="bubble-primary"
+                                            alignPoints={[{ align: "cr cl" }]}
+                                            arrowOffsets={{ "cr cl": [15, 0] }}
+                                        >
+                                            <FormattedMessage
+                                                id="insightAlert.config.filters.info"
+                                                values={{
+                                                    spacer: (
+                                                        <div className="gd-alert-comparison-operator-tooltip-spacer" />
+                                                    ),
+                                                }}
+                                            />
+                                        </Bubble>
+                                    </BubbleHoverTrigger>
+                                </div>
+                            </div>
+                        )}
                         <AlertComparisonOperatorSelect
-                            selectedComparisonOperator={updatedAlert.alert!.condition.operator}
+                            measure={selectedMeasure}
+                            selectedComparisonOperator={getAlertCompareOperator(updatedAlert.alert)}
+                            selectedRelativeOperator={getAlertRelativeOperator(updatedAlert.alert)}
                             onComparisonOperatorChange={changeComparisonOperator}
+                            onRelativeOperatorChange={changeRelativeOperator}
                             overlayPositionType={overlayPositionType}
                         />
                         <Input
                             className="gd-edit-alert__value-input s-alert-value-input"
                             isSmall
                             autofocus
-                            value={updatedAlert.alert!.condition.right}
+                            value={getAlertThreshold(updatedAlert.alert)}
                             onChange={(e) => changeValue(e !== "" ? parseFloat(e as string) : undefined!)}
                             type="number"
+                            suffix={getValueSuffix(updatedAlert.alert)}
                         />
+                        {selectedMeasure?.comparators.some(
+                            (a) => a.comparator === AlertMetricComparatorType.SamePeriodPreviousYear,
+                        ) &&
+                            isChangeOrDifferenceOperator(updatedAlert.alert) && (
+                                <div className="gd-edit-alert__measure-info">
+                                    <FormattedMessage id="insightAlert.config.compare_with" />{" "}
+                                    <FormattedMessage id="insightAlert.config.compare_with_sp" />
+                                </div>
+                            )}
+                        {selectedMeasure?.comparators.some(
+                            (a) => a.comparator === AlertMetricComparatorType.PreviousPeriod,
+                        ) &&
+                            isChangeOrDifferenceOperator(updatedAlert.alert) && (
+                                <div className="gd-edit-alert__measure-info">
+                                    <FormattedMessage id="insightAlert.config.compare_with" />{" "}
+                                    <FormattedMessage id="insightAlert.config.compare_with_pp" />
+                                </div>
+                            )}
                         {destinations.length > 1 && (
                             <AlertDestinationSelect
                                 selectedDestination={updatedAlert.notificationChannel!}

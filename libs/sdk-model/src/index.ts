@@ -946,6 +946,10 @@ export {
     IAlertTriggerMode,
     IAlertTriggerState,
     IAutomationAlertTrigger,
+    IAutomationAlertComparisonCondition,
+    IAlertRelativeOperator,
+    IAlertRelativeArithmeticOperator,
+    IAutomationAlertRelativeCondition,
 } from "./automations/index.js";
 
 export {

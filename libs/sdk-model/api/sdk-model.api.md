@@ -577,6 +577,12 @@ export interface IAlertDefault {
 }
 
 // @alpha (undocumented)
+export type IAlertRelativeArithmeticOperator = "DIFFERENCE" | "CHANGE";
+
+// @alpha (undocumented)
+export type IAlertRelativeOperator = "INCREASES_BY" | "DECREASES_BY" | "CHANGES_BY";
+
+// @alpha (undocumented)
 export type IAlertTriggerMode = "ALWAYS" | "ONCE";
 
 // @alpha (undocumented)
@@ -790,7 +796,7 @@ export interface IAutomationAlert {
 }
 
 // @alpha (undocumented)
-export interface IAutomationAlertCondition {
+export interface IAutomationAlertComparisonCondition {
     left: string;
     operator: IAlertComparisonOperator;
     right: number;
@@ -798,7 +804,22 @@ export interface IAutomationAlertCondition {
 }
 
 // @alpha (undocumented)
+export type IAutomationAlertCondition = IAutomationAlertComparisonCondition | IAutomationAlertRelativeCondition;
+
+// @alpha (undocumented)
 export type IAutomationAlertExecutionDefinition = Pick<IExecutionDefinition, "attributes" | "measures" | "filters">;
+
+// @alpha (undocumented)
+export interface IAutomationAlertRelativeCondition {
+    measure: {
+        operator: IAlertRelativeArithmeticOperator;
+        left: string;
+        right: string;
+    };
+    operator: IAlertRelativeOperator;
+    threshold: number;
+    type: "relative";
+}
 
 // @alpha (undocumented)
 export interface IAutomationAlertTrigger {

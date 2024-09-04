@@ -1,6 +1,8 @@
 // (C) 2024 GoodData Corporation
 import {
-    Comparison,
+    ComparisonWrapper,
+    RangeWrapper,
+    RelativeWrapper,
     JsonApiAutomationInAttributesAlert,
     JsonApiAutomationOutAttributesStateEnum,
     JsonApiAutomationOutIncludes,
@@ -9,7 +11,6 @@ import {
     JsonApiExportDefinitionOutWithLinks,
     JsonApiUserLinkage,
     JsonApiUserOutWithLinks,
-    Range,
 } from "@gooddata/api-client-tiger";
 import {
     IAlertComparisonOperator,
@@ -128,21 +129,16 @@ const convertAlert = (
     }
 
     const { condition, execution } = alert;
-    const comparison = (condition as Comparison)?.comparison;
-    const range = (condition as Range)?.range;
+    const comparison = (condition as ComparisonWrapper)?.comparison;
+    const range = (condition as RangeWrapper)?.range;
+    const relative = (condition as RelativeWrapper)?.relative;
 
     // TODO: we do not support RANGE for now
-    if (range || !comparison) {
+    if (range) {
         return undefined;
     }
 
-    return {
-        condition: {
-            type: "comparison",
-            operator: comparison.operator as IAlertComparisonOperator,
-            left: comparison.left.localIdentifier,
-            right: (comparison.right as any)?.value,
-        },
+    const base = {
         execution: {
             attributes: [], // TODO: not implemented on BE yet
             measures: execution.measures.map(convertMeasure),
@@ -153,4 +149,34 @@ const convertAlert = (
             mode: alert.trigger,
         },
     };
+
+    if (comparison) {
+        return {
+            condition: {
+                type: "comparison",
+                operator: comparison.operator as IAlertComparisonOperator,
+                left: comparison.left.localIdentifier,
+                right: (comparison.right as any)?.value,
+            },
+            ...base,
+        };
+    }
+
+    if (relative) {
+        return {
+            condition: {
+                type: "relative",
+                operator: relative.operator,
+                measure: {
+                    operator: relative.measure.operator,
+                    left: relative.measure.left.localIdentifier,
+                    right: relative.measure.right.localIdentifier,
+                },
+                threshold: relative.threshold.value,
+            },
+            ...base,
+        };
+    }
+
+    return undefined;
 };

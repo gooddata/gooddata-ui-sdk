@@ -14,9 +14,12 @@ import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { gdColorNegative, gdColorStateBlank } from "../../../constants/colors.js";
 import { selectWidgetByRef, useDashboardSelector } from "../../../../model/index.js";
-import { translateOperator } from "../../DefaultAlertingDialog/operator.js";
 import { AlertDropdown } from "./AlertDropdown.js";
 import { useAlertValidation } from "../../../widget/insight/configuration/InsightAlertConfig/hooks/useAlertValidation.js";
+import {
+    getAlertThreshold,
+    getOperatorTitle,
+} from "../../../widget/insight/configuration/InsightAlertConfig/utils.js";
 
 interface IAlertProps {
     onDelete: (alert: IAutomationMetadataObject) => void;
@@ -43,8 +46,7 @@ export const Alert: React.FC<IAlertProps> = (props) => {
 
     const intl = useIntl();
     const { isValid } = useAlertValidation(alert);
-    const operator = alert.alert?.condition.operator;
-    const threshold = alert.alert?.condition.right;
+    const threshold = getAlertThreshold(alert.alert);
     const iconColor = theme?.palette?.complementary?.c6 ?? gdColorStateBlank;
     const iconColorError = theme?.palette?.error?.base ?? gdColorNegative;
 
@@ -61,7 +63,7 @@ export const Alert: React.FC<IAlertProps> = (props) => {
     const insightWidget = isInsightWidget(widget) ? widget : undefined;
     const widgetName = insightWidget?.title ?? "";
 
-    const subtitle = [`${translateOperator(intl, operator)} ${threshold}`, widgetName]
+    const subtitle = [`${getOperatorTitle(intl, alert.alert)} ${threshold}`, widgetName]
         .filter(Boolean)
         .join(" • ");
 

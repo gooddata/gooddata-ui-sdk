@@ -6,7 +6,7 @@ import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { Icon } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import { AlertActionsDropdown } from "./AlertActionsDropdown.js";
-import { getComparisonOperatorTitle } from "./utils.js";
+import { getAlertThreshold, getOperatorTitle } from "./utils.js";
 import { gdColorNegative } from "../../../../constants/colors.js";
 import { useAlertValidation } from "./hooks/useAlertValidation.js";
 
@@ -28,9 +28,7 @@ export const AlertsListItem: React.FC<IAlertsListItemProps> = ({
     const theme = useTheme();
     const intl = useIntl();
     const isPaused = alert.alert?.trigger?.state === "PAUSED";
-    const description = `${getComparisonOperatorTitle(alert.alert!.condition.operator, intl)} ${
-        alert.alert!.condition.right
-    }`;
+    const description = `${getOperatorTitle(intl, alert.alert)} ${getAlertThreshold(alert.alert)}`;
     const { isValid } = useAlertValidation(alert);
 
     return (
