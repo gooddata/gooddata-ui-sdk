@@ -241,6 +241,12 @@
      */
     "projects": [
         {
+            "packageName": "@gooddata/sdk-ui-flex-ai",
+            "projectFolder": "libs/sdk-ui-flex-ai",
+            "reviewCategory": "production",
+            "versionPolicyName": "sdk"
+        },
+        {
             "packageName": "@gooddata/sdk-ui-semantic-search",
             "projectFolder": "libs/sdk-ui-semantic-search",
             "reviewCategory": "production",
