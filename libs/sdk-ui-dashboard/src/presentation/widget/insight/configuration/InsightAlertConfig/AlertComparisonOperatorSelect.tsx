@@ -1,6 +1,6 @@
 // (C) 2024 GoodData Corporation
 import React from "react";
-import { Dropdown, Button, List, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
+import { Dropdown, Button, List, SingleSelectListItem, OverlayPositionType } from "@gooddata/sdk-ui-kit";
 import { IAlertComparisonOperator } from "@gooddata/sdk-model";
 import cx from "classnames";
 import { COMPARISON_OPERATOR_OPTIONS, DROPDOWN_ITEM_HEIGHT } from "./constants.js";
@@ -9,10 +9,11 @@ import { useIntl } from "react-intl";
 export interface IAlertComparisonOperatorSelectProps {
     selectedComparisonOperator: IAlertComparisonOperator;
     onComparisonOperatorChange: (comparisonOperator: IAlertComparisonOperator) => void;
+    overlayPositionType?: OverlayPositionType;
 }
 
 export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSelectProps) => {
-    const { selectedComparisonOperator, onComparisonOperatorChange } = props;
+    const { selectedComparisonOperator, onComparisonOperatorChange, overlayPositionType } = props;
     const selectedItem = COMPARISON_OPERATOR_OPTIONS.find(
         (option) => option.id === selectedComparisonOperator,
     )!;
@@ -21,6 +22,7 @@ export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSel
     return (
         <div className="gd-alert-comparison-operator-select">
             <Dropdown
+                overlayPositionType={overlayPositionType}
                 renderButton={({ isOpen, toggleDropdown }) => {
                     return (
                         <Button

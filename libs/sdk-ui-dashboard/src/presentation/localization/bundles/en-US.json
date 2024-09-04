@@ -1096,14 +1096,12 @@
     "options.menu.unsupported.incompatibleWidget": {
         "value": "Unable to schedule the export on custom widget.",
         "comment": "",
-        "limit": 0,
-        "translate": false
+        "limit": 0
     },
     "options.menu.unsupported.oldWidget": {
         "value": "Unable to schedule the export. Please resave the dashboard or contact your administrator.",
         "comment": "",
-        "limit": 0,
-        "translate": false
+        "limit": 0
     },
     "export.defaultTitle|insight": {
         "value": "Untitled visualization",

@@ -85,6 +85,7 @@ export const AttachmentFilters: React.FC<IAttachmentFiltersProps> = (props) => {
     return (
         <div>
             <Dropdown
+                overlayPositionType="fixed"
                 alignPoints={DROPDOWN_ALIGN_POINTS}
                 renderButton={({ toggleDropdown }) => (
                     <div className="gd-attachment-filters-dropdown-button">

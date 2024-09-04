@@ -1,7 +1,14 @@
 // (C) 2022-2024 GoodData Corporation
 import React from "react";
 import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
-import { Bubble, BubbleHoverTrigger, Button, Input, Message } from "@gooddata/sdk-ui-kit";
+import {
+    Bubble,
+    BubbleHoverTrigger,
+    Button,
+    Input,
+    Message,
+    OverlayPositionType,
+} from "@gooddata/sdk-ui-kit";
 import { DashboardInsightSubmenuContainer } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightSubmenuContainer.js";
 import { AlertMeasureSelect } from "./AlertMeasureSelect.js";
 import { AlertComparisonOperatorSelect } from "./AlertComparisonOperatorSelect.js";
@@ -40,6 +47,7 @@ interface IEditAlertProps {
     onCreate?: (alert: IAutomationMetadataObjectDefinition) => void;
     onUpdate?: (alert: IAutomationMetadataObject) => void;
     maxAutomationsReached?: boolean;
+    overlayPositionType?: OverlayPositionType;
 }
 
 export const EditAlert: React.FC<IEditAlertProps> = ({
@@ -53,6 +61,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
     onCreate,
     onUpdate,
     maxAutomationsReached = false,
+    overlayPositionType,
 }) => {
     const {
         viewMode,
@@ -103,10 +112,12 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                             selectedMeasure={selectedMeasure}
                             onMeasureChange={changeMeasure}
                             measures={measures}
+                            overlayPositionType={overlayPositionType}
                         />
                         <AlertComparisonOperatorSelect
                             selectedComparisonOperator={updatedAlert.alert!.condition.operator}
                             onComparisonOperatorChange={changeComparisonOperator}
+                            overlayPositionType={overlayPositionType}
                         />
                         <Input
                             className="gd-edit-alert__value-input s-alert-value-input"
@@ -121,6 +132,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                                 selectedDestination={updatedAlert.notificationChannel!}
                                 onDestinationChange={changeDestination}
                                 destinations={destinations}
+                                overlayPositionType={overlayPositionType}
                             />
                         )}
                     </div>
@@ -177,6 +189,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                 alert={updatedAlert}
                 onUpdate={saveAlertConfiguration}
                 onCancel={cancelAlertConfiguration}
+                overlayPositionType={overlayPositionType}
             />
         </DashboardInsightSubmenuContainer>
     );

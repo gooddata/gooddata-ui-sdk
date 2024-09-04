@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React from "react";
 import keys from "lodash/keys.js";
 import cloneDeep from "lodash/cloneDeep.js";
@@ -11,6 +11,7 @@ import cx from "classnames";
 import { IAlignPoint } from "../typings/positioning.js";
 import { ArrowDirections, ArrowOffsets } from "./typings.js";
 import { Overlay } from "../Overlay/index.js";
+import { OverlayPositionType } from "../typings/overlay.js";
 
 const ARROW_DIRECTIONS: ArrowDirections = {
     ".. cc": "none",
@@ -76,6 +77,7 @@ export interface IBubbleProps {
     onKeyDown?: () => void;
     overlayClassName?: string;
     children?: React.ReactNode;
+    overlayPositionType?: OverlayPositionType;
 }
 
 /**
@@ -194,6 +196,7 @@ export class Bubble extends React.Component<IBubbleProps, IBubbleState> {
                 ignoreClicksOn={this.props.ignoreClicksOn}
                 ignoreClicksOnByClass={this.props.ignoreClicksOnByClass}
                 onClose={this.props.onClose}
+                positionType={this.props.overlayPositionType}
             >
                 <div
                     onMouseEnter={this.props.onMouseEnter}
