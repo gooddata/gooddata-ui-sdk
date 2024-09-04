@@ -18,8 +18,15 @@ import { useEditAlert } from "./hooks/useEditAlert.js";
 import { defineMessages, FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 import { Smtps, Webhooks } from "../../../../../model/index.js";
 import { AlertMetric, AlertMetricComparatorType } from "../../types.js";
-import { getValueSuffix, isChangeOrDifferenceOperator } from "./utils.js";
 import { useAlertValidation, AlertInvalidityReason } from "./hooks/useAlertValidation.js";
+import {
+    getAlertCompareOperator,
+    getAlertMeasure,
+    getAlertRelativeOperator,
+    getAlertThreshold,
+    getValueSuffix,
+    isChangeOrDifferenceOperator,
+} from "./utils.js";
 
 const TOOLTIP_ALIGN_POINTS = [{ align: "cl cr" }, { align: "cr cl" }];
 
@@ -70,6 +77,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
         canSubmit,
         //
         changeComparisonOperator,
+        changeRelativeOperator,
         changeMeasure,
         changeValue,
         changeDestination,
@@ -87,7 +95,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
     });
     const intl = useIntl();
     const disableCreateButtonDueToLimits = isNewAlert && maxAutomationsReached;
-    const selectedMeasureIdentifier = updatedAlert.alert!.condition.left;
+    const selectedMeasureIdentifier = getAlertMeasure(updatedAlert.alert);
     const selectedMeasure = measures.find(
         (measure) => measure.measure.measure.localIdentifier === selectedMeasureIdentifier,
     );
@@ -152,15 +160,17 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                         )}
                         <AlertComparisonOperatorSelect
                             measure={selectedMeasure}
-                            selectedComparisonOperator={updatedAlert.alert!.condition.operator}
+                            selectedComparisonOperator={getAlertCompareOperator(updatedAlert.alert)}
+                            selectedRelativeOperator={getAlertRelativeOperator(updatedAlert.alert)}
                             onComparisonOperatorChange={changeComparisonOperator}
+                            onRelativeOperatorChange={changeRelativeOperator}
                             overlayPositionType={overlayPositionType}
                         />
                         <Input
                             className="gd-edit-alert__value-input s-alert-value-input"
                             isSmall
                             autofocus
-                            value={updatedAlert.alert!.condition.right}
+                            value={getAlertThreshold(updatedAlert.alert)}
                             onChange={(e) => changeValue(e !== "" ? parseFloat(e as string) : undefined!)}
                             type="number"
                             suffix={getValueSuffix(updatedAlert.alert)}

@@ -236,7 +236,14 @@ export type IAlertComparisonOperator =
 /**
  * @alpha
  */
-export interface IAutomationAlertCondition {
+export type IAutomationAlertCondition =
+    | IAutomationAlertComparisonCondition
+    | IAutomationAlertRelativeCondition;
+
+/**
+ * @alpha
+ */
+export interface IAutomationAlertComparisonCondition {
     /**
      * Type of the condition.
      */
@@ -256,6 +263,56 @@ export interface IAutomationAlertCondition {
      * Right side of the condition.
      */
     right: number;
+}
+
+/**
+ * @alpha
+ */
+export type IAlertRelativeOperator = "INCREASES_BY" | "DECREASES_BY" | "CHANGES_BY";
+
+/**
+ * @alpha
+ */
+export type IAlertRelativeArithmeticOperator = "DIFFERENCE" | "CHANGE";
+
+/**
+ * @alpha
+ */
+export interface IAutomationAlertRelativeCondition {
+    /**
+     * Type of the condition.
+     */
+    type: "relative";
+
+    /**
+     * Operator of the condition.
+     */
+    operator: IAlertRelativeOperator;
+
+    /**
+     * Identifier of the measures calculated in the condition.
+     */
+    measure: {
+        /**
+         * Operator of the measure.
+         */
+        operator: IAlertRelativeArithmeticOperator;
+
+        /**
+         * Identifier of left side of the condition.
+         */
+        left: string;
+
+        /**
+         * Identifier of right side of the condition.
+         */
+        right: string;
+    };
+
+    /**
+     * Threshold of the condition.
+     */
+    threshold: number;
 }
 
 /**

@@ -57,6 +57,7 @@ export class ActionsApi extends MetadataBaseApi implements ActionsApiInterface {
     manageOrganizationPermissions(requestParameters: ActionsApiManageOrganizationPermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     manageWorkspacePermissions(requestParameters: ActionsApiManageWorkspacePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     metadataSync(requestParameters: ActionsApiMetadataSyncRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    metadataSyncOrganization(options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     overriddenChildEntities(requestParameters: ActionsApiOverriddenChildEntitiesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<IdentifierDuplications[], any>>;
     particularPlatformUsage(requestParameters: ActionsApiParticularPlatformUsageRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<PlatformUsage[], any>>;
     registerUploadNotification(requestParameters: ActionsApiRegisterUploadNotificationRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
@@ -135,6 +136,7 @@ export const ActionsApiAxiosParamCreator: (configuration?: MetadataConfiguration
     manageOrganizationPermissions: (organizationPermissionAssignment: Array<OrganizationPermissionAssignment>, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     manageWorkspacePermissions: (workspaceId: string, workspacePermissionAssignment: Array<WorkspacePermissionAssignment>, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     metadataSync: (workspaceId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    metadataSyncOrganization: (options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     overriddenChildEntities: (workspaceId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     particularPlatformUsage: (platformUsageRequest: PlatformUsageRequest, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     registerUploadNotification: (dataSourceId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -262,6 +264,7 @@ export const ActionsApiFactory: (configuration?: MetadataConfiguration, basePath
     manageOrganizationPermissions(requestParameters: ActionsApiManageOrganizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageWorkspacePermissions(requestParameters: ActionsApiManageWorkspacePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     metadataSync(requestParameters: ActionsApiMetadataSyncRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    metadataSyncOrganization(options?: AxiosRequestConfig): AxiosPromise<void>;
     overriddenChildEntities(requestParameters: ActionsApiOverriddenChildEntitiesRequest, options?: AxiosRequestConfig): AxiosPromise<Array<IdentifierDuplications>>;
     particularPlatformUsage(requestParameters: ActionsApiParticularPlatformUsageRequest, options?: AxiosRequestConfig): AxiosPromise<Array<PlatformUsage>>;
     registerUploadNotification(requestParameters: ActionsApiRegisterUploadNotificationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -311,6 +314,7 @@ export const ActionsApiFp: (configuration?: MetadataConfiguration) => {
     manageOrganizationPermissions(organizationPermissionAssignment: Array<OrganizationPermissionAssignment>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     manageWorkspacePermissions(workspaceId: string, workspacePermissionAssignment: Array<WorkspacePermissionAssignment>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     metadataSync(workspaceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    metadataSyncOrganization(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     overriddenChildEntities(workspaceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<IdentifierDuplications>>>;
     particularPlatformUsage(platformUsageRequest: PlatformUsageRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<PlatformUsage>>>;
     registerUploadNotification(dataSourceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
@@ -407,6 +411,7 @@ export interface ActionsApiInterface {
     manageOrganizationPermissions(requestParameters: ActionsApiManageOrganizationPermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     manageWorkspacePermissions(requestParameters: ActionsApiManageWorkspacePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     metadataSync(requestParameters: ActionsApiMetadataSyncRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    metadataSyncOrganization(options?: AxiosRequestConfig): AxiosPromise<void>;
     overriddenChildEntities(requestParameters: ActionsApiOverriddenChildEntitiesRequest, options?: AxiosRequestConfig): AxiosPromise<Array<IdentifierDuplications>>;
     particularPlatformUsage(requestParameters: ActionsApiParticularPlatformUsageRequest, options?: AxiosRequestConfig): AxiosPromise<Array<PlatformUsage>>;
     registerUploadNotification(requestParameters: ActionsApiRegisterUploadNotificationRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -1255,26 +1260,31 @@ export interface AfmValidObjectsResponse {
 // @public
 export class AIApi extends MetadataBaseApi implements AIApiInterface {
     metadataSync(requestParameters: AIApiMetadataSyncRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    metadataSyncOrganization(options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
 }
 
 // @public
 export const AIApiAxiosParamCreator: (configuration?: MetadataConfiguration) => {
     metadataSync: (workspaceId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    metadataSyncOrganization: (options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
 };
 
 // @public
 export const AIApiFactory: (configuration?: MetadataConfiguration, basePath?: string, axios?: AxiosInstance) => {
     metadataSync(requestParameters: AIApiMetadataSyncRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    metadataSyncOrganization(options?: AxiosRequestConfig): AxiosPromise<void>;
 };
 
 // @public
 export const AIApiFp: (configuration?: MetadataConfiguration) => {
     metadataSync(workspaceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    metadataSyncOrganization(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
 };
 
 // @public
 export interface AIApiInterface {
     metadataSync(requestParameters: AIApiMetadataSyncRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    metadataSyncOrganization(options?: AxiosRequestConfig): AxiosPromise<void>;
 }
 
 // @public
@@ -1289,7 +1299,7 @@ export interface AlertAfm {
 }
 
 // @public
-export type AlertCondition = Comparison | Range_2;
+export type AlertCondition = ComparisonWrapper | RangeWrapper | RelativeWrapper;
 
 // @public
 export type AlertConditionOperand = LocalIdentifier | Value;
@@ -1682,6 +1692,13 @@ export interface AppearanceApiUpdateEntityThemesRequest {
 }
 
 // @public
+export interface ArithmeticMeasure {
+    left: LocalIdentifier;
+    operator: ArithmeticMeasureOperatorEnum;
+    right: LocalIdentifier;
+}
+
+// @public
 export interface ArithmeticMeasureDefinition {
     arithmeticMeasure: ArithmeticMeasureDefinitionArithmeticMeasure;
 }
@@ -1703,6 +1720,15 @@ export const ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum: {
 
 // @public (undocumented)
 export type ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum = typeof ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum[keyof typeof ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum];
+
+// @public (undocumented)
+export const ArithmeticMeasureOperatorEnum: {
+    readonly DIFFERENCE: "DIFFERENCE";
+    readonly CHANGE: "CHANGE";
+};
+
+// @public (undocumented)
+export type ArithmeticMeasureOperatorEnum = typeof ArithmeticMeasureOperatorEnum[keyof typeof ArithmeticMeasureOperatorEnum];
 
 // @public
 export interface AssigneeIdentifier {
@@ -2241,28 +2267,10 @@ export interface ColumnWarning {
 
 // @public
 export interface Comparison {
-    comparison?: ComparisonComparison;
-}
-
-// @public
-export interface ComparisonComparison {
     left: LocalIdentifier;
-    operator: ComparisonComparisonOperatorEnum;
+    operator: ComparisonOperatorEnum;
     right: AlertConditionOperand;
 }
-
-// @public (undocumented)
-export const ComparisonComparisonOperatorEnum: {
-    readonly GREATER_THAN: "GREATER_THAN";
-    readonly GREATER_THAN_OR_EQUAL_TO: "GREATER_THAN_OR_EQUAL_TO";
-    readonly LESS_THAN: "LESS_THAN";
-    readonly LESS_THAN_OR_EQUAL_TO: "LESS_THAN_OR_EQUAL_TO";
-    readonly EQUAL_TO: "EQUAL_TO";
-    readonly NOT_EQUAL_TO: "NOT_EQUAL_TO";
-};
-
-// @public (undocumented)
-export type ComparisonComparisonOperatorEnum = typeof ComparisonComparisonOperatorEnum[keyof typeof ComparisonComparisonOperatorEnum];
 
 // @public
 export interface ComparisonMeasureValueFilter {
@@ -2290,6 +2298,24 @@ export const ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnu
 
 // @public (undocumented)
 export type ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum = typeof ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum[keyof typeof ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum];
+
+// @public (undocumented)
+export const ComparisonOperatorEnum: {
+    readonly GREATER_THAN: "GREATER_THAN";
+    readonly GREATER_THAN_OR_EQUAL_TO: "GREATER_THAN_OR_EQUAL_TO";
+    readonly LESS_THAN: "LESS_THAN";
+    readonly LESS_THAN_OR_EQUAL_TO: "LESS_THAN_OR_EQUAL_TO";
+    readonly EQUAL_TO: "EQUAL_TO";
+    readonly NOT_EQUAL_TO: "NOT_EQUAL_TO";
+};
+
+// @public (undocumented)
+export type ComparisonOperatorEnum = typeof ComparisonOperatorEnum[keyof typeof ComparisonOperatorEnum];
+
+// @public
+export interface ComparisonWrapper {
+    comparison: Comparison;
+}
 
 // @public (undocumented)
 export class Configuration {
@@ -4623,6 +4649,7 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     createEntityFilterContexts(requestParameters: EntitiesApiCreateEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument, any>>;
     createEntityIdentityProviders(requestParameters: EntitiesApiCreateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any>>;
     createEntityJwks(requestParameters: EntitiesApiCreateEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutDocument, any>>;
+    createEntityLlmEndpoints(requestParameters: EntitiesApiCreateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any>>;
     createEntityMetrics(requestParameters: EntitiesApiCreateEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument, any>>;
     createEntityNotificationChannels(requestParameters: EntitiesApiCreateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any>>;
     createEntityOrganizationSettings(requestParameters: EntitiesApiCreateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument, any>>;
@@ -4649,8 +4676,9 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     deleteEntityFilterContexts(requestParameters: EntitiesApiDeleteEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     deleteEntityIdentityProviders(requestParameters: EntitiesApiDeleteEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     deleteEntityJwks(requestParameters: EntitiesApiDeleteEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
-    deleteEntityMetrics(requestParameters: EntitiesApiDeleteEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     // (undocumented)
+    deleteEntityLlmEndpoints(requestParameters: EntitiesApiDeleteEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    deleteEntityMetrics(requestParameters: EntitiesApiDeleteEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     deleteEntityNotificationChannels(requestParameters: EntitiesApiDeleteEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     deleteEntityOrganizationSettings(requestParameters: EntitiesApiDeleteEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     deleteEntityThemes(requestParameters: EntitiesApiDeleteEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
@@ -4682,6 +4710,7 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     getAllEntitiesIdentityProviders(requestParameters?: EntitiesApiGetAllEntitiesIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutList, any>>;
     getAllEntitiesJwks(requestParameters?: EntitiesApiGetAllEntitiesJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutList, any>>;
     getAllEntitiesLabels(requestParameters: EntitiesApiGetAllEntitiesLabelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLabelOutList, any>>;
+    getAllEntitiesLlmEndpoints(requestParameters?: EntitiesApiGetAllEntitiesLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutList, any>>;
     getAllEntitiesMetrics(requestParameters: EntitiesApiGetAllEntitiesMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutList, any>>;
     getAllEntitiesNotificationChannels(requestParameters?: EntitiesApiGetAllEntitiesNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutList, any>>;
     getAllEntitiesOrganizationSettings(requestParameters?: EntitiesApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutList, any>>;
@@ -4720,6 +4749,7 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     getEntityIdentityProviders(requestParameters: EntitiesApiGetEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any>>;
     getEntityJwks(requestParameters: EntitiesApiGetEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutDocument, any>>;
     getEntityLabels(requestParameters: EntitiesApiGetEntityLabelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLabelOutDocument, any>>;
+    getEntityLlmEndpoints(requestParameters: EntitiesApiGetEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any>>;
     getEntityMetrics(requestParameters: EntitiesApiGetEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument, any>>;
     getEntityNotificationChannels(requestParameters: EntitiesApiGetEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any>>;
     getEntityOrganizations(requestParameters: EntitiesApiGetEntityOrganizationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationOutDocument, any>>;
@@ -4749,6 +4779,7 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     patchEntityFilterContexts(requestParameters: EntitiesApiPatchEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument, any>>;
     patchEntityIdentityProviders(requestParameters: EntitiesApiPatchEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any>>;
     patchEntityJwks(requestParameters: EntitiesApiPatchEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutDocument, any>>;
+    patchEntityLlmEndpoints(requestParameters: EntitiesApiPatchEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any>>;
     patchEntityMetrics(requestParameters: EntitiesApiPatchEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument, any>>;
     patchEntityNotificationChannels(requestParameters: EntitiesApiPatchEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any>>;
     patchEntityOrganizations(requestParameters: EntitiesApiPatchEntityOrganizationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationOutDocument, any>>;
@@ -4775,6 +4806,7 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     updateEntityFilterContexts(requestParameters: EntitiesApiUpdateEntityFilterContextsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiFilterContextOutDocument, any>>;
     updateEntityIdentityProviders(requestParameters: EntitiesApiUpdateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any>>;
     updateEntityJwks(requestParameters: EntitiesApiUpdateEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutDocument, any>>;
+    updateEntityLlmEndpoints(requestParameters: EntitiesApiUpdateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any>>;
     updateEntityMetrics(requestParameters: EntitiesApiUpdateEntityMetricsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiMetricOutDocument, any>>;
     updateEntityNotificationChannels(requestParameters: EntitiesApiUpdateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any>>;
     updateEntityOrganizations(requestParameters: EntitiesApiUpdateEntityOrganizationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationOutDocument, any>>;
@@ -4806,6 +4838,7 @@ export const EntitiesApiAxiosParamCreator: (configuration?: MetadataConfiguratio
     createEntityFilterContexts: (workspaceId: string, jsonApiFilterContextPostOptionalIdDocument: JsonApiFilterContextPostOptionalIdDocument, include?: Array<"attributes" | "datasets" | "labels" | "ALL">, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityIdentityProviders: (jsonApiIdentityProviderInDocument: JsonApiIdentityProviderInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityJwks: (jsonApiJwkInDocument: JsonApiJwkInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityLlmEndpoints: (jsonApiLlmEndpointInDocument: JsonApiLlmEndpointInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityMetrics: (workspaceId: string, jsonApiMetricPostOptionalIdDocument: JsonApiMetricPostOptionalIdDocument, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityNotificationChannels: (jsonApiNotificationChannelPostOptionalIdDocument: JsonApiNotificationChannelPostOptionalIdDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityOrganizationSettings: (jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -4832,6 +4865,7 @@ export const EntitiesApiAxiosParamCreator: (configuration?: MetadataConfiguratio
     deleteEntityFilterContexts: (workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     deleteEntityIdentityProviders: (id: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     deleteEntityJwks: (id: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityLlmEndpoints: (id: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     deleteEntityMetrics: (workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     deleteEntityNotificationChannels: (id: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     deleteEntityOrganizationSettings: (id: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -4864,6 +4898,7 @@ export const EntitiesApiAxiosParamCreator: (configuration?: MetadataConfiguratio
     getAllEntitiesIdentityProviders: (filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<"page" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesJwks: (filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<"page" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesLabels: (workspaceId: string, origin?: "ALL" | "PARENTS" | "NATIVE", filter?: string, include?: Array<"attributes" | "attribute" | "ALL">, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "page" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesLlmEndpoints: (filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<"page" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesMetrics: (workspaceId: string, origin?: "ALL" | "PARENTS" | "NATIVE", filter?: string, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "page" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesNotificationChannels: (filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<"page" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesOrganizationSettings: (filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<"page" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -4900,6 +4935,7 @@ export const EntitiesApiAxiosParamCreator: (configuration?: MetadataConfiguratio
     getEntityIdentityProviders: (id: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityJwks: (id: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityLabels: (workspaceId: string, objectId: string, filter?: string, include?: Array<"attributes" | "attribute" | "ALL">, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityLlmEndpoints: (id: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityMetrics: (workspaceId: string, objectId: string, filter?: string, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityNotificationChannels: (id: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityOrganizationSettings: (id: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -4929,6 +4965,7 @@ export const EntitiesApiAxiosParamCreator: (configuration?: MetadataConfiguratio
     patchEntityFilterContexts: (workspaceId: string, objectId: string, jsonApiFilterContextPatchDocument: JsonApiFilterContextPatchDocument, filter?: string, include?: Array<"attributes" | "datasets" | "labels" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityIdentityProviders: (id: string, jsonApiIdentityProviderPatchDocument: JsonApiIdentityProviderPatchDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityJwks: (id: string, jsonApiJwkPatchDocument: JsonApiJwkPatchDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityLlmEndpoints: (id: string, jsonApiLlmEndpointPatchDocument: JsonApiLlmEndpointPatchDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityMetrics: (workspaceId: string, objectId: string, jsonApiMetricPatchDocument: JsonApiMetricPatchDocument, filter?: string, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityNotificationChannels: (id: string, jsonApiNotificationChannelPatchDocument: JsonApiNotificationChannelPatchDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityOrganizationSettings: (id: string, jsonApiOrganizationSettingPatchDocument: JsonApiOrganizationSettingPatchDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -4955,6 +4992,7 @@ export const EntitiesApiAxiosParamCreator: (configuration?: MetadataConfiguratio
     updateEntityFilterContexts: (workspaceId: string, objectId: string, jsonApiFilterContextInDocument: JsonApiFilterContextInDocument, filter?: string, include?: Array<"attributes" | "datasets" | "labels" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityIdentityProviders: (id: string, jsonApiIdentityProviderInDocument: JsonApiIdentityProviderInDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityJwks: (id: string, jsonApiJwkInDocument: JsonApiJwkInDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityLlmEndpoints: (id: string, jsonApiLlmEndpointInDocument: JsonApiLlmEndpointInDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityMetrics: (workspaceId: string, objectId: string, jsonApiMetricInDocument: JsonApiMetricInDocument, filter?: string, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityNotificationChannels: (id: string, jsonApiNotificationChannelInDocument: JsonApiNotificationChannelInDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityOrganizationSettings: (id: string, jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -5056,6 +5094,11 @@ export interface EntitiesApiCreateEntityIdentityProvidersRequest {
 // @public
 export interface EntitiesApiCreateEntityJwksRequest {
     readonly jsonApiJwkInDocument: JsonApiJwkInDocument;
+}
+
+// @public
+export interface EntitiesApiCreateEntityLlmEndpointsRequest {
+    readonly jsonApiLlmEndpointInDocument: JsonApiLlmEndpointInDocument;
 }
 
 // @public
@@ -5232,6 +5275,12 @@ export interface EntitiesApiDeleteEntityJwksRequest {
 }
 
 // @public
+export interface EntitiesApiDeleteEntityLlmEndpointsRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
 export interface EntitiesApiDeleteEntityMetricsRequest {
     readonly filter?: string;
     readonly objectId: string;
@@ -5331,6 +5380,7 @@ export const EntitiesApiFactory: (configuration?: MetadataConfiguration, basePat
     createEntityFilterContexts(requestParameters: EntitiesApiCreateEntityFilterContextsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFilterContextOutDocument>;
     createEntityIdentityProviders(requestParameters: EntitiesApiCreateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
     createEntityJwks(requestParameters: EntitiesApiCreateEntityJwksRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiJwkOutDocument>;
+    createEntityLlmEndpoints(requestParameters: EntitiesApiCreateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
     createEntityMetrics(requestParameters: EntitiesApiCreateEntityMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutDocument>;
     createEntityNotificationChannels(requestParameters: EntitiesApiCreateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
     createEntityOrganizationSettings(requestParameters: EntitiesApiCreateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
@@ -5357,6 +5407,7 @@ export const EntitiesApiFactory: (configuration?: MetadataConfiguration, basePat
     deleteEntityFilterContexts(requestParameters: EntitiesApiDeleteEntityFilterContextsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityIdentityProviders(requestParameters: EntitiesApiDeleteEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityJwks(requestParameters: EntitiesApiDeleteEntityJwksRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    deleteEntityLlmEndpoints(requestParameters: EntitiesApiDeleteEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityMetrics(requestParameters: EntitiesApiDeleteEntityMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityNotificationChannels(requestParameters: EntitiesApiDeleteEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityOrganizationSettings(requestParameters: EntitiesApiDeleteEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -5389,6 +5440,7 @@ export const EntitiesApiFactory: (configuration?: MetadataConfiguration, basePat
     getAllEntitiesIdentityProviders(requestParameters: EntitiesApiGetAllEntitiesIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutList>;
     getAllEntitiesJwks(requestParameters: EntitiesApiGetAllEntitiesJwksRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiJwkOutList>;
     getAllEntitiesLabels(requestParameters: EntitiesApiGetAllEntitiesLabelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLabelOutList>;
+    getAllEntitiesLlmEndpoints(requestParameters: EntitiesApiGetAllEntitiesLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutList>;
     getAllEntitiesMetrics(requestParameters: EntitiesApiGetAllEntitiesMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutList>;
     getAllEntitiesNotificationChannels(requestParameters: EntitiesApiGetAllEntitiesNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutList>;
     getAllEntitiesOrganizationSettings(requestParameters: EntitiesApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutList>;
@@ -5427,6 +5479,7 @@ export const EntitiesApiFactory: (configuration?: MetadataConfiguration, basePat
     getEntityIdentityProviders(requestParameters: EntitiesApiGetEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
     getEntityJwks(requestParameters: EntitiesApiGetEntityJwksRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiJwkOutDocument>;
     getEntityLabels(requestParameters: EntitiesApiGetEntityLabelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLabelOutDocument>;
+    getEntityLlmEndpoints(requestParameters: EntitiesApiGetEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
     getEntityMetrics(requestParameters: EntitiesApiGetEntityMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutDocument>;
     getEntityNotificationChannels(requestParameters: EntitiesApiGetEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
     getEntityOrganizationSettings(requestParameters: EntitiesApiGetEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
@@ -5456,6 +5509,7 @@ export const EntitiesApiFactory: (configuration?: MetadataConfiguration, basePat
     patchEntityFilterContexts(requestParameters: EntitiesApiPatchEntityFilterContextsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFilterContextOutDocument>;
     patchEntityIdentityProviders(requestParameters: EntitiesApiPatchEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
     patchEntityJwks(requestParameters: EntitiesApiPatchEntityJwksRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiJwkOutDocument>;
+    patchEntityLlmEndpoints(requestParameters: EntitiesApiPatchEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
     patchEntityMetrics(requestParameters: EntitiesApiPatchEntityMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutDocument>;
     patchEntityNotificationChannels(requestParameters: EntitiesApiPatchEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
     patchEntityOrganizationSettings(requestParameters: EntitiesApiPatchEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
@@ -5482,6 +5536,7 @@ export const EntitiesApiFactory: (configuration?: MetadataConfiguration, basePat
     updateEntityFilterContexts(requestParameters: EntitiesApiUpdateEntityFilterContextsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFilterContextOutDocument>;
     updateEntityIdentityProviders(requestParameters: EntitiesApiUpdateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
     updateEntityJwks(requestParameters: EntitiesApiUpdateEntityJwksRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiJwkOutDocument>;
+    updateEntityLlmEndpoints(requestParameters: EntitiesApiUpdateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
     updateEntityMetrics(requestParameters: EntitiesApiUpdateEntityMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutDocument>;
     updateEntityNotificationChannels(requestParameters: EntitiesApiUpdateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
     updateEntityOrganizationSettings(requestParameters: EntitiesApiUpdateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
@@ -5513,6 +5568,7 @@ export const EntitiesApiFp: (configuration?: MetadataConfiguration) => {
     createEntityFilterContexts(workspaceId: string, jsonApiFilterContextPostOptionalIdDocument: JsonApiFilterContextPostOptionalIdDocument, include?: Array<"attributes" | "datasets" | "labels" | "ALL">, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiFilterContextOutDocument>>;
     createEntityIdentityProviders(jsonApiIdentityProviderInDocument: JsonApiIdentityProviderInDocument, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiIdentityProviderOutDocument>>;
     createEntityJwks(jsonApiJwkInDocument: JsonApiJwkInDocument, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiJwkOutDocument>>;
+    createEntityLlmEndpoints(jsonApiLlmEndpointInDocument: JsonApiLlmEndpointInDocument, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiLlmEndpointOutDocument>>;
     createEntityMetrics(workspaceId: string, jsonApiMetricPostOptionalIdDocument: JsonApiMetricPostOptionalIdDocument, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiMetricOutDocument>>;
     createEntityNotificationChannels(jsonApiNotificationChannelPostOptionalIdDocument: JsonApiNotificationChannelPostOptionalIdDocument, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiNotificationChannelOutDocument>>;
     createEntityOrganizationSettings(jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiOrganizationSettingOutDocument>>;
@@ -5539,6 +5595,7 @@ export const EntitiesApiFp: (configuration?: MetadataConfiguration) => {
     deleteEntityFilterContexts(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     deleteEntityIdentityProviders(id: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     deleteEntityJwks(id: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    deleteEntityLlmEndpoints(id: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     deleteEntityMetrics(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     deleteEntityNotificationChannels(id: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     deleteEntityOrganizationSettings(id: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
@@ -5571,6 +5628,7 @@ export const EntitiesApiFp: (configuration?: MetadataConfiguration) => {
     getAllEntitiesIdentityProviders(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<"page" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiIdentityProviderOutList>>;
     getAllEntitiesJwks(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<"page" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiJwkOutList>>;
     getAllEntitiesLabels(workspaceId: string, origin?: "ALL" | "PARENTS" | "NATIVE", filter?: string, include?: Array<"attributes" | "attribute" | "ALL">, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "page" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiLabelOutList>>;
+    getAllEntitiesLlmEndpoints(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<"page" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiLlmEndpointOutList>>;
     getAllEntitiesMetrics(workspaceId: string, origin?: "ALL" | "PARENTS" | "NATIVE", filter?: string, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "page" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiMetricOutList>>;
     getAllEntitiesNotificationChannels(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<"page" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiNotificationChannelOutList>>;
     getAllEntitiesOrganizationSettings(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<"page" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiOrganizationSettingOutList>>;
@@ -5609,6 +5667,7 @@ export const EntitiesApiFp: (configuration?: MetadataConfiguration) => {
     getEntityIdentityProviders(id: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiIdentityProviderOutDocument>>;
     getEntityJwks(id: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiJwkOutDocument>>;
     getEntityLabels(workspaceId: string, objectId: string, filter?: string, include?: Array<"attributes" | "attribute" | "ALL">, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiLabelOutDocument>>;
+    getEntityLlmEndpoints(id: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiLlmEndpointOutDocument>>;
     getEntityMetrics(workspaceId: string, objectId: string, filter?: string, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<"origin" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiMetricOutDocument>>;
     getEntityNotificationChannels(id: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiNotificationChannelOutDocument>>;
     getEntityOrganizationSettings(id: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiOrganizationSettingOutDocument>>;
@@ -5638,6 +5697,7 @@ export const EntitiesApiFp: (configuration?: MetadataConfiguration) => {
     patchEntityFilterContexts(workspaceId: string, objectId: string, jsonApiFilterContextPatchDocument: JsonApiFilterContextPatchDocument, filter?: string, include?: Array<"attributes" | "datasets" | "labels" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiFilterContextOutDocument>>;
     patchEntityIdentityProviders(id: string, jsonApiIdentityProviderPatchDocument: JsonApiIdentityProviderPatchDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiIdentityProviderOutDocument>>;
     patchEntityJwks(id: string, jsonApiJwkPatchDocument: JsonApiJwkPatchDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiJwkOutDocument>>;
+    patchEntityLlmEndpoints(id: string, jsonApiLlmEndpointPatchDocument: JsonApiLlmEndpointPatchDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiLlmEndpointOutDocument>>;
     patchEntityMetrics(workspaceId: string, objectId: string, jsonApiMetricPatchDocument: JsonApiMetricPatchDocument, filter?: string, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiMetricOutDocument>>;
     patchEntityNotificationChannels(id: string, jsonApiNotificationChannelPatchDocument: JsonApiNotificationChannelPatchDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiNotificationChannelOutDocument>>;
     patchEntityOrganizationSettings(id: string, jsonApiOrganizationSettingPatchDocument: JsonApiOrganizationSettingPatchDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiOrganizationSettingOutDocument>>;
@@ -5664,6 +5724,7 @@ export const EntitiesApiFp: (configuration?: MetadataConfiguration) => {
     updateEntityFilterContexts(workspaceId: string, objectId: string, jsonApiFilterContextInDocument: JsonApiFilterContextInDocument, filter?: string, include?: Array<"attributes" | "datasets" | "labels" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiFilterContextOutDocument>>;
     updateEntityIdentityProviders(id: string, jsonApiIdentityProviderInDocument: JsonApiIdentityProviderInDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiIdentityProviderOutDocument>>;
     updateEntityJwks(id: string, jsonApiJwkInDocument: JsonApiJwkInDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiJwkOutDocument>>;
+    updateEntityLlmEndpoints(id: string, jsonApiLlmEndpointInDocument: JsonApiLlmEndpointInDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiLlmEndpointOutDocument>>;
     updateEntityMetrics(workspaceId: string, objectId: string, jsonApiMetricInDocument: JsonApiMetricInDocument, filter?: string, include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiMetricOutDocument>>;
     updateEntityNotificationChannels(id: string, jsonApiNotificationChannelInDocument: JsonApiNotificationChannelInDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiNotificationChannelOutDocument>>;
     updateEntityOrganizationSettings(id: string, jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiOrganizationSettingOutDocument>>;
@@ -5893,6 +5954,15 @@ export interface EntitiesApiGetAllEntitiesLabelsRequest {
     readonly sort?: Array<string>;
     readonly workspaceId: string;
     readonly xGDCVALIDATERELATIONS?: boolean;
+}
+
+// @public
+export interface EntitiesApiGetAllEntitiesLlmEndpointsRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<"page" | "all" | "ALL">;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
 }
 
 // @public
@@ -6215,6 +6285,12 @@ export interface EntitiesApiGetEntityLabelsRequest {
 }
 
 // @public
+export interface EntitiesApiGetEntityLlmEndpointsRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
 export interface EntitiesApiGetEntityMetricsRequest {
     readonly filter?: string;
     readonly include?: Array<"userIdentifiers" | "facts" | "attributes" | "labels" | "metrics" | "datasets" | "createdBy" | "modifiedBy" | "ALL">;
@@ -6354,6 +6430,7 @@ export interface EntitiesApiInterface {
     createEntityFilterContexts(requestParameters: EntitiesApiCreateEntityFilterContextsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFilterContextOutDocument>;
     createEntityIdentityProviders(requestParameters: EntitiesApiCreateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
     createEntityJwks(requestParameters: EntitiesApiCreateEntityJwksRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiJwkOutDocument>;
+    createEntityLlmEndpoints(requestParameters: EntitiesApiCreateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
     createEntityMetrics(requestParameters: EntitiesApiCreateEntityMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutDocument>;
     createEntityNotificationChannels(requestParameters: EntitiesApiCreateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
     createEntityOrganizationSettings(requestParameters: EntitiesApiCreateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
@@ -6380,8 +6457,9 @@ export interface EntitiesApiInterface {
     deleteEntityFilterContexts(requestParameters: EntitiesApiDeleteEntityFilterContextsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityIdentityProviders(requestParameters: EntitiesApiDeleteEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityJwks(requestParameters: EntitiesApiDeleteEntityJwksRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    deleteEntityMetrics(requestParameters: EntitiesApiDeleteEntityMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     // (undocumented)
+    deleteEntityLlmEndpoints(requestParameters: EntitiesApiDeleteEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    deleteEntityMetrics(requestParameters: EntitiesApiDeleteEntityMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityNotificationChannels(requestParameters: EntitiesApiDeleteEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityOrganizationSettings(requestParameters: EntitiesApiDeleteEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityThemes(requestParameters: EntitiesApiDeleteEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -6413,6 +6491,7 @@ export interface EntitiesApiInterface {
     getAllEntitiesIdentityProviders(requestParameters: EntitiesApiGetAllEntitiesIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutList>;
     getAllEntitiesJwks(requestParameters: EntitiesApiGetAllEntitiesJwksRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiJwkOutList>;
     getAllEntitiesLabels(requestParameters: EntitiesApiGetAllEntitiesLabelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLabelOutList>;
+    getAllEntitiesLlmEndpoints(requestParameters: EntitiesApiGetAllEntitiesLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutList>;
     getAllEntitiesMetrics(requestParameters: EntitiesApiGetAllEntitiesMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutList>;
     getAllEntitiesNotificationChannels(requestParameters: EntitiesApiGetAllEntitiesNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutList>;
     getAllEntitiesOrganizationSettings(requestParameters: EntitiesApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutList>;
@@ -6451,6 +6530,7 @@ export interface EntitiesApiInterface {
     getEntityIdentityProviders(requestParameters: EntitiesApiGetEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
     getEntityJwks(requestParameters: EntitiesApiGetEntityJwksRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiJwkOutDocument>;
     getEntityLabels(requestParameters: EntitiesApiGetEntityLabelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLabelOutDocument>;
+    getEntityLlmEndpoints(requestParameters: EntitiesApiGetEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
     getEntityMetrics(requestParameters: EntitiesApiGetEntityMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutDocument>;
     getEntityNotificationChannels(requestParameters: EntitiesApiGetEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
     getEntityOrganizations(requestParameters: EntitiesApiGetEntityOrganizationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationOutDocument>;
@@ -6480,6 +6560,7 @@ export interface EntitiesApiInterface {
     patchEntityFilterContexts(requestParameters: EntitiesApiPatchEntityFilterContextsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFilterContextOutDocument>;
     patchEntityIdentityProviders(requestParameters: EntitiesApiPatchEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
     patchEntityJwks(requestParameters: EntitiesApiPatchEntityJwksRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiJwkOutDocument>;
+    patchEntityLlmEndpoints(requestParameters: EntitiesApiPatchEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
     patchEntityMetrics(requestParameters: EntitiesApiPatchEntityMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutDocument>;
     patchEntityNotificationChannels(requestParameters: EntitiesApiPatchEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
     patchEntityOrganizations(requestParameters: EntitiesApiPatchEntityOrganizationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationOutDocument>;
@@ -6506,6 +6587,7 @@ export interface EntitiesApiInterface {
     updateEntityFilterContexts(requestParameters: EntitiesApiUpdateEntityFilterContextsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiFilterContextOutDocument>;
     updateEntityIdentityProviders(requestParameters: EntitiesApiUpdateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
     updateEntityJwks(requestParameters: EntitiesApiUpdateEntityJwksRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiJwkOutDocument>;
+    updateEntityLlmEndpoints(requestParameters: EntitiesApiUpdateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
     updateEntityMetrics(requestParameters: EntitiesApiUpdateEntityMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutDocument>;
     updateEntityNotificationChannels(requestParameters: EntitiesApiUpdateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
     updateEntityOrganizations(requestParameters: EntitiesApiUpdateEntityOrganizationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationOutDocument>;
@@ -6624,6 +6706,13 @@ export interface EntitiesApiPatchEntityJwksRequest {
     readonly filter?: string;
     readonly id: string;
     readonly jsonApiJwkPatchDocument: JsonApiJwkPatchDocument;
+}
+
+// @public
+export interface EntitiesApiPatchEntityLlmEndpointsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiLlmEndpointPatchDocument: JsonApiLlmEndpointPatchDocument;
 }
 
 // @public
@@ -6834,6 +6923,13 @@ export interface EntitiesApiUpdateEntityJwksRequest {
     readonly filter?: string;
     readonly id: string;
     readonly jsonApiJwkInDocument: JsonApiJwkInDocument;
+}
+
+// @public
+export interface EntitiesApiUpdateEntityLlmEndpointsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiLlmEndpointInDocument: JsonApiLlmEndpointInDocument;
 }
 
 // @public
@@ -9012,9 +9108,15 @@ export type JsonApiColorPalettePatchTypeEnum = typeof JsonApiColorPalettePatchTy
 
 // @public
 export interface JsonApiCookieSecurityConfigurationIn {
-    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationInAttributes;
     id: string;
     type: JsonApiCookieSecurityConfigurationInTypeEnum;
+}
+
+// @public
+export interface JsonApiCookieSecurityConfigurationInAttributes {
+    lastRotation?: string;
+    rotationInterval?: string;
 }
 
 // @public
@@ -9032,15 +9134,9 @@ export type JsonApiCookieSecurityConfigurationInTypeEnum = typeof JsonApiCookieS
 
 // @public
 export interface JsonApiCookieSecurityConfigurationOut {
-    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationInAttributes;
     id: string;
     type: JsonApiCookieSecurityConfigurationOutTypeEnum;
-}
-
-// @public
-export interface JsonApiCookieSecurityConfigurationOutAttributes {
-    lastRotation?: string;
-    rotationInterval?: string;
 }
 
 // @public
@@ -9059,7 +9155,7 @@ export type JsonApiCookieSecurityConfigurationOutTypeEnum = typeof JsonApiCookie
 
 // @public
 export interface JsonApiCookieSecurityConfigurationPatch {
-    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationInAttributes;
     id: string;
     type: JsonApiCookieSecurityConfigurationPatchTypeEnum;
 }
@@ -10765,6 +10861,146 @@ export type JsonApiLabelOutWithLinksTypeEnum = typeof JsonApiLabelOutWithLinksTy
 export type JsonApiLabelToOneLinkage = JsonApiLabelLinkage;
 
 // @public
+export interface JsonApiLlmEndpointIn {
+    attributes: JsonApiLlmEndpointInAttributes;
+    id: string;
+    type: JsonApiLlmEndpointInTypeEnum;
+}
+
+// @public
+export interface JsonApiLlmEndpointInAttributes {
+    baseUrl?: string | null;
+    description?: string | null;
+    llmModel?: string | null;
+    llmOrganization?: string | null;
+    provider: JsonApiLlmEndpointInAttributesProviderEnum;
+    title: string;
+    token: string;
+}
+
+// @public (undocumented)
+export const JsonApiLlmEndpointInAttributesProviderEnum: {
+    readonly OPENAI: "OPENAI";
+};
+
+// @public (undocumented)
+export type JsonApiLlmEndpointInAttributesProviderEnum = typeof JsonApiLlmEndpointInAttributesProviderEnum[keyof typeof JsonApiLlmEndpointInAttributesProviderEnum];
+
+// @public
+export interface JsonApiLlmEndpointInDocument {
+    data: JsonApiLlmEndpointIn;
+}
+
+// @public (undocumented)
+export const JsonApiLlmEndpointInTypeEnum: {
+    readonly LLM_ENDPOINT: "llmEndpoint";
+};
+
+// @public (undocumented)
+export type JsonApiLlmEndpointInTypeEnum = typeof JsonApiLlmEndpointInTypeEnum[keyof typeof JsonApiLlmEndpointInTypeEnum];
+
+// @public
+export interface JsonApiLlmEndpointOut {
+    attributes: JsonApiLlmEndpointOutAttributes;
+    id: string;
+    type: JsonApiLlmEndpointOutTypeEnum;
+}
+
+// @public
+export interface JsonApiLlmEndpointOutAttributes {
+    baseUrl?: string | null;
+    description?: string | null;
+    llmModel?: string | null;
+    llmOrganization?: string | null;
+    provider: JsonApiLlmEndpointOutAttributesProviderEnum;
+    title: string;
+}
+
+// @public (undocumented)
+export const JsonApiLlmEndpointOutAttributesProviderEnum: {
+    readonly OPENAI: "OPENAI";
+};
+
+// @public (undocumented)
+export type JsonApiLlmEndpointOutAttributesProviderEnum = typeof JsonApiLlmEndpointOutAttributesProviderEnum[keyof typeof JsonApiLlmEndpointOutAttributesProviderEnum];
+
+// @public
+export interface JsonApiLlmEndpointOutDocument {
+    data: JsonApiLlmEndpointOut;
+    links?: ObjectLinks;
+}
+
+// @public
+export interface JsonApiLlmEndpointOutList {
+    data: Array<JsonApiLlmEndpointOutWithLinks>;
+    links?: ListLinks;
+    meta?: JsonApiApiTokenOutListMeta;
+}
+
+// @public (undocumented)
+export const JsonApiLlmEndpointOutTypeEnum: {
+    readonly LLM_ENDPOINT: "llmEndpoint";
+};
+
+// @public (undocumented)
+export type JsonApiLlmEndpointOutTypeEnum = typeof JsonApiLlmEndpointOutTypeEnum[keyof typeof JsonApiLlmEndpointOutTypeEnum];
+
+// @public
+export interface JsonApiLlmEndpointOutWithLinks {
+    attributes: JsonApiLlmEndpointOutAttributes;
+    id: string;
+    links?: ObjectLinks;
+    type: JsonApiLlmEndpointOutWithLinksTypeEnum;
+}
+
+// @public (undocumented)
+export const JsonApiLlmEndpointOutWithLinksTypeEnum: {
+    readonly LLM_ENDPOINT: "llmEndpoint";
+};
+
+// @public (undocumented)
+export type JsonApiLlmEndpointOutWithLinksTypeEnum = typeof JsonApiLlmEndpointOutWithLinksTypeEnum[keyof typeof JsonApiLlmEndpointOutWithLinksTypeEnum];
+
+// @public
+export interface JsonApiLlmEndpointPatch {
+    attributes: JsonApiLlmEndpointPatchAttributes;
+    id: string;
+    type: JsonApiLlmEndpointPatchTypeEnum;
+}
+
+// @public
+export interface JsonApiLlmEndpointPatchAttributes {
+    baseUrl?: string | null;
+    description?: string | null;
+    llmModel?: string | null;
+    llmOrganization?: string | null;
+    provider?: JsonApiLlmEndpointPatchAttributesProviderEnum;
+    title?: string;
+    token?: string;
+}
+
+// @public (undocumented)
+export const JsonApiLlmEndpointPatchAttributesProviderEnum: {
+    readonly OPENAI: "OPENAI";
+};
+
+// @public (undocumented)
+export type JsonApiLlmEndpointPatchAttributesProviderEnum = typeof JsonApiLlmEndpointPatchAttributesProviderEnum[keyof typeof JsonApiLlmEndpointPatchAttributesProviderEnum];
+
+// @public
+export interface JsonApiLlmEndpointPatchDocument {
+    data: JsonApiLlmEndpointPatch;
+}
+
+// @public (undocumented)
+export const JsonApiLlmEndpointPatchTypeEnum: {
+    readonly LLM_ENDPOINT: "llmEndpoint";
+};
+
+// @public (undocumented)
+export type JsonApiLlmEndpointPatchTypeEnum = typeof JsonApiLlmEndpointPatchTypeEnum[keyof typeof JsonApiLlmEndpointPatchTypeEnum];
+
+// @public
 export interface JsonApiMetricIn {
     attributes: JsonApiMetricInAttributes;
     id: string;
@@ -11099,9 +11335,25 @@ export type JsonApiNotificationChannelToOneLinkage = JsonApiNotificationChannelL
 
 // @public
 export interface JsonApiOrganizationIn {
-    attributes?: JsonApiOrganizationPatchAttributes;
+    attributes?: JsonApiOrganizationInAttributes;
     id: string;
     type: JsonApiOrganizationInTypeEnum;
+}
+
+// @public
+export interface JsonApiOrganizationInAttributes {
+    allowedOrigins?: Array<string>;
+    // @deprecated
+    earlyAccess?: string | null;
+    earlyAccessValues?: Array<string> | null;
+    hostname?: string;
+    jitEnabled?: boolean;
+    name?: string | null;
+    oauthClientId?: string;
+    oauthClientSecret?: string;
+    oauthIssuerId?: string;
+    oauthIssuerLocation?: string;
+    oauthSubjectIdClaim?: string;
 }
 
 // @public
@@ -11197,25 +11449,9 @@ export type JsonApiOrganizationOutTypeEnum = typeof JsonApiOrganizationOutTypeEn
 
 // @public
 export interface JsonApiOrganizationPatch {
-    attributes?: JsonApiOrganizationPatchAttributes;
+    attributes?: JsonApiOrganizationInAttributes;
     id: string;
     type: JsonApiOrganizationPatchTypeEnum;
-}
-
-// @public
-export interface JsonApiOrganizationPatchAttributes {
-    allowedOrigins?: Array<string>;
-    // @deprecated
-    earlyAccess?: string | null;
-    earlyAccessValues?: Array<string> | null;
-    hostname?: string;
-    jitEnabled?: boolean;
-    name?: string | null;
-    oauthClientId?: string;
-    oauthClientSecret?: string;
-    oauthIssuerId?: string;
-    oauthIssuerLocation?: string;
-    oauthSubjectIdClaim?: string;
 }
 
 // @public
@@ -13289,6 +13525,98 @@ export interface ListLinksAllOf {
 }
 
 // @public
+export class LLMEndpointsApi extends MetadataBaseApi implements LLMEndpointsApiInterface {
+    createEntityLlmEndpoints(requestParameters: LLMEndpointsApiCreateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any>>;
+    // (undocumented)
+    deleteEntityLlmEndpoints(requestParameters: LLMEndpointsApiDeleteEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    getAllEntitiesLlmEndpoints(requestParameters?: LLMEndpointsApiGetAllEntitiesLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutList, any>>;
+    getEntityLlmEndpoints(requestParameters: LLMEndpointsApiGetEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any>>;
+    patchEntityLlmEndpoints(requestParameters: LLMEndpointsApiPatchEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any>>;
+    updateEntityLlmEndpoints(requestParameters: LLMEndpointsApiUpdateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any>>;
+}
+
+// @public
+export const LLMEndpointsApiAxiosParamCreator: (configuration?: MetadataConfiguration) => {
+    createEntityLlmEndpoints: (jsonApiLlmEndpointInDocument: JsonApiLlmEndpointInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityLlmEndpoints: (id: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesLlmEndpoints: (filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<"page" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityLlmEndpoints: (id: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityLlmEndpoints: (id: string, jsonApiLlmEndpointPatchDocument: JsonApiLlmEndpointPatchDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityLlmEndpoints: (id: string, jsonApiLlmEndpointInDocument: JsonApiLlmEndpointInDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export interface LLMEndpointsApiCreateEntityLlmEndpointsRequest {
+    readonly jsonApiLlmEndpointInDocument: JsonApiLlmEndpointInDocument;
+}
+
+// @public
+export interface LLMEndpointsApiDeleteEntityLlmEndpointsRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export const LLMEndpointsApiFactory: (configuration?: MetadataConfiguration, basePath?: string, axios?: AxiosInstance) => {
+    createEntityLlmEndpoints(requestParameters: LLMEndpointsApiCreateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
+    deleteEntityLlmEndpoints(requestParameters: LLMEndpointsApiDeleteEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesLlmEndpoints(requestParameters: LLMEndpointsApiGetAllEntitiesLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutList>;
+    getEntityLlmEndpoints(requestParameters: LLMEndpointsApiGetEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
+    patchEntityLlmEndpoints(requestParameters: LLMEndpointsApiPatchEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
+    updateEntityLlmEndpoints(requestParameters: LLMEndpointsApiUpdateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
+};
+
+// @public
+export const LLMEndpointsApiFp: (configuration?: MetadataConfiguration) => {
+    createEntityLlmEndpoints(jsonApiLlmEndpointInDocument: JsonApiLlmEndpointInDocument, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiLlmEndpointOutDocument>>;
+    deleteEntityLlmEndpoints(id: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    getAllEntitiesLlmEndpoints(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<"page" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiLlmEndpointOutList>>;
+    getEntityLlmEndpoints(id: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiLlmEndpointOutDocument>>;
+    patchEntityLlmEndpoints(id: string, jsonApiLlmEndpointPatchDocument: JsonApiLlmEndpointPatchDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiLlmEndpointOutDocument>>;
+    updateEntityLlmEndpoints(id: string, jsonApiLlmEndpointInDocument: JsonApiLlmEndpointInDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiLlmEndpointOutDocument>>;
+};
+
+// @public
+export interface LLMEndpointsApiGetAllEntitiesLlmEndpointsRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<"page" | "all" | "ALL">;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface LLMEndpointsApiGetEntityLlmEndpointsRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface LLMEndpointsApiInterface {
+    createEntityLlmEndpoints(requestParameters: LLMEndpointsApiCreateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
+    // (undocumented)
+    deleteEntityLlmEndpoints(requestParameters: LLMEndpointsApiDeleteEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesLlmEndpoints(requestParameters: LLMEndpointsApiGetAllEntitiesLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutList>;
+    getEntityLlmEndpoints(requestParameters: LLMEndpointsApiGetEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
+    patchEntityLlmEndpoints(requestParameters: LLMEndpointsApiPatchEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
+    updateEntityLlmEndpoints(requestParameters: LLMEndpointsApiUpdateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
+}
+
+// @public
+export interface LLMEndpointsApiPatchEntityLlmEndpointsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiLlmEndpointPatchDocument: JsonApiLlmEndpointPatchDocument;
+}
+
+// @public
+export interface LLMEndpointsApiUpdateEntityLlmEndpointsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiLlmEndpointInDocument: JsonApiLlmEndpointInDocument;
+}
+
+// @public
 export interface LocaleRequest {
     locale: string;
 }
@@ -13425,6 +13753,41 @@ export interface MetadataRequestArgs {
     options: AxiosRequestConfig;
     // (undocumented)
     url: string;
+}
+
+// @public
+export class MetadataSyncApi extends MetadataBaseApi implements MetadataSyncApiInterface {
+    metadataSync(requestParameters: MetadataSyncApiMetadataSyncRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    metadataSyncOrganization(options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+}
+
+// @public
+export const MetadataSyncApiAxiosParamCreator: (configuration?: MetadataConfiguration) => {
+    metadataSync: (workspaceId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    metadataSyncOrganization: (options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export const MetadataSyncApiFactory: (configuration?: MetadataConfiguration, basePath?: string, axios?: AxiosInstance) => {
+    metadataSync(requestParameters: MetadataSyncApiMetadataSyncRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    metadataSyncOrganization(options?: AxiosRequestConfig): AxiosPromise<void>;
+};
+
+// @public
+export const MetadataSyncApiFp: (configuration?: MetadataConfiguration) => {
+    metadataSync(workspaceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    metadataSyncOrganization(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+};
+
+// @public
+export interface MetadataSyncApiInterface {
+    metadataSync(requestParameters: MetadataSyncApiMetadataSyncRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    metadataSyncOrganization(options?: AxiosRequestConfig): AxiosPromise<void>;
+}
+
+// @public
+export interface MetadataSyncApiMetadataSyncRequest {
+    readonly workspaceId: string;
 }
 
 // @internal
@@ -13667,7 +14030,6 @@ export interface NotificationChannelDestination {
 // @public
 export class NotificationChannelsApi extends MetadataBaseApi implements NotificationChannelsApiInterface {
     createEntityNotificationChannels(requestParameters: NotificationChannelsApiCreateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any>>;
-    // (undocumented)
     deleteEntityNotificationChannels(requestParameters: NotificationChannelsApiDeleteEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     getAllEntitiesNotificationChannels(requestParameters?: NotificationChannelsApiGetAllEntitiesNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutList, any>>;
     getEntityNotificationChannels(requestParameters: NotificationChannelsApiGetEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any>>;
@@ -13734,7 +14096,6 @@ export interface NotificationChannelsApiGetEntityNotificationChannelsRequest {
 // @public
 export interface NotificationChannelsApiInterface {
     createEntityNotificationChannels(requestParameters: NotificationChannelsApiCreateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
-    // (undocumented)
     deleteEntityNotificationChannels(requestParameters: NotificationChannelsApiDeleteEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getAllEntitiesNotificationChannels(requestParameters: NotificationChannelsApiGetAllEntitiesNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutList>;
     getEntityNotificationChannels(requestParameters: NotificationChannelsApiGetEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
@@ -14126,6 +14487,7 @@ export class OrganizationModelControllerApi extends MetadataBaseApi implements O
     createEntityDataSources(requestParameters: OrganizationModelControllerApiCreateEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument, any>>;
     createEntityIdentityProviders(requestParameters: OrganizationModelControllerApiCreateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any>>;
     createEntityJwks(requestParameters: OrganizationModelControllerApiCreateEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutDocument, any>>;
+    createEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiCreateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any>>;
     createEntityNotificationChannels(requestParameters: OrganizationModelControllerApiCreateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any>>;
     createEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiCreateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument, any>>;
     createEntityThemes(requestParameters: OrganizationModelControllerApiCreateEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument, any>>;
@@ -14138,6 +14500,7 @@ export class OrganizationModelControllerApi extends MetadataBaseApi implements O
     deleteEntityIdentityProviders(requestParameters: OrganizationModelControllerApiDeleteEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     deleteEntityJwks(requestParameters: OrganizationModelControllerApiDeleteEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     // (undocumented)
+    deleteEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiDeleteEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     deleteEntityNotificationChannels(requestParameters: OrganizationModelControllerApiDeleteEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     deleteEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiDeleteEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     deleteEntityThemes(requestParameters: OrganizationModelControllerApiDeleteEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
@@ -14151,6 +14514,7 @@ export class OrganizationModelControllerApi extends MetadataBaseApi implements O
     getAllEntitiesEntitlements(requestParameters?: OrganizationModelControllerApiGetAllEntitiesEntitlementsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiEntitlementOutList, any>>;
     getAllEntitiesIdentityProviders(requestParameters?: OrganizationModelControllerApiGetAllEntitiesIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutList, any>>;
     getAllEntitiesJwks(requestParameters?: OrganizationModelControllerApiGetAllEntitiesJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutList, any>>;
+    getAllEntitiesLlmEndpoints(requestParameters?: OrganizationModelControllerApiGetAllEntitiesLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutList, any>>;
     getAllEntitiesNotificationChannels(requestParameters?: OrganizationModelControllerApiGetAllEntitiesNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutList, any>>;
     getAllEntitiesOrganizationSettings(requestParameters?: OrganizationModelControllerApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutList, any>>;
     getAllEntitiesThemes(requestParameters?: OrganizationModelControllerApiGetAllEntitiesThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutList, any>>;
@@ -14165,6 +14529,7 @@ export class OrganizationModelControllerApi extends MetadataBaseApi implements O
     getEntityEntitlements(requestParameters: OrganizationModelControllerApiGetEntityEntitlementsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiEntitlementOutDocument, any>>;
     getEntityIdentityProviders(requestParameters: OrganizationModelControllerApiGetEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any>>;
     getEntityJwks(requestParameters: OrganizationModelControllerApiGetEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutDocument, any>>;
+    getEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiGetEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any>>;
     getEntityNotificationChannels(requestParameters: OrganizationModelControllerApiGetEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any>>;
     getEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiGetEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument, any>>;
     getEntityThemes(requestParameters: OrganizationModelControllerApiGetEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument, any>>;
@@ -14177,6 +14542,7 @@ export class OrganizationModelControllerApi extends MetadataBaseApi implements O
     patchEntityDataSources(requestParameters: OrganizationModelControllerApiPatchEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument, any>>;
     patchEntityIdentityProviders(requestParameters: OrganizationModelControllerApiPatchEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any>>;
     patchEntityJwks(requestParameters: OrganizationModelControllerApiPatchEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutDocument, any>>;
+    patchEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiPatchEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any>>;
     patchEntityNotificationChannels(requestParameters: OrganizationModelControllerApiPatchEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any>>;
     patchEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiPatchEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument, any>>;
     patchEntityThemes(requestParameters: OrganizationModelControllerApiPatchEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument, any>>;
@@ -14188,6 +14554,7 @@ export class OrganizationModelControllerApi extends MetadataBaseApi implements O
     updateEntityDataSources(requestParameters: OrganizationModelControllerApiUpdateEntityDataSourcesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiDataSourceOutDocument, any>>;
     updateEntityIdentityProviders(requestParameters: OrganizationModelControllerApiUpdateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any>>;
     updateEntityJwks(requestParameters: OrganizationModelControllerApiUpdateEntityJwksRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiJwkOutDocument, any>>;
+    updateEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiUpdateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiLlmEndpointOutDocument, any>>;
     updateEntityNotificationChannels(requestParameters: OrganizationModelControllerApiUpdateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any>>;
     updateEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiUpdateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiOrganizationSettingOutDocument, any>>;
     updateEntityThemes(requestParameters: OrganizationModelControllerApiUpdateEntityThemesRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiThemeOutDocument, any>>;
@@ -14203,6 +14570,7 @@ export const OrganizationModelControllerApiAxiosParamCreator: (configuration?: M
     createEntityDataSources: (jsonApiDataSourceInDocument: JsonApiDataSourceInDocument, metaInclude?: Array<"permissions" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityIdentityProviders: (jsonApiIdentityProviderInDocument: JsonApiIdentityProviderInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityJwks: (jsonApiJwkInDocument: JsonApiJwkInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    createEntityLlmEndpoints: (jsonApiLlmEndpointInDocument: JsonApiLlmEndpointInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityNotificationChannels: (jsonApiNotificationChannelPostOptionalIdDocument: JsonApiNotificationChannelPostOptionalIdDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityOrganizationSettings: (jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     createEntityThemes: (jsonApiThemeInDocument: JsonApiThemeInDocument, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -14214,6 +14582,7 @@ export const OrganizationModelControllerApiAxiosParamCreator: (configuration?: M
     deleteEntityDataSources: (id: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     deleteEntityIdentityProviders: (id: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     deleteEntityJwks: (id: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    deleteEntityLlmEndpoints: (id: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     deleteEntityNotificationChannels: (id: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     deleteEntityOrganizationSettings: (id: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     deleteEntityThemes: (id: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -14227,6 +14596,7 @@ export const OrganizationModelControllerApiAxiosParamCreator: (configuration?: M
     getAllEntitiesEntitlements: (filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<"page" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesIdentityProviders: (filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<"page" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesJwks: (filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<"page" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getAllEntitiesLlmEndpoints: (filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<"page" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesNotificationChannels: (filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<"page" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesOrganizationSettings: (filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<"page" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesThemes: (filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<"page" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -14241,6 +14611,7 @@ export const OrganizationModelControllerApiAxiosParamCreator: (configuration?: M
     getEntityEntitlements: (id: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityIdentityProviders: (id: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityJwks: (id: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getEntityLlmEndpoints: (id: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityNotificationChannels: (id: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityOrganizationSettings: (id: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityThemes: (id: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -14253,6 +14624,7 @@ export const OrganizationModelControllerApiAxiosParamCreator: (configuration?: M
     patchEntityDataSources: (id: string, jsonApiDataSourcePatchDocument: JsonApiDataSourcePatchDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityIdentityProviders: (id: string, jsonApiIdentityProviderPatchDocument: JsonApiIdentityProviderPatchDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityJwks: (id: string, jsonApiJwkPatchDocument: JsonApiJwkPatchDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    patchEntityLlmEndpoints: (id: string, jsonApiLlmEndpointPatchDocument: JsonApiLlmEndpointPatchDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityNotificationChannels: (id: string, jsonApiNotificationChannelPatchDocument: JsonApiNotificationChannelPatchDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityOrganizationSettings: (id: string, jsonApiOrganizationSettingPatchDocument: JsonApiOrganizationSettingPatchDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityThemes: (id: string, jsonApiThemePatchDocument: JsonApiThemePatchDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -14264,6 +14636,7 @@ export const OrganizationModelControllerApiAxiosParamCreator: (configuration?: M
     updateEntityDataSources: (id: string, jsonApiDataSourceInDocument: JsonApiDataSourceInDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityIdentityProviders: (id: string, jsonApiIdentityProviderInDocument: JsonApiIdentityProviderInDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityJwks: (id: string, jsonApiJwkInDocument: JsonApiJwkInDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    updateEntityLlmEndpoints: (id: string, jsonApiLlmEndpointInDocument: JsonApiLlmEndpointInDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityNotificationChannels: (id: string, jsonApiNotificationChannelInDocument: JsonApiNotificationChannelInDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityOrganizationSettings: (id: string, jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityThemes: (id: string, jsonApiThemeInDocument: JsonApiThemeInDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -14296,6 +14669,11 @@ export interface OrganizationModelControllerApiCreateEntityIdentityProvidersRequ
 // @public
 export interface OrganizationModelControllerApiCreateEntityJwksRequest {
     readonly jsonApiJwkInDocument: JsonApiJwkInDocument;
+}
+
+// @public
+export interface OrganizationModelControllerApiCreateEntityLlmEndpointsRequest {
+    readonly jsonApiLlmEndpointInDocument: JsonApiLlmEndpointInDocument;
 }
 
 // @public
@@ -14363,6 +14741,12 @@ export interface OrganizationModelControllerApiDeleteEntityJwksRequest {
 }
 
 // @public
+export interface OrganizationModelControllerApiDeleteEntityLlmEndpointsRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
 export interface OrganizationModelControllerApiDeleteEntityNotificationChannelsRequest {
     readonly filter?: string;
     readonly id: string;
@@ -14405,6 +14789,7 @@ export const OrganizationModelControllerApiFactory: (configuration?: MetadataCon
     createEntityDataSources(requestParameters: OrganizationModelControllerApiCreateEntityDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceOutDocument>;
     createEntityIdentityProviders(requestParameters: OrganizationModelControllerApiCreateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
     createEntityJwks(requestParameters: OrganizationModelControllerApiCreateEntityJwksRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiJwkOutDocument>;
+    createEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiCreateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
     createEntityNotificationChannels(requestParameters: OrganizationModelControllerApiCreateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
     createEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiCreateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
     createEntityThemes(requestParameters: OrganizationModelControllerApiCreateEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
@@ -14416,6 +14801,7 @@ export const OrganizationModelControllerApiFactory: (configuration?: MetadataCon
     deleteEntityDataSources(requestParameters: OrganizationModelControllerApiDeleteEntityDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityIdentityProviders(requestParameters: OrganizationModelControllerApiDeleteEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityJwks(requestParameters: OrganizationModelControllerApiDeleteEntityJwksRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    deleteEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiDeleteEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityNotificationChannels(requestParameters: OrganizationModelControllerApiDeleteEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiDeleteEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityThemes(requestParameters: OrganizationModelControllerApiDeleteEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -14429,6 +14815,7 @@ export const OrganizationModelControllerApiFactory: (configuration?: MetadataCon
     getAllEntitiesEntitlements(requestParameters: OrganizationModelControllerApiGetAllEntitiesEntitlementsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiEntitlementOutList>;
     getAllEntitiesIdentityProviders(requestParameters: OrganizationModelControllerApiGetAllEntitiesIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutList>;
     getAllEntitiesJwks(requestParameters: OrganizationModelControllerApiGetAllEntitiesJwksRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiJwkOutList>;
+    getAllEntitiesLlmEndpoints(requestParameters: OrganizationModelControllerApiGetAllEntitiesLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutList>;
     getAllEntitiesNotificationChannels(requestParameters: OrganizationModelControllerApiGetAllEntitiesNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutList>;
     getAllEntitiesOrganizationSettings(requestParameters: OrganizationModelControllerApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutList>;
     getAllEntitiesThemes(requestParameters: OrganizationModelControllerApiGetAllEntitiesThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutList>;
@@ -14443,6 +14830,7 @@ export const OrganizationModelControllerApiFactory: (configuration?: MetadataCon
     getEntityEntitlements(requestParameters: OrganizationModelControllerApiGetEntityEntitlementsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiEntitlementOutDocument>;
     getEntityIdentityProviders(requestParameters: OrganizationModelControllerApiGetEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
     getEntityJwks(requestParameters: OrganizationModelControllerApiGetEntityJwksRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiJwkOutDocument>;
+    getEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiGetEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
     getEntityNotificationChannels(requestParameters: OrganizationModelControllerApiGetEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
     getEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiGetEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
     getEntityThemes(requestParameters: OrganizationModelControllerApiGetEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
@@ -14455,6 +14843,7 @@ export const OrganizationModelControllerApiFactory: (configuration?: MetadataCon
     patchEntityDataSources(requestParameters: OrganizationModelControllerApiPatchEntityDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceOutDocument>;
     patchEntityIdentityProviders(requestParameters: OrganizationModelControllerApiPatchEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
     patchEntityJwks(requestParameters: OrganizationModelControllerApiPatchEntityJwksRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiJwkOutDocument>;
+    patchEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiPatchEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
     patchEntityNotificationChannels(requestParameters: OrganizationModelControllerApiPatchEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
     patchEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiPatchEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
     patchEntityThemes(requestParameters: OrganizationModelControllerApiPatchEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
@@ -14466,6 +14855,7 @@ export const OrganizationModelControllerApiFactory: (configuration?: MetadataCon
     updateEntityDataSources(requestParameters: OrganizationModelControllerApiUpdateEntityDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceOutDocument>;
     updateEntityIdentityProviders(requestParameters: OrganizationModelControllerApiUpdateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
     updateEntityJwks(requestParameters: OrganizationModelControllerApiUpdateEntityJwksRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiJwkOutDocument>;
+    updateEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiUpdateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
     updateEntityNotificationChannels(requestParameters: OrganizationModelControllerApiUpdateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
     updateEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiUpdateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
     updateEntityThemes(requestParameters: OrganizationModelControllerApiUpdateEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
@@ -14481,6 +14871,7 @@ export const OrganizationModelControllerApiFp: (configuration?: MetadataConfigur
     createEntityDataSources(jsonApiDataSourceInDocument: JsonApiDataSourceInDocument, metaInclude?: Array<"permissions" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiDataSourceOutDocument>>;
     createEntityIdentityProviders(jsonApiIdentityProviderInDocument: JsonApiIdentityProviderInDocument, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiIdentityProviderOutDocument>>;
     createEntityJwks(jsonApiJwkInDocument: JsonApiJwkInDocument, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiJwkOutDocument>>;
+    createEntityLlmEndpoints(jsonApiLlmEndpointInDocument: JsonApiLlmEndpointInDocument, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiLlmEndpointOutDocument>>;
     createEntityNotificationChannels(jsonApiNotificationChannelPostOptionalIdDocument: JsonApiNotificationChannelPostOptionalIdDocument, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiNotificationChannelOutDocument>>;
     createEntityOrganizationSettings(jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiOrganizationSettingOutDocument>>;
     createEntityThemes(jsonApiThemeInDocument: JsonApiThemeInDocument, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiThemeOutDocument>>;
@@ -14492,6 +14883,7 @@ export const OrganizationModelControllerApiFp: (configuration?: MetadataConfigur
     deleteEntityDataSources(id: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     deleteEntityIdentityProviders(id: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     deleteEntityJwks(id: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    deleteEntityLlmEndpoints(id: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     deleteEntityNotificationChannels(id: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     deleteEntityOrganizationSettings(id: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     deleteEntityThemes(id: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
@@ -14505,6 +14897,7 @@ export const OrganizationModelControllerApiFp: (configuration?: MetadataConfigur
     getAllEntitiesEntitlements(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<"page" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiEntitlementOutList>>;
     getAllEntitiesIdentityProviders(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<"page" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiIdentityProviderOutList>>;
     getAllEntitiesJwks(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<"page" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiJwkOutList>>;
+    getAllEntitiesLlmEndpoints(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<"page" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiLlmEndpointOutList>>;
     getAllEntitiesNotificationChannels(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<"page" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiNotificationChannelOutList>>;
     getAllEntitiesOrganizationSettings(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<"page" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiOrganizationSettingOutList>>;
     getAllEntitiesThemes(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<"page" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiThemeOutList>>;
@@ -14519,6 +14912,7 @@ export const OrganizationModelControllerApiFp: (configuration?: MetadataConfigur
     getEntityEntitlements(id: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiEntitlementOutDocument>>;
     getEntityIdentityProviders(id: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiIdentityProviderOutDocument>>;
     getEntityJwks(id: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiJwkOutDocument>>;
+    getEntityLlmEndpoints(id: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiLlmEndpointOutDocument>>;
     getEntityNotificationChannels(id: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiNotificationChannelOutDocument>>;
     getEntityOrganizationSettings(id: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiOrganizationSettingOutDocument>>;
     getEntityThemes(id: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiThemeOutDocument>>;
@@ -14531,6 +14925,7 @@ export const OrganizationModelControllerApiFp: (configuration?: MetadataConfigur
     patchEntityDataSources(id: string, jsonApiDataSourcePatchDocument: JsonApiDataSourcePatchDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiDataSourceOutDocument>>;
     patchEntityIdentityProviders(id: string, jsonApiIdentityProviderPatchDocument: JsonApiIdentityProviderPatchDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiIdentityProviderOutDocument>>;
     patchEntityJwks(id: string, jsonApiJwkPatchDocument: JsonApiJwkPatchDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiJwkOutDocument>>;
+    patchEntityLlmEndpoints(id: string, jsonApiLlmEndpointPatchDocument: JsonApiLlmEndpointPatchDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiLlmEndpointOutDocument>>;
     patchEntityNotificationChannels(id: string, jsonApiNotificationChannelPatchDocument: JsonApiNotificationChannelPatchDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiNotificationChannelOutDocument>>;
     patchEntityOrganizationSettings(id: string, jsonApiOrganizationSettingPatchDocument: JsonApiOrganizationSettingPatchDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiOrganizationSettingOutDocument>>;
     patchEntityThemes(id: string, jsonApiThemePatchDocument: JsonApiThemePatchDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiThemeOutDocument>>;
@@ -14542,6 +14937,7 @@ export const OrganizationModelControllerApiFp: (configuration?: MetadataConfigur
     updateEntityDataSources(id: string, jsonApiDataSourceInDocument: JsonApiDataSourceInDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiDataSourceOutDocument>>;
     updateEntityIdentityProviders(id: string, jsonApiIdentityProviderInDocument: JsonApiIdentityProviderInDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiIdentityProviderOutDocument>>;
     updateEntityJwks(id: string, jsonApiJwkInDocument: JsonApiJwkInDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiJwkOutDocument>>;
+    updateEntityLlmEndpoints(id: string, jsonApiLlmEndpointInDocument: JsonApiLlmEndpointInDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiLlmEndpointOutDocument>>;
     updateEntityNotificationChannels(id: string, jsonApiNotificationChannelInDocument: JsonApiNotificationChannelInDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiNotificationChannelOutDocument>>;
     updateEntityOrganizationSettings(id: string, jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiOrganizationSettingOutDocument>>;
     updateEntityThemes(id: string, jsonApiThemeInDocument: JsonApiThemeInDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiThemeOutDocument>>;
@@ -14606,6 +15002,15 @@ export interface OrganizationModelControllerApiGetAllEntitiesIdentityProvidersRe
 
 // @public
 export interface OrganizationModelControllerApiGetAllEntitiesJwksRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<"page" | "all" | "ALL">;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface OrganizationModelControllerApiGetAllEntitiesLlmEndpointsRequest {
     readonly filter?: string;
     readonly metaInclude?: Array<"page" | "all" | "ALL">;
     readonly page?: number;
@@ -14724,6 +15129,12 @@ export interface OrganizationModelControllerApiGetEntityJwksRequest {
 }
 
 // @public
+export interface OrganizationModelControllerApiGetEntityLlmEndpointsRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
 export interface OrganizationModelControllerApiGetEntityNotificationChannelsRequest {
     readonly filter?: string;
     readonly id: string;
@@ -14776,6 +15187,7 @@ export interface OrganizationModelControllerApiInterface {
     createEntityDataSources(requestParameters: OrganizationModelControllerApiCreateEntityDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceOutDocument>;
     createEntityIdentityProviders(requestParameters: OrganizationModelControllerApiCreateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
     createEntityJwks(requestParameters: OrganizationModelControllerApiCreateEntityJwksRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiJwkOutDocument>;
+    createEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiCreateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
     createEntityNotificationChannels(requestParameters: OrganizationModelControllerApiCreateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
     createEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiCreateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
     createEntityThemes(requestParameters: OrganizationModelControllerApiCreateEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
@@ -14788,6 +15200,7 @@ export interface OrganizationModelControllerApiInterface {
     deleteEntityIdentityProviders(requestParameters: OrganizationModelControllerApiDeleteEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityJwks(requestParameters: OrganizationModelControllerApiDeleteEntityJwksRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     // (undocumented)
+    deleteEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiDeleteEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityNotificationChannels(requestParameters: OrganizationModelControllerApiDeleteEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiDeleteEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     deleteEntityThemes(requestParameters: OrganizationModelControllerApiDeleteEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -14801,6 +15214,7 @@ export interface OrganizationModelControllerApiInterface {
     getAllEntitiesEntitlements(requestParameters: OrganizationModelControllerApiGetAllEntitiesEntitlementsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiEntitlementOutList>;
     getAllEntitiesIdentityProviders(requestParameters: OrganizationModelControllerApiGetAllEntitiesIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutList>;
     getAllEntitiesJwks(requestParameters: OrganizationModelControllerApiGetAllEntitiesJwksRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiJwkOutList>;
+    getAllEntitiesLlmEndpoints(requestParameters: OrganizationModelControllerApiGetAllEntitiesLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutList>;
     getAllEntitiesNotificationChannels(requestParameters: OrganizationModelControllerApiGetAllEntitiesNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutList>;
     getAllEntitiesOrganizationSettings(requestParameters: OrganizationModelControllerApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutList>;
     getAllEntitiesThemes(requestParameters: OrganizationModelControllerApiGetAllEntitiesThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutList>;
@@ -14815,6 +15229,7 @@ export interface OrganizationModelControllerApiInterface {
     getEntityEntitlements(requestParameters: OrganizationModelControllerApiGetEntityEntitlementsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiEntitlementOutDocument>;
     getEntityIdentityProviders(requestParameters: OrganizationModelControllerApiGetEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
     getEntityJwks(requestParameters: OrganizationModelControllerApiGetEntityJwksRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiJwkOutDocument>;
+    getEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiGetEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
     getEntityNotificationChannels(requestParameters: OrganizationModelControllerApiGetEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
     getEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiGetEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
     getEntityThemes(requestParameters: OrganizationModelControllerApiGetEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
@@ -14827,6 +15242,7 @@ export interface OrganizationModelControllerApiInterface {
     patchEntityDataSources(requestParameters: OrganizationModelControllerApiPatchEntityDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceOutDocument>;
     patchEntityIdentityProviders(requestParameters: OrganizationModelControllerApiPatchEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
     patchEntityJwks(requestParameters: OrganizationModelControllerApiPatchEntityJwksRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiJwkOutDocument>;
+    patchEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiPatchEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
     patchEntityNotificationChannels(requestParameters: OrganizationModelControllerApiPatchEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
     patchEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiPatchEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
     patchEntityThemes(requestParameters: OrganizationModelControllerApiPatchEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
@@ -14838,6 +15254,7 @@ export interface OrganizationModelControllerApiInterface {
     updateEntityDataSources(requestParameters: OrganizationModelControllerApiUpdateEntityDataSourcesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceOutDocument>;
     updateEntityIdentityProviders(requestParameters: OrganizationModelControllerApiUpdateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
     updateEntityJwks(requestParameters: OrganizationModelControllerApiUpdateEntityJwksRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiJwkOutDocument>;
+    updateEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiUpdateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
     updateEntityNotificationChannels(requestParameters: OrganizationModelControllerApiUpdateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
     updateEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiUpdateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
     updateEntityThemes(requestParameters: OrganizationModelControllerApiUpdateEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
@@ -14879,6 +15296,13 @@ export interface OrganizationModelControllerApiPatchEntityJwksRequest {
     readonly filter?: string;
     readonly id: string;
     readonly jsonApiJwkPatchDocument: JsonApiJwkPatchDocument;
+}
+
+// @public
+export interface OrganizationModelControllerApiPatchEntityLlmEndpointsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiLlmEndpointPatchDocument: JsonApiLlmEndpointPatchDocument;
 }
 
 // @public
@@ -14959,6 +15383,13 @@ export interface OrganizationModelControllerApiUpdateEntityJwksRequest {
     readonly filter?: string;
     readonly id: string;
     readonly jsonApiJwkInDocument: JsonApiJwkInDocument;
+}
+
+// @public
+export interface OrganizationModelControllerApiUpdateEntityLlmEndpointsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiLlmEndpointInDocument: JsonApiLlmEndpointInDocument;
 }
 
 // @public
@@ -15474,7 +15905,10 @@ export interface ProfileApiInterface {
 
 // @public
 interface Range_2 {
-    range?: RangeRange;
+    from: Value;
+    measure: LocalIdentifier;
+    operator: RangeOperatorEnum;
+    to: Value;
 }
 export { Range_2 as Range }
 
@@ -15502,22 +15936,19 @@ export const RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum: {
 // @public (undocumented)
 export type RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum = typeof RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum[keyof typeof RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum];
 
-// @public
-export interface RangeRange {
-    from: Value;
-    measure: LocalIdentifier;
-    operator: RangeRangeOperatorEnum;
-    to: Value;
-}
-
 // @public (undocumented)
-export const RangeRangeOperatorEnum: {
+export const RangeOperatorEnum: {
     readonly BETWEEN: "BETWEEN";
     readonly NOT_BETWEEN: "NOT_BETWEEN";
 };
 
 // @public (undocumented)
-export type RangeRangeOperatorEnum = typeof RangeRangeOperatorEnum[keyof typeof RangeRangeOperatorEnum];
+export type RangeOperatorEnum = typeof RangeOperatorEnum[keyof typeof RangeOperatorEnum];
+
+// @public
+export interface RangeWrapper {
+    range: Range_2;
+}
 
 // @public
 export interface RankingFilter {
@@ -15595,6 +16026,13 @@ export const ReferenceSourceColumnDataTypeEnum: {
 export type ReferenceSourceColumnDataTypeEnum = typeof ReferenceSourceColumnDataTypeEnum[keyof typeof ReferenceSourceColumnDataTypeEnum];
 
 // @public
+export interface Relative {
+    measure: ArithmeticMeasure;
+    operator: RelativeOperatorEnum;
+    threshold: Value;
+}
+
+// @public
 export interface RelativeDateFilter {
     relativeDateFilter: RelativeDateFilterRelativeDateFilter;
 }
@@ -15629,6 +16067,21 @@ export const RelativeDateFilterRelativeDateFilterGranularityEnum: {
 
 // @public (undocumented)
 export type RelativeDateFilterRelativeDateFilterGranularityEnum = typeof RelativeDateFilterRelativeDateFilterGranularityEnum[keyof typeof RelativeDateFilterRelativeDateFilterGranularityEnum];
+
+// @public (undocumented)
+export const RelativeOperatorEnum: {
+    readonly INCREASES_BY: "INCREASES_BY";
+    readonly DECREASES_BY: "DECREASES_BY";
+    readonly CHANGES_BY: "CHANGES_BY";
+};
+
+// @public (undocumented)
+export type RelativeOperatorEnum = typeof RelativeOperatorEnum[keyof typeof RelativeOperatorEnum];
+
+// @public
+export interface RelativeWrapper {
+    relative: Relative;
+}
 
 // @public
 export class ReportingSettingsApi extends MetadataBaseApi implements ReportingSettingsApiInterface {

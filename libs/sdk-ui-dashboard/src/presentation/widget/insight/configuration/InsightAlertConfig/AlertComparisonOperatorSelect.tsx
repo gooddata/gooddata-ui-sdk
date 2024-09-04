@@ -1,7 +1,11 @@
 // (C) 2024 GoodData Corporation
 import React from "react";
 import { Dropdown, Button, List, SingleSelectListItem, OverlayPositionType } from "@gooddata/sdk-ui-kit";
-import { IAlertComparisonOperator } from "@gooddata/sdk-model";
+import {
+    IAlertComparisonOperator,
+    IAlertRelativeArithmeticOperator,
+    IAlertRelativeOperator,
+} from "@gooddata/sdk-model";
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -12,14 +16,33 @@ import { useOperators } from "./hooks/useOperators.js";
 
 export interface IAlertComparisonOperatorSelectProps {
     measure: AlertMetric | undefined;
-    selectedComparisonOperator: IAlertComparisonOperator;
+    selectedComparisonOperator: IAlertComparisonOperator | undefined;
+    selectedRelativeOperator: [IAlertRelativeOperator, IAlertRelativeArithmeticOperator] | undefined;
     onComparisonOperatorChange: (comparisonOperator: IAlertComparisonOperator) => void;
+    onRelativeOperatorChange: (
+        relativeOperator: IAlertRelativeOperator,
+        relativeArithmeticOperator: IAlertRelativeArithmeticOperator,
+    ) => void;
     overlayPositionType?: OverlayPositionType;
 }
 
 export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSelectProps) => {
-    const { selectedComparisonOperator, onComparisonOperatorChange, overlayPositionType } = props;
-    const selectedItem = OPERATORS.find((option) => option.id === selectedComparisonOperator)!;
+    const {
+        selectedComparisonOperator,
+        onComparisonOperatorChange,
+        selectedRelativeOperator,
+        onRelativeOperatorChange,
+        overlayPositionType,
+    } = props;
+    const selectedComparisonItem = selectedComparisonOperator
+        ? OPERATORS.find((option) => option.id === selectedComparisonOperator)!
+        : undefined;
+    const selectedRelativeItem = selectedRelativeOperator
+        ? OPERATORS.find(
+              (option) => option.id === `${selectedRelativeOperator[1]}.${selectedRelativeOperator[0]}`,
+          )!
+        : undefined;
+
     const intl = useIntl();
 
     const operators = useOperators(props.measure);
@@ -39,11 +62,13 @@ export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSel
                             )}
                             size="small"
                             variant="secondary"
-                            iconLeft={selectedItem.icon}
+                            iconLeft={selectedComparisonItem?.icon ?? selectedRelativeItem?.icon}
                             iconRight={`gd-icon-navigate${isOpen ? "up" : "down"}`}
                             onClick={toggleDropdown}
                         >
-                            {intl.formatMessage({ id: selectedItem.title })}
+                            {intl.formatMessage({
+                                id: selectedComparisonItem?.title ?? selectedRelativeItem?.title,
+                            })}
                         </Button>
                     );
                 }}
@@ -89,12 +114,22 @@ export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSel
                                                 />
                                             ) : undefined
                                         }
-                                        isSelected={prop.item === selectedItem}
+                                        isSelected={
+                                            prop.item === selectedComparisonItem ||
+                                            prop.item === selectedRelativeItem
+                                        }
                                         onClick={() => {
-                                            if (prop.item.id) {
-                                                onComparisonOperatorChange(prop.item.id);
-                                                closeDropdown();
+                                            const [first, second] = prop.item.id.split(".");
+                                            if (first && !second) {
+                                                onComparisonOperatorChange(first);
                                             }
+                                            if (first && second) {
+                                                onRelativeOperatorChange(
+                                                    second as IAlertRelativeOperator,
+                                                    first as IAlertRelativeArithmeticOperator,
+                                                );
+                                            }
+                                            closeDropdown();
                                         }}
                                     />
                                 );

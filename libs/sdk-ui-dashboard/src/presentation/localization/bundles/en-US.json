@@ -748,26 +748,6 @@
         "comment": "",
         "limit": 0
     },
-    "alerting.comparisonOperator.greaterThan": {
-        "value": "greater than",
-        "comment": "",
-        "limit": 0
-    },
-    "alerting.comparisonOperator.greaterThanOrEquals": {
-        "value": "greater than or equals",
-        "comment": "",
-        "limit": 0
-    },
-    "alerting.comparisonOperator.lessThan": {
-        "value": "less than",
-        "comment": "",
-        "limit": 0
-    },
-    "alerting.comparisonOperator.lessThanOrEquals": {
-        "value": "less than or equals",
-        "comment": "",
-        "limit": 0
-    },
     "alerting.alert.menu.delete": {
         "value": "Delete",
         "comment": "",

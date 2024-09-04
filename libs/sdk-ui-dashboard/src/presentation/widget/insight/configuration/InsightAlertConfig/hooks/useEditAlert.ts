@@ -2,14 +2,18 @@
 import { useState } from "react";
 import {
     IAlertComparisonOperator,
+    IAlertRelativeArithmeticOperator,
+    IAlertRelativeOperator,
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
 import {
+    isAlertValueDefined,
     transformAlertByComparisonOperator,
     transformAlertByDestination,
     transformAlertByMetric,
+    transformAlertByRelativeOperator,
     transformAlertByValue,
 } from "../utils.js";
 import { AlertMetric } from "../../../types.js";
@@ -30,6 +34,15 @@ export const useEditAlert = ({ alert, onCreate, onUpdate }: IUseEditAlertProps) 
 
     const changeComparisonOperator = (comparisonOperator: IAlertComparisonOperator) => {
         setUpdatedAlert((alert) => transformAlertByComparisonOperator(alert, comparisonOperator));
+    };
+
+    const changeRelativeOperator = (
+        relativeOperator: IAlertRelativeOperator,
+        arithmeticOperator: IAlertRelativeArithmeticOperator,
+    ) => {
+        setUpdatedAlert((alert) =>
+            transformAlertByRelativeOperator(alert, relativeOperator, arithmeticOperator),
+        );
     };
 
     const changeValue = (value: number) => {
@@ -61,7 +74,7 @@ export const useEditAlert = ({ alert, onCreate, onUpdate }: IUseEditAlertProps) 
         onUpdate?.(updatedAlert as IAutomationMetadataObject);
     };
 
-    const isValueDefined = typeof updatedAlert.alert?.condition.right !== "undefined";
+    const isValueDefined = isAlertValueDefined(updatedAlert.alert);
     const isAlertChanged = !isEqual(updatedAlert, alert);
     const canSubmit = isValueDefined && isAlertChanged;
 
@@ -71,6 +84,7 @@ export const useEditAlert = ({ alert, onCreate, onUpdate }: IUseEditAlertProps) 
         canSubmit,
         //
         changeComparisonOperator,
+        changeRelativeOperator,
         changeMeasure,
         changeValue,
         changeDestination,

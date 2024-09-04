@@ -5,7 +5,7 @@ import {
     selectWidgetByRef,
     useDashboardSelector,
 } from "../../../../../../model/index.js";
-import { getSupportedInsightMeasuresByInsight } from "../utils.js";
+import { getAlertMeasure, getSupportedInsightMeasuresByInsight } from "../utils.js";
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 
 export type AlertInvalidityReason = "missingMetric" | "missingWidget";
@@ -16,7 +16,7 @@ export const useAlertValidation = (
 ): { isValid: boolean; invalidityReason: AlertInvalidityReason | undefined } => {
     const widgetLocalId = alert.metadata?.widget;
     const widgetRef = widgetLocalId ? { identifier: widgetLocalId } : undefined;
-    const selectedMeasure = alert.alert?.condition.left;
+    const selectedMeasure = getAlertMeasure(alert.alert);
 
     const widget = useDashboardSelector(selectWidgetByRef(widgetRef));
     const insight = useDashboardSelector(selectInsightByWidgetRef(widget?.ref));
