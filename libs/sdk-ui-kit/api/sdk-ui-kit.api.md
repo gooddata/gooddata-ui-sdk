@@ -1017,6 +1017,8 @@ export interface IBubbleProps {
     onMouseLeave?: () => void;
     // (undocumented)
     overlayClassName?: string;
+    // (undocumented)
+    overlayPositionType?: OverlayPositionType;
 }
 
 // @internal (undocumented)

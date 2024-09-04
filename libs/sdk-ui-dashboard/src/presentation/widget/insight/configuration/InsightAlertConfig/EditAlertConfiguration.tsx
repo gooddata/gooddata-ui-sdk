@@ -1,7 +1,7 @@
 // (C) 2022-2024 GoodData Corporation
 import React, { useState } from "react";
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
-import { Bubble, BubbleHoverTrigger, Button, Icon } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, Button, Icon, OverlayPositionType } from "@gooddata/sdk-ui-kit";
 import { AlertTriggerModeSelect } from "./AlertTriggerModeSelect.js";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { FormattedMessage } from "react-intl";
@@ -16,12 +16,14 @@ interface IEditAlertConfigurationProps {
     alert: IAutomationMetadataObject;
     onCancel: () => void;
     onUpdate: (alert: IAutomationMetadataObject) => void;
+    overlayPositionType?: OverlayPositionType;
 }
 
 export const EditAlertConfiguration: React.FC<IEditAlertConfigurationProps> = ({
     alert,
     onCancel,
     onUpdate,
+    overlayPositionType,
 }) => {
     const [updatedAlert, setUpdatedAlert] = useState<IAutomationMetadataObject>(alert);
     const canSubmit = updatedAlert.alert?.trigger.mode !== alert.alert?.trigger.mode;
@@ -59,6 +61,7 @@ export const EditAlertConfiguration: React.FC<IEditAlertConfigurationProps> = ({
                                 },
                             });
                         }}
+                        overlayPositionType={overlayPositionType}
                     />
                 </div>
             </div>

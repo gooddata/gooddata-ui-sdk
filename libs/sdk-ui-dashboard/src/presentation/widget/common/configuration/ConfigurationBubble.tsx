@@ -1,7 +1,13 @@
 // (C) 2022-2024 GoodData Corporation
 import React from "react";
 import cx from "classnames";
-import { ArrowDirections, ArrowOffsets, Bubble, IAlignPoint } from "@gooddata/sdk-ui-kit";
+import {
+    ArrowDirections,
+    ArrowOffsets,
+    Bubble,
+    IAlignPoint,
+    OverlayPositionType,
+} from "@gooddata/sdk-ui-kit";
 
 interface IConfigurationBubbleProps {
     classNames?: string;
@@ -10,6 +16,7 @@ interface IConfigurationBubbleProps {
     alignTo?: string;
     alignPoints?: IAlignPoint[];
     arrowOffsets?: ArrowOffsets;
+    overlayPositionType?: OverlayPositionType;
 }
 
 const defaultAlignPoints: IAlignPoint[] = [
@@ -41,6 +48,7 @@ export const ConfigurationBubble: React.FC<IConfigurationBubbleProps> = (props) 
         alignTo = ".s-dash-item.is-selected",
         alignPoints = defaultAlignPoints,
         arrowOffsets = defaultArrowOffsets,
+        overlayPositionType,
     } = props;
     const ignoreClicksOnByClass = [alignTo]; // do not close on click to the widget
 
@@ -56,6 +64,7 @@ export const ConfigurationBubble: React.FC<IConfigurationBubbleProps> = (props) 
             closeOnParentScroll={false}
             ignoreClicksOnByClass={ignoreClicksOnByClass}
             onClose={onClose}
+            overlayPositionType={overlayPositionType}
         >
             {children}
         </Bubble>

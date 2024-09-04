@@ -64,6 +64,7 @@ export const AlertDropdown: React.FC<IAlertDropdownProps> = (props) => {
             alignTo={alignTo}
             alignPoints={[{ align: "br tr" }, { align: "tr br" }]}
             onClose={onClose}
+            positionType="fixed"
         >
             <div
                 className={cx(
