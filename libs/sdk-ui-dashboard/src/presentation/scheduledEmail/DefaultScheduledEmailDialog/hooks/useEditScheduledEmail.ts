@@ -23,7 +23,7 @@ import {
     isCustomWidget,
     ExtendedDashboardWidget,
 } from "../../../../model/index.js";
-import { Alignment, normalizeTime } from "@gooddata/sdk-ui-kit";
+import { normalizeTime } from "@gooddata/sdk-ui-kit";
 import { IScheduledEmailDialogProps } from "../../types.js";
 import { WidgetAttachmentType } from "../types.js";
 import { toModifiedISOString } from "../../DefaultScheduledEmailManagementDialog/utils.js";
@@ -254,24 +254,6 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
         onWidgetAttachmentsSettingsChange,
         isCronValid,
     };
-}
-
-export function useScheduledEmailDialogAlignment() {
-    const [alignState, setAlignState] = useState("cc cc");
-    const alignPoints = [
-        {
-            align: alignState,
-        },
-    ];
-    const onAlign = (alignment: Alignment) => {
-        if (alignment.top < 0) {
-            setAlignState("tc tc");
-        } else {
-            setAlignState("cc cc");
-        }
-    };
-
-    return { alignPoints, onAlign };
 }
 
 function newDashboardExportDefinitionMetadataObjectDefinition({

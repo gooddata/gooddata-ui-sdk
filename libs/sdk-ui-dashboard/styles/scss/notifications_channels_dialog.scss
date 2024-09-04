@@ -17,9 +17,8 @@ $min-content-height: 110px;
 
 @media #{kit-variables.$small-only} {
     .gd-notifications-channels-dialog-overlay {
-        // override the static position in case of dialog with long content, on mobile view
-        // stylelint-disable-next-line declaration-no-important
-        position: absolute !important;
+        overflow-y: auto;
+        max-height: 99vh;
     }
 }
 
