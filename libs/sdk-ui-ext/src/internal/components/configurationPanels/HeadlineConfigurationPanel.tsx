@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -47,6 +47,7 @@ class HeadlineConfigurationPanel extends ConfigurationPanelContent<
                         propertiesMeta={propertiesMeta}
                         pushData={pushData}
                     />
+                    {this.renderInteractionsSection()}
                 </div>
                 <Bubble
                     className={bubbleClassNames}

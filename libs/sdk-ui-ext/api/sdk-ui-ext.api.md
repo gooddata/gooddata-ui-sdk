@@ -436,6 +436,15 @@ export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition
 // @alpha (undocumented)
 export function isEmptyAfm(obj: unknown): obj is EmptyAfmSdkError;
 
+// @internal (undocumented)
+export const isInsightAlertingConfigurationEnabled: (insight: IInsight | IInsightDefinition) => boolean;
+
+// @internal (undocumented)
+export const isInsightScheduledExportsConfigurationEnabled: (insight: IInsight | IInsightDefinition) => boolean;
+
+// @internal (undocumented)
+export const isInsightSupportedForAlerts: (insight: IInsight | IInsightDefinition | null | undefined) => boolean;
+
 // @alpha
 export interface ISizeInfo {
     // (undocumented)
