@@ -631,18 +631,20 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5, #b1c1d1);
     display: none;
     border-radius: 50%;
     background-color: var(--gd-palette-complementary-2, variables.$grey-background);
-    width: 36px;
-    height: 36px;
+    // width: 36px;
+    // height: 36px;
+    width: 0;
+    height: 0;
     transition: variables.$transition-length;
 
-    &::before {
-        content: "...";
-        font-size: 22px;
-        position: relative;
-        top: -5px;
-        display: inline;
-        color: variables.$darker-grey-background;
-    }
+    // &::before {
+    //     content: "...";
+    //     font-size: 22px;
+    //     position: relative;
+    //     top: -5px;
+    //     display: inline;
+    //     color: variables.$darker-grey-background;
+    // }
 }
 
 .dash-section {

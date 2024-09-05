@@ -2451,6 +2451,21 @@
         "comment": "",
         "limit": 0
     },
+    "visualizationSwitcherToolbar.visualizationsList.header": {
+        "value": "Visualizations",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcherToolbar.visualizationsList.empty": {
+        "value": "No visualization in switcher, add one to continue.",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcherToolbar.visualizationsList.add": {
+        "value": "Add visualization",
+        "comment": "",
+        "limit": 0
+    },
     "attributesDropdown.valuesLimiting.title": {
         "value": "Filter values by",
         "comment": "The title of section that configures filters for listed values in the filter. There is a list of applied filters below the title.",

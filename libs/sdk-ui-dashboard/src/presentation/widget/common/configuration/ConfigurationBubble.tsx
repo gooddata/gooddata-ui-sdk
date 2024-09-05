@@ -17,6 +17,8 @@ interface IConfigurationBubbleProps {
     alignPoints?: IAlignPoint[];
     arrowOffsets?: ArrowOffsets;
     overlayPositionType?: OverlayPositionType;
+    arrowDirections?: ArrowDirections;
+    showArrow?: boolean;
 }
 
 const defaultAlignPoints: IAlignPoint[] = [
@@ -35,7 +37,7 @@ const defaultArrowOffsets: ArrowOffsets = {
     "br br": [-76, -28],
 };
 
-const arrowDirections: ArrowDirections = {
+const defaultArrowDirections: ArrowDirections = {
     "tr tr": "right",
     "br br": "right",
 };
@@ -49,6 +51,8 @@ export const ConfigurationBubble: React.FC<IConfigurationBubbleProps> = (props) 
         alignPoints = defaultAlignPoints,
         arrowOffsets = defaultArrowOffsets,
         overlayPositionType,
+        arrowDirections = defaultArrowDirections,
+        showArrow = true,
     } = props;
     const ignoreClicksOnByClass = [alignTo]; // do not close on click to the widget
 
@@ -65,6 +69,7 @@ export const ConfigurationBubble: React.FC<IConfigurationBubbleProps> = (props) 
             ignoreClicksOnByClass={ignoreClicksOnByClass}
             onClose={onClose}
             overlayPositionType={overlayPositionType}
+            arrowStyle={{ display: showArrow ? "block" : "none" }}
         >
             {children}
         </Bubble>

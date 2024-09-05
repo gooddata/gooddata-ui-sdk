@@ -1243,6 +1243,9 @@ export type CustomToolbarComponent = ComponentType<IToolbarProps>;
 // @alpha (undocumented)
 export type CustomTopBarComponent = ComponentType<ITopBarProps>;
 
+// @alpha (undocumented)
+export type CustomVisualizationSwitcherToolbarComponent = ComponentType<IVisualizationSwitcherToolbarProps>;
+
 // @internal
 export type CustomWidgetComponentSet = CustomComponentBase<IDashboardWidgetProps, Parameters<WidgetComponentProvider>> & DraggableComponent & Partial<ConfigurableWidget<ICustomWidget>> & Partial<CreatableByDragComponent>;
 
@@ -3049,6 +3052,9 @@ export const DefaultTitle: CustomTitleComponent;
 // @alpha (undocumented)
 export function DefaultTopBar(props: ITopBarProps): JSX.Element;
 
+// @alpha (undocumented)
+export const DefaultVisualizationSwitcherToolbar: (props: IVisualizationSwitcherToolbarProps) => JSX.Element;
+
 // @internal
 export interface DeleteAttributeHierarchyRequested extends IDashboardEvent {
     // (undocumented)
@@ -3948,6 +3954,7 @@ export interface IDashboardCustomComponentProps {
     // @alpha
     TopBarComponent?: CustomTopBarComponent;
     VisualizationSwitcherComponentProvider?: OptionalVisualizationSwitcherComponentProvider;
+    VisualizationSwitcherToolbarComponentProvider?: OptionalVisualizationSwitcherToolbarComponentProvider;
     WidgetComponentProvider?: OptionalWidgetComponentProvider;
 }
 
@@ -5546,6 +5553,18 @@ export type IVisualizationSwitcherDraggingComponentProps = {
     item: VisualizationSwitcherDraggableItem;
 };
 
+// @alpha (undocumented)
+export interface IVisualizationSwitcherToolbarProps {
+    // (undocumented)
+    onVisualizationAdded: (insightWidget: IInsightWidget, sizeInfo: any) => void;
+    // (undocumented)
+    onVisualizationsChanged: (visualizations: IInsightWidget[]) => void;
+    // (undocumented)
+    onWidgetDelete: () => void;
+    // (undocumented)
+    widget: IVisualizationSwitcherWidget;
+}
+
 // @internal (undocumented)
 export type IWrapCreatePanelItemWithDragComponent = React.ComponentType<IWrapCreatePanelItemWithDragProps>;
 
@@ -5994,6 +6013,9 @@ export type OptionalRichTextComponentProvider = OptionalProvider<RichTextCompone
 
 // @public (undocumented)
 export type OptionalVisualizationSwitcherComponentProvider = OptionalProvider<VisualizationSwitcherComponentProvider>;
+
+// @alpha (undocumented)
+export type OptionalVisualizationSwitcherToolbarComponentProvider = OptionalProvider<VisualizationSwitcherToolbarComponentProvider>;
 
 // @public (undocumented)
 export type OptionalWidgetComponentProvider = OptionalProvider<WidgetComponentProvider>;
@@ -9119,6 +9141,9 @@ export type VisualizationSwitcherDraggableListItem = BaseDraggableLayoutItem & {
 
 // @internal (undocumented)
 export type VisualizationSwitcherDraggingComponent = ComponentType<IVisualizationSwitcherDraggingComponentProps>;
+
+// @alpha (undocumented)
+export type VisualizationSwitcherToolbarComponentProvider = (widget: IVisualizationSwitcherWidget) => CustomVisualizationSwitcherToolbarComponent;
 
 // @internal
 export type VisualizationSwitcherWidgetComponentSet = CustomComponentBase<IDashboardVisualizationSwitcherProps, Parameters<VisualizationSwitcherComponentProvider>> & DraggableComponent & Partial<CreatableByDragComponent> & Partial<CreatablePlaceholderComponent<IDashboardWidgetProps>> & ConfigurableWidget<IVisualizationSwitcherWidget>;
