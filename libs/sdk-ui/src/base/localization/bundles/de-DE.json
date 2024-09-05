@@ -636,5 +636,7 @@
     "semantic-search.placeholder": "Dashboards oder Visualisierung durchsuchen…",
     "semantic-search.id": "ID",
     "semantic-search.tags": "Tags",
-    "semantic-search.match": "{score}% Übereinstimmung"
+    "semantic-search.match": "{score}% Übereinstimmung",
+    "recurrence.error.too_often": "Frequenz zu hoch",
+    "recurrence.cron.tooltip": "Verwenden Sie das Unix-Cron-String-Format. <a>Mehr erfahren </a>"
 }

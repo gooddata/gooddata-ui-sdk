@@ -636,5 +636,7 @@
     "semantic-search.placeholder": "搜尋儀表板或視覺化…",
     "semantic-search.id": "ID",
     "semantic-search.tags": "標籤",
-    "semantic-search.match": "{score}％ 匹配"
+    "semantic-search.match": "{score}％ 匹配",
+    "recurrence.error.too_often": "頻率太高",
+    "recurrence.cron.tooltip": "使用 unix-cron 字串格式。<a>了解更多</a>"
 }

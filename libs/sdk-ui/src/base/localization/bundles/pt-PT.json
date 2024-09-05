@@ -636,5 +636,7 @@
     "semantic-search.placeholder": "Pesquisar painéis de controlo ou de visualização…",
     "semantic-search.id": "ID",
     "semantic-search.tags": "Tags",
-    "semantic-search.match": "{score}% de correspondência"
+    "semantic-search.match": "{score}% de correspondência",
+    "recurrence.error.too_often": "Frequência demasiado alta",
+    "recurrence.cron.tooltip": "Use o formato de string unix-cron. <a>Saiba mais</a>"
 }

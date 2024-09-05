@@ -636,5 +636,7 @@
     "semantic-search.placeholder": "搜索儀錶板或可視化…",
     "semantic-search.id": "身份證",
     "semantic-search.tags": "標籤",
-    "semantic-search.match": "{score}％ 匹配"
+    "semantic-search.match": "{score}％ 匹配",
+    "recurrence.error.too_often": "頻率太高",
+    "recurrence.cron.tooltip": "使用unix-cron字符串格式。 <a>瞭解更多信息</a>"
 }
