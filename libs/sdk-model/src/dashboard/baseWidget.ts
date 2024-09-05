@@ -9,6 +9,7 @@ import { IDashboardFilterReference } from "./filterContext.js";
  * -  Date data set that should be used for date-filtering the data for the widget
  * -  An ignore-list containing references to dashboard attribute filters that should be ignored by
  *    the widget.
+ * -  Whether widget should ignore cross-filtering filters.
  *
  * @public
  */
@@ -22,6 +23,11 @@ export interface IFilterableWidget {
      * Date data set widget is connected to
      */
     readonly dateDataSet?: ObjRef;
+
+    /**
+     * Ignore cross-filtering filters
+     */
+    readonly ignoreCrossFiltering?: boolean;
 }
 
 /**

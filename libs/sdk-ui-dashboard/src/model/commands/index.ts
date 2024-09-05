@@ -54,6 +54,7 @@ import {
     AddDrillDownForInsightWidget,
     ModifyDrillDownForInsightWidget,
     AttributeHierarchyModified,
+    ChangeInsightWidgetIgnoreCrossFiltering,
 } from "./insight.js";
 import {
     ChangeKpiWidgetComparison,
@@ -363,6 +364,9 @@ export {
     ChangeInsightWidgetDescription,
     ChangeInsightWidgetDescriptionPayload,
     changeInsightWidgetDescription,
+    ChangeInsightWidgetIgnoreCrossFiltering,
+    ChangeInsightWidgetIgnoreCrossFilteringPayload,
+    changeInsightWidgetIgnoreCrossFiltering,
     ChangeInsightWidgetFilterSettings,
     ChangeInsightWidgetFilterSettingsPayload,
     replaceInsightWidgetFilterSettings,
@@ -491,6 +495,7 @@ export type DashboardCommands =
     | RemoveDrillForKpiWidget
     | ChangeInsightWidgetHeader
     | ChangeInsightWidgetDescription
+    | ChangeInsightWidgetIgnoreCrossFiltering
     | ChangeInsightWidgetFilterSettings
     | ChangeInsightWidgetVisProperties
     | ChangeInsightWidgetVisConfiguration

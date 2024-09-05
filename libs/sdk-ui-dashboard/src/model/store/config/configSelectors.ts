@@ -746,3 +746,15 @@ export const selectEnableVisualizationSwitcher: DashboardSelector<boolean> = cre
         return state.settings?.enableKDVisualizationSwitcher ?? false;
     },
 );
+
+/**
+ * Returns whether ignore cross-filtering enabled.
+ *
+ * @internal
+ */
+export const selectEnableIgnoreCrossFiltering: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableIgnoreCrossFiltering ?? false;
+    },
+);

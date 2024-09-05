@@ -88,6 +88,7 @@ export {
     selectEnableDrillDownIntersectionIgnoredAttributes,
     selectEnableAlerting,
     selectEnableVisualizationSwitcher,
+    selectEnableIgnoreCrossFiltering,
 } from "./config/configSelectors.js";
 export { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {
