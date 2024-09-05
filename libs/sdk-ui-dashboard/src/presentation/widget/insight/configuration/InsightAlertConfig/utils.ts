@@ -37,7 +37,7 @@ import { messages } from "./messages.js";
  * @internal
  */
 export const getMeasureTitle = (measure: IMeasure) => {
-    return measure ? measureTitle(measure) ?? measureAlias(measure) : undefined;
+    return measure ? measureAlias(measure) ?? measureTitle(measure) : undefined;
 };
 
 export const getOperatorTitle = (intl: IntlShape, alert?: IAutomationAlert) => {
