@@ -21,7 +21,7 @@ interface IConfigurationBubbleProps {
     showArrow?: boolean;
 }
 
-const defaultAlignPoints: IAlignPoint[] = [
+export const defaultAlignPoints: IAlignPoint[] = [
     { align: "tr tl" },
     { align: "br bl" },
     { align: "tl tr" },
@@ -29,7 +29,7 @@ const defaultAlignPoints: IAlignPoint[] = [
     { align: "br br" },
 ];
 
-const defaultArrowOffsets: ArrowOffsets = {
+export const defaultArrowOffsets: ArrowOffsets = {
     "tr tl": [7, 28],
     "br bl": [7, -28],
     "tl tr": [-7, 28],
@@ -37,7 +37,7 @@ const defaultArrowOffsets: ArrowOffsets = {
     "br br": [-76, -28],
 };
 
-const defaultArrowDirections: ArrowDirections = {
+export const defaultArrowDirections: ArrowDirections = {
     "tr tr": "right",
     "br br": "right",
 };

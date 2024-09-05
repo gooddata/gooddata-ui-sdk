@@ -2,30 +2,84 @@
 @use "variables";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
-.visualization-switcher-toolbar-container {
+.visualization-switcher-toolbar-top {
+    width: 189px;
+    height: 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
-    // height: 50px;
-    // background-color: $gd-color-background;
-    // border-bottom: 1px solid $gd-color-border;
-    // z-index: 1;
-    // position: relative;
-    // box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-    .divider {
+    padding: 6px 8px;
+    margin-bottom: 8px;
+    background-color: white;
+    .left-section {
+        padding: 4px 14px 4px 4px;
+        flex: 0 1 auto;
+    }
+    .vertical-divider {
+        flex: 0 0 1px;
         width: 1px;
         height: 28px;
         background-color: variables.$button-grey-background;
     }
     .middle-section {
+        flex: 1 0 auto;
         display: flex;
+        padding: 4px 10px;
         justify-content: space-between;
         align-items: center;
         color: kit-variables.$gd-color-link;
+        font-size: 14px;
+    }
+    .status {
+        padding: 2px 0;
+        line-height: 21px;
+    }
+    .navigate-button {
+        width: 28px;
+        height: 19px;
+        text-align: center;
     }
 
-    .gd-icon-trash:hover::before {
+    .right-section {
+        padding: 4px;
+        flex: 0 1 auto;
+    }
+
+    .gd-button.gd-button-link.gd-button-icon-only.gd-icon-trash:hover::before {
         color: var(--gd-palette-error-base, #e54d42);
+    }
+}
+
+.visualization-switcher-toolbar-bottom {
+    background-color: white;
+
+    .insight-configuration-content {
+        padding: 10px 0;
+    }
+    .no-visualizations-text {
+        margin-left: 15px;
+        padding: 5px 0;
+        font-size: 12px;
+        line-height: 21px;
+        color: var(--gd-palette-complementary-6, #94a1ad);
+    }
+
+    .horizontal-divider {
+        width: 100%;
+        text-align: center;
+        padding: 0 15px;
+        .horizontal-divider-line {
+            height: 1px;
+            background-color: variables.$button-grey-background;
+        }
+    }
+    .gd-add-visualization {
+        margin-top: 5px;
+        margin-left: 5px;
+        font-size: 12px;
+    }
+
+    .open-visualizations {
+        padding: 15px 0;
     }
 }

@@ -1,6 +1,6 @@
 // (C) 2024 GoodData Corporation
 
-import { Button, Icon, Typography } from "@gooddata/sdk-ui-kit";
+import { Bubble, Button, GD_COLOR_HIGHLIGHT, Icon, Typography } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import React, { useCallback, useState } from "react";
 import cx from "classnames";
@@ -27,9 +27,14 @@ import {
 import { IInsightMenuSubmenu } from "../../insightMenu/index.js";
 import { useEditableInsightMenu } from "../../widget/InsightWidget/useEditableInsightMenu.js";
 import { useIntl } from "react-intl";
-import { ConfigurationBubble } from "../../common/configuration/ConfigurationBubble.js";
+import {
+    defaultAlignPoints,
+    defaultArrowOffsets,
+    defaultArrowDirections,
+} from "../../common/configuration/ConfigurationBubble.js";
 import { getSizeInfo } from "../../../../_staging/layout/sizing.js";
 import { InsightList } from "../../../insightList/index.js";
+import { DashboardInsightSubmenuHeader } from "../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightSubmenuHeader.js";
 
 interface ToolbarProps {
     widget: IVisualizationSwitcherWidget;
@@ -94,52 +99,68 @@ export const Toolbar: React.FC<ToolbarProps> = ({
         (visualization) => visualization.identifier === activeVisualizationId,
     );
 
+    const showVisualizationsList = isVisualizationsListVisible || !activeVisualization;
+    const alignTo = ".s-dash-item.is-selected";
+    const ignoreClicksOnByClass = [alignTo]; // do not close on click to the widget
+    const configBubbleClassNames = cx(
+        "edit-insight-config",
+        "s-edit-insight-config",
+        "edit-insight-config-title-1-line",
+        "edit-insight-config-arrow-color",
+    );
+
     return (
-        <>
-            <ConfigurationBubble
-                classNames={cx(
-                    "edit-insight-config",
-                    "s-edit-insight-config",
-                    "edit-insight-config-title-1-line",
-                    "edit-insight-config-arrow-color",
-                )}
-                showArrow={false}
-            >
-                <ToolbarBody
-                    visualizations={visualizations}
-                    onNavigate={onNavigate}
-                    activeVisualizationId={activeVisualizationId}
-                    onDelete={onWidgetDelete}
-                    toggleVisualizationsList={toggleVisualizationsList}
-                />
-                {isVisualizationsListVisible || !activeVisualization ? (
-                    <VisualizationsList
-                        visualizations={visualizations}
-                        onVisualizationAdd={onVisualizationAdd}
-                        onVisualizationDeleted={onVisualizationDelete}
-                    />
-                ) : (
-                    <VisualizationConfig widget={activeVisualization} />
-                )}
-            </ConfigurationBubble>
-        </>
+        <Bubble
+            className={cx(
+                "gd-configuration-bubble s-gd-visualization-switcher-toolbar-bubble",
+                configBubbleClassNames,
+            )}
+            overlayClassName="gd-configuration-bubble-wrapper sdk-edit-mode-on"
+            alignTo={alignTo}
+            alignPoints={defaultAlignPoints}
+            arrowOffsets={defaultArrowOffsets}
+            arrowDirections={defaultArrowDirections}
+            closeOnOutsideClick
+            closeOnParentScroll={false}
+            ignoreClicksOnByClass={ignoreClicksOnByClass}
+            arrowStyle={{ display: "none" }}
+        >
+            <ToolbarTop
+                visualizations={visualizations}
+                onNavigate={onNavigate}
+                activeVisualizationId={activeVisualizationId}
+                onDelete={onWidgetDelete}
+                toggleVisualizationsList={toggleVisualizationsList}
+                visualizationsListShown={showVisualizationsList}
+            />
+            <ToolbarBottom
+                visualizations={visualizations}
+                activeVisualizationId={activeVisualizationId}
+                showVisualizationsList={showVisualizationsList}
+                onVisualizationAdd={onVisualizationAdd}
+                onVisualizationDelete={onVisualizationDelete}
+                onVisualizationSelect={onNavigate}
+            />
+        </Bubble>
     );
 };
 
-interface ToolbarBodyProps {
+interface IToolbarTopProps {
     visualizations: IInsightWidget[];
     activeVisualizationId: string | undefined;
     onNavigate: (widgetId: string) => void;
     onDelete: () => void;
     toggleVisualizationsList: () => void;
+    visualizationsListShown: boolean;
 }
 
-const ToolbarBody: React.FC<ToolbarBodyProps> = ({
+const ToolbarTop: React.FC<IToolbarTopProps> = ({
     visualizations,
     onNavigate,
     activeVisualizationId: activeWidgetId,
     onDelete,
     toggleVisualizationsList,
+    visualizationsListShown,
 }) => {
     const theme = useTheme();
     const activeWidgetIndex = visualizations.findIndex(() => activeWidgetId);
@@ -147,7 +168,9 @@ const ToolbarBody: React.FC<ToolbarBodyProps> = ({
     const prevDisabled = activeWidgetIndex <= 0;
     const nextDisabled = activeWidgetIndex === -1 || activeWidgetIndex >= visualizations.length;
 
-    const iconColor = theme?.palette?.complementary?.c6 ?? gdColorStateBlank;
+    const iconColor = visualizationsListShown
+        ? theme?.palette?.primary?.base ?? GD_COLOR_HIGHLIGHT
+        : theme?.palette?.complementary?.c6 ?? gdColorStateBlank;
 
     const enabledColor = theme?.palette?.complementary?.c7 ?? "#6D7680";
     const disabledColor = theme?.palette?.complementary?.c5 ?? "#B0BECA";
@@ -174,23 +197,23 @@ const ToolbarBody: React.FC<ToolbarBodyProps> = ({
     }, [activeWidgetIndex, visualizations, onNavigate, nextDisabled]);
 
     return (
-        <div className="visualization-switcher-toolbar-container">
+        <div className="visualization-switcher-toolbar-top bubble-light">
             <div className="left-section" onClick={toggleVisualizationsList}>
-                <Icon.VisualizationSwitcher color={iconColor} />
+                <Icon.VisualizationSwitcher color={iconColor} width={20} height={20} />
             </div>
-            <div className="divider" />
+            <div className="vertical-divider" />
             <div className="middle-section">
-                <div className="navigate-prev" onClick={onNavigatePrev}>
+                <div className="navigate-button navigate-prev" onClick={onNavigatePrev}>
                     <Icon.ArrowLeft color={prevColor} />
                 </div>
                 <div className="status">
-                    {activeWidgetIndex + 1} / {visualizations.length}
+                    {activeWidgetIndex + 1}/{visualizations.length}
                 </div>
-                <div className="navigate-next" onClick={onNavigateNext}>
+                <div className="navigate-button navigate-next" onClick={onNavigateNext}>
                     <Icon.ArrowRight color={nextColor} />
                 </div>
             </div>
-            <div className="divider" />
+            <div className="vertical-divider" />
             <div className="right-section">
                 <Button
                     className="gd-button-link gd-button-icon-only gd-icon-trash s-visualization-switcher-remove-button"
@@ -201,14 +224,54 @@ const ToolbarBody: React.FC<ToolbarBodyProps> = ({
     );
 };
 
+interface IToolbarBottomProps {
+    visualizations: IInsightWidget[];
+    activeVisualizationId: string | undefined;
+    onVisualizationAdd: (insight: IInsight) => void;
+    onVisualizationDelete: (visualizationWidgetId: string) => void;
+    onVisualizationSelect: (visualizationWidgetId: string) => void;
+    showVisualizationsList: boolean;
+}
+
+const ToolbarBottom: React.FC<IToolbarBottomProps> = ({
+    showVisualizationsList,
+    visualizations,
+    onVisualizationAdd,
+    onVisualizationDelete,
+    onVisualizationSelect,
+    activeVisualizationId,
+}) => {
+    const activeVisualization = visualizations.find(
+        (visualization) => visualization.identifier === activeVisualizationId,
+    );
+    return (
+        <div className="visualization-switcher-toolbar-bottom bubble-light">
+            {showVisualizationsList || !activeVisualization ? (
+                <VisualizationsList
+                    visualizations={visualizations}
+                    activeVisualizationId={activeVisualizationId}
+                    onVisualizationAdd={onVisualizationAdd}
+                    onVisualizationDeleted={onVisualizationDelete}
+                    onVisualizationSelect={onVisualizationSelect}
+                />
+            ) : (
+                <VisualizationConfig widget={activeVisualization} />
+            )}
+        </div>
+    );
+};
+
 interface VisualizationsListProps {
     visualizations: IInsightWidget[];
+    activeVisualizationId: string | undefined;
     onVisualizationAdd: (insight: IInsight) => void;
-    onVisualizationDeleted: (widgetId: string) => void;
+    onVisualizationDeleted: (visualizationWidgetId: string) => void;
+    onVisualizationSelect: (visualizationWidgetId: string) => void;
 }
 
 const VisualizationsList: React.FC<VisualizationsListProps> = ({
     visualizations,
+    activeVisualizationId,
     onVisualizationDeleted,
     onVisualizationAdd,
 }) => {
@@ -219,13 +282,16 @@ const VisualizationsList: React.FC<VisualizationsListProps> = ({
     const onAdd = () => {
         setVisualizationPickerVisible(!isVisualizationPickerVisible);
     };
+    const onBack = () => {
+        setVisualizationPickerVisible(!isVisualizationPickerVisible);
+    };
 
     const onAdded = (insight: IInsight) => {
         onVisualizationAdd(insight);
         setVisualizationPickerVisible(false);
     };
     return isVisualizationPickerVisible ? (
-        <VisualizationPicker onVisualizationSelect={onAdded} />
+        <VisualizationPicker onVisualizationSelect={onAdded} onBack={onBack} />
     ) : (
         <div className="edit-insight-config">
             <div className="insight-configuration">
@@ -238,26 +304,34 @@ const VisualizationsList: React.FC<VisualizationsListProps> = ({
                         </span>
                     </Typography>
                 </div>
-                {visualizations.length === 0 && (
-                    <div>
-                        {intl.formatMessage({ id: "visualizationSwitcherToolbar.visualizationsList.empty" })}
+                <div className="insight-configuration-content">
+                    {visualizations.length === 0 && (
+                        <div className="no-visualizations-text">
+                            {intl.formatMessage({
+                                id: "visualizationSwitcherToolbar.visualizationsList.empty",
+                            })}
+                        </div>
+                    )}
+                    {visualizations.map((visualization) => (
+                        <div key={visualization.identifier}>
+                            {visualization.title}
+                            {visualization.identifier === activeVisualizationId && "X"}
+                            <Button
+                                className="gd-button-link gd-button-icon-only gd-icon-trash s-visualization-switcher-remove-button"
+                                onClick={() => onVisualizationDeleted(visualization.identifier)}
+                            />
+                        </div>
+                    ))}
+                    <div className="horizontal-divider">
+                        <div className="horizontal-divider-line" />
                     </div>
-                )}
-                {visualizations.map((visualization) => (
-                    <div key={visualization.identifier}>
-                        {visualization.title}
-                        <Button
-                            className="gd-button-link gd-button-icon-only gd-icon-trash s-visualization-switcher-remove-button"
-                            onClick={() => onVisualizationDeleted(visualization.identifier)}
-                        />
-                    </div>
-                ))}
-                <Button
-                    className="gd-button-link gd-icon-plus s-visualization-switcher-add-button"
-                    onClick={onAdd}
-                >
-                    {intl.formatMessage({ id: "visualizationSwitcherToolbar.visualizationsList.add" })}
-                </Button>
+                    <Button
+                        className="gd-button-link gd-icon-plus gd-add-visualization s-visualization-switcher-add-button"
+                        onClick={onAdd}
+                    >
+                        {intl.formatMessage({ id: "visualizationSwitcherToolbar.visualizationsList.add" })}
+                    </Button>
+                </div>
             </div>
         </div>
     );
@@ -306,15 +380,25 @@ const VisualizationConfigContent: React.FC<{ widget: IInsightWidget; insight: II
 
 interface IVisualizationPickerProps {
     onVisualizationSelect: (insight: IInsight) => void;
+    onBack: () => void;
 }
 
-const VisualizationPicker: React.FC<IVisualizationPickerProps> = ({ onVisualizationSelect }) => {
+const VisualizationPicker: React.FC<IVisualizationPickerProps> = ({ onVisualizationSelect, onBack }) => {
+    const intl = useIntl();
     return (
         <div className="visualization-picker">
+            <div className="configuration-panel-header" onClick={onBack}>
+                <DashboardInsightSubmenuHeader
+                    title={intl.formatMessage({
+                        id: "visualizationSwitcherToolbar.visualizationsList.add",
+                    })}
+                    onHeaderClick={onBack}
+                />
+            </div>
             <div className="open-visualizations s-open-visualizations">
                 <InsightList
-                    height={300}
-                    width={275}
+                    height={260}
+                    width={240}
                     searchAutofocus={true}
                     onSelect={(insight) => {
                         onVisualizationSelect(insight);
