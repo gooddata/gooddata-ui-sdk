@@ -2,6 +2,18 @@
   "name": "@gooddata/sdk-ui-all",
   "entries": [
     {
+      "version": "10.9.0",
+      "tag": "@gooddata/sdk-ui-all_v10.9.0",
+      "date": "Thu, 05 Sep 2024 08:14:25 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Add possibility to ignore specified attributes in the drill down intersection. Modify addDrillDownForInsightWidget and modifyDrillDownForInsightWidget commands to be able to configure it (breaking)."
+          }
+        ]
+      }
+    },
+    {
       "version": "10.8.0",
       "tag": "@gooddata/sdk-ui-all_v10.8.0",
       "date": "Thu, 22 Aug 2024 07:33:19 GMT",

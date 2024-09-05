@@ -1,6 +1,13 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 22 Aug 2024 07:33:19 GMT and should not be manually modified.
+This log was last generated on Thu, 05 Sep 2024 08:14:25 GMT and should not be manually modified.
+
+## 10.9.0
+Thu, 05 Sep 2024 08:14:25 GMT
+
+### Updates
+
+- Add possibility to ignore specified attributes in the drill down intersection. Modify addDrillDownForInsightWidget and modifyDrillDownForInsightWidget commands to be able to configure it (breaking).
 
 ## 10.8.0
 Thu, 22 Aug 2024 07:33:19 GMT
