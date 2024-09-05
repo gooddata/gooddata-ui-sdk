@@ -158,6 +158,19 @@ $color-picker-spacing: 5px;
     padding-bottom: 16px;
 }
 
+.gd-interactions-section__control-with-tooltip {
+    display: flex;
+    align-items: center;
+
+    + .gd-interactions-section__control-with-tooltip {
+        margin-top: 10px;
+    }
+}
+
+.gd-interactions-section__question-mark {
+    color: kit-variables.$gd-color-state-blank;
+}
+
 .gd-table-canvas-section.adi-bucket-configuration {
     padding: 0;
 }

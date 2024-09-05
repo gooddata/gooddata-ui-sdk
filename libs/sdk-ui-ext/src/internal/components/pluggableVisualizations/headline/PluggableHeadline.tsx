@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import React from "react";
 import cloneDeep from "lodash/cloneDeep.js";
 
@@ -265,6 +265,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
                     panelConfig={{
                         separators: this.settings?.separators,
                         comparisonColorPalette,
+                        supportsAttributeHierarchies: false,
                     }}
                     pushData={this.pushData}
                     properties={getHeadlineSupportedProperties(this.visualizationProperties)}
@@ -272,6 +273,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
                     isError={this.getIsError()}
                     isLoading={this.isLoading}
                     configurationPanelRenderers={options.custom?.configurationPanelRenderers}
+                    featureFlags={this.settings}
                 />,
                 configPanelElement,
             );
@@ -313,19 +315,20 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
         super.updateInstanceProperties(options, insight, insightPropertiesMeta);
 
         const hasComparisonProperties = insightProperties(insight).controls?.comparison;
+        const currentControls = this.visualizationProperties.controls ?? {};
+
         if (!hasComparisonProperties && this.settings?.enableNewHeadline) {
             const defaultComparisonProperties = this.getDefaultPropertiesForComparison(options, insight);
-            this.visualizationProperties = {
+            const newProperties = {
+                ...this.visualizationProperties,
                 controls: {
+                    ...currentControls,
                     ...defaultComparisonProperties,
                 },
             };
+            this.visualizationProperties = newProperties;
             this.pushData({
-                properties: {
-                    controls: {
-                        ...defaultComparisonProperties,
-                    },
-                },
+                properties: newProperties,
             });
         }
     }

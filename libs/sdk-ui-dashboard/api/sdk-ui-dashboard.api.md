@@ -436,6 +436,9 @@ export interface AddSectionItemsPayload {
 export const AlertingDialog: (props: IAlertingDialogProps) => JSX.Element;
 
 // @internal (undocumented)
+export type AlertingDisabledReason = "noDestinations" | "disabledOnInsight";
+
+// @internal (undocumented)
 export const AlertingManagementDialog: (props: IAlertingManagementDialogProps) => JSX.Element;
 
 // @internal (undocumented)
@@ -3561,7 +3564,7 @@ export function getDefaultInsightMenuItems(intl: IntlShape, config: {
     exportXLSXDisabled: boolean;
     exportCSVDisabled: boolean;
     scheduleExportDisabled: boolean;
-    scheduleExportDisabledReason: "incompatibleWidget" | "oldWidget" | undefined;
+    scheduleExportDisabledReason?: SchedulingDisabledReason;
     scheduleExportManagementDisabled: boolean;
     onExportXLSX: () => void;
     onExportCSV: () => void;
@@ -3572,6 +3575,7 @@ export function getDefaultInsightMenuItems(intl: IntlShape, config: {
     isDataError: boolean;
     isAlertingVisible: boolean;
     alertingDisabled: boolean;
+    alertingDisabledReason?: AlertingDisabledReason;
 }): IInsightMenuItem[];
 
 // @internal (undocumented)
@@ -6782,6 +6786,9 @@ export const ScheduledEmailDialog: (props: IScheduledEmailDialogProps) => JSX.El
 
 // @internal (undocumented)
 export const ScheduledEmailManagementDialog: (props: IScheduledEmailManagementDialogProps) => JSX.Element;
+
+// @internal (undocumented)
+export type SchedulingDisabledReason = "incompatibleWidget" | "oldWidget" | "disabledOnInsight";
 
 // @alpha
 export const selectAccessibleDashboards: (state: DashboardState) => IListedDashboard[];

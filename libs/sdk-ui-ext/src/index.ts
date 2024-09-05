@@ -97,3 +97,5 @@ export function getInsightVisualizationMeta(insight: IInsightDefinition): IVisua
 export * from "./internal/components/dialogs/userManagementDialogs/index.js";
 
 export * from "./internal/components/attributeHierarchies/index.js";
+
+export * from "./internal/components/pluggableVisualizations/alerts.js";

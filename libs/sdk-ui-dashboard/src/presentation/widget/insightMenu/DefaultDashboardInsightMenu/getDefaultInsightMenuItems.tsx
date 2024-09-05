@@ -9,13 +9,23 @@ import { InsightAlerts } from "../../insight/configuration/InsightAlerts.js";
 /**
  * @internal
  */
+export type SchedulingDisabledReason = "incompatibleWidget" | "oldWidget" | "disabledOnInsight";
+
+/**
+ * @internal
+ */
+export type AlertingDisabledReason = "noDestinations" | "disabledOnInsight";
+
+/**
+ * @internal
+ */
 export function getDefaultInsightMenuItems(
     intl: IntlShape,
     config: {
         exportXLSXDisabled: boolean;
         exportCSVDisabled: boolean;
         scheduleExportDisabled: boolean;
-        scheduleExportDisabledReason: "incompatibleWidget" | "oldWidget" | undefined;
+        scheduleExportDisabledReason?: SchedulingDisabledReason;
         scheduleExportManagementDisabled: boolean;
         onExportXLSX: () => void;
         onExportCSV: () => void;
@@ -26,6 +36,7 @@ export function getDefaultInsightMenuItems(
         isDataError: boolean;
         isAlertingVisible: boolean;
         alertingDisabled: boolean;
+        alertingDisabledReason?: AlertingDisabledReason;
     },
 ): IInsightMenuItem[] {
     const {
@@ -43,6 +54,7 @@ export function getDefaultInsightMenuItems(
         isDataError,
         isAlertingVisible,
         alertingDisabled,
+        alertingDisabledReason,
     } = config;
 
     const defaultWidgetTooltip = isDataError
@@ -54,6 +66,22 @@ export function getDefaultInsightMenuItems(
     const incompatibleWidgetTooltip = intl.formatMessage({
         id: "options.menu.unsupported.incompatibleWidget",
     });
+    const schedulingForInsightNotEnabledTooltip = intl.formatMessage({
+        id: "options.menu.unsupported.schedulingForInsightNotEnabled",
+    });
+    const alertingForInsightNotEnabledTooltip = intl.formatMessage({
+        id: "options.menu.unsupported.alertingForInsightNotEnabled",
+    });
+    const noDestinationsTooltip = intl.formatMessage(
+        { id: "insightAlert.noDestination.tooltip" },
+        {
+            a: (chunk: React.ReactNode) => (
+                <a href="/settings" rel="noopener noreferrer" target="_blank">
+                    {chunk}
+                </a>
+            ),
+        },
+    );
 
     const isSomeScheduleVisible =
         (isScheduleExportVisible && !scheduleExportDisabled) ||
@@ -92,18 +120,12 @@ export function getDefaultInsightMenuItems(
             className: "s-options-menu-alerting",
             SubmenuComponent: InsightAlerts,
             renderSubmenuComponentOnly: true,
-            tooltip: alertingDisabled
-                ? intl.formatMessage(
-                      { id: "insightAlert.noDestination.tooltip" },
-                      {
-                          a: (chunk: React.ReactNode) => (
-                              <a href="/settings" rel="noopener noreferrer" target="_blank">
-                                  {chunk}
-                              </a>
-                          ),
-                      },
-                  )
-                : undefined,
+            tooltip:
+                alertingDisabledReason === "noDestinations"
+                    ? noDestinationsTooltip
+                    : alertingDisabledReason === "disabledOnInsight"
+                    ? alertingForInsightNotEnabledTooltip
+                    : undefined,
             disabled: alertingDisabled,
         },
         isSomeScheduleVisible && {
@@ -121,6 +143,8 @@ export function getDefaultInsightMenuItems(
                     ? incompatibleWidgetTooltip
                     : scheduleExportDisabledReason === "oldWidget"
                     ? oldWidgetTooltip
+                    : scheduleExportDisabledReason === "disabledOnInsight"
+                    ? schedulingForInsightNotEnabledTooltip
                     : undefined,
             icon: "gd-icon-clock",
             className: "s-options-menu-schedule-export",

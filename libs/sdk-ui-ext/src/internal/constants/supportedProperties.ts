@@ -11,6 +11,8 @@ const BASE_PROPERTIES = [
     "colorMapping",
     "zoomInsight",
     "disableDrillDown",
+    "disableAlerts",
+    "disableScheduledExports",
 ];
 
 const FORECAST_PROPERTIES = ["forecast"];
@@ -180,6 +182,8 @@ export const BUBBLE_CHART_SUPPORTED_PROPERTIES = [
     "yaxis.name.position",
     "yaxis.format",
     "disableDrillDown",
+    "disableAlerts",
+    "disableScheduledExports",
 ];
 
 export const SCATTERPLOT_SUPPORTED_PROPERTIES = [
@@ -206,6 +210,8 @@ export const SCATTERPLOT_SUPPORTED_PROPERTIES = [
     "zoomInsight",
     "yaxis.format",
     "disableDrillDown",
+    "disableAlerts",
+    "disableScheduledExports",
     "clustering.enabled",
     "clustering.numberOfClusters",
     "clustering.threshold",
@@ -217,6 +223,8 @@ export const PIECHART_SUPPORTED_PROPERTIES = [
     "colorMapping",
     "chart.verticalAlign",
     "disableDrillDown",
+    "disableAlerts",
+    "disableScheduledExports",
 ];
 
 export const FUNNELCHART_SUPPORTED_PROPERTIES = [
@@ -225,8 +233,9 @@ export const FUNNELCHART_SUPPORTED_PROPERTIES = [
     "legend",
     "colorMapping",
     "chart.verticalAlign",
-
     "disableDrillDown",
+    "disableAlerts",
+    "disableScheduledExports",
 ];
 
 export const TREEMAP_SUPPORTED_PROPERTIES = [
@@ -235,6 +244,8 @@ export const TREEMAP_SUPPORTED_PROPERTIES = [
     "colorMapping",
     "zoomInsight",
     "disableDrillDown",
+    "disableAlerts",
+    "disableScheduledExports",
 ];
 
 export const HEATMAP_SUPPORTED_PROPERTIES = [
@@ -254,6 +265,8 @@ export const HEATMAP_SUPPORTED_PROPERTIES = [
     "colorMapping",
     "zoomInsight",
     "disableDrillDown",
+    "disableAlerts",
+    "disableScheduledExports",
 ];
 
 export const BULLET_CHART_SUPPORTED_PROPERTIES = [
@@ -277,6 +290,8 @@ export const BULLET_CHART_SUPPORTED_PROPERTIES = [
     "colorMapping",
     "zoomInsight",
     "disableDrillDown",
+    "disableAlerts",
+    "disableScheduledExports",
 ];
 
 export const GEOPUSHPIN_SUPPORTED_PROPERTIES = [
@@ -289,6 +304,8 @@ export const GEOPUSHPIN_SUPPORTED_PROPERTIES = [
     "points.maxSize",
     "viewport.area",
     "colorMapping",
+    "disableAlerts",
+    "disableScheduledExports",
 ];
 
 export const PIVOT_TABLE_SUPPORTED_PROPERTIES = [
@@ -296,6 +313,8 @@ export const PIVOT_TABLE_SUPPORTED_PROPERTIES = [
     "measureGroupDimension",
     "columnHeadersPosition",
     "disableDrillDown",
+    "disableAlerts",
+    "disableScheduledExports",
 ];
 
 export const SANKEY_CHART_SUPPORTED_PROPERTIES = [
@@ -303,6 +322,8 @@ export const SANKEY_CHART_SUPPORTED_PROPERTIES = [
     "legend",
     "colorMapping",
     "disableDrillDown",
+    "disableAlerts",
+    "disableScheduledExports",
 ];
 
 const WATERFALL_PRIMARY_X_AXIS_PROPERTIES = [
@@ -321,7 +342,7 @@ export const WATERFALL_CHART_SUPPORTED_PROPERTIES = [
     "orientation.position",
 ];
 
-export const HEADLINE_SUPPORTED_PROPERTIES = ["comparison"];
+export const HEADLINE_SUPPORTED_PROPERTIES = ["comparison", "disableAlerts", "disableScheduledExports"];
 
 export const HEADLINE_DEFAULT_CONTROL_PROPERTIES: HeadlineControlProperties = {
     comparison: {

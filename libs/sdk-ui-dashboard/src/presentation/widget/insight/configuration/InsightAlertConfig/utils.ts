@@ -16,7 +16,6 @@ import {
     IInsight,
     IMeasure,
     insightBucket,
-    insightVisualizationType,
     IPoPMeasureDefinition,
     IPreviousPeriodMeasureDefinition,
     isArithmeticMeasure,
@@ -26,7 +25,7 @@ import {
     measureAlias,
     measureTitle,
 } from "@gooddata/sdk-model";
-import { BucketNames, VisType } from "@gooddata/sdk-ui";
+import { BucketNames } from "@gooddata/sdk-ui";
 import { IntlShape } from "react-intl";
 
 import { AlertMetric, AlertMetricComparatorType } from "../../types.js";
@@ -198,25 +197,6 @@ export const getSupportedInsightMeasuresByInsight = (insight: IInsight | null | 
     });
 
     return simpleMetrics;
-};
-
-export const isSupportedInsightVisType = (insight: IInsight | null | undefined): boolean => {
-    const type = insight ? (insightVisualizationType(insight) as VisType) : null;
-
-    switch (type) {
-        case "headline":
-        case "bar":
-        case "column":
-        case "line":
-        case "area":
-        case "combo2":
-        case "scatter":
-        case "bubble":
-        case "repeater":
-            return true;
-        default:
-            return false;
-    }
 };
 
 function collectAllMetric(insight: IInsight | null | undefined) {
