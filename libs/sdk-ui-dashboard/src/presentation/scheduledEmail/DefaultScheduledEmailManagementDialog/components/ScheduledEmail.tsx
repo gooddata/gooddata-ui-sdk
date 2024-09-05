@@ -3,17 +3,23 @@
 import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
-import { IAutomationMetadataObject, IWebhookDefinitionObject } from "@gooddata/sdk-model";
+import {
+    IAutomationMetadataObject,
+    ISmtpDefinitionObject,
+    IWebhookDefinitionObject,
+} from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, Icon, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
-import { gdColorStateBlank } from "../../../constants/colors.js";
+import { gdColorNegative, gdColorStateBlank } from "../../../constants/colors.js";
 import { isVisualisationAutomation } from "../../DefaultScheduledEmailDialog/utils/automationHelpers.js";
+import { useScheduleValidation } from "../../DefaultScheduledEmailDialog/hooks/useScheduleValidation.js";
 
 interface IScheduledEmailProps {
     onDelete: (scheduledEmail: IAutomationMetadataObject) => void;
     onEdit: (scheduledEmail: IAutomationMetadataObject) => void;
     scheduledEmail: IAutomationMetadataObject;
     webhooks: IWebhookDefinitionObject[];
+    emails: ISmtpDefinitionObject[];
 }
 
 const ICON_TOOLTIP_ALIGN_POINTS = [
@@ -28,15 +34,21 @@ const TEXT_TOOLTIP_ALIGN_POINTS = [
 export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
     const theme = useTheme();
 
-    const { scheduledEmail, onDelete, onEdit, webhooks } = props;
+    const { scheduledEmail, onDelete, onEdit, webhooks, emails } = props;
 
+    const { isValid } = useScheduleValidation(scheduledEmail);
     const intl = useIntl();
     const cronDescription = scheduledEmail.schedule?.cronDescription;
-    const webhookTitle = webhooks.find((webhook) => webhook.id === scheduledEmail.webhook)?.destination?.name;
+    const webhookTitle = [...webhooks, ...emails].find(
+        (channel) => channel.id === scheduledEmail.notificationChannel,
+    )?.destination?.name;
     const dashboardTitle = scheduledEmail.exportDefinitions?.[0]?.title;
     const isWidget = isVisualisationAutomation(scheduledEmail);
     const iconColor = theme?.palette?.complementary?.c6 ?? gdColorStateBlank;
-    const iconComponent = isWidget ? (
+    const iconColorError = theme?.palette?.error?.base ?? gdColorNegative;
+    const iconComponent = !isValid ? (
+        <Icon.Warning width={16} height={16} color={iconColorError} />
+    ) : isWidget ? (
         <Icon.Insight width={16} height={16} color={iconColor} />
     ) : (
         <Icon.SimplifiedDashboard width={19} height={19} color={iconColor} />
@@ -49,11 +61,11 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
     }, [scheduledEmail, onEdit]);
 
     return (
-        <div className={cx("gd-scheduled-email", "s-scheduled-email", { editable: true })}>
-            <div className="gd-scheduled-email-delete">
+        <div className={cx("gd-notifications-channel", "s-scheduled-email", { editable: true })}>
+            <div className="gd-notifications-channel-delete">
                 <BubbleHoverTrigger showDelay={0} hideDelay={0}>
                     <span
-                        className="gd-scheduled-email-delete-icon s-scheduled-email-delete-icon"
+                        className="gd-notifications-channel-delete-icon s-scheduled-email-delete-icon"
                         onClick={() => onDelete(scheduledEmail)}
                     />
                     <Bubble className="bubble-primary" alignPoints={ICON_TOOLTIP_ALIGN_POINTS}>
@@ -61,13 +73,19 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
                     </Bubble>
                 </BubbleHoverTrigger>
             </div>
-            <div className="gd-scheduled-email-content" onClick={handleClick}>
-                <div className="gd-scheduled-email-icon">{iconComponent}</div>
-                <div className="gd-scheduled-email-text-content">
-                    <div className="gd-scheduled-email-title">
+            <div className="gd-notifications-channel-content" onClick={handleClick}>
+                <div
+                    className={cx("gd-notifications-channel-icon", {
+                        "gd-notifications-channel-icon-invalid": !isValid,
+                    })}
+                >
+                    {iconComponent}
+                </div>
+                <div className="gd-notifications-channel-text-content">
+                    <div className="gd-notifications-channel-title">
                         <strong>
                             <ShortenedText
-                                className="gd-scheduled-email-shortened-text"
+                                className="gd-notifications-channel-shortened-text"
                                 tooltipAlignPoints={TEXT_TOOLTIP_ALIGN_POINTS}
                             >
                                 {scheduledEmail.title ??
@@ -76,9 +94,9 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
                         </strong>
                     </div>
                     <div>
-                        <span className="gd-scheduled-email-subtitle">
+                        <span className="gd-notifications-channel-subtitle">
                             <ShortenedText
-                                className="gd-scheduled-email-shortened-text"
+                                className="gd-notifications-channel-shortened-text"
                                 tooltipAlignPoints={TEXT_TOOLTIP_ALIGN_POINTS}
                             >
                                 {subtitle}

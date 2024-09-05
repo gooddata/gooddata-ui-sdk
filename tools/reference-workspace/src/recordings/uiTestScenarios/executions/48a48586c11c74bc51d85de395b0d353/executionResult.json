@@ -14,6 +14,10 @@
                         "identifier": "dt_oppcreated_timestamp.year",
                         "localIdentifier": "a_dt_oppcreated_timestamp.year",
                         "name": "Created - Year",
+                        "primaryLabel": {
+                            "identifier": "dt_oppcreated_timestamp.year",
+                            "type": "displayForm"
+                        },
                         "totalItems": [],
                         "uri": ""
                     }
@@ -34,6 +38,10 @@
                         "identifier": "dt_closedate_timestamp.year",
                         "localIdentifier": "a_dt_closedate_timestamp.year",
                         "name": "Closed - Year",
+                        "primaryLabel": {
+                            "identifier": "dt_closedate_timestamp.year",
+                            "type": "displayForm"
+                        },
                         "totalItems": [],
                         "uri": ""
                     }

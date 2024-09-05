@@ -1,8 +1,10 @@
 // (C) 2024 GoodData Corporation
 import {
-    ComparisonComparisonOperatorEnum,
+    ComparisonOperatorEnum,
+    RelativeOperatorEnum,
+    ArithmeticMeasureOperatorEnum,
     JsonApiAutomationIn,
-    JsonApiAutomationPatchAttributesAlert,
+    JsonApiAutomationInAttributesAlert,
 } from "@gooddata/api-client-tiger";
 import {
     IAutomationAlert,
@@ -30,7 +32,7 @@ export function convertAutomation(
         title,
         recipients,
         details,
-        webhook,
+        notificationChannel,
         dashboard,
         metadata,
     } = automation;
@@ -50,9 +52,9 @@ export function convertAutomation(
                       data: recipients?.map((r) => ({ type: "user", id: r.id })) ?? [],
                   }
                 : undefined,
-            notificationChannel: webhook
+            notificationChannel: notificationChannel
                 ? {
-                      data: { type: "notificationChannel", id: webhook },
+                      data: { type: "notificationChannel", id: notificationChannel },
                   }
                 : undefined,
             analyticalDashboard: dashboard
@@ -70,6 +72,7 @@ export function convertAutomation(
               alert: convertAlert(alert),
           }
         : {};
+    const state = alert ? alert.trigger.state : undefined;
     const metadataObj = metadata ? { metadata } : {};
 
     const attributes = omitBy(
@@ -78,6 +81,7 @@ export function convertAutomation(
             description,
             tags,
             details,
+            state,
             ...metadataObj,
             ...scheduleObj,
             ...alertObj,
@@ -97,26 +101,53 @@ export function convertAutomation(
     };
 }
 
-const convertAlert = (alert: IAutomationAlert): JsonApiAutomationPatchAttributesAlert => {
+const convertAlert = (alert: IAutomationAlert): JsonApiAutomationInAttributesAlert => {
     const { condition, execution } = alert;
 
-    const convertedCondition = {
-        comparison: {
-            operator: condition.operator as ComparisonComparisonOperatorEnum,
-            left: { localIdentifier: condition.left },
-            right: { value: condition.right },
-        },
-    };
-
     const { filters: convertedFilters } = convertAfmFilters(execution.measures, execution.filters);
-
-    return {
-        condition: convertedCondition,
+    const base = {
         execution: {
             filters: convertedFilters,
             measures: execution.measures.map((measure) => {
                 return omit(convertMeasure(measure), "alias", "format", "title");
             }),
         },
+        trigger: alert.trigger.mode,
     };
+
+    //comparison
+    if (condition.type === "comparison") {
+        return {
+            condition: {
+                comparison: {
+                    operator: condition.operator as ComparisonOperatorEnum,
+                    left: { localIdentifier: condition.left },
+                    right: { value: condition.right },
+                },
+            },
+            ...base,
+        };
+    }
+
+    //relative
+    if (condition.type === "relative") {
+        return {
+            condition: {
+                relative: {
+                    operator: condition.operator as RelativeOperatorEnum,
+                    measure: {
+                        operator: condition.measure.operator as ArithmeticMeasureOperatorEnum,
+                        left: { localIdentifier: condition.measure.left },
+                        right: { localIdentifier: condition.measure.right },
+                    },
+                    threshold: {
+                        value: condition.threshold,
+                    },
+                },
+            },
+            ...base,
+        };
+    }
+
+    throw new Error("Unsupported alert condition type.");
 };

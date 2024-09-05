@@ -5,6 +5,7 @@ import {
     InsightWidgetComponentSet,
     KpiWidgetComponentSet,
     RichTextWidgetComponentSet,
+    VisualizationSwitcherWidgetComponentSet,
 } from "../../componentDefinition/index.js";
 import {
     IWrapCreatePanelItemWithDragComponent,
@@ -73,6 +74,14 @@ export interface ISidebarProps {
      * @internal
      */
     RichTextWidgetComponentSet?: RichTextWidgetComponentSet;
+
+    /**
+     * Visualization switcher widget component set.
+     * Do not set or override this property, it's injected by the Dashboard.
+     *
+     * @internal
+     */
+    VisualizationSwitcherWidgetComponentSet?: VisualizationSwitcherWidgetComponentSet;
 
     /**
      * Component, that renders delete drop zone.

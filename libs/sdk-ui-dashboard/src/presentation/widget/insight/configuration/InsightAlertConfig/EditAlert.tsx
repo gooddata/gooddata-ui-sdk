@@ -1,33 +1,61 @@
 // (C) 2022-2024 GoodData Corporation
 import React from "react";
+import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 import {
-    IAutomationMetadataObject,
-    IAutomationMetadataObjectDefinition,
-    IMeasure,
-} from "@gooddata/sdk-model";
-import { Bubble, BubbleHoverTrigger, Button, Input, Message } from "@gooddata/sdk-ui-kit";
+    Bubble,
+    BubbleHoverTrigger,
+    Button,
+    Input,
+    Message,
+    OverlayPositionType,
+} from "@gooddata/sdk-ui-kit";
 import { DashboardInsightSubmenuContainer } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightSubmenuContainer.js";
 import { AlertMeasureSelect } from "./AlertMeasureSelect.js";
 import { AlertComparisonOperatorSelect } from "./AlertComparisonOperatorSelect.js";
 import { AlertDestinationSelect } from "./AlertDestinationSelect.js";
 import { EditAlertConfiguration } from "./EditAlertConfiguration.js";
 import { useEditAlert } from "./hooks/useEditAlert.js";
-import { FormattedMessage, useIntl } from "react-intl";
-import { Webhooks } from "../../../../../model/index.js";
+import { defineMessages, FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
+import { Smtps, Webhooks } from "../../../../../model/index.js";
+import { AlertMetric, AlertMetricComparatorType } from "../../types.js";
+import { useAlertValidation, AlertInvalidityReason } from "./hooks/useAlertValidation.js";
+import {
+    getAlertCompareOperator,
+    getAlertMeasure,
+    getAlertRelativeOperator,
+    getAlertThreshold,
+    getValueSuffix,
+    isChangeOrDifferenceOperator,
+} from "./utils.js";
 
 const TOOLTIP_ALIGN_POINTS = [{ align: "cl cr" }, { align: "cr cl" }];
+
+const messages = defineMessages({
+    invalidDefault: {
+        id: "insightAlert.config.invalid",
+    },
+    invalidWidget: {
+        id: "insightAlert.config.invalidWidget",
+    },
+});
+
+const invalidMessagesObj: Record<AlertInvalidityReason, MessageDescriptor> = {
+    missingMetric: messages.invalidDefault,
+    missingWidget: messages.invalidWidget,
+};
 
 interface IEditAlertProps {
     alert: IAutomationMetadataObject;
     isNewAlert?: boolean;
     hasAlerts: boolean;
-    destinations: Webhooks;
-    measures: IMeasure[];
+    destinations: (Webhooks[number] | Smtps[number])[];
+    measures: AlertMetric[];
     onClose: () => void;
     onCancel: () => void;
     onCreate?: (alert: IAutomationMetadataObjectDefinition) => void;
     onUpdate?: (alert: IAutomationMetadataObject) => void;
     maxAutomationsReached?: boolean;
+    overlayPositionType?: OverlayPositionType;
 }
 
 export const EditAlert: React.FC<IEditAlertProps> = ({
@@ -41,6 +69,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
     onCreate,
     onUpdate,
     maxAutomationsReached = false,
+    overlayPositionType,
 }) => {
     const {
         viewMode,
@@ -48,6 +77,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
         canSubmit,
         //
         changeComparisonOperator,
+        changeRelativeOperator,
         changeMeasure,
         changeValue,
         changeDestination,
@@ -65,10 +95,12 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
     });
     const intl = useIntl();
     const disableCreateButtonDueToLimits = isNewAlert && maxAutomationsReached;
-    const selectedMeasureIdentifier = updatedAlert.alert!.condition.left;
+    const selectedMeasureIdentifier = getAlertMeasure(updatedAlert.alert);
     const selectedMeasure = measures.find(
-        (measure) => measure.measure.localIdentifier === selectedMeasureIdentifier,
+        (measure) => measure.measure.measure.localIdentifier === selectedMeasureIdentifier,
     );
+    const { isValid, invalidityReason } = useAlertValidation(alert, isNewAlert);
+    const filters = alert.alert?.execution?.filters ?? [];
 
     return viewMode === "edit" ? (
         <DashboardInsightSubmenuContainer
@@ -90,30 +122,89 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                             selectedMeasure={selectedMeasure}
                             onMeasureChange={changeMeasure}
                             measures={measures}
+                            overlayPositionType={overlayPositionType}
                         />
+                        {filters.length > 0 && (
+                            <div className="gd-edit-alert__measure-info">
+                                <FormattedMessage
+                                    id="insightAlert.config.filters"
+                                    values={{
+                                        n: filters.length,
+                                    }}
+                                />
+                                <div role="item-info" className="gd-list-item-bubble">
+                                    <BubbleHoverTrigger
+                                        tagName="div"
+                                        showDelay={200}
+                                        hideDelay={0}
+                                        eventsOnBubble={false}
+                                    >
+                                        <div className="inlineBubbleHelp" />
+                                        <Bubble
+                                            className="bubble-primary"
+                                            alignPoints={[{ align: "cr cl" }]}
+                                            arrowOffsets={{ "cr cl": [15, 0] }}
+                                        >
+                                            <FormattedMessage
+                                                id="insightAlert.config.filters.info"
+                                                values={{
+                                                    spacer: (
+                                                        <div className="gd-alert-comparison-operator-tooltip-spacer" />
+                                                    ),
+                                                }}
+                                            />
+                                        </Bubble>
+                                    </BubbleHoverTrigger>
+                                </div>
+                            </div>
+                        )}
                         <AlertComparisonOperatorSelect
-                            selectedComparisonOperator={updatedAlert.alert!.condition.operator}
+                            measure={selectedMeasure}
+                            selectedComparisonOperator={getAlertCompareOperator(updatedAlert.alert)}
+                            selectedRelativeOperator={getAlertRelativeOperator(updatedAlert.alert)}
                             onComparisonOperatorChange={changeComparisonOperator}
+                            onRelativeOperatorChange={changeRelativeOperator}
+                            overlayPositionType={overlayPositionType}
                         />
                         <Input
                             className="gd-edit-alert__value-input s-alert-value-input"
                             isSmall
                             autofocus
-                            value={updatedAlert.alert!.condition.right}
-                            onChange={(e) => changeValue(e !== "" ? parseInt(e as string, 10) : undefined!)}
+                            value={getAlertThreshold(updatedAlert.alert)}
+                            onChange={(e) => changeValue(e !== "" ? parseFloat(e as string) : undefined!)}
                             type="number"
+                            suffix={getValueSuffix(updatedAlert.alert)}
                         />
+                        {selectedMeasure?.comparators.some(
+                            (a) => a.comparator === AlertMetricComparatorType.SamePeriodPreviousYear,
+                        ) &&
+                            isChangeOrDifferenceOperator(updatedAlert.alert) && (
+                                <div className="gd-edit-alert__measure-info">
+                                    <FormattedMessage id="insightAlert.config.compare_with" />{" "}
+                                    <FormattedMessage id="insightAlert.config.compare_with_sp" />
+                                </div>
+                            )}
+                        {selectedMeasure?.comparators.some(
+                            (a) => a.comparator === AlertMetricComparatorType.PreviousPeriod,
+                        ) &&
+                            isChangeOrDifferenceOperator(updatedAlert.alert) && (
+                                <div className="gd-edit-alert__measure-info">
+                                    <FormattedMessage id="insightAlert.config.compare_with" />{" "}
+                                    <FormattedMessage id="insightAlert.config.compare_with_pp" />
+                                </div>
+                            )}
                         {destinations.length > 1 && (
                             <AlertDestinationSelect
-                                selectedDestination={updatedAlert.webhook!}
+                                selectedDestination={updatedAlert.notificationChannel!}
                                 onDestinationChange={changeDestination}
                                 destinations={destinations}
+                                overlayPositionType={overlayPositionType}
                             />
                         )}
                     </div>
-                    {!selectedMeasure ? (
+                    {!isValid ? (
                         <Message type="error">
-                            <FormattedMessage id="insightAlert.config.invalid" />
+                            <FormattedMessage id={invalidMessagesObj[invalidityReason!].id} />
                         </Message>
                     ) : null}
                 </div>
@@ -164,6 +255,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                 alert={updatedAlert}
                 onUpdate={saveAlertConfiguration}
                 onCancel={cancelAlertConfiguration}
+                overlayPositionType={overlayPositionType}
             />
         </DashboardInsightSubmenuContainer>
     );

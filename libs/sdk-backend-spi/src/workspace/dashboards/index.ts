@@ -22,6 +22,7 @@ import {
     IDateFilter,
     IDashboardFilterView,
     IDashboardFilterViewSaveRequest,
+    IDashboardAttributeFilterConfig,
 } from "@gooddata/sdk-model";
 import { IExportResult } from "../execution/export.js";
 import { IPagedResource } from "../../common/paging.js";
@@ -408,9 +409,14 @@ export interface IWorkspaceDashboardsService {
      *
      * @param widget - widget to get filters for
      * @param filters - filters to apply on the widget
+     * @param attributeFilterConfigs - filter configs
      * @returns promise with the filters with the ignored filters removed
      */
-    getResolvedFiltersForWidget(widget: IWidget, filters: IFilter[]): Promise<IFilter[]>;
+    getResolvedFiltersForWidget(
+        widget: IWidget,
+        filters: IFilter[],
+        attributeFilterConfigs: IDashboardAttributeFilterConfig[],
+    ): Promise<IFilter[]>;
 
     /**
      * Takes a widget, commonDateFilters and a list of other filters and returns filters that can be used for the widget.
@@ -425,12 +431,14 @@ export interface IWorkspaceDashboardsService {
      * @param widget - widget to get filters for
      * @param commonDateFilters - date filters to apply on the widget only when matching its date dataSet
      * @param otherFilters - filters to apply on the widget
+     * @param attributeFilterConfigs - filter configs
      * @returns promise with the filters with the ignored filters removed
      */
     getResolvedFiltersForWidgetWithMultipleDateFilters(
         widget: IWidget,
         commonDateFilters: IDateFilter[],
         otherFilters: IFilter[],
+        attributeFilterConfigs: IDashboardAttributeFilterConfig[],
     ): Promise<IFilter[]>;
 
     /**

@@ -11,18 +11,24 @@ import {
     AnalyticalWidgetType,
     IRichTextWidget,
     IRichTextWidgetDefinition,
+    IVisualizationSwitcherWidget,
+    IVisualizationSwitcherWidgetDefinition,
 } from "./analyticalWidgets.js";
 
 /**
  * See {@link IWidget}]
  * @public
  */
-export type IWidgetDefinition = IKpiWidgetDefinition | IInsightWidgetDefinition | IRichTextWidgetDefinition;
+export type IWidgetDefinition =
+    | IKpiWidgetDefinition
+    | IInsightWidgetDefinition
+    | IRichTextWidgetDefinition
+    | IVisualizationSwitcherWidgetDefinition;
 
 /**
  * @public
  */
-export type IWidget = IKpiWidget | IInsightWidget | IRichTextWidget;
+export type IWidget = IKpiWidget | IInsightWidget | IRichTextWidget | IVisualizationSwitcherWidget;
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IWidgetDefinition}.
@@ -46,7 +52,7 @@ export function isWidget(obj: unknown): obj is IWidget {
 function hasWidgetProps(obj: unknown): boolean {
     return (
         !isEmpty(obj) &&
-        (["kpi", "richText", "insight"] as IAnalyticalWidget["type"][]).some(
+        (["kpi", "richText", "insight", "visualizationSwitcher"] as IAnalyticalWidget["type"][]).some(
             (x) => (obj as IAnalyticalWidget).type === x,
         )
     );
@@ -163,4 +169,25 @@ export function isRichTextWidget(obj: unknown): obj is IRichTextWidget {
  */
 export function isRichTextWidgetDefinition(obj: unknown): obj is IRichTextWidgetDefinition {
     return isWidgetDefinition(obj) && (obj as IRichTextWidgetDefinition).type === "richText";
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IVisualizationSwitcherWidget}.
+ * @alpha
+ */
+export function isVisualizationSwitcherWidget(obj: unknown): obj is IVisualizationSwitcherWidget {
+    return isWidget(obj) && (obj as IVisualizationSwitcherWidget).type === "visualizationSwitcher";
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IVisualizationSwitcherWidgetDefinition}.
+ * @alpha
+ */
+export function isVisualizationSwitcherWidgetDefinition(
+    obj: unknown,
+): obj is IVisualizationSwitcherWidgetDefinition {
+    return (
+        isWidgetDefinition(obj) &&
+        (obj as IVisualizationSwitcherWidgetDefinition).type === "visualizationSwitcher"
+    );
 }

@@ -3268,7 +3268,16 @@
         "comment": "Do not translate placeholders {hour}, {dayOfWeekName} and {weekNumber}.",
         "limit": 0
     },
-
+    "recurrence.error.too_often": {
+        "value": "Frequency too high",
+        "comment": "Invalid frequency recurrence.",
+        "limit": 0
+    },
+    "recurrence.cron.tooltip": {
+        "value": "Use the unix-cron string format. <a>Learn more</a>",
+        "comment": "Do not translate html tags <a>, </a>. Do not translate 'unix-cron' as it is a name of specific tech.",
+        "limit": 0
+    },
     "semantic-search.error.title": {
         "value": "Our search service is temporarily down.",
         "comment": "Title for the error message shown when semantic search failed.",

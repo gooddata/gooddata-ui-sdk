@@ -342,6 +342,11 @@ export interface ISettings {
     enableKDRichText?: boolean;
 
     /**
+     * Enables visualization switcher widgets on dashboards.
+     */
+    enableKDVisualizationSwitcher?: boolean;
+
+    /**
      * Enable attribute filter values validation by metric, attribute, fact.
      * The configuration of filter values validation is merged with parent filters UI.
      */
@@ -408,6 +413,11 @@ export interface ISettings {
     enableAlerting?: boolean;
 
     /**
+     * Enables smtp settings.
+     */
+    enableSmtp?: boolean;
+
+    /**
      * Enables rollup (native) totals.
      */
     enableRollupTotals?: boolean;
@@ -432,9 +442,14 @@ export interface ISettings {
     enableSingleStoreDataSource?: boolean;
 
     /**
-     * Enable GenAI-powered functionality, such as semantic-search
+     * Enable GenAI-powered functionality, such as semantic-search.
      */
     enableAIFunctions?: boolean;
+
+    /**
+     * Enable Semantic Search in the UI.
+     */
+    enableSemanticSearch?: boolean;
 
     /**
      * Enable configuration of the drill intersection ignored attributes.

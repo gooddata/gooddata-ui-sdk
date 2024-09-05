@@ -23,7 +23,7 @@ import {
     isCustomWidget,
     ExtendedDashboardWidget,
 } from "../../../../model/index.js";
-import { Alignment, normalizeTime } from "@gooddata/sdk-ui-kit";
+import { normalizeTime } from "@gooddata/sdk-ui-kit";
 import { IScheduledEmailDialogProps } from "../../types.js";
 import { WidgetAttachmentType } from "../types.js";
 import { toModifiedISOString } from "../../DefaultScheduledEmailManagementDialog/utils.js";
@@ -41,7 +41,8 @@ import {
 import { invariant } from "ts-invariant";
 
 export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
-    const { editSchedule, webhooks, context } = props;
+    const { editSchedule, webhooks, emails, context } = props;
+    const [isCronValid, setIsCronValid] = useState(true);
     const editWidgetId = (
         editSchedule?.exportDefinitions?.find((exportDefinition) =>
             isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload),
@@ -61,13 +62,15 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
         widget,
     });
 
+    const firstChannel = emails[0]?.id ?? webhooks[0]?.id;
+
     const [state, setState] = useState<IAutomationMetadataObjectDefinition>(
         editSchedule ??
             newAutomationMetadataObjectDefinition(
                 isWidget
                     ? {
                           dashboardId: dashboardId!,
-                          webhook: webhooks[0]?.id,
+                          notificationChannel: firstChannel,
                           insight,
                           widget,
                           /**
@@ -78,7 +81,7 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
                       }
                     : {
                           dashboardId: dashboardId!,
-                          webhook: webhooks[0]?.id,
+                          notificationChannel: firstChannel,
                           title: dashboardTitle,
                           filters: areFiltersChanged ? filtersToStore : undefined,
                       },
@@ -89,7 +92,8 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
 
     const onTitleChange = (value: string) => setState((s) => ({ ...s, title: value }));
 
-    const onRecurrenceChange = (cronExpression: string, startDate: Date | null) => {
+    const onRecurrenceChange = (cronExpression: string, startDate: Date | null, isValid: boolean) => {
+        setIsCronValid(isValid);
         setState((s) => ({
             ...s,
             schedule: {
@@ -100,8 +104,8 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
         }));
     };
 
-    const onDestinationChange = (webhookId: string): void => {
-        setState((s) => ({ ...s, webhook: webhookId }));
+    const onDestinationChange = (notificationChannelId: string): void => {
+        setState((s) => ({ ...s, notificationChannel: notificationChannelId }));
     };
 
     const onRecipientsChange = (updatedRecipients: IAutomationRecipient[]): void => {
@@ -248,25 +252,8 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
         onDashboardAttachmentsChange,
         onWidgetAttachmentsChange,
         onWidgetAttachmentsSettingsChange,
+        isCronValid,
     };
-}
-
-export function useScheduledEmailDialogAlignment() {
-    const [alignState, setAlignState] = useState("cc cc");
-    const alignPoints = [
-        {
-            align: alignState,
-        },
-    ];
-    const onAlign = (alignment: Alignment) => {
-        if (alignment.top < 0) {
-            setAlignState("tc tc");
-        } else {
-            setAlignState("cc cc");
-        }
-    };
-
-    return { alignPoints, onAlign };
 }
 
 function newDashboardExportDefinitionMetadataObjectDefinition({
@@ -343,14 +330,14 @@ function newWidgetExportDefinitionMetadataObjectDefinition({
 
 function newAutomationMetadataObjectDefinition({
     dashboardId,
-    webhook,
+    notificationChannel,
     title,
     insight,
     widget,
     filters,
 }: {
     dashboardId: string;
-    webhook: string;
+    notificationChannel: string;
     title?: string;
     insight?: IInsight;
     widget?: ExtendedDashboardWidget;
@@ -390,7 +377,7 @@ function newAutomationMetadataObjectDefinition({
         },
         exportDefinitions: [{ ...exportDefinition }],
         recipients: [],
-        webhook,
+        notificationChannel,
         dashboard: dashboardId,
     };
 

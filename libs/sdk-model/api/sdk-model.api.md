@@ -21,7 +21,7 @@ export type AccessGranularPermission = "VIEW" | "EDIT" | "SHARE";
 export type AllTimeGranularity = "ALL_TIME_GRANULARITY";
 
 // @public
-export type AnalyticalWidgetType = "kpi" | "insight" | "richText";
+export type AnalyticalWidgetType = "kpi" | "insight" | "richText" | "visualizationSwitcher";
 
 // @public
 export const anyAttribute: AttributePredicate;
@@ -577,6 +577,12 @@ export interface IAlertDefault {
 }
 
 // @alpha (undocumented)
+export type IAlertRelativeArithmeticOperator = "DIFFERENCE" | "CHANGE";
+
+// @alpha (undocumented)
+export type IAlertRelativeOperator = "INCREASES_BY" | "DECREASES_BY" | "CHANGES_BY";
+
+// @alpha (undocumented)
 export type IAlertTriggerMode = "ALWAYS" | "ONCE";
 
 // @alpha (undocumented)
@@ -790,7 +796,7 @@ export interface IAutomationAlert {
 }
 
 // @alpha (undocumented)
-export interface IAutomationAlertCondition {
+export interface IAutomationAlertComparisonCondition {
     left: string;
     operator: IAlertComparisonOperator;
     right: number;
@@ -798,7 +804,22 @@ export interface IAutomationAlertCondition {
 }
 
 // @alpha (undocumented)
+export type IAutomationAlertCondition = IAutomationAlertComparisonCondition | IAutomationAlertRelativeCondition;
+
+// @alpha (undocumented)
 export type IAutomationAlertExecutionDefinition = Pick<IExecutionDefinition, "attributes" | "measures" | "filters">;
+
+// @alpha (undocumented)
+export interface IAutomationAlertRelativeCondition {
+    measure: {
+        operator: IAlertRelativeArithmeticOperator;
+        left: string;
+        right: string;
+    };
+    operator: IAlertRelativeOperator;
+    threshold: number;
+    type: "relative";
+}
 
 // @alpha (undocumented)
 export interface IAutomationAlertTrigger {
@@ -824,9 +845,9 @@ export interface IAutomationMetadataObjectBase {
     metadata?: {
         widget?: string;
     };
+    notificationChannel?: string;
     recipients?: IAutomationRecipient[];
     schedule?: IAutomationSchedule;
-    webhook?: string;
 }
 
 // @alpha (undocumented)
@@ -1057,6 +1078,19 @@ export interface IComparisonConditionBody {
 export interface ICrossFiltering extends IDrill {
     type: "crossFiltering";
 }
+
+// @alpha (undocumented)
+export type ICustomSmtpDestination = {
+    type: "custom";
+    name: string;
+    from: string;
+    address: string;
+    person: string;
+    port: 25 | 465 | 587 | 2525;
+    login: string;
+    password?: string;
+    hasPassword?: boolean;
+};
 
 // @alpha
 export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, IDashboardObjectIdentity, Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers>, IAccessControlAware {
@@ -1448,6 +1482,14 @@ export interface IDateHierarchyTemplate extends IMetadataObjectIdentity, IMetada
     // (undocumented)
     type: "dateHierarchyTemplate";
 }
+
+// @alpha (undocumented)
+export type IDefaultSmtpDestination = {
+    type: "default";
+    name: string;
+    address: string;
+    person: string;
+};
 
 // @public
 export type Identifier = string;
@@ -2932,6 +2974,7 @@ export interface ISettings {
     enableKDAttributeFilterDatesValidation?: boolean;
     enableKDCrossFiltering?: boolean;
     enableKDRichText?: boolean;
+    enableKDVisualizationSwitcher?: boolean;
     enableKDWidgetCustomHeight?: boolean;
     enableKDZooming?: boolean;
     enableKPIDashboardDrillFromAttribute?: boolean;
@@ -2971,9 +3014,11 @@ export interface ISettings {
     enableScatterPlotClustering?: boolean;
     enableScatterPlotSegmentation?: boolean;
     enableScheduling?: boolean;
+    enableSemanticSearch?: boolean;
     enableSeparateTotalLabels?: boolean;
     // (undocumented)
     enableSingleStoreDataSource?: boolean;
+    enableSmtp?: boolean;
     // (undocumented)
     enableSnowflakeKeyPairAuthentication?: boolean;
     enableTableColumnsAutoResizing?: boolean;
@@ -3133,15 +3178,7 @@ export interface ISmtpDefinitionObject extends Partial<ISmtpDefinition>, Pick<IN
 }
 
 // @alpha (undocumented)
-export interface ISmtpDestination {
-    address: string;
-    from: string;
-    hasPassword?: boolean;
-    login: string;
-    name: string;
-    password?: string;
-    port: 25 | 465 | 587 | 2525;
-}
+export type ISmtpDestination = ICustomSmtpDestination | IDefaultSmtpDestination;
 
 // @public
 export function isNegativeAttributeFilter(obj: unknown): obj is INegativeAttributeFilter;
@@ -3264,6 +3301,12 @@ export function isVirtualArithmeticMeasure(obj: unknown): obj is IMeasure<IVirtu
 
 // @internal
 export function isVirtualArithmeticMeasureDefinition(obj: unknown): obj is IVirtualArithmeticMeasureDefinition;
+
+// @alpha
+export function isVisualizationSwitcherWidget(obj: unknown): obj is IVisualizationSwitcherWidget;
+
+// @alpha
+export function isVisualizationSwitcherWidgetDefinition(obj: unknown): obj is IVisualizationSwitcherWidgetDefinition;
 
 // @alpha
 export function isWidget(obj: unknown): obj is IWidget;
@@ -3673,6 +3716,22 @@ export interface IVisualizationClassBody {
     url: string;
 }
 
+// @public (undocumented)
+export interface IVisualizationSwitcherWidget extends IVisualizationSwitcherWidgetBase, IDashboardObjectIdentity {
+}
+
+// @public (undocumented)
+export interface IVisualizationSwitcherWidgetBase extends IAnalyticalWidget {
+    readonly selectedVisualizationIdentifier: string;
+    // (undocumented)
+    readonly type: "visualizationSwitcher";
+    readonly visualizations: IInsightWidget[];
+}
+
+// @public (undocumented)
+export interface IVisualizationSwitcherWidgetDefinition extends IVisualizationSwitcherWidgetBase, Partial<IDashboardObjectIdentity> {
+}
+
 // @alpha (undocumented)
 export interface IWebhookDefinition extends INotificationChannelMetadataObjectBase {
     // (undocumented)
@@ -3702,7 +3761,7 @@ export interface IWhiteLabeling {
 }
 
 // @public (undocumented)
-export type IWidget = IKpiWidget | IInsightWidget | IRichTextWidget;
+export type IWidget = IKpiWidget | IInsightWidget | IRichTextWidget | IVisualizationSwitcherWidget;
 
 // @alpha
 export interface IWidgetAlert extends IWidgetAlertBase, IDashboardObjectIdentity {
@@ -3736,7 +3795,7 @@ export interface IWidgetAttachment {
 }
 
 // @public
-export type IWidgetDefinition = IKpiWidgetDefinition | IInsightWidgetDefinition | IRichTextWidgetDefinition;
+export type IWidgetDefinition = IKpiWidgetDefinition | IInsightWidgetDefinition | IRichTextWidgetDefinition | IVisualizationSwitcherWidgetDefinition;
 
 // @public
 export interface IWidgetDescription {
@@ -3754,6 +3813,8 @@ export interface IWorkspaceAccess {
 export interface IWorkspaceDataFilter {
     // (undocumented)
     id: string;
+    // (undocumented)
+    isInherited: boolean;
     // (undocumented)
     settings: IWorkspaceDataFilterSetting[];
     // (undocumented)

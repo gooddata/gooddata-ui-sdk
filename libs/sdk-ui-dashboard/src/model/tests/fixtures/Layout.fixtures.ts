@@ -13,6 +13,7 @@ import {
     IDashboardLayoutItem,
     IRichTextWidget,
     IdentifierRef,
+    IVisualizationSwitcherWidget,
 } from "@gooddata/sdk-model";
 import { PivotTableWithRowAndColumnAttributes } from "./Insights.fixtures";
 import {
@@ -91,6 +92,34 @@ export function createTestRichTextItem(ref: IdentifierRef): IDashboardLayoutItem
             ignoreDashboardFilters: [],
             drills: [],
             title: "Test Rich Text Item",
+            description: "",
+            identifier: ref.identifier,
+            uri: `/${ref.identifier}`,
+        },
+        size: {
+            xl: {
+                gridWidth: 6,
+            },
+        },
+    };
+}
+
+export const TestVisualizationSwitcherItem: IDashboardLayoutItem<IVisualizationSwitcherWidget> =
+    createTestVisualizationSwitcherItem(idRef("visualizationSwitcherWidgetRef"));
+
+export function createTestVisualizationSwitcherItem(
+    ref: IdentifierRef,
+): IDashboardLayoutItem<IVisualizationSwitcherWidget> {
+    return {
+        type: "IDashboardLayoutItem",
+        widget: {
+            type: "visualizationSwitcher",
+            ref,
+            visualizations: [],
+            selectedVisualizationIdentifier: "",
+            ignoreDashboardFilters: [],
+            drills: [],
+            title: "Visualization Switcher Text Item",
             description: "",
             identifier: ref.identifier,
             uri: `/${ref.identifier}`,

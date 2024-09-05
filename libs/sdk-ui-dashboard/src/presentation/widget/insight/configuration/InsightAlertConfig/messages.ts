@@ -27,6 +27,36 @@ export const messages = defineMessages({
     comparisonOperatorGreaterThanOrEquals: {
         id: "insightAlert.config.comparisonOperator.greaterThanOrEquals",
     },
+    comparisonOperatorChangeHeader: {
+        id: "insightAlert.config.changeOperator.header",
+    },
+    comparisonOperatorChangeHeaderInfo: {
+        id: "insightAlert.config.changeOperator.header.info",
+    },
+    comparisonOperatorChangeIncreasesBy: {
+        id: "insightAlert.config.changeOperator.increasesBy",
+    },
+    comparisonOperatorChangeDecreasesBy: {
+        id: "insightAlert.config.changeOperator.decreasesBy",
+    },
+    comparisonOperatorChangeChangesBy: {
+        id: "insightAlert.config.changeOperator.changesBy",
+    },
+    comparisonOperatorDifferenceHeader: {
+        id: "insightAlert.config.differenceOperator.header",
+    },
+    comparisonOperatorDifferenceHeaderInfo: {
+        id: "insightAlert.config.differenceOperator.header.info",
+    },
+    comparisonOperatorDifferenceIncreasesBy: {
+        id: "insightAlert.config.differenceOperator.increasesBy",
+    },
+    comparisonOperatorDifferenceDecreasesBy: {
+        id: "insightAlert.config.differenceOperator.decreasesBy",
+    },
+    comparisonOperatorDifferenceChangesBy: {
+        id: "insightAlert.config.differenceOperator.changesBy",
+    },
     alertTriggerModeAlways: {
         id: "insightAlert.config.triggerMode.always",
     },

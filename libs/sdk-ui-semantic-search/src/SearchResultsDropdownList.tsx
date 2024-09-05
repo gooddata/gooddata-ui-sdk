@@ -8,6 +8,7 @@ import { useListSelector } from "./hooks/index.js";
 import { ListItem } from "./types.js";
 
 const ITEM_HEIGHT = 50;
+const MAX_ITEMS_UNSCROLLED = 5;
 
 /**
  * Search results props.
@@ -53,6 +54,7 @@ export const SearchResultsDropdownList: React.FC<SearchResultsDropdownListProps>
     return (
         <DropdownList
             width={width}
+            height={ITEM_HEIGHT * Math.min(searchResults.length, MAX_ITEMS_UNSCROLLED)}
             isMobile={isMobile}
             isLoading={searchLoading}
             itemHeight={ITEM_HEIGHT}

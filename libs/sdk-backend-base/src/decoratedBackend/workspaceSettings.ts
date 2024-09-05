@@ -39,6 +39,14 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
         return this.decorated.setTheme(themeId);
     }
 
+    async deleteTheme(): Promise<void> {
+        return this.decorated.deleteTheme();
+    }
+
+    async deleteColorPalette(): Promise<void> {
+        return this.decorated.deleteColorPalette();
+    }
+
     async setColorPalette(colorPaletteId: string): Promise<void> {
         return this.decorated.setColorPalette(colorPaletteId);
     }

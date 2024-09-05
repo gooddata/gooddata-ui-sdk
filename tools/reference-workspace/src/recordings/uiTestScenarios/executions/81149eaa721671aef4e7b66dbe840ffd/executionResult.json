@@ -9,6 +9,7 @@
                         "identifier": "label.f_account.account.name",
                         "localIdentifier": "a_label.f_account.account.name",
                         "name": "Name",
+                        "primaryLabel": { "identifier": "attr.f_account.account", "type": "displayForm" },
                         "totalItems": [],
                         "uri": ""
                     }

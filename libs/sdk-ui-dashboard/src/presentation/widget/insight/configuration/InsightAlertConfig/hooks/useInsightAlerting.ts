@@ -3,9 +3,10 @@ import {
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
     IInsightWidget,
+    isAllTimeDateFilter,
 } from "@gooddata/sdk-model";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
     useDashboardSelector,
@@ -20,12 +21,14 @@ import {
     dispatchAndWaitFor,
     selectAutomationsAlertsInContext,
     selectDashboardId,
+    selectSmtps,
+    selectLocale,
 } from "../../../../../../model/index.js";
 import { createDefaultAlert, getSupportedInsightMeasuresByInsight } from "../utils.js";
 import { messages } from "../messages.js";
 import { useWidgetFilters } from "../../../../common/useWidgetFilters.js";
 import { useSaveAlertToBackend } from "./useSaveAlertToBackend.js";
-import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { fillMissingTitles, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 type InsightWidgetAlertingViewMode = "list" | "edit" | "create";
 
@@ -39,7 +42,8 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     const dispatch = useDashboardDispatch();
     const effectiveBackend = useBackendStrict();
     const effectiveWorkspace = useWorkspaceStrict();
-    const destinations = useDashboardSelector(selectWebhooks);
+    const webhooks = useDashboardSelector(selectWebhooks);
+    const emails = useDashboardSelector(selectSmtps);
     const alerts = useDashboardSelector(selectAutomationsAlertsInContext(widget?.localIdentifier));
     const dashboard = useDashboardSelector(selectDashboardId);
     const insight = useDashboardSelector(selectInsightByWidgetRef(widget?.ref));
@@ -70,23 +74,35 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
                 addError(messages.alertSaveError);
             },
             onPauseSuccess: () => {
+                handleRefreshAutomations();
                 addSuccess(messages.alertPauseSuccess);
             },
             onPauseError: () => {
+                setIsLoading(false);
                 addError(messages.alertSaveError);
             },
             onResumeSuccess: () => {
+                handleRefreshAutomations();
                 addSuccess(messages.alertResumeSuccess);
             },
             onResumeError: () => {
+                setIsLoading(false);
                 addError(messages.alertSaveError);
             },
         });
 
     const { result: widgetFilters, status: widgetFiltersStatus } = useWidgetFilters(widget, insight);
-    const supportedMeasures = getSupportedInsightMeasuresByInsight(insight);
+    const destinations = useMemo(() => [...emails, ...webhooks], [emails, webhooks]);
+    const locale = useDashboardSelector(selectLocale);
+    const supportedMeasures = useMemo(
+        () =>
+            getSupportedInsightMeasuresByInsight(
+                insight ? fillMissingTitles(insight, locale, 9999) : insight,
+            ),
+        [insight, locale],
+    );
     const defaultMeasure = supportedMeasures[0];
-    const defaultNotificationChannelId = destinations[0].id;
+    const defaultNotificationChannelId = destinations[0]?.id;
     const hasAlerts = alerts.length > 0;
     const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);
     const maxAutomationsReached = automationsCount >= maxAutomations && !unlimitedAutomationsEntitlement;
@@ -95,7 +111,10 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     useEffect(() => {
         if (widgetFiltersStatus === "success") {
             setIsLoading(false);
-            setDefaultAlert(createDefaultAlert(widgetFilters, defaultMeasure!, defaultNotificationChannelId));
+            const sanitizedFilters = widgetFilters.filter((filter) => !isAllTimeDateFilter(filter));
+            setDefaultAlert(
+                createDefaultAlert(sanitizedFilters, defaultMeasure!, defaultNotificationChannelId),
+            );
         } else if (widgetFiltersStatus === "error") {
             setIsLoading(false);
             closeInsightWidgetMenu();
@@ -168,6 +187,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             ...alert,
             alert: { ...alert.alert, trigger: { ...alert.alert?.trigger, state: "PAUSED" } },
         } as IAutomationMetadataObject;
+        setIsLoading(true);
         handlePauseAlert(alertToPause);
     };
 
@@ -176,6 +196,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             ...alert,
             alert: { ...alert.alert, trigger: { ...alert.alert?.trigger, state: "ACTIVE" } },
         } as IAutomationMetadataObject;
+        setIsLoading(true);
         handleResumeAlert(alertToResume);
     };
 

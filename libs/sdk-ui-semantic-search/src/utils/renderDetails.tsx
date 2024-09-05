@@ -63,7 +63,7 @@ const renderScore = (item: ISemanticSearchResultItem) => {
 export const renderDetails = (listItem: ListItem<ISemanticSearchResultItem>, theme?: ITheme) => {
     return (
         <span className="gd-semantic-search__results-item__details">
-            <BubbleHoverTrigger eventsOnBubble>
+            <BubbleHoverTrigger eventsOnBubble className="gd-semantic-search__bubble_trigger">
                 <Icon.QuestionMark color={theme?.palette?.complementary?.c7 ?? "#6D7680"} />
                 <Bubble
                     className="bubble-light gd-semantic-search__bubble"

@@ -1,14 +1,16 @@
 // (C) 2024 GoodData Corporation
 import {
-    Comparison,
+    ComparisonWrapper,
+    RangeWrapper,
+    RelativeWrapper,
+    JsonApiAutomationInAttributesAlert,
+    JsonApiAutomationOutAttributesStateEnum,
     JsonApiAutomationOutIncludes,
     JsonApiAutomationOutList,
     JsonApiAutomationOutWithLinks,
-    JsonApiAutomationPatchAttributesAlert,
     JsonApiExportDefinitionOutWithLinks,
     JsonApiUserLinkage,
     JsonApiUserOutWithLinks,
-    Range,
 } from "@gooddata/api-client-tiger";
 import {
     IAlertComparisonOperator,
@@ -51,11 +53,11 @@ export function convertAutomation(
     included: JsonApiAutomationOutIncludes[],
 ): IAutomationMetadataObject {
     const { id, attributes = {}, relationships = {} } = automation;
-    const { title, description, tags, schedule, alert, details, createdAt, modifiedAt, metadata } =
+    const { title, description, tags, schedule, alert, details, createdAt, modifiedAt, metadata, state } =
         attributes;
     const { createdBy, modifiedBy } = relationships;
 
-    const webhook = relationships?.notificationChannel?.data?.id;
+    const notificationChannel = relationships?.notificationChannel?.data?.id;
     const exportDefinitionsIds = relationships?.exportDefinitions?.data?.map((ed) => ed.id) ?? [];
     const includedExportDefinitions = compact(
         exportDefinitionsIds.map((exportDefinitionId) =>
@@ -74,7 +76,7 @@ export function convertAutomation(
 
     const dashboard = relationships?.analyticalDashboard?.data?.id;
 
-    const convertedAlert = convertAlert(alert);
+    const convertedAlert = convertAlert(alert, state);
     const alertObj = convertedAlert ? { alert: convertedAlert } : {};
     const scheduleObj = schedule ? { schedule } : {};
     const metadataObj = metadata ? { metadata } : {};
@@ -97,7 +99,7 @@ export function convertAutomation(
         // Relationships
         exportDefinitions,
         recipients,
-        webhook,
+        notificationChannel,
         createdBy: convertUserIdentifier(createdBy, included),
         updatedBy: convertUserIdentifier(modifiedBy, included),
         created: createdAt,
@@ -119,37 +121,62 @@ export const convertAutomationListToAutomations = (
 };
 
 const convertAlert = (
-    alert: JsonApiAutomationPatchAttributesAlert | undefined,
+    alert: JsonApiAutomationInAttributesAlert | undefined,
+    state: JsonApiAutomationOutAttributesStateEnum | undefined,
 ): IAutomationAlert | undefined => {
     if (!alert) {
         return undefined;
     }
 
     const { condition, execution } = alert;
-    const comparison = (condition as Comparison)?.comparison;
-    const range = (condition as Range)?.range;
+    const comparison = (condition as ComparisonWrapper)?.comparison;
+    const range = (condition as RangeWrapper)?.range;
+    const relative = (condition as RelativeWrapper)?.relative;
 
     // TODO: we do not support RANGE for now
-    if (range || !comparison) {
+    if (range) {
         return undefined;
     }
 
-    return {
-        condition: {
-            type: "comparison",
-            operator: comparison.operator as IAlertComparisonOperator,
-            left: comparison.left.localIdentifier,
-            right: (comparison.right as any)?.value,
-        },
+    const base = {
         execution: {
             attributes: [], // TODO: not implemented on BE yet
             measures: execution.measures.map(convertMeasure),
             filters: execution.filters.map(convertFilter),
         },
         trigger: {
-            // TODO: not implemented on BE yet
-            state: "ACTIVE",
-            mode: "ALWAYS",
+            state: state ?? "ACTIVE",
+            mode: alert.trigger,
         },
     };
+
+    if (comparison) {
+        return {
+            condition: {
+                type: "comparison",
+                operator: comparison.operator as IAlertComparisonOperator,
+                left: comparison.left.localIdentifier,
+                right: (comparison.right as any)?.value,
+            },
+            ...base,
+        };
+    }
+
+    if (relative) {
+        return {
+            condition: {
+                type: "relative",
+                operator: relative.operator,
+                measure: {
+                    operator: relative.measure.operator,
+                    left: relative.measure.left.localIdentifier,
+                    right: relative.measure.right.localIdentifier,
+                },
+                threshold: relative.threshold.value,
+            },
+            ...base,
+        };
+    }
+
+    return undefined;
 };

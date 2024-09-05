@@ -36,6 +36,7 @@ import { ICatalogMeasure } from '@gooddata/sdk-model';
 import { IClusteringConfig } from '@gooddata/sdk-backend-spi';
 import { IClusteringResult } from '@gooddata/sdk-backend-spi';
 import { IDashboard } from '@gooddata/sdk-model';
+import { IDashboardAttributeFilterConfig } from '@gooddata/sdk-model';
 import { IDashboardDefinition } from '@gooddata/sdk-model';
 import { IDashboardFilterReference } from '@gooddata/sdk-model';
 import { IDashboardFilterView } from '@gooddata/sdk-model';
@@ -566,9 +567,9 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     // (undocumented)
     getFilterViewsForCurrentUser(dashboardRef: ObjRef): Promise<IDashboardFilterView[]>;
     // (undocumented)
-    getResolvedFiltersForWidget(widget: IWidget, filters: IFilter[]): Promise<IFilter[]>;
+    getResolvedFiltersForWidget(widget: IWidget, filters: IFilter[], attributeFilterConfigs: IDashboardAttributeFilterConfig[]): Promise<IFilter[]>;
     // (undocumented)
-    getResolvedFiltersForWidgetWithMultipleDateFilters(widget: IWidget, commonDateFilters: IDateFilter[], otherFilters: IFilter[]): Promise<IFilter[]>;
+    getResolvedFiltersForWidgetWithMultipleDateFilters(widget: IWidget, commonDateFilters: IDateFilter[], otherFilters: IFilter[], attributeFilterConfigs: IDashboardAttributeFilterConfig[]): Promise<IFilter[]>;
     // (undocumented)
     getScheduledMailsCountForDashboard(ref: ObjRef): Promise<number>;
     // (undocumented)
@@ -596,6 +597,10 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     protected constructor(decorated: IWorkspaceSettingsService);
     // (undocumented)
     protected decorated: IWorkspaceSettingsService;
+    // (undocumented)
+    deleteColorPalette(): Promise<void>;
+    // (undocumented)
+    deleteTheme(): Promise<void>;
     // (undocumented)
     getSettings(): Promise<IWorkspaceSettings>;
     // (undocumented)

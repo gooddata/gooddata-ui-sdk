@@ -1,5 +1,5 @@
 // (C) 2019-2024 GoodData Corporation
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import noop from "lodash/noop.js";
 import { defineMessage, useIntl } from "react-intl";
 import {
@@ -11,8 +11,9 @@ import {
     Hyperlink,
     RecurrenceForm,
     normalizeTime,
-    Alignment,
     Message,
+    OverlayControllerProvider,
+    OverlayController,
 } from "@gooddata/sdk-ui-kit";
 import { Textarea } from "./components/Textarea.js";
 import { Input } from "./components/Input.js";
@@ -43,20 +44,32 @@ import {
     IExportDefinitionVisualizationObjectContent,
 } from "@gooddata/sdk-model";
 import { getTimezoneByIdentifier, TIMEZONE_DEFAULT } from "./utils/timezone.js";
-import { DASHBOARD_TITLE_MAX_LENGTH } from "../../constants/index.js";
+import { DASHBOARD_DIALOG_OVERS_Z_INDEX, DASHBOARD_TITLE_MAX_LENGTH } from "../../constants/index.js";
 import parseISO from "date-fns/parseISO/index.js";
 import { isMobileView } from "./utils/responsive.js";
 import { DeleteScheduleConfirmDialog } from "../DefaultScheduledEmailManagementDialog/components/DeleteScheduleConfirmDialog.js";
 import { areAutomationsEqual } from "./utils/automationHelpers.js";
+import { useScheduleValidation } from "./hooks/useScheduleValidation.js";
 
 const MAX_MESSAGE_LENGTH = 200;
 const MAX_SUBJECT_LENGTH = 200;
 const DEFAULT_MAX_RECIPIENTS = "10";
 const DEFAULT_MIN_RECURRENCE_MINUTES = "60";
 
+const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
+
 export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
-    const { onCancel, onDeleteSuccess, onDeleteError, isVisible, editSchedule, users, webhooks, context } =
-        props;
+    const {
+        onCancel,
+        onDeleteSuccess,
+        onDeleteError,
+        isVisible,
+        editSchedule,
+        users,
+        webhooks,
+        emails,
+        context,
+    } = props;
     const intl = useIntl();
     const [scheduledEmailToDelete, setScheduledEmailToDelete] = useState<
         IAutomationMetadataObject | IAutomationMetadataObjectDefinition | null
@@ -79,7 +92,8 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
     const allowHourlyRecurrence =
         parseInt(minimumRecurrenceMinutesEntitlement?.value ?? DEFAULT_MIN_RECURRENCE_MINUTES, 10) === 60;
 
-    const { alignPoints, onAlign } = useScheduledEmailDialogAlignment();
+    const notificationChannels = useMemo(() => [...emails, ...webhooks], [webhooks, emails]);
+
     const {
         automation,
         originalAutomation,
@@ -92,9 +106,16 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
         onRecurrenceChange,
         onSubjectChange,
         onTitleChange,
+        isCronValid,
     } = useEditScheduledEmail(props);
     const { handleSaveScheduledEmail, isSavingScheduledEmail, savingErrorMessage } =
         useSaveScheduledEmailToBackend(automation, props);
+    const { isValid: isAutomationValid } = useScheduleValidation(originalAutomation);
+    const errorMessage = savingErrorMessage
+        ? savingErrorMessage
+        : !isAutomationValid
+        ? intl.formatMessage({ id: "dialogs.schedule.email.widgetError" })
+        : undefined;
 
     // It is needed to use originalAutomation here instead of automation, as in edit mode, all attachments may be removed
     // and no connection to widget would exist anymore and form would fallback to editing of dashboard variant.
@@ -140,8 +161,8 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
             }) ?? true,
     };
 
-    const isValid = (automation.recipients?.length ?? 0) <= maxAutomationsRecipients;
-    const isDestinationEmpty = !automation.webhook;
+    const isValid = (automation.recipients?.length ?? 0) <= maxAutomationsRecipients && isCronValid;
+    const isDestinationEmpty = !automation.notificationChannel;
     const isSubmitDisabled =
         !isValid ||
         isDestinationEmpty ||
@@ -174,139 +195,139 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
 
     return (
         <>
-            <Overlay
-                alignPoints={alignPoints}
-                className="gd-schedule-email-dialog-overlay"
-                isModal={true}
-                positionType="fixed"
-                onAlign={onAlign}
-            >
-                <ConfirmDialogBase
-                    className="gd-schedule-email-dialog s-gd-schedule-email-dialog"
-                    isPositive={true}
-                    cancelButtonText={intl.formatMessage({ id: "cancel" })}
-                    submitButtonText={
-                        editSchedule
-                            ? intl.formatMessage({ id: `dialogs.schedule.email.save` })
-                            : intl.formatMessage({ id: `dialogs.schedule.email.create` })
-                    }
-                    showProgressIndicator={isSavingScheduledEmail}
-                    footerLeftRenderer={() => (
-                        <div className="gd-schedule-email-dialog-footer-link">
-                            <Hyperlink
-                                text={intl.formatMessage({ id: helpTextId })}
-                                href="https://www.gooddata.com/docs/cloud/create-dashboards/export/schedule-emailing/"
-                                iconClass="gd-icon-circle-question"
-                            />
-                            {editSchedule ? (
-                                <Button
-                                    className="gd-button-link-dimmed"
-                                    value={intl.formatMessage({ id: "delete" })}
-                                    onClick={() => setScheduledEmailToDelete(automation)}
-                                    disabled={isSavingScheduledEmail}
+            <Overlay className="gd-notifications-channels-dialog-overlay" isModal={true} positionType="fixed">
+                <OverlayControllerProvider overlayController={overlayController}>
+                    <ConfirmDialogBase
+                        className="gd-notifications-channels-dialog s-gd-notifications-channels-dialog"
+                        isPositive={true}
+                        cancelButtonText={intl.formatMessage({ id: "cancel" })}
+                        submitButtonText={
+                            editSchedule
+                                ? intl.formatMessage({ id: `dialogs.schedule.email.save` })
+                                : intl.formatMessage({ id: `dialogs.schedule.email.create` })
+                        }
+                        showProgressIndicator={isSavingScheduledEmail}
+                        footerLeftRenderer={() => (
+                            <div className="gd-notifications-channels-dialog-footer-link">
+                                <Hyperlink
+                                    text={intl.formatMessage({ id: helpTextId })}
+                                    href="https://www.gooddata.com/docs/cloud/create-dashboards/export/schedule-emailing/"
+                                    iconClass="gd-icon-circle-question"
                                 />
-                            ) : null}
-                        </div>
-                    )}
-                    isSubmitDisabled={isSubmitDisabled || isSavingScheduledEmail}
-                    submitOnEnterKey={false}
-                    onCancel={onCancel}
-                    onSubmit={handleSaveScheduledEmail}
-                    headline={undefined}
-                    headerLeftButtonRenderer={() => (
-                        <div className="gd-schedule-email-dialog-header">
-                            <Button
-                                className="gd-button-primary gd-button-icon-only gd-icon-navigateleft s-schedule-email-dialog-button"
-                                onClick={onCancel}
+                                {editSchedule ? (
+                                    <Button
+                                        className="gd-button-link-dimmed"
+                                        value={intl.formatMessage({ id: "delete" })}
+                                        onClick={() => setScheduledEmailToDelete(automation)}
+                                        disabled={isSavingScheduledEmail}
+                                    />
+                                ) : null}
+                            </div>
+                        )}
+                        isSubmitDisabled={isSubmitDisabled || isSavingScheduledEmail}
+                        submitOnEnterKey={false}
+                        onCancel={onCancel}
+                        onSubmit={handleSaveScheduledEmail}
+                        headline={undefined}
+                        headerLeftButtonRenderer={() => (
+                            <div className="gd-notifications-channels-dialog-header">
+                                <Button
+                                    className="gd-button-primary gd-button-icon-only gd-icon-navigateleft s-schedule-email-dialog-button"
+                                    onClick={onCancel}
+                                />
+                                <EditableLabel
+                                    value={automation.title ?? ""}
+                                    onSubmit={noop}
+                                    onChange={onTitleChange}
+                                    maxRows={1}
+                                    maxLength={40}
+                                    className="gd-notifications-channels-dialog-title s-gd-notifications-channels-dialog-title"
+                                    autofocus={!automation.title}
+                                    placeholder={intl.formatMessage({
+                                        id: "dialogs.schedule.email.title.placeholder",
+                                    })}
+                                />
+                            </div>
+                        )}
+                    >
+                        <div className="gd-notifications-channel-dialog-content-wrapper">
+                            <ContentDivider className="gd-divider-with-margin gd-divider-full-row" />
+                            <RecurrenceForm
+                                startDate={startDate}
+                                cronExpression={
+                                    automation.schedule?.cron ?? getDefaultCronExpression(startDate)
+                                }
+                                timezone={
+                                    (
+                                        getTimezoneByIdentifier(automation.schedule?.timezone) ??
+                                        TIMEZONE_DEFAULT
+                                    ).title
+                                }
+                                dateFormat={dateFormat ?? "MM/dd/yyyy"}
+                                locale={locale}
+                                weekStart={weekStart}
+                                onChange={onRecurrenceChange}
+                                allowHourlyRecurrence={allowHourlyRecurrence}
                             />
-                            <EditableLabel
-                                value={automation.title ?? ""}
-                                onSubmit={noop}
-                                onChange={onTitleChange}
-                                maxRows={1}
-                                maxLength={40}
-                                className="gd-schedule-email-dialog-title s-gd-schedule-email-dialog-title"
-                                autofocus={!automation.title}
+                            <ContentDivider className="gd-divider-with-margin" />
+                            <DestinationSelect
+                                notificationChannels={notificationChannels}
+                                selectedItemId={automation.notificationChannel}
+                                onChange={onDestinationChange}
+                            />
+                            <ContentDivider className="gd-divider-with-margin" />
+                            <RecipientsSelect
+                                users={users}
+                                value={automation.recipients ?? []}
+                                originalValue={originalAutomation.recipients || []}
+                                onChange={onRecipientsChange}
+                                allowEmptySelection
+                                maxRecipients={maxAutomationsRecipients}
+                            />
+                            <Input
+                                className="gd-notifications-channels-dialog-subject s-gd-notifications-channels-dialog-subject"
+                                label={intl.formatMessage({ id: "dialogs.schedule.email.subject.label" })}
+                                maxlength={MAX_SUBJECT_LENGTH}
+                                placeholder={
+                                    dashboardTitle.length > DASHBOARD_TITLE_MAX_LENGTH
+                                        ? dashboardTitle.substring(0, DASHBOARD_TITLE_MAX_LENGTH)
+                                        : dashboardTitle
+                                }
+                                value={automation.details?.subject ?? ""}
+                                onChange={onSubjectChange}
+                            />
+                            <Textarea
+                                className="gd-notifications-channels-dialog-message s-gd-notifications-channels-dialog-message"
+                                label={intl.formatMessage({ id: "dialogs.schedule.email.message.label" })}
+                                maxlength={MAX_MESSAGE_LENGTH}
                                 placeholder={intl.formatMessage({
-                                    id: "dialogs.schedule.email.title.placeholder",
+                                    id: "dialogs.schedule.email.message.placeholder",
                                 })}
+                                rows={3}
+                                onChange={onMessageChange}
+                                value={automation.details?.message ?? ""}
                             />
+                            <Attachments
+                                dashboardTitle={dashboardTitle}
+                                dashboardSelected={isDashboardExportSelected}
+                                csvSelected={isCsvExportSelected}
+                                xlsxSelected={isXlsxExportSelected}
+                                settings={settings}
+                                onDashboardAttachmentsSelectionChange={onDashboardAttachmentsChange}
+                                onWidgetAttachmentsSelectionChange={onWidgetAttachmentsChange}
+                                onWidgetAttachmentsSettingsChange={onWidgetAttachmentsSettingsChange}
+                                widget={widget}
+                                editSchedule={editSchedule}
+                            />
+                            {errorMessage ? (
+                                <Message type="error" className="gd-notifications-channels-dialog-error">
+                                    {errorMessage}
+                                </Message>
+                            ) : null}
+                            <ContentDivider className="gd-divider-with-margin gd-divider-full-row" />
                         </div>
-                    )}
-                >
-                    <div className="gd-schedule-mail-dialog-content-wrapper">
-                        <ContentDivider className="gd-divider-with-margin gd-divider-full-row" />
-                        <RecurrenceForm
-                            startDate={startDate}
-                            cronExpression={automation.schedule?.cron ?? getDefaultCronExpression(startDate)}
-                            timezone={
-                                (getTimezoneByIdentifier(automation.schedule?.timezone) ?? TIMEZONE_DEFAULT)
-                                    .title
-                            }
-                            dateFormat={dateFormat ?? "MM/dd/yyyy"}
-                            locale={locale}
-                            weekStart={weekStart}
-                            onChange={onRecurrenceChange}
-                            allowHourlyRecurrence={allowHourlyRecurrence}
-                        />
-                        <ContentDivider className="gd-divider-with-margin" />
-                        <DestinationSelect
-                            webhooks={webhooks}
-                            selectedItemId={automation.webhook}
-                            onChange={onDestinationChange}
-                        />
-                        <ContentDivider className="gd-divider-with-margin" />
-                        <RecipientsSelect
-                            users={users}
-                            value={automation.recipients ?? []}
-                            originalValue={originalAutomation.recipients || []}
-                            onChange={onRecipientsChange}
-                            allowEmptySelection
-                            maxRecipients={maxAutomationsRecipients}
-                        />
-                        <Input
-                            className="gd-schedule-email-dialog-subject s-gd-schedule-email-dialog-subject"
-                            label={intl.formatMessage({ id: "dialogs.schedule.email.subject.label" })}
-                            maxlength={MAX_SUBJECT_LENGTH}
-                            placeholder={
-                                dashboardTitle.length > DASHBOARD_TITLE_MAX_LENGTH
-                                    ? dashboardTitle.substring(0, DASHBOARD_TITLE_MAX_LENGTH)
-                                    : dashboardTitle
-                            }
-                            value={automation.details?.subject ?? ""}
-                            onChange={onSubjectChange}
-                        />
-                        <Textarea
-                            className="gd-schedule-email-dialog-message s-gd-schedule-email-dialog-message"
-                            label={intl.formatMessage({ id: "dialogs.schedule.email.message.label" })}
-                            maxlength={MAX_MESSAGE_LENGTH}
-                            placeholder={intl.formatMessage({
-                                id: "dialogs.schedule.email.message.placeholder",
-                            })}
-                            rows={3}
-                            onChange={onMessageChange}
-                            value={automation.details?.message ?? ""}
-                        />
-                        <Attachments
-                            dashboardTitle={dashboardTitle}
-                            dashboardSelected={isDashboardExportSelected}
-                            csvSelected={isCsvExportSelected}
-                            xlsxSelected={isXlsxExportSelected}
-                            settings={settings}
-                            onDashboardAttachmentsSelectionChange={onDashboardAttachmentsChange}
-                            onWidgetAttachmentsSelectionChange={onWidgetAttachmentsChange}
-                            onWidgetAttachmentsSettingsChange={onWidgetAttachmentsSettingsChange}
-                            widget={widget}
-                            editSchedule={editSchedule}
-                        />
-                        {savingErrorMessage ? (
-                            <Message type="error" className="gd-schedule-email-dialog-error">
-                                {savingErrorMessage}
-                            </Message>
-                        ) : null}
-                        <ContentDivider className="gd-divider-with-margin gd-divider-full-row" />
-                    </div>
-                </ConfirmDialogBase>
+                    </ConfirmDialogBase>
+                </OverlayControllerProvider>
             </Overlay>
             {scheduledEmailToDelete ? (
                 <DeleteScheduleConfirmDialog
@@ -332,21 +353,3 @@ export const DefaultScheduledEmailDialog: React.FC<IScheduledEmailDialogProps> =
         </IntlWrapper>
     );
 };
-
-export function useScheduledEmailDialogAlignment() {
-    const [alignState, setAlignState] = useState("cc cc");
-    const alignPoints = [
-        {
-            align: alignState,
-        },
-    ];
-    const onAlign = (alignment: Alignment) => {
-        if (alignment.top <= 0) {
-            setAlignState("tc tc");
-        } else {
-            setAlignState("cc cc");
-        }
-    };
-
-    return { alignPoints, onAlign };
-}

@@ -173,6 +173,7 @@ import { IDashboardLayoutSizeByScreenSize } from '@gooddata/sdk-model';
 import { IDashboardObjectIdentity } from '@gooddata/sdk-model';
 import { IDashboardPermissions } from '@gooddata/sdk-model';
 import { IDashboardRichTextProps as IDashboardRichTextProps_2 } from './types.js';
+import { IDashboardVisualizationSwitcherProps as IDashboardVisualizationSwitcherProps_2 } from './types.js';
 import { IDashboardWidget } from '@gooddata/sdk-model';
 import { IDashboardWidgetOverlay as IDashboardWidgetOverlay_2 } from '../../index.js';
 import { IDataView } from '@gooddata/sdk-backend-spi';
@@ -183,6 +184,7 @@ import { IDateHierarchyTemplate } from '@gooddata/sdk-model';
 import { Identifier } from '@gooddata/sdk-model';
 import { IdentifierRef } from '@gooddata/sdk-model';
 import { IDrillDownDefinition as IDrillDownDefinition_2 } from '../../../types.js';
+import { IDrillDownIntersectionIgnoredAttributes } from '@gooddata/sdk-model';
 import { IDrillDownReference } from '@gooddata/sdk-model';
 import { IDrillEvent } from '@gooddata/sdk-ui';
 import { IDrillEventIntersectionElement } from '@gooddata/sdk-ui';
@@ -237,6 +239,7 @@ import { ISettings } from '@gooddata/sdk-model';
 import { IShareDialogInteractionData } from '@gooddata/sdk-ui-kit';
 import { ISharedObject } from '@gooddata/sdk-ui-kit';
 import { ISharingApplyPayload as ISharingApplyPayload_2 } from '@gooddata/sdk-ui-kit';
+import { ISmtpDefinitionObject } from '@gooddata/sdk-model';
 import { ITempFilterContext } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
 import { ITitleProps as ITitleProps_2 } from './types.js';
@@ -244,6 +247,7 @@ import { ITranslations } from '@gooddata/sdk-ui';
 import { IUser } from '@gooddata/sdk-model';
 import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
+import { IVisualizationSwitcherWidget } from '@gooddata/sdk-model';
 import { IWebhookDefinitionObject } from '@gooddata/sdk-model';
 import { IWidget } from '@gooddata/sdk-model';
 import { IWidgetAlert } from '@gooddata/sdk-model';
@@ -278,6 +282,7 @@ import { Selector } from '@reduxjs/toolkit';
 import { SetCatalogItemsPayload } from './catalogReducers.js';
 import { SetCatalogMeasuresAndFactsPayload } from './catalogReducers.js';
 import { ShareStatus } from '@gooddata/sdk-model';
+import { Smtps as Smtps_2 } from '../index.js';
 import { TypedUseSelectorHook } from 'react-redux';
 import { UiState as UiState_2 } from './uiState.js';
 import { Uri } from '@gooddata/sdk-model';
@@ -1165,6 +1170,9 @@ export type CustomDashboardLayoutComponent = ComponentType<IDashboardLayoutProps
 
 // @public (undocumented)
 export type CustomDashboardRichTextComponent = ComponentType<IDashboardRichTextProps>;
+
+// @public (undocumented)
+export type CustomDashboardVisualizationSwitcherComponent = ComponentType<IDashboardVisualizationSwitcherProps>;
 
 // @public (undocumented)
 export type CustomDashboardWidgetComponent = ComponentType<IDashboardWidgetProps>;
@@ -2727,6 +2735,8 @@ export interface DashboardState {
     renderMode: RenderModeState;
     // (undocumented)
     saving: SavingState;
+    // @alpha (undocumented)
+    smtps: SmtpsState;
     // @beta
     ui: UiState;
     // (undocumented)
@@ -2982,6 +2992,12 @@ export const DefaultDashboardToolbarButton: React_2.FC<IDefaultDashboardToolbarB
 // @internal (undocumented)
 export const DefaultDashboardToolbarGroup: React_2.FC<IDefaultDashboardToolbarGroupProps>;
 
+// @public
+export const DefaultDashboardVisualizationSwitcher: ComponentType<IDashboardVisualizationSwitcherProps_2>;
+
+// @internal (undocumented)
+export function DefaultDashboardVisualizationSwitcherComponentSetFactory(visualizationSwitcherComponentProvider: VisualizationSwitcherComponentProvider): VisualizationSwitcherWidgetComponentSet;
+
 // @internal (undocumented)
 export const DefaultDashboardWidget: React_2.NamedExoticComponent<IDashboardWidgetProps>;
 
@@ -3092,14 +3108,14 @@ export function dispatchAndWaitFor<TCommand extends DashboardCommands, TResult>(
 
 // @internal
 export type DraggableComponent = {
-    dragging: AttributeFilterDraggableComponent | DateFilterDraggableComponent | KpiDraggableComponent | InsightDraggableComponent | RichTextDraggableComponent | CustomDraggableComponent;
+    dragging: AttributeFilterDraggableComponent | DateFilterDraggableComponent | KpiDraggableComponent | InsightDraggableComponent | RichTextDraggableComponent | VisualizationSwitcherDraggableComponent | CustomDraggableComponent;
 };
 
 // @internal (undocumented)
-export type DraggableContentItem = AttributeFilterDraggableItem | AttributeFilterPlaceholderDraggableItem | DateFilterDraggableItem | InsightDraggableItem | InsightDraggableListItem | InsightPlaceholderDraggableItem | KpiDraggableItem | KpiPlaceholderDraggableItem | RichTextDraggableItem | RichTextDraggableListItem | CustomWidgetDraggableItem | CustomDraggableItem;
+export type DraggableContentItem = AttributeFilterDraggableItem | AttributeFilterPlaceholderDraggableItem | DateFilterDraggableItem | InsightDraggableItem | InsightDraggableListItem | InsightPlaceholderDraggableItem | KpiDraggableItem | KpiPlaceholderDraggableItem | RichTextDraggableItem | RichTextDraggableListItem | VisualizationSwitcherDraggableItem | VisualizationSwitcherDraggableListItem | CustomWidgetDraggableItem | CustomDraggableItem;
 
 // @internal (undocumented)
-export type DraggableContentItemType = "attributeFilter" | "dateFilter" | "attributeFilter-placeholder" | "insightListItem" | "insight" | "insight-placeholder" | "kpi" | "kpi-placeholder" | "richText" | "richTextListItem" | "custom";
+export type DraggableContentItemType = "attributeFilter" | "dateFilter" | "attributeFilter-placeholder" | "insightListItem" | "insight" | "insight-placeholder" | "kpi" | "kpi-placeholder" | "richText" | "richTextListItem" | "visualizationSwitcher" | "visualizationSwitcherListItem" | "custom";
 
 // @internal (undocumented)
 export const DraggableCreatePanelItem: React_2.FC<IDraggableCreatePanelItemProps>;
@@ -3125,6 +3141,8 @@ export type DraggableItemComponentTypeMapping = {
     "kpi-placeholder": KpiPlaceholderDraggableItem;
     richText: RichTextDraggableItem;
     richTextListItem: RichTextDraggableListItem;
+    visualizationSwitcher: VisualizationSwitcherDraggableItem;
+    visualizationSwitcherListItem: VisualizationSwitcherDraggableListItem;
     custom: CustomDraggableItem;
 };
 
@@ -3141,7 +3159,7 @@ export type DraggableItemType = DraggableContentItemType | DraggableInternalItem
 export type DraggableItemTypeMapping = DraggableItemComponentTypeMapping & DraggableItemInternalTypeMapping;
 
 // @internal (undocumented)
-export type DraggableLayoutItem = InsightDraggableItem | KpiDraggableItem | RichTextDraggableItem | CustomWidgetDraggableItem;
+export type DraggableLayoutItem = InsightDraggableItem | KpiDraggableItem | RichTextDraggableItem | VisualizationSwitcherDraggableItem | CustomWidgetDraggableItem;
 
 // @internal (undocumented)
 export interface DraggingComponentProps {
@@ -3536,7 +3554,7 @@ export type FluidLayoutCustomizationFn = (layout: IDashboardLayout<ExtendedDashb
 export function getAuthor(capabilities: IBackendCapabilities, user: IUser): string | undefined;
 
 // @internal (undocumented)
-export function getDefaultInsightEditMenuItems(widget: IInsightWidget, { intl, dispatch, eventDispatch, includeInteractions }: MenuItemDependencies): IInsightMenuItem[];
+export function getDefaultInsightEditMenuItems(widget: IInsightWidget, { intl, dispatch, eventDispatch, includeInteractions, useWidgetDeleteDialog, }: MenuItemDependencies): IInsightMenuItem[];
 
 // @internal (undocumented)
 export function getDefaultInsightMenuItems(intl: IntlShape, config: {
@@ -3557,7 +3575,7 @@ export function getDefaultInsightMenuItems(intl: IntlShape, config: {
 }): IInsightMenuItem[];
 
 // @internal (undocumented)
-export function getDrillDownAttributeTitle(localIdentifier: string, drillEvent: IDrillEvent): string | null;
+export function getDrillDownTitle(drillDefinition: IDrillDownDefinition, drillEvent: IDrillEvent, drillDownIntersectionIgnoredAttributes?: IDrillDownIntersectionIgnoredAttributes[], drillTargetDisplayForm?: IAttributeDisplayFormMetadataObject): string | null;
 
 // @internal (undocumented)
 export class HeadlessDashboard {
@@ -3925,6 +3943,7 @@ export interface IDashboardCustomComponentProps {
     ToolbarComponent?: CustomToolbarComponent;
     // @alpha
     TopBarComponent?: CustomTopBarComponent;
+    VisualizationSwitcherComponentProvider?: OptionalVisualizationSwitcherComponentProvider;
     WidgetComponentProvider?: OptionalWidgetComponentProvider;
 }
 
@@ -4263,6 +4282,19 @@ export interface IDashboardThemingProps {
 }
 
 // @public
+export interface IDashboardVisualizationSwitcherProps {
+    // @alpha
+    backend?: IAnalyticalBackend;
+    // @alpha
+    clientHeight?: number;
+    // @alpha
+    clientWidth?: number;
+    widget: IVisualizationSwitcherWidget;
+    // @alpha
+    workspace?: string;
+}
+
+// @public
 export interface IDashboardWidgetCustomizer {
     addCustomWidget(widgetType: string, Component: CustomDashboardWidgetComponent): IDashboardWidgetCustomizer;
 }
@@ -4378,6 +4410,9 @@ export interface IDrillTargets {
     ref: ObjRef;
     uri: string;
 }
+
+// @internal (undocumented)
+export type IDrillToUrl = IDrillToCustomUrl | IDrillToAttributeUrl;
 
 // @internal (undocumented)
 export interface IDrillToUrlPlaceholder {
@@ -4938,6 +4973,7 @@ export interface IScheduledEmailDialogProps {
     automations: IAutomationMetadataObject[];
     context?: IScheduledEmailDialogPropsContext;
     editSchedule?: IAutomationMetadataObject;
+    emails: ISmtpDefinitionObject[];
     isVisible?: boolean;
     onCancel?: () => void;
     onDeleteError?: (error: GoodDataSdkError) => void;
@@ -4962,6 +4998,7 @@ export interface IScheduledEmailDialogPropsContext {
 export interface IScheduledEmailManagementDialogProps {
     automations: IAutomationMetadataObject[];
     context?: IScheduledEmailDialogPropsContext;
+    emails: ISmtpDefinitionObject[];
     isLoadingScheduleData: boolean;
     isVisible?: boolean;
     onAdd?: () => void;
@@ -5382,6 +5419,8 @@ export interface ISidebarProps {
     // @internal
     RichTextWidgetComponentSet?: RichTextWidgetComponentSet;
     // @internal
+    VisualizationSwitcherWidgetComponentSet?: VisualizationSwitcherWidgetComponentSet;
+    // @internal
     WrapCreatePanelItemWithDragComponent?: IWrapCreatePanelItemWithDragComponent;
     // @internal
     WrapInsightListItemWithDragComponent?: IWrapInsightListItemWithDragComponent;
@@ -5425,6 +5464,12 @@ export function isRichTextDraggableListItem(item: any): item is RichTextDraggabl
 
 // @internal
 export function isTemporaryIdentity(obj: IDashboardObjectIdentity): boolean;
+
+// @internal (undocumented)
+export function isVisualizationSwitcherDraggableItem(item: any): item is VisualizationSwitcherDraggableItem;
+
+// @internal (undocumented)
+export function isVisualizationSwitcherDraggableListItem(item: any): item is VisualizationSwitcherDraggableListItem;
 
 // @alpha (undocumented)
 export interface ITitleProps {
@@ -5490,6 +5535,12 @@ export interface IUseWidgetSelectionResult {
     isSelected: boolean;
     onSelected: (e?: MouseEvent_2) => void;
 }
+
+// @internal (undocumented)
+export type IVisualizationSwitcherDraggingComponentProps = {
+    itemType: "visualizationSwitcher";
+    item: VisualizationSwitcherDraggableItem;
+};
 
 // @internal (undocumented)
 export type IWrapCreatePanelItemWithDragComponent = React.ComponentType<IWrapCreatePanelItemWithDragProps>;
@@ -5625,6 +5676,7 @@ export type MenuItemDependencies = {
     dispatch: ReturnType<typeof useDashboardDispatch>;
     eventDispatch: ReturnType<typeof useDashboardEventDispatch>;
     includeInteractions?: boolean;
+    useWidgetDeleteDialog?: boolean;
 };
 
 // @alpha (undocumented)
@@ -5935,6 +5987,9 @@ export type OptionalProvider<T> = T extends (...args: infer TArgs) => infer TRes
 
 // @public (undocumented)
 export type OptionalRichTextComponentProvider = OptionalProvider<RichTextComponentProvider>;
+
+// @public (undocumented)
+export type OptionalVisualizationSwitcherComponentProvider = OptionalProvider<VisualizationSwitcherComponentProvider>;
 
 // @public (undocumented)
 export type OptionalWidgetComponentProvider = OptionalProvider<WidgetComponentProvider>;
@@ -6840,7 +6895,7 @@ export const selectAutomationsIsLoading: DashboardSelector<boolean>;
 export const selectAutomationsSchedules: DashboardSelector<IAutomationMetadataObject[]>;
 
 // @alpha
-export const selectAutomationsSchedulesInContext: DashboardSelector<IAutomationMetadataObject[]>;
+export const selectAutomationsSchedulesInContext: (widgetLocalIdentifier: string | undefined) => DashboardSelector<IAutomationMetadataObject[]>;
 
 // @public
 export const selectBackendCapabilities: DashboardSelector<IBackendCapabilities>;
@@ -6925,6 +6980,9 @@ export const selectCanViewDashboardPermission: DashboardSelector<boolean>;
 
 // @public (undocumented)
 export const selectCatalogAttributeDisplayForms: DashboardSelector<IAttributeDisplayFormMetadataObject[]>;
+
+// @public (undocumented)
+export const selectCatalogAttributeDisplayFormsById: DashboardSelector<Record<string, IAttributeDisplayFormMetadataObject>>;
 
 // @beta (undocumented)
 export const selectCatalogAttributeHierarchies: DashboardSelector<ICatalogAttributeHierarchy[]>;
@@ -7203,6 +7261,9 @@ export const selectEnableScheduling: DashboardSelector<boolean>;
 export const selectEnableUnavailableItemsVisibility: DashboardSelector<boolean>;
 
 // @internal
+export const selectEnableVisualizationSwitcher: DashboardSelector<boolean>;
+
+// @internal
 export const selectEnableWidgetCustomHeight: DashboardSelector<boolean>;
 
 // @alpha (undocumented)
@@ -7476,6 +7537,9 @@ export const selectIsShareDialogOpen: DashboardSelector<boolean>;
 export const selectIsWhiteLabeled: DashboardSelector<boolean>;
 
 // @internal (undocumented)
+export const selectIsWidgetDeleteDialogOpen: DashboardSelector<boolean>;
+
+// @internal (undocumented)
 export const selectIsWidgetLoadingAdditionalDataByWidgetRef: (refs: ObjRef) => DashboardSelector<boolean>;
 
 // @internal (undocumented)
@@ -7556,6 +7620,15 @@ export const selectSettings: DashboardSelector<ISettings>;
 // @internal
 export const selectShouldHidePixelPerfectExperience: DashboardSelector<string | number | boolean | object>;
 
+// @alpha
+export const selectSmtps: DashboardSelector<Smtps>;
+
+// @alpha
+export const selectSmtpsError: DashboardSelector<GoodDataSdkError | undefined>;
+
+// @alpha
+export const selectSmtpsIsLoading: DashboardSelector<boolean>;
+
 // @internal
 export const selectStash: DashboardSelector<LayoutStash>;
 
@@ -7624,6 +7697,9 @@ export const selectWidgetCoordinatesByRef: (ref: ObjRef) => DashboardSelector<IL
 
 // @internal (undocumented)
 export const selectWidgetDateDatasetAutoSelect: DashboardSelector<boolean>;
+
+// @internal (undocumented)
+export const selectWidgetDeleteDialogWidgetRef: DashboardSelector<ObjRef | undefined>;
 
 // @alpha
 export const selectWidgetDrills: (ref: ObjRef | undefined) => DashboardSelector<IDrillToLegacyDashboard[] | InsightDrillDefinition[] | DrillDefinition[]>;
@@ -7938,6 +8014,19 @@ export class SingleDashboardStoreAccessor {
 // @public
 export function singleEventTypeHandler(type: (DashboardEvents | ICustomDashboardEvent)["type"], handler: DashboardEventHandler["handler"]): DashboardEventHandler;
 
+// @alpha
+export type Smtps = ISmtpDefinitionObject[];
+
+// @alpha (undocumented)
+export interface SmtpsState {
+    // (undocumented)
+    error?: GoodDataSdkError;
+    // (undocumented)
+    loading: boolean;
+    // (undocumented)
+    smtps: Smtps;
+}
+
 // @beta
 export type StashedDashboardItemsId = string;
 
@@ -8126,6 +8215,11 @@ mode?: FilterViewDialogMode_2 | undefined;
 } | undefined;
 type: string;
 }) => void | UiState_2 | WritableDraft<UiState_2>;
+openWidgetDeleteDialog: (state: WritableDraft<UiState_2>, action: {
+payload: ObjRef;
+type: string;
+}) => void | UiState_2 | WritableDraft<UiState_2>;
+closeWidgetDeleteDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
 }, "uiSlice">;
 
 // @beta (undocumented)
@@ -8210,6 +8304,11 @@ export interface UiState {
     };
     // (undocumented)
     widgetDateDatasetAutoSelect: boolean;
+    // (undocumented)
+    widgetDeleteDialog: {
+        open: boolean;
+        widgetRef: ObjRef | undefined;
+    };
     // (undocumented)
     widgetsLoadingAdditionalData: ObjRef[];
     // (undocumented)
@@ -8719,11 +8818,12 @@ export type UseDashboardQueryProcessingResult<TQueryCreatorArgs extends any[], T
 // @alpha
 export const useDashboardScheduledEmails: () => {
     webhooks: Webhooks_2;
+    emails: Smtps_2;
     users: Users_2;
     automations: IAutomationMetadataObject[];
     automationsCount: number;
     schedulingLoadError: GoodDataSdkError | undefined;
-    numberOfAvailableWebhooks: number;
+    numberOfAvailableDestinations: number;
     isScheduleLoading: boolean;
     isScheduledEmailingVisible: boolean;
     isScheduledManagementEmailingVisible: boolean;
@@ -8990,6 +9090,31 @@ export function useWidgetSelection(widgetRef?: ObjRef): IUseWidgetSelectionResul
 
 // @internal (undocumented)
 export type ValuesLimitingItem = IDashboardAttributeFilterParentItem | ObjRef | IDashboardDependentDateFilter;
+
+// @public (undocumented)
+export type VisualizationSwitcherComponentProvider = (visualizationSwitcher: IVisualizationSwitcherWidget) => CustomDashboardVisualizationSwitcherComponent;
+
+// @internal (undocumented)
+export type VisualizationSwitcherDraggableComponent = {
+    DraggingComponent?: VisualizationSwitcherDraggingComponent;
+    type: "visualizationSwitcher";
+};
+
+// @internal (undocumented)
+export type VisualizationSwitcherDraggableItem = BaseDraggableMovingItem & {
+    type: "visualizationSwitcher";
+};
+
+// @internal (undocumented)
+export type VisualizationSwitcherDraggableListItem = BaseDraggableLayoutItem & {
+    type: "visualizationSwitcherListItem";
+};
+
+// @internal (undocumented)
+export type VisualizationSwitcherDraggingComponent = ComponentType<IVisualizationSwitcherDraggingComponentProps>;
+
+// @internal
+export type VisualizationSwitcherWidgetComponentSet = CustomComponentBase<IDashboardVisualizationSwitcherProps, Parameters<VisualizationSwitcherComponentProvider>> & DraggableComponent & Partial<CreatableByDragComponent> & Partial<CreatablePlaceholderComponent<IDashboardWidgetProps>> & ConfigurableWidget<IVisualizationSwitcherWidget>;
 
 // @alpha
 export type Webhooks = IWebhookDefinitionObject[];

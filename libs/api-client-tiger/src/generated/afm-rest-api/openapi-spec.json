@@ -567,6 +567,48 @@
                 }
             }
         },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/searchCreate": {
+            "post": {
+                "tags": ["Smart Functions", "actions"],
+                "summary": "(BETA) Semantic Search in Metadata + creates new visualizations",
+                "description": "(BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.",
+                "operationId": "aiSearchCreate",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SearchCreateRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SearchCreateResult"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/actions/workspaces/{workspaceId}/ai/search": {
             "post": {
                 "tags": ["Smart Functions", "actions"],
@@ -2696,6 +2738,216 @@
                 },
                 "description": "Entity describing the valid descendants response."
             },
+            "SearchCreateRequest": {
+                "required": ["question"],
+                "type": "object",
+                "properties": {
+                    "question": {
+                        "maxLength": 1000,
+                        "type": "string",
+                        "description": "User question",
+                        "example": "Do you have anything about revenue?"
+                    },
+                    "limitSearch": {
+                        "type": "integer",
+                        "description": "Maximum number of search results.",
+                        "format": "int32",
+                        "default": 10
+                    },
+                    "limitCreate": {
+                        "type": "integer",
+                        "description": "Maximum number of created results.",
+                        "format": "int32",
+                        "default": 5
+                    },
+                    "titleToDescriptorRatio": {
+                        "type": "number",
+                        "description": "Ratio of title to descriptor.",
+                        "format": "double",
+                        "default": 0.75
+                    }
+                }
+            },
+            "CreatedVisualization": {
+                "required": ["dimensionality", "id", "metrics", "title", "visualizationType"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Proposed ID of the new visualization",
+                        "example": "revenue_by_country"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Proposed title of the new visualization",
+                        "example": "Revenue by Country"
+                    },
+                    "visualizationType": {
+                        "type": "string",
+                        "description": "Visualization type requested in question",
+                        "example": "TABLE",
+                        "enum": ["TABLE", "HEADLINE", "BAR", "LINE", "PIE"]
+                    },
+                    "metrics": {
+                        "type": "array",
+                        "description": "List of metrics to be used in the new visualization",
+                        "items": {
+                            "$ref": "#/components/schemas/Metric"
+                        }
+                    },
+                    "dimensionality": {
+                        "type": "array",
+                        "description": "List of attributes representing the dimensionality of the new visualization",
+                        "items": {
+                            "$ref": "#/components/schemas/DimAttribute"
+                        }
+                    }
+                },
+                "description": "List of created visualizations"
+            },
+            "DimAttribute": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "ID of the object",
+                        "example": "obj-123"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "metric"
+                    }
+                },
+                "description": "List of attributes representing the dimensionality of the new visualization"
+            },
+            "Metric": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "ID of the object",
+                        "example": "obj-123"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "metric"
+                    },
+                    "aggFunction": {
+                        "type": "string",
+                        "description": "Agg function. Empty if a stored metric is used.",
+                        "example": "COUNT, SUM, MIN, MAX, AVG, MEDIAN",
+                        "enum": ["COUNT", "SUM", "MIN", "MAX", "AVG", "MEDIAN"]
+                    }
+                },
+                "description": "List of metrics to be used in the new visualization"
+            },
+            "SearchCreateResult": {
+                "required": ["createdVisualizations", "objects", "textResponse"],
+                "type": "object",
+                "properties": {
+                    "objects": {
+                        "type": "array",
+                        "description": "List of search result objects",
+                        "items": {
+                            "$ref": "#/components/schemas/SearchResultObject"
+                        }
+                    },
+                    "createdVisualizations": {
+                        "type": "array",
+                        "description": "List of created visualizations",
+                        "items": {
+                            "$ref": "#/components/schemas/CreatedVisualization"
+                        }
+                    },
+                    "textResponse": {
+                        "type": "string",
+                        "description": "Text answer. Contains reasoning from AI. Can contain an equivalent of \"I don't know\"."
+                    }
+                }
+            },
+            "SearchResultObject": {
+                "required": [
+                    "description",
+                    "id",
+                    "score",
+                    "scoreDescriptor",
+                    "scoreExactMatch",
+                    "scoreTitle",
+                    "title",
+                    "type",
+                    "workspaceId"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Object ID."
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type, e.g. dashboard."
+                    },
+                    "workspaceId": {
+                        "type": "string",
+                        "description": "Workspace ID."
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Object title."
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Object description."
+                    },
+                    "tags": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "description": "List of tags assigned to the object."
+                        }
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "description": "Timestamp when object was created.",
+                        "format": "date-time"
+                    },
+                    "modifiedAt": {
+                        "type": "string",
+                        "description": "Timestamp when object was last modified.",
+                        "format": "date-time"
+                    },
+                    "visualizationUrl": {
+                        "type": "string",
+                        "description": "If the object is visualization, this field defines the type of visualization."
+                    },
+                    "score": {
+                        "type": "number",
+                        "description": "Result score calculated by a similarity search algorithm (cosine_distance).",
+                        "format": "float"
+                    },
+                    "scoreTitle": {
+                        "type": "number",
+                        "description": "Result score for object title.",
+                        "format": "float"
+                    },
+                    "scoreDescriptor": {
+                        "type": "number",
+                        "description": "Result score for descriptor containing(now) description and tags.",
+                        "format": "float"
+                    },
+                    "scoreExactMatch": {
+                        "type": "integer",
+                        "description": "Result score for exact match(id/title). 1/1000. Other scores are multiplied by this.",
+                        "format": "int32"
+                    }
+                },
+                "description": "List of search result objects"
+            },
             "SearchRequest": {
                 "required": ["question"],
                 "type": "object",
@@ -2804,84 +3056,6 @@
                         "items": {
                             "$ref": "#/components/schemas/SearchRelationshipObject"
                         }
-                    }
-                }
-            },
-            "SearchResultObject": {
-                "required": [
-                    "description",
-                    "id",
-                    "score",
-                    "scoreDescriptor",
-                    "scoreExactMatch",
-                    "scoreTitle",
-                    "title",
-                    "type",
-                    "workspaceId"
-                ],
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "string",
-                        "description": "Object ID."
-                    },
-                    "type": {
-                        "type": "string",
-                        "description": "Object type, e.g. dashboard."
-                    },
-                    "workspaceId": {
-                        "type": "string",
-                        "description": "Workspace ID."
-                    },
-                    "title": {
-                        "type": "string",
-                        "description": "Object title."
-                    },
-                    "description": {
-                        "type": "string",
-                        "description": "Object description."
-                    },
-                    "tags": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "type": "string",
-                            "description": "List of tags assigned to the object."
-                        }
-                    },
-                    "createdAt": {
-                        "type": "string",
-                        "description": "Timestamp when object was created.",
-                        "format": "date-time"
-                    },
-                    "modifiedAt": {
-                        "type": "string",
-                        "description": "Timestamp when object was last modified.",
-                        "format": "date-time"
-                    },
-                    "visualizationUrl": {
-                        "type": "string",
-                        "description": "If the object is visualization, this field defines the type of visualization."
-                    },
-                    "score": {
-                        "type": "number",
-                        "description": "Result score calculated by a similarity search algorithm (cosine_distance).",
-                        "format": "float"
-                    },
-                    "scoreTitle": {
-                        "type": "number",
-                        "description": "Result score for object title.",
-                        "format": "float"
-                    },
-                    "scoreDescriptor": {
-                        "type": "number",
-                        "description": "Result score for descriptor containing(now) description and tags.",
-                        "format": "float"
-                    },
-                    "scoreExactMatch": {
-                        "type": "integer",
-                        "description": "Result score for exact match(id/title). 1/1000. Other scores are multiplied by this.",
-                        "format": "int32"
                     }
                 }
             },
@@ -2997,13 +3171,13 @@
                             "nullable": true
                         }
                     },
-                    "ycoord": {
+                    "xcoord": {
                         "type": "array",
                         "items": {
                             "type": "number"
                         }
                     },
-                    "xcoord": {
+                    "ycoord": {
                         "type": "array",
                         "items": {
                             "type": "number"

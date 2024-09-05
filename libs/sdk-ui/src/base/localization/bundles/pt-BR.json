@@ -619,5 +619,22 @@
     "recurrence.types.monthly.last": "Mensalmente no último {day}",
     "recurrence.types.monthly": "Mensalmente ao {week, select, 1 {primeiro} 2 {segundo} 3 {terceiro} 4 {quarto} other {último}} {day}",
     "recurrence.types.cron": "Expressão cron",
-    "gs.header.search": "Pesquisar"
+    "gs.header.search": "Pesquisar",
+    "gs.date.today": "Hoje",
+    "gs.date.yesterday": "Ontem",
+    "recurrence.types.monthly.first": "Mensalmente no primeiro dia",
+    "recurrence.types.weekly.first": "Semanalmente no primeiro dia",
+    "recurrence.description.hourly": "No início de cada hora",
+    "recurrence.description.daily": "Todos {hour} os dias",
+    "recurrence.description.weekly_first": "Em {hour} cada início de semana",
+    "recurrence.description.weekly": "{dayOfWeekName} Em {hour}  todas as semanas",
+    "recurrence.description.monthly_first": "No {hour} início de cada mês",
+    "recurrence.description.monthly": "{dayOfWeekName} Em {hour}  cada {weekNumber}. semana no mês",
+    "semantic-search.error.title": "Nosso serviço de pesquisa está temporariamente fora do ar.",
+    "semantic-search.error.text": "Estamos trabalhando para resolver o problema.",
+    "semantic-search.no-results": "Nenhum resultado encontrado para ”{query}”.",
+    "semantic-search.placeholder": "Pesquisar painéis ou visualizações…",
+    "semantic-search.id": "ID",
+    "semantic-search.tags": "Tags",
+    "semantic-search.match": "{score}% de correspondência"
 }

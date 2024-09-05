@@ -193,7 +193,11 @@ export class OrganizationNotificationChannelService implements IOrganizationNoti
     public updateEmail = async (smtp: ISmtpDefinitionObject): Promise<ISmtpDefinitionObject> => {
         //NOTE: If smtp has password but password is undefined, we need to patch the smtp
         // instead of updating it because we want to keep the password on the backend
-        if (smtp.destination?.hasPassword && smtp.destination?.password === undefined) {
+        if (
+            smtp.destination?.type === "custom" &&
+            smtp.destination?.hasPassword &&
+            smtp.destination?.password === undefined
+        ) {
             return this.authCall(async (client: ITigerClient) => {
                 const channel = await client.entities.patchEntityNotificationChannels({
                     id: smtp.id,

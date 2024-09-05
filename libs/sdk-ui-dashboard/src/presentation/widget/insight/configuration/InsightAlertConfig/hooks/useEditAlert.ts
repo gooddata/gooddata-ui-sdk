@@ -2,13 +2,21 @@
 import { useState } from "react";
 import {
     IAlertComparisonOperator,
+    IAlertRelativeArithmeticOperator,
+    IAlertRelativeOperator,
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
-    IMeasure,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
-import { getComparisonOperatorTitle, getMeasureTitle } from "../utils.js";
-import { useIntl } from "react-intl";
+import {
+    isAlertValueDefined,
+    transformAlertByComparisonOperator,
+    transformAlertByDestination,
+    transformAlertByMetric,
+    transformAlertByRelativeOperator,
+    transformAlertByValue,
+} from "../utils.js";
+import { AlertMetric } from "../../../types.js";
 
 export interface IUseEditAlertProps {
     alert: IAutomationMetadataObject;
@@ -19,66 +27,30 @@ export interface IUseEditAlertProps {
 export const useEditAlert = ({ alert, onCreate, onUpdate }: IUseEditAlertProps) => {
     const [viewMode, setViewMode] = useState<"edit" | "configuration">("edit");
     const [updatedAlert, setUpdatedAlert] = useState<IAutomationMetadataObject>(alert);
-    const intl = useIntl();
 
-    const changeMeasure = (measure: IMeasure) => {
-        setUpdatedAlert((alert) => ({
-            ...alert,
-            title: getMeasureTitle(measure) ?? "",
-            description: `${getComparisonOperatorTitle(updatedAlert.alert!.condition.operator, intl)} ${
-                alert.alert!.condition.right
-            }`,
-            alert: {
-                ...alert.alert!,
-                condition: {
-                    ...alert.alert!.condition,
-                    left: measure.measure.localIdentifier,
-                },
-                execution: {
-                    ...alert.alert!.execution,
-                    measures: [measure],
-                },
-            },
-        }));
+    const changeMeasure = (measure: AlertMetric) => {
+        setUpdatedAlert((alert) => transformAlertByMetric(alert, measure));
     };
 
     const changeComparisonOperator = (comparisonOperator: IAlertComparisonOperator) => {
-        setUpdatedAlert((alert) => ({
-            ...alert,
-            description: `${getComparisonOperatorTitle(comparisonOperator, intl)} ${
-                updatedAlert.alert!.condition.right
-            }`,
-            alert: {
-                ...alert.alert!,
-                condition: {
-                    ...alert.alert!.condition,
-                    operator: comparisonOperator,
-                },
-            },
-        }));
+        setUpdatedAlert((alert) => transformAlertByComparisonOperator(alert, comparisonOperator));
+    };
+
+    const changeRelativeOperator = (
+        relativeOperator: IAlertRelativeOperator,
+        arithmeticOperator: IAlertRelativeArithmeticOperator,
+    ) => {
+        setUpdatedAlert((alert) =>
+            transformAlertByRelativeOperator(alert, relativeOperator, arithmeticOperator),
+        );
     };
 
     const changeValue = (value: number) => {
-        setUpdatedAlert((alert) => ({
-            ...alert,
-            description: `${getComparisonOperatorTitle(updatedAlert.alert!.condition.operator, intl)} ${
-                alert.alert!.condition.right
-            }`,
-            alert: {
-                ...alert.alert!,
-                condition: {
-                    ...alert.alert!.condition,
-                    right: value,
-                },
-            },
-        }));
+        setUpdatedAlert((alert) => transformAlertByValue(alert, value));
     };
 
     const changeDestination = (destinationId: string) => {
-        setUpdatedAlert((alert) => ({
-            ...alert,
-            webhook: destinationId,
-        }));
+        setUpdatedAlert((alert) => transformAlertByDestination(alert, destinationId));
     };
 
     const configureAlert = () => {
@@ -102,7 +74,7 @@ export const useEditAlert = ({ alert, onCreate, onUpdate }: IUseEditAlertProps) 
         onUpdate?.(updatedAlert as IAutomationMetadataObject);
     };
 
-    const isValueDefined = typeof updatedAlert.alert?.condition.right !== "undefined";
+    const isValueDefined = isAlertValueDefined(updatedAlert.alert);
     const isAlertChanged = !isEqual(updatedAlert, alert);
     const canSubmit = isValueDefined && isAlertChanged;
 
@@ -112,6 +84,7 @@ export const useEditAlert = ({ alert, onCreate, onUpdate }: IUseEditAlertProps) 
         canSubmit,
         //
         changeComparisonOperator,
+        changeRelativeOperator,
         changeMeasure,
         changeValue,
         changeDestination,

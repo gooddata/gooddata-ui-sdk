@@ -298,6 +298,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableSmtp,
+            "enableSmtp",
+            "BOOLEAN",
+            FeatureFlagsValues.enableSmtp,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableLabsSmartFunctions,
             "enableLabsSmartFunctions",
             "BOOLEAN",
@@ -438,6 +445,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableSemanticSearch,
+            "enableSemanticSearch",
+            "BOOLEAN",
+            FeatureFlagsValues.enableSemanticSearch,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableDrillIntersectionIgnoredAttributes,
             "enableDrillIntersectionIgnoredAttributes",
             "BOOLEAN",
@@ -463,6 +477,20 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableWorkspaceHierarchySettings",
             "BOOLEAN",
             FeatureFlagsValues.enableWorkspaceHierarchySettings,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableNewInsightChangedPostMessageEvent,
+            "enableNewInsightChangedPostMessageEvent",
+            "BOOLEAN",
+            FeatureFlagsValues.enableNewInsightChangedPostMessageEvent,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableKDVisualizationSwitcher,
+            "enableKDVisualizationSwitcher",
+            "BOOLEAN",
+            FeatureFlagsValues.enableKDVisualizationSwitcher,
         ),
     };
 }

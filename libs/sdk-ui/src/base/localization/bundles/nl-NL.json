@@ -619,5 +619,22 @@
     "recurrence.types.monthly.last": "Maandelijks op de laatste {day}",
     "recurrence.types.monthly": "Maandelijks op de {week, select, 1 {eerste} 2 {tweede} 3 {derde} 4 {vierde} other {laatste}} {day}",
     "recurrence.types.cron": "Cron-uitdrukking",
-    "gs.header.search": "Zoeken"
+    "gs.header.search": "Zoeken",
+    "gs.date.today": "Vandaag",
+    "gs.date.yesterday": "Gisteren",
+    "recurrence.types.monthly.first": "Maandelijks op de eerste dag",
+    "recurrence.types.weekly.first": "Wekelijks op de eerste dag",
+    "recurrence.description.hourly": "Aan het begin van elk uur",
+    "recurrence.description.daily": "Elke dag op {hour}",
+    "recurrence.description.weekly_first": "Om {hour} aan het begin van elke week",
+    "recurrence.description.weekly": "Op {dayOfWeekName} om {hour} elke week",
+    "recurrence.description.monthly_first": "Om {hour} aan het begin van elke maand",
+    "recurrence.description.monthly": "{dayOfWeekName} om {hour} elke {weekNumber}. week in maand",
+    "semantic-search.error.title": "Onze zoekdienst werkt tijdelijk niet.",
+    "semantic-search.error.text": "We werken eraan om het probleem op te lossen.",
+    "semantic-search.no-results": "Geen resultaten gevonden voor ”{query}”.",
+    "semantic-search.placeholder": "Zoek dashboards of visualisaties…",
+    "semantic-search.id": "ID",
+    "semantic-search.tags": "Tags",
+    "semantic-search.match": "{score}% overeenkomst"
 }

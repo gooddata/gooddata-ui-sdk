@@ -1,17 +1,18 @@
 // (C) 2024 GoodData Corporation
 import * as React from "react";
 import classnames from "classnames";
-import { FormattedMessage, WrappedComponentProps } from "react-intl";
+import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
 import { GenAISemanticSearchType, ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { Input, LoadingMask, Message, useDebouncedState } from "@gooddata/sdk-ui-kit";
-import { useWorkspaceStrict, useLocalStorage } from "@gooddata/sdk-ui";
+import { Input, LoadingMask, Message, useDebouncedState, useHeaderSearch } from "@gooddata/sdk-ui-kit";
+import { useWorkspaceStrict, useLocalStorage, IntlWrapper } from "@gooddata/sdk-ui";
 import { useSemanticSearch, useElementWidth } from "../hooks/index.js";
 import { ListItem } from "../types.js";
 import { getUIPath } from "../utils/getUIPath.js";
 import { SearchList } from "./SearchList.js";
 import { HistoryItem } from "./HistoryItem.js";
 import { AnnotatedResultsItem } from "./AnnotatedResultsItem.js";
+import { MetadataTimezoneProvider } from "./metadataTimezoneContext.js";
 
 /**
  * A time in milliseconds to wait before sending a search request after the user stops typing.
@@ -33,16 +34,35 @@ const SEARCH_HISTORY_KEY = "gd-semantic-search-history";
  * An initial value for the search history.
  */
 const SEARCH_HISTORY_EMPTY: string[] = [];
+/**
+ * Default limit of search results.
+ */
+const LIMIT = 10;
+/**
+ * A threshold for search results to be shown to user.
+ */
+const THRESHOLD = 0.5;
+
+export type SearchOnSelect = {
+    item: ISemanticSearchResultItem;
+    preventDefault: () => void;
+    itemUrl?: string;
+    newTab?: boolean;
+};
 
 /**
  * Props for the SemanticSearchOverlay component.
  * @internal
  */
-export type SearchOverlayProps = WrappedComponentProps & {
+export type SearchOverlayProps = {
     /**
      * A function called when the user selects an item from the search results.
      */
-    onSelect: (item: ISemanticSearchResultItem, e: MouseEvent | KeyboardEvent, itemUrl?: string) => void;
+    onSelect: (selection: SearchOnSelect) => void;
+    /**
+     * A function called when the search request is triggered.
+     */
+    onSearch?: (query: string) => void;
     /**
      * An analytical backend to use for the search. Can be omitted and taken from context.
      */
@@ -64,26 +84,42 @@ export type SearchOverlayProps = WrappedComponentProps & {
      */
     limit?: number;
     /**
+     * A minimum similarity score for search result to be shown to user.
+     */
+    threshold?: number;
+    /**
      * Additional CSS class for the component.
      */
     className?: string;
+    /**
+     * Locale to use for translations.
+     */
+    locale?: string;
+    /**
+     * Timezone in which metadata created and updated dates are saved.
+     */
+    metadataTimezone?: string;
 };
 
 /**
- * A component that allows users to search for insights, metrics, attributes, and other objects using semantic search.
- * The internal version is meant to be used in an overlay inside the Header.
- * @internal
+ * Core implementation of the SemanticSearchOverlay component.
  */
-export const SearchOverlay: React.FC<SearchOverlayProps> = ({
+const SearchOverlayCore: React.FC<
+    WrappedComponentProps & Omit<SearchOverlayProps, "locale" | "metadataTimezone">
+> = ({
     onSelect,
+    onSearch,
     backend,
     workspace,
     objectTypes,
     deepSearch,
-    limit = 6,
+    limit = LIMIT,
     className,
     intl,
+    threshold = THRESHOLD,
 }) => {
+    const { toggleOpen } = useHeaderSearch();
+
     // Input value handling
     const [value, setValue, searchTerm, setImmediate] = useDebouncedState("", DEBOUNCE);
 
@@ -98,34 +134,56 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({
         limit,
     });
 
+    // Report metrics
+    React.useEffect(() => {
+        onSearch?.(searchTerm);
+    }, [onSearch, searchTerm]);
+
     // Results wrapped into ListItems
     const searchResultsItems: ListItem<ISemanticSearchResultItem>[] = React.useMemo(
         (): ListItem<ISemanticSearchResultItem>[] =>
-            searchResults.flatMap((item) => {
-                // Look up parent items if available
-                const parentDashboards = relationships.filter(
-                    (rel) =>
-                        rel.targetObjectId === item.id &&
-                        rel.targetObjectType === item.type &&
-                        rel.sourceObjectType === "dashboard",
-                );
-                const isLocked = item.workspaceId !== effectiveWorkspace;
+            searchResults
+                .filter((item) => {
+                    // Filter out items with similarity score below the threshold
+                    return item.score >= threshold;
+                })
+                .flatMap((item) => {
+                    // Look up parent items if available
+                    const parentDashboards = relationships.filter(
+                        (rel) =>
+                            rel.targetObjectId === item.id &&
+                            rel.targetObjectType === item.type &&
+                            rel.sourceObjectType === "dashboard",
+                    );
+                    const isLocked = item.workspaceId !== effectiveWorkspace;
 
-                if (!parentDashboards.length)
-                    return {
-                        item,
-                        url: getUIPath(item.type, item.id, effectiveWorkspace),
-                        isLocked,
-                    };
+                    // The item itself
+                    const listItems: ListItem<ISemanticSearchResultItem>[] = [
+                        {
+                            item,
+                            url: getUIPath(item.type, item.id, effectiveWorkspace),
+                            isLocked,
+                        },
+                    ];
 
-                return parentDashboards.map((parent) => ({
-                    item,
-                    parentRef: parent,
-                    url: getUIPath(parent.sourceObjectType, parent.sourceObjectId, effectiveWorkspace),
-                    isLocked,
-                }));
-            }),
-        [searchResults, effectiveWorkspace, relationships],
+                    // Potentially, the item's parent dashboards
+                    if (parentDashboards.length)
+                        listItems.push(
+                            ...parentDashboards.map((parent) => ({
+                                item,
+                                parentRef: parent,
+                                url: getUIPath(
+                                    parent.sourceObjectType,
+                                    parent.sourceObjectId,
+                                    effectiveWorkspace,
+                                ),
+                                isLocked,
+                            })),
+                        );
+
+                    return listItems;
+                }),
+        [searchResults, effectiveWorkspace, relationships, threshold],
     );
 
     // Search history
@@ -136,24 +194,31 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({
                 [...new Set([searchTerm, ...searchHistory])].slice(0, MAX_SEARCH_HISTORY_LENGTH),
             );
 
-            // Simulate browser behaviour - if user presses Ctrl or Cmd and clicks on the result, open it in a new tab
-            if (item.url && (e.ctrlKey || e.metaKey)) {
-                // Keyboard events do not navigate to the URL natively by the browser, do it artificially
-                if (e instanceof KeyboardEvent) {
-                    window.open(item.url, "_blank");
-                }
-                return;
-            }
+            const newTab = e.ctrlKey || e.metaKey || (e as MouseEvent).button === 1;
 
             // Call the onSelect callback
-            onSelect(item.item, e, item.url);
+            onSelect({
+                item: item.item,
+                preventDefault: e.preventDefault.bind(e),
+                itemUrl: item.url,
+                newTab,
+            });
 
-            // If the default was not prevented - simulate browser navigation
-            if (item.url && e instanceof KeyboardEvent && !e.defaultPrevented) {
-                window.location.href = item.url;
+            // If the default was not prevented - simulate browser navigation for keyboard event
+            if (item.url && !e.defaultPrevented && e instanceof KeyboardEvent) {
+                if (newTab) {
+                    window.open(item.url, "_blank");
+                } else {
+                    window.location.href = item.url;
+                }
+            }
+
+            // Trigger the dialog closing unless it's opening in a new tab
+            if (!newTab) {
+                toggleOpen();
             }
         },
-        [searchTerm, searchHistory, onSelect, setSearchHistory],
+        [searchTerm, searchHistory, onSelect, setSearchHistory, toggleOpen],
     );
     const onHistorySelect = (item: ListItem<string>) => setImmediate(item.item);
     const searchHistoryItems: ListItem<string>[] = React.useMemo(
@@ -233,5 +298,25 @@ export const SearchOverlay: React.FC<SearchOverlayProps> = ({
                 }
             })()}
         </div>
+    );
+};
+
+/**
+ * Inject `intl` prop to the component.
+ */
+const SearchOverlayWithIntl = injectIntl(SearchOverlayCore);
+
+/**
+ * A component that allows users to search for insights, metrics, attributes, and other objects using semantic search.
+ * The internal version is meant to be used in an overlay inside the Header.
+ * @internal
+ */
+export const SearchOverlay: React.FC<SearchOverlayProps> = ({ locale, metadataTimezone, ...props }) => {
+    return (
+        <MetadataTimezoneProvider value={metadataTimezone}>
+            <IntlWrapper locale={locale}>
+                <SearchOverlayWithIntl {...props} />
+            </IntlWrapper>
+        </MetadataTimezoneProvider>
     );
 };

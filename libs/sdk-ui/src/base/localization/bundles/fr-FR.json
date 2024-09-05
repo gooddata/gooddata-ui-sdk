@@ -619,5 +619,22 @@
     "recurrence.types.monthly.last": "Mensuellement sur le dernier {day}",
     "recurrence.types.monthly": "Mensuellement le {week, select, 1 {premier} 2 {deuxième} 3 {troisième} 4 {quatrième} other {dernier}} {day}",
     "recurrence.types.cron": "Expression Cron",
-    "gs.header.search": "Recherche"
+    "gs.header.search": "Recherche",
+    "gs.date.today": "Aujourd'hui",
+    "gs.date.yesterday": "Hier",
+    "recurrence.types.monthly.first": "Mensuellement, le premier jour",
+    "recurrence.types.weekly.first": "Chaque semaine, le premier jour",
+    "recurrence.description.hourly": "Au début de chaque heure",
+    "recurrence.description.daily": "À {hour} tous les jours",
+    "recurrence.description.weekly_first": "À {hour} chaque début de semaine",
+    "recurrence.description.weekly": "À {hour} le {dayOfWeekName} chaque semaine",
+    "recurrence.description.monthly_first": "À {hour} chaque début de mois",
+    "recurrence.description.monthly": "À {hour} le {dayOfWeekName} chaque {weekNumber} semaine du mois",
+    "semantic-search.error.title": "Notre service de recherche est temporairement indisponible.",
+    "semantic-search.error.text": "Nous nous efforçons de résoudre ce problème.",
+    "semantic-search.no-results": "Aucun résultat trouvé pour ”{query}”.",
+    "semantic-search.placeholder": "Recherche de tableaux de bord ou de visualisation…",
+    "semantic-search.id": "ID",
+    "semantic-search.tags": "Balises",
+    "semantic-search.match": "{score}% de correspondance"
 }

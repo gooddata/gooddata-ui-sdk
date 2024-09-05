@@ -32,6 +32,7 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
         isLoadingScheduleData,
         automations,
         webhooks,
+        emails,
     } = props;
     const [scheduledEmailToDelete, setScheduledEmailToDelete] = useState<IAutomationMetadataObject | null>(
         null,
@@ -69,15 +70,15 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
             <Dialog
                 displayCloseButton={true}
                 onCancel={onClose}
-                className="gd-scheduled-email-management-dialog s-scheduled-email-management-dialog"
+                className="gd-notifications-channels-management-dialog s-scheduled-email-management-dialog"
             >
-                <div className="gd-scheduled-email-management-dialog-title">
+                <div className="gd-notifications-channels-management-dialog-title">
                     <Typography tagName="h3" className="gd-dialog-header">
                         <FormattedMessage id="dialogs.schedule.management.title" />
                     </Typography>
                 </div>
-                <div className="gd-scheduled-emails-content">
-                    <div className="gd-scheduled-emails-content-header">
+                <div className="gd-notifications-channels-content">
+                    <div className="gd-notifications-channels-content-header">
                         <Typography tagName="h3">
                             <FormattedMessage id={messages.scheduleManagementListTitle.id!} />
                         </Typography>
@@ -100,6 +101,7 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
                         currentUserEmail={currentUser?.email}
                         noSchedulesMessageId={messages.scheduleManagementNoSchedules.id!}
                         webhooks={webhooks}
+                        emails={emails}
                     />
                 </div>
                 <div className="gd-content-divider"></div>

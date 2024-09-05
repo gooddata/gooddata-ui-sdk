@@ -36,6 +36,7 @@ import { ObjRef } from '@gooddata/sdk-model';
 import { OverlayController as OverlayController_2 } from './OverlayController.js';
 import { PureComponent } from 'react';
 import { default as React_2 } from 'react';
+import * as React_3 from 'react';
 import { ReactNode } from 'react';
 import { ShareStatus } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
@@ -596,6 +597,9 @@ export class FullScreenOverlay extends Overlay<IOverlayState> {
 export const GD_COLOR_HIGHLIGHT = "#14b2e2";
 
 // @internal (undocumented)
+export const GD_COLOR_STATE_BLANK = "#94a1ad";
+
+// @internal (undocumented)
 export const GD_COLOR_WHITE = "#fff";
 
 // @internal (undocumented)
@@ -725,6 +729,15 @@ export const HeaderDataMenu: React_2.FC<WithIntlProps<IHeaderDataMenuProps>> & {
     WrappedComponent: React_2.ComponentType<IHeaderDataMenuProps>;
 };
 
+// @internal
+export type HeaderSearchContext = {
+    isOpen: boolean;
+    toggleOpen: () => void;
+};
+
+// @internal
+export const HeaderSearchProvider: ({ children, ...rest }: React_3.PropsWithChildren<HeaderSearchContext>) => React_3.JSX.Element;
+
 // @internal (undocumented)
 export const HeaderWorkspacePicker: React_2.FC<WithIntlProps<IHeaderWorkspacePickerProps>> & {
     WrappedComponent: React_2.ComponentType<IHeaderWorkspacePickerProps>;
@@ -849,8 +862,6 @@ export interface IAppHeaderProps {
     logoUrl?: string;
     // (undocumented)
     menuItemsGroups?: IHeaderMenuItem[][];
-    // (undocumented)
-    mobileSearch?: React_2.ReactNode;
     // (undocumented)
     onHelpClick?: (isOpen: boolean) => void;
     // (undocumented)
@@ -1006,6 +1017,8 @@ export interface IBubbleProps {
     onMouseLeave?: () => void;
     // (undocumented)
     overlayClassName?: string;
+    // (undocumented)
+    overlayPositionType?: OverlayPositionType;
 }
 
 // @internal (undocumented)
@@ -3389,7 +3402,7 @@ export interface IRecurrenceFormProps {
     // (undocumented)
     locale?: string;
     // (undocumented)
-    onChange: (cronExpression: string, startDate: Date | null) => void;
+    onChange: (cronExpression: string, startDate: Date | null, isValid: boolean) => void;
     // (undocumented)
     repeatLabel?: string;
     // (undocumented)
@@ -3415,7 +3428,7 @@ export interface IRecurrenceProps {
     // (undocumented)
     label: string;
     // (undocumented)
-    onCronValueChange: (cronValue: string) => void;
+    onCronValueChange: (cronValue: string, isValid: boolean) => void;
     // (undocumented)
     onRepeatTypeChange: (repeatType: string) => void;
     // (undocumented)
@@ -3981,6 +3994,8 @@ export interface IStylingSettingWidgetProps<T extends StylingPickerItemContent> 
     footerHelpTitle?: string;
     // (undocumented)
     footerMobileMessage?: string;
+    // (undocumented)
+    isEditingSupported?: boolean;
     // (undocumented)
     isLoading?: boolean;
     // (undocumented)
@@ -4841,6 +4856,9 @@ T,
 T,
 (value: T) => void
 ];
+
+// @internal
+export const useHeaderSearch: () => HeaderSearchContext;
 
 // @internal (undocumented)
 export function useInvertableSelectionStatusText<T>(selectedItems: T[], isInverted: boolean, getItemTitle: (item: T) => string): string;

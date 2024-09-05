@@ -5,6 +5,7 @@
 ```ts
 
 import { ActionsApiProcessInvitationRequest } from '@gooddata/api-client-tiger';
+import { AfmExecution } from '@gooddata/api-client-tiger';
 import { AnalyzeCsvRequest } from '@gooddata/api-client-tiger';
 import { AnalyzeCsvResponse } from '@gooddata/api-client-tiger';
 import { AnonymousAuthProvider } from '@gooddata/sdk-backend-base';
@@ -27,6 +28,7 @@ import { IAuthenticatedPrincipal } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationContext } from '@gooddata/sdk-backend-spi';
 import { IAuthenticationProvider } from '@gooddata/sdk-backend-spi';
 import { IdentifierDuplications } from '@gooddata/api-client-tiger';
+import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { ImportCsvRequest } from '@gooddata/api-client-tiger';
 import { ImportCsvResponse } from '@gooddata/api-client-tiger';
 import { ITigerClient } from '@gooddata/api-client-tiger';
@@ -493,6 +495,9 @@ export class TigerTokenAuthProvider extends TigerAuthProviderBase {
     // (undocumented)
     updateApiToken: (apiToken: string) => void;
 }
+
+// @public
+export function toAfmExecution(def: IExecutionDefinition): AfmExecution;
 
 export { UploadFileResponse }
 

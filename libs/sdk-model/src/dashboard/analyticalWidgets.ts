@@ -11,7 +11,7 @@ import { IKpi } from "./kpi.js";
  *
  * @public
  */
-export type AnalyticalWidgetType = "kpi" | "insight" | "richText";
+export type AnalyticalWidgetType = "kpi" | "insight" | "richText" | "visualizationSwitcher";
 
 /**
  * Analytical Widgets are a sub-type of dashboard widgets that display analytics. Be it charts rendering
@@ -181,3 +181,34 @@ export interface IRichTextWidget extends IRichTextWidgetBase, IDashboardObjectId
  * @public
  */
 export interface IRichTextWidgetDefinition extends IRichTextWidgetBase, Partial<IDashboardObjectIdentity> {}
+
+/**
+ * @public
+ */
+export interface IVisualizationSwitcherWidgetBase extends IAnalyticalWidget {
+    readonly type: "visualizationSwitcher";
+
+    /**
+     * Selected visualization to display on switcher (based on widget localIdentifier)
+     */
+    readonly selectedVisualizationIdentifier: string;
+
+    /**
+     * List of visualizations which are part of the visualization switcher.
+     */
+    readonly visualizations: IInsightWidget[];
+}
+
+/**
+ * @public
+ */
+export interface IVisualizationSwitcherWidget
+    extends IVisualizationSwitcherWidgetBase,
+        IDashboardObjectIdentity {}
+
+/**
+ * @public
+ */
+export interface IVisualizationSwitcherWidgetDefinition
+    extends IVisualizationSwitcherWidgetBase,
+        Partial<IDashboardObjectIdentity> {}

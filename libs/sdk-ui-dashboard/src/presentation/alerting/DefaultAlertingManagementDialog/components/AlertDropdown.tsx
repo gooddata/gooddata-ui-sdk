@@ -64,10 +64,11 @@ export const AlertDropdown: React.FC<IAlertDropdownProps> = (props) => {
             alignTo={alignTo}
             alignPoints={[{ align: "br tr" }, { align: "tr br" }]}
             onClose={onClose}
+            positionType="fixed"
         >
             <div
                 className={cx(
-                    "gd-schedule-email-dialog-menu",
+                    "gd-notifications-channels-dialog-menu",
                     "gd-dropdown gd-menu-wrapper gd-menu-wrapper-small-spacing",
                 )}
             >

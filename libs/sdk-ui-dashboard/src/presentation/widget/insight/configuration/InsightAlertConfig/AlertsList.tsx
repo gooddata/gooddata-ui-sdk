@@ -1,6 +1,6 @@
 // (C) 2022-2024 GoodData Corporation
 import React from "react";
-import { IAutomationMetadataObject, IMeasure } from "@gooddata/sdk-model";
+import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { AddButton, SeparatorLine } from "@gooddata/sdk-ui-kit";
 import { AlertsListItem } from "./AlertsListItem.js";
 import { DashboardInsightSubmenuContainer } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightSubmenuContainer.js";
@@ -17,8 +17,6 @@ interface IAlertsListProps {
     onDeleteAlert: (alert: IAutomationMetadataObject) => void;
     onClose: () => void;
     onGoBack: () => void;
-    measures: IMeasure[];
-
     maxAutomationsReached: boolean;
 }
 
@@ -32,7 +30,6 @@ export const AlertsList: React.FC<IAlertsListProps> = ({
     onDeleteAlert,
     onClose,
     onGoBack,
-    measures,
     maxAutomationsReached,
 }) => {
     const intl = useIntl();
@@ -50,12 +47,6 @@ export const AlertsList: React.FC<IAlertsListProps> = ({
                     ) : (
                         <>
                             {alerts.map((alert) => {
-                                const selectedMeasureIdentifier = alert.alert!.condition.left;
-                                const measureExists = measures.some(
-                                    (measure) =>
-                                        measure.measure.localIdentifier === selectedMeasureIdentifier,
-                                );
-
                                 return (
                                     <AlertsListItem
                                         key={alert.id}
@@ -64,7 +55,6 @@ export const AlertsList: React.FC<IAlertsListProps> = ({
                                         onPauseAlert={onPauseAlert}
                                         onResumeAlert={onResumeAlert}
                                         onDeleteAlert={onDeleteAlert}
-                                        isInvalid={!measureExists}
                                     />
                                 );
                             })}

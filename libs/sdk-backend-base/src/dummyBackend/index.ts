@@ -885,10 +885,12 @@ class DummyOrganization implements IOrganization {
                     type: "smtp",
                     triggers: [],
                     destination: {
+                        type: "custom",
                         name: "",
                         address: "",
                         login: "",
                         password: "",
+                        person: "",
                         from: "",
                         hasPassword: true,
                         port: 25,
@@ -964,6 +966,14 @@ class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
     }
 
     setColorPalette(_colorPaletteId: string): Promise<void> {
+        return Promise.resolve();
+    }
+
+    deleteTheme(): Promise<void> {
+        return Promise.resolve();
+    }
+
+    deleteColorPalette(): Promise<void> {
         return Promise.resolve();
     }
 }

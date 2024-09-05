@@ -46,9 +46,17 @@ export const PauseAlertRunner: React.FC<IPauseAlertRunnerProps> = (props) => {
         }
 
         if (pause) {
-            handlePauseAlert(alert);
+            const alertToPause = {
+                ...alert,
+                alert: { ...alert.alert, trigger: { ...alert.alert?.trigger, state: "PAUSED" } },
+            } as IAutomationMetadataObject;
+            handlePauseAlert(alertToPause);
         } else {
-            handleResumeAlert(alert);
+            const alertToResume = {
+                ...alert,
+                alert: { ...alert.alert, trigger: { ...alert.alert?.trigger, state: "ACTIVE" } },
+            } as IAutomationMetadataObject;
+            handleResumeAlert(alertToResume);
         }
     }, [alert, handlePauseAlert, handleResumeAlert, pause]);
 

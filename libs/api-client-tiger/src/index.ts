@@ -203,6 +203,14 @@ export {
     RouteResult,
     RouteResultObject,
     ActionsApiAiRouteRequest,
+    SearchCreateRequest,
+    ActionsApiAiSearchCreateRequest,
+    SearchCreateResult,
+    CreatedVisualization,
+    CreatedVisualizationVisualizationTypeEnum,
+    MetricAggFunctionEnum,
+    Metric,
+    DimAttribute,
 } from "./generated/afm-rest-api/api.js";
 export {
     ActionsApiFactory as AuthActionsApiFactory,

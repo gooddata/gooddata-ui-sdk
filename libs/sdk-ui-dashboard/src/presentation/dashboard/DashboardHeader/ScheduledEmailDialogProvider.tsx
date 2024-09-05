@@ -9,6 +9,7 @@ import { useDashboardScheduledEmails } from "../../../model/index.js";
 export const ScheduledEmailDialogProvider = () => {
     const {
         users,
+        emails,
         webhooks,
         automations,
         schedulingLoadError,
@@ -44,6 +45,7 @@ export const ScheduledEmailDialogProvider = () => {
                     isLoadingScheduleData={isScheduleLoading}
                     automations={automations}
                     webhooks={webhooks}
+                    emails={emails}
                     scheduleDataError={schedulingLoadError}
                 />
             ) : null}
@@ -61,6 +63,7 @@ export const ScheduledEmailDialogProvider = () => {
                     onDeleteError={onScheduleEmailingManagementDeleteError}
                     users={users}
                     webhooks={webhooks}
+                    emails={emails}
                     automations={automations}
                 />
             ) : null}

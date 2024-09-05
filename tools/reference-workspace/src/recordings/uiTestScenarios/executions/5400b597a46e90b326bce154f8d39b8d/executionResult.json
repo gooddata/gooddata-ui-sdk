@@ -9,6 +9,7 @@
                         "identifier": "label.f_product.product.name",
                         "localIdentifier": "a_label.f_product.product.name",
                         "name": "Product Name",
+                        "primaryLabel": { "identifier": "attr.f_product.product", "type": "displayForm" },
                         "totalItems": [{ "totalHeaderItem": { "name": "sum" } }],
                         "uri": ""
                     }
@@ -20,6 +21,7 @@
                         "identifier": "f_owner.department_id",
                         "localIdentifier": "a_f_owner.department_id",
                         "name": "Department",
+                        "primaryLabel": { "identifier": "f_owner.department_id", "type": "displayForm" },
                         "totalItems": [],
                         "uri": ""
                     }
@@ -35,6 +37,7 @@
                         "identifier": "attr.f_stage.stagename",
                         "localIdentifier": "a_attr.f_stage.stagename",
                         "name": "Stage Name",
+                        "primaryLabel": { "identifier": "attr.f_stage.stagename", "type": "displayForm" },
                         "totalItems": [],
                         "uri": ""
                     }
@@ -46,6 +49,7 @@
                         "identifier": "f_owner.region_id",
                         "localIdentifier": "a_f_owner.region_id",
                         "name": "Region",
+                        "primaryLabel": { "identifier": "f_owner.region_id", "type": "displayForm" },
                         "totalItems": [],
                         "uri": ""
                     }

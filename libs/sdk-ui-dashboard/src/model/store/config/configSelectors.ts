@@ -734,3 +734,15 @@ export const selectEnableDrillDownIntersectionIgnoredAttributes: DashboardSelect
 export const selectEnableFilterViews: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
     return state.settings?.enableDashboardFilterViews ?? false;
 });
+
+/**
+ * Returns whether rich text widgets are enabled.
+ *
+ * @internal
+ */
+export const selectEnableVisualizationSwitcher: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableKDVisualizationSwitcher ?? false;
+    },
+);

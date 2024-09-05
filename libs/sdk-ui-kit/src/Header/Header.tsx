@@ -30,6 +30,8 @@ import { HeaderMenu } from "./HeaderMenu.js";
 import { HeaderUpsellButton } from "./HeaderUpsellButton.js";
 import { HeaderInvite } from "./HeaderInvite.js";
 import { Typography } from "../Typography/index.js";
+import { HeaderSearchButton } from "./HeaderSearchButton.js";
+import { HeaderSearchProvider } from "./headerSearchContext.js";
 
 function getOuterWidth(element: HTMLDivElement) {
     const width = element.offsetWidth;
@@ -153,6 +155,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                 responsiveMode,
                 isOverlayMenuOpen: false,
                 isHelpMenuOpen: false,
+                isSearchMenuOpen: false,
             });
         }
     };
@@ -221,7 +224,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
     };
 
     private addSearchMenu = (itemGroups: IHeaderMenuItem[][]): IHeaderMenuItem[][] => {
-        if (!this.props.mobileSearch) {
+        if (!this.props.search) {
             return itemGroups;
         }
 
@@ -341,7 +344,9 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                 <Typography tagName="h3" className="gd-header-menu-search-title">
                     <FormattedMessage id="gs.header.search" />
                 </Typography>
-                {this.props.mobileSearch}
+                <HeaderSearchProvider isOpen={this.state.isSearchMenuOpen} toggleOpen={this.toggleSearchMenu}>
+                    {this.props.search}
+                </HeaderSearchProvider>
             </div>
         );
     };
@@ -435,7 +440,16 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
 
                 {this.renderTrialItems()}
 
-                {this.props.search}
+                {this.props.search ? (
+                    <HeaderSearchProvider
+                        isOpen={this.state.isSearchMenuOpen}
+                        toggleOpen={this.toggleSearchMenu}
+                    >
+                        <HeaderSearchButton title={this.props.intl.formatMessage({ id: "gs.header.search" })}>
+                            {this.props.search}
+                        </HeaderSearchButton>
+                    </HeaderSearchProvider>
+                ) : null}
 
                 {this.props.helpMenuItems.length ? (
                     <HeaderHelp

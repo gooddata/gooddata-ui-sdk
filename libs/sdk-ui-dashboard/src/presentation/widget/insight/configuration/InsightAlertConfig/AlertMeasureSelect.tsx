@@ -1,16 +1,18 @@
 // (C) 2019-2024 GoodData Corporation
 import React from "react";
-import { Dropdown, Button, List, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
-import { IMeasure } from "@gooddata/sdk-model";
+import { Dropdown, Button, List, SingleSelectListItem, OverlayPositionType } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
-import { getMeasureTitle } from "./utils.js";
-import { DROPDOWN_ITEM_HEIGHT } from "./constants.js";
 import { useIntl } from "react-intl";
 
+import { getMeasureTitle } from "./utils.js";
+import { DROPDOWN_ITEM_HEIGHT } from "./constants.js";
+import { AlertMetric } from "../../types.js";
+
 export interface IAlertMetricSelectProps {
-    selectedMeasure: IMeasure | undefined;
-    onMeasureChange: (measure: IMeasure) => void;
-    measures: IMeasure[];
+    selectedMeasure: AlertMetric | undefined;
+    onMeasureChange: (measure: AlertMetric) => void;
+    measures: AlertMetric[];
+    overlayPositionType?: OverlayPositionType;
 }
 
 const measureIcon = <div className="gd-alert-measure-select__icon gd-icon-metric" />;
@@ -19,15 +21,17 @@ export const AlertMeasureSelect = ({
     selectedMeasure,
     onMeasureChange,
     measures,
+    overlayPositionType,
 }: IAlertMetricSelectProps) => {
     const intl = useIntl();
     const selectedMeasureTitle = selectedMeasure
-        ? getMeasureTitle(selectedMeasure)
+        ? getMeasureTitle(selectedMeasure.measure)
         : intl.formatMessage({ id: "insightAlert.config.selectMetric" });
 
     return (
         <div className="gd-alert-measure-select">
             <Dropdown
+                overlayPositionType={overlayPositionType}
                 renderButton={({ isOpen, toggleDropdown }) => {
                     return (
                         <Button
@@ -54,8 +58,8 @@ export const AlertMeasureSelect = ({
                                 <SingleSelectListItem
                                     key={i.rowIndex}
                                     icon={measureIcon}
-                                    title={getMeasureTitle(i.item)}
-                                    isSelected={i.item === selectedMeasure}
+                                    title={getMeasureTitle(i.item.measure)}
+                                    isSelected={i.item.measure === selectedMeasure?.measure}
                                     onClick={() => {
                                         onMeasureChange(i.item);
                                         closeDropdown();

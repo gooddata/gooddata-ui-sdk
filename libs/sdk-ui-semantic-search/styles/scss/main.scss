@@ -17,14 +17,6 @@
     }
 }
 
-@mixin ellipsis($line-height) {
-    min-width: 0; // A hack to make ellipsis work in flexbox
-    line-height: $line-height;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
 .gd-semantic-search {
     &__results-item {
         $line-height: 50px;
@@ -38,7 +30,10 @@
         height: $line-height;
         text-decoration: none;
 
-        &:hover {
+        &:hover,
+        &:focus,
+        &:active,
+        &:visited {
             text-decoration: none;
         }
 
@@ -48,43 +43,34 @@
         }
 
         &__icon {
-            @include icon(32px);
-
-            &--history {
-                @include icon(17px);
-            }
+            @include icon(26px);
         }
 
         &__text {
-            flex-grow: 1;
+            flex: 1;
+            min-width: 0; // A hack to make ellipsis work in flexbox
+            display: flex;
+            flex-direction: column;
             font-weight: 400;
             color: kit-variables.$gd-color-text;
             font-size: 14px;
+            line-height: 20px;
 
-            &--history {
-                @include ellipsis(1.4rem);
-            }
-
-            &--result {
-                display: flex;
-                flex-direction: column;
-            }
-
-            &__1 {
+            &__row {
                 display: flex;
                 flex-direction: row;
-                align-items: center;
-                gap: 0.3em;
-                @include ellipsis(20px);
+                gap: 5px;
+
+                &:not(:first-child) {
+                    color: kit-variables.$gd-color-state-blank;
+                }
             }
 
-            &__2 {
-                @include ellipsis(20px);
-                color: kit-variables.$gd-color-state-blank;
-            }
-
-            &__lock-icon {
-                width: 14px;
+            &__ellipsis {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                flex-shrink: 1;
             }
         }
 
@@ -135,19 +121,13 @@
                 }
             }
         }
-
-        &__annotation {
-            &:after {
-                content: "\0000a0•\0000a0";
-            }
-
-            &:last-child:after {
-                content: "";
-            }
-        }
     }
-}
 
-.gd-semantic-search__bubble.bubble.bubble-light {
-    background: kit-variables.$gd-color-white;
+    &__bubble.bubble.bubble-light {
+        background: kit-variables.$gd-color-white;
+    }
+
+    &__bubble_trigger {
+        display: flex;
+    }
 }

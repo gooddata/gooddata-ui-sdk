@@ -4,18 +4,20 @@
 @use "sass:meta";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins" as kit-mixins;
-@use "./main.scss";
+@use "./main.scss" as main;
 
 .gd-semantic-search {
     &__overlay {
         background: kit-variables.$gd-color-white;
         margin: 10px 0;
 
-        &--fixed {
+        // Desktop view
+        .gd-header-search-dropdown & {
             width: 440px;
         }
 
-        &--mobile {
+        // Mobile view
+        .gd-header-menu-search & {
             .gd-semantic-search__overlay-input {
                 margin-bottom: 10px;
             }
@@ -41,74 +43,27 @@
     &__overlay-no-results {
         height: 100px;
     }
-}
 
-.gd-header-search {
-    height: 100%;
-    margin: 0;
-    line-height: 42px;
-    opacity: 0.8;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-size: 14px;
-    font-weight: 400;
-    position: relative;
-    box-sizing: border-box;
-    padding: 0 34px 2px 13px;
+    &__results-item {
+        &--history &__icon {
+            @include main.icon(17px);
+        }
 
-    @include kit-mixins.text-overflow;
+        &__text {
+            &__lock-icon {
+                width: 14px;
 
-    &:hover,
-    &.is-open {
-        opacity: 1;
-    }
+                & svg {
+                    width: 14px;
+                    height: 14px;
+                }
+            }
 
-    &::after {
-        content: "\e612";
-        position: absolute;
-        top: 0;
-        right: 11px;
-        margin-left: 11px;
-        width: 12px;
-        opacity: 0.5;
-        text-align: center;
-        font-family: kit-variables.$gd-font-indigo;
-        font-size: 18px;
-        font-weight: 700;
-    }
-
-    &.is-open::after {
-        content: "\e613";
-    }
-
-    &:hover {
-        background: rgba(255, 255, 255, 0.3);
-    }
-
-    &.is-open {
-        background-color: rgba(255, 255, 255, 0.3);
-    }
-
-    &-dropdown {
-        overflow: hidden;
-
-        .gd-list {
-            min-width: 210px;
-
-            .gd-list-item {
-                font-family: kit-variables.$gd-font-primary;
-                font-weight: 400;
+            &__row:not(:first-child) {
+                :not(:first-child):before {
+                    content: "•\0000a0";
+                }
             }
         }
-    }
-}
-
-.gd-icon-header-search-button {
-    vertical-align: middle;
-    opacity: 0.8;
-    margin-right: 6px;
-
-    &::before {
-        content: "\e62b";
     }
 }

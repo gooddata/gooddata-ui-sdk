@@ -53,6 +53,10 @@ export interface UiState {
     deleteDialog: {
         open: boolean;
     };
+    widgetDeleteDialog: {
+        open: boolean;
+        widgetRef: ObjRef | undefined;
+    };
     filterViews: {
         open: boolean;
         mode: FilterViewDialogMode;
@@ -117,6 +121,10 @@ export const uiInitialState: UiState = {
     },
     deleteDialog: {
         open: false,
+    },
+    widgetDeleteDialog: {
+        open: false,
+        widgetRef: undefined,
     },
     filterViews: {
         open: false,

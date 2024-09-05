@@ -20,10 +20,12 @@ import {
 import { DashboardInsight } from "../../insight/index.js";
 import { useInsightExport } from "../../common/index.js";
 import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
+import { InsightWidgetDescriptionTrigger } from "../../description/InsightWidgetDescriptionTrigger.js";
+import { isSupportedInsightVisType } from "../../insight/configuration/InsightAlertConfig/utils.js";
+
 import { useInsightMenu } from "./useInsightMenu.js";
 import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard.js";
 import { IDefaultDashboardInsightWidgetProps } from "./types.js";
-import { InsightWidgetDescriptionTrigger } from "../../description/InsightWidgetDescriptionTrigger.js";
 
 export const DefaultDashboardInsightWidget: React.FC<Omit<IDefaultDashboardInsightWidgetProps, "insight">> = (
     props,
@@ -45,7 +47,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         onScheduleEmailingManagementOpen,
         isScheduledEmailingVisible,
         isScheduledManagementEmailingVisible,
-        numberOfAvailableWebhooks,
+        numberOfAvailableDestinations,
     } = useDashboardScheduledEmails();
 
     const visType = insightVisualizationType(insight) as VisType;
@@ -68,9 +70,9 @@ const DefaultDashboardInsightWidgetCore: React.FC<
     const scheduleExportEnabled = !isCustomWidget(widget);
     const scheduleExportManagementEnabled = !isCustomWidget(widget);
 
-    const isHeadline = visType === "headline";
-    const isAlertingVisible = isHeadline && !isCustomWidget(widget) && settings.enableAlerting === true;
-    const alertingDisabled = numberOfAvailableWebhooks === 0;
+    const isSupported = isSupportedInsightVisType(insight);
+    const isAlertingVisible = isSupported && !isCustomWidget(widget) && settings.enableAlerting === true;
+    const alertingDisabled = numberOfAvailableDestinations === 0;
 
     const { closeMenu, isMenuOpen, menuItems, openMenu } = useInsightMenu({
         insight,

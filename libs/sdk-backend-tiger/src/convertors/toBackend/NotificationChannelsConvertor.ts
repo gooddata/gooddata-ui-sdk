@@ -61,6 +61,23 @@ export function convertEmailToNotificationChannel(
 export function convertCreateEmailToNotificationChannel(
     smtp: Partial<ISmtpDefinition>,
 ): JsonApiNotificationChannelPostOptionalId {
+    switch (smtp.destination?.type) {
+        case "custom":
+            return convertCreateCustomEmailToNotificationChannel(smtp);
+        case "default":
+            return convertCreateDefaultEmailToNotificationChannel(smtp);
+        default:
+            throw new Error(`Unknown email channel type.`);
+    }
+}
+
+function convertCreateCustomEmailToNotificationChannel(
+    smtp: Partial<ISmtpDefinition>,
+): JsonApiNotificationChannelPostOptionalId {
+    if (smtp.destination?.type !== "custom") {
+        throw new Error("Only custom SMTP destinations are supported");
+    }
+
     return {
         type: JsonApiNotificationChannelOutTypeEnum.NOTIFICATION_CHANNEL,
         attributes: {
@@ -68,11 +85,44 @@ export function convertCreateEmailToNotificationChannel(
             destinationType: DeclarativeNotificationChannelDestinationTypeEnum.SMTP,
             destination: {
                 type: DeclarativeNotificationChannelDestinationTypeEnum.SMTP,
-                address: smtp.destination?.address ?? "",
-                fromEmail: smtp.destination?.from ?? "",
-                login: smtp.destination?.login ?? "",
+                host: smtp.destination?.from ?? "",
+                fromEmailName: smtp.destination?.person ?? "",
+                fromEmail: smtp.destination?.address ?? "",
+                username: smtp.destination?.login ?? "",
                 port: smtp.destination?.port ?? 25,
                 password: smtp.destination?.password,
+            },
+            triggers:
+                smtp.triggers?.map((trigger) => ({
+                    type: trigger.type,
+                    ...(trigger?.allowOn
+                        ? {
+                              metadata: {
+                                  allowedOn: trigger.allowOn,
+                              },
+                          }
+                        : {}),
+                })) ?? [],
+        },
+    };
+}
+
+function convertCreateDefaultEmailToNotificationChannel(
+    smtp: Partial<ISmtpDefinition>,
+): JsonApiNotificationChannelPostOptionalId {
+    if (smtp.destination?.type !== "default") {
+        throw new Error("Only default SMTP destinations are supported");
+    }
+
+    return {
+        type: JsonApiNotificationChannelOutTypeEnum.NOTIFICATION_CHANNEL,
+        attributes: {
+            name: smtp.destination?.name,
+            destinationType: DeclarativeNotificationChannelDestinationTypeEnum.DEFAULT_SMTP,
+            destination: {
+                type: DeclarativeNotificationChannelDestinationTypeEnum.DEFAULT_SMTP,
+                fromEmailName: smtp.destination?.person ?? "",
+                fromEmail: smtp.destination?.address ?? "",
             },
             triggers:
                 smtp.triggers?.map((trigger) => ({

@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 export { useDrill, UseDrillProps } from "./hooks/useDrill.js";
 export { useDrillDown, UseDrillDownProps } from "./hooks/useDrillDown.js";
 export { useDrillToInsight, UseDrillToInsightProps } from "./hooks/useDrillToInsight.js";
@@ -28,5 +28,6 @@ export {
     OnDrillToInsightSuccess,
     OnDrillToLegacyDashboard,
     OnDrillToLegacyDashboardSuccess,
+    IDrillToUrl,
 } from "./types.js";
-export { getDrillDownAttributeTitle } from "./utils/drillDownUtils.js";
+export { getDrillDownTitle } from "./utils/drillDownUtils.js";

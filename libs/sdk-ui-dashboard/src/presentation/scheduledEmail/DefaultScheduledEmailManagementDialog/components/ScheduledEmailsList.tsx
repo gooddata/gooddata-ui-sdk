@@ -1,7 +1,11 @@
 // (C) 2022-2024 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import { IAutomationMetadataObject, IWebhookDefinitionObject } from "@gooddata/sdk-model";
+import {
+    IAutomationMetadataObject,
+    ISmtpDefinitionObject,
+    IWebhookDefinitionObject,
+} from "@gooddata/sdk-model";
 import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
@@ -15,15 +19,16 @@ interface IScheduledEmailsProps {
     currentUserEmail?: string;
     noSchedulesMessageId: string;
     webhooks: IWebhookDefinitionObject[];
+    emails: ISmtpDefinitionObject[];
 }
 
 export const ScheduledEmails: React.FC<IScheduledEmailsProps> = (props) => {
-    const { isLoading, scheduledEmails, onDelete, onEdit, noSchedulesMessageId, webhooks } = props;
+    const { isLoading, scheduledEmails, onDelete, onEdit, noSchedulesMessageId, webhooks, emails } = props;
     const theme = useTheme();
 
     if (isLoading) {
         return (
-            <div className="gd-loading-equalizer-wrap gd-scheduled-emails-message">
+            <div className="gd-loading-equalizer-wrap gd-notifications-channels-message">
                 <div className="gd-loading-equalizer gd-loading-equalizer-fade">
                     <LoadingSpinner
                         className="large gd-loading-equalizer-spinner"
@@ -36,7 +41,7 @@ export const ScheduledEmails: React.FC<IScheduledEmailsProps> = (props) => {
 
     if (scheduledEmails.length === 0) {
         return (
-            <div className="gd-scheduled-emails-message s-no-schedules-message">
+            <div className="gd-notifications-channels-message s-no-schedules-message">
                 <FormattedMessage id={noSchedulesMessageId} values={{ br: <br /> }} />
             </div>
         );
@@ -51,6 +56,7 @@ export const ScheduledEmails: React.FC<IScheduledEmailsProps> = (props) => {
                     onDelete={onDelete}
                     onEdit={onEdit}
                     webhooks={webhooks}
+                    emails={emails}
                 />
             ))}
         </>

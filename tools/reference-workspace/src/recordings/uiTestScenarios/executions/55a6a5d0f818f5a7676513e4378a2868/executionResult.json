@@ -35,6 +35,7 @@
                         "identifier": "f_owner.department_id",
                         "localIdentifier": "a_f_owner.department_id",
                         "name": "Department",
+                        "primaryLabel": { "identifier": "f_owner.department_id", "type": "displayForm" },
                         "totalItems": [{ "totalHeaderItem": { "name": "sum" } }],
                         "uri": ""
                     }
@@ -46,6 +47,7 @@
                         "identifier": "f_owner.region_id",
                         "localIdentifier": "a_f_owner.region_id",
                         "name": "Region",
+                        "primaryLabel": { "identifier": "f_owner.region_id", "type": "displayForm" },
                         "totalItems": [{ "totalHeaderItem": { "name": "sum" } }],
                         "uri": ""
                     }

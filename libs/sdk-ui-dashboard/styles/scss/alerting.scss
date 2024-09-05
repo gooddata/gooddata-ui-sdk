@@ -12,6 +12,8 @@
 
 .gd-alerts-list__items {
     padding: 10px 0 10px 0;
+    overflow-y: auto;
+    max-height: 365px;
 
     .skeleton-flex {
         flex: 1;
@@ -83,6 +85,10 @@
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
+
+    &.gd-alerts-list-item__icon-invalid {
+        background-color: kit-variables.$gd-palette-error-dimmed;
+    }
 }
 
 .gd-alerts-list-item__details {
@@ -125,6 +131,15 @@
 
 .gd-edit-alert__measure-label {
     margin-bottom: 5px;
+}
+
+.gd-edit-alert__measure-info {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    gap: 5px;
+    line-height: 21px;
+    color: kit-variables.$gd-color-link;
 }
 
 .gd-edit-alert__value-input {
@@ -219,6 +234,14 @@
     &::before {
         height: 100%;
     }
+}
+
+.gd-alert-comparison-operator-select__list .gd-list-item-header {
+    display: flex;
+}
+
+.gd-alert-comparison-operator-tooltip-spacer {
+    margin-bottom: 10px;
 }
 
 //

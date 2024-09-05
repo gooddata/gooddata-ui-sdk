@@ -49,6 +49,8 @@ export {
     INotificationChannelMetadataObject,
     INotificationChannelDefinitionObject,
     INotificationChannelMetadataObjectBase,
+    IDefaultSmtpDestination,
+    ICustomSmtpDestination,
 } from "./notificationChannels/index.js";
 
 export {
@@ -594,6 +596,9 @@ export {
     IRichTextWidget,
     IRichTextWidgetBase,
     IRichTextWidgetDefinition,
+    IVisualizationSwitcherWidget,
+    IVisualizationSwitcherWidgetBase,
+    IVisualizationSwitcherWidgetDefinition,
 } from "./dashboard/analyticalWidgets.js";
 
 export {
@@ -686,6 +691,8 @@ export {
     isInsightWidget,
     isRichTextWidget,
     isRichTextWidgetDefinition,
+    isVisualizationSwitcherWidget,
+    isVisualizationSwitcherWidgetDefinition,
 } from "./dashboard/widget.js";
 
 export {
@@ -939,6 +946,10 @@ export {
     IAlertTriggerMode,
     IAlertTriggerState,
     IAutomationAlertTrigger,
+    IAutomationAlertComparisonCondition,
+    IAlertRelativeOperator,
+    IAlertRelativeArithmeticOperator,
+    IAutomationAlertRelativeCondition,
 } from "./automations/index.js";
 
 export {

@@ -87,6 +87,7 @@ export {
     selectEnableFilterViews,
     selectEnableDrillDownIntersectionIgnoredAttributes,
     selectEnableAlerting,
+    selectEnableVisualizationSwitcher,
 } from "./config/configSelectors.js";
 export { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {
@@ -244,6 +245,7 @@ export {
     selectDateHierarchyTemplates,
     selectAdhocDateHierarchies,
     selectAllCatalogAttributeHierarchies,
+    selectCatalogAttributeDisplayFormsById,
 } from "./catalog/catalogSelectors.js";
 export { catalogActions } from "./catalog/index.js";
 export { drillActions } from "./drill/index.js";
@@ -353,6 +355,8 @@ export {
     selectIsFilterViewsDialogOpen,
     selectIsAlertingDialogOpen,
     selectIsAlertsManagementDialogOpen,
+    selectIsWidgetDeleteDialogOpen,
+    selectWidgetDeleteDialogWidgetRef,
 } from "./ui/uiSelectors.js";
 export { uiActions } from "./ui/index.js";
 export { RenderModeState } from "./renderMode/renderModeState.js";
@@ -387,6 +391,9 @@ export {
     selectWebhooksIsLoading,
     selectWebhooksError,
 } from "./webhooks/webhooksSelectors.js";
+
+export { SmtpsState } from "./smtps/smtpsState.js";
+export { selectSmtps, selectSmtpsIsLoading, selectSmtpsError } from "./smtps/smtpsSelectors.js";
 
 export { AutomationsState } from "./automations/automationsState.js";
 export {

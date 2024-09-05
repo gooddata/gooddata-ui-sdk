@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
 import {
     filterObjRef,
@@ -11,6 +11,8 @@ import {
     ObjRef,
     dashboardFilterReferenceObjRef,
     IWidget,
+    IDashboardAttributeFilterConfig,
+    filterLocalIdentifier,
 } from "@gooddata/sdk-model";
 import last from "lodash/last.js";
 import zip from "lodash/zip.js";
@@ -35,6 +37,7 @@ export async function resolveWidgetFilters(
     ignoreDashboardFilters: IWidget["ignoreDashboardFilters"],
     dateDataSet: IWidget["dateDataSet"],
     normalizeIds: NormalizeIds,
+    attributeFilterConfigs: IDashboardAttributeFilterConfig[] = [],
 ): Promise<IFilter[]> {
     const dateFilters = filters.filter(isDateFilter);
     const attributeFilters = filters.filter(isAttributeFilter);
@@ -48,7 +51,12 @@ export async function resolveWidgetFilters(
 
     const [dateFiltersToKeep, attributeFiltersToKeep] = await Promise.all([
         getRelevantDateFiltersForWidget(dateFilters, dateDataSet, normalizeIds),
-        getRelevantAttributeFiltersForWidget(attributeFilters, ignoreDashboardFilters, normalizeIds),
+        getRelevantAttributeFiltersForWidget(
+            attributeFilters,
+            ignoreDashboardFilters,
+            normalizeIds,
+            attributeFilterConfigs,
+        ),
     ]);
 
     const filtersToKeep = [...dateFiltersToKeep, ...attributeFiltersToKeep];
@@ -76,6 +84,7 @@ export async function resolveWidgetFiltersWithMultipleDateFilters(
     ignoreDashboardFilters: IWidget["ignoreDashboardFilters"],
     dateDataSet: IWidget["dateDataSet"],
     normalizeIds: NormalizeIds,
+    attributeFilterConfigs: IDashboardAttributeFilterConfig[],
 ): Promise<IFilter[]> {
     const dateFilters = otherFilters.filter(isDateFilter);
     const attributeFilters = otherFilters.filter(isAttributeFilter);
@@ -90,7 +99,12 @@ export async function resolveWidgetFiltersWithMultipleDateFilters(
     const [commonDateFiltersToKeep, dateFiltersToKeep, attributeFiltersToKeep] = await Promise.all([
         getRelevantDateFiltersForWidget(commonDateFilters, dateDataSet, normalizeIds),
         getRelevantDateFiltersWithDimensionForWidget(dateFilters, ignoreDashboardFilters, normalizeIds),
-        getRelevantAttributeFiltersForWidget(attributeFilters, ignoreDashboardFilters, normalizeIds),
+        getRelevantAttributeFiltersForWidget(
+            attributeFilters,
+            ignoreDashboardFilters,
+            normalizeIds,
+            attributeFilterConfigs,
+        ),
     ]);
 
     const filtersToKeep = [...dateFiltersToKeep, ...attributeFiltersToKeep];
@@ -162,6 +176,7 @@ async function getRelevantAttributeFiltersForWidget(
     filters: IAttributeFilter[],
     ignoreDashboardFilters: IWidget["ignoreDashboardFilters"],
     normalizeIds: NormalizeIds,
+    attributeFilterConfigs: IDashboardAttributeFilterConfig[],
 ): Promise<IAttributeFilter[]> {
     if (!ignoreDashboardFilters.length) {
         return filters;
@@ -175,14 +190,33 @@ async function getRelevantAttributeFiltersForWidget(
     const ids = await normalizeIds([
         ...ignoreDashboardFilters.map(dashboardFilterReferenceObjRef),
         ...filters.map((filter) => filterObjRef(filter)!),
+        ...attributeFilterConfigs
+            .filter((config) => !!config.displayAsLabel)
+            .map((config) => config.displayAsLabel!),
     ]);
 
     // re-split the uris array to the two parts corresponding to the original arrays
     const divide = ignoreDashboardFilters.length;
     const ignoredIds = ids.slice(0, divide);
-    const filterIds = ids.slice(divide);
+    const filterIds = ids.slice(divide, divide + filters.length);
+    const configIds = ids.slice(divide + filters.length);
+
+    const normalizedConfig = attributeFilterConfigs
+        .filter((config) => !!config.displayAsLabel)
+        .map((config, index) => ({
+            ...config,
+            normalizedDisplayAsLabel: configIds[index],
+        }));
 
     return zip(filters, filterIds)
-        .filter(([, id]) => !ignoredIds.includes(id!))
+        .filter(([filter, id]) => {
+            const config = normalizedConfig.find(
+                (config) => config.localIdentifier === filterLocalIdentifier(filter!),
+            );
+            return (
+                !ignoredIds.includes(id!) &&
+                (!config || !ignoredIds.includes(config.normalizedDisplayAsLabel!))
+            );
+        })
         .map(([filter]) => filter!);
 }

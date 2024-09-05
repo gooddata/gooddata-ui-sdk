@@ -113,19 +113,6 @@ export interface Features {
     context: FeatureFlagsContext;
 }
 /**
- * Heap service.
- * @export
- * @interface HeapService
- */
-export interface HeapService {
-    /**
-     * Heap app ID.
-     * @type {string}
-     * @memberof HeapService
-     */
-    appId: string;
-}
-/**
  *
  * @export
  * @interface Invitation
@@ -415,12 +402,6 @@ export interface TelemetryServices {
      * @memberof TelemetryServices
      */
     openTelemetry?: OpenTelemetryService;
-    /**
-     *
-     * @type {HeapService}
-     * @memberof TelemetryServices
-     */
-    heap?: HeapService;
 }
 
 /**

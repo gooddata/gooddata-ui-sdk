@@ -23,7 +23,7 @@ import {
     isRemoveDateFilter,
     isRemoveRankingFilter,
 } from "../iframe/index.js";
-import { ObjRef } from "@gooddata/sdk-model";
+import { ObjRef, idRef } from "@gooddata/sdk-model";
 
 export const EXTERNAL_DATE_FILTER_FORMAT = "YYYY-MM-DD";
 
@@ -272,12 +272,15 @@ function transformAttributeFilterItem(
             displayAsLabel,
         } = attributeFilterItem;
         const { uri: dfUri, identifier: dfIdentifier } = getObjectUriIdentifier(displayForm);
+        const { identifier: displayAsLabelIdentifier } = getObjectUriIdentifier(displayAsLabel);
         return {
             negativeSelection: false,
             attributeElements,
             dfIdentifier,
             dfUri,
-            ...(displayAsLabel ? { displayAsLabel } : {}),
+            ...(displayAsLabelIdentifier
+                ? { displayAsLabel: idRef(displayAsLabelIdentifier, "displayForm") }
+                : {}),
         };
     } else {
         const {
@@ -285,12 +288,15 @@ function transformAttributeFilterItem(
             displayAsLabel,
         } = attributeFilterItem;
         const { uri: dfUri, identifier: dfIdentifier } = getObjectUriIdentifier(displayForm);
+        const { identifier: displayAsLabelIdentifier } = getObjectUriIdentifier(displayAsLabel);
         return {
             negativeSelection: true,
             attributeElements,
             dfIdentifier,
             dfUri,
-            ...(displayAsLabel ? { displayAsLabel } : {}),
+            ...(displayAsLabelIdentifier
+                ? { displayAsLabel: idRef(displayAsLabelIdentifier, "displayForm") }
+                : {}),
         };
     }
 }

@@ -76,6 +76,18 @@ export const selectCatalogAttributeDisplayForms: DashboardSelector<IAttributeDis
 /**
  * @public
  */
+export const selectCatalogAttributeDisplayFormsById: DashboardSelector<
+    Record<string, IAttributeDisplayFormMetadataObject>
+> = createSelector(selectCatalogAttributeDisplayForms, (displayForms) => {
+    return displayForms.reduce((acc, displayForm) => {
+        acc[displayForm.id] = displayForm;
+        return acc;
+    }, {} as Record<string, IAttributeDisplayFormMetadataObject>);
+});
+
+/**
+ * @public
+ */
 export const selectCatalogMeasures: DashboardSelector<ICatalogMeasure[]> = createSelector(
     selectSelf,
     (state) => {

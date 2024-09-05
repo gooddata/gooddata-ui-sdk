@@ -110,7 +110,16 @@ export interface ISmtpDefinition extends INotificationChannelMetadataObjectBase 
 /**
  * @alpha
  */
-export interface ISmtpDestination {
+export type ISmtpDestination = ICustomSmtpDestination | IDefaultSmtpDestination;
+
+/**
+ * @alpha
+ */
+export type ICustomSmtpDestination = {
+    /**
+     * Type of the SMTP.
+     */
+    type: "custom";
     /**
      * Name of the smtp.
      */
@@ -123,6 +132,10 @@ export interface ISmtpDestination {
      * Email address of the sender.
      */
     address: string;
+    /**
+     * Who the email is from.
+     */
+    person: string;
     /**
      * Port of the SMTP server.
      */
@@ -139,4 +152,26 @@ export interface ISmtpDestination {
      * Flag indicating whether the SMTP server has a password.
      */
     hasPassword?: boolean;
-}
+};
+
+/**
+ * @alpha
+ */
+export type IDefaultSmtpDestination = {
+    /**
+     * Type of the SMTP.
+     */
+    type: "default";
+    /**
+     * Name of the smtp.
+     */
+    name: string;
+    /**
+     * Email address of the sender.
+     */
+    address: string;
+    /**
+     * Who the email is from.
+     */
+    person: string;
+};

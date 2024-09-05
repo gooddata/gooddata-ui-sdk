@@ -39,6 +39,10 @@
                         "identifier": "label.f_opportunity.opportunity.name",
                         "localIdentifier": "a_label.f_opportunity.opportunity.name",
                         "name": "Opportunity Name",
+                        "primaryLabel": {
+                            "identifier": "attr.f_opportunity.opportunity",
+                            "type": "displayForm"
+                        },
                         "totalItems": [],
                         "uri": ""
                     }

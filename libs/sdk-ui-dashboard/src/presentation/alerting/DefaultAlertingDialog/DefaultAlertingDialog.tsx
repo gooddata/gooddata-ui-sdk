@@ -51,6 +51,7 @@ export const AlertingDialog: React.FC<IAlertingDialogProps> = (props) => {
             arrowOffsets={defaultArrowOffsets}
             alignTo={`#${anchorEl.id}`}
             onClose={onCancel}
+            overlayPositionType="fixed"
         >
             <ScrollablePanel className={classes}>
                 <OverlayControllerProvider overlayController={overlayController}>
@@ -68,6 +69,7 @@ export const AlertingDialog: React.FC<IAlertingDialogProps> = (props) => {
                             onCancel();
                         }}
                         onClose={onCancel}
+                        overlayPositionType="fixed"
                     />
                 </OverlayControllerProvider>
             </ScrollablePanel>

@@ -12,10 +12,14 @@ import {
 import { Icon, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { gdColorStateBlank } from "../../../constants/colors.js";
+import { gdColorNegative, gdColorStateBlank } from "../../../constants/colors.js";
 import { selectWidgetByRef, useDashboardSelector } from "../../../../model/index.js";
-import { translateOperator } from "../../DefaultAlertingDialog/operator.js";
 import { AlertDropdown } from "./AlertDropdown.js";
+import { useAlertValidation } from "../../../widget/insight/configuration/InsightAlertConfig/hooks/useAlertValidation.js";
+import {
+    getAlertThreshold,
+    getOperatorTitle,
+} from "../../../widget/insight/configuration/InsightAlertConfig/utils.js";
 
 interface IAlertProps {
     onDelete: (alert: IAutomationMetadataObject) => void;
@@ -41,12 +45,14 @@ export const Alert: React.FC<IAlertProps> = (props) => {
     const { alert, onDelete, onEdit, onPause } = props;
 
     const intl = useIntl();
-    const operator = alert.alert?.condition.operator;
-    const threshold = alert.alert?.condition.right;
+    const { isValid } = useAlertValidation(alert);
+    const threshold = getAlertThreshold(alert.alert);
     const iconColor = theme?.palette?.complementary?.c6 ?? gdColorStateBlank;
+    const iconColorError = theme?.palette?.error?.base ?? gdColorNegative;
 
     const iconActive = <Icon.Alert width={16} height={16} color={iconColor} />;
     const iconPaused = <Icon.AlertPaused width={16} height={16} color={iconColor} />;
+    const iconError = <Icon.Warning width={16} height={16} color={iconColorError} />;
 
     const paused = alert.alert?.trigger.state === "PAUSED";
 
@@ -57,7 +63,7 @@ export const Alert: React.FC<IAlertProps> = (props) => {
     const insightWidget = isInsightWidget(widget) ? widget : undefined;
     const widgetName = insightWidget?.title ?? "";
 
-    const subtitle = [`${translateOperator(intl, operator)} ${threshold}`, widgetName]
+    const subtitle = [`${getOperatorTitle(intl, alert.alert)} ${threshold}`, widgetName]
         .filter(Boolean)
         .join(" • ");
 
@@ -66,8 +72,7 @@ export const Alert: React.FC<IAlertProps> = (props) => {
     const [dropdownOpened, toggleDropdownOpened] = useState(false);
     const buttonRef = useRef<HTMLElement | null>(null);
 
-    const openDropdown = (e: React.SyntheticEvent) => {
-        buttonRef.current = e.currentTarget as HTMLElement;
+    const openDropdown = () => {
         toggleDropdownOpened(true);
         setHover(true);
     };
@@ -98,40 +103,7 @@ export const Alert: React.FC<IAlertProps> = (props) => {
     }, [alert, onPause]);
 
     return (
-        <div className={cx("gd-scheduled-email", "s-alert", { editable: true, hover })}>
-            <div className="gd-scheduled-email-menu">
-                <span
-                    className="gd-scheduled-email-menu-icon s-alert-menu-icon"
-                    id={`alert-menu-${alert.id}`}
-                    onClick={openDropdown}
-                />
-            </div>
-            <div className="gd-scheduled-email-content" onClick={handleEdit}>
-                <div className="gd-scheduled-email-icon">{paused ? iconPaused : iconActive}</div>
-                <div className="gd-scheduled-email-text-content">
-                    <div className="gd-scheduled-email-title">
-                        <strong>
-                            <ShortenedText
-                                className="gd-scheduled-email-shortened-text"
-                                tooltipAlignPoints={TEXT_TOOLTIP_ALIGN_POINTS}
-                            >
-                                {alert.title ??
-                                    intl.formatMessage({ id: "dialogs.alerting.title.placeholder" })}
-                            </ShortenedText>
-                        </strong>
-                    </div>
-                    <div>
-                        <span className="gd-scheduled-email-subtitle">
-                            <ShortenedText
-                                className="gd-scheduled-email-shortened-text"
-                                tooltipAlignPoints={TEXT_TOOLTIP_ALIGN_POINTS}
-                            >
-                                {subtitle}
-                            </ShortenedText>
-                        </span>
-                    </div>
-                </div>
-            </div>
+        <div className={cx("gd-notifications-channel", "s-alert", { editable: true, hover })}>
             {dropdownOpened && buttonRef.current ? (
                 <AlertDropdown
                     paused={paused}
@@ -143,6 +115,46 @@ export const Alert: React.FC<IAlertProps> = (props) => {
                     onResume={handleResume}
                 />
             ) : null}
+            <div className="gd-notifications-channel-menu">
+                <span
+                    className="gd-notifications-channel-menu-icon s-alert-menu-icon"
+                    id={`alert-menu-${alert.id}`}
+                    ref={buttonRef}
+                    onClick={openDropdown}
+                />
+            </div>
+            <div className="gd-notifications-channel-content" onClick={handleEdit}>
+                <div
+                    className={cx("gd-notifications-channel-icon", {
+                        "gd-notifications-channel-icon-invalid": !isValid,
+                    })}
+                >
+                    {!isValid ? iconError : paused ? iconPaused : iconActive}
+                </div>
+                <div className="gd-notifications-channel-text-content">
+                    <div className="gd-notifications-channel-title">
+                        <strong>
+                            <ShortenedText
+                                className="gd-notifications-channel-shortened-text"
+                                tooltipAlignPoints={TEXT_TOOLTIP_ALIGN_POINTS}
+                            >
+                                {alert.title ??
+                                    intl.formatMessage({ id: "dialogs.alerting.title.placeholder" })}
+                            </ShortenedText>
+                        </strong>
+                    </div>
+                    <div>
+                        <span className="gd-notifications-channel-subtitle">
+                            <ShortenedText
+                                className="gd-notifications-channel-shortened-text"
+                                tooltipAlignPoints={TEXT_TOOLTIP_ALIGN_POINTS}
+                            >
+                                {subtitle}
+                            </ShortenedText>
+                        </span>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 };

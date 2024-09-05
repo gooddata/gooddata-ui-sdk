@@ -22,6 +22,7 @@ interface IStylingSettingBodyProps<T> {
     onItemEdit?: (item: IStylingPickerItem<T>) => void;
     onItemDelete?: (ref: ObjRef) => void;
     onItemMenuToggle?: (ref: ObjRef) => void;
+    isEditingSupported?: boolean;
 }
 
 export const StylingSettingBody = <T extends StylingPickerItemContent>({
@@ -38,6 +39,7 @@ export const StylingSettingBody = <T extends StylingPickerItemContent>({
     onItemEdit,
     onItemDelete,
     onItemMenuToggle,
+    isEditingSupported,
 }: IStylingSettingBodyProps<T>) => {
     const intl = useIntl();
 
@@ -63,7 +65,7 @@ export const StylingSettingBody = <T extends StylingPickerItemContent>({
                         <DialogListHeader
                             title={intl.formatMessage({ id: "stylingPicker.title.custom" })}
                             buttonTitle={
-                                isMobile
+                                isMobile || !isEditingSupported
                                     ? undefined
                                     : intl.formatMessage({ id: "stylingPicker.title.create" })
                             }
@@ -75,8 +77,8 @@ export const StylingSettingBody = <T extends StylingPickerItemContent>({
                             itemToColorPreview={itemToColorPreview}
                             emptyMessageElement={emptyMessage()}
                             onItemClick={onItemClick}
-                            onItemEdit={isMobile ? undefined : onItemEdit}
-                            onItemDelete={isMobile ? undefined : onItemDelete}
+                            onItemEdit={isMobile || !isEditingSupported ? undefined : onItemEdit}
+                            onItemDelete={isMobile || !isEditingSupported ? undefined : onItemDelete}
                             initiallySelectedItemRef={initiallySelectedItemRef}
                             selectedItemRef={selectedItemRef}
                             onItemMenuToggle={onItemMenuToggle}
