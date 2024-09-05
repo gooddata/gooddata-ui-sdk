@@ -8,9 +8,13 @@
 #                 on every patch release of respective branch
 
 [[versions]]
-    version = "10.8"
+    version = "10.9"
     dirpath = "latest"
     url = "/latest/"
+[[versions]]
+    version = "10.8"
+    dirpath = "10.8"
+    url = "/10.8/"
 [[versions]]
     version = "10.7"
     dirpath = "10.7"
@@ -19,10 +23,6 @@
     version = "10.6"
     dirpath = "10.6"
     url = "/10.6/"
-[[versions]]
-    version = "10.5"
-    dirpath = "10.5"
-    url = "/10.5/"
 [[versions]]
     version = "Older"
     url = "https://sdk.gooddata.com/gooddata-ui/versions.html"
