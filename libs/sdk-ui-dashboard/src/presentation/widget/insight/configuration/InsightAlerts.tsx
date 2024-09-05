@@ -19,6 +19,7 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
         ? stringUtils.simplifyText(objRefToString(widget.ref))
         : "";
     const classes = cx(
+        "gd-alerts-configuration-panel",
         "configuration-scrollable-panel",
         "s-configuration-scrollable-panel",
         `s-visualization-${widgetRefSuffix}`,
