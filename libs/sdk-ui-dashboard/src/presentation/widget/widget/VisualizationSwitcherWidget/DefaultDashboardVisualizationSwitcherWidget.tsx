@@ -10,7 +10,7 @@ import { DashboardVisualizationSwitcher } from "../../visualizationSwitcher/Dash
 /**
  * @internal
  */
-export const DefaultDashboardVisualizationSwitchertWidget: React.FC<
+export const DefaultDashboardVisualizationSwitcherWidget: React.FC<
     IDefaultDashboardVisualizationSwitcherWidgetProps
 > = ({ widget, screen, dashboardItemClasses }) => {
     return (

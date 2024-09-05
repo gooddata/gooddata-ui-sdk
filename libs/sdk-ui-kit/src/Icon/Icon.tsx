@@ -26,6 +26,8 @@ import { AttributeFilter } from "./icons/AttributeFilter.js";
 import { LegendMenu } from "./icons/LegendMenu.js";
 import { ArrowDown } from "./icons/ArrowDown.js";
 import { ArrowUp } from "./icons/ArrowUp.js";
+import { ArrowLeft } from "./icons/ArrowLeft.js";
+import { ArrowRight } from "./icons/ArrowRight.js";
 import { Attribute } from "./icons/Attribute.js";
 import { Close } from "./icons/Close.js";
 import { Dataset } from "./icons/Dataset.js";
@@ -125,6 +127,8 @@ export const Icon: Record<string, React.FC<IIconProps>> = {
     LegendMenu,
     ArrowDown,
     ArrowUp,
+    ArrowLeft,
+    ArrowRight,
     Attribute,
     Close,
     Dataset,
