@@ -636,5 +636,7 @@
     "semantic-search.placeholder": "Ricerca di cruscotti o visualizzazioni…",
     "semantic-search.id": "ID",
     "semantic-search.tags": "Tag",
-    "semantic-search.match": "{score}% di corrispondenza"
+    "semantic-search.match": "{score}% di corrispondenza",
+    "recurrence.error.too_often": "Frequenza troppo alta",
+    "recurrence.cron.tooltip": "Utilizzare il formato di stringa unix-cron. <a>Maggiori informazioni</a>"
 }

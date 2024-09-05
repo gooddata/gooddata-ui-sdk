@@ -636,5 +636,7 @@
     "semantic-search.placeholder": "ダッシュボードまたはビジュアライゼーションを検索…",
     "semantic-search.id": "ID",
     "semantic-search.tags": "タグ",
-    "semantic-search.match": "{score}％マッチ"
+    "semantic-search.match": "{score}％マッチ",
+    "recurrence.error.too_often": "頻度が高すぎます",
+    "recurrence.cron.tooltip": "unix-cronの文字列フォーマットを使用します。<a>詳細</a>"
 }

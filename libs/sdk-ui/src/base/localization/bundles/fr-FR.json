@@ -636,5 +636,7 @@
     "semantic-search.placeholder": "Recherche de tableaux de bord ou de visualisation…",
     "semantic-search.id": "ID",
     "semantic-search.tags": "Balises",
-    "semantic-search.match": "{score}% de correspondance"
+    "semantic-search.match": "{score}% de correspondance",
+    "recurrence.error.too_often": "Fréquence trop élevée",
+    "recurrence.cron.tooltip": "Utilisez le format de chaîne unix-cron. <a>En savoir plus</a>"
 }
