@@ -413,6 +413,11 @@ export interface ISettings {
     enableAlerting?: boolean;
 
     /**
+     * Enables alerting rollout of the dashboard widgets.
+     */
+    enableAlertingRollout?: boolean;
+
+    /**
      * Enables smtp settings.
      */
     enableSmtp?: boolean;

@@ -2794,6 +2794,21 @@
         "comment": "Title of the section in insight configuration",
         "limit": 0
     },
+    "insightAlert.config.noAlertMeasures": {
+        "value": "Alerts",
+        "comment": "Text shown when there are no metrics available for the insight",
+        "limit": 0
+    },
+    "insightAlert.config.noAlertMeasures.title": {
+        "value": "No metrics available for alerting.",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.noAlertMeasures.description": {
+        "value": "Please add a metric to enable alerting.",
+        "comment": "",
+        "limit": 0
+    },
     "insightAlert.config.createAlert": {
         "value": "Create alert",
         "comment": "Title of the section in insight configuration",
