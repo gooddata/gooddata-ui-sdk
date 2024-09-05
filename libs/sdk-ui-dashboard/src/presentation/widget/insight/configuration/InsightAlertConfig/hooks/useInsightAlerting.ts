@@ -109,6 +109,10 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
 
     // Handle async widget filters state
     useEffect(() => {
+        if (supportedMeasures.length === 0) {
+            setIsLoading(false);
+            return;
+        }
         if (widgetFiltersStatus === "success") {
             setIsLoading(false);
             const sanitizedFilters = widgetFilters.filter((filter) => !isAllTimeDateFilter(filter));

@@ -10,6 +10,7 @@ import { AlertsList } from "./InsightAlertConfig/AlertsList.js";
 import { EditAlert } from "./InsightAlertConfig/EditAlert.js";
 import { useInsightWidgetAlerting } from "./InsightAlertConfig/hooks/useInsightAlerting.js";
 import { CreateAlert } from "./InsightAlertConfig/CreateAlert.js";
+import { NoAvailableMeasures } from "./InsightAlertConfig/NoAvailableAlerts.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 
@@ -75,7 +76,7 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
                 onClose={onClose}
             />
         );
-    } else if (viewMode === "create") {
+    } else if (viewMode === "create" && creatingAlert) {
         content = (
             <CreateAlert
                 alert={creatingAlert}
@@ -88,6 +89,8 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
                 maxAutomationsReached={maxAutomationsReached}
             />
         );
+    } else {
+        content = <NoAvailableMeasures onClose={onClose} onBack={onGoBack} />;
     }
 
     return (

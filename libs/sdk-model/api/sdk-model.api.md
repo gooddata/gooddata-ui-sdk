@@ -2936,6 +2936,7 @@ export interface ISettings {
     enableADMultipleDateFilters?: boolean;
     enableAIFunctions?: boolean;
     enableAlerting?: boolean;
+    enableAlertingRollout?: boolean;
     enableAlternativeDisplayFormSelection?: boolean;
     enableAnalyticalDashboardPermissions?: boolean;
     // (undocumented)
