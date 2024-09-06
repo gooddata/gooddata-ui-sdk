@@ -2451,6 +2451,16 @@
         "comment": "",
         "limit": 0
     },
+    "visualizationSwitcher.deleteDialog.header": {
+        "value": "Delete visualization switcher?",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcher.deleteDialog.message": {
+        "value": "The visualization switcher and all of its visualizations will be irreversibly deleted.",
+        "comment": "",
+        "limit": 0
+    },
     "visualizationSwitcherToolbar.visualizationsList.header": {
         "value": "Visualizations",
         "comment": "",

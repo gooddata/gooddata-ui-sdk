@@ -69,7 +69,7 @@ import {
 import { ChangeRichTextWidgetContent } from "./richText.js";
 import {
     AddVisualizationToVisualizationSwitcherWidgetContent,
-    RemoveVisualizationFromVisualizationSwitcherWidgetContent,
+    UpdateVisualizationsFromVisualizationSwitcherWidgetContent,
 } from "./visualizationSwitcher.js";
 import {
     AddLayoutSection,
@@ -420,11 +420,11 @@ export {
 
 export {
     AddVisualizationToVisualizationSwitcherWidgetContent,
-    AddVisualizationToVisualizationSwitcherWidgetontentPayload,
+    AddVisualizationToVisualizationSwitcherWidgetContentPayload,
     addVisualizationToSwitcherWidgetContent,
-    RemoveVisualizationFromVisualizationSwitcherWidgetContent,
-    RemoveVisualizationFromVisualizationSwitcherWidgetontentPayload,
-    removeVisualizationFromSwitcherWidgetContent,
+    UpdateVisualizationsFromVisualizationSwitcherWidgetContent,
+    UpdateVisualizationsFromVisualizationSwitcherWidgetontentPayload,
+    updateVisualizationsFromSwitcherWidgetContent,
 } from "./visualizationSwitcher.js";
 
 export {
@@ -522,7 +522,7 @@ export type DashboardCommands =
     | SetAttributeFilterSelectionMode
     | ChangeRichTextWidgetContent
     | AddVisualizationToVisualizationSwitcherWidgetContent
-    | RemoveVisualizationFromVisualizationSwitcherWidgetContent
+    | UpdateVisualizationsFromVisualizationSwitcherWidgetContent
     //alpha
     | Drill
     | DrillDown

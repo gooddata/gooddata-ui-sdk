@@ -69,8 +69,8 @@ import {
 } from "./insight.js";
 import { DashboardRichTextWidgetContentChanged } from "./richText.js";
 import {
-    DashboardVisualizationSwitcherWidgetRemoveVisualization,
-    DashboardVisualizationSwitcherWidgetAddVisualization,
+    DashboardVisualizationSwitcherWidgetVisualizationAdded,
+    DashboardVisualizationSwitcherWidgetVisualizationsUpdated,
 } from "./visualizationSwitcher.js";
 import {
     DashboardWidgetExecutionStarted,
@@ -343,14 +343,14 @@ export {
 } from "./richText.js";
 
 export {
-    DashboardVisualizationSwitcherWidgetAddVisualization,
-    DashboardVisualizationSwticherWidgetAddVisualizationPayload,
-    isDashboardVisualizationSwitcherWidgetAddVisualization,
-    visualizationSwitcherWidgetAddVisualization,
-    DashboardVisualizationSwitcherWidgetRemoveVisualization,
-    DashboardVisualizationSwticherWidgetRemoveVisualizationPayload,
-    isDashboardVisualizationSwitcherWidgetRemoveVisualization,
-    visualizationSwitcherWidgetRemoveVisualization,
+    DashboardVisualizationSwitcherWidgetVisualizationAdded,
+    DashboardVisualizationSwticherWidgetVisualizationAddedPayload,
+    isDashboardVisualizationSwitcherWidgetVisualizationAdded,
+    visualizationSwitcherWidgetVisualizationAdded,
+    DashboardVisualizationSwitcherWidgetVisualizationsUpdated,
+    DashboardVisualizationSwticherWidgetVisualizationsUpdatedPayload,
+    isDashboardVisualizationSwitcherWidgetVisualizationsUpdated,
+    visualizationSwitcherWidgetVisualizationsUpdated,
 } from "./visualizationSwitcher.js";
 
 export {
@@ -550,8 +550,8 @@ export type DashboardEvents =
     | DashboardInsightWidgetExportResolved
     | DashboardInsightWidgetRefreshed
     | DashboardRichTextWidgetContentChanged
-    | DashboardVisualizationSwitcherWidgetAddVisualization
-    | DashboardVisualizationSwitcherWidgetRemoveVisualization
+    | DashboardVisualizationSwitcherWidgetVisualizationAdded
+    | DashboardVisualizationSwitcherWidgetVisualizationsUpdated
     | DashboardWidgetExecutionStarted
     | DashboardWidgetExecutionSucceeded
     | DashboardWidgetExecutionFailed

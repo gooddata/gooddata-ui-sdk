@@ -42,7 +42,7 @@ import { modifyDrillsForInsightWidgetHandler } from "./widgets/modifyDrillsForIn
 import { removeDrillsForInsightWidgetHandler } from "./widgets/removeDrillsForInsightWidgetHandler.js";
 import { changeRichTextWidgetContentHandler } from "./widgets/changeRichTextWidgetContentHandler.js";
 import { addVisualizationToSwticherWidgetContentHandler } from "./widgets/addVisualizationToSwitcherWidgetHandler.js";
-import { removeVisualizationFromSwticherWidgetContentHandler } from "./widgets/removeVisualzationFromSwitcherWidgetHandler.js";
+import { updateVisualizationsFromSwticherWidgetContentHandler } from "./widgets/removeVisualzationFromSwitcherWidgetHandler.js";
 import { exportInsightWidgetHandler } from "./widgets/exportInsightWidgetHandler.js";
 import { createAlertHandler } from "./alerts/createAlertHandler.js";
 import { saveAlertHandler } from "./alerts/saveAlertHandler.js";
@@ -176,8 +176,8 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.RICH_TEXT_WIDGET.CHANGE_CONTENT": changeRichTextWidgetContentHandler,
     "GDC.DASH/CMD.VISUALIZATION_SWITCHER_WIDGET.ADD_VISUALIZATION":
         addVisualizationToSwticherWidgetContentHandler,
-    "GDC.DASH/CMD.VISUALIZATION_SWITCHER_WIDGET.REMOVE_VISUALIZATION":
-        removeVisualizationFromSwticherWidgetContentHandler,
+    "GDC.DASH/CMD.VISUALIZATION_SWITCHER_WIDGET.UPDATE_VISUALIZATIONS":
+        updateVisualizationsFromSwticherWidgetContentHandler,
     "GDC.DASH/CMD.ALERT.CREATE": createAlertHandler,
     "GDC.DASH/CMD.ALERT.SAVE": saveAlertHandler,
     "GDC.DASH/CMD.SCHEDULED_EMAIL.CREATE": createScheduledEmailHandler,

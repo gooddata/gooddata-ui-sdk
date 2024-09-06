@@ -781,7 +781,7 @@ const addVisualizationSwitcherWidgetVisualization: LayoutReducer<
 
 type RemoveVisualzationSwitcherWidgetVisualization = {
     ref: ObjRef;
-    visualization: IInsightWidget;
+    visualizations: IInsightWidget[];
 };
 
 const removeVisualizationSwitcherWidgetVisualization: LayoutReducer<
@@ -789,12 +789,12 @@ const removeVisualizationSwitcherWidgetVisualization: LayoutReducer<
 > = (state, action) => {
     invariant(state.layout);
 
-    const { visualization, ref } = action.payload;
+    const { visualizations, ref } = action.payload;
     const widgetRef = getWidgetByRef(state, ref);
 
     invariant(widgetRef && isVisualizationSwitcherWidget(widgetRef));
 
-    widgetRef.visualizations.filter((vis) => areObjRefsEqual(vis.ref, visualization.ref));
+    widgetRef.visualizations = visualizations;
 };
 
 export const layoutReducers = {

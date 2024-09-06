@@ -1,13 +1,14 @@
 // (C) 2024 GoodData Corporation
 
+import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
 import { IDashboardCommand } from "./base.js";
-import { IInsightWidget, ObjRef } from "@gooddata/sdk-model";
+import { IInsight, IInsightWidget, ObjRef } from "@gooddata/sdk-model";
 
 /**
  * Payload of the {@link AddVisualizationToVisualizationSwitcherWidgetContent} command.
  * @beta
  */
-export interface AddVisualizationToVisualizationSwitcherWidgetontentPayload {
+export interface AddVisualizationToVisualizationSwitcherWidgetContentPayload {
     /**
      * Visualization switcher widget reference whose content to change.
      */
@@ -17,6 +18,16 @@ export interface AddVisualizationToVisualizationSwitcherWidgetontentPayload {
      * Visualization to add onto switcher widget.
      */
     readonly visualization: IInsightWidget;
+
+    /**
+     * Insight that is added.
+     */
+    readonly insight: IInsight;
+
+    /**
+     * Size info of the added visualizaiton.
+     */
+    readonly sizeInfo: IVisualizationSizeInfo;
 }
 
 /**
@@ -24,7 +35,7 @@ export interface AddVisualizationToVisualizationSwitcherWidgetontentPayload {
  */
 export interface AddVisualizationToVisualizationSwitcherWidgetContent extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.VISUALIZATION_SWITCHER_WIDGET.ADD_VISUALIZATION";
-    readonly payload: AddVisualizationToVisualizationSwitcherWidgetontentPayload;
+    readonly payload: AddVisualizationToVisualizationSwitcherWidgetContentPayload;
 }
 
 /**
@@ -40,6 +51,8 @@ export interface AddVisualizationToVisualizationSwitcherWidgetContent extends ID
 export function addVisualizationToSwitcherWidgetContent(
     ref: ObjRef,
     visualization: IInsightWidget,
+    insight: IInsight,
+    sizeInfo: IVisualizationSizeInfo,
     correlationId?: string,
 ): AddVisualizationToVisualizationSwitcherWidgetContent {
     return {
@@ -48,55 +61,58 @@ export function addVisualizationToSwitcherWidgetContent(
         payload: {
             ref,
             visualization,
+            insight,
+            sizeInfo,
         },
     };
 }
 
 /**
- * Payload of the {@link RemoveVisualizationFromVisualizationSwitcherWidgetContent} command.
+ * Payload of the {@link UpdateVisualizationsFromVisualizationSwitcherWidgetContent} command.
  * @beta
  */
-export interface RemoveVisualizationFromVisualizationSwitcherWidgetontentPayload {
+export interface UpdateVisualizationsFromVisualizationSwitcherWidgetontentPayload {
     /**
      * Visualization switcher widget reference whose content to change.
      */
     readonly ref: ObjRef;
 
     /**
-     * Visualization to remove from switcher widget.
+     * Visualization to update from switcher widget.
      */
-    readonly visualization: IInsightWidget;
+    readonly visualizations: IInsightWidget[];
 }
 
 /**
  * @beta
  */
-export interface RemoveVisualizationFromVisualizationSwitcherWidgetContent extends IDashboardCommand {
-    readonly type: "GDC.DASH/CMD.VISUALIZATION_SWITCHER_WIDGET.REMOVE_VISUALIZATION";
-    readonly payload: RemoveVisualizationFromVisualizationSwitcherWidgetontentPayload;
+export interface UpdateVisualizationsFromVisualizationSwitcherWidgetContent extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.VISUALIZATION_SWITCHER_WIDGET.UPDATE_VISUALIZATIONS";
+    readonly payload: UpdateVisualizationsFromVisualizationSwitcherWidgetontentPayload;
 }
 
 /**
- * Creates the AddVisualizationToSwitcherWidgetContent command. Dispatching this command will result in addition of visualization to switcher widget.
+ * Creates the ChangeVisualizationsFromVisualizationSwitcherWidgetContent command. Dispatching this command will result in the update of visualization
+ * which form part of the visualization switcher widget.
  *
  * @param ref - reference of the visualization switcher widget to modify
- * @param visualization - visualization to remove
+ * @param visualizations - changed visualizations to remove
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
  * @beta
  */
-export function removeVisualizationFromSwitcherWidgetContent(
+export function updateVisualizationsFromSwitcherWidgetContent(
     ref: ObjRef,
-    visualization: IInsightWidget,
+    visualizations: IInsightWidget[],
     correlationId?: string,
-): RemoveVisualizationFromVisualizationSwitcherWidgetContent {
+): UpdateVisualizationsFromVisualizationSwitcherWidgetContent {
     return {
-        type: "GDC.DASH/CMD.VISUALIZATION_SWITCHER_WIDGET.REMOVE_VISUALIZATION",
+        type: "GDC.DASH/CMD.VISUALIZATION_SWITCHER_WIDGET.UPDATE_VISUALIZATIONS",
         correlationId,
         payload: {
             ref,
-            visualization,
+            visualizations,
         },
     };
 }
