@@ -69,8 +69,8 @@ import {
 } from "./insight.js";
 import { DashboardRichTextWidgetContentChanged } from "./richText.js";
 import {
-    DashboardVisualizationSwitcherWidgetRemoveVisualization,
-    DashboardVisualizationSwitcherWidgetAddVisualization,
+    DashboardVisualizationSwitcherWidgetVisualizationAdded,
+    DashboardVisualizationSwitcherWidgetVisualizationsUpdated,
 } from "./visualizationSwitcher.js";
 import {
     DashboardWidgetExecutionStarted,
@@ -351,15 +351,18 @@ export type {
 } from "./richText.js";
 export { isDashboardRichTextWidgetContentChanged, richTextWidgetContentChanged } from "./richText.js";
 
+export type {
+    DashboardVisualizationSwitcherWidgetVisualizationAdded,
+    DashboardVisualizationSwitcherWidgetVisualizationAddedPayload,
+    DashboardVisualizationSwitcherWidgetVisualizationsUpdated,
+    DashboardVisualizationSwitcherWidgetVisualizationsUpdatedPayload,
+} from "./visualizationSwitcher.js";
+
 export {
-    DashboardVisualizationSwitcherWidgetAddVisualization,
-    DashboardVisualizationSwticherWidgetAddVisualizationPayload,
-    isDashboardVisualizationSwitcherWidgetAddVisualization,
-    visualizationSwitcherWidgetAddVisualization,
-    DashboardVisualizationSwitcherWidgetRemoveVisualization,
-    DashboardVisualizationSwticherWidgetRemoveVisualizationPayload,
-    isDashboardVisualizationSwitcherWidgetRemoveVisualization,
-    visualizationSwitcherWidgetRemoveVisualization,
+    isDashboardVisualizationSwitcherWidgetVisualizationAdded,
+    visualizationSwitcherWidgetVisualizationAdded,
+    isDashboardVisualizationSwitcherWidgetVisualizationsUpdated,
+    visualizationSwitcherWidgetVisualizationsUpdated,
 } from "./visualizationSwitcher.js";
 
 export type {
@@ -555,8 +558,8 @@ export type DashboardEvents =
     | DashboardInsightWidgetExportResolved
     | DashboardInsightWidgetRefreshed
     | DashboardRichTextWidgetContentChanged
-    | DashboardVisualizationSwitcherWidgetAddVisualization
-    | DashboardVisualizationSwitcherWidgetRemoveVisualization
+    | DashboardVisualizationSwitcherWidgetVisualizationAdded
+    | DashboardVisualizationSwitcherWidgetVisualizationsUpdated
     | DashboardWidgetExecutionStarted
     | DashboardWidgetExecutionSucceeded
     | DashboardWidgetExecutionFailed

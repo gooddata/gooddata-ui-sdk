@@ -1,50 +1,45 @@
 // (C) 2024 GoodData Corporation
 
-// (C) 024 GoodData Corporation
-
 import { IInsightWidget, ObjRef } from "@gooddata/sdk-model";
-
 import { IDashboardEvent } from "./base.js";
 import { DashboardContext } from "../types/commonTypes.js";
 import { eventGuard } from "./util.js";
 
 /**
- * Payload of the {@link DashboardVisualizationSwitcherWidgetAddVisualization} event.
+ * Payload of the {@link DashboardVisualizationSwitcherWidgetVisualizationAdded} event.
  * @beta
  */
-export interface DashboardVisualizationSwticherWidgetAddVisualizationPayload {
+export interface DashboardVisualizationSwitcherWidgetVisualizationAddedPayload {
     /**
      * Reference to changed visualization switcher widget.
      */
     readonly ref: ObjRef;
-
     /**
      * Visualization to add onto switcher widget.
      */
     readonly visualization: IInsightWidget;
 }
-
 /**
- * This event is emitted when the dashboard's rich text widget content is changed.
+ * This event is emitted when the new visualization is added to the dashboard's visualization switcher widget.
  *
  * @beta
  */
-export interface DashboardVisualizationSwitcherWidgetAddVisualization extends IDashboardEvent {
-    readonly type: "GDC.DASH/EVT.VISUALIZATION_SWITCHER_WIDGET.ADD_VISUALIZATION";
-    readonly payload: DashboardVisualizationSwticherWidgetAddVisualizationPayload;
+export interface DashboardVisualizationSwitcherWidgetVisualizationAdded extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.VISUALIZATION_SWITCHER_WIDGET.VISUALIZATION_ADDED";
+    readonly payload: DashboardVisualizationSwitcherWidgetVisualizationAddedPayload;
 }
 
 /**
  * @internal
  */
-export function visualizationSwitcherWidgetAddVisualization(
+export function visualizationSwitcherWidgetVisualizationAdded(
     ctx: DashboardContext,
     ref: ObjRef,
     visualization: IInsightWidget,
     correlationId?: string,
-): DashboardVisualizationSwitcherWidgetAddVisualization {
+): DashboardVisualizationSwitcherWidgetVisualizationAdded {
     return {
-        type: "GDC.DASH/EVT.VISUALIZATION_SWITCHER_WIDGET.ADD_VISUALIZATION",
+        type: "GDC.DASH/EVT.VISUALIZATION_SWITCHER_WIDGET.VISUALIZATION_ADDED",
         ctx,
         correlationId,
         payload: {
@@ -55,69 +50,69 @@ export function visualizationSwitcherWidgetAddVisualization(
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardVisualizationSwitcherWidgetAddVisualization}.
+ * Tests whether the provided object is an instance of {@link DashboardVisualizationSwitcherWidgetVisualizationAdded}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardVisualizationSwitcherWidgetAddVisualization =
-    eventGuard<DashboardVisualizationSwitcherWidgetAddVisualization>(
-        "GDC.DASH/EVT.VISUALIZATION_SWITCHER_WIDGET.ADD_VISUALIZATION",
+export const isDashboardVisualizationSwitcherWidgetVisualizationAdded =
+    eventGuard<DashboardVisualizationSwitcherWidgetVisualizationAdded>(
+        "GDC.DASH/EVT.VISUALIZATION_SWITCHER_WIDGET.VISUALIZATION_ADDED",
     );
 
 /**
- * Payload of the {@link DashboardVisualizationSwitcherWidgetRemoveVisualization} event.
+ * Payload of the {@link DashboardVisualizationSwitcherWidgetVisualizationsUpdated} event.
  * @beta
  */
-export interface DashboardVisualizationSwticherWidgetRemoveVisualizationPayload {
+export interface DashboardVisualizationSwitcherWidgetVisualizationsUpdatedPayload {
     /**
      * Reference to changed visualization switcher widget.
      */
     readonly ref: ObjRef;
 
     /**
-     * Visualization to remove from switcher widget.
+     * Visualizations to update from switcher widget.
      */
-    readonly visualization: IInsightWidget;
+    readonly visualizations: IInsightWidget[];
 }
 
 /**
- * This event is emitted when the dashboard's rich text widget content is changed.
+ * This event is emitted when the dashboard's visualization switcher visualizations is updated.
  *
  * @beta
  */
-export interface DashboardVisualizationSwitcherWidgetRemoveVisualization extends IDashboardEvent {
-    readonly type: "GDC.DASH/EVT.VISUALIZATION_SWITCHER_WIDGET.REMOVE_VISUALIZATION";
-    readonly payload: DashboardVisualizationSwticherWidgetRemoveVisualizationPayload;
+export interface DashboardVisualizationSwitcherWidgetVisualizationsUpdated extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.VISUALIZATION_SWITCHER_WIDGET.VISUALIZATIONS_UPDATED";
+    readonly payload: DashboardVisualizationSwitcherWidgetVisualizationsUpdatedPayload;
 }
 
 /**
  * @internal
  */
-export function visualizationSwitcherWidgetRemoveVisualization(
+export function visualizationSwitcherWidgetVisualizationsUpdated(
     ctx: DashboardContext,
     ref: ObjRef,
-    visualization: IInsightWidget,
+    visualizations: IInsightWidget[],
     correlationId?: string,
-): DashboardVisualizationSwitcherWidgetRemoveVisualization {
+): DashboardVisualizationSwitcherWidgetVisualizationsUpdated {
     return {
-        type: "GDC.DASH/EVT.VISUALIZATION_SWITCHER_WIDGET.REMOVE_VISUALIZATION",
+        type: "GDC.DASH/EVT.VISUALIZATION_SWITCHER_WIDGET.VISUALIZATIONS_UPDATED",
         ctx,
         correlationId,
         payload: {
             ref,
-            visualization,
+            visualizations,
         },
     };
 }
 
 /**
- * Tests whether the provided object is an instance of {@link DashboardVisualizationSwitcherWidgetRemoveVisualization}.
+ * Tests whether the provided object is an instance of {@link DashboardVisualizationSwitcherWidgetVisualizationsUpdated}.
  *
  * @param obj - object to test
  * @beta
  */
-export const isDashboardVisualizationSwitcherWidgetRemoveVisualization =
-    eventGuard<DashboardVisualizationSwitcherWidgetRemoveVisualization>(
-        "GDC.DASH/EVT.VISUALIZATION_SWITCHER_WIDGET.REMOVE_VISUALIZATION",
+export const isDashboardVisualizationSwitcherWidgetVisualizationsUpdated =
+    eventGuard<DashboardVisualizationSwitcherWidgetVisualizationsUpdated>(
+        "GDC.DASH/EVT.VISUALIZATION_SWITCHER_WIDGET.VISUALIZATIONS_UPDATED",
     );

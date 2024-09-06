@@ -5,6 +5,7 @@ import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import React, { useCallback, useState } from "react";
 import cx from "classnames";
 import { v4 as uuid } from "uuid";
+import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
 
 import {
     IInsight,
@@ -40,7 +41,11 @@ import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
 interface ToolbarProps {
     widget: IVisualizationSwitcherWidget;
     onVisualizationsChanged: (visualizations: IInsightWidget[]) => void;
-    onVisualizationAdded: (insightWidget: IInsightWidget, insight: IInsight, sizeInfo: any) => void; // TODO INE any
+    onVisualizationAdded: (
+        insightWidget: IInsightWidget,
+        insight: IInsight,
+        sizeInfo: IVisualizationSizeInfo,
+    ) => void;
     onWidgetDelete: () => void;
 }
 
