@@ -7,6 +7,7 @@ import { DateFilter } from "../../tools/dateFilter";
 import { DateFilterAbsoluteForm } from "../../tools/dateFilterAbsoluteForm";
 import { Widget } from "../../tools/widget";
 import { ISettings } from "@gooddata/sdk-model";
+import { InsightsCatalog } from "../../tools/insightsCatalog";
 
 const headline = new Headline(".s-dash-item.viz-type-headline");
 const topBar = new TopBar();
@@ -24,6 +25,7 @@ describe("Available value filter", () => {
         Navigation.visit("dashboard/dashboard-tiger-hide-filters");
         cy.intercept("GET", "**/attributes**").as("attributes");
         topBar.enterEditMode().editButtonIsVisible(false);
+        new InsightsCatalog().waitForCatalogLoad();
         new FilterBar().clickDateFilter().selectDateFilterOption(".s-all-time").clickApply();
         cy.wait("@attributes").then(() => {
             accountFilter.open().selectAttribute(["101 Financial"]).apply();
@@ -78,6 +80,7 @@ describe("Available value filter", () => {
             const dateFilterActivity = new DateFilter("Activity");
             const dateFilterAbsoluteForm = new DateFilterAbsoluteForm();
             topBar.enterEditMode().editButtonIsVisible(false);
+            new InsightsCatalog().waitForCatalogLoad();
 
             dateFilter.openAndSelectOption(".s-absolute-form");
             dateFilterAbsoluteForm
