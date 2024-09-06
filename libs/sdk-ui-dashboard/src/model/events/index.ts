@@ -69,6 +69,10 @@ import {
 } from "./insight.js";
 import { DashboardRichTextWidgetContentChanged } from "./richText.js";
 import {
+    DashboardVisualizationSwitcherWidgetRemoveVisualization,
+    DashboardVisualizationSwitcherWidgetAddVisualization,
+} from "./visualizationSwitcher.js";
+import {
     DashboardWidgetExecutionStarted,
     DashboardWidgetExecutionSucceeded,
     DashboardWidgetExecutionFailed,
@@ -339,6 +343,17 @@ export {
 } from "./richText.js";
 
 export {
+    DashboardVisualizationSwitcherWidgetAddVisualization,
+    DashboardVisualizationSwticherWidgetAddVisualizationPayload,
+    isDashboardVisualizationSwitcherWidgetAddVisualization,
+    visualizationSwitcherWidgetAddVisualization,
+    DashboardVisualizationSwitcherWidgetRemoveVisualization,
+    DashboardVisualizationSwticherWidgetRemoveVisualizationPayload,
+    isDashboardVisualizationSwitcherWidgetRemoveVisualization,
+    visualizationSwitcherWidgetRemoveVisualization,
+} from "./visualizationSwitcher.js";
+
+export {
     DashboardWidgetExecutionStarted,
     DashboardWidgetExecutionStartedPayload,
     DashboardWidgetExecutionSucceeded,
@@ -535,6 +550,8 @@ export type DashboardEvents =
     | DashboardInsightWidgetExportResolved
     | DashboardInsightWidgetRefreshed
     | DashboardRichTextWidgetContentChanged
+    | DashboardVisualizationSwitcherWidgetAddVisualization
+    | DashboardVisualizationSwitcherWidgetRemoveVisualization
     | DashboardWidgetExecutionStarted
     | DashboardWidgetExecutionSucceeded
     | DashboardWidgetExecutionFailed

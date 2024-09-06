@@ -10,6 +10,8 @@ import {
     isInsightWidget,
     IRichTextWidget,
     isRichTextWidget,
+    IVisualizationSwitcherWidget,
+    isVisualizationSwitcherWidget,
 } from "@gooddata/sdk-model";
 import { IDashboardCommand } from "../../../commands/index.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
@@ -139,6 +141,46 @@ export function validateExistingKpiWidget(
             ctx,
             cmd,
             `Widget with ref: ${serializeObjRef(ref)} exists but is not a KPI widget.`,
+        );
+    }
+
+    return widget;
+}
+/**
+ * Given list of all dashboard widgets and a command that contains a ref, this function tests that the `ref` is
+ * a reference to an existing dashboard widget and that the existing widget is an visualization switcher widget.
+ *
+ * If the validation succeeds, the located visualization switcher widget will be returned. Otherwise an error will fly. The error
+ * will be an instance of DashboardCommandFailed event - it can be propagated through the command handler all the
+ * way to the root command handler saga.
+ *
+ * @param ctx - dashboard context, this will be included in the DashboardCommandFailed event
+ * @param widgets - map of widgets on the dashboard
+ * @param cmd - any command that has 'ref' in its payload
+ */
+export function validateExistingVisualizationSwitcherWidget(
+    widgets: ObjRefMap<ExtendedDashboardWidget>,
+    cmd: CommandWithRef,
+    ctx: DashboardContext,
+): IVisualizationSwitcherWidget {
+    const {
+        payload: { ref },
+    } = cmd;
+    const widget = widgets.get(ref);
+
+    if (!widget) {
+        throw invalidArgumentsProvided(
+            ctx,
+            cmd,
+            `Cannot find rich text widget with ref: ${serializeObjRef(ref)}.`,
+        );
+    }
+
+    if (!isVisualizationSwitcherWidget(widget)) {
+        throw invalidArgumentsProvided(
+            ctx,
+            cmd,
+            `Widget with ref: ${serializeObjRef(ref)} exists but is not a visualization switcher widget.`,
         );
     }
 
