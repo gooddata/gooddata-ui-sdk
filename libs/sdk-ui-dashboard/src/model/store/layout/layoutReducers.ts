@@ -32,6 +32,8 @@ import {
     isDashboardAttributeFilterReference,
     isRichTextWidget,
     IDrillDownIntersectionIgnoredAttributes,
+    IInsightWidget,
+    isVisualizationSwitcherWidget,
 } from "@gooddata/sdk-model";
 import { WidgetDescription, WidgetHeader } from "../../types/widgetTypes.js";
 import flatMap from "lodash/flatMap.js";
@@ -769,6 +771,45 @@ const changeWidgetIgnoreCrossFiltering: LayoutReducer<ChangeWidgetIgnoreCrossFil
     invariant(widget && (isInsightWidget(widget) || isKpiWidget(widget)));
 
     widget.ignoreCrossFiltering = ignoreCrossFiltering;
+}
+//
+//
+//
+
+type AddVisualzationSwitcherWidgetVisualization = {
+    ref: ObjRef;
+    visualization: IInsightWidget;
+};
+
+const addVisualizationSwitcherWidgetVisualization: LayoutReducer<
+    AddVisualzationSwitcherWidgetVisualization
+> = (state, action) => {
+    invariant(state.layout);
+
+    const { visualization, ref } = action.payload;
+    const widgetRef = getWidgetByRef(state, ref);
+
+    invariant(widgetRef && isVisualizationSwitcherWidget(widgetRef));
+
+    widgetRef.visualizations.push(visualization);
+};
+
+type RemoveVisualzationSwitcherWidgetVisualization = {
+    ref: ObjRef;
+    visualization: IInsightWidget;
+};
+
+const removeVisualizationSwitcherWidgetVisualization: LayoutReducer<
+    RemoveVisualzationSwitcherWidgetVisualization
+> = (state, action) => {
+    invariant(state.layout);
+
+    const { visualization, ref } = action.payload;
+    const widgetRef = getWidgetByRef(state, ref);
+
+    invariant(widgetRef && isVisualizationSwitcherWidget(widgetRef));
+
+    widgetRef.visualizations.filter((vis) => areObjRefsEqual(vis.ref, visualization.ref));
 };
 
 export const layoutReducers = {
@@ -803,6 +844,8 @@ export const layoutReducers = {
     replaceKpiWidgetDrill: withUndo(replaceKpiWidgetDrill),
     replaceKpiWidgetConfiguration: withUndo(replaceKpiWidgetConfiguration),
     replaceRichTextWidgetContent: withUndo(replaceRichTextWidgetContent),
+    addVisualizationSwitcherWidgetVisualization: withUndo(addVisualizationSwitcherWidgetVisualization),
+    removeVisualizationSwitcherWidgetVisualization: withUndo(removeVisualizationSwitcherWidgetVisualization),
     undoLayout: undoReducer,
     clearLayoutHistory: resetUndoReducer,
     changeItemsHeight: changeItemsHeight,
