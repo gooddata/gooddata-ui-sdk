@@ -35,11 +35,12 @@ import {
 import { getSizeInfo } from "../../../../_staging/layout/sizing.js";
 import { InsightList } from "../../../insightList/index.js";
 import { DashboardInsightSubmenuHeader } from "../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightSubmenuHeader.js";
+import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
 
 interface ToolbarProps {
     widget: IVisualizationSwitcherWidget;
     onVisualizationsChanged: (visualizations: IInsightWidget[]) => void;
-    onVisualizationAdded: (insightWidget: IInsightWidget, sizeInfo: any) => void; // TODO INE any
+    onVisualizationAdded: (insightWidget: IInsightWidget, insight: IInsight, sizeInfo: any) => void; // TODO INE any
     onWidgetDelete: () => void;
 }
 
@@ -51,7 +52,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
 }) => {
     const visualizations = widget.visualizations;
 
-    const [isVisualizationsListVisible, setVisualizationsListVisible] = useState(false);
+    const [isVisualizationsListVisible, setVisualizationsListVisible] = useState(true);
 
     const [activeVisualizationId, setActiveVisualizationId] = useState(visualizations[0]?.identifier);
     const settings = useDashboardSelector(selectSettings);
@@ -73,7 +74,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
                 uri: "",
                 ref: idRef(identifier),
             };
-            onVisualizationAdded(newWidget, sizeInfo);
+            onVisualizationAdded(newWidget, insight, sizeInfo);
         },
         [onVisualizationAdded, settings],
     );
@@ -93,6 +94,11 @@ export const Toolbar: React.FC<ToolbarProps> = ({
 
     const onNavigate = useCallback((identifier: string) => {
         setActiveVisualizationId(identifier);
+    }, []);
+
+    const onVisualizationSelect = useCallback((identifier: string) => {
+        setActiveVisualizationId(identifier);
+        setVisualizationsListVisible(false);
     }, []);
 
     const activeVisualization = visualizations.find(
@@ -139,7 +145,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
                 showVisualizationsList={showVisualizationsList}
                 onVisualizationAdd={onVisualizationAdd}
                 onVisualizationDelete={onVisualizationDelete}
-                onVisualizationSelect={onNavigate}
+                onVisualizationSelect={onVisualizationSelect}
             />
         </Bubble>
     );
@@ -166,7 +172,7 @@ const ToolbarTop: React.FC<IToolbarTopProps> = ({
     const activeWidgetIndex = visualizations.findIndex(() => activeWidgetId);
 
     const prevDisabled = activeWidgetIndex <= 0;
-    const nextDisabled = activeWidgetIndex === -1 || activeWidgetIndex >= visualizations.length;
+    const nextDisabled = activeWidgetIndex === -1 || activeWidgetIndex >= visualizations.length - 1;
 
     const iconColor = visualizationsListShown
         ? theme?.palette?.primary?.base ?? GD_COLOR_HIGHLIGHT
@@ -244,10 +250,11 @@ const ToolbarBottom: React.FC<IToolbarBottomProps> = ({
     const activeVisualization = visualizations.find(
         (visualization) => visualization.identifier === activeVisualizationId,
     );
+
     return (
         <div className="visualization-switcher-toolbar-bottom bubble-light">
             {showVisualizationsList || !activeVisualization ? (
-                <VisualizationsList
+                <VisualizationsPage
                     visualizations={visualizations}
                     activeVisualizationId={activeVisualizationId}
                     onVisualizationAdd={onVisualizationAdd}
@@ -261,7 +268,7 @@ const ToolbarBottom: React.FC<IToolbarBottomProps> = ({
     );
 };
 
-interface VisualizationsListProps {
+interface IVisualizationsPageProps {
     visualizations: IInsightWidget[];
     activeVisualizationId: string | undefined;
     onVisualizationAdd: (insight: IInsight) => void;
@@ -269,15 +276,18 @@ interface VisualizationsListProps {
     onVisualizationSelect: (visualizationWidgetId: string) => void;
 }
 
-const VisualizationsList: React.FC<VisualizationsListProps> = ({
+const VisualizationsPage: React.FC<IVisualizationsPageProps> = ({
     visualizations,
     activeVisualizationId,
     onVisualizationDeleted,
     onVisualizationAdd,
+    onVisualizationSelect,
 }) => {
     const [isVisualizationPickerVisible, setVisualizationPickerVisible] = React.useState(false);
 
     const intl = useIntl();
+
+    const insights = useDashboardSelector(selectInsightsMap);
 
     const onAdd = () => {
         setVisualizationPickerVisible(!isVisualizationPickerVisible);
@@ -291,7 +301,7 @@ const VisualizationsList: React.FC<VisualizationsListProps> = ({
         setVisualizationPickerVisible(false);
     };
     return isVisualizationPickerVisible ? (
-        <VisualizationPicker onVisualizationSelect={onAdded} onBack={onBack} />
+        <InsightPicker onInsightSelect={onAdded} onBack={onBack} />
     ) : (
         <div className="edit-insight-config">
             <div className="insight-configuration">
@@ -312,16 +322,13 @@ const VisualizationsList: React.FC<VisualizationsListProps> = ({
                             })}
                         </div>
                     )}
-                    {visualizations.map((visualization) => (
-                        <div key={visualization.identifier}>
-                            {visualization.title}
-                            {visualization.identifier === activeVisualizationId && "X"}
-                            <Button
-                                className="gd-button-link gd-button-icon-only gd-icon-trash s-visualization-switcher-remove-button"
-                                onClick={() => onVisualizationDeleted(visualization.identifier)}
-                            />
-                        </div>
-                    ))}
+                    <VisualizationsList
+                        visualizations={visualizations}
+                        insights={insights}
+                        activeVisualizationId={activeVisualizationId}
+                        onVisualizationDeleted={onVisualizationDeleted}
+                        onVisualizationSelect={onVisualizationSelect}
+                    />
                     <div className="horizontal-divider">
                         <div className="horizontal-divider-line" />
                     </div>
@@ -339,7 +346,77 @@ const VisualizationsList: React.FC<VisualizationsListProps> = ({
 
 const VisualizationConfig: React.FC<{ widget: IInsightWidget }> = ({ widget }) => {
     const insights = useDashboardSelector(selectInsightsMap);
-    const insight = insights.get(widget.insight);
+    const fakeInsight: IInsight = {
+        insight: {
+            buckets: [
+                {
+                    items: [
+                        {
+                            measure: {
+                                localIdentifier: "5c7210080e9e47328d0e3d2a3b54af7f",
+                                definition: {
+                                    measureDefinition: {
+                                        item: {
+                                            identifier: "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                            type: "measure",
+                                        },
+                                        filters: [],
+                                    },
+                                },
+                                title: "Amount",
+                            },
+                        },
+                    ],
+                    localIdentifier: "measures",
+                },
+                {
+                    items: [
+                        {
+                            attribute: {
+                                localIdentifier: "199571ef00d74addb94b49801192ff7c",
+                                displayForm: { identifier: "user_id", type: "displayForm" },
+                            },
+                        },
+                        {
+                            attribute: {
+                                localIdentifier: "7c00e367648b4415b9ad061d0ba7b459",
+                                displayForm: { identifier: "user_id.username", type: "displayForm" },
+                            },
+                        },
+                    ],
+                    localIdentifier: "attribute",
+                },
+            ],
+            filters: [],
+            sorts: [
+                {
+                    attributeSortItem: {
+                        attributeIdentifier: "199571ef00d74addb94b49801192ff7c",
+                        direction: "asc",
+                    },
+                },
+            ],
+            properties: {
+                sortItems: [
+                    {
+                        attributeSortItem: {
+                            attributeIdentifier: "199571ef00d74addb94b49801192ff7c",
+                            direction: "asc",
+                        },
+                    },
+                ],
+            },
+            visualizationUrl: "local:table",
+            title: "Users",
+            summary: "",
+            identifier: "c9b7bca1-3384-4931-a57d-e49dc4bea810",
+            uri: "https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/4d6dec78f9304bf7a578992a837f8307/visualizationObjects/c9b7bca1-3384-4931-a57d-e49dc4bea810",
+            ref: { identifier: "c9b7bca1-3384-4931-a57d-e49dc4bea810", type: "insight" },
+            isLocked: false,
+            created: "2024-08-30 08:43",
+        },
+    };
+    const insight = insights.get(widget.insight) ?? fakeInsight;
 
     if (!insight) {
         // eslint-disable-next-line no-console
@@ -378,12 +455,12 @@ const VisualizationConfigContent: React.FC<{ widget: IInsightWidget; insight: II
     );
 };
 
-interface IVisualizationPickerProps {
-    onVisualizationSelect: (insight: IInsight) => void;
+interface IInsightPickerProps {
+    onInsightSelect: (insight: IInsight) => void;
     onBack: () => void;
 }
 
-const VisualizationPicker: React.FC<IVisualizationPickerProps> = ({ onVisualizationSelect, onBack }) => {
+const InsightPicker: React.FC<IInsightPickerProps> = ({ onInsightSelect, onBack }) => {
     const intl = useIntl();
     return (
         <div className="visualization-picker">
@@ -401,10 +478,46 @@ const VisualizationPicker: React.FC<IVisualizationPickerProps> = ({ onVisualizat
                     width={240}
                     searchAutofocus={true}
                     onSelect={(insight) => {
-                        onVisualizationSelect(insight);
+                        onInsightSelect(insight);
                     }}
                 />
             </div>
         </div>
     );
+};
+
+interface IVisulizationsListProps {
+    visualizations: IInsightWidget[];
+    insights: ObjRefMap<IInsight>;
+    activeVisualizationId: string | undefined;
+    onVisualizationDeleted: (visualizationWidgetId: string) => void;
+    onVisualizationSelect: (visualizationWidgetId: string) => void;
+}
+
+const VisualizationsList: React.FC<IVisulizationsListProps> = ({
+    visualizations,
+    activeVisualizationId,
+    onVisualizationDeleted,
+    onVisualizationSelect,
+}) => {
+    return visualizations.map((visualization) => (
+        <div
+            key={visualization.identifier}
+            className={cx("switcher-visualizations-list-item", {
+                "is-active": visualization.identifier === activeVisualizationId,
+            })}
+        >
+            <div
+                className="visualization-title"
+                onClick={() => onVisualizationSelect(visualization.identifier)}
+            >
+                {/* TODO INE: get insight type */}
+                {visualization.title}
+            </div>
+            <Button
+                className="gd-button-link gd-button-icon-only gd-icon-trash s-visualization-switcher-remove-button"
+                onClick={() => onVisualizationDeleted(visualization.identifier)}
+            />
+        </div>
+    ));
 };
