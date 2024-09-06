@@ -116,7 +116,6 @@ export function createTestVisualizationSwitcherItem(
             type: "visualizationSwitcher",
             ref,
             visualizations: [],
-            selectedVisualizationIdentifier: "",
             ignoreDashboardFilters: [],
             drills: [],
             title: "Visualization Switcher Text Item",

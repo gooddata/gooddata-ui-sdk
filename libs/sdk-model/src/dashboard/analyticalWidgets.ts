@@ -189,12 +189,8 @@ export interface IVisualizationSwitcherWidgetBase extends IAnalyticalWidget {
     readonly type: "visualizationSwitcher";
 
     /**
-     * Selected visualization to display on switcher (based on widget localIdentifier)
-     */
-    readonly selectedVisualizationIdentifier: string;
-
-    /**
      * List of visualizations which are part of the visualization switcher.
+     * First visualization in the list is the one that is selected as default.
      */
     readonly visualizations: IInsightWidget[];
 }
