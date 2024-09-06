@@ -3723,7 +3723,6 @@ export interface IVisualizationSwitcherWidget extends IVisualizationSwitcherWidg
 
 // @public (undocumented)
 export interface IVisualizationSwitcherWidgetBase extends IAnalyticalWidget {
-    readonly selectedVisualizationIdentifier: string;
     // (undocumented)
     readonly type: "visualizationSwitcher";
     readonly visualizations: IInsightWidget[];

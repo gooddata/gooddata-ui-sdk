@@ -40,7 +40,6 @@ export function useNewSectionVisualizationSwitcherPlaceholderDropHandler(section
                 widget: {
                     type: "visualizationSwitcher",
                     visualizations: [],
-                    selectedVisualizationIdentifier: "",
                     description: "",
                     drills: [],
                     ignoreDashboardFilters: [],
