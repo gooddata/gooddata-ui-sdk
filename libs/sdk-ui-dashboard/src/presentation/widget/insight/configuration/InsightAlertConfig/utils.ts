@@ -16,6 +16,7 @@ import {
     IInsight,
     IMeasure,
     insightBucket,
+    insightVisualizationType,
     IPoPMeasureDefinition,
     IPreviousPeriodMeasureDefinition,
     isArithmeticMeasure,
@@ -148,6 +149,8 @@ type InsightType =
     | "repeater";
 
 export const getSupportedInsightMeasuresByInsight = (insight: IInsight | null | undefined): AlertMetric[] => {
+    const insightType = insight ? (insightVisualizationType(insight) as InsightType) : null;
+
     const allMetrics = collectAllMetric(insight);
 
     const simpleMetrics = allMetrics
@@ -162,46 +165,50 @@ export const getSupportedInsightMeasuresByInsight = (insight: IInsight | null | 
         })
         .filter(Boolean) as AlertMetric[];
 
-    const previousPeriodMetrics = allMetrics.filter((measure) =>
-        isPreviousPeriodMeasure(measure),
-    ) as IMeasure<IPreviousPeriodMeasureDefinition>[];
-    previousPeriodMetrics.forEach((measure) => {
-        const found = simpleMetrics.find(
-            (simpleMetric) =>
-                simpleMetric.measure.measure.localIdentifier ===
-                measure.measure.definition.previousPeriodMeasure.measureIdentifier,
-        );
-        if (found) {
-            found.comparators.push({
-                measure,
-                comparator: AlertMetricComparatorType.PreviousPeriod,
-            });
-        }
-    });
+    //NOTE: For now only headline insight support previous period and same period previous year,
+    // if we want to support other insight types, just add the logic here or remove the condition at
+    // all to support all insight types
+    if (insightType === "headline") {
+        const previousPeriodMetrics = allMetrics.filter((measure) =>
+            isPreviousPeriodMeasure(measure),
+        ) as IMeasure<IPreviousPeriodMeasureDefinition>[];
+        previousPeriodMetrics.forEach((measure) => {
+            const found = simpleMetrics.find(
+                (simpleMetric) =>
+                    simpleMetric.measure.measure.localIdentifier ===
+                    measure.measure.definition.previousPeriodMeasure.measureIdentifier,
+            );
+            if (found) {
+                found.comparators.push({
+                    measure,
+                    comparator: AlertMetricComparatorType.PreviousPeriod,
+                });
+            }
+        });
 
-    const popMetrics = allMetrics.filter((measure) =>
-        isPoPMeasure(measure),
-    ) as IMeasure<IPoPMeasureDefinition>[];
-    popMetrics.forEach((measure) => {
-        const found = simpleMetrics.find(
-            (simpleMetric) =>
-                simpleMetric.measure.measure.localIdentifier ===
-                measure.measure.definition.popMeasureDefinition.measureIdentifier,
-        );
-        if (found) {
-            found.comparators.push({
-                measure,
-                comparator: AlertMetricComparatorType.SamePeriodPreviousYear,
-            });
-        }
-    });
+        const popMetrics = allMetrics.filter((measure) =>
+            isPoPMeasure(measure),
+        ) as IMeasure<IPoPMeasureDefinition>[];
+        popMetrics.forEach((measure) => {
+            const found = simpleMetrics.find(
+                (simpleMetric) =>
+                    simpleMetric.measure.measure.localIdentifier ===
+                    measure.measure.definition.popMeasureDefinition.measureIdentifier,
+            );
+            if (found) {
+                found.comparators.push({
+                    measure,
+                    comparator: AlertMetricComparatorType.SamePeriodPreviousYear,
+                });
+            }
+        });
+    }
 
     return simpleMetrics;
 };
 
 function collectAllMetric(insight: IInsight | null | undefined) {
-    const visualizationUrl = insight?.insight.visualizationUrl;
-    const insightType = visualizationUrl?.split(":")[1] as InsightType;
+    const insightType = insight ? (insightVisualizationType(insight) as InsightType) : null;
 
     switch (insightType) {
         case "headline":
