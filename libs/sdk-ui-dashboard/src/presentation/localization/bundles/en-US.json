@@ -2426,6 +2426,16 @@
         "comment": "Tooltip displayed when hierarchy object cannot be used again for drill down functionality.",
         "limit": 0
     },
+    "configurationPanel.respectCrossFiltering": {
+        "value": "Respect cross-filtering",
+        "comment": "Label of checkbox whether cross-filtering should be respected or not",
+        "limit": 0
+    },
+    "configurationPanel.respectCrossFiltering.tooltip": {
+        "value": "Disable this option to ignore cross-filtering from other visualizations.",
+        "comment": "Tooltip for checkbox whether cross-filtering should be respected or not",
+        "limit": 0
+    },
     "richText.formattingOptions": {
         "value": "Formatting options",
         "comment": "",

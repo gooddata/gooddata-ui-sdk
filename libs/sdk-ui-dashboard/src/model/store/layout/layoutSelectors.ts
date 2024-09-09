@@ -37,7 +37,11 @@ import {
 import { LayoutStash, LayoutState } from "./layoutState.js";
 import { isItemWithBaseWidget, getWidgetCoordinates } from "./layoutUtils.js";
 import { DashboardLayoutCommands } from "../../commands/index.js";
-import { selectCrossFilteringFiltersLocalIdentifiersByWidgetRef } from "../drill/drillSelectors.js";
+import {
+    selectCrossFilteringFiltersLocalIdentifiers,
+    selectCrossFilteringFiltersLocalIdentifiersByWidgetRef,
+} from "../drill/drillSelectors.js";
+import { selectEnableIgnoreCrossFiltering } from "../config/configSelectors.js";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -239,8 +243,20 @@ export const selectAllFiltersForWidgetByRef: (
         selectWidgetByRef(ref),
         selectFilterContextFilters,
         selectCrossFilteringFiltersLocalIdentifiersByWidgetRef(ref),
-        (widget, dashboardFilters, crossFilteringFiltersLocalIdentifiers) => {
+        selectEnableIgnoreCrossFiltering,
+        selectWidgetIgnoreCrossFiltering(ref),
+        selectCrossFilteringFiltersLocalIdentifiers,
+        (
+            widget,
+            dashboardFilters,
+            crossFilteringFiltersLocalIdentifiers,
+            isIgnoreCrossFilteringEnabled,
+            shouldIgnoreCrossFiltering,
+            allCrossFilteringLocalIdentifiers,
+        ) => {
             invariant(widget, `widget with ref ${objRefToString(ref)} does not exist in the state`);
+
+            // Widget is the source of cross-filtering, so filtering out the cross-filtering filters
             const filtersWithoutCrossFilteringFilters = dashboardFilters.filter((f) => {
                 if (isDashboardAttributeFilter(f)) {
                     return !crossFilteringFiltersLocalIdentifiers?.includes(
@@ -251,8 +267,22 @@ export const selectAllFiltersForWidgetByRef: (
                 return true;
             });
 
+            // Widget ignores cross-filtering, so we should remove all cross-filtering filters
+            const filtersWithoutAllCrossFiltering =
+                isIgnoreCrossFilteringEnabled && shouldIgnoreCrossFiltering
+                    ? filtersWithoutCrossFilteringFilters.filter((f) => {
+                          if (isDashboardAttributeFilter(f)) {
+                              return !allCrossFilteringLocalIdentifiers.includes(
+                                  f.attributeFilter.localIdentifier!,
+                              );
+                          }
+
+                          return true;
+                      })
+                    : [...filtersWithoutCrossFilteringFilters];
+
             const [commonDateFilters, otherFilters] = partition(
-                filtersWithoutCrossFilteringFilters,
+                filtersWithoutAllCrossFiltering,
                 isDashboardCommonDateFilter,
             );
 
@@ -403,3 +433,15 @@ export const selectKpiWidgetPlaceholderCoordinates: DashboardSelector<ILayoutCoo
     createSelector(selectKpiWidgetPlaceholder, selectLayout, (widgetPlaceholder, layout) => {
         return widgetPlaceholder ? getWidgetCoordinates(layout, widgetPlaceholder.ref) : undefined;
     });
+
+/**
+ * Selects whether widget should ignore cross-filtering filters
+ *
+ * @alpha
+ */
+export const selectWidgetIgnoreCrossFiltering: (ref: ObjRef) => DashboardSelector<boolean> =
+    createMemoizedSelector((ref: ObjRef) =>
+        createSelector(selectAnalyticalWidgetByRef(ref), (widget) => {
+            return widget?.ignoreCrossFiltering ?? false;
+        }),
+    );

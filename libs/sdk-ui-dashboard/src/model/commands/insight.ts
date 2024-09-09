@@ -1089,3 +1089,53 @@ export function unignoreDateFilterOnInsightWidget(
         },
     };
 }
+
+/**
+ * Payload of the {@link ChangeInsightWidgetIgnoreCrossFiltering} command.
+ * @alpha
+ */
+export interface ChangeInsightWidgetIgnoreCrossFilteringPayload {
+    /**
+     * Reference to Insight Widget whose ignore cross-filtering setting to change.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * Value for the ignore cross-filtering setting.
+     */
+    readonly ignoreCrossFiltering: boolean;
+}
+
+/**
+ * @alpha
+ */
+export interface ChangeInsightWidgetIgnoreCrossFiltering extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_IGNORE_CROSS_FILTERING";
+    readonly payload: ChangeInsightWidgetIgnoreCrossFilteringPayload;
+}
+
+/**
+ * Creates the ChangeInsightWidgetCrossFiltering command. Dispatching this command will result in change of the Insight widget's
+ * cross-filtering setting.
+ *
+ * @param ref - reference of the insight widget to modify
+ * @param value - new value to use
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function changeInsightWidgetIgnoreCrossFiltering(
+    ref: ObjRef,
+    ignoreCrossFiltering: boolean,
+    correlationId?: string,
+): ChangeInsightWidgetIgnoreCrossFiltering {
+    return {
+        type: "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_IGNORE_CROSS_FILTERING",
+        correlationId,
+        payload: {
+            ref,
+            ignoreCrossFiltering,
+        },
+    };
+}

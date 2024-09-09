@@ -1745,6 +1745,7 @@ export type IFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttri
 // @public
 export interface IFilterableWidget {
     readonly dateDataSet?: ObjRef;
+    readonly ignoreCrossFiltering?: boolean;
     readonly ignoreDashboardFilters: IDashboardFilterReference[];
 }
 
@@ -2969,6 +2970,7 @@ export interface ISettings {
     enableEmbedButtonInKD?: boolean;
     enableHidingOfDataPoints?: boolean;
     enableHidingOfWidgetTitle?: boolean;
+    enableIgnoreCrossFiltering?: boolean;
     enableInsightExportScheduling?: boolean;
     enableInsightToReport?: boolean;
     enableInvalidValuesInAttributeFilter?: boolean;

@@ -755,6 +755,22 @@ const replaceRichTextWidgetContent: LayoutReducer<ReplaceRichTextWidgetContent> 
     setOrDelete(widget, "content", content);
 };
 
+type ChangeWidgetIgnoreCrossFiltering = {
+    ref: ObjRef;
+    ignoreCrossFiltering?: boolean;
+};
+
+const changeWidgetIgnoreCrossFiltering: LayoutReducer<ChangeWidgetIgnoreCrossFiltering> = (state, action) => {
+    invariant(state.layout);
+
+    const { ignoreCrossFiltering, ref } = action.payload;
+    const widget = getWidgetByRef(state, ref);
+
+    invariant(widget && (isInsightWidget(widget) || isKpiWidget(widget)));
+
+    widget.ignoreCrossFiltering = ignoreCrossFiltering;
+};
+
 export const layoutReducers = {
     setLayout,
     updateWidgetIdentities,
@@ -791,4 +807,5 @@ export const layoutReducers = {
     clearLayoutHistory: resetUndoReducer,
     changeItemsHeight: changeItemsHeight,
     changeItemWidth: changeItemWidth,
+    changeWidgetIgnoreCrossFiltering: withUndo(changeWidgetIgnoreCrossFiltering),
 };

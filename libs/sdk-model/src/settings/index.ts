@@ -476,6 +476,11 @@ export interface ISettings {
      */
     enableWorkspaceHierarchySettings?: boolean;
 
+    /**
+     * Enables ignore cross-filtering in widgets on dashboard.
+     */
+    enableIgnoreCrossFiltering?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 
