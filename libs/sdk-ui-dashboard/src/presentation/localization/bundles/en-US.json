@@ -1095,6 +1095,11 @@
         "comment": "",
         "limit": 0
     },
+    "options.menu.unsupported.alertingOldWidget": {
+        "value": "Unable to create an alert. Please resave the dashboard or contact your administrator.",
+        "comment": "",
+        "limit": 0
+    },
     "export.defaultTitle|insight": {
         "value": "Untitled visualization",
         "comment": "Default title for exported file",

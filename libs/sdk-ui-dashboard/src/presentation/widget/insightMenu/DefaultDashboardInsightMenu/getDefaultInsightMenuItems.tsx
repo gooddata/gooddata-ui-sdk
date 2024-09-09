@@ -14,7 +14,7 @@ export type SchedulingDisabledReason = "incompatibleWidget" | "oldWidget" | "dis
 /**
  * @internal
  */
-export type AlertingDisabledReason = "noDestinations" | "disabledOnInsight";
+export type AlertingDisabledReason = "noDestinations" | "oldWidget" | "disabledOnInsight";
 
 /**
  * @internal
@@ -62,6 +62,9 @@ export function getDefaultInsightMenuItems(
         : intl.formatMessage({ id: "options.menu.unsupported.loading" });
     const oldWidgetTooltip = intl.formatMessage({
         id: "options.menu.unsupported.oldWidget",
+    });
+    const alertingOldWidgetTooltip = intl.formatMessage({
+        id: "options.menu.unsupported.alertingOldWidget",
     });
     const incompatibleWidgetTooltip = intl.formatMessage({
         id: "options.menu.unsupported.incompatibleWidget",
@@ -121,7 +124,9 @@ export function getDefaultInsightMenuItems(
             SubmenuComponent: InsightAlerts,
             renderSubmenuComponentOnly: true,
             tooltip:
-                alertingDisabledReason === "noDestinations"
+                alertingDisabledReason === "oldWidget"
+                    ? alertingOldWidgetTooltip
+                    : alertingDisabledReason === "noDestinations"
                     ? noDestinationsTooltip
                     : alertingDisabledReason === "disabledOnInsight"
                     ? alertingForInsightNotEnabledTooltip
