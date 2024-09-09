@@ -74,21 +74,23 @@ const DefaultDashboardInsightWidgetCore: React.FC<
     const isStandardWidget = !isCustomWidget(widget);
     const hasNoDestinations = numberOfAvailableDestinations === 0;
 
+    //NOTE: Check if widget has localIdentifier, if not that is probably widget from old dashboard
+    // and we should not allow to schedule export/alert because we need localIdentifier to identify the widget
+    const widgetHasNoLocalIdentifier = !widget.localIdentifier;
+
     const isAlertingEnabled = settings.enableAlerting === true;
     const isInsightTypeSupportedForAlerting = isInsightSupportedForAlerts(insight);
     const isInsightEnabledForAlerting = isInsightAlertingConfigurationEnabled(insight);
     const isAlertingVisible = isAlertingEnabled && isStandardWidget && isInsightTypeSupportedForAlerting;
-    const alertingDisabled = hasNoDestinations || !isInsightEnabledForAlerting;
+    const alertingDisabled = hasNoDestinations || !isInsightEnabledForAlerting || widgetHasNoLocalIdentifier;
     let alertingDisabledReason: AlertingDisabledReason | undefined = undefined;
-    if (hasNoDestinations) {
+    if (widgetHasNoLocalIdentifier) {
+        alertingDisabledReason = "oldWidget";
+    } else if (hasNoDestinations) {
         alertingDisabledReason = "noDestinations";
     } else if (!isInsightEnabledForAlerting) {
         alertingDisabledReason = "disabledOnInsight";
     }
-
-    //NOTE: Check if widget has localIdentifier, if not that is probably widget from old dashboard
-    // and we should not allow to schedule export because we need localIdentifier to create schedule
-    const widgetHasNoLocalIdentifier = !widget.localIdentifier;
 
     const isInsightEnabledForScheduling = isInsightScheduledExportsConfigurationEnabled(insight);
     const scheduleExportDisabled =

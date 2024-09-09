@@ -436,7 +436,7 @@ export interface AddSectionItemsPayload {
 export const AlertingDialog: (props: IAlertingDialogProps) => JSX.Element;
 
 // @internal (undocumented)
-export type AlertingDisabledReason = "noDestinations" | "disabledOnInsight";
+export type AlertingDisabledReason = "noDestinations" | "oldWidget" | "disabledOnInsight";
 
 // @internal (undocumented)
 export const AlertingManagementDialog: (props: IAlertingManagementDialogProps) => JSX.Element;
