@@ -1313,7 +1313,6 @@ class DummyAutomationsQuery implements IAutomationsQuery {
     private settings: {
         size: number;
         page: number;
-        all: boolean;
         author: string | null;
         dashboard: string | null;
         filter: { title?: string };
@@ -1321,9 +1320,8 @@ class DummyAutomationsQuery implements IAutomationsQuery {
         type: AutomationType | undefined;
         totalCount: number | undefined;
     } = {
-        size: 50,
+        size: 100,
         page: 0,
-        all: false,
         author: null,
         dashboard: null,
         filter: {},
@@ -1338,9 +1336,9 @@ class DummyAutomationsQuery implements IAutomationsQuery {
         );
     }
 
-    withAll(): IAutomationsQuery {
-        this.settings.all = true;
-        return this;
+    async queryAll(): Promise<IAutomationMetadataObject[]> {
+        const firstQuery = await this.query();
+        return firstQuery.all();
     }
 
     withFilter(filter: { title?: string }): IAutomationsQuery {
@@ -1350,13 +1348,11 @@ class DummyAutomationsQuery implements IAutomationsQuery {
 
     withPage(page: number): IAutomationsQuery {
         this.settings.page = page;
-        this.settings.all = false;
         return this;
     }
 
     withSize(size: number): IAutomationsQuery {
         this.settings.size = size;
-        this.settings.all = false;
         return this;
     }
 

@@ -6,11 +6,11 @@ import { EntitiesApiGetAllEntitiesAutomationsRequest, MetadataUtilities } from "
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { convertAutomationListToAutomations } from "../../../convertors/fromBackend/AutomationConverter.js";
 import isNil from "lodash/isNil.js";
+import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 
 export class AutomationsQuery implements IAutomationsQuery {
-    private size = 50;
+    private size = 100;
     private page = 0;
-    private all = false;
     private author: string | null = null;
     private dashboard: string | null = null;
     private filter: { title?: string } = {};
@@ -27,19 +27,12 @@ export class AutomationsQuery implements IAutomationsQuery {
         this.totalCount = value;
     };
 
-    withAll(): IAutomationsQuery {
-        this.all = true;
-        return this;
-    }
-
     withSize(size: number): IAutomationsQuery {
-        this.all = false;
         this.size = size;
         return this;
     }
 
     withPage(page: number): IAutomationsQuery {
-        this.all = false;
         this.page = page;
         return this;
     }
@@ -72,10 +65,6 @@ export class AutomationsQuery implements IAutomationsQuery {
     }
 
     query(): Promise<IAutomationsQueryResult> {
-        const all = this.all;
-        const size = all ? Number.MAX_SAFE_INTEGER : this.size;
-        const offset = all ? 0 : this.page * this.size;
-
         return ServerPaging.for(
             async ({ limit, offset }) => {
                 /**
@@ -101,8 +90,8 @@ export class AutomationsQuery implements IAutomationsQuery {
                             "analyticalDashboard",
                         ],
                         origin: "NATIVE", // ensures that no inherited automations are returned
-                        // size and page are not needed when we want to get all automations
-                        ...(all ? {} : { size: limit, page: offset / limit }),
+                        size: limit,
+                        page: offset / limit,
                     }),
                 )
                     .then((res) => MetadataUtilities.filterValidEntities(res.data))
@@ -114,9 +103,14 @@ export class AutomationsQuery implements IAutomationsQuery {
 
                 return { items, totalCount: this.totalCount! };
             },
-            size,
-            offset,
+            this.size,
+            this.page * this.size,
         );
+    }
+
+    async queryAll(): Promise<IAutomationMetadataObject[]> {
+        const firstQuery = await this.query();
+        return firstQuery.all();
     }
 
     private constructFilter = () => {
