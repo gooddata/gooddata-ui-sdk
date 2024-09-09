@@ -13,9 +13,6 @@ import { IAutomationMetadataObjectDefinition, IAutomationMetadataObject } from "
 export abstract class DecoratedAutomationsQuery implements IAutomationsQuery {
     protected constructor(protected readonly decorated: IAutomationsQuery) {}
 
-    withAll(): IAutomationsQuery {
-        return this.decorated.withAll();
-    }
     withSize(size: number): IAutomationsQuery {
         return this.decorated.withSize(size);
     }
@@ -39,6 +36,9 @@ export abstract class DecoratedAutomationsQuery implements IAutomationsQuery {
     }
     query(): Promise<IAutomationsQueryResult> {
         return this.decorated.query();
+    }
+    queryAll(): Promise<IAutomationMetadataObject[]> {
+        return this.decorated.queryAll();
     }
 }
 
