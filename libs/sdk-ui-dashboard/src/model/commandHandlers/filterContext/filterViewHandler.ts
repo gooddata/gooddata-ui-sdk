@@ -7,6 +7,8 @@ import {
     IDashboardFilterView,
     ObjRef,
     areObjRefsEqual,
+    IFilterContextDefinition,
+    isDashboardAttributeFilter,
 } from "@gooddata/sdk-model";
 import { defaultErrorHandler } from "@gooddata/sdk-ui";
 
@@ -20,6 +22,7 @@ import {
     changeFilterContextSelection,
 } from "../../commands/index.js";
 import { selectFilterContextDefinition } from "../../store/filterContext/filterContextSelectors.js";
+import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
 import { selectFilterViews, filterViewsActions } from "../../store/filterViews/index.js";
 import {
     filterViewCreationSucceeded,
@@ -51,10 +54,25 @@ export function* saveFilterViewHandler(ctx: DashboardContext, cmd: SaveFilterVie
         selectFilterContextDefinition,
     );
 
+    const virtualFilters: ReturnType<typeof selectCrossFilteringFiltersLocalIdentifiers> = yield select(
+        selectCrossFilteringFiltersLocalIdentifiers,
+    );
+
+    const sanitizedFilterContext: IFilterContextDefinition = {
+        ...filterContext,
+        // accept date filters, unknown filters (will probably always be true), non-virtual filters
+        filters: filterContext.filters.filter(
+            (filter) =>
+                !isDashboardAttributeFilter(filter) ||
+                !filter.attributeFilter.localIdentifier ||
+                !virtualFilters.includes(filter.attributeFilter.localIdentifier),
+        ),
+    };
+
     const filterView: IDashboardFilterViewSaveRequest = {
         name: cmd.payload.name,
         dashboard: ctx.dashboardRef,
-        filterContext,
+        filterContext: sanitizedFilterContext,
         isDefault: cmd.payload.isDefault,
     };
 
@@ -106,7 +124,7 @@ export function* applyFilterViewHandler(ctx: DashboardContext, cmd: ApplyFilterV
     );
 
     if (filterView) {
-        yield put(changeFilterContextSelection(filterView.filterContext.filters, false, cmd.correlationId));
+        yield put(changeFilterContextSelection(filterView.filterContext.filters, true, cmd.correlationId));
         yield put(filterViewApplicationSucceeded(ctx, filterView, cmd.correlationId));
     } else {
         yield put(filterViewApplicationFailed(ctx));
