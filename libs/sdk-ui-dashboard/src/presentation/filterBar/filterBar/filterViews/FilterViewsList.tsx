@@ -175,6 +175,7 @@ export const FilterViewsList: React.FC<IFilterViewsDropdownBodyProps> = ({
                             iconLeft="gd-icon-plus"
                             size="small"
                             onClick={onAddNew}
+                            disabled={isLoading}
                         >
                             <FormattedMessage id="filters.filterViews.dropdown.newButton" />
                         </Button>

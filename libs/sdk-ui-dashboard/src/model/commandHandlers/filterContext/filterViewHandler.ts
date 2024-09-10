@@ -87,6 +87,7 @@ export function* saveFilterViewHandler(ctx: DashboardContext, cmd: SaveFilterVie
     } catch (error) {
         defaultErrorHandler(error);
         yield put(filterViewCreationFailed(ctx));
+        yield put(filterViewsActions.setFilterLoading(false));
     }
 }
 

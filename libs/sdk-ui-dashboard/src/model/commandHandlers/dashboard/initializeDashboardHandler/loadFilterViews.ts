@@ -11,5 +11,12 @@ export function loadFilterViews(ctx: DashboardContext): Promise<IDashboardFilter
         return Promise.resolve([]);
     }
 
-    return backend.workspace(workspace).dashboards().getFilterViewsForCurrentUser(ctx.dashboardRef);
+    return backend
+        .workspace(workspace)
+        .dashboards()
+        .getFilterViewsForCurrentUser(ctx.dashboardRef)
+        .catch((error) => {
+            console.error("Loading of the user filter views for the dashboard failed", error);
+            return Promise.resolve([]);
+        });
 }
