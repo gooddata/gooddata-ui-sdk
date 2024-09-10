@@ -102,8 +102,6 @@ export enum TigerFeaturesNames {
     EnableWidgetIdentifiersRollout = "enableWidgetIdentifiersRollout",
     EnableAIFunctions = "enableAIFunctions",
     EnableSemanticSearch = "enableSemanticSearch",
-    EnableDrillIntersectionIgnoredAttributes = "enableDrillIntersectionIgnoredAttributes",
-    EnableDrillDownIntersectionIgnoredAttributes = "enableDrillDownIntersectionIgnoredAttributes",
     EnableDashboardFilterViews = "enableDashboardFilterViews",
     EnableAlertingRollout = "enableAlertingRollout",
     EnableWorkspaceHierarchySettings = "enableWorkspaceHierarchySettings",
@@ -174,8 +172,6 @@ export type ITigerFeatureFlags = {
     enableWidgetIdentifiersRollout: typeof FeatureFlagsValues["enableWidgetIdentifiersRollout"][number];
     enableAIFunctions: typeof FeatureFlagsValues["enableAIFunctions"][number];
     enableSemanticSearch: typeof FeatureFlagsValues["enableSemanticSearch"][number];
-    enableDrillIntersectionIgnoredAttributes: typeof FeatureFlagsValues["enableDrillIntersectionIgnoredAttributes"][number];
-    enableDrillDownIntersectionIgnoredAttributes: typeof FeatureFlagsValues["enableDrillDownIntersectionIgnoredAttributes"][number];
     enableAlertingRollout: typeof FeatureFlagsValues["enableAlertingRollout"][number];
     enableDashboardFilterViews: typeof FeatureFlagsValues["enableDashboardFilterViews"][number];
     enableWorkspaceHierarchySettings: typeof FeatureFlagsValues["enableWorkspaceHierarchySettings"][number];
@@ -247,10 +243,8 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableWidgetIdentifiersRollout: true,
     enableAIFunctions: false,
     enableSemanticSearch: false,
-    enableDrillIntersectionIgnoredAttributes: true,
     enableAlertingRollout: false,
     enableDashboardFilterViews: false,
-    enableDrillDownIntersectionIgnoredAttributes: false,
     enableWorkspaceHierarchySettings: false,
     enableNewInsightChangedPostMessageEvent: false,
     enableKDVisualizationSwitcher: false,
@@ -324,8 +318,6 @@ export const FeatureFlagsValues = {
     enableWidgetIdentifiersRollout: [true, false] as const,
     enableAIFunctions: [true, false] as const,
     enableSemanticSearch: [true, false] as const,
-    enableDrillIntersectionIgnoredAttributes: [true, false] as const,
-    enableDrillDownIntersectionIgnoredAttributes: [true, false] as const,
     enableAlertingRollout: [true, false] as const,
     enableDashboardFilterViews: [true, false] as const,
     enableWorkspaceHierarchySettings: [true, false] as const,

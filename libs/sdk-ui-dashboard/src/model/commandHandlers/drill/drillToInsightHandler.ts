@@ -10,10 +10,7 @@ import {
 } from "../../events/drill.js";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
 import { addIntersectionFiltersToInsight } from "@gooddata/sdk-ui-ext";
-import {
-    selectEnableDrillIntersectionIgnoredAttributes,
-    selectEnableDuplicatedLabelValuesInAttributeFilter,
-} from "../../store/config/configSelectors.js";
+import { selectEnableDuplicatedLabelValuesInAttributeFilter } from "../../store/config/configSelectors.js";
 import { removeIgnoredValuesFromDrillIntersection } from "./common/intersectionUtils.js";
 
 export function* drillToInsightHandler(
@@ -28,11 +25,7 @@ export function* drillToInsightHandler(
         typeof selectEnableDuplicatedLabelValuesInAttributeFilter
     > = yield select(selectEnableDuplicatedLabelValuesInAttributeFilter);
 
-    const enableDrillIntersectionIgnoredAttributes: ReturnType<
-        typeof selectEnableDrillIntersectionIgnoredAttributes
-    > = yield select(selectEnableDrillIntersectionIgnoredAttributes);
-
-    const filteredIntersection = enableDrillIntersectionIgnoredAttributes
+    const filteredIntersection = cmd.payload.drillDefinition.drillIntersectionIgnoredAttributes
         ? removeIgnoredValuesFromDrillIntersection(
               cmd.payload.drillEvent.drillContext.intersection ?? [],
               cmd.payload.drillDefinition.drillIntersectionIgnoredAttributes ?? [],

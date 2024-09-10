@@ -457,16 +457,6 @@ export interface ISettings {
     enableSemanticSearch?: boolean;
 
     /**
-     * Enable configuration of the drill intersection ignored attributes.
-     */
-    enableDrillIntersectionIgnoredAttributes?: boolean;
-
-    /**
-     * Enable configuration of the drill intersection ignored attributes for drill down.
-     */
-    enableDrillDownIntersectionIgnoredAttributes?: boolean;
-
-    /**
      * Enable multiple data sources to be used in a single workspace.
      */
     enableDashboardFilterViews?: boolean;

@@ -30,8 +30,6 @@ import {
 import {
     selectCatalogDateDatasets,
     selectDrillTargetsByWidgetRef,
-    selectEnableDrillDownIntersectionIgnoredAttributes,
-    selectEnableDrillIntersectionIgnoredAttributes,
     selectSelectedWidgetRef,
     selectWidgetDrills,
     useDashboardSelector,
@@ -101,12 +99,6 @@ const DrillConfigItem: React.FunctionComponent<IDrillConfigItemProps> = ({
 
     const widgetRef = useDashboardSelector(selectSelectedWidgetRef);
     const widgetDrills = useDashboardSelector(selectWidgetDrills(widgetRef));
-    const enableDrillIntersectionIgnoredAttributes = useDashboardSelector(
-        selectEnableDrillIntersectionIgnoredAttributes,
-    );
-    const enableDrillDownIntersectionIgnoredAttributes = useDashboardSelector(
-        selectEnableDrillDownIntersectionIgnoredAttributes,
-    );
     invariant(widgetRef, "mush have widget selected");
 
     const { isFromDateAttribute, showDateFilterTransferWarning } = useDateAttributeOptions(item, widgetRef);
@@ -119,18 +111,17 @@ const DrillConfigItem: React.FunctionComponent<IDrillConfigItemProps> = ({
     const isAllowedDrillTypeForDrillIntersectionIgnoredAttributes = compact([
         DRILL_TARGET_TYPE.DRILL_TO_DASHBOARD,
         DRILL_TARGET_TYPE.DRILL_TO_INSIGHT,
-        enableDrillDownIntersectionIgnoredAttributes ? DRILL_TARGET_TYPE.DRILL_DOWN : undefined,
+        DRILL_TARGET_TYPE.DRILL_DOWN,
     ]).some((drillTarget) => drillTarget === item?.drillTargetType);
 
-    const showDrillIntersectionIgnoredAttributes =
-        enableDrillIntersectionIgnoredAttributes && isAllowedDrillTypeForDrillIntersectionIgnoredAttributes;
+    const showDrillIntersectionIgnoredAttributes = isAllowedDrillTypeForDrillIntersectionIgnoredAttributes;
 
     const onDrillIntersectionIgnoredAttributesChange = (ignoredAttributeLocalIds: string[]) => {
         const targetDrill = widgetDrills.find((d) => d.localIdentifier === item.localIdentifier);
         const currentIgnoredAttributes = item.drillIntersectionIgnoredAttributes ?? [];
         const isDrillDown = item.drillTargetType === DRILL_TARGET_TYPE.DRILL_DOWN;
         const isChanged = !isEqual(currentIgnoredAttributes, ignoredAttributeLocalIds);
-        if (enableDrillDownIntersectionIgnoredAttributes && isDrillDown && isChanged) {
+        if (isDrillDown && isChanged) {
             const drillDownItem: IDrillDownAttributeHierarchyDefinition = {
                 attributeHierarchyRef: (item as IDrillDownAttributeHierarchyConfig).attributeHierarchyRef,
                 type: "drillDownAttributeHierarchy",
