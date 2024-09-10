@@ -2966,6 +2966,7 @@ export interface ISettings {
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     enableEmbedButtonInAD?: boolean;
     enableEmbedButtonInKD?: boolean;
+    enableHeadlineExport?: boolean;
     enableHidingOfDataPoints?: boolean;
     enableHidingOfWidgetTitle?: boolean;
     enableIgnoreCrossFiltering?: boolean;

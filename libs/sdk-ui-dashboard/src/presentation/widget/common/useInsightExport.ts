@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { useCallback, useState } from "react";
 import { invariant } from "ts-invariant";
 import { IExtendedExportConfig } from "@gooddata/sdk-ui";
@@ -45,11 +45,10 @@ export const useInsightExport = (config: {
         [widgetRef],
     );
 
-    const isInsightExportable = getInsightVisualizationMeta(insight).supportsExport;
+    const settings = useDashboardSelector(selectSettings);
+    const isInsightExportable = getInsightVisualizationMeta(insight, settings).supportsExport;
     const isExportableToCsv = useDashboardSelector(selectIsExecutionResultExportableToCsvByRef(widgetRef));
     const isExportableToXlsx = useDashboardSelector(selectIsExecutionResultExportableToXlsxByRef(widgetRef));
-
-    const settings = useDashboardSelector(selectSettings);
 
     const exportHandler = useExportHandler();
     const { openDialog, closeDialog } = useExportDialogContext();

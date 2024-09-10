@@ -471,6 +471,11 @@ export interface ISettings {
      */
     enableIgnoreCrossFiltering?: boolean;
 
+    /**
+     * Enables manual headline exports on dashboard.
+     */
+    enableHeadlineExport?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

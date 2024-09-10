@@ -107,6 +107,7 @@ export enum TigerFeaturesNames {
     EnableWorkspaceHierarchySettings = "enableWorkspaceHierarchySettings",
     EnableNewInsightChangedPostMessageEvent = "enableNewInsightChangedPostMessageEvent",
     EnableIgnoreCrossFiltering = "enableIgnoreCrossFiltering",
+    EnableHeadlineExport = "enableHeadlineExport",
 }
 
 export type ITigerFeatureFlags = {
@@ -178,6 +179,7 @@ export type ITigerFeatureFlags = {
     enableNewInsightChangedPostMessageEvent: typeof FeatureFlagsValues["enableNewInsightChangedPostMessageEvent"][number];
     enableKDVisualizationSwitcher: typeof FeatureFlagsValues["enableKDVisualizationSwitcher"][number];
     enableIgnoreCrossFiltering: typeof FeatureFlagsValues["enableIgnoreCrossFiltering"][number];
+    enableHeadlineExport: typeof FeatureFlagsValues["enableHeadlineExport"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -249,6 +251,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableNewInsightChangedPostMessageEvent: false,
     enableKDVisualizationSwitcher: false,
     enableIgnoreCrossFiltering: false,
+    enableHeadlineExport: false,
 };
 
 export const FeatureFlagsValues = {
@@ -324,4 +327,5 @@ export const FeatureFlagsValues = {
     enableNewInsightChangedPostMessageEvent: [true, false] as const,
     enableKDVisualizationSwitcher: [true, false] as const,
     enableIgnoreCrossFiltering: [true, false] as const,
+    enableHeadlineExport: [true, false] as const,
 };
