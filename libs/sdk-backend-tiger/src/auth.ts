@@ -110,7 +110,7 @@ export class TigerTokenAuthProvider extends TigerAuthProviderBase {
     public updateApiToken = (apiToken: string): void => {
         invariant(this.clients.length > 0, "The method cannot be called before initializeClient method.");
         this.apiToken = apiToken;
-        this.clients.map((client) => this.initializeClient(client));
+        this.clients.forEach((client) => this.initializeClient(client));
     };
 }
 

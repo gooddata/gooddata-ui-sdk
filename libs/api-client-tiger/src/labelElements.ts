@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { AxiosInstance } from "axios";
 import {
     ActionsApi,
@@ -8,12 +8,11 @@ import {
 } from "./generated/afm-rest-api/index.js";
 import { BaseAPI, RequestArgs } from "./generated/afm-rest-api/base.js";
 
-export {
-    Configuration as LabelElementsConfiguration,
+export type {
     ConfigurationParameters as LabelElementsConfigurationParameters,
-    BaseAPI as LabelElementsBaseApi,
     RequestArgs as LabelElementsRequestArgs,
 };
+export { Configuration as LabelElementsConfiguration, BaseAPI as LabelElementsBaseApi };
 
 export const tigerLabelElementsClientFactory = (
     axios: AxiosInstance,

@@ -2,8 +2,9 @@
 
 export { DialogList } from "./DialogList.js";
 export { DialogListItemBasic } from "./DialogListItemBasic.js";
-export { IDialogListHeaderProps, DialogListHeader } from "./DialogListHeader.js";
-export {
+export type { IDialogListHeaderProps } from "./DialogListHeader.js";
+export { DialogListHeader } from "./DialogListHeader.js";
+export type {
     DialogListItemComponent,
     IDialogListItem,
     IDialogListItemBase,

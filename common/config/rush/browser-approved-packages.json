@@ -147,10 +147,6 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
-      "name": "@gooddata/sdk-ui-charts",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
       "name": "@gooddata/sdk-ui-dashboard",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -164,6 +160,10 @@
     },
     {
       "name": "@gooddata/sdk-ui-geo",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "@gooddata/sdk-ui-charts",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
@@ -459,6 +459,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "@vitejs/plugin-react",
+      "allowedCategories": [ "examples" ]
+    },
+    {
       "name": "@vitejs/plugin-react-swc",
       "allowedCategories": [ "examples" ]
     },
@@ -501,14 +505,6 @@
     {
       "name": "case-sensitive-paths-webpack-plugin",
       "allowedCategories": [ "examples", "tools" ]
-    },
-    {
-      "name": "chalk",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "chokidar",
-      "allowedCategories": [ "tools" ]
     },
     {
       "name": "circular-dependency-plugin",
@@ -737,6 +733,14 @@
     {
       "name": "http-status-codes",
       "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "chalk",
+      "allowedCategories": [ "tools" ]
+    },
+    {
+      "name": "chokidar",
+      "allowedCategories": [ "tools" ]
     },
     {
       "name": "immer",
@@ -983,16 +987,16 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "recharts",
-      "allowedCategories": [ "examples" ]
-    },
-    {
       "name": "redux-batched-actions",
       "allowedCategories": [ "production" ]
     },
     {
       "name": "redux-saga",
       "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "recharts",
+      "allowedCategories": [ "examples" ]
     },
     {
       "name": "require-from-string",
@@ -1047,11 +1051,11 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "stylelint-checkstyle-formatter",
+      "name": "stylelint-config-prettier",
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "stylelint-config-prettier",
+      "name": "stylelint-checkstyle-formatter",
       "allowedCategories": [ "production" ]
     },
     {
@@ -1112,6 +1116,10 @@
     },
     {
       "name": "vite-plugin-html",
+      "allowedCategories": [ "examples" ]
+    },
+    {
+      "name": "vite-plugin-mkcert",
       "allowedCategories": [ "examples" ]
     },
     {

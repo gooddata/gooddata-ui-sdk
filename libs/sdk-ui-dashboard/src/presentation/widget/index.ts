@@ -1,15 +1,17 @@
 // (C) 2021-2024 GoodData Corporation
-export {
-    useWidgetFilters,
-    useCustomWidgetExecutionDataView,
+export type {
     IUseCustomWidgetExecutionDataViewConfig,
-    useCustomWidgetInsightDataView,
     IUseCustomWidgetInsightDataViewConfig,
-    useInsightWidgetDataView,
     IUseInsightWidgetDataView,
     UseCustomWidgetExecutionDataViewCallbacks,
     UseCustomWidgetInsightDataViewCallbacks,
     UseInsightWidgetInsightDataViewCallbacks,
+} from "./common/index.js";
+export {
+    useWidgetFilters,
+    useCustomWidgetExecutionDataView,
+    useCustomWidgetInsightDataView,
+    useInsightWidgetDataView,
 } from "./common/index.js";
 
 export * from "./insight/index.js";

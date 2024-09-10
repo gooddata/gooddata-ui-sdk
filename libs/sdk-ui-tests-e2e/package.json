@@ -40,7 +40,7 @@
         "build": "tsc -p tsconfig.build.json",
         "dev": "bash scripts/build.sh --dev-watch",
         "eslint": "eslint -c .eslintrc.cjs --ext js,jsx,ts,tsx ./",
-        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml .eslintrc.cjs --ext js,jsx,ts,tsx ./",
+        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs --ext js,jsx,ts,tsx ./",
         "prettier-check": "prettier --check './**/*.{ts,js,cjs,tsx,jsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write './**/*.{ts,js,cjs,tsx,jsx,json,scss,md,yaml,html}'",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long cypress/",

@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 
 import { AxiosInstance } from "axios";
 
@@ -11,13 +11,12 @@ import {
 
 import { BaseAPI, RequestArgs } from "./generated/scan-json-api/base.js";
 
-export {
-    Configuration as ScanModelConfiguration,
+export type {
     ConfigurationParameters as ScanModelConfigurationParameters,
-    BaseAPI as ScanModelBaseApi,
     RequestArgs as ScanModelRequestArgs,
     ScanModelActionsApiInterface,
 };
+export { Configuration as ScanModelConfiguration, BaseAPI as ScanModelBaseApi };
 
 export const tigerScanModelClientFactory = (axios: AxiosInstance): ScanModelActionsApiInterface =>
     ActionsApiFactory(undefined, "", axios);

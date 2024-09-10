@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 /**
  * This package provides functions commonly used when building visualizations.
@@ -11,13 +11,8 @@
  */
 
 export { AttributeColorStrategy } from "./coloring/attribute.js";
-export {
-    ColorStrategy,
-    getAttributeColorAssignment,
-    IColorStrategy,
-    ICreateColorAssignmentReturnValue,
-    isValidMappedColor,
-} from "./coloring/base.js";
+export type { IColorStrategy, ICreateColorAssignmentReturnValue } from "./coloring/base.js";
+export { ColorStrategy, getAttributeColorAssignment, isValidMappedColor } from "./coloring/base.js";
 export {
     getColorByGuid,
     getColorFromMapping,
@@ -35,30 +30,35 @@ export {
     parseRGBString,
 } from "./coloring/color.js";
 
-export { IColorMapping } from "./coloring/types.js";
+export type { IColorMapping } from "./coloring/types.js";
 
-export { Legend, ILegendProps } from "./legend/Legend.js";
+export type { ILegendProps } from "./legend/Legend.js";
+export { Legend } from "./legend/Legend.js";
 
-export { StaticLegend, IStaticLegendProps } from "./legend/StaticLegend.js";
+export type { IStaticLegendProps } from "./legend/StaticLegend.js";
+export { StaticLegend } from "./legend/StaticLegend.js";
 
-export { PopUpLegend, IPopUpLegendProps } from "./legend/PopUpLegend/PopUpLegend.js";
+export type { IPopUpLegendProps } from "./legend/PopUpLegend/PopUpLegend.js";
+export { PopUpLegend } from "./legend/PopUpLegend/PopUpLegend.js";
 
-export { FluidLegend, IFluidLegendProps } from "./legend/FluidLegend.js";
+export type { IFluidLegendProps } from "./legend/FluidLegend.js";
+export { FluidLegend } from "./legend/FluidLegend.js";
 
-export { HeatmapLegend, IHeatmapLegendProps } from "./legend/HeatmapLegend.js";
+export type { IHeatmapLegendProps } from "./legend/HeatmapLegend.js";
+export { HeatmapLegend } from "./legend/HeatmapLegend.js";
 
-export { ColorLegend, IColorLegendProps } from "./legend/ColorLegend.js";
+export type { IColorLegendProps } from "./legend/ColorLegend.js";
+export { ColorLegend } from "./legend/ColorLegend.js";
 
-export { IPagingProps, ButtonsOrientationType, Paging } from "./legend/Paging.js";
+export type { IPagingProps, ButtonsOrientationType } from "./legend/Paging.js";
+export { Paging } from "./legend/Paging.js";
 
-export { IHeadlinePaginationProps, HeadlinePagination } from "./compactSize/HeadlinePagination.js";
+export type { IHeadlinePaginationProps } from "./compactSize/HeadlinePagination.js";
+export { HeadlinePagination } from "./compactSize/HeadlinePagination.js";
 
 export { formatLegendLabel, shouldShowFluid, FLUID_LEGEND_THRESHOLD } from "./legend/helpers.js";
 
-export {
-    DEFAULT_LEGEND_CONFIG,
-    LegendPosition,
-    SupportedLegendPositions,
+export type {
     PositionType,
     IBaseLegendItem,
     IColorLegendItem,
@@ -71,6 +71,7 @@ export {
     ItemBorderRadiusPredicate,
     IColorLegendSize,
 } from "./legend/types.js";
+export { DEFAULT_LEGEND_CONFIG, LegendPosition, SupportedLegendPositions } from "./legend/types.js";
 
 export { fixEmptyHeaderItems } from "./utils/fixEmptyHeaderItems.js";
 export { valueWithEmptyHandling } from "./utils/valueWithEmptyHandling.js";
@@ -78,4 +79,5 @@ export { valueWithEmptyHandling } from "./utils/valueWithEmptyHandling.js";
 export { shouldRenderPagination, calculateHeadlineHeightFontSize } from "./utils/calculateCustomHeight.js";
 export { getHeadlineResponsiveClassName } from "./utils/headlineResponsiveClassName.js";
 
-export { getLegendDetails, ILegendDetails, ILegendDetailOptions } from "./legend/PopUpLegend/helpers.js";
+export type { ILegendDetails, ILegendDetailOptions } from "./legend/PopUpLegend/helpers.js";
+export { getLegendDetails } from "./legend/PopUpLegend/helpers.js";

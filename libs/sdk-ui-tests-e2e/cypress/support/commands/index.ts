@@ -2,3 +2,4 @@
 import "./dnd";
 import "./pdf";
 import "./xlsx";
+import "./iframe";

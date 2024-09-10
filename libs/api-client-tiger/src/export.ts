@@ -17,11 +17,10 @@ import {
 export const tigerExportClientFactory = (axios: AxiosInstance): ActionsApiInterface =>
     new ActionsApi(undefined, "", axios);
 
-export {
+export type {
     ActionsApiInterface as ExportActionsApiInterface,
     TabularExportRequest as TabularExportActionsRequest,
     VisualExportRequest as VisualExportActionsRequest,
-    TabularExportRequestFormatEnum as TabularExportActionsRequestFormatEnum,
     Settings as ExportActionsSettings,
     CustomOverride as ExportActionsCustomOverride,
     CustomLabel as ExportActionsCustomLabel,
@@ -29,3 +28,4 @@ export {
     PdfTableStyle as ExportActionsPdfTableStyle,
     PdfTableStyleProperty as ExportActionsPdfTableStyleProperty,
 };
+export { TabularExportRequestFormatEnum as TabularExportActionsRequestFormatEnum };

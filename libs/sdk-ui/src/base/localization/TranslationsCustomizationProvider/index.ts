@@ -1,13 +1,8 @@
-// (C) 2021-2022 GoodData Corporation
-export {
-    ITranslationsCustomizationContextProviderProps,
-    TranslationsCustomizationContextProvider,
-    withTranslationsCustomization,
-} from "./Context.js";
-export {
-    ITranslationsCustomizationProviderProps,
-    TranslationsCustomizationProvider,
-} from "./TranslationsCustomizationProvider.js";
+// (C) 2021-2024 GoodData Corporation
+export type { ITranslationsCustomizationContextProviderProps } from "./Context.js";
+export { TranslationsCustomizationContextProvider, withTranslationsCustomization } from "./Context.js";
+export type { ITranslationsCustomizationProviderProps } from "./TranslationsCustomizationProvider.js";
+export { TranslationsCustomizationProvider } from "./TranslationsCustomizationProvider.js";
 export {
     pickCorrectInsightWording,
     pickCorrectMetricWording,

@@ -9,18 +9,13 @@
  *
  * @packageDocumentation
  */
+export type { IThemeProviderProps, ThemeModifier } from "./ThemeProvider/ThemeProvider.js";
+export { ThemeProvider, isDarkTheme } from "./ThemeProvider/ThemeProvider.js";
+export type { IThemeContextProviderProps, ThemeStatus } from "./ThemeProvider/Context.js";
 export {
-    IThemeProviderProps,
-    ThemeProvider,
-    ThemeModifier,
-    isDarkTheme,
-} from "./ThemeProvider/ThemeProvider.js";
-export {
-    IThemeContextProviderProps,
     withTheme,
     useTheme,
     useThemeIsLoading,
     useThemeStatus,
     ThemeContextProvider,
-    ThemeStatus,
 } from "./ThemeProvider/Context.js";

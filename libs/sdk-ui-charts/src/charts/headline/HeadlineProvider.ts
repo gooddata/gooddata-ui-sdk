@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import { IDataView, IExecutionFactory, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { ExplicitDrill, IDrillEventCallback } from "@gooddata/sdk-ui";
 import { IChartConfig } from "../../interfaces/index.js";
@@ -49,4 +49,4 @@ interface IHeadlineProvider {
 /**
  * NOTE: exported to satisfy sdk-ui-ext; is internal, must not be used outside of SDK; will disapppear.
  */
-export { IHeadlineProvider, IHeadlineTransformationProps, ICreateExecutionParams };
+export type { IHeadlineProvider, IHeadlineTransformationProps, ICreateExecutionParams };

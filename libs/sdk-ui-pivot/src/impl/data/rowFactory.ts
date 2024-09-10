@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { IntlShape } from "react-intl";
 
 import {
@@ -385,7 +385,7 @@ export function createAgGridPage(
         });
 
         // rows with measure values
-        headerItems[0][0].filter(isResultMeasureHeader).map((measureHeader, measureRowIndex) => {
+        headerItems[0][0].filter(isResultMeasureHeader).forEach((measureHeader, measureRowIndex) => {
             const headerColumn = tableDescriptor.headers.mixedHeadersCols[0];
 
             const measureHeaderItem = measureHeader.measureHeaderItem;

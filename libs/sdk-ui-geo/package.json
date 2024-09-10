@@ -14,6 +14,7 @@
     "exports": {
         ".": "./esm/index.js",
         "./styles/css/*": "./styles/css/*",
+        "./styles/scss/*": "./styles/scss/*",
         "./internal-tests/GeoChartOptionsWrapper": "./esm/core/geoChart/GeoChartOptionsWrapper.js"
     },
     "types": "./esm/index.d.ts",

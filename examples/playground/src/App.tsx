@@ -4,7 +4,7 @@ import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { createBackend } from "./createBackend.js";
 
 function hasCredentialsSetup(): boolean {
-    return !!process.env.TIGER_API_TOKEN;
+    return !!import.meta.env.VITE_TIGER_API_TOKEN;
 }
 
 const AppWithBackend: React.FC = () => {
@@ -15,7 +15,7 @@ const AppWithBackend: React.FC = () => {
 
     return (
         <BackendProvider backend={backend}>
-            <WorkspaceProvider workspace={WORKSPACE}>
+            <WorkspaceProvider workspace={import.meta.env.VITE_WORKSPACE}>
                 {/* Build your playground components under the playground directory.*/}
             </WorkspaceProvider>
         </BackendProvider>

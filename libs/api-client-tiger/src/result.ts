@@ -19,7 +19,7 @@ import {
 export const tigerResultClientFactory = (axios: AxiosInstance): ActionsApiInterface =>
     new ActionsApi(undefined, "", axios);
 
-export {
+export type {
     ActionsApiInterface as ResultActionsApiInterface,
     ActionsApiAnalyzeCsvRequest,
     AnalyzeCsvResponse,

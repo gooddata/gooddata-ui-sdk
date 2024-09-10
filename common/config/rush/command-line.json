@@ -39,6 +39,15 @@
       "ignoreMissingScript": true
     },
     {
+      "commandKind": "bulk",
+      "name": "eslint-fix",
+      "summary": "Triggers eslint auto fix in all projects.",
+      "safeForSimultaneousRushProcesses": true,
+      "enableParallelism": true,
+      "ignoreDependencyOrder": true,
+      "ignoreMissingScript": true
+    },
+    {
       "commandKind": "global",
       "name": "lint-staged-files",
       "summary": "Used by the pre-commit Git hook. This command invokes linters to reformat staged changes.",

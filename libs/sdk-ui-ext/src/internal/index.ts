@@ -22,32 +22,23 @@ export {
     LegendSection,
 };
 
-export { BaseVisualization, IBaseVisualizationProps } from "./components/BaseVisualization.js";
+export type { IBaseVisualizationProps } from "./components/BaseVisualization.js";
+export { BaseVisualization } from "./components/BaseVisualization.js";
 
-export {
-    IVisualizationCatalog,
-    DefaultVisualizationCatalog,
-    FullVisualizationCatalog,
-} from "./components/VisualizationCatalog.js";
+export type { IVisualizationCatalog } from "./components/VisualizationCatalog.js";
+export { DefaultVisualizationCatalog, FullVisualizationCatalog } from "./components/VisualizationCatalog.js";
 export { translations } from "./utils/translations.js";
 
-export {
+export type {
     IVisualization,
     IVisConstruct,
     IVisCallbacks,
     IVisProps,
     IVisualizationProperties,
     IVisualizationOptions,
-    ConfigPanelClassName,
     IGdcConfig,
-    PluggableVisualizationErrorCodes,
     PluggableVisualizationErrorType,
-    InvalidBucketsSdkError,
-    EmptyAfmSdkError,
     PluggableVisualizationError,
-    isPluggableVisualizationError,
-    isEmptyAfm,
-    isInvalidBuckets,
     IExtendedReferencePoint,
     IBucketItem,
     IReferencePoint,
@@ -59,9 +50,18 @@ export {
     IDateFilter,
     IDrillDownContext,
     IDrillDownDefinition,
-    isDrillDownDefinition,
     ICustomProps,
     IConfigurationPanelRenderers,
+} from "./interfaces/Visualization.js";
+export {
+    ConfigPanelClassName,
+    PluggableVisualizationErrorCodes,
+    InvalidBucketsSdkError,
+    EmptyAfmSdkError,
+    isPluggableVisualizationError,
+    isEmptyAfm,
+    isInvalidBuckets,
+    isDrillDownDefinition,
     InvalidColumnsSdkError,
     isInvalidColumns,
 } from "./interfaces/Visualization.js";
@@ -74,16 +74,16 @@ export {
 } from "./utils/bucketHelper.js";
 export { createInternalIntl, InternalIntlWrapper } from "./utils/internalIntlProvider.js";
 
-export {
+export type {
     IVisualizationSizeInfo,
     ISizeInfo,
     IVisualizationDefaultSizeInfo,
     ISizeInfoDefault,
     IVisualizationMeta,
 } from "./interfaces/VisualizationDescriptor.js";
-export { IFluidLayoutDescriptor, ILayoutDescriptor, LayoutType } from "./interfaces/LayoutDescriptor.js";
+export type { IFluidLayoutDescriptor, ILayoutDescriptor, LayoutType } from "./interfaces/LayoutDescriptor.js";
 
-export { ISortConfig, IAvailableSortsGroup } from "./interfaces/SortConfig.js";
+export type { ISortConfig, IAvailableSortsGroup } from "./interfaces/SortConfig.js";
 
 export { addIntersectionFiltersToInsight } from "./components/pluggableVisualizations/drillDownUtil.js";
 export * from "./components/pluggableVisualizations/constants.js";

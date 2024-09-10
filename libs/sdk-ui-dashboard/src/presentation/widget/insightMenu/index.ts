@@ -3,7 +3,7 @@ export * from "./DefaultDashboardInsightMenu/index.js";
 export { DashboardInsightMenuButton } from "./DashboardInsightMenuButton.js";
 export { DashboardInsightMenu } from "./DashboardInsightMenu.js";
 export { DashboardInsightMenuTitle } from "./DashboardInsightMenuTitle.js";
-export {
+export type {
     CustomDashboardInsightMenuButtonComponent,
     CustomDashboardInsightMenuComponent,
     CustomDashboardInsightMenuTitleComponent,

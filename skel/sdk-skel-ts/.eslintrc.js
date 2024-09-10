@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 module.exports = {
     parser: "@typescript-eslint/parser",
     plugins: ["prettier", "sonarjs", "eslint-plugin-tsdoc", "regexp"],
@@ -10,5 +10,5 @@ module.exports = {
         "plugin:regexp/recommended",
         "../../.eslintrc.js",
     ],
-    parserOptions: { tsconfigRootDir: __dirname },
+    parserOptions: { tsconfigRootDir: __dirname, project: "tsconfig.json" },
 };

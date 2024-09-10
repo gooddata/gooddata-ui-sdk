@@ -3,7 +3,7 @@ export { DefaultAlertingDialog } from "./DefaultAlertingDialog/index.js";
 export { DefaultAlertingManagementDialog } from "./DefaultAlertingManagementDialog/index.js";
 export { AlertingDialog } from "./AlertingDialog.js";
 export { AlertingManagementDialog } from "./AlertingManagementDialog.js";
-export {
+export type {
     CustomAlertingManagementDialogComponent,
     CustomAlertingDialogComponent,
     IAlertingManagementDialogProps,

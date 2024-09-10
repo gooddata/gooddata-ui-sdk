@@ -161,13 +161,12 @@ const getComparisonRgbColor = (
 /**
  * NOTE: exported to satisfy sdk-ui-ext; is internal, must not be used outside of SDK; will disapppear.
  */
+export type { ICalculationDefaultValue, IDefaultLabelKeys };
 export {
     CALCULATION_VALUES_DEFAULT,
     DEFAULT_COMPARISON_PALETTE,
     getCalculationValuesDefault,
     getComparisonFormat,
     getComparisonRgbColor,
-    ICalculationDefaultValue,
-    IDefaultLabelKeys,
     ComparisonColorType,
 };

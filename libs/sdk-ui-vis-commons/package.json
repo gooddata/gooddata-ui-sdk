@@ -10,7 +10,11 @@
     "author": "GoodData Corporation",
     "license": "MIT",
     "type": "module",
-    "exports": "./esm/index.js",
+    "exports": {
+        ".": "./esm/index.js",
+        "./styles/css/*": "./styles/css/*",
+        "./styles/scss/*": "./styles/scss/*"
+    },
     "types": "./esm/index.d.ts",
     "sideEffects": [
         "*.css",

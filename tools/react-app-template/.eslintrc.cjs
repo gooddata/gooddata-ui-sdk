@@ -12,4 +12,5 @@ module.exports = {
     rules: {
         "import/no-unassigned-import": "off",
     },
+    parserOptions: { tsconfigRootDir: __dirname, project: "tsconfig.json" },
 };

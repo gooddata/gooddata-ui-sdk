@@ -20,7 +20,7 @@ import { AnalyticalWorkspaceDecorator } from "./analyticalWorkspace.js";
 import { OrganizationDecorator } from "./organization.js";
 import { OrganizationsDecorator } from "./organizations.js";
 
-export {
+export type {
     ExecutionDecoratorFactory,
     CatalogDecoratorFactory,
     SecuritySettingsDecoratorFactory,

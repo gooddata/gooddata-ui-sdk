@@ -1,11 +1,11 @@
 // (C) 2021-2024 GoodData Corporation
-export {
+export type {
     IDashboardInsightProps,
     CustomDashboardInsightComponent,
     IInsightBodyProps,
     CustomInsightBodyComponent,
 } from "./insight/types.js";
-export {
+export type {
     CustomDashboardInsightMenuButtonComponent,
     CustomDashboardInsightMenuComponent,
     CustomDashboardInsightMenuTitleComponent,
@@ -16,10 +16,10 @@ export {
     IInsightMenuItemButton,
     IInsightMenuItemSeparator,
 } from "./insightMenu/types.js";
-export { IDashboardKpiProps, CustomDashboardKpiComponent } from "./kpi/types.js";
-export { IDashboardWidgetProps, CustomDashboardWidgetComponent } from "./widget/types.js";
-export { CustomDashboardRichTextComponent, IDashboardRichTextProps } from "../widget/richText/types.js";
-export {
+export type { IDashboardKpiProps, CustomDashboardKpiComponent } from "./kpi/types.js";
+export type { IDashboardWidgetProps, CustomDashboardWidgetComponent } from "./widget/types.js";
+export type { CustomDashboardRichTextComponent, IDashboardRichTextProps } from "../widget/richText/types.js";
+export type {
     CustomDashboardVisualizationSwitcherComponent,
     IDashboardVisualizationSwitcherProps,
 } from "../widget/visualizationSwitcher/types.js";
