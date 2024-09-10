@@ -32,36 +32,38 @@ import {
 } from "./types.js";
 import { isVariableMetadataObject, IVariableMetadataObject } from "./variable/index.js";
 
-export {
+export type {
     IMetadataObject,
     IMetadataObjectBase,
     IMetadataObjectIdentity,
-    isMetadataObject,
     IAttributeMetadataObject,
-    isAttributeMetadataObject,
     IAttributeDisplayFormMetadataObject,
-    isAttributeDisplayFormMetadataObject,
     AttributeDisplayFormType,
     IFactMetadataObject,
-    isFactMetadataObject,
     IMeasureMetadataObject,
     IMeasureMetadataObjectBase,
     IMetadataObjectDefinition,
-    isMeasureMetadataObject,
     IMeasureMetadataObjectDefinition,
-    isMeasureMetadataObjectDefinition,
     IDataSetMetadataObject,
-    isDataSetMetadataObject,
     IVariableMetadataObject,
-    isVariableMetadataObject,
     IDashboardMetadataObject,
+    IAttributeHierarchyMetadataObject,
+    IDateHierarchyTemplate,
+};
+export {
+    isMetadataObject,
+    isAttributeMetadataObject,
+    isAttributeDisplayFormMetadataObject,
+    isFactMetadataObject,
+    isMeasureMetadataObject,
+    isMeasureMetadataObjectDefinition,
+    isDataSetMetadataObject,
+    isVariableMetadataObject,
     isDashboardMetadataObject,
     attributeDisplayFormMetadataObjectAttributeRef,
     attributeDisplayFormMetadataObjectRef,
     attributeDisplayFormMetadataObjectTitle,
-    IAttributeHierarchyMetadataObject,
     isAttributeHierarchyMetadataObject,
-    IDateHierarchyTemplate,
 };
 
 /**

@@ -1,7 +1,7 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 export { DashboardLayoutBuilder } from "./builder/layout.js";
-export {
+export type {
     DashboardLayoutItemModifications,
     DashboardLayoutItemsSelector,
     DashboardLayoutModifications,
@@ -13,7 +13,7 @@ export {
 } from "./builder/interfaces.js";
 export { DashboardLayoutItemBuilder } from "./builder/item.js";
 export { DashboardLayoutSectionBuilder } from "./builder/section.js";
-export {
+export type {
     IDashboardLayoutFacade,
     IDashboardLayoutSectionFacade,
     IDashboardLayoutSectionsFacade,

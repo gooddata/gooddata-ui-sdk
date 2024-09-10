@@ -1,6 +1,6 @@
 // (C) 2024 GoodData Corporation
 
-export {
+export type {
     CustomDashboardVisualizationSwitcherComponent,
     IDashboardVisualizationSwitcherProps,
 } from "./types.js";

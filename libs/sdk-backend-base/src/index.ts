@@ -9,16 +9,15 @@
  *
  * @packageDocumentation
  */
+export type { DummyBackendConfig } from "./dummyBackend/index.js";
 export {
     dummyBackend,
     dummyBackendEmptyData,
     dummyDataView,
-    DummyBackendConfig,
     DummySemanticSearchQueryBuilder,
 } from "./dummyBackend/index.js";
 
-export {
-    decoratedBackend,
+export type {
     DecoratorFactories,
     CatalogDecoratorFactory,
     ExecutionDecoratorFactory,
@@ -28,64 +27,49 @@ export {
     AttributesDecoratorFactory,
     DashboardsDecoratorFactory,
 } from "./decoratedBackend/index.js";
+export { decoratedBackend } from "./decoratedBackend/index.js";
 
+export type { PreparedExecutionWrapper } from "./decoratedBackend/execution.js";
 export {
     DecoratedExecutionFactory,
-    PreparedExecutionWrapper,
     DecoratedPreparedExecution,
     DecoratedExecutionResult,
 } from "./decoratedBackend/execution.js";
 
 export { DecoratedWorkspaceDashboardsService } from "./decoratedBackend/dashboards.js";
 
-export {
-    DecoratedWorkspaceCatalogFactory,
-    DecoratedWorkspaceCatalog,
-    WorkspaceCatalogWrapper,
-} from "./decoratedBackend/catalog.js";
+export type { WorkspaceCatalogWrapper } from "./decoratedBackend/catalog.js";
+export { DecoratedWorkspaceCatalogFactory, DecoratedWorkspaceCatalog } from "./decoratedBackend/catalog.js";
 
 export { DecoratedSecuritySettingsService } from "./decoratedBackend/securitySettings.js";
 
 export { DecoratedWorkspaceSettingsService } from "./decoratedBackend/workspaceSettings.js";
 
-export { withEventing, AnalyticalBackendCallbacks } from "./eventingBackend/index.js";
-export {
-    withCaching,
-    CachingConfiguration,
-    RecommendedCachingConfiguration,
-    CacheControl,
-} from "./cachingBackend/index.js";
-export {
-    withCustomWorkspaceSettings,
+export type { AnalyticalBackendCallbacks } from "./eventingBackend/index.js";
+export { withEventing } from "./eventingBackend/index.js";
+export type { CachingConfiguration, CacheControl } from "./cachingBackend/index.js";
+export { withCaching, RecommendedCachingConfiguration } from "./cachingBackend/index.js";
+export type {
     WorkspaceSettingsConfiguration,
     SettingsWrapper,
     CurrentUserSettingsWrapper,
     CommonSettingsWrapper,
 } from "./workspaceSettingsBackend/index.js";
-export {
-    withNormalization,
-    NormalizationConfig,
-    NormalizationWhenExecuteByRef,
-} from "./normalizingBackend/index.js";
-export {
-    Normalizer,
-    Denormalizer,
-    NormalizationState,
-    LocalIdMap,
-    INormalizerOptions,
-} from "./normalizingBackend/normalizer.js";
+export { withCustomWorkspaceSettings } from "./workspaceSettingsBackend/index.js";
+export type { NormalizationConfig, NormalizationWhenExecuteByRef } from "./normalizingBackend/index.js";
+export { withNormalization } from "./normalizingBackend/index.js";
+export type { NormalizationState, LocalIdMap, INormalizerOptions } from "./normalizingBackend/normalizer.js";
+export { Normalizer, Denormalizer } from "./normalizingBackend/normalizer.js";
 
-export {
+export type {
     AuthenticatedAsyncCall,
     AuthenticatedCallGuard,
-    AuthProviderCallGuard,
     IAuthenticatedAsyncCallContext,
     IAuthProviderCallGuard,
-    NoopAuthProvider,
-    AnonymousAuthProvider,
 } from "./toolkit/auth.js";
+export { AuthProviderCallGuard, NoopAuthProvider, AnonymousAuthProvider } from "./toolkit/auth.js";
 
-export { TelemetryData } from "./toolkit/backend.js";
+export type { TelemetryData } from "./toolkit/backend.js";
 
 export {
     AbstractExecutionFactory,
@@ -93,12 +77,13 @@ export {
     ExecutionFactoryUpgradingToExecByReference,
 } from "./toolkit/execution.js";
 
-export { InMemoryPaging, ServerPaging, IServerPagingResult, IServerPagingParams } from "./toolkit/paging.js";
+export type { IServerPagingResult, IServerPagingParams } from "./toolkit/paging.js";
+export { InMemoryPaging, ServerPaging } from "./toolkit/paging.js";
 export { validatePluginUrlIsSane } from "./toolkit/pluginUrlValidation.js";
 
 export { customBackend } from "./customBackend/index.js";
 
-export {
+export type {
     ResultProvider,
     ResultProviderContext,
     DataProvider,
@@ -110,27 +95,20 @@ export {
     CustomBackendState,
 } from "./customBackend/config.js";
 
-export {
-    Builder,
+export type {
     BuilderConstructor,
-    builderFactory,
     BuilderModifications,
     ExtractBuilderType,
     IBuilder,
     ValueOrUpdateCallback,
-    resolveValueOrUpdateCallback,
 } from "./ldmFactories/builder.js";
-export {
-    InsightWidgetBuilder,
-    newInsightWidget,
-    IInsightWidgetBuilder,
-} from "./ldmFactories/dashboard/insightWidgetFactory.js";
-export {
-    KpiWidgetBuilder,
-    newKpiWidget,
-    IKpiWidgetBuilder,
-} from "./ldmFactories/dashboard/kpiWidgetFactory.js";
-export { IWidgetBaseBuilder, WidgetBaseBuilder } from "./ldmFactories/dashboard/widgetFactory.js";
+export { Builder, builderFactory, resolveValueOrUpdateCallback } from "./ldmFactories/builder.js";
+export type { IInsightWidgetBuilder } from "./ldmFactories/dashboard/insightWidgetFactory.js";
+export { InsightWidgetBuilder, newInsightWidget } from "./ldmFactories/dashboard/insightWidgetFactory.js";
+export type { IKpiWidgetBuilder } from "./ldmFactories/dashboard/kpiWidgetFactory.js";
+export { KpiWidgetBuilder, newKpiWidget } from "./ldmFactories/dashboard/kpiWidgetFactory.js";
+export type { IWidgetBaseBuilder } from "./ldmFactories/dashboard/widgetFactory.js";
+export { WidgetBaseBuilder } from "./ldmFactories/dashboard/widgetFactory.js";
 export { CatalogAttributeBuilder, newCatalogAttribute } from "./ldmFactories/catalog/attributeFactory.js";
 export {
     CatalogDateAttributeBuilder,
@@ -139,10 +117,10 @@ export {
     newCatalogDateDataset,
 } from "./ldmFactories/catalog/dateDatasetFactory.js";
 export { CatalogFactBuilder, newCatalogFact } from "./ldmFactories/catalog/factFactory.js";
+export type { IGroupableCatalogItemBuilder } from "./ldmFactories/catalog/groupFactory.js";
 export {
     CatalogGroupBuilder,
     GroupableCatalogItemBuilder,
-    IGroupableCatalogItemBuilder,
     newCatalogGroup,
 } from "./ldmFactories/catalog/groupFactory.js";
 export { CatalogMeasureBuilder, newCatalogMeasure } from "./ldmFactories/catalog/measureFactory.js";
@@ -159,7 +137,8 @@ export {
     AttributeDisplayFormMetadataObjectBuilder,
     newAttributeDisplayFormMetadataObject,
 } from "./ldmFactories/metadata/displayFormFactory.js";
-export { IMetadataObjectBuilder, MetadataObjectBuilder } from "./ldmFactories/metadata/factory.js";
+export type { IMetadataObjectBuilder } from "./ldmFactories/metadata/factory.js";
+export { MetadataObjectBuilder } from "./ldmFactories/metadata/factory.js";
 export { newFactMetadataObject, FactMetadataObjectBuilder } from "./ldmFactories/metadata/factFactory.js";
 export {
     MeasureMetadataObjectBuilder,
@@ -174,4 +153,5 @@ export {
     DashboardMetadataObjectBuilder,
 } from "./ldmFactories/metadata/dashboardFactory.js";
 
-export { ResultHeaderTransformer, transformResultHeaders } from "./convertors/fromBackend/afm/result.js";
+export type { ResultHeaderTransformer } from "./convertors/fromBackend/afm/result.js";
+export { transformResultHeaders } from "./convertors/fromBackend/afm/result.js";

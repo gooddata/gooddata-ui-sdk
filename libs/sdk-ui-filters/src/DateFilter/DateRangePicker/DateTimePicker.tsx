@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React, { useState, useEffect } from "react";
 import cx from "classnames";
 import { injectIntl, WrappedComponentProps } from "react-intl";
@@ -186,4 +186,5 @@ const DateTimePickerWithInt = injectIntl(DateTimePickerComponent, { forwardRef: 
 
 DateTimePickerWithInt.displayName = "DateTimePicker";
 
-export { DateTimePickerWithInt, DateTimePickerComponentProps };
+export type { DateTimePickerComponentProps };
+export { DateTimePickerWithInt };

@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React from "react";
 import {
     newErrorMapping,
@@ -91,4 +91,5 @@ const CoreHeadline = withEntireDataView(HeadlineStateless);
 /**
  * NOTE: exported to satisfy sdk-ui-ext; is internal, must not be used outside of SDK; will disapppear.
  */
-export { CoreHeadline, ICoreHeadlineExtendedProps };
+export type { ICoreHeadlineExtendedProps };
+export { CoreHeadline };

@@ -25,11 +25,11 @@ import {
 } from "../../types.js";
 import isEqual from "lodash/isEqual.js";
 
+export type { IDrillToUrlPlaceholder } from "@gooddata/sdk-model/internal";
 export {
     getAttributeIdentifiersPlaceholdersFromUrl,
     getDashboardAttributeFilterPlaceholdersFromUrl,
     getInsightAttributeFilterPlaceholdersFromUrl,
-    IDrillToUrlPlaceholder,
 } from "@gooddata/sdk-model/internal";
 
 export function getDrillsBySourceLocalIdentifiers(

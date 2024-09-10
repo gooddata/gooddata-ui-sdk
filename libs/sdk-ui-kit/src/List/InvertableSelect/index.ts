@@ -1,5 +1,5 @@
 // (C) 2020-2024 GoodData Corporation
-export {
+export type {
     IInvertableSelectProps,
     IInvertableSelectRenderItemProps,
     IInvertableSelectRenderErrorProps,
@@ -8,25 +8,20 @@ export {
     IInvertableSelectRenderSearchBarProps,
     IInvertableSelectRenderStatusBarProps,
     IInvertableSelectRenderActionsProps,
-    InvertableSelect,
 } from "./InvertableSelect.js";
-export { IInvertableSelectStatusBarProps, InvertableSelectStatusBar } from "./InvertableSelectStatusBar.js";
-export {
-    InvertableSelectLimitWarning,
-    IInvertableSelectLimitWarningProps,
-} from "./InvertableSelectLimitWarning.js";
-export {
-    IInvertableSelectItem,
-    InvertableSelectItem,
-    IInvertableSelectItemRenderOnlyProps,
-} from "./InvertableSelectItem.js";
-export { InvertableSelectSearchBar, IInvertableSelectSearchBarProps } from "./InvertableSelectSearchBar.js";
-export {
-    InvertableSelectAllCheckbox,
-    IInvertableSelectAllCheckboxProps,
-} from "./InvertableSelectAllCheckbox.js";
+export { InvertableSelect } from "./InvertableSelect.js";
+export type { IInvertableSelectStatusBarProps } from "./InvertableSelectStatusBar.js";
+export { InvertableSelectStatusBar } from "./InvertableSelectStatusBar.js";
+export type { IInvertableSelectLimitWarningProps } from "./InvertableSelectLimitWarning.js";
+export { InvertableSelectLimitWarning } from "./InvertableSelectLimitWarning.js";
+export type { IInvertableSelectItem, IInvertableSelectItemRenderOnlyProps } from "./InvertableSelectItem.js";
+export { InvertableSelectItem } from "./InvertableSelectItem.js";
+export type { IInvertableSelectSearchBarProps } from "./InvertableSelectSearchBar.js";
+export { InvertableSelectSearchBar } from "./InvertableSelectSearchBar.js";
+export type { IInvertableSelectAllCheckboxProps } from "./InvertableSelectAllCheckbox.js";
+export { InvertableSelectAllCheckbox } from "./InvertableSelectAllCheckbox.js";
+export type { IInvertableSelectStatusProps } from "./InvertableSelectSelectionStatus.js";
 export {
     InvertableSelectStatus,
-    IInvertableSelectStatusProps,
     useInvertableSelectionStatusText,
 } from "./InvertableSelectSelectionStatus.js";

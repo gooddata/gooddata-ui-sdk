@@ -195,4 +195,4 @@ export const Icon: Record<string, React.FC<IIconProps>> = {
     Email,
 };
 
-export { IRowsIconProps, IColumnsIconProps };
+export type { IRowsIconProps, IColumnsIconProps };

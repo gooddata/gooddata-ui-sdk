@@ -217,11 +217,10 @@ run().catch((err) => {
 // Type exports
 //
 
-export {
+export type {
     DataViewRequests,
     RequestedWindow,
-    RecordingFiles,
     ScenarioDescriptor,
     InsightRecordingSpec,
-    requestPages,
 } from "./interface.js";
+export { RecordingFiles, requestPages } from "./interface.js";

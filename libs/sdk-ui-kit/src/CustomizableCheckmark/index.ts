@@ -1,3 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
-export { CustomizableCheckmark, ICustomizableCheckmarkProps } from "./CustomizableCheckmark.js";
+export type { ICustomizableCheckmarkProps } from "./CustomizableCheckmark.js";
+export { CustomizableCheckmark } from "./CustomizableCheckmark.js";

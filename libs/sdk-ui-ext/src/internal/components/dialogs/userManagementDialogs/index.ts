@@ -1,6 +1,6 @@
 // (C) 2023-2024 GoodData Corporation
 
-export {
+export type {
     UserEditDialogMode,
     UserGroupEditDialogMode,
     WorkspacePermissionSubject,
@@ -8,21 +8,26 @@ export {
     IGrantedDataSource,
     DataSourcePermission,
 } from "./types.js";
-export { UserEditDialog, IUserEditDialogProps } from "./UserEditDialog.js";
-export { UserGroupEditDialog, IUserGroupEditDialogProps } from "./UserGroupEditDialog.js";
-export { CreateUserGroupDialog, ICreateUserGroupDialogProps } from "./CreateUserGroupDialog.js";
-export { DeleteUserDialog, IDeleteUserDialogProps } from "./DeleteUserDialog.js";
-export { DeleteUsersDialog, IDeleteUsersDialogProps } from "./DeleteUsersDialog.js";
-export { DeleteUserGroupDialog, IDeleteUserGroupDialogProps } from "./DeleteUserGroupDialog.js";
-export { DeleteUserGroupsDialog, IDeleteUserGroupsDialogProps } from "./DeleteUserGroupsDialog.js";
-export { AddWorkspaceToSubjects, IAddWorkspaceToSubjectsProps } from "./AddWorkspaceToSubjects.js";
-export { AddDataSourceToSubjects, IAddDataSourceToSubjectsProps } from "./AddDataSourceToSubjects.js";
-export {
-    AddUserGroupsToUsersDialog,
-    IAddUserGroupsToUsersDialogProps,
-} from "./AddUserGroupsToUsersDialog.js";
-export {
-    AddUsersToUserGroupsDialog,
-    IAddUsersToUserGroupsDialogProps,
-} from "./AddUsersToUserGroupsDialog.js";
-export { TelemetryEvent, TrackEventCallback, IWithTelemetryProps } from "./TelemetryContext.js";
+export type { IUserEditDialogProps } from "./UserEditDialog.js";
+export { UserEditDialog } from "./UserEditDialog.js";
+export type { IUserGroupEditDialogProps } from "./UserGroupEditDialog.js";
+export { UserGroupEditDialog } from "./UserGroupEditDialog.js";
+export type { ICreateUserGroupDialogProps } from "./CreateUserGroupDialog.js";
+export { CreateUserGroupDialog } from "./CreateUserGroupDialog.js";
+export type { IDeleteUserDialogProps } from "./DeleteUserDialog.js";
+export { DeleteUserDialog } from "./DeleteUserDialog.js";
+export type { IDeleteUsersDialogProps } from "./DeleteUsersDialog.js";
+export { DeleteUsersDialog } from "./DeleteUsersDialog.js";
+export type { IDeleteUserGroupDialogProps } from "./DeleteUserGroupDialog.js";
+export { DeleteUserGroupDialog } from "./DeleteUserGroupDialog.js";
+export type { IDeleteUserGroupsDialogProps } from "./DeleteUserGroupsDialog.js";
+export { DeleteUserGroupsDialog } from "./DeleteUserGroupsDialog.js";
+export type { IAddWorkspaceToSubjectsProps } from "./AddWorkspaceToSubjects.js";
+export { AddWorkspaceToSubjects } from "./AddWorkspaceToSubjects.js";
+export type { IAddDataSourceToSubjectsProps } from "./AddDataSourceToSubjects.js";
+export { AddDataSourceToSubjects } from "./AddDataSourceToSubjects.js";
+export type { IAddUserGroupsToUsersDialogProps } from "./AddUserGroupsToUsersDialog.js";
+export { AddUserGroupsToUsersDialog } from "./AddUserGroupsToUsersDialog.js";
+export type { IAddUsersToUserGroupsDialogProps } from "./AddUsersToUserGroupsDialog.js";
+export { AddUsersToUserGroupsDialog } from "./AddUsersToUserGroupsDialog.js";
+export type { TelemetryEvent, TrackEventCallback, IWithTelemetryProps } from "./TelemetryContext.js";

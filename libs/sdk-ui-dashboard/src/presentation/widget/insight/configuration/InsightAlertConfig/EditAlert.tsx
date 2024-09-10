@@ -177,22 +177,20 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                         />
                         {selectedMeasure?.comparators.some(
                             (a) => a.comparator === AlertMetricComparatorType.SamePeriodPreviousYear,
-                        ) &&
-                            isChangeOrDifferenceOperator(updatedAlert.alert) && (
-                                <div className="gd-edit-alert__measure-info">
-                                    <FormattedMessage id="insightAlert.config.compare_with" />{" "}
-                                    <FormattedMessage id="insightAlert.config.compare_with_sp" />
-                                </div>
-                            )}
+                        ) && isChangeOrDifferenceOperator(updatedAlert.alert) ? (
+                            <div className="gd-edit-alert__measure-info">
+                                <FormattedMessage id="insightAlert.config.compare_with" />{" "}
+                                <FormattedMessage id="insightAlert.config.compare_with_sp" />
+                            </div>
+                        ) : null}
                         {selectedMeasure?.comparators.some(
                             (a) => a.comparator === AlertMetricComparatorType.PreviousPeriod,
-                        ) &&
-                            isChangeOrDifferenceOperator(updatedAlert.alert) && (
-                                <div className="gd-edit-alert__measure-info">
-                                    <FormattedMessage id="insightAlert.config.compare_with" />{" "}
-                                    <FormattedMessage id="insightAlert.config.compare_with_pp" />
-                                </div>
-                            )}
+                        ) && isChangeOrDifferenceOperator(updatedAlert.alert) ? (
+                            <div className="gd-edit-alert__measure-info">
+                                <FormattedMessage id="insightAlert.config.compare_with" />{" "}
+                                <FormattedMessage id="insightAlert.config.compare_with_pp" />
+                            </div>
+                        ) : null}
                         {destinations.length > 1 && (
                             <AlertDestinationSelect
                                 selectedDestination={updatedAlert.notificationChannel!}

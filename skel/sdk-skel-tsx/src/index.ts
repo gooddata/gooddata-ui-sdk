@@ -1,7 +1,7 @@
-// (C) 2019 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 /*
  *
  */
 
-export { ISdkComponentProps, SdkComponent } from "./sdkComponent/SdkComponent";
+export type { ISdkComponentProps, SdkComponent } from "./sdkComponent/SdkComponent";
