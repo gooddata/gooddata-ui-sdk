@@ -1,0 +1,31 @@
+// (C) 2024 GoodData Corporation
+
+@use "sass:color";
+@use "variables" as variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins" as kit-mixins;
+@use "@gooddata/sdk-ui-kit/styles/scss/Form/mixins" as form-mixins;
+
+.gd-flex-ai-chat__agent_state {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 39px;
+
+    &__status {
+        animation: gd-flex-ai-agent-state 3s infinite linear;
+    }
+}
+
+@keyframes gd-flex-ai-agent-state {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.3;
+    }
+    100% {
+        opacity: 1;
+    }
+}

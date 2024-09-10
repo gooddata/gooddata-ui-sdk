@@ -1,0 +1,77 @@
+// (C) 2024 GoodData Corporation
+
+@use "sass:color";
+@use "variables" as variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins" as kit-mixins;
+@use "@gooddata/sdk-ui-kit/styles/scss/Form/mixins" as form-mixins;
+
+.gd-flex-ai-chat__messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: variables.$y-spacing variables.$x-spacing 0;
+
+    &__scroll {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    &__message {
+        display: flex;
+
+        &--user {
+            $tail-height: 7px;
+            $tail-width: 10px;
+
+            max-width: 80%;
+            background-color: kit-variables.$gd-palette-primary-base;
+            border-radius: 3px 3px 0 3px;
+            padding: 4.5px 12px;
+            position: relative;
+            align-self: flex-end;
+            margin-bottom: 29px;
+            animation: gd-flex-ai-message-in 0.3s ease-out;
+
+            &::after {
+                content: "";
+                position: absolute;
+                bottom: -$tail-height;
+                right: 0;
+                border: 0 solid transparent;
+                border-top: $tail-height solid kit-variables.$gd-palette-primary-base;
+                border-left-width: $tail-width;
+                width: 0;
+                height: 0;
+            }
+
+            .gd-flex-ai-chat__messages__message__contents {
+                color: kit-variables.$gd-color-white;
+            }
+        }
+
+        &--assistant {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            align-items: flex-start;
+            margin-bottom: 39px;
+        }
+    }
+
+    &__contents {
+        flex: 1;
+        padding: 4.5px 0;
+    }
+}
+
+@keyframes gd-flex-ai-message-in {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

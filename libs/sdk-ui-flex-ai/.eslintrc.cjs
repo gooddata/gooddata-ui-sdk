@@ -1,16 +1,19 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2024 GoodData Corporation
 module.exports = {
     parser: "@typescript-eslint/parser",
     plugins: ["react-hooks", "prettier", "sonarjs", "eslint-plugin-tsdoc"],
     extends: [
         "@gooddata",
         "plugin:react/recommended",
-        "plugin:import/errors",
-        "plugin:import/typescript",
+        "plugin:import-esm/recommended",
         "plugin:sonarjs/recommended",
         "plugin:regexp/recommended",
         "plugin:react-hooks/recommended",
         "../../.eslintrc.react.js",
     ],
-    parserOptions: { tsconfigRootDir: __dirname },
+    rules: {
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "error",
+    },
+    parserOptions: { tsconfigRootDir: __dirname, project: "tsconfig.json" },
 };

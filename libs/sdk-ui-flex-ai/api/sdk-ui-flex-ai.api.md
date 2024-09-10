@@ -4,20 +4,44 @@
 
 ```ts
 
+import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { default as React_2 } from 'react';
 
-// @public (undocumented)
-export interface ISdkComponentProps {
-    // (undocumented)
-    message: string;
+// @alpha (undocumented)
+export type AssistantMessage = BaseMessage & {
+    role: "assistant";
+    content: string;
+};
+
+// @alpha (undocumented)
+export type BaseMessage = {
+    id: string;
+    created: number;
+};
+
+// @alpha
+export const FlexAIChat: React_2.FC<FlexAIChatProps>;
+
+// @alpha
+export interface FlexAIChatProps {
+    backend?: IAnalyticalBackend;
+    history?: Message[];
+    workspace?: string;
 }
 
-// @public (undocumented)
-export class SdkComponent extends React_2.Component<ISdkComponentProps> {
-    // (undocumented)
-    render(): React_2.JSX.Element;
-}
+// @alpha
+export type Message = UserMessage | SystemMessage | AssistantMessage;
 
-// (No @packageDocumentation comment for this package)
+// @alpha (undocumented)
+export type SystemMessage = BaseMessage & {
+    role: "system";
+    content: string;
+};
+
+// @alpha (undocumented)
+export type UserMessage = BaseMessage & {
+    role: "user";
+    content: string;
+};
 
 ```
