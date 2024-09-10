@@ -42,7 +42,7 @@ export const InsightCrossFiltering: React.FC<IInsightCrossFiltering> = ({ widget
                     id="respect-cross-filtering"
                     type="checkbox"
                     className="input-checkbox"
-                    checked={!widget.ignoreCrossFiltering ?? true}
+                    checked={!widget.ignoreCrossFiltering}
                     onChange={(e) => {
                         dispatch(changeInsightWidgetIgnoreCrossFiltering(widget.ref, !e.target.checked));
                     }}
