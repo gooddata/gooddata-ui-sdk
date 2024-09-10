@@ -344,7 +344,7 @@ export function transformAlertByMetric(
             measure: {
                 ...cond.measure,
                 left: measure.measure.measure.localIdentifier,
-                right: periodMeasure?.measure.measure.localIdentifier ?? "",
+                right: periodMeasure.measure.measure.localIdentifier ?? "",
             },
         } as IAutomationAlertRelativeCondition;
         return {
@@ -400,12 +400,19 @@ export function transformAlertByRelativeOperator(
     relativeOperator: IAlertRelativeOperator,
     arithmeticOperator: IAlertRelativeArithmeticOperator,
 ): IAutomationMetadataObject {
+    const periodMeasure = measure.comparators.find(
+        (c) =>
+            c.comparator === AlertMetricComparatorType.PreviousPeriod ||
+            c.comparator === AlertMetricComparatorType.SamePeriodPreviousYear,
+    );
+
     const cond = transformToRelativeCondition(alert.alert!.condition);
     const condition = {
         ...cond,
         measure: {
             ...cond.measure,
             operator: arithmeticOperator,
+            right: periodMeasure?.measure.measure.localIdentifier ?? "",
         },
         operator: relativeOperator,
     };

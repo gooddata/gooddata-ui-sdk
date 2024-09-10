@@ -328,6 +328,7 @@ describe("alert transforms", () => {
                         measure: {
                             ...cond.measure,
                             operator: "DIFFERENCE",
+                            right: "localMetric_pp_1",
                         },
                     },
                     execution: {
@@ -356,6 +357,7 @@ describe("alert transforms", () => {
                         measure: {
                             ...cond.measure,
                             operator: "DIFFERENCE",
+                            right: "localMetric_pp_1",
                         },
                     },
                     execution: {
