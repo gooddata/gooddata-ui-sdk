@@ -8,6 +8,7 @@ import {
     IAutomationAlert,
     IAutomationAlertComparisonCondition,
     IAutomationAlertCondition,
+    IAutomationAlertExecutionDefinition,
     IAutomationAlertRelativeCondition,
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
@@ -338,80 +339,82 @@ export function transformAlertByMetric(
 
     if (alert.alert?.condition.type === "relative" && periodMeasure) {
         const cond = transformToRelativeCondition(alert.alert!.condition);
+        const condition = {
+            ...cond,
+            measure: {
+                ...cond.measure,
+                left: measure.measure.measure.localIdentifier,
+                right: periodMeasure?.measure.measure.localIdentifier ?? "",
+            },
+        } as IAutomationAlertRelativeCondition;
         return {
             ...alert,
             title: getMeasureTitle(measure.measure) ?? "",
             alert: {
                 ...alert.alert!,
-                condition: {
-                    ...cond,
-                    measure: {
-                        ...cond.measure,
-                        left: measure.measure.measure.localIdentifier,
-                        right: periodMeasure?.measure.measure.localIdentifier ?? "",
-                    },
-                } as IAutomationAlertRelativeCondition,
-                execution: {
-                    ...alert.alert!.execution,
-                    measures: [measure.measure, periodMeasure.measure],
-                },
+                condition,
+                execution: transformAlertExecutionByMetric(condition, alert.alert!.execution, measure),
             },
         };
     }
 
     const cond = transformToComparisonCondition(alert.alert!.condition);
+    const condition = {
+        ...cond,
+        left: measure.measure.measure.localIdentifier,
+    } as IAutomationAlertComparisonCondition;
     return {
         ...alert,
         title: getMeasureTitle(measure.measure) ?? "",
         alert: {
             ...alert.alert!,
-            condition: {
-                ...cond,
-                left: measure.measure.measure.localIdentifier,
-            } as IAutomationAlertComparisonCondition,
-            execution: {
-                ...alert.alert!.execution,
-                measures: [measure.measure],
-            },
+            condition,
+            execution: transformAlertExecutionByMetric(condition, alert.alert!.execution, measure),
         },
     };
 }
 
 export function transformAlertByComparisonOperator(
     alert: IAutomationMetadataObject,
+    measure: AlertMetric,
     comparisonOperator: IAlertComparisonOperator,
 ): IAutomationMetadataObject {
     const cond = transformToComparisonCondition(alert.alert!.condition);
+    const condition = {
+        ...cond,
+        operator: comparisonOperator,
+    };
     return {
         ...alert,
         alert: {
             ...alert.alert!,
-            condition: {
-                ...cond,
-                operator: comparisonOperator,
-            },
+            condition,
+            execution: transformAlertExecutionByMetric(condition, alert.alert!.execution, measure),
         },
     };
 }
 
 export function transformAlertByRelativeOperator(
     alert: IAutomationMetadataObject,
+    measure: AlertMetric,
     relativeOperator: IAlertRelativeOperator,
     arithmeticOperator: IAlertRelativeArithmeticOperator,
 ): IAutomationMetadataObject {
     const cond = transformToRelativeCondition(alert.alert!.condition);
+    const condition = {
+        ...cond,
+        measure: {
+            ...cond.measure,
+            operator: arithmeticOperator,
+        },
+        operator: relativeOperator,
+    };
     return {
         ...alert,
         alert: {
             ...alert.alert!,
-            condition: {
-                ...cond,
-                measure: {
-                    ...cond.measure,
-                    operator: arithmeticOperator,
-                },
-                operator: relativeOperator,
-            },
+            condition,
+            execution: transformAlertExecutionByMetric(condition, alert.alert!.execution, measure),
         },
     };
 }
@@ -497,5 +500,29 @@ function transformToRelativeCondition(
         operator: condition.operator,
         measure: condition.measure,
         threshold: condition.threshold,
+    };
+}
+
+function transformAlertExecutionByMetric(
+    condition: IAutomationAlertCondition,
+    execution: IAutomationAlertExecutionDefinition,
+    measure: AlertMetric,
+): IAutomationAlertExecutionDefinition {
+    const periodMeasure = measure.comparators.find(
+        (c) =>
+            c.comparator === AlertMetricComparatorType.PreviousPeriod ||
+            c.comparator === AlertMetricComparatorType.SamePeriodPreviousYear,
+    );
+
+    if (condition.type === "relative" && periodMeasure) {
+        return {
+            ...execution,
+            measures: [measure.measure, periodMeasure.measure],
+        };
+    }
+
+    return {
+        ...execution,
+        measures: [measure.measure],
     };
 }
