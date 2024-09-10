@@ -5,10 +5,7 @@ import { DashboardContext } from "../../types/commonTypes.js";
 import { DrillDown } from "../../commands/drill.js";
 import { DashboardDrillDownResolved, drillDownRequested, drillDownResolved } from "../../events/drill.js";
 import { getInsightWithAppliedDrillDown } from "@gooddata/sdk-ui-ext";
-import {
-    selectEnableDrillDownIntersectionIgnoredAttributes,
-    selectEnableDuplicatedLabelValuesInAttributeFilter,
-} from "../../store/config/configSelectors.js";
+import { selectEnableDuplicatedLabelValuesInAttributeFilter } from "../../store/config/configSelectors.js";
 import { selectWidgetByRef } from "../../store/layout/layoutSelectors.js";
 import { isInsightWidget } from "@gooddata/sdk-model";
 import { removeIgnoredValuesFromDrillIntersection } from "./common/intersectionUtils.js";
@@ -26,44 +23,38 @@ export function* drillDownHandler(
         typeof selectEnableDuplicatedLabelValuesInAttributeFilter
     > = yield select(selectEnableDuplicatedLabelValuesInAttributeFilter);
 
-    const enableDrillDownIntersectionIgnoredAttributes: ReturnType<
-        typeof selectEnableDrillDownIntersectionIgnoredAttributes
-    > = yield select(selectEnableDrillDownIntersectionIgnoredAttributes);
-
     let effectiveDrillEvent = drillEvent;
 
-    if (enableDrillDownIntersectionIgnoredAttributes) {
-        const widget: ReturnType<ReturnType<typeof selectWidgetByRef>> = yield select(
-            selectWidgetByRef(drillEvent.widgetRef),
-        );
+    const widget: ReturnType<ReturnType<typeof selectWidgetByRef>> = yield select(
+        selectWidgetByRef(drillEvent.widgetRef),
+    );
 
-        const drillDownIntersectionIgnoredAttributes = isInsightWidget(widget)
-            ? widget.drillDownIntersectionIgnoredAttributes
-            : undefined;
+    const drillDownIntersectionIgnoredAttributes = isInsightWidget(widget)
+        ? widget.drillDownIntersectionIgnoredAttributes
+        : undefined;
 
-        const drillDownIntersectionIgnoredAttributesForCurrentHierarchy =
-            drillDownIntersectionIgnoredAttributes?.find((ignored) => {
-                return isDrillDownIntersectionIgnoredAttributesForHierarchy(
-                    ignored,
-                    drillDefinition.hierarchyRef!,
-                );
-            });
+    const drillDownIntersectionIgnoredAttributesForCurrentHierarchy =
+        drillDownIntersectionIgnoredAttributes?.find((ignored) => {
+            return isDrillDownIntersectionIgnoredAttributesForHierarchy(
+                ignored,
+                drillDefinition.hierarchyRef!,
+            );
+        });
 
-        const ignoredAttributesLocalIdentifiers =
-            drillDownIntersectionIgnoredAttributesForCurrentHierarchy?.ignoredAttributes ?? [];
+    const ignoredAttributesLocalIdentifiers =
+        drillDownIntersectionIgnoredAttributesForCurrentHierarchy?.ignoredAttributes ?? [];
 
-        if (ignoredAttributesLocalIdentifiers.length > 0) {
-            effectiveDrillEvent = {
-                ...drillEvent,
-                drillContext: {
-                    ...drillEvent.drillContext,
-                    intersection: removeIgnoredValuesFromDrillIntersection(
-                        drillEvent.drillContext.intersection ?? [],
-                        drillDownIntersectionIgnoredAttributesForCurrentHierarchy?.ignoredAttributes ?? [],
-                    ),
-                },
-            };
-        }
+    if (ignoredAttributesLocalIdentifiers.length > 0) {
+        effectiveDrillEvent = {
+            ...drillEvent,
+            drillContext: {
+                ...drillEvent.drillContext,
+                intersection: removeIgnoredValuesFromDrillIntersection(
+                    drillEvent.drillContext.intersection ?? [],
+                    drillDownIntersectionIgnoredAttributesForCurrentHierarchy?.ignoredAttributes ?? [],
+                ),
+            },
+        };
     }
 
     const insightWithDrillDownApplied = getInsightWithAppliedDrillDown(

@@ -459,20 +459,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableDrillIntersectionIgnoredAttributes,
-            "enableDrillIntersectionIgnoredAttributes",
-            "BOOLEAN",
-            FeatureFlagsValues.enableDrillIntersectionIgnoredAttributes,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableDrillDownIntersectionIgnoredAttributes,
-            "enableDrillDownIntersectionIgnoredAttributes",
-            "BOOLEAN",
-            FeatureFlagsValues.enableDrillDownIntersectionIgnoredAttributes,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableDashboardFilterViews,
             "enableDashboardFilterViews",
             "BOOLEAN",

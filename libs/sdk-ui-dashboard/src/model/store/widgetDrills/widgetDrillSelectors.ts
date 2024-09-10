@@ -59,7 +59,6 @@ import {
     selectIsEmbedded,
     selectEnableKDCrossFiltering,
     selectIsDisabledCrossFiltering,
-    selectEnableDrillDownIntersectionIgnoredAttributes,
 } from "../config/configSelectors.js";
 import flatMap from "lodash/flatMap.js";
 import { selectAccessibleDashboardsMap } from "../accessibleDashboards/accessibleDashboardsSelectors.js";
@@ -105,7 +104,6 @@ function createDrillDefinition(
     descendantRef: ObjRef,
     allCatalogAttributesMap: ObjRefMap<ICatalogAttribute | ICatalogDateAttribute>,
     hierarchyRef: ObjRef,
-    enableDrillDownIntersectionIgnoredAttributes?: boolean,
 ): IImplicitDrillWithPredicates {
     /**
      * Here we need to distinguish how the drill is defined in the attribute hierarchy.
@@ -123,7 +121,7 @@ function createDrillDefinition(
               target: descendantRef,
           };
 
-    const hierarchyRefObj = enableDrillDownIntersectionIgnoredAttributes ? { hierarchyRef } : {};
+    const hierarchyRefObj = { hierarchyRef };
 
     return {
         drillDefinition: {
@@ -143,7 +141,6 @@ function getDrillDownDefinitionsWithPredicates(
     allCatalogAttributeHierarchies: (ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy)[],
     ignoredDrillDownHierarchies: IDrillDownReference[],
     supportsAttributeHierarchies?: boolean,
-    enableDrillDownIntersectionIgnoredAttributes?: boolean,
 ): IImplicitDrillWithPredicates[] {
     // generate targets on the fly if ignored hierarchies are present
     // this allows to have `selectAttributesWithHierarchyDescendants` be universal and
@@ -193,7 +190,6 @@ function getDrillDownDefinitionsWithPredicates(
                     descendant.descendantRef,
                     allCatalogAttributesMap,
                     descendant.hierarchyRef,
-                    enableDrillDownIntersectionIgnoredAttributes,
                 );
             });
         });
@@ -215,7 +211,6 @@ function getDrillDownDefinitionsWithPredicates(
                 descendantRef.descendantRef,
                 allCatalogAttributesMap,
                 descendantRef.hierarchyRef,
-                enableDrillDownIntersectionIgnoredAttributes,
             );
         });
     });
@@ -330,7 +325,6 @@ export const selectImplicitDrillsDownByWidgetRef: (
         selectIgnoredDrillDownHierarchiesByWidgetRef(ref),
         selectAllCatalogAttributeHierarchies,
         selectBackendCapabilities,
-        selectEnableDrillDownIntersectionIgnoredAttributes,
         (
             availableDrillTargets,
             attributesWithHierarchyDescendants,
@@ -340,7 +334,6 @@ export const selectImplicitDrillsDownByWidgetRef: (
             ignoredHierarchies,
             allCatalogAttributeHierarchies,
             backendCapabilities,
-            enableDrillDownIntersectionIgnoredAttributes,
         ) => {
             const isWidgetEnableDrillDown = !widgetInsight?.insight?.properties?.controls?.disableDrillDown;
             if (isDrillDownEnabled && isWidgetEnableDrillDown) {
@@ -354,7 +347,6 @@ export const selectImplicitDrillsDownByWidgetRef: (
                     allCatalogAttributeHierarchies,
                     ignoredHierarchies,
                     backendCapabilities.supportsAttributeHierarchies,
-                    enableDrillDownIntersectionIgnoredAttributes,
                 );
             }
 
@@ -709,7 +701,6 @@ export const selectImplicitDrillsByAvailableDrillTargets: (
             selectIsDrillDownEnabled,
             selectAllCatalogAttributeHierarchies,
             selectBackendCapabilities,
-            selectEnableDrillDownIntersectionIgnoredAttributes,
             (
                 attributesWithLink,
                 attributesWithHierarchyDescendants,
@@ -717,7 +708,6 @@ export const selectImplicitDrillsByAvailableDrillTargets: (
                 isDrillDownEnabled,
                 allCatalogHierarchies,
                 backendCapabilities,
-                enableDrillDownIntersectionIgnoredAttributes,
             ) => {
                 const availableDrillAttributes = availableDrillTargets?.attributes ?? [];
                 const drillDownDrills = isDrillDownEnabled
@@ -728,7 +718,6 @@ export const selectImplicitDrillsByAvailableDrillTargets: (
                           allCatalogHierarchies,
                           ignoredDrillDownHierarchies,
                           backendCapabilities.supportsAttributeHierarchies,
-                          enableDrillDownIntersectionIgnoredAttributes,
                       )
                     : [];
                 const drillToUrlDrills = getDrillToUrlDefinitionsWithPredicates(

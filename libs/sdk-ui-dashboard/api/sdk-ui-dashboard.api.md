@@ -7210,12 +7210,6 @@ export const selectEnableClickableAttributeURL: DashboardSelector<boolean>;
 export const selectEnableCompanyLogoInEmbeddedUI: DashboardSelector<boolean>;
 
 // @internal
-export const selectEnableDrillDownIntersectionIgnoredAttributes: DashboardSelector<boolean>;
-
-// @internal
-export const selectEnableDrillIntersectionIgnoredAttributes: DashboardSelector<boolean>;
-
-// @internal
 export const selectEnableDuplicatedLabelValuesInAttributeFilter: DashboardSelector<boolean>;
 
 // @public

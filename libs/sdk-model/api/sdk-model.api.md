@@ -2962,9 +2962,7 @@ export interface ISettings {
     // (undocumented)
     enableDataSection?: boolean;
     enableDescriptions?: boolean;
-    enableDrillDownIntersectionIgnoredAttributes?: boolean;
     enableDrilledInsightExport?: boolean;
-    enableDrillIntersectionIgnoredAttributes?: boolean;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     enableEmbedButtonInAD?: boolean;
     enableEmbedButtonInKD?: boolean;

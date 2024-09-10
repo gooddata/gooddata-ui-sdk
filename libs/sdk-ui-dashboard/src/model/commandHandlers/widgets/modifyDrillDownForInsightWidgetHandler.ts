@@ -15,7 +15,6 @@ import { layoutActions } from "../../store/layout/index.js";
 import { existBlacklistHierarchyPredicate } from "../../utils/attributeHierarchyUtils.js";
 import { selectAllCatalogAttributeHierarchies } from "../../store/catalog/catalogSelectors.js";
 import { getHierarchyRef } from "@gooddata/sdk-model";
-import { selectEnableDrillDownIntersectionIgnoredAttributes } from "../../store/config/configSelectors.js";
 import { hierarchyToDrillDownReference } from "./common/drillDown.js";
 
 export function* modifyDrillDownForInsightWidgetHandler(
@@ -67,11 +66,7 @@ export function* modifyDrillDownForInsightWidgetHandler(
         }),
     );
 
-    const enableDrillDownIntersectionIgnoredAttributes: ReturnType<
-        typeof selectEnableDrillDownIntersectionIgnoredAttributes
-    > = yield select(selectEnableDrillDownIntersectionIgnoredAttributes);
-
-    if (enableDrillDownIntersectionIgnoredAttributes && hierarchy && intersectionIgnoredAttributes) {
+    if (hierarchy && intersectionIgnoredAttributes) {
         const drillDownReference = hierarchyToDrillDownReference(hierarchy, attributeIdentifier);
         const existingIgnoredAttributesWithoutChangedItem =
             currentDrillDownIntersectionIgnoredAttributes?.filter(
