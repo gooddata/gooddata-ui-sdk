@@ -10,7 +10,7 @@ import {
 } from "@gooddata/sdk-model";
 import { IVisualizationSizeInfo, WIDGET_DROPZONE_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
 import React, { useRef } from "react";
-import cx from "classnames";
+// import cx from "classnames";
 import {
     ExtendedDashboardWidget,
     isCustomWidget,
@@ -24,7 +24,7 @@ import {
     selectWidgetsOverlayState,
     selectWidgetsModification,
     selectSectionModification,
-    selectIsExport,
+    // selectIsExport,
     useWidgetSelection,
 } from "../../model/index.js";
 import { isAnyPlaceholderWidget, isPlaceholderWidget } from "../../widgets/index.js";
@@ -94,7 +94,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     const insights = useDashboardSelector(selectInsightsMap);
     const settings = useDashboardSelector(selectSettings);
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
-    const isExport = useDashboardSelector(selectIsExport);
+    // const isExport = useDashboardSelector(selectIsExport);
     const enableWidgetCustomHeight = useDashboardSelector(selectEnableWidgetCustomHeight);
 
     const handleDragEnd = useWidgetDragEndHandler();
@@ -108,7 +108,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     const isRichText = isRichTextWidget(widget);
     const isRichTextWidgetInEditState = isSelected && isRichText;
 
-    const [{ isDragging }, dragRef] = useDashboardDrag(
+    const [{ isDragging } /*, dragRef*/] = useDashboardDrag(
         {
             dragItem: () => {
                 return createDraggableItem(item, insights, settings);
@@ -179,25 +179,25 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
             contentRef={contentRef}
             getLayoutDimensions={getLayoutDimensions}
         >
-            <div
-                ref={dragRef}
-                className={cx([
-                    "dashboard-widget-draggable-wrapper",
-                    { "gd-custom-widget-export": isCustom && isExport },
-                ])}
-            >
-                <DashboardWidget
-                    // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
-                    index={index}
-                    screen={screen}
-                    onDrill={onDrill}
-                    onError={onError}
-                    onFiltersChange={onFiltersChange}
-                    widget={widget as ExtendedDashboardWidget}
-                    ErrorComponent={ErrorComponent}
-                    LoadingComponent={LoadingComponent}
-                />
-            </div>
+            {/*<div*/}
+            {/*    ref={dragRef}*/}
+            {/*    className={cx([*/}
+            {/*        "dashboard-widget-draggable-wrapper",*/}
+            {/*        { "gd-custom-widget-export": isCustom && isExport },*/}
+            {/*    ])}*/}
+            {/*>*/}
+            <DashboardWidget
+                // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
+                index={index}
+                screen={screen}
+                onDrill={onDrill}
+                onError={onError}
+                onFiltersChange={onFiltersChange}
+                widget={widget as ExtendedDashboardWidget}
+                ErrorComponent={ErrorComponent}
+                LoadingComponent={LoadingComponent}
+            />
+            {/*</div>*/}
 
             {canShowHotspot && !isAnyPlaceholderWidget(widget) ? (
                 <>

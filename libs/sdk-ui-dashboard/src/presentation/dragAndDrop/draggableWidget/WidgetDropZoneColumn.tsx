@@ -2,7 +2,7 @@
 import { ScreenSize } from "@gooddata/sdk-model";
 import cx from "classnames";
 import React, { useMemo } from "react";
-import { Col } from "react-grid-system";
+// import { Col } from "react-grid-system";
 import {
     selectDraggingWidgetTarget,
     useDashboardDispatch,
@@ -121,23 +121,36 @@ export const WidgetDropZoneColumn = (props: WidgetDropZoneColumnProps) => {
     const size = (collectedProps.item as BaseDraggableLayoutItem).size;
 
     return (
-        <Col
-            xl={size.gridWidth}
-            lg={size.gridWidth}
-            md={size.gridWidth}
-            sm={size.gridWidth}
-            xs={size.gridWidth}
-            className={cx("gd-fluidlayout-column", "gd-fluidlayout-column-dropzone", "s-fluid-layout-column")}
+        <div
+            className={cx(
+                "gd-fluidlayout-column",
+                "gd-fluidlayout-column-dropzone",
+                "gd-grid-layout__item",
+                `gd-grid-layout__item--span-${size.gridWidth}`,
+                "s-fluid-layout-column",
+            )}
             style={{
                 minHeight: getDashboardLayoutItemHeightForGrid(size.gridHeight),
             }}
         >
+            {/*<Col*/}
+            {/*    xl={size.gridWidth}*/}
+            {/*    lg={size.gridWidth}*/}
+            {/*    md={size.gridWidth}*/}
+            {/*    sm={size.gridWidth}*/}
+            {/*    xs={size.gridWidth}*/}
+            {/*    className={cx("gd-fluidlayout-column", "gd-fluidlayout-column-dropzone", "s-fluid-layout-column")}*/}
+            {/*    style={{*/}
+            {/*        minHeight: getDashboardLayoutItemHeightForGrid(size.gridHeight),*/}
+            {/*    }}*/}
+            {/*>*/}
             <WidgetDropZone
                 isLastInSection={isLastInSection}
                 sectionIndex={sectionIndex}
                 itemIndex={itemIndex}
                 dropRef={dropRef}
             />
-        </Col>
+            {/*</Col>*/}
+        </div>
     );
 };

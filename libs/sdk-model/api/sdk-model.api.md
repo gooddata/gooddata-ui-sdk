@@ -1275,6 +1275,7 @@ export interface IDashboardLayoutItem<TWidget = IDashboardWidget> {
 export interface IDashboardLayoutSection<TWidget = IDashboardWidget> {
     header?: IDashboardLayoutSectionHeader;
     items: IDashboardLayoutItem<TWidget>[];
+    size?: IDashboardLayoutSize;
     type: "IDashboardLayoutSection";
 }
 

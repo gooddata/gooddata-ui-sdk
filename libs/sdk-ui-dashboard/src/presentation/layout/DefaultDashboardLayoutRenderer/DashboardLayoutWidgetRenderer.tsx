@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React, { CSSProperties, useMemo } from "react";
 import cx from "classnames";
 import { IDashboardLayoutWidgetRenderProps } from "./interfaces.js";
@@ -51,7 +51,7 @@ export function DashboardLayoutWidgetRenderer(props: IDashboardLayoutWidgetRende
             })}
             style={style}
         >
-            {children}
+            <>{children}</>
         </div>
     );
 }

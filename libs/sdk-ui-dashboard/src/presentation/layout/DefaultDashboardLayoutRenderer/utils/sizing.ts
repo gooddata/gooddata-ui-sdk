@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import {
     AnalyticalWidgetType,
     IDashboardLayout,
@@ -41,7 +41,7 @@ import {
 /**
  * Unify dashboard layout items height for all screens.
  *
- * @param items - dashboard layout items
+ * @param layout - dashboard layout with items
  */
 export function unifyDashboardLayoutItemHeights<TWidget>(
     layout: IDashboardLayout<TWidget>,
@@ -53,7 +53,7 @@ export function unifyDashboardLayoutItemHeights<TWidget>(
     itemsOrLayout: IDashboardLayout<TWidget> | IDashboardLayoutItem<TWidget>[],
 ): IDashboardLayout<TWidget> | IDashboardLayoutItem<TWidget>[] {
     if (isDashboardLayout<TWidget>(itemsOrLayout)) {
-        const updatedLayout: IDashboardLayout<TWidget> = {
+        return {
             ...itemsOrLayout,
             sections: DashboardLayoutFacade.for(itemsOrLayout)
                 .sections()
@@ -65,8 +65,6 @@ export function unifyDashboardLayoutItemHeights<TWidget>(
                     return acc;
                 }, []),
         };
-
-        return updatedLayout;
     }
 
     const itemsWithSizeForAllScreens = itemsOrLayout.map((item) => ({
@@ -74,28 +72,28 @@ export function unifyDashboardLayoutItemHeights<TWidget>(
         size: implicitLayoutItemSizeFromXlSize(item.size.xl),
     }));
 
-    const itemsWithUnifiedHeightForAllScreens: IDashboardLayoutItem<TWidget>[] = ALL_SCREENS.reduce(
-        (acc, screen) => {
-            const itemsAsFutureGridRows = splitDashboardLayoutItemsAsRenderedGridRows(acc, screen);
+    // items with unified height for all screens
+    return ALL_SCREENS.reduce((acc, screen) => {
+        const itemsAsFutureGridRows = splitDashboardLayoutItemsAsRenderedGridRows(acc, screen);
 
-            return flatten(
-                itemsAsFutureGridRows.map((futureGridRow) =>
-                    unifyDashboardLayoutItemHeightsForScreen(futureGridRow, screen),
-                ),
-            );
-        },
-        itemsWithSizeForAllScreens,
-    );
-
-    return itemsWithUnifiedHeightForAllScreens;
+        return flatten(
+            itemsAsFutureGridRows.map((futureGridRow) =>
+                unifyDashboardLayoutItemHeightsForScreen(futureGridRow, screen),
+            ),
+        );
+    }, itemsWithSizeForAllScreens);
 }
 
 /**
+ * TODO we have xl in metadata, this will create additional screen sizes based on xl
+ *
  * Derive dashboard layout size for all screens from dashboard layout size defined for xl screen.
  *
  * @param xlSize - dashboard layout size for xl screen
  */
-function implicitLayoutItemSizeFromXlSize(xlSize: IDashboardLayoutSize): IDashboardLayoutSizeByScreenSize {
+export function implicitLayoutItemSizeFromXlSize(
+    xlSize: IDashboardLayoutSize,
+): IDashboardLayoutSizeByScreenSize {
     const xlWidth = xlSize.gridWidth;
     const xlHeight = xlSize.gridHeight;
     const ratio = xlSize.heightAsRatio;

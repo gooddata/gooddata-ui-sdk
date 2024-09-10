@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 @use "sass:color";
 @use "variables";
 @use "zIndexes";
@@ -618,6 +618,10 @@
     height: 100%;
     position: relative;
     z-index: zIndexes.$drag-and-drop-draggable-wrapper;
+
+    // fix for grid layout after some classes at the top were removed
+    display: flex;
+    flex-direction: column;
 }
 
 .current-dragging-item {

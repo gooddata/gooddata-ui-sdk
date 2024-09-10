@@ -47,27 +47,29 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5, #b1c1d1);
     align-items: stretch;
     min-height: variables.$item-min-height;
     padding: variables.$item-outer-padding;
+    height: 100%;
+
     // Grid definition
 
-    @media #{kit-variables.$small-up} {
-        flex: 0 0 100%;
-        max-width: 100%;
-    }
-
-    @media #{kit-variables.$medium-up} {
-        flex: 0 0 50%;
-        max-width: 50%;
-    }
-
-    @media #{kit-variables.$large-up} {
-        flex: 0 0 25%;
-        max-width: 25%;
-    }
-
-    @media #{kit-variables.$xxlarge-up} {
-        flex: 0 0 math.percentage(calc(1 / 6));
-        max-width: math.percentage(calc(1 / 6));
-    }
+    //@media #{kit-variables.$small-up} {
+    //    flex: 0 0 100%;
+    //    max-width: 100%;
+    //}
+    //
+    //@media #{kit-variables.$medium-up} {
+    //    flex: 0 0 50%;
+    //    max-width: 50%;
+    //}
+    //
+    //@media #{kit-variables.$large-up} {
+    //    flex: 0 0 25%;
+    //    max-width: 25%;
+    //}
+    //
+    //@media #{kit-variables.$xxlarge-up} {
+    //    flex: 0 0 math.percentage(calc(1 / 6));
+    //    max-width: math.percentage(calc(1 / 6));
+    //}
 
     @media #{kit-variables.$xsmall-only}, #{kit-variables.$small-only} {
         flex-direction: column;

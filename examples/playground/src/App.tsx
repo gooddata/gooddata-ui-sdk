@@ -2,6 +2,7 @@
 import React, { useMemo } from "react";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { Dashboard } from "@gooddata/sdk-ui-dashboard";
+
 import { createBackend } from "./createBackend.js";
 
 function hasCredentialsSetup(): boolean {

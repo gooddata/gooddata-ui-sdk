@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React, { RefObject, useRef } from "react";
 import cx from "classnames";
 import { IntlWrapper } from "../../localization/index.js";
@@ -18,8 +18,12 @@ import { Toolbar } from "../../toolbar/index.js";
 import { OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../constants/index.js";
 import { DashboardContent } from "../DashboardContent.js";
+import { GRID_COLUMNS_COUNT } from "../../layout/DefaultDashboardLayoutRenderer/constants.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
+
+const GRID_RULERS = new Array(GRID_COLUMNS_COUNT).fill(0).map((_, i) => i + 1);
+const styles = { padding: 20 };
 
 export const DashboardInner: React.FC<IDashboardProps> = (props) => {
     const locale = useDashboardSelector(selectLocale);
@@ -56,6 +60,19 @@ export const DashboardInner: React.FC<IDashboardProps> = (props) => {
                             {/* Header z-index start at  6000 so we need force all overlays z-indexes start at 6000 to be under header */}
                             <OverlayControllerProvider overlayController={overlayController}>
                                 <DashboardHeader />
+                                <div
+                                    style={styles}
+                                    className="gd-grid-layout__container gd-grid-layout__item--container--ruler"
+                                >
+                                    {GRID_RULERS.map((value) => (
+                                        <div
+                                            key={value}
+                                            className="gd-grid-layout__item gd-grid-layout__item--ruler"
+                                        >
+                                            {value}
+                                        </div>
+                                    ))}
+                                </div>
                             </OverlayControllerProvider>
                         </div>
                         <div

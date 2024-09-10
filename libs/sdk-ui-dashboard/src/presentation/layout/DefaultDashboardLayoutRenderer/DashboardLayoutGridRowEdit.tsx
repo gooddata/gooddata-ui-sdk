@@ -1,6 +1,6 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React, { useMemo } from "react";
-import { Col, Row } from "react-grid-system";
+// import { Col, Row } from "react-grid-system";
 import reverse from "lodash/fp/reverse.js";
 
 import { HeightResizerHotspot, useIsDraggingWidget } from "../../dragAndDrop/index.js";
@@ -53,7 +53,12 @@ export function DashboardLayoutGridRowEdit<TWidget>(
                           acc,
                           index + 1,
                           0,
-                          <Col xl={12} key={`HeightResizerHotspot-${index}`} style={{ minHeight: 0 }}>
+                          <div
+                              className="gd-grid-layout__container--virtual"
+                              key={`HeightResizerHotspot-${index}`}
+                              style={{ minHeight: 0 }}
+                          >
+                              {/*<Col xl={12} key={`HeightResizerHotspot-${index}`} style={{ minHeight: 0 }}>*/}
                               <HeightResizerHotspot
                                   key={`HeightResizerHotspot-${index}`}
                                   screen={screen}
@@ -61,14 +66,16 @@ export function DashboardLayoutGridRowEdit<TWidget>(
                                   section={section}
                                   items={itemsInRow}
                               />
-                          </Col>,
+                              {/*</Col>*/}
+                          </div>,
                       );
                   }, rowItems),
         [isDraggingWidget, rowItems, itemsInRowsByIndex, screen, getLayoutDimensions, section],
     );
 
     return (
-        <Row className="gd-fluidlayout-row s-gd-fluid-layout-row">
+        // <Row className="gd-fluidlayout-row s-gd-fluid-layout-row">
+        <>
             {gridRowRenderer
                 ? gridRowRenderer({
                       children: extendedRows,
@@ -78,7 +85,8 @@ export function DashboardLayoutGridRowEdit<TWidget>(
                       renderMode,
                   })
                 : extendedRows}
-        </Row>
+        </>
+        // </Row>
     );
 }
 

@@ -1,17 +1,18 @@
-// (C) 2007-2023 GoodData Corporation
-import { IDashboardLayout, ScreenSize } from "@gooddata/sdk-model";
+// (C) 2007-2024 GoodData Corporation
+import { IDashboardLayout /*, ScreenSize, IDashboardWidget*/ } from "@gooddata/sdk-model";
 import cx from "classnames";
 import isEqual from "lodash/isEqual.js";
 import React, { useCallback, useMemo } from "react";
-import {
-    Container,
-    ScreenClass,
-    ScreenClassProvider,
-    ScreenClassRender,
-    setConfiguration,
-} from "react-grid-system";
+// import {
+//     Col,
+//     Container,
+//     ScreenClass,
+//     ScreenClassProvider,
+//     ScreenClassRender,
+//     setConfiguration,
+// } from "react-grid-system";
 import { DashboardLayoutFacade } from "../../../_staging/dashboard/fluidLayout/facade/layout.js";
-import { DASHBOARD_LAYOUT_GRID_CONFIGURATION } from "../../constants/index.js";
+// import { DASHBOARD_LAYOUT_GRID_CONFIGURATION } from "../../constants/index.js";
 import { emptyDOMRect } from "../constants.js";
 import { DashboardLayoutSection } from "./DashboardLayoutSection.js";
 import {
@@ -24,9 +25,12 @@ import {
     getLayoutWithoutGridHeights,
     getResizedItemPositions,
     unifyDashboardLayoutItemHeights,
+    implicitLayoutItemSizeFromXlSize,
 } from "./utils/sizing.js";
+import { GRID_COLUMNS_COUNT } from "./constants.js";
+import { useScreenSize } from "./useScreenSize.js";
 
-setConfiguration(DASHBOARD_LAYOUT_GRID_CONFIGURATION);
+// setConfiguration(DASHBOARD_LAYOUT_GRID_CONFIGURATION);
 
 const removeHeights = <TWidget,>(layout: IDashboardLayout<TWidget>, enableCustomHeight: boolean) => {
     if (enableCustomHeight) {
@@ -47,6 +51,7 @@ const defaultSectionKeyGetter: IDashboardLayoutSectionKeyGetter<unknown> = ({ se
 export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWidget>): JSX.Element {
     const {
         layout,
+        screen: providedScreen,
         sectionKeyGetter = defaultSectionKeyGetter,
         sectionRenderer,
         sectionHeaderRenderer,
@@ -59,6 +64,7 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
         onMouseLeave,
         enableCustomHeight,
         renderMode = "view",
+        isNestedLayout,
     } = props;
 
     const layoutRef = React.useRef<HTMLDivElement>(null);
@@ -112,40 +118,70 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
         [debug, resizedItemPositions, widgetRenderer],
     );
 
+    const detectedScreenSize = useScreenSize(layoutRef);
+    const screenSize = providedScreen ?? detectedScreenSize;
+
+    // TODO handle undefined size?
+    const possibleLayoutSizes = implicitLayoutItemSizeFromXlSize(layout.size!);
+    const layoutSize = possibleLayoutSizes[screenSize];
+
     return (
         <div
-            className={cx("gd-fluidlayout-container", "s-fluid-layout-container", "gd-dashboards", className)}
+            // className={cx("gd-fluidlayout-container", "s-fluid-layout-container", "gd-dashboards", className)}
+            className={cx("gd-dashboards", className, {
+                "gd-grid-layout__container": !isNestedLayout,
+                "gd-grid-layout__item": isNestedLayout,
+                "gd-grid-layout__item--container": isNestedLayout,
+                [`gd-grid-layout__item--span-${layoutSize?.gridWidth ?? GRID_COLUMNS_COUNT}`]: isNestedLayout,
+            })}
             onMouseLeave={onMouseLeave}
             ref={layoutRef}
         >
-            <ScreenClassProvider useOwnWidth={false}>
-                <ScreenClassRender
-                    render={(screenClass: ScreenClass) => {
-                        const screen = screenClass as ScreenSize;
-                        return screen ? (
-                            <Container fluid={true} className="gd-fluidlayout-layout s-fluid-layout">
-                                {layoutFacade.sections().map((section) => {
-                                    return (
-                                        <DashboardLayoutSection
-                                            key={sectionKeyGetter({ section, screen })}
-                                            section={section}
-                                            sectionRenderer={sectionRendererWrapped}
-                                            sectionHeaderRenderer={sectionHeaderRenderer}
-                                            itemKeyGetter={itemKeyGetter}
-                                            itemRenderer={itemRenderer}
-                                            gridRowRenderer={gridRowRenderer}
-                                            widgetRenderer={widgetRendererWrapped}
-                                            screen={screen}
-                                            renderMode={renderMode}
-                                            getLayoutDimensions={getLayoutDimensions}
-                                        />
-                                    );
-                                })}
-                            </Container>
-                        ) : null;
-                    }}
-                />
-            </ScreenClassProvider>
+            {layoutFacade.sections().map((section) => {
+                return (
+                    <DashboardLayoutSection
+                        key={sectionKeyGetter({ section, screen: screenSize })}
+                        section={section}
+                        sectionRenderer={sectionRendererWrapped}
+                        sectionHeaderRenderer={sectionHeaderRenderer}
+                        itemKeyGetter={itemKeyGetter}
+                        itemRenderer={itemRenderer}
+                        gridRowRenderer={gridRowRenderer}
+                        widgetRenderer={widgetRendererWrapped}
+                        screen={screenSize}
+                        renderMode={renderMode}
+                        getLayoutDimensions={getLayoutDimensions}
+                    />
+                );
+            })}
+            {/*<ScreenClassProvider useOwnWidth={false}>*/}
+            {/*    <ScreenClassRender*/}
+            {/*        render={(screenClass: ScreenClass) => {*/}
+            {/*            const screen = screenClass as ScreenSize;*/}
+            {/*            return screen ? (*/}
+            {/*                <LayoutContainer item={layout} isNestedLayout={isNestedLayout}>*/}
+            {/*                    {layoutFacade.sections().map((section) => {*/}
+            {/*                        return (*/}
+            {/*                            <DashboardLayoutSection*/}
+            {/*                                key={sectionKeyGetter({ section, screen })}*/}
+            {/*                                section={section}*/}
+            {/*                                sectionRenderer={sectionRendererWrapped}*/}
+            {/*                                sectionHeaderRenderer={sectionHeaderRenderer}*/}
+            {/*                                itemKeyGetter={itemKeyGetter}*/}
+            {/*                                itemRenderer={itemRenderer}*/}
+            {/*                                gridRowRenderer={gridRowRenderer}*/}
+            {/*                                widgetRenderer={widgetRendererWrapped}*/}
+            {/*                                screen={screen}*/}
+            {/*                                renderMode={renderMode}*/}
+            {/*                                getLayoutDimensions={getLayoutDimensions}*/}
+            {/*                            />*/}
+            {/*                        );*/}
+            {/*                    })}*/}
+            {/*                </LayoutContainer>*/}
+            {/*            ) : null;*/}
+            {/*        }}*/}
+            {/*    />*/}
+            {/*</ScreenClassProvider>*/}
         </div>
     );
 }

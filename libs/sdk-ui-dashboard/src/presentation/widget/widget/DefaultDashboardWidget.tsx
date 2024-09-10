@@ -9,6 +9,7 @@ import {
     isKpiWidget,
     isRichTextWidget,
     isVisualizationSwitcherWidget,
+    isDashboardLayout,
 } from "@gooddata/sdk-model";
 import { BackendProvider, convertError, useBackendStrict } from "@gooddata/sdk-ui";
 import { withEventing } from "@gooddata/sdk-backend-base";
@@ -25,6 +26,7 @@ import { DefaultDashboardKpiWidget } from "./DefaultDashboardKpiWidget.js";
 import { RenderModeAwareDashboardInsightWidget } from "./InsightWidget/index.js";
 import { RenderModeAwareDashboardRichTextWidget } from "./RichTextWidget/index.js";
 import { RenderModeAwareDashboardVisualizationSwitchertWidget } from "./VisualizationSwitcherWidget/RenderModeAwareDashboardVisualizationSwitcherWidget.js";
+import { DashboardLayout } from "../../layout/index.js";
 
 /**
  * @internal
@@ -126,6 +128,8 @@ export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget
         }
 
         return <BackendProvider backend={backendWithEventing}>{renderWidget}</BackendProvider>;
+    } else if (isDashboardLayout(widget)) {
+        return <DashboardLayout layout={widget} screen={screen} onFiltersChange={onFiltersChange} />;
     }
 
     return <div>Unknown widget</div>;

@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { IDashboardLayout, IDashboardWidget, ScreenSize } from "@gooddata/sdk-model";
 import { RenderMode } from "../../../types.js";
 import {
@@ -339,6 +339,10 @@ export interface IDashboardLayoutRenderProps<TWidget = IDashboardWidget> {
      * Dashboard layout definition to render.
      */
     layout: IDashboardLayout<TWidget>;
+
+    screen?: ScreenSize;
+
+    isNestedLayout: boolean;
 
     /**
      * Callback to determine a unique key of the section.

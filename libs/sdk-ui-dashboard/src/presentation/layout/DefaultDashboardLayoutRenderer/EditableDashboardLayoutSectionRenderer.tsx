@@ -1,7 +1,6 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React from "react";
 import { IDashboardLayoutSectionRenderer } from "./interfaces.js";
-import cx from "classnames";
 import {
     DashboardLayoutSectionBorder,
     DashboardLayoutSectionBorderStatus,
@@ -9,8 +8,8 @@ import {
 } from "../../dragAndDrop/index.js";
 import { selectActiveSectionIndex, useDashboardSelector } from "../../../model/index.js";
 
-const isHiddenStyle = { height: 0, width: 0, overflow: "hidden", flex: 0 };
-const defaultStyle = {};
+// const isHiddenStyle = { height: 0, width: 0, overflow: "hidden", flex: 0 };
+// const defaultStyle = {};
 
 function useBorderStatus(sectionIndex: number): DashboardLayoutSectionBorderStatus {
     const activeSectionIndex = useDashboardSelector(selectActiveSectionIndex);
@@ -24,19 +23,20 @@ function useBorderStatus(sectionIndex: number): DashboardLayoutSectionBorderStat
 }
 
 export const EditableDashboardLayoutSectionRenderer: IDashboardLayoutSectionRenderer<unknown> = (props) => {
-    const { children, className, debug, isHidden, section } = props;
+    const { children, /*className, debug, isHidden,*/ section } = props;
 
-    const style = isHidden ? isHiddenStyle : defaultStyle;
+    // const style = isHidden ? isHiddenStyle : defaultStyle;
     const status = useBorderStatus(section.index());
 
+    // TODO move the functionality to widget itself, no wrapper here to fuck up the grid
     return (
-        <div
-            className={cx(["gd-fluidlayout-row", "s-fluid-layout-row", className], {
-                "gd-fluidlayout-row-debug": debug,
-            })}
-            style={style}
-        >
-            <DashboardLayoutSectionBorder status={status}>{children}</DashboardLayoutSectionBorder>
-        </div>
+        // <div
+        //     className={cx(["gd-fluidlayout-row", "s-fluid-layout-row", className], {
+        //         "gd-fluidlayout-row-debug": debug,
+        //     })}
+        //     style={style}
+        // >
+        <DashboardLayoutSectionBorder status={status}>{children}</DashboardLayoutSectionBorder>
+        // </div>
     );
 };

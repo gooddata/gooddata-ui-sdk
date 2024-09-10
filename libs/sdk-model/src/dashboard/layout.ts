@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import isArray from "lodash/isArray.js";
 import { IWidget, IWidgetDefinition, isWidget, isWidgetDefinition } from "./widget.js";
@@ -150,6 +150,8 @@ export interface IDashboardLayoutSize {
     heightAsRatio?: number;
 }
 
+// export type IDashboardLayoutSectionItemsDirection = "row" | "column";
+
 /**
  * Dashboard layout section represents a group of widgets on the dashboard with a title and description.
  * @public
@@ -169,6 +171,17 @@ export interface IDashboardLayoutSection<TWidget = IDashboardWidget> {
      * Section header with title and description.
      */
     header?: IDashboardLayoutSectionHeader;
+
+    /**
+     * Flex-like direction of section items.
+     * Value "row" is used as a default when not specified otherwise.
+     */
+    // direction?: IDashboardLayoutSectionItemsDirection;
+
+    /**
+     * The size of the section
+     */
+    size?: IDashboardLayoutSize;
 }
 
 /**

@@ -4212,11 +4212,15 @@ export interface IDashboardLayoutProps {
     // (undocumented)
     ErrorComponent?: React.ComponentType<IErrorProps>;
     // (undocumented)
+    layout?: IDashboardLayout<ExtendedDashboardWidget>;
+    // (undocumented)
     onDrill?: OnFiredDashboardDrillEvent;
     // (undocumented)
     onError?: OnError;
     // (undocumented)
     onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
+    // (undocumented)
+    screen?: ScreenSize;
 }
 
 // @public
