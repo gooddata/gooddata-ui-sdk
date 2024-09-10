@@ -15,6 +15,7 @@ export interface IFilterViews {
  */
 export interface FilterViewsState {
     filterViews: IFilterViews[];
+    isLoading: boolean;
 }
 
-export const filterViewsInitialState: FilterViewsState = { filterViews: [] };
+export const filterViewsInitialState: FilterViewsState = { filterViews: [], isLoading: false };

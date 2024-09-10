@@ -46,6 +46,7 @@ export const AddFilterView: React.FC<IAddFilterViewProps> = ({ onClose }) => {
                     onChange={onInputChange}
                     label={intl.formatMessage({ id: "filters.filterViews.add.nameLabel" })}
                     placeholder={intl.formatMessage({ id: "filters.filterViews.add.namePlaceholder" })}
+                    onEnterKeyPress={handleSave}
                 />
                 <div className="gd-filter-view-add-checkbox-row">
                     <Checkbox

@@ -416,4 +416,4 @@ export type { UsersState } from "./users/usersState.js";
 export { selectUsers } from "./users/usersSelectors.js";
 
 export type { IFilterViews, FilterViewsState } from "./filterViews/index.js";
-export { selectFilterViews } from "./filterViews/index.js";
+export { selectFilterViews, selectFilterViewsAreLoading } from "./filterViews/index.js";
