@@ -18,8 +18,9 @@ export interface IAlertComparisonOperatorSelectProps {
     measure: AlertMetric | undefined;
     selectedComparisonOperator: IAlertComparisonOperator | undefined;
     selectedRelativeOperator: [IAlertRelativeOperator, IAlertRelativeArithmeticOperator] | undefined;
-    onComparisonOperatorChange: (comparisonOperator: IAlertComparisonOperator) => void;
+    onComparisonOperatorChange: (metric: AlertMetric, comparisonOperator: IAlertComparisonOperator) => void;
     onRelativeOperatorChange: (
+        metric: AlertMetric,
         relativeOperator: IAlertRelativeOperator,
         relativeArithmeticOperator: IAlertRelativeArithmeticOperator,
     ) => void;
@@ -28,6 +29,7 @@ export interface IAlertComparisonOperatorSelectProps {
 
 export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSelectProps) => {
     const {
+        measure,
         selectedComparisonOperator,
         onComparisonOperatorChange,
         selectedRelativeOperator,
@@ -46,6 +48,10 @@ export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSel
     const intl = useIntl();
 
     const operators = useOperators(props.measure);
+
+    if (!measure) {
+        return null;
+    }
 
     return (
         <div className="gd-alert-comparison-operator-select">
@@ -121,10 +127,11 @@ export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSel
                                         onClick={() => {
                                             const [first, second] = prop.item.id.split(".");
                                             if (first && !second) {
-                                                onComparisonOperatorChange(first);
+                                                onComparisonOperatorChange(measure, first);
                                             }
                                             if (first && second) {
                                                 onRelativeOperatorChange(
+                                                    measure,
                                                     second as IAlertRelativeOperator,
                                                     first as IAlertRelativeArithmeticOperator,
                                                 );
