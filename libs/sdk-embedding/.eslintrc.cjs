@@ -12,4 +12,5 @@ module.exports = {
     rules: {
         "@typescript-eslint/no-namespace": "off",
     },
+    parserOptions: { tsconfigRootDir: __dirname, project: "tsconfig.json" },
 };

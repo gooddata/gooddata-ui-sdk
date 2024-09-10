@@ -14,6 +14,7 @@
     "exports": {
         ".": "./esm/index.js",
         "./styles/css/*": "./styles/css/*",
+        "./styles/scss/*": "./styles/scss/*",
         "./internal-tests/CoreAreaChart": "./esm/charts/areaChart/CoreAreaChart.js",
         "./internal-tests/CoreBarChart": "./esm/charts/barChart/CoreBarChart.js",
         "./internal-tests/CoreBubbleChart": "./esm/charts/bubbleChart/CoreBubbleChart.js",

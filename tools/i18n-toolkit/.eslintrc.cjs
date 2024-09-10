@@ -9,7 +9,7 @@ module.exports = {
         "plugin:regexp/recommended",
         "../../.eslintrc.js",
     ],
-    parserOptions: { tsconfigRootDir: __dirname },
+    parserOptions: { tsconfigRootDir: __dirname, project: "tsconfig.json" },
     rules: {
         "@typescript-eslint/no-namespace": "off",
     },
