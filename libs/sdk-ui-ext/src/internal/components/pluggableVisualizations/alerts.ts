@@ -35,6 +35,17 @@ export const isInsightSupportedForAlerts = (
 /**
  * @internal
  */
+export const isInsightSupportedForScheduledExports = (
+    insight: IInsight | IInsightDefinition | null | undefined,
+): boolean => {
+    const type = insight ? (insightVisualizationType(insight) as VisType) : null;
+
+    return type !== "repeater";
+};
+
+/**
+ * @internal
+ */
 export const isInsightAlertingConfigurationEnabled = (insight: IInsight | IInsightDefinition): boolean => {
     const visualizationProperties = insightProperties(insight);
     const controls = visualizationProperties?.controls ?? {};

@@ -8,6 +8,7 @@ import {
     isInsightAlertingConfigurationEnabled,
     isInsightScheduledExportsConfigurationEnabled,
     isInsightSupportedForAlerts,
+    isInsightSupportedForScheduledExports,
 } from "@gooddata/sdk-ui-ext";
 import {
     useDashboardSelector,
@@ -92,16 +93,20 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         alertingDisabledReason = "disabledOnInsight";
     }
 
+    const isInsightTypeSupportedForScheduling = isInsightSupportedForScheduledExports(insight);
     const isInsightEnabledForScheduling = isInsightScheduledExportsConfigurationEnabled(insight);
     const scheduleExportDisabled =
-        !isStandardWidget || !isInsightEnabledForScheduling || widgetHasNoLocalIdentifier;
+        !isInsightTypeSupportedForScheduling ||
+        !isStandardWidget ||
+        !isInsightEnabledForScheduling ||
+        widgetHasNoLocalIdentifier;
     const scheduleExportManagementDisabled = !isStandardWidget;
     let scheduleExportDisabledReason: SchedulingDisabledReason | undefined = undefined;
     if (widgetHasNoLocalIdentifier) {
         scheduleExportDisabledReason = "oldWidget";
     } else if (!isStandardWidget) {
         scheduleExportDisabledReason = "incompatibleWidget";
-    } else if (!isInsightEnabledForScheduling) {
+    } else if (!isInsightEnabledForScheduling || !isInsightTypeSupportedForScheduling) {
         scheduleExportDisabledReason = "disabledOnInsight";
     }
 
