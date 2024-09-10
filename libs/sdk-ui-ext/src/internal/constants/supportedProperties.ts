@@ -342,6 +342,17 @@ export const WATERFALL_CHART_SUPPORTED_PROPERTIES = [
     "orientation.position",
 ];
 
+export const REPEATER_SUPPORTER_PROPERTIES_LIST = [
+    "columnWidths",
+    "colorMapping",
+    "rowHeight",
+    "cellVerticalAlign",
+    "cellTextWrapping",
+    "cellImageSizing",
+    "disableAlerts",
+    "disableScheduledExports",
+];
+
 export const HEADLINE_SUPPORTED_PROPERTIES = ["comparison", "disableAlerts", "disableScheduledExports"];
 
 export const HEADLINE_DEFAULT_CONTROL_PROPERTIES: HeadlineControlProperties = {

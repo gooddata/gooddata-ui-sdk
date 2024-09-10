@@ -18,7 +18,10 @@ import { getMeasuresFromMdObject } from "../../utils/bucketHelper.js";
 import InteractionsSection from "../configurationControls/interactions/InteractionsSection.js";
 import ForecastSection from "../configurationControls/forecast/ForecastSection.js";
 import { isForecastEnabled } from "../../utils/forecastHelper.js";
-import { isInsightSupportedForAlerts } from "../pluggableVisualizations/alerts.js";
+import {
+    isInsightSupportedForAlerts,
+    isInsightSupportedForScheduledExports,
+} from "../pluggableVisualizations/alerts.js";
 
 export interface IConfigurationPanelContentProps<PanelConfig = any> {
     properties?: IVisualizationProperties;
@@ -125,8 +128,11 @@ export default abstract class ConfigurationPanelContent<
 
         const isAlertingEnabled = featureFlags.enableAlerting;
         const isScheduledExportsEnabled = featureFlags.enableScheduling;
+        const insightSupportsScheduledExports = isInsightSupportedForScheduledExports(insight);
         const insightSupportsAlerts = isInsightSupportedForAlerts(insight);
         const supportsAlertsConfiguration = insightSupportsAlerts && isAlertingEnabled;
+        const supportsScheduledExportsConfiguration =
+            insightSupportsScheduledExports && isScheduledExportsEnabled;
 
         return supportsAlertsConfiguration || panelConfig.supportsAttributeHierarchies ? (
             <InteractionsSection
@@ -136,7 +142,7 @@ export default abstract class ConfigurationPanelContent<
                 pushData={pushData}
                 supportsAlertConfiguration={supportsAlertsConfiguration}
                 supportsDrillDownConfiguration={panelConfig.supportsAttributeHierarchies}
-                supportsScheduledExportsConfiguration={isScheduledExportsEnabled}
+                supportsScheduledExportsConfiguration={supportsScheduledExportsConfiguration}
                 InteractionsDetailRenderer={configurationPanelRenderers?.InteractionsDetailRenderer}
             />
         ) : null;

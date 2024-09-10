@@ -52,15 +52,7 @@ import { IColorConfiguration } from "src/internal/interfaces/Colors.js";
 import compact from "lodash/compact.js";
 import { getValidProperties } from "../../../utils/colors.js";
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
-
-const REPEATER_SUPPORTER_PROPERTIES_LIST = [
-    "columnWidths",
-    "colorMapping",
-    "rowHeight",
-    "cellVerticalAlign",
-    "cellTextWrapping",
-    "cellImageSizing",
-];
+import { REPEATER_SUPPORTER_PROPERTIES_LIST } from "../../../constants/supportedProperties.js";
 
 /**
  * PluggableRepeater

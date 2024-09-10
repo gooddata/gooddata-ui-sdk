@@ -445,6 +445,9 @@ export const isInsightScheduledExportsConfigurationEnabled: (insight: IInsight |
 // @internal (undocumented)
 export const isInsightSupportedForAlerts: (insight: IInsight | IInsightDefinition | null | undefined) => boolean;
 
+// @internal (undocumented)
+export const isInsightSupportedForScheduledExports: (insight: IInsight | IInsightDefinition | null | undefined) => boolean;
+
 // @alpha
 export interface ISizeInfo {
     // (undocumented)
