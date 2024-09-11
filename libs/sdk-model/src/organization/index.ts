@@ -58,7 +58,6 @@ export const AssignedWorkspacePermissionValue = {
     EXPORT_PDF: "EXPORT_PDF",
     CREATE_FILTER_VIEW: "CREATE_FILTER_VIEW",
     VIEW: "VIEW",
-    CREATE_FILTER_VIEW: "CREATE_FILTER_VIEW",
 } as const;
 
 /**

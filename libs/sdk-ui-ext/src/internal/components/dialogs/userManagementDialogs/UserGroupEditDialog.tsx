@@ -46,6 +46,7 @@ export interface IUserGroupEditDialogProps extends IWithTelemetryProps {
     onSuccess: () => void;
     onClose: () => void;
     renderDataSourceIcon?: (dataSource: IGrantedDataSource) => JSX.Element;
+    areFilterViewsEnabled?: boolean;
 }
 
 const UserGroupEditDialogComponent: React.FC<IUserGroupEditDialogProps> = ({
@@ -56,6 +57,7 @@ const UserGroupEditDialogComponent: React.FC<IUserGroupEditDialogProps> = ({
     onClose,
     initialView = "VIEW",
     renderDataSourceIcon,
+    areFilterViewsEnabled = false,
 }) => {
     const intl = useIntl();
     const { dialogMode, setDialogMode } = useUserGroupDialogMode(initialView);
@@ -214,6 +216,7 @@ const UserGroupEditDialogComponent: React.FC<IUserGroupEditDialogProps> = ({
                                             mode="VIEW"
                                             onDelete={removeGrantedWorkspace}
                                             onChange={updateGrantedWorkspace}
+                                            areFilterViewsEnabled={areFilterViewsEnabled}
                                         />
                                     )}
                                     {selectedTabId.id === userGroupDialogTabsMessages.dataSources.id && (
@@ -249,6 +252,7 @@ const UserGroupEditDialogComponent: React.FC<IUserGroupEditDialogProps> = ({
                                     onSubmit={onWorkspacesChanged}
                                     onCancel={isOpenedInEditMode ? onClose : () => setDialogMode("VIEW")}
                                     onClose={onClose}
+                                    areFilterViewsEnabled={areFilterViewsEnabled}
                                 />
                             )}
                             {dialogMode === "USERS" && (

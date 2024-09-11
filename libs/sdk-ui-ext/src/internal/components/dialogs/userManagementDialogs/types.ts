@@ -46,7 +46,14 @@ export type UserGroupEditDialogMode = "VIEW" | "WORKSPACE" | "USERS" | "DATA_SOU
 
 export type ListMode = "VIEW" | "EDIT";
 
-export type WorkspacePermission = "VIEW" | "VIEW_AND_EXPORT" | "ANALYZE" | "ANALYZE_AND_EXPORT" | "MANAGE";
+export type WorkspacePermission =
+    | "VIEW"
+    | "VIEW_AND_SAVE_VIEWS"
+    | "VIEW_AND_EXPORT"
+    | "VIEW_AND_EXPORT_AND_SAVE_VIEWS"
+    | "ANALYZE"
+    | "ANALYZE_AND_EXPORT"
+    | "MANAGE";
 
 /**
  * @internal

@@ -53,8 +53,12 @@ const asPermissions = (permission: WorkspacePermission): AssignedWorkspacePermis
     switch (permission) {
         case "VIEW":
             return ["VIEW"];
+        case "VIEW_AND_SAVE_VIEWS":
+            return ["VIEW", "CREATE_FILTER_VIEW"];
         case "VIEW_AND_EXPORT":
             return ["VIEW", "EXPORT"];
+        case "VIEW_AND_EXPORT_AND_SAVE_VIEWS":
+            return ["VIEW", "EXPORT", "CREATE_FILTER_VIEW"];
         case "ANALYZE":
             return ["ANALYZE"];
         case "ANALYZE_AND_EXPORT":
@@ -96,6 +100,9 @@ export const asPermission = (permissions: AssignedWorkspacePermission[]): Worksp
         return permissions.includes("EXPORT") ? "ANALYZE_AND_EXPORT" : "ANALYZE"; // TODO what about EXPORT_PDF granularity?
     }
     if (permissions.includes("VIEW")) {
+        if (permissions.includes("CREATE_FILTER_VIEW")) {
+            return permissions.includes("EXPORT") ? "VIEW_AND_EXPORT_AND_SAVE_VIEWS" : "VIEW_AND_SAVE_VIEWS";
+        }
         return permissions.includes("EXPORT") ? "VIEW_AND_EXPORT" : "VIEW";
     }
     return "VIEW";

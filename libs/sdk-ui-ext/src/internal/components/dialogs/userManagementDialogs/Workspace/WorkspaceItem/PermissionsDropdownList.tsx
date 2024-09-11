@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import React, { useCallback } from "react";
 import { useIntl, defineMessages } from "react-intl";
@@ -12,7 +12,11 @@ import { PermissionDropdownItem } from "./PermissionDropdownItem.js";
 
 const userGroupTooltipMessages = defineMessages({
     VIEW: { id: "userManagement.workspace.permissionGroup.view.tooltip" },
+    VIEW_AND_SAVE_VIEWS: { id: "userManagement.workspace.permissionGroup.viewSaveViews.tooltip" },
     VIEW_AND_EXPORT: { id: "userManagement.workspace.permissionGroup.viewExport.tooltip" },
+    VIEW_AND_EXPORT_AND_SAVE_VIEWS: {
+        id: "userManagement.workspace.permissionGroup.viewExportSaveViews.tooltip",
+    },
     ANALYZE: { id: "userManagement.workspace.permissionGroup.analyze.tooltip" },
     ANALYZE_AND_EXPORT: { id: "userManagement.workspace.permissionGroup.analyzeExport.tooltip" },
     MANAGE: { id: "userManagement.workspace.permissionGroup.manage.tooltip" },
@@ -20,7 +24,11 @@ const userGroupTooltipMessages = defineMessages({
 
 const userTooltipMessages = defineMessages({
     VIEW: { id: "userManagement.workspace.permissionUser.view.tooltip" },
+    VIEW_AND_SAVE_VIEWS: { id: "userManagement.workspace.permissionUser.viewSaveViews.tooltip" },
     VIEW_AND_EXPORT: { id: "userManagement.workspace.permissionUser.viewExport.tooltip" },
+    VIEW_AND_EXPORT_AND_SAVE_VIEWS: {
+        id: "userManagement.workspace.permissionUser.viewExportSaveViews.tooltip",
+    },
     ANALYZE: { id: "userManagement.workspace.permissionUser.analyze.tooltip" },
     ANALYZE_AND_EXPORT: { id: "userManagement.workspace.permissionUser.analyzeExport.tooltip" },
     MANAGE: { id: "userManagement.workspace.permissionUser.manage.tooltip" },

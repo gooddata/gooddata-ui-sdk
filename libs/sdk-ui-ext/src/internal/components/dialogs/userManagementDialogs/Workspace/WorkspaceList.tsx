@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import React, { useMemo } from "react";
 
 import { sortByName } from "../utils.js";
@@ -13,6 +13,7 @@ export interface IWorkspaceListProps {
     mode: ListMode;
     onDelete: (workspace: IGrantedWorkspace) => void;
     onChange?: (workspace: IGrantedWorkspace) => void;
+    areFilterViewsEnabled: boolean;
 }
 
 export const WorkspaceList: React.FC<IWorkspaceListProps> = ({
@@ -21,6 +22,7 @@ export const WorkspaceList: React.FC<IWorkspaceListProps> = ({
     mode,
     onChange,
     onDelete,
+    areFilterViewsEnabled,
 }) => {
     const sortedWorkspaces = useMemo(() => {
         return workspaces ? [...workspaces].sort(sortByName) : [];
@@ -40,6 +42,7 @@ export const WorkspaceList: React.FC<IWorkspaceListProps> = ({
                         subjectType={subjectType}
                         onChange={onChange}
                         onDelete={onDelete}
+                        areFilterViewsEnabled={areFilterViewsEnabled}
                     />
                 );
             })}

@@ -19,6 +19,7 @@ export interface IAddWorkspaceProps {
     onSubmit: (workspaces: IGrantedWorkspace[]) => void;
     onCancel: () => void;
     onClose: () => void;
+    areFilterViewsEnabled: boolean;
 }
 
 export const AddWorkspace: React.FC<IAddWorkspaceProps> = ({
@@ -29,6 +30,7 @@ export const AddWorkspace: React.FC<IAddWorkspaceProps> = ({
     onSubmit,
     onCancel,
     onClose,
+    areFilterViewsEnabled,
 }) => {
     const intl = useIntl();
     const { addedWorkspaces, isProcessing, onAdd, onDelete, onChange, onSelect } = useAddWorkspace(
@@ -68,6 +70,7 @@ export const AddWorkspace: React.FC<IAddWorkspaceProps> = ({
                 workspaces={addedWorkspaces}
                 onDelete={onDelete}
                 onChange={onChange}
+                areFilterViewsEnabled={areFilterViewsEnabled}
             />
         </ConfirmDialogBase>
     );

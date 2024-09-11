@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import React from "react";
 import cx from "classnames";
@@ -35,6 +35,7 @@ interface IGranularGranteeUserGroupItemProps {
     subjectType: WorkspacePermissionSubject;
     onChange: (grantee: IGrantedWorkspace) => void;
     onDelete: (grantee: IGrantedWorkspace) => void;
+    areFilterViewsEnabled: boolean;
 }
 
 export const WorkspaceItem: React.FC<IGranularGranteeUserGroupItemProps> = ({
@@ -42,6 +43,7 @@ export const WorkspaceItem: React.FC<IGranularGranteeUserGroupItemProps> = ({
     subjectType,
     onChange,
     onDelete,
+    areFilterViewsEnabled,
 }) => {
     const { isDropdownOpen, toggleDropdown } = usePermissionsDropdownState();
     const { isDropdownOpen: isHierarchicalDropdownOpen, toggleDropdown: toggleHierarchicalDropdown } =
@@ -69,6 +71,7 @@ export const WorkspaceItem: React.FC<IGranularGranteeUserGroupItemProps> = ({
                 onChange={onChange}
                 onDelete={onDelete}
                 className="gd-grantee-granular-permission"
+                areFilterViewsEnabled={areFilterViewsEnabled}
             />
             <div className="gd-grantee-content">
                 <div className="gd-grantee-content-label">{workspace.title}</div>
