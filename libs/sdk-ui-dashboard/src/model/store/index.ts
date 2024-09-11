@@ -124,6 +124,7 @@ export {
     selectCanRefreshData,
     selectCanManageScheduledMail,
     selectCanManageAttributeHierarchy,
+    selectCanCreateFilterView,
 } from "./permissions/permissionsSelectors.js";
 export type { DashboardPermissionsState } from "./dashboardPermissions/dashboardPermissionsState.js";
 export {

@@ -667,6 +667,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
             return this.authCall(async (client) => {
                 if (isDefault) {
+                    // this should ideally be handled by the POST call below so all these calls are just
+                    // a single transaction and the action itself is more performant on UI
                     await this.unsetDashboardDefaultFilterView(client, dashboardId);
                 }
                 const profile = await client.profile.getCurrent();
@@ -745,6 +747,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         const id = await objRefToIdentifier(ref, this.authCall);
         await this.authCall(async (client) => {
             if (isDefault) {
+                // this should ideally be handled by the PATCH call below so all these calls are just
+                // a single transaction and the action itself is more performant on UI
                 const filterView = await this.getFilterView(client, id);
                 const dashboardId = filterView.data.relationships?.analyticalDashboard?.data?.id;
                 invariant(dashboardId, "Dashboard could not be determined for the filter view.");
