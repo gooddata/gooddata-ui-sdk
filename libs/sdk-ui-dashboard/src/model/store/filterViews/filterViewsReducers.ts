@@ -12,8 +12,14 @@ const setFilterViews: FilterViewsReducer<PayloadAction<IFilterViews>> = (state, 
         ...state.filterViews.filter((item) => !areObjRefsEqual(item.dashboard, action.payload.dashboard)),
         action.payload,
     ];
+    state.isLoading = false;
+};
+
+const setFilterLoading: FilterViewsReducer<PayloadAction<boolean>> = (state, action) => {
+    state.isLoading = action.payload;
 };
 
 export const filterViewsReducers = {
     setFilterViews,
+    setFilterLoading,
 };

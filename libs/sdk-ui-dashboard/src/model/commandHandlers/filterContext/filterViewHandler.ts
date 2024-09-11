@@ -7,6 +7,8 @@ import {
     IDashboardFilterView,
     ObjRef,
     areObjRefsEqual,
+    IFilterContextDefinition,
+    isDashboardAttributeFilter,
 } from "@gooddata/sdk-model";
 import { defaultErrorHandler } from "@gooddata/sdk-ui";
 
@@ -20,6 +22,7 @@ import {
     changeFilterContextSelection,
 } from "../../commands/index.js";
 import { selectFilterContextDefinition } from "../../store/filterContext/filterContextSelectors.js";
+import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
 import { selectFilterViews, filterViewsActions } from "../../store/filterViews/index.js";
 import {
     filterViewCreationSucceeded,
@@ -42,6 +45,7 @@ function createFilterView(
 }
 
 export function* saveFilterViewHandler(ctx: DashboardContext, cmd: SaveFilterView): SagaIterator<void> {
+    yield put(filterViewsActions.setFilterLoading(true));
     if (!ctx.dashboardRef) {
         throw Error("Dashboard ref must be provided.");
     }
@@ -50,10 +54,25 @@ export function* saveFilterViewHandler(ctx: DashboardContext, cmd: SaveFilterVie
         selectFilterContextDefinition,
     );
 
+    const virtualFilters: ReturnType<typeof selectCrossFilteringFiltersLocalIdentifiers> = yield select(
+        selectCrossFilteringFiltersLocalIdentifiers,
+    );
+
+    const sanitizedFilterContext: IFilterContextDefinition = {
+        ...filterContext,
+        // accept date filters, unknown filters (will probably always be true), non-virtual filters
+        filters: filterContext.filters.filter(
+            (filter) =>
+                !isDashboardAttributeFilter(filter) ||
+                !filter.attributeFilter.localIdentifier ||
+                !virtualFilters.includes(filter.attributeFilter.localIdentifier),
+        ),
+    };
+
     const filterView: IDashboardFilterViewSaveRequest = {
         name: cmd.payload.name,
         dashboard: ctx.dashboardRef,
-        filterContext,
+        filterContext: sanitizedFilterContext,
         isDefault: cmd.payload.isDefault,
     };
 
@@ -76,6 +95,7 @@ function deleteFilterView(ctx: DashboardContext, ref: ObjRef): Promise<void> {
 }
 
 export function* deleteFilterViewHandler(ctx: DashboardContext, cmd: DeleteFilterView): SagaIterator<void> {
+    yield put(filterViewsActions.setFilterLoading(true));
     try {
         const filterView: PromiseFnReturnType<typeof findFilterView> = yield call(
             findFilterView,
@@ -88,6 +108,7 @@ export function* deleteFilterViewHandler(ctx: DashboardContext, cmd: DeleteFilte
     } catch (error) {
         defaultErrorHandler(error);
         yield put(filterViewDeletionFailed(ctx));
+        yield put(filterViewsActions.setFilterLoading(false));
     }
 }
 
@@ -103,7 +124,7 @@ export function* applyFilterViewHandler(ctx: DashboardContext, cmd: ApplyFilterV
     );
 
     if (filterView) {
-        yield put(changeFilterContextSelection(filterView.filterContext.filters, false, cmd.correlationId));
+        yield put(changeFilterContextSelection(filterView.filterContext.filters, true, cmd.correlationId));
         yield put(filterViewApplicationSucceeded(ctx, filterView, cmd.correlationId));
     } else {
         yield put(filterViewApplicationFailed(ctx));
@@ -118,6 +139,7 @@ export function* setFilterViewAsDefaultHandler(
     ctx: DashboardContext,
     cmd: SetFilterViewAsDefault,
 ): SagaIterator<void> {
+    yield put(filterViewsActions.setFilterLoading(true));
     const filterView = yield call(findFilterView, cmd.payload.ref);
     const updatedFilterView: IDashboardFilterView = {
         ...filterView,
@@ -130,10 +152,12 @@ export function* setFilterViewAsDefaultHandler(
     } catch (error) {
         defaultErrorHandler(error);
         yield put(filterViewDefaultStatusChangeFailed(ctx, updatedFilterView));
+        yield put(filterViewsActions.setFilterLoading(false));
     }
 }
 
 export function* reloadFilterViewsHandler(ctx: DashboardContext): SagaIterator<void> {
+    yield put(filterViewsActions.setFilterLoading(true));
     try {
         const filterViews: PromiseFnReturnType<typeof loadFilterViews> = yield call(loadFilterViews, ctx);
         yield put(
@@ -144,5 +168,6 @@ export function* reloadFilterViewsHandler(ctx: DashboardContext): SagaIterator<v
         );
     } catch (error) {
         defaultErrorHandler(error);
+        yield put(filterViewsActions.setFilterLoading(false));
     }
 }

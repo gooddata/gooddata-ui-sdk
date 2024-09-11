@@ -16,6 +16,7 @@ import {
     selectDisableFilterViews,
     selectIsFilterViewsDialogOpen,
     selectFilterViewsDialogMode,
+    selectIsNewDashboard,
 } from "../../../../model/index.js";
 
 import { FilterViewsList } from "./FilterViewsList.js";
@@ -86,6 +87,7 @@ export const FilterViews: React.FC = () => {
     const isDashboardEditMode = useDashboardSelector(selectIsInEditMode);
     const filterViews = useDashboardSelector(selectFilterViews);
     const isFilterViewsEnabledForDashboard = !useDashboardSelector(selectDisableFilterViews);
+    const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
     const isMobile = useMediaQuery("mobileDevice");
     const { toggleDialog, openAddDialog, openListDialog, closeDialog } = useCallbacks();
 
@@ -93,7 +95,9 @@ export const FilterViews: React.FC = () => {
 
     // On mobile the dropdown button is not on filter bar but rendered inside the "..." dashboard menu.
     // The dropdown body must still be rendered so the body can be opened when user uses the menu.
-    const showDropdownButton = isFilterViewsEnabledForDashboard && !isMobile;
+    // Also, the menu is not available for new dashboard as new filter view can be saved only for an existing
+    // dashboard with ref id.
+    const showDropdownButton = isFilterViewsEnabledForDashboard && !isNewDashboard && !isMobile;
 
     const buttonClassNames = cx(
         "gd-filter-views-button",

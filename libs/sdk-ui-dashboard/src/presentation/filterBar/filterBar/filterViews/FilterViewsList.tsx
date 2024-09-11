@@ -11,9 +11,12 @@ import {
     applyFilterView,
     deleteFilterView,
     setFilterViewAsDefault,
+    useDashboardSelector,
+    selectFilterViewsAreLoading,
 } from "../../../../model/index.js";
 
 import { FilterViewDeleteConfirm } from "./FilterViewDeleteConfirm.js";
+import { LoadingComponent } from "@gooddata/sdk-ui";
 
 const HEADER_TOOLTIP_ALIGN_POINTS: IAlignPoint[] = [
     {
@@ -97,6 +100,7 @@ export const FilterViewsList: React.FC<IFilterViewsDropdownBodyProps> = ({
     const [filterViewToDelete, setFilterViewToDelete] = React.useState<IDashboardFilterView | undefined>(
         undefined,
     );
+    const isLoading = useDashboardSelector(selectFilterViewsAreLoading);
 
     return (
         <>
@@ -138,7 +142,11 @@ export const FilterViewsList: React.FC<IFilterViewsDropdownBodyProps> = ({
                     </Typography>
                 </div>
                 <div className="configuration-category">
-                    {filterViews && filterViews.length > 0 ? (
+                    {isLoading ? (
+                        <div className="gd-filter-view__list__empty">
+                            <LoadingComponent />
+                        </div>
+                    ) : filterViews && filterViews.length > 0 ? (
                         filterViews.map((filterView) => (
                             <FilterListItem
                                 key={objRefToString(filterView.ref)}

@@ -3565,6 +3565,8 @@ export type FilterViewDialogMode = "list" | "add";
 export interface FilterViewsState {
     // (undocumented)
     filterViews: IFilterViews[];
+    // (undocumented)
+    isLoading: boolean;
 }
 
 // @public (undocumented)
@@ -7340,6 +7342,9 @@ export const selectFilterContextIdentity: DashboardSelector<IDashboardObjectIden
 
 // @alpha (undocumented)
 export const selectFilterViews: DashboardSelector<IDashboardFilterView[]>;
+
+// @alpha (undocumented)
+export const selectFilterViewsAreLoading: DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export const selectFilterViewsDialogMode: DashboardSelector<FilterViewDialogMode>;

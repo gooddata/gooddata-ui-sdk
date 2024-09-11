@@ -17,6 +17,13 @@ const AppWithBackend: React.FC = () => {
         <BackendProvider backend={backend}>
             <WorkspaceProvider workspace={import.meta.env.VITE_WORKSPACE}>
                 {/* Build your playground components under the playground directory.*/}
+                {/*<Dashboard*/}
+                {/*    dashboard={import.meta.env.VITE_DASHBOARD}*/}
+                {/*    backend={backend}*/}
+                {/*    config={{*/}
+                {/*        initialRenderMode: "view",*/}
+                {/*    }}*/}
+                {/*/>*/}
             </WorkspaceProvider>
         </BackendProvider>
     );
