@@ -3,7 +3,7 @@ import {
     ComparisonWrapper,
     RangeWrapper,
     RelativeWrapper,
-    JsonApiAutomationInAttributesAlert,
+    JsonApiAutomationOutAttributesAlert,
     JsonApiAutomationOutAttributesStateEnum,
     JsonApiAutomationOutIncludes,
     JsonApiAutomationOutList,
@@ -121,7 +121,7 @@ export const convertAutomationListToAutomations = (
 };
 
 const convertAlert = (
-    alert: JsonApiAutomationInAttributesAlert | undefined,
+    alert: JsonApiAutomationOutAttributesAlert | undefined,
     state: JsonApiAutomationOutAttributesStateEnum | undefined,
 ): IAutomationAlert | undefined => {
     if (!alert) {

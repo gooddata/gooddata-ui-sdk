@@ -80,6 +80,7 @@ export const AssignedWorkspacePermissionValue: {
     readonly EXPORT: "EXPORT";
     readonly EXPORT_TABULAR: "EXPORT_TABULAR";
     readonly EXPORT_PDF: "EXPORT_PDF";
+    readonly CREATE_FILTER_VIEW: "CREATE_FILTER_VIEW";
     readonly VIEW: "VIEW";
 };
 

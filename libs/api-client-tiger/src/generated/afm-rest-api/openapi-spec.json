@@ -567,48 +567,6 @@
                 }
             }
         },
-        "/api/v1/actions/workspaces/{workspaceId}/ai/searchCreate": {
-            "post": {
-                "tags": ["Smart Functions", "actions"],
-                "summary": "(BETA) Semantic Search in Metadata + creates new visualizations",
-                "description": "(BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.",
-                "operationId": "aiSearchCreate",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "description": "Workspace identifier",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/SearchCreateRequest"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/SearchCreateResult"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/api/v1/actions/workspaces/{workspaceId}/ai/search": {
             "post": {
                 "tags": ["Smart Functions", "actions"],
@@ -686,6 +644,48 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/RouteResult"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/chat": {
+            "post": {
+                "tags": ["Smart Functions", "actions"],
+                "summary": "(BETA) Chat with AI",
+                "description": "(BETA) Combines multiple use cases such as search, create visualizations, ...",
+                "operationId": "aiChat",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ChatRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ChatResult"
                                 }
                             }
                         }
@@ -2738,134 +2738,120 @@
                 },
                 "description": "Entity describing the valid descendants response."
             },
-            "SearchCreateRequest": {
+            "SearchRequest": {
                 "required": ["question"],
                 "type": "object",
                 "properties": {
                     "question": {
                         "maxLength": 1000,
                         "type": "string",
-                        "description": "User question",
-                        "example": "Do you have anything about revenue?"
+                        "description": "Keyword/sentence is input for search."
                     },
-                    "limitSearch": {
+                    "objectTypes": {
+                        "type": "array",
+                        "description": "List of object types to search for.",
+                        "items": {
+                            "type": "string",
+                            "description": "Object type to search for.",
+                            "enum": [
+                                "attribute",
+                                "metric",
+                                "fact",
+                                "label",
+                                "date",
+                                "dataset",
+                                "visualization",
+                                "dashboard"
+                            ]
+                        }
+                    },
+                    "deepSearch": {
+                        "type": "boolean",
+                        "description": "Turn on deep search. If true, content of complex objects will be searched as well, e.g. metrics in visualizations.",
+                        "default": false
+                    },
+                    "limit": {
                         "type": "integer",
-                        "description": "Maximum number of search results.",
+                        "description": "Maximum number of results to return. There is a hard limit and the actual number of returned results may be lower than what is requested.",
                         "format": "int32",
                         "default": 10
                     },
-                    "limitCreate": {
-                        "type": "integer",
-                        "description": "Maximum number of created results.",
-                        "format": "int32",
-                        "default": 5
-                    },
                     "titleToDescriptorRatio": {
                         "type": "number",
-                        "description": "Ratio of title to descriptor.",
+                        "description": "Temporary for experiments. Ratio of title score to descriptor score.",
                         "format": "double",
-                        "default": 0.75
+                        "default": 0.7
+                    },
+                    "relevantScoreThreshold": {
+                        "type": "number",
+                        "description": "Score, above which we return found objects. Below this score objects are not relevant.",
+                        "format": "double",
+                        "default": 0.3
                     }
                 }
             },
-            "CreatedVisualization": {
-                "required": ["dimensionality", "id", "metrics", "title", "visualizationType"],
+            "SearchRelationshipObject": {
+                "required": [
+                    "sourceObjectId",
+                    "sourceObjectTitle",
+                    "sourceObjectType",
+                    "sourceWorkspaceId",
+                    "targetObjectId",
+                    "targetObjectTitle",
+                    "targetObjectType",
+                    "targetWorkspaceId"
+                ],
                 "type": "object",
                 "properties": {
-                    "id": {
+                    "sourceWorkspaceId": {
                         "type": "string",
-                        "description": "Proposed ID of the new visualization",
-                        "example": "revenue_by_country"
+                        "description": "Source workspace ID. If relationship is dashboard->visualization, this is the workspace where the dashboard is located."
                     },
-                    "title": {
+                    "sourceObjectId": {
                         "type": "string",
-                        "description": "Proposed title of the new visualization",
-                        "example": "Revenue by Country"
+                        "description": "Source object ID."
                     },
-                    "visualizationType": {
+                    "sourceObjectType": {
                         "type": "string",
-                        "description": "Visualization type requested in question",
-                        "example": "TABLE",
-                        "enum": ["TABLE", "HEADLINE", "BAR", "LINE", "PIE"]
+                        "description": "Source object type, e.g. dashboard."
                     },
-                    "metrics": {
-                        "type": "array",
-                        "description": "List of metrics to be used in the new visualization",
-                        "items": {
-                            "$ref": "#/components/schemas/Metric"
-                        }
+                    "sourceObjectTitle": {
+                        "type": "string",
+                        "description": "Source object title."
                     },
-                    "dimensionality": {
-                        "type": "array",
-                        "description": "List of attributes representing the dimensionality of the new visualization",
-                        "items": {
-                            "$ref": "#/components/schemas/DimAttribute"
-                        }
+                    "targetWorkspaceId": {
+                        "type": "string",
+                        "description": "Target workspace ID. If relationship is dashboard->visualization, this is the workspace where the visualization is located."
+                    },
+                    "targetObjectId": {
+                        "type": "string",
+                        "description": "Target object ID."
+                    },
+                    "targetObjectType": {
+                        "type": "string",
+                        "description": "Target object type, e.g. visualization."
+                    },
+                    "targetObjectTitle": {
+                        "type": "string",
+                        "description": "Target object title."
                     }
-                },
-                "description": "List of created visualizations"
+                }
             },
-            "DimAttribute": {
-                "required": ["id", "type"],
+            "SearchResult": {
+                "required": ["relationships", "results"],
                 "type": "object",
                 "properties": {
-                    "id": {
-                        "type": "string",
-                        "description": "ID of the object",
-                        "example": "obj-123"
-                    },
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "metric"
-                    }
-                },
-                "description": "List of attributes representing the dimensionality of the new visualization"
-            },
-            "Metric": {
-                "required": ["id", "type"],
-                "type": "object",
-                "properties": {
-                    "id": {
-                        "type": "string",
-                        "description": "ID of the object",
-                        "example": "obj-123"
-                    },
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "metric"
-                    },
-                    "aggFunction": {
-                        "type": "string",
-                        "description": "Agg function. Empty if a stored metric is used.",
-                        "example": "COUNT, SUM, MIN, MAX, AVG, MEDIAN",
-                        "enum": ["COUNT", "SUM", "MIN", "MAX", "AVG", "MEDIAN"]
-                    }
-                },
-                "description": "List of metrics to be used in the new visualization"
-            },
-            "SearchCreateResult": {
-                "required": ["createdVisualizations", "objects", "textResponse"],
-                "type": "object",
-                "properties": {
-                    "objects": {
+                    "results": {
                         "type": "array",
-                        "description": "List of search result objects",
                         "items": {
                             "$ref": "#/components/schemas/SearchResultObject"
                         }
                     },
-                    "createdVisualizations": {
+                    "relationships": {
                         "type": "array",
-                        "description": "List of created visualizations",
                         "items": {
-                            "$ref": "#/components/schemas/CreatedVisualization"
+                            "$ref": "#/components/schemas/SearchRelationshipObject"
                         }
-                    },
-                    "textResponse": {
-                        "type": "string",
-                        "description": "Text answer. Contains reasoning from AI. Can contain an equivalent of \"I don't know\"."
                     }
                 }
             },
@@ -2945,118 +2931,6 @@
                         "description": "Result score for exact match(id/title). 1/1000. Other scores are multiplied by this.",
                         "format": "int32"
                     }
-                },
-                "description": "List of search result objects"
-            },
-            "SearchRequest": {
-                "required": ["question"],
-                "type": "object",
-                "properties": {
-                    "question": {
-                        "maxLength": 1000,
-                        "type": "string",
-                        "description": "Keyword/sentence is input for search."
-                    },
-                    "objectTypes": {
-                        "type": "array",
-                        "description": "List of object types to search for.",
-                        "items": {
-                            "type": "string",
-                            "description": "Object type to search for.",
-                            "enum": [
-                                "attribute",
-                                "metric",
-                                "fact",
-                                "label",
-                                "date",
-                                "dataset",
-                                "visualization",
-                                "dashboard"
-                            ]
-                        }
-                    },
-                    "deepSearch": {
-                        "type": "boolean",
-                        "description": "Turn on deep search. If true, content of complex objects will be searched as well, e.g. metrics in visualizations.",
-                        "default": false
-                    },
-                    "limit": {
-                        "type": "integer",
-                        "description": "Maximum number of results to return. There is a hard limit and the actual number of returned results may be lower than what is requested.",
-                        "format": "int32",
-                        "default": 10
-                    },
-                    "titleToDescriptorRatio": {
-                        "type": "number",
-                        "description": "Temporary for experiments. Ratio of title score to descriptor score.",
-                        "format": "double",
-                        "default": 0.7
-                    }
-                }
-            },
-            "SearchRelationshipObject": {
-                "required": [
-                    "sourceObjectId",
-                    "sourceObjectTitle",
-                    "sourceObjectType",
-                    "sourceWorkspaceId",
-                    "targetObjectId",
-                    "targetObjectTitle",
-                    "targetObjectType",
-                    "targetWorkspaceId"
-                ],
-                "type": "object",
-                "properties": {
-                    "sourceWorkspaceId": {
-                        "type": "string",
-                        "description": "Source workspace ID. If relationship is dashboard->visualization, this is the workspace where the dashboard is located."
-                    },
-                    "sourceObjectId": {
-                        "type": "string",
-                        "description": "Source object ID."
-                    },
-                    "sourceObjectType": {
-                        "type": "string",
-                        "description": "Source object type, e.g. dashboard."
-                    },
-                    "sourceObjectTitle": {
-                        "type": "string",
-                        "description": "Source object title."
-                    },
-                    "targetWorkspaceId": {
-                        "type": "string",
-                        "description": "Target workspace ID. If relationship is dashboard->visualization, this is the workspace where the visualization is located."
-                    },
-                    "targetObjectId": {
-                        "type": "string",
-                        "description": "Target object ID."
-                    },
-                    "targetObjectType": {
-                        "type": "string",
-                        "description": "Target object type, e.g. visualization."
-                    },
-                    "targetObjectTitle": {
-                        "type": "string",
-                        "description": "Target object title."
-                    }
-                }
-            },
-            "SearchResult": {
-                "required": ["relationships", "results"],
-                "type": "object",
-                "properties": {
-                    "results": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/SearchResultObject"
-                        }
-                    },
-                    "relationships": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/SearchRelationshipObject"
-                        }
-                    }
                 }
             },
             "RouteRequest": {
@@ -3083,19 +2957,325 @@
                 }
             },
             "RouteResultObject": {
-                "required": ["score", "useCase"],
+                "required": ["exampleDescription", "score", "useCase"],
                 "type": "object",
                 "properties": {
                     "useCase": {
                         "type": "string",
                         "description": "Use case where to route, e.g. 'list dashboards' or 'create visualization'."
                     },
+                    "exampleDescription": {
+                        "type": "string",
+                        "description": "Use case description, which was hit by the similarity search."
+                    },
                     "score": {
                         "type": "number",
-                        "description": "Similarity score between input query and use case.",
+                        "description": "Similarity score between input query and the use case description.",
                         "format": "float"
                     }
                 }
+            },
+            "ActiveObjectIdentification": {
+                "required": ["id", "type", "workspaceId"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Object ID."
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type, e.g. dashboard."
+                    },
+                    "workspaceId": {
+                        "type": "string",
+                        "description": "Workspace ID."
+                    }
+                },
+                "description": "Object, with which the user is actively working."
+            },
+            "ChatRequest": {
+                "required": ["question"],
+                "type": "object",
+                "properties": {
+                    "question": {
+                        "maxLength": 2000,
+                        "type": "string",
+                        "description": "User question"
+                    },
+                    "limitSearch": {
+                        "type": "integer",
+                        "description": "Maximum number of search results.",
+                        "format": "int32",
+                        "default": 5
+                    },
+                    "limitCreate": {
+                        "type": "integer",
+                        "description": "Maximum number of created results.",
+                        "format": "int32",
+                        "default": 5
+                    },
+                    "conversationHistory": {
+                        "type": "array",
+                        "description": "List of conversation interactions",
+                        "items": {
+                            "$ref": "#/components/schemas/ConversationInteraction"
+                        }
+                    },
+                    "userContext": {
+                        "$ref": "#/components/schemas/UserContext"
+                    },
+                    "titleToDescriptorRatio": {
+                        "type": "number",
+                        "description": "Temporary for experiments. Ratio of title score to descriptor score.",
+                        "format": "double",
+                        "default": 0.7
+                    },
+                    "routeScoreThreshold": {
+                        "type": "number",
+                        "description": "Score, below which we set invalidQuestion to true. The question does not match to any use case",
+                        "format": "double",
+                        "default": 0.2
+                    },
+                    "searchScoreThreshold": {
+                        "type": "number",
+                        "description": "Score, above which we return found object(s) and don't call LLM to create new objects.",
+                        "format": "double",
+                        "default": 0.9
+                    },
+                    "relevantScoreThreshold": {
+                        "type": "number",
+                        "description": "Score, above which we return found objects. Below this score objects are not relevant.",
+                        "format": "double",
+                        "default": 0.3
+                    }
+                }
+            },
+            "ConversationInteraction": {
+                "required": ["content", "role"],
+                "type": "object",
+                "properties": {
+                    "content": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/CreatedVisualizationInteractionWithContext"
+                            },
+                            {
+                                "$ref": "#/components/schemas/FoundObjectInteractionWithContext"
+                            },
+                            {
+                                "$ref": "#/components/schemas/TextInteractionWithContext"
+                            }
+                        ]
+                    },
+                    "role": {
+                        "type": "string",
+                        "description": "Role of actor.",
+                        "enum": ["USER", "AI"]
+                    }
+                },
+                "description": "List of conversation interactions"
+            },
+            "CreatedVisualization": {
+                "required": ["dimensionality", "id", "metrics", "title", "visualizationType"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Proposed ID of the new visualization",
+                        "example": "revenue_by_country"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Proposed title of the new visualization",
+                        "example": "Revenue by Country"
+                    },
+                    "visualizationType": {
+                        "type": "string",
+                        "description": "Visualization type requested in question",
+                        "example": "TABLE",
+                        "enum": ["TABLE", "HEADLINE", "BAR", "LINE", "PIE"]
+                    },
+                    "metrics": {
+                        "type": "array",
+                        "description": "List of metrics to be used in the new visualization",
+                        "items": {
+                            "$ref": "#/components/schemas/Metric"
+                        }
+                    },
+                    "dimensionality": {
+                        "type": "array",
+                        "description": "List of attributes representing the dimensionality of the new visualization",
+                        "items": {
+                            "$ref": "#/components/schemas/DimAttribute"
+                        }
+                    }
+                },
+                "description": "Visualization created by AI."
+            },
+            "CreatedVisualizationInteractionWithContext": {
+                "required": ["createdVisualization", "includeToChatContext", "userFeedback"],
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/InteractionWithContext"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "createdVisualization": {
+                                "$ref": "#/components/schemas/CreatedVisualization"
+                            }
+                        }
+                    }
+                ]
+            },
+            "DimAttribute": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "ID of the object",
+                        "example": "country"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "attribute",
+                        "enum": ["attribute"]
+                    }
+                },
+                "description": "List of attributes representing the dimensionality of the new visualization"
+            },
+            "FoundObjectInteractionWithContext": {
+                "required": ["foundObject", "includeToChatContext", "userFeedback"],
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/InteractionWithContext"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "foundObject": {
+                                "$ref": "#/components/schemas/SearchResultObject"
+                            }
+                        }
+                    }
+                ]
+            },
+            "InteractionWithContext": {
+                "required": ["includeToChatContext", "userFeedback"],
+                "type": "object",
+                "properties": {
+                    "includeToChatContext": {
+                        "type": "boolean",
+                        "description": "Include all in the chat context. Used for further questions. Use if it's not clear which objects relate to the question."
+                    },
+                    "userFeedback": {
+                        "type": "string",
+                        "description": "User feedback",
+                        "enum": ["POSITIVE", "NEGATIVE", "NONE"]
+                    }
+                },
+                "description": "Interaction content."
+            },
+            "Metric": {
+                "required": ["id", "type"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "ID of the object",
+                        "example": "revenue"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "metric",
+                        "enum": ["metric", "fact", "attribute"]
+                    },
+                    "aggFunction": {
+                        "type": "string",
+                        "description": "Agg function. Empty if a stored metric is used.",
+                        "enum": ["COUNT", "SUM", "MIN", "MAX", "AVG", "MEDIAN"]
+                    }
+                },
+                "description": "List of metrics to be used in the new visualization"
+            },
+            "TextInteractionWithContext": {
+                "required": ["includeToChatContext", "text", "userFeedback"],
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/InteractionWithContext"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "text": {
+                                "type": "string",
+                                "description": "Object found by similarity search."
+                            }
+                        }
+                    }
+                ]
+            },
+            "UserContext": {
+                "required": ["activeObject"],
+                "type": "object",
+                "properties": {
+                    "activeObject": {
+                        "$ref": "#/components/schemas/ActiveObjectIdentification"
+                    }
+                },
+                "description": "User context, which can affect the behavior of the underlying AI features."
+            },
+            "ChatResult": {
+                "required": ["invalidQuestion", "useCases"],
+                "type": "object",
+                "properties": {
+                    "useCases": {
+                        "type": "array",
+                        "description": "Use cases with scores. The question was routed to the use case with highest score.",
+                        "items": {
+                            "$ref": "#/components/schemas/RouteResultObject"
+                        }
+                    },
+                    "invalidQuestion": {
+                        "type": "boolean",
+                        "description": "Flag detecting invalid/irrelevant user question. No user case was found."
+                    },
+                    "foundObjects": {
+                        "type": "array",
+                        "description": "List of objects found by similarity search.",
+                        "items": {
+                            "$ref": "#/components/schemas/SearchResultObject"
+                        }
+                    },
+                    "createdVisualizations": {
+                        "$ref": "#/components/schemas/CreatedVisualizations"
+                    }
+                }
+            },
+            "CreatedVisualizations": {
+                "required": ["objects", "reasoning"],
+                "type": "object",
+                "properties": {
+                    "objects": {
+                        "type": "array",
+                        "description": "List of created visualization objects",
+                        "items": {
+                            "$ref": "#/components/schemas/CreatedVisualization"
+                        }
+                    },
+                    "reasoning": {
+                        "type": "string",
+                        "description": "Reasoning from LLM. Description of how the answer was generated."
+                    }
+                },
+                "description": "Visualization definitions created by AI."
             },
             "ForecastResult": {
                 "required": ["attribute", "lowerBound", "origin", "prediction", "upperBound"],

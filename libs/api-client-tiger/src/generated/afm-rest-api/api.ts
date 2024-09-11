@@ -109,6 +109,31 @@ export type AbstractMeasureValueFilter =
     | RankingFilter;
 
 /**
+ * Object, with which the user is actively working.
+ * @export
+ * @interface ActiveObjectIdentification
+ */
+export interface ActiveObjectIdentification {
+    /**
+     * Object ID.
+     * @type {string}
+     * @memberof ActiveObjectIdentification
+     */
+    id: string;
+    /**
+     * Object type, e.g. dashboard.
+     * @type {string}
+     * @memberof ActiveObjectIdentification
+     */
+    type: string;
+    /**
+     * Workspace ID.
+     * @type {string}
+     * @memberof ActiveObjectIdentification
+     */
+    workspaceId: string;
+}
+/**
  *
  * @export
  * @interface AfmExecution
@@ -733,6 +758,98 @@ export interface AttributeResultHeader {
 /**
  *
  * @export
+ * @interface ChatRequest
+ */
+export interface ChatRequest {
+    /**
+     * User question
+     * @type {string}
+     * @memberof ChatRequest
+     */
+    question: string;
+    /**
+     * Maximum number of search results.
+     * @type {number}
+     * @memberof ChatRequest
+     */
+    limitSearch?: number;
+    /**
+     * Maximum number of created results.
+     * @type {number}
+     * @memberof ChatRequest
+     */
+    limitCreate?: number;
+    /**
+     * List of conversation interactions
+     * @type {Array<ConversationInteraction>}
+     * @memberof ChatRequest
+     */
+    conversationHistory?: Array<ConversationInteraction>;
+    /**
+     *
+     * @type {UserContext}
+     * @memberof ChatRequest
+     */
+    userContext?: UserContext;
+    /**
+     * Temporary for experiments. Ratio of title score to descriptor score.
+     * @type {number}
+     * @memberof ChatRequest
+     */
+    titleToDescriptorRatio?: number;
+    /**
+     * Score, below which we set invalidQuestion to true. The question does not match to any use case
+     * @type {number}
+     * @memberof ChatRequest
+     */
+    routeScoreThreshold?: number;
+    /**
+     * Score, above which we return found object(s) and don\'t call LLM to create new objects.
+     * @type {number}
+     * @memberof ChatRequest
+     */
+    searchScoreThreshold?: number;
+    /**
+     * Score, above which we return found objects. Below this score objects are not relevant.
+     * @type {number}
+     * @memberof ChatRequest
+     */
+    relevantScoreThreshold?: number;
+}
+/**
+ *
+ * @export
+ * @interface ChatResult
+ */
+export interface ChatResult {
+    /**
+     * Use cases with scores. The question was routed to the use case with highest score.
+     * @type {Array<RouteResultObject>}
+     * @memberof ChatResult
+     */
+    useCases: Array<RouteResultObject>;
+    /**
+     * Flag detecting invalid/irrelevant user question. No user case was found.
+     * @type {boolean}
+     * @memberof ChatResult
+     */
+    invalidQuestion: boolean;
+    /**
+     * List of objects found by similarity search.
+     * @type {Array<SearchResultObject>}
+     * @memberof ChatResult
+     */
+    foundObjects?: Array<SearchResultObject>;
+    /**
+     *
+     * @type {CreatedVisualizations}
+     * @memberof ChatResult
+     */
+    createdVisualizations?: CreatedVisualizations;
+}
+/**
+ *
+ * @export
  * @interface ClusteringRequest
  */
 export interface ClusteringRequest {
@@ -856,7 +973,38 @@ export type ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum
     typeof ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum[keyof typeof ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum];
 
 /**
- * List of created visualizations
+ * List of conversation interactions
+ * @export
+ * @interface ConversationInteraction
+ */
+export interface ConversationInteraction {
+    /**
+     *
+     * @type {CreatedVisualizationInteractionWithContext | FoundObjectInteractionWithContext | TextInteractionWithContext}
+     * @memberof ConversationInteraction
+     */
+    content:
+        | CreatedVisualizationInteractionWithContext
+        | FoundObjectInteractionWithContext
+        | TextInteractionWithContext;
+    /**
+     * Role of actor.
+     * @type {string}
+     * @memberof ConversationInteraction
+     */
+    role: ConversationInteractionRoleEnum;
+}
+
+export const ConversationInteractionRoleEnum = {
+    USER: "USER",
+    AI: "AI",
+} as const;
+
+export type ConversationInteractionRoleEnum =
+    typeof ConversationInteractionRoleEnum[keyof typeof ConversationInteractionRoleEnum];
+
+/**
+ * Visualization created by AI.
  * @export
  * @interface CreatedVisualization
  */
@@ -904,6 +1052,73 @@ export const CreatedVisualizationVisualizationTypeEnum = {
 export type CreatedVisualizationVisualizationTypeEnum =
     typeof CreatedVisualizationVisualizationTypeEnum[keyof typeof CreatedVisualizationVisualizationTypeEnum];
 
+/**
+ *
+ * @export
+ * @interface CreatedVisualizationInteractionWithContext
+ */
+export interface CreatedVisualizationInteractionWithContext {
+    /**
+     * Include all in the chat context. Used for further questions. Use if it\'s not clear which objects relate to the question.
+     * @type {boolean}
+     * @memberof CreatedVisualizationInteractionWithContext
+     */
+    includeToChatContext: boolean;
+    /**
+     * User feedback
+     * @type {string}
+     * @memberof CreatedVisualizationInteractionWithContext
+     */
+    userFeedback: CreatedVisualizationInteractionWithContextUserFeedbackEnum;
+    /**
+     *
+     * @type {CreatedVisualization}
+     * @memberof CreatedVisualizationInteractionWithContext
+     */
+    createdVisualization: CreatedVisualization;
+}
+
+export const CreatedVisualizationInteractionWithContextUserFeedbackEnum = {
+    POSITIVE: "POSITIVE",
+    NEGATIVE: "NEGATIVE",
+    NONE: "NONE",
+} as const;
+
+export type CreatedVisualizationInteractionWithContextUserFeedbackEnum =
+    typeof CreatedVisualizationInteractionWithContextUserFeedbackEnum[keyof typeof CreatedVisualizationInteractionWithContextUserFeedbackEnum];
+
+/**
+ *
+ * @export
+ * @interface CreatedVisualizationInteractionWithContextAllOf
+ */
+export interface CreatedVisualizationInteractionWithContextAllOf {
+    /**
+     *
+     * @type {CreatedVisualization}
+     * @memberof CreatedVisualizationInteractionWithContextAllOf
+     */
+    createdVisualization?: CreatedVisualization;
+}
+/**
+ * Visualization definitions created by AI.
+ * @export
+ * @interface CreatedVisualizations
+ */
+export interface CreatedVisualizations {
+    /**
+     * List of created visualization objects
+     * @type {Array<CreatedVisualization>}
+     * @memberof CreatedVisualizations
+     */
+    objects: Array<CreatedVisualization>;
+    /**
+     * Reasoning from LLM. Description of how the answer was generated.
+     * @type {string}
+     * @memberof CreatedVisualizations
+     */
+    reasoning: string;
+}
 /**
  * Mapping from dimension items (either \'localIdentifier\' from \'AttributeItem\', or \"measureGroup\") to their respective values. This effectively specifies the path (location) of the data column used for sorting. Therefore values for all dimension items must be specified.
  * @export
@@ -1030,8 +1245,15 @@ export interface DimAttribute {
      * @type {string}
      * @memberof DimAttribute
      */
-    type: string;
+    type: DimAttributeTypeEnum;
 }
+
+export const DimAttributeTypeEnum = {
+    ATTRIBUTE: "attribute",
+} as const;
+
+export type DimAttributeTypeEnum = typeof DimAttributeTypeEnum[keyof typeof DimAttributeTypeEnum];
+
 /**
  * Single dimension description.
  * @export
@@ -1479,6 +1701,54 @@ export interface ForecastResult {
     upperBound: Array<number>;
 }
 /**
+ *
+ * @export
+ * @interface FoundObjectInteractionWithContext
+ */
+export interface FoundObjectInteractionWithContext {
+    /**
+     * Include all in the chat context. Used for further questions. Use if it\'s not clear which objects relate to the question.
+     * @type {boolean}
+     * @memberof FoundObjectInteractionWithContext
+     */
+    includeToChatContext: boolean;
+    /**
+     * User feedback
+     * @type {string}
+     * @memberof FoundObjectInteractionWithContext
+     */
+    userFeedback: FoundObjectInteractionWithContextUserFeedbackEnum;
+    /**
+     *
+     * @type {SearchResultObject}
+     * @memberof FoundObjectInteractionWithContext
+     */
+    foundObject: SearchResultObject;
+}
+
+export const FoundObjectInteractionWithContextUserFeedbackEnum = {
+    POSITIVE: "POSITIVE",
+    NEGATIVE: "NEGATIVE",
+    NONE: "NONE",
+} as const;
+
+export type FoundObjectInteractionWithContextUserFeedbackEnum =
+    typeof FoundObjectInteractionWithContextUserFeedbackEnum[keyof typeof FoundObjectInteractionWithContextUserFeedbackEnum];
+
+/**
+ *
+ * @export
+ * @interface FoundObjectInteractionWithContextAllOf
+ */
+export interface FoundObjectInteractionWithContextAllOf {
+    /**
+     *
+     * @type {SearchResultObject}
+     * @memberof FoundObjectInteractionWithContextAllOf
+     */
+    foundObject?: SearchResultObject;
+}
+/**
  * Contains the information specific for a group of headers. These groups correlate to attributes and metric groups.
  * @export
  * @interface HeaderGroup
@@ -1549,6 +1819,35 @@ export interface InlineMeasureDefinitionInline {
      */
     maql: string;
 }
+/**
+ * Interaction content.
+ * @export
+ * @interface InteractionWithContext
+ */
+export interface InteractionWithContext {
+    /**
+     * Include all in the chat context. Used for further questions. Use if it\'s not clear which objects relate to the question.
+     * @type {boolean}
+     * @memberof InteractionWithContext
+     */
+    includeToChatContext: boolean;
+    /**
+     * User feedback
+     * @type {string}
+     * @memberof InteractionWithContext
+     */
+    userFeedback: InteractionWithContextUserFeedbackEnum;
+}
+
+export const InteractionWithContextUserFeedbackEnum = {
+    POSITIVE: "POSITIVE",
+    NEGATIVE: "NEGATIVE",
+    NONE: "NONE",
+} as const;
+
+export type InteractionWithContextUserFeedbackEnum =
+    typeof InteractionWithContextUserFeedbackEnum[keyof typeof InteractionWithContextUserFeedbackEnum];
+
 /**
  *
  * @export
@@ -1827,7 +2126,7 @@ export interface Metric {
      * @type {string}
      * @memberof Metric
      */
-    type: string;
+    type: MetricTypeEnum;
     /**
      * Agg function. Empty if a stored metric is used.
      * @type {string}
@@ -1836,6 +2135,13 @@ export interface Metric {
     aggFunction?: MetricAggFunctionEnum;
 }
 
+export const MetricTypeEnum = {
+    METRIC: "metric",
+    FACT: "fact",
+    ATTRIBUTE: "attribute",
+} as const;
+
+export type MetricTypeEnum = typeof MetricTypeEnum[keyof typeof MetricTypeEnum];
 export const MetricAggFunctionEnum = {
     COUNT: "COUNT",
     SUM: "SUM",
@@ -2385,67 +2691,17 @@ export interface RouteResultObject {
      */
     useCase: string;
     /**
-     * Similarity score between input query and use case.
+     * Use case description, which was hit by the similarity search.
+     * @type {string}
+     * @memberof RouteResultObject
+     */
+    exampleDescription: string;
+    /**
+     * Similarity score between input query and the use case description.
      * @type {number}
      * @memberof RouteResultObject
      */
     score: number;
-}
-/**
- *
- * @export
- * @interface SearchCreateRequest
- */
-export interface SearchCreateRequest {
-    /**
-     * User question
-     * @type {string}
-     * @memberof SearchCreateRequest
-     */
-    question: string;
-    /**
-     * Maximum number of search results.
-     * @type {number}
-     * @memberof SearchCreateRequest
-     */
-    limitSearch?: number;
-    /**
-     * Maximum number of created results.
-     * @type {number}
-     * @memberof SearchCreateRequest
-     */
-    limitCreate?: number;
-    /**
-     * Ratio of title to descriptor.
-     * @type {number}
-     * @memberof SearchCreateRequest
-     */
-    titleToDescriptorRatio?: number;
-}
-/**
- *
- * @export
- * @interface SearchCreateResult
- */
-export interface SearchCreateResult {
-    /**
-     * List of search result objects
-     * @type {Array<SearchResultObject>}
-     * @memberof SearchCreateResult
-     */
-    objects: Array<SearchResultObject>;
-    /**
-     * List of created visualizations
-     * @type {Array<CreatedVisualization>}
-     * @memberof SearchCreateResult
-     */
-    createdVisualizations: Array<CreatedVisualization>;
-    /**
-     * Text answer. Contains reasoning from AI. Can contain an equivalent of \"I don\'t know\".
-     * @type {string}
-     * @memberof SearchCreateResult
-     */
-    textResponse: string;
 }
 /**
  *
@@ -2538,6 +2794,12 @@ export interface SearchRequest {
      * @memberof SearchRequest
      */
     titleToDescriptorRatio?: number;
+    /**
+     * Score, above which we return found objects. Below this score objects are not relevant.
+     * @type {number}
+     * @memberof SearchRequest
+     */
+    relevantScoreThreshold?: number;
 }
 
 export const SearchRequestObjectTypesEnum = {
@@ -2574,7 +2836,7 @@ export interface SearchResult {
     relationships: Array<SearchRelationshipObject>;
 }
 /**
- * List of search result objects
+ *
  * @export
  * @interface SearchResultObject
  */
@@ -2881,6 +3143,54 @@ export type SortKeyValueValueDirectionEnum =
     typeof SortKeyValueValueDirectionEnum[keyof typeof SortKeyValueValueDirectionEnum];
 
 /**
+ *
+ * @export
+ * @interface TextInteractionWithContext
+ */
+export interface TextInteractionWithContext {
+    /**
+     * Include all in the chat context. Used for further questions. Use if it\'s not clear which objects relate to the question.
+     * @type {boolean}
+     * @memberof TextInteractionWithContext
+     */
+    includeToChatContext: boolean;
+    /**
+     * User feedback
+     * @type {string}
+     * @memberof TextInteractionWithContext
+     */
+    userFeedback: TextInteractionWithContextUserFeedbackEnum;
+    /**
+     * Object found by similarity search.
+     * @type {string}
+     * @memberof TextInteractionWithContext
+     */
+    text: string;
+}
+
+export const TextInteractionWithContextUserFeedbackEnum = {
+    POSITIVE: "POSITIVE",
+    NEGATIVE: "NEGATIVE",
+    NONE: "NONE",
+} as const;
+
+export type TextInteractionWithContextUserFeedbackEnum =
+    typeof TextInteractionWithContextUserFeedbackEnum[keyof typeof TextInteractionWithContextUserFeedbackEnum];
+
+/**
+ *
+ * @export
+ * @interface TextInteractionWithContextAllOf
+ */
+export interface TextInteractionWithContextAllOf {
+    /**
+     * Object found by similarity search.
+     * @type {string}
+     * @memberof TextInteractionWithContextAllOf
+     */
+    text?: string;
+}
+/**
  * Definition of a total. There are two types of totals: grand totals and subtotals. Grand total data will be returned in a separate section of the result structure while subtotals are fully integrated into the main result data. The mechanism for this distinction is automatic and it\'s described in `TotalDimension`
  * @export
  * @interface Total
@@ -2969,6 +3279,19 @@ export interface TotalResultHeader {
     function: string;
 }
 /**
+ * User context, which can affect the behavior of the underlying AI features.
+ * @export
+ * @interface UserContext
+ */
+export interface UserContext {
+    /**
+     *
+     * @type {ActiveObjectIdentification}
+     * @memberof UserContext
+     */
+    activeObject: ActiveObjectIdentification;
+}
+/**
  *
  * @export
  * @interface ValidateByItem
@@ -2994,6 +3317,58 @@ export interface ValidateByItem {
  */
 export const ActionsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * (BETA) Combines multiple use cases such as search, create visualizations, ...
+         * @summary (BETA) Chat with AI
+         * @param {string} workspaceId Workspace identifier
+         * @param {ChatRequest} chatRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiChat: async (
+            workspaceId: string,
+            chatRequest: ChatRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("aiChat", "workspaceId", workspaceId);
+            // verify required parameter 'chatRequest' is not null or undefined
+            assertParamExists("aiChat", "chatRequest", chatRequest);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chat`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof chatRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(chatRequest !== undefined ? chatRequest : {})
+                : chatRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * (BETA) Uses similarity (e.g. cosine distance) to find most similar use cases.
          * @summary (BETA) Route to supported use cases based on this input query.
@@ -3092,58 +3467,6 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             localVarRequestOptions.data = needsSerialization
                 ? JSON.stringify(searchRequest !== undefined ? searchRequest : {})
                 : searchRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
-         * @summary (BETA) Semantic Search in Metadata + creates new visualizations
-         * @param {string} workspaceId Workspace identifier
-         * @param {SearchCreateRequest} searchCreateRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        aiSearchCreate: async (
-            workspaceId: string,
-            searchCreateRequest: SearchCreateRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("aiSearchCreate", "workspaceId", workspaceId);
-            // verify required parameter 'searchCreateRequest' is not null or undefined
-            assertParamExists("aiSearchCreate", "searchCreateRequest", searchCreateRequest);
-            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/searchCreate`.replace(
-                `{${"workspaceId"}}`,
-                encodeURIComponent(String(workspaceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof searchCreateRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(searchCreateRequest !== undefined ? searchCreateRequest : {})
-                : searchCreateRequest || "";
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4051,6 +4374,26 @@ export const ActionsApiFp = function (configuration?: Configuration) {
     const localVarAxiosParamCreator = ActionsApiAxiosParamCreator(configuration);
     return {
         /**
+         * (BETA) Combines multiple use cases such as search, create visualizations, ...
+         * @summary (BETA) Chat with AI
+         * @param {string} workspaceId Workspace identifier
+         * @param {ChatRequest} chatRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async aiChat(
+            workspaceId: string,
+            chatRequest: ChatRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.aiChat(
+                workspaceId,
+                chatRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * (BETA) Uses similarity (e.g. cosine distance) to find most similar use cases.
          * @summary (BETA) Route to supported use cases based on this input query.
          * @param {string} workspaceId Workspace identifier
@@ -4086,26 +4429,6 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.aiSearch(
                 workspaceId,
                 searchRequest,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
-         * @summary (BETA) Semantic Search in Metadata + creates new visualizations
-         * @param {string} workspaceId Workspace identifier
-         * @param {SearchCreateRequest} searchCreateRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async aiSearchCreate(
-            workspaceId: string,
-            searchCreateRequest: SearchCreateRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchCreateResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.aiSearchCreate(
-                workspaceId,
-                searchCreateRequest,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -4507,6 +4830,21 @@ export const ActionsApiFactory = function (
     const localVarFp = ActionsApiFp(configuration);
     return {
         /**
+         * (BETA) Combines multiple use cases such as search, create visualizations, ...
+         * @summary (BETA) Chat with AI
+         * @param {ActionsApiAiChatRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiChat(
+            requestParameters: ActionsApiAiChatRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ChatResult> {
+            return localVarFp
+                .aiChat(requestParameters.workspaceId, requestParameters.chatRequest, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * (BETA) Uses similarity (e.g. cosine distance) to find most similar use cases.
          * @summary (BETA) Route to supported use cases based on this input query.
          * @param {ActionsApiAiRouteRequest} requestParameters Request parameters.
@@ -4534,21 +4872,6 @@ export const ActionsApiFactory = function (
         ): AxiosPromise<SearchResult> {
             return localVarFp
                 .aiSearch(requestParameters.workspaceId, requestParameters.searchRequest, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
-         * @summary (BETA) Semantic Search in Metadata + creates new visualizations
-         * @param {ActionsApiAiSearchCreateRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        aiSearchCreate(
-            requestParameters: ActionsApiAiSearchCreateRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<SearchCreateResult> {
-            return localVarFp
-                .aiSearchCreate(requestParameters.workspaceId, requestParameters.searchCreateRequest, options)
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -4866,6 +5189,19 @@ export const ActionsApiFactory = function (
  */
 export interface ActionsApiInterface {
     /**
+     * (BETA) Combines multiple use cases such as search, create visualizations, ...
+     * @summary (BETA) Chat with AI
+     * @param {ActionsApiAiChatRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    aiChat(
+        requestParameters: ActionsApiAiChatRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ChatResult>;
+
+    /**
      * (BETA) Uses similarity (e.g. cosine distance) to find most similar use cases.
      * @summary (BETA) Route to supported use cases based on this input query.
      * @param {ActionsApiAiRouteRequest} requestParameters Request parameters.
@@ -4890,19 +5226,6 @@ export interface ActionsApiInterface {
         requestParameters: ActionsApiAiSearchRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<SearchResult>;
-
-    /**
-     * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
-     * @summary (BETA) Semantic Search in Metadata + creates new visualizations
-     * @param {ActionsApiAiSearchCreateRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ActionsApiInterface
-     */
-    aiSearchCreate(
-        requestParameters: ActionsApiAiSearchCreateRequest,
-        options?: AxiosRequestConfig,
-    ): AxiosPromise<SearchCreateResult>;
 
     /**
      * (EXPERIMENTAL) Computes anomaly detection.
@@ -5101,6 +5424,27 @@ export interface ActionsApiInterface {
 }
 
 /**
+ * Request parameters for aiChat operation in ActionsApi.
+ * @export
+ * @interface ActionsApiAiChatRequest
+ */
+export interface ActionsApiAiChatRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiAiChat
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {ChatRequest}
+     * @memberof ActionsApiAiChat
+     */
+    readonly chatRequest: ChatRequest;
+}
+
+/**
  * Request parameters for aiRoute operation in ActionsApi.
  * @export
  * @interface ActionsApiAiRouteRequest
@@ -5140,27 +5484,6 @@ export interface ActionsApiAiSearchRequest {
      * @memberof ActionsApiAiSearch
      */
     readonly searchRequest: SearchRequest;
-}
-
-/**
- * Request parameters for aiSearchCreate operation in ActionsApi.
- * @export
- * @interface ActionsApiAiSearchCreateRequest
- */
-export interface ActionsApiAiSearchCreateRequest {
-    /**
-     * Workspace identifier
-     * @type {string}
-     * @memberof ActionsApiAiSearchCreate
-     */
-    readonly workspaceId: string;
-
-    /**
-     *
-     * @type {SearchCreateRequest}
-     * @memberof ActionsApiAiSearchCreate
-     */
-    readonly searchCreateRequest: SearchCreateRequest;
 }
 
 /**
@@ -5664,6 +5987,20 @@ export interface ActionsApiRetrieveResultRequest {
  */
 export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     /**
+     * (BETA) Combines multiple use cases such as search, create visualizations, ...
+     * @summary (BETA) Chat with AI
+     * @param {ActionsApiAiChatRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public aiChat(requestParameters: ActionsApiAiChatRequest, options?: AxiosRequestConfig) {
+        return ActionsApiFp(this.configuration)
+            .aiChat(requestParameters.workspaceId, requestParameters.chatRequest, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * (BETA) Uses similarity (e.g. cosine distance) to find most similar use cases.
      * @summary (BETA) Route to supported use cases based on this input query.
      * @param {ActionsApiAiRouteRequest} requestParameters Request parameters.
@@ -5688,20 +6025,6 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     public aiSearch(requestParameters: ActionsApiAiSearchRequest, options?: AxiosRequestConfig) {
         return ActionsApiFp(this.configuration)
             .aiSearch(requestParameters.workspaceId, requestParameters.searchRequest, options)
-            .then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
-     * @summary (BETA) Semantic Search in Metadata + creates new visualizations
-     * @param {ActionsApiAiSearchCreateRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ActionsApi
-     */
-    public aiSearchCreate(requestParameters: ActionsApiAiSearchCreateRequest, options?: AxiosRequestConfig) {
-        return ActionsApiFp(this.configuration)
-            .aiSearchCreate(requestParameters.workspaceId, requestParameters.searchCreateRequest, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -7613,6 +7936,58 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
 export const SmartFunctionsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
+         * (BETA) Combines multiple use cases such as search, create visualizations, ...
+         * @summary (BETA) Chat with AI
+         * @param {string} workspaceId Workspace identifier
+         * @param {ChatRequest} chatRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiChat: async (
+            workspaceId: string,
+            chatRequest: ChatRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("aiChat", "workspaceId", workspaceId);
+            // verify required parameter 'chatRequest' is not null or undefined
+            assertParamExists("aiChat", "chatRequest", chatRequest);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chat`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof chatRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(chatRequest !== undefined ? chatRequest : {})
+                : chatRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * (BETA) Uses similarity (e.g. cosine distance) to find most similar use cases.
          * @summary (BETA) Route to supported use cases based on this input query.
          * @param {string} workspaceId Workspace identifier
@@ -7710,58 +8085,6 @@ export const SmartFunctionsApiAxiosParamCreator = function (configuration?: Conf
             localVarRequestOptions.data = needsSerialization
                 ? JSON.stringify(searchRequest !== undefined ? searchRequest : {})
                 : searchRequest || "";
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
-         * @summary (BETA) Semantic Search in Metadata + creates new visualizations
-         * @param {string} workspaceId Workspace identifier
-         * @param {SearchCreateRequest} searchCreateRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        aiSearchCreate: async (
-            workspaceId: string,
-            searchCreateRequest: SearchCreateRequest,
-            options: AxiosRequestConfig = {},
-        ): Promise<RequestArgs> => {
-            // verify required parameter 'workspaceId' is not null or undefined
-            assertParamExists("aiSearchCreate", "workspaceId", workspaceId);
-            // verify required parameter 'searchCreateRequest' is not null or undefined
-            assertParamExists("aiSearchCreate", "searchCreateRequest", searchCreateRequest);
-            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/searchCreate`.replace(
-                `{${"workspaceId"}}`,
-                encodeURIComponent(String(workspaceId)),
-            );
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            localVarHeaderParameter["Content-Type"] = "application/json";
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {
-                ...localVarHeaderParameter,
-                ...headersFromBaseOptions,
-                ...options.headers,
-            };
-            const needsSerialization =
-                typeof searchCreateRequest !== "string" ||
-                localVarRequestOptions.headers["Content-Type"] === "application/json";
-            localVarRequestOptions.data = needsSerialization
-                ? JSON.stringify(searchCreateRequest !== undefined ? searchCreateRequest : {})
-                : searchCreateRequest || "";
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -8133,6 +8456,26 @@ export const SmartFunctionsApiFp = function (configuration?: Configuration) {
     const localVarAxiosParamCreator = SmartFunctionsApiAxiosParamCreator(configuration);
     return {
         /**
+         * (BETA) Combines multiple use cases such as search, create visualizations, ...
+         * @summary (BETA) Chat with AI
+         * @param {string} workspaceId Workspace identifier
+         * @param {ChatRequest} chatRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async aiChat(
+            workspaceId: string,
+            chatRequest: ChatRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.aiChat(
+                workspaceId,
+                chatRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * (BETA) Uses similarity (e.g. cosine distance) to find most similar use cases.
          * @summary (BETA) Route to supported use cases based on this input query.
          * @param {string} workspaceId Workspace identifier
@@ -8168,26 +8511,6 @@ export const SmartFunctionsApiFp = function (configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.aiSearch(
                 workspaceId,
                 searchRequest,
-                options,
-            );
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
-         * @summary (BETA) Semantic Search in Metadata + creates new visualizations
-         * @param {string} workspaceId Workspace identifier
-         * @param {SearchCreateRequest} searchCreateRequest
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async aiSearchCreate(
-            workspaceId: string,
-            searchCreateRequest: SearchCreateRequest,
-            options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchCreateResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.aiSearchCreate(
-                workspaceId,
-                searchCreateRequest,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -8363,6 +8686,21 @@ export const SmartFunctionsApiFactory = function (
     const localVarFp = SmartFunctionsApiFp(configuration);
     return {
         /**
+         * (BETA) Combines multiple use cases such as search, create visualizations, ...
+         * @summary (BETA) Chat with AI
+         * @param {SmartFunctionsApiAiChatRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiChat(
+            requestParameters: SmartFunctionsApiAiChatRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<ChatResult> {
+            return localVarFp
+                .aiChat(requestParameters.workspaceId, requestParameters.chatRequest, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * (BETA) Uses similarity (e.g. cosine distance) to find most similar use cases.
          * @summary (BETA) Route to supported use cases based on this input query.
          * @param {SmartFunctionsApiAiRouteRequest} requestParameters Request parameters.
@@ -8390,21 +8728,6 @@ export const SmartFunctionsApiFactory = function (
         ): AxiosPromise<SearchResult> {
             return localVarFp
                 .aiSearch(requestParameters.workspaceId, requestParameters.searchRequest, options)
-                .then((request) => request(axios, basePath));
-        },
-        /**
-         * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
-         * @summary (BETA) Semantic Search in Metadata + creates new visualizations
-         * @param {SmartFunctionsApiAiSearchCreateRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        aiSearchCreate(
-            requestParameters: SmartFunctionsApiAiSearchCreateRequest,
-            options?: AxiosRequestConfig,
-        ): AxiosPromise<SearchCreateResult> {
-            return localVarFp
-                .aiSearchCreate(requestParameters.workspaceId, requestParameters.searchCreateRequest, options)
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -8543,6 +8866,19 @@ export const SmartFunctionsApiFactory = function (
  */
 export interface SmartFunctionsApiInterface {
     /**
+     * (BETA) Combines multiple use cases such as search, create visualizations, ...
+     * @summary (BETA) Chat with AI
+     * @param {SmartFunctionsApiAiChatRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    aiChat(
+        requestParameters: SmartFunctionsApiAiChatRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<ChatResult>;
+
+    /**
      * (BETA) Uses similarity (e.g. cosine distance) to find most similar use cases.
      * @summary (BETA) Route to supported use cases based on this input query.
      * @param {SmartFunctionsApiAiRouteRequest} requestParameters Request parameters.
@@ -8567,19 +8903,6 @@ export interface SmartFunctionsApiInterface {
         requestParameters: SmartFunctionsApiAiSearchRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<SearchResult>;
-
-    /**
-     * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
-     * @summary (BETA) Semantic Search in Metadata + creates new visualizations
-     * @param {SmartFunctionsApiAiSearchCreateRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SmartFunctionsApiInterface
-     */
-    aiSearchCreate(
-        requestParameters: SmartFunctionsApiAiSearchCreateRequest,
-        options?: AxiosRequestConfig,
-    ): AxiosPromise<SearchCreateResult>;
 
     /**
      * (EXPERIMENTAL) Computes anomaly detection.
@@ -8661,6 +8984,27 @@ export interface SmartFunctionsApiInterface {
 }
 
 /**
+ * Request parameters for aiChat operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiAiChatRequest
+ */
+export interface SmartFunctionsApiAiChatRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiAiChat
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {ChatRequest}
+     * @memberof SmartFunctionsApiAiChat
+     */
+    readonly chatRequest: ChatRequest;
+}
+
+/**
  * Request parameters for aiRoute operation in SmartFunctionsApi.
  * @export
  * @interface SmartFunctionsApiAiRouteRequest
@@ -8700,27 +9044,6 @@ export interface SmartFunctionsApiAiSearchRequest {
      * @memberof SmartFunctionsApiAiSearch
      */
     readonly searchRequest: SearchRequest;
-}
-
-/**
- * Request parameters for aiSearchCreate operation in SmartFunctionsApi.
- * @export
- * @interface SmartFunctionsApiAiSearchCreateRequest
- */
-export interface SmartFunctionsApiAiSearchCreateRequest {
-    /**
-     * Workspace identifier
-     * @type {string}
-     * @memberof SmartFunctionsApiAiSearchCreate
-     */
-    readonly workspaceId: string;
-
-    /**
-     *
-     * @type {SearchCreateRequest}
-     * @memberof SmartFunctionsApiAiSearchCreate
-     */
-    readonly searchCreateRequest: SearchCreateRequest;
 }
 
 /**
@@ -8941,6 +9264,20 @@ export interface SmartFunctionsApiForecastResultRequest {
  */
 export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInterface {
     /**
+     * (BETA) Combines multiple use cases such as search, create visualizations, ...
+     * @summary (BETA) Chat with AI
+     * @param {SmartFunctionsApiAiChatRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public aiChat(requestParameters: SmartFunctionsApiAiChatRequest, options?: AxiosRequestConfig) {
+        return SmartFunctionsApiFp(this.configuration)
+            .aiChat(requestParameters.workspaceId, requestParameters.chatRequest, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * (BETA) Uses similarity (e.g. cosine distance) to find most similar use cases.
      * @summary (BETA) Route to supported use cases based on this input query.
      * @param {SmartFunctionsApiAiRouteRequest} requestParameters Request parameters.
@@ -8965,23 +9302,6 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
     public aiSearch(requestParameters: SmartFunctionsApiAiSearchRequest, options?: AxiosRequestConfig) {
         return SmartFunctionsApiFp(this.configuration)
             .aiSearch(requestParameters.workspaceId, requestParameters.searchRequest, options)
-            .then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * (BETA) Uses similarity (e.g. cosine distance) search to find top X most similar metadata objects.
-     * @summary (BETA) Semantic Search in Metadata + creates new visualizations
-     * @param {SmartFunctionsApiAiSearchCreateRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof SmartFunctionsApi
-     */
-    public aiSearchCreate(
-        requestParameters: SmartFunctionsApiAiSearchCreateRequest,
-        options?: AxiosRequestConfig,
-    ) {
-        return SmartFunctionsApiFp(this.configuration)
-            .aiSearchCreate(requestParameters.workspaceId, requestParameters.searchCreateRequest, options)
             .then((request) => request(this.axios, this.basePath));
     }
 

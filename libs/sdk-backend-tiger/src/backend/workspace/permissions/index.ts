@@ -4,7 +4,14 @@ import { IWorkspacePermissions } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "../constants.js";
 
-type TigerPermissionType = "MANAGE" | "VIEW" | "ANALYZE" | "EXPORT" | "EXPORT_TABULAR" | "EXPORT_PDF";
+type TigerPermissionType =
+    | "MANAGE"
+    | "VIEW"
+    | "ANALYZE"
+    | "EXPORT"
+    | "EXPORT_TABULAR"
+    | "EXPORT_PDF"
+    | "CREATE_FILTER_VIEW";
 
 export class TigerWorkspacePermissionsFactory implements IWorkspacePermissionsService {
     constructor(public readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
@@ -67,6 +74,7 @@ function getPermission(permissions: Array<TigerPermissionType>) {
     const canExportReport = hasPermission(permissions, "EXPORT");
     const canExportTabular = hasPermission(permissions, "EXPORT_TABULAR");
     const canExportPdf = hasPermission(permissions, "EXPORT_PDF");
+    const canCreateFilterView = hasPermission(permissions, "CREATE_FILTER_VIEW");
 
     return {
         canViewWorkspace,
@@ -75,6 +83,7 @@ function getPermission(permissions: Array<TigerPermissionType>) {
         canExportReport,
         canExportTabular,
         canExportPdf,
+        canCreateFilterView,
     };
 }
 
