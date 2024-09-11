@@ -451,7 +451,7 @@ export const selectEnableRenamingProjectToWorkspace: DashboardSelector<boolean> 
 export const selectEnableRenamingMeasureToMetric: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return !!(state.settings?.enableRenamingMeasureToMetric ?? false);
+        return state.settings?.enableRenamingMeasureToMetric ?? true;
     },
 );
 

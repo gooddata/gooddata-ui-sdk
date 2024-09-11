@@ -140,7 +140,7 @@ exports[`PluggableDependencyWheelChart > dependency wheel should allow date attr
         "isShowInPercentEnabled": true,
         "isShowInPercentVisible": true,
         "itemsLimit": 1,
-        "title": "MEASURE",
+        "title": "METRIC",
       },
     },
     "exportConfig": {
@@ -275,7 +275,7 @@ exports[`PluggableDependencyWheelChart > should return reference point with one 
         "isShowInPercentEnabled": true,
         "isShowInPercentVisible": true,
         "itemsLimit": 1,
-        "title": "MEASURE",
+        "title": "METRIC",
       },
     },
     "exportConfig": {
@@ -462,7 +462,7 @@ exports[`PluggableDependencyWheelChart > should reuse one measure and order attr
         "isShowInPercentEnabled": true,
         "isShowInPercentVisible": true,
         "itemsLimit": 1,
-        "title": "MEASURE",
+        "title": "METRIC",
       },
     },
     "exportConfig": {

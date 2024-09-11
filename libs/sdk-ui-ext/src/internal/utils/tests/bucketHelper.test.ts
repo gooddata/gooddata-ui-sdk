@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
 import set from "lodash/set.js";
 import { IBucket } from "@gooddata/sdk-model";
@@ -197,7 +197,7 @@ describe("Bucket title", () => {
         const intl = createInternalIntl(DefaultLocale);
         const expectedUiconfig: IUiConfig = cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
 
-        set(expectedUiconfig, ["buckets", "measures", "title"], "Measures");
+        set(expectedUiconfig, ["buckets", "measures", "title"], "Metrics");
         set(expectedUiconfig, ["buckets", "view", "title"], "View by");
         set(expectedUiconfig, ["buckets", "stack", "title"], "Stack by");
 
@@ -232,7 +232,7 @@ describe("Bucket title", () => {
         const intl = createInternalIntl(DefaultLocale);
         const expectedUiconfig: IUiConfig = cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
 
-        set(expectedUiconfig, ["buckets", "measures", "title"], "Measures");
+        set(expectedUiconfig, ["buckets", "measures", "title"], "Metrics");
         set(expectedUiconfig, ["buckets", "view", "title"], "View by");
         set(expectedUiconfig, ["buckets", "stack", "enabled"], false);
 
