@@ -36,5 +36,5 @@ export const visibleMessagesSelector: (state: RootState) => VisibleMessage[] = c
 export const lastMessageSelector: (state: RootState) => Message | undefined = createSelector(
     messagesOrderSelector,
     messagesSelector,
-    (order, messages) => messages[order.length - 1],
+    (order, messages) => messages[order[order.length - 1]],
 );
