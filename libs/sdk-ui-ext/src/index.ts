@@ -93,8 +93,11 @@ export function getInsightWithAppliedDrillDown(
 /**
  * @internal
  */
-export function getInsightVisualizationMeta(insight: IInsightDefinition): IVisualizationMeta {
-    return FullVisualizationCatalog.forInsight(insight).getMeta();
+export function getInsightVisualizationMeta(
+    insight: IInsightDefinition,
+    settings?: ISettings,
+): IVisualizationMeta {
+    return FullVisualizationCatalog.forInsight(insight).getMeta(settings);
 }
 
 export * from "./internal/components/dialogs/userManagementDialogs/index.js";
