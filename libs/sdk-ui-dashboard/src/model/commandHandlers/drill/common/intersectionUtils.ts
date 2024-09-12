@@ -56,6 +56,7 @@ export function convertIntersectionToAttributeFilters(
                         displayForm: ref,
                         negativeSelection: false,
                         localIdentifier: uuid(),
+                        title: h.attributeHeader.formOf?.name,
                     },
                 },
                 ...(enableDuplicatedLabelValuesInAttributeFilter

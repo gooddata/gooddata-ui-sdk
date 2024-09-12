@@ -273,6 +273,11 @@ export interface AddAttributeFilterPayload {
      * If provided it is used for filter definition and displayForm param is used only for UI representation
      */
     readonly primaryDisplayForm?: ObjRef;
+
+    /**
+     * Specify custom title of attribute filter
+     */
+    readonly title?: string;
 }
 
 /**
@@ -300,6 +305,7 @@ export interface AddAttributeFilter extends IDashboardCommand {
  * @param mode - specify the visibility mode of attribute filter
  * @param initialSelection - specify the initial selection of attribute elements
  * @param initialIsNegativeSelection - specify if the initial selection of attribute elements is a negative one
+ * @param title - specify custom title of attribute filter
  * @beta
  */
 export function addAttributeFilter(
@@ -312,6 +318,7 @@ export function addAttributeFilter(
     initialIsNegativeSelection?: boolean,
     localIdentifier?: string,
     primaryDisplayForm?: ObjRef,
+    title?: string,
 ): AddAttributeFilter {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADD",
@@ -325,6 +332,7 @@ export function addAttributeFilter(
             initialSelection,
             initialIsNegativeSelection,
             localIdentifier,
+            title,
         },
     };
 }

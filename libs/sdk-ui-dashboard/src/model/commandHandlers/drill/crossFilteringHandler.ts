@@ -75,7 +75,7 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
         crossFilteringItemByWidget?.filterLocalIdentifiers.length <= drillIntersectionFilters.length;
 
     const virtualFilters = drillIntersectionFilters.map(({ attributeFilter, primaryLabel }) => {
-        const { displayForm, attributeElements, negativeSelection } = attributeFilter.attributeFilter;
+        const { displayForm, attributeElements, negativeSelection, title } = attributeFilter.attributeFilter;
 
         const existingVirtualFilter = shouldUpdateExistingCrossFiltering
             ? currentVirtualFilters.find((vf) => {
@@ -104,6 +104,7 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
                 negativeSelection,
                 localIdentifier: existingVirtualFilter?.attributeFilter.localIdentifier ?? uuid(),
                 selectionMode: "multi",
+                title,
             },
         };
 
@@ -152,6 +153,7 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
                           vf.attributeFilter.negativeSelection,
                           vf.attributeFilter.localIdentifier,
                           drillIntersectionFilters[index].primaryLabel,
+                          vf.attributeFilter.title,
                       ),
                   )
                 : call(
