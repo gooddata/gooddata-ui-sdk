@@ -16,6 +16,7 @@ export interface IVisualizationSwitcherToolbarProps {
         insight: IInsight,
         sizeInfo: IVisualizationSizeInfo,
     ) => void; // TODO INE any
+    onSelectedVisualizationChanged: (visualizationId: string) => void;
 }
 
 /**

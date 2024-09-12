@@ -19,7 +19,7 @@ export const DefaultDashboardVisualizationSwitcherWidget: React.FC<
             screen={screen}
         >
             <DashboardItemBase visualizationClassName="gd-visualization-switcher-widget-wrapper">
-                {() => <DashboardVisualizationSwitcher widget={widget} />}
+                {() => <DashboardVisualizationSwitcher widget={widget} screen={screen} />}
             </DashboardItemBase>
         </DashboardItem>
     );

@@ -30,7 +30,7 @@ const overlayController = OverlayController.getInstance(DASHBOARD_OVERLAYS_FILTE
  */
 export const EditableDashboardVisualizationSwitcherWidget: React.FC<
     IDefaultDashboardVisualizationSwitcherWidgetProps
-> = ({ widget, screen, dashboardItemClasses }) => {
+> = ({ widget, screen, dashboardItemClasses, onError, onExportReady, onLoadingChanged }) => {
     const dispatch = useDashboardDispatch();
     const intl = useIntl();
 
@@ -39,6 +39,10 @@ export const EditableDashboardVisualizationSwitcherWidget: React.FC<
     );
     const isSaving = useDashboardSelector(selectIsDashboardSaving);
     const isEditable = !isSaving;
+
+    const [activeVisualizationId, setActiveVisualizationId] = useState<string | undefined>(
+        widget.visualizations[0]?.identifier,
+    );
 
     const { VisualizationSwitcherToolbarComponentProvider } = useDashboardComponentsContext();
 
@@ -95,6 +99,7 @@ export const EditableDashboardVisualizationSwitcherWidget: React.FC<
                                         widget={widget}
                                         onWidgetDelete={() => setIsConfirmDeleteDialogVisible(true)}
                                         onVisualizationsChanged={changedVisualizations}
+                                        onSelectedVisualizationChanged={setActiveVisualizationId}
                                         onVisualizationAdded={addVisualization}
                                     />
                                 )}
@@ -107,6 +112,11 @@ export const EditableDashboardVisualizationSwitcherWidget: React.FC<
                             widget={widget}
                             clientHeight={clientHeight}
                             clientWidth={clientWidth}
+                            activeVisualizationId={activeVisualizationId}
+                            onError={onError}
+                            onExportReady={onExportReady}
+                            onLoadingChanged={onLoadingChanged}
+                            screen={screen}
                         />
                     )}
                 </DashboardItemBase>

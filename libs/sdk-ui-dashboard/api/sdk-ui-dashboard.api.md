@@ -4364,12 +4364,21 @@ export interface IDashboardThemingProps {
 
 // @public
 export interface IDashboardVisualizationSwitcherProps {
+    activeVisualizationId?: string | undefined;
     // @alpha
     backend?: IAnalyticalBackend;
     // @alpha
     clientHeight?: number;
     // @alpha
     clientWidth?: number;
+    // (undocumented)
+    onError?: OnError;
+    // (undocumented)
+    onExportReady?: OnExportReady;
+    // (undocumented)
+    onLoadingChanged?: OnLoadingChanged;
+    // (undocumented)
+    screen: ScreenSize;
     widget: IVisualizationSwitcherWidget;
     // @alpha
     workspace?: string;
@@ -5631,6 +5640,8 @@ export type IVisualizationSwitcherDraggingComponentProps = {
 
 // @alpha (undocumented)
 export interface IVisualizationSwitcherToolbarProps {
+    // (undocumented)
+    onSelectedVisualizationChanged: (visualizationId: string) => void;
     // (undocumented)
     onVisualizationAdded: (insightWidget: IInsightWidget, insight: IInsight, sizeInfo: IVisualizationSizeInfo) => void;
     // (undocumented)

@@ -139,6 +139,9 @@ export const selectWidgets: DashboardSelector<ExtendedDashboardWidget[]> = creat
                 }
 
                 items.push(item.widget);
+                if (item.widget.type === "visualizationSwitcher") {
+                    items.push(...item.widget.visualizations);
+                }
             }
         }
 
@@ -154,6 +157,7 @@ export const selectWidgets: DashboardSelector<ExtendedDashboardWidget[]> = creat
  */
 export const selectWidgetsMap: DashboardSelector<ObjRefMap<ExtendedDashboardWidget>> = createSelector(
     selectWidgets,
+
     (widgets) => {
         return newMapForObjectWithIdentity(widgets);
     },

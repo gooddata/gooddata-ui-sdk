@@ -4,6 +4,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 import { Icon, Typography } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+import cx from "classnames";
 
 import { IDashboardVisualizationSwitcherProps } from "./types.js";
 import { useDashboardSelector, selectInsightsMap } from "../../../model/index.js";
@@ -22,8 +23,14 @@ import { DashboardInsight } from "../insight/ViewModeDashboardInsight/Insight/Da
  * @internal
  */
 export const EditModeDashboardVisualizationSwitcher: React.FC<IDashboardVisualizationSwitcherProps> = (
-    _props,
+    props,
 ) => {
+    const { widget, activeVisualizationId, onError, onExportReady, onLoadingChanged, screen } = props;
+
+    const activeVisualization =
+        widget.visualizations.find((visualization) => visualization.identifier === activeVisualizationId) ??
+        widget.visualizations[0];
+
     const theme = useTheme();
     const intl = useIntl();
     const emptyContentIconColor = theme?.palette?.complementary?.c7 ?? "#6D7680";

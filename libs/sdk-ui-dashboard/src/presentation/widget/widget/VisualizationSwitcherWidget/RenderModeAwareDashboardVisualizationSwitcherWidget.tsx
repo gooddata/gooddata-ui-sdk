@@ -7,7 +7,7 @@ import { EditableDashboardVisualizationSwitcherWidget } from "./EditableDashboar
 /**
  * @internal
  */
-export const RenderModeAwareDashboardVisualizationSwitchertWidget = renderModeAware({
+export const RenderModeAwareDashboardVisualizationSwitcherWidget = renderModeAware({
     view: DefaultDashboardVisualizationSwitcherWidget,
     edit: EditableDashboardVisualizationSwitcherWidget,
 });
