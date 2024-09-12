@@ -53,6 +53,7 @@ import compact from "lodash/compact.js";
 import { getValidProperties } from "../../../utils/colors.js";
 import { DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
 import { REPEATER_SUPPORTER_PROPERTIES_LIST } from "../../../constants/supportedProperties.js";
+import omit from "lodash/omit.js";
 
 /**
  * PluggableRepeater
@@ -392,7 +393,10 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
                     isError={this.getIsError()}
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
-                    configurationPanelRenderers={options.custom?.configurationPanelRenderers}
+                    configurationPanelRenderers={omit(
+                        options.custom?.configurationPanelRenderers,
+                        "InteractionsDetailRenderer",
+                    )}
                 />,
                 configPanelElement,
             );
