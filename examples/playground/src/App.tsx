@@ -1,11 +1,14 @@
 // (C) 2019-2024 GoodData Corporation
 import React, { useMemo } from "react";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
+import { Dashboard } from "@gooddata/sdk-ui-dashboard";
 import { createBackend } from "./createBackend.js";
 
 function hasCredentialsSetup(): boolean {
     return !!import.meta.env.VITE_TIGER_API_TOKEN;
 }
+
+const dashboard = import.meta.env.VITE_DASHBOARD;
 
 const AppWithBackend: React.FC = () => {
     // only create the backend instance once
@@ -17,13 +20,14 @@ const AppWithBackend: React.FC = () => {
         <BackendProvider backend={backend}>
             <WorkspaceProvider workspace={import.meta.env.VITE_WORKSPACE}>
                 {/* Build your playground components under the playground directory.*/}
-                {/*<Dashboard*/}
-                {/*    dashboard={import.meta.env.VITE_DASHBOARD}*/}
-                {/*    backend={backend}*/}
-                {/*    config={{*/}
-                {/*        initialRenderMode: "view",*/}
-                {/*    }}*/}
-                {/*/>*/}
+                {dashboard ? (
+                    <Dashboard
+                        dashboard={dashboard}
+                        config={{
+                            initialRenderMode: "view",
+                        }}
+                    />
+                ) : undefined}
             </WorkspaceProvider>
         </BackendProvider>
     );
