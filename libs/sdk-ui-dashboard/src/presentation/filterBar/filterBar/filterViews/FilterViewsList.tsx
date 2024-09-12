@@ -13,6 +13,7 @@ import {
     setFilterViewAsDefault,
     useDashboardSelector,
     selectFilterViewsAreLoading,
+    selectCanCreateFilterView,
 } from "../../../../model/index.js";
 
 import { FilterViewDeleteConfirm } from "./FilterViewDeleteConfirm.js";
@@ -64,14 +65,14 @@ const DeleteButton: React.FC<{ onClick: () => void }> = ({ onClick }) => (
 const FilterListItem: React.FC<{
     item: IDashboardFilterView;
     onApply: () => void;
-    onSetAsDefault: () => void;
-    onDelete: () => void;
+    onSetAsDefault?: () => void;
+    onDelete?: () => void;
 }> = ({ item, onApply, onDelete, onSetAsDefault }) => {
     const { name, isDefault = false } = item;
     return (
         <div className="gd-filter-view__item">
-            <DeleteButton onClick={onDelete} />
-            <SetAsDefaultButton isDefault={isDefault} onClick={onSetAsDefault} />
+            {onDelete ? <DeleteButton onClick={onDelete} /> : null}
+            {onSetAsDefault ? <SetAsDefaultButton isDefault={isDefault} onClick={onSetAsDefault} /> : null}
             <div className="gd-filter-view__item__value" onClick={onApply}>
                 <span className="gd-filter-view__item__value__title">{name}</span>
                 {isDefault ? (
@@ -101,6 +102,7 @@ export const FilterViewsList: React.FC<IFilterViewsDropdownBodyProps> = ({
         undefined,
     );
     const isLoading = useDashboardSelector(selectFilterViewsAreLoading);
+    const canCreateFilterView = useDashboardSelector(selectCanCreateFilterView);
 
     return (
         <>
@@ -155,11 +157,22 @@ export const FilterViewsList: React.FC<IFilterViewsDropdownBodyProps> = ({
                                     dispatch(applyFilterView(filterView.ref));
                                     onClose();
                                 }}
-                                onSetAsDefault={() => {
-                                    dispatch(setFilterViewAsDefault(filterView.ref, !filterView.isDefault));
-                                    onClose();
-                                }}
-                                onDelete={() => setFilterViewToDelete(filterView)}
+                                onSetAsDefault={
+                                    canCreateFilterView
+                                        ? () => {
+                                              dispatch(
+                                                  setFilterViewAsDefault(
+                                                      filterView.ref,
+                                                      !filterView.isDefault,
+                                                  ),
+                                              );
+                                              onClose();
+                                          }
+                                        : undefined
+                                }
+                                onDelete={
+                                    canCreateFilterView ? () => setFilterViewToDelete(filterView) : undefined
+                                }
                             />
                         ))
                     ) : (
@@ -175,6 +188,7 @@ export const FilterViewsList: React.FC<IFilterViewsDropdownBodyProps> = ({
                             iconLeft="gd-icon-plus"
                             size="small"
                             onClick={onAddNew}
+                            disabled={isLoading || !canCreateFilterView}
                         >
                             <FormattedMessage id="filters.filterViews.dropdown.newButton" />
                         </Button>

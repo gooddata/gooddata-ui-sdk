@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 /**
  * Workspace permission types
@@ -89,7 +89,11 @@ export type WorkspacePermission =
     /**
      * Whether the current user has permissions to export as pdf documents.
      */
-    | "canExportPdf";
+    | "canExportPdf"
+    /**
+     * Whether the current user has permissions to create a dashboard filter view.
+     */
+    | "canCreateFilterView";
 
 /**
  * Dictionary of workspace permissions

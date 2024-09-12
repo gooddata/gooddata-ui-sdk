@@ -174,6 +174,8 @@ export interface IAddUsersToUserGroupsDialogProps extends IWithTelemetryProps {
 // @internal (undocumented)
 export interface IAddWorkspaceToSubjectsProps extends IWithTelemetryProps {
     // (undocumented)
+    areFilterViewsEnabled?: boolean;
+    // (undocumented)
     ids: string[];
     // (undocumented)
     onClose: () => void;
@@ -466,6 +468,8 @@ export type ISizeInfoDefault = ISizeInfo & {
 // @internal (undocumented)
 export interface IUserEditDialogProps extends IWithTelemetryProps {
     // (undocumented)
+    areFilterViewsEnabled?: boolean;
+    // (undocumented)
     changeUserMembership?: boolean;
     // (undocumented)
     initialView?: UserEditDialogMode;
@@ -485,6 +489,8 @@ export interface IUserEditDialogProps extends IWithTelemetryProps {
 
 // @internal (undocumented)
 export interface IUserGroupEditDialogProps extends IWithTelemetryProps {
+    // (undocumented)
+    areFilterViewsEnabled?: boolean;
     // (undocumented)
     initialView?: UserGroupEditDialogMode;
     // (undocumented)
@@ -564,7 +570,7 @@ export interface Root {
 }
 
 // @internal (undocumented)
-export type TelemetryEvent = "multiple-users-deleted" | "multiple-groups-deleted" | "group-deleted" | "user-deleted" | "group-created" | "user-detail-updated" | "group-detail-updated" | "groups-added-to-single-user" | "groups-added-to-multiple-users" | "users-added-to-single-group" | "users-added-to-multiple-groups" | "permission-added-to-single-user" | "permission-added-to-single-group" | "permission-added-to-multiple-users" | "permission-added-to-multiple-groups" | "user-permission-changed-to-hierarchy" | "user-permission-changed-to-single-workspace" | "group-permission-changed-to-hierarchy" | "group-permission-changed-to-single-workspace" | "user-permission-changed-to-view" | "group-permission-changed-to-view" | "user-permission-changed-to-view-export" | "group-permission-changed-to-view-export" | "user-permission-changed-to-analyze" | "group-permission-changed-to-analyze" | "user-permission-changed-to-analyze-export" | "group-permission-changed-to-analyze-export" | "user-permission-changed-to-manage" | "group-permission-changed-to-manage" | "user-data-source-permission-changed-to-use" | "group-data-source-permission-changed-to-use" | "user-data-source-permission-changed-to-manage" | "group-data-source-permission-changed-to-manage" | "user-role-changed-to-admin" | "user-role-changed-to-member";
+export type TelemetryEvent = "multiple-users-deleted" | "multiple-groups-deleted" | "group-deleted" | "user-deleted" | "group-created" | "user-detail-updated" | "group-detail-updated" | "groups-added-to-single-user" | "groups-added-to-multiple-users" | "users-added-to-single-group" | "users-added-to-multiple-groups" | "permission-added-to-single-user" | "permission-added-to-single-group" | "permission-added-to-multiple-users" | "permission-added-to-multiple-groups" | "user-permission-changed-to-hierarchy" | "user-permission-changed-to-single-workspace" | "group-permission-changed-to-hierarchy" | "group-permission-changed-to-single-workspace" | "user-permission-changed-to-view" | "group-permission-changed-to-view" | "user-permission-changed-to-view-save-views" | "group-permission-changed-to-view-save-views" | "user-permission-changed-to-view-export" | "group-permission-changed-to-view-export" | "user-permission-changed-to-view-export-save-views" | "group-permission-changed-to-view-export-save-views" | "user-permission-changed-to-analyze" | "group-permission-changed-to-analyze" | "user-permission-changed-to-analyze-export" | "group-permission-changed-to-analyze-export" | "user-permission-changed-to-manage" | "group-permission-changed-to-manage" | "user-data-source-permission-changed-to-use" | "group-data-source-permission-changed-to-use" | "user-data-source-permission-changed-to-manage" | "group-data-source-permission-changed-to-manage" | "user-role-changed-to-admin" | "user-role-changed-to-member";
 
 // @internal (undocumented)
 export type TrackEventCallback = (event: TelemetryEvent) => void;

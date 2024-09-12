@@ -54,6 +54,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
             canManageScheduledMail: false,
             canRefreshData: false,
             canUploadNonProductionCSV: false,
+            canCreateFilterView: false,
         });
     });
 
@@ -88,6 +89,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
             canManageScheduledMail: false,
             canRefreshData: true,
             canUploadNonProductionCSV: false,
+            canCreateFilterView: false,
         });
     });
 
@@ -122,6 +124,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
             canManageScheduledMail: false,
             canRefreshData: true,
             canUploadNonProductionCSV: false,
+            canCreateFilterView: false,
         });
     });
 });

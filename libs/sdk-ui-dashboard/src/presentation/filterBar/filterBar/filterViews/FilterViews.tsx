@@ -17,6 +17,7 @@ import {
     selectIsFilterViewsDialogOpen,
     selectFilterViewsDialogMode,
     selectIsNewDashboard,
+    selectCanCreateFilterView,
 } from "../../../../model/index.js";
 
 import { FilterViewsList } from "./FilterViewsList.js";
@@ -88,16 +89,21 @@ export const FilterViews: React.FC = () => {
     const filterViews = useDashboardSelector(selectFilterViews);
     const isFilterViewsEnabledForDashboard = !useDashboardSelector(selectDisableFilterViews);
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
+    const canCreateFilterView = useDashboardSelector(selectCanCreateFilterView);
     const isMobile = useMediaQuery("mobileDevice");
     const { toggleDialog, openAddDialog, openListDialog, closeDialog } = useCallbacks();
 
     useFilterViewsToastMessages();
 
+    // filter views dropdown should be visible when user looses the permission but had some views created
+    const isUserPermittedToSeeDropdown = filterViews.length > 0 || canCreateFilterView;
+
     // On mobile the dropdown button is not on filter bar but rendered inside the "..." dashboard menu.
     // The dropdown body must still be rendered so the body can be opened when user uses the menu.
     // Also, the menu is not available for new dashboard as new filter view can be saved only for an existing
     // dashboard with ref id.
-    const showDropdownButton = isFilterViewsEnabledForDashboard && !isNewDashboard && !isMobile;
+    const showDropdownButton =
+        isFilterViewsEnabledForDashboard && isUserPermittedToSeeDropdown && !isNewDashboard && !isMobile;
 
     const buttonClassNames = cx(
         "gd-filter-views-button",

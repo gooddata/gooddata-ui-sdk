@@ -33,6 +33,7 @@ export class TigerWorkspacePermissionsFactory implements IWorkspacePermissionsSe
             canExportReport,
             canExportTabular,
             canExportPdf,
+            canCreateFilterView,
         } = getPermission(permissions);
 
         return {
@@ -63,6 +64,7 @@ export class TigerWorkspacePermissionsFactory implements IWorkspacePermissionsSe
             canExportReport,
             canExportTabular: canExportTabular || canExportReport,
             canExportPdf: canExportPdf || canExportReport,
+            canCreateFilterView,
         };
     }
 }

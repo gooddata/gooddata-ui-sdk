@@ -6936,6 +6936,9 @@ export const selectCanAddMoreFilters: DashboardSelector<boolean>;
 export const selectCanCreateAnalyticalDashboard: DashboardSelector<boolean>;
 
 // @public
+export const selectCanCreateFilterView: DashboardSelector<boolean>;
+
+// @public
 export const selectCanCreateScheduledMail: DashboardSelector<boolean>;
 
 // @public
