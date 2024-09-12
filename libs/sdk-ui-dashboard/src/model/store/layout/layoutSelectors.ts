@@ -123,7 +123,7 @@ export const selectBasicLayout: DashboardSelector<IDashboardLayout<IWidget>> = c
 
 /**
  * Selects dashboard widgets in an obj ref an array. This map will include both analytical and custom
- * widgets that are placed on the dashboard.
+ * widgets that are placed on the dashboard and also all widgets from visualization switchers
  *
  * @internal
  */

@@ -345,9 +345,16 @@ const replaceSectionItem: LayoutReducer<ReplaceSectionItemActionPayload> = (stat
 //
 
 const getWidgetByRef = (state: Draft<LayoutState>, widgetRef: ObjRef) => {
-    const allWidgets = flatMap(state?.layout?.sections, (section) =>
-        section.items.map((item) => item.widget),
-    );
+    const allWidgets = flatMap(state?.layout?.sections, (section) => {
+        return section.items.flatMap((item) => {
+            let result: typeof item.widget[] = [];
+            if (isVisualizationSwitcherWidget(item.widget)) {
+                result = [item.widget, ...item.widget.visualizations];
+                return result;
+            }
+            return [item.widget];
+        });
+    });
 
     const widgets = allWidgets.filter(Boolean) as NonNullable<typeof allWidgets[number]>[];
     const widgetMap = newMapForObjectWithIdentity(widgets);
