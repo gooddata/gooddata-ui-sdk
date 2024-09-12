@@ -314,6 +314,8 @@ export interface IChartConfig {
     disableDrillDown?: boolean;
     disableDrillUnderline?: boolean;
     dualAxis?: boolean;
+    // @internal
+    enableAliasAttributeLabel?: boolean;
     enableChartSorting?: boolean;
     enableCompactSize?: boolean;
     enableJoinedAttributeAxisName?: boolean;

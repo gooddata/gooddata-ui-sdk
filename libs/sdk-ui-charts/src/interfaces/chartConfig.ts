@@ -349,6 +349,12 @@ export interface IChartConfig {
      * @beta
      */
     clustering?: IChartClusteringConfig;
+
+    /**
+     * Temporary configuration for charts to use proper alias for attribute label
+     * @internal
+     */
+    enableAliasAttributeLabel?: boolean;
 }
 
 /**
