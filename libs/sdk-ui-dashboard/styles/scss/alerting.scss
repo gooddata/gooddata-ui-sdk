@@ -54,6 +54,14 @@
     }
 }
 
+.gd-alerts-list__empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px;
+    color: kit-variables.$gd-color-state-blank;
+}
+
 //
 // Alerts list item
 //

@@ -93,7 +93,11 @@ export type WorkspacePermission =
     /**
      * Whether the current user has permissions to create a dashboard filter view.
      */
-    | "canCreateFilterView";
+    | "canCreateFilterView"
+    /**
+     * Whether the current user has permissions to create an automation.
+     */
+    | "canCreateAutomation";
 
 /**
  * Dictionary of workspace permissions

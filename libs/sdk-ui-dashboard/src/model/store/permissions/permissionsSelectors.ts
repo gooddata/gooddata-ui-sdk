@@ -255,6 +255,18 @@ export const selectCanManageScheduledMail: DashboardSelector<boolean> = createSe
 );
 
 /**
+ * Returns whether the current user has permissions to create automation.
+ *
+ * @internal
+ */
+export const selectCanCreateAutomation: DashboardSelector<boolean> = createSelector(
+    selectPermissions,
+    (state) => {
+        return state?.canCreateAutomation ?? false;
+    },
+);
+
+/**
  * Returns whether the current user has permissions to create/edit/delete attribute hierarchy.
  *
  * @internal

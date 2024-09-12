@@ -4,7 +4,11 @@ import { useCallback, useMemo, useState, Dispatch, SetStateAction } from "react"
 import { useIntl } from "react-intl";
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 
-import { selectExecutionResultByRef, useDashboardSelector } from "../../../../model/index.js";
+import {
+    selectCanCreateAutomation,
+    selectExecutionResultByRef,
+    useDashboardSelector,
+} from "../../../../model/index.js";
 
 import { isDataError } from "../../../../_staging/errors/errorPredicates.js";
 import { useDashboardCustomizationsContext } from "../../../dashboardContexts/index.js";
@@ -76,6 +80,7 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
 
     const intl = useIntl();
     const execution = useDashboardSelector(selectExecutionResultByRef(widget.ref));
+    const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
 
     return useMemo<IInsightMenuItem[]>(() => {
         return getDefaultInsightMenuItems(intl, {
@@ -106,6 +111,7 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
             isAlertingVisible,
             alertingDisabled,
             alertingDisabledReason,
+            canCreateAutomation,
         });
     }, [
         intl,
@@ -125,5 +131,6 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
         onScheduleManagementExport,
         scheduleExportDisabledReason,
         alertingDisabledReason,
+        canCreateAutomation,
     ]);
 }

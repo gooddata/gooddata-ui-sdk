@@ -23,6 +23,7 @@ import {
     selectDashboardId,
     selectSmtps,
     selectLocale,
+    selectCanCreateAutomation,
 } from "../../../../../../model/index.js";
 import { createDefaultAlert, getSupportedInsightMeasuresByInsight } from "../utils.js";
 import { messages } from "../messages.js";
@@ -50,6 +51,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     const automationsCount = useDashboardSelector(selectAutomationsCount);
     const maxAutomationsEntitlement = useDashboardSelector(selectEntitlementMaxAutomations);
     const unlimitedAutomationsEntitlement = useDashboardSelector(selectEntitlementUnlimitedAutomations);
+    const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
 
     const { handleCreateAlert, handleUpdateAlert, handlePauseAlert, handleResumeAlert } =
         useSaveAlertToBackend({
@@ -136,7 +138,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
 
     const [isLoading, setIsLoading] = useState(true);
     const [viewMode, setViewMode] = useState<InsightWidgetAlertingViewMode>(
-        alerts.length > 0 ? "list" : "create",
+        alerts.length > 0 || !canCreateAutomation ? "list" : "create",
     );
     const [defaultAlert, setDefaultAlert] = useState<
         IAutomationMetadataObject | IAutomationMetadataObjectDefinition | null
@@ -243,5 +245,6 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         hasAlerts,
         supportedMeasures,
         maxAutomationsReached,
+        canCreateAutomation,
     };
 };

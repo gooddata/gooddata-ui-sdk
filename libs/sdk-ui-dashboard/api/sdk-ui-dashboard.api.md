@@ -3595,6 +3595,7 @@ export function getDefaultInsightMenuItems(intl: IntlShape, config: {
     isAlertingVisible: boolean;
     alertingDisabled: boolean;
     alertingDisabledReason?: AlertingDisabledReason;
+    canCreateAutomation: boolean;
 }): IInsightMenuItem[];
 
 // @internal (undocumented)
@@ -6934,6 +6935,9 @@ export const selectCanAddMoreFilters: DashboardSelector<boolean>;
 
 // @public
 export const selectCanCreateAnalyticalDashboard: DashboardSelector<boolean>;
+
+// @internal
+export const selectCanCreateAutomation: DashboardSelector<boolean>;
 
 // @public
 export const selectCanCreateFilterView: DashboardSelector<boolean>;

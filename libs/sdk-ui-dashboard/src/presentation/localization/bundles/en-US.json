@@ -137,9 +137,19 @@
         "comment": "Translate as imperative. Schedule emailing edit whole KPI dashboard",
         "limit": 0
     },
+    "options.menu.schedule.email.edit.noCreatePermissions": {
+        "value": "Scheduled exports",
+        "comment": "Translate as imperative. Schedule emailing edit whole KPI dashboard, without create permissions.",
+        "limit": 0
+    },
     "options.menu.alerts.edit": {
         "value": "Show alerts",
         "comment": "Translate as imperative. Schedule alerts for dashboard or widget",
+        "limit": 0
+    },
+    "options.menu.alerts.edit.noCreatePermissions": {
+        "value": "Alerts",
+        "comment": "Translate as imperative. Schedule alerts for dashboard or widget, without create permissions.",
         "limit": 0
     },
     "options.menu.delete": {
@@ -2819,6 +2829,11 @@
     "insightAlert.config.alerts": {
         "value": "Alerts",
         "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.alerts.empty": {
+        "value": "There are no alerts for this visualization.",
+        "comment": "Text shown when there are no alerts for this visualization.",
         "limit": 0
     },
     "insightAlert.config.noAlertMeasures": {
