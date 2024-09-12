@@ -38,6 +38,7 @@ export function convertIntersectionToAttributeFilters(
     dateDataSetsAttributesRefs: ObjRef[],
     backendSupportsElementUris: boolean,
     enableDuplicatedLabelValuesInAttributeFilter: boolean,
+    enableAliasTitles = false,
 ): IConversionResult[] {
     return intersection
         .map((i) => i.header)
@@ -49,6 +50,7 @@ export function convertIntersectionToAttributeFilters(
                 backendSupportsElementUris || enableDuplicatedLabelValuesInAttributeFilter
                     ? h.attributeHeaderItem.uri
                     : h.attributeHeaderItem.name;
+            const titleObj = enableAliasTitles ? { title: h.attributeHeader.formOf?.name } : {};
             result.push({
                 attributeFilter: {
                     attributeFilter: {
@@ -56,6 +58,7 @@ export function convertIntersectionToAttributeFilters(
                         displayForm: ref,
                         negativeSelection: false,
                         localIdentifier: uuid(),
+                        ...titleObj,
                     },
                 },
                 ...(enableDuplicatedLabelValuesInAttributeFilter

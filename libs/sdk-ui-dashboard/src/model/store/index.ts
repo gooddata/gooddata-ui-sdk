@@ -94,6 +94,7 @@ export {
     selectEnableVisualizationSwitcher,
     selectEnableIgnoreCrossFiltering,
     selectEnableAutomations,
+    selectEnableCrossFilteringAliasTitles,
 } from "./config/configSelectors.js";
 export type { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {

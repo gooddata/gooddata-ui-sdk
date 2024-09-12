@@ -22,7 +22,10 @@ import {
 import { changeAttributeFilterSelectionHandler } from "../filterContext/attributeFilter/changeAttributeFilterSelectionHandler.js";
 import { removeAttributeFiltersHandler } from "../filterContext/attributeFilter/removeAttributeFiltersHandler.js";
 import isEmpty from "lodash/isEmpty.js";
-import { selectEnableDuplicatedLabelValuesInAttributeFilter } from "../../store/config/configSelectors.js";
+import {
+    selectEnableCrossFilteringAliasTitles,
+    selectEnableDuplicatedLabelValuesInAttributeFilter,
+} from "../../store/config/configSelectors.js";
 import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 
 export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFiltering) {
@@ -33,6 +36,8 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
     const enableDuplicatedLabelValuesInAttributeFilter: ReturnType<
         typeof selectEnableDuplicatedLabelValuesInAttributeFilter
     > = yield select(selectEnableDuplicatedLabelValuesInAttributeFilter);
+    const enableCrossFilteringAliasTitles: ReturnType<typeof selectEnableCrossFilteringAliasTitles> =
+        yield select(selectEnableCrossFilteringAliasTitles);
 
     const backendSupportsElementUris = !!ctx.backend.capabilities.supportsElementUris;
     const widgetRef = cmd.payload.drillEvent.widgetRef!;
@@ -60,6 +65,7 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
         dateDataSetsAttributesRefs,
         backendSupportsElementUris,
         enableDuplicatedLabelValuesInAttributeFilter,
+        enableCrossFilteringAliasTitles,
     );
 
     const attributeFilterDisplayAsLabelMap: ReturnType<typeof selectAttributeFilterConfigsDisplayAsLabelMap> =
@@ -75,7 +81,7 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
         crossFilteringItemByWidget?.filterLocalIdentifiers.length <= drillIntersectionFilters.length;
 
     const virtualFilters = drillIntersectionFilters.map(({ attributeFilter, primaryLabel }) => {
-        const { displayForm, attributeElements, negativeSelection } = attributeFilter.attributeFilter;
+        const { displayForm, attributeElements, negativeSelection, title } = attributeFilter.attributeFilter;
 
         const existingVirtualFilter = shouldUpdateExistingCrossFiltering
             ? currentVirtualFilters.find((vf) => {
@@ -104,6 +110,7 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
                 negativeSelection,
                 localIdentifier: existingVirtualFilter?.attributeFilter.localIdentifier ?? uuid(),
                 selectionMode: "multi",
+                title,
             },
         };
 
@@ -152,6 +159,7 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
                           vf.attributeFilter.negativeSelection,
                           vf.attributeFilter.localIdentifier,
                           drillIntersectionFilters[index].primaryLabel,
+                          vf.attributeFilter.title,
                       ),
                   )
                 : call(

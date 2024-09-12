@@ -508,6 +508,12 @@ export interface ISettings {
      */
     enableEarlyAccessFeaturesRollout?: boolean;
 
+    /**
+     * Enable the use of alias filter titles in cross filtering.
+     * @internal
+     */
+    enableCrossFilteringAliasTitles?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 
