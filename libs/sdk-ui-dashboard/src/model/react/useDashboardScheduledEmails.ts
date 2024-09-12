@@ -28,6 +28,7 @@ import {
     selectAutomationsError,
     selectAutomationsSchedulesInContext,
     selectEntitlementUnlimitedAutomations,
+    selectCanCreateAutomation,
 } from "../store/index.js";
 import { refreshAutomations } from "../commands/index.js";
 import { messages } from "../../locales.js";
@@ -107,7 +108,8 @@ export const useDashboardScheduledEmails = () => {
         showDueToNumberOfAvailableDestinations &&
         (menuButtonItemsVisibility.scheduleEmailButton ?? true);
 
-    const isScheduledEmailingVisible = isSchedulingAvailable && !maxAutomationsReached;
+    const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
+    const isScheduledEmailingVisible = isSchedulingAvailable && canCreateAutomation && !maxAutomationsReached;
     const isScheduledManagementEmailingVisible = isSchedulingAvailable && automations.length > 0;
 
     const openScheduleEmailingDialog = useCallback(

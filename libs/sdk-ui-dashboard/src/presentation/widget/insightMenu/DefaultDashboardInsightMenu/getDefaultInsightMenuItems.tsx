@@ -37,6 +37,7 @@ export function getDefaultInsightMenuItems(
         isAlertingVisible: boolean;
         alertingDisabled: boolean;
         alertingDisabledReason?: AlertingDisabledReason;
+        canCreateAutomation: boolean;
     },
 ): IInsightMenuItem[] {
     const {
@@ -55,6 +56,7 @@ export function getDefaultInsightMenuItems(
         isAlertingVisible,
         alertingDisabled,
         alertingDisabledReason,
+        canCreateAutomation,
     } = config;
 
     const defaultWidgetTooltip = isDataError
@@ -157,11 +159,13 @@ export function getDefaultInsightMenuItems(
         isScheduleExportManagementVisible && {
             type: "button",
             itemId: "ScheduleExportEdit",
-            itemName: intl.formatMessage({ id: "widget.options.menu.scheduleExport.edit" }),
+            itemName: canCreateAutomation
+                ? intl.formatMessage({ id: "widget.options.menu.scheduleExport.edit" })
+                : intl.formatMessage({ id: "options.menu.schedule.email.edit.noCreatePermissions" }),
             onClick: onScheduleManagementExport,
             disabled: scheduleExportManagementDisabled,
             tooltip: defaultWidgetTooltip,
-            icon: "gd-icon-list",
+            icon: canCreateAutomation ? "gd-icon-list" : "gd-icon-clock",
             className: "s-options-menu-schedule-export-edit",
         },
     ];

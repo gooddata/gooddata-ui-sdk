@@ -11,6 +11,7 @@ const packagesWithoutStyles = [
     "@gooddata/sdk-backend-tiger",
     "@gooddata/sdk-ui-loaders",
     "@gooddata/sdk-ui-theme-provider",
+    "@gooddata/sdk-embedding",
 ];
 
 const packagesWithStyles = [
@@ -23,6 +24,7 @@ const packagesWithStyles = [
     "@gooddata/sdk-ui-pivot",
     "@gooddata/sdk-ui-semantic-search",
     "@gooddata/sdk-ui-kit",
+    "@gooddata/sdk-ui-vis-commons",
 ];
 
 function makePackageSourceAlias(packageName: string) {
@@ -55,6 +57,10 @@ export default defineConfig(({ mode }) => {
                 {
                     find: "~@gooddata/sdk-ui-kit/styles",
                     replacement: path.resolve(__dirname, "./../../libs/sdk-ui-kit/styles"),
+                },
+                {
+                    find: "~@gooddata/sdk-ui-dashboard/esm/assets",
+                    replacement: path.resolve(__dirname, "./../../libs/sdk-ui-dashboard/src/assets"),
                 },
                 ...packagesWithoutStyles.map(makePackageSourceAlias),
                 ...packagesWithStyles.flatMap((pkg) => [

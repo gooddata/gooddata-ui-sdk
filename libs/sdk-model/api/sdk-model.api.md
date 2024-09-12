@@ -82,6 +82,7 @@ export const AssignedWorkspacePermissionValue: {
     readonly EXPORT_PDF: "EXPORT_PDF";
     readonly CREATE_FILTER_VIEW: "CREATE_FILTER_VIEW";
     readonly VIEW: "VIEW";
+    readonly CREATE_AUTOMATION: "CREATE_AUTOMATION";
 };
 
 // @public
@@ -4427,6 +4428,10 @@ export type WorkspacePermission =
 /**
 * Whether the current user has permissions to create a dashboard filter view.
 */
-| "canCreateFilterView";
+| "canCreateFilterView"
+/**
+* Whether the current user has permissions to create an automation.
+*/
+| "canCreateAutomation";
 
 ```

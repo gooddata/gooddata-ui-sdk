@@ -18,6 +18,7 @@ interface IAlertsListProps {
     onClose: () => void;
     onGoBack: () => void;
     maxAutomationsReached: boolean;
+    canCreateAutomation: boolean;
 }
 
 export const AlertsList: React.FC<IAlertsListProps> = ({
@@ -31,6 +32,7 @@ export const AlertsList: React.FC<IAlertsListProps> = ({
     onClose,
     onGoBack,
     maxAutomationsReached,
+    canCreateAutomation,
 }) => {
     const intl = useIntl();
 
@@ -46,35 +48,45 @@ export const AlertsList: React.FC<IAlertsListProps> = ({
                         <LoadingSkeleton />
                     ) : (
                         <>
-                            {alerts.map((alert) => {
-                                return (
-                                    <AlertsListItem
-                                        key={alert.id}
-                                        alert={alert}
-                                        onEditAlert={onEditAlert}
-                                        onPauseAlert={onPauseAlert}
-                                        onResumeAlert={onResumeAlert}
-                                        onDeleteAlert={onDeleteAlert}
-                                    />
-                                );
-                            })}
+                            {alerts.length > 0 ? (
+                                alerts.map((alert) => {
+                                    return (
+                                        <AlertsListItem
+                                            key={alert.id}
+                                            alert={alert}
+                                            onEditAlert={onEditAlert}
+                                            onPauseAlert={onPauseAlert}
+                                            onResumeAlert={onResumeAlert}
+                                            onDeleteAlert={onDeleteAlert}
+                                        />
+                                    );
+                                })
+                            ) : (
+                                <div className="gd-alerts-list__empty">
+                                    <FormattedMessage id="insightAlert.config.alerts.empty" />
+                                </div>
+                            )}
                         </>
                     )}
                 </div>
-                <SeparatorLine pL={10} pR={10} />
-                <div className="gd-alerts-list__buttons">
-                    <AddButton
-                        onClick={onCreateAlert}
-                        title={<FormattedMessage id="insightAlert.config.addAlert" />}
-                        className="gd-alerts-list__add-button"
-                        isDisabled={maxAutomationsReached || isLoading}
-                        tooltip={
-                            maxAutomationsReached ? (
-                                <FormattedMessage id="insightAlert.maxAlertsReached" />
-                            ) : undefined
-                        }
-                    />
-                </div>
+                {canCreateAutomation ? (
+                    <>
+                        <SeparatorLine pL={10} pR={10} />
+                        <div className="gd-alerts-list__buttons">
+                            <AddButton
+                                onClick={onCreateAlert}
+                                title={<FormattedMessage id="insightAlert.config.addAlert" />}
+                                className="gd-alerts-list__add-button"
+                                isDisabled={maxAutomationsReached || isLoading}
+                                tooltip={
+                                    maxAutomationsReached ? (
+                                        <FormattedMessage id="insightAlert.maxAlertsReached" />
+                                    ) : undefined
+                                }
+                            />
+                        </div>
+                    </>
+                ) : null}
             </div>
         </DashboardInsightSubmenuContainer>
     );
