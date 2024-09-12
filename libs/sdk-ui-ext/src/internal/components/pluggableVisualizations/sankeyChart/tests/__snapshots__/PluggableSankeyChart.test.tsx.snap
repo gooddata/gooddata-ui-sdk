@@ -140,7 +140,7 @@ exports[`PluggableSankeyChart > sankey should allow date attribute in attribute 
         "isShowInPercentEnabled": true,
         "isShowInPercentVisible": true,
         "itemsLimit": 1,
-        "title": "MEASURE",
+        "title": "METRIC",
       },
     },
     "exportConfig": {
@@ -275,7 +275,7 @@ exports[`PluggableSankeyChart > should return reference point with one metric, a
         "isShowInPercentEnabled": true,
         "isShowInPercentVisible": true,
         "itemsLimit": 1,
-        "title": "MEASURE",
+        "title": "METRIC",
       },
     },
     "exportConfig": {
@@ -462,7 +462,7 @@ exports[`PluggableSankeyChart > should reuse one measure and order attribute typ
         "isShowInPercentEnabled": true,
         "isShowInPercentVisible": true,
         "itemsLimit": 1,
-        "title": "MEASURE",
+        "title": "METRIC",
       },
     },
     "exportConfig": {

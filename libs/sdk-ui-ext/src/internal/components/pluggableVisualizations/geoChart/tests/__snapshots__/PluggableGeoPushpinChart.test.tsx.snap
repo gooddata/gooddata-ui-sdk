@@ -68,7 +68,7 @@ exports[`PluggableGeoPushpinChart > getExtendedReferencePoint > should return a 
       "isShowInPercentVisible": false,
       "itemsLimit": 1,
       "subtitle": "Color",
-      "title": "Measure",
+      "title": "Metric",
     },
     "filters": {
       "accepts": [
@@ -132,7 +132,7 @@ exports[`PluggableGeoPushpinChart > getExtendedReferencePoint > should return a 
       "isShowInPercentVisible": false,
       "itemsLimit": 1,
       "subtitle": "Size",
-      "title": "Measure",
+      "title": "Metric",
     },
   },
   "exportConfig": {

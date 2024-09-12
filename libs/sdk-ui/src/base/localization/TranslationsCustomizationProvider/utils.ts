@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import memoize from "memoize-one";
 import { IWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { defaultImport } from "default-import";
@@ -76,7 +76,7 @@ export const pickCorrectMetricWording = (
     translations: Record<string, string>,
     settings?: IWorkspaceSettings,
 ): Record<string, string> => {
-    const isEnabledRenamingMeasureToMetric = !!settings?.enableRenamingMeasureToMetric;
+    const isEnabledRenamingMeasureToMetric = settings?.enableRenamingMeasureToMetric ?? true;
 
     return memoizedPickCorrectMetricWordingInner(translations, isEnabledRenamingMeasureToMetric);
 };

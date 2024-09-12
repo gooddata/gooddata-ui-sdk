@@ -94,7 +94,7 @@ exports[`PluggableWaterfallChart > should return reference point after switching
         "isTotalMeasureEnabled": false,
         "isTotalMeasureVisible": true,
         "itemsLimit": 1,
-        "title": "Measures",
+        "title": "Metrics",
       },
       "view": {
         "accepts": [
@@ -214,7 +214,7 @@ exports[`PluggableWaterfallChart > should return reference point with multi meas
         "isTotalMeasureEnabled": true,
         "isTotalMeasureVisible": true,
         "itemsLimit": 40,
-        "title": "Measures",
+        "title": "Metrics",
       },
       "view": {
         "accepts": [
@@ -232,7 +232,7 @@ exports[`PluggableWaterfallChart > should return reference point with multi meas
           "date": 1,
         },
         "title": "View by",
-        "warningMessage": "To view by, an visualization can have only one measure",
+        "warningMessage": "To view by, an visualization can have only one metric",
       },
     },
     "exportConfig": {
@@ -321,7 +321,7 @@ exports[`PluggableWaterfallChart > should return reference point with one measur
         "isTotalMeasureEnabled": false,
         "isTotalMeasureVisible": true,
         "itemsLimit": 1,
-        "title": "Measures",
+        "title": "Metrics",
       },
       "view": {
         "accepts": [

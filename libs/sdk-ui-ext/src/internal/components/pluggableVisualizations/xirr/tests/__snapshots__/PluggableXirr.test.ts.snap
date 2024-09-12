@@ -60,12 +60,12 @@ exports[`PluggableXirr > getExtendedReferencePoint > should correctly process em
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
-        "title": "Measure",
+        "title": "Metric",
       },
     },
     "customError": {
       "heading": "Incomplete configuration",
-      "text": "Make sure you have selected one measure and one date attribute",
+      "text": "Make sure you have selected one metric and one date attribute",
     },
     "exportConfig": {
       "supported": false,
@@ -161,7 +161,7 @@ exports[`PluggableXirr > getExtendedReferencePoint > should return proper extend
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
-        "title": "Measure",
+        "title": "Metric",
       },
     },
     "customError": undefined,
