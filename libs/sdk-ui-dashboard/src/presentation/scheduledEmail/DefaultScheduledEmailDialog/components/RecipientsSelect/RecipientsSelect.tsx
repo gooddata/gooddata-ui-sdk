@@ -5,6 +5,7 @@ import { IAutomationRecipient, IWorkspaceUser } from "@gooddata/sdk-model";
 import sortBy from "lodash/sortBy.js";
 
 import { RecipientsSelectRenderer } from "./RecipientsSelectRenderer.js";
+import { convertUserToAutomationRecipient } from "../../utils/automationHelpers.js";
 
 interface IRecipientsSelectProps {
     /**
@@ -45,17 +46,7 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
 
     const options = useMemo(() => {
         const filteredUsers = search ? users?.filter((user) => matchUser(user, search)) : users;
-        return sortBy(
-            filteredUsers?.map(
-                (user): IAutomationRecipient => ({
-                    id: user.login,
-                    email: user.email,
-                    name: user.fullName,
-                    type: "user",
-                }),
-            ) ?? [],
-            "user.email",
-        );
+        return sortBy(filteredUsers?.map(convertUserToAutomationRecipient) ?? [], "user.email");
     }, [users, search]);
 
     return (

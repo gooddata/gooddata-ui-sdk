@@ -4,6 +4,7 @@ import {
     FilterContextItem,
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
+    IAutomationRecipient,
     IExportDefinitionMetadataObject,
     IExportDefinitionMetadataObjectDefinition,
     IFilter,
@@ -14,6 +15,7 @@ import {
     isFilterContextItem,
     isObjRef,
     isRelativeDateFilter,
+    IUser,
 } from "@gooddata/sdk-model";
 import omit from "lodash/omit.js";
 import isEqual from "lodash/isEqual.js";
@@ -170,4 +172,13 @@ export const transformFilterContextToModelFilters = (
 
         return filter;
     });
+};
+
+export const convertUserToAutomationRecipient = (user: IUser): IAutomationRecipient => {
+    return {
+        id: user.login,
+        email: user.email,
+        name: user.fullName,
+        type: "user",
+    };
 };
