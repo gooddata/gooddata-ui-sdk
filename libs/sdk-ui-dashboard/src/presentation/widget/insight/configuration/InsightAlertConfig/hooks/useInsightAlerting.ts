@@ -24,12 +24,14 @@ import {
     selectSmtps,
     selectLocale,
     selectCanCreateAutomation,
+    selectCurrentUser,
 } from "../../../../../../model/index.js";
 import { createDefaultAlert, getSupportedInsightMeasuresByInsight } from "../utils.js";
 import { messages } from "../messages.js";
 import { useWidgetFilters } from "../../../../common/useWidgetFilters.js";
 import { useSaveAlertToBackend } from "./useSaveAlertToBackend.js";
 import { fillMissingTitles, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { convertUserToAutomationRecipient } from "../../../../../scheduledEmail/DefaultScheduledEmailDialog/utils/automationHelpers.js";
 
 type InsightWidgetAlertingViewMode = "list" | "edit" | "create";
 
@@ -52,6 +54,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     const maxAutomationsEntitlement = useDashboardSelector(selectEntitlementMaxAutomations);
     const unlimitedAutomationsEntitlement = useDashboardSelector(selectEntitlementUnlimitedAutomations);
     const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
+    const currentUser = useDashboardSelector(selectCurrentUser);
 
     const { handleCreateAlert, handleUpdateAlert, handlePauseAlert, handleResumeAlert } =
         useSaveAlertToBackend({
@@ -178,6 +181,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             metadata: {
                 widget: widget?.localIdentifier,
             },
+            recipients: [convertUserToAutomationRecipient(currentUser)],
         } as IAutomationMetadataObject;
         setIsLoading(true);
         handleCreateAlert(alertToCreate);
