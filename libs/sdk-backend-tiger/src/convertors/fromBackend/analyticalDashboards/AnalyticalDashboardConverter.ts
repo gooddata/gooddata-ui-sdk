@@ -18,7 +18,6 @@ import {
     convertDashboard as convertDashboardV1,
     convertFilterContextFilters as convertFilterContextFiltersV1,
     convertFilterContextFromBackend as convertFilterContextFromBackendV1,
-    convertFilterContextWithLinksFromBackend as convertFilterContextWithLinksFromBackendV1,
 } from "./v1/AnalyticalDashboardConverter.js";
 import {
     convertDashboard as convertDashboardV2,
@@ -26,7 +25,6 @@ import {
     convertFilterContextFromBackend as convertFilterContextFromBackendV2,
     convertDashboardPlugin as convertDashboardPluginV2,
     convertDashboardPluginWithLinks as convertDashboardPluginWithLinksV2,
-    convertFilterContextWithLinksFromBackend as convertFilterContextWithLinksFromBackendV2,
 } from "./v2/AnalyticalDashboardConverter.js";
 import {
     idRef,
@@ -173,20 +171,4 @@ export function getFilterContextFromIncluded(
             content as AnalyticalDashboardModelV1.IFilterContext | AnalyticalDashboardModelV2.IFilterContext,
         ),
     };
-}
-
-export function convertFilterContextWithLinksFromBackend(
-    filterContext: JsonApiFilterContextOutWithLinks,
-): IFilterContext {
-    const content = filterContext.attributes!.content;
-
-    if (AnalyticalDashboardModelV1.isFilterContext(content)) {
-        return convertFilterContextWithLinksFromBackendV1(filterContext);
-    }
-
-    if (AnalyticalDashboardModelV2.isFilterContext(content)) {
-        return convertFilterContextWithLinksFromBackendV2(filterContext);
-    }
-
-    invariant(false, "Unknown filter context version");
 }

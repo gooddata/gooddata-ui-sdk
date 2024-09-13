@@ -3,7 +3,6 @@ import {
     AnalyticalDashboardModelV1,
     JsonApiAnalyticalDashboardOutDocument,
     JsonApiFilterContextOutDocument,
-    JsonApiFilterContextOutWithLinks,
 } from "@gooddata/api-client-tiger";
 import { LayoutPath, walkLayout } from "@gooddata/sdk-backend-spi";
 import { v4 as uuidv4 } from "uuid";
@@ -122,21 +121,6 @@ export function convertFilterContextFromBackend(
     };
 }
 
-export function convertFilterContextWithLinksFromBackend(
-    filterContext: JsonApiFilterContextOutWithLinks,
-): IFilterContext {
-    const { id, type, attributes } = filterContext;
-    const { title = "", description = "", content } = attributes!;
-
-    return {
-        ref: idRef(id, type as ObjectType),
-        identifier: id,
-        uri: filterContext.links!.self,
-        title,
-        description,
-        filters: convertFilterContextFilters(content as AnalyticalDashboardModelV1.IFilterContext),
-    };
-}
 export function convertFilterContextFilters(
     content: AnalyticalDashboardModelV1.IFilterContext,
 ): FilterContextItem[] {

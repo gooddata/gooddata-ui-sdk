@@ -642,7 +642,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 const profile = await client.profile.getCurrent();
                 return client.entities.getAllEntitiesFilterViews({
                     workspaceId: this.workspace,
-                    include: ["filterContext", "user", "analyticalDashboard"],
+                    include: ["user", "analyticalDashboard"],
                     filter: `analyticalDashboard.id==${dashboardId};user.id==${profile.userId}`,
                     // sort: ["name"], // TODO LX-422 remove comment and array sort below once sort is supported
                 });
@@ -663,7 +663,6 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             const { name, dashboard, isDefault, filterContext } = filterView;
 
             const dashboardId = await objRefToIdentifier(dashboard, this.authCall);
-            const persistedFilterContext = await this.createFilterContext(filterContext);
 
             return this.authCall(async (client) => {
                 if (isDefault) {
@@ -682,6 +681,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                                 attributes: {
                                     isDefault,
                                     title: name,
+                                    content: convertFilterContextToBackend(filterContext),
                                 },
                                 relationships: {
                                     user: {
@@ -694,12 +694,6 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                                         data: {
                                             id: dashboardId,
                                             type: "analyticalDashboard",
-                                        },
-                                    },
-                                    filterContext: {
-                                        data: {
-                                            id: persistedFilterContext.identifier,
-                                            type: "filterContext",
                                         },
                                     },
                                 },
@@ -720,7 +714,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     dashboard,
                     user: idRef(profile.userId, "user"),
                     name: title,
-                    filterContext: persistedFilterContext,
+                    filterContext,
                     isDefault: persistedIsDefault ?? false,
                 };
             });
