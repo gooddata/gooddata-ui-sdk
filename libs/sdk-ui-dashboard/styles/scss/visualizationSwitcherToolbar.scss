@@ -17,14 +17,20 @@
 .gd-visualization-switcher-toolbar-top {
     width: 189px;
     height: 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 6px 4px 6px 8px;
+    padding: 6px 8px;
     margin-bottom: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
     background-color: white;
+    line-height: 0;
+
+    .gd-bubble-trigger {
+        display: inline-block;
+    }
     .left-section {
-        padding: 4px 14px 4px 4px;
+        padding: 4px;
         flex: 0 1 auto;
     }
     .vertical-divider {
@@ -46,18 +52,24 @@
         line-height: 21px;
     }
     .navigate-button {
-        width: 28px;
-        height: 19px;
-        text-align: center;
+        display: flex;
+        padding: 4px;
+        justify-content: center;
+        align-items: center;
     }
 
     .right-section {
-        padding-left: 4px;
-        flex: 0 1 auto;
+        display: flex;
+        padding: 4px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
     }
 
-    .gd-button.gd-button-link.gd-button-icon-only.gd-icon-trash:hover::before {
-        color: var(--gd-palette-error-base, #e54d42);
+    .gd-trash-icon:hover {
+        path {
+            fill: var(--gd-palette-error-base, #e54d42);
+        }
     }
 }
 

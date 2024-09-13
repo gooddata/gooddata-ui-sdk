@@ -1,11 +1,14 @@
 // (C) 2024 GoodData Corporation
 
-import { Button, GD_COLOR_HIGHLIGHT, Icon } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, GD_COLOR_HIGHLIGHT, IAlignPoint, Icon } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import React, { useCallback } from "react";
 import { IInsightWidget } from "@gooddata/sdk-model";
+import { FormattedMessage } from "react-intl";
+
 import { gdColorStateBlank } from "../../../constants/colors.js";
 
+const bubbleAlignPoints: IAlignPoint[] = [{ align: "tc bc", offset: { x: 0, y: -8 } }];
 interface IToolbarTopProps {
     visualizations: IInsightWidget[];
     activeVisualizationId: string | undefined;
@@ -59,26 +62,45 @@ export const ToolbarTop: React.FC<IToolbarTopProps> = ({
     return (
         <div className="gd-visualization-switcher-toolbar-top bubble-light">
             <div className="left-section" onClick={toggleVisualizationsList}>
-                <Icon.VisualizationSwitcher color={iconColor} width={20} height={20} />
+                <BubbleHoverTrigger eventsOnBubble={true}>
+                    <Icon.VisualizationSwitcher color={iconColor} width={20} height={20} />
+                    <Bubble alignPoints={bubbleAlignPoints}>
+                        <FormattedMessage id="visualizationSwitcherToolbar.visualizationsList.tooltip" />
+                    </Bubble>
+                </BubbleHoverTrigger>
             </div>
             <div className="vertical-divider" />
             <div className="middle-section">
                 <div className="navigate-button navigate-prev" onClick={onNavigatePrev}>
-                    <Icon.ArrowLeft color={prevColor} />
+                    <BubbleHoverTrigger eventsOnBubble={true}>
+                        <Icon.ArrowLeft color={prevColor} />
+                        <Bubble alignPoints={bubbleAlignPoints}>
+                            <FormattedMessage id="visualizationSwitcherToolbar.visualizationsList.prev" />
+                        </Bubble>
+                    </BubbleHoverTrigger>
                 </div>
                 <div className="status">
                     {activeWidgetIndex + 1}/{visualizations.length}
                 </div>
                 <div className="navigate-button navigate-next" onClick={onNavigateNext}>
-                    <Icon.ArrowRight color={nextColor} />
+                    <BubbleHoverTrigger eventsOnBubble={true}>
+                        <Icon.ArrowRight color={nextColor} />
+                        <Bubble alignPoints={bubbleAlignPoints}>
+                            <FormattedMessage id="visualizationSwitcherToolbar.visualizationsList.next" />
+                        </Bubble>
+                    </BubbleHoverTrigger>
                 </div>
             </div>
             <div className="vertical-divider" />
             <div className="right-section">
-                <Button
-                    className="gd-button-link gd-button-icon-only gd-icon-trash s-visualization-switcher-remove-button"
-                    onClick={onDelete}
-                />
+                <div className="s-visualization-switcher-remove-button" onClick={onDelete}>
+                    <BubbleHoverTrigger eventsOnBubble={true}>
+                        <Icon.Trash className="gd-trash-icon" width={20} />
+                        <Bubble alignPoints={bubbleAlignPoints}>
+                            <FormattedMessage id="visualizationSwitcherToolbar.remove" />
+                        </Bubble>
+                    </BubbleHoverTrigger>
+                </div>
             </div>
         </div>
     );
