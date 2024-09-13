@@ -186,7 +186,6 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         useCallback<VisualizationSwitcherToolbarComponentProvider>(
             (widget) => {
                 const userSpecified = VisualizationSwitcherToolbarComponentProvider?.(widget);
-                // if user customizes the items, always use the "new" default menu
                 return userSpecified ?? DefaultVisualizationSwitcherToolbar;
             },
             [VisualizationSwitcherToolbarComponentProvider],

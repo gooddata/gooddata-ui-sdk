@@ -15,6 +15,7 @@ import {
     isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
     DrillDefinition,
+    isVisualizationSwitcherWidget,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import partition from "lodash/partition.js";
@@ -139,7 +140,7 @@ export const selectWidgets: DashboardSelector<ExtendedDashboardWidget[]> = creat
                 }
 
                 items.push(item.widget);
-                if (item.widget.type === "visualizationSwitcher") {
+                if (isVisualizationSwitcherWidget(item.widget)) {
                     items.push(...item.widget.visualizations);
                 }
             }
@@ -157,7 +158,6 @@ export const selectWidgets: DashboardSelector<ExtendedDashboardWidget[]> = creat
  */
 export const selectWidgetsMap: DashboardSelector<ObjRefMap<ExtendedDashboardWidget>> = createSelector(
     selectWidgets,
-
     (widgets) => {
         return newMapForObjectWithIdentity(widgets);
     },
