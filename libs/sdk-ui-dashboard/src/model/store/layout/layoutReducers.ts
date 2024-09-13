@@ -801,13 +801,13 @@ const addVisualizationSwitcherWidgetVisualization: LayoutReducer<
     widgetRef.visualizations.push(visualization);
 };
 
-type RemoveVisualzationSwitcherWidgetVisualization = {
+type UpdateVisualizationSwitcherWidgetVisualizations = {
     ref: ObjRef;
     visualizations: IInsightWidget[];
 };
 
-const removeVisualizationSwitcherWidgetVisualization: LayoutReducer<
-    RemoveVisualzationSwitcherWidgetVisualization
+const updateVisualizationSwitcherWidgetVisualizations: LayoutReducer<
+    UpdateVisualizationSwitcherWidgetVisualizations
 > = (state, action) => {
     invariant(state.layout);
 
@@ -852,7 +852,9 @@ export const layoutReducers = {
     replaceKpiWidgetConfiguration: withUndo(replaceKpiWidgetConfiguration),
     replaceRichTextWidgetContent: withUndo(replaceRichTextWidgetContent),
     addVisualizationSwitcherWidgetVisualization: withUndo(addVisualizationSwitcherWidgetVisualization),
-    removeVisualizationSwitcherWidgetVisualization: withUndo(removeVisualizationSwitcherWidgetVisualization),
+    updateVisualizationSwitcherWidgetVisualizations: withUndo(
+        updateVisualizationSwitcherWidgetVisualizations,
+    ),
     undoLayout: undoReducer,
     clearLayoutHistory: resetUndoReducer,
     changeItemsHeight: changeItemsHeight,

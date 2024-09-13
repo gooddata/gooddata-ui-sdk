@@ -2836,27 +2836,27 @@ export interface DashboardUserInteractionTriggered extends IDashboardEvent {
 // @beta
 export interface DashboardVisualizationSwitcherWidgetVisualizationAdded extends IDashboardEvent {
     // (undocumented)
-    readonly payload: DashboardVisualizationSwticherWidgetVisualizationAddedPayload;
+    readonly payload: DashboardVisualizationSwitcherWidgetVisualizationAddedPayload;
     // (undocumented)
     readonly type: "GDC.DASH/EVT.VISUALIZATION_SWITCHER_WIDGET.VISUALIZATION_ADDED";
 }
 
 // @beta
-export interface DashboardVisualizationSwitcherWidgetVisualizationsUpdated extends IDashboardEvent {
-    // (undocumented)
-    readonly payload: DashboardVisualizationSwticherWidgetVisualizationsUpdatedPayload;
-    // (undocumented)
-    readonly type: "GDC.DASH/EVT.VISUALIZATION_SWITCHER_WIDGET.VISUALIZATIONS_UPDATED";
-}
-
-// @beta
-export interface DashboardVisualizationSwticherWidgetVisualizationAddedPayload {
+export interface DashboardVisualizationSwitcherWidgetVisualizationAddedPayload {
     readonly ref: ObjRef;
     readonly visualization: IInsightWidget;
 }
 
 // @beta
-export interface DashboardVisualizationSwticherWidgetVisualizationsUpdatedPayload {
+export interface DashboardVisualizationSwitcherWidgetVisualizationsUpdated extends IDashboardEvent {
+    // (undocumented)
+    readonly payload: DashboardVisualizationSwitcherWidgetVisualizationsUpdatedPayload;
+    // (undocumented)
+    readonly type: "GDC.DASH/EVT.VISUALIZATION_SWITCHER_WIDGET.VISUALIZATIONS_UPDATED";
+}
+
+// @beta
+export interface DashboardVisualizationSwitcherWidgetVisualizationsUpdatedPayload {
     readonly ref: ObjRef;
     readonly visualizations: IInsightWidget[];
 }

@@ -24,7 +24,7 @@ export function* updateVisualizationsFromSwticherWidgetContentHandler(
     const visualizationSwitcherWidget = validateExistingVisualizationSwitcherWidget(widgets, cmd, ctx);
 
     yield put(
-        layoutActions.removeVisualizationSwitcherWidgetVisualization({
+        layoutActions.updateVisualizationSwitcherWidgetVisualizations({
             ref: visualizationSwitcherWidget.ref,
             visualizations,
             undo: {
