@@ -69,6 +69,10 @@ import {
 } from "./kpi.js";
 import { ChangeRichTextWidgetContent } from "./richText.js";
 import {
+    AddVisualizationToVisualizationSwitcherWidgetContent,
+    UpdateVisualizationsFromVisualizationSwitcherWidgetContent,
+} from "./visualizationSwitcher.js";
+import {
     AddLayoutSection,
     AddSectionItems,
     ChangeLayoutSectionHeader,
@@ -421,6 +425,17 @@ export type { ChangeRichTextWidgetContent, ChangeRichTextWidgetContentPayload } 
 export { changeRichTextWidgetContent } from "./richText.js";
 
 export type {
+    AddVisualizationToVisualizationSwitcherWidgetContent,
+    AddVisualizationToVisualizationSwitcherWidgetContentPayload,
+    UpdateVisualizationsFromVisualizationSwitcherWidgetContent,
+    UpdateVisualizationsFromVisualizationSwitcherWidgetontentPayload,
+} from "./visualizationSwitcher.js";
+export {
+    addVisualizationToSwitcherWidgetContent,
+    updateVisualizationsFromSwitcherWidgetContent,
+} from "./visualizationSwitcher.js";
+
+export type {
     RequestAsyncRender,
     RequestAsyncRenderPayload,
     ResolveAsyncRender,
@@ -509,6 +524,8 @@ export type DashboardCommands =
     | SetAttributeFilterTitle
     | SetAttributeFilterSelectionMode
     | ChangeRichTextWidgetContent
+    | AddVisualizationToVisualizationSwitcherWidgetContent
+    | UpdateVisualizationsFromVisualizationSwitcherWidgetContent
     //alpha
     | Drill
     | DrillDown

@@ -23,6 +23,7 @@ import {
     DefaultDashboardRichTextComponentSetFactory,
     DefaultDashboardVisualizationSwitcher,
     DefaultDashboardVisualizationSwitcherComponentSetFactory,
+    DefaultVisualizationSwitcherToolbar,
 } from "../../widget/index.js";
 import { IDashboardProps } from "../types.js";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -39,6 +40,7 @@ import {
     DashboardContentComponentProvider,
     RichTextComponentProvider,
     VisualizationSwitcherComponentProvider,
+    VisualizationSwitcherToolbarComponentProvider,
 } from "../../dashboardContexts/index.js";
 import {
     AttributeFilterComponentSet,
@@ -73,6 +75,7 @@ interface IUseDashboardResult {
     richTextWidgetComponentSet: RichTextWidgetComponentSet;
     visualizationSwitcherProvider: VisualizationSwitcherComponentProvider;
     visualizationSwitcherWidgetComponentSet: VisualizationSwitcherWidgetComponentSet;
+    visualizationSwitcherToolbarComponentProvider: VisualizationSwitcherToolbarComponentProvider;
 }
 
 export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
@@ -91,6 +94,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         DashboardContentComponentProvider,
         RichTextComponentProvider,
         VisualizationSwitcherComponentProvider,
+        VisualizationSwitcherToolbarComponentProvider,
     } = props;
 
     const backend = useBackendStrict(props.backend);
@@ -178,6 +182,15 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         [KpiComponentProvider],
     );
 
+    const visualizationSwitcherToolbarComponentProvider =
+        useCallback<VisualizationSwitcherToolbarComponentProvider>(
+            (widget) => {
+                const userSpecified = VisualizationSwitcherToolbarComponentProvider?.(widget);
+                return userSpecified ?? DefaultVisualizationSwitcherToolbar;
+            },
+            [VisualizationSwitcherToolbarComponentProvider],
+        );
+
     const dashboardOrRef = useMemo(() => {
         return typeof dashboard === "string" ? idRef(dashboard) : dashboard;
     }, [dashboard]);
@@ -251,5 +264,6 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         richTextWidgetComponentSet,
         visualizationSwitcherProvider,
         visualizationSwitcherWidgetComponentSet,
+        visualizationSwitcherToolbarComponentProvider,
     };
 };

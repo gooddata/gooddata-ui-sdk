@@ -7,7 +7,7 @@ export { Item, ItemsWrapper, Separator, Header } from "./MenuList.js";
 export type { IDateDatasetsListItemProps } from "./DateDatasetsListItem.js";
 export { DateDatasetsListItem } from "./DateDatasetsListItem.js";
 export type { IInsightListItemProps } from "./InsightListItem.js";
-export { InsightListItem } from "./InsightListItem.js";
+export { InsightListItem, InsightListItemTypeIcon } from "./InsightListItem.js";
 export type { IInsightListItemDateProps, IInsightListItemDateConfig } from "./InsightListItemDate.js";
 export { InsightListItemDate } from "./InsightListItemDate.js";
 export type { IListProps, ScrollCallback, IRenderListItemProps } from "./List.js";

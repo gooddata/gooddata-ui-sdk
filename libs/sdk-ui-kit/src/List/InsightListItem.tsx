@@ -59,6 +59,19 @@ export interface IInsightListItemProps {
 /**
  * @internal
  */
+export const InsightListItemTypeIcon: React.FC<{ type: string }> = ({ type }) => {
+    const iconClassName = cx("gd-vis-type", `gd-vis-type-${type}`);
+
+    return (
+        <div className="gd-vis-type-container">
+            <div className={iconClassName} />
+        </div>
+    );
+};
+
+/**
+ * @internal
+ */
 export class InsightListItemCore extends Component<IInsightListItemProps & WrappedComponentProps> {
     private shortenedTextRef = createRef<ShortenedText>();
 
@@ -74,8 +87,6 @@ export class InsightListItemCore extends Component<IInsightListItemProps & Wrapp
             onDescriptionPanelOpen,
             showDescriptionPanel = false,
         } = this.props;
-
-        const iconClassName = cx("gd-vis-type", `gd-vis-type-${type}`);
 
         const visualizationListItemClassname = cx(
             "gd-visualizations-list-item",
@@ -116,9 +127,7 @@ export class InsightListItemCore extends Component<IInsightListItemProps & Wrapp
                         {this.renderUpdatedDateTime(updated)}
                     </div>
                 </div>
-                <div className="gd-vis-type-container">
-                    <div className={iconClassName} />
-                </div>
+                <InsightListItemTypeIcon type={type} />
             </div>
         );
     }

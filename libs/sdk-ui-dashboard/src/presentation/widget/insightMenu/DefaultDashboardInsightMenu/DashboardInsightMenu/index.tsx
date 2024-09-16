@@ -11,7 +11,7 @@ import { DashboardInsightMenuBubble } from "./DashboardInsightMenuBubble.js";
 import { DashboardInsightEditMenuBubble } from "./DashboardInsightEditMenuBubble.js";
 import { RenderMode } from "../../../../../types.js";
 
-const DashboardInsightMenuBody: React.FC<
+export const DashboardInsightMenuBody: React.FC<
     IDashboardInsightMenuProps & {
         submenu: IInsightMenuSubmenu | null;
         setSubmenu: React.Dispatch<React.SetStateAction<IInsightMenuSubmenu | null>>;

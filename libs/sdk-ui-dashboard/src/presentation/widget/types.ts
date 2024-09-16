@@ -23,3 +23,5 @@ export type {
     CustomDashboardVisualizationSwitcherComponent,
     IDashboardVisualizationSwitcherProps,
 } from "../widget/visualizationSwitcher/types.js";
+
+export type { CustomVisualizationSwitcherToolbarComponent } from "../widget/visualizationSwitcher/configuration/types.js";

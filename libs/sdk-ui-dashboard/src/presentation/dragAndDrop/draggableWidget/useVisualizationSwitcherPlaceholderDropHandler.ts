@@ -7,16 +7,13 @@ import { VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_DEFAULT } from "@gooddata/sdk-u
 
 import {
     addSectionItem,
-    selectSettings,
     uiActions,
     useDashboardCommandProcessing,
     useDashboardDispatch,
-    useDashboardSelector,
 } from "../../../model/index.js";
 
 export function useVisualizationSwitcherPlaceholderDropHandler(sectionIndex: number, itemIndex: number) {
     const dispatch = useDashboardDispatch();
-    const settings = useDashboardSelector(selectSettings);
 
     const { run: createVisualizationSwitcher } = useDashboardCommandProcessing({
         commandCreator: addSectionItem,
@@ -41,7 +38,6 @@ export function useVisualizationSwitcherPlaceholderDropHandler(sectionIndex: num
             },
             widget: {
                 type: "visualizationSwitcher",
-                selectedVisualizationIdentifier: "",
                 visualizations: [],
                 description: "",
                 drills: [],
@@ -52,5 +48,5 @@ export function useVisualizationSwitcherPlaceholderDropHandler(sectionIndex: num
                 uri: `/${id}`,
             },
         });
-    }, [createVisualizationSwitcher, itemIndex, sectionIndex, settings]);
+    }, [createVisualizationSwitcher, itemIndex, sectionIndex]);
 }

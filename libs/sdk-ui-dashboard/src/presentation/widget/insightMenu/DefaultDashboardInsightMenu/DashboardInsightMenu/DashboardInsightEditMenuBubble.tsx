@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import React from "react";
 import cx from "classnames";
@@ -23,6 +23,7 @@ export const DashboardInsightEditMenuBubble: React.FC<IDashboardInsightMenuBubbl
                 isSubmenu ? "edit-insight-config-arrow-submenu-color" : "edit-insight-config-arrow-color",
             )}
             onClose={onClose}
+            showArrow={false}
         >
             {children}
         </ConfigurationBubble>
