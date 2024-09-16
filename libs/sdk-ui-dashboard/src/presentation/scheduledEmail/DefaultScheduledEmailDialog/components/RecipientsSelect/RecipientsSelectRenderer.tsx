@@ -83,8 +83,22 @@ export interface IRecipientsSelectRendererProps {
     maxRecipients?: number;
 }
 
-export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSelectRendererProps> {
+interface IRecipientsSelectRendererState {
+    minRecipientsError: boolean;
+}
+
+export class RecipientsSelectRenderer extends React.PureComponent<
+    IRecipientsSelectRendererProps,
+    IRecipientsSelectRendererState
+> {
     private recipientRef = React.createRef<HTMLDivElement>();
+
+    constructor(props: IRecipientsSelectRendererProps) {
+        super(props);
+        this.state = {
+            minRecipientsError: false,
+        };
+    }
 
     public componentDidMount(): void {
         const { current } = this.recipientRef;
@@ -118,6 +132,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
         };
 
         const maxRecipientsError = maxRecipients && value.length > maxRecipients;
+        const showInputError = maxRecipientsError || this.state.minRecipientsError;
 
         return (
             <div className="gd-input-component gd-recipients-field s-gd-notifications-channels-dialog-recipients">
@@ -127,7 +142,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
                 <div ref={this.recipientRef} className="gd-input s-gd-recipients-value">
                     <ReactSelect
                         className={cx("gd-recipients-container", {
-                            "gd-input-component--invalid": maxRecipientsError,
+                            "gd-input-component--invalid": showInputError,
                         })}
                         classNamePrefix="gd-recipients"
                         components={creatableSelectComponent}
@@ -146,12 +161,16 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
                         getOptionValue={(o) => o.id}
                         getOptionLabel={(o) => o.name ?? o.id}
                     />
-                    {maxRecipientsError ? (
+                    {showInputError ? (
                         <div className="gd-recipients-field-error">
-                            <FormattedMessage
-                                id="dialogs.schedule.email.max.recipients"
-                                values={{ maxRecipients }}
-                            />
+                            {maxRecipientsError ? (
+                                <FormattedMessage
+                                    id="dialogs.schedule.email.max.recipients"
+                                    values={{ maxRecipients }}
+                                />
+                            ) : (
+                                <FormattedMessage id="dialogs.schedule.email.min.recipients" />
+                            )}
                         </div>
                     ) : null}
                 </div>
@@ -301,13 +320,16 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
             this.props.onChange?.(value);
             return;
         }
-        if (newSelectedValues === null) {
+        if (newSelectedValues?.length === 0) {
             if (allowEmptySelection) {
                 this.props.onChange?.([]);
+                this.setState({ minRecipientsError: true });
             } else {
                 this.props.onChange?.([value[0]]);
             }
             return;
+        } else {
+            this.setState({ minRecipientsError: false });
         }
 
         this.props.onChange?.(newSelectedValues);
@@ -323,7 +345,6 @@ export class RecipientsSelectRenderer extends React.PureComponent<IRecipientsSel
             return;
         }
 
-        this.setState({ isLoading: true });
         onLoad?.({ search: searchString });
     };
 
