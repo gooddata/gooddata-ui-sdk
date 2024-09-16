@@ -9,6 +9,8 @@ The Repeater component in the GoodData UI SDK, similar to sparklines, excels in 
 
 > Repeater is currently in the **beta** stage.
 
+{{< embedded-image alt="Repeater" src="/gd-ui/repeater_chart.png" >}}
+
 ## Structure
 
 ```jsx
