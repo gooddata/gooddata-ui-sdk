@@ -53,40 +53,87 @@ const hasSameAttributeFilterConfiguration = (
     );
 };
 
+const isCommonDateFilter = (filter: FilterContextItem) =>
+    isDashboardDateFilter(filter) && filter.dateFilter.dataSet === undefined;
+
+const handleCommonDateFilter = (
+    filterContextFilters: FilterContextItem[],
+    filterViewFilters: FilterContextItem[],
+    mergedFilters: FilterContextItem[],
+): FilterContextItem[] => {
+    // If common date is set to All, it is not included in filter context filters.
+    // Common filter differs from date filters by not having date dataset (it is provided by widget).
+    const isCommonDateOriginallyOnAll = !filterContextFilters.some(isCommonDateFilter);
+    const nonAllCommonDateFilterFromView = filterViewFilters.find(isCommonDateFilter);
+
+    if (isCommonDateOriginallyOnAll && nonAllCommonDateFilterFromView) {
+        // inject value of common date from view to filter context to override filter context's All value
+        return [nonAllCommonDateFilterFromView, ...mergedFilters];
+    } else if (!nonAllCommonDateFilterFromView) {
+        // set common date to All based on filter view
+        return mergedFilters.filter((filter) => !isCommonDateFilter(filter));
+    }
+
+    return mergedFilters;
+};
+
 export const changeFilterContextSelection = (
     filterContext: IFilterContext,
     filterViewFilters: FilterContextItem[],
 ): IFilterContext => {
+    const mergedFilters: FilterContextItem[] = filterContext.filters.map((filter) => {
+        if (isDashboardAttributeFilter(filter)) {
+            const viewFilter = findMatchingAttributeFilterByLocalIdentifier(filter, filterViewFilters);
+            if (viewFilter !== undefined && hasSameAttributeFilterConfiguration(filter, viewFilter)) {
+                return {
+                    attributeFilter: {
+                        ...filter.attributeFilter,
+                        attributeElements: viewFilter.attributeFilter.attributeElements,
+                        negativeSelection: viewFilter.attributeFilter.negativeSelection,
+                    },
+                };
+            } else {
+                return {
+                    // reset filter that has not been found in the view
+                    attributeFilter: {
+                        ...filter.attributeFilter,
+                        attributeElements: {
+                            uris: [],
+                        },
+                        negativeSelection: true,
+                    },
+                };
+            }
+        } else {
+            const viewFilter = findMatchingDateFilterByDataSet(filter, filterViewFilters);
+            if (viewFilter) {
+                return {
+                    dateFilter: {
+                        ...filter.dateFilter,
+                        from: viewFilter.dateFilter.from,
+                        to: viewFilter.dateFilter.to,
+                        granularity: viewFilter.dateFilter.granularity,
+                        type: viewFilter.dateFilter.type,
+                    },
+                };
+            } else {
+                return {
+                    // reset filter that has not been found in the view
+                    dateFilter: {
+                        ...filter.dateFilter,
+                        from: undefined,
+                        to: undefined,
+                        granularity: "GDC.time.date",
+                        type: "relative",
+                    },
+                };
+            }
+        }
+    });
+
     return {
         ...filterContext,
-        filters: filterContext.filters.map((filter) => {
-            if (isDashboardAttributeFilter(filter)) {
-                const viewFilter = findMatchingAttributeFilterByLocalIdentifier(filter, filterViewFilters);
-                if (viewFilter !== undefined && hasSameAttributeFilterConfiguration(filter, viewFilter)) {
-                    return {
-                        attributeFilter: {
-                            ...filter.attributeFilter,
-                            attributeElements: viewFilter.attributeFilter.attributeElements,
-                            negativeSelection: viewFilter.attributeFilter.negativeSelection,
-                        },
-                    };
-                }
-            } else {
-                const viewFilter = findMatchingDateFilterByDataSet(filter, filterViewFilters);
-                if (viewFilter) {
-                    return {
-                        dateFilter: {
-                            ...filter.dateFilter,
-                            from: viewFilter.dateFilter.from,
-                            to: viewFilter.dateFilter.to,
-                            granularity: viewFilter.dateFilter.granularity,
-                            type: viewFilter.dateFilter.type,
-                        },
-                    };
-                }
-            }
-            return filter;
-        }),
+        filters: handleCommonDateFilter(filterContext.filters, filterViewFilters, mergedFilters),
     };
 };
 

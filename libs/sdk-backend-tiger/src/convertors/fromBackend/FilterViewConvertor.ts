@@ -2,13 +2,12 @@
 
 import { IDashboardFilterView, idRef } from "@gooddata/sdk-model";
 import {
-    JsonApiFilterContextOutWithLinks,
-    JsonApiFilterContextOutWithLinksTypeEnum,
     JsonApiFilterViewOutWithLinks,
     JsonApiFilterViewOutIncludes,
+    AnalyticalDashboardModelV2,
 } from "@gooddata/api-client-tiger";
 import { invariant } from "ts-invariant";
-import { convertFilterContextWithLinksFromBackend } from "./analyticalDashboards/AnalyticalDashboardConverter.js";
+import { convertFilterContextFilters } from "./analyticalDashboards/v2/AnalyticalDashboardConverter.js";
 
 /**
  * Convert filter view from API response.
@@ -21,24 +20,17 @@ export function convertFilterView(
     included: JsonApiFilterViewOutIncludes[] = [],
 ): IDashboardFilterView {
     const { id, type, attributes, relationships } = data;
-    const { title, isDefault } = attributes;
+    const { title, isDefault, content } = attributes;
 
     invariant(relationships?.analyticalDashboard, "Analytical dashboard is missing from response.");
     invariant(relationships?.analyticalDashboard.data, "Analytical dashboard is missing from response.");
     invariant(relationships?.user, "User is missing from response.");
     invariant(relationships?.user.data, "User is missing from response.");
     invariant(included);
-
-    const rawFilterContext = included.find((include): include is JsonApiFilterContextOutWithLinks => {
-        return (
-            include.type === JsonApiFilterContextOutWithLinksTypeEnum.FILTER_CONTEXT &&
-            include.id === relationships?.filterContext?.data?.id
-        );
-    });
-
-    invariant(rawFilterContext, "Filter context is missing from response.");
-
-    const filterContext = convertFilterContextWithLinksFromBackend(rawFilterContext);
+    invariant(
+        AnalyticalDashboardModelV2.isFilterContext(content),
+        "Entity content is not of FilterContextType",
+    );
 
     return {
         ref: idRef(id, type),
@@ -48,7 +40,11 @@ export function convertFilterView(
         ),
         user: idRef(relationships?.user.data.id, relationships?.user.data.type),
         name: title,
-        filterContext,
+        filterContext: {
+            title: "",
+            description: "",
+            filters: convertFilterContextFilters(content),
+        },
         isDefault: isDefault ?? false,
     };
 }
