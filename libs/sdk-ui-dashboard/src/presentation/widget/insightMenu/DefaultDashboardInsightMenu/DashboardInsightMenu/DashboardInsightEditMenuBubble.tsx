@@ -23,7 +23,6 @@ export const DashboardInsightEditMenuBubble: React.FC<IDashboardInsightMenuBubbl
                 isSubmenu ? "edit-insight-config-arrow-submenu-color" : "edit-insight-config-arrow-color",
             )}
             onClose={onClose}
-            showArrow={false}
         >
             {children}
         </ConfigurationBubble>

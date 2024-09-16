@@ -26,7 +26,7 @@ export const ToolbarBottom: React.FC<IToolbarBottomProps> = ({
     );
 
     return (
-        <div className="gd-visualization-switcher-toolbar-bottom bubble-light">
+        <div className="gd-visualization-switcher-toolbar-bottom bubble bubble-light">
             {showVisualizationsList || !activeVisualization ? (
                 <VisualizationsPage
                     visualizations={visualizations}
