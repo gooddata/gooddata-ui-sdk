@@ -523,6 +523,11 @@
         "comment": "Message for recipients input when the maximum number of recipients is reached",
         "limit": 0
     },
+    "dialogs.schedule.email.min.recipients": {
+        "value": "There must be at least one recipient.",
+        "comment": "Message for recipients input when the minimum number of recipients is reached",
+        "limit": 0
+    },
     "dialogs.schedule.email.subject.label": {
         "value": "Subject",
         "comment": "Subject of the schedule email.",
