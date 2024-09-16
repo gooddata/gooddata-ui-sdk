@@ -163,9 +163,11 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
 
     const isValid = (automation.recipients?.length ?? 0) <= maxAutomationsRecipients && isCronValid;
     const isDestinationEmpty = !automation.notificationChannel;
+    const isAttachmentsEmpty = !automation.exportDefinitions?.length;
     const isSubmitDisabled =
         !isValid ||
         isDestinationEmpty ||
+        isAttachmentsEmpty ||
         (editSchedule && areAutomationsEqual(automation, originalAutomation));
 
     const startDate = parseISO(
