@@ -15,6 +15,9 @@ describe("NotificationChannelsConvertor", () => {
                 token: "token",
                 endpoint: "endpoint",
             },
+            configuration: {
+                dashboardUrl: "dashboardUrl",
+            },
             triggers: [
                 {
                     type: "SCHEDULE",
@@ -46,6 +49,7 @@ describe("NotificationChannelsConvertor", () => {
                     token: "token",
                     url: "endpoint",
                 },
+                customDashboardUrl: "dashboardUrl",
             },
             id: "id",
             type: "notificationChannel",
@@ -86,6 +90,9 @@ describe("NotificationChannelsConvertor", () => {
                 endpoint: "endpoint",
                 token: "token",
                 hasToken: true,
+            },
+            configuration: {
+                dashboardUrl: undefined,
             },
             triggers: [
                 {

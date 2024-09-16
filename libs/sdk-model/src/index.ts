@@ -45,6 +45,7 @@ export type {
     INotificationChannelMetadataObjectBase,
     IDefaultSmtpDestination,
     ICustomSmtpDestination,
+    INotificationChannelConfiguration,
 } from "./notificationChannels/index.js";
 
 export type {

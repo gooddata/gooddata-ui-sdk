@@ -2166,6 +2166,11 @@ export class InlineMeasureBuilder extends MeasureBuilderBase<IInlineMeasureDefin
 export type InlineMeasureBuilderInput = string | IMeasure<IInlineMeasureDefinition>;
 
 // @alpha (undocumented)
+export interface INotificationChannelConfiguration {
+    dashboardUrl?: string;
+}
+
+// @alpha (undocumented)
 export interface INotificationChannelDefinitionObject extends INotificationChannelMetadataObject {
 }
 
@@ -3172,6 +3177,8 @@ export function isMetadataObject(obj: unknown): obj is IMetadataObject;
 // @alpha (undocumented)
 export interface ISmtpDefinition extends INotificationChannelMetadataObjectBase {
     // (undocumented)
+    configuration: INotificationChannelConfiguration;
+    // (undocumented)
     destination: ISmtpDestination;
     // (undocumented)
     type: "smtp";
@@ -3737,6 +3744,8 @@ export interface IVisualizationSwitcherWidgetDefinition extends IVisualizationSw
 
 // @alpha (undocumented)
 export interface IWebhookDefinition extends INotificationChannelMetadataObjectBase {
+    // (undocumented)
+    configuration: INotificationChannelConfiguration;
     // (undocumented)
     destination: IWebhookDestination;
     // (undocumented)
