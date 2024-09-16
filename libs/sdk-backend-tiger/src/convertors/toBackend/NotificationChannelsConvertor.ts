@@ -34,6 +34,7 @@ export function convertCreateWebhookToNotificationChannel(
                 url: webhook.destination?.endpoint ?? "",
                 token: webhook.destination?.token,
             },
+            customDashboardUrl: webhook.configuration?.dashboardUrl,
             triggers:
                 webhook.triggers?.map((trigger) => ({
                     type: trigger.type,
@@ -92,6 +93,7 @@ function convertCreateCustomEmailToNotificationChannel(
                 port: smtp.destination?.port ?? 25,
                 password: smtp.destination?.password ?? "",
             },
+            customDashboardUrl: smtp.configuration?.dashboardUrl,
             triggers:
                 smtp.triggers?.map((trigger) => ({
                     type: trigger.type,
@@ -124,6 +126,7 @@ function convertCreateDefaultEmailToNotificationChannel(
                 fromEmailName: smtp.destination?.person ?? "",
                 fromEmail: smtp.destination?.address ?? "",
             },
+            customDashboardUrl: smtp.configuration?.dashboardUrl,
             triggers:
                 smtp.triggers?.map((trigger) => ({
                     type: trigger.type,
