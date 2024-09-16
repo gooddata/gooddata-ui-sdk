@@ -14,7 +14,8 @@
     }
 }
 
-.gd-visualization-switcher-toolbar-top {
+.gd-visualization-switcher-toolbar-top.bubble.bubble-light {
+    position: initial;
     width: 189px;
     height: 40px;
     padding: 6px 8px;
@@ -73,7 +74,8 @@
     }
 }
 
-.gd-visualization-switcher-toolbar-bottom {
+.gd-visualization-switcher-toolbar-bottom.bubble.bubble-light {
+    position: initial;
     background-color: white;
 
     .configuration-panel-header {

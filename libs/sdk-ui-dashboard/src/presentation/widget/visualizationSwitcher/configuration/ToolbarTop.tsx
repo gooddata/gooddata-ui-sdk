@@ -60,7 +60,7 @@ export const ToolbarTop: React.FC<IToolbarTopProps> = ({
     }, [activeWidgetIndex, visualizations, onNavigate, nextDisabled]);
 
     return (
-        <div className="gd-visualization-switcher-toolbar-top bubble-light">
+        <div className="gd-visualization-switcher-toolbar-top bubble bubble-light">
             <div className="left-section" onClick={toggleVisualizationsList}>
                 <BubbleHoverTrigger eventsOnBubble={true}>
                     <Icon.VisualizationSwitcher color={iconColor} width={20} height={20} />
