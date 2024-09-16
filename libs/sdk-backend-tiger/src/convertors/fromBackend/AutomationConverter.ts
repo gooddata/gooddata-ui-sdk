@@ -172,7 +172,7 @@ const convertAlert = (
                     left: relative.measure.left.localIdentifier,
                     right: relative.measure.right.localIdentifier,
                 },
-                threshold: relative.threshold.value,
+                threshold: relative.threshold.value * 100,
             },
             ...base,
         };
