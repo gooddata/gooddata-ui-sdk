@@ -91,7 +91,7 @@ function convertCreateCustomEmailToNotificationChannel(
                 fromEmail: smtp.destination?.address ?? "",
                 username: smtp.destination?.login ?? "",
                 port: smtp.destination?.port ?? 25,
-                password: smtp.destination?.password ?? "",
+                password: smtp.destination?.password,
             },
             customDashboardUrl: smtp.configuration?.dashboardUrl,
             triggers:
