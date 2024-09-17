@@ -60,6 +60,7 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
 
     const currentUser = useDashboardSelector(selectCurrentUser);
+    const defaultRecipient = convertUserToAutomationRecipient(currentUser);
 
     const dashboardEditFilters = getAutomationDashboardFilters(editSchedule);
     const { areFiltersChanged, filtersToStore } = useAttachmentDashboardFilters({
@@ -112,7 +113,15 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
     };
 
     const onDestinationChange = (notificationChannelId: string): void => {
-        setState((s) => ({ ...s, notificationChannel: notificationChannelId }));
+        setState((s) => ({
+            ...s,
+            notificationChannel: notificationChannelId,
+            /**
+             * Reset recipients when changing notification channel as allowed recipients may differ
+             * in new notification channel and previous recipients may no longer be valid.
+             */
+            recipients: [defaultRecipient],
+        }));
     };
 
     const onRecipientsChange = (updatedRecipients: IAutomationRecipient[]): void => {

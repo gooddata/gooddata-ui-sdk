@@ -2181,6 +2181,7 @@ export interface INotificationChannelMetadataObject extends INotificationChannel
 
 // @alpha (undocumented)
 export interface INotificationChannelMetadataObjectBase {
+    allowedRecipients?: NotificationChannelAllowedRecipient;
     destination: IWebhookDestination | ISmtpDestination;
     triggers: INotificationChannelTrigger[];
     type: "webhook" | "smtp";
@@ -4160,6 +4161,9 @@ export function newTwoDimensional(dim1Input: DimensionItem[], dim2Input: Dimensi
 
 // @internal
 export function newVirtualArithmeticMeasure(measuresOrIds: ReadonlyArray<MeasureOrLocalId>, operator: ArithmeticMeasureOperator, modifications?: MeasureModifications<VirtualArithmeticMeasureBuilder>): IMeasure<IVirtualArithmeticMeasureDefinition>;
+
+// @alpha (undocumented)
+export type NotificationChannelAllowedRecipient = "CREATOR" | "INTERNAL";
 
 // @public
 export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy" | "exportDefinition" | "automation" | "filterView";

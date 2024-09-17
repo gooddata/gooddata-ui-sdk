@@ -172,6 +172,11 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
         isRecipientsEmpty ||
         (editSchedule && areAutomationsEqual(automation, originalAutomation));
 
+    const selectedNotificationChannel = notificationChannels.find(
+        (channel) => channel.id === automation.notificationChannel,
+    );
+    const showRecipientsSelect = selectedNotificationChannel?.allowedRecipients !== "CREATOR" ?? true;
+
     const startDate = parseISO(
         automation.schedule?.firstRun ?? normalizeTime(new Date(), undefined, 60).toISOString(),
     );
@@ -280,14 +285,16 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
                                 onChange={onDestinationChange}
                             />
                             <ContentDivider className="gd-divider-with-margin" />
-                            <RecipientsSelect
-                                users={users}
-                                value={automation.recipients ?? []}
-                                originalValue={originalAutomation.recipients || []}
-                                onChange={onRecipientsChange}
-                                allowEmptySelection
-                                maxRecipients={maxAutomationsRecipients}
-                            />
+                            {showRecipientsSelect ? (
+                                <RecipientsSelect
+                                    users={users}
+                                    value={automation.recipients ?? []}
+                                    originalValue={originalAutomation.recipients || []}
+                                    onChange={onRecipientsChange}
+                                    allowEmptySelection
+                                    maxRecipients={maxAutomationsRecipients}
+                                />
+                            ) : null}
                             <Input
                                 className="gd-notifications-channels-dialog-subject s-gd-notifications-channels-dialog-subject"
                                 label={intl.formatMessage({ id: "dialogs.schedule.email.subject.label" })}

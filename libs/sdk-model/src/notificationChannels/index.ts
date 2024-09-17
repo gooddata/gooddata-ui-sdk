@@ -27,7 +27,17 @@ export interface INotificationChannelMetadataObjectBase {
      * Triggers that the notification channel are used for.
      */
     triggers: INotificationChannelTrigger[];
+
+    /**
+     * Allowed recipients of notifications from this channel.
+     */
+    allowedRecipients?: NotificationChannelAllowedRecipient;
 }
+
+/**
+ * @alpha
+ */
+export type NotificationChannelAllowedRecipient = "CREATOR" | "INTERNAL";
 
 /**
  * @alpha
