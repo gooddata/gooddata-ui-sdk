@@ -1,5 +1,5 @@
 // (C) 2019-2024 GoodData Corporation
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
     IAutomationMetadataObjectDefinition,
     IExportDefinitionMetadataObjectDefinition,
@@ -42,10 +42,13 @@ import {
     transformFilterContextToModelFilters,
 } from "../utils/automationHelpers.js";
 import { invariant } from "ts-invariant";
+import { useIntl } from "react-intl";
 
 export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
     const { editSchedule, webhooks, emails, context } = props;
+    const intl = useIntl();
     const [isCronValid, setIsCronValid] = useState(true);
+    const [warningMessage, setWarningMessage] = useState<string | undefined>(undefined);
     const editWidgetId = (
         editSchedule?.exportDefinitions?.find((exportDefinition) =>
             isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload),
@@ -68,7 +71,8 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
         widget,
     });
 
-    const firstChannel = emails[0]?.id ?? webhooks[0]?.id;
+    const notificationChannels = useMemo(() => [...emails, ...webhooks], [webhooks, emails]);
+    const firstChannel = notificationChannels[0]?.id;
 
     const [state, setState] = useState<IAutomationMetadataObjectDefinition>(
         editSchedule ??
@@ -113,14 +117,37 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
     };
 
     const onDestinationChange = (notificationChannelId: string): void => {
+        const previousNotificationChannel = notificationChannels.find(
+            (channel) => state.notificationChannel === channel.id,
+        );
+        const selectedNotificationChannel = notificationChannels.find(
+            (channel) => notificationChannelId === channel.id,
+        );
+
+        /**
+         * When allowed recipients are changed from "ALL" to "CREATOR", show warning message
+         */
+        const showWarningMessage =
+            selectedNotificationChannel?.allowedRecipients === "CREATOR" &&
+            previousNotificationChannel?.allowedRecipients !== "CREATOR";
+        setWarningMessage(
+            showWarningMessage
+                ? intl.formatMessage({ id: "dialogs.schedule.email.destinationWarning" })
+                : undefined,
+        );
+
+        /**
+         * Reset recipients when new notification channel only allows the author/creator
+         */
+        const updatedRecipients =
+            selectedNotificationChannel?.allowedRecipients === "CREATOR"
+                ? { recipients: [defaultRecipient] }
+                : {};
+
         setState((s) => ({
             ...s,
+            ...updatedRecipients,
             notificationChannel: notificationChannelId,
-            /**
-             * Reset recipients when changing notification channel as allowed recipients may differ
-             * in new notification channel and previous recipients may no longer be valid.
-             */
-            recipients: [defaultRecipient],
         }));
     };
 
@@ -269,6 +296,8 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
         onWidgetAttachmentsChange,
         onWidgetAttachmentsSettingsChange,
         isCronValid,
+        notificationChannels,
+        warningMessage,
     };
 }
 
