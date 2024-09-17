@@ -11,6 +11,7 @@ import {
     JsonApiUserLinkage,
     JsonApiUserOutWithLinks,
     JsonApiAutomationPatchAttributesAlert,
+    ArithmeticMeasureOperatorEnum,
 } from "@gooddata/api-client-tiger";
 import {
     IAlertComparisonOperator,
@@ -172,7 +173,13 @@ const convertAlert = (
                     left: relative.measure.left.localIdentifier,
                     right: relative.measure.right.localIdentifier,
                 },
-                threshold: relative.threshold.value * 100,
+                ...(relative.measure.operator === ArithmeticMeasureOperatorEnum.CHANGE
+                    ? {
+                          threshold: relative.threshold.value * 100,
+                      }
+                    : {
+                          threshold: relative.threshold.value,
+                      }),
             },
             ...base,
         };

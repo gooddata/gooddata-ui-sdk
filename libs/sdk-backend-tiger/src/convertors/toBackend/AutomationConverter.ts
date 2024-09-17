@@ -141,7 +141,13 @@ const convertAlert = (alert: IAutomationAlert): JsonApiAutomationPatchAttributes
                         right: { localIdentifier: condition.measure.right },
                     },
                     threshold: {
-                        value: condition.threshold / 100,
+                        ...(condition.measure.operator === ArithmeticMeasureOperatorEnum.CHANGE
+                            ? {
+                                  value: condition.threshold / 100,
+                              }
+                            : {
+                                  value: condition.threshold,
+                              }),
                     },
                 },
             },
