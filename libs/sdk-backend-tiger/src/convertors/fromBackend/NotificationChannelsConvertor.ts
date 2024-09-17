@@ -55,6 +55,7 @@ export function convertWebhookFromNotificationChannel(
                 type: trigger.type,
                 ...(isAllowedOn(trigger.metadata) ? { allowOn: trigger.metadata.allowedOn } : {}),
             })) ?? [],
+        allowedRecipients: channel.attributes?.allowedRecipients,
     };
 }
 
@@ -95,6 +96,7 @@ export function convertCustomEmailFromNotificationChannel(
                 type: trigger.type,
                 ...(isAllowedOn(trigger.metadata) ? { allowOn: trigger.metadata.allowedOn } : {}),
             })) ?? [],
+        allowedRecipients: channel.attributes?.allowedRecipients,
     };
 }
 
@@ -119,6 +121,7 @@ export function convertDefaultEmailFromNotificationChannel(
                 type: trigger.type,
                 ...(isAllowedOn(trigger.metadata) ? { allowOn: trigger.metadata.allowedOn } : {}),
             })) ?? [],
+        allowedRecipients: channel.attributes?.allowedRecipients,
     };
 }
 
