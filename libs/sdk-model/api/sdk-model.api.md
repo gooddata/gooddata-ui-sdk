@@ -2166,6 +2166,11 @@ export class InlineMeasureBuilder extends MeasureBuilderBase<IInlineMeasureDefin
 export type InlineMeasureBuilderInput = string | IMeasure<IInlineMeasureDefinition>;
 
 // @alpha (undocumented)
+export interface INotificationChannelConfiguration {
+    dashboardUrl?: string;
+}
+
+// @alpha (undocumented)
 export interface INotificationChannelDefinitionObject extends INotificationChannelMetadataObject {
 }
 
@@ -2176,6 +2181,7 @@ export interface INotificationChannelMetadataObject extends INotificationChannel
 
 // @alpha (undocumented)
 export interface INotificationChannelMetadataObjectBase {
+    allowedRecipients?: NotificationChannelAllowedRecipient;
     destination: IWebhookDestination | ISmtpDestination;
     triggers: INotificationChannelTrigger[];
     type: "webhook" | "smtp";
@@ -3172,6 +3178,8 @@ export function isMetadataObject(obj: unknown): obj is IMetadataObject;
 // @alpha (undocumented)
 export interface ISmtpDefinition extends INotificationChannelMetadataObjectBase {
     // (undocumented)
+    configuration: INotificationChannelConfiguration;
+    // (undocumented)
     destination: ISmtpDestination;
     // (undocumented)
     type: "smtp";
@@ -3726,7 +3734,6 @@ export interface IVisualizationSwitcherWidget extends IVisualizationSwitcherWidg
 
 // @public (undocumented)
 export interface IVisualizationSwitcherWidgetBase extends IAnalyticalWidget {
-    readonly selectedVisualizationIdentifier: string;
     // (undocumented)
     readonly type: "visualizationSwitcher";
     readonly visualizations: IInsightWidget[];
@@ -3738,6 +3745,8 @@ export interface IVisualizationSwitcherWidgetDefinition extends IVisualizationSw
 
 // @alpha (undocumented)
 export interface IWebhookDefinition extends INotificationChannelMetadataObjectBase {
+    // (undocumented)
+    configuration: INotificationChannelConfiguration;
     // (undocumented)
     destination: IWebhookDestination;
     // (undocumented)
@@ -4152,6 +4161,9 @@ export function newTwoDimensional(dim1Input: DimensionItem[], dim2Input: Dimensi
 
 // @internal
 export function newVirtualArithmeticMeasure(measuresOrIds: ReadonlyArray<MeasureOrLocalId>, operator: ArithmeticMeasureOperator, modifications?: MeasureModifications<VirtualArithmeticMeasureBuilder>): IMeasure<IVirtualArithmeticMeasureDefinition>;
+
+// @alpha (undocumented)
+export type NotificationChannelAllowedRecipient = "CREATOR" | "INTERNAL";
 
 // @public
 export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy" | "exportDefinition" | "automation" | "filterView";

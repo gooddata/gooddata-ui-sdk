@@ -3248,6 +3248,11 @@ export const InsightListItem: React_2.FC<WithIntlProps<IInsightListItemProps & W
 export const InsightListItemDate: React_2.FC<IInsightListItemDateProps>;
 
 // @internal (undocumented)
+export const InsightListItemTypeIcon: React_2.FC<{
+    type: string;
+}>;
+
+// @internal (undocumented)
 export interface INumericInputProps {
     // (undocumented)
     onValueChanged: (height: string) => void;

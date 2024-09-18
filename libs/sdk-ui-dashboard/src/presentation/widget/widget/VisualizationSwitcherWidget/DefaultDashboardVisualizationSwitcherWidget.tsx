@@ -10,7 +10,7 @@ import { DashboardVisualizationSwitcher } from "../../visualizationSwitcher/Dash
 /**
  * @internal
  */
-export const DefaultDashboardVisualizationSwitchertWidget: React.FC<
+export const DefaultDashboardVisualizationSwitcherWidget: React.FC<
     IDefaultDashboardVisualizationSwitcherWidgetProps
 > = ({ widget, screen, dashboardItemClasses }) => {
     return (
@@ -19,7 +19,7 @@ export const DefaultDashboardVisualizationSwitchertWidget: React.FC<
             screen={screen}
         >
             <DashboardItemBase visualizationClassName="gd-visualization-switcher-widget-wrapper">
-                {() => <DashboardVisualizationSwitcher widget={widget} />}
+                {() => <DashboardVisualizationSwitcher widget={widget} screen={screen} />}
             </DashboardItemBase>
         </DashboardItem>
     );

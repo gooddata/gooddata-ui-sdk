@@ -523,6 +523,11 @@
         "comment": "Message for recipients input when the maximum number of recipients is reached",
         "limit": 0
     },
+    "dialogs.schedule.email.min.recipients": {
+        "value": "There must be at least one recipient.",
+        "comment": "Message for recipients input when the minimum number of recipients is reached",
+        "limit": 0
+    },
     "dialogs.schedule.email.subject.label": {
         "value": "Subject",
         "comment": "Subject of the schedule email.",
@@ -2473,6 +2478,51 @@
     },
     "visualizationSwitcher.emptyContent": {
         "value": "No visualization in switcher",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcher.deleteDialog.header": {
+        "value": "Delete visualization switcher?",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcher.deleteDialog.message": {
+        "value": "The visualization switcher and all of its visualizations will be irreversibly deleted.",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcherToolbar.visualizationsList.header": {
+        "value": "Visualizations",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcherToolbar.visualizationsList.tooltip": {
+        "value": "Visualizations",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcherToolbar.visualizationsList.prev": {
+        "value": "Previous",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcherToolbar.visualizationsList.next": {
+        "value": "Next",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcherToolbar.visualizationsList.empty": {
+        "value": "No visualization in switcher, add one to continue.",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcherToolbar.visualizationsList.add": {
+        "value": "Add visualization",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcherToolbar.remove": {
+        "value": "Remove switcher",
         "comment": "",
         "limit": 0
     },

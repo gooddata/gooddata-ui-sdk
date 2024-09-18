@@ -47,11 +47,15 @@ export function convertWebhookFromNotificationChannel(
             token: wh?.token ?? "",
             hasToken: wh?.hasToken ?? false,
         },
+        configuration: {
+            dashboardUrl: channel.attributes?.customDashboardUrl,
+        },
         triggers:
             channel.attributes?.triggers?.map((trigger) => ({
                 type: trigger.type,
                 ...(isAllowedOn(trigger.metadata) ? { allowOn: trigger.metadata.allowedOn } : {}),
             })) ?? [],
+        allowedRecipients: channel.attributes?.allowedRecipients,
     };
 }
 
@@ -84,11 +88,15 @@ export function convertCustomEmailFromNotificationChannel(
             password: wh?.password ?? "",
             hasPassword: true,
         },
+        configuration: {
+            dashboardUrl: channel.attributes?.customDashboardUrl,
+        },
         triggers:
             channel.attributes?.triggers?.map((trigger) => ({
                 type: trigger.type,
                 ...(isAllowedOn(trigger.metadata) ? { allowOn: trigger.metadata.allowedOn } : {}),
             })) ?? [],
+        allowedRecipients: channel.attributes?.allowedRecipients,
     };
 }
 
@@ -105,11 +113,15 @@ export function convertDefaultEmailFromNotificationChannel(
             address: wh?.fromEmail ?? "",
             person: wh?.fromEmailName ?? "",
         },
+        configuration: {
+            dashboardUrl: channel.attributes?.customDashboardUrl,
+        },
         triggers:
             channel.attributes?.triggers?.map((trigger) => ({
                 type: trigger.type,
                 ...(isAllowedOn(trigger.metadata) ? { allowOn: trigger.metadata.allowedOn } : {}),
             })) ?? [],
+        allowedRecipients: channel.attributes?.allowedRecipients,
     };
 }
 

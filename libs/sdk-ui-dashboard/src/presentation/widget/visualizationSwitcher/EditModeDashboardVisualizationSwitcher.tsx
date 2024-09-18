@@ -4,24 +4,90 @@ import React from "react";
 import { useIntl } from "react-intl";
 import { Icon, Typography } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
+import cx from "classnames";
 
 import { IDashboardVisualizationSwitcherProps } from "./types.js";
+import { useDashboardSelector, selectInsightsMap } from "../../../model/index.js";
+import { useDashboardComponentsContext } from "../../../presentation/dashboardContexts/index.js";
+import {
+    DashboardItem,
+    DashboardItemVisualization,
+    getVisTypeCssClass,
+} from "../../../presentation/presentationComponents/index.js";
+import { insightVisualizationType } from "@gooddata/sdk-model";
+import { VisType } from "@gooddata/sdk-ui";
+import { EditableDashboardInsightWidgetHeader } from "../widget/InsightWidget/EditableDashboardInsightWidgetHeader.js";
+import { DashboardInsight } from "../insight/ViewModeDashboardInsight/Insight/DashboardInsight.js";
 
 /**
  * @internal
  */
 export const EditModeDashboardVisualizationSwitcher: React.FC<IDashboardVisualizationSwitcherProps> = (
-    _props,
+    props,
 ) => {
+    const { widget, activeVisualizationId, onError, onExportReady, onLoadingChanged, screen } = props;
+
+    const activeVisualization =
+        widget.visualizations.find((visualization) => visualization.identifier === activeVisualizationId) ??
+        widget.visualizations[0];
+
     const theme = useTheme();
     const intl = useIntl();
     const emptyContentIconColor = theme?.palette?.complementary?.c7 ?? "#6D7680";
-    return (
-        <div className="gd-visualization-switcher-widget-empty-content">
-            <Icon.VisualizationSwitcher width={32} height={38} color={emptyContentIconColor} />
-            <Typography tagName="p">
-                {intl.formatMessage({ id: "visualizationSwitcher.emptyContent" })}
-            </Typography>
-        </div>
-    );
+
+    const insights = useDashboardSelector(selectInsightsMap);
+    const insight = activeVisualization ? insights.get(activeVisualization.insight) : undefined;
+
+    const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext();
+
+    if (!activeVisualization || !insight) {
+        return (
+            <div className="gd-visualization-switcher-widget-empty-content">
+                <Icon.VisualizationSwitcher width={32} height={38} color={emptyContentIconColor} />
+                <Typography tagName="p">
+                    {intl.formatMessage({ id: "visualizationSwitcher.emptyContent" })}
+                </Typography>
+            </div>
+        );
+    } else {
+        const visType = insightVisualizationType(insight) as VisType;
+
+        return (
+            <DashboardItem
+                className={cx(
+                    "type-visualization",
+                    "gd-dashboard-view-widget",
+                    "is-edit-mode",
+                    getVisTypeCssClass(activeVisualization.type, visType),
+                )}
+                screen={screen}
+            >
+                <DashboardItemVisualization
+                    renderHeadline={(clientHeight) =>
+                        !activeVisualization.configuration?.hideTitle && (
+                            <EditableDashboardInsightWidgetHeader
+                                clientHeight={clientHeight}
+                                widget={activeVisualization}
+                                insight={insight}
+                            />
+                        )
+                    }
+                >
+                    {({ clientHeight, clientWidth }) => (
+                        <DashboardInsight
+                            clientHeight={clientHeight}
+                            clientWidth={clientWidth}
+                            insight={insight}
+                            widget={activeVisualization}
+                            onExportReady={onExportReady}
+                            onLoadingChanged={onLoadingChanged}
+                            onError={onError}
+                            ErrorComponent={ErrorComponent}
+                            LoadingComponent={LoadingComponent}
+                        />
+                    )}
+                </DashboardItemVisualization>
+            </DashboardItem>
+        );
+    }
 };

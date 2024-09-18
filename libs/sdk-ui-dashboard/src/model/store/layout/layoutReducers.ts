@@ -32,6 +32,8 @@ import {
     isDashboardAttributeFilterReference,
     isRichTextWidget,
     IDrillDownIntersectionIgnoredAttributes,
+    IInsightWidget,
+    isVisualizationSwitcherWidget,
 } from "@gooddata/sdk-model";
 import { WidgetDescription, WidgetHeader } from "../../types/widgetTypes.js";
 import flatMap from "lodash/flatMap.js";
@@ -343,9 +345,16 @@ const replaceSectionItem: LayoutReducer<ReplaceSectionItemActionPayload> = (stat
 //
 
 const getWidgetByRef = (state: Draft<LayoutState>, widgetRef: ObjRef) => {
-    const allWidgets = flatMap(state?.layout?.sections, (section) =>
-        section.items.map((item) => item.widget),
-    );
+    const allWidgets = flatMap(state?.layout?.sections, (section) => {
+        return section.items.flatMap((item) => {
+            let result: typeof item.widget[] = [];
+            if (isVisualizationSwitcherWidget(item.widget)) {
+                result = [item.widget, ...item.widget.visualizations];
+                return result;
+            }
+            return [item.widget];
+        });
+    });
 
     const widgets = allWidgets.filter(Boolean) as NonNullable<typeof allWidgets[number]>[];
     const widgetMap = newMapForObjectWithIdentity(widgets);
@@ -770,6 +779,45 @@ const changeWidgetIgnoreCrossFiltering: LayoutReducer<ChangeWidgetIgnoreCrossFil
 
     widget.ignoreCrossFiltering = ignoreCrossFiltering;
 };
+//
+//
+//
+
+type AddVisualzationSwitcherWidgetVisualization = {
+    ref: ObjRef;
+    visualization: IInsightWidget;
+};
+
+const addVisualizationSwitcherWidgetVisualization: LayoutReducer<
+    AddVisualzationSwitcherWidgetVisualization
+> = (state, action) => {
+    invariant(state.layout);
+
+    const { visualization, ref } = action.payload;
+    const widgetRef = getWidgetByRef(state, ref);
+
+    invariant(widgetRef && isVisualizationSwitcherWidget(widgetRef));
+
+    widgetRef.visualizations.push(visualization);
+};
+
+type UpdateVisualizationSwitcherWidgetVisualizations = {
+    ref: ObjRef;
+    visualizations: IInsightWidget[];
+};
+
+const updateVisualizationSwitcherWidgetVisualizations: LayoutReducer<
+    UpdateVisualizationSwitcherWidgetVisualizations
+> = (state, action) => {
+    invariant(state.layout);
+
+    const { visualizations, ref } = action.payload;
+    const widgetRef = getWidgetByRef(state, ref);
+
+    invariant(widgetRef && isVisualizationSwitcherWidget(widgetRef));
+
+    widgetRef.visualizations = visualizations;
+};
 
 export const layoutReducers = {
     setLayout,
@@ -803,6 +851,10 @@ export const layoutReducers = {
     replaceKpiWidgetDrill: withUndo(replaceKpiWidgetDrill),
     replaceKpiWidgetConfiguration: withUndo(replaceKpiWidgetConfiguration),
     replaceRichTextWidgetContent: withUndo(replaceRichTextWidgetContent),
+    addVisualizationSwitcherWidgetVisualization: withUndo(addVisualizationSwitcherWidgetVisualization),
+    updateVisualizationSwitcherWidgetVisualizations: withUndo(
+        updateVisualizationSwitcherWidgetVisualizations,
+    ),
     undoLayout: undoReducer,
     clearLayoutHistory: resetUndoReducer,
     changeItemsHeight: changeItemsHeight,

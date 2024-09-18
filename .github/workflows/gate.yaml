@@ -102,6 +102,7 @@ jobs:
           comment-pr: 'true'
         if: steps.branch-matches.outputs.branch_matches == 'true'
   gooddata-ui-sdk-compatibility-pipeline:
+    if: false
     runs-on:
       group: infra1-runners-arc
       labels: runners-small

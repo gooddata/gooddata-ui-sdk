@@ -74,6 +74,7 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
         visualizationSwitcherProvider,
         richTextWidgetComponentSet,
         visualizationSwitcherWidgetComponentSet,
+        visualizationSwitcherToolbarComponentProvider,
     } = useDashboard(props);
 
     const dashboardRender = (
@@ -109,6 +110,9 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                         InsightMenuButtonComponentProvider={insightMenuButtonProvider}
                                         InsightMenuTitleComponentProvider={insightMenuTitleProvider}
                                         InsightMenuComponentProvider={insightMenuProvider}
+                                        VisualizationSwitcherToolbarComponentProvider={
+                                            visualizationSwitcherToolbarComponentProvider
+                                        }
                                         KpiComponentProvider={kpiProvider}
                                         RichTextComponentProvider={richTextProvider}
                                         VisualizationSwitcherComponentProvider={visualizationSwitcherProvider}

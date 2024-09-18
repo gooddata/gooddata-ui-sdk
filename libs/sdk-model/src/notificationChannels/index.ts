@@ -27,7 +27,17 @@ export interface INotificationChannelMetadataObjectBase {
      * Triggers that the notification channel are used for.
      */
     triggers: INotificationChannelTrigger[];
+
+    /**
+     * Allowed recipients of notifications from this channel.
+     */
+    allowedRecipients?: NotificationChannelAllowedRecipient;
 }
+
+/**
+ * @alpha
+ */
+export type NotificationChannelAllowedRecipient = "CREATOR" | "INTERNAL";
 
 /**
  * @alpha
@@ -51,6 +61,17 @@ export interface INotificationChannelTrigger {
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface INotificationChannelDefinitionObject extends INotificationChannelMetadataObject {}
 
+/**
+ * @alpha
+ */
+export interface INotificationChannelConfiguration {
+    /**
+     * @alpha
+     * URL of the dashboard.
+     */
+    dashboardUrl?: string;
+}
+
 //Webhook
 
 /**
@@ -66,6 +87,7 @@ export interface IWebhookDefinitionObject
 export interface IWebhookDefinition extends INotificationChannelMetadataObjectBase {
     type: "webhook";
     destination: IWebhookDestination;
+    configuration: INotificationChannelConfiguration;
 }
 
 /**
@@ -105,6 +127,7 @@ export interface ISmtpDefinitionObject
 export interface ISmtpDefinition extends INotificationChannelMetadataObjectBase {
     type: "smtp";
     destination: ISmtpDestination;
+    configuration: INotificationChannelConfiguration;
 }
 
 /**

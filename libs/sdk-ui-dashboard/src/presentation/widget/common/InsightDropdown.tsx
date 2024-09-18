@@ -1,16 +1,9 @@
-// (C) 2007-2022 GoodData Corporation
-import React, { useMemo } from "react";
+// (C) 2007-2024 GoodData Corporation
+import React from "react";
 import { Dropdown, DropdownButton } from "@gooddata/sdk-ui-kit";
-import { ObjRef, IInsight, isInsight, insightVisualizationType } from "@gooddata/sdk-model";
+import { ObjRef, IInsight } from "@gooddata/sdk-model";
 import { IntlShape, useIntl } from "react-intl";
-import { IDrillConfigItem, isDrillToInsightConfig } from "../../../../drill/types.js";
-import { InsightList } from "../../../../insightList/index.js";
-import { selectInsightsMap, useDashboardSelector } from "../../../../../model/index.js";
-
-export interface IInsightDropdownProps {
-    insightConfig: IDrillConfigItem;
-    onSelect: (targetItem: IInsight) => void;
-}
+import { InsightList } from "../../insightList/index.js";
 
 const DROPDOWN_ALIGN_POINTS = [
     {
@@ -37,10 +30,21 @@ function getButtonValue(title: string, intl: IntlShape, ref?: ObjRef) {
     return title || intl.formatMessage({ id: "loading" });
 }
 
-export const InsightDropdown: React.FC<IInsightDropdownProps> = ({ insightConfig, onSelect }) => {
-    const intl = useIntl();
+export interface IInsightDropdownProps {
+    insight?: IInsight;
+    insightRef?: ObjRef;
+    insightType?: string;
 
-    const { insight, insightType, insightRef } = useDrillToInsightData(insightConfig);
+    onSelect: (targetItem: IInsight) => void;
+}
+
+export const InsightDropdown: React.FC<IInsightDropdownProps> = ({
+    insight,
+    insightRef,
+    insightType,
+    onSelect,
+}) => {
+    const intl = useIntl();
     const buttonText = getButtonValue(insight?.insight.title ?? "", intl, insightRef);
 
     return (
@@ -63,9 +67,7 @@ export const InsightDropdown: React.FC<IInsightDropdownProps> = ({ insightConfig
                 return (
                     <div className="open-visualizations s-open-visualizations">
                         <InsightList
-                            selectedRef={
-                                isDrillToInsightConfig(insightConfig) ? insightConfig.insightRef : undefined
-                            }
+                            selectedRef={insightRef}
                             height={300}
                             width={275}
                             searchAutofocus={true}
@@ -80,27 +82,3 @@ export const InsightDropdown: React.FC<IInsightDropdownProps> = ({ insightConfig
         />
     );
 };
-
-function useDrillToInsightData(insightConfig: IDrillConfigItem): {
-    insight?: IInsight;
-    insightType?: string;
-    insightRef?: ObjRef;
-} {
-    const insights = useDashboardSelector(selectInsightsMap);
-
-    return useMemo(() => {
-        if (isDrillToInsightConfig(insightConfig) && insightConfig.insightRef) {
-            const insight = insights.get(insightConfig.insightRef);
-
-            if (isInsight(insight)) {
-                const insightType = insightVisualizationType(insight);
-                return {
-                    insight,
-                    insightRef: insightConfig.insightRef,
-                    insightType: insightType,
-                };
-            }
-        }
-        return {};
-    }, [insightConfig, insights]);
-}
