@@ -34,3 +34,20 @@
         }
     }
 }
+// Fix the gap on sidebar - media query for breadcrumbs
+@media only screen and (min-width: 991px) {
+    .td-main .gd-breadcrumb {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 990px) {
+    .td-main .gd-breadcrumb {
+        display: flex;
+        padding-top: 145px;
+    }
+
+    .col-xl-3.td-sidebar.d-print-none {
+        padding-top: 0;
+    }
+}
