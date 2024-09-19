@@ -35,6 +35,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
         expect(permissions).toEqual({
             canAccessWorkbench: true,
             canCreateAnalyticalDashboard: false,
+            canCreateAutomation: false,
             canCreateReport: false,
             canCreateScheduledMail: false,
             canCreateVisualization: false,
@@ -54,6 +55,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
             canManageScheduledMail: false,
             canRefreshData: false,
             canUploadNonProductionCSV: false,
+            canCreateFilterView: false,
         });
     });
 
@@ -69,6 +71,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
         expect(permissions).toEqual({
             canAccessWorkbench: true,
             canCreateAnalyticalDashboard: true,
+            canCreateAutomation: false,
             canCreateReport: false,
             canCreateScheduledMail: false,
             canCreateVisualization: true,
@@ -88,6 +91,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
             canManageScheduledMail: false,
             canRefreshData: true,
             canUploadNonProductionCSV: false,
+            canCreateFilterView: false,
         });
     });
 
@@ -103,6 +107,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
         expect(permissions).toEqual({
             canAccessWorkbench: true,
             canCreateAnalyticalDashboard: true,
+            canCreateAutomation: false,
             canCreateReport: false,
             canCreateScheduledMail: false,
             canCreateVisualization: true,
@@ -122,6 +127,7 @@ describe("TigerWorkspacePermissionsFactory", () => {
             canManageScheduledMail: false,
             canRefreshData: true,
             canUploadNonProductionCSV: false,
+            canCreateFilterView: false,
         });
     });
 });

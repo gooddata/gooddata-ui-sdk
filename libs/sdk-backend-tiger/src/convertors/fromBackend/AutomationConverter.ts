@@ -3,7 +3,6 @@ import {
     ComparisonWrapper,
     RangeWrapper,
     RelativeWrapper,
-    JsonApiAutomationInAttributesAlert,
     JsonApiAutomationOutAttributesStateEnum,
     JsonApiAutomationOutIncludes,
     JsonApiAutomationOutList,
@@ -11,6 +10,8 @@ import {
     JsonApiExportDefinitionOutWithLinks,
     JsonApiUserLinkage,
     JsonApiUserOutWithLinks,
+    JsonApiAutomationPatchAttributesAlert,
+    ArithmeticMeasureOperatorEnum,
 } from "@gooddata/api-client-tiger";
 import {
     IAlertComparisonOperator,
@@ -121,7 +122,7 @@ export const convertAutomationListToAutomations = (
 };
 
 const convertAlert = (
-    alert: JsonApiAutomationInAttributesAlert | undefined,
+    alert: JsonApiAutomationPatchAttributesAlert | undefined,
     state: JsonApiAutomationOutAttributesStateEnum | undefined,
 ): IAutomationAlert | undefined => {
     if (!alert) {
@@ -172,7 +173,13 @@ const convertAlert = (
                     left: relative.measure.left.localIdentifier,
                     right: relative.measure.right.localIdentifier,
                 },
-                threshold: relative.threshold.value,
+                ...(relative.measure.operator === ArithmeticMeasureOperatorEnum.CHANGE
+                    ? {
+                          threshold: relative.threshold.value * 100,
+                      }
+                    : {
+                          threshold: relative.threshold.value,
+                      }),
             },
             ...base,
         };

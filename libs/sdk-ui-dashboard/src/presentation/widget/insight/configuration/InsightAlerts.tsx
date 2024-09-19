@@ -10,6 +10,7 @@ import { AlertsList } from "./InsightAlertConfig/AlertsList.js";
 import { EditAlert } from "./InsightAlertConfig/EditAlert.js";
 import { useInsightWidgetAlerting } from "./InsightAlertConfig/hooks/useInsightAlerting.js";
 import { CreateAlert } from "./InsightAlertConfig/CreateAlert.js";
+import { NoAvailableMeasures } from "./InsightAlertConfig/NoAvailableAlerts.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 
@@ -18,6 +19,7 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
         ? stringUtils.simplifyText(objRefToString(widget.ref))
         : "";
     const classes = cx(
+        "gd-alerts-configuration-panel",
         "configuration-scrollable-panel",
         "s-configuration-scrollable-panel",
         `s-visualization-${widgetRefSuffix}`,
@@ -31,6 +33,7 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
         viewMode,
         supportedMeasures,
         maxAutomationsReached,
+        canCreateAutomation,
         //
         creatingAlert,
         initiateAlertCreation,
@@ -61,6 +64,7 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
                 onClose={onClose}
                 onGoBack={onGoBack}
                 maxAutomationsReached={maxAutomationsReached}
+                canCreateAutomation={canCreateAutomation}
             />
         );
     } else if (viewMode === "edit" && editingAlert) {
@@ -75,7 +79,7 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
                 onClose={onClose}
             />
         );
-    } else if (viewMode === "create") {
+    } else if (viewMode === "create" && creatingAlert) {
         content = (
             <CreateAlert
                 alert={creatingAlert}
@@ -88,6 +92,8 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
                 maxAutomationsReached={maxAutomationsReached}
             />
         );
+    } else {
+        content = <NoAvailableMeasures onClose={onClose} onBack={onGoBack} />;
     }
 
     return (

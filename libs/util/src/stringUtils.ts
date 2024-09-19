@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 
 /**
  * @internal
@@ -83,6 +83,7 @@ export function parseStringToArray(str: string): string[] | null {
             return [];
         }
 
+        // eslint-disable-next-line regexp/no-unused-capturing-group
         if (str.match(/^\[[a-zA-Z0-9 ]+(,(?=[^ ])[a-zA-Z0-9 ]+)*\]$/)) {
             // [foo], [foo,bar]
             return str.slice(1, -1).split(",");

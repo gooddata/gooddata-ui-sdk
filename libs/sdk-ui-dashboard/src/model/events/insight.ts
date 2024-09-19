@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import {
     IInsight,
     ObjRef,
@@ -922,3 +922,48 @@ export function insightWidgetRefreshed(
 export const isDashboardInsightWidgetRefreshed = eventGuard<DashboardInsightWidgetRefreshed>(
     "GDC.DASH/EVT.INSIGHT_WIDGET.REFRESHED",
 );
+
+/**
+ * Payload of the {@link DashboardInsightWidgetIgnoreCrossFilteringChanged} event.
+ * @alpha
+ */
+export interface DashboardInsightWidgetIgnoreCrossFilteringChangedPayload {
+    /**
+     * Reference to Insight Widget that was changed.
+     */
+    readonly ref: ObjRef;
+
+    /**
+     * New value for ignore cross-filters widget setting.
+     */
+    readonly ignoreCrossFiltering: boolean;
+}
+
+/**
+ * This event is emitted when the insight widget's ignore cross-filters setting changes.
+ *
+ * The configuration specified influence how the insight is filtered
+ *
+ * @alpha
+ */
+export interface DashboardInsightWidgetIgnoreCrossFilteringChanged extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.INSIGHT_WIDGET.IGNORE_CROSS_FILTERING_CHANGED";
+    readonly payload: DashboardInsightWidgetIgnoreCrossFilteringChangedPayload;
+}
+
+export function insightWidgetIgnoreCrossFilteringChanged(
+    ctx: DashboardContext,
+    ref: ObjRef,
+    ignoreCrossFiltering: boolean,
+    correlationId?: string,
+): DashboardInsightWidgetIgnoreCrossFilteringChanged {
+    return {
+        type: "GDC.DASH/EVT.INSIGHT_WIDGET.IGNORE_CROSS_FILTERING_CHANGED",
+        ctx,
+        correlationId,
+        payload: {
+            ref,
+            ignoreCrossFiltering,
+        },
+    };
+}

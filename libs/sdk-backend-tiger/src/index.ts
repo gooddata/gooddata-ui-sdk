@@ -48,11 +48,10 @@ function tigerFactory(config?: IAnalyticalBackendConfig, implConfig?: any): IAna
 
 export default tigerFactory;
 export { AnonymousAuthProvider } from "@gooddata/sdk-backend-base";
-export {
+export type {
     DeclarativeModel,
     GenerateLdmRequest,
     ApiEntitlement,
-    ApiEntitlementNameEnum,
     AnalyzeCsvRequest,
     AnalyzeCsvResponse,
     ImportCsvRequest,
@@ -61,18 +60,18 @@ export {
     UploadFileResponse,
     ReadCsvFileManifestsResponse,
 } from "@gooddata/api-client-tiger";
+export { ApiEntitlementNameEnum } from "@gooddata/api-client-tiger";
+export type { SetJwtCallback, JwtIsAboutToExpireHandler } from "./auth.js";
 export {
     ContextDeferredAuthProvider,
     TigerTokenAuthProvider,
-    SetJwtCallback,
-    JwtIsAboutToExpireHandler,
     TigerJwtAuthProvider,
     TigerAuthProviderBase,
     createTigerAuthenticationUrl,
     redirectToTigerAuthentication,
 } from "./auth.js";
 
-export {
+export type {
     TigerSpecificFunctions,
     IApiToken,
     IApiTokenExtended,
@@ -111,13 +110,14 @@ export {
     INotificationChannel,
 } from "./backend/tigerSpecificFunctions.js";
 
-export { TigerAfmType, TigerMetadataType, TigerObjectType } from "./types/index.js";
+export type { TigerAfmType, TigerMetadataType, TigerObjectType } from "./types/index.js";
+export type { TigerCompatibleObjectType } from "./types/refTypeMapping.js";
 export {
     isTigerType,
     isTigerCompatibleType,
     tigerIdTypeToObjectType,
     objectTypeToTigerIdType,
-    TigerCompatibleObjectType,
 } from "./types/refTypeMapping.js";
-export { getIdOrigin, OriginInfoWithId } from "./convertors/fromBackend/ObjectInheritance.js";
+export type { OriginInfoWithId } from "./convertors/fromBackend/ObjectInheritance.js";
+export { getIdOrigin } from "./convertors/fromBackend/ObjectInheritance.js";
 export { toAfmExecution } from "./convertors/toBackend/afm/toAfmResultSpec.js";

@@ -636,5 +636,7 @@
     "semantic-search.placeholder": "Búsqueda en cuadros de mando o visualización…",
     "semantic-search.id": "ID",
     "semantic-search.tags": "Etiquetas",
-    "semantic-search.match": "{score}% coincidencia"
+    "semantic-search.match": "{score}% coincidencia",
+    "recurrence.error.too_often": "Frecuencia demasiado alta",
+    "recurrence.cron.tooltip": "Utilice el formato de cadena unix-cron. <a>Más información</a>"
 }

@@ -1,3 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
-export { Datepicker, IDatePickerOwnProps } from "./Datepicker.js";
+export type { IDatePickerOwnProps } from "./Datepicker.js";
+export { Datepicker } from "./Datepicker.js";

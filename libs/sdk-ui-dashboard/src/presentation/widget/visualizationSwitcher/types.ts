@@ -2,7 +2,8 @@
 
 import { ComponentType } from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { IVisualizationSwitcherWidget } from "@gooddata/sdk-model";
+import { IVisualizationSwitcherWidget, ScreenSize } from "@gooddata/sdk-model";
+import { OnError, OnExportReady, OnLoadingChanged } from "@gooddata/sdk-ui";
 
 ///
 /// Component props
@@ -44,6 +45,11 @@ export interface IDashboardVisualizationSwitcherProps {
     widget: IVisualizationSwitcherWidget;
 
     /**
+     * Identifier of visualization currently active.
+     */
+    activeVisualizationId?: string | undefined;
+
+    /**
      * Height of the visualization switcher widget container.
      *
      * @alpha
@@ -56,6 +62,11 @@ export interface IDashboardVisualizationSwitcherProps {
      * @alpha
      */
     clientWidth?: number;
+
+    onLoadingChanged?: OnLoadingChanged;
+    onExportReady?: OnExportReady;
+    onError?: OnError;
+    screen: ScreenSize;
 }
 
 ///

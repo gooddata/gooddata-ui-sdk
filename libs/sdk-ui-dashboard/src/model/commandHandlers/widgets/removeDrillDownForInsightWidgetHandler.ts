@@ -12,7 +12,6 @@ import {
 import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
 import { layoutActions } from "../../store/layout/index.js";
-import { selectEnableDrillDownIntersectionIgnoredAttributes } from "../../store/config/configSelectors.js";
 import isEqual from "lodash/isEqual.js";
 
 export function* removeDrillDownForInsightWidgetHandler(
@@ -43,30 +42,24 @@ export function* removeDrillDownForInsightWidgetHandler(
         }),
     );
 
-    const enableDrillDownIntersectionIgnoredAttributes: ReturnType<
-        typeof selectEnableDrillDownIntersectionIgnoredAttributes
-    > = yield select(selectEnableDrillDownIntersectionIgnoredAttributes);
-
-    if (enableDrillDownIntersectionIgnoredAttributes) {
-        const drillIntersectionIgnoredAttributesWithoutBlacklistedHierarchies =
-            currentDrillDownIntersectionIgnoredAttributes?.filter(
-                (ignoredIntersectionAttributes) =>
-                    !newBlacklistHierarchies.some((hierarchy) =>
-                        isEqual(hierarchy, ignoredIntersectionAttributes.drillDownReference),
-                    ),
-            );
-
-        yield put(
-            layoutActions.replaceWidgetDrillDownIntersectionIgnoredAttributes({
-                ref: widgetRef,
-                ignoredDrillDownIntersectionIgnoredAttributes:
-                    drillIntersectionIgnoredAttributesWithoutBlacklistedHierarchies ?? [],
-                undo: {
-                    cmd,
-                },
-            }),
+    const drillIntersectionIgnoredAttributesWithoutBlacklistedHierarchies =
+        currentDrillDownIntersectionIgnoredAttributes?.filter(
+            (ignoredIntersectionAttributes) =>
+                !newBlacklistHierarchies.some((hierarchy) =>
+                    isEqual(hierarchy, ignoredIntersectionAttributes.drillDownReference),
+                ),
         );
-    }
+
+    yield put(
+        layoutActions.replaceWidgetDrillDownIntersectionIgnoredAttributes({
+            ref: widgetRef,
+            ignoredDrillDownIntersectionIgnoredAttributes:
+                drillIntersectionIgnoredAttributesWithoutBlacklistedHierarchies ?? [],
+            undo: {
+                cmd,
+            },
+        }),
+    );
 
     return insightWidgetDrillDownRemoved(ctx, widgetRef, blacklistHierarchies, correlationId);
 }

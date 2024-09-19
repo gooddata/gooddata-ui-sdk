@@ -11,6 +11,7 @@ import {
     IExportDefinitionVisualizationObjectContent,
     IInsight,
     IAutomationMetadataObject,
+    IUser,
 } from "@gooddata/sdk-model";
 import parseISO from "date-fns/parseISO/index.js";
 import { getUserTimezone } from "../utils/timezone.js";
@@ -22,6 +23,7 @@ import {
     selectWidgetByRef,
     isCustomWidget,
     ExtendedDashboardWidget,
+    selectCurrentUser,
 } from "../../../../model/index.js";
 import { normalizeTime } from "@gooddata/sdk-ui-kit";
 import { IScheduledEmailDialogProps } from "../../types.js";
@@ -29,6 +31,7 @@ import { WidgetAttachmentType } from "../types.js";
 import { toModifiedISOString } from "../../DefaultScheduledEmailManagementDialog/utils.js";
 import { useAttachmentDashboardFilters } from "./useAttachmentDashboardFilters.js";
 import {
+    convertUserToAutomationRecipient,
     getAutomationDashboardFilters,
     getAutomationVisualizationFilters,
     isCsvVisualizationAutomation,
@@ -56,6 +59,9 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
     const dashboardId = useDashboardSelector(selectDashboardId);
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
 
+    const currentUser = useDashboardSelector(selectCurrentUser);
+    const defaultRecipient = convertUserToAutomationRecipient(currentUser);
+
     const dashboardEditFilters = getAutomationDashboardFilters(editSchedule);
     const { areFiltersChanged, filtersToStore } = useAttachmentDashboardFilters({
         customFilters: dashboardEditFilters,
@@ -78,12 +84,14 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
                            * construction of AFM definition on BE.
                            */
                           filters: filtersToStore,
+                          user: currentUser,
                       }
                     : {
                           dashboardId: dashboardId!,
                           notificationChannel: firstChannel,
                           title: dashboardTitle,
                           filters: areFiltersChanged ? filtersToStore : undefined,
+                          user: currentUser,
                       },
             ),
     );
@@ -105,7 +113,15 @@ export function useEditScheduledEmail(props: IScheduledEmailDialogProps) {
     };
 
     const onDestinationChange = (notificationChannelId: string): void => {
-        setState((s) => ({ ...s, notificationChannel: notificationChannelId }));
+        setState((s) => ({
+            ...s,
+            notificationChannel: notificationChannelId,
+            /**
+             * Reset recipients when changing notification channel as allowed recipients may differ
+             * in new notification channel and previous recipients may no longer be valid.
+             */
+            recipients: [defaultRecipient],
+        }));
     };
 
     const onRecipientsChange = (updatedRecipients: IAutomationRecipient[]): void => {
@@ -335,6 +351,7 @@ function newAutomationMetadataObjectDefinition({
     insight,
     widget,
     filters,
+    user,
 }: {
     dashboardId: string;
     notificationChannel: string;
@@ -342,6 +359,7 @@ function newAutomationMetadataObjectDefinition({
     insight?: IInsight;
     widget?: ExtendedDashboardWidget;
     filters?: FilterContextItem[];
+    user: IUser;
 }): IAutomationMetadataObjectDefinition {
     const firstRun = parseISO(new Date().toISOString());
     const normalizedFirstRun = normalizeTime(firstRun, undefined, 60);
@@ -376,7 +394,7 @@ function newAutomationMetadataObjectDefinition({
             subject: "",
         },
         exportDefinitions: [{ ...exportDefinition }],
-        recipients: [],
+        recipients: [convertUserToAutomationRecipient(user)],
         notificationChannel,
         dashboard: dashboardId,
     };

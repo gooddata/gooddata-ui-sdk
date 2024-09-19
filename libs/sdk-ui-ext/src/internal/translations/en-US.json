@@ -1593,6 +1593,26 @@
         "comment": "The text for the drill down checkbox",
         "limit": 0
     },
+    "properties.interactions.alerts": {
+        "value": "Alert",
+        "comment": "Label of the checkbox that enables/disables alerts configuration for particular visualization.",
+        "limit": 0
+    },
+    "properties.interactions.alerts.tooltip": {
+        "value": "Enable users to create alerts for this visualization on dashboards.",
+        "comment": "Tooltip for the checkbox that enables/disables alerts configuration for particular visualization.",
+        "limit": 0
+    },
+    "properties.interactions.scheduledExports": {
+        "value": "Scheduled exports",
+        "comment": "Label of the checkbox that enables/disables scheduled exports configuration for particular visualization.",
+        "limit": 0
+    },
+    "properties.interactions.scheduledExports.tooltip": {
+        "value": "Enable users to create scheduled exports for this visualization on dashboards.",
+        "comment": "Tooltip for the checkbox that enables/disables scheduled exports configuration for particular visualization.",
+        "limit": 0
+    },
     "properties.comparison.title": {
         "value": "Comparison",
         "comment": "The title of comparison section",

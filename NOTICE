@@ -7,9 +7,9 @@
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2024-9-5
+Date generated: 2024-9-10
 
-Revision ID: eb4b8f3fb49e9ca267b2836572c0b75d5f602161
+Revision ID: db08da8c798ff34ee4b7fa609e11418460eb3622
 
 ================================================================================
 ================================================================================
@@ -170,7 +170,6 @@ Revision ID: eb4b8f3fb49e9ca267b2836572c0b75d5f602161
 - @formatjs/intl-listformat (7.5.3) [MIT]
 - @formatjs/intl-localematcher (0.5.2) [MIT]
 - @formatjs/ts-transformer (3.13.9) [MIT]
-- @gooddata/number-formatter (1.0.5) [MIT]
 - @html-validate/stylish (4.2.0) [MIT]
 - @isaacs/cliui (8.0.2) [ISC]
 - @jest/schemas (29.6.3) [MIT]
@@ -398,7 +397,6 @@ Revision ID: eb4b8f3fb49e9ca267b2836572c0b75d5f602161
 - deep-eql (4.1.3) [MIT]
 - deepmerge (4.3.1) [MIT]
 - default-gateway (6.0.3) [BSD-2-Clause]
-- default-import (1.1.5) [MIT]
 - defaults (1.0.4) [MIT]
 - define-data-property (1.1.1) [MIT]
 - define-lazy-prop (2.0.0) [MIT]
@@ -430,7 +428,7 @@ Revision ID: eb4b8f3fb49e9ca267b2836572c0b75d5f602161
 - envinfo (7.11.0) [MIT]
 - error-ex (1.3.2) [MIT]
 - es-module-lexer (1.4.1) [MIT]
-- esbuild (0.19.9) [MIT]
+- esbuild (0.21.5) [MIT]
 - escalade (3.1.2) [MIT]
 - escape-html (1.0.3) [MIT]
 - escape-string-regexp (1.0.5) [MIT]
@@ -729,7 +727,7 @@ Revision ID: eb4b8f3fb49e9ca267b2836572c0b75d5f602161
 - pkg-dir (4.2.0) [MIT]
 - pkg-types (1.0.3) [MIT]
 - polished (3.7.2) [MIT, OFL-1.1]
-- postcss (8.4.32) [MIT]
+- postcss (8.4.45) [MIT]
 - potpack (2.0.0) [ISC]
 - prettier (2.5.1) [MIT, Apache-2.0, MPL-2.0]
 - pretty-format (29.7.0) [MIT]
@@ -806,7 +804,7 @@ Revision ID: eb4b8f3fb49e9ca267b2836572c0b75d5f602161
 - retry (0.13.1) [MIT]
 - reusify (1.0.4) [MIT]
 - rimraf (3.0.2) [ISC]
-- rollup (4.9.0) [MIT, Apache-2.0, ISC]
+- rollup (4.21.2) [MIT, Apache-2.0, ISC]
 - rrweb-cssom (0.6.0) [MIT]
 - run-async (2.4.1) [MIT]
 - run-parallel (1.2.0) [MIT]
@@ -849,6 +847,7 @@ Revision ID: eb4b8f3fb49e9ca267b2836572c0b75d5f602161
 - source-map (0.5.7) [BSD-3-Clause]
 - source-map (0.6.1) [BSD-3-Clause]
 - source-map-js (1.0.2) [BSD-3-Clause]
+- source-map-js (1.2.1) [BSD-3-Clause]
 - source-map-support (0.5.21) [MIT]
 - space-separated-tokens (2.0.2) [MIT]
 - spark-md5 (3.0.2) [Multi-license: MIT OR WTFPL]
@@ -860,14 +859,12 @@ Revision ID: eb4b8f3fb49e9ca267b2836572c0b75d5f602161
 - std-env (3.6.0) [MIT]
 - string-width (4.2.3) [MIT]
 - string-width (5.1.2) [MIT]
-- string-width-cjs (5.1.1) [ISC]
 - string_decoder (1.1.1) [MIT]
 - string_decoder (1.3.0) [MIT]
 - stringify-entities (4.0.3) [MIT]
 - stringify-object (3.3.0) [BSD-2-Clause]
 - strip-ansi (6.0.1) [MIT]
 - strip-ansi (7.1.0) [MIT]
-- strip-ansi-cjs (8.0.0) [ISC]
 - strip-final-newline (2.0.0) [MIT]
 - strip-final-newline (3.0.0) [MIT]
 - strip-literal (1.3.0) [MIT]
@@ -941,7 +938,7 @@ Revision ID: eb4b8f3fb49e9ca267b2836572c0b75d5f602161
 - vary (1.1.2) [MIT]
 - vfile (6.0.1) [MIT]
 - vfile-message (4.0.2) [MIT]
-- vite (5.0.8) [MIT, ISC, CC0-1.0, BSD-2-Clause, Apache-2.0]
+- vite (5.4.3) [MIT, ISC, CC0-1.0, BSD-2-Clause, Apache-2.0]
 - vite-node (1.0.4) [MIT]
 - vitest (1.0.4) [MIT, ISC, BSD-3-Clause, Apache-2.0]
 - vt-pbf (3.1.3) [MIT, BSD-3-Clause]
@@ -969,7 +966,6 @@ Revision ID: eb4b8f3fb49e9ca267b2836572c0b75d5f602161
 - wrap-ansi (6.2.0) [MIT]
 - wrap-ansi (7.0.0) [MIT]
 - wrap-ansi (8.1.0) [MIT]
-- wrap-ansi-cjs (8.0.0) [ISC]
 - wrappy (1.0.2) [ISC]
 - ws (7.5.9) [MIT]
 - ws (8.15.1) [MIT]
@@ -1208,9 +1204,8 @@ Package Locator: npm+@ag-grid-community/core$27.3.0
 --------------------------------------------------------------------------------
 
 * Declared Licenses *
-MIT, ISC
+MIT
 
-* MIT *
 
 The MIT License
 
@@ -1235,7 +1230,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 
-* ISC *
+
+* Other Licenses *
+ISC
+
 
 Copyright (c) 2004-2010 by Internet Systems Consortium, Inc. ("ISC")
 Copyright (c) 1995-2003 by Internet Software Consortium
@@ -6235,36 +6233,6 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
-
---------------------------------------------------------------------------------
-Package Title: @gooddata/number-formatter (1.0.5)
-
-Package Locator: npm+@gooddata/number-formatter$1.0.5
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-Copyright (c) <year> <copyright holders>
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
 
 
 --------------------------------------------------------------------------------
@@ -14470,40 +14438,6 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 --------------------------------------------------------------------------------
-Package Title: default-import (1.1.5)
-
-Package Locator: npm+default-import$1.1.5
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
-MIT License
-
-Copyright (c) 2022 Jacob Ley
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-
---------------------------------------------------------------------------------
 Package Title: defaults (1.0.4)
 
 Package Locator: npm+defaults$1.0.4
@@ -15497,9 +15431,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 
 --------------------------------------------------------------------------------
-Package Title: esbuild (0.19.9)
+Package Title: esbuild (0.21.5)
 
-Package Locator: npm+esbuild$0.19.9
+Package Locator: npm+esbuild$0.21.5
 --------------------------------------------------------------------------------
 
 * Declared Licenses *
@@ -26828,9 +26762,9 @@ THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
 
 
 --------------------------------------------------------------------------------
-Package Title: postcss (8.4.32)
+Package Title: postcss (8.4.45)
 
-Package Locator: npm+postcss$8.4.32
+Package Locator: npm+postcss$8.4.45
 --------------------------------------------------------------------------------
 
 * Declared Licenses *
@@ -29608,9 +29542,9 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
 --------------------------------------------------------------------------------
-Package Title: rollup (4.9.0)
+Package Title: rollup (4.21.2)
 
-Package Locator: npm+rollup$4.9.0
+Package Locator: npm+rollup$4.21.2
 --------------------------------------------------------------------------------
 
 
@@ -33174,6 +33108,47 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 --------------------------------------------------------------------------------
+Package Title: source-map-js (1.2.1)
+
+Package Locator: npm+source-map-js$1.2.1
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+BSD-3-Clause
+
+
+
+Copyright (c) 2009-2011, Mozilla Foundation and contributors
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+* Redistributions of source code must retain the above copyright notice, this
+  list of conditions and the following disclaimer.
+
+* Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
+
+* Neither the names of the Mozilla Foundation nor the names of project
+  contributors may be used to endorse or promote products derived from this
+  software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+
+--------------------------------------------------------------------------------
 Package Title: source-map-support (0.5.21)
 
 Package Locator: npm+source-map-support$0.5.21
@@ -33528,22 +33503,6 @@ SOFTWARE.
 
 
 --------------------------------------------------------------------------------
-Package Title: string-width-cjs (5.1.1)
-
-Package Locator: npm+string-width-cjs$5.1.1
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-ISC
-
-
-Copyright (c) 2004-2010 by Internet Systems Consortium, Inc. ("ISC")
-Copyright (c) 1995-2003 by Internet Software Consortium
-Permission to use, copy, modify, and distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
-THE SOFTWARE IS PROVIDED "AS IS" AND ISC DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL ISC BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-
---------------------------------------------------------------------------------
 Package Title: string_decoder (1.1.1)
 
 Package Locator: npm+string_decoder$1.1.1
@@ -33788,22 +33747,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-
---------------------------------------------------------------------------------
-Package Title: strip-ansi-cjs (8.0.0)
-
-Package Locator: npm+strip-ansi-cjs$8.0.0
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-ISC
-
-
-Copyright (c) 2004-2010 by Internet Systems Consortium, Inc. ("ISC")
-Copyright (c) 1995-2003 by Internet Software Consortium
-Permission to use, copy, modify, and distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
-THE SOFTWARE IS PROVIDED "AS IS" AND ISC DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL ISC BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
 --------------------------------------------------------------------------------
@@ -36597,9 +36540,9 @@ SOFTWARE.
 
 
 --------------------------------------------------------------------------------
-Package Title: vite (5.0.8)
+Package Title: vite (5.4.3)
 
-Package Locator: npm+vite$5.0.8
+Package Locator: npm+vite$5.4.3
 --------------------------------------------------------------------------------
 
 
@@ -48366,22 +48309,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-
---------------------------------------------------------------------------------
-Package Title: wrap-ansi-cjs (8.0.0)
-
-Package Locator: npm+wrap-ansi-cjs$8.0.0
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-ISC
-
-
-Copyright (c) 2004-2010 by Internet Systems Consortium, Inc. ("ISC")
-Copyright (c) 1995-2003 by Internet Software Consortium
-Permission to use, copy, modify, and distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
-THE SOFTWARE IS PROVIDED "AS IS" AND ISC DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL ISC BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
 --------------------------------------------------------------------------------
@@ -64449,31 +64376,6 @@ SOFTWARE.
 
 MIT License
 
-Copyright (c) 2022 Jacob Ley
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-
-
-* MIT *
-
-MIT License
-
 Copyright (c) 2022 Jordan Harband
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -69144,4 +69046,4 @@ POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2024-9-5
+Report Generated by FOSSA on 2024-9-10

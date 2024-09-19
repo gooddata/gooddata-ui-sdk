@@ -17,9 +17,8 @@ export function loadWorkspaceAutomations(
         .workspace(workspace)
         .automations()
         .getAutomationsQuery()
-        .withAll()
-        .query()
-        .then((result) => result.items);
+        .withSorting(["title,asc", "createdAt,asc"])
+        .queryAll();
 }
 
 export function loadContextAutomations(
@@ -39,10 +38,8 @@ export function loadContextAutomations(
         .workspace(workspace)
         .automations()
         .getAutomationsQuery()
-        .withAll()
         .withDashboard(opts.dashboardId ?? "")
         .withAuthor(opts.author ?? "")
-        .withSorting(["title,asc"])
-        .query()
-        .then((result) => result.items);
+        .withSorting(["title,asc", "createdAt,asc"])
+        .queryAll();
 }

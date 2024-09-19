@@ -14,6 +14,7 @@
     "exports": {
         ".": "./esm/index.js",
         "./styles/css/*": "./styles/css/*",
+        "./styles/scss/*": "./styles/scss/*",
         "./internal": "./esm/internal.js"
     },
     "types": "./esm/index.d.ts",
@@ -39,6 +40,7 @@
         "test": "vitest watch",
         "test-once": "vitest run",
         "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml",
+        "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
         "eslint": "eslint $npm_package_config_eslint",
         "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml $npm_package_config_eslint",
         "prettier-check": "prettier --check '{src,stories,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",

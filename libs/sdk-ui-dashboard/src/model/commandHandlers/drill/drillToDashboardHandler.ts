@@ -53,7 +53,6 @@ import {
 } from "./common/intersectionUtils.js";
 import { selectSupportsMultipleDateFilters } from "../../store/backendCapabilities/backendCapabilitiesSelectors.js";
 import {
-    selectEnableDrillIntersectionIgnoredAttributes,
     selectEnableDuplicatedLabelValuesInAttributeFilter,
     selectEnableMultipleDateFilters,
 } from "../../store/config/configSelectors.js";
@@ -123,11 +122,7 @@ export function* drillToDashboardHandler(
         typeof selectEnableDuplicatedLabelValuesInAttributeFilter
     > = yield select(selectEnableDuplicatedLabelValuesInAttributeFilter);
 
-    const enableDrillIntersectionIgnoredAttributes: ReturnType<
-        typeof selectEnableDrillIntersectionIgnoredAttributes
-    > = yield select(selectEnableDrillIntersectionIgnoredAttributes);
-
-    const filteredIntersection = enableDrillIntersectionIgnoredAttributes
+    const filteredIntersection = cmd.payload.drillDefinition.drillIntersectionIgnoredAttributes
         ? removeIgnoredValuesFromDrillIntersection(
               cmd.payload.drillEvent.drillContext.intersection ?? [],
               cmd.payload.drillDefinition.drillIntersectionIgnoredAttributes ?? [],

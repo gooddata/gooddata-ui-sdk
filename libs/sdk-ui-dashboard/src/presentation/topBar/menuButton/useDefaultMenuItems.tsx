@@ -25,6 +25,7 @@ import {
     useDashboardAlerts,
     selectEnableFilterViews,
     selectDisableFilterViews,
+    selectCanCreateAutomation,
 } from "../../../model/index.js";
 import { downloadFile } from "../../../_staging/fileUtils/downloadFile.js";
 import { IMenuButtonItem } from "../types.js";
@@ -144,6 +145,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         exportDashboard();
     }, [exportDashboard, isNewDashboard]);
 
+    const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
     const isReadOnly = useDashboardSelector(selectIsReadOnly);
     const isInViewMode = useDashboardSelector(selectIsInViewMode);
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
@@ -206,7 +208,9 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                 {
                     type: "button",
                     itemId: "alerts-edit-item", // careful, this is also used as a selector in tests, do not change
-                    itemName: intl.formatMessage({ id: "options.menu.alerts.edit" }),
+                    itemName: canCreateAutomation
+                        ? intl.formatMessage({ id: "options.menu.alerts.edit" })
+                        : intl.formatMessage({ id: "options.menu.alerts.edit.noCreatePermissions" }),
                     onClick: defaultOnAlertsManagement,
                     visible: isAlertsManagementVisible,
                     icon: "gd-icon-bell",
@@ -238,10 +242,12 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                 {
                     type: "button",
                     itemId: "schedule-email-edit-item", // careful, this is also used as a selector in tests, do not change
-                    itemName: intl.formatMessage({ id: "options.menu.schedule.email.edit" }),
+                    itemName: canCreateAutomation
+                        ? intl.formatMessage({ id: "options.menu.schedule.email.edit" })
+                        : intl.formatMessage({ id: "options.menu.schedule.email.edit.noCreatePermissions" }),
                     onClick: defaultOnScheduleEmailingManagement,
                     visible: isScheduledManagementEmailingVisible,
-                    icon: "gd-icon-list",
+                    icon: canCreateAutomation ? "gd-icon-list" : "gd-icon-clock",
                 },
             ],
             // filter views section
@@ -306,5 +312,8 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         openDeleteDialog,
         openFilterViewsAddDialog,
         openFilterViewsListDialog,
+        isAlertsManagementVisible,
+        canCreateAutomation,
+        defaultOnAlertsManagement,
     ]);
 }

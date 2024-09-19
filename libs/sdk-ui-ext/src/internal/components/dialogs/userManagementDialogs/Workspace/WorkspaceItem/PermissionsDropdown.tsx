@@ -1,6 +1,6 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useMemo } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 import { withBubble } from "@gooddata/sdk-ui-kit";
@@ -14,20 +14,16 @@ import {
 } from "../../types.js";
 import { useTelemetry, TrackEventCallback } from "../../TelemetryContext.js";
 
-import { workspacePermissionMessages } from "./locales.js";
+import { getPermissionTitle } from "./locales.js";
 import { PermissionsDropdownList } from "./PermissionsDropdownList.js";
 
 const items: IPermissionsItem[] = [
     {
-        id: "MANAGE",
+        id: "VIEW",
         enabled: true,
     },
     {
-        id: "ANALYZE_AND_EXPORT",
-        enabled: true,
-    },
-    {
-        id: "ANALYZE",
+        id: "VIEW_AND_SAVE_VIEWS",
         enabled: true,
     },
     {
@@ -35,7 +31,19 @@ const items: IPermissionsItem[] = [
         enabled: true,
     },
     {
-        id: "VIEW",
+        id: "VIEW_AND_EXPORT_AND_SAVE_VIEWS",
+        enabled: true,
+    },
+    {
+        id: "ANALYZE",
+        enabled: true,
+    },
+    {
+        id: "ANALYZE_AND_EXPORT",
+        enabled: true,
+    },
+    {
+        id: "MANAGE",
         enabled: true,
     },
 ];
@@ -49,6 +57,7 @@ interface IGranularPermissionsDropdownProps {
     onChange: (workspace: IGrantedWorkspace) => void;
     onDelete: (workspace: IGrantedWorkspace) => void;
     className: string;
+    areFilterViewsEnabled: boolean;
 }
 
 const trackPermissionChange = (
@@ -64,11 +73,25 @@ const trackPermissionChange = (
                     : "group-permission-changed-to-view",
             );
             break;
+        case "VIEW_AND_SAVE_VIEWS":
+            trackEvent(
+                subjectType === "user"
+                    ? "user-permission-changed-to-view-save-views"
+                    : "group-permission-changed-to-view-save-views",
+            );
+            break;
         case "VIEW_AND_EXPORT":
             trackEvent(
                 subjectType === "user"
                     ? "user-permission-changed-to-view-export"
                     : "group-permission-changed-to-view-export",
+            );
+            break;
+        case "VIEW_AND_EXPORT_AND_SAVE_VIEWS":
+            trackEvent(
+                subjectType === "user"
+                    ? "user-permission-changed-to-view-export-save-views"
+                    : "group-permission-changed-to-view-export-save-views",
             );
             break;
         case "ANALYZE":
@@ -104,6 +127,7 @@ const Dropdown: React.FC<IGranularPermissionsDropdownProps> = ({
     onChange,
     onDelete,
     className,
+    areFilterViewsEnabled,
 }) => {
     const intl = useIntl();
     const [selectedPermission, setSelectedPermission] = useState<WorkspacePermission>(workspace.permission);
@@ -125,7 +149,17 @@ const Dropdown: React.FC<IGranularPermissionsDropdownProps> = ({
         }
     }, [isDropdownDisabled, toggleDropdown]);
 
-    const buttonValue = intl.formatMessage(workspacePermissionMessages[selectedPermission]);
+    const buttonValue = intl.formatMessage(getPermissionTitle(selectedPermission));
+
+    const enabledItems = useMemo(
+        () =>
+            items.filter(
+                (item) =>
+                    areFilterViewsEnabled ||
+                    (item.id !== "VIEW_AND_SAVE_VIEWS" && item.id !== "VIEW_AND_EXPORT_AND_SAVE_VIEWS"),
+            ),
+        [areFilterViewsEnabled],
+    );
 
     return (
         <div className={className}>
@@ -152,7 +186,7 @@ const Dropdown: React.FC<IGranularPermissionsDropdownProps> = ({
             </div>
             <PermissionsDropdownList
                 selectedPermission={selectedPermission}
-                items={items}
+                items={enabledItems}
                 subjectType={subjectType}
                 onSelect={handleOnSelect}
                 onDelete={handleOnDelete}

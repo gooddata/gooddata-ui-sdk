@@ -48,7 +48,7 @@ exports[`PluggableHeadline2 > getExtendedReferencePoint > should correctly proce
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
         "subtitle": "primary",
-        "title": "Measure",
+        "title": "Metric",
       },
       "secondary_measures": {
         "accepts": [
@@ -66,7 +66,7 @@ exports[`PluggableHeadline2 > getExtendedReferencePoint > should correctly proce
         "isShowInPercentVisible": false,
         "itemsLimit": 2,
         "subtitle": "secondary",
-        "title": "Measure",
+        "title": "Metric",
       },
     },
     "exportConfig": {
@@ -160,7 +160,7 @@ exports[`PluggableHeadline2 > getExtendedReferencePoint > should return proper e
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
         "subtitle": "primary",
-        "title": "Measure",
+        "title": "Metric",
       },
       "secondary_measures": {
         "accepts": [
@@ -178,7 +178,7 @@ exports[`PluggableHeadline2 > getExtendedReferencePoint > should return proper e
         "isShowInPercentVisible": false,
         "itemsLimit": 2,
         "subtitle": "secondary",
-        "title": "Measure",
+        "title": "Metric",
       },
     },
     "exportConfig": {

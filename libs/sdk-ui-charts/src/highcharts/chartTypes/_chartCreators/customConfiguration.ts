@@ -1158,7 +1158,7 @@ export const getFormatterProperty = (
         return { formatter: partial(formatAsPercent, 100) };
     }
 
-    const useCustomFormat = chartOptions?.[axisPropsKey]?.format === "inherit" ?? false;
+    const useCustomFormat = chartOptions?.[axisPropsKey]?.format === "inherit" || false;
     if (useCustomFormat) {
         return { formatter: partial(axisLabelFormatter, chartConfig, axisFormat) };
     }

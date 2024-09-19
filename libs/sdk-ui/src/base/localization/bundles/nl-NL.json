@@ -636,5 +636,7 @@
     "semantic-search.placeholder": "Zoek dashboards of visualisaties…",
     "semantic-search.id": "ID",
     "semantic-search.tags": "Tags",
-    "semantic-search.match": "{score}% overeenkomst"
+    "semantic-search.match": "{score}% overeenkomst",
+    "recurrence.error.too_often": "Frequentie te hoog",
+    "recurrence.cron.tooltip": "Gebruik de unix-cron stringopmaak. <a>Lees meer</a>"
 }

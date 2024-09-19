@@ -56,7 +56,8 @@ export type ObjectType =
     | "dateHierarchyTemplate"
     | "dateAttributeHierarchy"
     | "exportDefinition"
-    | "automation";
+    | "automation"
+    | "filterView";
 
 /**
  * Model object reference using object's unique identifier.

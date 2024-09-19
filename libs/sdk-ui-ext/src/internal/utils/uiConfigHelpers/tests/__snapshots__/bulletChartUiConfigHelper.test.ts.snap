@@ -93,7 +93,7 @@ exports[`bulletChartUiConfigHelper > getBulletChartUiConfig > should return bull
         "isShowOnSecondaryAxisVisible": false,
         "itemsLimit": 1,
         "subtitle": "Primary",
-        "title": "Measure",
+        "title": "Metric",
       },
       "secondary_measures": {
         "accepts": [
@@ -112,7 +112,7 @@ exports[`bulletChartUiConfigHelper > getBulletChartUiConfig > should return bull
         "isShowOnSecondaryAxisVisible": false,
         "itemsLimit": 1,
         "subtitle": "Target",
-        "title": "Measure",
+        "title": "Metric",
       },
       "tertiary_measures": {
         "accepts": [
@@ -131,7 +131,7 @@ exports[`bulletChartUiConfigHelper > getBulletChartUiConfig > should return bull
         "isShowOnSecondaryAxisVisible": false,
         "itemsLimit": 1,
         "subtitle": "Comparative",
-        "title": "Measure",
+        "title": "Metric",
       },
       "view": {
         "accepts": [

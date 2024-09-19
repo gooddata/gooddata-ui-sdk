@@ -17,6 +17,17 @@ describe("useSearchMetrics hook", () => {
         score: 0.5,
         tags: [],
     };
+    const item2: ISemanticSearchResultItem = {
+        type: "dashboard",
+        id: "test2",
+        workspaceId: "test",
+        title: "selected2",
+        description: "",
+        createdAt: null,
+        modifiedAt: null,
+        score: 0.4,
+        tags: [],
+    };
 
     it("should report open -> close transaction", async () => {
         const callback = vi.fn();
@@ -29,9 +40,12 @@ describe("useSearchMetrics hook", () => {
         expect(callback).toHaveBeenCalled();
         expect(callback).toHaveBeenCalledWith({
             lastSearchTerm: "",
+            lastSearchScores: [],
             searchCount: 0,
             selectedItemTitle: null,
             selectedItemType: null,
+            selectedItemScore: null,
+            selectedItemIndex: null,
         });
     });
 
@@ -41,15 +55,18 @@ describe("useSearchMetrics hook", () => {
 
         const { onCloseMetrics, onSearchMetrics } = result.current;
 
-        act(() => onSearchMetrics("test"));
+        act(() => onSearchMetrics("test", [{ item }, { item: item2 }]));
         act(() => onCloseMetrics());
 
         expect(callback).toHaveBeenCalled();
         expect(callback).toHaveBeenCalledWith({
             lastSearchTerm: "test",
+            lastSearchScores: [0.5, 0.4],
             searchCount: 1,
             selectedItemTitle: null,
             selectedItemType: null,
+            selectedItemScore: null,
+            selectedItemIndex: null,
         });
     });
 
@@ -59,15 +76,18 @@ describe("useSearchMetrics hook", () => {
 
         const { onSelectMetrics, onSearchMetrics } = result.current;
 
-        act(() => onSearchMetrics("test"));
-        act(() => onSelectMetrics(item));
+        act(() => onSearchMetrics("test", [{ item }, { item: item2 }]));
+        act(() => onSelectMetrics(item, 0));
 
         expect(callback).toHaveBeenCalled();
         expect(callback).toHaveBeenCalledWith({
             lastSearchTerm: "test",
+            lastSearchScores: [0.5, 0.4],
             searchCount: 1,
             selectedItemTitle: "selected",
             selectedItemType: "dashboard",
+            selectedItemScore: 0.5,
+            selectedItemIndex: 0,
         });
     });
 
@@ -77,22 +97,28 @@ describe("useSearchMetrics hook", () => {
 
         const { onSelectMetrics, onSearchMetrics } = result.current;
 
-        act(() => onSearchMetrics("test"));
-        act(() => onSelectMetrics(item));
-        act(() => onSelectMetrics({ ...item, title: "other" }));
+        act(() => onSearchMetrics("test", [{ item }, { item: item2 }]));
+        act(() => onSelectMetrics(item, 0));
+        act(() => onSelectMetrics(item2, 1));
 
         expect(callback).toHaveBeenCalledTimes(2);
         expect(callback).toHaveBeenNthCalledWith(1, {
             lastSearchTerm: "test",
+            lastSearchScores: [0.5, 0.4],
             searchCount: 1,
             selectedItemTitle: "selected",
             selectedItemType: "dashboard",
+            selectedItemScore: 0.5,
+            selectedItemIndex: 0,
         });
         expect(callback).toHaveBeenNthCalledWith(2, {
             lastSearchTerm: "test",
+            lastSearchScores: [0.5, 0.4],
             searchCount: 1,
-            selectedItemTitle: "other",
+            selectedItemTitle: "selected2",
             selectedItemType: "dashboard",
+            selectedItemScore: 0.4,
+            selectedItemIndex: 1,
         });
     });
 
@@ -102,16 +128,19 @@ describe("useSearchMetrics hook", () => {
 
         const { onCloseMetrics, onSelectMetrics, onSearchMetrics } = result.current;
 
-        act(() => onSearchMetrics("test"));
-        act(() => onSelectMetrics(item));
+        act(() => onSearchMetrics("test", [{ item }, { item: item2 }]));
+        act(() => onSelectMetrics(item, 0));
         act(() => onCloseMetrics());
 
         expect(callback).toHaveBeenCalledTimes(1);
         expect(callback).toHaveBeenCalledWith({
             lastSearchTerm: "test",
+            lastSearchScores: [0.5, 0.4],
             searchCount: 1,
             selectedItemTitle: "selected",
             selectedItemType: "dashboard",
+            selectedItemScore: 0.5,
+            selectedItemIndex: 0,
         });
     });
 });

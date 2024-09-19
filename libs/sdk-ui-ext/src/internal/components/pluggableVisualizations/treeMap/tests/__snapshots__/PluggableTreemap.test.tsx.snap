@@ -125,8 +125,8 @@ exports[`PluggableTreemap > should return ref. point with 1 M, 1 Vb, 1 Sb and on
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": true,
         "itemsLimit": 1,
-        "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">view by</span>",
+        "title": "Metrics",
+        "warningMessage": "To add additional metric, remove <span class="attr-field-icon" /> from <span class="stack-by">view by</span>",
       },
       "segment": {
         "accepts": [
@@ -254,8 +254,8 @@ exports[`PluggableTreemap > should return ref. point with 1 M, 1 Vb, 1 Sb and on
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": true,
         "itemsLimit": 1,
-        "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class="date-field-icon" /> from <span class="stack-by">view by</span>",
+        "title": "Metrics",
+        "warningMessage": "To add additional metric, remove <span class="date-field-icon" /> from <span class="stack-by">view by</span>",
       },
       "segment": {
         "accepts": [
@@ -427,8 +427,8 @@ exports[`PluggableTreemap > should return ref. point with 1 M, 1 Vb, 1 Sb and on
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": true,
         "itemsLimit": 1,
-        "title": "Measures",
-        "warningMessage": "To add additional measure, remove <span class="attr-field-icon" /> from <span class="stack-by">view by</span>",
+        "title": "Metrics",
+        "warningMessage": "To add additional metric, remove <span class="attr-field-icon" /> from <span class="stack-by">view by</span>",
       },
       "segment": {
         "accepts": [
@@ -559,7 +559,7 @@ exports[`PluggableTreemap > should return ref. point with n M, 0 Vb, 0 Sb for n 
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": true,
         "itemsLimit": 40,
-        "title": "Measures",
+        "title": "Metrics",
       },
       "segment": {
         "accepts": [
@@ -590,7 +590,7 @@ exports[`PluggableTreemap > should return ref. point with n M, 0 Vb, 0 Sb for n 
           "date": 1,
         },
         "title": "View by",
-        "warningMessage": "To view by, an visualization can have only one measure",
+        "warningMessage": "To view by, an visualization can have only one metric",
       },
     },
     "exportConfig": {
@@ -701,7 +701,7 @@ exports[`PluggableTreemap > should return ref. point with n M, 0 Vb, 1 Sb for n 
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": true,
         "itemsLimit": 40,
-        "title": "Measures",
+        "title": "Metrics",
       },
       "segment": {
         "accepts": [
@@ -732,7 +732,7 @@ exports[`PluggableTreemap > should return ref. point with n M, 0 Vb, 1 Sb for n 
           "date": 1,
         },
         "title": "View by",
-        "warningMessage": "To view by, an visualization can have only one measure",
+        "warningMessage": "To view by, an visualization can have only one metric",
       },
     },
     "exportConfig": {
@@ -809,7 +809,7 @@ exports[`PluggableTreemap > should return reference point with 1 M, 0 Vb, 0 Sb f
         "isShowInPercentEnabled": false,
         "isShowInPercentVisible": true,
         "itemsLimit": 40,
-        "title": "Measures",
+        "title": "Metrics",
       },
       "segment": {
         "accepts": [

@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { TableDescriptor } from "../structure/tableDescriptor.js";
 import { DataValue } from "@gooddata/sdk-model";
 import { getMappingHeaderName, getMappingHeaderUri, hasMappingHeaderFormattedName } from "@gooddata/sdk-ui";
@@ -10,7 +10,7 @@ import { IGridRow } from "../data/resultTypes.js";
  */
 function extractIdsFromAttributeElementUri(uri: string): (string | null)[] {
     // no reasonable way to avoid the super-linear backtracking right now
-    // eslint-disable-next-line regexp/no-super-linear-backtracking
+    // eslint-disable-next-line regexp/no-super-linear-backtracking, regexp/no-unused-capturing-group
     const [, attributeId, , attributeValueId = null] = uri.match(/obj\/([^/]*)(\/elements\?id=)?(.*)$/)!;
 
     return [attributeId, attributeValueId];

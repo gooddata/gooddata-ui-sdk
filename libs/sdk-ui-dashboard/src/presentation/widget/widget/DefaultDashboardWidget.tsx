@@ -24,7 +24,7 @@ import { safeSerializeObjRef } from "../../../_staging/metadata/safeSerializeObj
 import { DefaultDashboardKpiWidget } from "./DefaultDashboardKpiWidget.js";
 import { RenderModeAwareDashboardInsightWidget } from "./InsightWidget/index.js";
 import { RenderModeAwareDashboardRichTextWidget } from "./RichTextWidget/index.js";
-import { RenderModeAwareDashboardVisualizationSwitchertWidget } from "./VisualizationSwitcherWidget/RenderModeAwareDashboardVisualizationSwitcherWidget.js";
+import { RenderModeAwareDashboardVisualizationSwitcherWidget } from "./VisualizationSwitcherWidget/RenderModeAwareDashboardVisualizationSwitcherWidget.js";
 
 /**
  * @internal
@@ -117,7 +117,7 @@ export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget
             );
         } else if (isVisualizationSwitcherWidget(widget)) {
             renderWidget = (
-                <RenderModeAwareDashboardVisualizationSwitchertWidget
+                <RenderModeAwareDashboardVisualizationSwitcherWidget
                     widget={widget}
                     screen={screen}
                     dashboardItemClasses={dashboardItemClasses}

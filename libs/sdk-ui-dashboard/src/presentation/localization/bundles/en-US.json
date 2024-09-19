@@ -137,9 +137,19 @@
         "comment": "Translate as imperative. Schedule emailing edit whole KPI dashboard",
         "limit": 0
     },
+    "options.menu.schedule.email.edit.noCreatePermissions": {
+        "value": "Scheduled exports",
+        "comment": "Translate as imperative. Schedule emailing edit whole KPI dashboard, without create permissions.",
+        "limit": 0
+    },
     "options.menu.alerts.edit": {
         "value": "Show alerts",
         "comment": "Translate as imperative. Schedule alerts for dashboard or widget",
+        "limit": 0
+    },
+    "options.menu.alerts.edit.noCreatePermissions": {
+        "value": "Alerts",
+        "comment": "Translate as imperative. Schedule alerts for dashboard or widget, without create permissions.",
         "limit": 0
     },
     "options.menu.delete": {
@@ -511,6 +521,11 @@
     "dialogs.schedule.email.max.recipients": {
         "value": "You can select up to {maxRecipients} recipients.",
         "comment": "Message for recipients input when the maximum number of recipients is reached",
+        "limit": 0
+    },
+    "dialogs.schedule.email.min.recipients": {
+        "value": "There must be at least one recipient.",
+        "comment": "Message for recipients input when the minimum number of recipients is reached",
         "limit": 0
     },
     "dialogs.schedule.email.subject.label": {
@@ -1078,8 +1093,25 @@
         "comment": "",
         "limit": 0
     },
+    "options.menu.unsupported.schedulingForInsightNotEnabled": {
+        "value": "You cannot schedule an export for this widget.",
+        "comment": "Tooltip for the widget that does not support scheduling, because it's disabled on the insight.",
+        "limit": 0,
+        "translate": false
+    },
+    "options.menu.unsupported.alertingForInsightNotEnabled": {
+        "value": "You cannot create an alert for this widget.",
+        "comment": "Tooltip for the widget that does not support alerting, because it's disabled on the insight.",
+        "limit": 0,
+        "translate": false
+    },
     "options.menu.unsupported.oldWidget": {
         "value": "Unable to schedule the export. Please resave the dashboard or contact your administrator.",
+        "comment": "",
+        "limit": 0
+    },
+    "options.menu.unsupported.alertingOldWidget": {
+        "value": "Unable to create an alert. Please resave the dashboard or contact your administrator.",
         "comment": "",
         "limit": 0
     },
@@ -2414,6 +2446,16 @@
         "comment": "Tooltip displayed when hierarchy object cannot be used again for drill down functionality.",
         "limit": 0
     },
+    "configurationPanel.respectCrossFiltering": {
+        "value": "Respect cross-filtering",
+        "comment": "Label of checkbox whether cross-filtering should be respected or not",
+        "limit": 0
+    },
+    "configurationPanel.respectCrossFiltering.tooltip": {
+        "value": "Disable this option to ignore cross-filtering from other visualizations.",
+        "comment": "Tooltip for checkbox whether cross-filtering should be respected or not",
+        "limit": 0
+    },
     "richText.formattingOptions": {
         "value": "Formatting options",
         "comment": "",
@@ -2436,6 +2478,51 @@
     },
     "visualizationSwitcher.emptyContent": {
         "value": "No visualization in switcher",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcher.deleteDialog.header": {
+        "value": "Delete visualization switcher?",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcher.deleteDialog.message": {
+        "value": "The visualization switcher and all of its visualizations will be irreversibly deleted.",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcherToolbar.visualizationsList.header": {
+        "value": "Visualizations",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcherToolbar.visualizationsList.tooltip": {
+        "value": "Visualizations",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcherToolbar.visualizationsList.prev": {
+        "value": "Previous",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcherToolbar.visualizationsList.next": {
+        "value": "Next",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcherToolbar.visualizationsList.empty": {
+        "value": "No visualization in switcher, add one to continue.",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcherToolbar.visualizationsList.add": {
+        "value": "Add visualization",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcherToolbar.remove": {
+        "value": "Remove switcher",
         "comment": "",
         "limit": 0
     },
@@ -2792,6 +2879,26 @@
     "insightAlert.config.alerts": {
         "value": "Alerts",
         "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.alerts.empty": {
+        "value": "There are no alerts for this visualization.",
+        "comment": "Text shown when there are no alerts for this visualization.",
+        "limit": 0
+    },
+    "insightAlert.config.noAlertMeasures": {
+        "value": "Alerts",
+        "comment": "Text shown when there are no metrics available for the insight",
+        "limit": 0
+    },
+    "insightAlert.config.noAlertMeasures.title": {
+        "value": "No metrics available for alerting.",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.noAlertMeasures.description": {
+        "value": "Please add a metric to enable alerting.",
+        "comment": "",
         "limit": 0
     },
     "insightAlert.config.createAlert": {

@@ -11,6 +11,7 @@ import {
     IInsightMenuItem,
     CustomDashboardRichTextComponent,
     CustomDashboardVisualizationSwitcherComponent,
+    CustomVisualizationSwitcherToolbarComponent,
 } from "../widget/types.js";
 import { DashboardConfig, ExtendedDashboardWidget } from "../../model/index.js";
 import {
@@ -152,6 +153,19 @@ export type OptionalRichTextComponentProvider = OptionalProvider<RichTextCompone
 export type VisualizationSwitcherComponentProvider = (
     visualizationSwitcher: IVisualizationSwitcherWidget,
 ) => CustomDashboardVisualizationSwitcherComponent;
+
+/**
+ * @alpha
+ */
+export type VisualizationSwitcherToolbarComponentProvider = (
+    widget: IVisualizationSwitcherWidget,
+) => CustomVisualizationSwitcherToolbarComponent;
+
+/**
+ * @alpha
+ */
+export type OptionalVisualizationSwitcherToolbarComponentProvider =
+    OptionalProvider<VisualizationSwitcherToolbarComponentProvider>;
 
 /**
  * @public

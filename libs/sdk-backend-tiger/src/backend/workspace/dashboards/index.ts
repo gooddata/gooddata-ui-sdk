@@ -11,6 +11,7 @@ import {
     MetadataUtilities,
     ValidateRelationsHeader,
     ITigerClient,
+    JsonApiFilterViewOutDocument,
 } from "@gooddata/api-client-tiger";
 import {
     IDashboardReferences,
@@ -78,6 +79,9 @@ import { parseNameFromContentDisposition } from "../../../utils/downloadFile.js"
 import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "../constants.js";
 import { DashboardsQuery } from "./dashboardsQuery.js";
 import { getSettingsForCurrentUser } from "../settings/index.js";
+import { convertFilterView } from "../../../convertors/fromBackend/FilterViewConvertor.js";
+import { invariant } from "ts-invariant";
+import { convertApiError } from "../../../utils/errorHandling.js";
 
 const DEFAULT_POLL_DELAY = 5000;
 const MAX_POLL_ATTEMPTS = 50;
@@ -631,113 +635,170 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         }));
     };
 
-    // TODO LX-422 Temporary alpha implementation that uses localStorage till backend supports a new metadata
-    //  object type to persist filterView
-    public getFilterViewsForCurrentUser = async (dashboardRef: ObjRef): Promise<IDashboardFilterView[]> => {
+    public getFilterViewsForCurrentUser = async (dashboard: ObjRef): Promise<IDashboardFilterView[]> => {
         try {
-            const blob = window.localStorage["filterViews"];
-            const filterViews: IDashboardFilterView[] = blob ? JSON.parse(blob) : [];
-            const dashboardFilterViews = filterViews
-                .filter((view) => areObjRefsEqual(view.dashboard, dashboardRef))
-                .sort((f1, f2) => f1.name.localeCompare(f2.name));
-            return Promise.resolve(dashboardFilterViews);
-        } catch (error) {
-            // eslint-disable-next-line no-console
-            console.error("Could not parse saved filter views from local storage", error);
-            return Promise.resolve([]);
+            const dashboardId = await objRefToIdentifier(dashboard, this.authCall);
+            const result = await this.authCall(async (client) => {
+                const profile = await client.profile.getCurrent();
+                return client.entities.getAllEntitiesFilterViews({
+                    workspaceId: this.workspace,
+                    include: ["user", "analyticalDashboard"],
+                    filter: `analyticalDashboard.id==${dashboardId};user.id==${profile.userId}`,
+                    // sort: ["name"], // TODO LX-422 remove comment and array sort below once sort is supported
+                });
+            });
+            const { data, included } = result.data;
+            return data
+                .map((itemData) => convertFilterView(itemData, included))
+                .sort((a, b) => a.name.localeCompare(b.name));
+        } catch (error: any) {
+            throw convertApiError(error);
         }
     };
 
-    // TODO LX-422 Temporary alpha implementation that uses localStorage till backend supports a new metadata
-    //  object type to persist filterView
     public createFilterView = async (
         filterView: IDashboardFilterViewSaveRequest,
     ): Promise<IDashboardFilterView> => {
-        return this.authCall(async (client) => {
-            const profile = await client.profile.getCurrent();
-            const userId = idRef(profile.userId, "user");
+        try {
+            const { name, dashboard, isDefault, filterContext } = filterView;
 
-            const blob = window.localStorage["filterViews"];
-            const filterViews: IDashboardFilterView[] = blob ? JSON.parse(blob) : [];
+            const dashboardId = await objRefToIdentifier(dashboard, this.authCall);
 
-            const newFilterView: IDashboardFilterView = {
-                ...filterView,
-                ref: idRef(uuid()),
-                user: userId,
-            };
+            return this.authCall(async (client) => {
+                if (isDefault) {
+                    // this should ideally be handled by the POST call below so all these calls are just
+                    // a single transaction and the action itself is more performant on UI
+                    await this.unsetDashboardDefaultFilterView(client, dashboardId);
+                }
+                const profile = await client.profile.getCurrent();
+                const result = await client.entities.createEntityFilterViews(
+                    {
+                        workspaceId: this.workspace,
+                        jsonApiFilterViewInDocument: {
+                            data: {
+                                type: "filterView",
+                                id: uuid(),
+                                attributes: {
+                                    isDefault,
+                                    title: name,
+                                    content: convertFilterContextToBackend(filterContext),
+                                },
+                                relationships: {
+                                    user: {
+                                        data: {
+                                            id: profile.userId,
+                                            type: "user",
+                                        },
+                                    },
+                                    analyticalDashboard: {
+                                        data: {
+                                            id: dashboardId,
+                                            type: "analyticalDashboard",
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    {
+                        headers: jsonApiHeaders,
+                    },
+                );
 
-            // mark filter views for the dashboard and user as not default if new filter is a new default
-            const updatedFilterViews: IDashboardFilterView[] = filterViews.map((view) => ({
-                ...view,
-                isDefault:
-                    filterView.isDefault &&
-                    areObjRefsEqual(view.dashboard, filterView.dashboard) &&
-                    areObjRefsEqual(view.user, userId)
-                        ? false
-                        : view.isDefault,
-            }));
+                const { id, type, attributes } = result.data.data;
+                const { title, isDefault: persistedIsDefault } = attributes;
 
-            updatedFilterViews.push(newFilterView);
-
-            window.localStorage["filterViews"] = JSON.stringify(updatedFilterViews);
-
-            return Promise.resolve(newFilterView);
-        });
+                // let's save a one call and do not fetch the whole entity again as we have all the info here
+                return {
+                    ref: idRef(id, type),
+                    dashboard,
+                    user: idRef(profile.userId, "user"),
+                    name: title,
+                    filterContext,
+                    isDefault: persistedIsDefault ?? false,
+                };
+            });
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
     };
 
-    // TODO LX-422 Temporary alpha implementation that uses localStorage till backend supports a new metadata
-    //  object type to persist filterView
     public deleteFilterView = async (ref: ObjRef): Promise<void> => {
-        const blob = window.localStorage["filterViews"];
-        const filterViews: IDashboardFilterView[] = blob ? JSON.parse(blob) : {};
-
-        window.localStorage["filterViews"] = JSON.stringify(
-            filterViews.filter((view) => !areObjRefsEqual(view.ref, ref)),
-        );
-
-        return Promise.resolve();
+        try {
+            const id = await objRefToIdentifier(ref, this.authCall);
+            await this.authCall((client) =>
+                client.entities.deleteEntityFilterViews({
+                    workspaceId: this.workspace,
+                    objectId: id,
+                }),
+            );
+        } catch (error: any) {
+            throw convertApiError(error);
+        }
     };
 
-    // TODO LX-422 Temporary alpha implementation that uses localStorage till backend supports a new metadata
-    //  object type to persist filterView
     public setFilterViewAsDefault = async (ref: ObjRef, isDefault: boolean): Promise<void> => {
-        return this.authCall(async (client) => {
-            const profile = await client.profile.getCurrent();
-
-            const blob = window.localStorage["filterViews"];
-            const filterViews: IDashboardFilterView[] = blob ? JSON.parse(blob) : {};
-
-            const updatedFilterView = filterViews.find((view) => areObjRefsEqual(view.ref, ref));
-
-            if (!updatedFilterView) {
-                throw Error("There is no such filter view.");
+        const id = await objRefToIdentifier(ref, this.authCall);
+        await this.authCall(async (client) => {
+            if (isDefault) {
+                // this should ideally be handled by the PATCH call below so all these calls are just
+                // a single transaction and the action itself is more performant on UI
+                const filterView = await this.getFilterView(client, id);
+                const dashboardId = filterView.data.relationships?.analyticalDashboard?.data?.id;
+                invariant(dashboardId, "Dashboard could not be determined for the filter view.");
+                await this.unsetDashboardDefaultFilterView(client, dashboardId);
             }
-
-            const userId = idRef(profile.userId, "user");
-
-            // find views for the same dashboard, same user, unmark them as non default, set the new one
-            // as the default one
-            const updatedFilterViews = filterViews
-                .filter((view) => areObjRefsEqual(view.dashboard, updatedFilterView.dashboard))
-                .filter((view) => areObjRefsEqual(view.user, userId))
-                .map((view) => {
-                    if (areObjRefsEqual(view.ref, ref)) {
-                        return {
-                            ...view,
-                            isDefault,
-                        };
-                    } else {
-                        return {
-                            ...view,
-                            isDefault: false,
-                        };
-                    }
-                });
-
-            window.localStorage["filterViews"] = JSON.stringify(updatedFilterViews);
-
-            return Promise.resolve();
+            await this.updateFilterViewDefaultStatus(client, id, isDefault);
         });
+    };
+
+    private unsetDashboardDefaultFilterView = async (
+        client: ITigerClient,
+        dashboardId: string,
+    ): Promise<void> => {
+        const profile = await client.profile.getCurrent();
+        const defaultFilterViewsForDashboard = await client.entities.getAllEntitiesFilterViews({
+            workspaceId: this.workspace,
+            include: ["user", "analyticalDashboard"],
+            filter: `analyticalDashboard.id==${dashboardId};user.id==${profile.userId};filterView.isDefault==true`,
+        });
+        await Promise.all(
+            defaultFilterViewsForDashboard.data.data.map((view) =>
+                this.updateFilterViewDefaultStatus(client, view.id, false),
+            ),
+        );
+    };
+
+    private updateFilterViewDefaultStatus = async (
+        client: ITigerClient,
+        id: string,
+        isDefault: boolean,
+    ): Promise<void> => {
+        await client.entities.patchEntityFilterViews({
+            workspaceId: this.workspace,
+            objectId: id,
+            jsonApiFilterViewPatchDocument: {
+                data: {
+                    id,
+                    type: "filterView",
+                    attributes: {
+                        isDefault,
+                    },
+                },
+            },
+        });
+    };
+    private getFilterView = async (
+        client: ITigerClient,
+        id: string,
+    ): Promise<JsonApiFilterViewOutDocument> => {
+        return client.entities
+            .getEntityFilterViews({
+                workspaceId: this.workspace,
+                objectId: id,
+                include: ["analyticalDashboard"],
+            })
+            .then((result) => result.data);
     };
 
     //

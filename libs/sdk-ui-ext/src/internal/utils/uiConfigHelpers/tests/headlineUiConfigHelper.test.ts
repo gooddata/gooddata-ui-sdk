@@ -1,4 +1,4 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { describe, expect, it } from "vitest";
 import cloneDeep from "lodash/cloneDeep.js";
 
@@ -75,8 +75,8 @@ describe("headlineUiConfigHelper", () => {
                     referencePointMocks.headlineWithMeasureInPrimaryBucket,
                     intl,
                 );
-                expect(uiConfig.buckets.measures.title).toEqual("Measure");
-                expect(uiConfig.buckets.secondary_measures.title).toEqual("Measure");
+                expect(uiConfig.buckets.measures.title).toEqual("Metric");
+                expect(uiConfig.buckets.secondary_measures.title).toEqual("Metric");
             });
         });
     });

@@ -208,6 +208,8 @@ exports[`initialize dashboard handler > for any dashboard > should resolve permi
 {
   "canAccessWorkbench": true,
   "canCreateAnalyticalDashboard": true,
+  "canCreateAutomation": true,
+  "canCreateFilterView": true,
   "canCreateReport": true,
   "canCreateScheduledMail": true,
   "canCreateVisualization": true,

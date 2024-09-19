@@ -27,3 +27,11 @@ export const selectFilterViews: DashboardSelector<IDashboardFilterView[]> = crea
             : [];
     },
 );
+
+/**
+ * @alpha
+ */
+export const selectFilterViewsAreLoading: DashboardSelector<boolean> = createSelector(
+    selectSelf,
+    (state) => state.isLoading,
+);

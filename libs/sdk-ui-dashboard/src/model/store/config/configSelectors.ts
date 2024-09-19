@@ -451,7 +451,7 @@ export const selectEnableRenamingProjectToWorkspace: DashboardSelector<boolean> 
 export const selectEnableRenamingMeasureToMetric: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return !!(state.settings?.enableRenamingMeasureToMetric ?? false);
+        return state.settings?.enableRenamingMeasureToMetric ?? true;
     },
 );
 
@@ -703,30 +703,6 @@ export const selectEnableRichTextDescriptions: DashboardSelector<boolean> = crea
 );
 
 /**
- * Returns whether drill intersection ignored attributes is enabled.
- *
- * @internal
- */
-export const selectEnableDrillIntersectionIgnoredAttributes: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableDrillIntersectionIgnoredAttributes ?? true;
-    },
-);
-
-/**
- * Returns whether drill down intersection ignored attributes is enabled.
- *
- * @internal
- */
-export const selectEnableDrillDownIntersectionIgnoredAttributes: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableDrillDownIntersectionIgnoredAttributes ?? false;
-    },
-);
-
-/**
  * Returns whether filter views are enabled.
  *
  * @internal
@@ -744,5 +720,17 @@ export const selectEnableVisualizationSwitcher: DashboardSelector<boolean> = cre
     selectConfig,
     (state) => {
         return state.settings?.enableKDVisualizationSwitcher ?? false;
+    },
+);
+
+/**
+ * Returns whether ignore cross-filtering enabled.
+ *
+ * @internal
+ */
+export const selectEnableIgnoreCrossFiltering: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableIgnoreCrossFiltering ?? false;
     },
 );

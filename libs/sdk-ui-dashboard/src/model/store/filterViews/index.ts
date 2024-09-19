@@ -14,5 +14,5 @@ const filterViewsSlice = createSlice({
 export const filterViewsSliceReducer = filterViewsSlice.reducer;
 export const filterViewsActions = filterViewsSlice.actions;
 
-export { selectFilterViews } from "./filterViewsReducersSelectors.js";
-export { FilterViewsState, IFilterViews } from "./filterViewsState.js";
+export { selectFilterViews, selectFilterViewsAreLoading } from "./filterViewsReducersSelectors.js";
+export type { FilterViewsState, IFilterViews } from "./filterViewsState.js";

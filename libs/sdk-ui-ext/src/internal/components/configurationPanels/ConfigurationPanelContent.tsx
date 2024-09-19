@@ -18,6 +18,10 @@ import { getMeasuresFromMdObject } from "../../utils/bucketHelper.js";
 import InteractionsSection from "../configurationControls/interactions/InteractionsSection.js";
 import ForecastSection from "../configurationControls/forecast/ForecastSection.js";
 import { isForecastEnabled } from "../../utils/forecastHelper.js";
+import {
+    isInsightSupportedForAlerts,
+    isInsightSupportedForScheduledExports,
+} from "../pluggableVisualizations/alerts.js";
 
 export interface IConfigurationPanelContentProps<PanelConfig = any> {
     properties?: IVisualizationProperties;
@@ -112,14 +116,33 @@ export default abstract class ConfigurationPanelContent<
     }
 
     protected renderInteractionsSection(): React.ReactNode {
-        const { pushData, properties, propertiesMeta, panelConfig, configurationPanelRenderers } = this.props;
+        const {
+            pushData,
+            properties,
+            propertiesMeta,
+            panelConfig,
+            configurationPanelRenderers,
+            featureFlags,
+            insight,
+        } = this.props;
 
-        return panelConfig.supportsAttributeHierarchies ? (
+        const isAlertingEnabled = featureFlags.enableAlerting;
+        const isScheduledExportsEnabled = featureFlags.enableScheduling;
+        const insightSupportsScheduledExports = isInsightSupportedForScheduledExports(insight);
+        const insightSupportsAlerts = isInsightSupportedForAlerts(insight);
+        const supportsAlertsConfiguration = insightSupportsAlerts && isAlertingEnabled;
+        const supportsScheduledExportsConfiguration =
+            insightSupportsScheduledExports && isScheduledExportsEnabled;
+
+        return supportsAlertsConfiguration || panelConfig.supportsAttributeHierarchies ? (
             <InteractionsSection
                 controlsDisabled={this.isControlDisabled()}
                 properties={properties}
                 propertiesMeta={propertiesMeta}
                 pushData={pushData}
+                supportsAlertConfiguration={supportsAlertsConfiguration}
+                supportsDrillDownConfiguration={panelConfig.supportsAttributeHierarchies}
+                supportsScheduledExportsConfiguration={supportsScheduledExportsConfiguration}
                 InteractionsDetailRenderer={configurationPanelRenderers?.InteractionsDetailRenderer}
             />
         ) : null;

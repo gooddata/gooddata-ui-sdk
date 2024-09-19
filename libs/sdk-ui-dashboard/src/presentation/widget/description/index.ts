@@ -1,2 +1,2 @@
-// (C) 2022 GoodData Corporation
-export { IInsightWidgetDescriptionTriggerProps } from "./types.js";
+// (C) 2022-2024 GoodData Corporation
+export type { IInsightWidgetDescriptionTriggerProps } from "./types.js";

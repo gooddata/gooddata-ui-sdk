@@ -125,14 +125,8 @@ export interface IWorkspaceAutomationService {
  */
 export interface IAutomationsQuery {
     /**
-     * Sets the query to return all automations.
-     *
-     * @returns automations query
-     */
-    withAll(): IAutomationsQuery;
-    /**
      * Sets number of automations to return per page.
-     * Default size: 50
+     * Default size: 100
      *
      * @param size - desired max number of automations per page must be a positive number
      * @returns automations query
@@ -195,6 +189,13 @@ export interface IAutomationsQuery {
      * @returns promise of first page of the results
      */
     query(): Promise<IAutomationsQueryResult>;
+
+    /**
+     * Starts the automations query.
+     *
+     * @returns promise with a list of all automations matching the specified options
+     */
+    queryAll(): Promise<IAutomationMetadataObject[]>;
 }
 
 /**

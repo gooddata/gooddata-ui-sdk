@@ -23,12 +23,15 @@ import {
     selectDashboardId,
     selectSmtps,
     selectLocale,
+    selectCanCreateAutomation,
+    selectCurrentUser,
 } from "../../../../../../model/index.js";
 import { createDefaultAlert, getSupportedInsightMeasuresByInsight } from "../utils.js";
 import { messages } from "../messages.js";
 import { useWidgetFilters } from "../../../../common/useWidgetFilters.js";
 import { useSaveAlertToBackend } from "./useSaveAlertToBackend.js";
 import { fillMissingTitles, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { convertUserToAutomationRecipient } from "../../../../../scheduledEmail/DefaultScheduledEmailDialog/utils/automationHelpers.js";
 
 type InsightWidgetAlertingViewMode = "list" | "edit" | "create";
 
@@ -50,6 +53,8 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     const automationsCount = useDashboardSelector(selectAutomationsCount);
     const maxAutomationsEntitlement = useDashboardSelector(selectEntitlementMaxAutomations);
     const unlimitedAutomationsEntitlement = useDashboardSelector(selectEntitlementUnlimitedAutomations);
+    const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
+    const currentUser = useDashboardSelector(selectCurrentUser);
 
     const { handleCreateAlert, handleUpdateAlert, handlePauseAlert, handleResumeAlert } =
         useSaveAlertToBackend({
@@ -109,6 +114,10 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
 
     // Handle async widget filters state
     useEffect(() => {
+        if (supportedMeasures.length === 0) {
+            setIsLoading(false);
+            return;
+        }
         if (widgetFiltersStatus === "success") {
             setIsLoading(false);
             const sanitizedFilters = widgetFilters.filter((filter) => !isAllTimeDateFilter(filter));
@@ -132,7 +141,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
 
     const [isLoading, setIsLoading] = useState(true);
     const [viewMode, setViewMode] = useState<InsightWidgetAlertingViewMode>(
-        alerts.length > 0 ? "list" : "create",
+        alerts.length > 0 || !canCreateAutomation ? "list" : "create",
     );
     const [defaultAlert, setDefaultAlert] = useState<
         IAutomationMetadataObject | IAutomationMetadataObjectDefinition | null
@@ -172,6 +181,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             metadata: {
                 widget: widget?.localIdentifier,
             },
+            recipients: [convertUserToAutomationRecipient(currentUser)],
         } as IAutomationMetadataObject;
         setIsLoading(true);
         handleCreateAlert(alertToCreate);
@@ -239,5 +249,6 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         hasAlerts,
         supportedMeasures,
         maxAutomationsReached,
+        canCreateAutomation,
     };
 };

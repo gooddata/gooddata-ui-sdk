@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
@@ -6,7 +6,7 @@ import cx from "classnames";
 
 import { IPermissionsItem, WorkspacePermission } from "../../types.js";
 
-import { workspacePermissionMessages } from "./locales.js";
+import { getPermissionTitle } from "./locales.js";
 import { QuestionMarkIcon } from "./QuestionMarkIcon.js";
 
 interface IPermissionItemProps {
@@ -50,7 +50,7 @@ export const PermissionDropdownItem: React.FC<IPermissionItemProps> = ({
                 },
             )}
         >
-            <div>{intl.formatMessage(workspacePermissionMessages[permission.id])}</div>
+            <div>{intl.formatMessage(getPermissionTitle(permission.id))}</div>
             <div className="gd-user-management-help-icon-wrapper">
                 <QuestionMarkIcon bubbleTextId={bubbleTextId} />
             </div>

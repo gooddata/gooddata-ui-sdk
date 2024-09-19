@@ -413,6 +413,11 @@ export interface ISettings {
     enableAlerting?: boolean;
 
     /**
+     * Enables alerting rollout of the dashboard widgets.
+     */
+    enableAlertingRollout?: boolean;
+
+    /**
      * Enables smtp settings.
      */
     enableSmtp?: boolean;
@@ -452,16 +457,6 @@ export interface ISettings {
     enableSemanticSearch?: boolean;
 
     /**
-     * Enable configuration of the drill intersection ignored attributes.
-     */
-    enableDrillIntersectionIgnoredAttributes?: boolean;
-
-    /**
-     * Enable configuration of the drill intersection ignored attributes for drill down.
-     */
-    enableDrillDownIntersectionIgnoredAttributes?: boolean;
-
-    /**
      * Enable multiple data sources to be used in a single workspace.
      */
     enableDashboardFilterViews?: boolean;
@@ -470,6 +465,16 @@ export interface ISettings {
      * Enable configuration workspace hierarchy settings in Home UI.
      */
     enableWorkspaceHierarchySettings?: boolean;
+
+    /**
+     * Enables ignore cross-filtering in widgets on dashboard.
+     */
+    enableIgnoreCrossFiltering?: boolean;
+
+    /**
+     * Enables manual headline exports on dashboard.
+     */
+    enableHeadlineExport?: boolean;
 
     [key: string]: number | boolean | string | object | undefined;
 }

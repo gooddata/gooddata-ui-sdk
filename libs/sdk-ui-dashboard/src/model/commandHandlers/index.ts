@@ -41,6 +41,8 @@ import { changeInsightWidgetVisPropertiesHandler } from "./widgets/changeInsight
 import { modifyDrillsForInsightWidgetHandler } from "./widgets/modifyDrillsForInsightWidgetHandler.js";
 import { removeDrillsForInsightWidgetHandler } from "./widgets/removeDrillsForInsightWidgetHandler.js";
 import { changeRichTextWidgetContentHandler } from "./widgets/changeRichTextWidgetContentHandler.js";
+import { addVisualizationToSwticherWidgetContentHandler } from "./widgets/addVisualizationToSwitcherWidgetHandler.js";
+import { updateVisualizationsFromSwticherWidgetContentHandler } from "./widgets/updateVisualizationsFromSwitcherWidgetHandler.js";
 import { exportInsightWidgetHandler } from "./widgets/exportInsightWidgetHandler.js";
 import { createAlertHandler } from "./alerts/createAlertHandler.js";
 import { saveAlertHandler } from "./alerts/saveAlertHandler.js";
@@ -95,6 +97,7 @@ import {
     setFilterViewAsDefaultHandler,
     reloadFilterViewsHandler,
 } from "./filterContext/filterViewHandler.js";
+import { changeInsightWidgetIgnoreCrossFilteringHandler } from "./widgets/changeInsightWidgetIgnoreCrossFilteringHandler.js";
 
 function* notImplementedCommand(ctx: DashboardContext, cmd: IDashboardCommand): SagaIterator<void> {
     yield dispatchDashboardEvent(commandRejected(ctx, cmd.correlationId));
@@ -162,6 +165,8 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS": changeInsightWidgetFilterSettingsHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_PROPERTIES": changeInsightWidgetVisPropertiesHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_CONFIGURATION": changeInsightWidgetVisConfigurationHandler,
+    "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_IGNORE_CROSS_FILTERING":
+        changeInsightWidgetIgnoreCrossFilteringHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_INSIGHT": changeInsightWidgetInsightHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS": modifyDrillsForInsightWidgetHandler,
     "GDC.DASH/CMD.ATTRIBUTE_HIERARCHY_MODIFIED": attributeHierarchyModifiedHandler,
@@ -172,6 +177,10 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH": refreshInsightWidgetHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT": exportInsightWidgetHandler,
     "GDC.DASH/CMD.RICH_TEXT_WIDGET.CHANGE_CONTENT": changeRichTextWidgetContentHandler,
+    "GDC.DASH/CMD.VISUALIZATION_SWITCHER_WIDGET.ADD_VISUALIZATION":
+        addVisualizationToSwticherWidgetContentHandler,
+    "GDC.DASH/CMD.VISUALIZATION_SWITCHER_WIDGET.UPDATE_VISUALIZATIONS":
+        updateVisualizationsFromSwticherWidgetContentHandler,
     "GDC.DASH/CMD.ALERT.CREATE": createAlertHandler,
     "GDC.DASH/CMD.ALERT.SAVE": saveAlertHandler,
     "GDC.DASH/CMD.SCHEDULED_EMAIL.CREATE": createScheduledEmailHandler,

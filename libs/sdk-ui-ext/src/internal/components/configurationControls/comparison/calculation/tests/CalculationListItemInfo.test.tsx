@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import React from "react";
 import { describe, it, expect } from "vitest";
 import { render } from "@testing-library/react";
@@ -28,7 +28,7 @@ describe("CalculationListItemInfo", () => {
         [
             CalculateAs.CHANGE,
             "Change",
-            "Calculates the relative change between primary and secondary measure values.",
+            "Calculates the relative change between primary and secondary metric values.",
             "Formula",
             "(Primary - Secondary) / Secondary",
             "Example",
@@ -37,7 +37,7 @@ describe("CalculationListItemInfo", () => {
         [
             CalculateAs.CHANGE_DIFFERENCE,
             "Change (difference)",
-            "Calculates both the relative change and absolute difference between primary and secondary measure values.",
+            "Calculates both the relative change and absolute difference between primary and secondary metric values.",
             "Formula (relative change)",
             "(Primary - Secondary) / Secondary",
             "Formula (absolute difference)",
@@ -48,7 +48,7 @@ describe("CalculationListItemInfo", () => {
         [
             CalculateAs.RATIO,
             "Ratio",
-            "Quantifies the share of the primary measure value in the secondary measure value.",
+            "Quantifies the share of the primary metric value in the secondary metric value.",
             "Formula",
             "Primary / Secondary",
             "Example",
@@ -57,7 +57,7 @@ describe("CalculationListItemInfo", () => {
         [
             CalculateAs.DIFFERENCE,
             "Difference",
-            "Calculates the absolute difference between primary and secondary measure values.",
+            "Calculates the absolute difference between primary and secondary metric values.",
             "Formula",
             "Primary - Secondary",
             "Example",

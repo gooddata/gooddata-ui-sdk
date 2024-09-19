@@ -29,6 +29,7 @@ import {
     selectOriginalFilterContextFilters,
     useDashboardSelector,
 } from "../../../../model/index.js";
+import compact from "lodash/compact.js";
 
 export interface IAttachmentFilterInfo {
     id: string;
@@ -104,7 +105,7 @@ export const useAttachmentDashboardFilters = ({
         attributeFiltersModeMap,
     );
 
-    const filtersToDisplayInfo = useFiltersNamings(filtersToDisplay);
+    const filtersToDisplayInfo = compact(useFiltersNamings(filtersToDisplay));
 
     return {
         areFiltersChanged,

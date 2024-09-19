@@ -1,3 +1,4 @@
 // (C) 2024 GoodData Corporation
 
-export { AddButton, IAddButtonProps } from "./AddButton.js";
+export type { IAddButtonProps } from "./AddButton.js";
+export { AddButton } from "./AddButton.js";

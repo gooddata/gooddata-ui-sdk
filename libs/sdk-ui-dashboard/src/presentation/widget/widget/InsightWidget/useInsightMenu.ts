@@ -4,19 +4,26 @@ import { useCallback, useMemo, useState, Dispatch, SetStateAction } from "react"
 import { useIntl } from "react-intl";
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 
-import { selectExecutionResultByRef, useDashboardSelector } from "../../../../model/index.js";
+import {
+    selectCanCreateAutomation,
+    selectExecutionResultByRef,
+    useDashboardSelector,
+} from "../../../../model/index.js";
 
 import { isDataError } from "../../../../_staging/errors/errorPredicates.js";
 import { useDashboardCustomizationsContext } from "../../../dashboardContexts/index.js";
-import { getDefaultInsightMenuItems, IInsightMenuItem } from "../../insightMenu/index.js";
+import {
+    getDefaultInsightMenuItems,
+    IInsightMenuItem,
+    AlertingDisabledReason,
+    SchedulingDisabledReason,
+} from "../../insightMenu/index.js";
 
 type UseInsightMenuConfig = {
     insight: IInsight;
     widget: IInsightWidget;
     exportCSVEnabled: boolean;
     exportXLSXEnabled: boolean;
-    scheduleExportEnabled: boolean;
-    scheduleExportManagementEnabled: boolean;
     onExportCSV: () => void;
     onExportXLSX: () => void;
     onScheduleExport: () => void;
@@ -25,6 +32,10 @@ type UseInsightMenuConfig = {
     isScheduleExportManagementVisible: boolean;
     isAlertingVisible: boolean;
     alertingDisabled: boolean;
+    scheduleExportDisabled: boolean;
+    scheduleExportManagementDisabled: boolean;
+    scheduleExportDisabledReason?: SchedulingDisabledReason;
+    alertingDisabledReason?: AlertingDisabledReason;
 };
 
 export const useInsightMenu = (
@@ -52,8 +63,6 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
     const {
         exportCSVEnabled,
         exportXLSXEnabled,
-        scheduleExportEnabled,
-        scheduleExportManagementEnabled,
         onExportCSV,
         onExportXLSX,
         onScheduleExport,
@@ -62,17 +71,16 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
         isScheduleExportManagementVisible,
         isAlertingVisible,
         alertingDisabled,
+        scheduleExportDisabled,
+        scheduleExportManagementDisabled,
+        scheduleExportDisabledReason,
+        alertingDisabledReason,
         widget,
     } = config;
 
     const intl = useIntl();
     const execution = useDashboardSelector(selectExecutionResultByRef(widget.ref));
-
-    //NOTE: Check if widget has localIdentifier, if not that is probably widget from old dashboard
-    // and we should not allow to schedule export because we need localIdentifier to create schedule
-    const noLocalIdentifier = !widget.localIdentifier;
-    const scheduleExportDisabled = !scheduleExportEnabled || noLocalIdentifier;
-    const scheduleExportManagementDisabled = !scheduleExportManagementEnabled;
+    const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
 
     return useMemo<IInsightMenuItem[]>(() => {
         return getDefaultInsightMenuItems(intl, {
@@ -80,11 +88,7 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
             exportXLSXDisabled: !exportXLSXEnabled,
             scheduleExportManagementDisabled,
             scheduleExportDisabled,
-            scheduleExportDisabledReason: scheduleExportDisabled
-                ? noLocalIdentifier
-                    ? "oldWidget"
-                    : "incompatibleWidget"
-                : undefined,
+            scheduleExportDisabledReason,
             onExportCSV: () => {
                 setIsMenuOpen(false);
                 onExportCSV();
@@ -106,6 +110,8 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
             isDataError: isDataError(execution?.error),
             isAlertingVisible,
             alertingDisabled,
+            alertingDisabledReason,
+            canCreateAutomation,
         });
     }, [
         intl,
@@ -113,7 +119,6 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
         exportXLSXEnabled,
         scheduleExportManagementDisabled,
         scheduleExportDisabled,
-        noLocalIdentifier,
         isScheduleExportVisible,
         isScheduleExportManagementVisible,
         execution?.error,
@@ -124,5 +129,8 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
         onExportXLSX,
         onScheduleExport,
         onScheduleManagementExport,
+        scheduleExportDisabledReason,
+        alertingDisabledReason,
+        canCreateAutomation,
     ]);
 }

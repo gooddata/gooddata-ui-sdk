@@ -70,9 +70,12 @@ export const convertMeasure = (measure: MeasureItem): IMeasure => {
             measure: {
                 localIdentifier: measure.localIdentifier,
                 definition: {
-                    popMeasureDefinition: {
+                    previousPeriodMeasure: {
                         measureIdentifier: objRefToString(definition.previousPeriodMeasure.measureIdentifier),
-                        popAttribute: toObjRef(definition.previousPeriodMeasure.dateDatasets[0].dataset),
+                        dateDataSets: definition.previousPeriodMeasure.dateDatasets.map((attr) => ({
+                            dataSet: toObjRef(attr.dataset),
+                            periodsAgo: attr.periodsAgo,
+                        })),
                     },
                 },
             },
@@ -82,12 +85,9 @@ export const convertMeasure = (measure: MeasureItem): IMeasure => {
             measure: {
                 localIdentifier: measure.localIdentifier,
                 definition: {
-                    previousPeriodMeasure: {
+                    popMeasureDefinition: {
                         measureIdentifier: objRefToString(definition.overPeriodMeasure.measureIdentifier),
-                        dateDataSets: definition.overPeriodMeasure.dateAttributes.map((attr) => ({
-                            dataSet: toObjRef(attr.attribute),
-                            periodsAgo: attr.periodsAgo,
-                        })),
+                        popAttribute: toObjRef(definition.overPeriodMeasure.dateAttributes[0].attribute),
                     },
                 },
             },

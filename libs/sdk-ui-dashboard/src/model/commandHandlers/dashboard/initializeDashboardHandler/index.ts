@@ -4,11 +4,7 @@ import { all, call, put, SagaReturnType } from "redux-saga/effects";
 import { InitializeDashboard } from "../../../commands/dashboard.js";
 import { DashboardInitialized, dashboardInitialized } from "../../../events/dashboard.js";
 import { loadingActions } from "../../../store/loading/index.js";
-import {
-    DashboardContext,
-    PrivateDashboardContext,
-    ResolvedDashboardConfig,
-} from "../../../types/commonTypes.js";
+import { DashboardContext, PrivateDashboardContext } from "../../../types/commonTypes.js";
 import { IDashboardWithReferences, walkLayout } from "@gooddata/sdk-backend-spi";
 import { resolveDashboardConfig } from "./resolveDashboardConfig.js";
 import { configActions } from "../../../store/config/index.js";
@@ -38,8 +34,6 @@ import {
     isInsightWidget,
     ObjRef,
     serializeObjRef,
-    isFilterContext,
-    IDashboardFilterView,
 } from "@gooddata/sdk-model";
 import {
     actionsToInitializeExistingDashboard,
@@ -69,6 +63,7 @@ import { filterViewsActions } from "../../../store/filterViews/index.js";
 import { loadFilterViews } from "./loadFilterViews.js";
 import { smtpsActions } from "../../../store/smtps/index.js";
 import { loadOrganizationSmtps } from "../common/loadOrganizationSmtps.js";
+import { applyDefaultFilterView } from "../common/filterViews.js";
 
 async function loadDashboardFromBackend(
     ctx: DashboardContext,
@@ -140,27 +135,6 @@ async function loadInsightsForPersistedDashboard(
     return Promise.all(uniqueRefs.map((ref) => backend.workspace(workspace).insights().getInsight(ref)));
 }
 
-function applyDefaultFilterView(
-    dashboard: IDashboard,
-    filterViews: IDashboardFilterView[],
-    config: ResolvedDashboardConfig,
-): IDashboard {
-    // find first default filter view (in case metadata are not consistent and there are more than one)
-    const defaultFilterView = filterViews.find((view) => view.isDefault);
-    const areFilterViewsEnabled = config.settings.enableDashboardFilterViews;
-    return areFilterViewsEnabled && defaultFilterView && isFilterContext(dashboard.filterContext)
-        ? {
-              ...dashboard,
-              filterContext: {
-                  ...dashboard.filterContext,
-                  // Temporary solution for the feature evaluation.
-                  // Possibly some more clever merging or some redux action should be used instead.
-                  filters: defaultFilterView.filterContext.filters,
-              },
-          }
-        : dashboard;
-}
-
 type DashboardLoadResult = {
     batch: BatchAction;
     event: DashboardInitialized;
@@ -229,7 +203,7 @@ function* loadExistingDashboard(
         references: { insights },
     } = dashboardWithReferences;
 
-    const dashboard = applyDefaultFilterView(loadedDashboard, filterViews, config);
+    const dashboard = applyDefaultFilterView(loadedDashboard, filterViews, config.settings);
 
     const effectiveDateFilterConfig: DateFilterMergeResult = yield call(
         mergeDateFilterConfigWithOverrides,

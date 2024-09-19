@@ -15,4 +15,5 @@ module.exports = {
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "error",
     },
+    parserOptions: { tsconfigRootDir: __dirname, project: "tsconfig.json" },
 };

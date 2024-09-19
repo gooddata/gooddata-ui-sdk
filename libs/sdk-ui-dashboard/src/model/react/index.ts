@@ -5,11 +5,12 @@ export {
     useDashboardSelector,
     ReactDashboardContext,
 } from "./DashboardStoreProvider.js";
-export { IDashboardEventsContext, useDashboardEventsContext } from "./DashboardEventsContext.js";
-export { useDashboardCommandProcessing, CommandProcessingStatus } from "./useDashboardCommandProcessing.js";
+export type { IDashboardEventsContext } from "./DashboardEventsContext.js";
+export { useDashboardEventsContext } from "./DashboardEventsContext.js";
+export type { CommandProcessingStatus } from "./useDashboardCommandProcessing.js";
+export { useDashboardCommandProcessing } from "./useDashboardCommandProcessing.js";
 export { useDashboardEventDispatch } from "./useDashboardEventDispatch.js";
-export {
-    useDashboardQueryProcessing,
+export type {
     QueryProcessingStatus,
     QueryProcessingErrorState,
     QueryProcessingPendingState,
@@ -19,11 +20,14 @@ export {
     QueryProcessingSuccessState,
     UseDashboardQueryProcessingResult,
 } from "./useDashboardQueryProcessing.js";
+export { useDashboardQueryProcessing } from "./useDashboardQueryProcessing.js";
 export { useDashboardUserInteraction } from "./useDashboardUserInteraction.js";
-export { useDashboardAsyncRender, UseDashboardAsyncRender } from "./useDashboardAsyncRender.js";
-export { IDashboardStoreProviderProps } from "./types.js";
+export type { UseDashboardAsyncRender } from "./useDashboardAsyncRender.js";
+export { useDashboardAsyncRender } from "./useDashboardAsyncRender.js";
+export type { IDashboardStoreProviderProps } from "./types.js";
 export { useDispatchDashboardCommand } from "./useDispatchDashboardCommand.js";
 export { useWidgetExecutionsHandler } from "./useWidgetExecutionsHandler.js";
 export { useDashboardScheduledEmails, DEFAULT_MAX_AUTOMATIONS } from "./useDashboardScheduledEmails.js";
 export { useDashboardAlerts } from "./useDashboardAlerts.js";
-export { useWidgetSelection, IUseWidgetSelectionResult } from "./useWidgetSelection.js";
+export type { IUseWidgetSelectionResult } from "./useWidgetSelection.js";
+export { useWidgetSelection } from "./useWidgetSelection.js";

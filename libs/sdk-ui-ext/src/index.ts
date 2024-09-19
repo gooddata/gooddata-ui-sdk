@@ -13,7 +13,7 @@
 
 import { IInsight, IInsightDefinition, ISettings } from "@gooddata/sdk-model";
 import { IDrillEvent } from "@gooddata/sdk-ui";
-export { ChartInlineVisualizationType } from "@gooddata/sdk-ui-charts";
+export type { ChartInlineVisualizationType } from "@gooddata/sdk-ui-charts";
 import {
     fluidLayoutDescriptor,
     FullVisualizationCatalog,
@@ -26,23 +26,26 @@ export { clearInsightViewCaches } from "./dataLoaders/index.js";
 export * from "./insightView/index.js";
 
 // exported for sdk-ui-dashboard
-export {
+export type {
     IDrillDownDefinition,
-    isDrillDownDefinition,
     IVisualizationSizeInfo,
     IVisualizationDefaultSizeInfo,
     IVisualizationMeta,
     ISizeInfo,
     ISizeInfoDefault,
-    fluidLayoutDescriptor,
-    FluidLayoutDescriptor,
     IFluidLayoutDescriptor,
     ILayoutDescriptor,
     LayoutType,
+    PluggableVisualizationErrorType,
+    IEmbedInsightDialogProps,
+} from "./internal/index.js";
+export {
+    isDrillDownDefinition,
+    fluidLayoutDescriptor,
+    FluidLayoutDescriptor,
     isEmptyAfm,
     EmptyAfmSdkError,
     PluggableVisualizationErrorCodes,
-    PluggableVisualizationErrorType,
     addIntersectionFiltersToInsight,
     DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT_PX,
     INSIGHT_WIDGET_SIZE_INFO_DEFAULT,
@@ -53,10 +56,10 @@ export {
     RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT,
     VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_DEFAULT,
     EmbedInsightDialog,
-    IEmbedInsightDialogProps,
 } from "./internal/index.js";
 
-export { provideCreateRoot, CreateRoot, Root } from "./internal/createRootProvider.js";
+export type { CreateRoot, Root } from "./internal/createRootProvider.js";
+export { provideCreateRoot } from "./internal/createRootProvider.js";
 
 // below functions are exported only for sdk-ui-dashboard use to avoid exporting the whole FullVisualizationCatalog
 /**
@@ -90,10 +93,15 @@ export function getInsightWithAppliedDrillDown(
 /**
  * @internal
  */
-export function getInsightVisualizationMeta(insight: IInsightDefinition): IVisualizationMeta {
-    return FullVisualizationCatalog.forInsight(insight).getMeta();
+export function getInsightVisualizationMeta(
+    insight: IInsightDefinition,
+    settings?: ISettings,
+): IVisualizationMeta {
+    return FullVisualizationCatalog.forInsight(insight).getMeta(settings);
 }
 
 export * from "./internal/components/dialogs/userManagementDialogs/index.js";
 
 export * from "./internal/components/attributeHierarchies/index.js";
+
+export * from "./internal/components/pluggableVisualizations/alerts.js";

@@ -80,7 +80,9 @@ export const AssignedWorkspacePermissionValue: {
     readonly EXPORT: "EXPORT";
     readonly EXPORT_TABULAR: "EXPORT_TABULAR";
     readonly EXPORT_PDF: "EXPORT_PDF";
+    readonly CREATE_FILTER_VIEW: "CREATE_FILTER_VIEW";
     readonly VIEW: "VIEW";
+    readonly CREATE_AUTOMATION: "CREATE_AUTOMATION";
 };
 
 // @public
@@ -1745,6 +1747,7 @@ export type IFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttri
 // @public
 export interface IFilterableWidget {
     readonly dateDataSet?: ObjRef;
+    readonly ignoreCrossFiltering?: boolean;
     readonly ignoreDashboardFilters: IDashboardFilterReference[];
 }
 
@@ -2163,6 +2166,11 @@ export class InlineMeasureBuilder extends MeasureBuilderBase<IInlineMeasureDefin
 export type InlineMeasureBuilderInput = string | IMeasure<IInlineMeasureDefinition>;
 
 // @alpha (undocumented)
+export interface INotificationChannelConfiguration {
+    dashboardUrl?: string;
+}
+
+// @alpha (undocumented)
 export interface INotificationChannelDefinitionObject extends INotificationChannelMetadataObject {
 }
 
@@ -2173,6 +2181,7 @@ export interface INotificationChannelMetadataObject extends INotificationChannel
 
 // @alpha (undocumented)
 export interface INotificationChannelMetadataObjectBase {
+    allowedRecipients?: NotificationChannelAllowedRecipient;
     destination: IWebhookDestination | ISmtpDestination;
     triggers: INotificationChannelTrigger[];
     type: "webhook" | "smtp";
@@ -2936,6 +2945,7 @@ export interface ISettings {
     enableADMultipleDateFilters?: boolean;
     enableAIFunctions?: boolean;
     enableAlerting?: boolean;
+    enableAlertingRollout?: boolean;
     enableAlternativeDisplayFormSelection?: boolean;
     enableAnalyticalDashboardPermissions?: boolean;
     // (undocumented)
@@ -2960,14 +2970,14 @@ export interface ISettings {
     // (undocumented)
     enableDataSection?: boolean;
     enableDescriptions?: boolean;
-    enableDrillDownIntersectionIgnoredAttributes?: boolean;
     enableDrilledInsightExport?: boolean;
-    enableDrillIntersectionIgnoredAttributes?: boolean;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     enableEmbedButtonInAD?: boolean;
     enableEmbedButtonInKD?: boolean;
+    enableHeadlineExport?: boolean;
     enableHidingOfDataPoints?: boolean;
     enableHidingOfWidgetTitle?: boolean;
+    enableIgnoreCrossFiltering?: boolean;
     enableInsightExportScheduling?: boolean;
     enableInsightToReport?: boolean;
     enableInvalidValuesInAttributeFilter?: boolean;
@@ -3167,6 +3177,8 @@ export function isMetadataObject(obj: unknown): obj is IMetadataObject;
 
 // @alpha (undocumented)
 export interface ISmtpDefinition extends INotificationChannelMetadataObjectBase {
+    // (undocumented)
+    configuration: INotificationChannelConfiguration;
     // (undocumented)
     destination: ISmtpDestination;
     // (undocumented)
@@ -3722,7 +3734,6 @@ export interface IVisualizationSwitcherWidget extends IVisualizationSwitcherWidg
 
 // @public (undocumented)
 export interface IVisualizationSwitcherWidgetBase extends IAnalyticalWidget {
-    readonly selectedVisualizationIdentifier: string;
     // (undocumented)
     readonly type: "visualizationSwitcher";
     readonly visualizations: IInsightWidget[];
@@ -3734,6 +3745,8 @@ export interface IVisualizationSwitcherWidgetDefinition extends IVisualizationSw
 
 // @alpha (undocumented)
 export interface IWebhookDefinition extends INotificationChannelMetadataObjectBase {
+    // (undocumented)
+    configuration: INotificationChannelConfiguration;
     // (undocumented)
     destination: IWebhookDestination;
     // (undocumented)
@@ -4149,8 +4162,11 @@ export function newTwoDimensional(dim1Input: DimensionItem[], dim2Input: Dimensi
 // @internal
 export function newVirtualArithmeticMeasure(measuresOrIds: ReadonlyArray<MeasureOrLocalId>, operator: ArithmeticMeasureOperator, modifications?: MeasureModifications<VirtualArithmeticMeasureBuilder>): IMeasure<IVirtualArithmeticMeasureDefinition>;
 
+// @alpha (undocumented)
+export type NotificationChannelAllowedRecipient = "CREATOR" | "INTERNAL";
+
 // @public
-export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy" | "exportDefinition" | "automation";
+export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy" | "exportDefinition" | "automation" | "filterView";
 
 // @public
 export type ObjRef = UriRef | IdentifierRef;
@@ -4420,6 +4436,14 @@ export type WorkspacePermission =
 /**
 * Whether the current user has permissions to export as pdf documents.
 */
-| "canExportPdf";
+| "canExportPdf"
+/**
+* Whether the current user has permissions to create a dashboard filter view.
+*/
+| "canCreateFilterView"
+/**
+* Whether the current user has permissions to create an automation.
+*/
+| "canCreateAutomation";
 
 ```

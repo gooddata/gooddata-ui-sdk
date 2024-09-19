@@ -34,7 +34,6 @@ import {
     selectAccessibleDashboards,
     selectCatalogAttributeDisplayFormsById,
     selectDashboardTitle,
-    selectEnableDrillDownIntersectionIgnoredAttributes,
     selectInsightsMap,
     selectWidgetByRef,
     useDashboardSelector,
@@ -59,9 +58,6 @@ export const DrillSelectDropdown: React.FC<DrillSelectDropdownProps> = (props) =
     const insights = useDashboardSelector(selectInsightsMap);
     const widget = useDashboardSelector(selectWidgetByRef(drillEvent.widgetRef));
     const attributeDisplayForms = useDashboardSelector(selectCatalogAttributeDisplayFormsById);
-    const enableDrillDownIntersectionIgnoredAttributes = useDashboardSelector(
-        selectEnableDrillDownIntersectionIgnoredAttributes,
-    );
 
     const drillSelectItems = useMemo(
         () =>
@@ -72,7 +68,6 @@ export const DrillSelectDropdown: React.FC<DrillSelectDropdownProps> = (props) =
                 dashboardList,
                 dashboardTitle,
                 attributeDisplayForms,
-                enableDrillDownIntersectionIgnoredAttributes,
                 intl,
                 widget: widget as IWidget,
             }),
@@ -85,7 +80,6 @@ export const DrillSelectDropdown: React.FC<DrillSelectDropdownProps> = (props) =
             intl,
             widget,
             attributeDisplayForms,
-            enableDrillDownIntersectionIgnoredAttributes,
         ],
     );
 
@@ -119,7 +113,6 @@ export const createDrillSelectItems = ({
     intl,
     widget,
     attributeDisplayForms,
-    enableDrillDownIntersectionIgnoredAttributes,
 }: {
     drillDefinitions: DashboardDrillDefinition[];
     drillEvent: IDrillEvent;
@@ -129,7 +122,6 @@ export const createDrillSelectItems = ({
     intl: IntlShape;
     widget?: IWidget;
     attributeDisplayForms: Record<string, IAttributeDisplayFormMetadataObject>;
-    enableDrillDownIntersectionIgnoredAttributes: boolean;
 }): DrillSelectItem[] => {
     const totalDrillToUrls = getTotalDrillToUrlCount(drillDefinitions);
 
@@ -144,16 +136,11 @@ export const createDrillSelectItems = ({
             const drillTargetIdentifier = isIdentifierRef(drillDefinition.target)
                 ? drillDefinition.target.identifier
                 : drillDefinition.target.uri;
-            const drillTargetDisplayForm = enableDrillDownIntersectionIgnoredAttributes
-                ? attributeDisplayForms[drillTargetIdentifier]
-                : undefined;
-
+            const drillTargetDisplayForm = attributeDisplayForms[drillTargetIdentifier];
             const title = getDrillDownTitle(
                 drillDefinition,
                 drillEvent,
-                enableDrillDownIntersectionIgnoredAttributes
-                    ? widget?.drillDownIntersectionIgnoredAttributes
-                    : undefined,
+                widget?.drillDownIntersectionIgnoredAttributes,
                 drillTargetDisplayForm,
             );
 

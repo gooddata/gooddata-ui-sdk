@@ -12,7 +12,7 @@ export { dummyBackend, dummyBackendEmptyData, dummyDataView };
 
 export { recordedBackend, defaultRecordedBackendCapabilities } from "./recordedBackend/index.js";
 
-export {
+export type {
     RecordingIndex,
     ExecutionRecording,
     InsightRecording,
@@ -34,6 +34,7 @@ export {
     AttributeElementsFilteringPredicate,
 } from "./recordedBackend/types.js";
 
+export type { NamedDataView } from "./recordedBackend/execution.js";
 export {
     recordedDataView,
     recordedDataViews,
@@ -42,7 +43,6 @@ export {
     DataViewAll,
     dataViewWindow,
     DataViewFirstPage,
-    NamedDataView,
 } from "./recordedBackend/execution.js";
 
 export {
@@ -51,14 +51,14 @@ export {
     newMeasureLimitingItem,
 } from "./recordedBackend/elementsUtils.js";
 
-export { CompositeBackendPart, compositeBackend } from "./compositeBackend/index.js";
+export type { CompositeBackendPart } from "./compositeBackend/index.js";
+export { compositeBackend } from "./compositeBackend/index.js";
 
-export {
+export type {
     LegacyExecutionRecording,
-    legacyRecordedBackend,
-    legacyRecordedDataView,
     LegacyRecordingIndex,
     LegacyWorkspaceRecordings,
 } from "./legacyRecordedBackend/index.js";
+export { legacyRecordedBackend, legacyRecordedDataView } from "./legacyRecordedBackend/index.js";
 
 export { objRefsToStringKey } from "./recordedBackend/utils.js";

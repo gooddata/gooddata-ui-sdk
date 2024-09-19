@@ -9,13 +9,23 @@ import { InsightAlerts } from "../../insight/configuration/InsightAlerts.js";
 /**
  * @internal
  */
+export type SchedulingDisabledReason = "incompatibleWidget" | "oldWidget" | "disabledOnInsight";
+
+/**
+ * @internal
+ */
+export type AlertingDisabledReason = "noDestinations" | "oldWidget" | "disabledOnInsight";
+
+/**
+ * @internal
+ */
 export function getDefaultInsightMenuItems(
     intl: IntlShape,
     config: {
         exportXLSXDisabled: boolean;
         exportCSVDisabled: boolean;
         scheduleExportDisabled: boolean;
-        scheduleExportDisabledReason: "incompatibleWidget" | "oldWidget" | undefined;
+        scheduleExportDisabledReason?: SchedulingDisabledReason;
         scheduleExportManagementDisabled: boolean;
         onExportXLSX: () => void;
         onExportCSV: () => void;
@@ -26,6 +36,8 @@ export function getDefaultInsightMenuItems(
         isDataError: boolean;
         isAlertingVisible: boolean;
         alertingDisabled: boolean;
+        alertingDisabledReason?: AlertingDisabledReason;
+        canCreateAutomation: boolean;
     },
 ): IInsightMenuItem[] {
     const {
@@ -43,6 +55,8 @@ export function getDefaultInsightMenuItems(
         isDataError,
         isAlertingVisible,
         alertingDisabled,
+        alertingDisabledReason,
+        canCreateAutomation,
     } = config;
 
     const defaultWidgetTooltip = isDataError
@@ -51,9 +65,28 @@ export function getDefaultInsightMenuItems(
     const oldWidgetTooltip = intl.formatMessage({
         id: "options.menu.unsupported.oldWidget",
     });
+    const alertingOldWidgetTooltip = intl.formatMessage({
+        id: "options.menu.unsupported.alertingOldWidget",
+    });
     const incompatibleWidgetTooltip = intl.formatMessage({
         id: "options.menu.unsupported.incompatibleWidget",
     });
+    const schedulingForInsightNotEnabledTooltip = intl.formatMessage({
+        id: "options.menu.unsupported.schedulingForInsightNotEnabled",
+    });
+    const alertingForInsightNotEnabledTooltip = intl.formatMessage({
+        id: "options.menu.unsupported.alertingForInsightNotEnabled",
+    });
+    const noDestinationsTooltip = intl.formatMessage(
+        { id: "insightAlert.noDestination.tooltip" },
+        {
+            a: (chunk: React.ReactNode) => (
+                <a href="/settings" rel="noopener noreferrer" target="_blank">
+                    {chunk}
+                </a>
+            ),
+        },
+    );
 
     const isSomeScheduleVisible =
         (isScheduleExportVisible && !scheduleExportDisabled) ||
@@ -92,18 +125,14 @@ export function getDefaultInsightMenuItems(
             className: "s-options-menu-alerting",
             SubmenuComponent: InsightAlerts,
             renderSubmenuComponentOnly: true,
-            tooltip: alertingDisabled
-                ? intl.formatMessage(
-                      { id: "insightAlert.noDestination.tooltip" },
-                      {
-                          a: (chunk: React.ReactNode) => (
-                              <a href="/settings" rel="noopener noreferrer" target="_blank">
-                                  {chunk}
-                              </a>
-                          ),
-                      },
-                  )
-                : undefined,
+            tooltip:
+                alertingDisabledReason === "oldWidget"
+                    ? alertingOldWidgetTooltip
+                    : alertingDisabledReason === "noDestinations"
+                    ? noDestinationsTooltip
+                    : alertingDisabledReason === "disabledOnInsight"
+                    ? alertingForInsightNotEnabledTooltip
+                    : undefined,
             disabled: alertingDisabled,
         },
         isSomeScheduleVisible && {
@@ -121,6 +150,8 @@ export function getDefaultInsightMenuItems(
                     ? incompatibleWidgetTooltip
                     : scheduleExportDisabledReason === "oldWidget"
                     ? oldWidgetTooltip
+                    : scheduleExportDisabledReason === "disabledOnInsight"
+                    ? schedulingForInsightNotEnabledTooltip
                     : undefined,
             icon: "gd-icon-clock",
             className: "s-options-menu-schedule-export",
@@ -128,11 +159,13 @@ export function getDefaultInsightMenuItems(
         isScheduleExportManagementVisible && {
             type: "button",
             itemId: "ScheduleExportEdit",
-            itemName: intl.formatMessage({ id: "widget.options.menu.scheduleExport.edit" }),
+            itemName: canCreateAutomation
+                ? intl.formatMessage({ id: "widget.options.menu.scheduleExport.edit" })
+                : intl.formatMessage({ id: "options.menu.schedule.email.edit.noCreatePermissions" }),
             onClick: onScheduleManagementExport,
             disabled: scheduleExportManagementDisabled,
             tooltip: defaultWidgetTooltip,
-            icon: "gd-icon-list",
+            icon: canCreateAutomation ? "gd-icon-list" : "gd-icon-clock",
             className: "s-options-menu-schedule-export-edit",
         },
     ];

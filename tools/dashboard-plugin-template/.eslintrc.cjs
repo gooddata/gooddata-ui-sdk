@@ -12,7 +12,7 @@ module.exports = {
     rules: {
         "import/no-unassigned-import": "off",
     },
-    parserOptions: { tsconfigRootDir: __dirname },
+    parserOptions: { tsconfigRootDir: __dirname, project: "tsconfig.json" },
     ignorePatterns: [
         "webpack.config.cjs",
         "scripts/refresh-md.js",

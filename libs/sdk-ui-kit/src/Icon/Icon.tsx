@@ -26,6 +26,8 @@ import { AttributeFilter } from "./icons/AttributeFilter.js";
 import { LegendMenu } from "./icons/LegendMenu.js";
 import { ArrowDown } from "./icons/ArrowDown.js";
 import { ArrowUp } from "./icons/ArrowUp.js";
+import { ArrowLeft } from "./icons/ArrowLeft.js";
+import { ArrowRight } from "./icons/ArrowRight.js";
 import { Attribute } from "./icons/Attribute.js";
 import { Close } from "./icons/Close.js";
 import { Dataset } from "./icons/Dataset.js";
@@ -95,6 +97,7 @@ import { Ellipsis } from "./icons/Ellipsis.js";
 import { Warning } from "./icons/Warning.js";
 import { Email } from "./icons/Email.js";
 import { VisualizationSwitcher } from "./icons/VisualizationSwitcher.js";
+import { Trash } from "./icons/Trash.js";
 
 /**
  * @internal
@@ -125,6 +128,8 @@ export const Icon: Record<string, React.FC<IIconProps>> = {
     LegendMenu,
     ArrowDown,
     ArrowUp,
+    ArrowLeft,
+    ArrowRight,
     Attribute,
     Close,
     Dataset,
@@ -193,6 +198,7 @@ export const Icon: Record<string, React.FC<IIconProps>> = {
     Ellipsis,
     Warning,
     Email,
+    Trash,
 };
 
-export { IRowsIconProps, IColumnsIconProps };
+export type { IRowsIconProps, IColumnsIconProps };

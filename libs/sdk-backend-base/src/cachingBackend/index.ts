@@ -801,7 +801,6 @@ class CachedAutomationsQueryFactory extends DecoratedAutomationsQuery {
     private settings: {
         size: number;
         page: number;
-        all: boolean;
         author: string | null;
         dashboard: string | null;
         filter: { title?: string };
@@ -809,9 +808,8 @@ class CachedAutomationsQueryFactory extends DecoratedAutomationsQuery {
         type: AutomationType | undefined;
         totalCount: number | undefined;
     } = {
-        size: 50,
+        size: 100,
         page: 0,
-        all: false,
         author: null,
         dashboard: null,
         filter: {},
@@ -828,22 +826,14 @@ class CachedAutomationsQueryFactory extends DecoratedAutomationsQuery {
         super(decorated);
     }
 
-    withAll(): IAutomationsQuery {
-        this.settings.all = true;
-        super.withAll();
-        return this;
-    }
-
     withSize(size: number): IAutomationsQuery {
         this.settings.size = size;
-        this.settings.all = false;
         super.withSize(size);
         return this;
     }
 
     withPage(page: number): IAutomationsQuery {
         this.settings.page = page;
-        this.settings.all = false;
         super.withPage(page);
         return this;
     }
@@ -896,6 +886,11 @@ class CachedAutomationsQueryFactory extends DecoratedAutomationsQuery {
         }
 
         return result;
+    }
+
+    async queryAll(): Promise<IAutomationMetadataObject[]> {
+        const firstQuery = await this.query();
+        return firstQuery.all();
     }
 }
 

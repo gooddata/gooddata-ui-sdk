@@ -1,4 +1,6 @@
 // (C) 2024 GoodData Corporation
 
-export { RichText, IRichTextProps } from "./RichText.js";
-export { RichTextWithTooltip, IRichTextWithTooltipProps } from "./RichTextWithTooltip.js";
+export type { IRichTextProps } from "./RichText.js";
+export { RichText } from "./RichText.js";
+export type { IRichTextWithTooltipProps } from "./RichTextWithTooltip.js";
+export { RichTextWithTooltip } from "./RichTextWithTooltip.js";

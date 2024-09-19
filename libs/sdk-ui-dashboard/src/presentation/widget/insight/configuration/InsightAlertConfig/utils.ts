@@ -8,6 +8,7 @@ import {
     IAutomationAlert,
     IAutomationAlertComparisonCondition,
     IAutomationAlertCondition,
+    IAutomationAlertExecutionDefinition,
     IAutomationAlertRelativeCondition,
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
@@ -26,7 +27,7 @@ import {
     measureAlias,
     measureTitle,
 } from "@gooddata/sdk-model";
-import { BucketNames, VisType } from "@gooddata/sdk-ui";
+import { BucketNames } from "@gooddata/sdk-ui";
 import { IntlShape } from "react-intl";
 
 import { AlertMetric, AlertMetricComparatorType } from "../../types.js";
@@ -38,7 +39,7 @@ import { messages } from "./messages.js";
  * @internal
  */
 export const getMeasureTitle = (measure: IMeasure) => {
-    return measure ? measureTitle(measure) ?? measureAlias(measure) : undefined;
+    return measure ? measureAlias(measure) ?? measureTitle(measure) : undefined;
 };
 
 export const getOperatorTitle = (intl: IntlShape, alert?: IAutomationAlert) => {
@@ -149,6 +150,8 @@ type InsightType =
     | "repeater";
 
 export const getSupportedInsightMeasuresByInsight = (insight: IInsight | null | undefined): AlertMetric[] => {
+    const insightType = insight ? (insightVisualizationType(insight) as InsightType) : null;
+
     const allMetrics = collectAllMetric(insight);
 
     const simpleMetrics = allMetrics
@@ -163,65 +166,50 @@ export const getSupportedInsightMeasuresByInsight = (insight: IInsight | null | 
         })
         .filter(Boolean) as AlertMetric[];
 
-    const previousPeriodMetrics = allMetrics.filter((measure) =>
-        isPreviousPeriodMeasure(measure),
-    ) as IMeasure<IPreviousPeriodMeasureDefinition>[];
-    previousPeriodMetrics.forEach((measure) => {
-        const found = simpleMetrics.find(
-            (simpleMetric) =>
-                simpleMetric.measure.measure.localIdentifier ===
-                measure.measure.definition.previousPeriodMeasure.measureIdentifier,
-        );
-        if (found) {
-            found.comparators.push({
-                measure,
-                comparator: AlertMetricComparatorType.PreviousPeriod,
-            });
-        }
-    });
+    //NOTE: For now only headline insight support previous period and same period previous year,
+    // if we want to support other insight types, just add the logic here or remove the condition at
+    // all to support all insight types
+    if (insightType === "headline") {
+        const previousPeriodMetrics = allMetrics.filter((measure) =>
+            isPreviousPeriodMeasure(measure),
+        ) as IMeasure<IPreviousPeriodMeasureDefinition>[];
+        previousPeriodMetrics.forEach((measure) => {
+            const found = simpleMetrics.find(
+                (simpleMetric) =>
+                    simpleMetric.measure.measure.localIdentifier ===
+                    measure.measure.definition.previousPeriodMeasure.measureIdentifier,
+            );
+            if (found) {
+                found.comparators.push({
+                    measure,
+                    comparator: AlertMetricComparatorType.PreviousPeriod,
+                });
+            }
+        });
 
-    const popMetrics = allMetrics.filter((measure) =>
-        isPoPMeasure(measure),
-    ) as IMeasure<IPoPMeasureDefinition>[];
-    popMetrics.forEach((measure) => {
-        const found = simpleMetrics.find(
-            (simpleMetric) =>
-                simpleMetric.measure.measure.localIdentifier ===
-                measure.measure.definition.popMeasureDefinition.measureIdentifier,
-        );
-        if (found) {
-            found.comparators.push({
-                measure,
-                comparator: AlertMetricComparatorType.SamePeriodPreviousYear,
-            });
-        }
-    });
+        const popMetrics = allMetrics.filter((measure) =>
+            isPoPMeasure(measure),
+        ) as IMeasure<IPoPMeasureDefinition>[];
+        popMetrics.forEach((measure) => {
+            const found = simpleMetrics.find(
+                (simpleMetric) =>
+                    simpleMetric.measure.measure.localIdentifier ===
+                    measure.measure.definition.popMeasureDefinition.measureIdentifier,
+            );
+            if (found) {
+                found.comparators.push({
+                    measure,
+                    comparator: AlertMetricComparatorType.SamePeriodPreviousYear,
+                });
+            }
+        });
+    }
 
     return simpleMetrics;
 };
 
-export const isSupportedInsightVisType = (insight: IInsight | null | undefined): boolean => {
-    const type = insight ? (insightVisualizationType(insight) as VisType) : null;
-
-    switch (type) {
-        case "headline":
-        case "bar":
-        case "column":
-        case "line":
-        case "area":
-        case "combo2":
-        case "scatter":
-        case "bubble":
-        case "repeater":
-            return true;
-        default:
-            return false;
-    }
-};
-
 function collectAllMetric(insight: IInsight | null | undefined) {
-    const visualizationUrl = insight?.insight.visualizationUrl;
-    const insightType = visualizationUrl?.split(":")[1] as InsightType;
+    const insightType = insight ? (insightVisualizationType(insight) as InsightType) : null;
 
     switch (insightType) {
         case "headline":
@@ -351,80 +339,89 @@ export function transformAlertByMetric(
 
     if (alert.alert?.condition.type === "relative" && periodMeasure) {
         const cond = transformToRelativeCondition(alert.alert!.condition);
+        const condition = {
+            ...cond,
+            measure: {
+                ...cond.measure,
+                left: measure.measure.measure.localIdentifier,
+                right: periodMeasure.measure.measure.localIdentifier ?? "",
+            },
+        } as IAutomationAlertRelativeCondition;
         return {
             ...alert,
             title: getMeasureTitle(measure.measure) ?? "",
             alert: {
                 ...alert.alert!,
-                condition: {
-                    ...cond,
-                    measure: {
-                        ...cond.measure,
-                        left: measure.measure.measure.localIdentifier,
-                        right: periodMeasure?.measure.measure.localIdentifier ?? "",
-                    },
-                } as IAutomationAlertRelativeCondition,
-                execution: {
-                    ...alert.alert!.execution,
-                    measures: [measure.measure, periodMeasure.measure],
-                },
+                condition,
+                execution: transformAlertExecutionByMetric(condition, alert.alert!.execution, measure),
             },
         };
     }
 
     const cond = transformToComparisonCondition(alert.alert!.condition);
+    const condition = {
+        ...cond,
+        left: measure.measure.measure.localIdentifier,
+    } as IAutomationAlertComparisonCondition;
     return {
         ...alert,
         title: getMeasureTitle(measure.measure) ?? "",
         alert: {
             ...alert.alert!,
-            condition: {
-                ...cond,
-                left: measure.measure.measure.localIdentifier,
-            } as IAutomationAlertComparisonCondition,
-            execution: {
-                ...alert.alert!.execution,
-                measures: [measure.measure],
-            },
+            condition,
+            execution: transformAlertExecutionByMetric(condition, alert.alert!.execution, measure),
         },
     };
 }
 
 export function transformAlertByComparisonOperator(
     alert: IAutomationMetadataObject,
+    measure: AlertMetric,
     comparisonOperator: IAlertComparisonOperator,
 ): IAutomationMetadataObject {
     const cond = transformToComparisonCondition(alert.alert!.condition);
+    const condition = {
+        ...cond,
+        operator: comparisonOperator,
+    };
     return {
         ...alert,
         alert: {
             ...alert.alert!,
-            condition: {
-                ...cond,
-                operator: comparisonOperator,
-            },
+            condition,
+            execution: transformAlertExecutionByMetric(condition, alert.alert!.execution, measure),
         },
     };
 }
 
 export function transformAlertByRelativeOperator(
     alert: IAutomationMetadataObject,
+    measure: AlertMetric,
     relativeOperator: IAlertRelativeOperator,
     arithmeticOperator: IAlertRelativeArithmeticOperator,
 ): IAutomationMetadataObject {
+    const periodMeasure = measure.comparators.find(
+        (c) =>
+            c.comparator === AlertMetricComparatorType.PreviousPeriod ||
+            c.comparator === AlertMetricComparatorType.SamePeriodPreviousYear,
+    );
+
     const cond = transformToRelativeCondition(alert.alert!.condition);
+    const condition = {
+        ...cond,
+        measure: {
+            ...cond.measure,
+            operator: arithmeticOperator,
+            right: periodMeasure?.measure.measure.localIdentifier ?? "",
+        },
+        operator: relativeOperator,
+    };
     return {
         ...alert,
         alert: {
             ...alert.alert!,
-            condition: {
-                ...cond,
-                measure: {
-                    ...cond.measure,
-                    operator: arithmeticOperator,
-                },
-                operator: relativeOperator,
-            },
+            condition,
+            execution: transformAlertExecutionByMetric(condition, alert.alert!.execution, measure),
         },
     };
 }
@@ -510,5 +507,29 @@ function transformToRelativeCondition(
         operator: condition.operator,
         measure: condition.measure,
         threshold: condition.threshold,
+    };
+}
+
+function transformAlertExecutionByMetric(
+    condition: IAutomationAlertCondition,
+    execution: IAutomationAlertExecutionDefinition,
+    measure: AlertMetric,
+): IAutomationAlertExecutionDefinition {
+    const periodMeasure = measure.comparators.find(
+        (c) =>
+            c.comparator === AlertMetricComparatorType.PreviousPeriod ||
+            c.comparator === AlertMetricComparatorType.SamePeriodPreviousYear,
+    );
+
+    if (condition.type === "relative" && periodMeasure) {
+        return {
+            ...execution,
+            measures: [measure.measure, periodMeasure.measure],
+        };
+    }
+
+    return {
+        ...execution,
+        measures: [measure.measure],
     };
 }

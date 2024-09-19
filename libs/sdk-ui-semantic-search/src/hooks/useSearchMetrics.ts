@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { GenAISemanticSearchType, ISemanticSearchResultItem } from "@gooddata/sdk-model";
+import { ListItem } from "../types.js";
 
 /**
  * A conclusion of a single search action by the user.
@@ -13,6 +14,10 @@ export type ISearchMetrics = {
      * The last search term.
      */
     lastSearchTerm: string;
+    /**
+     * Scores of the last search results.
+     */
+    lastSearchScores: number[];
     /**
      * Number of times the search feed was triggered.
      */
@@ -27,14 +32,22 @@ export type ISearchMetrics = {
      * Null means the search was closed without selecting an item.
      */
     selectedItemType: GenAISemanticSearchType | null;
+    /**
+     * The score of the selected item, if any.
+     */
+    selectedItemScore: number | null;
+    /**
+     * The index of the selected item, if any.
+     */
+    selectedItemIndex: number | null;
 };
 
 export type UseSearchMetricsCallback = (metricsData: ISearchMetrics) => void;
 
 export type UseSearchMetricsReturn = {
     onCloseMetrics: () => void;
-    onSelectMetrics: (item: ISemanticSearchResultItem) => void;
-    onSearchMetrics: (searchTerm: string) => void;
+    onSelectMetrics: (item: ISemanticSearchResultItem, index?: number) => void;
+    onSearchMetrics: (searchTerm: string, searchResults?: ListItem<ISemanticSearchResultItem>[]) => void;
 };
 
 type ISearchMetricsRef = {
@@ -45,9 +58,12 @@ type ISearchMetricsRef = {
 const defaultOnSearchMetrics: ISearchMetricsRef = {
     state: {
         lastSearchTerm: "",
+        lastSearchScores: [],
         searchCount: 0,
         selectedItemTitle: null,
         selectedItemType: null,
+        selectedItemScore: null,
+        selectedItemIndex: null,
     },
     reported: false,
 };
@@ -76,6 +92,8 @@ export const useSearchMetrics = (callback?: UseSearchMetricsCallback): UseSearch
             ...searchMetricsRef.current.state,
             selectedItemTitle: null,
             selectedItemType: null,
+            selectedItemScore: null,
+            selectedItemIndex: null,
         });
 
         // Flush the metrics data
@@ -84,12 +102,14 @@ export const useSearchMetrics = (callback?: UseSearchMetricsCallback): UseSearch
 
     // Callback will be called when the user selects an item
     const onSelectMetrics = React.useCallback(
-        (item: ISemanticSearchResultItem) => {
+        (item: ISemanticSearchResultItem, index?: number) => {
             // Report the metrics
             callback?.({
                 ...searchMetricsRef.current.state,
                 selectedItemTitle: item.title,
                 selectedItemType: item.type,
+                selectedItemScore: item.score,
+                selectedItemIndex: index ?? null,
             });
             // Mark the metrics as reported
             // Do not flush the metric data, because user might select several items in sequence
@@ -100,24 +120,28 @@ export const useSearchMetrics = (callback?: UseSearchMetricsCallback): UseSearch
     );
 
     // Callback will be called when the user types in the search input
-    const onSearchMetrics = React.useCallback((searchTerm: string) => {
-        const { searchCount, lastSearchTerm } = searchMetricsRef.current.state;
+    const onSearchMetrics = React.useCallback(
+        (searchTerm: string, searchResults?: ListItem<ISemanticSearchResultItem>[]) => {
+            const { searchCount, lastSearchTerm } = searchMetricsRef.current.state;
 
-        // We do not want to count the case when the user continues to type the same search term
-        const shouldIncrement = !(lastSearchTerm === ""
-            ? searchTerm === ""
-            : searchTerm.startsWith(lastSearchTerm));
+            // We do not want to count the case when the user continues to type the same search term
+            const shouldIncrement = !(lastSearchTerm === ""
+                ? searchTerm === ""
+                : searchTerm.startsWith(lastSearchTerm));
 
-        // Also reset reported flag to catch type -> select -> type -> close sequence
-        searchMetricsRef.current = {
-            state: {
-                ...searchMetricsRef.current.state,
-                lastSearchTerm: searchTerm,
-                searchCount: shouldIncrement ? searchCount + 1 : searchCount,
-            },
-            reported: false,
-        };
-    }, []);
+            // Also reset reported flag to catch type -> select -> type -> close sequence
+            searchMetricsRef.current = {
+                state: {
+                    ...searchMetricsRef.current.state,
+                    lastSearchTerm: searchTerm,
+                    lastSearchScores: searchResults?.map((result) => result.item.score) ?? [],
+                    searchCount: shouldIncrement ? searchCount + 1 : searchCount,
+                },
+                reported: false,
+            };
+        },
+        [],
+    );
 
     return {
         onCloseMetrics,

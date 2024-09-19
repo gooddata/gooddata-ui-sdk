@@ -15,6 +15,7 @@ import {
     selectEntitlementUnlimitedAutomations,
     useDashboardSelector,
     DEFAULT_MAX_AUTOMATIONS,
+    selectCanCreateAutomation,
 } from "../../../model/index.js";
 import { messages } from "../../../locales.js";
 import { isMobileView } from "../DefaultScheduledEmailDialog/utils/responsive.js";
@@ -37,6 +38,7 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
     const [scheduledEmailToDelete, setScheduledEmailToDelete] = useState<IAutomationMetadataObject | null>(
         null,
     );
+    const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
     const currentUser = useDashboardSelector(selectCurrentUser);
     const maxAutomationsEntitlement = useDashboardSelector(selectEntitlementMaxAutomations);
     const unlimitedAutomationsEntitlement = useDashboardSelector(selectEntitlementUnlimitedAutomations);
@@ -82,16 +84,18 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
                         <Typography tagName="h3">
                             <FormattedMessage id={messages.scheduleManagementListTitle.id!} />
                         </Typography>
-                        <AddButton
-                            onClick={onAdd}
-                            isDisabled={isLoadingScheduleData || maxAutomationsReached}
-                            title={<FormattedMessage id={messages.scheduleManagementCreate.id!} />}
-                            tooltip={
-                                maxAutomationsReached ? (
-                                    <FormattedMessage id={messages.scheduleManagementCreateTooMany.id!} />
-                                ) : undefined
-                            }
-                        />
+                        {canCreateAutomation ? (
+                            <AddButton
+                                onClick={onAdd}
+                                isDisabled={isLoadingScheduleData || maxAutomationsReached}
+                                title={<FormattedMessage id={messages.scheduleManagementCreate.id!} />}
+                                tooltip={
+                                    maxAutomationsReached ? (
+                                        <FormattedMessage id={messages.scheduleManagementCreateTooMany.id!} />
+                                    ) : undefined
+                                }
+                            />
+                        ) : null}
                     </div>
                     <ScheduledEmails
                         onDelete={handleScheduleDelete}

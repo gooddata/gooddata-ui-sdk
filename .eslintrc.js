@@ -1,7 +1,7 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 module.exports = {
     root: true,
-    ignorePatterns: ["**/dist/**/*.*"],
+    ignorePatterns: ["**/dist/**/*.*", "**/tests", "**/test"],
     rules: {
         "no-duplicate-imports": "error",
         "@typescript-eslint/array-type": "off",
@@ -14,6 +14,10 @@ module.exports = {
                 },
                 extendDefaults: true,
             },
+        ],
+        "@typescript-eslint/consistent-type-exports": [
+            "error",
+            { fixMixedExportsWithInlineTypeSpecifier: false },
         ],
         "@typescript-eslint/explicit-member-accessibility": "off",
         "@typescript-eslint/interface-name-prefix": "off",

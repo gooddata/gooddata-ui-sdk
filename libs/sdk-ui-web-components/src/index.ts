@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 /**
  * This module registers GoodData's Custom Elements for Dashboard and Insight embedding.
  *
@@ -30,4 +30,5 @@ window.customElements.define("gd-dashboard", Dashboard);
 
 // Expose context accessors in case user wants to configure custom
 //  authentication flow
-export { getContext, setContext, CustomElementContext };
+export type { CustomElementContext };
+export { getContext, setContext };

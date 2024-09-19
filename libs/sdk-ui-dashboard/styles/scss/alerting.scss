@@ -54,6 +54,14 @@
     }
 }
 
+.gd-alerts-list__empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 10px;
+    color: kit-variables.$gd-color-state-blank;
+}
+
 //
 // Alerts list item
 //
@@ -211,6 +219,17 @@
     align-items: center;
     justify-content: flex-end;
     border-top: 1px solid kit-variables.$gd-border-color;
+}
+
+//
+// No measures alert
+//
+.gd-no-measures-alert {
+    .gd-message {
+        margin: 10px;
+        font-size: 12px;
+        line-height: 17px;
+    }
 }
 
 //

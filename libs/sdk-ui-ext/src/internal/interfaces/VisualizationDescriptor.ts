@@ -204,5 +204,5 @@ export interface IVisualizationDescriptor {
     /**
      * Gets additional metadata related to the particular visualization.
      */
-    getMeta(): IVisualizationMeta;
+    getMeta(settings?: ISettings): IVisualizationMeta;
 }

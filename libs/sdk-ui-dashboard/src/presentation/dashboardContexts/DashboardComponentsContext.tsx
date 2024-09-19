@@ -35,6 +35,7 @@ import {
     KpiComponentProvider,
     RichTextComponentProvider,
     VisualizationSwitcherComponentProvider,
+    VisualizationSwitcherToolbarComponentProvider,
     WidgetComponentProvider,
 } from "./types.js";
 import { CustomSidebarComponent } from "../dashboard/DashboardSidebar/types.js";
@@ -62,6 +63,7 @@ interface IDashboardComponentsContext {
     InsightMenuButtonComponentProvider: InsightMenuButtonComponentProvider;
     InsightMenuComponentProvider: InsightMenuComponentProvider;
     InsightMenuTitleComponentProvider: InsightMenuTitleComponentProvider;
+    VisualizationSwitcherToolbarComponentProvider: VisualizationSwitcherToolbarComponentProvider;
     KpiComponentProvider: KpiComponentProvider;
     RichTextComponentProvider: RichTextComponentProvider;
     VisualizationSwitcherComponentProvider: VisualizationSwitcherComponentProvider;
@@ -141,6 +143,9 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     EmptyLayoutDropZoneBodyComponent: ThrowMissingComponentError("EmptyLayoutDropZoneBodyComponent"),
     SaveButtonComponent: ThrowMissingComponentError("SaveButtonComponent"),
     DashboardContentComponentProvider: ThrowMissingComponentError("DashboardContentComponentProvider"),
+    VisualizationSwitcherToolbarComponentProvider: ThrowMissingComponentError(
+        "VisualizationSwitcherToolbarComponentProvider",
+    ),
 });
 DashboardComponentsContext.displayName = "DashboardComponentsContext";
 

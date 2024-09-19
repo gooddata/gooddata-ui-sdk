@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 /**
  * This package provides the components that you can use to visualize location-based data.
@@ -10,7 +10,7 @@
  * @packageDocumentation
  */
 
-export {
+export type {
     IGeoConfig,
     IGeoLngLat,
     IGeoPushpinChartBaseProps,
@@ -40,7 +40,7 @@ export {
     enrichMapboxToken,
 } from "./core/MapboxTokenProvider.js";
 export { CoreGeoChart } from "./core/CoreGeoChart.js";
-export {
+export type {
     IGeoChartInnerProps,
     ICoreGeoChartProps,
     IGeoChartInnerOptions,

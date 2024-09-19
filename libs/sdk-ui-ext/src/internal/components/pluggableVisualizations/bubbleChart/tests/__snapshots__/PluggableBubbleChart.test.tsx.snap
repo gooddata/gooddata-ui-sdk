@@ -116,7 +116,7 @@ exports[`PluggableBubbleChart > should return reference point with secondary met
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
         "subtitle": "X-axis",
-        "title": "Measure",
+        "title": "Metric",
       },
       "secondary_measures": {
         "accepts": [
@@ -134,7 +134,7 @@ exports[`PluggableBubbleChart > should return reference point with secondary met
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
         "subtitle": "Y-axis",
-        "title": "Measure",
+        "title": "Metric",
       },
       "tertiary_measures": {
         "accepts": [
@@ -152,7 +152,7 @@ exports[`PluggableBubbleChart > should return reference point with secondary met
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
         "subtitle": "Size",
-        "title": "Measure",
+        "title": "Metric",
       },
       "view": {
         "accepts": [
@@ -269,7 +269,7 @@ exports[`PluggableBubbleChart > should return reference point with three measure
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
         "subtitle": "X-axis",
-        "title": "Measure",
+        "title": "Metric",
       },
       "secondary_measures": {
         "accepts": [
@@ -287,7 +287,7 @@ exports[`PluggableBubbleChart > should return reference point with three measure
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
         "subtitle": "Y-axis",
-        "title": "Measure",
+        "title": "Metric",
       },
       "tertiary_measures": {
         "accepts": [
@@ -305,7 +305,7 @@ exports[`PluggableBubbleChart > should return reference point with three measure
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
         "subtitle": "Size",
-        "title": "Measure",
+        "title": "Metric",
       },
       "view": {
         "accepts": [
@@ -455,7 +455,7 @@ exports[`PluggableBubbleChart > should return reference point with three measure
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
         "subtitle": "X-axis",
-        "title": "Measure",
+        "title": "Metric",
       },
       "secondary_measures": {
         "accepts": [
@@ -473,7 +473,7 @@ exports[`PluggableBubbleChart > should return reference point with three measure
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
         "subtitle": "Y-axis",
-        "title": "Measure",
+        "title": "Metric",
       },
       "tertiary_measures": {
         "accepts": [
@@ -491,7 +491,7 @@ exports[`PluggableBubbleChart > should return reference point with three measure
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
         "subtitle": "Size",
-        "title": "Measure",
+        "title": "Metric",
       },
       "view": {
         "accepts": [

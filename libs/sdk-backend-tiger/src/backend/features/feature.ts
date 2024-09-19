@@ -291,6 +291,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableAlertingRollout,
+            "enableAlertingRollout",
+            "BOOLEAN",
+            FeatureFlagsValues.enableAlertingRollout,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableScheduling,
             "enableScheduling",
             "BOOLEAN",
@@ -452,20 +459,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableDrillIntersectionIgnoredAttributes,
-            "enableDrillIntersectionIgnoredAttributes",
-            "BOOLEAN",
-            FeatureFlagsValues.enableDrillIntersectionIgnoredAttributes,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableDrillDownIntersectionIgnoredAttributes,
-            "enableDrillDownIntersectionIgnoredAttributes",
-            "BOOLEAN",
-            FeatureFlagsValues.enableDrillDownIntersectionIgnoredAttributes,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableDashboardFilterViews,
             "enableDashboardFilterViews",
             "BOOLEAN",
@@ -491,6 +484,20 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableKDVisualizationSwitcher",
             "BOOLEAN",
             FeatureFlagsValues.enableKDVisualizationSwitcher,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableIgnoreCrossFiltering,
+            "enableIgnoreCrossFiltering",
+            "BOOLEAN",
+            FeatureFlagsValues.enableIgnoreCrossFiltering,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableHeadlineExport,
+            "enableHeadlineExport",
+            "BOOLEAN",
+            FeatureFlagsValues.enableHeadlineExport,
         ),
     };
 }

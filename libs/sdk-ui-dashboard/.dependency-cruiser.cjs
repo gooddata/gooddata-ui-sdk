@@ -199,6 +199,7 @@ options = {
             "src/presentation/dashboardList",
             "src/presentation/localization",
             "src/presentation/presentationComponents",
+            "src/presentation/scheduledEmail/*",
             "src/types.ts",
             "src/widgets",
         ]),

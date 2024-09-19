@@ -32,16 +32,17 @@ export const useEditAlert = ({ alert, onCreate, onUpdate }: IUseEditAlertProps) 
         setUpdatedAlert((alert) => transformAlertByMetric(alert, measure));
     };
 
-    const changeComparisonOperator = (comparisonOperator: IAlertComparisonOperator) => {
-        setUpdatedAlert((alert) => transformAlertByComparisonOperator(alert, comparisonOperator));
+    const changeComparisonOperator = (measure: AlertMetric, comparisonOperator: IAlertComparisonOperator) => {
+        setUpdatedAlert((alert) => transformAlertByComparisonOperator(alert, measure, comparisonOperator));
     };
 
     const changeRelativeOperator = (
+        measure: AlertMetric,
         relativeOperator: IAlertRelativeOperator,
         arithmeticOperator: IAlertRelativeArithmeticOperator,
     ) => {
         setUpdatedAlert((alert) =>
-            transformAlertByRelativeOperator(alert, relativeOperator, arithmeticOperator),
+            transformAlertByRelativeOperator(alert, measure, relativeOperator, arithmeticOperator),
         );
     };
 

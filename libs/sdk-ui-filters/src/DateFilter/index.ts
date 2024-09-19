@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { granularityIntlCodes } from "./constants/i18n.js";
 import { defaultDateFilterOptions } from "./constants/config.js";
 import { validateFilterOption } from "./validation/OptionValidation.js";
@@ -12,7 +12,7 @@ import {
     formatAbsoluteDateRange,
     formatRelativeDateRange,
 } from "./utils/Translations/DateFilterTitle.js";
-export {
+export type {
     IDateAndMessageTranslator,
     IDateTranslator,
     IMessageTranslator,
@@ -45,18 +45,16 @@ const DateFilterHelpers = {
 };
 
 // This is 1:1 reexported by root index.ts and is part of SDK's public API
-export {
-    DateFilter,
+export type {
     IDateFilterCallbackProps,
     IDateFilterOwnProps,
     IDateFilterProps,
     IDateFilterState,
-    DateFilterHelpers,
     IDateFilterStatePropsIntersection,
-    filterVisibleDateFilterOptions,
 };
+export { DateFilter, DateFilterHelpers, filterVisibleDateFilterOptions };
 
-export {
+export type {
     AbsoluteDateFilterOption,
     DateFilterOption,
     DateFilterRelativeOptionGroup,
@@ -65,14 +63,16 @@ export {
     IDateFilterAbsoluteFormErrors,
     IDateFilterRelativeFormErrors,
     RelativeDateFilterOption,
-    isAbsoluteDateFilterOption,
-    isRelativeDateFilterOption,
     IUiAbsoluteDateFilterForm,
     IUiRelativeDateFilterForm,
+} from "./interfaces/index.js";
+export {
+    isAbsoluteDateFilterOption,
+    isRelativeDateFilterOption,
     isUiRelativeDateFilterForm,
 } from "./interfaces/index.js";
 
-export { IFilterConfigurationProps } from "./DateFilterBody/types.js";
+export type { IFilterConfigurationProps } from "./DateFilterBody/types.js";
 export { defaultDateFilterOptions } from "./constants/config.js";
-export { GranularityIntlKey } from "./constants/i18n.js";
+export type { GranularityIntlKey } from "./constants/i18n.js";
 export { getLocalizedIcuDateFormatPattern } from "./utils/FormattingUtils.js";

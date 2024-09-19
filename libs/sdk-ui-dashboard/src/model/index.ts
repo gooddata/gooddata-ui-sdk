@@ -12,7 +12,7 @@
  * -  all commands, their types & command factories
  */
 
-export {
+export type {
     DashboardContext,
     ObjectAvailabilityConfig,
     DashboardConfig,
@@ -33,18 +33,11 @@ export {
     Users,
     Automations,
 } from "./types/commonTypes.js";
-export {
+export type {
     ICustomWidget,
     ICustomWidgetDefinition,
     ICustomWidgetBase,
-    newCustomWidget,
-    newDashboardItem,
-    newDashboardSection,
-    isCustomWidgetDefinition,
-    isCustomWidgetBase,
-    isCustomWidget,
     ExtendedDashboardItem,
-    extendedWidgetDebugStr,
     ExtendedDashboardWidget,
     DashboardItemDefinition,
     StashedDashboardItemsId,
@@ -54,6 +47,15 @@ export {
     ExtendedDashboardItemTypes,
 } from "./types/layoutTypes.js";
 export {
+    newCustomWidget,
+    newDashboardItem,
+    newDashboardSection,
+    isCustomWidgetDefinition,
+    isCustomWidgetBase,
+    isCustomWidget,
+    extendedWidgetDebugStr,
+} from "./types/layoutTypes.js";
+export type {
     FilterOp,
     FilterOpReplaceAll,
     FilterOpUnignoreAttributeFilter,
@@ -69,18 +71,17 @@ export {
     WidgetDescription,
 } from "./types/widgetTypes.js";
 
-export {
+export type {
     BrokenAlertType,
     IBrokenAlertFilterBasicInfo,
     BrokenAlertDateFilterInfo,
     BrokenAlertAttributeFilterInfo,
-    isBrokenAlertDateFilterInfo,
-    isBrokenAlertAttributeFilterInfo,
 } from "./types/alertTypes.js";
+export { isBrokenAlertDateFilterInfo, isBrokenAlertAttributeFilterInfo } from "./types/alertTypes.js";
 
-export { ICsvExportConfig, IExportConfig, IXlsxExportConfig } from "./types/exportTypes.js";
+export type { ICsvExportConfig, IExportConfig, IXlsxExportConfig } from "./types/exportTypes.js";
 
-export {
+export type {
     IConnectingAttribute,
     IDashboardAttributeFilterDisplayForms,
     IDashboardAttributeFilterParentItem,
@@ -88,10 +89,11 @@ export {
     IUseAttributeElements,
 } from "./types/attributeFilterTypes.js";
 
-export { IDashboardDependentDateFilter, isDashboardDependentDateFilter } from "./types/dateFilterTypes.js";
+export type { IDashboardDependentDateFilter } from "./types/dateFilterTypes.js";
+export { isDashboardDependentDateFilter } from "./types/dateFilterTypes.js";
 
 export { DRILL_TO_URL_PLACEHOLDER } from "./types/drillTypes.js";
-export {
+export type {
     DashboardAccessibilityLimitation,
     IInaccessibleDashboard,
 } from "./types/inaccessibleDashboardTypes.js";
@@ -106,15 +108,17 @@ export { selectDateDatasetsForInsight } from "./queryServices/queryInsightDateDa
 export { selectInsightAttributesMeta } from "./queryServices/queryInsightAttributesMeta.js";
 export { selectDateDatasetsForMeasure } from "./queryServices/queryMeasureDateDatasets.js";
 
-export {
+export type {
     DashboardEventHandler,
     DashboardEventHandlerFn,
+    DashboardEventEvalFn,
+} from "./eventHandlers/eventHandler.js";
+export {
     anyEventHandler,
     anyDashboardEventHandler,
     singleEventTypeHandler,
     commandStartedEventHandler,
     commandFailedEventHandler,
-    DashboardEventEvalFn,
 } from "./eventHandlers/eventHandler.js";
 export { newDrillToSameDashboardHandler } from "./eventHandlers/drillToSameDashboardHandlerFactory.js";
 export * from "./headlessDashboard/index.js";

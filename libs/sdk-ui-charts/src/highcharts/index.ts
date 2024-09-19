@@ -1,8 +1,9 @@
 // (C) 2019-2024 GoodData Corporation
 import { Chart, IChartProps } from "./adapter/Chart.js";
 import { ChartTransformation, IChartTransformationProps } from "./ChartTransformation.js";
-export { IHighChartsRendererProps } from "./adapter/HighChartsRenderer.js";
-export { Chart, ChartTransformation, IChartTransformationProps, IChartProps };
+export type { IHighChartsRendererProps } from "./adapter/HighChartsRenderer.js";
+export type { IChartTransformationProps, IChartProps };
+export { Chart, ChartTransformation };
 
 /*
  * TODO: none of the stuff below this comment should be exported from highcharts. it should either be hidden

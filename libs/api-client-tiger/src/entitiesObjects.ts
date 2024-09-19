@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { AxiosInstance } from "axios";
 import {
     EntitiesApiFactory,
@@ -9,12 +9,11 @@ import {
 
 import { BaseAPI, RequestArgs } from "./generated/metadata-json-api/base.js";
 
-export {
-    Configuration as MetadataConfiguration,
+export type {
     ConfigurationParameters as MetadataConfigurationParameters,
-    BaseAPI as MetadataBaseApi,
     RequestArgs as MetadataRequestArgs,
 };
+export { Configuration as MetadataConfiguration, BaseAPI as MetadataBaseApi };
 
 export const tigerEntitiesObjectsClientFactory = (axios: AxiosInstance): EntitiesApiInterface =>
     EntitiesApiFactory(undefined, "", axios);

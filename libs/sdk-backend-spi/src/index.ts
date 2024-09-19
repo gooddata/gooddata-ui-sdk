@@ -8,25 +8,25 @@
  *
  * @packageDocumentation
  */
-export {
+export type {
     IAnalyticalBackend,
     IAnalyticalBackendConfig,
     AnalyticalBackendFactory,
-    prepareExecution,
     IAuthenticationContext,
     IAuthenticatedPrincipal,
     IAuthenticationProvider,
     NotAuthenticatedHandler,
 } from "./backend/index.js";
+export { prepareExecution } from "./backend/index.js";
 
-export { IBackendCapabilities } from "./backend/capabilities.js";
+export type { IBackendCapabilities } from "./backend/capabilities.js";
 
-export { IUserSettings, IWorkspaceSettings, IUserWorkspaceSettings } from "./common/settings.js";
+export type { IUserSettings, IWorkspaceSettings, IUserWorkspaceSettings } from "./common/settings.js";
 
-export { IUserService } from "./user/index.js";
-export { IUserSettingsService } from "./user/settings/index.js";
+export type { IUserService } from "./user/index.js";
+export type { IUserSettingsService } from "./user/settings/index.js";
 
-export {
+export type {
     IExecutionFactory,
     IPreparedExecution,
     IExecutionResult,
@@ -44,11 +44,11 @@ export {
     IClusteringResult,
 } from "./workspace/execution/index.js";
 
-export { IWorkspaceSettingsService } from "./workspace/settings/index.js";
+export type { IWorkspaceSettingsService } from "./workspace/settings/index.js";
 
-export { CancelableOptions, ICancelable } from "./cancelation/index.js";
+export type { CancelableOptions, ICancelable } from "./cancelation/index.js";
 
-export {
+export type {
     IGetInsightOptions,
     IGetVisualizationClassesOptions,
     IWorkspaceInsightsService,
@@ -62,7 +62,7 @@ export {
     SupportedInsightReferenceTypes,
 } from "./workspace/insights/index.js";
 
-export {
+export type {
     ExportDefinitionOrdering,
     IExportDefinitionsQuery,
     IExportDefinitionsQueryOptions,
@@ -74,7 +74,7 @@ export {
     ExportDefinitionQuerySort,
 } from "./workspace/exportDefinitions/index.js";
 
-export {
+export type {
     IElementsQueryFactory,
     IElementsQueryResult,
     IElementsQuery,
@@ -84,18 +84,21 @@ export {
     IElementsQueryOptionsElementsByValue,
     IElementsQueryOptionsElementsByPrimaryDisplayFormValue,
     ElementsQueryOptionsElementsSpecification,
-    isElementsQueryOptionsElementsByValue,
-    isElementsQueryOptionsElementsByPrimaryDisplayFormValue,
-    isValueBasedElementsQueryOptionsElements,
     IFilterElementsQuery,
     FilterWithResolvableElements,
 } from "./workspace/attributes/elements/index.js";
+export {
+    isElementsQueryOptionsElementsByValue,
+    isElementsQueryOptionsElementsByPrimaryDisplayFormValue,
+    isValueBasedElementsQueryOptionsElements,
+} from "./workspace/attributes/elements/index.js";
 
-export { IExportConfig, IExportResult, IExportPdfConfig } from "./workspace/execution/export.js";
+export type { IExportConfig, IExportResult, IExportPdfConfig } from "./workspace/execution/export.js";
 
-export { IGenAIService, ISemanticSearchQuery, ISemanticSearchResult } from "./workspace/genAI/index.js";
+export type { IGenAIService, ISemanticSearchQuery, ISemanticSearchResult } from "./workspace/genAI/index.js";
 
-export { IWorkspaceStylingService } from "./workspace/styling/index.js";
+export type { IWorkspaceStylingService } from "./workspace/styling/index.js";
+export type { NotAuthenticatedReason, ErrorConverter, AuthenticationFlow } from "./errors/index.js";
 export {
     AnalyticalBackendError,
     NoDataError,
@@ -107,10 +110,8 @@ export {
     NotSupported,
     NotImplemented,
     NotAuthenticated,
-    NotAuthenticatedReason,
     LimitReached,
     ContractExpired,
-    ErrorConverter,
     isAnalyticalBackendError,
     isNoDataError,
     isDataTooLargeError,
@@ -122,13 +123,12 @@ export {
     isNotAuthenticated,
     isLimitReached,
     isContractExpired,
-    AuthenticationFlow,
     AnalyticalBackendErrorTypes,
 } from "./errors/index.js";
 
-export { IPagedResource } from "./common/paging.js";
+export type { IPagedResource } from "./common/paging.js";
 
-export {
+export type {
     IAnalyticalWorkspace,
     IWorkspacesQuery,
     IWorkspacesQueryFactory,
@@ -139,21 +139,21 @@ export {
     IWorkspaceDescriptorUpdate,
 } from "./workspace/index.js";
 
-export { IAttributeHierarchiesService } from "./workspace/attributeHierarchies/index.js";
+export type { IAttributeHierarchiesService } from "./workspace/attributeHierarchies/index.js";
 
-export { IWorkspacePermissionsService } from "./workspace/permissions/index.js";
+export type { IWorkspacePermissionsService } from "./workspace/permissions/index.js";
 
-export { IWorkspaceAttributesService } from "./workspace/attributes/index.js";
+export type { IWorkspaceAttributesService } from "./workspace/attributes/index.js";
 
-export {
+export type {
     IWorkspaceMeasuresService,
     IMeasureReferencing,
     IMeasureKeyDrivers,
 } from "./workspace/measures/index.js";
 
-export { IWorkspaceFactsService } from "./workspace/facts/index.js";
+export type { IWorkspaceFactsService } from "./workspace/facts/index.js";
 
-export {
+export type {
     IWorkspaceDashboardsService,
     IGetDashboardOptions,
     IGetDashboardPluginOptions,
@@ -167,25 +167,24 @@ export {
     IDashboardsQuery,
     IDashboardsQueryResult,
 } from "./workspace/dashboards/index.js";
+export type { IWidgetWithLayoutPath, LayoutPath } from "./workspace/dashboards/utils.js";
 export {
     isDashboardLayoutEmpty,
-    IWidgetWithLayoutPath,
-    LayoutPath,
     layoutWidgets,
     layoutWidgetsWithPaths,
     walkLayout,
 } from "./workspace/dashboards/utils.js";
-export {
+export type {
     IWorkspaceUsersQuery,
     IWorkspaceUsersQueryOptions,
     IWorkspaceUsersQueryResult,
 } from "./workspace/users/index.js";
-export {
+export type {
     IDateFilterConfigsQuery,
     IDateFilterConfigsQueryResult,
 } from "./workspace/dateFilterConfigs/index.js";
 
-export {
+export type {
     IWorkspaceCatalogFactory,
     IWorkspaceCatalogAvailableItemsFactory,
     IWorkspaceCatalog,
@@ -196,9 +195,9 @@ export {
     IWorkspaceCatalogMethods,
 } from "./workspace/ldm/catalog.js";
 
-export { IWorkspaceDatasetsService } from "./workspace/ldm/datasets.js";
+export type { IWorkspaceDatasetsService } from "./workspace/ldm/datasets.js";
 
-export {
+export type {
     IMeasureExpressionToken,
     IObjectExpressionToken,
     IAttributeElementExpressionToken,
@@ -207,35 +206,38 @@ export {
     IBracketExpressionToken,
 } from "./workspace/measures/measure.js";
 
-export { IOrganization, IOrganizations } from "./organization/index.js";
-export { IEntitlements } from "./entitlements/index.js";
-export { IDataSourcesService } from "./dataSources/index.js";
-export { ISecuritySettingsService, ValidationContext } from "./organization/securitySettings/index.js";
-export { IOrganizationStylingService } from "./organization/styling/index.js";
-export { IOrganizationSettingsService } from "./organization/settings/index.js";
+export type { IOrganization, IOrganizations } from "./organization/index.js";
+export type { IEntitlements } from "./entitlements/index.js";
+export type { IDataSourcesService } from "./dataSources/index.js";
+export type { ISecuritySettingsService, ValidationContext } from "./organization/securitySettings/index.js";
+export type { IOrganizationStylingService } from "./organization/styling/index.js";
+export type { IOrganizationSettingsService } from "./organization/settings/index.js";
 
-export {
+export type {
     IWorkspaceUserGroupsQuery,
     IWorkspaceUserGroupsQueryOptions,
     IWorkspaceUserGroupsQueryResult,
 } from "./workspace/userGroups/index.js";
 
-export { IWorkspaceAccessControlService } from "./workspace/accessControl/index.js";
+export type { IWorkspaceAccessControlService } from "./workspace/accessControl/index.js";
 
-export {
+export type {
     IOrganizationUserService,
     IOrganizationUsersQuery,
     IOrganizationUsersQueryResult,
     IOrganizationUserGroupsQuery,
     IOrganizationUserGroupsQueryResult,
 } from "./organization/users/index.js";
-export { IOrganizationPermissionService, IPermissionsAssignment } from "./organization/permissions/index.js";
-export { IOrganizationNotificationChannelService } from "./organization/notificationChannels/index.js";
-export { IDataFiltersService } from "./workspace/dataFilter/index.js";
+export type {
+    IOrganizationPermissionService,
+    IPermissionsAssignment,
+} from "./organization/permissions/index.js";
+export type { IOrganizationNotificationChannelService } from "./organization/notificationChannels/index.js";
+export type { IDataFiltersService } from "./workspace/dataFilter/index.js";
 
-export { IWorkspaceLogicalModelService, IDateDataset } from "./workspace/ldm/model.js";
+export type { IWorkspaceLogicalModelService, IDateDataset } from "./workspace/ldm/model.js";
 
-export {
+export type {
     IWorkspaceAutomationService,
     IGetAutomationOptions,
     IGetAutomationsOptions,

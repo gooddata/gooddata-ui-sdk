@@ -13,6 +13,8 @@ import {
     IDashboardPluginDefinition,
     IDashboardPluginLink,
     isDashboardLayout,
+    isVisualizationSwitcherWidget,
+    IInsightWidget,
 } from "@gooddata/sdk-model";
 import omit from "lodash/omit.js";
 import { cloneWithSanitizedIds } from "./IdSanitization.js";
@@ -20,7 +22,7 @@ import update from "lodash/fp/update.js";
 import { convertLayout } from "../shared/layoutConverter.js";
 import { generateWidgetLocalIdentifier } from "../../utils/widgetLocalIdentifier.js";
 
-function removeIdentifiers(widget: IDashboardWidget, useWidgetLocalIdentifiers?: boolean) {
+function removeIdentifiers(widget: IDashboardWidget, useWidgetLocalIdentifiers?: boolean): IDashboardWidget {
     /**
      * We want to keep localIdentifier which is the only widget identity stored on backend.
      * If it is nonexistent, we create a new one.
@@ -29,12 +31,21 @@ function removeIdentifiers(widget: IDashboardWidget, useWidgetLocalIdentifiers?:
         useWidgetLocalIdentifiers && !isDashboardLayout(widget)
             ? { localIdentifier: widget.localIdentifier ?? generateWidgetLocalIdentifier() }
             : {};
-    const updatedWidget = {
+    const updatedWidget: IDashboardWidget = {
         ...widget,
         ...localIdentifierObj,
+        ...(isVisualizationSwitcherWidget(widget)
+            ? {
+                  visualizations: widget.visualizations.map(
+                      (visualization) =>
+                          removeIdentifiers(visualization, useWidgetLocalIdentifiers) as IInsightWidget,
+                  ),
+              }
+            : {}),
     };
 
-    return omit(updatedWidget, ["ref", "uri", "identifier"]);
+    // omit removes mandatory props, but we do not have type for such stripped widget
+    return omit(updatedWidget, ["ref", "uri", "identifier"]) as IDashboardWidget;
 }
 
 function removeWidgetIdentifiersInLayout(

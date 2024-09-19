@@ -425,9 +425,9 @@ describe("PluggableHeadline2", () => {
 
                 expect(extendedReferencePoint.buckets).toEqual(referencePoint.buckets);
                 expect(extendedReferencePoint.uiConfig.customError).toEqual({
-                    heading: "No primary measure in your visualization",
+                    heading: "No primary metric in your visualization",
                     text:
-                        "Add a primary measure to your visualization, or switch to table.\n" +
+                        "Add a primary metric to your visualization, or switch to table.\n" +
                         "Once done, you'll be able to save it.",
                 });
             });

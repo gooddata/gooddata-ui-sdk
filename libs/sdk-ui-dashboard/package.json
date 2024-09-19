@@ -15,6 +15,7 @@
         ".": "./esm/index.js",
         "./internal": "./esm/internal.js",
         "./styles/css/*": "./styles/css/*",
+        "./styles/scss/*": "./styles/scss/*",
         "./esm/assets/*": "./esm/assets/*"
     },
     "types": "./esm/index.d.ts",

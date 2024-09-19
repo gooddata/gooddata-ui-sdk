@@ -8,7 +8,6 @@ import {
     isDashboardDateFilterWithDimension,
     serializeObjRef,
 } from "@gooddata/sdk-model";
-import { invariant } from "ts-invariant";
 import {
     DateFilterHelpers,
     getAttributeFilterSubtitle,
@@ -38,7 +37,6 @@ export function useFiltersNamings(filtersToDisplay: FilterContextItem[]) {
     const dateFormat = settings.formatLocale
         ? getLocalizedIcuDateFormatPattern(settings.formatLocale)
         : settings.responsiveUiDateFormat;
-
     const dfMap = useDashboardSelector(selectAttributeFilterDisplayFormsMap);
     const attrMap = useDashboardSelector(selectAllCatalogAttributesMap);
     const dateFiltersToDisplay = filtersToDisplay.filter(isDashboardDateFilterWithDimension);
@@ -51,9 +49,14 @@ export function useFiltersNamings(filtersToDisplay: FilterContextItem[]) {
     return extendedFiltersToDisplay.map((filter) => {
         if (isDashboardAttributeFilter(filter)) {
             const displayForm = dfMap.get(filter.attributeFilter.displayForm);
-            invariant(displayForm, "Inconsistent state in catalog");
+            if (!displayForm) {
+                return undefined;
+            }
+
             const attribute = attrMap.get(displayForm.attribute);
-            invariant(attribute, "Inconsistent state in catalog");
+            if (!attribute) {
+                return undefined;
+            }
 
             const valuesAsAttributeElements: IAttributeElement[] = getAttributeElementsItems(
                 filter.attributeFilter.attributeElements,

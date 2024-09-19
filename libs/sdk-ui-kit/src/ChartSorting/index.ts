@@ -1,17 +1,13 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 
-export {
-    ChartSortingDialog,
-    ChartSortingOwnProps,
-    ChartSortingProps,
-    ChartSortingWithIntl,
-} from "./ChartSorting.js";
+export type { ChartSortingOwnProps, ChartSortingProps } from "./ChartSorting.js";
+export { ChartSortingDialog, ChartSortingWithIntl } from "./ChartSorting.js";
 
-export {
+export type {
     IAvailableSortsGroup,
     MeasureSortSuggestion,
-    SORT_TARGET_TYPE,
     ISortTypeItem,
     IBucketItemDescriptor,
     IBucketItemDescriptors,
 } from "./types.js";
+export { SORT_TARGET_TYPE } from "./types.js";

@@ -307,7 +307,7 @@ export interface IAuthenticationProvider {
 // @public
 export interface IAutomationsQuery {
     query(): Promise<IAutomationsQueryResult>;
-    withAll(): IAutomationsQuery;
+    queryAll(): Promise<IAutomationMetadataObject[]>;
     withAuthor(author: string): IAutomationsQuery;
     withDashboard(dashboard: string): IAutomationsQuery;
     withFilter(filter: {

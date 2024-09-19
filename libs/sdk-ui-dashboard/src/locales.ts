@@ -85,6 +85,8 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     drillToUrlConfig: { id: "configurationPanel.drillConfig.drillIntoUrl" },
     disableDrillDownToolTip: { id: "configurationPanel.drillConfig.disableDrillDownTooltip" },
     disableUsedDrillDownTooltip: { id: "configurationPanel.drillConfig.alreadyUsedTooltip" },
+    respectCrossFilteringConfig: { id: "configurationPanel.respectCrossFiltering" },
+    respectCrossFilteringTooltip: { id: "configurationPanel.respectCrossFiltering.tooltip" },
     filterDropzoneTooltip: { id: "filterBar.filter.dropzone.tooltip" },
     filterDropzoneTooltipGeneric: { id: "filterBar.filter.dropzone.tooltip.generic" },
 });

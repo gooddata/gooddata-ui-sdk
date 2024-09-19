@@ -104,7 +104,7 @@ exports[`PluggableScatterPlot > should return reference point after switching fr
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
         "subtitle": "X-axis",
-        "title": "Measure",
+        "title": "Metric",
       },
       "secondary_measures": {
         "accepts": [
@@ -122,7 +122,7 @@ exports[`PluggableScatterPlot > should return reference point after switching fr
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
         "subtitle": "Y-axis",
-        "title": "Measure",
+        "title": "Metric",
       },
       "segment": {
         "accepts": [
@@ -240,7 +240,7 @@ exports[`PluggableScatterPlot > should return reference point with one secondary
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
         "subtitle": "X-axis",
-        "title": "Measure",
+        "title": "Metric",
       },
       "secondary_measures": {
         "accepts": [
@@ -258,7 +258,7 @@ exports[`PluggableScatterPlot > should return reference point with one secondary
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
         "subtitle": "Y-axis",
-        "title": "Measure",
+        "title": "Metric",
       },
       "segment": {
         "accepts": [
@@ -385,7 +385,7 @@ exports[`PluggableScatterPlot > should return reference point with primary and s
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
         "subtitle": "X-axis",
-        "title": "Measure",
+        "title": "Metric",
       },
       "secondary_measures": {
         "accepts": [
@@ -403,7 +403,7 @@ exports[`PluggableScatterPlot > should return reference point with primary and s
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
         "subtitle": "Y-axis",
-        "title": "Measure",
+        "title": "Metric",
       },
       "segment": {
         "accepts": [
@@ -521,7 +521,7 @@ exports[`PluggableScatterPlot > should return reference point with primary measu
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
         "subtitle": "X-axis",
-        "title": "Measure",
+        "title": "Metric",
       },
       "secondary_measures": {
         "accepts": [
@@ -539,7 +539,7 @@ exports[`PluggableScatterPlot > should return reference point with primary measu
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
         "subtitle": "Y-axis",
-        "title": "Measure",
+        "title": "Metric",
       },
       "segment": {
         "accepts": [
@@ -666,7 +666,7 @@ exports[`PluggableScatterPlot > should return reference point with two measures 
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
         "subtitle": "X-axis",
-        "title": "Measure",
+        "title": "Metric",
       },
       "secondary_measures": {
         "accepts": [
@@ -684,7 +684,7 @@ exports[`PluggableScatterPlot > should return reference point with two measures 
         "isShowInPercentVisible": false,
         "itemsLimit": 1,
         "subtitle": "Y-axis",
-        "title": "Measure",
+        "title": "Metric",
       },
       "segment": {
         "accepts": [

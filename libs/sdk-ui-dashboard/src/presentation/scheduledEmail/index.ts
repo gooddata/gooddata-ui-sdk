@@ -3,7 +3,7 @@ export { DefaultScheduledEmailDialog } from "./DefaultScheduledEmailDialog/index
 export { DefaultScheduledEmailManagementDialog } from "./DefaultScheduledEmailManagementDialog/index.js";
 export { ScheduledEmailDialog } from "./ScheduledEmailDialog.js";
 export { ScheduledEmailManagementDialog } from "./ScheduledEmailManagementDialog.js";
-export {
+export type {
     CustomScheduledEmailDialogComponent,
     CustomScheduledEmailManagementDialogComponent,
     IScheduledEmailDialogProps,

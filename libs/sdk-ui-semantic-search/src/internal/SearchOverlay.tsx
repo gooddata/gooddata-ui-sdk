@@ -45,6 +45,7 @@ const THRESHOLD = 0.5;
 
 export type SearchOnSelect = {
     item: ISemanticSearchResultItem;
+    index: number;
     preventDefault: () => void;
     itemUrl?: string;
     newTab?: boolean;
@@ -60,9 +61,9 @@ export type SearchOverlayProps = {
      */
     onSelect: (selection: SearchOnSelect) => void;
     /**
-     * A function called when the search request is triggered.
+     * A function called when the search request is completed.
      */
-    onSearch?: (query: string) => void;
+    onSearch?: (query: string, searchResults?: ListItem<ISemanticSearchResultItem>[]) => void;
     /**
      * An analytical backend to use for the search. Can be omitted and taken from context.
      */
@@ -134,11 +135,6 @@ const SearchOverlayCore: React.FC<
         limit,
     });
 
-    // Report metrics
-    React.useEffect(() => {
-        onSearch?.(searchTerm);
-    }, [onSearch, searchTerm]);
-
     // Results wrapped into ListItems
     const searchResultsItems: ListItem<ISemanticSearchResultItem>[] = React.useMemo(
         (): ListItem<ISemanticSearchResultItem>[] =>
@@ -186,6 +182,14 @@ const SearchOverlayCore: React.FC<
         [searchResults, effectiveWorkspace, relationships, threshold],
     );
 
+    // Report metrics
+    React.useEffect(() => {
+        onSearch?.(searchTerm, searchResultsItems);
+        // I don't want to report on search string change, only on results
+        // But I do need searchTerm, it will update with results anyway
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [onSearch, searchResultsItems]);
+
     // Search history
     const [searchHistory, setSearchHistory] = useLocalStorage(SEARCH_HISTORY_KEY, SEARCH_HISTORY_EMPTY);
     const onResultSelect = React.useCallback(
@@ -199,6 +203,7 @@ const SearchOverlayCore: React.FC<
             // Call the onSelect callback
             onSelect({
                 item: item.item,
+                index: searchResultsItems.indexOf(item),
                 preventDefault: e.preventDefault.bind(e),
                 itemUrl: item.url,
                 newTab,
@@ -218,7 +223,7 @@ const SearchOverlayCore: React.FC<
                 toggleOpen();
             }
         },
-        [searchTerm, searchHistory, onSelect, setSearchHistory, toggleOpen],
+        [searchTerm, searchHistory, onSelect, setSearchHistory, toggleOpen, searchResultsItems],
     );
     const onHistorySelect = (item: ListItem<string>) => setImmediate(item.item);
     const searchHistoryItems: ListItem<string>[] = React.useMemo(

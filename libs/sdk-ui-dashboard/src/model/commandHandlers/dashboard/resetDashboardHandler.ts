@@ -19,6 +19,8 @@ import { areObjRefsEqual } from "@gooddata/sdk-model";
 import { resolveInsights } from "../../utils/insightResolver.js";
 import { insightReferences } from "./common/insightReferences.js";
 import { selectCatalogDateDatasets } from "../../store/catalog/catalogSelectors.js";
+import { applyDefaultFilterView } from "./common/filterViews.js";
+import { selectFilterViews } from "../../store/filterViews/filterViewsReducersSelectors.js";
 
 export function* resetDashboardHandler(
     ctx: DashboardContext,
@@ -65,7 +67,15 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
          * Everything else can stay untouched.
          */
 
-        const insightRefsFromWidgets = insightReferences(persistedDashboard.layout);
+        const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
+        const filterViews: ReturnType<typeof selectFilterViews> = yield select(selectFilterViews);
+        const dashboardWithUpdatedFilterContext = applyDefaultFilterView(
+            persistedDashboard,
+            filterViews,
+            settings,
+        );
+
+        const insightRefsFromWidgets = insightReferences(dashboardWithUpdatedFilterContext.layout);
         const uniqueInsightRefsFromWidgets = uniqWith(insightRefsFromWidgets, areObjRefsEqual);
         const resolvedInsights: SagaReturnType<typeof resolveInsights> = yield call(
             resolveInsights,
@@ -73,7 +83,6 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
             uniqueInsightRefsFromWidgets,
         );
 
-        const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
         const effectiveConfig: ReturnType<typeof selectEffectiveDateFilterConfig> = yield select(
             selectEffectiveDateFilterConfig,
         );
@@ -86,7 +95,7 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
         batch = yield call(
             actionsToInitializeExistingDashboard,
             ctx,
-            persistedDashboard,
+            dashboardWithUpdatedFilterContext,
             resolvedInsightsValues,
             settings,
             effectiveConfig,

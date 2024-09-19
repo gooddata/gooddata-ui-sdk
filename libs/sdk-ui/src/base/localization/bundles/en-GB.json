@@ -636,5 +636,7 @@
     "semantic-search.placeholder": "Search dashboards or visualisation…",
     "semantic-search.id": "ID",
     "semantic-search.tags": "Tags",
-    "semantic-search.match": "{score}% game"
+    "semantic-search.match": "{score}% game",
+    "recurrence.error.too_often": "Frequency too high",
+    "recurrence.cron.tooltip": "Use the unix-cron string format. <a>Learn more</a>"
 }

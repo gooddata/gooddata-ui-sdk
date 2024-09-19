@@ -5,14 +5,15 @@
  */
 
 export { DefaultColorPalette } from "./constants/colorPalette.js";
-export { BucketNames, BucketNameKeys, BucketNameValues } from "./constants/bucketNames.js";
+export type { BucketNameKeys, BucketNameValues } from "./constants/bucketNames.js";
+export { BucketNames } from "./constants/bucketNames.js";
 export { visualizationIsBetaWarning } from "./helpers/logging.js";
 
 /*
  * Error handling
  */
+export type { SdkErrorType } from "./errors/GoodDataSdkError.js";
 export {
-    SdkErrorType,
     ErrorCodes,
     ForecastNotReceivedSdkError,
     ClusteringNotReceivedSdkError,
@@ -47,40 +48,31 @@ export {
     isClusteringNotReceived,
     isDynamicScriptLoadSdkError,
 } from "./errors/GoodDataSdkError.js";
-export {
-    IErrorDescriptors,
-    newErrorMapping,
-    convertError,
-    defaultErrorHandler,
-} from "./errors/errorHandling.js";
+export type { IErrorDescriptors } from "./errors/errorHandling.js";
+export { newErrorMapping, convertError, defaultErrorHandler } from "./errors/errorHandling.js";
 
 /*
  * Base React stuff
  */
-export { LoadingComponent, ILoadingProps } from "./react/LoadingComponent.js";
-export { ErrorComponent, IErrorProps } from "./react/ErrorComponent.js";
-export {
-    BackendProvider,
-    useBackend,
-    useBackendStrict,
-    withBackend,
-    IBackendProviderProps,
-} from "./react/BackendContext.js";
+export type { ILoadingProps } from "./react/LoadingComponent.js";
+export { LoadingComponent } from "./react/LoadingComponent.js";
+export type { IErrorProps } from "./react/ErrorComponent.js";
+export { ErrorComponent } from "./react/ErrorComponent.js";
+export type { IBackendProviderProps } from "./react/BackendContext.js";
+export { BackendProvider, useBackend, useBackendStrict, withBackend } from "./react/BackendContext.js";
+export type { IWorkspaceProviderProps } from "./react/WorkspaceContext.js";
 export {
     WorkspaceProvider,
     useWorkspace,
     useWorkspaceStrict,
     withWorkspace,
-    IWorkspaceProviderProps,
 } from "./react/WorkspaceContext.js";
-export { IPlaceholdersProviderProps, PlaceholdersProvider } from "./react/placeholders/context.js";
-export {
+export type { IPlaceholdersProviderProps } from "./react/placeholders/context.js";
+export { PlaceholdersProvider } from "./react/placeholders/context.js";
+export type {
     AnyPlaceholder,
     IPlaceholder,
     IComposedPlaceholder,
-    isAnyPlaceholder,
-    isPlaceholder,
-    isComposedPlaceholder,
     Flatten,
     IUsePlaceholderHook,
     PlaceholderValue,
@@ -100,8 +92,10 @@ export {
     UnionToIntersection,
     ValueOrMultiValuePlaceholder,
 } from "./react/placeholders/base.js";
-export { IPlaceholderOptions, newComposedPlaceholder, newPlaceholder } from "./react/placeholders/factory.js";
-export {
+export { isAnyPlaceholder, isPlaceholder, isComposedPlaceholder } from "./react/placeholders/base.js";
+export type { IPlaceholderOptions } from "./react/placeholders/factory.js";
+export { newComposedPlaceholder, newPlaceholder } from "./react/placeholders/factory.js";
+export type {
     AttributeFilterOrPlaceholder,
     AttributeFiltersOrPlaceholders,
     AttributeMeasureOrPlaceholder,
@@ -125,14 +119,10 @@ export {
     useResolveValueWithPlaceholders,
     useResolveValuesWithPlaceholders,
 } from "./react/placeholders/hooks.js";
-export {
-    usePagedResource,
-    IUsePagedResourceResult,
-    IUsePagedResourceState,
-} from "./react/usePagedResource.js";
-export {
+export type { IUsePagedResourceResult, IUsePagedResourceState } from "./react/usePagedResource.js";
+export { usePagedResource } from "./react/usePagedResource.js";
+export type {
     UseCancelablePromiseStatus,
-    useCancelablePromise,
     UseCancelablePromiseCallbacks,
     UseCancelablePromiseOptions,
     UseCancelablePromiseState,
@@ -141,21 +131,26 @@ export {
     UseCancelablePromisePendingState,
     UseCancelablePromiseSuccessState,
 } from "./react/useCancelablePromise.js";
+export { useCancelablePromise } from "./react/useCancelablePromise.js";
 export { withContexts } from "./react/withContexts.js";
 export { wrapDisplayName } from "./react/wrapDisplayName.js";
-export { CancelError, ICancelablePromise, makeCancelable, isCancelError } from "./react/CancelablePromise.js";
-export { withEntireDataView, ILoadingInjectedProps } from "./react/legacy/withEntireDataView.js";
+export type { ICancelablePromise } from "./react/CancelablePromise.js";
+export { CancelError, makeCancelable, isCancelError } from "./react/CancelablePromise.js";
+export type { ILoadingInjectedProps } from "./react/legacy/withEntireDataView.js";
+export { withEntireDataView } from "./react/legacy/withEntireDataView.js";
 export { getIntersectionAttributes } from "./react/legacy/availableDrillTargets.js";
 
 export {
     resolveUseCancelablePromisesError,
     resolveUseCancelablePromisesStatus,
 } from "./react/useCancelablePromiseUtils.js";
-export {
+export type {
     IClientWorkspaceProviderProps,
     IClientWorkspaceProviderCoreProps,
     IClientWorkspaceProviderWithClientAndDataProductProps,
     IClientWorkspaceProviderWithWorkspaceProps,
+} from "./react/ClientWorkspaceContext/ClientWorkspaceContext.js";
+export {
     ClientWorkspaceProvider,
     ResolvedClientWorkspaceProvider,
     useClientWorkspaceIdentifiers,
@@ -163,7 +158,7 @@ export {
     useClientWorkspaceError,
     useClientWorkspaceInitialized,
 } from "./react/ClientWorkspaceContext/ClientWorkspaceContext.js";
-export {
+export type {
     IClientWorkspaceIdentifiers,
     IClientWorkspaceStatus,
 } from "./react/ClientWorkspaceContext/interfaces.js";
@@ -174,17 +169,19 @@ export { useLocalStorage } from "./react/useLocalStorage.js";
  * Localization exports
  */
 
-export { ILocale, DefaultLocale, isLocale, LOCALES } from "./localization/Locale.js";
+export type { ILocale } from "./localization/Locale.js";
+export { DefaultLocale, isLocale, LOCALES } from "./localization/Locale.js";
 export { getTranslation, getIntl } from "./localization/IntlStore.js";
-export { IntlWrapper, IIntlWrapperProps } from "./localization/IntlWrapper.js";
-export { messagesMap, ITranslations } from "./localization/messagesMap.js";
-export {
-    TranslationsProvider,
-    IntlTranslationsProvider,
+export type { IIntlWrapperProps } from "./localization/IntlWrapper.js";
+export { IntlWrapper } from "./localization/IntlWrapper.js";
+export type { ITranslations } from "./localization/messagesMap.js";
+export { messagesMap } from "./localization/messagesMap.js";
+export type {
     ITranslationsComponentProps,
     ITranslationsProviderOwnProps,
     ITranslationsProviderProps,
 } from "./localization/TranslationsProvider.js";
+export { TranslationsProvider, IntlTranslationsProvider } from "./localization/TranslationsProvider.js";
 export {
     createIntlMock,
     withIntl,
@@ -194,11 +191,13 @@ export {
     clusterTitleFromIntl,
     resolveLocaleDefaultMessages,
 } from "./localization/intlUtils.js";
-export {
+export type {
     ITranslationsCustomizationContextProviderProps,
+    ITranslationsCustomizationProviderProps,
+} from "./localization/TranslationsCustomizationProvider/index.js";
+export {
     TranslationsCustomizationContextProvider,
     withTranslationsCustomization,
-    ITranslationsCustomizationProviderProps,
     TranslationsCustomizationProvider,
     pickCorrectInsightWording,
     pickCorrectMetricWording,
@@ -211,8 +210,8 @@ export {
  * Header matching & predicates
  */
 
+export type { IMappingHeader } from "./headerMatching/MappingHeader.js";
 export {
-    IMappingHeader,
     getMappingHeaderLocalIdentifier,
     hasMappingHeaderLocalIdentifier,
     getMappingHeaderUri,
@@ -222,11 +221,8 @@ export {
     getMappingHeaderFormattedName,
     hasMappingHeaderFormattedName,
 } from "./headerMatching/MappingHeader.js";
-export {
-    IHeaderPredicate,
-    IHeaderPredicateContext,
-    isHeaderPredicate,
-} from "./headerMatching/HeaderPredicate.js";
+export type { IHeaderPredicate, IHeaderPredicateContext } from "./headerMatching/HeaderPredicate.js";
+export { isHeaderPredicate } from "./headerMatching/HeaderPredicate.js";
 
 export {
     HeaderPredicates,
@@ -248,7 +244,7 @@ export { ArithmeticMeasureTitleFactory } from "./measureTitles/ArithmeticMeasure
 export { DerivedMeasureTitleSuffixFactory } from "./measureTitles/DerivedMeasureTitleSuffixFactory.js";
 export { fillMissingTitles } from "./measureTitles/fillMissingTitles.js";
 export { ignoreTitlesForSimpleMeasures } from "./measureTitles/ignoreTitlesForSimpleMeasures.js";
-export { IArithmeticMeasureTitleProps, IMeasureTitleProps } from "./measureTitles/MeasureTitle.js";
+export type { IArithmeticMeasureTitleProps, IMeasureTitleProps } from "./measureTitles/MeasureTitle.js";
 
 /*
  * Derived measure format generation
@@ -261,12 +257,12 @@ export { fillMissingFormat } from "./measureFormats/fillMissingFormat.js";
  *
  */
 
-export {
+export type {
     IVisualizationProps,
     IVisualizationCallbacks,
     IDataVisualizationProps,
 } from "./vis/VisualizationProps.js";
-export {
+export type {
     IPushData,
     PushDataCallback,
     IOpenAsReportUiConfig,
@@ -282,7 +278,7 @@ export {
     IColorAssignment,
     IColorsData,
 } from "./vis/Events.js";
-export {
+export type {
     OnFiredDrillEvent,
     IDrillableItem,
     DrillEventIntersectionElementHeader,
@@ -300,14 +296,16 @@ export {
     IDrillEventIntersectionElement,
     IDrillIntersectionAttributeItem,
     IDrillPoint,
+    ExplicitDrill,
+    IHighchartsCategoriesTree,
+    IHighchartsParentTick,
+} from "./vis/DrillEvents.js";
+export {
     isDrillableItemIdentifier,
     isDrillableItemUri,
     isDrillableItem,
     isExplicitDrill,
-    ExplicitDrill,
     isDrillIntersectionAttributeItem,
-    IHighchartsCategoriesTree,
-    IHighchartsParentTick,
 } from "./vis/DrillEvents.js";
 export {
     convertDrillableItemsToPredicates,
@@ -317,13 +315,11 @@ export {
     fireDrillEvent,
 } from "./vis/drilling.js";
 export { createExportFunction, createExportErrorFunction } from "./vis/export.js";
-export {
-    VisualizationTypes,
+export type {
     VisualizationEnvironment,
     ChartType,
     VisType,
     HeadlineElementType,
-    getVisualizationType,
     ChartElementType,
     HeadlineType,
     TableElementType,
@@ -331,17 +327,19 @@ export {
     VisElementType,
     XirrType,
 } from "./vis/visualizationTypes.js";
-export { Subtract } from "./typings/subtract.js";
-export { OverTimeComparisonType, OverTimeComparisonTypes } from "./interfaces/OverTimeComparison.js";
+export { VisualizationTypes, getVisualizationType } from "./vis/visualizationTypes.js";
+export type { Subtract } from "./typings/subtract.js";
+export type { OverTimeComparisonType } from "./interfaces/OverTimeComparison.js";
+export { OverTimeComparisonTypes } from "./interfaces/OverTimeComparison.js";
 /*
  *
  */
 
 export { DataViewFacade } from "./results/facade.js";
-export { IExecutionDefinitionMethods } from "./results/internal/definitionMethods.js";
-export { IResultDataMethods } from "./results/internal/resultDataMethods.js";
-export { IResultMetaMethods } from "./results/internal/resultMetaMethods.js";
-export {
+export type { IExecutionDefinitionMethods } from "./results/internal/definitionMethods.js";
+export type { IResultDataMethods } from "./results/internal/resultDataMethods.js";
+export type { IResultMetaMethods } from "./results/internal/resultMetaMethods.js";
+export type {
     DataSeriesId,
     DataPoint,
     DataSeriesDescriptorMethods,
@@ -358,12 +356,7 @@ export {
     DataSliceHeaders,
     DataPointCoordinates,
 } from "./results/dataAccess.js";
-export {
-    DataAccessConfig,
-    ValueFormatter,
-    HeaderTranslator,
-    createNumberJsFormatter,
-    DefaultDataAccessConfig,
-} from "./results/dataAccessConfig.js";
+export type { DataAccessConfig, ValueFormatter, HeaderTranslator } from "./results/dataAccessConfig.js";
+export { createNumberJsFormatter, DefaultDataAccessConfig } from "./results/dataAccessConfig.js";
 
 export { getTotalInfo } from "./results/internal/utils.js";

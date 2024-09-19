@@ -5,11 +5,8 @@ export * from "./dashboard/index.js";
 // only export the types for this, not the actual code
 export * from "./dashboardContexts/types.js";
 export * from "./dragAndDrop/types.js";
-export {
-    DraggableCreatePanelItem,
-    IDraggableCreatePanelItemProps,
-    useWidgetDragEndHandler,
-} from "./dragAndDrop/index.js";
+export type { IDraggableCreatePanelItemProps } from "./dragAndDrop/index.js";
+export { DraggableCreatePanelItem, useWidgetDragEndHandler } from "./dragAndDrop/index.js";
 export * from "./drill/index.js";
 export * from "./filterBar/index.js";
 export * from "./layout/index.js";

@@ -597,6 +597,8 @@ function recordedPermissionsFactory(): IWorkspacePermissionsService {
             canRefreshData: true,
             canManageACL: true,
             canManageScheduledMail: true,
+            canCreateFilterView: true,
+            canCreateAutomation: true,
         }),
     };
 }
