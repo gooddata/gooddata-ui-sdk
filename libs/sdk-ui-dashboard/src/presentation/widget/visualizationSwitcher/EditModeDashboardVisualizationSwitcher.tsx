@@ -17,7 +17,7 @@ import {
 import { insightVisualizationType } from "@gooddata/sdk-model";
 import { VisType } from "@gooddata/sdk-ui";
 import { EditableDashboardInsightWidgetHeader } from "../widget/InsightWidget/EditableDashboardInsightWidgetHeader.js";
-import { DashboardInsight } from "../insight/ViewModeDashboardInsight/Insight/DashboardInsight.js";
+import { DashboardInsight } from "../insight/DashboardInsight.js";
 
 /**
  * @internal

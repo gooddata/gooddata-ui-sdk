@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React, { MouseEvent } from "react";
 
 import { DashboardItemContent } from "./DashboardItemContent.js";
@@ -12,7 +12,7 @@ export interface IDashboardItemBaseProps {
     /**
      * Render prop for the item headline.
      */
-    renderHeadline?: (clientHeight?: number) => React.ReactNode;
+    renderHeadline?: (clientHeight?: number, clientWidth?: number) => React.ReactNode;
     /**
      * Render prop for content rendered inside the main content before the visualization container.
      */
@@ -85,7 +85,7 @@ export const DashboardItemBase: React.FC<IDashboardItemBaseProps> = ({
                     >
                         {renderBeforeVisualization()}
                         <div className={visualizationClassName}>
-                            {renderHeadline(clientHeight)}
+                            {renderHeadline(clientHeight, clientWidth)}
                             {children({ clientWidth, clientHeight })}
                         </div>
                         {renderAfterVisualization()}
