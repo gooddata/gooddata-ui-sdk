@@ -2,6 +2,18 @@
   "name": "@gooddata/sdk-ui-all",
   "entries": [
     {
+      "version": "10.10.0",
+      "tag": "@gooddata/sdk-ui-all_v10.10.0",
+      "date": "Thu, 19 Sep 2024 06:58:04 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "Improved Handling of Secondary Labels in AttributeFilter"
+          }
+        ]
+      }
+    },
+    {
       "version": "10.9.0",
       "tag": "@gooddata/sdk-ui-all_v10.9.0",
       "date": "Thu, 05 Sep 2024 08:14:25 GMT",
