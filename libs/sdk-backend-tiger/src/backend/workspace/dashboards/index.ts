@@ -644,6 +644,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                     workspaceId: this.workspace,
                     include: ["user", "analyticalDashboard"],
                     filter: `analyticalDashboard.id==${dashboardId};user.id==${profile.userId}`,
+                    origin: "NATIVE",
+
                     // sort: ["name"], // TODO LX-422 remove comment and array sort below once sort is supported
                 });
             });
@@ -761,6 +763,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             workspaceId: this.workspace,
             include: ["user", "analyticalDashboard"],
             filter: `analyticalDashboard.id==${dashboardId};user.id==${profile.userId};filterView.isDefault==true`,
+            origin: "NATIVE",
         });
         await Promise.all(
             defaultFilterViewsForDashboard.data.data.map((view) =>
