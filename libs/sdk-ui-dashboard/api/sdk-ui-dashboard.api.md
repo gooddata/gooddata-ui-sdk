@@ -2750,6 +2750,8 @@ export interface DashboardState {
     drillTargets: EntityState<IDrillTargets>;
     // @beta (undocumented)
     entitlements: EntitlementsState;
+    // (undocumented)
+    executed: ExecutedState;
     // @beta
     executionResults: EntityState<IExecutionResultEnvelope>;
     // (undocumented)

@@ -18,7 +18,13 @@ import {
     DashboardItemVisualization,
     getVisTypeCssClass,
 } from "../../../presentation/presentationComponents/index.js";
-import { IInsight, IInsightWidget, insightVisualizationType, widgetTitle } from "@gooddata/sdk-model";
+import {
+    IInsight,
+    IInsightWidget,
+    IVisualizationSwitcherWidget,
+    insightVisualizationType,
+    widgetTitle,
+} from "@gooddata/sdk-model";
 import { VisType } from "@gooddata/sdk-ui";
 import { DashboardInsight } from "../insight/DashboardInsight.js";
 import { InsightWidgetDescriptionTrigger } from "../description/InsightWidgetDescriptionTrigger.js";
@@ -26,6 +32,7 @@ import { useInsightExport } from "../common/index.js";
 import { useAlertingAndScheduling } from "../widget/InsightWidget/useAlertingAndScheduling.js";
 import { useInsightMenu } from "../widget/InsightWidget/useInsightMenu.js";
 import { VisualizationSwitcherNavigationHeader } from "../widget/VisualizationSwitcherWidget/VisualizationSwitcherNavigationHeader.js";
+import { selectIsDashboardExecuted } from "src/model/store/executed/executedSelectors.js";
 
 /**
  * @internal
@@ -106,6 +113,8 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
     const intl = useIntl();
     const visType = insightVisualizationType(insight) as VisType;
     const settings = useDashboardSelector(selectSettings);
+    const isExecuted = useDashboardSelector(selectIsDashboardExecuted);
+
     const { ref: widgetRef } = activeVisualization;
 
     const { exportCSVEnabled, exportXLSXEnabled, onExportCSV, onExportXLSX } = useInsightExport({
@@ -257,6 +266,46 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
                     // TODO INE: once active visualization is loaded and executed then we can render on background also other switcher visualizations
                 )}
             </DashboardItemVisualization>
+            {isExecuted ? (
+                <OtherVisualizations
+                    widget={widget}
+                    visualizations={widget.visualizations.filter(
+                        (visualization) => visualization.identifier !== activeVisualization.identifier,
+                    )}
+                />
+            ) : null}
         </DashboardItem>
+    );
+};
+
+const OtherVisualizations: React.FC<{
+    widget: IVisualizationSwitcherWidget;
+    visualizations: IInsightWidget[];
+}> = ({ visualizations }) => {
+    const insights = useDashboardSelector(selectInsightsMap);
+    const othersAreExecuted = useDashboardSelector(selectIsDashboardExecuted);
+    if (!othersAreExecuted) {
+        return null;
+    }
+    return (
+        <>
+            {visualizations.map((visualization) => {
+                const insight = insights.get(visualization.insight);
+                if (!insight) {
+                    return null;
+                }
+                return (
+                    <DashboardInsight
+                        key={visualization.identifier}
+                        clientHeight={0}
+                        clientWidth={0}
+                        insight={insight}
+                        widget={visualization}
+                        ErrorComponent={() => null}
+                        LoadingComponent={() => null}
+                    />
+                );
+            })}
+        </>
     );
 };

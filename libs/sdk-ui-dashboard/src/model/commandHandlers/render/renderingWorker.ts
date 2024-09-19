@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { newDashboardEventPredicate } from "../../events/index.js";
 import { renderRequested, renderResolved } from "../../events/render.js";
+import { executedActions } from "src/model/store/executed/index.js";
 
 function* wait(ms: number): SagaIterator<true> {
     yield delay(ms);
@@ -82,6 +83,9 @@ export function newRenderingWorker(renderingWorkerConfig: Partial<RenderingWorke
             // Provide a correlation id so that event handlers can correlate the start and end of the rendering
             const correlationId = config.correlationIdGenerator();
 
+            // set flag
+            yield put(executedActions.setExecutedStart());
+
             // First, notify that the rendering of the whole dashboard started.
             yield put(renderRequested(ctx, correlationId));
 
@@ -93,6 +97,9 @@ export function newRenderingWorker(renderingWorkerConfig: Partial<RenderingWorke
 
             // Wait for the resolution of all async rendering tasks.
             yield call(waitForAsyncRenderTasksResolution, asyncRenderTasks, config);
+
+            // set flag
+            yield put(executedActions.setExecutedDone());
 
             // Notify that the dashboard is fully rendered.
             yield put(renderResolved(ctx, correlationId));
