@@ -15,6 +15,7 @@ export {
     isVerboseSelector,
     visibleMessagesSelector,
     lastMessageSelector,
+    hasMessagesSelector,
 } from "./messages/messagesSelectors.js";
 
 export { setAgentBusyAction, setAgentIdleAction } from "./agent/agentSlice.js";

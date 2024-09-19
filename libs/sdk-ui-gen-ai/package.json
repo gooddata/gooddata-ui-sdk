@@ -13,6 +13,7 @@
     "browser": "./esm/index.js",
     "exports": {
         ".": "./esm/index.js",
+        "./internal": "./esm/internal.js",
         "./styles/css/*": "./styles/css/*",
         "./esm/assets/*": "./esm/assets/*"
     },

@@ -4,10 +4,8 @@ import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { Provider as StoreProvider } from "react-redux";
 import { useGenAIStore } from "../hooks/useGenAIStore.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
-import { Input } from "./Input.js";
-import { Messages } from "./Messages.js";
-import { Typography } from "@gooddata/sdk-ui-kit";
 import { Message } from "../model.js";
+import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
 
 /**
  * Properties for the GenAIChat component.
@@ -38,13 +36,7 @@ export const GenAIChat: React.FC<GenAIChatProps> = ({ backend, workspace, histor
     return (
         <IntlWrapper>
             <StoreProvider store={genAIStore}>
-                <div className="gd-gen-ai-chat">
-                    <Messages />
-                    <Input />
-                    <Typography tagName="p" className="gd-gen-ai-chat__disclaimer">
-                        We do not accept any liability for the generated information as it may not be accurate
-                    </Typography>
-                </div>
+                <GenAIChatWrapper />
             </StoreProvider>
         </IntlWrapper>
     );

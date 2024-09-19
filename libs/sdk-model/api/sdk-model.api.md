@@ -3074,6 +3074,8 @@ export interface ISettings {
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     enableEmbedButtonInAD?: boolean;
     enableEmbedButtonInKD?: boolean;
+    enableGenAIChat?: boolean;
+    enableGenAIChatRollout?: boolean;
     enableHeadlineExport?: boolean;
     enableHidingOfDataPoints?: boolean;
     enableHidingOfWidgetTitle?: boolean;

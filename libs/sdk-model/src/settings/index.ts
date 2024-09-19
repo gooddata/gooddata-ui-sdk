@@ -457,6 +457,16 @@ export interface ISettings {
     enableSemanticSearch?: boolean;
 
     /**
+     * Enable Gen AI Chatbot in UI.
+     */
+    enableGenAIChat?: boolean;
+
+    /**
+     * Enable Gen AI Chatbot rollout in UI.
+     */
+    enableGenAIChatRollout?: boolean;
+
+    /**
      * Enable multiple data sources to be used in a single workspace.
      */
     enableDashboardFilterViews?: boolean;

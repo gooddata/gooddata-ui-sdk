@@ -98,6 +98,7 @@ import { Warning } from "./icons/Warning.js";
 import { Email } from "./icons/Email.js";
 import { VisualizationSwitcher } from "./icons/VisualizationSwitcher.js";
 import { Trash } from "./icons/Trash.js";
+import { GenAI } from "./icons/GenAI.js";
 
 /**
  * @internal
@@ -199,6 +200,7 @@ export const Icon: Record<string, React.FC<IIconProps>> = {
     Warning,
     Email,
     Trash,
+    GenAI,
 };
 
 export type { IRowsIconProps, IColumnsIconProps };

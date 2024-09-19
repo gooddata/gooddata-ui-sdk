@@ -38,3 +38,8 @@ export const lastMessageSelector: (state: RootState) => Message | undefined = cr
     messagesSelector,
     (order, messages) => messages[order[order.length - 1]],
 );
+
+export const hasMessagesSelector: (state: RootState) => boolean = createSelector(
+    messagesOrderSelector,
+    (order) => order.length > 0,
+);
