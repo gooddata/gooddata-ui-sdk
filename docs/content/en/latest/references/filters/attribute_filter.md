@@ -1,4 +1,5 @@
 
+---
 id: attribute_filter_component
 title: Attribute Filter
 sidebar_label: Attribute Filter
