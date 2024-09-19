@@ -1,6 +1,13 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 05 Sep 2024 08:14:25 GMT and should not be manually modified.
+This log was last generated on Thu, 19 Sep 2024 06:58:04 GMT and should not be manually modified.
+
+## 10.10.0
+Thu, 19 Sep 2024 06:58:04 GMT
+
+### Updates
+
+- Improved Handling of Secondary Labels in AttributeFilter
 
 ## 10.9.0
 Thu, 05 Sep 2024 08:14:25 GMT
