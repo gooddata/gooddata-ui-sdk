@@ -111,7 +111,11 @@ export function newAttributeFilterHandler(
     backend: IAnalyticalBackend,
     workspace: string,
     attributeFilter: IAttributeFilter,
-    options: IAttributeFilterHandlerOptions = { selectionMode: "multi", displayAsLabel: undefined },
+    options: IAttributeFilterHandlerOptions = {
+        selectionMode: "multi",
+        displayAsLabel: undefined,
+        enableDuplicatedLabelValuesInAttributeFilter: true,
+    },
 ): IAttributeFilterHandler {
     const {
         selectionMode,

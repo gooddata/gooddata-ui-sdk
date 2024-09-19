@@ -47,6 +47,9 @@ export const intersection: IDrillEventIntersectionElement[] = [
                 },
                 identifier: null,
                 formOf: null,
+                primaryLabel: {
+                    uri: regionUri,
+                },
             },
         },
     },
@@ -65,6 +68,9 @@ export const intersection: IDrillEventIntersectionElement[] = [
                 },
                 identifier: null,
                 formOf: null,
+                primaryLabel: {
+                    uri: departmentUri,
+                },
             },
         },
     },

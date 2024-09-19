@@ -94,7 +94,7 @@ export const useAttributeFilterController = (
 
         selectionMode = "multi",
         selectFirst = false,
-        enableDuplicatedLabelValuesInAttributeFilter = false,
+        enableDuplicatedLabelValuesInAttributeFilter = true,
     } = props;
 
     const backend = useBackendStrict(backendInput, "AttributeFilter");
