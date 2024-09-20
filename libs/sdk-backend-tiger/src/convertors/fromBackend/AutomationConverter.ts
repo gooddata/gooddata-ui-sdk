@@ -26,6 +26,7 @@ import compact from "lodash/compact.js";
 import { convertUserIdentifier } from "./UsersConverter.js";
 import { convertFilter } from "./afm/FilterConverter.js";
 import { convertMeasure } from "./afm/MeasureConverter.js";
+import { fixNumber } from "../../utils/fixNumber.js";
 
 function convertRecipient(
     userLinkage: JsonApiUserLinkage,
@@ -175,7 +176,7 @@ const convertAlert = (
                 },
                 ...(relative.measure.operator === ArithmeticMeasureOperatorEnum.CHANGE
                     ? {
-                          threshold: relative.threshold.value * 100,
+                          threshold: fixNumber(relative.threshold.value * 100),
                       }
                     : {
                           threshold: relative.threshold.value,

@@ -17,6 +17,7 @@ import omit from "lodash/omit.js";
 import { v4 as uuidv4 } from "uuid";
 import { convertMeasure } from "./afm/MeasureConverter.js";
 import { convertAfmFilters } from "./afm/AfmFiltersConverter.js";
+import { fixNumber } from "../../utils/fixNumber.js";
 
 export function convertAutomation(
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
@@ -143,7 +144,7 @@ const convertAlert = (alert: IAutomationAlert): JsonApiAutomationPatchAttributes
                     threshold: {
                         ...(condition.measure.operator === ArithmeticMeasureOperatorEnum.CHANGE
                             ? {
-                                  value: condition.threshold / 100,
+                                  value: fixNumber(condition.threshold / 100),
                               }
                             : {
                                   value: condition.threshold,
