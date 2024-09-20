@@ -46,7 +46,9 @@ describe("alert transforms", () => {
         alert: {
             condition: {
                 type: "comparison",
-                left: "",
+                left: {
+                    id: "",
+                },
                 right: 0,
                 operator: "GREATER_THAN_OR_EQUAL_TO",
             },
@@ -69,8 +71,12 @@ describe("alert transforms", () => {
                 operator: "INCREASES_BY",
                 measure: {
                     operator: "CHANGE",
-                    left: "",
-                    right: "",
+                    left: {
+                        id: "",
+                    },
+                    right: {
+                        id: "",
+                    },
                 },
                 threshold: 0,
             },
@@ -110,6 +116,7 @@ describe("alert transforms", () => {
             measure: {
                 localIdentifier: "localMetric2",
                 title: "metric2",
+                format: "#,##0.00",
                 definition: {
                     measureDefinition: {
                         filters: [],
@@ -150,7 +157,11 @@ describe("alert transforms", () => {
                     ...baseComparison.alert,
                     condition: {
                         ...baseComparison.alert.condition,
-                        left: "localMetric1",
+                        left: {
+                            format: undefined,
+                            id: "localMetric1",
+                            title: "metric1",
+                        },
                     },
                     execution: {
                         ...baseComparison.alert.execution,
@@ -169,7 +180,11 @@ describe("alert transforms", () => {
                     ...baseComparison.alert,
                     condition: {
                         ...baseComparison.alert.condition,
-                        left: "localMetric2",
+                        left: {
+                            format: "#,##0.00",
+                            id: "localMetric2",
+                            title: "metric2",
+                        },
                     },
                     execution: {
                         ...baseComparison.alert.execution,
@@ -189,7 +204,11 @@ describe("alert transforms", () => {
                     condition: {
                         ...baseComparison.alert.condition,
                         operator: "GREATER_THAN",
-                        left: "localMetric1",
+                        left: {
+                            format: undefined,
+                            id: "localMetric1",
+                            title: "metric1",
+                        },
                     },
                     execution: {
                         ...baseComparison.alert.execution,
@@ -210,8 +229,16 @@ describe("alert transforms", () => {
                         ...baseRelative.alert.condition,
                         measure: {
                             operator: "CHANGE",
-                            left: "localMetric2",
-                            right: "localMetric_pp_1",
+                            left: {
+                                format: "#,##0.00",
+                                id: "localMetric2",
+                                title: "metric2",
+                            },
+                            right: {
+                                format: undefined,
+                                id: "localMetric_pp_1",
+                                title: "metric_pp_1",
+                            },
                         },
                     },
                     execution: {
@@ -328,7 +355,11 @@ describe("alert transforms", () => {
                         measure: {
                             ...cond.measure,
                             operator: "DIFFERENCE",
-                            right: "localMetric_pp_1",
+                            right: {
+                                format: undefined,
+                                id: "localMetric_pp_1",
+                                title: "metric_pp_1",
+                            },
                         },
                     },
                     execution: {
@@ -357,7 +388,11 @@ describe("alert transforms", () => {
                         measure: {
                             ...cond.measure,
                             operator: "DIFFERENCE",
-                            right: "localMetric_pp_1",
+                            right: {
+                                format: undefined,
+                                id: "localMetric_pp_1",
+                                title: "metric_pp_1",
+                            },
                         },
                     },
                     execution: {

@@ -880,7 +880,11 @@ export interface IAutomationAlert {
 
 // @alpha (undocumented)
 export interface IAutomationAlertComparisonCondition {
-    left: string;
+    left: {
+        id: string;
+        title?: string;
+        format?: string;
+    };
     operator: IAlertComparisonOperator;
     right: number;
     type: "comparison";
@@ -896,8 +900,16 @@ export type IAutomationAlertExecutionDefinition = Pick<IExecutionDefinition, "at
 export interface IAutomationAlertRelativeCondition {
     measure: {
         operator: IAlertRelativeArithmeticOperator;
-        left: string;
-        right: string;
+        left: {
+            id: string;
+            title?: string;
+            format?: string;
+        };
+        right: {
+            id: string;
+            title?: string;
+            format?: string;
+        };
     };
     operator: IAlertRelativeOperator;
     threshold: number;
