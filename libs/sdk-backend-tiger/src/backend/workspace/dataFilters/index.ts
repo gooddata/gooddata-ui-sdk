@@ -6,7 +6,7 @@ import { IWorkspaceDataFilter, IWorkspaceDataFilterSetting } from "@gooddata/sdk
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import {
     JsonApiWorkspaceDataFilterSettingOutWithLinks,
-    JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum,
+    JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum,
 } from "@gooddata/api-client-tiger";
 
 export class TigerDataFiltersService implements IDataFiltersService {
@@ -38,7 +38,7 @@ export class TigerDataFiltersService implements IDataFiltersService {
                         settings: settingsMap[filter.id] || [],
                         isInherited:
                             filter.meta?.origin?.originType ===
-                            JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum.PARENT,
+                            JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum.PARENT,
                     };
                 }) || []
             );

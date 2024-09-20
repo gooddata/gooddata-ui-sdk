@@ -110,7 +110,11 @@ export const createDefaultAlert = (
         alert: {
             condition: {
                 type: "comparison",
-                left: measure.measure.measure.localIdentifier,
+                left: {
+                    id: measure.measure.measure.localIdentifier,
+                    format: measure.measure.measure.format,
+                    title: getMeasureTitle(measure.measure),
+                },
                 operator: comparisonOperator,
                 right: undefined!,
             },
@@ -304,9 +308,9 @@ export function getAlertThreshold(alert?: IAutomationAlert): number | undefined 
 
 export function getAlertMeasure(alert?: IAutomationAlert): string | undefined {
     if (alert?.condition.type === "relative") {
-        return alert.condition.measure.left;
+        return alert.condition.measure.left.id;
     }
-    return alert?.condition.left;
+    return alert?.condition.left.id;
 }
 
 export function getAlertCompareOperator(alert?: IAutomationAlert): IAlertComparisonOperator | undefined {
@@ -343,8 +347,16 @@ export function transformAlertByMetric(
             ...cond,
             measure: {
                 ...cond.measure,
-                left: measure.measure.measure.localIdentifier,
-                right: periodMeasure.measure.measure.localIdentifier ?? "",
+                left: {
+                    id: measure.measure.measure.localIdentifier,
+                    format: measure.measure.measure.format,
+                    title: getMeasureTitle(measure.measure),
+                },
+                right: {
+                    id: periodMeasure.measure.measure.localIdentifier,
+                    format: periodMeasure.measure.measure.format,
+                    title: getMeasureTitle(periodMeasure.measure),
+                },
             },
         } as IAutomationAlertRelativeCondition;
         return {
@@ -361,7 +373,11 @@ export function transformAlertByMetric(
     const cond = transformToComparisonCondition(alert.alert!.condition);
     const condition = {
         ...cond,
-        left: measure.measure.measure.localIdentifier,
+        left: {
+            id: measure.measure.measure.localIdentifier,
+            format: measure.measure.measure.format,
+            title: getMeasureTitle(measure.measure),
+        },
     } as IAutomationAlertComparisonCondition;
     return {
         ...alert,
@@ -412,7 +428,11 @@ export function transformAlertByRelativeOperator(
         measure: {
             ...cond.measure,
             operator: arithmeticOperator,
-            right: periodMeasure?.measure.measure.localIdentifier ?? "",
+            right: {
+                id: periodMeasure?.measure.measure.localIdentifier ?? "",
+                format: periodMeasure?.measure.measure.format,
+                title: periodMeasure?.measure ? getMeasureTitle(periodMeasure.measure) : undefined,
+            },
         },
         operator: relativeOperator,
     };
@@ -496,7 +516,7 @@ function transformToRelativeCondition(
             measure: {
                 operator: ARITHMETIC_OPERATORS.ARITHMETIC_OPERATOR_CHANGE,
                 left: condition.left,
-                right: "",
+                right: undefined!,
             },
             threshold: condition.right,
         };

@@ -10,7 +10,7 @@ import {
     JsonApiExportDefinitionOutWithLinks,
     JsonApiUserLinkage,
     JsonApiUserOutWithLinks,
-    JsonApiAutomationPatchAttributesAlert,
+    JsonApiAutomationOutAttributesAlert,
     ArithmeticMeasureOperatorEnum,
 } from "@gooddata/api-client-tiger";
 import {
@@ -123,7 +123,7 @@ export const convertAutomationListToAutomations = (
 };
 
 const convertAlert = (
-    alert: JsonApiAutomationPatchAttributesAlert | undefined,
+    alert: JsonApiAutomationOutAttributesAlert | undefined,
     state: JsonApiAutomationOutAttributesStateEnum | undefined,
 ): IAutomationAlert | undefined => {
     if (!alert) {
@@ -157,7 +157,11 @@ const convertAlert = (
             condition: {
                 type: "comparison",
                 operator: comparison.operator as IAlertComparisonOperator,
-                left: comparison.left.localIdentifier,
+                left: {
+                    id: comparison.left.localIdentifier,
+                    title: comparison.left.title,
+                    format: comparison.left.format,
+                },
                 right: (comparison.right as any)?.value,
             },
             ...base,
@@ -171,8 +175,16 @@ const convertAlert = (
                 operator: relative.operator,
                 measure: {
                     operator: relative.measure.operator,
-                    left: relative.measure.left.localIdentifier,
-                    right: relative.measure.right.localIdentifier,
+                    left: {
+                        id: relative.measure.left.localIdentifier,
+                        title: relative.measure.left.title,
+                        format: relative.measure.left.format,
+                    },
+                    right: {
+                        id: relative.measure.right.localIdentifier,
+                        title: relative.measure.right.title,
+                        format: relative.measure.right.format,
+                    },
                 },
                 ...(relative.measure.operator === ArithmeticMeasureOperatorEnum.CHANGE
                     ? {
