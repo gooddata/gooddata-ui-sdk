@@ -3130,6 +3130,9 @@ importers:
       '@gooddata/sdk-ui-kit':
         specifier: workspace:*
         version: link:../sdk-ui-kit
+      '@gooddata/sdk-ui-pivot':
+        specifier: workspace:*
+        version: link:../sdk-ui-pivot
       '@gooddata/util':
         specifier: workspace:*
         version: link:../util

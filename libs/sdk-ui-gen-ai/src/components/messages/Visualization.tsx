@@ -1,28 +1,89 @@
 // (C) 2024 GoodData Corporation
 
 import React from "react";
-import { Typography } from "@gooddata/sdk-ui-kit";
 import { GenAIChatCreatedVisualization } from "@gooddata/sdk-model";
-import { BaseChart } from "@gooddata/sdk-ui-charts";
+import { BarChart, ColumnChart, Headline, LineChart, PieChart } from "@gooddata/sdk-ui-charts";
+import { PivotTable } from "@gooddata/sdk-ui-pivot";
+import { Typography } from "@gooddata/sdk-ui-kit";
 import { useExecution } from "./useExecution.js";
-import { ChartType } from "@gooddata/sdk-ui";
 
 type VisualizationProps = {
     definition: GenAIChatCreatedVisualization;
 };
 
 export const Visualization: React.FC<VisualizationProps> = ({ definition }) => {
-    const execution = useExecution(definition);
+    const { metrics, dimensions } = useExecution(definition);
 
     return (
         <div className="gd-gen-ai-chat__messages__visualization">
-            <BaseChart
-                height={300}
-                width={400}
-                type={definition.visualizationType.toLowerCase() as ChartType}
-                execution={execution}
-            />
+            {(() => {
+                switch (definition.visualizationType) {
+                    case "BAR":
+                        return (
+                            <BarChart
+                                height={300}
+                                measures={metrics}
+                                viewBy={[dimensions[0], dimensions[1]].filter(Boolean)}
+                                stackBy={metrics.length <= 1 ? dimensions[2] : undefined}
+                                config={{
+                                    // Better visibility with stacked bars if there are multiple metrics and dimensions
+                                    stackMeasures: metrics.length > 1 && dimensions.length === 2,
+                                }}
+                            />
+                        );
+                    case "COLUMN":
+                        return (
+                            <ColumnChart
+                                height={300}
+                                measures={metrics}
+                                viewBy={[dimensions[0], dimensions[1]].filter(Boolean)}
+                                stackBy={metrics.length <= 1 ? dimensions[2] : undefined}
+                                config={{
+                                    // Better visibility with stacked bars if there are multiple metrics and dimensions
+                                    stackMeasures: metrics.length > 1 && dimensions.length === 2,
+                                }}
+                            />
+                        );
+                    case "LINE":
+                        return (
+                            <LineChart
+                                height={300}
+                                measures={metrics}
+                                trendBy={dimensions[0]}
+                                segmentBy={metrics.length <= 1 ? dimensions[1] : undefined}
+                            />
+                        );
+                    case "PIE":
+                        return (
+                            <PieChart
+                                height={300}
+                                measures={metrics}
+                                viewBy={metrics.length <= 1 ? dimensions[0] : undefined}
+                            />
+                        );
+                    case "TABLE":
+                        return (
+                            <div style={{ height: 300 }}>
+                                <PivotTable measures={metrics} rows={dimensions} />
+                            </div>
+                        );
+                    case "HEADLINE":
+                        return (
+                            <Headline
+                                height={300}
+                                primaryMeasure={metrics[0]}
+                                secondaryMeasures={[metrics[1], metrics[2]].filter(Boolean)}
+                            />
+                        );
+                    default:
+                        return assertNever(definition.visualizationType);
+                }
+            })()}
             <Typography tagName="p">{definition.title}</Typography>
         </div>
     );
+};
+
+const assertNever = (value: never): never => {
+    throw new Error("Unknown visualization type: " + value);
 };
