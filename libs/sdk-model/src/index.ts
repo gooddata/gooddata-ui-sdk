@@ -981,6 +981,29 @@ export {
 
 export type {
     ISemanticSearchResultItem,
-    GenAISemanticSearchType,
     ISemanticSearchRelationship,
-} from "./genAI/index.js";
+    GenAISemanticSearchType,
+} from "./genAI/semanticSearch.js";
+
+export type {
+    IGenAIUserContext,
+    IGenAIChatInteraction,
+    IGenAIChatEvaluation,
+    GenAIActiveObject,
+    GenAIChatRole,
+    GenAIChatInteractionContent,
+    GenAIChatBaseInteractionContent,
+    GenAIChatTextInteractionContent,
+    GenAIChatCreatedVisualization,
+    GenAIChatSearchInteractionContent,
+    GenAIChatVisualizationInteractionContent,
+    GenAIChatMetricType,
+    GenAIChatCreatedVisualizationMetric,
+    GenAIChatVisualizationType,
+    GenAIChatMetricAggregation,
+    GenAIChatCreatedVisualizationDimension,
+    GenAIChatUseCase,
+    GenAIChatCreatedVisualizations,
+} from "./genAI/flexAI.js";
+
+export type { GenAIObjectType } from "./genAI/common.js";

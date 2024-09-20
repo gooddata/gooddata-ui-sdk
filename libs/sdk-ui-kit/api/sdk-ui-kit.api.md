@@ -863,6 +863,8 @@ export interface IAppHeaderProps {
     // (undocumented)
     menuItemsGroups?: IHeaderMenuItem[][];
     // (undocumented)
+    onChatItemClick?: (e: React_2.MouseEvent) => void;
+    // (undocumented)
     onHelpClick?: (isOpen: boolean) => void;
     // (undocumented)
     onInviteItemClick?: (e: React_2.MouseEvent) => void;
@@ -874,6 +876,8 @@ export interface IAppHeaderProps {
     onUpsellButtonClick?: (e: React_2.MouseEvent) => void;
     // (undocumented)
     search?: React_2.ReactNode;
+    // (undocumented)
+    showChatItem?: boolean;
     // (undocumented)
     showInviteItem?: boolean;
     // (undocumented)

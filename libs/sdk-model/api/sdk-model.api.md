@@ -503,8 +503,89 @@ export type ForecastDataValue = {
     loading: boolean;
 };
 
+// @alpha
+export type GenAIActiveObject = {
+    id: string;
+    workspaceId: string;
+    type: GenAIObjectType;
+};
+
+// @alpha
+export type GenAIChatBaseInteractionContent = {
+    includeToChatContext: boolean;
+    userFeedback: "POSITIVE" | "NEGATIVE" | "NONE";
+};
+
+// @alpha
+export type GenAIChatCreatedVisualization = {
+    id: string;
+    title: string;
+    visualizationType: GenAIChatVisualizationType;
+    metrics: GenAIChatCreatedVisualizationMetric[];
+    dimensionality: GenAIChatCreatedVisualizationDimension[];
+};
+
+// @alpha
+export type GenAIChatCreatedVisualizationDimension = {
+    id: string;
+    type: "attribute";
+};
+
+// @alpha
+export type GenAIChatCreatedVisualizationMetric = {
+    id: string;
+    type: GenAIChatMetricType;
+    aggFunction: GenAIChatMetricAggregation;
+};
+
+// @alpha
+export type GenAIChatCreatedVisualizations = {
+    objects: GenAIChatCreatedVisualization[];
+    reasoning: string;
+};
+
+// @alpha
+export type GenAIChatInteractionContent = GenAIChatTextInteractionContent | GenAIChatSearchInteractionContent | GenAIChatVisualizationInteractionContent;
+
+// @alpha
+export type GenAIChatMetricAggregation = "COUNT" | "SUM" | "MIN" | "MAX" | "AVG" | "MEDIAN";
+
+// @alpha
+export type GenAIChatMetricType = "metric" | "fact" | "attribute";
+
+// @alpha
+export type GenAIChatRole = "USER" | "AI";
+
+// @alpha
+export type GenAIChatSearchInteractionContent = GenAIChatBaseInteractionContent & {
+    foundObject: ISemanticSearchResultItem;
+};
+
+// @alpha
+export type GenAIChatTextInteractionContent = GenAIChatBaseInteractionContent & {
+    text: string;
+};
+
+// @alpha
+export type GenAIChatUseCase = {
+    useCase: string;
+    exampleDescription?: string;
+    score: number;
+};
+
+// @alpha
+export type GenAIChatVisualizationInteractionContent = GenAIChatBaseInteractionContent & {
+    createdVisualization: GenAIChatCreatedVisualization;
+};
+
+// @alpha
+export type GenAIChatVisualizationType = "TABLE" | "HEADLINE" | "BAR" | "LINE" | "PIE" | "COLUMN";
+
 // @beta
-export type GenAISemanticSearchType = "dataset" | "attribute" | "label" | "fact" | "date" | "metric" | "visualization" | "dashboard";
+export type GenAIObjectType = "dataset" | "attribute" | "label" | "fact" | "date" | "metric" | "visualization" | "dashboard";
+
+// @beta @deprecated
+export type GenAISemanticSearchType = GenAIObjectType;
 
 // @internal
 export function getAttributeElementsItems(attributeElements: IAttributeElements): Array<string | null>;
@@ -1766,6 +1847,25 @@ export interface IFilterContextBase {
 export interface IFilterContextDefinition extends IFilterContextBase, Partial<IDashboardObjectIdentity> {
 }
 
+// @alpha
+export interface IGenAIChatEvaluation {
+    createdVisualizations?: GenAIChatCreatedVisualizations;
+    foundObjects?: ISemanticSearchResultItem[];
+    invalidQuestion: boolean;
+    useCases?: GenAIChatUseCase[];
+}
+
+// @alpha
+export interface IGenAIChatInteraction {
+    content: GenAIChatInteractionContent[];
+    role: GenAIChatRole;
+}
+
+// @alpha
+export interface IGenAIUserContext {
+    activeObject: GenAIActiveObject;
+}
+
 // @public
 export interface IGranteeGranularity {
     inheritedPermissions: AccessGranularPermission[];
@@ -2902,16 +3002,16 @@ export function isDrillToInsight(obj: unknown): obj is IDrillToInsight;
 export function isDrillToLegacyDashboard(obj: unknown): obj is IDrillToLegacyDashboard;
 
 // @beta
-export type ISemanticSearchRelationship = {
-    sourceWorkspaceId: string;
+export interface ISemanticSearchRelationship {
     sourceObjectId: string;
-    sourceObjectType: GenAISemanticSearchType;
     sourceObjectTitle: string;
-    targetWorkspaceId: string;
+    sourceObjectType: GenAIObjectType;
+    sourceWorkspaceId: string;
     targetObjectId: string;
-    targetObjectType: GenAISemanticSearchType;
     targetObjectTitle: string;
-};
+    targetObjectType: GenAIObjectType;
+    targetWorkspaceId: string;
+}
 
 // @beta
 export interface ISemanticSearchResultItem {
@@ -2922,7 +3022,7 @@ export interface ISemanticSearchResultItem {
     score: number;
     tags: string[];
     title: string;
-    type: GenAISemanticSearchType;
+    type: GenAIObjectType;
     visualizationUrl?: string;
     workspaceId: string;
 }
@@ -2974,6 +3074,8 @@ export interface ISettings {
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     enableEmbedButtonInAD?: boolean;
     enableEmbedButtonInKD?: boolean;
+    enableGenAIChat?: boolean;
+    enableGenAIChatRollout?: boolean;
     enableHeadlineExport?: boolean;
     enableHidingOfDataPoints?: boolean;
     enableHidingOfWidgetTitle?: boolean;

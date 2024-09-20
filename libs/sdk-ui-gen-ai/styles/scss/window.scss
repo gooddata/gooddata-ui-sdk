@@ -1,0 +1,122 @@
+// (C) 2024 GoodData Corporation
+
+@use "sass:color";
+@use "variables" as variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins" as kit-mixins;
+@use "@gooddata/sdk-ui-kit/styles/scss/Form/mixins" as form-mixins;
+
+.gd-gen-ai-chat__window {
+    width: 420px;
+    height: calc(100vh - 84px);
+    background-color: kit-variables.$gd-color-light;
+    border: 1px solid kit-variables.$gd-border-color;
+    border-radius: 3px;
+    // TODO - use color from variables
+    box-shadow: 0 1px 20px 0 #14385d26;
+    display: flex;
+    flex-direction: column;
+
+    &--fullscreen {
+        width: 768px;
+        height: calc(100vh - 60px);
+    }
+
+    &__header {
+        flex-shrink: 0;
+        height: 45px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 16px;
+        padding: 0 16px;
+    }
+
+    &__header__gap {
+        flex: 1;
+    }
+
+    &__header__divider {
+        width: 1px;
+        height: 29px;
+        background-color: kit-variables.$gd-border-color;
+    }
+
+    &__header__icon {
+        display: flex;
+        cursor: pointer;
+
+        & svg path {
+            transition: fill 0.2s;
+            fill: kit-variables.$gd-color-label;
+        }
+
+        &--disabled {
+            cursor: default;
+
+            & svg path {
+                fill: kit-variables.$gd-color-disabled;
+            }
+        }
+
+        & svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        &--reset:not(&--disabled):hover {
+            & svg path {
+                fill: kit-variables.$gd-palette-error-base;
+            }
+        }
+
+        &--close:not(&--disabled):hover,
+        &--fullscreen:not(&--disabled):hover {
+            & svg path {
+                fill: kit-variables.$gd-palette-primary-base;
+            }
+        }
+
+        &[data-gd-tooltip] {
+            position: relative;
+        }
+
+        &[data-gd-tooltip]::before {
+            content: "";
+            position: absolute;
+            top: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 4px 6px 0 6px;
+            border-style: solid;
+            border-color: kit-variables.$gd-color-text transparent transparent transparent;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+        &[data-gd-tooltip]::after {
+            content: attr(data-gd-tooltip);
+            position: absolute;
+            top: -4px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100%);
+            background: kit-variables.$gd-color-text;
+            text-align: center;
+            color: kit-variables.$gd-color-white;
+            padding: 0.3em 0.6em;
+            font-size: 0.85em;
+            min-width: 5em;
+            text-wrap: balance;
+            border-radius: 5px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        &[data-gd-tooltip]:hover::after,
+        &[data-gd-tooltip]:hover::before {
+            opacity: 1;
+        }
+    }
+}

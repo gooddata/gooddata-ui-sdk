@@ -459,6 +459,20 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableGenAIChat,
+            "enableGenAIChat",
+            "BOOLEAN",
+            FeatureFlagsValues.enableGenAIChat,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableGenAIChatRollout,
+            "enableGenAIChatRollout",
+            "BOOLEAN",
+            FeatureFlagsValues.enableGenAIChatRollout,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableDashboardFilterViews,
             "enableDashboardFilterViews",
             "BOOLEAN",

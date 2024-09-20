@@ -13,7 +13,7 @@ import { ErrorConverter } from '@gooddata/sdk-backend-spi';
 import { ExplainConfig } from '@gooddata/sdk-backend-spi';
 import { ExplainType } from '@gooddata/sdk-backend-spi';
 import { FilterContextItem } from '@gooddata/sdk-model';
-import { GenAISemanticSearchType } from '@gooddata/sdk-model';
+import { GenAIObjectType } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { IAnomalyDetectionConfig } from '@gooddata/sdk-backend-spi';
@@ -33,6 +33,7 @@ import { ICatalogDateDataset } from '@gooddata/sdk-model';
 import { ICatalogFact } from '@gooddata/sdk-model';
 import { ICatalogGroup } from '@gooddata/sdk-model';
 import { ICatalogMeasure } from '@gooddata/sdk-model';
+import { IChatThread } from '@gooddata/sdk-backend-spi';
 import { IClusteringConfig } from '@gooddata/sdk-backend-spi';
 import { IClusteringResult } from '@gooddata/sdk-backend-spi';
 import { IDashboard } from '@gooddata/sdk-model';
@@ -65,6 +66,7 @@ import { IFilter } from '@gooddata/sdk-model';
 import { IFilterContextDefinition } from '@gooddata/sdk-model';
 import { IForecastConfig } from '@gooddata/sdk-backend-spi';
 import { IForecastResult } from '@gooddata/sdk-backend-spi';
+import { IGenAIChatEvaluation } from '@gooddata/sdk-model';
 import { IGetDashboardOptions } from '@gooddata/sdk-backend-spi';
 import { IGetDashboardPluginOptions } from '@gooddata/sdk-backend-spi';
 import { IGetScheduledMailOptions } from '@gooddata/sdk-backend-spi';
@@ -655,6 +657,24 @@ export function dummyBackendEmptyData(): IAnalyticalBackend;
 export function dummyDataView(definition: IExecutionDefinition, result?: IExecutionResult, config?: DummyBackendConfig): IDataView;
 
 // @internal
+export class DummyGenAIChatThread implements IChatThread {
+    // (undocumented)
+    query({ signal }: {
+        signal?: AbortSignal;
+    }): Promise<IGenAIChatEvaluation>;
+    // (undocumented)
+    withChatHistory(): IChatThread;
+    // (undocumented)
+    withCreateLimit(): IChatThread;
+    // (undocumented)
+    withQuestion(): IChatThread;
+    // (undocumented)
+    withSearchLimit(): IChatThread;
+    // (undocumented)
+    withUserContext(): IChatThread;
+}
+
+// @internal
 export class DummySemanticSearchQueryBuilder implements ISemanticSearchQuery {
     constructor(workspaceId: string);
     // (undocumented)
@@ -663,7 +683,7 @@ export class DummySemanticSearchQueryBuilder implements ISemanticSearchQuery {
     }): Promise<{
         results: {
             id: string;
-            type: GenAISemanticSearchType;
+            type: GenAIObjectType;
             workspaceId: string;
             title: string;
             description: string;
