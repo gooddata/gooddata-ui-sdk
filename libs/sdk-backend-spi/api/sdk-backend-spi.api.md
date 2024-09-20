@@ -10,7 +10,7 @@ import { CatalogItemType } from '@gooddata/sdk-model';
 import { DataValue } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { FilterContextItem } from '@gooddata/sdk-model';
-import { GenAISemanticSearchType } from '@gooddata/sdk-model';
+import { GenAIObjectType } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAccessGrantee } from '@gooddata/sdk-model';
 import { IAlertDefault } from '@gooddata/sdk-model';
@@ -60,6 +60,9 @@ import { IExportDefinitionMetadataObject } from '@gooddata/sdk-model';
 import { IExportDefinitionMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IFilterContextDefinition } from '@gooddata/sdk-model';
+import { IGenAIChatEvaluation } from '@gooddata/sdk-model';
+import { IGenAIChatInteraction } from '@gooddata/sdk-model';
+import { IGenAIUserContext } from '@gooddata/sdk-model';
 import { IGranularAccessGrantee } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
@@ -392,6 +395,18 @@ export interface ICancelable<T> {
     withSignal(signal: AbortSignal): T;
 }
 
+// @alpha
+export interface IChatThread {
+    query(options?: {
+        signal?: AbortSignal;
+    }): Promise<IGenAIChatEvaluation>;
+    withChatHistory(chatHistory: IGenAIChatInteraction[]): IChatThread;
+    withCreateLimit(createLimit: number): IChatThread;
+    withQuestion(question: string): IChatThread;
+    withSearchLimit(searchLimit: number): IChatThread;
+    withUserContext(userContext: IGenAIUserContext): IChatThread;
+}
+
 // @alpha (undocumented)
 export interface IClusteringConfig {
     numberOfClusters: number;
@@ -708,6 +723,7 @@ export interface IForecastView {
 
 // @beta
 export interface IGenAIService {
+    getChatThread(): IChatThread;
     getSemanticSearchQuery(): ISemanticSearchQuery;
     semanticSearchIndex(): Promise<void>;
 }
@@ -1034,7 +1050,7 @@ export interface ISemanticSearchQuery {
     }): Promise<ISemanticSearchResult>;
     withDeepSearch(deepSearch: boolean): ISemanticSearchQuery;
     withLimit(limit: number): ISemanticSearchQuery;
-    withObjectTypes(types: GenAISemanticSearchType[]): ISemanticSearchQuery;
+    withObjectTypes(types: GenAIObjectType[]): ISemanticSearchQuery;
     withQuestion(question: string): ISemanticSearchQuery;
 }
 

@@ -159,6 +159,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "@gooddata/sdk-ui-gen-ai",
+      "allowedCategories": [ "examples", "production" ]
+    },
+    {
       "name": "@gooddata/sdk-ui-geo",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -383,6 +387,10 @@
       "allowedCategories": [ "examples", "production" ]
     },
     {
+      "name": "@types/react-native-listener",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@types/react-portal",
       "allowedCategories": [ "production" ]
     },
@@ -401,6 +409,10 @@
     {
       "name": "@types/react-syntax-highlighter",
       "allowedCategories": [ "examples" ]
+    },
+    {
+      "name": "@types/react-textarea-autosize",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "@types/react-transition-group",
@@ -1000,6 +1012,10 @@
     },
     {
       "name": "require-from-string",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "reselect",
       "allowedCategories": [ "production" ]
     },
     {

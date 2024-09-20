@@ -20,6 +20,7 @@ const packagesWithStyles = [
     "@gooddata/sdk-ui",
     "@gooddata/sdk-ui-charts",
     "@gooddata/sdk-ui-filters",
+    "@gooddata/sdk-ui-gen-ai",
     "@gooddata/sdk-ui-geo",
     "@gooddata/sdk-ui-pivot",
     "@gooddata/sdk-ui-semantic-search",

@@ -1,0 +1,25 @@
+{
+    "exclude": ["**/tests", "**/test"],
+    "include": ["src/**/*", "src/**/*.json"],
+    "compilerOptions": {
+        "baseUrl": ".",
+        "rootDir": "./src",
+        "outDir": "./esm",
+        "target": "ES2022",
+        "lib": ["ES2022", "DOM"],
+        "module": "Node16",
+        "moduleResolution": "Node16",
+        "jsx": "react",
+        "importHelpers": true,
+        "incremental": false,
+        "resolveJsonModule": true,
+        "strict": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "composite": false,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true
+    }
+}

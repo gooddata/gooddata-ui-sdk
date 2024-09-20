@@ -465,6 +465,27 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
     }
 }
 
+.gd-header-chat {
+    height: 100%;
+    margin: 0;
+    line-height: 42px;
+    opacity: 0.8;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+    font-weight: 400;
+    position: relative;
+    box-sizing: border-box;
+
+    &:hover {
+        opacity: 1;
+    }
+
+    & .gd-button-text {
+        display: flex;
+    }
+}
+
 .gd-icon-header-search-button {
     vertical-align: middle;
     opacity: 0.8;
