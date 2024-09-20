@@ -1,5 +1,5 @@
 // (C) 2019-2024 GoodData Corporation
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import noop from "lodash/noop.js";
 import { defineMessage, useIntl } from "react-intl";
 import {
@@ -59,17 +59,7 @@ const DEFAULT_MIN_RECURRENCE_MINUTES = "60";
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 
 export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
-    const {
-        onCancel,
-        onDeleteSuccess,
-        onDeleteError,
-        isVisible,
-        editSchedule,
-        users,
-        webhooks,
-        emails,
-        context,
-    } = props;
+    const { onCancel, onDeleteSuccess, onDeleteError, isVisible, editSchedule, users, context } = props;
     const intl = useIntl();
     const [scheduledEmailToDelete, setScheduledEmailToDelete] = useState<
         IAutomationMetadataObject | IAutomationMetadataObjectDefinition | null
@@ -92,8 +82,6 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
     const allowHourlyRecurrence =
         parseInt(minimumRecurrenceMinutesEntitlement?.value ?? DEFAULT_MIN_RECURRENCE_MINUTES, 10) === 60;
 
-    const notificationChannels = useMemo(() => [...emails, ...webhooks], [webhooks, emails]);
-
     const {
         automation,
         originalAutomation,
@@ -107,6 +95,8 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
         onSubjectChange,
         onTitleChange,
         isCronValid,
+        notificationChannels,
+        warningMessage,
     } = useEditScheduledEmail(props);
     const { handleSaveScheduledEmail, isSavingScheduledEmail, savingErrorMessage } =
         useSaveScheduledEmailToBackend(automation, props);
@@ -333,6 +323,11 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
                             {errorMessage ? (
                                 <Message type="error" className="gd-notifications-channels-dialog-error">
                                     {errorMessage}
+                                </Message>
+                            ) : null}
+                            {warningMessage ? (
+                                <Message type="warning" className="gd-notifications-channels-dialog-warning">
+                                    {warningMessage}
                                 </Message>
                             ) : null}
                             <ContentDivider className="gd-divider-with-margin gd-divider-full-row" />
