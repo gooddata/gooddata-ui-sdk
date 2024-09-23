@@ -1,5 +1,5 @@
 // (C) 2024 GoodData Corporation
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { Icon, Typography } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
@@ -11,14 +11,6 @@ import {
     selectInsightsMap,
     selectSettings,
     useDashboardScheduledEmails,
-    selectIsDashboardExecuted,
-    DashboardEventHandler,
-    useDashboardEventsContext,
-    isDashboardFilterContextChanged,
-    isDashboardCommandStarted,
-    DashboardCommandStarted,
-    RequestAsyncRender,
-    ResolveAsyncRender,
 } from "../../../model/index.js";
 import { useDashboardComponentsContext } from "../../../presentation/dashboardContexts/index.js";
 import {
@@ -26,20 +18,15 @@ import {
     DashboardItemVisualization,
     getVisTypeCssClass,
 } from "../../../presentation/presentationComponents/index.js";
-import {
-    IInsight,
-    IInsightWidget,
-    IVisualizationSwitcherWidget,
-    insightVisualizationType,
-    widgetTitle,
-} from "@gooddata/sdk-model";
+import { IInsight, IInsightWidget, insightVisualizationType, widgetTitle } from "@gooddata/sdk-model";
 import { VisType } from "@gooddata/sdk-ui";
-import { DashboardInsight } from "../insight/DashboardInsight.js";
 import { InsightWidgetDescriptionTrigger } from "../description/InsightWidgetDescriptionTrigger.js";
 import { useInsightExport } from "../common/index.js";
 import { useAlertingAndScheduling } from "../widget/InsightWidget/useAlertingAndScheduling.js";
 import { useInsightMenu } from "../widget/InsightWidget/useInsightMenu.js";
 import { VisualizationSwitcherNavigationHeader } from "../widget/VisualizationSwitcherWidget/VisualizationSwitcherNavigationHeader.js";
+import { useExecutionProgress } from "./useExecutionProgress.js";
+import { AllVisualizationsDashInsights } from "./AllVisualizationsDashInsights.js";
 
 /**
  * @internal
@@ -120,69 +107,8 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
     const intl = useIntl();
     const visType = insightVisualizationType(insight) as VisType;
     const settings = useDashboardSelector(selectSettings);
-    const isDashboardExecuted = useDashboardSelector(selectIsDashboardExecuted);
-    const [isReexecuting, setIsReexecuting] = useState(false);
 
-    const [_executionsProgress, setExecutionsProgress] = useState({});
-
-    const { registerHandler, unregisterHandler } = useDashboardEventsContext();
-
-    useEffect(() => {
-        const onFilterContextChanged: DashboardEventHandler = {
-            eval: (evt: any) => {
-                return isDashboardFilterContextChanged(evt);
-            },
-            handler: () => {
-                setIsReexecuting(true);
-            },
-        };
-        const onRenderRequest: DashboardEventHandler = {
-            eval: (evt: any) => {
-                return (
-                    isDashboardCommandStarted(evt) &&
-                    evt.payload.command.type === "GDC.DASH/CMD.RENDER.ASYNC.REQUEST"
-                );
-            },
-            handler: (evt: DashboardCommandStarted<RequestAsyncRender>) => {
-                setExecutionsProgress((prev) => ({
-                    ...prev,
-                    [evt.payload.command.payload.id]: true,
-                }));
-            },
-        };
-
-        const onRenderResponse: DashboardEventHandler = {
-            eval: (evt: any) => {
-                return (
-                    isDashboardCommandStarted(evt) &&
-                    evt.payload.command.type === "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE"
-                );
-            },
-            handler: (evt: DashboardCommandStarted<ResolveAsyncRender>) => {
-                setExecutionsProgress((prev) => {
-                    const newProgress = {
-                        ...prev,
-                        [evt.payload.command.payload.id]: false,
-                    };
-
-                    if (Object.values(newProgress).every((value) => !value)) {
-                        setIsReexecuting(false);
-                    }
-                    return newProgress;
-                });
-            },
-        };
-
-        registerHandler(onFilterContextChanged);
-        registerHandler(onRenderRequest);
-        registerHandler(onRenderResponse);
-
-        return () => {
-            unregisterHandler(onFilterContextChanged);
-            unregisterHandler(onRenderRequest);
-            unregisterHandler(onRenderResponse);
-        };
-    }, [registerHandler, unregisterHandler]);
+    const { showOthers } = useExecutionProgress();
 
     const { ref: widgetRef } = activeVisualization;
 
@@ -221,7 +147,6 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
         numberOfAvailableDestinations,
     });
 
-    ///
     const { closeMenu, isMenuOpen, menuItems, openMenu } = useInsightMenu({
         insight,
         widget: activeVisualization,
@@ -248,12 +173,8 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
         }
     }, [isMenuOpen, closeMenu, openMenu]);
 
-    const {
-        InsightMenuButtonComponentProvider,
-        InsightMenuComponentProvider,
-        ErrorComponent,
-        LoadingComponent,
-    } = useDashboardComponentsContext();
+    const { InsightMenuButtonComponentProvider, InsightMenuComponentProvider } =
+        useDashboardComponentsContext();
 
     const InsightMenuButtonComponent = useMemo(
         () => InsightMenuButtonComponentProvider(insight, activeVisualization),
@@ -321,61 +242,18 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
                 }}
             >
                 {({ clientHeight, clientWidth }) => (
-                    <DashboardInsight
-                        key={activeVisualization.identifier}
+                    <AllVisualizationsDashInsights
+                        visualizations={widget.visualizations}
+                        activeVisualization={activeVisualization}
+                        showOthers={showOthers}
+                        onExportReady={onExportReady}
+                        onError={onError}
+                        onLoadingChanged={onLoadingChanged}
                         clientHeight={clientHeight}
                         clientWidth={clientWidth}
-                        insight={insight}
-                        widget={activeVisualization}
-                        onExportReady={onExportReady}
-                        onLoadingChanged={onLoadingChanged}
-                        onError={onError}
-                        ErrorComponent={ErrorComponent}
-                        LoadingComponent={LoadingComponent}
                     />
-                    // TODO INE: once active visualization is loaded and executed then we can render on background also other switcher visualizations
                 )}
             </DashboardItemVisualization>
-            {isDashboardExecuted && !isReexecuting ? (
-                <OtherVisualizations
-                    widget={widget}
-                    visualizations={widget.visualizations.filter(
-                        (visualization) => visualization.identifier !== activeVisualization.identifier,
-                    )}
-                />
-            ) : null}
         </DashboardItem>
-    );
-};
-
-const OtherVisualizations: React.FC<{
-    widget: IVisualizationSwitcherWidget;
-    visualizations: IInsightWidget[];
-}> = ({ visualizations }) => {
-    const insights = useDashboardSelector(selectInsightsMap);
-    const othersAreExecuted = useDashboardSelector(selectIsDashboardExecuted);
-    if (!othersAreExecuted) {
-        return null;
-    }
-    return (
-        <div className="gd-visualization-switcher-hidden-visualizations">
-            {visualizations.map((visualization) => {
-                const insight = insights.get(visualization.insight);
-                if (!insight) {
-                    return null;
-                }
-                return (
-                    <DashboardInsight
-                        key={visualization.identifier}
-                        clientHeight={0}
-                        clientWidth={0}
-                        insight={insight}
-                        widget={visualization}
-                        ErrorComponent={() => null}
-                        LoadingComponent={() => null}
-                    />
-                );
-            })}
-        </div>
     );
 };

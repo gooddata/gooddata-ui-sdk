@@ -26,7 +26,16 @@
     gap: 8px;
 }
 
-.gd-visualization-switcher-hidden-visualizations {
+.gd-visualization-switcher-visible-visualization {
+    width: 100%;
+    height: 100%;
+
+    &.is-edit-mode {
+        display: flex;
+    }
+}
+
+.gd-visualization-switcher-hidden-visualization {
     width: 0;
     height: 0;
     overflow: hidden;
