@@ -4,15 +4,15 @@ import { ExecutedState } from "./executedState.js";
 
 type ExecutedReducer<A extends Action = AnyAction> = CaseReducer<ExecutedState, A>;
 
-const setExecutedStart: ExecutedReducer = (state) => {
+const setDashboardExecutionStart: ExecutedReducer = (state) => {
     state.executed = false;
 };
 
-const setExecutedDone: ExecutedReducer = (state) => {
+const setDashboardExecutionDone: ExecutedReducer = (state) => {
     state.executed = true;
 };
 
 export const executedReducers = {
-    setExecutedStart,
-    setExecutedDone,
+    setDashboardExecutionStart,
+    setDashboardExecutionDone,
 };

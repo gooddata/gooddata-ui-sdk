@@ -1,5 +1,5 @@
 // (C) 2024 GoodData Corporation
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import { Icon, Typography } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
@@ -11,6 +11,14 @@ import {
     selectInsightsMap,
     selectSettings,
     useDashboardScheduledEmails,
+    selectIsDashboardExecuted,
+    DashboardEventHandler,
+    useDashboardEventsContext,
+    isDashboardFilterContextChanged,
+    isDashboardCommandStarted,
+    DashboardCommandStarted,
+    RequestAsyncRender,
+    ResolveAsyncRender,
 } from "../../../model/index.js";
 import { useDashboardComponentsContext } from "../../../presentation/dashboardContexts/index.js";
 import {
@@ -32,7 +40,6 @@ import { useInsightExport } from "../common/index.js";
 import { useAlertingAndScheduling } from "../widget/InsightWidget/useAlertingAndScheduling.js";
 import { useInsightMenu } from "../widget/InsightWidget/useInsightMenu.js";
 import { VisualizationSwitcherNavigationHeader } from "../widget/VisualizationSwitcherWidget/VisualizationSwitcherNavigationHeader.js";
-import { selectIsDashboardExecuted } from "src/model/store/executed/executedSelectors.js";
 
 /**
  * @internal
@@ -113,7 +120,69 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
     const intl = useIntl();
     const visType = insightVisualizationType(insight) as VisType;
     const settings = useDashboardSelector(selectSettings);
-    const isExecuted = useDashboardSelector(selectIsDashboardExecuted);
+    const isDashboardExecuted = useDashboardSelector(selectIsDashboardExecuted);
+    const [isReexecuting, setIsReexecuting] = useState(false);
+
+    const [_executionsProgress, setExecutionsProgress] = useState({});
+
+    const { registerHandler, unregisterHandler } = useDashboardEventsContext();
+
+    useEffect(() => {
+        const onFilterContextChanged: DashboardEventHandler = {
+            eval: (evt: any) => {
+                return isDashboardFilterContextChanged(evt);
+            },
+            handler: () => {
+                setIsReexecuting(true);
+            },
+        };
+        const onRenderRequest: DashboardEventHandler = {
+            eval: (evt: any) => {
+                return (
+                    isDashboardCommandStarted(evt) &&
+                    evt.payload.command.type === "GDC.DASH/CMD.RENDER.ASYNC.REQUEST"
+                );
+            },
+            handler: (evt: DashboardCommandStarted<RequestAsyncRender>) => {
+                setExecutionsProgress((prev) => ({
+                    ...prev,
+                    [evt.payload.command.payload.id]: true,
+                }));
+            },
+        };
+
+        const onRenderResponse: DashboardEventHandler = {
+            eval: (evt: any) => {
+                return (
+                    isDashboardCommandStarted(evt) &&
+                    evt.payload.command.type === "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE"
+                );
+            },
+            handler: (evt: DashboardCommandStarted<ResolveAsyncRender>) => {
+                setExecutionsProgress((prev) => {
+                    const newProgress = {
+                        ...prev,
+                        [evt.payload.command.payload.id]: false,
+                    };
+
+                    if (Object.values(newProgress).every((value) => !value)) {
+                        setIsReexecuting(false);
+                    }
+                    return newProgress;
+                });
+            },
+        };
+
+        registerHandler(onFilterContextChanged);
+        registerHandler(onRenderRequest);
+        registerHandler(onRenderResponse);
+
+        return () => {
+            unregisterHandler(onFilterContextChanged);
+            unregisterHandler(onRenderRequest);
+            unregisterHandler(onRenderResponse);
+        };
+    }, [registerHandler, unregisterHandler]);
 
     const { ref: widgetRef } = activeVisualization;
 
@@ -253,6 +322,7 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
             >
                 {({ clientHeight, clientWidth }) => (
                     <DashboardInsight
+                        key={activeVisualization.identifier}
                         clientHeight={clientHeight}
                         clientWidth={clientWidth}
                         insight={insight}
@@ -266,7 +336,7 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
                     // TODO INE: once active visualization is loaded and executed then we can render on background also other switcher visualizations
                 )}
             </DashboardItemVisualization>
-            {isExecuted ? (
+            {isDashboardExecuted && !isReexecuting ? (
                 <OtherVisualizations
                     widget={widget}
                     visualizations={widget.visualizations.filter(
@@ -288,7 +358,7 @@ const OtherVisualizations: React.FC<{
         return null;
     }
     return (
-        <>
+        <div className="gd-visualization-switcher-hidden-visualizations">
             {visualizations.map((visualization) => {
                 const insight = insights.get(visualization.insight);
                 if (!insight) {
@@ -306,6 +376,6 @@ const OtherVisualizations: React.FC<{
                     />
                 );
             })}
-        </>
+        </div>
     );
 };

@@ -417,3 +417,6 @@ export { selectUsers } from "./users/usersSelectors.js";
 
 export type { IFilterViews, FilterViewsState } from "./filterViews/index.js";
 export { selectFilterViews, selectFilterViewsAreLoading } from "./filterViews/index.js";
+
+export type { ExecutedState } from "./executed/executedState.js";
+export { selectIsDashboardExecuted } from "./executed/executedSelectors.js";

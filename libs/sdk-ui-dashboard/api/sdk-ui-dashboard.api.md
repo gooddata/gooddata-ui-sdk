@@ -3465,6 +3465,12 @@ export interface EntitlementsState {
     entitlements?: ResolvedEntitlements;
 }
 
+// @beta (undocumented)
+export interface ExecutedState {
+    // (undocumented)
+    executed: boolean;
+}
+
 // @internal (undocumented)
 export function existBlacklistHierarchyPredicate(reference: IDrillDownReference, attributeHierarchy: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy, attributeIdentifier?: ObjRef): boolean;
 
@@ -7547,6 +7553,9 @@ export const selectIsCircularDependency: (currentFilterLocalId: string, neighbor
 
 // @internal
 export const selectIsDashboardDirty: DashboardSelector<boolean>;
+
+// @internal (undocumented)
+export const selectIsDashboardExecuted: DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export const selectIsDashboardLoading: DashboardSelector<boolean>;

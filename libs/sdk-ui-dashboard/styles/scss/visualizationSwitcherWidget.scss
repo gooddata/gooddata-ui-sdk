@@ -25,3 +25,9 @@
     align-items: center;
     gap: 8px;
 }
+
+.gd-visualization-switcher-hidden-visualizations {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
