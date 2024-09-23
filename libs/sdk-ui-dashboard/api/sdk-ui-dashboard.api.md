@@ -5641,6 +5641,8 @@ export type IVisualizationSwitcherDraggingComponentProps = {
 // @alpha (undocumented)
 export interface IVisualizationSwitcherToolbarProps {
     // (undocumented)
+    onClose: () => void;
+    // (undocumented)
     onSelectedVisualizationChanged: (visualizationId: string) => void;
     // (undocumented)
     onVisualizationAdded: (insightWidget: IInsightWidget, insight: IInsight, sizeInfo: IVisualizationSizeInfo) => void;

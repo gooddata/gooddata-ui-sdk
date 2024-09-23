@@ -34,7 +34,7 @@ export const EditableDashboardVisualizationSwitcherWidget: React.FC<
     const dispatch = useDashboardDispatch();
     const intl = useIntl();
 
-    const { isSelectable, isSelected, onSelected, hasConfigPanelOpen } = useWidgetSelection(
+    const { isSelectable, isSelected, onSelected, closeConfigPanel, hasConfigPanelOpen } = useWidgetSelection(
         widgetRef(widget),
     );
     const isSaving = useDashboardSelector(selectIsDashboardSaving);
@@ -101,6 +101,7 @@ export const EditableDashboardVisualizationSwitcherWidget: React.FC<
                                         onVisualizationsChanged={changedVisualizations}
                                         onSelectedVisualizationChanged={setActiveVisualizationId}
                                         onVisualizationAdded={addVisualization}
+                                        onClose={closeConfigPanel}
                                     />
                                 )}
                             </>

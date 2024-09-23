@@ -17,6 +17,7 @@ export interface IVisualizationSwitcherToolbarProps {
         sizeInfo: IVisualizationSizeInfo,
     ) => void;
     onSelectedVisualizationChanged: (visualizationId: string) => void;
+    onClose: () => void;
 }
 
 /**
