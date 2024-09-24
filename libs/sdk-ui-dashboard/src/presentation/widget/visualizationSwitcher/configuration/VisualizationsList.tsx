@@ -54,7 +54,10 @@ export const VisualizationsList: React.FC<IVisulizationsListProps> = ({
                     {insight ? <InsightListItemTypeIcon type={insightVisualizationType(insight!)} /> : null}
                     <div className="gd-visualizations-list-item-content">
                         <div className="gd-visualizations-list-item-content-name">
-                            <ShortenedText tooltipAlignPoints={tooltipAlignPoints}>
+                            <ShortenedText
+                                className="gd-visualizations-list-item-content-name-text"
+                                tooltipAlignPoints={tooltipAlignPoints}
+                            >
                                 {visualization.title}
                             </ShortenedText>
                         </div>
