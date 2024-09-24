@@ -55,7 +55,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
     const currentUser = useDashboardSelector(selectCurrentUser);
 
-    const { handleCreateAlert, handleUpdateAlert, handlePauseAlert, handleResumeAlert } =
+    const { handleCreateAlert, handleUpdateAlert, handlePauseAlert, handleResumeAlert, isSavingAlert } =
         useSaveAlertToBackend({
             onCreateSuccess: () => {
                 setViewMode("list");
@@ -63,7 +63,6 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
                 addSuccess(messages.alertAddSuccess);
             },
             onCreateError: () => {
-                setIsLoading(false);
                 setViewMode("list");
                 addError(messages.alertSaveError);
             },
@@ -73,7 +72,6 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
                 addSuccess(messages.alertUpdateSuccess);
             },
             onUpdateError: () => {
-                setIsLoading(false);
                 cancelAlertEditing();
                 addError(messages.alertSaveError);
             },
@@ -82,7 +80,6 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
                 addSuccess(messages.alertPauseSuccess);
             },
             onPauseError: () => {
-                setIsLoading(false);
                 addError(messages.alertSaveError);
             },
             onResumeSuccess: () => {
@@ -90,7 +87,6 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
                 addSuccess(messages.alertResumeSuccess);
             },
             onResumeError: () => {
-                setIsLoading(false);
                 addError(messages.alertSaveError);
             },
         });
@@ -114,32 +110,9 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     const hasAlerts = alerts.length > 0;
     const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);
     const maxAutomationsReached = automationsCount >= maxAutomations && !unlimitedAutomationsEntitlement;
-
-    // Handle async widget filters state
-    useEffect(() => {
-        if (supportedMeasures.length === 0) {
-            setIsLoading(false);
-            return;
-        }
-        if (widgetFiltersStatus === "success") {
-            setIsLoading(false);
-            setDefaultAlert(createDefaultAlert(widgetFilters, defaultMeasure!, defaultNotificationChannelId));
-        } else if (widgetFiltersStatus === "error") {
-            setIsLoading(false);
-            closeInsightWidgetMenu();
-            addError(messages.alertLoadingError);
-        }
-        // Avoid infinite loop by ignoring addError
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [
-        closeInsightWidgetMenu,
-        defaultMeasure,
-        defaultNotificationChannelId,
-        widgetFilters,
-        widgetFiltersStatus,
-    ]);
-
-    const [isLoading, setIsLoading] = useState(true);
+    const [isRefreshingAutomations, setIsRefreshingAutomations] = useState(false);
+    const [isDeletingAlert, setIsDeletingAlert] = useState(false);
+    const isLoadingFilters = widgetFiltersStatus === "pending" || widgetFiltersStatus === "running";
     const [viewMode, setViewMode] = useState<InsightWidgetAlertingViewMode>(
         alerts.length > 0 || !canCreateAutomation ? "list" : "create",
     );
@@ -147,6 +120,30 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         IAutomationMetadataObject | IAutomationMetadataObjectDefinition | null
     >(null);
     const [editingAlert, setEditingAlert] = useState<IAutomationMetadataObject | null>(null);
+
+    // Handle async widget filters state
+    useEffect(() => {
+        if (
+            widgetFiltersStatus === "success" &&
+            defaultMeasure &&
+            defaultNotificationChannelId &&
+            !defaultAlert
+        ) {
+            setDefaultAlert(createDefaultAlert(widgetFilters, defaultMeasure, defaultNotificationChannelId));
+        } else if (widgetFiltersStatus === "error" && !defaultAlert) {
+            closeInsightWidgetMenu();
+            addError(messages.alertLoadingError);
+        }
+        // Avoid infinite loop by ignoring addError
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [
+        closeInsightWidgetMenu,
+        defaultAlert,
+        defaultMeasure,
+        defaultNotificationChannelId,
+        widgetFilters,
+        widgetFiltersStatus,
+    ]);
 
     const initiateAlertCreation = () => {
         setViewMode("create");
@@ -183,12 +180,10 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             },
             recipients: [convertUserToAutomationRecipient(currentUser)],
         } as IAutomationMetadataObject;
-        setIsLoading(true);
         handleCreateAlert(alertToCreate);
     };
 
     const updateExistingAlert = (alert: IAutomationMetadataObject) => {
-        setIsLoading(true);
         handleUpdateAlert(alert);
     };
 
@@ -197,7 +192,6 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             ...alert,
             alert: { ...alert.alert, trigger: { ...alert.alert?.trigger, state: "PAUSED" } },
         } as IAutomationMetadataObject;
-        setIsLoading(true);
         handlePauseAlert(alertToPause);
     };
 
@@ -206,32 +200,34 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             ...alert,
             alert: { ...alert.alert, trigger: { ...alert.alert?.trigger, state: "ACTIVE" } },
         } as IAutomationMetadataObject;
-        setIsLoading(true);
         handleResumeAlert(alertToResume);
     };
 
     const deleteExistingAlert = async (alert: IAutomationMetadataObject) => {
-        setIsLoading(true);
+        setIsDeletingAlert(true);
         try {
             await effectiveBackend.workspace(effectiveWorkspace).automations().deleteAutomation(alert.id);
             addSuccess(messages.alertDeleteSuccess);
+            setIsDeletingAlert(false);
             setViewMode(alerts.length === 1 ? "create" : "list");
             handleRefreshAutomations();
         } catch (err) {
             addError(messages.alertDeleteError);
-            setIsLoading(false);
+            setIsDeletingAlert(false);
         }
     };
 
     const handleRefreshAutomations = useCallback(() => {
-        setIsLoading(true);
-        dispatchAndWaitFor(dispatch, refreshAutomations()).then(() => {
-            setIsLoading(false);
-        });
+        setIsRefreshingAutomations(true);
+        dispatchAndWaitFor(dispatch, refreshAutomations())
+            .then(() => {
+                setIsRefreshingAutomations(false);
+            })
+            .catch(() => setIsRefreshingAutomations(false));
     }, [dispatch]);
 
     return {
-        isLoading,
+        isLoading: isSavingAlert || isLoadingFilters || isRefreshingAutomations || isDeletingAlert,
         destinations,
         alerts,
         viewMode,
