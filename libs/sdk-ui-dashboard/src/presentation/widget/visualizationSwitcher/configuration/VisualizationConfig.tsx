@@ -34,6 +34,7 @@ const VisualizationConfigContent: React.FC<{ widget: IInsightWidget; insight: II
 
     return (
         <DashboardInsightMenuBody
+            key={widget.identifier}
             widget={widget}
             insight={insight}
             items={menuItems}
