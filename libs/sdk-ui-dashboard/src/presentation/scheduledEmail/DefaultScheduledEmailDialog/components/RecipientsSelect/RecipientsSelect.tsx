@@ -5,7 +5,7 @@ import { IAutomationRecipient, IWorkspaceUser } from "@gooddata/sdk-model";
 import sortBy from "lodash/sortBy.js";
 
 import { RecipientsSelectRenderer } from "./RecipientsSelectRenderer.js";
-import { convertUserToAutomationRecipient } from "../../utils/automationHelpers.js";
+import { convertUserToAutomationRecipient } from "../../../../../_staging/automation/index.js";
 
 interface IRecipientsSelectProps {
     /**

@@ -11,8 +11,8 @@ import {
 } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage, defineMessage, useIntl } from "react-intl";
 import { AttachmentFiltersList } from "./AttachmentFiltersList.js";
-import { IAttachmentFilterInfo } from "../../hooks/useAttachmentDashboardFilters.js";
 import { DEFAULT_DROPDOWN_ALIGN_POINTS } from "../../constants.js";
+import { IAttachmentFilterInfo } from "../../hooks/useFiltersForDashboardScheduledExportInfo.js";
 
 const TOOLTIP_ALIGN_POINTS: IAlignPoint[] = [
     {

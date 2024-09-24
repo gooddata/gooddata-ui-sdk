@@ -16,18 +16,19 @@ import stringify from "json-stable-stringify";
 import isEqual from "lodash/isEqual.js";
 
 import {
-    ExtendedDashboardWidget,
-    QueryProcessingState,
-    QueryProcessingStatus,
-    QueryWidgetFilters,
-    queryWidgetFilters,
     selectFilterContextFilters,
     selectIsInEditMode,
-    useDashboardQueryProcessing,
-    useDashboardSelector,
     selectCrossFilteringFiltersLocalIdentifiersByWidgetRef,
-} from "../../../model/index.js";
-import { safeSerializeObjRef } from "../../../_staging/metadata/safeSerializeObjRef.js";
+} from "../../model/store/index.js";
+import { safeSerializeObjRef } from "../../_staging/metadata/safeSerializeObjRef.js";
+import { ExtendedDashboardWidget } from "../types/layoutTypes.js";
+import {
+    QueryProcessingState,
+    QueryProcessingStatus,
+    useDashboardQueryProcessing,
+} from "./useDashboardQueryProcessing.js";
+import { queryWidgetFilters, QueryWidgetFilters } from "../queries/widgets.js";
+import { useDashboardSelector } from "./DashboardStoreProvider.js";
 
 /**
  * Hook for obtaining the effective filters for a widget.

@@ -10,7 +10,17 @@ import omit from "lodash/omit.js";
 
 export function useSaveScheduledEmailToBackend(
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
-    { onSuccess, onError, onSubmit, onSaveSuccess, onSaveError, onSave }: IScheduledEmailDialogProps,
+    {
+        onSuccess,
+        onError,
+        onSubmit,
+        onSaveSuccess,
+        onSaveError,
+        onSave,
+    }: Pick<
+        IScheduledEmailDialogProps,
+        "onSuccess" | "onError" | "onSubmit" | "onSaveSuccess" | "onSaveError" | "onSave"
+    >,
 ) {
     const intl = useIntl();
     const [savingErrorMessage, setSavingErrorMessage] = useState<string | undefined>(undefined);

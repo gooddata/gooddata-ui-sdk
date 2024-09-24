@@ -20,6 +20,7 @@ import {
     useDashboardSelector,
     selectFilterContextAttributeFilters,
     selectAttributeFilterConfigsOverrides,
+    useWidgetFilters,
 } from "../../../../model/index.js";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/index.js";
 import {
@@ -34,7 +35,6 @@ import {
     objRefToString,
     serializeObjRef,
 } from "@gooddata/sdk-model";
-import { useWidgetFilters } from "../../../widget/common/useWidgetFilters.js";
 import compact from "lodash/compact.js";
 import uniqBy from "lodash/uniqBy.js";
 import { dashboardAttributeFilterToAttributeFilter } from "../../../../converters/index.js";

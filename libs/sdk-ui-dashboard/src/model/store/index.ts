@@ -255,6 +255,7 @@ export { catalogActions } from "./catalog/index.js";
 export { drillActions } from "./drill/index.js";
 export {
     selectDrillableItems,
+    selectIsCrossFiltering,
     selectCrossFilteringItems,
     selectCrossFilteringItemByWidgetRef,
     selectCrossFilteringFiltersLocalIdentifiers,

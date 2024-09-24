@@ -34,10 +34,10 @@ import {
     useWidgetExecutionsHandler,
     selectIsInEditMode,
     selectCrossFilteringSelectedPointsByWidgetRef,
+    useWidgetFilters,
 } from "../../../../../model/index.js";
 import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties.js";
 import { IDashboardInsightProps } from "../../types.js";
-import { useWidgetFilters } from "../../../common/index.js";
 import { useDashboardInsightDrills } from "./useDashboardInsightDrills.js";
 import { CustomError } from "../CustomError/CustomError.js";
 import { DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH } from "../../../../constants/index.js";

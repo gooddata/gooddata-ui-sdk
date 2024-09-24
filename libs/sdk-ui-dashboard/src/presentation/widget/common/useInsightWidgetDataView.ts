@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import {
     DataViewFacade,
     GoodDataSdkError,
@@ -11,8 +11,7 @@ import {
 import { useMemo } from "react";
 import { insightSetFilters, IInsightWidget } from "@gooddata/sdk-model";
 import stringify from "json-stable-stringify";
-import { selectInsightByRef, useDashboardSelector } from "../../../model/index.js";
-import { useWidgetFilters } from "./useWidgetFilters.js";
+import { selectInsightByRef, useDashboardSelector, useWidgetFilters } from "../../../model/index.js";
 
 /**
  * Configuration for the `useInsightWidgetDataView` hook.
