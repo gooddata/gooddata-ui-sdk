@@ -46,6 +46,7 @@ export function convertCreateWebhookToNotificationChannel(
                           }
                         : {}),
                 })) ?? [],
+            allowedRecipients: webhook.allowedRecipients,
         },
     };
 }
@@ -105,6 +106,7 @@ function convertCreateCustomEmailToNotificationChannel(
                           }
                         : {}),
                 })) ?? [],
+            allowedRecipients: smtp.allowedRecipients,
         },
     };
 }
@@ -138,6 +140,7 @@ function convertCreateDefaultEmailToNotificationChannel(
                           }
                         : {}),
                 })) ?? [],
+            allowedRecipients: smtp.allowedRecipients,
         },
     };
 }
