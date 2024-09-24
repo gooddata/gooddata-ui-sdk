@@ -2,7 +2,7 @@
 import React, { useCallback } from "react";
 import { IInsightWidget, IVisualizationSwitcherWidget, objRefToString, widgetRef } from "@gooddata/sdk-model";
 
-import { DashboardItemHeadlineContainer } from "../../../presentationComponents/index.js";
+import { DashboardItemHeadline } from "../../../presentationComponents/index.js";
 
 import { ItemsWrapper, Overlay, ShortenedText } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
@@ -19,11 +19,11 @@ interface IVisualizationSwitcherNavigationHeaderProps {
 const alignPoints = [
     {
         align: "bc tc",
-        offset: { x: 0, y: 9 },
+        offset: { x: 0, y: -9 },
     },
     {
         align: "tc bc",
-        offset: { x: 0, y: -9 },
+        offset: { x: 0, y: 9 },
     },
 ];
 
@@ -53,12 +53,13 @@ export const VisualizationSwitcherNavigationHeader: React.FC<IVisualizationSwitc
     );
 
     return (
-        <DashboardItemHeadlineContainer clientHeight={clientHeight}>
+        <>
             <VisualizationSwitcherNavigationHeaderButton
                 className={alignTo}
                 title={activeVisualization.title}
                 isOpen={isOpen}
                 toggleDropdown={toggleDropdown}
+                clientHeight={clientHeight}
             />
 
             {isOpen ? (
@@ -91,7 +92,7 @@ export const VisualizationSwitcherNavigationHeader: React.FC<IVisualizationSwitc
                     </ItemsWrapper>
                 </Overlay>
             ) : null}
-        </DashboardItemHeadlineContainer>
+        </>
     );
 };
 
@@ -100,17 +101,18 @@ type VisualizationSwitcherNavigationHeaderButtonProps = {
     isOpen: boolean;
     toggleDropdown: () => void;
     className: string;
+    clientHeight?: number;
 };
 
 const VisualizationSwitcherNavigationHeaderButton: React.FC<
     VisualizationSwitcherNavigationHeaderButtonProps
-> = ({ isOpen, toggleDropdown, title, className }) => {
+> = ({ isOpen, toggleDropdown, title, className, clientHeight }) => {
     const classNames = cx("gd-visualization-switcher-widget-header", className, {
         "is-open": isOpen,
     });
     return (
         <div className={classNames} onClick={toggleDropdown}>
-            {title}
+            <DashboardItemHeadline clientHeight={clientHeight} title={title} />
         </div>
     );
 };
