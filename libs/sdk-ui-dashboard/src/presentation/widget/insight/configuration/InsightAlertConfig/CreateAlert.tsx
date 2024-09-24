@@ -1,6 +1,10 @@
 // (C) 2022-2024 GoodData Corporation
 import React from "react";
-import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
+import {
+    IAutomationMetadataObject,
+    IAutomationMetadataObjectDefinition,
+    ICatalogMeasure,
+} from "@gooddata/sdk-model";
 
 import { Smtps, Webhooks } from "../../../../../model/index.js";
 import { AlertMetric } from "../../types.js";
@@ -16,6 +20,7 @@ interface ICreateAlertProps {
     hasAlerts: boolean;
     measures: AlertMetric[];
     maxAutomationsReached: boolean;
+    catalogMeasures: ICatalogMeasure[];
 }
 
 export const CreateAlert: React.FC<ICreateAlertProps> = ({
@@ -27,6 +32,7 @@ export const CreateAlert: React.FC<ICreateAlertProps> = ({
     hasAlerts,
     measures,
     maxAutomationsReached,
+    catalogMeasures,
 }) => {
     return (
         <EditAlert
@@ -39,6 +45,7 @@ export const CreateAlert: React.FC<ICreateAlertProps> = ({
             hasAlerts={hasAlerts}
             measures={measures}
             maxAutomationsReached={maxAutomationsReached}
+            catalogMeasures={catalogMeasures}
         />
     );
 };
