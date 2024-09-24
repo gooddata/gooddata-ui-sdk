@@ -1,11 +1,6 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React from "react";
-import {
-    IInsightWidget,
-    isInsightWidget,
-    objRefToString,
-    IInsightWidgetDescriptionConfiguration,
-} from "@gooddata/sdk-model";
+import { isInsightWidget, objRefToString, IInsightWidgetDescriptionConfiguration } from "@gooddata/sdk-model";
 import { ScrollablePanel, OverlayControllerProvider, OverlayController } from "@gooddata/sdk-ui-kit";
 
 import { stringUtils } from "@gooddata/util";
@@ -23,14 +18,14 @@ import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/index.js";
 import InsightFilters from "./InsightFilters.js";
 import { InsightTitleConfig } from "./InsightTitleConfig.js";
 import { InsightDescriptionConfig } from "./InsightDescriptionConfig/InsightDescriptionConfig.js";
+import { IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 
-interface IInsightConfigurationProps {
-    widget: IInsightWidget;
-}
-
-export const InsightConfiguration: React.FC<IInsightConfigurationProps> = ({ widget }) => {
+export const InsightConfiguration: React.FC<IInsightMenuSubmenuComponentProps> = ({
+    widget,
+    enableTitleConfig = true,
+}) => {
     const widgetRefSuffix = isInsightWidget(widget)
         ? stringUtils.simplifyText(objRefToString(widget.ref))
         : "";
@@ -50,13 +45,15 @@ export const InsightConfiguration: React.FC<IInsightConfigurationProps> = ({ wid
         visible: true,
     };
 
+    const isHidingOfWidgetTitleEnabled = (settings.enableHidingOfWidgetTitle ?? false) && enableTitleConfig;
+
     return (
         <ScrollablePanel className={classes}>
             {/* Header z-index start at  6000 so we need force all overlays z-indexes start at 6000 to be under header */}
             <OverlayControllerProvider overlayController={overlayController}>
                 <InsightTitleConfig
                     widget={widget}
-                    isHidingOfWidgetTitleEnabled={settings.enableHidingOfWidgetTitle ?? false}
+                    isHidingOfWidgetTitleEnabled={isHidingOfWidgetTitleEnabled}
                     hideTitle={widget.configuration?.hideTitle ?? false}
                     setVisualPropsConfigurationTitle={(widget, hideTitle) => {
                         dispatch(

@@ -2531,6 +2531,11 @@
         "comment": "",
         "limit": 0
     },
+    "visualizationSwitcher.configurationPanel.remove.from.switcher": {
+        "value": "Remove from switcher",
+        "comment": "",
+        "limit": 0
+    },
     "attributesDropdown.valuesLimiting.title": {
         "value": "Filter values by",
         "comment": "The title of section that configures filters for listed values in the filter. There is a list of applied filters below the title.",

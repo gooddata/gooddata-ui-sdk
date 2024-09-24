@@ -4712,6 +4712,7 @@ export interface IInsightMenuSubmenu {
 
 // @alpha (undocumented)
 export interface IInsightMenuSubmenuComponentProps {
+    enableTitleConfig?: boolean;
     onClose: () => void;
     onGoBack: () => void;
     widget: IInsightWidget;
