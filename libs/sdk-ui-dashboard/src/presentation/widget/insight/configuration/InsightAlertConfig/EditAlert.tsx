@@ -1,6 +1,10 @@
 // (C) 2022-2024 GoodData Corporation
 import React from "react";
-import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
+import {
+    IAutomationMetadataObject,
+    IAutomationMetadataObjectDefinition,
+    ICatalogMeasure,
+} from "@gooddata/sdk-model";
 import {
     Bubble,
     BubbleHoverTrigger,
@@ -50,6 +54,7 @@ interface IEditAlertProps {
     hasAlerts: boolean;
     destinations: (Webhooks[number] | Smtps[number])[];
     measures: AlertMetric[];
+    catalogMeasures: ICatalogMeasure[];
     onClose: () => void;
     onCancel: () => void;
     onCreate?: (alert: IAutomationMetadataObjectDefinition) => void;
@@ -70,6 +75,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
     onUpdate,
     maxAutomationsReached = false,
     overlayPositionType,
+    catalogMeasures,
 }) => {
     const {
         viewMode,
@@ -92,6 +98,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
         alert,
         onCreate,
         onUpdate,
+        catalogMeasures,
     });
     const intl = useIntl();
     const disableCreateButtonDueToLimits = isNewAlert && maxAutomationsReached;

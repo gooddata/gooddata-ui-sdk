@@ -31,6 +31,7 @@ import { messages } from "../messages.js";
 import { useSaveAlertToBackend } from "./useSaveAlertToBackend.js";
 import { fillMissingTitles, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { convertUserToAutomationRecipient } from "../../../../../../_staging/automation/index.js";
+import { useMetricsAndFacts } from "../../../../../../_staging/sharedHooks/useMetricsAndFacts.js";
 
 type InsightWidgetAlertingViewMode = "list" | "edit" | "create";
 
@@ -95,6 +96,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         widget,
         insight,
     });
+    const { metricsAndFacts, metricsAndFactsLoading, metricsAndFactsLoadingError } = useMetricsAndFacts();
 
     const destinations = useMemo(() => [...emails, ...webhooks], [emails, webhooks]);
     const locale = useDashboardSelector(selectLocale);
@@ -121,21 +123,29 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     >(null);
     const [editingAlert, setEditingAlert] = useState<IAutomationMetadataObject | null>(null);
 
-    // Handle async widget filters state
+    // Handle async widget filters and catalog state
     useEffect(() => {
         if (
             widgetFiltersStatus === "success" &&
             defaultMeasure &&
             defaultNotificationChannelId &&
+            !metricsAndFactsLoading &&
             !defaultAlert
         ) {
-            setDefaultAlert(createDefaultAlert(widgetFilters, defaultMeasure, defaultNotificationChannelId));
-        } else if (widgetFiltersStatus === "error" && !defaultAlert) {
+            setDefaultAlert(
+                createDefaultAlert(
+                    widgetFilters,
+                    defaultMeasure,
+                    defaultNotificationChannelId,
+                    metricsAndFacts?.metrics ?? [],
+                ),
+            );
+        } else if ((widgetFiltersStatus === "error" || metricsAndFactsLoadingError) && !defaultAlert) {
             closeInsightWidgetMenu();
             addError(messages.alertLoadingError);
         }
         // Avoid infinite loop by ignoring addError
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // /eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         closeInsightWidgetMenu,
         defaultAlert,
@@ -143,6 +153,10 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         defaultNotificationChannelId,
         widgetFilters,
         widgetFiltersStatus,
+        metricsAndFacts,
+        metricsAndFactsLoading,
+        metricsAndFactsLoadingError,
+        addError,
     ]);
 
     const initiateAlertCreation = () => {
@@ -177,6 +191,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             dashboard,
             metadata: {
                 widget: widget?.localIdentifier,
+                widgetName: widget?.title ?? "",
             },
             recipients: [convertUserToAutomationRecipient(currentUser)],
         } as IAutomationMetadataObject;
@@ -227,7 +242,12 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     }, [dispatch]);
 
     return {
-        isLoading: isSavingAlert || isLoadingFilters || isRefreshingAutomations || isDeletingAlert,
+        isLoading:
+            isSavingAlert ||
+            isLoadingFilters ||
+            isRefreshingAutomations ||
+            isDeletingAlert ||
+            metricsAndFactsLoading,
         destinations,
         alerts,
         viewMode,
@@ -246,5 +266,6 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         supportedMeasures,
         maxAutomationsReached,
         canCreateAutomation,
+        catalogMeasures: metricsAndFacts?.metrics ?? [],
     };
 };

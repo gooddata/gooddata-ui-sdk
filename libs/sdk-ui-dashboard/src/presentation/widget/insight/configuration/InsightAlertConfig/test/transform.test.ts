@@ -158,7 +158,7 @@ describe("alert transforms", () => {
                     condition: {
                         ...baseComparison.alert.condition,
                         left: {
-                            format: undefined,
+                            format: "#,##0.00",
                             id: "localMetric1",
                             title: "metric1",
                         },
@@ -205,7 +205,7 @@ describe("alert transforms", () => {
                         ...baseComparison.alert.condition,
                         operator: "GREATER_THAN",
                         left: {
-                            format: undefined,
+                            format: "#,##0.00",
                             id: "localMetric1",
                             title: "metric1",
                         },
@@ -235,7 +235,7 @@ describe("alert transforms", () => {
                                 title: "metric2",
                             },
                             right: {
-                                format: undefined,
+                                format: "#,##0.00",
                                 id: "localMetric_pp_1",
                                 title: "metric_pp_1",
                             },
@@ -356,7 +356,7 @@ describe("alert transforms", () => {
                             ...cond.measure,
                             operator: "DIFFERENCE",
                             right: {
-                                format: undefined,
+                                format: "#,##0.00",
                                 id: "localMetric_pp_1",
                                 title: "metric_pp_1",
                             },
@@ -389,7 +389,7 @@ describe("alert transforms", () => {
                             ...cond.measure,
                             operator: "DIFFERENCE",
                             right: {
-                                format: undefined,
+                                format: "#,##0.00",
                                 id: "localMetric_pp_1",
                                 title: "metric_pp_1",
                             },

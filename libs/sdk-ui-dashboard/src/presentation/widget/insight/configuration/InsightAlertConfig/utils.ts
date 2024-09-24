@@ -13,6 +13,7 @@ import {
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
     IBucket,
+    ICatalogMeasure,
     IFilter,
     IInsight,
     IMeasure,
@@ -25,6 +26,7 @@ import {
     isPreviousPeriodMeasure,
     isSimpleMeasure,
     measureAlias,
+    measureIdentifier,
     measureTitle,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
@@ -32,7 +34,12 @@ import { IntlShape } from "react-intl";
 
 import { AlertMetric, AlertMetricComparatorType } from "../../types.js";
 
-import { COMPARISON_OPERATORS, RELATIVE_OPERATORS, ARITHMETIC_OPERATORS } from "./constants.js";
+import {
+    COMPARISON_OPERATORS,
+    RELATIVE_OPERATORS,
+    ARITHMETIC_OPERATORS,
+    DEFAULT_MEASURE_FORMAT,
+} from "./constants.js";
 import { messages } from "./messages.js";
 
 /**
@@ -101,6 +108,7 @@ export const createDefaultAlert = (
     filters: IFilter[],
     measure: AlertMetric,
     notificationChannelId: string,
+    catalogMeasures: ICatalogMeasure[] = [],
     comparisonOperator: IAlertComparisonOperator = "GREATER_THAN",
 ): IAutomationMetadataObjectDefinition => {
     return {
@@ -112,7 +120,7 @@ export const createDefaultAlert = (
                 type: "comparison",
                 left: {
                     id: measure.measure.measure.localIdentifier,
-                    format: measure.measure.measure.format,
+                    format: getMeasureFormat(measure.measure, catalogMeasures),
                     title: getMeasureTitle(measure.measure),
                 },
                 operator: comparisonOperator,
@@ -334,6 +342,7 @@ export function getAlertRelativeOperator(
 export function transformAlertByMetric(
     alert: IAutomationMetadataObject,
     measure: AlertMetric,
+    catalogMeasures?: ICatalogMeasure[],
 ): IAutomationMetadataObject {
     const periodMeasure = measure.comparators.find(
         (c) =>
@@ -349,12 +358,12 @@ export function transformAlertByMetric(
                 ...cond.measure,
                 left: {
                     id: measure.measure.measure.localIdentifier,
-                    format: measure.measure.measure.format,
+                    format: getMeasureFormat(measure.measure, catalogMeasures),
                     title: getMeasureTitle(measure.measure),
                 },
                 right: {
                     id: periodMeasure.measure.measure.localIdentifier,
-                    format: periodMeasure.measure.measure.format,
+                    format: getMeasureFormat(periodMeasure.measure, catalogMeasures),
                     title: getMeasureTitle(periodMeasure.measure),
                 },
             },
@@ -375,7 +384,7 @@ export function transformAlertByMetric(
         ...cond,
         left: {
             id: measure.measure.measure.localIdentifier,
-            format: measure.measure.measure.format,
+            format: getMeasureFormat(measure.measure, catalogMeasures),
             title: getMeasureTitle(measure.measure),
         },
     } as IAutomationAlertComparisonCondition;
@@ -415,6 +424,7 @@ export function transformAlertByRelativeOperator(
     measure: AlertMetric,
     relativeOperator: IAlertRelativeOperator,
     arithmeticOperator: IAlertRelativeArithmeticOperator,
+    catalogMeasures?: ICatalogMeasure[],
 ): IAutomationMetadataObject {
     const periodMeasure = measure.comparators.find(
         (c) =>
@@ -430,7 +440,7 @@ export function transformAlertByRelativeOperator(
             operator: arithmeticOperator,
             right: {
                 id: periodMeasure?.measure.measure.localIdentifier ?? "",
-                format: periodMeasure?.measure.measure.format,
+                format: getMeasureFormat(periodMeasure?.measure, catalogMeasures),
                 title: periodMeasure?.measure ? getMeasureTitle(periodMeasure.measure) : undefined,
             },
         },
@@ -553,3 +563,26 @@ function transformAlertExecutionByMetric(
         measures: [measure.measure],
     };
 }
+
+const getMeasureFormat = (measure: IMeasure | undefined, catalogMeasures?: ICatalogMeasure[]) => {
+    if (!measure) {
+        return DEFAULT_MEASURE_FORMAT;
+    }
+
+    // custom format set in the bucket
+    if (measure?.measure.format) {
+        return measure.measure.format;
+    }
+
+    // measure format from the catalog
+    const catalogMeasure = findMeasureInCatalog(measure, catalogMeasures);
+
+    return catalogMeasure?.measure.format ?? DEFAULT_MEASURE_FORMAT;
+};
+
+const findMeasureInCatalog = (
+    measure: IMeasure,
+    catalogMeasures?: ICatalogMeasure[],
+): ICatalogMeasure | undefined => {
+    return catalogMeasures?.find((m) => m.measure.id === measureIdentifier(measure));
+};
