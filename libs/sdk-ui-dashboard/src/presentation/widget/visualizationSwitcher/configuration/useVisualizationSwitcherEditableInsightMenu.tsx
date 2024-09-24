@@ -9,11 +9,13 @@ import {
     IInsightMenuSubmenuComponentProps,
     isIInsightMenuSubmenu,
 } from "../../insightMenu/types.js";
+import { useIntl } from "react-intl";
 
 export const useVisualizationSwitcherEditableInsightMenu = (
     widget: IInsightWidget,
     insight: IInsight,
 ): { menuItems: IInsightMenuItem[] } => {
+    const intl = useIntl();
     const { menuItems } = useEditableInsightMenu({
         widget,
         insight,
@@ -27,6 +29,14 @@ export const useVisualizationSwitcherEditableInsightMenu = (
                 SubmenuComponent: (props: IInsightMenuSubmenuComponentProps) => (
                     <item.SubmenuComponent {...props} enableTitleConfig={false} />
                 ),
+            };
+        }
+        if (item.itemId === "InteractionPanelRemove") {
+            return {
+                ...item,
+                itemName: intl.formatMessage({
+                    id: "visualizationSwitcher.configurationPanel.remove.from.switcher",
+                }),
             };
         }
 
