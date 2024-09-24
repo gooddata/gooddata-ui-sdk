@@ -9,4 +9,5 @@ export type {
     IScheduledEmailDialogProps,
     IScheduledEmailManagementDialogProps,
     IScheduledEmailDialogPropsContext,
+    INotificationChannel,
 } from "./types.js";

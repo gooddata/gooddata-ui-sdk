@@ -5,23 +5,20 @@ import {
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
     IAutomationRecipient,
+    IExportDefinitionDashboardRequestPayload,
     IExportDefinitionMetadataObject,
     IExportDefinitionMetadataObjectDefinition,
+    IExportDefinitionVisualizationObjectRequestPayload,
     IFilter,
-    isAbsoluteDateFilter,
     isExportDefinitionDashboardRequestPayload,
     isExportDefinitionVisualizationObjectRequestPayload,
     isFilter,
     isFilterContextItem,
-    isObjRef,
-    isRelativeDateFilter,
     IUser,
 } from "@gooddata/sdk-model";
 import omit from "lodash/omit.js";
 import isEqual from "lodash/isEqual.js";
 import pick from "lodash/pick.js";
-import { ExtendedDashboardWidget } from "../../../../model/index.js";
-import { filterContextItemsToDashboardFiltersByWidget } from "../../../../converters/index.js";
 
 export const isDashboardAutomation = (
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition | undefined,
@@ -100,11 +97,11 @@ export const getAutomationDashboardFilters = (
         return undefined;
     }
 
-    return automation.exportDefinitions
-        ?.find((exportDefinition) => {
+    return (
+        automation.exportDefinitions?.find((exportDefinition) => {
             return isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload);
-        })
-        ?.requestPayload?.content.filters?.filter(isFilterContextItem);
+        })?.requestPayload as IExportDefinitionDashboardRequestPayload
+    )?.content.filters?.filter((f) => isFilterContextItem(f));
 };
 
 export const getAutomationVisualizationFilters = (
@@ -114,11 +111,11 @@ export const getAutomationVisualizationFilters = (
         return undefined;
     }
 
-    return automation.exportDefinitions
-        ?.find((exportDefinition) => {
+    return (
+        automation.exportDefinitions?.find((exportDefinition) => {
             return isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload);
-        })
-        ?.requestPayload?.content.filters?.filter(isFilter);
+        })?.requestPayload as IExportDefinitionVisualizationObjectRequestPayload
+    )?.content.filters?.filter((f) => isFilter(f));
 };
 
 type ExportDefinitionSubset = Pick<IExportDefinitionMetadataObjectDefinition, "requestPayload" | "title">;
@@ -127,16 +124,16 @@ const sortByFormat = (a: ExportDefinitionSubset, b: ExportDefinitionSubset) =>
     a.requestPayload.format > b.requestPayload.format ? 1 : -1;
 
 export const areAutomationsEqual = (
-    automation: IAutomationMetadataObjectDefinition,
     originalAutomation: IAutomationMetadataObjectDefinition,
+    updatedAutomation: IAutomationMetadataObjectDefinition,
 ) => {
-    const automationWithoutExportDefinitions = omit(automation, "exportDefinitions");
+    const automationWithoutExportDefinitions = omit(updatedAutomation, "exportDefinitions");
     const origAutomationWithoutExportDefinitions = omit(originalAutomation, "exportDefinitions");
 
     // We only want to compare requestPayload and title of exportDefinitions, rest may be omitted as it is just arbitrary
     // metadata that is not relevant for the comparison and causes false positive results when comparing new and old def.
     // Sorting is done just to avoid false positive result of different order of export definitions.
-    const automationExportDefinitions = automation.exportDefinitions
+    const automationExportDefinitions = updatedAutomation.exportDefinitions
         ?.map((exportDefinition) => pick(exportDefinition, ["requestPayload", "title"]))
         .sort(sortByFormat);
     const origAutomationExportDefinitions = originalAutomation.exportDefinitions
@@ -147,31 +144,6 @@ export const areAutomationsEqual = (
         isEqual(automationWithoutExportDefinitions, origAutomationWithoutExportDefinitions) &&
         isEqual(automationExportDefinitions, origAutomationExportDefinitions)
     );
-};
-
-export const transformFilterContextToModelFilters = (
-    filters: FilterContextItem[] | undefined,
-    widget: ExtendedDashboardWidget,
-): IFilter[] => {
-    if (!filters) {
-        return [];
-    }
-
-    const transformedFilters = filterContextItemsToDashboardFiltersByWidget(filters, widget);
-
-    /**
-     * When widget has no date dimension available, common date filter gets empty date data set.
-     * In this case, we rather filter it out and keep all other filters.
-     */
-    return transformedFilters.filter((filter) => {
-        if (isRelativeDateFilter(filter)) {
-            return isObjRef(filter.relativeDateFilter.dataSet);
-        } else if (isAbsoluteDateFilter(filter)) {
-            return isObjRef(filter.absoluteDateFilter.dataSet);
-        }
-
-        return filter;
-    });
 };
 
 export const convertUserToAutomationRecipient = (user: IUser): IAutomationRecipient => {

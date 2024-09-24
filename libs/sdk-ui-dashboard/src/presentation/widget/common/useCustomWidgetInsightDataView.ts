@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { useEffect, useMemo } from "react";
 import { IInsightDefinition, insightSetFilters, isInsight, ObjRef } from "@gooddata/sdk-model";
 import {
@@ -13,9 +13,7 @@ import {
 } from "@gooddata/sdk-ui";
 import stringify from "json-stable-stringify";
 
-import { ICustomWidget } from "../../../model/index.js";
-
-import { useWidgetFilters } from "./useWidgetFilters.js";
+import { ICustomWidget, useWidgetFilters } from "../../../model/index.js";
 
 /**
  * Configuration options for the {@link useCustomWidgetInsightDataView} hook.

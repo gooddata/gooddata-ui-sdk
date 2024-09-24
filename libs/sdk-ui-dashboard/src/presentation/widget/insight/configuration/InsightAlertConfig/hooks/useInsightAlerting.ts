@@ -3,7 +3,6 @@ import {
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
     IInsightWidget,
-    isAllTimeDateFilter,
 } from "@gooddata/sdk-model";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -25,13 +24,13 @@ import {
     selectLocale,
     selectCanCreateAutomation,
     selectCurrentUser,
+    useFiltersForWidgetScheduledExport,
 } from "../../../../../../model/index.js";
 import { createDefaultAlert, getSupportedInsightMeasuresByInsight } from "../utils.js";
 import { messages } from "../messages.js";
-import { useWidgetFilters } from "../../../../common/useWidgetFilters.js";
 import { useSaveAlertToBackend } from "./useSaveAlertToBackend.js";
 import { fillMissingTitles, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { convertUserToAutomationRecipient } from "../../../../../scheduledEmail/DefaultScheduledEmailDialog/utils/automationHelpers.js";
+import { convertUserToAutomationRecipient } from "../../../../../../_staging/automation/index.js";
 
 type InsightWidgetAlertingViewMode = "list" | "edit" | "create";
 
@@ -96,7 +95,11 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             },
         });
 
-    const { result: widgetFilters, status: widgetFiltersStatus } = useWidgetFilters(widget, insight);
+    const { result: widgetFilters, status: widgetFiltersStatus } = useFiltersForWidgetScheduledExport({
+        widget,
+        insight,
+    });
+
     const destinations = useMemo(() => [...emails, ...webhooks], [emails, webhooks]);
     const locale = useDashboardSelector(selectLocale);
     const supportedMeasures = useMemo(
@@ -120,10 +123,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         }
         if (widgetFiltersStatus === "success") {
             setIsLoading(false);
-            const sanitizedFilters = widgetFilters.filter((filter) => !isAllTimeDateFilter(filter));
-            setDefaultAlert(
-                createDefaultAlert(sanitizedFilters, defaultMeasure!, defaultNotificationChannelId),
-            );
+            setDefaultAlert(createDefaultAlert(widgetFilters, defaultMeasure!, defaultNotificationChannelId));
         } else if (widgetFiltersStatus === "error") {
             setIsLoading(false);
             closeInsightWidgetMenu();

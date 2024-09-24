@@ -8,7 +8,6 @@ export type {
     UseInsightWidgetInsightDataViewCallbacks,
 } from "./common/index.js";
 export {
-    useWidgetFilters,
     useCustomWidgetExecutionDataView,
     useCustomWidgetInsightDataView,
     useInsightWidgetDataView,

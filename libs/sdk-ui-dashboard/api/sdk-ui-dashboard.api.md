@@ -124,6 +124,7 @@ import { DrillState as DrillState_2 } from './drillState.js';
 import { EntityId } from '@reduxjs/toolkit';
 import { EntityState } from '@reduxjs/toolkit';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
+import { ExtendedDashboardWidget as ExtendedDashboardWidget_2 } from '../../index.js';
 import { FilterContextItem } from '@gooddata/sdk-model';
 import { FilterViewDialogMode as FilterViewDialogMode_2 } from './uiState.js';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
@@ -235,7 +236,6 @@ import { IRenderListItemProps } from '@gooddata/sdk-ui-kit';
 import { IResultWarning } from '@gooddata/sdk-model';
 import { IRichTextWidget } from '@gooddata/sdk-model';
 import { IScheduleEmailContext as IScheduleEmailContext_2 } from '../../../types.js';
-import { IScheduleEmailDialogContext as IScheduleEmailDialogContext_2 } from '../../types.js';
 import { ISeparators } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-model';
 import { IShareDialogInteractionData } from '@gooddata/sdk-ui-kit';
@@ -285,14 +285,13 @@ import { Selector } from '@reduxjs/toolkit';
 import { SetCatalogItemsPayload } from './catalogReducers.js';
 import { SetCatalogMeasuresAndFactsPayload } from './catalogReducers.js';
 import { ShareStatus } from '@gooddata/sdk-model';
-import { Smtps as Smtps_2 } from '../index.js';
 import { TypedUseSelectorHook } from 'react-redux';
 import { UiState as UiState_2 } from './uiState.js';
 import { Uri } from '@gooddata/sdk-model';
 import { UriRef } from '@gooddata/sdk-model';
 import { UseCancelablePromiseCallbacks } from '@gooddata/sdk-ui';
 import { UseCancelablePromiseState } from '@gooddata/sdk-ui';
-import { Users as Users_2 } from '../index.js';
+import { Users as Users_2 } from '../../index.js';
 import { VisualizationProperties } from '@gooddata/sdk-model';
 import { Webhooks as Webhooks_2 } from '../index.js';
 import { WeekStart } from '@gooddata/sdk-model';
@@ -4844,6 +4843,9 @@ export function initializeDashboardWithPersistedDashboard(config?: DashboardConf
 // @beta
 export const InitialLoadCorrelationId = "initialLoad";
 
+// @alpha (undocumented)
+export type INotificationChannel = IWebhookDefinitionObject | ISmtpDefinitionObject;
+
 // @internal (undocumented)
 export const INSIGHT_PLACEHOLDER_WIDGET_ID = "__insightPlaceholder__";
 
@@ -5060,11 +5062,11 @@ export function isBrokenAlertDateFilterInfo(item: IBrokenAlertFilterBasicInfo): 
 
 // @alpha (undocumented)
 export interface IScheduledEmailDialogProps {
-    automations: IAutomationMetadataObject[];
-    context?: IScheduledEmailDialogPropsContext;
-    editSchedule?: IAutomationMetadataObject;
-    emails: ISmtpDefinitionObject[];
+    dashboardFilters?: FilterContextItem[];
+    insight?: IInsight;
+    isLoading?: boolean;
     isVisible?: boolean;
+    notificationChannels: INotificationChannel[];
     onCancel?: () => void;
     onDeleteError?: (error: GoodDataSdkError) => void;
     onDeleteSuccess?: () => void;
@@ -5074,8 +5076,10 @@ export interface IScheduledEmailDialogProps {
     onSaveSuccess?: () => void;
     onSubmit?: (scheduledEmailDefinition: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => void;
     onSuccess?: () => void;
+    scheduledExportToEdit?: IAutomationMetadataObject;
     users: IWorkspaceUser[];
-    webhooks: IWebhookDefinitionObject[];
+    widget?: ExtendedDashboardWidget;
+    widgetFilters?: IFilter[];
 }
 
 // @internal (undocumented)
@@ -5087,17 +5091,15 @@ export interface IScheduledEmailDialogPropsContext {
 // @alpha (undocumented)
 export interface IScheduledEmailManagementDialogProps {
     automations: IAutomationMetadataObject[];
-    context?: IScheduledEmailDialogPropsContext;
-    emails: ISmtpDefinitionObject[];
     isLoadingScheduleData: boolean;
     isVisible?: boolean;
+    notificationChannels: INotificationChannel[];
     onAdd?: () => void;
     onClose?: () => void;
     onDeleteError?: (error: GoodDataSdkError) => void;
     onDeleteSuccess?: () => void;
     onEdit?: (scheduledMail: IAutomationMetadataObject) => void;
     scheduleDataError?: GoodDataSdkError;
-    webhooks: IWebhookDefinitionObject[];
 }
 
 // @internal (undocumented)
@@ -5615,6 +5617,28 @@ export interface IUseCustomWidgetExecutionDataViewConfig {
 export interface IUseCustomWidgetInsightDataViewConfig {
     insight?: IInsightDefinition | ObjRef;
     widget: ICustomWidget;
+}
+
+// @alpha (undocumented)
+export interface IUseDashboardScheduledEmailsFiltersProps {
+    // (undocumented)
+    insight?: IInsight;
+    // (undocumented)
+    scheduledExportToEdit?: IAutomationMetadataObject;
+    // (undocumented)
+    widget?: ExtendedDashboardWidget;
+}
+
+// @alpha (undocumented)
+export interface IUseFiltersForDashboardScheduledExportProps {
+    scheduledExportToEdit?: IAutomationMetadataObject;
+}
+
+// @alpha (undocumented)
+export interface IUseFiltersForWidgetScheduledExportProps {
+    insight?: IInsightDefinition;
+    scheduledExportToEdit?: IAutomationMetadataObjectDefinition;
+    widget?: ExtendedDashboardWidget;
 }
 
 // @public
@@ -7543,6 +7567,9 @@ export const selectIsCancelEditModeDialogOpen: DashboardSelector<boolean>;
 // @internal
 export const selectIsCircularDependency: (currentFilterLocalId: string, neighborFilterLocalId: string) => DashboardSelector<boolean>;
 
+// @beta (undocumented)
+export const selectIsCrossFiltering: DashboardSelector<boolean>;
+
 // @internal
 export const selectIsDashboardDirty: DashboardSelector<boolean>;
 
@@ -8966,36 +8993,45 @@ export type UseDashboardQueryProcessingResult<TQueryCreatorArgs extends any[], T
 
 // @alpha
 export const useDashboardScheduledEmails: () => {
-    webhooks: Webhooks_2;
-    emails: Smtps_2;
+    scheduledExportToEdit: IAutomationMetadataObject | undefined;
     users: Users_2;
+    notificationChannels: (IWebhookDefinitionObject | ISmtpDefinitionObject)[];
     automations: IAutomationMetadataObject[];
     automationsCount: number;
-    schedulingLoadError: GoodDataSdkError | undefined;
     numberOfAvailableDestinations: number;
-    isScheduleLoading: boolean;
+    widget: ExtendedDashboardWidget_2 | undefined;
+    insight: IInsight | undefined;
+    automationsLoading: boolean;
+    automationsError: GoodDataSdkError | undefined;
+    webhooksLoading: boolean;
+    webhooksError: GoodDataSdkError | undefined;
     isScheduledEmailingVisible: boolean;
-    isScheduledManagementEmailingVisible: boolean;
-    defaultOnScheduleEmailing: (widget?: IWidget) => void;
-    defaultOnScheduleEmailingManagement: (widget?: IWidget) => void;
     isScheduleEmailingDialogOpen: boolean;
-    isScheduleEmailingManagementDialogOpen: boolean;
-    scheduleEmailingDialogContext: IScheduleEmailDialogContext_2;
-    scheduleEmailingManagementDialogContext: IScheduleEmailDialogContext_2;
-    onScheduleEmailingOpen: (widget?: IWidget) => void;
-    onScheduleEmailingManagementOpen: (widget?: IWidget) => void;
-    onScheduleEmailingManagementEdit: (schedule: IAutomationMetadataObject, widget?: IWidget) => void;
-    scheduledEmailToEdit: IAutomationMetadataObject | undefined;
-    onScheduleEmailingCancel: (widget?: IWidget) => void;
+    defaultOnScheduleEmailing: (widget?: IWidget | undefined) => void;
+    onScheduleEmailingOpen: (widget?: IWidget | undefined) => void;
+    onScheduleEmailingCancel: (widget?: IWidget | undefined) => void;
     onScheduleEmailingCreateError: () => void;
-    onScheduleEmailingCreateSuccess: (widget?: IWidget) => void;
+    onScheduleEmailingCreateSuccess: (widget?: IWidget | undefined) => void;
     onScheduleEmailingSaveError: () => void;
-    onScheduleEmailingSaveSuccess: (widget?: IWidget) => void;
-    onScheduleEmailingManagementAdd: (widget?: IWidget) => void;
+    onScheduleEmailingSaveSuccess: (widget?: IWidget | undefined) => void;
+    isScheduledManagementEmailingVisible: boolean;
+    isScheduleEmailingManagementDialogOpen: boolean;
+    defaultOnScheduleEmailingManagement: (widget?: IWidget | undefined) => void;
+    onScheduleEmailingManagementOpen: (widget?: IWidget | undefined) => void;
+    onScheduleEmailingManagementEdit: (schedule: IAutomationMetadataObject, widget?: IWidget | undefined) => void;
+    onScheduleEmailingManagementAdd: (widget?: IWidget | undefined) => void;
     onScheduleEmailingManagementClose: () => void;
     onScheduleEmailingManagementLoadingError: () => void;
     onScheduleEmailingManagementDeleteSuccess: () => void;
     onScheduleEmailingManagementDeleteError: () => void;
+};
+
+// @alpha (undocumented)
+export const useDashboardScheduledEmailsFilters: ({ scheduledExportToEdit, widget, insight, }: IUseDashboardScheduledEmailsFiltersProps) => {
+    widgetFilters: IFilter[] | undefined;
+    widgetFiltersLoading: boolean;
+    widgetFiltersError: GoodDataSdkError | undefined;
+    dashboardFilters: FilterContextItem[] | undefined;
 };
 
 // @public
@@ -9139,6 +9175,12 @@ export function useEditButtonProps(): IEditButtonProps;
 
 // @alpha (undocumented)
 export const useFilterBarProps: () => IFilterBarProps;
+
+// @alpha
+export const useFiltersForDashboardScheduledExport: ({ scheduledExportToEdit, }: IUseFiltersForDashboardScheduledExportProps) => FilterContextItem[] | undefined;
+
+// @alpha
+export function useFiltersForWidgetScheduledExport({ scheduledExportToEdit, widget, insight, }: IUseFiltersForWidgetScheduledExportProps): QueryProcessingState<IFilter[]>;
 
 // @public
 export function useInsightWidgetDataView(config: IUseInsightWidgetDataView & UseInsightWidgetInsightDataViewCallbacks): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;

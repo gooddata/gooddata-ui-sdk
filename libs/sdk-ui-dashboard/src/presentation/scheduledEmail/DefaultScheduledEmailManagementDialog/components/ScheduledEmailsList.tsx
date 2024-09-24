@@ -1,15 +1,12 @@
 // (C) 2022-2024 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import {
-    IAutomationMetadataObject,
-    ISmtpDefinitionObject,
-    IWebhookDefinitionObject,
-} from "@gooddata/sdk-model";
+import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { ScheduledEmail } from "./ScheduledEmail.js";
+import { INotificationChannel } from "../../types.js";
 
 interface IScheduledEmailsProps {
     onDelete: (scheduledEmail: IAutomationMetadataObject) => void;
@@ -18,12 +15,12 @@ interface IScheduledEmailsProps {
     scheduledEmails: IAutomationMetadataObject[];
     currentUserEmail?: string;
     noSchedulesMessageId: string;
-    webhooks: IWebhookDefinitionObject[];
-    emails: ISmtpDefinitionObject[];
+    notificationChannels: INotificationChannel[];
 }
 
 export const ScheduledEmails: React.FC<IScheduledEmailsProps> = (props) => {
-    const { isLoading, scheduledEmails, onDelete, onEdit, noSchedulesMessageId, webhooks, emails } = props;
+    const { isLoading, scheduledEmails, onDelete, onEdit, noSchedulesMessageId, notificationChannels } =
+        props;
     const theme = useTheme();
 
     if (isLoading) {
@@ -55,8 +52,7 @@ export const ScheduledEmails: React.FC<IScheduledEmailsProps> = (props) => {
                     scheduledEmail={scheduledEmail}
                     onDelete={onDelete}
                     onEdit={onEdit}
-                    webhooks={webhooks}
-                    emails={emails}
+                    notificationChannels={notificationChannels}
                 />
             ))}
         </>

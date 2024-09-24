@@ -48,11 +48,11 @@ const DefaultDashboardInsightWidgetCore: React.FC<
     const settings = useDashboardSelector(selectSettings);
 
     const {
-        onScheduleEmailingOpen,
-        onScheduleEmailingManagementOpen,
         isScheduledEmailingVisible,
         isScheduledManagementEmailingVisible,
         numberOfAvailableDestinations,
+        onScheduleEmailingOpen,
+        onScheduleEmailingManagementOpen,
     } = useDashboardScheduledEmails();
 
     const visType = insightVisualizationType(insight) as VisType;

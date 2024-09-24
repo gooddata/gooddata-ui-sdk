@@ -99,10 +99,11 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
     const {
         isScheduledEmailingVisible,
         isScheduledManagementEmailingVisible,
+        numberOfAvailableDestinations,
         defaultOnScheduleEmailing,
         defaultOnScheduleEmailingManagement,
-        numberOfAvailableDestinations,
     } = useDashboardScheduledEmails();
+
     const { defaultOnAlertsManagement, isAlertsManagementVisible } = useDashboardAlerts();
 
     const dispatch = useDashboardDispatch();
