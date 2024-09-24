@@ -246,7 +246,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAIFunctions: false,
     enableSemanticSearch: false,
     enableAlertingRollout: false,
-    enableDashboardFilterViews: false,
+    enableDashboardFilterViews: true,
     enableWorkspaceHierarchySettings: false,
     enableNewInsightChangedPostMessageEvent: false,
     enableKDVisualizationSwitcher: false,
