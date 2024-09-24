@@ -1,8 +1,7 @@
 // (C) 2024 GoodData Corporation
 
 import React from "react";
-import { Typography } from "@gooddata/sdk-ui-kit";
-import { useWorkspace } from "@gooddata/sdk-ui";
+import { Hyperlink, Typography } from "@gooddata/sdk-ui-kit";
 import { ISemanticSearchResultItem } from "@gooddata/sdk-model";
 
 type FoundObjectsProps = {
@@ -11,24 +10,21 @@ type FoundObjectsProps = {
 
 export const FoundObjects: React.FC<FoundObjectsProps> = ({ foundObjects }) => {
     const first5FoundObjects = foundObjects?.filter((obj) => obj.type === "visualization").slice(0, 5);
-    const workspace = useWorkspace();
 
     if (!first5FoundObjects) {
         return null;
     }
 
     return (
-        <Typography tagName="p">
-            I have found the following relevant visualizations:
+        <div className="gd-gen-ai-chat__messages__message__found_objects">
+            <Typography tagName="p">I have found the following relevant visualizations:</Typography>
             <ul>
                 {first5FoundObjects.map((vis) => (
                     <li key={vis.id}>
-                        <a href={`/analyze/#/${workspace}/${vis.id}/edit`} target="_blank" rel="noreferrer">
-                            {vis.title}
-                        </a>
+                        <Hyperlink href={`/analyze/#/${vis.workspaceId}/${vis.id}/edit`} text={vis.title} />
                     </li>
                 ))}
             </ul>
-        </Typography>
+        </div>
     );
 };

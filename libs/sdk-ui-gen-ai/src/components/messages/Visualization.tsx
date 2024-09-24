@@ -16,70 +16,70 @@ export const Visualization: React.FC<VisualizationProps> = ({ definition }) => {
 
     return (
         <div className="gd-gen-ai-chat__messages__visualization">
-            {(() => {
-                switch (definition.visualizationType) {
-                    case "BAR":
-                        return (
-                            <BarChart
-                                height={300}
-                                measures={metrics}
-                                viewBy={[dimensions[0], dimensions[1]].filter(Boolean)}
-                                stackBy={metrics.length <= 1 ? dimensions[2] : undefined}
-                                config={{
-                                    // Better visibility with stacked bars if there are multiple metrics and dimensions
-                                    stackMeasures: metrics.length > 1 && dimensions.length === 2,
-                                }}
-                            />
-                        );
-                    case "COLUMN":
-                        return (
-                            <ColumnChart
-                                height={300}
-                                measures={metrics}
-                                viewBy={[dimensions[0], dimensions[1]].filter(Boolean)}
-                                stackBy={metrics.length <= 1 ? dimensions[2] : undefined}
-                                config={{
-                                    // Better visibility with stacked bars if there are multiple metrics and dimensions
-                                    stackMeasures: metrics.length > 1 && dimensions.length === 2,
-                                }}
-                            />
-                        );
-                    case "LINE":
-                        return (
-                            <LineChart
-                                height={300}
-                                measures={metrics}
-                                trendBy={dimensions[0]}
-                                segmentBy={metrics.length <= 1 ? dimensions[1] : undefined}
-                            />
-                        );
-                    case "PIE":
-                        return (
-                            <PieChart
-                                height={300}
-                                measures={metrics}
-                                viewBy={metrics.length <= 1 ? dimensions[0] : undefined}
-                            />
-                        );
-                    case "TABLE":
-                        return (
-                            <div style={{ height: 300 }}>
-                                <PivotTable measures={metrics} rows={dimensions} />
-                            </div>
-                        );
-                    case "HEADLINE":
-                        return (
-                            <Headline
-                                height={300}
-                                primaryMeasure={metrics[0]}
-                                secondaryMeasures={[metrics[1], metrics[2]].filter(Boolean)}
-                            />
-                        );
-                    default:
-                        return assertNever(definition.visualizationType);
-                }
-            })()}
-            <Typography tagName="p">{definition.title}</Typography>
+            <div className="gd-gen-ai-chat__messages__visualization__wrapper">
+                {(() => {
+                    switch (definition.visualizationType) {
+                        case "BAR":
+                            return (
+                                <BarChart
+                                    height={300}
+                                    measures={metrics}
+                                    viewBy={[dimensions[0], dimensions[1]].filter(Boolean)}
+                                    stackBy={metrics.length <= 1 ? dimensions[2] : undefined}
+                                    config={{
+                                        // Better visibility with stacked bars if there are multiple metrics and dimensions
+                                        stackMeasures: metrics.length > 1 && dimensions.length === 2,
+                                    }}
+                                />
+                            );
+                        case "COLUMN":
+                            return (
+                                <ColumnChart
+                                    height={300}
+                                    measures={metrics}
+                                    viewBy={[dimensions[0], dimensions[1]].filter(Boolean)}
+                                    stackBy={metrics.length <= 1 ? dimensions[2] : undefined}
+                                    config={{
+                                        // Better visibility with stacked bars if there are multiple metrics and dimensions
+                                        stackMeasures: metrics.length > 1 && dimensions.length === 2,
+                                    }}
+                                />
+                            );
+                        case "LINE":
+                            return (
+                                <LineChart
+                                    height={300}
+                                    measures={metrics}
+                                    trendBy={dimensions[0]}
+                                    segmentBy={metrics.length <= 1 ? dimensions[1] : undefined}
+                                />
+                            );
+                        case "PIE":
+                            return (
+                                <PieChart
+                                    height={300}
+                                    measures={metrics}
+                                    viewBy={metrics.length <= 1 ? dimensions[0] : undefined}
+                                />
+                            );
+                        case "TABLE":
+                            return <PivotTable measures={metrics} rows={dimensions} />;
+                        case "HEADLINE":
+                            return (
+                                <Headline
+                                    height={300}
+                                    primaryMeasure={metrics[0]}
+                                    secondaryMeasures={[metrics[1], metrics[2]].filter(Boolean)}
+                                />
+                            );
+                        default:
+                            return assertNever(definition.visualizationType);
+                    }
+                })()}
+            </div>
+            <Typography tagName="p" className="gd-gen-ai-chat__messages__visualization__title">
+                {definition.title}
+            </Typography>
         </div>
     );
 };

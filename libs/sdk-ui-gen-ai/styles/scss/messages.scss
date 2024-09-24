@@ -9,7 +9,7 @@
 .gd-gen-ai-chat__messages {
     flex: 1;
     overflow-y: auto;
-    padding: variables.$y-spacing variables.$x-spacing 0;
+    margin: variables.$y-spacing variables.$x-spacing 0;
 
     &__scroll {
         display: flex;
@@ -51,10 +51,10 @@
 
             &--cancelled {
                 background-color: kit-variables.$gd-palette-primary-base-t80;
+            }
 
-                &::after {
-                    border-top-color: kit-variables.$gd-palette-primary-base-t80;
-                }
+            &--cancelled::after {
+                border-top-color: kit-variables.$gd-palette-primary-base-t80;
             }
         }
 
@@ -76,6 +76,10 @@
             border-radius: 3px;
             background: kit-variables.$gd-palette-error-dimmed;
             color: kit-variables.$gd-palette-error-base;
+        }
+
+        &__found_objects ul {
+            margin: 0;
         }
     }
 
@@ -107,7 +111,16 @@
         margin: 10px 0;
         padding: 10px;
         border: 1px solid kit-variables.$is-focused-background;
+        background: kit-variables.$gd-color-white;
         border-radius: 8px;
+
+        &__wrapper {
+            height: 250px;
+        }
+
+        &__title {
+            text-align: center;
+        }
     }
 }
 
