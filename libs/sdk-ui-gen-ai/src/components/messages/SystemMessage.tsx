@@ -10,7 +10,7 @@ type SystemMessageProps = {
 export const SystemMessageComponent: React.FC<SystemMessageProps> = ({ message }) => {
     return (
         <div className="gd-gen-ai-chat__messages__message mgd-gen-ai-chat__messages__message--system">
-            <div className="gd-gen-ai-chat__messages__contents">{message.content}</div>
+            <div className="gd-gen-ai-chat__messages__contents">{message.content.text}</div>
         </div>
     );
 };

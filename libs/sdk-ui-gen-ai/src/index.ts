@@ -12,9 +12,12 @@ export type {
     Message,
     BaseMessage,
     UserMessage,
+    UserTextMessage,
     AssistantMessage,
     AssistantTextMessage,
     AssistantErrorMessage,
+    AssistantCancelledMessage,
     AssistantSearchCreateMessage,
     SystemMessage,
+    SystemTextMessage,
 } from "./model.js";

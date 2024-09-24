@@ -1,6 +1,6 @@
 // (C) 2024 GoodData Corporation
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Message } from "../../model.js";
+import { isAssistantCancelledMessage, isUserTextMessage, Message } from "../../model.js";
 
 type MessagesSliceState = {
     messageOrder: string[];
@@ -22,6 +22,18 @@ const messagesSlice = createSlice({
     initialState,
     reducers: {
         newMessageAction: (state, action: PayloadAction<Message>) => {
+            if (isAssistantCancelledMessage(action.payload)) {
+                const lastMessageId = state.messageOrder[state.messageOrder.length - 1];
+                const lastMessage = state.messages[lastMessageId];
+
+                if (!lastMessageId || !isUserTextMessage(lastMessage)) {
+                    return;
+                }
+
+                // Mark the last user message as cancelled
+                lastMessage.content.cancelled = true;
+            }
+
             state.messages[action.payload.id] = action.payload;
             state.messageOrder.push(action.payload.id);
         },

@@ -9,7 +9,7 @@ export const AgentState: React.FC = () => {
         <div className="gd-gen-ai-chat__agent_state">
             <AgentIcon loading />
             <Typography className="gd-gen-ai-chat__agent_state__status" tagName="p">
-                Analyzing…
+                Generating your response…
             </Typography>
         </div>
     );

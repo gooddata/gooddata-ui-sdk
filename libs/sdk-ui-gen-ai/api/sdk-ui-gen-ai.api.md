@@ -4,32 +4,40 @@
 
 ```ts
 
+import { GenAIChatFoundObjects } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IGenAIChatEvaluation } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
 
 // @alpha (undocumented)
-export type AssistantErrorMessage = BaseMessage & {
-    role: "assistant";
-    type: "error";
-    content: string;
+export type AssistantCancelledMessage = BaseMessage & {
+    type: "assistant-cancelled";
 };
 
 // @alpha (undocumented)
-export type AssistantMessage = AssistantTextMessage | AssistantErrorMessage | AssistantSearchCreateMessage;
+export type AssistantErrorMessage = BaseMessage & {
+    type: "assistant-error";
+    content: {
+        error: string;
+        foundObjects?: GenAIChatFoundObjects;
+    };
+};
+
+// @alpha (undocumented)
+export type AssistantMessage = AssistantTextMessage | AssistantErrorMessage | AssistantSearchCreateMessage | AssistantCancelledMessage;
 
 // @alpha (undocumented)
 export type AssistantSearchCreateMessage = BaseMessage & {
-    role: "assistant";
-    type: "search-create";
+    type: "assistant-search-create";
     content: IGenAIChatEvaluation;
 };
 
 // @alpha (undocumented)
 export type AssistantTextMessage = BaseMessage & {
-    role: "assistant";
-    type: "text";
-    content: string;
+    type: "assistant-text";
+    content: {
+        text: string;
+    };
 };
 
 // @alpha (undocumented)
@@ -52,17 +60,26 @@ export interface GenAIChatProps {
 export type Message = UserMessage | SystemMessage | AssistantMessage;
 
 // @alpha (undocumented)
-export type SystemMessage = BaseMessage & {
-    role: "system";
-    type: "text";
-    content: string;
+export type SystemMessage = SystemTextMessage;
+
+// @alpha (undocumented)
+export type SystemTextMessage = BaseMessage & {
+    type: "system-text";
+    content: {
+        text: string;
+    };
 };
 
 // @alpha (undocumented)
-export type UserMessage = BaseMessage & {
-    role: "user";
-    type: "text";
-    content: string;
+export type UserMessage = UserTextMessage;
+
+// @alpha (undocumented)
+export type UserTextMessage = BaseMessage & {
+    type: "user-text";
+    content: {
+        text: string;
+        cancelled: boolean;
+    };
 };
 
 ```

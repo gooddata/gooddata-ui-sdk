@@ -5,6 +5,7 @@ import { AssistantSearchCreateMessage } from "../../model.js";
 import { AgentIcon } from "./AgentIcon.js";
 import { Typography } from "@gooddata/sdk-ui-kit";
 import { Visualization } from "./Visualization.js";
+import { FoundObjects } from "./FoundObjects.js";
 
 type AssistantSearchCreateMessageProps = {
     message: AssistantSearchCreateMessage;
@@ -29,6 +30,7 @@ export const AssistantSearchCreateMessageComponent: React.FC<AssistantSearchCrea
                 {firstVisualization ? <Visualization definition={firstVisualization} /> : null}
 
                 {/* Search results */}
+                <FoundObjects foundObjects={message.content.foundObjects} />
             </div>
         </div>
     );

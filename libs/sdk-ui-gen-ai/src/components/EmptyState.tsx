@@ -2,7 +2,7 @@
 import React from "react";
 import { Button, IButtonProps, Typography } from "@gooddata/sdk-ui-kit";
 import { useDispatch } from "react-redux";
-import { makeAssistantTextMessage, makeUserMessage } from "../model.js";
+import { makeAssistantTextMessage, makeUserTextMessage } from "../model.js";
 import { setMessages } from "../store/index.js";
 
 type QuickOption = {
@@ -37,7 +37,7 @@ export const EmptyState: React.FC = () => {
     const withClickValue = (option: QuickOption): IButtonProps => ({
         onClick: () => {
             dispatch(
-                setMessages([makeUserMessage(option.question), makeAssistantTextMessage(option.answer)]),
+                setMessages([makeUserTextMessage(option.question), makeAssistantTextMessage(option.answer)]),
             );
         },
         value: option.title,

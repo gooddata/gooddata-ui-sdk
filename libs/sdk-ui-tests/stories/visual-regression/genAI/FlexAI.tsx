@@ -15,30 +15,34 @@ const history: Message[] = [
     {
         id: "1",
         created: Date.now(),
-        role: "user",
-        type: "text",
-        content: "Hello World from the Username!",
+        type: "user-text",
+        content: {
+            text: "Hello World from the Username!",
+            cancelled: false,
+        },
     },
     {
         id: "2",
         created: Date.now() + 1000,
-        role: "assistant",
-        type: "text",
-        content: "Hello World from the Assistant!",
+        type: "assistant-text",
+        content: { text: "Hello World from the Assistant!" },
     },
     {
         id: "3",
         created: Date.now() + 2000,
-        role: "user",
-        type: "text",
-        content: "A longer message. ".repeat(30),
+        type: "user-text",
+        content: {
+            text: "A longer message. ".repeat(30),
+            cancelled: false,
+        },
     },
     {
         id: "4",
         created: Date.now() + 3000,
-        role: "assistant",
-        type: "text",
-        content: "A longer reply. ".repeat(10),
+        type: "assistant-text",
+        content: {
+            text: "A longer reply. ".repeat(10),
+        },
     },
 ];
 

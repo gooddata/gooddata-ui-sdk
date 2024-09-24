@@ -3130,6 +3130,9 @@ importers:
       '@gooddata/sdk-ui-kit':
         specifier: workspace:*
         version: link:../sdk-ui-kit
+      '@gooddata/sdk-ui-pivot':
+        specifier: workspace:*
+        version: link:../sdk-ui-pivot
       '@gooddata/util':
         specifier: workspace:*
         version: link:../util
@@ -3148,9 +3151,6 @@ importers:
       react-intl:
         specifier: ^6.4.1
         version: 6.5.5(react@18.2.0)(typescript@5.3.3)
-      react-native-listener:
-        specifier: ~1.1.0
-        version: 1.1.0
       react-redux:
         specifier: ^7.2.4
         version: 7.2.9(react-dom@18.2.0)(react@18.2.0)
@@ -3161,8 +3161,8 @@ importers:
         specifier: ^1.2.3
         version: 1.2.3
       reselect:
-        specifier: ~5.1.1
-        version: 5.1.1
+        specifier: 4.1.8
+        version: 4.1.8
       tslib:
         specifier: ^2.5.0
         version: 2.6.2
@@ -21432,10 +21432,6 @@ packages:
 
   /reselect@4.1.8:
     resolution: {integrity: sha512-ab9EmR80F/zQTMNeneUr4cv+jSwPJgIlvEmVwLerwrWVbpLlBuls9XHzIeTFy4cegU2NHBp3va0LKOzU5qFEYQ==}
-    dev: false
-
-  /reselect@5.1.1:
-    resolution: {integrity: sha512-K/BG6eIky/SBpzfHZv/dd+9JBFiS4SWV7FIujVyJRux6e45+73RaUHXLmIR1f7WOMaQ0U1km6qwklRQxpJJY0w==}
     dev: false
 
   /resize-observer-polyfill@1.5.1:

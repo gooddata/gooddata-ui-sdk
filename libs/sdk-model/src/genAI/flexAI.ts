@@ -45,7 +45,7 @@ export interface IGenAIChatEvaluation {
     /**
      * Most relevant objects for the user question.
      */
-    foundObjects?: ISemanticSearchResultItem[];
+    foundObjects?: GenAIChatFoundObjects;
     /**
      * Visualizations created by the assistant.
      */
@@ -174,6 +174,15 @@ export type GenAIChatUseCase = {
  * @alpha
  */
 export type GenAIChatCreatedVisualizations = {
-    objects: GenAIChatCreatedVisualization[];
+    objects?: GenAIChatCreatedVisualization[];
+    reasoning: string;
+};
+
+/**
+ * Found objects related to the user question.
+ * @alpha
+ */
+export type GenAIChatFoundObjects = {
+    objects?: ISemanticSearchResultItem[];
     reasoning: string;
 };

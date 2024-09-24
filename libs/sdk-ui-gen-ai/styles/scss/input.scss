@@ -72,11 +72,13 @@
         right: 10px;
         cursor: pointer;
 
-        & path {
+        & path,
+        & rect {
             fill: kit-variables.$gd-color-link;
         }
 
-        &:hover path {
+        &:hover path,
+        &:hover rect {
             fill: kit-variables.$gd-palette-primary-base;
         }
 
@@ -84,14 +86,16 @@
         &--disabled:hover {
             cursor: default;
 
-            path {
+            path,
+            rect {
                 fill: kit-variables.$gd-color-disabled;
             }
         }
     }
 
     &:focus-within &__send_button {
-        path {
+        path,
+        rect {
             fill: kit-variables.$gd-palette-primary-base;
         }
 
@@ -99,7 +103,8 @@
         &--disabled:hover {
             cursor: default;
 
-            path {
+            path,
+            rect {
                 fill: kit-variables.$gd-color-disabled;
             }
         }

@@ -6,15 +6,17 @@ import { agentLoadingSelector, visibleMessagesSelector } from "../store/index.js
 import {
     AssistantTextMessageComponent,
     SystemMessageComponent,
-    UserMessageComponent,
+    UserTextMessageComponent,
+    AssistantCancelledMessageComponent,
 } from "./messages/index.js";
 import { AgentState } from "./messages/AgentState.js";
 import {
     isAssistantErrorMessage,
     isAssistantSearchCreateMessage,
     isAssistantTextMessage,
-    isSystemMessage,
-    isUserMessage,
+    isAssistantCancelledMessage,
+    isUserTextMessage,
+    isSystemTextMessage,
 } from "../model.js";
 import { EmptyState } from "./EmptyState.js";
 import { AssistantErrorMessageComponent } from "./messages/AssistantErrorMessage.js";
@@ -51,11 +53,15 @@ export const Messages = () => {
                         return <AssistantSearchCreateMessageComponent key={message.id} message={message} />;
                     }
 
-                    if (isUserMessage(message)) {
-                        return <UserMessageComponent key={message.id} message={message} />;
+                    if (isUserTextMessage(message)) {
+                        return <UserTextMessageComponent key={message.id} message={message} />;
                     }
 
-                    if (isSystemMessage(message)) {
+                    if (isAssistantCancelledMessage(message)) {
+                        return <AssistantCancelledMessageComponent key={message.id} message={message} />;
+                    }
+
+                    if (isSystemTextMessage(message)) {
                         return <SystemMessageComponent key={message.id} message={message} />;
                     }
 

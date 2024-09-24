@@ -48,6 +48,18 @@ export interface ISemanticSearchResultItem {
      * Larger is more similar.
      */
     score: number;
+    /**
+     * Title score of the found item.
+     */
+    scoreTitle: number;
+    /**
+     * Description score of the found item.
+     */
+    scoreDescriptor: number;
+    /**
+     * 1000 if the found item is an exact match, 0 otherwise.
+     */
+    scoreExactMatch: number;
 }
 
 /**

@@ -1004,6 +1004,7 @@ export type {
     GenAIChatCreatedVisualizationDimension,
     GenAIChatUseCase,
     GenAIChatCreatedVisualizations,
+    GenAIChatFoundObjects,
 } from "./genAI/flexAI.js";
 
 export type { GenAIObjectType } from "./genAI/common.js";

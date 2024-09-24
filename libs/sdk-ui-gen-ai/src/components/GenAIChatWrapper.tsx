@@ -14,7 +14,7 @@ export const GenAIChatWrapper: React.FC = () => {
             <Messages />
             <Input />
             <Typography tagName="p" className="gd-gen-ai-chat__disclaimer">
-                We do not accept any liability for the generated information as it may not be accurate
+                AI assistants can make mistakes. Check before relying on these answers.
             </Typography>
         </div>
     );
