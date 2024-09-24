@@ -6,7 +6,7 @@ import noop from "lodash/noop.js";
 import { DashboardInsightMenuBody } from "../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/index.js";
 import { selectInsightsMap, selectRenderMode, useDashboardSelector } from "../../../../model/index.js";
 import { IInsightMenuSubmenu } from "../../insightMenu/index.js";
-import { useEditableInsightMenu } from "../../widget/InsightWidget/useEditableInsightMenu.js";
+import { useVisualizationSwitcherEditableInsightMenu } from "./useVisualizationSwitcherEditableInsightMenu.js";
 
 export const VisualizationConfig: React.FC<{ widget: IInsightWidget }> = ({ widget }) => {
     const insights = useDashboardSelector(selectInsightsMap);
@@ -15,7 +15,7 @@ export const VisualizationConfig: React.FC<{ widget: IInsightWidget }> = ({ widg
     if (!insight) {
         // eslint-disable-next-line no-console
         console.debug(
-            "DefaultDashboardInsightWidget rendered before the insights were ready, skipping render.",
+            "DefaultVisualizationSwitcherToolbar rendered before the insights were ready, skipping render.",
         );
         return null;
     }
@@ -27,11 +27,8 @@ const VisualizationConfigContent: React.FC<{ widget: IInsightWidget; insight: II
     widget,
     insight,
 }) => {
-    const { menuItems } = useEditableInsightMenu({
-        widget,
-        insight,
-        closeMenu: noop,
-    });
+    const { menuItems } = useVisualizationSwitcherEditableInsightMenu(widget, insight);
+
     const renderMode = useDashboardSelector(selectRenderMode);
     const [submenu, setSubmenu] = useState<IInsightMenuSubmenu | null>(null);
 
