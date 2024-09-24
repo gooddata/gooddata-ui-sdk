@@ -2,84 +2,98 @@
 
 import { IGenAIChatInteraction } from "@gooddata/sdk-model";
 import {
+    isAssistantCancelledMessage,
     isAssistantErrorMessage,
     isAssistantSearchCreateMessage,
     isAssistantTextMessage,
-    isSystemMessage,
-    isUserMessage,
+    isSystemTextMessage,
+    isUserTextMessage,
     Message,
 } from "../../../model.js";
 
 export const messagesToHistory = (messages: Message[]): IGenAIChatInteraction[] => {
-    return messages.map((message) => {
-        if (isUserMessage(message)) {
-            return {
-                role: "USER",
-                content: [
-                    {
-                        text: message.content,
-                        includeToChatContext: true,
-                        userFeedback: "NONE" as const,
-                    },
-                ],
-            };
-        }
+    return messages
+        .map((message): IGenAIChatInteraction | null => {
+            if (isUserTextMessage(message)) {
+                if (message.content.cancelled) {
+                    // Do not send cancelled message to history
+                    return null;
+                }
 
-        if (isSystemMessage(message)) {
-            throw new Error("TODO: implement system message conversion");
-        }
+                return {
+                    role: "USER",
+                    content: [
+                        {
+                            text: message.content.text,
+                            includeToChatContext: true,
+                            userFeedback: "NONE" as const,
+                        },
+                    ],
+                };
+            }
 
-        if (isAssistantTextMessage(message)) {
-            return {
-                role: "AI",
-                content: [
-                    {
-                        text: message.content,
-                        includeToChatContext: true,
-                        userFeedback: "NONE" as const,
-                    },
-                ],
-            };
-        }
+            if (isSystemTextMessage(message)) {
+                // Server does not accept system messages
+                return null;
+            }
 
-        if (isAssistantErrorMessage(message)) {
-            return {
-                role: "AI",
-                content: [
-                    {
-                        text: `ERROR: ${message.content}`,
-                        includeToChatContext: true,
-                        userFeedback: "NONE" as const,
-                    },
-                ],
-            };
-        }
+            if (isAssistantTextMessage(message)) {
+                return {
+                    role: "AI",
+                    content: [
+                        {
+                            text: message.content.text,
+                            includeToChatContext: true,
+                            userFeedback: "NONE" as const,
+                        },
+                    ],
+                };
+            }
 
-        if (isAssistantSearchCreateMessage(message)) {
-            const firstVis = message.content.createdVisualizations?.objects?.[0];
+            if (isAssistantErrorMessage(message)) {
+                return {
+                    role: "AI",
+                    content: [
+                        {
+                            text: `ERROR: ${message.content.error}`,
+                            includeToChatContext: true,
+                            userFeedback: "NONE" as const,
+                        },
+                    ],
+                };
+            }
 
-            // Chat hallucinates when you provide both createdVisualizations and foundObjects
-            // So, deliver the first created vis and if none - deliver found objects
-            return {
-                role: "AI",
-                content: firstVis
-                    ? [
-                          {
-                              createdVisualization: firstVis,
+            if (isAssistantCancelledMessage(message)) {
+                // Do not send cancelled message to history
+                return null;
+            }
+
+            if (isAssistantSearchCreateMessage(message)) {
+                const firstVis = message.content.createdVisualizations?.objects?.[0];
+
+                // Chat hallucinates when you provide both createdVisualizations and foundObjects
+                // So, deliver the first created vis and if none - deliver found objects
+                return {
+                    role: "AI",
+                    content: firstVis
+                        ? [
+                              {
+                                  createdVisualization: firstVis,
+                                  includeToChatContext: true,
+                                  userFeedback: "NONE" as const,
+                              },
+                          ]
+                        : (message.content.foundObjects ?? []).map((foundObject) => ({
+                              foundObject,
                               includeToChatContext: true,
                               userFeedback: "NONE" as const,
-                          },
-                      ]
-                    : (message.content.foundObjects ?? []).map((foundObject) => ({
-                          foundObject,
-                          includeToChatContext: true,
-                          userFeedback: "NONE" as const,
-                      })),
-            };
-        }
+                          })),
+                };
+            }
 
-        return assertNever(message);
-    });
+            return assertNever(message);
+        })
+        .filter<IGenAIChatInteraction>((x): x is IGenAIChatInteraction => !!x);
 };
 
 const assertNever = (value: never): never => {

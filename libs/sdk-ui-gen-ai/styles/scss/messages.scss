@@ -48,6 +48,14 @@
             .gd-gen-ai-chat__messages__contents {
                 color: kit-variables.$gd-color-white;
             }
+
+            &--cancelled {
+                background-color: kit-variables.$gd-palette-primary-base-t80;
+
+                &::after {
+                    border-top-color: kit-variables.$gd-palette-primary-base-t80;
+                }
+            }
         }
 
         &--assistant {
@@ -56,6 +64,10 @@
             gap: 10px;
             align-items: flex-start;
             margin-bottom: 39px;
+
+            &--cancelled .gd-gen-ai-chat__messages__contents {
+                color: kit-variables.$gd-color-disabled;
+            }
         }
 
         &--error .gd-gen-ai-chat__messages__contents {

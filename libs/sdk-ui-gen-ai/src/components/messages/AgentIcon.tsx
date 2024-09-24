@@ -8,17 +8,23 @@ let INSTANCE_COUNTER = 0;
 type AgentStateIconProps = {
     loading?: boolean;
     error?: boolean;
+    cancelled?: boolean;
 };
 
-export const AgentIcon: React.FC<AgentStateIconProps> = ({ loading = false, error = false }) => {
+export const AgentIcon: React.FC<AgentStateIconProps> = ({
+    loading = false,
+    error = false,
+    cancelled = false,
+}) => {
     // A precaution in case there are multiple instances of the component on the same page
     // In-line SVGs must obey the unique ID rule as any other HTML element
     const instanceId = React.useMemo(() => INSTANCE_COUNTER++, []);
 
     const className = cx("gd-gen-ai-chat__agent_icon", {
         "gd-gen-ai-chat__agent_icon--loading": loading,
-        "gd-gen-ai-chat__agent_icon--appear": !loading,
-        "gd-gen-ai-chat__agent_icon--error": error,
+        "gd-gen-ai-chat__agent_icon--appear": !loading && !error && !cancelled,
+        "gd-gen-ai-chat__agent_icon--error": !loading && error,
+        "gd-gen-ai-chat__agent_icon--cancelled": !loading && !error && cancelled,
     });
 
     return (

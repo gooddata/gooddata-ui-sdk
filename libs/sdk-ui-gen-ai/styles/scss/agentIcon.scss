@@ -63,6 +63,16 @@ $gd-palette-primary-base-midpoint: color-mix(
         }
     }
 
+    &--cancelled & {
+        &__background {
+            fill: kit-variables.$gd-color-light;
+        }
+
+        &__star {
+            fill: kit-variables.$gd-color-disabled;
+        }
+    }
+
     &__grad {
         &--from {
             stop-color: kit-variables.$gd-palette-primary-base;

@@ -15,7 +15,7 @@ export const evalToMessage = (evalResult: IGenAIChatEvaluation): AssistantMessag
         // Convert to the error message
         const message = evalResult.createdVisualizations?.reasoning || "Invalid question. Try again.";
 
-        return makeAssistantErrorMessage(message);
+        return makeAssistantErrorMessage(message, evalResult.foundObjects);
     }
 
     return makeAssistantSearchCreateMessage(evalResult);

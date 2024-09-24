@@ -3151,9 +3151,6 @@ importers:
       react-intl:
         specifier: ^6.4.1
         version: 6.5.5(react@18.2.0)(typescript@5.3.3)
-      react-native-listener:
-        specifier: ~1.1.0
-        version: 1.1.0
       react-redux:
         specifier: ^7.2.4
         version: 7.2.9(react-dom@18.2.0)(react@18.2.0)

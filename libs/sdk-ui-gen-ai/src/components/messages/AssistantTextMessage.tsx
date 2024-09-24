@@ -14,7 +14,7 @@ export const AssistantTextMessageComponent: React.FC<AssistantTextMessageProps> 
         <div className="gd-gen-ai-chat__messages__message gd-gen-ai-chat__messages__message--assistant">
             <AgentIcon />
             <Typography tagName="p" className="gd-gen-ai-chat__messages__contents">
-                {message.content}
+                {message.content.text}
             </Typography>
         </div>
     );
