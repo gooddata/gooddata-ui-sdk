@@ -46,6 +46,9 @@ export class DummySemanticSearchQueryBuilder implements ISemanticSearchQuery {
                 modifiedAt: "2023-08-03T13:17:26.923537",
                 visualizationUrl: type === "visualization" ? "local:line" : undefined,
                 score: 0.5,
+                scoreTitle: 0.5,
+                scoreDescriptor: 0.5,
+                scoreExactMatch: 0,
             })),
             relationships: [] as ISemanticSearchRelationship[],
         };

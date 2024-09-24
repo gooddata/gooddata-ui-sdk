@@ -1,6 +1,6 @@
 // (C) 2024 GoodData Corporation
 import { v4 as uuidv4 } from "uuid";
-import { IGenAIChatEvaluation, ISemanticSearchResultItem } from "@gooddata/sdk-model";
+import { GenAIChatFoundObjects, IGenAIChatEvaluation } from "@gooddata/sdk-model";
 
 /**
  * @alpha
@@ -113,7 +113,7 @@ export type AssistantErrorMessage = BaseMessage & {
     type: "assistant-error";
     content: {
         error: string;
-        foundObjects?: ISemanticSearchResultItem[];
+        foundObjects?: GenAIChatFoundObjects;
     };
 };
 
@@ -128,7 +128,7 @@ export const isAssistantErrorMessage = (message?: Message): message is Assistant
  */
 export const makeAssistantErrorMessage = (
     error: string,
-    foundObjects?: ISemanticSearchResultItem[],
+    foundObjects?: GenAIChatFoundObjects,
 ): AssistantErrorMessage => ({
     id: uuidv4(),
     type: "assistant-error",

@@ -2236,8 +2236,23 @@ export interface CacheUsageData {
 }
 
 // @public
+export interface ChatInteraction {
+    content: Array<CreatedVisualizationInteractionWithContext | FoundObjectInteractionWithContext | TextInteractionWithContext>;
+    role: ChatInteractionRoleEnum;
+}
+
+// @public (undocumented)
+export const ChatInteractionRoleEnum: {
+    readonly USER: "USER";
+    readonly AI: "AI";
+};
+
+// @public (undocumented)
+export type ChatInteractionRoleEnum = typeof ChatInteractionRoleEnum[keyof typeof ChatInteractionRoleEnum];
+
+// @public
 export interface ChatRequest {
-    conversationHistory?: Array<ConversationInteraction>;
+    chatHistory?: Array<ChatInteraction>;
     limitCreate?: number;
     limitCreateContext?: number;
     limitSearch?: number;
@@ -2252,7 +2267,7 @@ export interface ChatRequest {
 // @public
 export interface ChatResult {
     createdVisualizations?: CreatedVisualizations;
-    foundObjects?: Array<SearchResultObject>;
+    foundObjects?: FoundObjects;
     invalidQuestion: boolean;
     useCases: Array<RouteResultObject>;
 }
@@ -2530,21 +2545,6 @@ export interface ContextFiltersApiUpdateEntityFilterContextsRequest {
     readonly objectId: string;
     readonly workspaceId: string;
 }
-
-// @public
-export interface ConversationInteraction {
-    content: Array<CreatedVisualizationInteractionWithContext | FoundObjectInteractionWithContext | TextInteractionWithContext>;
-    role: ConversationInteractionRoleEnum;
-}
-
-// @public (undocumented)
-export const ConversationInteractionRoleEnum: {
-    readonly USER: "USER";
-    readonly AI: "AI";
-};
-
-// @public (undocumented)
-export type ConversationInteractionRoleEnum = typeof ConversationInteractionRoleEnum[keyof typeof ConversationInteractionRoleEnum];
 
 // @public
 export class CookieSecurityConfigurationApi extends MetadataBaseApi implements CookieSecurityConfigurationApiInterface {
@@ -7790,6 +7790,12 @@ export const FoundObjectInteractionWithContextUserFeedbackEnum: {
 
 // @public (undocumented)
 export type FoundObjectInteractionWithContextUserFeedbackEnum = typeof FoundObjectInteractionWithContextUserFeedbackEnum[keyof typeof FoundObjectInteractionWithContextUserFeedbackEnum];
+
+// @public
+export interface FoundObjects {
+    objects: Array<SearchResultObject>;
+    reasoning: string;
+}
 
 // @public
 export interface Frequency {

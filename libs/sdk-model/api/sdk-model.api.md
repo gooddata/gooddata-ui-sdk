@@ -540,7 +540,13 @@ export type GenAIChatCreatedVisualizationMetric = {
 
 // @alpha
 export type GenAIChatCreatedVisualizations = {
-    objects: GenAIChatCreatedVisualization[];
+    objects?: GenAIChatCreatedVisualization[];
+    reasoning: string;
+};
+
+// @alpha
+export type GenAIChatFoundObjects = {
+    objects?: ISemanticSearchResultItem[];
     reasoning: string;
 };
 
@@ -1862,7 +1868,7 @@ export interface IFilterContextDefinition extends IFilterContextBase, Partial<ID
 // @alpha
 export interface IGenAIChatEvaluation {
     createdVisualizations?: GenAIChatCreatedVisualizations;
-    foundObjects?: ISemanticSearchResultItem[];
+    foundObjects?: GenAIChatFoundObjects;
     invalidQuestion: boolean;
     useCases?: GenAIChatUseCase[];
 }
@@ -3032,6 +3038,9 @@ export interface ISemanticSearchResultItem {
     id: string;
     modifiedAt?: string;
     score: number;
+    scoreDescriptor: number;
+    scoreExactMatch: number;
+    scoreTitle: number;
     tags: string[];
     title: string;
     type: GenAIObjectType;

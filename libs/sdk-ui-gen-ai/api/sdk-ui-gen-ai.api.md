@@ -4,9 +4,9 @@
 
 ```ts
 
+import { GenAIChatFoundObjects } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IGenAIChatEvaluation } from '@gooddata/sdk-model';
-import { ISemanticSearchResultItem } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
 
 // @alpha (undocumented)
@@ -19,7 +19,7 @@ export type AssistantErrorMessage = BaseMessage & {
     type: "assistant-error";
     content: {
         error: string;
-        foundObjects?: ISemanticSearchResultItem[];
+        foundObjects?: GenAIChatFoundObjects;
     };
 };
 

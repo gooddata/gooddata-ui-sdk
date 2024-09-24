@@ -83,7 +83,7 @@ export const messagesToHistory = (messages: Message[]): IGenAIChatInteraction[] 
                                   userFeedback: "NONE" as const,
                               },
                           ]
-                        : (message.content.foundObjects ?? []).map((foundObject) => ({
+                        : (message.content.foundObjects?.objects ?? []).map((foundObject) => ({
                               foundObject,
                               includeToChatContext: true,
                               userFeedback: "NONE" as const,
