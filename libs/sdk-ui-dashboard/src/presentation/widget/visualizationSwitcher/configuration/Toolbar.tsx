@@ -42,6 +42,7 @@ interface ToolbarProps {
     ) => void;
     onWidgetDelete: () => void;
     onSelectedVisualizationChanged?: (visualizationId: string) => void;
+    onClose: () => void;
 }
 
 export const Toolbar: React.FC<ToolbarProps> = ({
@@ -50,6 +51,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
     onVisualizationAdded,
     onWidgetDelete,
     onSelectedVisualizationChanged,
+    onClose,
 }) => {
     const visualizations = widget.visualizations;
 
@@ -154,6 +156,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
             closeOnParentScroll={false}
             ignoreClicksOnByClass={ignoreClicksOnByClass}
             arrowStyle={{ display: "none" }}
+            onClose={onClose}
         >
             <ToolbarTop
                 visualizations={visualizations}
