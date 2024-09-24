@@ -2749,6 +2749,8 @@ export interface DashboardState {
     drillTargets: EntityState<IDrillTargets>;
     // @beta (undocumented)
     entitlements: EntitlementsState;
+    // (undocumented)
+    executed: ExecutedState;
     // @beta
     executionResults: EntityState<IExecutionResultEnvelope>;
     // (undocumented)
@@ -3460,6 +3462,12 @@ export function enableKpiWidgetDateFilter(ref: ObjRef, dateDataset: ObjRef | "de
 export interface EntitlementsState {
     // (undocumented)
     entitlements?: ResolvedEntitlements;
+}
+
+// @beta (undocumented)
+export interface ExecutedState {
+    // (undocumented)
+    executed: boolean;
 }
 
 // @internal (undocumented)
@@ -7572,6 +7580,9 @@ export const selectIsCrossFiltering: DashboardSelector<boolean>;
 
 // @internal
 export const selectIsDashboardDirty: DashboardSelector<boolean>;
+
+// @internal (undocumented)
+export const selectIsDashboardExecuted: DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export const selectIsDashboardLoading: DashboardSelector<boolean>;

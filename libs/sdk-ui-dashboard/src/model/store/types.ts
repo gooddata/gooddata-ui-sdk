@@ -28,6 +28,7 @@ import { SmtpsState } from "./smtps/smtpsState.js";
 import { AutomationsState } from "./automations/automationsState.js";
 import { UsersState } from "./users/usersState.js";
 import { FilterViewsState } from "./filterViews/filterViewsState.js";
+import { ExecutedState } from "./executed/executedState.js";
 
 /*
  * This explicit typing is unfortunate but cannot find better way. Normally the typings get inferred from store,
@@ -51,6 +52,7 @@ export interface DashboardState {
     /** @beta */
     loading: LoadingState;
     saving: SavingState;
+    executed: ExecutedState;
     backendCapabilities: BackendCapabilitiesState;
     config: ConfigState;
     /** @beta */

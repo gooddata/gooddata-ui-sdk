@@ -4,13 +4,17 @@
 .gd-visualization-switcher-widget-wrapper {
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
     overflow-x: hidden;
     overflow-y: auto;
-    position: absolute;
-    left: 0;
-    top: 0;
+
+    .dash-item,
+    .dash-item-content {
+        padding: 0;
+        position: static;
+    }
+    .dash-item-content {
+        border-width: 0;
+    }
 }
 
 .gd-visualization-switcher-widget-empty-content {
@@ -20,4 +24,19 @@
     justify-content: center;
     align-items: center;
     gap: 8px;
+}
+
+.gd-visualization-switcher-visible-visualization {
+    width: 100%;
+    height: 100%;
+
+    &.is-edit-mode {
+        display: flex;
+    }
+}
+
+.gd-visualization-switcher-hidden-visualization {
+    width: 0;
+    height: 0;
+    overflow: hidden;
 }

@@ -26,6 +26,7 @@ import {
     IDashboardAttributeFilterConfig,
     IRichTextWidget,
     IVisualizationSwitcherWidget,
+    isVisualizationSwitcherWidget,
 } from "@gooddata/sdk-model";
 import updateWith from "lodash/updateWith.js";
 import { cloneWithSanitizedIds } from "../../IdSanitization.js";
@@ -60,7 +61,24 @@ function setWidgetRefsInLayout(layout: IDashboardLayout<IDashboardWidget> | unde
                     identifier: id,
                 };
 
-                return fixWidgetLegacyElementUris(convertedWidget);
+                const isSwitcher = isVisualizationSwitcherWidget(convertedWidget);
+
+                return fixWidgetLegacyElementUris({
+                    ...convertedWidget,
+                    ...(isSwitcher
+                        ? {
+                              visualizations: convertedWidget.visualizations.map((visualization) => {
+                                  const id = visualization.localIdentifier ?? uuidv4();
+                                  return {
+                                      ...visualization,
+                                      ref: idRef(id),
+                                      uri: id,
+                                      identifier: id,
+                                  };
+                              }),
+                          }
+                        : {}),
+                });
             },
         );
     }, layout);
