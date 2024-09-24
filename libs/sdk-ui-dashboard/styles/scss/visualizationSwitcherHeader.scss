@@ -7,7 +7,7 @@
     line-height: 23px;
     text-decoration-line: underline;
 
-    &::after {
+    .item-headline-inner::after {
         content: "\e612";
         display: inline-block;
         height: 1px;
@@ -21,7 +21,7 @@
     }
 
     &.is-open {
-        &::after {
+        .item-headline-inner::after {
             content: "\e613";
         }
     }
