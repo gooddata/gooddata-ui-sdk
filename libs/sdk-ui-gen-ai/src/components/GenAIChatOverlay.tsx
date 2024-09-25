@@ -2,25 +2,35 @@
 import React from "react";
 import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
 import { Icon, Overlay } from "@gooddata/sdk-ui-kit";
-import { clearMessagesAction, hasMessagesSelector } from "../store/index.js";
+import { clearMessagesAction, hasMessagesSelector, RootState } from "../store/index.js";
 import cx from "classnames";
 import { HeaderIcon } from "./HeaderIcon.js";
-import { useDispatch, useSelector } from "react-redux";
+import { connect } from "react-redux";
 
-export type GenAIChatOverlayProps = {
+type GenAIChatOverlayOwnProps = {
     onClose: () => void;
 };
 
-export const GenAIChatOverlay: React.FC<GenAIChatOverlayProps> = ({ onClose }) => {
+type GenAIChatOverlayStateProps = {
+    hasMessages: boolean;
+};
+
+type GenAIChatOverlayDispatchProps = {
+    clearMessages: typeof clearMessagesAction;
+};
+
+export type GenAIChatOverlayProps = GenAIChatOverlayOwnProps &
+    GenAIChatOverlayStateProps &
+    GenAIChatOverlayDispatchProps;
+
+const GenAIChatOverlayComponent: React.FC<GenAIChatOverlayProps> = ({
+    onClose,
+    hasMessages,
+    clearMessages,
+}) => {
     const [isFullScreen, setIsFullScreen] = React.useState(false);
-    const dispatch = useDispatch();
-    const hasMessages = useSelector(hasMessagesSelector);
 
     const isModal = isFullScreen;
-
-    const reset = () => {
-        dispatch(clearMessagesAction());
-    };
 
     const classNames = cx("gd-gen-ai-chat__window", {
         "gd-gen-ai-chat__window--fullscreen": isFullScreen,
@@ -44,7 +54,7 @@ export const GenAIChatOverlay: React.FC<GenAIChatOverlayProps> = ({ onClose }) =
                         Icon={Icon.Undo}
                         className="gd-gen-ai-chat__window__header__icon--reset"
                         tooltip="Reset"
-                        onClick={reset}
+                        onClick={() => clearMessages()}
                         disabled={!hasMessages}
                     />
                     <div className="gd-gen-ai-chat__window__header__gap"></div>
@@ -67,3 +77,13 @@ export const GenAIChatOverlay: React.FC<GenAIChatOverlayProps> = ({ onClose }) =
         </Overlay>
     );
 };
+
+const mapStateToProps = (state: RootState): GenAIChatOverlayStateProps => ({
+    hasMessages: hasMessagesSelector(state),
+});
+
+const mapDispatchToProps: GenAIChatOverlayDispatchProps = {
+    clearMessages: clearMessagesAction,
+};
+
+export const GenAIChatOverlay = connect(mapStateToProps, mapDispatchToProps)(GenAIChatOverlayComponent);

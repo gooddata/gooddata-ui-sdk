@@ -11,16 +11,17 @@ const dummyState: RootState = {
             "1": {
                 id: "1",
                 created: Date.now(),
-                role: "user",
-                type: "text",
-                content: "Hello",
+                type: "user-text",
+                content: {
+                    cancelled: false,
+                    text: "Hello",
+                },
             },
             "2": {
                 id: "2",
                 created: Date.now() + 1000,
-                role: "assistant",
-                type: "text",
-                content: "Hi!",
+                type: "assistant-text",
+                content: { text: "Hi!" },
             },
         },
         verbose: false,

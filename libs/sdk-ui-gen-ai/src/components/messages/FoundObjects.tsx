@@ -9,9 +9,9 @@ type FoundObjectsProps = {
 };
 
 export const FoundObjects: React.FC<FoundObjectsProps> = ({ foundObjects }) => {
-    const first5FoundObjects = foundObjects?.objects
-        ?.filter((obj) => obj.type === "visualization")
-        .slice(0, 5);
+    const first5FoundObjects = React.useMemo(() => {
+        return foundObjects?.objects?.filter((obj) => obj.type === "visualization").slice(0, 5);
+    }, [foundObjects?.objects]);
     const foundObjectsReasoning = foundObjects?.reasoning;
 
     if (!first5FoundObjects) {
