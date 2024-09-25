@@ -423,11 +423,6 @@ export interface ISettings {
     enableSmtp?: boolean;
 
     /**
-     * Enables rollup (native) totals.
-     */
-    enableRollupTotals?: boolean;
-
-    /**
      * Enables storing widget identifiers.
      */
     enableWidgetIdentifiersRollout?: boolean;

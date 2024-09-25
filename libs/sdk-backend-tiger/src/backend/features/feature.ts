@@ -431,13 +431,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableRollupTotals,
-            "enableRollupTotals",
-            "BOOLEAN",
-            FeatureFlagsValues.enableRollupTotals,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableWidgetIdentifiersRollout,
             "enableWidgetIdentifiersRollout",
             "BOOLEAN",
