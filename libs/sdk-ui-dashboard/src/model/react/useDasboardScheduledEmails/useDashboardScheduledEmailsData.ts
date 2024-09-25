@@ -6,7 +6,6 @@ import {
     isExportDefinitionVisualizationObjectRequestPayload,
 } from "@gooddata/sdk-model";
 import {
-    selectCanExportPdf,
     selectCanManageWorkspace,
     selectEnableScheduling,
     selectIsInViewMode,
@@ -71,7 +70,6 @@ export const useDashboardScheduledEmailsData = ({
     const isScheduledEmailingEnabled = useDashboardSelector(selectEnableScheduling);
 
     // Permissions
-    const canExport = useDashboardSelector(selectCanExportPdf);
     const isWorkspaceManager = useDashboardSelector(selectCanManageWorkspace);
     const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
 
@@ -93,7 +91,6 @@ export const useDashboardScheduledEmailsData = ({
         isInViewMode &&
         !isReadOnly &&
         isScheduledEmailingEnabled &&
-        canExport &&
         showDueToNumberOfAvailableDestinations &&
         (menuButtonItemsVisibility.scheduleEmailButton ?? true);
 
