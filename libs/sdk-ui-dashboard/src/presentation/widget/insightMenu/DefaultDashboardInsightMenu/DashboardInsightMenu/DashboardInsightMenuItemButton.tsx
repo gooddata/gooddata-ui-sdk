@@ -38,7 +38,7 @@ function renderButtonWithTooltip(
 ) {
     if (tooltip && disabled) {
         return (
-            <BubbleHoverTrigger className="s-gd-bubble-trigger-options-menu-item">
+            <BubbleHoverTrigger className="s-gd-bubble-trigger-options-menu-item" eventsOnBubble>
                 {button}
                 <Bubble
                     className={`bubble-primary bubble-primary-${id} s-bubble-primary-${id}`}
