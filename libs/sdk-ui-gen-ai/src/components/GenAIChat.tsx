@@ -6,6 +6,7 @@ import { useGenAIStore } from "../hooks/useGenAIStore.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
 import { Message } from "../model.js";
 import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
+import { BackendProvider, useBackendStrict, useWorkspaceStrict, WorkspaceProvider } from "@gooddata/sdk-ui";
 
 /**
  * Properties for the GenAIChat component.
@@ -31,12 +32,18 @@ export interface GenAIChatProps {
  * @alpha
  */
 export const GenAIChat: React.FC<GenAIChatProps> = ({ backend, workspace, history }) => {
-    const genAIStore = useGenAIStore(backend, workspace, history);
+    const effectiveBackend = useBackendStrict(backend);
+    const effectiveWorkspace = useWorkspaceStrict(workspace);
+    const genAIStore = useGenAIStore(effectiveBackend, effectiveWorkspace, history);
 
     return (
         <IntlWrapper>
             <StoreProvider store={genAIStore}>
-                <GenAIChatWrapper />
+                <BackendProvider backend={effectiveBackend}>
+                    <WorkspaceProvider workspace={effectiveWorkspace}>
+                        <GenAIChatWrapper />
+                    </WorkspaceProvider>
+                </BackendProvider>
             </StoreProvider>
         </IntlWrapper>
     );

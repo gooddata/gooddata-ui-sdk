@@ -9,7 +9,10 @@
 .gd-gen-ai-chat__messages {
     flex: 1;
     overflow-y: auto;
-    margin: variables.$y-spacing variables.$x-spacing 0;
+
+    // Use padding on the right to prevent the scrollbar from overlapping the content
+    margin: variables.$y-spacing 0 0 variables.$x-spacing;
+    padding-right: variables.$x-spacing;
 
     &__scroll {
         display: flex;
