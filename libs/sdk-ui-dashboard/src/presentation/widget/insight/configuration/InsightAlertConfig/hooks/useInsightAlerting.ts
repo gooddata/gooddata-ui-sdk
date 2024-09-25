@@ -191,6 +191,9 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             dashboard,
             metadata: {
                 widget: widget?.localIdentifier,
+            },
+            details: {
+                ...alert.details,
                 widgetName: widget?.title ?? "",
             },
             recipients: [convertUserToAutomationRecipient(currentUser)],
