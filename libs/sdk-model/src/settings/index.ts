@@ -481,6 +481,11 @@ export interface ISettings {
      */
     enableHeadlineExport?: boolean;
 
+    /**
+     * Enables the FlightRPC (FlexFunctions) data source.
+     */
+    enableFlightRpcDataSource?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 
