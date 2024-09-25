@@ -110,6 +110,7 @@ export enum TigerFeaturesNames {
     EnableNewInsightChangedPostMessageEvent = "enableNewInsightChangedPostMessageEvent",
     EnableIgnoreCrossFiltering = "enableIgnoreCrossFiltering",
     EnableHeadlineExport = "enableHeadlineExport",
+    EnableFlightRpcDataSource = "enableFlightRpcDataSource",
 }
 
 export type ITigerFeatureFlags = {
@@ -184,6 +185,7 @@ export type ITigerFeatureFlags = {
     enableKDVisualizationSwitcher: typeof FeatureFlagsValues["enableKDVisualizationSwitcher"][number];
     enableIgnoreCrossFiltering: typeof FeatureFlagsValues["enableIgnoreCrossFiltering"][number];
     enableHeadlineExport: typeof FeatureFlagsValues["enableHeadlineExport"][number];
+    enableFlightRpcDataSource: typeof FeatureFlagsValues["enableFlightRpcDataSource"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -258,6 +260,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableKDVisualizationSwitcher: false,
     enableIgnoreCrossFiltering: false,
     enableHeadlineExport: false,
+    enableFlightRpcDataSource: false,
 };
 
 export const FeatureFlagsValues = {
@@ -336,4 +339,5 @@ export const FeatureFlagsValues = {
     enableKDVisualizationSwitcher: [true, false] as const,
     enableIgnoreCrossFiltering: [true, false] as const,
     enableHeadlineExport: [true, false] as const,
+    enableFlightRpcDataSource: [true, false] as const,
 };

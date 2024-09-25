@@ -513,6 +513,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableHeadlineExport,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableFlightRpcDataSource,
+            "enableFlightRpcDataSource",
+            "BOOLEAN",
+            FeatureFlagsValues.enableFlightRpcDataSource,
+        ),
     };
 }
 

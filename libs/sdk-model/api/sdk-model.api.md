@@ -3095,6 +3095,7 @@ export interface ISettings {
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     enableEmbedButtonInAD?: boolean;
     enableEmbedButtonInKD?: boolean;
+    enableFlightRpcDataSource?: boolean;
     enableGenAIChat?: boolean;
     enableGenAIChatRollout?: boolean;
     enableHeadlineExport?: boolean;
