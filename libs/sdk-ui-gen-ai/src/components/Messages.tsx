@@ -1,8 +1,8 @@
 // (C) 2024 GoodData Corporation
 
 import React from "react";
-import { useSelector } from "react-redux";
-import { agentLoadingSelector, visibleMessagesSelector } from "../store/index.js";
+import { connect } from "react-redux";
+import { agentLoadingSelector, RootState, visibleMessagesSelector } from "../store/index.js";
 import {
     AssistantTextMessageComponent,
     SystemMessageComponent,
@@ -22,9 +22,12 @@ import { EmptyState } from "./EmptyState.js";
 import { AssistantErrorMessageComponent } from "./messages/AssistantErrorMessage.js";
 import { AssistantSearchCreateMessageComponent } from "./messages/AssistantSearchCreateMessage.js";
 
-export const Messages = () => {
-    const messages = useSelector(visibleMessagesSelector);
-    const loading = useSelector(agentLoadingSelector);
+type MessagesComponentProps = {
+    messages: ReturnType<typeof visibleMessagesSelector>;
+    loading: ReturnType<typeof agentLoadingSelector>;
+};
+
+const MessagesComponent: React.FC<MessagesComponentProps> = ({ messages, loading }) => {
     const scrollRef = React.useRef<HTMLDivElement>(null);
 
     const lastMessage = messages[messages.length - 1];
@@ -76,3 +79,10 @@ export const Messages = () => {
 const assertNever = (value: never): never => {
     throw new Error(`Unhandled message role: ${value}`);
 };
+
+const mapStateToProps = (state: RootState): MessagesComponentProps => ({
+    messages: visibleMessagesSelector(state),
+    loading: agentLoadingSelector(state),
+});
+
+export const Messages = connect(mapStateToProps)(MessagesComponent);

@@ -1,16 +1,9 @@
 // (C) 2024 GoodData Corporation
 import React from "react";
-import { Button, IButtonProps, Typography } from "@gooddata/sdk-ui-kit";
-import { useDispatch } from "react-redux";
+import { Button, Typography } from "@gooddata/sdk-ui-kit";
+import { connect } from "react-redux";
 import { makeAssistantTextMessage, makeUserTextMessage } from "../model.js";
 import { setMessages } from "../store/index.js";
-
-type QuickOption = {
-    title: string;
-    question: string;
-    answer: string;
-    icon?: string;
-};
 
 const quickOptions = [
     {
@@ -31,20 +24,11 @@ const quickOptions = [
     },
 ];
 
-export const EmptyState: React.FC = () => {
-    const dispatch = useDispatch();
+type EmptyStateDispatchProps = {
+    setMessages: typeof setMessages;
+};
 
-    const withClickValue = (option: QuickOption): IButtonProps => ({
-        onClick: () => {
-            dispatch(
-                setMessages([makeUserTextMessage(option.question), makeAssistantTextMessage(option.answer)]),
-            );
-        },
-        value: option.title,
-        variant: "secondary" as const,
-        iconLeft: option.icon,
-    });
-
+const EmptyStateComponent: React.FC<EmptyStateDispatchProps> = ({ setMessages }) => {
     return (
         <div className="gd-gen-ai-chat__messages__empty">
             <Typography tagName="h1" className="gd-gen-ai-chat__messages__empty__h1--accent">
@@ -52,8 +36,25 @@ export const EmptyState: React.FC = () => {
             </Typography>
             <Typography tagName="h1">How can I help you?</Typography>
             {quickOptions.map((option) => (
-                <Button key={option.title} {...withClickValue(option)} />
+                <Button
+                    key={option.title}
+                    onClick={() =>
+                        setMessages([
+                            makeUserTextMessage(option.question),
+                            makeAssistantTextMessage(option.answer),
+                        ])
+                    }
+                    value={option.title}
+                    variant="secondary"
+                    iconLeft={option.icon}
+                />
             ))}
         </div>
     );
 };
+
+const mapDispatchToProps: EmptyStateDispatchProps = {
+    setMessages,
+};
+
+export const EmptyState = connect(null, mapDispatchToProps)(EmptyStateComponent);

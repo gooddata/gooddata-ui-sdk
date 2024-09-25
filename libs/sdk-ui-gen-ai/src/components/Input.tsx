@@ -4,9 +4,9 @@ import DefaultTextArea from "react-textarea-autosize";
 import { defaultImport } from "default-import";
 import cx from "classnames";
 import { SendIcon } from "./SendIcon.js";
-import { useDispatch, useSelector } from "react-redux";
+import { connect } from "react-redux";
 import { makeAssistantCancelledMessage, makeUserTextMessage } from "../model.js";
-import { agentLoadingSelector, newMessageAction } from "../store/index.js";
+import { agentLoadingSelector, newMessageAction, RootState } from "../store/index.js";
 import { StopIcon } from "./StopIcon.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
@@ -14,14 +14,16 @@ import { StopIcon } from "./StopIcon.js";
 // https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
 const TextareaAutosize = defaultImport(DefaultTextArea);
 
-type InputProps = {
-    // empty
+type InputStateProps = {
+    isBusy: boolean;
 };
 
-export const Input: React.FC<InputProps> = () => {
+type InputDispatchProps = {
+    newMessage: typeof newMessageAction;
+};
+
+const InputComponent: React.FC<InputStateProps & InputDispatchProps> = ({ isBusy, newMessage }) => {
     const [value, setValue] = React.useState("");
-    const dispatch = useDispatch();
-    const isBusy = useSelector(agentLoadingSelector);
     const textareaRef = React.useRef<HTMLTextAreaElement>(null);
 
     React.useEffect(() => {
@@ -34,12 +36,12 @@ export const Input: React.FC<InputProps> = () => {
     }, [isBusy]);
 
     const handleSubmit = () => {
-        dispatch(newMessageAction(makeUserTextMessage(value)));
+        newMessage(makeUserTextMessage(value));
         setValue("");
     };
 
     const handleCancel = () => {
-        dispatch(newMessageAction(makeAssistantCancelledMessage()));
+        newMessage(makeAssistantCancelledMessage());
     };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -78,3 +80,13 @@ export const Input: React.FC<InputProps> = () => {
         </div>
     );
 };
+
+const mapStateToProps = (state: RootState): InputStateProps => ({
+    isBusy: agentLoadingSelector(state),
+});
+
+const mapDispatchToProps = {
+    newMessage: newMessageAction,
+};
+
+export const Input = connect(mapStateToProps, mapDispatchToProps)(InputComponent);
