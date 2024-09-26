@@ -638,5 +638,11 @@
     "semantic-search.tags": "Tags",
     "semantic-search.match": "{score}% overeenkomst",
     "recurrence.error.too_often": "Frequentie te hoog",
-    "recurrence.cron.tooltip": "Gebruik de unix-cron stringopmaak. <a>Lees meer</a>"
+    "recurrence.cron.tooltip": "Gebruik de unix-cron stringopmaak. <a>Lees meer</a>",
+    "userManagement.workspace.permission.viewSaveViews": "Weergaven bekijken en opslaan",
+    "userManagement.workspace.permissionUser.viewSaveViews.tooltip": "De gebruiker kan dashboards bekijken die met hem zijn gedeeld en de status van dashboardfilters opslaan als persoonlijke weergaven voor toekomstig gebruik.",
+    "userManagement.workspace.permissionGroup.viewSaveViews.tooltip": "De groepsleden kunnen dashboards bekijken die met hen zijn gedeeld en de status van dashboardfilters opslaan als persoonlijke weergaven voor toekomstig gebruik.",
+    "userManagement.workspace.permission.viewExportSaveViews": "Weergaven bekijken, exporteren en opslaan",
+    "userManagement.workspace.permissionUser.viewExportSaveViews.tooltip": "Omvat de toestemming Bekijken. Daarnaast kan de gebruiker dashboards en visualisaties maken, bewerken of verwijderen en het LDM en de metriek bekijken. Ze kunnen ook dashboards exporteren naar PDF-bestanden en gegevens in tabelvorm van visualisaties naar XLSX- en CSV-bestanden, en de status van dashboardfilters opslaan als persoonlijke weergaven voor toekomstig gebruik.",
+    "userManagement.workspace.permissionGroup.viewExportSaveViews.tooltip": "Omvat de toestemming Bekijken. Daarnaast kunnen de groepsleden dashboards en visualisaties maken, bewerken of verwijderen en de LDM en metriek bekijken. Ze kunnen ook dashboards exporteren naar PDF-bestanden en gegevens in tabelvorm van visualisaties naar XLSX- en CSV-bestanden, en de status van dashboardfilters opslaan als persoonlijke weergaven voor toekomstig gebruik."
 }

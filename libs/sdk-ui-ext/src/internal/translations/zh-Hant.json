@@ -359,5 +359,9 @@
     "properties.clustering.threshold": "臨界點",
     "properties.clustering.threshold.placeholder": "0.03",
     "properties.clustering.threshold.tooltip": "閾值是確定何時對資料進行分組的限制。<link>了解更多</link>",
-    "visualizations.headline.tertiary.title": "相對"
+    "visualizations.headline.tertiary.title": "相對",
+    "properties.interactions.alerts": "警報",
+    "properties.interactions.alerts.tooltip": "使用戶能夠在儀表板上為此視覺化建立警報。",
+    "properties.interactions.scheduledExports": "預定出口",
+    "properties.interactions.scheduledExports.tooltip": "使用戶能夠在儀表板上為此視覺化建立計劃匯出。"
 }

@@ -359,5 +359,9 @@
     "properties.clustering.threshold": "Schwellenwert",
     "properties.clustering.threshold.placeholder": "0,03",
     "properties.clustering.threshold.tooltip": "Der Schwellenwert ist ein Grenzwert, der bestimmt, wann Daten gruppiert werden sollen. <link>Mehr erfahren </link>",
-    "visualizations.headline.tertiary.title": "im Vergleich zu"
+    "visualizations.headline.tertiary.title": "im Vergleich zu",
+    "properties.interactions.alerts": "Warnung",
+    "properties.interactions.alerts.tooltip": "Ermöglichen Sie Benutzern, Warnungen für diese Visualisierung auf Dashboards zu erstellen.",
+    "properties.interactions.scheduledExports": "Geplante Exportvorgänge",
+    "properties.interactions.scheduledExports.tooltip": "Ermöglichen Sie Benutzern, geplante Exporte für diese Visualisierung auf Dashboards zu erstellen."
 }

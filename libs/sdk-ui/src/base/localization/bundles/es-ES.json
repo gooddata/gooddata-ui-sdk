@@ -638,5 +638,11 @@
     "semantic-search.tags": "Etiquetas",
     "semantic-search.match": "{score}% coincidencia",
     "recurrence.error.too_often": "Frecuencia demasiado alta",
-    "recurrence.cron.tooltip": "Utilice el formato de cadena unix-cron. <a>Más información</a>"
+    "recurrence.cron.tooltip": "Utilice el formato de cadena unix-cron. <a>Más información</a>",
+    "userManagement.workspace.permission.viewSaveViews": "Ver y guardar vistas",
+    "userManagement.workspace.permissionUser.viewSaveViews.tooltip": "El usuario puede ver los cuadros de mando que se han compartido con él y guardar el estado de los filtros del cuadro de mando como vistas personales para su uso futuro.",
+    "userManagement.workspace.permissionGroup.viewSaveViews.tooltip": "Los miembros del grupo pueden ver los cuadros de mando que se han compartido con ellos y guardar el estado de los filtros de los cuadros de mando como vistas personales para su uso futuro.",
+    "userManagement.workspace.permission.viewExportSaveViews": "Ver, exportar y guardar vistas",
+    "userManagement.workspace.permissionUser.viewExportSaveViews.tooltip": "Cubre el permiso Ver. Además, el usuario puede crear, editar o eliminar cuadros de mando y visualizaciones, y ver el LDM y las métricas. También puede exportar cuadros de mando a archivos PDF y datos tabulares de visualizaciones a archivos XLSX y CSV, y guardar el estado de los filtros de cuadros de mando como vistas personales para su uso futuro.",
+    "userManagement.workspace.permissionGroup.viewExportSaveViews.tooltip": "Cubre el permiso Ver. Además, los miembros del grupo pueden crear, editar o eliminar cuadros de mando y visualizaciones, y ver el LDM y las métricas. También pueden exportar cuadros de mando a archivos PDF y datos tabulares de visualizaciones a archivos XLSX y CSV, y guardar el estado de los filtros de cuadros de mando como vistas personales para su uso futuro."
 }

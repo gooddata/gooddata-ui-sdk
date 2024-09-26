@@ -638,5 +638,11 @@
     "semantic-search.tags": "Tags",
     "semantic-search.match": "{score}% Übereinstimmung",
     "recurrence.error.too_often": "Frequenz zu hoch",
-    "recurrence.cron.tooltip": "Verwenden Sie das Unix-Cron-String-Format. <a>Mehr erfahren </a>"
+    "recurrence.cron.tooltip": "Verwenden Sie das Unix-Cron-String-Format. <a>Mehr erfahren </a>",
+    "userManagement.workspace.permission.viewSaveViews": "Ansichten anzeigen und speichern",
+    "userManagement.workspace.permissionUser.viewSaveViews.tooltip": "Der Benutzer kann Dashboards anzeigen, die mit ihm geteilt wurden, und den Status der Dashboard-Filter als persönliche Ansichten für die zukünftige Verwendung speichern.",
+    "userManagement.workspace.permissionGroup.viewSaveViews.tooltip": "Die Gruppenmitglieder können Dashboards anzeigen, die mit ihnen geteilt wurden, und den Status der Dashboard-Filter als persönliche Ansichten für die zukünftige Verwendung speichern.",
+    "userManagement.workspace.permission.viewExportSaveViews": "Ansichten anzeigen, exportieren und speichern",
+    "userManagement.workspace.permissionUser.viewExportSaveViews.tooltip": "Deckt die Ansichtsberechtigung ab. Zusätzlich kann der Benutzer Daten analysieren, Dashboards und Visualisierungen erstellen, bearbeiten und löschen sowie das LDM und die Metriken einsehen. Er kann auch Dashboards in PDF-Dateien und tabellarische Daten aus Visualisierungen in XLSX- und CSV-Dateien exportieren u. den Status der Dashboard-Filter als persönliche Ansichten für die zukünftige Verwendung speichern.",
+    "userManagement.workspace.permissionGroup.viewExportSaveViews.tooltip": "Deckt die Ansichtsberechtigung ab. Zusätzlich können die Gruppenmitglieder Daten analysieren, Dashboards und Visualisierungen erstellen, bearbeiten und löschen sowie das LDM und die Metriken einsehen. Er kann auch Dashboards in PDF-Dateien und tabellarische Daten aus Visualisierungen in XLSX- und CSV-Dateien exportieren u. den Status der Dashboard-Filter als persönliche Ansichten für die zukünftige Verwendung speichern."
 }
