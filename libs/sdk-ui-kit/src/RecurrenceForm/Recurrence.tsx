@@ -21,6 +21,7 @@ export interface IRecurrenceProps {
     onRepeatTypeChange: (repeatType: string) => void;
     onCronValueChange: (cronValue: string, isValid: boolean) => void;
     allowHourlyRecurrence?: boolean;
+    onRecurrenceDropdownOpen?: () => void;
 }
 
 /**
@@ -40,6 +41,7 @@ export const Recurrence: React.FC<IRecurrenceProps> = (props) => {
         allowHourlyRecurrence,
         showRepeatTypeDescription,
         weekStart = "Sunday",
+        onRecurrenceDropdownOpen,
     } = props;
 
     return (
@@ -51,6 +53,7 @@ export const Recurrence: React.FC<IRecurrenceProps> = (props) => {
                     startDate={startDate}
                     onChange={onRepeatTypeChange}
                     allowHourlyRecurrence={allowHourlyRecurrence}
+                    onRepeatDropdownOpen={onRecurrenceDropdownOpen}
                 />
                 {recurrenceType !== RECURRENCE_TYPES.CRON && showRepeatTypeDescription ? (
                     <RepeatTypeDescription
