@@ -14,6 +14,7 @@ import {
     IDashboardPluginLink,
     isDashboardLayout,
     isVisualizationSwitcherWidget,
+    isVisualizationSwitcherWidgetDefinition,
     IInsightWidget,
 } from "@gooddata/sdk-model";
 import omit from "lodash/omit.js";
@@ -34,7 +35,8 @@ function removeIdentifiers(widget: IDashboardWidget, useWidgetLocalIdentifiers?:
     const updatedWidget: IDashboardWidget = {
         ...widget,
         ...localIdentifierObj,
-        ...(isVisualizationSwitcherWidget(widget)
+        // check both types as widget during save as new is already stripped from ref and uri
+        ...(isVisualizationSwitcherWidget(widget) || isVisualizationSwitcherWidgetDefinition(widget)
             ? {
                   visualizations: widget.visualizations.map(
                       (visualization) =>
