@@ -3413,6 +3413,8 @@ export interface IRecurrenceFormProps {
     // (undocumented)
     onChange: (cronExpression: string, startDate: Date | null, isValid: boolean) => void;
     // (undocumented)
+    onRecurrenceDropdownOpen?: () => void;
+    // (undocumented)
     repeatLabel?: string;
     // (undocumented)
     showRepeatTypeDescription?: boolean;
@@ -3438,6 +3440,8 @@ export interface IRecurrenceProps {
     label: string;
     // (undocumented)
     onCronValueChange: (cronValue: string, isValid: boolean) => void;
+    // (undocumented)
+    onRecurrenceDropdownOpen?: () => void;
     // (undocumented)
     onRepeatTypeChange: (repeatType: string) => void;
     // (undocumented)
