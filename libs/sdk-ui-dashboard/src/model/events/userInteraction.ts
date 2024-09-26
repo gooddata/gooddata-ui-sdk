@@ -117,6 +117,11 @@ export type AttributeHierarchiesInteractionType =
 /**
  * @beta
  */
+export type VisualizationSwitcherInteractionType = "visualizationSwitcherChanged";
+
+/**
+ * @beta
+ */
 export interface BareUserInteractionPayload {
     interaction:
         | "kpiAlertDialogClosed"
@@ -126,7 +131,8 @@ export interface BareUserInteractionPayload {
         | "addInteractionClicked"
         | AttributeHierarchiesInteractionType
         | AttributeFilterInteractionType
-        | DateFilterInteractionType;
+        | DateFilterInteractionType
+        | VisualizationSwitcherInteractionType;
 }
 
 /**

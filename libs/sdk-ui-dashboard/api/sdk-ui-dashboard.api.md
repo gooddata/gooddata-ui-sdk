@@ -578,7 +578,7 @@ export interface BackendCapabilitiesState {
 // @beta (undocumented)
 export interface BareUserInteractionPayload {
     // (undocumented)
-    interaction: "kpiAlertDialogClosed" | "poweredByGDLogoClicked" | "filterContextStateReset" | "interactionPanelOpened" | "addInteractionClicked" | AttributeHierarchiesInteractionType | AttributeFilterInteractionType | DateFilterInteractionType;
+    interaction: "kpiAlertDialogClosed" | "poweredByGDLogoClicked" | "filterContextStateReset" | "interactionPanelOpened" | "addInteractionClicked" | AttributeHierarchiesInteractionType | AttributeFilterInteractionType | DateFilterInteractionType | VisualizationSwitcherInteractionType;
 }
 
 // @beta (undocumented)
@@ -9062,6 +9062,7 @@ export const useDashboardUserInteraction: () => {
     addInteractionClicked: () => void;
     attributeHierarchiesInteraction: (eventType: AttributeHierarchiesInteractionType) => void;
     dateFilterInteraction: (eventType: DateFilterInteractionType) => void;
+    visualizationSwitcherInteraction: (eventType: VisualizationSwitcherInteractionType) => void;
 };
 
 // @internal (undocumented)
@@ -9315,6 +9316,9 @@ export type VisualizationSwitcherDraggableListItem = BaseDraggableLayoutItem & {
 
 // @internal (undocumented)
 export type VisualizationSwitcherDraggingComponent = ComponentType<IVisualizationSwitcherDraggingComponentProps>;
+
+// @beta (undocumented)
+export type VisualizationSwitcherInteractionType = "visualizationSwitcherChanged";
 
 // @alpha (undocumented)
 export type VisualizationSwitcherToolbarComponentProvider = (widget: IVisualizationSwitcherWidget) => CustomVisualizationSwitcherToolbarComponent;

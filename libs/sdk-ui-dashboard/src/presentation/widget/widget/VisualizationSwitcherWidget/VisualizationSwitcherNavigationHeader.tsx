@@ -7,6 +7,7 @@ import { DashboardItemHeadline } from "../../../presentationComponents/index.js"
 import { ItemsWrapper, Overlay, ShortenedText } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
+import { useDashboardUserInteraction } from "../../../../model/index.js";
 
 interface IVisualizationSwitcherNavigationHeaderProps {
     clientWidth: number | undefined;
@@ -34,6 +35,8 @@ export const VisualizationSwitcherNavigationHeader: React.FC<IVisualizationSwitc
     activeVisualization,
     onActiveVisualizationChange,
 }) => {
+    const userInteraction = useDashboardUserInteraction();
+
     const [isOpen, setIsOpen] = React.useState(false);
 
     const widgetRefAsString = objRefToString(widgetRef(widget));
@@ -79,7 +82,12 @@ export const VisualizationSwitcherNavigationHeader: React.FC<IVisualizationSwitc
                                 return (
                                     <VisualizationSwitcherNavigationHeaderItem
                                         key={visualization.identifier}
-                                        onSelect={onSelect}
+                                        onSelect={(item) => {
+                                            onSelect(item);
+                                            userInteraction.visualizationSwitcherInteraction(
+                                                "visualizationSwitcherChanged",
+                                            );
+                                        }}
                                         item={visualization}
                                         isSelected={
                                             visualization.identifier === activeVisualization.identifier
