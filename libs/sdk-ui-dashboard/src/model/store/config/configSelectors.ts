@@ -708,7 +708,7 @@ export const selectEnableRichTextDescriptions: DashboardSelector<boolean> = crea
  * @internal
  */
 export const selectEnableFilterViews: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
-    return state.settings?.enableDashboardFilterViews ?? false;
+    return state.settings?.enableDashboardFilterViews ?? true;
 });
 
 /**

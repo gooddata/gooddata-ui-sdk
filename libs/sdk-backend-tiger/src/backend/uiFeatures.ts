@@ -251,7 +251,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableGenAIChat: false,
     enableGenAIChatRollout: false,
     enableAlertingRollout: false,
-    enableDashboardFilterViews: false,
+    enableDashboardFilterViews: true,
     enableWorkspaceHierarchySettings: false,
     enableNewInsightChangedPostMessageEvent: false,
     enableKDVisualizationSwitcher: false,
