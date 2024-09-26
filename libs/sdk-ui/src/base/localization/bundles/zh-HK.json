@@ -638,5 +638,11 @@
     "semantic-search.tags": "標籤",
     "semantic-search.match": "{score}％ 匹配",
     "recurrence.error.too_often": "頻率太高",
-    "recurrence.cron.tooltip": "使用unix-cron字符串格式。 <a>瞭解更多信息</a>"
+    "recurrence.cron.tooltip": "使用unix-cron字符串格式。 <a>瞭解更多信息</a>",
+    "userManagement.workspace.permission.viewSaveViews": "查看同保存视圖",
+    "userManagement.workspace.permissionUser.viewSaveViews.tooltip": "用戶可以查看已與佢哋共享嘅控制面板，並將控制面板過濾器嘅狀態保存為個人視圖以備將來使用。",
+    "userManagement.workspace.permissionGroup.viewSaveViews.tooltip": "群組成員可以查看已與佢哋共享嘅控制面板，並將控制面板過濾器嘅狀態保存為個人視圖以供將來使用。",
+    "userManagement.workspace.permission.viewExportSaveViews": "查看、導出同保存视圖",
+    "userManagement.workspace.permissionUser.viewExportSaveViews.tooltip": "涵蓋View權限。 此外，用戶可以創建、編輯或刪除控制面板和可視化，以及查看LDM同指標。 佢哋仲可以把控制面板導出為PDF文件，把表格數據由可視化導出到XLSX同CSV文件，並將控制面板過濾器嘅狀態保存為個人視圖以備將來使用。",
+    "userManagement.workspace.permissionGroup.viewExportSaveViews.tooltip": "涵蓋View權限。 此外，組成員仲可以創建、編輯或刪除功能板同可視化，以及查看LDM同量度。 佢哋仲可以把控制面板導出為PDF文件，把表格數據由可視化導出到XLSX同CSV文件，並將控制面板過濾器嘅狀態保存為個人視圖以備將來使用。"
 }

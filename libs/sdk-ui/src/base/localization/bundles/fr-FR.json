@@ -638,5 +638,11 @@
     "semantic-search.tags": "Balises",
     "semantic-search.match": "{score}% de correspondance",
     "recurrence.error.too_often": "Fréquence trop élevée",
-    "recurrence.cron.tooltip": "Utilisez le format de chaîne unix-cron. <a>En savoir plus</a>"
+    "recurrence.cron.tooltip": "Utilisez le format de chaîne unix-cron. <a>En savoir plus</a>",
+    "userManagement.workspace.permission.viewSaveViews": "Visualiser et sauvegarder des vues",
+    "userManagement.workspace.permissionUser.viewSaveViews.tooltip": "L'utilisateur peut consulter les tableaux de bord qui ont été partagés avec lui et enregistrer l'état des filtres des tableaux de bord en tant que vues personnelles pour une utilisation ultérieure.",
+    "userManagement.workspace.permissionGroup.viewSaveViews.tooltip": "Les membres du groupe peuvent consulter les tableaux de bord qui ont été partagés avec eux et enregistrer l'état des filtres des tableaux de bord en tant que vues personnelles pour une utilisation ultérieure.",
+    "userManagement.workspace.permission.viewExportSaveViews": "Visualiser, exporter et sauvegarder les vues",
+    "userManagement.workspace.permissionUser.viewExportSaveViews.tooltip": "Couvre l'autorisation de visualiser. En outre, l'utilisateur peut créer, modifier ou supprimer des tableaux de bord et des visualisations, et consulter le MLD et les mesures. Il peut également exporter les tableaux de bord vers des fichiers PDF et les données tabulaires des visualisations vers des fichiers XLSX et CSV, et enregistrer l'état des filtres des tableaux de bord en tant que vues personnelles pour une utilisation ultérieure.",
+    "userManagement.workspace.permissionGroup.viewExportSaveViews.tooltip": "Couvre l'autorisation de visualiser. En outre, les membres du groupe peuvent créer, modifier ou supprimer des tableaux de bord et des visualisations, et consulter le MLD et les mesures. Ils peuvent également exporter les tableaux de bord vers des fichiers PDF et les données tabulaires des visualisations vers des fichiers XLSX et CSV, et enregistrer l'état des filtres des tableaux de bord en tant que vues personnelles pour une utilisation ultérieure."
 }

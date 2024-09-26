@@ -638,5 +638,11 @@
     "semantic-search.tags": "タグ",
     "semantic-search.match": "{score}％マッチ",
     "recurrence.error.too_often": "頻度が高すぎます",
-    "recurrence.cron.tooltip": "unix-cronの文字列フォーマットを使用します。<a>詳細</a>"
+    "recurrence.cron.tooltip": "unix-cronの文字列フォーマットを使用します。<a>詳細</a>",
+    "userManagement.workspace.permission.viewSaveViews": "ビューを表示&保存",
+    "userManagement.workspace.permissionUser.viewSaveViews.tooltip": "ユーザーは、共有されたダッシュボードを閲覧したり、ダッシュボードのフィルターの状態を個人用ビューとして保存して後から使用したりすることができます。",
+    "userManagement.workspace.permissionGroup.viewSaveViews.tooltip": "グループのメンバーは、共有されたダッシュボードを閲覧したり、ダッシュボードのフィルターの状態を個人用ビューとして保存して後から使用したりすることができます。",
+    "userManagement.workspace.permission.viewExportSaveViews": "ビューの表示と、エクスポート、および保存",
+    "userManagement.workspace.permissionUser.viewExportSaveViews.tooltip": "ビューの権限をカバーします。加えて、ユーザーはダッシュボードとビジュアライゼーションを作成・編集・削除したり、LDMと基準を閲覧したりすることができます。また、ダッシュボードをPDFファイルとしてエクスポートしたり、ビジュアライゼーションの表形式データをXLSX / CSVファイルにエクスポートしたり、ダッシュボードのフィルターの状態を個人用ビューとして保存して後から使用したりすることもできます。",
+    "userManagement.workspace.permissionGroup.viewExportSaveViews.tooltip": "ビューの権限をカバーします。加えて、グループのメンバーはダッシュボードとビジュアライゼーションを作成・編集・削除したり、LDMと基準を閲覧したりすることができます。また、ダッシュボードをPDFファイルとしてエクスポートしたり、ビジュアライゼーションの表形式データをXLSX / CSVファイルにエクスポートしたり、ダッシュボードのフィルターの状態を個人用ビューとして保存して後から使用したりすることもできます。"
 }

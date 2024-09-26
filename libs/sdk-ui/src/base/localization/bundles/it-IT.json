@@ -638,5 +638,11 @@
     "semantic-search.tags": "Tag",
     "semantic-search.match": "{score}% di corrispondenza",
     "recurrence.error.too_often": "Frequenza troppo alta",
-    "recurrence.cron.tooltip": "Utilizzare il formato di stringa unix-cron. <a>Maggiori informazioni</a>"
+    "recurrence.cron.tooltip": "Utilizzare il formato di stringa unix-cron. <a>Maggiori informazioni</a>",
+    "userManagement.workspace.permission.viewSaveViews": "Visualizza e salva le visualizzazioni",
+    "userManagement.workspace.permissionUser.viewSaveViews.tooltip": "L'utente può visualizzare i dashboard che sono stati condivisi con lui e salvare lo stato dei filtri dei dashboard come visualizzazioni personali per un uso futuro.",
+    "userManagement.workspace.permissionGroup.viewSaveViews.tooltip": "I membri del gruppo possono visualizzare i dashboard che sono stati condivisi con loro e salvare lo stato dei filtri del dashboard come visualizzazioni personali per un uso futuro.",
+    "userManagement.workspace.permission.viewExportSaveViews": "Visualizzazione, esportazione e salvataggio delle visualizzazioni",
+    "userManagement.workspace.permissionUser.viewExportSaveViews.tooltip": "Copre il permesso di visualizzazione. Inoltre, l'utente può creare, modificare o eliminare dashboard e visualizzazioni e visualizzare l'LDM e le metriche. Può anche esportare i dashboard in file PDF e i dati tabulari delle visualizzazioni in file XLSX e CSV e salvare lo stato dei filtri dei dashboard come visualizzazioni personali per un uso futuro.",
+    "userManagement.workspace.permissionGroup.viewExportSaveViews.tooltip": "Copre l'autorizzazione di visualizzazione. Inoltre, i membri del gruppo possono creare, modificare o eliminare dashboard e visualizzazioni e visualizzare l'LDM e le metriche. Possono anche esportare i dashboard in file PDF e i dati tabulari delle visualizzazioni in file XLSX e CSV e salvare lo stato dei filtri dei dashboard come visualizzazioni personali per un uso futuro."
 }

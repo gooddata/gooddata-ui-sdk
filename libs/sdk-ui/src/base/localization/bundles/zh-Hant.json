@@ -638,5 +638,11 @@
     "semantic-search.tags": "標籤",
     "semantic-search.match": "{score}％ 匹配",
     "recurrence.error.too_often": "頻率太高",
-    "recurrence.cron.tooltip": "使用 unix-cron 字串格式。<a>了解更多</a>"
+    "recurrence.cron.tooltip": "使用 unix-cron 字串格式。<a>了解更多</a>",
+    "userManagement.workspace.permission.viewSaveViews": "查看並儲存視圖",
+    "userManagement.workspace.permissionUser.viewSaveViews.tooltip": "使用者可以查看與其共享的儀表板，並將儀表板過濾器的狀態儲存為個人視圖以供將來使用。",
+    "userManagement.workspace.permissionGroup.viewSaveViews.tooltip": "群組成員可以查看與其共用的儀表板，並將儀表板篩選器的狀態儲存為個人視圖以供將來使用。",
+    "userManagement.workspace.permission.viewExportSaveViews": "查看、匯出和儲存視圖",
+    "userManagement.workspace.permissionUser.viewExportSaveViews.tooltip": "覆蓋查看權限。此外，使用者還可以建立、編輯或刪除儀表板和視覺化效果，並查看 LDM 和指標。他們還可以將儀表板匯出為 PDF 文件，將視覺化中的表格資料匯出為 XLSX 和 CSV 文件，並將儀表板篩選器的狀態儲存為個人視圖以供將來使用。",
+    "userManagement.workspace.permissionGroup.viewExportSaveViews.tooltip": "覆蓋查看權限。此外，群組成員還可以建立、編輯或刪除儀表板和視覺化效果，以及查看 LDM 和指標。他們還可以將儀表板匯出為 PDF 文件，將視覺化中的表格資料匯出為 XLSX 和 CSV 文件，並將儀表板篩選器的狀態儲存為個人視圖以供將來使用。"
 }

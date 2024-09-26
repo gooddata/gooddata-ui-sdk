@@ -638,5 +638,11 @@
     "semantic-search.tags": "Tagit",
     "semantic-search.match": "{score}% täsmää",
     "recurrence.error.too_often": "Taajuus on liian korkea",
-    "recurrence.cron.tooltip": "Käytä UNIX-CRON-merkkijonomuotoa. <a>Lisätietoja</a>"
+    "recurrence.cron.tooltip": "Käytä UNIX-CRON-merkkijonomuotoa. <a>Lisätietoja</a>",
+    "userManagement.workspace.permission.viewSaveViews": "Tarkastele ja tallenna näkymiä",
+    "userManagement.workspace.permissionUser.viewSaveViews.tooltip": "Käyttäjä voi tarkastella hänelle jaettuja dashboardeja ja tallentaa dashboard-suodattimien tilan henkilökohtaisina näkyminä tulevaa käyttöä varten.",
+    "userManagement.workspace.permissionGroup.viewSaveViews.tooltip": "Ryhmän jäsenet voivat tarkastella heille jaettuja dashboardeja ja tallentaa dashboard-suodattimien tilan henkilökohtaisina näkyminä tulevaa käyttöä varten.",
+    "userManagement.workspace.permission.viewExportSaveViews": "Näytä, vie ja tallenna näkymiä",
+    "userManagement.workspace.permissionUser.viewExportSaveViews.tooltip": "Kattaa Näkymä-oikeuden. Lisäksi käyttäjä voi luoda, muokata tai poistaa dashboardeja ja visualisointeja sekä tarkastella LDM: ää ja mittareita. He voivat myös viedä koontinäyttöjä PDF-tiedostoihin ja taulukon tietoja visualisoinneista XLSX- ja CSV-tiedostoihin ja tallentaa koontinäytön suodattimien tilan henkilökohtaisina näkyminä tulevaa käyttöä varten.",
+    "userManagement.workspace.permissionGroup.viewExportSaveViews.tooltip": "Kattaa Näkymä-oikeuden. Lisäksi ryhmän jäsenet voivat luoda, muokata tai poistaa dashboardeja ja visualisointeja sekä tarkastella LDM: ää ja mittareita. He voivat myös viedä koontinäyttöjä PDF-tiedostoihin ja taulukon tietoja visualisoinneista XLSX- ja CSV-tiedostoihin ja tallentaa koontinäytön suodattimien tilan henkilökohtaisina näkyminä tulevaa käyttöä varten."
 }

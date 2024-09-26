@@ -638,5 +638,11 @@
     "semantic-search.tags": "Tags",
     "semantic-search.match": "{score}% de correspondência",
     "recurrence.error.too_often": "Frequência demasiado alta",
-    "recurrence.cron.tooltip": "Use o formato de string unix-cron. <a>Saiba mais</a>"
+    "recurrence.cron.tooltip": "Use o formato de string unix-cron. <a>Saiba mais</a>",
+    "userManagement.workspace.permission.viewSaveViews": "Ver e Guardar Visualizações",
+    "userManagement.workspace.permissionUser.viewSaveViews.tooltip": "O utilizador pode ver os painéis que foram partilhados com ele e guardar o estado dos filtros do painel como vistas pessoais para utilização futura.",
+    "userManagement.workspace.permissionGroup.viewSaveViews.tooltip": "Os membros do grupo podem ver os painéis que foram partilhados com eles e guardar o estado dos filtros do painel como vistas pessoais para utilização futura.",
+    "userManagement.workspace.permission.viewExportSaveViews": "Visualizar, Exportar e Guardar Visualizações",
+    "userManagement.workspace.permissionUser.viewExportSaveViews.tooltip": "Abrange a permissão Visualizar. Além disso, o utilizador pode criar, editar ou eliminar dashboards e visualizações, e ver o LDM e as métricas. Também pode exportar dashboards para ficheiros PDF e dados tabulares de visualizações para ficheiros XLSX e CSV, e guardar o estado dos filtros do dashboard como vistas pessoais para utilização futura.",
+    "userManagement.workspace.permissionGroup.viewExportSaveViews.tooltip": "Abrange a permissão Visualizar. Além disso, os membros do grupo podem criar, editar ou excluir dashboards e visualizações e exibir o LDM e as métricas. Também podem exportar dashboards para ficheiros PDF e dados tabulares de visualizações para ficheiros XLSX e CSV, e guardar o estado dos filtros do dashboard como vistas pessoais para utilização futura."
 }

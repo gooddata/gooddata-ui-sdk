@@ -359,5 +359,9 @@
     "properties.clustering.threshold": "Drempel",
     "properties.clustering.threshold.placeholder": "0.03",
     "properties.clustering.threshold.tooltip": "De drempel is een limiet die bepaalt wanneer gegevens moeten worden gegroepeerd. <link>Lees meer</link>",
-    "visualizations.headline.tertiary.title": "Versus"
+    "visualizations.headline.tertiary.title": "Versus",
+    "properties.interactions.alerts": "Waarschuwing",
+    "properties.interactions.alerts.tooltip": "Stel gebruikers in staat om waarschuwingen te maken voor deze visualisatie op dashboards.",
+    "properties.interactions.scheduledExports": "Geplande export",
+    "properties.interactions.scheduledExports.tooltip": "Stel gebruikers in staat om geplande exports te maken voor deze visualisatie op dashboards."
 }

@@ -359,5 +359,9 @@
     "properties.clustering.threshold": "Soglia",
     "properties.clustering.threshold.placeholder": "0,03",
     "properties.clustering.threshold.tooltip": "La soglia è un limite che determina quando raggruppare i dati. <link>Maggiori informazioni</link>",
-    "visualizations.headline.tertiary.title": "VS"
+    "visualizations.headline.tertiary.title": "VS",
+    "properties.interactions.alerts": "Avviso",
+    "properties.interactions.alerts.tooltip": "Consente agli utenti di creare avvisi per questa visualizzazione sui dashboard.",
+    "properties.interactions.scheduledExports": "Esportazioni programmate",
+    "properties.interactions.scheduledExports.tooltip": "Consente agli utenti di creare esportazioni programmate per questa visualizzazione sui dashboard."
 }

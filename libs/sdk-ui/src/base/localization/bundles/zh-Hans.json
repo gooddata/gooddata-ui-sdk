@@ -638,5 +638,11 @@
     "semantic-search.tags": "标签",
     "semantic-search.match": "{score}％ 匹配",
     "recurrence.error.too_often": "频率过高",
-    "recurrence.cron.tooltip": "使用 unix-cron 字符串格式。<a>了解更多</a>"
+    "recurrence.cron.tooltip": "使用 unix-cron 字符串格式。<a>了解更多</a>",
+    "userManagement.workspace.permission.viewSaveViews": "查看和保存视图",
+    "userManagement.workspace.permissionUser.viewSaveViews.tooltip": "用户可以查看与其共享的仪表板，并将仪表板过滤器的状态保存为个人视图以供将来使用。",
+    "userManagement.workspace.permissionGroup.viewSaveViews.tooltip": "小组成员可以查看与他们共享的仪表板，并将仪表板过滤器的状态保存为个人视图以供将来使用。",
+    "userManagement.workspace.permission.viewExportSaveViews": "查看、导出和保存视图",
+    "userManagement.workspace.permissionUser.viewExportSaveViews.tooltip": "涵盖查看权限。此外，用户可以创建、编辑或删除仪表板和可视化效果，并查看 LDM 和指标。他们还可以将仪表板导出为 PDF 文件，将可视化效果中的表格数据导出为 XLSX 和 CSV 文件，并将仪表板过滤器的状态保存为个人视图以供将来使用。",
+    "userManagement.workspace.permissionGroup.viewExportSaveViews.tooltip": "涵盖查看权限。此外，小组成员可以创建、编辑或删除仪表板和可视化，并查看 LDM 和指标。他们还可以将仪表板导出为 PDF 文件，将可视化中的表格数据导出为 XLSX 和 CSV 文件，并将仪表板过滤器的状态保存为个人视图以供将来使用。"
 }

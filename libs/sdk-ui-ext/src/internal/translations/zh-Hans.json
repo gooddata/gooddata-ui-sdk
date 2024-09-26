@@ -359,5 +359,9 @@
     "properties.clustering.threshold": "临界点",
     "properties.clustering.threshold.placeholder": "0.03",
     "properties.clustering.threshold.tooltip": "临界点是决定何时对数据进行分组的限制。<link>了解更多</link>",
-    "visualizations.headline.tertiary.title": "对比"
+    "visualizations.headline.tertiary.title": "对比",
+    "properties.interactions.alerts": "警报",
+    "properties.interactions.alerts.tooltip": "允许用户在仪表板上为此可视化创建警报。",
+    "properties.interactions.scheduledExports": "已计划的导出",
+    "properties.interactions.scheduledExports.tooltip": "允许用户在仪表板上为此可视化创建计划导出。"
 }

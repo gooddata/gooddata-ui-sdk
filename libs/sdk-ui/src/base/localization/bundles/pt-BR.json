@@ -638,5 +638,11 @@
     "semantic-search.tags": "Tags",
     "semantic-search.match": "{score}% de correspondência",
     "recurrence.error.too_often": "Frequência muito alta",
-    "recurrence.cron.tooltip": "Use o formato de string unix-cron. <a>Saiba Mais</a>"
+    "recurrence.cron.tooltip": "Use o formato de string unix-cron. <a>Saiba Mais</a>",
+    "userManagement.workspace.permission.viewSaveViews": "Visualizar e salvar exibições",
+    "userManagement.workspace.permissionUser.viewSaveViews.tooltip": "O usuário pode exibir painéis que foram compartilhados com ele e salvar o estado dos filtros do painel como exibições pessoais para uso futuro.",
+    "userManagement.workspace.permissionGroup.viewSaveViews.tooltip": "Os membros do grupo podem visualizar painéis que foram compartilhados com eles e salvar o estado dos filtros do painel como exibições pessoais para uso futuro.",
+    "userManagement.workspace.permission.viewExportSaveViews": "Visualizar, exportar e salvar exibições",
+    "userManagement.workspace.permissionUser.viewExportSaveViews.tooltip": "Abrange a permissão Visualizar. Além disso, o usuário pode criar, editar ou excluir painéis e exibições, e visualizar o LDM e as métricas. Também podem exportar painéis para arquivos PDF e dados tabulares de visualizações para arquivos XLSX e CSV, e salvar o estado dos filtros do painel como exibições pessoais para uso futuro.",
+    "userManagement.workspace.permissionGroup.viewExportSaveViews.tooltip": "Abrange a permissão Visualizar. Além disso, os membros do grupo podem criar, editar ou excluir painéis e visualizações, e visualizar o LDM e as métricas. Também podem exportar painéis para arquivos PDF e dados tabulares de visualizações para arquivos XLSX e CSV, e salvar o estado dos filtros do painel como exibições pessoais para uso futuro."
 }

@@ -638,5 +638,11 @@
     "semantic-search.tags": "Tags",
     "semantic-search.match": "{score}% game",
     "recurrence.error.too_often": "Frequency too high",
-    "recurrence.cron.tooltip": "Use the unix-cron string format. <a>Learn more</a>"
+    "recurrence.cron.tooltip": "Use the unix-cron string format. <a>Learn more</a>",
+    "userManagement.workspace.permission.viewSaveViews": "View & Save Views",
+    "userManagement.workspace.permissionUser.viewSaveViews.tooltip": "The user can view dashboards that have been shared with them and save the state of dashboard filters as personal views for future use.",
+    "userManagement.workspace.permissionGroup.viewSaveViews.tooltip": "The group members can view dashboards that have been shared with them and save the state of dashboard filters as personal views for future use.",
+    "userManagement.workspace.permission.viewExportSaveViews": "View, Export & Save Views",
+    "userManagement.workspace.permissionUser.viewExportSaveViews.tooltip": "Covers the View permission. Additionally, the user can create, edit, or delete Dashboards and visualisations, and view the LDM and Metrics. They can also export Dashboards to PDF files and tabular Data from visualisations to XLSX and CSV files, and save the state of dashboard filters as personal views for future use.",
+    "userManagement.workspace.permissionGroup.viewExportSaveViews.tooltip": "Covers the View permission. Additionally, the group members can create, edit, or delete Dashboards and visualisations, and view the LDM and Metrics. They can also export Dashboards to PDF files and tabular Data from visualisations to XLSX and CSV files, and save the state of dashboard filters as personal views for future use."
 }
