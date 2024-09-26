@@ -10,6 +10,7 @@ import {
     RankingFilter,
     RelativeDateFilter,
     AfmObjectIdentifier,
+    isAfmObjectIdentifier,
 } from "@gooddata/api-client-tiger";
 import { IFilter, ObjRefInScope } from "@gooddata/sdk-model";
 import { toObjRef } from "../ObjRefConverter.js";
@@ -76,9 +77,10 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
             },
         };
     } else if (isComparisonMeasureValueFilter(filter)) {
+        const measure = filter.comparisonMeasureValueFilter.measure;
         return {
             measureValueFilter: {
-                measure: toObjRef(filter.comparisonMeasureValueFilter.measure as AfmObjectIdentifier),
+                measure: isAfmObjectIdentifier(measure) ? toObjRef(measure) : measure,
                 condition: {
                     comparison: {
                         operator: filter.comparisonMeasureValueFilter.operator,
@@ -88,9 +90,10 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
             },
         };
     } else if (isRangeMeasureValueFilter(filter)) {
+        const measure = filter.rangeMeasureValueFilter.measure;
         return {
             measureValueFilter: {
-                measure: toObjRef(filter.rangeMeasureValueFilter.measure as AfmObjectIdentifier),
+                measure: isAfmObjectIdentifier(measure) ? toObjRef(measure) : measure,
                 condition: {
                     range: {
                         operator: filter.rangeMeasureValueFilter.operator,
