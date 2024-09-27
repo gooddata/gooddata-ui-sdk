@@ -7,10 +7,19 @@
     overflow-x: hidden;
     overflow-y: auto;
 
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+
+    // inside switcher we repeat dash-item but need to style it differently
+
     .dash-item,
     .dash-item-content {
         padding: 0;
         position: static;
+    }
+    .dash-item {
+        flex: 1 1 100%;
     }
     .dash-item-content {
         border-width: 0;
@@ -29,6 +38,9 @@
 .gd-visualization-switcher-visible-visualization {
     width: 100%;
     height: 100%;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
 
     &.is-edit-mode {
         display: flex;
