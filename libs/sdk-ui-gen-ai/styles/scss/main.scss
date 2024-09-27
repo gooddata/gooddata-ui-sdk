@@ -18,10 +18,25 @@
     overflow: hidden;
     background-color: kit-variables.$gd-color-light;
 
-    & &__disclaimer {
+    &__disclaimer {
         font-size: 12px;
         color: kit-variables.$gd-color-state-blank;
         text-align: center;
         margin: 0 variables.$x-spacing variables.$y-spacing;
+    }
+
+    &__global_error {
+        padding: 4.5px 12px;
+        border-radius: 3px;
+        background: kit-variables.$gd-palette-error-dimmed;
+        margin: variables.$y-spacing variables.$x-spacing;
+
+        p {
+            color: kit-variables.$gd-palette-error-base;
+        }
+
+        &__details {
+            padding: 6px;
+        }
     }
 }
