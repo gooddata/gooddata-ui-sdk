@@ -4,6 +4,7 @@ import React from "react";
 import { Button, Typography } from "@gooddata/sdk-ui-kit";
 import { connect } from "react-redux";
 import { clearMessagesAction } from "../store/index.js";
+import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
 
 type GlobalErrorDispatchProps = {
     clearMessagesAction: () => void;
@@ -14,10 +15,11 @@ type GlobalErrorProps = GlobalErrorDispatchProps & {
     clearError: () => void;
 };
 
-const GlobalErrorComponent: React.FC<GlobalErrorProps> = ({
+const GlobalErrorComponent: React.FC<GlobalErrorProps & WrappedComponentProps> = ({
     errorDetails,
     clearMessagesAction,
     clearError,
+    intl,
 }) => {
     const [showMore, setShowMore] = React.useState(false);
     const showMoreButton = Boolean(errorDetails && !showMore);
@@ -29,16 +31,18 @@ const GlobalErrorComponent: React.FC<GlobalErrorProps> = ({
 
     return (
         <div className="gd-gen-ai-chat__global_error">
-            <Typography tagName="p">An unforeseen error has occurred.</Typography>
+            <Typography tagName="p">
+                <FormattedMessage id="gd.gen-ai.global-error" />
+            </Typography>
             <Button
                 className="gd-button-link"
-                value="Clear conversation and try again"
+                value={intl.formatMessage({ id: "gd.gen-ai.global-error.button-clear" })}
                 onClick={clearCallback}
             />
             {showMoreButton ? (
                 <Button
                     className="gd-button-link"
-                    value="Show error details"
+                    value={intl.formatMessage({ id: "gd.gen-ai.global-error.button-details" })}
                     onClick={() => setShowMore(true)}
                 />
             ) : null}
@@ -55,4 +59,4 @@ const mapDispatchToProps = {
     clearMessagesAction,
 };
 
-export const GlobalError = connect(null, mapDispatchToProps)(GlobalErrorComponent);
+export const GlobalError = connect(null, mapDispatchToProps)(injectIntl(GlobalErrorComponent));
