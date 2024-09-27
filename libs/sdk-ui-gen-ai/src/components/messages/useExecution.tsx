@@ -15,13 +15,13 @@ export const useExecution = (vis: GenAIChatCreatedVisualization) => {
         const metrics = vis.metrics.map((mf) => {
             switch (mf.type) {
                 case "fact":
-                    return newMeasure(mf.id, (m) =>
+                    return newMeasure(idRef(mf.id, "fact"), (m) =>
                         m.aggregation(mf.aggFunction.toLowerCase() as MeasureAggregation),
                     );
                 case "metric":
                     return newMeasure(idRef(mf.id, "measure"));
                 case "attribute":
-                    return newMeasure(mf.id, (m) => m.aggregation("count"));
+                    return newMeasure(idRef(mf.id, "attribute"), (m) => m.aggregation("count"));
             }
         });
 
