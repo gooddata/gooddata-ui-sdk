@@ -119,7 +119,7 @@ export interface IScheduledEmailDialogProps {
     /**
      * Callback to be called, when scheduling finishes successfully.
      */
-    onSuccess?: () => void;
+    onSuccess?: (scheduledEmailDefinition: IAutomationMetadataObject) => void;
 
     /**
      * Callback to be called, when error occurs.

@@ -5,8 +5,9 @@ import { IAutomationMetadataObject, IWidget } from "@gooddata/sdk-model";
 import { messages } from "../../../locales.js";
 import { useDashboardScheduledEmailsCommands } from "./useDashboardScheduledEmailsCommands.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";
-import { selectDashboardRef } from "../../store/index.js";
+import { selectDashboardRef, selectNotificationChannels } from "../../store/index.js";
 import { useDashboardAutomations } from "./useDashboardAutomations.js";
+import { useDashboardUserInteraction } from "../useDashboardUserInteraction.js";
 
 /**
  * @internal
@@ -22,8 +23,10 @@ export const useDashboardScheduledEmailsDialog = ({
     setScheduledExportToEdit,
 }: IUseDashboardScheduledEmailsDialogProps) => {
     const { addSuccess, addError } = useToastMessage();
+    const { automationInteraction } = useDashboardUserInteraction();
 
     const dashboardRef = useDashboardSelector(selectDashboardRef);
+    const destinations = useDashboardSelector(selectNotificationChannels);
 
     const { closeScheduleEmailingDialog, openScheduleEmailingDialog, openScheduleEmailingManagementDialog } =
         useDashboardScheduledEmailsCommands();
@@ -66,13 +69,31 @@ export const useDashboardScheduledEmailsDialog = ({
 
     // Create
     const onScheduleEmailingCreateSuccess = useCallback(
-        (widget?: IWidget) => {
+        (scheduledEmail: IAutomationMetadataObject) => {
             closeScheduleEmailingDialog();
-            openScheduleEmailingManagementDialog(widget);
+            openScheduleEmailingManagementDialog();
             addSuccess(messages.scheduleEmailSubmitSuccess);
             refreshAutomations();
+
+            const destinationType = destinations.find(
+                (channel) => channel.id === scheduledEmail.notificationChannel,
+            )?.type;
+            automationInteraction({
+                type: "scheduledExportCreated",
+                destination_id: scheduledEmail.notificationChannel,
+                destination_type: destinationType,
+                automation_id: scheduledEmail.id,
+                automation_name: scheduledEmail.title,
+            });
         },
-        [closeScheduleEmailingDialog, openScheduleEmailingManagementDialog, addSuccess, refreshAutomations],
+        [
+            closeScheduleEmailingDialog,
+            openScheduleEmailingManagementDialog,
+            addSuccess,
+            refreshAutomations,
+            destinations,
+            automationInteraction,
+        ],
     );
 
     const onScheduleEmailingCreateError = useCallback(() => {

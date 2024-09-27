@@ -131,6 +131,7 @@ import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAccessControlAware } from '@gooddata/sdk-model';
 import { IAccessGrantee } from '@gooddata/sdk-model';
+import { IAlertTriggerMode } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeElement } from '@gooddata/sdk-model';
@@ -227,6 +228,7 @@ import { IMeasureMetadataObject } from '@gooddata/sdk-model';
 import { IMenuButtonItemsVisibility as IMenuButtonItemsVisibility_2 } from '../../../types.js';
 import { INegativeAttributeFilter } from '@gooddata/sdk-model';
 import { INotificationChannelMetadataObject } from '@gooddata/sdk-model';
+import { INotificationChannelMetadataObjectBase } from '@gooddata/sdk-model';
 import { InsightDisplayFormUsage } from '@gooddata/sdk-model';
 import { InsightDrillDefinition } from '@gooddata/sdk-model';
 import { IntlShape } from 'react-intl';
@@ -550,6 +552,25 @@ export function attributeHierarchyModified(correlationId?: string): AttributeHie
 
 // @internal (undocumented)
 export function AttributesDropdown({ className, bodyClassName, onClose, onSelect, }: IDashboardAttributeFilterPlaceholderProps): React_2.JSX.Element;
+
+// @alpha (undocumented)
+export type AutomationInteractionData = {
+    type: AutomationInteractionType;
+    destination_id?: string;
+    destination_type?: INotificationChannelMetadataObjectBase["type"];
+    automation_id?: string;
+    automation_name?: string;
+    automation_source?: "dashboard" | "widget";
+    automation_visualization_type?: string;
+    filter_context?: "default" | "edited";
+    trigger_type?: IAlertTriggerMode;
+};
+
+// @alpha (undocumented)
+export type AutomationInteractionPayload = UserInteractionPayloadWithDataBase<"automationInteraction", AutomationInteractionData>;
+
+// @alpha (undocumented)
+export type AutomationInteractionType = "scheduledExportInitialized" | "scheduledExportCreated" | "alertInitialized" | "alertCreated";
 
 // @alpha (undocumented)
 export interface AutomationsState {
@@ -5083,7 +5104,7 @@ export interface IScheduledEmailDialogProps {
     onSaveError?: (error: GoodDataSdkError) => void;
     onSaveSuccess?: () => void;
     onSubmit?: (scheduledEmailDefinition: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => void;
-    onSuccess?: () => void;
+    onSuccess?: (scheduledEmailDefinition: IAutomationMetadataObject) => void;
     scheduledExportToEdit?: IAutomationMetadataObject;
     users: IWorkspaceUser[];
     widget?: ExtendedDashboardWidget;
@@ -9011,7 +9032,7 @@ export const useDashboardScheduledEmails: () => {
     onScheduleEmailingOpen: (widget?: IWidget | undefined) => void;
     onScheduleEmailingCancel: (widget?: IWidget | undefined) => void;
     onScheduleEmailingCreateError: () => void;
-    onScheduleEmailingCreateSuccess: (widget?: IWidget | undefined) => void;
+    onScheduleEmailingCreateSuccess: (scheduledEmail: IAutomationMetadataObject) => void;
     onScheduleEmailingSaveError: () => void;
     onScheduleEmailingSaveSuccess: (widget?: IWidget | undefined) => void;
     isScheduledManagementEmailingVisible: boolean;
@@ -9051,6 +9072,7 @@ export const useDashboardUserInteraction: () => {
     attributeHierarchiesInteraction: (eventType: AttributeHierarchiesInteractionType) => void;
     dateFilterInteraction: (eventType: DateFilterInteractionType) => void;
     visualizationSwitcherInteraction: (eventType: VisualizationSwitcherInteractionType) => void;
+    automationInteraction: (eventData: AutomationInteractionData) => void;
 };
 
 // @internal (undocumented)
@@ -9199,7 +9221,7 @@ export type UseParentFiltersResult = Pick<IAttributeFilterBaseProps, "parentFilt
 export type UserInteractionPayload = UserInteractionPayloadWithData | BareUserInteractionPayload;
 
 // @beta (undocumented)
-export type UserInteractionPayloadWithData = KpiAlertDialogOpenedPayload | DescriptionTooltipOpenedPayload | ShareDialogInteractionPayload;
+export type UserInteractionPayloadWithData = KpiAlertDialogOpenedPayload | DescriptionTooltipOpenedPayload | ShareDialogInteractionPayload | AutomationInteractionPayload;
 
 // @beta (undocumented)
 export interface UserInteractionPayloadWithDataBase<TType extends string, TData extends object> {
@@ -9229,7 +9251,7 @@ export interface UserState {
 
 // @internal (undocumented)
 export function useSaveAlertToBackend({ onCreateSuccess, onCreateError, onUpdateSuccess, onUpdateError, onPauseSuccess, onPauseError, onResumeSuccess, onResumeError, }: {
-    onCreateSuccess?: () => void;
+    onCreateSuccess?: (alert: IAutomationMetadataObject) => void;
     onCreateError?: (error: Error) => void;
     onUpdateSuccess?: () => void;
     onUpdateError?: (error: Error) => void;
