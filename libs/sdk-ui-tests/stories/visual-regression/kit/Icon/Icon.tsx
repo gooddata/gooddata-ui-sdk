@@ -320,6 +320,18 @@ const IconsTest: React.FC<{ children?: React.ReactNode }> = () => {
                     <IconWrapper name="Ellipsis">
                         <Icon.Ellipsis color="#00f" />
                     </IconWrapper>
+                    <IconWrapper name="GenAI">
+                        <Icon.GenAI color="#00f" width={22} height={22} />
+                    </IconWrapper>
+                    <IconWrapper name="Search">
+                        <Icon.Search color="#00f" />
+                    </IconWrapper>
+                    <IconWrapper name="NewVisualization">
+                        <Icon.NewVisualization color="#00f" />
+                    </IconWrapper>
+                    <IconWrapper name="ChatBubble">
+                        <Icon.ChatBubble color="#00f" />
+                    </IconWrapper>
                 </ColumnWrapper>
             </RowWrapper>
         </div>

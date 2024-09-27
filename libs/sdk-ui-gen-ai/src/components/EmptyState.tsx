@@ -1,6 +1,6 @@
 // (C) 2024 GoodData Corporation
 import React from "react";
-import { Button, Typography } from "@gooddata/sdk-ui-kit";
+import { Button, Icon, Typography } from "@gooddata/sdk-ui-kit";
 import { connect } from "react-redux";
 import { makeAssistantTextMessage, makeUserTextMessage } from "../model.js";
 import { setMessages } from "../store/index.js";
@@ -11,17 +11,19 @@ const quickOptions = [
         title: defineMessage({ id: "gd.gen-ai.welcome.option-1.title" }),
         question: defineMessage({ id: "gd.gen-ai.welcome.option-1.title" }),
         answer: defineMessage({ id: "gd.gen-ai.welcome.option-1.answer" }),
-        icon: "gd-icon-magnifier",
+        Icon: Icon.Search,
     },
     {
         title: defineMessage({ id: "gd.gen-ai.welcome.option-2.title" }),
         question: defineMessage({ id: "gd.gen-ai.welcome.option-2.title" }),
         answer: defineMessage({ id: "gd.gen-ai.welcome.option-2.answer" }),
+        Icon: Icon.NewVisualization,
     },
     {
         title: defineMessage({ id: "gd.gen-ai.welcome.option-3.title" }),
         question: defineMessage({ id: "gd.gen-ai.welcome.option-3.title" }),
         answer: defineMessage({ id: "gd.gen-ai.welcome.option-3.answer" }),
+        Icon: Icon.ChatBubble,
     },
 ];
 
@@ -50,10 +52,11 @@ const EmptyStateComponent: React.FC<EmptyStateDispatchProps & WrappedComponentPr
                             makeAssistantTextMessage(intl.formatMessage(option.answer)),
                         ])
                     }
-                    value={intl.formatMessage(option.title)}
                     variant="secondary"
-                    iconLeft={option.icon}
-                />
+                >
+                    <option.Icon width={18} height={18} />
+                    <FormattedMessage tagName="span" id={option.title.id} />
+                </Button>
             ))}
         </div>
     );
