@@ -451,6 +451,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
         },
         notificationChannels(): IOrganizationNotificationChannelService {
             return {
+                getCount: () => Promise.resolve(0),
                 getAll: () => Promise.resolve([]),
                 deleteChannel: () => Promise.resolve(),
                 //emails

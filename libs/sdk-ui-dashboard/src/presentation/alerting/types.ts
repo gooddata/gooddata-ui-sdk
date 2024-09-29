@@ -1,6 +1,6 @@
 // (C) 2019-2024 GoodData Corporation
 import { ComponentType } from "react";
-import { IAutomationMetadataObject, IInsightWidget, IWebhookDefinitionObject } from "@gooddata/sdk-model";
+import { IAutomationMetadataObject, IInsightWidget } from "@gooddata/sdk-model";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 ///
@@ -77,11 +77,6 @@ export interface IAlertingManagementDialogProps {
     alertingDataError?: GoodDataSdkError;
 
     /**
-     * Webhooks in organization
-     */
-    webhooks: IWebhookDefinitionObject[];
-
-    /**
      * Automations in workspace
      */
     automations: IAutomationMetadataObject[];
@@ -130,6 +125,7 @@ export type CustomAlertingManagementDialogComponent = ComponentType<IAlertingMan
  * @alpha
  */
 export interface IAlertDropdownProps {
+    isReadOnly?: boolean;
     paused: boolean;
     alignTo: HTMLElement;
     onClose: () => void;

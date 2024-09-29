@@ -1,7 +1,7 @@
 // (C) 2022-2024 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
-import { IAutomationMetadataObject, IInsightWidget, IWebhookDefinitionObject } from "@gooddata/sdk-model";
+import { IAutomationMetadataObject, IInsightWidget } from "@gooddata/sdk-model";
 import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
@@ -19,11 +19,10 @@ interface IAlertsProps {
     isLoading: boolean;
     alerts: IAutomationMetadataObject[];
     noAlertsMessageId: string;
-    webhooks: IWebhookDefinitionObject[];
 }
 
 export const Alerts: React.FC<IAlertsProps> = (props) => {
-    const { isLoading, alerts, onDelete, onEdit, onPause, noAlertsMessageId, webhooks } = props;
+    const { isLoading, alerts, onDelete, onEdit, onPause, noAlertsMessageId } = props;
     const theme = useTheme();
 
     if (isLoading) {
@@ -50,14 +49,7 @@ export const Alerts: React.FC<IAlertsProps> = (props) => {
     return (
         <>
             {alerts.map((alert) => (
-                <Alert
-                    key={alert.id}
-                    alert={alert}
-                    onDelete={onDelete}
-                    onEdit={onEdit}
-                    onPause={onPause}
-                    webhooks={webhooks}
-                />
+                <Alert key={alert.id} alert={alert} onDelete={onDelete} onEdit={onEdit} onPause={onPause} />
             ))}
         </>
     );

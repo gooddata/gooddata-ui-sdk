@@ -4,9 +4,8 @@ import {
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
     ICatalogMeasure,
+    INotificationChannelMetadataObject,
 } from "@gooddata/sdk-model";
-
-import { Smtps, Webhooks } from "../../../../../model/index.js";
 import { AlertMetric } from "../../types.js";
 
 import { EditAlert } from "./EditAlert.js";
@@ -16,7 +15,7 @@ interface ICreateAlertProps {
     onClose: () => void;
     onCancel: () => void;
     onCreate?: (alert: IAutomationMetadataObjectDefinition) => void;
-    destinations: (Webhooks[number] | Smtps[number])[];
+    destinations: INotificationChannelMetadataObject[];
     hasAlerts: boolean;
     measures: AlertMetric[];
     maxAutomationsReached: boolean;

@@ -3,12 +3,12 @@ import React from "react";
 import { Dropdown, Button, List, SingleSelectListItem, OverlayPositionType } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import { DROPDOWN_ITEM_HEIGHT } from "./constants.js";
-import { Smtps, Webhooks } from "../../../../../model/index.js";
+import { INotificationChannelMetadataObject } from "@gooddata/sdk-model";
 
 export interface IAlertDestinationSelectProps {
     selectedDestination: string;
     onDestinationChange: (destinationId: string) => void;
-    destinations: (Webhooks[number] | Smtps[number])[];
+    destinations: INotificationChannelMetadataObject[];
     overlayPositionType?: OverlayPositionType;
 }
 

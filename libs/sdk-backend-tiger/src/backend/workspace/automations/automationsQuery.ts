@@ -12,6 +12,8 @@ export class AutomationsQuery implements IAutomationsQuery {
     private size = 100;
     private page = 0;
     private author: string | null = null;
+    private recipient: string | null = null;
+    private user: string | null = null;
     private dashboard: string | null = null;
     private filter: { title?: string } = {};
     private sort = {};
@@ -56,6 +58,16 @@ export class AutomationsQuery implements IAutomationsQuery {
 
     withAuthor(author: string): IAutomationsQuery {
         this.author = author;
+        return this;
+    }
+
+    withRecipient(recipient: string): IAutomationsQuery {
+        this.recipient = recipient;
+        return this;
+    }
+
+    withUser(user: string): IAutomationsQuery {
+        this.user = user;
         return this;
     }
 
@@ -126,6 +138,14 @@ export class AutomationsQuery implements IAutomationsQuery {
 
         if (this.author) {
             allFilters.push(`createdBy.id=='${this.author}'`);
+        }
+
+        if (this.recipient) {
+            allFilters.push(`recipients.id=='${this.recipient}'`);
+        }
+
+        if (this.user) {
+            allFilters.push(`(createdBy.id=='${this.user}' or recipients.id=='${this.user}')`);
         }
 
         if (this.dashboard) {

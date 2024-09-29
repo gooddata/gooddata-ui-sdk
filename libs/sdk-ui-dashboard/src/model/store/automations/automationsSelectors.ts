@@ -7,8 +7,6 @@ import {
     IAutomationMetadataObject,
     isExportDefinitionVisualizationObjectRequestPayload,
 } from "@gooddata/sdk-model";
-import { selectDashboardId } from "../meta/metaSelectors.js";
-import { selectCurrentUser } from "../user/userSelectors.js";
 import { createMemoizedSelector } from "../_infra/selectors.js";
 
 const selectSelf = createSelector(
@@ -21,10 +19,10 @@ const selectSelf = createSelector(
  *
  * @alpha
  */
-export const selectAutomations: DashboardSelector<IAutomationMetadataObject[]> = createSelector(
+export const selectDashboardUserAutomations: DashboardSelector<IAutomationMetadataObject[]> = createSelector(
     selectSelf,
     (state) => {
-        return state.automations;
+        return state.userAutomations;
     },
 );
 
@@ -33,8 +31,8 @@ export const selectAutomations: DashboardSelector<IAutomationMetadataObject[]> =
  *
  * @alpha
  */
-export const selectAutomationsCount: DashboardSelector<number> = createSelector(selectSelf, (state) => {
-    return state.automations.length;
+export const selectAllAutomationsCount: DashboardSelector<number> = createSelector(selectSelf, (state) => {
+    return state.allAutomationsCount;
 });
 
 /**
@@ -42,47 +40,35 @@ export const selectAutomationsCount: DashboardSelector<number> = createSelector(
  *
  * @alpha
  */
-export const selectAutomationsAlerts: DashboardSelector<IAutomationMetadataObject[]> = createSelector(
-    selectSelf,
-    (state) => {
-        return state.automations.filter((automation) => !!automation.alert);
-    },
-);
+export const selectDashboardUserAutomationAlerts: DashboardSelector<IAutomationMetadataObject[]> =
+    createSelector(selectSelf, (state) => {
+        return state.userAutomations.filter((automation) => !!automation.alert);
+    });
 
 /**
  * Returns workspace schedules.
  *
  * @alpha
  */
-export const selectAutomationsSchedules: DashboardSelector<IAutomationMetadataObject[]> = createSelector(
-    selectSelf,
-    (state) => {
-        return state.automations.filter((automation) => !!automation.schedule);
-    },
-);
+export const selectDashboardUserAutomationSchedules: DashboardSelector<IAutomationMetadataObject[]> =
+    createSelector(selectSelf, (state) => {
+        return state.userAutomations.filter((automation) => !!automation.schedule);
+    });
 
 /**
  * Returns workspace alerts for current dashboard, widget and user context.
  *
  * @alpha
  */
-export const selectAutomationsAlertsInContext: (
+export const selectDashboardUserAutomationAlertsInContext: (
     widgetLocalIdentifier: string | undefined,
 ) => DashboardSelector<IAutomationMetadataObject[]> = createMemoizedSelector(
     (widgetLocalIdentifier: string | undefined) =>
-        createSelector(
-            selectAutomationsAlerts,
-            selectDashboardId,
-            selectCurrentUser,
-            (alerts, dashboardId, currentUser) => {
-                return alerts.filter(
-                    (alert) =>
-                        alert.dashboard === dashboardId &&
-                        alert.createdBy?.login === currentUser.login &&
-                        (alert.metadata?.widget === widgetLocalIdentifier || !widgetLocalIdentifier),
-                );
-            },
-        ),
+        createSelector(selectDashboardUserAutomationAlerts, (alerts) => {
+            return alerts.filter(
+                (alert) => alert.metadata?.widget === widgetLocalIdentifier || !widgetLocalIdentifier,
+            );
+        }),
 );
 
 /**
@@ -90,32 +76,23 @@ export const selectAutomationsAlertsInContext: (
  *
  * @alpha
  */
-export const selectAutomationsSchedulesInContext: (
+export const selectDashboardUserAutomationSchedulesInContext: (
     widgetLocalIdentifier: string | undefined,
 ) => DashboardSelector<IAutomationMetadataObject[]> = createMemoizedSelector(
     (widgetLocalIdentifier: string | undefined) =>
-        createSelector(
-            selectAutomationsSchedules,
-            selectDashboardId,
-            selectCurrentUser,
-            (schedules, dashboardId, currentUser) => {
-                return schedules.filter((schedule) => {
-                    const isTiedToWidget = schedule.exportDefinitions?.some((exportDefinition) => {
-                        const requestPayload = exportDefinition.requestPayload;
-                        return (
-                            isExportDefinitionVisualizationObjectRequestPayload(requestPayload) &&
-                            requestPayload.content.widget === widgetLocalIdentifier
-                        );
-                    });
-
+        createSelector(selectDashboardUserAutomationSchedules, (schedules) => {
+            return schedules.filter((schedule) => {
+                const isTiedToWidget = schedule.exportDefinitions?.some((exportDefinition) => {
+                    const requestPayload = exportDefinition.requestPayload;
                     return (
-                        schedule.dashboard === dashboardId &&
-                        schedule.createdBy?.login === currentUser.login &&
-                        (isTiedToWidget || !widgetLocalIdentifier)
+                        isExportDefinitionVisualizationObjectRequestPayload(requestPayload) &&
+                        requestPayload.content.widget === widgetLocalIdentifier
                     );
                 });
-            },
-        ),
+
+                return isTiedToWidget || !widgetLocalIdentifier;
+            });
+        }),
 );
 
 /**
@@ -124,8 +101,20 @@ export const selectAutomationsSchedulesInContext: (
  * @alpha
  */
 export const selectAutomationsIsLoading: DashboardSelector<boolean> = createSelector(selectSelf, (state) => {
-    return state.loading;
+    return state.isLoading;
 });
+
+/**
+ * Returns workspace automations loading
+ *
+ * @alpha
+ */
+export const selectAutomationsIsInitialized: DashboardSelector<boolean> = createSelector(
+    selectSelf,
+    (state) => {
+        return state.isInitialized;
+    },
+);
 
 /**
  * Returns organization automations error
@@ -138,12 +127,3 @@ export const selectAutomationsError: DashboardSelector<GoodDataSdkError | undefi
         return state.error;
     },
 );
-
-/**
- * Returns organization automations error
- *
- * @alpha
- */
-export const selectAutomationsFingerprint: DashboardSelector<string> = createSelector(selectSelf, (state) => {
-    return state.fingerprint;
-});

@@ -46,13 +46,12 @@ import { dashboardPermissionsSliceReducer } from "./dashboardPermissions/index.j
 import { defaultImport } from "default-import";
 import { attributeFilterConfigsSliceReducer } from "./attributeFilterConfigs/index.js";
 import { dateFilterConfigsSliceReducer } from "./dateFilterConfigs/index.js";
-import { webhooksSliceReducer } from "./webhooks/index.js";
 import { automationsSliceReducer } from "./automations/index.js";
 import { usersSliceReducer } from "./users/index.js";
 import { objRefToString } from "@gooddata/sdk-model";
 import { filterViewsSliceReducer } from "./filterViews/index.js";
-import { smtpsSliceReducer } from "./smtps/index.js";
 import { executedSliceReducer } from "./executed/index.js";
+import { notificationChannelsSliceReducer } from "./notificationChannels/index.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
@@ -104,6 +103,7 @@ const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandTy
     "layout/updateWidgetIdentities",
     "executionResults/upsertExecutionResult",
     "loadingSlice/setLoadingError",
+    "automations/setAutomationsError",
 ];
 
 /*
@@ -327,8 +327,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
         renderMode: renderModeSliceReducer,
         ui: uiSliceReducer,
         dashboardPermissions: dashboardPermissionsSliceReducer,
-        webhooks: webhooksSliceReducer,
-        smtps: smtpsSliceReducer,
+        notificationChannels: notificationChannelsSliceReducer,
         automations: automationsSliceReducer,
         users: usersSliceReducer,
         filterViews: filterViewsSliceReducer,
@@ -360,6 +359,7 @@ export function createDashboardStore(config: DashboardStoreConfig): ReduxedDashb
                         "drill.drillableItems",
                         // executions can have Errors stored, also some decorated execution results are non-serializable too
                         "executionResults",
+                        "automations.error",
                     ],
                     // prolong the check limit, otherwise this will flood the logs on CI with non-actionable warnings
                     warnAfter: 128,

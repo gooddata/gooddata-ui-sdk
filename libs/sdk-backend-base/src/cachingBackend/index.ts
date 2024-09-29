@@ -802,6 +802,8 @@ class CachedAutomationsQueryFactory extends DecoratedAutomationsQuery {
         size: number;
         page: number;
         author: string | null;
+        recipient: string | null;
+        user: string | null;
         dashboard: string | null;
         filter: { title?: string };
         sort: NonNullable<unknown>;
@@ -811,6 +813,8 @@ class CachedAutomationsQueryFactory extends DecoratedAutomationsQuery {
         size: 100,
         page: 0,
         author: null,
+        recipient: null,
+        user: null,
         dashboard: null,
         filter: {},
         sort: {},
@@ -860,6 +864,18 @@ class CachedAutomationsQueryFactory extends DecoratedAutomationsQuery {
     withAuthor(author: string): IAutomationsQuery {
         this.settings.author = author;
         super.withAuthor(author);
+        return this;
+    }
+
+    withRecipient(recipient: string): IAutomationsQuery {
+        this.settings.recipient = recipient;
+        super.withRecipient(recipient);
+        return this;
+    }
+
+    withUser(user: string): IAutomationsQuery {
+        this.settings.user = user;
+        super.withUser(user);
         return this;
     }
 
@@ -947,6 +963,13 @@ class WithAutomationsCaching extends DecoratedWorkspaceAutomationsService {
     public async deleteAutomation(id: string): Promise<void> {
         const cache = getOrCreateAutomationsCache(this.ctx, this.workspace);
         await super.deleteAutomation(id);
+        cache.automations.clear();
+        cache.queries.clear();
+    }
+
+    public async unsubscribeAutomation(id: string): Promise<void> {
+        const cache = getOrCreateAutomationsCache(this.ctx, this.workspace);
+        await super.unsubscribeAutomation(id);
         cache.automations.clear();
         cache.queries.clear();
     }

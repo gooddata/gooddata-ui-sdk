@@ -23,8 +23,7 @@ import { DashboardPermissionsState } from "./dashboardPermissions/dashboardPermi
 import { IInaccessibleDashboard } from "../types/inaccessibleDashboardTypes.js";
 import { AttributeFilterConfigsState } from "./attributeFilterConfigs/attributeFilterConfigsState.js";
 import { DateFilterConfigsState } from "./dateFilterConfigs/dateFilterConfigsState.js";
-import { WebhooksState } from "./webhooks/webhooksState.js";
-import { SmtpsState } from "./smtps/smtpsState.js";
+import { NotificationChannelsState } from "./notificationChannels/notificationChannelsState.js";
 import { AutomationsState } from "./automations/automationsState.js";
 import { UsersState } from "./users/usersState.js";
 import { FilterViewsState } from "./filterViews/filterViewsState.js";
@@ -89,13 +88,11 @@ export interface DashboardState {
     inaccessibleDashboards: EntityState<IInaccessibleDashboard>;
     dashboardPermissions: DashboardPermissionsState;
     /** @alpha */
-    webhooks: WebhooksState;
-    /** @alpha */
-    smtps: SmtpsState;
-    /** @alpha */
     automations: AutomationsState;
     /** @alpha */
     users: UsersState;
+    /** @alpha */
+    notificationChannels: NotificationChannelsState;
 
     /**
      * State controlling how exactly the dashboard is rendered.

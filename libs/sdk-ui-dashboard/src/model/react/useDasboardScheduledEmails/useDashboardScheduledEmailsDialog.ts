@@ -6,6 +6,7 @@ import { messages } from "../../../locales.js";
 import { useDashboardScheduledEmailsCommands } from "./useDashboardScheduledEmailsCommands.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";
 import { selectDashboardRef } from "../../store/index.js";
+import { useDashboardAutomations } from "./useDashboardAutomations.js";
 
 /**
  * @internal
@@ -24,12 +25,10 @@ export const useDashboardScheduledEmailsDialog = ({
 
     const dashboardRef = useDashboardSelector(selectDashboardRef);
 
-    const {
-        closeScheduleEmailingDialog,
-        openScheduleEmailingDialog,
-        openScheduleEmailingManagementDialog,
-        refreshAutomations,
-    } = useDashboardScheduledEmailsCommands();
+    const { closeScheduleEmailingDialog, openScheduleEmailingDialog, openScheduleEmailingManagementDialog } =
+        useDashboardScheduledEmailsCommands();
+
+    const { refreshAutomations } = useDashboardAutomations();
 
     /*
      * exports and scheduling are not available when rendering a dashboard that is not persisted.

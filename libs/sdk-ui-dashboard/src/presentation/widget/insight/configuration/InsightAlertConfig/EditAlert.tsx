@@ -4,6 +4,7 @@ import {
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
     ICatalogMeasure,
+    INotificationChannelMetadataObject,
 } from "@gooddata/sdk-model";
 import {
     Bubble,
@@ -20,7 +21,6 @@ import { AlertDestinationSelect } from "./AlertDestinationSelect.js";
 import { EditAlertConfiguration } from "./EditAlertConfiguration.js";
 import { useEditAlert } from "./hooks/useEditAlert.js";
 import { defineMessages, FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
-import { Smtps, Webhooks } from "../../../../../model/index.js";
 import { AlertMetric, AlertMetricComparatorType } from "../../types.js";
 import { useAlertValidation, AlertInvalidityReason } from "./hooks/useAlertValidation.js";
 import {
@@ -52,7 +52,7 @@ interface IEditAlertProps {
     alert: IAutomationMetadataObject;
     isNewAlert?: boolean;
     hasAlerts: boolean;
-    destinations: (Webhooks[number] | Smtps[number])[];
+    destinations: INotificationChannelMetadataObject[];
     measures: AlertMetric[];
     catalogMeasures: ICatalogMeasure[];
     onClose: () => void;

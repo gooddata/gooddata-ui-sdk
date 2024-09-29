@@ -93,19 +93,50 @@ export function saveScheduledEmail(
 }
 
 /**
- * Creates scheduled email.
+ * Initialize dashboard automations by loading essential data such as notification channels.
+ * This initialization is necessary for working with alerts and scheduled exports.
+ *
+ * @beta
+ */
+export interface InitializeAutomations extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.AUTOMATIONS.INITIALIZE";
+}
+
+/**
+ * Creates the InitializeAutomations command.
+ *
+ * Dispatching this command will result in the initializing dashboard automations.
+ * This initialization is necessary for working with alerts and scheduled exports.
+ *
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+
+ * @beta
+ */
+export function initializeAutomations(correlationId?: string): InitializeAutomations {
+    return {
+        type: "GDC.DASH/CMD.AUTOMATIONS.INITIALIZE",
+        correlationId,
+    };
+}
+
+/**
+ * Refresh the current dashboard's automation data.
+ * This is particularly useful after creating, updating, or removing alerts or scheduled exports,
+ * ensuring that the local data remains synchronized with the backend.
  *
  * @beta
  */
 export interface RefreshAutomations extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.AUTOMATIONS.REFRESH";
-    readonly payload: object;
 }
 
 /**
  * Creates the RefreshAutomations command.
  *
- * Dispatching this command will result in the refresh of automations from the backend.
+ * Dispatching this command will result in refreshing the current dashboard's automation data.
+ * This is particularly useful after creating, updating, or removing alerts or scheduled exports,
+ * ensuring that the local data remains synchronized with the backend.
  *
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
@@ -116,6 +147,5 @@ export function refreshAutomations(correlationId?: string): RefreshAutomations {
     return {
         type: "GDC.DASH/CMD.AUTOMATIONS.REFRESH",
         correlationId,
-        payload: {},
     };
 }
