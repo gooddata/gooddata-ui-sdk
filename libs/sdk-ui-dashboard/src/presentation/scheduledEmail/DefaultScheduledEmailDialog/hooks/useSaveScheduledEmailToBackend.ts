@@ -25,7 +25,9 @@ export function useSaveScheduledEmailToBackend(
     const intl = useIntl();
     const [savingErrorMessage, setSavingErrorMessage] = useState<string | undefined>(undefined);
     const scheduledEmailCreator = useCreateScheduledEmail({
-        onSuccess,
+        onSuccess: (scheduledEmail: IAutomationMetadataObject) => {
+            onSuccess?.(scheduledEmail);
+        },
         onError: (error: GoodDataSdkError) => {
             /**
              * Handle 400 error separately as it contains a detailed error message

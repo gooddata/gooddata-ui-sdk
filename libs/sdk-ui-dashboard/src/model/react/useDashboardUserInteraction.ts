@@ -8,6 +8,7 @@ import {
     AttributeHierarchiesInteractionType,
     VisualizationSwitcherInteractionType,
     DateFilterInteractionType,
+    AutomationInteractionData,
 } from "../events/index.js";
 
 import { useDashboardEventDispatch } from "./useDashboardEventDispatch.js";
@@ -78,6 +79,15 @@ export const useDashboardUserInteraction = () => {
         [eventDispatch],
     );
 
+    const automationInteraction = useCallback(
+        (eventData: AutomationInteractionData) => {
+            eventDispatch(
+                userInteractionTriggered({ interaction: "automationInteraction", data: eventData }),
+            );
+        },
+        [eventDispatch],
+    );
+
     const filterContextStateReset = useCallback(() => {
         eventDispatch(userInteractionTriggered("filterContextStateReset"));
     }, [eventDispatch]);
@@ -110,5 +120,6 @@ export const useDashboardUserInteraction = () => {
         attributeHierarchiesInteraction,
         dateFilterInteraction,
         visualizationSwitcherInteraction,
+        automationInteraction,
     };
 };

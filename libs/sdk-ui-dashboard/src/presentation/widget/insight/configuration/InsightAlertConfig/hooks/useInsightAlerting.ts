@@ -24,6 +24,7 @@ import {
     selectCurrentUser,
     useFiltersForWidgetScheduledExport,
     selectNotificationChannels,
+    useDashboardUserInteraction,
 } from "../../../../../../model/index.js";
 import { createDefaultAlert, getSupportedInsightMeasuresByInsight } from "../utils.js";
 import { messages } from "../messages.js";
@@ -41,6 +42,7 @@ export interface IInsightWidgetAlertingProps {
 
 export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IInsightWidgetAlertingProps) => {
     const { addSuccess, addError } = useToastMessage();
+    const { automationInteraction } = useDashboardUserInteraction();
     const dispatch = useDashboardDispatch();
     const effectiveBackend = useBackendStrict();
     const effectiveWorkspace = useWorkspaceStrict();
@@ -54,13 +56,27 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     const unlimitedAutomationsEntitlement = useDashboardSelector(selectEntitlementUnlimitedAutomations);
     const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
     const currentUser = useDashboardSelector(selectCurrentUser);
+    const destinations = useDashboardSelector(selectNotificationChannels);
 
     const { handleCreateAlert, handleUpdateAlert, handlePauseAlert, handleResumeAlert, isSavingAlert } =
         useSaveAlertToBackend({
-            onCreateSuccess: () => {
+            onCreateSuccess: (alert: IAutomationMetadataObject) => {
                 setViewMode("list");
                 handleRefreshAutomations();
                 addSuccess(messages.alertAddSuccess);
+
+                const destinationType = destinations.find(
+                    (channel) => channel.id === alert.notificationChannel,
+                )?.type;
+                automationInteraction({
+                    type: "alertCreated",
+                    destination_id: alert.notificationChannel,
+                    destination_type: destinationType,
+                    automation_id: alert.id,
+                    automation_name: alert.title,
+                    automation_visualization_type: insight?.insight.visualizationUrl,
+                    trigger_type: alert.alert?.trigger?.mode,
+                });
             },
             onCreateError: () => {
                 setViewMode("list");
@@ -96,7 +112,6 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         insight,
     });
     const { metricsAndFacts, metricsAndFactsLoading, metricsAndFactsLoadingError } = useMetricsAndFacts();
-    const destinations = useDashboardSelector(selectNotificationChannels);
     const locale = useDashboardSelector(selectLocale);
     const supportedMeasures = useMemo(
         () =>
@@ -157,8 +172,21 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         addError,
     ]);
 
+    useEffect(() => {
+        if (alerts.length === 0) {
+            automationInteraction({
+                type: "alertInitialized",
+                automation_visualization_type: insight?.insight.visualizationUrl,
+            });
+        }
+    }, [alerts.length, automationInteraction, insight?.insight.visualizationUrl]);
+
     const initiateAlertCreation = () => {
         setViewMode("create");
+        automationInteraction({
+            type: "alertInitialized",
+            automation_visualization_type: insight?.insight.visualizationUrl,
+        });
     };
 
     const cancelAlertCreation = () => {
