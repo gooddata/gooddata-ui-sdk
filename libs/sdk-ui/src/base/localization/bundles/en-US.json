@@ -3342,5 +3342,10 @@
         "value": "{score}% match",
         "comment": "Label of column that contains match score of the search results object. Do not translate placeholder {score}.",
         "limit": 0
+    },
+    "semantic-search.previous-search": {
+        "value": "Previous search",
+        "comment": "Area-label for the search history icon.",
+        "limit": 0
     }
 }
