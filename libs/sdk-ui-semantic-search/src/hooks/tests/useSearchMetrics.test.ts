@@ -15,6 +15,9 @@ describe("useSearchMetrics hook", () => {
         createdAt: null,
         modifiedAt: null,
         score: 0.5,
+        scoreTitle: 0.5,
+        scoreDescriptor: 0.5,
+        scoreExactMatch: 0.5,
         tags: [],
     };
     const item2: ISemanticSearchResultItem = {
@@ -26,6 +29,9 @@ describe("useSearchMetrics hook", () => {
         createdAt: null,
         modifiedAt: null,
         score: 0.4,
+        scoreTitle: 0.4,
+        scoreDescriptor: 0.4,
+        scoreExactMatch: 0.4,
         tags: [],
     };
 

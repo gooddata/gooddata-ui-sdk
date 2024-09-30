@@ -60,10 +60,10 @@
                 display: flex;
                 flex-direction: row;
                 gap: 5px;
+            }
 
-                &:not(:first-child) {
-                    color: kit-variables.$gd-color-state-blank;
-                }
+            &__row:not(:first-child) {
+                color: kit-variables.$gd-color-state-blank;
             }
 
             &__ellipsis {
@@ -82,43 +82,41 @@
             & .gd-ellipsis-text {
                 margin: 10px 0 0;
             }
+        }
 
-            &__contents {
-                width: 190px;
-                padding: 5px;
-                box-sizing: border-box;
-                display: flex;
-                flex-direction: column;
+        &__details__contents {
+            width: 190px;
+            padding: 5px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
 
-                h3 {
-                    font-size: 14px;
-                    margin: 0;
-                }
+            h3 {
+                font-size: 14px;
+                margin: 0;
+            }
 
-                .gd-ellipsis-text-content {
-                    font-size: 12px;
-                }
+            .gd-ellipsis-text-content {
+                font-size: 12px;
+            }
 
-                h4 {
-                    margin: 10px 0 0;
-                    text-transform: uppercase;
-                    font-size: 10px;
-                    font-weight: 400;
-                    color: kit-variables.$gd-color-state-blank;
-                }
+            h4 {
+                margin: 10px 0 0;
+                text-transform: uppercase;
+                font-size: 10px;
+                font-weight: 400;
+                color: kit-variables.$gd-color-state-blank;
+            }
 
-                hr {
-                    margin: 10px 0;
-                    border: 0;
-                    border-top: 1px solid kit-variables.$gd-border-color;
-                }
+            hr {
+                margin: 10px 0;
+                border: 0;
+                border-top: 1px solid kit-variables.$gd-border-color;
+            }
 
-                &__match {
-                    h4 {
-                        text-transform: none;
-                        font-size: 12px;
-                    }
-                }
+            &__match h4 {
+                text-transform: none;
+                font-size: 12px;
             }
         }
     }

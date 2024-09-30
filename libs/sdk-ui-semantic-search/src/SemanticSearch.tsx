@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import { useDebouncedState, Input, Dropdown } from "@gooddata/sdk-ui-kit";
-import { GenAISemanticSearchType, ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 import { SearchResultsDropdownList } from "./SearchResultsDropdownList.js";
 import { useSemanticSearch, useElementWidth } from "./hooks/index.js";
@@ -42,7 +41,7 @@ export type SemanticSearchProps = {
     /**
      * A list of object types to search for.
      */
-    objectTypes?: GenAISemanticSearchType[];
+    objectTypes?: GenAIObjectType[];
     /**
      * A flag to enable deep search, i.e. search dashboard by their contents.
      */
