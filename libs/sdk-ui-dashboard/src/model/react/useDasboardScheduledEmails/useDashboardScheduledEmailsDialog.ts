@@ -1,11 +1,24 @@
 // (C) 2022-2024 GoodData Corporation
 import { useCallback } from "react";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
-import { IAutomationMetadataObject, IWidget } from "@gooddata/sdk-model";
+import {
+    areObjRefsEqual,
+    IAutomationMetadataObject,
+    IExportDefinitionVisualizationObjectRequestPayload,
+    isExportDefinitionDashboardRequestPayload,
+    isExportDefinitionVisualizationObjectRequestPayload,
+    isInsightWidget,
+    IWidget,
+} from "@gooddata/sdk-model";
 import { messages } from "../../../locales.js";
 import { useDashboardScheduledEmailsCommands } from "./useDashboardScheduledEmailsCommands.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";
-import { selectDashboardRef, selectNotificationChannels } from "../../store/index.js";
+import {
+    selectDashboardRef,
+    selectInsights,
+    selectNotificationChannels,
+    selectWidgets,
+} from "../../store/index.js";
 import { useDashboardAutomations } from "./useDashboardAutomations.js";
 import { useDashboardUserInteraction } from "../useDashboardUserInteraction.js";
 
@@ -27,6 +40,8 @@ export const useDashboardScheduledEmailsDialog = ({
 
     const dashboardRef = useDashboardSelector(selectDashboardRef);
     const destinations = useDashboardSelector(selectNotificationChannels);
+    const allWidgets = useDashboardSelector(selectWidgets);
+    const allInsights = useDashboardSelector(selectInsights);
 
     const { closeScheduleEmailingDialog, openScheduleEmailingDialog, openScheduleEmailingManagementDialog } =
         useDashboardScheduledEmailsCommands();
@@ -75,6 +90,19 @@ export const useDashboardScheduledEmailsDialog = ({
             addSuccess(messages.scheduleEmailSubmitSuccess);
             refreshAutomations();
 
+            const widgetId = (
+                scheduledEmail.exportDefinitions?.find(({ requestPayload }) =>
+                    isExportDefinitionVisualizationObjectRequestPayload(requestPayload),
+                )?.requestPayload as IExportDefinitionVisualizationObjectRequestPayload
+            )?.content.widget;
+            const widget = allWidgets.find((widget) => widget.localIdentifier === widgetId);
+            const insight = allInsights.find((insight) => {
+                return isInsightWidget(widget) && areObjRefsEqual(insight.insight.ref, widget.insight);
+            });
+            const dashboardFilters =
+                scheduledEmail.exportDefinitions?.find(({ requestPayload }) =>
+                    isExportDefinitionDashboardRequestPayload(requestPayload),
+                )?.requestPayload.content.filters ?? [];
             const destinationType = destinations.find(
                 (channel) => channel.id === scheduledEmail.notificationChannel,
             )?.type;
@@ -84,6 +112,9 @@ export const useDashboardScheduledEmailsDialog = ({
                 destination_type: destinationType,
                 automation_id: scheduledEmail.id,
                 automation_name: scheduledEmail.title,
+                automation_source: widgetId ? "widget" : "dashboard",
+                ...(insight ? { automation_visualization_type: insight?.insight.visualizationUrl } : {}),
+                ...(!insight ? { filter_context: dashboardFilters.length > 0 ? "edited" : "default" } : {}),
             });
         },
         [
@@ -91,6 +122,8 @@ export const useDashboardScheduledEmailsDialog = ({
             openScheduleEmailingManagementDialog,
             addSuccess,
             refreshAutomations,
+            allWidgets,
+            allInsights,
             destinations,
             automationInteraction,
         ],
