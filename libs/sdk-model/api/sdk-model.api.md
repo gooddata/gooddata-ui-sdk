@@ -2301,14 +2301,7 @@ export interface INotificationChannelMetadataObject extends INotificationChannel
 export interface INotificationChannelMetadataObjectBase {
     allowedRecipients?: NotificationChannelAllowedRecipient;
     destination: IWebhookDestination | ISmtpDestination;
-    triggers: INotificationChannelTrigger[];
     type: "webhook" | "smtp";
-}
-
-// @alpha (undocumented)
-export interface INotificationChannelTrigger {
-    allowOn?: ("dashboard" | "visualization")[];
-    type: "SCHEDULE" | "ALERT";
 }
 
 // @public
