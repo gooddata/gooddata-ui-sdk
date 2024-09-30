@@ -105,7 +105,7 @@
     "dialogs.schedule.email.subject.label": "Objet:",
     "dialogs.schedule.email.time.label": "Première occurrence :",
     "dialogs.schedule.email.to.label": "À :",
-    "dialogs.schedule.email.message.placeholder": "Bonjour,\n\nvotre e-mail programmé est prêt. Vous pouvez télécharger le tableau de bord dans les pièces jointes.",
+    "dialogs.schedule.email.message.placeholder": "Salut,\n\nVotre courriel programmé est prêt. Vous pouvez télécharger le tableau de bord en pièces jointes.",
     "dialogs.schedule.email.submit": "Planifier",
     "dialogs.schedule.email.save": "Enregistrer",
     "dialogs.schedule.email.format.options": "Options de format",
