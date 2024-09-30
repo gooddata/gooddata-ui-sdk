@@ -105,7 +105,7 @@
     "dialogs.schedule.email.subject.label": "Asunto:",
     "dialogs.schedule.email.time.label": "Primer evento:",
     "dialogs.schedule.email.to.label": "Para:",
-    "dialogs.schedule.email.message.placeholder": "Hola:\n\nEl correo programado está listo. Puede descargar el panel en los adjuntos.",
+    "dialogs.schedule.email.message.placeholder": "Hola:\n\nSu correo programado está listo. Puede descargar el panel en archivos adjuntos.",
     "dialogs.schedule.email.submit": "Programar",
     "dialogs.schedule.email.save": "Guardar",
     "dialogs.schedule.email.format.options": "Opciones de formato",
