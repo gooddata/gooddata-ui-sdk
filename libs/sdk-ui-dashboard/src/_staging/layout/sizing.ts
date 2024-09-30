@@ -16,6 +16,8 @@ import {
     isWidget,
     IWidget,
     widgetType as getWidgetType,
+    isVisualizationSwitcherWidget,
+    IVisualizationSwitcherWidget,
 } from "@gooddata/sdk-model";
 import {
     fluidLayoutDescriptor,
@@ -54,7 +56,7 @@ export function getSizeInfo(
         return getKpiSizeInfo(settings, widgetContent);
     } else if (widgetType === "richText") {
         return RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT;
-    } else if (widgetType === "visualizationSwitcher") {
+    } else if (widgetType === "visualizationSwitcher" && !widgetContent) {
         return VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_DEFAULT;
     }
 
@@ -142,6 +144,15 @@ export function getMinHeight(widgets: IWidget[], insightMap: ObjRefMap<IInsight>
             widgetContent = widget.kpi;
         } else if (isInsightWidget(widget)) {
             widgetContent = insightMap.get(widget.insight);
+        } else if (isVisualizationSwitcherWidget(widget) && widget.visualizations.length > 0) {
+            return Math.max(
+                ...getVisSwitcherHeightWidth(
+                    widget,
+                    widgetContent,
+                    insightMap,
+                    getDashboardLayoutWidgetMinGridHeight,
+                ),
+            );
         }
 
         return getDashboardLayoutWidgetMinGridHeight(
@@ -163,6 +174,15 @@ export function getMaxHeight(widgets: IWidget[], insightMap: ObjRefMap<IInsight>
             widgetContent = widget.kpi;
         } else if (isInsightWidget(widget)) {
             widgetContent = insightMap.get(widget.insight);
+        } else if (isVisualizationSwitcherWidget(widget) && widget.visualizations.length > 0) {
+            return Math.max(
+                ...getVisSwitcherHeightWidth(
+                    widget,
+                    widgetContent,
+                    insightMap,
+                    getDashboardLayoutWidgetMaxGridHeight,
+                ),
+            );
         }
 
         return getDashboardLayoutWidgetMaxGridHeight(
@@ -186,6 +206,29 @@ export function getDashboardLayoutWidgetMinGridWidth(
     return sizeInfo.width.min!;
 }
 
+type DashboardLayoutWidgetGridWidthHeight = (
+    settings: ISettings,
+    widgetType: AnalyticalWidgetType,
+    widgetContent?: MeasurableWidgetContent,
+) => number;
+
+function getVisSwitcherHeightWidth(
+    widget: IVisualizationSwitcherWidget,
+    widgetContent: MeasurableWidgetContent | undefined,
+    insightMap: ObjRefMap<IInsight>,
+    fn: DashboardLayoutWidgetGridWidthHeight,
+): number[] {
+    const result: number[] = [];
+    widget.visualizations.forEach((visualization) => {
+        widgetContent = insightMap.get(visualization.insight);
+
+        const heightWidth = fn({ enableKDWidgetCustomHeight: true }, getWidgetType(widget), widgetContent);
+
+        result.push(heightWidth);
+    });
+
+    return result;
+}
 /**
  * @internal
  */
@@ -195,6 +238,15 @@ export function getMinWidth(widget: IWidget, insightMap: ObjRefMap<IInsight>): n
         widgetContent = widget.kpi;
     } else if (isInsightWidget(widget)) {
         widgetContent = insightMap.get(widget.insight);
+    } else if (isVisualizationSwitcherWidget(widget) && widget.visualizations.length > 0) {
+        return Math.max(
+            ...getVisSwitcherHeightWidth(
+                widget,
+                widgetContent,
+                insightMap,
+                getDashboardLayoutWidgetMinGridWidth,
+            ),
+        );
     }
 
     return getDashboardLayoutWidgetMinGridWidth(
