@@ -61,7 +61,8 @@
 
             &__row:not(:first-child) {
                 :not(:first-child):before {
-                    content: "•\0000a0";
+                    content: "\2022";
+                    padding-right: 5px;
                 }
             }
         }
