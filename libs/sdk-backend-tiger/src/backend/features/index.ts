@@ -43,6 +43,8 @@ export class TigerFeaturesService {
             return {
                 ...DefaultFeatureFlags,
                 ...results,
+                enableScheduling: false,
+                enableAlerting: false,
             };
         });
         responseMap.set(getKeyFromContext(wsContext), response);
