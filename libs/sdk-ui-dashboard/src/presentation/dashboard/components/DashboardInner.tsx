@@ -1,8 +1,13 @@
-// (C) 2022 GoodData Corporation
-import React, { RefObject, useRef } from "react";
+// (C) 2022-2024 GoodData Corporation
+import React, { RefObject, useEffect, useRef } from "react";
 import cx from "classnames";
 import { IntlWrapper } from "../../localization/index.js";
-import { useDashboardSelector, selectLocale, selectIsInEditMode } from "../../../model/index.js";
+import {
+    useDashboardSelector,
+    selectLocale,
+    selectIsInEditMode,
+    useDashboardAutomations,
+} from "../../../model/index.js";
 import { DashboardHeader } from "../DashboardHeader/DashboardHeader.js";
 import { IDashboardProps } from "../types.js";
 import { DashboardSidebar } from "../DashboardSidebar/DashboardSidebar.js";
@@ -30,6 +35,11 @@ export const DashboardInner: React.FC<IDashboardProps> = (props) => {
     const bottomRef = useRef(null);
 
     useDashboardDragScroll(layoutRef, headerRef, bottomRef);
+    const { initializeAutomations } = useDashboardAutomations();
+
+    useEffect(() => {
+        initializeAutomations();
+    }, [initializeAutomations]);
 
     return (
         <IntlWrapper locale={locale}>

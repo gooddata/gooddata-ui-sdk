@@ -30,32 +30,35 @@ const labelMessages = defineMessages({
 });
 
 export const AlertDropdown: React.FC<IAlertDropdownProps> = (props) => {
-    const { paused, alignTo, onClose, onEdit, onPause, onDelete, onResume } = props;
+    const { isReadOnly, paused, alignTo, onClose, onEdit, onPause, onDelete, onResume } = props;
 
-    const dropdownActions: IDropdownItemProps[] = [
-        {
-            labelIntlKey: labelMessages.edit.id,
-            classNames: "s-edit-alert-button",
-            onClick: onEdit,
-        },
-        paused
-            ? {
-                  labelIntlKey: labelMessages.resume.id,
-                  classNames: "s-resume-alert-button",
-                  onClick: onResume,
-              }
-            : {
-                  labelIntlKey: labelMessages.pause.id,
-                  classNames: "s-pause-alert-button",
-                  onClick: onPause,
-              },
-        {
-            labelIntlKey: labelMessages.delete.id,
-            classNames: "s-delete-alert-button deleteItem",
-            onClick: onDelete,
-            separator: "up",
-        },
-    ];
+    const editItem = {
+        labelIntlKey: labelMessages.edit.id,
+        classNames: "s-edit-alert-button",
+        onClick: onEdit,
+    };
+    const pauseItem = paused
+        ? {
+              labelIntlKey: labelMessages.resume.id,
+              classNames: "s-resume-alert-button",
+              onClick: onResume,
+          }
+        : {
+              labelIntlKey: labelMessages.pause.id,
+              classNames: "s-pause-alert-button",
+              onClick: onPause,
+          };
+
+    const deleteItem = {
+        labelIntlKey: labelMessages.delete.id,
+        classNames: "s-delete-alert-button deleteItem",
+        onClick: onDelete,
+        separator: !isReadOnly ? "up" : undefined,
+    };
+
+    const dropdownActions: IDropdownItemProps[] = isReadOnly
+        ? [deleteItem]
+        : [editItem, pauseItem, deleteItem];
 
     return (
         <Overlay

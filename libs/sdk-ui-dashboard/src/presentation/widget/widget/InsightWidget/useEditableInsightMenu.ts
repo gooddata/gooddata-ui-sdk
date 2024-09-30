@@ -6,8 +6,8 @@ import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 import { useDashboardCustomizationsContext } from "../../../dashboardContexts/index.js";
 import { getDefaultInsightEditMenuItems, IInsightMenuItem } from "../../insightMenu/index.js";
 import {
-    selectAutomationsAlertsInContext,
-    selectAutomationsSchedulesInContext,
+    selectDashboardUserAutomationAlertsInContext,
+    selectDashboardUserAutomationSchedulesInContext,
     selectDrillTargetsByWidgetRef,
     selectEnableAlerting,
     selectEnableScheduling,
@@ -52,8 +52,11 @@ export const useEditableInsightMenu = (
 
     const isSchedulingEnabled = useDashboardSelector(selectEnableScheduling);
     const isAlertingEnabled = useDashboardSelector(selectEnableAlerting);
-    const alerts = useDashboardSelector(selectAutomationsAlertsInContext(widget.localIdentifier));
-    const schedules = useDashboardSelector(selectAutomationsSchedulesInContext(widget.localIdentifier));
+    const alerts = useDashboardSelector(selectDashboardUserAutomationAlertsInContext(widget.localIdentifier));
+    const schedules = useDashboardSelector(
+        selectDashboardUserAutomationSchedulesInContext(widget.localIdentifier),
+    );
+
     const useWidgetDeleteDialog = useMemo(
         () =>
             // new widgets in edit mode do not have localIdentifier, so should be deleted without confirmation dialog

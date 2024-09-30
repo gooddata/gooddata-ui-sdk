@@ -41,3 +41,4 @@ export { useFiltersForWidgetScheduledExport } from "./useDasboardScheduledEmails
 export type { IUseFiltersForWidgetScheduledExportProps } from "./useDasboardScheduledEmails/useFiltersForWidgetScheduledExport.js";
 export { useDashboardScheduledEmailsFilters } from "./useDasboardScheduledEmails/useDashboardScheduledEmailsFilters.js";
 export type { IUseDashboardScheduledEmailsFiltersProps } from "./useDasboardScheduledEmails/useDashboardScheduledEmailsFilters.js";
+export { useDashboardAutomations } from "./useDasboardScheduledEmails/useDashboardAutomations.js";

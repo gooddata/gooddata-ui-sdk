@@ -317,9 +317,11 @@ export interface IAutomationsQuery {
         title?: string;
     }): IAutomationsQuery;
     withPage(page: number): IAutomationsQuery;
+    withRecipient(recipient: string): IAutomationsQuery;
     withSize(size: number): IAutomationsQuery;
     withSorting(sort: string[]): IAutomationsQuery;
     withType(type: AutomationType): IAutomationsQuery;
+    withUser(user: string): IAutomationsQuery;
 }
 
 // @public
@@ -860,6 +862,7 @@ export interface IOrganizationNotificationChannelService {
     deleteEmail(id: string): Promise<void>;
     deleteWebhook(id: string): Promise<void>;
     getAll(): Promise<INotificationChannelDefinitionObject[]>;
+    getCount(): Promise<number>;
     getEmail(id: string): Promise<ISmtpDefinitionObject>;
     getEmails(): Promise<ISmtpDefinitionObject[]>;
     getWebhook(id: string): Promise<IWebhookDefinitionObject>;
@@ -1170,6 +1173,7 @@ export interface IWorkspaceAutomationService {
     getAutomation(id: string, options?: IGetAutomationOptions): Promise<IAutomationMetadataObject>;
     getAutomations(options?: IGetAutomationsOptions): Promise<IAutomationMetadataObject[]>;
     getAutomationsQuery(): IAutomationsQuery;
+    unsubscribeAutomation(id: string): Promise<void>;
     updateAutomation(automation: IAutomationMetadataObject, options?: IGetAutomationOptions): Promise<IAutomationMetadataObject>;
 }
 

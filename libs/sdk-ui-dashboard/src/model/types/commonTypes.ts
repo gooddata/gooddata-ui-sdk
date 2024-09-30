@@ -8,10 +8,6 @@ import {
     ISettings,
     ISeparators,
     IEntitlementDescriptor,
-    IWebhookDefinitionObject,
-    IAutomationMetadataObject,
-    IWorkspaceUser,
-    ISmtpDefinitionObject,
 } from "@gooddata/sdk-model";
 import { ILocale } from "@gooddata/sdk-ui";
 import keys from "lodash/keys.js";
@@ -461,31 +457,3 @@ export type FiltersInfo = {
     filters: IDashboardFilter[];
     resolvedFilterValues?: IResolvedFilterValues;
 };
-
-/**
- * Organization webhooks
- *
- * @alpha
- */
-export type Webhooks = IWebhookDefinitionObject[];
-
-/**
- * Organization smtps
- *
- * @alpha
- */
-export type Smtps = ISmtpDefinitionObject[];
-
-/**
- * Workspace automations
- *
- * @alpha
- */
-export type Automations = IAutomationMetadataObject[];
-
-/**
- * Workspace users
- *
- * @alpha
- */
-export type Users = IWorkspaceUser[];

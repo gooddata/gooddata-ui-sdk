@@ -1,5 +1,4 @@
 // (C) 2022-2024 GoodData Corporation
-import { useMemo } from "react";
 import {
     IAutomationMetadataObject,
     IExportDefinitionVisualizationObjectContent,
@@ -12,15 +11,11 @@ import {
     selectIsReadOnly,
     selectMenuButtonItemsVisibility,
     selectEntitlementMaxAutomations,
-    selectWebhooks,
-    selectSmtps,
-    selectAutomationsCount,
+    selectAllAutomationsCount,
     selectUsers,
-    selectWebhooksIsLoading,
     selectAutomationsIsLoading,
-    selectWebhooksError,
     selectAutomationsError,
-    selectAutomationsSchedulesInContext,
+    selectDashboardUserAutomationSchedulesInContext,
     selectEntitlementUnlimitedAutomations,
     selectCanCreateAutomation,
     selectIsScheduleEmailDialogOpen,
@@ -28,8 +23,12 @@ import {
     selectIsScheduleEmailManagementDialogOpen,
     selectWidgetByRef,
     selectInsightByWidgetRef,
+    selectNotificationChannelsCount,
+    selectNotificationChannels,
+    selectAutomationsIsInitialized,
 } from "../../store/index.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";
+
 /**
  * @alpha
  * Default maximum number of automations.
@@ -48,14 +47,9 @@ export const useDashboardScheduledEmailsData = ({
 }: IUseDashboardScheduledEmailsDataProps) => {
     const users = useDashboardSelector(selectUsers);
 
-    const emails = useDashboardSelector(selectSmtps);
-
-    const webhooks = useDashboardSelector(selectWebhooks);
-    const webhooksLoading = useDashboardSelector(selectWebhooksIsLoading);
-    const webhooksError = useDashboardSelector(selectWebhooksError);
-
-    const automations = useDashboardSelector(selectAutomationsSchedulesInContext(undefined));
-    const automationsCount = useDashboardSelector(selectAutomationsCount);
+    const isInitialized = useDashboardSelector(selectAutomationsIsInitialized);
+    const automations = useDashboardSelector(selectDashboardUserAutomationSchedulesInContext(undefined));
+    const automationsCount = useDashboardSelector(selectAllAutomationsCount);
     const automationsLoading = useDashboardSelector(selectAutomationsIsLoading);
     const automationsError = useDashboardSelector(selectAutomationsError);
 
@@ -78,8 +72,8 @@ export const useDashboardScheduledEmailsData = ({
     const unlimitedAutomationsEntitlement = useDashboardSelector(selectEntitlementUnlimitedAutomations);
     const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);
 
-    const notificationChannels = useMemo(() => [...emails, ...webhooks], [webhooks, emails]);
-    const numberOfAvailableDestinations = notificationChannels.length;
+    const notificationChannels = useDashboardSelector(selectNotificationChannels);
+    const numberOfAvailableDestinations = useDashboardSelector(selectNotificationChannelsCount);
     const maxAutomationsReached = automationsCount >= maxAutomations && !unlimitedAutomationsEntitlement;
 
     /**
@@ -118,6 +112,7 @@ export const useDashboardScheduledEmailsData = ({
 
     return {
         // Data
+        isInitialized,
         users,
         notificationChannels,
         automations,
@@ -127,8 +122,6 @@ export const useDashboardScheduledEmailsData = ({
         numberOfAvailableDestinations,
         widget,
         insight,
-        webhooksLoading,
-        webhooksError,
         // Single Schedule Dialog
         isScheduledEmailingVisible,
         isScheduleEmailingDialogOpen,

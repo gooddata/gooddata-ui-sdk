@@ -60,7 +60,6 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
             onLoad={(queryOptions) => {
                 setSearch(queryOptions?.search);
             }}
-            isLoading={status === "loading" || status === "pending"}
             allowEmptySelection={allowEmptySelection}
             maxRecipients={maxRecipients}
         />

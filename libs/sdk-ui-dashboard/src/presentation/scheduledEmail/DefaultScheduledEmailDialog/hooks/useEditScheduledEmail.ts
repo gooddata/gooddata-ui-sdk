@@ -12,6 +12,7 @@ import {
     IAutomationMetadataObject,
     IUser,
     IFilter,
+    INotificationChannelMetadataObject,
 } from "@gooddata/sdk-model";
 import parseISO from "date-fns/parseISO/index.js";
 import { getUserTimezone } from "../utils/timezone.js";
@@ -24,7 +25,6 @@ import {
     selectCurrentUser,
 } from "../../../../model/index.js";
 import { normalizeTime } from "@gooddata/sdk-ui-kit";
-import { INotificationChannel } from "../../types.js";
 import { WidgetAttachmentType } from "../types.js";
 import { toModifiedISOString } from "../../DefaultScheduledEmailManagementDialog/utils.js";
 import {
@@ -43,7 +43,7 @@ import { useScheduleValidation } from "./useScheduleValidation.js";
 
 export interface IUseEditScheduledEmailProps {
     scheduledExportToEdit?: IAutomationMetadataObject;
-    notificationChannels: INotificationChannel[];
+    notificationChannels: INotificationChannelMetadataObject[];
     maxAutomationsRecipients: number;
 
     // In case we are editing widget scheduled export

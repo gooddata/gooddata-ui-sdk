@@ -29,6 +29,22 @@ export class OrganizationNotificationChannelService implements IOrganizationNoti
     /**
      * @alpha
      *
+     * Get all notification channels count.
+     * @returns Promise resolved with number of notification channels.
+     */
+    public getCount = async (): Promise<number> => {
+        return this.authCall(async (client: ITigerClient) => {
+            const result = await client.entities.getAllEntitiesNotificationChannels({
+                size: 1,
+                metaInclude: ["page"],
+            });
+            return result.data.meta?.page?.totalElements ?? 0;
+        });
+    };
+
+    /**
+     * @alpha
+     *
      * Get all notification channels
      * @returns Promise resolved with array of notification channels.
      */

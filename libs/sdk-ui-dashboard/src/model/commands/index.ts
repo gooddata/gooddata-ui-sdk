@@ -88,7 +88,12 @@ import {
     RemoveSectionItemByWidgetRef,
 } from "./layout.js";
 import { CreateAlert, SaveAlert } from "./alerts.js";
-import { CreateScheduledEmail, SaveScheduledEmail, RefreshAutomations } from "./scheduledEmail.js";
+import {
+    CreateScheduledEmail,
+    SaveScheduledEmail,
+    RefreshAutomations,
+    InitializeAutomations,
+} from "./scheduledEmail.js";
 import {
     Drill,
     DrillDown,
@@ -283,8 +288,14 @@ export type {
     SaveScheduledEmail,
     SaveScheduledEmailPayload,
     RefreshAutomations,
+    InitializeAutomations,
 } from "./scheduledEmail.js";
-export { createScheduledEmail, saveScheduledEmail, refreshAutomations } from "./scheduledEmail.js";
+export {
+    createScheduledEmail,
+    saveScheduledEmail,
+    refreshAutomations,
+    initializeAutomations,
+} from "./scheduledEmail.js";
 
 export type {
     Drill,
@@ -549,6 +560,7 @@ export type DashboardCommands =
     | MoveDateFilter
     | SetDashboardDateFilterWithDimensionConfigMode
     | SetDateFilterConfigTitle
+    | InitializeAutomations
     | RefreshAutomations
     | SetAttributeFilterLimitingItems
     | SaveFilterView

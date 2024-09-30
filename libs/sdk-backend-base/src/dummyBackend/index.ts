@@ -874,6 +874,7 @@ class DummyOrganization implements IOrganization {
 
     notificationChannels(): IOrganizationNotificationChannelService {
         return {
+            getCount: () => Promise.resolve(0),
             getAll: () => Promise.resolve([]),
             deleteChannel: () => Promise.resolve(),
             //emails
@@ -1249,6 +1250,10 @@ class DummyWorkspaceAutomationService implements IWorkspaceAutomationService {
         } as IAutomationMetadataObject);
     }
 
+    unsubscribeAutomation(_id: string): Promise<void> {
+        return Promise.resolve(undefined);
+    }
+
     getAutomationsQuery(): IAutomationsQuery {
         return new DummyAutomationsQuery();
     }
@@ -1259,6 +1264,8 @@ class DummyAutomationsQuery implements IAutomationsQuery {
         size: number;
         page: number;
         author: string | null;
+        user: string | null;
+        recipient: string | null;
         dashboard: string | null;
         filter: { title?: string };
         sort: NonNullable<unknown>;
@@ -1268,6 +1275,8 @@ class DummyAutomationsQuery implements IAutomationsQuery {
         size: 100,
         page: 0,
         author: null,
+        user: null,
+        recipient: null,
         dashboard: null,
         filter: {},
         sort: {},
@@ -1313,6 +1322,16 @@ class DummyAutomationsQuery implements IAutomationsQuery {
 
     withAuthor(author: string): IAutomationsQuery {
         this.settings.author = author;
+        return this;
+    }
+
+    withRecipient(recipient: string): IAutomationsQuery {
+        this.settings.recipient = recipient;
+        return this;
+    }
+
+    withUser(user: string): IAutomationsQuery {
+        this.settings.user = user;
         return this;
     }
 

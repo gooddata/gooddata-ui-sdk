@@ -2,33 +2,38 @@
 
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { AutomationsState } from "./automationsState.js";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
-import { v4 as uuid } from "uuid";
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { GoodDataSdkError } from "@gooddata/sdk-ui";
 
 type AutomationsReducer<A extends Action> = CaseReducer<AutomationsState, A>;
 
-const setAutomations: AutomationsReducer<PayloadAction<IAutomationMetadataObject[]>> = (state, action) => {
-    state.automations = action.payload;
-    state.loading = false;
+const setAllAutomationsCount: AutomationsReducer<PayloadAction<number>> = (state, action) => {
+    state.allAutomationsCount = action.payload;
 };
 
-const setAutomationsLoading: AutomationsReducer<PayloadAction> = (state) => {
-    state.loading = true;
+const setAutomationsInitialized: AutomationsReducer<Action> = (state) => {
+    state.isInitialized = true;
+};
+
+const setUserAutomations: AutomationsReducer<PayloadAction<IAutomationMetadataObject[]>> = (
+    state,
+    action,
+) => {
+    state.userAutomations = action.payload;
+};
+
+const setAutomationsLoading: AutomationsReducer<PayloadAction<boolean>> = (state, action) => {
+    state.isLoading = action.payload;
 };
 
 const setAutomationsError: AutomationsReducer<PayloadAction<GoodDataSdkError>> = (state, action) => {
-    state.loading = false;
     state.error = action.payload;
 };
 
-const refreshAutomationsFingerprint: AutomationsReducer<PayloadAction> = (state) => {
-    state.fingerprint = uuid();
-};
-
 export const automationsReducers = {
-    setAutomations,
+    setAutomationsInitialized,
+    setAllAutomationsCount,
+    setUserAutomations,
     setAutomationsLoading,
     setAutomationsError,
-    refreshAutomationsFingerprint,
 };

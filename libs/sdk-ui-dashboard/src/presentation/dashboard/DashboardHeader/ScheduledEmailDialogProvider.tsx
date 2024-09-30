@@ -11,15 +11,14 @@ export const ScheduledEmailDialogProvider = () => {
         // Shared Local State
         scheduledExportToEdit,
         // Data
-        automations,
-        notificationChannels,
+        isInitialized,
         users,
         widget,
         insight,
-        webhooksError,
-        webhooksLoading,
+        automations,
         automationsLoading,
         automationsError,
+        notificationChannels,
         // Single Schedule Dialog
         isScheduleEmailingDialogOpen,
         onScheduleEmailingCancel,
@@ -43,9 +42,12 @@ export const ScheduledEmailDialogProvider = () => {
             insight,
         });
 
-    const isLoading = [widgetFiltersLoading, webhooksLoading, automationsLoading].some(Boolean);
-    const loadingError = [widgetFiltersError, webhooksError, automationsError].find(Boolean);
+    const isLoading = [widgetFiltersLoading, automationsLoading].some(Boolean);
+    const loadingError = [widgetFiltersError, automationsError].find(Boolean);
 
+    if (!isInitialized) {
+        return null;
+    }
     return (
         <>
             {isScheduleEmailingManagementDialogOpen ? (

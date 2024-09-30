@@ -1,12 +1,11 @@
 // (C) 2024 GoodData Corporation
-
-import { Users } from "../../types/commonTypes.js";
+import { IWorkspaceUser } from "@gooddata/sdk-model";
 
 /**
  * @alpha
  */
 export interface UsersState {
-    users: Users;
+    users: IWorkspaceUser[];
 }
 
 export const usersInitialState: UsersState = { users: [] };

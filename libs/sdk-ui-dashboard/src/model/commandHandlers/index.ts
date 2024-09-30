@@ -90,6 +90,7 @@ import { changeDateFilterWithDimensionModeHandler } from "./dashboard/changeDate
 import { changeDateFilterTitleHandler } from "./dashboard/changeDateFilterTitleHandler.js";
 import { changeAttributeFilterLimitingItemsHandler } from "./dashboard/changeAttributeFilterLimitingItemsHandler.js";
 import { refreshAutomationsHandlers } from "./scheduledEmail/refreshAutomationsHandlers.js";
+import { initializeAutomationsHandler } from "./scheduledEmail/initializeAutomationsHandler.js";
 import {
     saveFilterViewHandler,
     deleteFilterViewHandler,
@@ -198,6 +199,7 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.RENDER.ASYNC.REQUEST": requestAsyncRenderHandler,
     "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE": resolveAsyncRenderHandler,
     "GDC.DASH/CMD.AUTOMATIONS.REFRESH": refreshAutomationsHandlers,
+    "GDC.DASH/CMD.AUTOMATIONS.INITIALIZE": initializeAutomationsHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.SAVE": saveFilterViewHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.DELETE": deleteFilterViewHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.APPLY": applyFilterViewHandler,

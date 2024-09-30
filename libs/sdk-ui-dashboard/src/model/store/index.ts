@@ -92,6 +92,7 @@ export {
     selectEnableAlerting,
     selectEnableVisualizationSwitcher,
     selectEnableIgnoreCrossFiltering,
+    selectEnableAutomations,
 } from "./config/configSelectors.js";
 export type { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {
@@ -389,28 +390,22 @@ export {
     DashboardStoreAccessorRepository,
     SingleDashboardStoreAccessor,
 } from "./storeAccessors/index.js";
-
-export type { WebhooksState } from "./webhooks/webhooksState.js";
 export {
-    selectWebhooks,
-    selectWebhooksIsLoading,
-    selectWebhooksError,
-} from "./webhooks/webhooksSelectors.js";
-
-export type { SmtpsState } from "./smtps/smtpsState.js";
-export { selectSmtps, selectSmtpsIsLoading, selectSmtpsError } from "./smtps/smtpsSelectors.js";
-
+    selectNotificationChannels,
+    selectNotificationChannelsCount,
+} from "./notificationChannels/notificationChannelsSelectors.js";
+export type { NotificationChannelsState } from "./notificationChannels/notificationChannelsState.js";
 export type { AutomationsState } from "./automations/automationsState.js";
 export {
-    selectAutomations,
-    selectAutomationsCount,
-    selectAutomationsAlerts,
-    selectAutomationsSchedules,
-    selectAutomationsAlertsInContext,
-    selectAutomationsSchedulesInContext,
+    selectAutomationsIsInitialized,
+    selectAllAutomationsCount,
+    selectDashboardUserAutomations,
+    selectDashboardUserAutomationAlerts,
+    selectDashboardUserAutomationSchedules,
+    selectDashboardUserAutomationAlertsInContext,
+    selectDashboardUserAutomationSchedulesInContext,
     selectAutomationsIsLoading,
     selectAutomationsError,
-    selectAutomationsFingerprint,
 } from "./automations/automationsSelectors.js";
 
 export type { UsersState } from "./users/usersState.js";

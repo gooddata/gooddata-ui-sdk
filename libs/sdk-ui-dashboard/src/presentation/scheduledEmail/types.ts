@@ -6,8 +6,7 @@ import {
     IAutomationMetadataObjectDefinition,
     IFilter,
     IInsight,
-    ISmtpDefinitionObject,
-    IWebhookDefinitionObject,
+    INotificationChannelMetadataObject,
     IWorkspaceUser,
     ObjRef,
 } from "@gooddata/sdk-model";
@@ -47,7 +46,7 @@ export interface IScheduledEmailDialogProps {
     /**
      * Notification channels in organization
      */
-    notificationChannels: INotificationChannel[];
+    notificationChannels: INotificationChannelMetadataObject[];
 
     /**
      * Widget to be used for scheduled email.
@@ -166,7 +165,7 @@ export interface IScheduledEmailManagementDialogProps {
     /**
      * Notification channels in organization
      */
-    notificationChannels: INotificationChannel[];
+    notificationChannels: INotificationChannelMetadataObject[];
 
     /**
      * Automations in workspace
@@ -213,8 +212,3 @@ export type CustomScheduledEmailDialogComponent = ComponentType<IScheduledEmailD
  */
 export type CustomScheduledEmailManagementDialogComponent =
     ComponentType<IScheduledEmailManagementDialogProps>;
-
-/**
- * @alpha
- */
-export type INotificationChannel = IWebhookDefinitionObject | ISmtpDefinitionObject;

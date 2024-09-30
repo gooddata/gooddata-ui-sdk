@@ -20,13 +20,12 @@ export const useDashboardScheduledEmails = () => {
 
     const {
         // Data
+        isInitialized,
         users,
         automations,
         automationsLoading,
         automationsError,
         automationsCount,
-        webhooksLoading,
-        webhooksError,
         notificationChannels,
         numberOfAvailableDestinations,
         widget,
@@ -64,6 +63,7 @@ export const useDashboardScheduledEmails = () => {
         // Local state
         scheduledExportToEdit,
         // Data
+        isInitialized,
         users,
         notificationChannels,
         automations,
@@ -73,8 +73,6 @@ export const useDashboardScheduledEmails = () => {
         insight,
         automationsLoading,
         automationsError,
-        webhooksLoading,
-        webhooksError,
         // Single Schedule Dialog
         isScheduledEmailingVisible,
         isScheduleEmailingDialogOpen,
