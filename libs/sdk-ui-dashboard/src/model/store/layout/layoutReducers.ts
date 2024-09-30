@@ -779,6 +779,7 @@ const changeWidgetIgnoreCrossFiltering: LayoutReducer<ChangeWidgetIgnoreCrossFil
 
     widget.ignoreCrossFiltering = ignoreCrossFiltering;
 };
+
 //
 //
 //
@@ -786,6 +787,7 @@ const changeWidgetIgnoreCrossFiltering: LayoutReducer<ChangeWidgetIgnoreCrossFil
 type AddVisualzationSwitcherWidgetVisualization = {
     ref: ObjRef;
     visualization: IInsightWidget;
+    newSize?: IVisualizationSizeInfo;
 };
 
 const addVisualizationSwitcherWidgetVisualization: LayoutReducer<
@@ -793,12 +795,17 @@ const addVisualizationSwitcherWidgetVisualization: LayoutReducer<
 > = (state, action) => {
     invariant(state.layout);
 
-    const { visualization, ref } = action.payload;
+    const { visualization, ref, newSize } = action.payload;
     const widgetRef = getWidgetByRef(state, ref);
+    const data = getWidgetCoordinatesAndItem(state.layout, ref);
 
     invariant(widgetRef && isVisualizationSwitcherWidget(widgetRef));
 
     widgetRef.visualizations.push(visualization);
+
+    if (newSize && data?.item) {
+        data.item.size.xl = resizeInsightWidget(data.item.size.xl, newSize);
+    }
 };
 
 type UpdateVisualizationSwitcherWidgetVisualizations = {
@@ -817,6 +824,27 @@ const updateVisualizationSwitcherWidgetVisualizations: LayoutReducer<
     invariant(widgetRef && isVisualizationSwitcherWidget(widgetRef));
 
     widgetRef.visualizations = visualizations;
+};
+
+type ResizeVisualizationSwitcherOnInsightChanged = {
+    ref: ObjRef;
+    newSize?: IVisualizationSizeInfo;
+};
+
+const resizeVisualizationSwitcherOnInsightChanged: LayoutReducer<
+    ResizeVisualizationSwitcherOnInsightChanged
+> = (state, action) => {
+    invariant(state.layout);
+
+    const { ref, newSize } = action.payload;
+    const widgetRef = getWidgetByRef(state, ref);
+    const data = getWidgetCoordinatesAndItem(state.layout, ref);
+
+    invariant(widgetRef && isVisualizationSwitcherWidget(widgetRef));
+
+    if (newSize && data?.item) {
+        data.item.size.xl = resizeInsightWidget(data.item.size.xl, newSize);
+    }
 };
 
 export const layoutReducers = {
@@ -860,4 +888,5 @@ export const layoutReducers = {
     changeItemsHeight: changeItemsHeight,
     changeItemWidth: changeItemWidth,
     changeWidgetIgnoreCrossFiltering: withUndo(changeWidgetIgnoreCrossFiltering),
+    resizeVisualizationSwitcherOnInsightChanged: withUndo(resizeVisualizationSwitcherOnInsightChanged),
 };
