@@ -43,8 +43,7 @@ export class TigerFeaturesService {
             return {
                 ...DefaultFeatureFlags,
                 ...results,
-                enableScheduling: false,
-                enableAlerting: false,
+                // After conflict here when merge release->master, please remove hardcoded feature flags override
             };
         });
         responseMap.set(getKeyFromContext(wsContext), response);
