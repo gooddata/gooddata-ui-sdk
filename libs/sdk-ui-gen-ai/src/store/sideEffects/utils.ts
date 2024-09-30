@@ -3,7 +3,7 @@
 export const extractError = (e: unknown) => {
     // Normal error
     if (e instanceof Error) {
-        return e.message;
+        return `${e.name}: ${e.message}`;
     }
 
     if (typeof e === "object" && e !== null && "detail" in e) {

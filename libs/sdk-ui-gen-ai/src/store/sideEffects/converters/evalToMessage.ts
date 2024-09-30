@@ -13,7 +13,7 @@ import {
 export const evalToMessage = (evalResult: IGenAIChatEvaluation): AssistantMessage => {
     if (evalResult.invalidQuestion) {
         // Convert to the error message
-        const message = evalResult.createdVisualizations?.reasoning || "Invalid question. Try again.";
+        const message = evalResult.createdVisualizations?.reasoning ?? null;
 
         return makeAssistantErrorMessage(message, evalResult.foundObjects);
     }

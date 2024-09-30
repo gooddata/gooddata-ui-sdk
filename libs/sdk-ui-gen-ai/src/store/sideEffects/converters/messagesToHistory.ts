@@ -55,7 +55,8 @@ export const messagesToHistory = (messages: Message[]): IGenAIChatInteraction[] 
                     role: "AI",
                     content: [
                         {
-                            text: `ERROR: ${message.content.error}`,
+                            // This is not localized, as it's an error for AI, not for the user
+                            text: `ERROR: ${message.content.error ?? "Unknown error"}`,
                             includeToChatContext: true,
                             userFeedback: "NONE" as const,
                         },

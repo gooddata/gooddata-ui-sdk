@@ -112,7 +112,7 @@ export const makeAssistantTextMessage = (text: string): AssistantTextMessage => 
 export type AssistantErrorMessage = BaseMessage & {
     type: "assistant-error";
     content: {
-        error: string;
+        error: string | null;
         foundObjects?: GenAIChatFoundObjects;
     };
 };
@@ -127,7 +127,7 @@ export const isAssistantErrorMessage = (message?: Message): message is Assistant
  * @alpha
  */
 export const makeAssistantErrorMessage = (
-    error: string,
+    error: string | null,
     foundObjects?: GenAIChatFoundObjects,
 ): AssistantErrorMessage => ({
     id: uuidv4(),

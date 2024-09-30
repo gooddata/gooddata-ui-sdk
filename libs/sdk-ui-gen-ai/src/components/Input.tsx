@@ -8,6 +8,8 @@ import { connect } from "react-redux";
 import { makeAssistantCancelledMessage, makeUserTextMessage } from "../model.js";
 import { agentLoadingSelector, newMessageAction, RootState } from "../store/index.js";
 import { StopIcon } from "./StopIcon.js";
+import { injectIntl } from "react-intl";
+import { WrappedComponentProps } from "react-intl/src/components/injectIntl.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
@@ -22,7 +24,11 @@ type InputDispatchProps = {
     newMessage: typeof newMessageAction;
 };
 
-const InputComponent: React.FC<InputStateProps & InputDispatchProps> = ({ isBusy, newMessage }) => {
+const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedComponentProps> = ({
+    isBusy,
+    newMessage,
+    intl,
+}) => {
     const [value, setValue] = React.useState("");
     const textareaRef = React.useRef<HTMLTextAreaElement>(null);
 
@@ -64,7 +70,7 @@ const InputComponent: React.FC<InputStateProps & InputDispatchProps> = ({ isBusy
             <TextareaAutosize
                 ref={textareaRef}
                 className="gd-gen-ai-chat__input__textarea"
-                placeholder="Ask here…"
+                placeholder={intl.formatMessage({ id: "gd.gen-ai.input-placeholder" })}
                 value={value}
                 onChange={handleChange}
                 onKeyDown={handleKeyDown}
@@ -89,4 +95,4 @@ const mapDispatchToProps = {
     newMessage: newMessageAction,
 };
 
-export const Input = connect(mapStateToProps, mapDispatchToProps)(InputComponent);
+export const Input = connect(mapStateToProps, mapDispatchToProps)(injectIntl(InputComponent));

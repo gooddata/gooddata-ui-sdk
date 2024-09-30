@@ -18,7 +18,7 @@ export type AssistantCancelledMessage = BaseMessage & {
 export type AssistantErrorMessage = BaseMessage & {
     type: "assistant-error";
     content: {
-        error: string;
+        error: string | null;
         foundObjects?: GenAIChatFoundObjects;
     };
 };

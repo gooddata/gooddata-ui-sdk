@@ -6,6 +6,7 @@ import { clearMessagesAction, hasMessagesSelector, RootState } from "../store/in
 import cx from "classnames";
 import { HeaderIcon } from "./HeaderIcon.js";
 import { connect } from "react-redux";
+import { injectIntl, WrappedComponentProps } from "react-intl";
 
 type GenAIChatOverlayOwnProps = {
     onClose: () => void;
@@ -23,10 +24,11 @@ export type GenAIChatOverlayProps = GenAIChatOverlayOwnProps &
     GenAIChatOverlayStateProps &
     GenAIChatOverlayDispatchProps;
 
-const GenAIChatOverlayComponent: React.FC<GenAIChatOverlayProps> = ({
+const GenAIChatOverlayComponent: React.FC<GenAIChatOverlayProps & WrappedComponentProps> = ({
     onClose,
     hasMessages,
     clearMessages,
+    intl,
 }) => {
     const [isFullScreen, setIsFullScreen] = React.useState(false);
 
@@ -53,7 +55,7 @@ const GenAIChatOverlayComponent: React.FC<GenAIChatOverlayProps> = ({
                     <HeaderIcon
                         Icon={Icon.Undo}
                         className="gd-gen-ai-chat__window__header__icon--reset"
-                        tooltip="Reset"
+                        tooltip={intl.formatMessage({ id: "gd.gen-ai.header.reset-tooltip" })}
                         onClick={() => clearMessages()}
                         disabled={!hasMessages}
                     />
@@ -61,14 +63,18 @@ const GenAIChatOverlayComponent: React.FC<GenAIChatOverlayProps> = ({
                     <HeaderIcon
                         Icon={isFullScreen ? Icon.Contract : Icon.Expand}
                         className="gd-gen-ai-chat__window__header__icon--fullscreen"
-                        tooltip={isFullScreen ? "Contract" : "Expand"}
+                        tooltip={
+                            isFullScreen
+                                ? intl.formatMessage({ id: "gd.gen-ai.header.contract-tooltip" })
+                                : intl.formatMessage({ id: "gd.gen-ai.header.expand-tooltip" })
+                        }
                         onClick={() => setIsFullScreen(!isFullScreen)}
                     />
                     <div className="gd-gen-ai-chat__window__header__divider"></div>
                     <HeaderIcon
                         Icon={Icon.Close}
                         className="gd-gen-ai-chat__window__header__icon--close"
-                        tooltip="Close"
+                        tooltip={intl.formatMessage({ id: "gd.gen-ai.header.close-tooltip" })}
                         onClick={onClose}
                     />
                 </div>
@@ -86,4 +92,7 @@ const mapDispatchToProps: GenAIChatOverlayDispatchProps = {
     clearMessages: clearMessagesAction,
 };
 
-export const GenAIChatOverlay = connect(mapStateToProps, mapDispatchToProps)(GenAIChatOverlayComponent);
+export const GenAIChatOverlay = connect(
+    mapStateToProps,
+    mapDispatchToProps,
+)(injectIntl(GenAIChatOverlayComponent));

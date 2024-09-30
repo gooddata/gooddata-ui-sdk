@@ -99,6 +99,9 @@ import { Email } from "./icons/Email.js";
 import { VisualizationSwitcher } from "./icons/VisualizationSwitcher.js";
 import { Trash } from "./icons/Trash.js";
 import { GenAI } from "./icons/GenAI.js";
+import { Search } from "./icons/Search.js";
+import { NewVisualization } from "./icons/NewVisualization.js";
+import { ChatBubble } from "./icons/ChatBubble.js";
 
 /**
  * @internal
@@ -201,6 +204,9 @@ export const Icon: Record<string, React.FC<IIconProps>> = {
     Email,
     Trash,
     GenAI,
+    Search,
+    NewVisualization,
+    ChatBubble,
 };
 
 export type { IRowsIconProps, IColumnsIconProps };
