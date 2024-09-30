@@ -14,6 +14,7 @@ import { useIntl } from "react-intl";
 export const useVisualizationSwitcherEditableInsightMenu = (
     widget: IInsightWidget,
     insight: IInsight,
+    onVisualizationDeleted: (visualizationWidgetId: string) => void,
 ): { menuItems: IInsightMenuItem[] } => {
     const intl = useIntl();
     const { menuItems } = useEditableInsightMenu({
@@ -37,6 +38,7 @@ export const useVisualizationSwitcherEditableInsightMenu = (
                 itemName: intl.formatMessage({
                     id: "visualizationSwitcher.configurationPanel.remove.from.switcher",
                 }),
+                onClick: () => onVisualizationDeleted(widget.identifier),
             };
         }
 

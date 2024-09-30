@@ -36,7 +36,10 @@ export const ToolbarBottom: React.FC<IToolbarBottomProps> = ({
                     onVisualizationSelect={onVisualizationSelect}
                 />
             ) : (
-                <VisualizationConfig widget={activeVisualization} />
+                <VisualizationConfig
+                    widget={activeVisualization}
+                    onVisualizationDeleted={onVisualizationDelete}
+                />
             )}
         </div>
     );
