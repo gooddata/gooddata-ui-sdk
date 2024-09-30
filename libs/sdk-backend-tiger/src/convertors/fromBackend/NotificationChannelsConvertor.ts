@@ -7,7 +7,6 @@ import {
 } from "@gooddata/api-client-tiger";
 import {
     IWebhookDefinitionObject,
-    INotificationChannelTrigger,
     ISmtpDefinitionObject,
     INotificationChannelDefinitionObject,
 } from "@gooddata/sdk-model";
@@ -50,11 +49,6 @@ export function convertWebhookFromNotificationChannel(
         configuration: {
             dashboardUrl: channel.attributes?.customDashboardUrl,
         },
-        triggers:
-            channel.attributes?.triggers?.map((trigger) => ({
-                type: trigger.type,
-                ...(isAllowedOn(trigger.metadata) ? { allowOn: trigger.metadata.allowedOn } : {}),
-            })) ?? [],
         allowedRecipients: channel.attributes?.allowedRecipients,
     };
 }
@@ -91,11 +85,6 @@ export function convertCustomEmailFromNotificationChannel(
         configuration: {
             dashboardUrl: channel.attributes?.customDashboardUrl,
         },
-        triggers:
-            channel.attributes?.triggers?.map((trigger) => ({
-                type: trigger.type,
-                ...(isAllowedOn(trigger.metadata) ? { allowOn: trigger.metadata.allowedOn } : {}),
-            })) ?? [],
         allowedRecipients: channel.attributes?.allowedRecipients,
     };
 }
@@ -116,19 +105,6 @@ export function convertDefaultEmailFromNotificationChannel(
         configuration: {
             dashboardUrl: channel.attributes?.customDashboardUrl,
         },
-        triggers:
-            channel.attributes?.triggers?.map((trigger) => ({
-                type: trigger.type,
-                ...(isAllowedOn(trigger.metadata) ? { allowOn: trigger.metadata.allowedOn } : {}),
-            })) ?? [],
         allowedRecipients: channel.attributes?.allowedRecipients,
     };
-}
-
-interface INotificationChannelAllowedOn {
-    allowedOn: INotificationChannelTrigger["allowOn"];
-}
-
-function isAllowedOn(obj: any): obj is INotificationChannelAllowedOn {
-    return !!(typeof obj === "object" && obj.allowedOn && Array.isArray(obj.allowedOn));
 }

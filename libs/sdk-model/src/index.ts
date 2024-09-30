@@ -39,7 +39,6 @@ export type {
     ISmtpDefinition,
     ISmtpDefinitionObject,
     IWebhookDefinitionObject,
-    INotificationChannelTrigger,
     INotificationChannelMetadataObject,
     INotificationChannelDefinitionObject,
     INotificationChannelMetadataObjectBase,

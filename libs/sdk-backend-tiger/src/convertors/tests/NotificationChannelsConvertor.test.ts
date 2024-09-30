@@ -18,31 +18,11 @@ describe("NotificationChannelsConvertor", () => {
             configuration: {
                 dashboardUrl: "dashboardUrl",
             },
-            triggers: [
-                {
-                    type: "SCHEDULE",
-                    allowOn: ["dashboard", "visualization"],
-                },
-                {
-                    type: "ALERT",
-                },
-            ],
         });
 
         expect(data).toEqual({
             attributes: {
                 name: "name",
-                triggers: [
-                    {
-                        metadata: {
-                            allowedOn: ["dashboard", "visualization"],
-                        },
-                        type: "SCHEDULE",
-                    },
-                    {
-                        type: "ALERT",
-                    },
-                ],
                 destinationType: "WEBHOOK",
                 destination: {
                     type: "WEBHOOK",
@@ -68,17 +48,6 @@ describe("NotificationChannelsConvertor", () => {
                     token: "token",
                     hasToken: true,
                 },
-                triggers: [
-                    {
-                        type: "SCHEDULE",
-                        metadata: {
-                            allowedOn: ["dashboard", "visualization"],
-                        },
-                    },
-                    {
-                        type: "ALERT",
-                    },
-                ],
             },
         });
 
@@ -94,15 +63,6 @@ describe("NotificationChannelsConvertor", () => {
             configuration: {
                 dashboardUrl: undefined,
             },
-            triggers: [
-                {
-                    allowOn: ["dashboard", "visualization"],
-                    type: "SCHEDULE",
-                },
-                {
-                    type: "ALERT",
-                },
-            ],
         });
     });
 });
