@@ -101,6 +101,7 @@ export enum TigerFeaturesNames {
     EnableWidgetIdentifiersRollout = "enableWidgetIdentifiersRollout",
     EnableAIFunctions = "enableAIFunctions",
     EnableSemanticSearch = "enableSemanticSearch",
+    EnableSemanticSearchRollout = "enableSemanticSearchRollout",
     EnableGenAIChat = "enableGenAIChat",
     EnableGenAIChatRollout = "enableGenAIChatRollout",
     EnableDashboardFilterViews = "enableDashboardFilterViews",
@@ -174,6 +175,7 @@ export type ITigerFeatureFlags = {
     enableWidgetIdentifiersRollout: typeof FeatureFlagsValues["enableWidgetIdentifiersRollout"][number];
     enableAIFunctions: typeof FeatureFlagsValues["enableAIFunctions"][number];
     enableSemanticSearch: typeof FeatureFlagsValues["enableSemanticSearch"][number];
+    enableSemanticSearchRollout: typeof FeatureFlagsValues["enableSemanticSearchRollout"][number];
     enableGenAIChat: typeof FeatureFlagsValues["enableGenAIChat"][number];
     enableGenAIChatRollout: typeof FeatureFlagsValues["enableGenAIChatRollout"][number];
     enableAlertingRollout: typeof FeatureFlagsValues["enableAlertingRollout"][number];
@@ -248,6 +250,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableWidgetIdentifiersRollout: true,
     enableAIFunctions: false,
     enableSemanticSearch: false,
+    enableSemanticSearchRollout: false,
     enableGenAIChat: false,
     enableGenAIChatRollout: false,
     enableAlertingRollout: false,
@@ -326,6 +329,7 @@ export const FeatureFlagsValues = {
     enableWidgetIdentifiersRollout: [true, false] as const,
     enableAIFunctions: [true, false] as const,
     enableSemanticSearch: [true, false] as const,
+    enableSemanticSearchRollout: [true, false] as const,
     enableGenAIChat: [true, false] as const,
     enableGenAIChatRollout: [true, false] as const,
     enableAlertingRollout: [true, false] as const,

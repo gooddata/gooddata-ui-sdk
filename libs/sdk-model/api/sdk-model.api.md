@@ -3057,6 +3057,7 @@ export interface ISettings {
     disableKpiDashboardHeadlineUnderline?: boolean;
     enableAdDescriptionEdit?: boolean;
     enableADMultipleDateFilters?: boolean;
+    // @deprecated
     enableAIFunctions?: boolean;
     enableAlerting?: boolean;
     enableAlertingRollout?: boolean;
@@ -3141,6 +3142,7 @@ export interface ISettings {
     enableScatterPlotSegmentation?: boolean;
     enableScheduling?: boolean;
     enableSemanticSearch?: boolean;
+    enableSemanticSearchRollout?: boolean;
     enableSeparateTotalLabels?: boolean;
     // (undocumented)
     enableSingleStoreDataSource?: boolean;
