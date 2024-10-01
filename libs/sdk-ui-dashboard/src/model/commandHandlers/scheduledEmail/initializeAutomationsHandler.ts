@@ -19,6 +19,7 @@ import {
     selectAutomationsIsInitialized,
     selectAutomationsIsLoading,
 } from "../../store/automations/automationsSelectors.js";
+import { selectCanManageWorkspace } from "../../store/permissions/permissionsSelectors.js";
 
 export function* initializeAutomationsHandler(
     ctx: DashboardContext,
@@ -26,6 +27,10 @@ export function* initializeAutomationsHandler(
 ): SagaIterator {
     const dashboardId: ReturnType<typeof selectDashboardId> = yield select(selectDashboardId);
     const user: ReturnType<typeof selectCurrentUser> = yield select(selectCurrentUser);
+    const canManageAutomations: ReturnType<typeof selectCanManageWorkspace> = yield select(
+        selectCanManageWorkspace,
+    );
+
     const enableAutomations: ReturnType<typeof selectEnableScheduling> = yield select(
         selectEnableAutomations,
     );
@@ -49,7 +54,7 @@ export function* initializeAutomationsHandler(
             PromiseFnReturnType<typeof loadNotificationChannels>,
             PromiseFnReturnType<typeof loadWorkspaceUsers>,
         ] = yield all([
-            call(loadDashboardUserAutomations, ctx, dashboardId, user.login),
+            call(loadDashboardUserAutomations, ctx, dashboardId, user.login, !canManageAutomations),
             call(loadWorkspaceAutomationsCount, ctx),
             call(loadNotificationChannels, ctx),
             call(loadWorkspaceUsers, ctx),
