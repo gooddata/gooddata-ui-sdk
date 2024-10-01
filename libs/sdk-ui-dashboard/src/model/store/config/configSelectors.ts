@@ -743,6 +743,6 @@ export const selectEnableVisualizationSwitcher: DashboardSelector<boolean> = cre
 export const selectEnableIgnoreCrossFiltering: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableIgnoreCrossFiltering ?? false;
+        return state.settings?.enableIgnoreCrossFiltering ?? true;
     },
 );
