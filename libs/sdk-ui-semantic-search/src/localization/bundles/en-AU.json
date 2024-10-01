@@ -1,0 +1,12 @@
+{
+    "semantic-search.error.title": "Our search service is temporarily out of order.",
+    "semantic-search.error.text": "We're working to sort out the problem.",
+    "semantic-search.no-results": "No results found for “{query}”.",
+    "semantic-search.placeholder": "Search dashboards or visualisation…",
+    "semantic-search.id": "ID",
+    "semantic-search.tags": "Tags",
+    "semantic-search.match": "{score}% match",
+    "semantic-search.date.at": "at",
+    "gs.date.today": "Today",
+    "gs.date.yesterday": "Yesterday"
+}

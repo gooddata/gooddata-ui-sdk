@@ -2,13 +2,14 @@
 import * as React from "react";
 import classnames from "classnames";
 import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
-import { GenAISemanticSearchType, ISemanticSearchResultItem } from "@gooddata/sdk-model";
+import { GenAIObjectType, ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { Input, LoadingMask, Message, useDebouncedState, useHeaderSearch } from "@gooddata/sdk-ui-kit";
-import { useWorkspaceStrict, useLocalStorage, IntlWrapper } from "@gooddata/sdk-ui";
+import { useWorkspaceStrict, useLocalStorage } from "@gooddata/sdk-ui";
 import { useSemanticSearch, useElementWidth } from "../hooks/index.js";
 import { ListItem } from "../types.js";
 import { getUIPath } from "../utils/getUIPath.js";
+import { IntlWrapper } from "../localization/IntlWrapper.js";
 import { SearchList } from "./SearchList.js";
 import { HistoryItem } from "./HistoryItem.js";
 import { AnnotatedResultsItem } from "./AnnotatedResultsItem.js";
@@ -75,7 +76,7 @@ export type SearchOverlayProps = {
     /**
      * A list of object types to search for.
      */
-    objectTypes?: GenAISemanticSearchType[];
+    objectTypes?: GenAIObjectType[];
     /**
      * A flag to enable deep search, i.e. search dashboard by their contents.
      */

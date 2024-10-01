@@ -4,7 +4,7 @@
 
 ```ts
 
-import { GenAISemanticSearchType } from '@gooddata/sdk-model';
+import { GenAIObjectType } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { ISemanticSearchRelationship } from '@gooddata/sdk-model';
 import { ISemanticSearchResultItem } from '@gooddata/sdk-model';
@@ -16,7 +16,7 @@ export const SemanticSearch: React_2.FC<SemanticSearchProps>;
 // @beta
 export type SemanticSearchHookInput = {
     searchTerm: string;
-    objectTypes?: GenAISemanticSearchType[];
+    objectTypes?: GenAIObjectType[];
     deepSearch?: boolean;
     limit?: number;
     backend?: IAnalyticalBackend;
@@ -39,7 +39,7 @@ export type SemanticSearchProps = {
     onSelect: (item: ISemanticSearchResultItem) => void;
     onError?: (errorMessage: string) => void;
     className?: string;
-    objectTypes?: GenAISemanticSearchType[];
+    objectTypes?: GenAIObjectType[];
     deepSearch?: boolean;
     limit?: number;
     placeholder?: string;

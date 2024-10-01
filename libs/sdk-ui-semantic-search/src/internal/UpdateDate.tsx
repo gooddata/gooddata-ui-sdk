@@ -21,7 +21,7 @@ export type UpdateDateProps = {
 const messages = defineMessages({
     today: { id: "gs.date.today" },
     yesterday: { id: "gs.date.yesterday" },
-    at: { id: "gs.date.at" },
+    at: { id: "semantic-search.date.at" },
 });
 
 /**
