@@ -175,7 +175,7 @@ export function getMaxHeight(widgets: IWidget[], insightMap: ObjRefMap<IInsight>
         } else if (isInsightWidget(widget)) {
             widgetContent = insightMap.get(widget.insight);
         } else if (isVisualizationSwitcherWidget(widget) && widget.visualizations.length > 0) {
-            return Math.max(
+            return Math.min(
                 ...getVisSwitcherHeightWidth(
                     widget,
                     widgetContent,
