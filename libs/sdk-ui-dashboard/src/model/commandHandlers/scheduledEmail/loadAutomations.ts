@@ -14,15 +14,20 @@ export function loadDashboardUserAutomations(
     ctx: DashboardContext,
     dashboardId: string,
     userId: string,
+    filterByUser: boolean,
 ): Promise<IAutomationMetadataObject[]> {
     const { backend, workspace } = ctx;
 
-    return backend
+    let dashboardQuery = backend
         .workspace(workspace)
         .automations()
         .getAutomationsQuery()
-        .withDashboard(dashboardId)
-        .withUser(userId)
         .withSorting(["title,asc", "createdAt,asc"])
-        .queryAll();
+        .withDashboard(dashboardId);
+
+    if (filterByUser) {
+        dashboardQuery = dashboardQuery.withUser(userId);
+    }
+
+    return dashboardQuery.queryAll();
 }

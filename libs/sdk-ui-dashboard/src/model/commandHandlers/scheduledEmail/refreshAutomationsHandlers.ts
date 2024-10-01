@@ -11,12 +11,16 @@ import { selectEnableAlerting, selectEnableScheduling } from "../../store/config
 import { automationsActions } from "../../store/automations/index.js";
 import { selectDashboardId } from "../../store/meta/metaSelectors.js";
 import { selectCurrentUser } from "../../store/user/userSelectors.js";
+import { selectCanManageWorkspace } from "../../store/permissions/permissionsSelectors.js";
 
 export function* refreshAutomationsHandlers(ctx: DashboardContext, _cmd: RefreshAutomations): SagaIterator {
     const dashboardId: ReturnType<typeof selectDashboardId> = yield select(selectDashboardId);
     const user: ReturnType<typeof selectCurrentUser> = yield select(selectCurrentUser);
     const enableScheduling: ReturnType<typeof selectEnableScheduling> = yield select(selectEnableScheduling);
     const enableAlerting: ReturnType<typeof selectEnableAlerting> = yield select(selectEnableAlerting);
+    const canManageAutomations: ReturnType<typeof selectCanManageWorkspace> = yield select(
+        selectCanManageWorkspace,
+    );
 
     const enableAutomations = enableScheduling || enableAlerting;
 
@@ -31,7 +35,7 @@ export function* refreshAutomationsHandlers(ctx: DashboardContext, _cmd: Refresh
             PromiseFnReturnType<typeof loadDashboardUserAutomations>,
             PromiseFnReturnType<typeof loadWorkspaceAutomationsCount>,
         ] = yield all([
-            call(loadDashboardUserAutomations, ctx, dashboardId, user.login),
+            call(loadDashboardUserAutomations, ctx, dashboardId, user.login, !canManageAutomations),
             call(loadWorkspaceAutomationsCount, ctx),
         ]);
 

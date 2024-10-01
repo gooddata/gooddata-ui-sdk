@@ -5,7 +5,11 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 import { convertError, GoodDataSdkError, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { ConfirmDialog } from "@gooddata/sdk-ui-kit";
-import { selectCurrentUser, useDashboardSelector } from "../../../../model/index.js";
+import {
+    selectCanManageWorkspace,
+    selectCurrentUser,
+    useDashboardSelector,
+} from "../../../../model/index.js";
 
 interface IDeleteScheduleConfirmDialogProps {
     scheduledEmail: IAutomationMetadataObject | IAutomationMetadataObjectDefinition;
@@ -21,6 +25,7 @@ export const DeleteScheduleConfirmDialog: React.FC<IDeleteScheduleConfirmDialogP
     const effectiveWorkspace = useWorkspaceStrict();
     const intl = useIntl();
     const currentUser = useDashboardSelector(selectCurrentUser);
+    const canManageAutomations = useDashboardSelector(selectCanManageWorkspace);
 
     const handleDeleteScheduledMail = async () => {
         const alertCreatorId = scheduledEmail.createdBy?.login;
@@ -29,10 +34,11 @@ export const DeleteScheduleConfirmDialog: React.FC<IDeleteScheduleConfirmDialogP
             !!alertCreatorId && !!currentUserId && alertCreatorId === currentUserId;
         const automationService = effectiveBackend.workspace(effectiveWorkspace).automations();
 
-        // If schedule is created by current user, delete it, otherwise unsubscribe
-        const deleteMethod = isAlertCreatedByCurrentUser
-            ? automationService.deleteAutomation.bind(automationService)
-            : automationService.unsubscribeAutomation.bind(automationService);
+        // If schedule is created by current user, or user has permissions to manage automations, delete it, otherwise unsubscribe
+        const deleteMethod =
+            canManageAutomations || isAlertCreatedByCurrentUser
+                ? automationService.deleteAutomation.bind(automationService)
+                : automationService.unsubscribeAutomation.bind(automationService);
 
         try {
             await deleteMethod(scheduledEmail.id!);

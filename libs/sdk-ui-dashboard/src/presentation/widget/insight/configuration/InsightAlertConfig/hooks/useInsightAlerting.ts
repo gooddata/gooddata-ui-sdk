@@ -25,6 +25,7 @@ import {
     useFiltersForWidgetScheduledExport,
     selectNotificationChannels,
     useDashboardUserInteraction,
+    selectCanManageWorkspace,
 } from "../../../../../../model/index.js";
 import { createDefaultAlert, getSupportedInsightMeasuresByInsight } from "../utils.js";
 import { messages } from "../messages.js";
@@ -57,6 +58,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
     const currentUser = useDashboardSelector(selectCurrentUser);
     const destinations = useDashboardSelector(selectNotificationChannels);
+    const canManageAutomations = useDashboardSelector(selectCanManageWorkspace);
 
     const { handleCreateAlert, handleUpdateAlert, handlePauseAlert, handleResumeAlert, isSavingAlert } =
         useSaveAlertToBackend({
@@ -255,10 +257,11 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             !!alertCreatorId && !!currentUserId && alertCreatorId === currentUserId;
         const automationService = effectiveBackend.workspace(effectiveWorkspace).automations();
 
-        // If alert is created by current user, delete it, otherwise unsubscribe
-        const deleteMethod = isAlertCreatedByCurrentUser
-            ? automationService.deleteAutomation.bind(automationService)
-            : automationService.unsubscribeAutomation.bind(automationService);
+        // If alert is created by current user, or user has permissions to manage automations, delete it, otherwise unsubscribe
+        const deleteMethod =
+            canManageAutomations || isAlertCreatedByCurrentUser
+                ? automationService.deleteAutomation.bind(automationService)
+                : automationService.unsubscribeAutomation.bind(automationService);
 
         try {
             await deleteMethod(alert.id);
