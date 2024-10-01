@@ -90,16 +90,23 @@ export const useDashboardScheduledEmailsManagementDialog = ({
 
     // Delete
     const onScheduleEmailingManagementDeleteSuccess = useCallback(() => {
+        setScheduledExportToEdit(undefined);
         closeScheduleEmailingDialog();
         addSuccess(messages.scheduleEmailDeleteSuccess);
         refreshAutomations();
-    }, [addSuccess, closeScheduleEmailingDialog, refreshAutomations]);
+    }, [addSuccess, closeScheduleEmailingDialog, refreshAutomations, setScheduledExportToEdit]);
 
     const onScheduleEmailingManagementDeleteError = useCallback(() => {
+        setScheduledExportToEdit(undefined);
         closeScheduleEmailingDialog();
         closeScheduleEmailingManagementDialog();
         addError(messages.scheduleManagementDeleteError);
-    }, [closeScheduleEmailingDialog, closeScheduleEmailingManagementDialog, addError]);
+    }, [
+        setScheduledExportToEdit,
+        closeScheduleEmailingDialog,
+        closeScheduleEmailingManagementDialog,
+        addError,
+    ]);
 
     return {
         defaultOnScheduleEmailingManagement,
