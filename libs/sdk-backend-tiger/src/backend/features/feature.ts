@@ -452,6 +452,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableSemanticSearchRollout,
+            "enableSemanticSearchRollout",
+            "BOOLEAN",
+            FeatureFlagsValues.enableSemanticSearchRollout,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableGenAIChat,
             "enableGenAIChat",
             "BOOLEAN",

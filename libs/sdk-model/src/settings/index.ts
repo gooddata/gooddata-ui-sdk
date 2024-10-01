@@ -443,6 +443,7 @@ export interface ISettings {
 
     /**
      * Enable GenAI-powered functionality, such as semantic-search.
+     * @deprecated Use separate flags for semantic search and GenAI chat below.
      */
     enableAIFunctions?: boolean;
 
@@ -450,6 +451,11 @@ export interface ISettings {
      * Enable Semantic Search in the UI.
      */
     enableSemanticSearch?: boolean;
+
+    /**
+     * Enable Semantic Search rollout in the UI.
+     */
+    enableSemanticSearchRollout?: boolean;
 
     /**
      * Enable Gen AI Chatbot in UI.
