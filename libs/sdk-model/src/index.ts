@@ -948,7 +948,11 @@ export {
     isExportDefinitionVisualizationObjectRequestPayload,
 } from "./exportDefinitions/index.js";
 
-export type { IWorkspaceDataFilter, IWorkspaceDataFilterSetting } from "./dataFilter/index.js";
+export type {
+    IWorkspaceDataFilter,
+    IWorkspaceDataFilterDefinition,
+    IWorkspaceDataFilterSetting,
+} from "./dataFilter/index.js";
 export type {
     IAutomationMetadataObjectBase,
     IAutomationMetadataObject,

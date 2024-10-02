@@ -331,6 +331,8 @@ export const objectTypeToTigerIdType: {
     exportDefinition: TigerObjectType;
     automation: TigerObjectType;
     filterView: TigerObjectType;
+    workspaceDataFilter: TigerObjectType;
+    workspaceDataFilterSetting: TigerObjectType;
 };
 
 // @internal (undocumented)
