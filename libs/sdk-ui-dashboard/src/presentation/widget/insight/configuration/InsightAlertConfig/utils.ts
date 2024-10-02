@@ -247,6 +247,13 @@ function collectAllMetric(insight: IInsight | null | undefined): {
 } {
     const insightType = insight ? (insightVisualizationType(insight) as InsightType) : null;
 
+    if (!insight) {
+        return {
+            primaries: [],
+            others: [],
+        };
+    }
+
     switch (insightType) {
         case "headline":
         case "bar":
@@ -255,47 +262,24 @@ function collectAllMetric(insight: IInsight | null | undefined): {
         case "area":
         case "combo2":
         case "scatter":
-        case "bubble": {
-            const insightMeasuresBucket: IBucket | undefined = insight
-                ? insightBucket(insight, BucketNames.MEASURES)
-                : undefined;
-            const insightSecondaryMeasuresBucket: IBucket | undefined = insight
-                ? insightBucket(insight, BucketNames.SECONDARY_MEASURES)
-                : undefined;
-            const insightTertiaryMeasuresBucket: IBucket | undefined = insight
-                ? insightBucket(insight, BucketNames.TERTIARY_MEASURES)
-                : undefined;
-
-            return {
-                primaries: insightMeasuresBucket ? bucketMeasures(insightMeasuresBucket) : [],
-                others: [
-                    ...(insightSecondaryMeasuresBucket ? bucketMeasures(insightSecondaryMeasuresBucket) : []),
-                    ...(insightTertiaryMeasuresBucket ? bucketMeasures(insightTertiaryMeasuresBucket) : []),
-                ],
-            };
-        }
-        case "repeater": {
-            const insightColumnsBucket: IBucket | undefined = insight
-                ? insightBucket(insight, BucketNames.COLUMNS)
-                : undefined;
-
-            return {
-                primaries: insightColumnsBucket ? bucketMeasures(insightColumnsBucket) : [],
-                others: [],
-            };
-        }
+        case "bubble":
+        case "bullet":
+        case "pie":
         case "donut":
         case "treemap":
-        case "heatmap":
-        case "bullet":
-        case "table":
-        case "pushpin":
-        case "pie":
-        case "sankey":
-        case "dependencywheel":
         case "funnel":
         case "pyramid":
+        case "heatmap":
         case "waterfall":
+        case "dependencywheel":
+        case "sankey":
+        case "pushpin":
+        case "table": {
+            return collectAllMetricsDefault(insight);
+        }
+        case "repeater": {
+            return collectAllMetricsRepeater(insight);
+        }
         default: {
             return {
                 primaries: [],
@@ -303,6 +287,37 @@ function collectAllMetric(insight: IInsight | null | undefined): {
             };
         }
     }
+}
+
+function collectAllMetricsDefault(insight: IInsight) {
+    const insightMeasuresBucket: IBucket | undefined = insight
+        ? insightBucket(insight, BucketNames.MEASURES)
+        : undefined;
+    const insightSecondaryMeasuresBucket: IBucket | undefined = insight
+        ? insightBucket(insight, BucketNames.SECONDARY_MEASURES)
+        : undefined;
+    const insightTertiaryMeasuresBucket: IBucket | undefined = insight
+        ? insightBucket(insight, BucketNames.TERTIARY_MEASURES)
+        : undefined;
+
+    return {
+        primaries: insightMeasuresBucket ? bucketMeasures(insightMeasuresBucket) : [],
+        others: [
+            ...(insightSecondaryMeasuresBucket ? bucketMeasures(insightSecondaryMeasuresBucket) : []),
+            ...(insightTertiaryMeasuresBucket ? bucketMeasures(insightTertiaryMeasuresBucket) : []),
+        ],
+    };
+}
+
+function collectAllMetricsRepeater(insight: IInsight) {
+    const insightColumnsBucket: IBucket | undefined = insight
+        ? insightBucket(insight, BucketNames.COLUMNS)
+        : undefined;
+
+    return {
+        primaries: insightColumnsBucket ? bucketMeasures(insightColumnsBucket) : [],
+        others: [],
+    };
 }
 
 export function getValueSuffix(alert?: IAutomationAlert): string | undefined {
