@@ -1,7 +1,7 @@
 // (C) 2024 GoodData Corporation
 
 import * as React from "react";
-import { GenAISemanticSearchType, ISemanticSearchResultItem } from "@gooddata/sdk-model";
+import { GenAIObjectType, ISemanticSearchResultItem } from "@gooddata/sdk-model";
 import { ListItem } from "../types.js";
 
 /**
@@ -31,7 +31,7 @@ export type ISearchMetrics = {
      * The type of the selected item, if any.
      * Null means the search was closed without selecting an item.
      */
-    selectedItemType: GenAISemanticSearchType | null;
+    selectedItemType: GenAIObjectType | null;
     /**
      * The score of the selected item, if any.
      */

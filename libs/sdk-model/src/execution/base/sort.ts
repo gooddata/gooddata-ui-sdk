@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { Identifier } from "../../objRef/index.js";
 import { attributeLocalId, IAttribute } from "../attribute/index.js";
 import { IMeasure, measureLocalId } from "../measure/index.js";

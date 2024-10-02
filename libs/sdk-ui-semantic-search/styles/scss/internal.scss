@@ -49,20 +49,19 @@
             @include main.icon(17px);
         }
 
-        &__text {
-            &__lock-icon {
+        &__text__lock-icon {
+            width: 14px;
+
+            & svg {
                 width: 14px;
-
-                & svg {
-                    width: 14px;
-                    height: 14px;
-                }
+                height: 14px;
             }
+        }
 
-            &__row:not(:first-child) {
-                :not(:first-child):before {
-                    content: "•\0000a0";
-                }
+        &__text__row:not(:first-child) {
+            :not(:first-child)::before {
+                content: "\2022";
+                padding-right: 5px;
             }
         }
     }

@@ -8,13 +8,19 @@ import { renderItemIcon } from "../utils/renderItemIcon.js";
 import { UpdatedDate } from "./UpdateDate.js";
 import { renderLock } from "../utils/renderLock.js";
 import { SearchListItem } from "../SearchListItem.js";
+import { getAreaLabel } from "../utils/getAreaLabel.js";
 
 const CoreAnnotatedResultsItem: React.FC<ListItemProps<ISemanticSearchResultItem>> = (props) => {
     const { listItem } = props;
     const lockIcon = renderLock(listItem);
 
     return (
-        <SearchListItem {...props} renderIcon={renderItemIcon} renderDetails={renderDetails}>
+        <SearchListItem
+            {...props}
+            renderIcon={renderItemIcon}
+            renderDetails={renderDetails}
+            getAreaLabel={getAreaLabel}
+        >
             <span className="gd-semantic-search__results-item__text__row">
                 {lockIcon}
                 <span className="gd-semantic-search__results-item__text__ellipsis">

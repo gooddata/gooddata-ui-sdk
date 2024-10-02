@@ -4,14 +4,16 @@ import React from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { Bubble, BubbleHoverTrigger, IAlignPoint, Icon, useMediaQuery } from "@gooddata/sdk-ui-kit";
+import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "cr cl", offset: { x: 5, y: 0 } }];
 
 export const AddVisualizationSwitcherWidgetButton: React.FC = () => {
     const isMobileDevice = useMediaQuery("mobileDevice");
+    const theme = useTheme();
     return (
         <div className="add-item-placeholder add-item-placeholder-visualization-switcher s-add-visualization-switcher">
-            <Icon.VisualizationSwitcher />
+            <Icon.VisualizationSwitcher color={theme?.palette?.complementary?.c6 ?? "#94a1ad"} />
             <FormattedMessage id="addPanel.visualizationSwitcher" />
             <BubbleHoverTrigger
                 eventsOnBubble={true}

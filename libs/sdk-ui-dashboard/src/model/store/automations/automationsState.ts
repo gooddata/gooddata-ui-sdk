@@ -7,14 +7,16 @@ import { GoodDataSdkError } from "@gooddata/sdk-ui";
  * @alpha
  */
 export interface AutomationsState {
-    fingerprint: string;
-    automations: IAutomationMetadataObject[];
-    loading: boolean;
+    isInitialized: boolean;
+    isLoading: boolean;
     error?: GoodDataSdkError;
+    userAutomations: IAutomationMetadataObject[];
+    allAutomationsCount: number;
 }
 
 export const automationsInitialState: AutomationsState = {
-    automations: [],
-    loading: true,
-    fingerprint: "initial",
+    isInitialized: false,
+    isLoading: false,
+    allAutomationsCount: 0,
+    userAutomations: [],
 };

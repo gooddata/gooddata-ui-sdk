@@ -678,24 +678,14 @@ export function createPivotTableConfig(
     };
 
     const enableTableTotalRows = settings.enableTableTotalRows;
-    const enableRollupTotals = settings.enableRollupTotals;
 
     if (environment !== DASHBOARDS_ENVIRONMENT) {
         tableConfig = {
             ...tableConfig,
-            menu: pivotTableMenuForCapabilities(
-                {
-                    ...capabilities,
-                    // allow the enableRollupTotals to override the capabilities for now
-                    // we are in the process of adding the capability to the tiger backend
-                    // TODO: remove this once the tiger backend has the canCalculateNativeTotals capability
-                    canCalculateNativeTotals: capabilities.canCalculateNativeTotals || !!enableRollupTotals,
-                },
-                {
-                    aggregations: true,
-                    aggregationsSubMenu: true,
-                },
-            ),
+            menu: pivotTableMenuForCapabilities(capabilities, {
+                aggregations: true,
+                aggregationsSubMenu: true,
+            }),
         };
     }
 

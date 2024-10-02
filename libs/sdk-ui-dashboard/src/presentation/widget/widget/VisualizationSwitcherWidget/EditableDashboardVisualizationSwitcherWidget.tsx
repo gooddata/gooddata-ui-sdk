@@ -17,6 +17,12 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
     useWidgetSelection,
+    useDashboardCommandProcessing,
+    ChangeInsightWidgetFilterSettings,
+    DashboardCommandFailed,
+    enableInsightWidgetDateFilter,
+    uiActions,
+    dispatchAndWaitFor,
 } from "../../../../model/index.js";
 import { IDefaultDashboardVisualizationSwitcherWidgetProps } from "./types.js";
 import { DashboardVisualizationSwitcher } from "../../visualizationSwitcher/DashboardVisualizationSwitcher.js";
@@ -34,7 +40,7 @@ export const EditableDashboardVisualizationSwitcherWidget: React.FC<
     const dispatch = useDashboardDispatch();
     const intl = useIntl();
 
-    const { isSelectable, isSelected, onSelected, hasConfigPanelOpen } = useWidgetSelection(
+    const { isSelectable, isSelected, onSelected, closeConfigPanel, hasConfigPanelOpen } = useWidgetSelection(
         widgetRef(widget),
     );
     const isSaving = useDashboardSelector(selectIsDashboardSaving);
@@ -53,18 +59,37 @@ export const EditableDashboardVisualizationSwitcherWidget: React.FC<
         [VisualizationSwitcherToolbarComponentProvider, widget],
     );
 
+    const { run: preselectDateDataset } = useDashboardCommandProcessing({
+        commandCreator: enableInsightWidgetDateFilter,
+        errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
+        successEvent: "GDC.DASH/EVT.INSIGHT_WIDGET.FILTER_SETTINGS_CHANGED",
+        onSuccess: (event) => {
+            dispatch(uiActions.setWidgetLoadingAdditionalDataStopped(event.payload.ref));
+        },
+        onError: (event: DashboardCommandFailed<ChangeInsightWidgetFilterSettings>) => {
+            dispatch(uiActions.setWidgetLoadingAdditionalDataStopped(event.payload.command.payload.ref));
+        },
+    });
+
     const addVisualization = useCallback(
         (insightWidget: IInsightWidget, insight: IInsight, sizeInfo: IVisualizationSizeInfo) => {
-            dispatch(addVisualizationToSwitcherWidgetContent(widget.ref, insightWidget, insight, sizeInfo));
+            dispatchAndWaitFor(
+                dispatch,
+                addVisualizationToSwitcherWidgetContent(widget.ref, insightWidget, insight, sizeInfo),
+            ).then(() => {
+                dispatch(uiActions.setWidgetDateDatasetAutoSelect(true));
+                dispatch(uiActions.setWidgetLoadingAdditionalDataStarted(insightWidget.ref));
+                preselectDateDataset(insightWidget.ref, "default");
+            });
         },
-        [widget.ref],
+        [widget.ref, dispatch, preselectDateDataset],
     );
 
     const changedVisualizations = useCallback(
         (visualizations: IInsightWidget[]) => {
             dispatch(updateVisualizationsFromSwitcherWidgetContent(widget.ref, visualizations));
         },
-        [widget.ref],
+        [widget.ref, dispatch],
     );
 
     return (
@@ -101,6 +126,7 @@ export const EditableDashboardVisualizationSwitcherWidget: React.FC<
                                         onVisualizationsChanged={changedVisualizations}
                                         onSelectedVisualizationChanged={setActiveVisualizationId}
                                         onVisualizationAdded={addVisualization}
+                                        onClose={closeConfigPanel}
                                     />
                                 )}
                             </>

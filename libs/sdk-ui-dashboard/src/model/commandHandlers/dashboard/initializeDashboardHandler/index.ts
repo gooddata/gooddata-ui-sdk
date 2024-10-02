@@ -32,6 +32,7 @@ import {
     IInsight,
     isDrillToInsight,
     isInsightWidget,
+    isVisualizationSwitcherWidget,
     ObjRef,
     serializeObjRef,
 } from "@gooddata/sdk-model";
@@ -53,16 +54,12 @@ import { resolveEntitlements } from "./resolveEntitlements.js";
 import { attributeFilterConfigsActions } from "../../../store/attributeFilterConfigs/index.js";
 import { dateFilterConfigsActions } from "../../../store/dateFilterConfigs/index.js";
 import { loadDateHierarchyTemplates } from "./loadDateHierarchyTemplates.js";
-import { loadWorkspaceAutomations } from "../common/loadWorkspaceAutomations.js";
 import { automationsActions } from "../../../store/automations/index.js";
-import { loadOrganizationWebhooks } from "../common/loadOrganizationWebhooks.js";
-import { webhooksActions } from "../../../store/webhooks/index.js";
-import { loadWorkspaceUsers } from "../common/loadWorkspaceUsers.js";
-import { usersActions } from "../../../store/users/index.js";
+import { notificationChannelsActions } from "../../../store/notificationChannels/index.js";
 import { filterViewsActions } from "../../../store/filterViews/index.js";
 import { loadFilterViews } from "./loadFilterViews.js";
-import { smtpsActions } from "../../../store/smtps/index.js";
-import { loadOrganizationSmtps } from "../common/loadOrganizationSmtps.js";
+import { loadWorkspaceAutomationsCount } from "../common/loadWorkspaceAutomationsCount.js";
+import { loadNotificationChannelsCount } from "../common/loadNotificationChannelsCount.js";
 import { applyDefaultFilterView } from "../common/filterViews.js";
 
 async function loadDashboardFromBackend(
@@ -126,6 +123,18 @@ async function loadInsightsForPersistedDashboard(
                     // insights in drills to insight
                     ...widget.drills.filter(isDrillToInsight).map((drill) => drill.target),
                 );
+            }
+            if (isVisualizationSwitcherWidget(widget)) {
+                widget.visualizations.forEach((vis) => {
+                    if (isInsightWidget(vis)) {
+                        referencedInsights.push(
+                            // insight itself
+                            vis.insight,
+                            // insights in drills to insight
+                            ...vis.drills.filter(isDrillToInsight).map((drill) => drill.target),
+                        );
+                    }
+                });
             }
         },
     });
@@ -225,18 +234,15 @@ function* loadExistingDashboard(
         cmd.payload.persistedDashboard,
     );
 
+    // After FF removal, we can move this to other calls and call it in parallel
     const ffCalls = [
-        call(loadWorkspaceAutomations, ctx, config.settings),
-        call(loadWorkspaceUsers, ctx, config.settings),
-        call(loadOrganizationWebhooks, ctx, config.settings),
-        call(loadOrganizationSmtps, ctx, config.settings),
+        call(loadWorkspaceAutomationsCount, ctx, config.settings),
+        call(loadNotificationChannelsCount, ctx, config.settings),
     ];
 
-    const [automations, users, webhooks, smtps]: [
-        PromiseFnReturnType<typeof loadWorkspaceAutomations>,
-        PromiseFnReturnType<typeof loadWorkspaceUsers>,
-        PromiseFnReturnType<typeof loadOrganizationWebhooks>,
-        PromiseFnReturnType<typeof loadOrganizationSmtps>,
+    const [allAutomationsCount, notificationChannelsCount]: [
+        PromiseFnReturnType<typeof loadWorkspaceAutomationsCount>, // todo: split alerts vs schedules, later move to dialogs
+        PromiseFnReturnType<typeof loadNotificationChannelsCount>,
     ] = yield all(ffCalls);
 
     const batch: BatchAction = batchActions(
@@ -273,11 +279,8 @@ function* loadExistingDashboard(
             uiActions.setMenuButtonItemsVisibility(config.menuButtonItemsVisibility),
             renderModeActions.setRenderMode(config.initialRenderMode),
             dashboardPermissionsActions.setDashboardPermissions(dashboardPermissions),
-            automationsActions.setAutomations(automations),
-            automationsActions.refreshAutomationsFingerprint(),
-            webhooksActions.setWebhooks(webhooks),
-            smtpsActions.setSmtps(smtps),
-            usersActions.setUsers(users),
+            automationsActions.setAllAutomationsCount(allAutomationsCount),
+            notificationChannelsActions.setNotificationChannelsCount(notificationChannelsCount),
             filterViewsActions.setFilterViews({
                 dashboard: ctx.dashboardRef!, // should be defined as we are in existing dashboard load fn
                 filterViews,
@@ -332,18 +335,15 @@ function* initializeNewDashboard(
         call(loadFilterViews, ctx),
     ]);
 
+    // After FF removal, we can move this to other calls and call it in parallel
     const ffCalls = [
-        call(loadWorkspaceAutomations, ctx, config.settings),
-        call(loadWorkspaceUsers, ctx, config.settings),
-        call(loadOrganizationWebhooks, ctx, config.settings),
-        call(loadOrganizationSmtps, ctx, config.settings),
+        call(loadWorkspaceAutomationsCount, ctx, config.settings),
+        call(loadNotificationChannelsCount, ctx, config.settings),
     ];
 
-    const [automations, users, webhooks, smtps]: [
-        PromiseFnReturnType<typeof loadWorkspaceAutomations>,
-        PromiseFnReturnType<typeof loadWorkspaceUsers>,
-        PromiseFnReturnType<typeof loadOrganizationWebhooks>,
-        PromiseFnReturnType<typeof loadOrganizationSmtps>,
+    const [allAutomationsCount, notificationChannelsCount]: [
+        PromiseFnReturnType<typeof loadWorkspaceAutomationsCount>,
+        PromiseFnReturnType<typeof loadNotificationChannelsCount>,
     ] = yield all(ffCalls);
 
     const batch: BatchAction = batchActions(
@@ -380,11 +380,8 @@ function* initializeNewDashboard(
                 canEditDashboard: true,
                 canEditLockedDashboard: true,
             }),
-            automationsActions.setAutomations(automations),
-            automationsActions.refreshAutomationsFingerprint(),
-            webhooksActions.setWebhooks(webhooks),
-            smtpsActions.setSmtps(smtps),
-            usersActions.setUsers(users),
+            automationsActions.setAllAutomationsCount(allAutomationsCount),
+            notificationChannelsActions.setNotificationChannelsCount(notificationChannelsCount),
         ],
         "@@GDC.DASH/BATCH.INIT.NEW",
     );

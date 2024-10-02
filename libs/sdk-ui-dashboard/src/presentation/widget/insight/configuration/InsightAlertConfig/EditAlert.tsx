@@ -1,6 +1,11 @@
 // (C) 2022-2024 GoodData Corporation
 import React from "react";
-import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
+import {
+    IAutomationMetadataObject,
+    IAutomationMetadataObjectDefinition,
+    ICatalogMeasure,
+    INotificationChannelMetadataObject,
+} from "@gooddata/sdk-model";
 import {
     Bubble,
     BubbleHoverTrigger,
@@ -16,7 +21,6 @@ import { AlertDestinationSelect } from "./AlertDestinationSelect.js";
 import { EditAlertConfiguration } from "./EditAlertConfiguration.js";
 import { useEditAlert } from "./hooks/useEditAlert.js";
 import { defineMessages, FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
-import { Smtps, Webhooks } from "../../../../../model/index.js";
 import { AlertMetric, AlertMetricComparatorType } from "../../types.js";
 import { useAlertValidation, AlertInvalidityReason } from "./hooks/useAlertValidation.js";
 import {
@@ -48,8 +52,9 @@ interface IEditAlertProps {
     alert: IAutomationMetadataObject;
     isNewAlert?: boolean;
     hasAlerts: boolean;
-    destinations: (Webhooks[number] | Smtps[number])[];
+    destinations: INotificationChannelMetadataObject[];
     measures: AlertMetric[];
+    catalogMeasures: ICatalogMeasure[];
     onClose: () => void;
     onCancel: () => void;
     onCreate?: (alert: IAutomationMetadataObjectDefinition) => void;
@@ -70,6 +75,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
     onUpdate,
     maxAutomationsReached = false,
     overlayPositionType,
+    catalogMeasures,
 }) => {
     const {
         viewMode,
@@ -92,6 +98,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
         alert,
         onCreate,
         onUpdate,
+        catalogMeasures,
     });
     const intl = useIntl();
     const disableCreateButtonDueToLimits = isNewAlert && maxAutomationsReached;

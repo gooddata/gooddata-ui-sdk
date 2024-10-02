@@ -241,6 +241,13 @@
      */
     "projects": [
         {
+            "packageName": "@gooddata/sdk-ui-gen-ai",
+            "projectFolder": "libs/sdk-ui-gen-ai",
+            "reviewCategory": "production",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
+        },
+        {
             "packageName": "@gooddata/sdk-ui-semantic-search",
             "projectFolder": "libs/sdk-ui-semantic-search",
             "reviewCategory": "production",

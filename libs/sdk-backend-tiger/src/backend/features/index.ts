@@ -43,6 +43,7 @@ export class TigerFeaturesService {
             return {
                 ...DefaultFeatureFlags,
                 ...results,
+                // After conflict here when merge release->master, please remove hardcoded feature flags override
             };
         });
         responseMap.set(getKeyFromContext(wsContext), response);

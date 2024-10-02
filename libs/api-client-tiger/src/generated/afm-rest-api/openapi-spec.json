@@ -2994,6 +2994,35 @@
                 },
                 "description": "Object, with which the user is actively working."
             },
+            "ChatInteraction": {
+                "required": ["content", "role"],
+                "type": "object",
+                "properties": {
+                    "content": {
+                        "type": "array",
+                        "description": "Interaction content.",
+                        "items": {
+                            "oneOf": [
+                                {
+                                    "$ref": "#/components/schemas/CreatedVisualizationInteractionWithContext"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/FoundObjectInteractionWithContext"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/TextInteractionWithContext"
+                                }
+                            ]
+                        }
+                    },
+                    "role": {
+                        "type": "string",
+                        "description": "Role of actor.",
+                        "enum": ["USER", "AI"]
+                    }
+                },
+                "description": "List of chat interactions"
+            },
             "ChatRequest": {
                 "required": ["question"],
                 "type": "object",
@@ -3009,17 +3038,23 @@
                         "format": "int32",
                         "default": 5
                     },
+                    "limitCreateContext": {
+                        "type": "integer",
+                        "description": "Maximum number of relevant objects included into context for LLM (for each object type).",
+                        "format": "int32",
+                        "default": 10
+                    },
                     "limitCreate": {
                         "type": "integer",
                         "description": "Maximum number of created results.",
                         "format": "int32",
-                        "default": 5
+                        "default": 3
                     },
-                    "conversationHistory": {
+                    "chatHistory": {
                         "type": "array",
-                        "description": "List of conversation interactions",
+                        "description": "List of chat interactions",
                         "items": {
-                            "$ref": "#/components/schemas/ConversationInteraction"
+                            "$ref": "#/components/schemas/ChatInteraction"
                         }
                     },
                     "userContext": {
@@ -3051,31 +3086,6 @@
                     }
                 }
             },
-            "ConversationInteraction": {
-                "required": ["content", "role"],
-                "type": "object",
-                "properties": {
-                    "content": {
-                        "oneOf": [
-                            {
-                                "$ref": "#/components/schemas/CreatedVisualizationInteractionWithContext"
-                            },
-                            {
-                                "$ref": "#/components/schemas/FoundObjectInteractionWithContext"
-                            },
-                            {
-                                "$ref": "#/components/schemas/TextInteractionWithContext"
-                            }
-                        ]
-                    },
-                    "role": {
-                        "type": "string",
-                        "description": "Role of actor.",
-                        "enum": ["USER", "AI"]
-                    }
-                },
-                "description": "List of conversation interactions"
-            },
             "CreatedVisualization": {
                 "required": ["dimensionality", "id", "metrics", "title", "visualizationType"],
                 "type": "object",
@@ -3094,7 +3104,7 @@
                         "type": "string",
                         "description": "Visualization type requested in question",
                         "example": "TABLE",
-                        "enum": ["TABLE", "HEADLINE", "BAR", "LINE", "PIE"]
+                        "enum": ["TABLE", "HEADLINE", "BAR", "LINE", "PIE", "COLUMN"]
                     },
                     "metrics": {
                         "type": "array",
@@ -3114,7 +3124,7 @@
                 "description": "Visualization created by AI."
             },
             "CreatedVisualizationInteractionWithContext": {
-                "required": ["createdVisualization", "includeToChatContext", "userFeedback"],
+                "required": ["createdVisualization"],
                 "type": "object",
                 "allOf": [
                     {
@@ -3149,7 +3159,7 @@
                 "description": "List of attributes representing the dimensionality of the new visualization"
             },
             "FoundObjectInteractionWithContext": {
-                "required": ["foundObject", "includeToChatContext", "userFeedback"],
+                "required": ["foundObject"],
                 "type": "object",
                 "allOf": [
                     {
@@ -3166,7 +3176,6 @@
                 ]
             },
             "InteractionWithContext": {
-                "required": ["includeToChatContext", "userFeedback"],
                 "type": "object",
                 "properties": {
                     "includeToChatContext": {
@@ -3205,7 +3214,7 @@
                 "description": "List of metrics to be used in the new visualization"
             },
             "TextInteractionWithContext": {
-                "required": ["includeToChatContext", "text", "userFeedback"],
+                "required": ["text"],
                 "type": "object",
                 "allOf": [
                     {
@@ -3248,11 +3257,7 @@
                         "description": "Flag detecting invalid/irrelevant user question. No user case was found."
                     },
                     "foundObjects": {
-                        "type": "array",
-                        "description": "List of objects found by similarity search.",
-                        "items": {
-                            "$ref": "#/components/schemas/SearchResultObject"
-                        }
+                        "$ref": "#/components/schemas/FoundObjects"
                     },
                     "createdVisualizations": {
                         "$ref": "#/components/schemas/CreatedVisualizations"
@@ -3276,6 +3281,24 @@
                     }
                 },
                 "description": "Visualization definitions created by AI."
+            },
+            "FoundObjects": {
+                "required": ["objects", "reasoning"],
+                "type": "object",
+                "properties": {
+                    "objects": {
+                        "type": "array",
+                        "description": "List of objects found with a similarity search.",
+                        "items": {
+                            "$ref": "#/components/schemas/SearchResultObject"
+                        }
+                    },
+                    "reasoning": {
+                        "type": "string",
+                        "description": "Reasoning from LLM. Description of how the answer was generated."
+                    }
+                },
+                "description": "List of objects found by similarity search."
             },
             "ForecastResult": {
                 "required": ["attribute", "lowerBound", "origin", "prediction", "upperBound"],

@@ -41,8 +41,20 @@ const ALERT_ACTIONS_DROPDOWN_OPTIONS: {
     },
 ];
 
+const ALERT_ACTIONS_DROPDOWN_READONLY_OPTIONS: {
+    title?: string;
+    id?: "edit" | "pause" | "resume" | "delete";
+    type?: SingleSelectListItemType;
+}[] = [
+    {
+        title: messages.alertActionDelete.id,
+        id: "delete",
+    },
+];
+
 export interface IAlertActionsDropdownProps {
     alert: IAutomationMetadataObject;
+    isReadOnly?: boolean;
     onEdit: () => void;
     onPause: () => void;
     onResume: () => void;
@@ -57,17 +69,20 @@ export const AlertActionsDropdown = ({
     onResume,
     onDelete,
     isPaused,
+    isReadOnly,
 }: IAlertActionsDropdownProps) => {
     const intl = useIntl();
-    const options = ALERT_ACTIONS_DROPDOWN_OPTIONS.filter((option) => {
-        if (option.id === "pause") {
-            return !isPaused;
-        }
-        if (option.id === "resume") {
-            return isPaused;
-        }
-        return true;
-    });
+    const options = isReadOnly
+        ? ALERT_ACTIONS_DROPDOWN_READONLY_OPTIONS
+        : ALERT_ACTIONS_DROPDOWN_OPTIONS.filter((option) => {
+              if (option.id === "pause") {
+                  return !isPaused;
+              }
+              if (option.id === "resume") {
+                  return isPaused;
+              }
+              return true;
+          });
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
     return (
@@ -95,7 +110,7 @@ export const AlertActionsDropdown = ({
                     return (
                         <List
                             width={80}
-                            height={94}
+                            height={isReadOnly ? 28 : 94}
                             className="gd-alert-actions-dropdown__list s-alert-actions-list"
                             items={options}
                             itemHeightGetter={(idx) =>

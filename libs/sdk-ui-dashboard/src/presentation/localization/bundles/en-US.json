@@ -583,6 +583,11 @@
         "comment": "Invalid schedule error message",
         "limit": 0
     },
+    "dialogs.schedule.email.destinationWarning": {
+        "value": "The selected destination only supports sending the export to yourself.",
+        "comment": "Schedule warning message",
+        "limit": 0
+    },
     "dialogs.schedule.management.title": {
         "value": "Scheduled exports",
         "comment": "",
@@ -2523,6 +2528,26 @@
     },
     "visualizationSwitcherToolbar.remove": {
         "value": "Remove switcher",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcher.configurationPanel.remove.from.switcher": {
+        "value": "Remove from switcher",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcher.list.menu.move.up": {
+        "value": "Move up",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcher.list.menu.move.down": {
+        "value": "Move down",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcher.list.menu.remove": {
+        "value": "Remove",
         "comment": "",
         "limit": 0
     },

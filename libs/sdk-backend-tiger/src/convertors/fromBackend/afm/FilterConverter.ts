@@ -9,7 +9,7 @@ import {
     RangeMeasureValueFilter,
     RankingFilter,
     RelativeDateFilter,
-    AfmObjectIdentifier,
+    isAfmObjectIdentifier,
 } from "@gooddata/api-client-tiger";
 import { IFilter, ObjRefInScope } from "@gooddata/sdk-model";
 import { toObjRef } from "../ObjRefConverter.js";
@@ -44,17 +44,30 @@ const isRankingFilter = (filter: unknown): filter is RankingFilter => {
 };
 
 export const convertFilter = (filter: FilterDefinition): IFilter => {
-    if (isPositiveAttributeFilter(filter)) {
+    if (isPositiveAttributeFilter(filter) && isAfmObjectIdentifier(filter.positiveAttributeFilter.label)) {
         return {
             positiveAttributeFilter: {
-                displayForm: toObjRef(filter.positiveAttributeFilter.label as AfmObjectIdentifier),
+                /**
+                 * We expect that only identifier is used in the filter definition and not localIdentifier.
+                 * Once we support attribute slicing in alerts, we will need to find the possible localIdentifier
+                 * in AFM definition and get filter identifier.
+                 */
+                displayForm: toObjRef(filter.positiveAttributeFilter.label),
                 in: filter.positiveAttributeFilter.in,
             },
         };
-    } else if (isNegativeAttributeFilter(filter)) {
+    } else if (
+        isNegativeAttributeFilter(filter) &&
+        isAfmObjectIdentifier(filter.negativeAttributeFilter.label)
+    ) {
         return {
             negativeAttributeFilter: {
-                displayForm: toObjRef(filter.negativeAttributeFilter.label as AfmObjectIdentifier),
+                /**
+                 * We expect that only identifier is used in the filter definition and not localIdentifier.
+                 * Once we support attribute slicing in alerts, we will need to find the possible localIdentifier
+                 * in AFM definition and get filter identifier.
+                 */
+                displayForm: toObjRef(filter.negativeAttributeFilter.label),
                 notIn: filter.negativeAttributeFilter.notIn,
             },
         };
@@ -76,9 +89,10 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
             },
         };
     } else if (isComparisonMeasureValueFilter(filter)) {
+        const measure = filter.comparisonMeasureValueFilter.measure;
         return {
             measureValueFilter: {
-                measure: toObjRef(filter.comparisonMeasureValueFilter.measure as AfmObjectIdentifier),
+                measure: isAfmObjectIdentifier(measure) ? toObjRef(measure) : measure,
                 condition: {
                     comparison: {
                         operator: filter.comparisonMeasureValueFilter.operator,
@@ -88,9 +102,10 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
             },
         };
     } else if (isRangeMeasureValueFilter(filter)) {
+        const measure = filter.rangeMeasureValueFilter.measure;
         return {
             measureValueFilter: {
-                measure: toObjRef(filter.rangeMeasureValueFilter.measure as AfmObjectIdentifier),
+                measure: isAfmObjectIdentifier(measure) ? toObjRef(measure) : measure,
                 condition: {
                     range: {
                         operator: filter.rangeMeasureValueFilter.operator,

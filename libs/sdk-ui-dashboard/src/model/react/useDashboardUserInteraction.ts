@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import { useCallback } from "react";
 import {
     AttributeFilterInteractionType,
@@ -6,7 +6,9 @@ import {
     ShareDialogInteractionData,
     userInteractionTriggered,
     AttributeHierarchiesInteractionType,
+    VisualizationSwitcherInteractionType,
     DateFilterInteractionType,
+    AutomationInteractionData,
 } from "../events/index.js";
 
 import { useDashboardEventDispatch } from "./useDashboardEventDispatch.js";
@@ -70,6 +72,22 @@ export const useDashboardUserInteraction = () => {
         [eventDispatch],
     );
 
+    const visualizationSwitcherInteraction = useCallback(
+        (eventType: VisualizationSwitcherInteractionType) => {
+            eventDispatch(userInteractionTriggered(eventType));
+        },
+        [eventDispatch],
+    );
+
+    const automationInteraction = useCallback(
+        (eventData: AutomationInteractionData) => {
+            eventDispatch(
+                userInteractionTriggered({ interaction: "automationInteraction", data: eventData }),
+            );
+        },
+        [eventDispatch],
+    );
+
     const filterContextStateReset = useCallback(() => {
         eventDispatch(userInteractionTriggered("filterContextStateReset"));
     }, [eventDispatch]);
@@ -101,5 +119,7 @@ export const useDashboardUserInteraction = () => {
         addInteractionClicked,
         attributeHierarchiesInteraction,
         dateFilterInteraction,
+        visualizationSwitcherInteraction,
+        automationInteraction,
     };
 };

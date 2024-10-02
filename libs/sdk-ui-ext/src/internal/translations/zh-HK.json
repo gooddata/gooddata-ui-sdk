@@ -359,5 +359,9 @@
     "properties.clustering.threshold": "門檻",
     "properties.clustering.threshold.placeholder": "0.03",
     "properties.clustering.threshold.tooltip": "閾值係肯定何時對數據進行分組嘅限制。 <link>瞭解更多信息</link>",
-    "visualizations.headline.tertiary.title": "啱"
+    "visualizations.headline.tertiary.title": "啱",
+    "properties.interactions.alerts": "警報",
+    "properties.interactions.alerts.tooltip": "使用戶能夠喺儀錶板上為此可視化創建警報。",
+    "properties.interactions.scheduledExports": "計劃導出",
+    "properties.interactions.scheduledExports.tooltip": "使用戶能夠喺功能板上為此可視化創建計劃導出。"
 }

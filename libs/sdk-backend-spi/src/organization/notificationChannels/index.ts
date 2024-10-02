@@ -15,6 +15,11 @@ import {
  */
 export interface IOrganizationNotificationChannelService {
     /**
+     * Get count of all notification channels
+     */
+    getCount(): Promise<number>;
+
+    /**
      * Get all notification channels
      */
     getAll(): Promise<INotificationChannelDefinitionObject[]>;

@@ -1,8 +1,9 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2024 GoodData Corporation
 
-import { GenAISemanticSearchType } from "@gooddata/sdk-model";
-import { IGenAIService, ISemanticSearchQuery, ISemanticSearchResult } from "@gooddata/sdk-backend-spi";
+import { IChatThread, IGenAIService, ISemanticSearchQuery } from "@gooddata/sdk-backend-spi";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { SemanticSearchQuery } from "./SemanticSearchQuery.js";
+import { ChatThread } from "./ChatThread.js";
 
 export class GenAIService implements IGenAIService {
     constructor(
@@ -10,79 +11,19 @@ export class GenAIService implements IGenAIService {
         private readonly workspaceId: string,
     ) {}
 
+    getChatThread(): IChatThread {
+        return new ChatThread(this.authCall, this.workspaceId);
+    }
+
     getSemanticSearchQuery(): ISemanticSearchQuery {
         return new SemanticSearchQuery(this.authCall, this.workspaceId);
     }
+
     async semanticSearchIndex(): Promise<void> {
         await this.authCall((client) =>
             client.actions.metadataSync({
                 workspaceId: this.workspaceId,
             }),
         );
-    }
-}
-
-type SemanticSearchQueryConfig = {
-    deepSearch: boolean;
-    limit: number;
-    question: string;
-    objectTypes: GenAISemanticSearchType[];
-};
-
-const defaultConfig: SemanticSearchQueryConfig = {
-    deepSearch: true,
-    limit: 10,
-    question: "",
-    objectTypes: [],
-};
-
-export class SemanticSearchQuery implements ISemanticSearchQuery {
-    constructor(
-        private readonly authCall: TigerAuthenticatedCallGuard,
-        private readonly workspaceId: string,
-        private readonly config: SemanticSearchQueryConfig = { ...defaultConfig },
-    ) {}
-
-    withDeepSearch(deepSearch: boolean): ISemanticSearchQuery {
-        return new SemanticSearchQuery(this.authCall, this.workspaceId, {
-            ...this.config,
-            deepSearch,
-        });
-    }
-
-    withLimit(limit: number): ISemanticSearchQuery {
-        return new SemanticSearchQuery(this.authCall, this.workspaceId, {
-            ...this.config,
-            limit,
-        });
-    }
-
-    withQuestion(question: string): ISemanticSearchQuery {
-        return new SemanticSearchQuery(this.authCall, this.workspaceId, {
-            ...this.config,
-            question,
-        });
-    }
-
-    withObjectTypes(objectTypes: GenAISemanticSearchType[]): ISemanticSearchQuery {
-        return new SemanticSearchQuery(this.authCall, this.workspaceId, {
-            ...this.config,
-            objectTypes,
-        });
-    }
-
-    async query(options?: { signal?: AbortSignal }): Promise<ISemanticSearchResult> {
-        const response = await this.authCall((client) =>
-            client.execution.aiSearch(
-                {
-                    workspaceId: this.workspaceId,
-                    searchRequest: this.config,
-                },
-                options,
-            ),
-        );
-
-        // Casting because api-client has loose typing for object type
-        return response.data as ISemanticSearchResult;
     }
 }

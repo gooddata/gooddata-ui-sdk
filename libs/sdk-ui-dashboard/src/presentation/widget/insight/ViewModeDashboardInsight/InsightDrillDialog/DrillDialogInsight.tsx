@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React, { useCallback, useMemo, useState, CSSProperties } from "react";
 import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { createSelector } from "@reduxjs/toolkit";
@@ -21,9 +21,9 @@ import {
     selectSettings,
     selectIsExport,
     selectDrillableItems,
+    useWidgetFilters,
 } from "../../../../../model/index.js";
 import { IDashboardInsightProps } from "../../types.js";
-import { useWidgetFilters } from "../../../common/index.js";
 import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties.js";
 import { useDrillDialogInsightDrills } from "./useDrillDialogInsightDrills.js";
 import { CustomError } from "../CustomError/CustomError.js";

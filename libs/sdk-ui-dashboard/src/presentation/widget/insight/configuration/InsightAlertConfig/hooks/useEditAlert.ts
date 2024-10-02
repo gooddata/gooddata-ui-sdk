@@ -6,6 +6,7 @@ import {
     IAlertRelativeOperator,
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
+    ICatalogMeasure,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
 import {
@@ -20,16 +21,17 @@ import { AlertMetric } from "../../../types.js";
 
 export interface IUseEditAlertProps {
     alert: IAutomationMetadataObject;
+    catalogMeasures: ICatalogMeasure[];
     onCreate?: (alert: IAutomationMetadataObjectDefinition) => void;
     onUpdate?: (alert: IAutomationMetadataObject) => void;
 }
 
-export const useEditAlert = ({ alert, onCreate, onUpdate }: IUseEditAlertProps) => {
+export const useEditAlert = ({ alert, onCreate, onUpdate, catalogMeasures }: IUseEditAlertProps) => {
     const [viewMode, setViewMode] = useState<"edit" | "configuration">("edit");
     const [updatedAlert, setUpdatedAlert] = useState<IAutomationMetadataObject>(alert);
 
     const changeMeasure = (measure: AlertMetric) => {
-        setUpdatedAlert((alert) => transformAlertByMetric(alert, measure));
+        setUpdatedAlert((alert) => transformAlertByMetric(alert, measure, catalogMeasures));
     };
 
     const changeComparisonOperator = (measure: AlertMetric, comparisonOperator: IAlertComparisonOperator) => {
@@ -42,7 +44,13 @@ export const useEditAlert = ({ alert, onCreate, onUpdate }: IUseEditAlertProps) 
         arithmeticOperator: IAlertRelativeArithmeticOperator,
     ) => {
         setUpdatedAlert((alert) =>
-            transformAlertByRelativeOperator(alert, measure, relativeOperator, arithmeticOperator),
+            transformAlertByRelativeOperator(
+                alert,
+                measure,
+                relativeOperator,
+                arithmeticOperator,
+                catalogMeasures,
+            ),
         );
     };
 

@@ -24,11 +24,6 @@ export interface INotificationChannelMetadataObjectBase {
     destination: IWebhookDestination | ISmtpDestination;
 
     /**
-     * Triggers that the notification channel are used for.
-     */
-    triggers: INotificationChannelTrigger[];
-
-    /**
      * Allowed recipients of notifications from this channel.
      */
     allowedRecipients?: NotificationChannelAllowedRecipient;
@@ -38,20 +33,6 @@ export interface INotificationChannelMetadataObjectBase {
  * @alpha
  */
 export type NotificationChannelAllowedRecipient = "CREATOR" | "INTERNAL";
-
-/**
- * @alpha
- */
-export interface INotificationChannelTrigger {
-    /**
-     * Type of the trigger.
-     */
-    type: "SCHEDULE" | "ALERT";
-    /**
-     * Optional list of objects that specify where the trigger is allowed to be used.
-     */
-    allowOn?: ("dashboard" | "visualization")[];
-}
 
 //Notification channel
 

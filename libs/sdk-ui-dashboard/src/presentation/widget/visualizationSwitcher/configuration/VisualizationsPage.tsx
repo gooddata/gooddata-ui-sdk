@@ -5,7 +5,7 @@ import React from "react";
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 import { selectInsightsMap, useDashboardSelector } from "../../../../model/index.js";
 import { useIntl } from "react-intl";
-import { VisualizationsList } from "./VisualizationsList.js";
+import { VisualizationsList } from "./VisualizationsList/VisualizationsList.js";
 import { InsightPicker } from "./InsightPicker.js";
 
 interface IVisualizationsPageProps {
@@ -14,6 +14,7 @@ interface IVisualizationsPageProps {
     onVisualizationAdd: (insight: IInsight) => void;
     onVisualizationDeleted: (visualizationWidgetId: string) => void;
     onVisualizationSelect: (visualizationWidgetId: string) => void;
+    onVisualizationPositionChange: (visualizationWidgetId: string, direction: string) => void;
 }
 
 export const VisualizationsPage: React.FC<IVisualizationsPageProps> = ({
@@ -22,6 +23,7 @@ export const VisualizationsPage: React.FC<IVisualizationsPageProps> = ({
     onVisualizationDeleted,
     onVisualizationAdd,
     onVisualizationSelect,
+    onVisualizationPositionChange,
 }) => {
     const [isVisualizationPickerVisible, setVisualizationPickerVisible] = React.useState(false);
 
@@ -69,6 +71,7 @@ export const VisualizationsPage: React.FC<IVisualizationsPageProps> = ({
                             activeVisualizationId={activeVisualizationId}
                             onVisualizationDeleted={onVisualizationDeleted}
                             onVisualizationSelect={onVisualizationSelect}
+                            onVisualizationPositionChange={onVisualizationPositionChange}
                         />
                     </div>
                     <div className="horizontal-divider">

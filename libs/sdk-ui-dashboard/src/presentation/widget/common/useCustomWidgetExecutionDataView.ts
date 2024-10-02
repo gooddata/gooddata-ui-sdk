@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { useEffect, useMemo } from "react";
 import {
     DataViewFacade,
@@ -10,9 +10,7 @@ import {
     useExecutionDataView,
 } from "@gooddata/sdk-ui";
 
-import { ICustomWidget } from "../../../model/index.js";
-
-import { useWidgetFilters } from "./useWidgetFilters.js";
+import { ICustomWidget, useWidgetFilters } from "../../../model/index.js";
 
 /**
  * Configuration options for the {@link useCustomWidgetExecutionDataView} hook.

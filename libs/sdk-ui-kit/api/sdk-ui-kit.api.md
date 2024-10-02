@@ -863,6 +863,8 @@ export interface IAppHeaderProps {
     // (undocumented)
     menuItemsGroups?: IHeaderMenuItem[][];
     // (undocumented)
+    onChatItemClick?: (e: React_2.MouseEvent) => void;
+    // (undocumented)
     onHelpClick?: (isOpen: boolean) => void;
     // (undocumented)
     onInviteItemClick?: (e: React_2.MouseEvent) => void;
@@ -874,6 +876,8 @@ export interface IAppHeaderProps {
     onUpsellButtonClick?: (e: React_2.MouseEvent) => void;
     // (undocumented)
     search?: React_2.ReactNode;
+    // (undocumented)
+    showChatItem?: boolean;
     // (undocumented)
     showInviteItem?: boolean;
     // (undocumented)
@@ -3409,6 +3413,8 @@ export interface IRecurrenceFormProps {
     // (undocumented)
     onChange: (cronExpression: string, startDate: Date | null, isValid: boolean) => void;
     // (undocumented)
+    onRecurrenceDropdownOpen?: () => void;
+    // (undocumented)
     repeatLabel?: string;
     // (undocumented)
     showRepeatTypeDescription?: boolean;
@@ -3434,6 +3440,8 @@ export interface IRecurrenceProps {
     label: string;
     // (undocumented)
     onCronValueChange: (cronValue: string, isValid: boolean) => void;
+    // (undocumented)
+    onRecurrenceDropdownOpen?: () => void;
     // (undocumented)
     onRepeatTypeChange: (repeatType: string) => void;
     // (undocumented)

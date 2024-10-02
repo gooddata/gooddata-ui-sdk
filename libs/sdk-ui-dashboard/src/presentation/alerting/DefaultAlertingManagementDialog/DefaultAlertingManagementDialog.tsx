@@ -30,7 +30,6 @@ export const AlertingManagementDialog: React.FC<IAlertingManagementDialogProps> 
         onClose,
         isLoadingAlertingData,
         automations,
-        webhooks,
     } = props;
     const [alertToDelete, setAlertToDelete] = useState<IAutomationMetadataObject | null>(null);
     const [alertToPause, setAlertToPause] = useState<[IAutomationMetadataObject, boolean] | null>(null);
@@ -106,7 +105,6 @@ export const AlertingManagementDialog: React.FC<IAlertingManagementDialogProps> 
                         isLoading={isLoadingAlertingData}
                         alerts={automations}
                         noAlertsMessageId={messages.alertingManagementNoAlerts.id!}
-                        webhooks={webhooks}
                     />
                 </div>
                 <div className="gd-content-divider"></div>

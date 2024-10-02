@@ -5,7 +5,7 @@ import { IAutomationRecipient, IWorkspaceUser } from "@gooddata/sdk-model";
 import sortBy from "lodash/sortBy.js";
 
 import { RecipientsSelectRenderer } from "./RecipientsSelectRenderer.js";
-import { convertUserToAutomationRecipient } from "../../utils/automationHelpers.js";
+import { convertUserToAutomationRecipient } from "../../../../../_staging/automation/index.js";
 
 interface IRecipientsSelectProps {
     /**
@@ -60,7 +60,6 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
             onLoad={(queryOptions) => {
                 setSearch(queryOptions?.search);
             }}
-            isLoading={status === "loading" || status === "pending"}
             allowEmptySelection={allowEmptySelection}
             maxRecipients={maxRecipients}
         />

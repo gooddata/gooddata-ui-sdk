@@ -1,0 +1,112 @@
+// (C) 2024 GoodData Corporation
+
+@use "sass:color";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins" as kit-mixins;
+@use "@gooddata/sdk-ui-kit/styles/scss/Form/mixins" as form-mixins;
+@use "variables" as variables;
+
+.gd-gen-ai-chat__input {
+    position: relative;
+    margin: 0 variables.$x-spacing;
+
+    &__textarea {
+        @include form-mixins.gd-input-base;
+        @include kit-mixins.border-radius(3px);
+        @include kit-mixins.box-shadow(
+            inset 0 1px 1px 0 color.adjust(kit-variables.$gd-input-text-box-shadow-color, $alpha: -0.85)
+        );
+
+        @include kit-mixins.placeholder {
+            color: var(
+                --gd-palette-complementary-6,
+                color.adjust(kit-variables.$default-gd-color-link, $alpha: -0.25)
+            );
+
+            @include kit-mixins.transition(color, 0.25s, ease-in-out);
+        }
+
+        resize: none;
+        box-sizing: border-box;
+        width: 100%;
+        outline: 0;
+        overflow: hidden;
+        padding-right: 30px; // Make space for the send button
+
+        &:hover {
+            @include kit-mixins.placeholder {
+                color: kit-variables.$gd-color-link;
+            }
+
+            border-color: kit-variables.$gd-input-text-hover-border;
+        }
+
+        &:focus {
+            @include kit-mixins.box-shadow(
+                inset 0 1px 1px 0 color.adjust(kit-variables.$gd-input-text-box-shadow-color, $alpha: -0.8)
+            );
+
+            outline: 0;
+            border-color: kit-variables.$gd-palette-primary-base;
+        }
+
+        &:disabled,
+        &.disabled {
+            &,
+            &:hover {
+                @include kit-mixins.box-shadow(none);
+
+                color: kit-variables.$gd-color-disabled;
+                border-color: kit-variables.$gd-input-text-border;
+                background-color: kit-variables.$gd-color-light;
+            }
+        }
+    }
+
+    &__send_button {
+        @include kit-mixins.transition(all, 0.25s, ease-in-out);
+
+        position: absolute;
+        top: 8.5px; // (line-height - own-height) / 2
+        height: 15px;
+        right: 10px;
+        cursor: pointer;
+
+        & path,
+        & rect {
+            fill: kit-variables.$gd-color-link;
+        }
+
+        &:hover path,
+        &:hover rect {
+            fill: kit-variables.$gd-palette-primary-base;
+        }
+
+        &--disabled,
+        &--disabled:hover {
+            cursor: default;
+
+            path,
+            rect {
+                fill: kit-variables.$gd-color-disabled;
+            }
+        }
+    }
+
+    &:focus-within &__send_button {
+        path,
+        rect {
+            fill: kit-variables.$gd-palette-primary-base;
+        }
+
+        &--disabled,
+        &--disabled:hover {
+            cursor: default;
+
+            path,
+            rect {
+                fill: kit-variables.$gd-color-disabled;
+            }
+        }
+    }
+}

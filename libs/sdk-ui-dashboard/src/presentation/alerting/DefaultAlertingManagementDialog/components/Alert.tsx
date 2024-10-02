@@ -3,17 +3,17 @@
 import React, { useCallback, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
-import {
-    IAutomationMetadataObject,
-    IInsightWidget,
-    isInsightWidget,
-    IWebhookDefinitionObject,
-} from "@gooddata/sdk-model";
+import { IAutomationMetadataObject, IInsightWidget, isInsightWidget } from "@gooddata/sdk-model";
 import { Icon, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { gdColorNegative, gdColorStateBlank } from "../../../constants/colors.js";
-import { selectWidgetByRef, useDashboardSelector } from "../../../../model/index.js";
+import {
+    selectCanManageWorkspace,
+    selectCurrentUser,
+    selectWidgetByRef,
+    useDashboardSelector,
+} from "../../../../model/index.js";
 import { AlertDropdown } from "./AlertDropdown.js";
 import { useAlertValidation } from "../../../widget/insight/configuration/InsightAlertConfig/hooks/useAlertValidation.js";
 import {
@@ -31,7 +31,6 @@ interface IAlertProps {
     ) => void;
     onPause: (alert: IAutomationMetadataObject, pause: boolean) => void;
     alert: IAutomationMetadataObject;
-    webhooks: IWebhookDefinitionObject[];
 }
 
 const TEXT_TOOLTIP_ALIGN_POINTS = [
@@ -72,6 +71,11 @@ export const Alert: React.FC<IAlertProps> = (props) => {
     const [dropdownOpened, toggleDropdownOpened] = useState(false);
     const buttonRef = useRef<HTMLElement | null>(null);
 
+    const currentUser = useDashboardSelector(selectCurrentUser);
+    const canManageWorkspace = useDashboardSelector(selectCanManageWorkspace);
+    const canEdit =
+        canManageWorkspace || (currentUser && alert.createdBy && currentUser.login === alert.createdBy.login);
+
     const openDropdown = () => {
         toggleDropdownOpened(true);
         setHover(true);
@@ -103,9 +107,10 @@ export const Alert: React.FC<IAlertProps> = (props) => {
     }, [alert, onPause]);
 
     return (
-        <div className={cx("gd-notifications-channel", "s-alert", { editable: true, hover })}>
+        <div className={cx("gd-notifications-channel", "s-alert", { editable: false, hover })}>
             {dropdownOpened && buttonRef.current ? (
                 <AlertDropdown
+                    isReadOnly={!canEdit}
                     paused={paused}
                     alignTo={buttonRef.current}
                     onClose={closeDropdown}
@@ -123,7 +128,7 @@ export const Alert: React.FC<IAlertProps> = (props) => {
                     onClick={openDropdown}
                 />
             </div>
-            <div className="gd-notifications-channel-content" onClick={handleEdit}>
+            <div className="gd-notifications-channel-content" onClick={canEdit ? handleEdit : undefined}>
                 <div
                     className={cx("gd-notifications-channel-icon", {
                         "gd-notifications-channel-icon-invalid": !isValid,

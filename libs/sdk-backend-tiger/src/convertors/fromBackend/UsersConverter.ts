@@ -8,6 +8,7 @@ import {
     JsonApiMetricOutIncludes,
     JsonApiAnalyticalDashboardOutIncludes,
     JsonApiAutomationOutIncludes,
+    JsonApiAutomationOutWithLinks,
 } from "@gooddata/api-client-tiger";
 
 /**
@@ -44,6 +45,7 @@ function isJsonApiUserIdentifierOutAttributes(
 
 export type IIncludedWithUserIdentifier =
     | JsonApiMetricOutIncludes
+    | JsonApiAutomationOutWithLinks
     | JsonApiAnalyticalDashboardOutIncludes
     | JsonApiAutomationOutIncludes;
 

@@ -423,11 +423,6 @@ export interface ISettings {
     enableSmtp?: boolean;
 
     /**
-     * Enables rollup (native) totals.
-     */
-    enableRollupTotals?: boolean;
-
-    /**
      * Enables storing widget identifiers.
      */
     enableWidgetIdentifiersRollout?: boolean;
@@ -448,6 +443,7 @@ export interface ISettings {
 
     /**
      * Enable GenAI-powered functionality, such as semantic-search.
+     * @deprecated Use separate flags for semantic search and GenAI chat below.
      */
     enableAIFunctions?: boolean;
 
@@ -455,6 +451,21 @@ export interface ISettings {
      * Enable Semantic Search in the UI.
      */
     enableSemanticSearch?: boolean;
+
+    /**
+     * Enable Semantic Search rollout in the UI.
+     */
+    enableSemanticSearchRollout?: boolean;
+
+    /**
+     * Enable Gen AI Chatbot in UI.
+     */
+    enableGenAIChat?: boolean;
+
+    /**
+     * Enable Gen AI Chatbot rollout in UI.
+     */
+    enableGenAIChatRollout?: boolean;
 
     /**
      * Enable multiple data sources to be used in a single workspace.
@@ -475,6 +486,11 @@ export interface ISettings {
      * Enables manual headline exports on dashboard.
      */
     enableHeadlineExport?: boolean;
+
+    /**
+     * Enables the FlightRPC (FlexFunctions) data source.
+     */
+    enableFlightRpcDataSource?: boolean;
 
     [key: string]: number | boolean | string | object | undefined;
 }

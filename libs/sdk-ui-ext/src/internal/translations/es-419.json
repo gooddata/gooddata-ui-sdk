@@ -359,5 +359,9 @@
     "properties.clustering.threshold": "Umbral",
     "properties.clustering.threshold.placeholder": "0.03",
     "properties.clustering.threshold.tooltip": "El umbral es un límite que determina cuándo agrupar los datos. <link>Más información</link>",
-    "visualizations.headline.tertiary.title": "Frente a"
+    "visualizations.headline.tertiary.title": "Frente a",
+    "properties.interactions.alerts": "Alerta",
+    "properties.interactions.alerts.tooltip": "Permitir a los usuarios crear alertas para esta visualización en los paneles de control.",
+    "properties.interactions.scheduledExports": "Exportaciones programadas",
+    "properties.interactions.scheduledExports.tooltip": "Permitir a los usuarios crear exportaciones programadas para esta visualización en lospaneles de control.."
 }

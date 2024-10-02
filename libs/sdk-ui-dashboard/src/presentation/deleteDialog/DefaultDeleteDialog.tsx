@@ -7,8 +7,8 @@ import { IDeleteDialogProps } from "./types.js";
 import {
     deleteDashboard,
     dispatchAndWaitFor,
-    selectAutomationsAlerts,
-    selectAutomationsSchedules,
+    selectDashboardUserAutomationAlerts,
+    selectDashboardUserAutomationSchedules,
     selectDashboardTitle,
     selectEnableAlerting,
     selectEnableKPIDashboardDrillToDashboard,
@@ -58,8 +58,8 @@ export function useDeleteDialogProps(): IDeleteDialogProps {
     const isAlertingEnabled = useDashboardSelector(selectEnableAlerting);
     const isDrillToDashboardEnabled = useDashboardSelector(selectEnableKPIDashboardDrillToDashboard);
 
-    const alerts = useDashboardSelector(selectAutomationsAlerts);
-    const schedules = useDashboardSelector(selectAutomationsSchedules);
+    const alerts = useDashboardSelector(selectDashboardUserAutomationAlerts); // Should be in dashboard context
+    const schedules = useDashboardSelector(selectDashboardUserAutomationSchedules); // Should be in dashboard context
 
     return {
         isVisible,

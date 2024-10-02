@@ -8,7 +8,6 @@ import cx from "classnames";
 
 import { IDashboardVisualizationSwitcherProps } from "./types.js";
 import { useDashboardSelector, selectInsightsMap } from "../../../model/index.js";
-import { useDashboardComponentsContext } from "../../../presentation/dashboardContexts/index.js";
 import {
     DashboardItem,
     DashboardItemVisualization,
@@ -17,7 +16,8 @@ import {
 import { insightVisualizationType } from "@gooddata/sdk-model";
 import { VisType } from "@gooddata/sdk-ui";
 import { EditableDashboardInsightWidgetHeader } from "../widget/InsightWidget/EditableDashboardInsightWidgetHeader.js";
-import { DashboardInsight } from "../insight/ViewModeDashboardInsight/Insight/DashboardInsight.js";
+import { AllVisualizationsDashInsights } from "./AllVisualizationsDashInsights.js";
+import { useExecutionProgress } from "./useExecutionProgress.js";
 
 /**
  * @internal
@@ -38,7 +38,7 @@ export const EditModeDashboardVisualizationSwitcher: React.FC<IDashboardVisualiz
     const insights = useDashboardSelector(selectInsightsMap);
     const insight = activeVisualization ? insights.get(activeVisualization.insight) : undefined;
 
-    const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext();
+    const { showOthers } = useExecutionProgress();
 
     if (!activeVisualization || !insight) {
         return (
@@ -74,16 +74,16 @@ export const EditModeDashboardVisualizationSwitcher: React.FC<IDashboardVisualiz
                     }
                 >
                     {({ clientHeight, clientWidth }) => (
-                        <DashboardInsight
+                        <AllVisualizationsDashInsights
+                            visualizationClassName="is-edit-mode"
                             clientHeight={clientHeight}
                             clientWidth={clientWidth}
-                            insight={insight}
-                            widget={activeVisualization}
+                            visualizations={widget.visualizations}
+                            showOthers={showOthers}
+                            activeVisualization={activeVisualization}
                             onExportReady={onExportReady}
                             onLoadingChanged={onLoadingChanged}
                             onError={onError}
-                            ErrorComponent={ErrorComponent}
-                            LoadingComponent={LoadingComponent}
                         />
                     )}
                 </DashboardItemVisualization>

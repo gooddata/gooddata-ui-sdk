@@ -1,6 +1,10 @@
 // (C) 2019-2024 GoodData Corporation
 
-import { InMemoryPaging, DummySemanticSearchQueryBuilder } from "@gooddata/sdk-backend-base";
+import {
+    InMemoryPaging,
+    DummySemanticSearchQueryBuilder,
+    DummyGenAIChatThread,
+} from "@gooddata/sdk-backend-base";
 import {
     IAnalyticalBackend,
     IAnalyticalWorkspace,
@@ -47,6 +51,7 @@ import {
     IOrganizationNotificationChannelService,
     IWorkspaceAutomationService,
     IGenAIService,
+    IChatThread,
 } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
@@ -324,6 +329,9 @@ function recordedWorkspace(
         },
         genAI(): IGenAIService {
             return {
+                getChatThread(): IChatThread {
+                    return new DummyGenAIChatThread();
+                },
                 getSemanticSearchQuery: () => {
                     return new DummySemanticSearchQueryBuilder(workspace);
                 },
@@ -443,6 +451,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
         },
         notificationChannels(): IOrganizationNotificationChannelService {
             return {
+                getCount: () => Promise.resolve(0),
                 getAll: () => Promise.resolve([]),
                 deleteChannel: () => Promise.resolve(),
                 //emails

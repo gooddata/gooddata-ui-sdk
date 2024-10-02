@@ -1,5 +1,10 @@
 // (C) 2021-2024 GoodData Corporation
-import { AccessGranularPermission, ShareStatus } from "@gooddata/sdk-model";
+import {
+    AccessGranularPermission,
+    IAlertTriggerMode,
+    INotificationChannelMetadataObjectBase,
+    ShareStatus,
+} from "@gooddata/sdk-model";
 import isString from "lodash/isString.js";
 import { DashboardEventBody, IDashboardEvent } from "./base.js";
 import { eventGuard } from "./util.js";
@@ -117,6 +122,43 @@ export type AttributeHierarchiesInteractionType =
 /**
  * @beta
  */
+export type VisualizationSwitcherInteractionType = "visualizationSwitcherChanged";
+
+/**
+ * @alpha
+ */
+export type AutomationInteractionType =
+    | "scheduledExportInitialized"
+    | "scheduledExportCreated"
+    | "alertInitialized"
+    | "alertCreated";
+
+/**
+ * @alpha
+ */
+export type AutomationInteractionData = {
+    type: AutomationInteractionType;
+    destination_id?: string;
+    destination_type?: INotificationChannelMetadataObjectBase["type"];
+    automation_id?: string;
+    automation_name?: string;
+    automation_source?: "dashboard" | "widget";
+    automation_visualization_type?: string;
+    filter_context?: "default" | "edited";
+    trigger_type?: IAlertTriggerMode;
+};
+
+/**
+ * @alpha
+ */
+export type AutomationInteractionPayload = UserInteractionPayloadWithDataBase<
+    "automationInteraction",
+    AutomationInteractionData
+>;
+
+/**
+ * @beta
+ */
 export interface BareUserInteractionPayload {
     interaction:
         | "kpiAlertDialogClosed"
@@ -126,7 +168,8 @@ export interface BareUserInteractionPayload {
         | "addInteractionClicked"
         | AttributeHierarchiesInteractionType
         | AttributeFilterInteractionType
-        | DateFilterInteractionType;
+        | DateFilterInteractionType
+        | VisualizationSwitcherInteractionType;
 }
 
 /**
@@ -140,7 +183,8 @@ export type DateFilterInteractionType = "dateFilterTitleResetClicked" | "dateFil
 export type UserInteractionPayloadWithData =
     | KpiAlertDialogOpenedPayload
     | DescriptionTooltipOpenedPayload
-    | ShareDialogInteractionPayload;
+    | ShareDialogInteractionPayload
+    | AutomationInteractionPayload;
 
 /**
  * @beta

@@ -431,13 +431,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableRollupTotals,
-            "enableRollupTotals",
-            "BOOLEAN",
-            FeatureFlagsValues.enableRollupTotals,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableWidgetIdentifiersRollout,
             "enableWidgetIdentifiersRollout",
             "BOOLEAN",
@@ -456,6 +449,27 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableSemanticSearch",
             "BOOLEAN",
             FeatureFlagsValues.enableSemanticSearch,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableSemanticSearchRollout,
+            "enableSemanticSearchRollout",
+            "BOOLEAN",
+            FeatureFlagsValues.enableSemanticSearchRollout,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableGenAIChat,
+            "enableGenAIChat",
+            "BOOLEAN",
+            FeatureFlagsValues.enableGenAIChat,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableGenAIChatRollout,
+            "enableGenAIChatRollout",
+            "BOOLEAN",
+            FeatureFlagsValues.enableGenAIChatRollout,
         ),
         ...loadFeature(
             features,
@@ -498,6 +512,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableHeadlineExport",
             "BOOLEAN",
             FeatureFlagsValues.enableHeadlineExport,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableFlightRpcDataSource,
+            "enableFlightRpcDataSource",
+            "BOOLEAN",
+            FeatureFlagsValues.enableFlightRpcDataSource,
         ),
     };
 }

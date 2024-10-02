@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { DashboardContext } from "../../types/commonTypes.js";
 import { ChangeInsightWidgetInsight } from "../../commands/index.js";
@@ -6,12 +6,19 @@ import { SagaIterator } from "redux-saga";
 import { batchActions } from "redux-batched-actions";
 import { invariant } from "ts-invariant";
 import { DashboardInsightWidgetInsightSwitched } from "../../events/index.js";
-import { selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
+import { selectWidgets, selectWidgetsMap } from "../../store/layout/layoutSelectors.js";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
 import { layoutActions } from "../../store/layout/index.js";
 import { insightWidgetInsightChanged } from "../../events/insight.js";
-import { insightTitle, serializeObjRef, widgetTitle } from "@gooddata/sdk-model";
+import {
+    areObjRefsEqual,
+    insightTitle,
+    isVisualizationSwitcherWidget,
+    ObjRef,
+    serializeObjRef,
+    widgetTitle,
+} from "@gooddata/sdk-model";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { insightsActions } from "../../store/insights/index.js";
 import { uiActions } from "../../store/ui/index.js";
@@ -28,9 +35,27 @@ export function* changeInsightWidgetInsightHandler(
         correlationId,
     } = cmd;
 
-    const widgets: ReturnType<typeof selectWidgetsMap> = yield select(selectWidgetsMap);
+    const widgetsMap: ReturnType<typeof selectWidgetsMap> = yield select(selectWidgetsMap);
+    const widgets: ReturnType<typeof selectWidgets> = yield select(selectWidgets);
 
-    const insightWidget = validateExistingInsightWidget(widgets, cmd, ctx);
+    // Find if changed insight is part of Vis. Switcher
+    let visSwitcherRef: ObjRef | undefined;
+    widgets.forEach((widget) => {
+        if (isVisualizationSwitcherWidget(widget)) {
+            const isInsightPartOfVisSwitcher = widget.visualizations.find((visualization) => {
+                return (
+                    areObjRefsEqual(visualization.ref, ref) ||
+                    areObjRefsEqual(visualization.insight, insightRef)
+                );
+            });
+
+            if (isInsightPartOfVisSwitcher) {
+                visSwitcherRef = widget.ref;
+            }
+        }
+    });
+
+    const insightWidget = validateExistingInsightWidget(widgetsMap, cmd, ctx);
     const originalInsight: ReturnType<ReturnType<typeof selectInsightByRef>> = yield select(
         selectInsightByRef(insightWidget.insight),
     );
@@ -84,6 +109,19 @@ export function* changeInsightWidgetInsightHandler(
             }),
         ]),
     );
+
+    // Resize Vis. Switcher
+    if (visSwitcherRef) {
+        yield put(
+            layoutActions.resizeVisualizationSwitcherOnInsightChanged({
+                ref: visSwitcherRef,
+                newSize,
+                undo: {
+                    cmd,
+                },
+            }),
+        );
+    }
 
     return insightWidgetInsightChanged(ctx, ref, insight, correlationId);
 }

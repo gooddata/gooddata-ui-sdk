@@ -10,6 +10,7 @@ export type SearchListItemProps<T> = ListItemProps<T> &
     React.PropsWithChildren<{
         renderIcon: (item: ListItem<T>, theme?: ITheme) => React.ReactElement;
         renderDetails?: (item: ListItem<T>, theme?: ITheme) => React.ReactElement;
+        getAreaLabel?: (item: ListItem<T>) => string;
         className?: string;
     }>;
 
@@ -24,6 +25,7 @@ export const SearchListItem = <T,>({
     onSelect,
     renderIcon,
     renderDetails,
+    getAreaLabel,
     className,
     children,
 }: SearchListItemProps<T>) => {
@@ -41,6 +43,8 @@ export const SearchListItem = <T,>({
         "gd-semantic-search__results-item--active": isActive,
     });
 
+    const areaLabel = getAreaLabel?.(listItem);
+
     return (
         <Tag
             href={listItem.url}
@@ -49,7 +53,9 @@ export const SearchListItem = <T,>({
             onClick={onClick}
             onAuxClick={onClick}
         >
-            <span className="gd-semantic-search__results-item__icon">{renderIcon(listItem, theme)}</span>
+            <span className="gd-semantic-search__results-item__icon" aria-label={areaLabel}>
+                {renderIcon(listItem, theme)}
+            </span>
             <span className="gd-semantic-search__results-item__text">{children}</span>
             {renderDetails && isActive ? renderDetails(listItem, theme) : null}
         </Tag>

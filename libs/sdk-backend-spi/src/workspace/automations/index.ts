@@ -110,6 +110,14 @@ export interface IWorkspaceAutomationService {
     ): Promise<IAutomationMetadataObject>;
 
     /**
+     * Unsubscribe automation
+     *
+     * @param id - id of the automation
+     * @returns Promise resolved when the automation is unsubscribed.
+     */
+    unsubscribeAutomation(id: string): Promise<void>;
+
+    /**
      * Delete automation
      *
      * @param id - id of the automation
@@ -174,6 +182,22 @@ export interface IAutomationsQuery {
      * @returns automations query
      */
     withAuthor(author: string): IAutomationsQuery;
+
+    /**
+     * Sets recipient of the automation for the query.
+     *
+     * @param recipient - recipient of the automation
+     * @returns automations query
+     */
+    withRecipient(recipient: string): IAutomationsQuery;
+
+    /**
+     * This filter gets automations if either author or recipient of the automation is the provided user.
+     *
+     * @param user - author or recipient of the automation
+     * @returns automations query
+     */
+    withUser(user: string): IAutomationsQuery;
 
     /**
      * Sets dashboard id for the query.

@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect } from "react";
 import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { convertError, GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import { useSaveAlertToBackend } from "../../../widget/index.js";
 
@@ -26,7 +26,7 @@ export const PauseAlertRunner: React.FC<IPauseAlertRunnerProps> = (props) => {
             }
         },
         onPauseError: (error) => {
-            onError?.(error as GoodDataSdkError, true);
+            onError?.(convertError(error), true);
         },
         onResumeSuccess: () => {
             if (alert) {

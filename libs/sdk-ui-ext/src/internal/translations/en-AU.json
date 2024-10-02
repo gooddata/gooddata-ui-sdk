@@ -359,5 +359,9 @@
     "properties.clustering.threshold": "Threshold",
     "properties.clustering.threshold.placeholder": "0.03",
     "properties.clustering.threshold.tooltip": "The threshold is a limit that determines when to group data. <link>Learn more</link>",
-    "visualizations.headline.tertiary.title": "Versus"
+    "visualizations.headline.tertiary.title": "Versus",
+    "properties.interactions.alerts": "Heads up",
+    "properties.interactions.alerts.tooltip": "Enable users to create alerts for this visualisation on dashboards.",
+    "properties.interactions.scheduledExports": "Scheduled exports",
+    "properties.interactions.scheduledExports.tooltip": "Enable users to create scheduled exports for this visualisation on dashboards."
 }

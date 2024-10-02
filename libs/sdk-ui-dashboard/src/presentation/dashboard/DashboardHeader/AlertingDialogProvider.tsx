@@ -8,8 +8,8 @@ import { useDashboardAlerts } from "../../../model/index.js";
 
 export const AlertingDialogProvider = () => {
     const {
+        isInitialized,
         automations,
-        webhooks,
         alertingLoadError,
         alertingToEdit,
         isAlertingLoading,
@@ -25,6 +25,10 @@ export const AlertingDialogProvider = () => {
         onAlertingUpdate,
     } = useDashboardAlerts();
 
+    if (!isInitialized) {
+        return null;
+    }
+
     return (
         <>
             {isAlertingManagementDialogOpen ? (
@@ -38,7 +42,6 @@ export const AlertingDialogProvider = () => {
                     onPauseError={onAlertingManagementPauseError}
                     isLoadingAlertingData={isAlertingLoading}
                     automations={automations}
-                    webhooks={webhooks}
                     alertingDataError={alertingLoadError}
                 />
             ) : null}
