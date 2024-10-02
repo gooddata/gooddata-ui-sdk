@@ -14,7 +14,7 @@
         content: "\e612";
         display: inline-block;
         height: 1px;
-        color: variables.$gd-color-text;
+        color: variables.$gd-dashboards-content-widget-title-color;
         vertical-align: top;
         transition: 0.2s;
         margin-left: 0.5em;
@@ -49,6 +49,7 @@
     padding: 0 10px;
 
     .gd-visualization-switcher-widget-header-item-content {
+        display: inline-flex;
         white-space: nowrap;
     }
 

@@ -1,5 +1,6 @@
 // (C) 2024 GoodData Corporation
 @use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
 .gd-visualization-switcher-widget-wrapper {
     width: 100%;
@@ -23,8 +24,22 @@
         border-width: 0;
     }
 
-    .gd-editable-label-inner span {
-        text-decoration-line: underline;
+    .gd-editable-label-inner {
+        span {
+            text-decoration-line: underline;
+            &::after {
+                content: "\e612";
+                display: inline-block;
+                height: 1px;
+                color: variables.$gd-dashboards-content-widget-title-color;
+                vertical-align: top;
+                transition: 0.2s;
+                margin-left: 0.5em;
+                font-family: "Indigo", sans-serif;
+                font-weight: normal;
+                font-size: inherit;
+            }
+        }
     }
 }
 
@@ -35,6 +50,9 @@
     justify-content: center;
     align-items: center;
     gap: 8px;
+    .gd-typography--p {
+        color: kit-variables.$gd-color-link;
+    }
 }
 
 .gd-visualization-switcher-visible-visualization {
