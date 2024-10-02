@@ -164,63 +164,87 @@ type InsightType =
 export const getSupportedInsightMeasuresByInsight = (insight: IInsight | null | undefined): AlertMetric[] => {
     const insightType = insight ? (insightVisualizationType(insight) as InsightType) : null;
 
-    const allMetrics = collectAllMetric(insight);
+    const { primaries, others } = collectAllMetric(insight);
 
-    const simpleMetrics = allMetrics
-        .map<AlertMetric | undefined>((measure) => {
-            if (isSimpleMeasure(measure) || isArithmeticMeasure(measure)) {
-                return {
-                    measure,
-                    comparators: [],
-                };
-            }
-            return undefined;
-        })
-        .filter(Boolean) as AlertMetric[];
+    const simpleMetrics = [
+        ...(primaries.map<AlertMetric | undefined>(transformMeasure(true)).filter(Boolean) as AlertMetric[]),
+        ...(others.map<AlertMetric | undefined>(transformMeasure(false)).filter(Boolean) as AlertMetric[]),
+    ];
 
     //NOTE: For now only headline insight support previous period and same period previous year,
     // if we want to support other insight types, just add the logic here or remove the condition at
     // all to support all insight types
     if (insightType === "headline") {
-        const previousPeriodMetrics = allMetrics.filter((measure) =>
-            isPreviousPeriodMeasure(measure),
-        ) as IMeasure<IPreviousPeriodMeasureDefinition>[];
-        previousPeriodMetrics.forEach((measure) => {
-            const found = simpleMetrics.find(
-                (simpleMetric) =>
-                    simpleMetric.measure.measure.localIdentifier ===
-                    measure.measure.definition.previousPeriodMeasure.measureIdentifier,
-            );
-            if (found) {
-                found.comparators.push({
-                    measure,
-                    comparator: AlertMetricComparatorType.PreviousPeriod,
-                });
-            }
-        });
-
-        const popMetrics = allMetrics.filter((measure) =>
-            isPoPMeasure(measure),
-        ) as IMeasure<IPoPMeasureDefinition>[];
-        popMetrics.forEach((measure) => {
-            const found = simpleMetrics.find(
-                (simpleMetric) =>
-                    simpleMetric.measure.measure.localIdentifier ===
-                    measure.measure.definition.popMeasureDefinition.measureIdentifier,
-            );
-            if (found) {
-                found.comparators.push({
-                    measure,
-                    comparator: AlertMetricComparatorType.SamePeriodPreviousYear,
-                });
-            }
-        });
+        transformPreviousPeriodMeasure(primaries, simpleMetrics, true);
+        transformPreviousPeriodMeasure(others, simpleMetrics, false);
+        transformPoPMeasure(primaries, simpleMetrics, true);
+        transformPoPMeasure(others, simpleMetrics, false);
     }
 
     return simpleMetrics;
 };
 
-function collectAllMetric(insight: IInsight | null | undefined) {
+function transformMeasure(isPrimary: boolean) {
+    return (measure: IMeasure) => {
+        if (isSimpleMeasure(measure) || isArithmeticMeasure(measure)) {
+            return {
+                measure,
+                isPrimary,
+                comparators: [],
+            };
+        }
+        return undefined;
+    };
+}
+
+function transformPreviousPeriodMeasure(
+    metrics: IMeasure[],
+    simpleMetrics: AlertMetric[],
+    isPrimary: boolean,
+) {
+    const previousPeriodMetrics = metrics.filter((measure) =>
+        isPreviousPeriodMeasure(measure),
+    ) as IMeasure<IPreviousPeriodMeasureDefinition>[];
+    previousPeriodMetrics.forEach((measure) => {
+        const found = simpleMetrics.find(
+            (simpleMetric) =>
+                simpleMetric.measure.measure.localIdentifier ===
+                measure.measure.definition.previousPeriodMeasure.measureIdentifier,
+        );
+        if (found) {
+            found.comparators.push({
+                measure,
+                isPrimary,
+                comparator: AlertMetricComparatorType.PreviousPeriod,
+            });
+        }
+    });
+}
+
+function transformPoPMeasure(metrics: IMeasure[], simpleMetrics: AlertMetric[], isPrimary: boolean) {
+    const popMetrics = metrics.filter((measure) =>
+        isPoPMeasure(measure),
+    ) as IMeasure<IPoPMeasureDefinition>[];
+    popMetrics.forEach((measure) => {
+        const found = simpleMetrics.find(
+            (simpleMetric) =>
+                simpleMetric.measure.measure.localIdentifier ===
+                measure.measure.definition.popMeasureDefinition.measureIdentifier,
+        );
+        if (found) {
+            found.comparators.push({
+                measure,
+                isPrimary,
+                comparator: AlertMetricComparatorType.SamePeriodPreviousYear,
+            });
+        }
+    });
+}
+
+function collectAllMetric(insight: IInsight | null | undefined): {
+    primaries: IMeasure[];
+    others: IMeasure[];
+} {
     const insightType = insight ? (insightVisualizationType(insight) as InsightType) : null;
 
     switch (insightType) {
@@ -241,18 +265,24 @@ function collectAllMetric(insight: IInsight | null | undefined) {
             const insightTertiaryMeasuresBucket: IBucket | undefined = insight
                 ? insightBucket(insight, BucketNames.TERTIARY_MEASURES)
                 : undefined;
-            return [
-                ...(insightMeasuresBucket ? bucketMeasures(insightMeasuresBucket) : []),
-                ...(insightSecondaryMeasuresBucket ? bucketMeasures(insightSecondaryMeasuresBucket) : []),
-                ...(insightTertiaryMeasuresBucket ? bucketMeasures(insightTertiaryMeasuresBucket) : []),
-            ];
+
+            return {
+                primaries: insightMeasuresBucket ? bucketMeasures(insightMeasuresBucket) : [],
+                others: [
+                    ...(insightSecondaryMeasuresBucket ? bucketMeasures(insightSecondaryMeasuresBucket) : []),
+                    ...(insightTertiaryMeasuresBucket ? bucketMeasures(insightTertiaryMeasuresBucket) : []),
+                ],
+            };
         }
         case "repeater": {
             const insightColumnsBucket: IBucket | undefined = insight
                 ? insightBucket(insight, BucketNames.COLUMNS)
                 : undefined;
 
-            return insightColumnsBucket ? bucketMeasures(insightColumnsBucket) : [];
+            return {
+                primaries: insightColumnsBucket ? bucketMeasures(insightColumnsBucket) : [],
+                others: [],
+            };
         }
         case "donut":
         case "treemap":
@@ -267,7 +297,10 @@ function collectAllMetric(insight: IInsight | null | undefined) {
         case "pyramid":
         case "waterfall":
         default: {
-            return [];
+            return {
+                primaries: [],
+                others: [],
+            };
         }
     }
 }
@@ -552,6 +585,14 @@ function transformAlertExecutionByMetric(
     );
 
     if (condition.type === "relative" && periodMeasure) {
+        // if the period measure is primary, it should be the first measure in the execution
+        if (periodMeasure.isPrimary) {
+            return {
+                ...execution,
+                measures: [periodMeasure.measure, measure.measure],
+            };
+        }
+
         return {
             ...execution,
             measures: [measure.measure, periodMeasure.measure],
