@@ -424,7 +424,7 @@ function getAttributeTitle(attribute: IAttribute, dataView: DataViewFacade) {
     const attributeDescriptor = attributeDescriptors.find(
         (descriptor) => descriptor.attributeHeader.localIdentifier === localId,
     );
-    return attributeDescriptor?.attributeHeader?.name;
+    return attributeDescriptor?.attributeHeader?.formOf.name;
 }
 
 function getInlineVisualizationType(measureLocalId: string, config: IChartConfig) {

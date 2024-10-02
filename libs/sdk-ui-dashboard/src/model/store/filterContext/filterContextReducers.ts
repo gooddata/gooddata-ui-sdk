@@ -245,6 +245,7 @@ export interface IAddAttributeFilterPayload {
     readonly initialIsNegativeSelection?: boolean;
     readonly selectionMode?: DashboardAttributeFilterSelectionMode;
     readonly localIdentifier?: string;
+    readonly title?: string;
 }
 
 const addAttributeFilter: FilterContextReducer<PayloadAction<IAddAttributeFilterPayload>> = (
@@ -261,6 +262,7 @@ const addAttributeFilter: FilterContextReducer<PayloadAction<IAddAttributeFilter
         parentFilters,
         selectionMode,
         localIdentifier,
+        title,
     } = action.payload;
 
     const hasSelection = initialSelection && !attributeElementsIsEmpty(initialSelection);
@@ -275,6 +277,7 @@ const addAttributeFilter: FilterContextReducer<PayloadAction<IAddAttributeFilter
             localIdentifier: localIdentifier ?? generateFilterLocalIdentifier(),
             filterElementsBy: parentFilters ? [...parentFilters] : undefined,
             ...(selectionMode !== undefined ? { selectionMode } : {}),
+            title,
         },
     };
 
