@@ -259,6 +259,7 @@ export enum AlertMetricComparatorType {
  */
 export type AlertMetricComparator = {
     measure: IMeasure;
+    isPrimary: boolean;
     comparator: AlertMetricComparatorType;
 };
 
@@ -267,5 +268,6 @@ export type AlertMetricComparator = {
  */
 export type AlertMetric = {
     measure: IMeasure;
+    isPrimary: boolean;
     comparators: AlertMetricComparator[];
 };
