@@ -34,7 +34,11 @@
     .left-section {
         padding: 4px;
         flex: 0 1 auto;
+        &:not(.is-active):hover path {
+            fill: kit-variables.$gd-color-text;
+        }
     }
+
     .vertical-divider {
         flex: 0 0 1px;
         width: 1px;
@@ -58,6 +62,9 @@
         padding: 4px;
         justify-content: center;
         align-items: center;
+        &:not(.is-disabled):hover path {
+            fill: kit-variables.$gd-color-text;
+        }
     }
 
     .right-section {
@@ -93,6 +100,10 @@
         font-size: 12px;
         line-height: 21px;
         color: var(--gd-palette-complementary-6, #94a1ad);
+    }
+
+    .configuration-panel-header-close-button {
+        display: none;
     }
 
     .visualizations-list {
