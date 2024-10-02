@@ -9,7 +9,11 @@ import { AlertActionsDropdown } from "./AlertActionsDropdown.js";
 import { getAlertThreshold, getOperatorTitle } from "./utils.js";
 import { gdColorNegative } from "../../../../constants/colors.js";
 import { useAlertValidation } from "./hooks/useAlertValidation.js";
-import { selectCurrentUser, useDashboardSelector } from "../../../../../model/index.js";
+import {
+    selectCanManageWorkspace,
+    selectCurrentUser,
+    useDashboardSelector,
+} from "../../../../../model/index.js";
 
 interface IAlertsListItemProps {
     alert: IAutomationMetadataObject;
@@ -32,13 +36,15 @@ export const AlertsListItem: React.FC<IAlertsListItemProps> = ({
     const description = `${getOperatorTitle(intl, alert.alert)} ${getAlertThreshold(alert.alert)}`;
     const { isValid } = useAlertValidation(alert);
     const currentUser = useDashboardSelector(selectCurrentUser);
-    const isReadOnly = currentUser && alert.createdBy && currentUser.login !== alert.createdBy.login;
+    const canManageWorkspace = useDashboardSelector(selectCanManageWorkspace);
+    const canEdit =
+        canManageWorkspace || (currentUser && alert.createdBy && currentUser.login === alert.createdBy.login);
 
     return (
         <div
-            className={cx("gd-alerts-list-item", { "gd-alerts-list-item--readonly": isReadOnly })}
+            className={cx("gd-alerts-list-item", { "gd-alerts-list-item--readonly": !canEdit })}
             key={alert.id}
-            onClick={!isReadOnly ? () => onEditAlert(alert) : undefined}
+            onClick={canEdit ? () => onEditAlert(alert) : undefined}
         >
             <div className="gd-alerts-list-item__content s-alert-list-item">
                 <div
@@ -61,7 +67,7 @@ export const AlertsListItem: React.FC<IAlertsListItemProps> = ({
             </div>
             <div className="gd-alerts-list-item__actions">
                 <AlertActionsDropdown
-                    isReadOnly={isReadOnly}
+                    isReadOnly={!canEdit}
                     alert={alert}
                     onEdit={() => onEditAlert(alert)}
                     onPause={() => onPauseAlert(alert)}

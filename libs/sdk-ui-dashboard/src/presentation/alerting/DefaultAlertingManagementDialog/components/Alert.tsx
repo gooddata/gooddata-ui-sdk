@@ -8,7 +8,12 @@ import { Icon, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { gdColorNegative, gdColorStateBlank } from "../../../constants/colors.js";
-import { selectCurrentUser, selectWidgetByRef, useDashboardSelector } from "../../../../model/index.js";
+import {
+    selectCanManageWorkspace,
+    selectCurrentUser,
+    selectWidgetByRef,
+    useDashboardSelector,
+} from "../../../../model/index.js";
 import { AlertDropdown } from "./AlertDropdown.js";
 import { useAlertValidation } from "../../../widget/insight/configuration/InsightAlertConfig/hooks/useAlertValidation.js";
 import {
@@ -67,7 +72,9 @@ export const Alert: React.FC<IAlertProps> = (props) => {
     const buttonRef = useRef<HTMLElement | null>(null);
 
     const currentUser = useDashboardSelector(selectCurrentUser);
-    const isReadOnly = currentUser && alert.createdBy && currentUser.login !== alert.createdBy.login;
+    const canManageWorkspace = useDashboardSelector(selectCanManageWorkspace);
+    const canEdit =
+        canManageWorkspace || (currentUser && alert.createdBy && currentUser.login === alert.createdBy.login);
 
     const openDropdown = () => {
         toggleDropdownOpened(true);
@@ -103,7 +110,7 @@ export const Alert: React.FC<IAlertProps> = (props) => {
         <div className={cx("gd-notifications-channel", "s-alert", { editable: false, hover })}>
             {dropdownOpened && buttonRef.current ? (
                 <AlertDropdown
-                    isReadOnly={isReadOnly}
+                    isReadOnly={!canEdit}
                     paused={paused}
                     alignTo={buttonRef.current}
                     onClose={closeDropdown}
@@ -121,7 +128,7 @@ export const Alert: React.FC<IAlertProps> = (props) => {
                     onClick={openDropdown}
                 />
             </div>
-            <div className="gd-notifications-channel-content" onClick={!isReadOnly ? handleEdit : undefined}>
+            <div className="gd-notifications-channel-content" onClick={canEdit ? handleEdit : undefined}>
                 <div
                     className={cx("gd-notifications-channel-icon", {
                         "gd-notifications-channel-icon-invalid": !isValid,

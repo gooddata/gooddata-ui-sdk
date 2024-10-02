@@ -9,7 +9,11 @@ import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { gdColorNegative, gdColorStateBlank } from "../../../constants/colors.js";
 import { isVisualisationAutomation } from "../../../../_staging/automation/index.js";
 import { useScheduleValidation } from "../../DefaultScheduledEmailDialog/hooks/useScheduleValidation.js";
-import { selectCurrentUser, useDashboardSelector } from "../../../../model/index.js";
+import {
+    selectCanManageWorkspace,
+    selectCurrentUser,
+    useDashboardSelector,
+} from "../../../../model/index.js";
 
 interface IScheduledEmailProps {
     onDelete: (scheduledEmail: IAutomationMetadataObject) => void;
@@ -33,8 +37,10 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
     const { scheduledEmail, onDelete, onEdit, notificationChannels } = props;
 
     const currentUser = useDashboardSelector(selectCurrentUser);
-    const isReadOnly =
-        currentUser && scheduledEmail.createdBy && currentUser.login !== scheduledEmail.createdBy.login;
+    const canManageWorkspace = useDashboardSelector(selectCanManageWorkspace);
+    const canEdit =
+        canManageWorkspace ||
+        (currentUser && scheduledEmail.createdBy && currentUser.login === scheduledEmail.createdBy.login);
 
     const { isValid } = useScheduleValidation(scheduledEmail);
     const intl = useIntl();
@@ -61,7 +67,7 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
     }, [scheduledEmail, onEdit]);
 
     return (
-        <div className={cx("gd-notifications-channel", "s-scheduled-email", { editable: !isReadOnly })}>
+        <div className={cx("gd-notifications-channel", "s-scheduled-email", { editable: canEdit })}>
             <div className="gd-notifications-channel-delete">
                 <BubbleHoverTrigger showDelay={0} hideDelay={0}>
                     <span
@@ -73,7 +79,7 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
                     </Bubble>
                 </BubbleHoverTrigger>
             </div>
-            <div className="gd-notifications-channel-content" onClick={!isReadOnly ? handleClick : undefined}>
+            <div className="gd-notifications-channel-content" onClick={canEdit ? handleClick : undefined}>
                 <div
                     className={cx("gd-notifications-channel-icon", {
                         "gd-notifications-channel-icon-invalid": !isValid,
