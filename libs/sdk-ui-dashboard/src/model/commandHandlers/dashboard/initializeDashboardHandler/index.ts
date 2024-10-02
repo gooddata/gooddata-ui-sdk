@@ -32,6 +32,7 @@ import {
     IInsight,
     isDrillToInsight,
     isInsightWidget,
+    isVisualizationSwitcherWidget,
     ObjRef,
     serializeObjRef,
 } from "@gooddata/sdk-model";
@@ -122,6 +123,18 @@ async function loadInsightsForPersistedDashboard(
                     // insights in drills to insight
                     ...widget.drills.filter(isDrillToInsight).map((drill) => drill.target),
                 );
+            }
+            if (isVisualizationSwitcherWidget(widget)) {
+                widget.visualizations.forEach((vis) => {
+                    if (isInsightWidget(vis)) {
+                        referencedInsights.push(
+                            // insight itself
+                            vis.insight,
+                            // insights in drills to insight
+                            ...vis.drills.filter(isDrillToInsight).map((drill) => drill.target),
+                        );
+                    }
+                });
             }
         },
     });
