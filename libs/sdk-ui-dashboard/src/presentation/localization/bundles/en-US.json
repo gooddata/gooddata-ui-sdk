@@ -2536,6 +2536,21 @@
         "comment": "",
         "limit": 0
     },
+    "visualizationSwitcher.list.menu.move.up": {
+        "value": "Move up",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcher.list.menu.move.down": {
+        "value": "Move down",
+        "comment": "",
+        "limit": 0
+    },
+    "visualizationSwitcher.list.menu.remove": {
+        "value": "Remove",
+        "comment": "",
+        "limit": 0
+    },
     "attributesDropdown.valuesLimiting.title": {
         "value": "Filter values by",
         "comment": "The title of section that configures filters for listed values in the filter. There is a list of applied filters below the title.",
