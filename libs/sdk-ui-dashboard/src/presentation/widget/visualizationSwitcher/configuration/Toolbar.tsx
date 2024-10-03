@@ -105,6 +105,27 @@ export const Toolbar: React.FC<ToolbarProps> = ({
         [onVisualizationsChanged, visualizations, onSelectedVisualizationChanged],
     );
 
+    const onVisualizationPositionChanged = useCallback(
+        (widgetId: string, direction: string) => {
+            const updatedVisualizations = [...visualizations];
+            const changedVisualizationIndex = visualizations.findIndex(
+                (visualization) => visualization.identifier === widgetId,
+            );
+
+            const element = updatedVisualizations[changedVisualizationIndex];
+            updatedVisualizations.splice(changedVisualizationIndex, 1);
+
+            if (direction === "moveUp") {
+                updatedVisualizations.splice(changedVisualizationIndex - 1, 0, element);
+            } else {
+                updatedVisualizations.splice(changedVisualizationIndex + 1, 0, element);
+            }
+
+            onVisualizationsChanged(updatedVisualizations);
+        },
+        [onVisualizationsChanged, visualizations],
+    );
+
     const showVisualizationsList = () => {
         setVisualizationsListVisible(true);
     };
@@ -173,6 +194,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
                 onVisualizationAdd={onVisualizationAdd}
                 onVisualizationDelete={onVisualizationDelete}
                 onVisualizationSelect={onVisualizationSelect}
+                onVisualizationPositionChange={onVisualizationPositionChanged}
             />
         </Bubble>
     );
