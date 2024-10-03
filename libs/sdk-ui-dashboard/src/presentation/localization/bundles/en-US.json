@@ -1171,6 +1171,16 @@
         "comment": "",
         "limit": 0
     },
+    "widget.error.missing_insight.message": {
+        "value": "Visualization error",
+        "comment": "",
+        "limit": 0
+    },
+    "widget.error.missing_insight.description": {
+        "value": "Visualization not found. It was deleted or you don't have access to it.",
+        "comment": "",
+        "limit": 0
+    },
     "share.button.text": {
         "value": "Share",
         "comment": "Text of button that opens share dialog",
