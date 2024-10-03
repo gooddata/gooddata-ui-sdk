@@ -26,6 +26,18 @@ export const isInsightSupportedForAlerts = (
         case "scatter":
         case "bubble":
         case "repeater":
+        case "bullet":
+        case "pie":
+        case "donut":
+        case "treemap":
+        case "funnel":
+        case "pyramid":
+        case "heatmap":
+        case "waterfall":
+        case "dependencywheel":
+        case "sankey":
+        case "pushpin":
+        case "table":
             return true;
         default:
             return false;
