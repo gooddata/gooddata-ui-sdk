@@ -381,6 +381,7 @@ const CustomUrlEditorDialog: React.FunctionComponent<CustomUrlEditorProps> = (pr
                 enableWidgetIdParameter={enableWidgetIdParameter}
                 onAdd={handleOnAdd}
                 intl={intl}
+                widgetRef={widgetRef}
             />
         </ConfirmDialogBase>
     );
