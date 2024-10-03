@@ -32,6 +32,7 @@ import { HeaderInvite } from "./HeaderInvite.js";
 import { Typography } from "../Typography/index.js";
 import { HeaderSearchButton } from "./HeaderSearchButton.js";
 import { HeaderSearchProvider } from "./headerSearchContext.js";
+import { HeaderChatButton } from "./HeaderChatButton.js";
 
 function getOuterWidth(element: HTMLDivElement) {
     const width = element.offsetWidth;
@@ -439,6 +440,8 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                 />
 
                 {this.renderTrialItems()}
+
+                {this.props.showChatItem ? <HeaderChatButton onClick={this.props.onChatItemClick} /> : null}
 
                 {this.props.search ? (
                     <HeaderSearchProvider

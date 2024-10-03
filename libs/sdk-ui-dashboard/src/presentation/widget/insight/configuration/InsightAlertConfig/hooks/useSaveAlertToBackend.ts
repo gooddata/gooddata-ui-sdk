@@ -25,7 +25,7 @@ export function useSaveAlertToBackend({
     onResumeSuccess,
     onResumeError,
 }: {
-    onCreateSuccess?: () => void;
+    onCreateSuccess?: (alert: IAutomationMetadataObject) => void;
     onCreateError?: (error: Error) => void;
     onUpdateSuccess?: () => void;
     onUpdateError?: (error: Error) => void;
@@ -35,7 +35,7 @@ export function useSaveAlertToBackend({
     onResumeError?: (error: Error) => void;
 }) {
     const alertCreator = useCreateAlert({
-        onSuccess: onCreateSuccess,
+        onSuccess: (alert: IAutomationMetadataObject) => onCreateSuccess?.(alert),
         onError: onCreateError,
     });
 

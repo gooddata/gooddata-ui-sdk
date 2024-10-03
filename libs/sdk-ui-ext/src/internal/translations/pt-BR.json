@@ -359,5 +359,9 @@
     "properties.clustering.threshold": "Limiar",
     "properties.clustering.threshold.placeholder": "0.03",
     "properties.clustering.threshold.tooltip": "O limiar é um limite que determina quando agrupar dados. <link>Saiba mais</link>",
-    "visualizations.headline.tertiary.title": "Versus"
+    "visualizations.headline.tertiary.title": "Versus",
+    "properties.interactions.alerts": "Alerta",
+    "properties.interactions.alerts.tooltip": "Permita que os usuários criem alertas para esta visualização em painéis.",
+    "properties.interactions.scheduledExports": "Exportações agendadas",
+    "properties.interactions.scheduledExports.tooltip": "Permita que os usuários criem exportações agendadas para esta visualização em painéis."
 }

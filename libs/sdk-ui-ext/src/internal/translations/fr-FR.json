@@ -359,5 +359,9 @@
     "properties.clustering.threshold": "Seuil",
     "properties.clustering.threshold.placeholder": "0.03",
     "properties.clustering.threshold.tooltip": "Le seuil est une limite qui détermine quand regrouper les données. <link>En savoir plus</link>",
-    "visualizations.headline.tertiary.title": "Par rapport à"
+    "visualizations.headline.tertiary.title": "Par rapport à",
+    "properties.interactions.alerts": "Alerte",
+    "properties.interactions.alerts.tooltip": "Permet aux utilisateurs de créer des alertes pour cette visualisation dans les tableaux de bord.",
+    "properties.interactions.scheduledExports": "Exportations programmées",
+    "properties.interactions.scheduledExports.tooltip": "Permet aux utilisateurs de créer des exportations programmées pour cette visualisation dans les tableaux de bord."
 }

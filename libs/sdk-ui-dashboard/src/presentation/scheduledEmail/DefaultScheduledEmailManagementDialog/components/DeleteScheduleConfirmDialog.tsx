@@ -3,8 +3,13 @@
 import React, { ReactNode } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
-import { GoodDataSdkError, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { convertError, GoodDataSdkError, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { ConfirmDialog } from "@gooddata/sdk-ui-kit";
+import {
+    selectCanManageWorkspace,
+    selectCurrentUser,
+    useDashboardSelector,
+} from "../../../../model/index.js";
 
 interface IDeleteScheduleConfirmDialogProps {
     scheduledEmail: IAutomationMetadataObject | IAutomationMetadataObjectDefinition;
@@ -19,16 +24,27 @@ export const DeleteScheduleConfirmDialog: React.FC<IDeleteScheduleConfirmDialogP
     const effectiveBackend = useBackendStrict();
     const effectiveWorkspace = useWorkspaceStrict();
     const intl = useIntl();
+    const currentUser = useDashboardSelector(selectCurrentUser);
+    const canManageAutomations = useDashboardSelector(selectCanManageWorkspace);
 
     const handleDeleteScheduledMail = async () => {
+        const alertCreatorId = scheduledEmail.createdBy?.login;
+        const currentUserId = currentUser?.login;
+        const isAlertCreatedByCurrentUser =
+            !!alertCreatorId && !!currentUserId && alertCreatorId === currentUserId;
+        const automationService = effectiveBackend.workspace(effectiveWorkspace).automations();
+
+        // If schedule is created by current user, or user has permissions to manage automations, delete it, otherwise unsubscribe
+        const deleteMethod =
+            canManageAutomations || isAlertCreatedByCurrentUser
+                ? automationService.deleteAutomation.bind(automationService)
+                : automationService.unsubscribeAutomation.bind(automationService);
+
         try {
-            await effectiveBackend
-                .workspace(effectiveWorkspace)
-                .automations()
-                .deleteAutomation(scheduledEmail.id!);
+            await deleteMethod(scheduledEmail.id!);
             onSuccess?.();
         } catch (err) {
-            onError?.(err as GoodDataSdkError);
+            onError?.(convertError(err));
         }
     };
 

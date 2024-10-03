@@ -124,12 +124,14 @@ import { DrillState as DrillState_2 } from './drillState.js';
 import { EntityId } from '@reduxjs/toolkit';
 import { EntityState } from '@reduxjs/toolkit';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
+import { ExtendedDashboardWidget as ExtendedDashboardWidget_2 } from '../../index.js';
 import { FilterContextItem } from '@gooddata/sdk-model';
 import { FilterViewDialogMode as FilterViewDialogMode_2 } from './uiState.js';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAccessControlAware } from '@gooddata/sdk-model';
 import { IAccessGrantee } from '@gooddata/sdk-model';
+import { IAlertTriggerMode } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeElement } from '@gooddata/sdk-model';
@@ -225,6 +227,8 @@ import { ILocale } from '@gooddata/sdk-ui';
 import { IMeasureMetadataObject } from '@gooddata/sdk-model';
 import { IMenuButtonItemsVisibility as IMenuButtonItemsVisibility_2 } from '../../../types.js';
 import { INegativeAttributeFilter } from '@gooddata/sdk-model';
+import { INotificationChannelMetadataObject } from '@gooddata/sdk-model';
+import { INotificationChannelMetadataObjectBase } from '@gooddata/sdk-model';
 import { InsightDisplayFormUsage } from '@gooddata/sdk-model';
 import { InsightDrillDefinition } from '@gooddata/sdk-model';
 import { IntlShape } from 'react-intl';
@@ -235,13 +239,11 @@ import { IRenderListItemProps } from '@gooddata/sdk-ui-kit';
 import { IResultWarning } from '@gooddata/sdk-model';
 import { IRichTextWidget } from '@gooddata/sdk-model';
 import { IScheduleEmailContext as IScheduleEmailContext_2 } from '../../../types.js';
-import { IScheduleEmailDialogContext as IScheduleEmailDialogContext_2 } from '../../types.js';
 import { ISeparators } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-model';
 import { IShareDialogInteractionData } from '@gooddata/sdk-ui-kit';
 import { ISharedObject } from '@gooddata/sdk-ui-kit';
 import { ISharingApplyPayload as ISharingApplyPayload_2 } from '@gooddata/sdk-ui-kit';
-import { ISmtpDefinitionObject } from '@gooddata/sdk-model';
 import { ITempFilterContext } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
 import { ITitleProps as ITitleProps_2 } from './types.js';
@@ -251,7 +253,6 @@ import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IVisualizationSizeInfo } from '@gooddata/sdk-ui-ext';
 import { IVisualizationSwitcherWidget } from '@gooddata/sdk-model';
-import { IWebhookDefinitionObject } from '@gooddata/sdk-model';
 import { IWidget } from '@gooddata/sdk-model';
 import { IWidgetAlert } from '@gooddata/sdk-model';
 import { IWidgetDefinition } from '@gooddata/sdk-model';
@@ -285,16 +286,13 @@ import { Selector } from '@reduxjs/toolkit';
 import { SetCatalogItemsPayload } from './catalogReducers.js';
 import { SetCatalogMeasuresAndFactsPayload } from './catalogReducers.js';
 import { ShareStatus } from '@gooddata/sdk-model';
-import { Smtps as Smtps_2 } from '../index.js';
 import { TypedUseSelectorHook } from 'react-redux';
 import { UiState as UiState_2 } from './uiState.js';
 import { Uri } from '@gooddata/sdk-model';
 import { UriRef } from '@gooddata/sdk-model';
 import { UseCancelablePromiseCallbacks } from '@gooddata/sdk-ui';
 import { UseCancelablePromiseState } from '@gooddata/sdk-ui';
-import { Users as Users_2 } from '../index.js';
 import { VisualizationProperties } from '@gooddata/sdk-model';
-import { Webhooks as Webhooks_2 } from '../index.js';
 import { WeekStart } from '@gooddata/sdk-model';
 import { WritableDraft } from 'immer/dist/internal.js';
 
@@ -555,19 +553,37 @@ export function attributeHierarchyModified(correlationId?: string): AttributeHie
 // @internal (undocumented)
 export function AttributesDropdown({ className, bodyClassName, onClose, onSelect, }: IDashboardAttributeFilterPlaceholderProps): React_2.JSX.Element;
 
-// @alpha
-export type Automations = IAutomationMetadataObject[];
+// @alpha (undocumented)
+export type AutomationInteractionData = {
+    type: AutomationInteractionType;
+    destination_id?: string;
+    destination_type?: INotificationChannelMetadataObjectBase["type"];
+    automation_id?: string;
+    automation_name?: string;
+    automation_source?: "dashboard" | "widget";
+    automation_visualization_type?: string;
+    filter_context?: "default" | "edited";
+    trigger_type?: IAlertTriggerMode;
+};
+
+// @alpha (undocumented)
+export type AutomationInteractionPayload = UserInteractionPayloadWithDataBase<"automationInteraction", AutomationInteractionData>;
+
+// @alpha (undocumented)
+export type AutomationInteractionType = "scheduledExportInitialized" | "scheduledExportCreated" | "alertInitialized" | "alertCreated";
 
 // @alpha (undocumented)
 export interface AutomationsState {
     // (undocumented)
-    automations: IAutomationMetadataObject[];
+    allAutomationsCount: number;
     // (undocumented)
     error?: GoodDataSdkError;
     // (undocumented)
-    fingerprint: string;
+    isInitialized: boolean;
     // (undocumented)
-    loading: boolean;
+    isLoading: boolean;
+    // (undocumented)
+    userAutomations: IAutomationMetadataObject[];
 }
 
 // @public (undocumented)
@@ -579,7 +595,7 @@ export interface BackendCapabilitiesState {
 // @beta (undocumented)
 export interface BareUserInteractionPayload {
     // (undocumented)
-    interaction: "kpiAlertDialogClosed" | "poweredByGDLogoClicked" | "filterContextStateReset" | "interactionPanelOpened" | "addInteractionClicked" | AttributeHierarchiesInteractionType | AttributeFilterInteractionType | DateFilterInteractionType;
+    interaction: "kpiAlertDialogClosed" | "poweredByGDLogoClicked" | "filterContextStateReset" | "interactionPanelOpened" | "addInteractionClicked" | AttributeHierarchiesInteractionType | AttributeFilterInteractionType | DateFilterInteractionType | VisualizationSwitcherInteractionType;
 }
 
 // @beta (undocumented)
@@ -1497,7 +1513,7 @@ export interface DashboardCommandRejected extends IDashboardEvent {
 }
 
 // @public
-export type DashboardCommands = InitializeDashboard | SaveDashboardAs | RequestAsyncRender | ResolveAsyncRender | ChangeFilterContextSelection | ChangeDateFilterSelection | ChangeAttributeFilterSelection | ChangeRenderMode | SaveDashboard | RenameDashboard | ResetDashboard | ExportDashboardToPdf | DeleteDashboard | TriggerEvent | UpsertExecutionResult | AddAttributeFilter | RemoveAttributeFilters | MoveAttributeFilter | SetAttributeFilterParents | SetAttributeFilterDependentDateFilters | AddLayoutSection | MoveLayoutSection | RemoveLayoutSection | ChangeLayoutSectionHeader | ResizeHeight | ResizeWidth | AddSectionItems | ReplaceSectionItem | MoveSectionItem | MoveSectionItemToNewSection | RemoveSectionItem | RemoveSectionItemByWidgetRef | UndoLayoutChanges | ChangeKpiWidgetHeader | ChangeKpiWidgetDescription | ChangeKpiWidgetConfiguration | ChangeKpiWidgetMeasure | ChangeKpiWidgetFilterSettings | ChangeKpiWidgetComparison | RefreshKpiWidget | SetDrillForKpiWidget | RemoveDrillForKpiWidget | ChangeInsightWidgetHeader | ChangeInsightWidgetDescription | ChangeInsightWidgetIgnoreCrossFiltering | ChangeInsightWidgetFilterSettings | ChangeInsightWidgetVisProperties | ChangeInsightWidgetVisConfiguration | ChangeInsightWidgetInsight | ModifyDrillsForInsightWidget | RemoveDrillsForInsightWidget | RefreshInsightWidget | ExportInsightWidget | CreateAlert | SaveAlert | CreateScheduledEmail | SaveScheduledEmail | ChangeSharing | SetAttributeFilterDisplayForm | SetAttributeFilterTitle | SetAttributeFilterSelectionMode | ChangeRichTextWidgetContent | AddVisualizationToVisualizationSwitcherWidgetContent | UpdateVisualizationsFromVisualizationSwitcherWidgetContent | Drill | DrillDown | DrillToAttributeUrl | DrillToCustomUrl | DrillToDashboard | DrillToInsight | DrillToLegacyDashboard | ChangeDrillableItems | AddDrillTargets | SetDashboardDateFilterConfigMode | SetDashboardAttributeFilterConfigMode | SetDashboardAttributeFilterConfigDisplayAsLabel | RemoveDrillDownForInsightWidget | AddDrillDownForInsightWidget | ModifyDrillDownForInsightWidget | CrossFiltering | AttributeHierarchyModified | AddDateFilter | RemoveDateFilters | MoveDateFilter | SetDashboardDateFilterWithDimensionConfigMode | SetDateFilterConfigTitle | RefreshAutomations | SetAttributeFilterLimitingItems | SaveFilterView | DeleteFilterView | ApplyFilterView | SetFilterViewAsDefault | ReloadFilterViews;
+export type DashboardCommands = InitializeDashboard | SaveDashboardAs | RequestAsyncRender | ResolveAsyncRender | ChangeFilterContextSelection | ChangeDateFilterSelection | ChangeAttributeFilterSelection | ChangeRenderMode | SaveDashboard | RenameDashboard | ResetDashboard | ExportDashboardToPdf | DeleteDashboard | TriggerEvent | UpsertExecutionResult | AddAttributeFilter | RemoveAttributeFilters | MoveAttributeFilter | SetAttributeFilterParents | SetAttributeFilterDependentDateFilters | AddLayoutSection | MoveLayoutSection | RemoveLayoutSection | ChangeLayoutSectionHeader | ResizeHeight | ResizeWidth | AddSectionItems | ReplaceSectionItem | MoveSectionItem | MoveSectionItemToNewSection | RemoveSectionItem | RemoveSectionItemByWidgetRef | UndoLayoutChanges | ChangeKpiWidgetHeader | ChangeKpiWidgetDescription | ChangeKpiWidgetConfiguration | ChangeKpiWidgetMeasure | ChangeKpiWidgetFilterSettings | ChangeKpiWidgetComparison | RefreshKpiWidget | SetDrillForKpiWidget | RemoveDrillForKpiWidget | ChangeInsightWidgetHeader | ChangeInsightWidgetDescription | ChangeInsightWidgetIgnoreCrossFiltering | ChangeInsightWidgetFilterSettings | ChangeInsightWidgetVisProperties | ChangeInsightWidgetVisConfiguration | ChangeInsightWidgetInsight | ModifyDrillsForInsightWidget | RemoveDrillsForInsightWidget | RefreshInsightWidget | ExportInsightWidget | CreateAlert | SaveAlert | CreateScheduledEmail | SaveScheduledEmail | ChangeSharing | SetAttributeFilterDisplayForm | SetAttributeFilterTitle | SetAttributeFilterSelectionMode | ChangeRichTextWidgetContent | AddVisualizationToVisualizationSwitcherWidgetContent | UpdateVisualizationsFromVisualizationSwitcherWidgetContent | Drill | DrillDown | DrillToAttributeUrl | DrillToCustomUrl | DrillToDashboard | DrillToInsight | DrillToLegacyDashboard | ChangeDrillableItems | AddDrillTargets | SetDashboardDateFilterConfigMode | SetDashboardAttributeFilterConfigMode | SetDashboardAttributeFilterConfigDisplayAsLabel | RemoveDrillDownForInsightWidget | AddDrillDownForInsightWidget | ModifyDrillDownForInsightWidget | CrossFiltering | AttributeHierarchyModified | AddDateFilter | RemoveDateFilters | MoveDateFilter | SetDashboardDateFilterWithDimensionConfigMode | SetDateFilterConfigTitle | InitializeAutomations | RefreshAutomations | SetAttributeFilterLimitingItems | SaveFilterView | DeleteFilterView | ApplyFilterView | SetFilterViewAsDefault | ReloadFilterViews;
 
 // @beta
 export interface DashboardCommandStarted<TCommand extends IDashboardCommand> extends IDashboardEvent {
@@ -1513,7 +1529,7 @@ export interface DashboardCommandStartedPayload<TCommand extends IDashboardComma
 }
 
 // @public
-export type DashboardCommandType = "GDC.DASH/CMD.INITIALIZE" | "GDC.DASH/CMD.SAVE" | "GDC.DASH/CMD.SAVEAS" | "GDC.DASH/CMD.RESET" | "GDC.DASH/CMD.RENAME" | "GDC.DASH/CMD.DELETE" | "GDC.DASH/CMD.CHANGE_RENDER_MODE" | "GDC.DASH/CMD.SHARING.CHANGE" | "GDC.DASH/CMD.EXPORT.PDF" | "GDC.DASH/CMD.EVENT.TRIGGER" | "GDC.DASH/CMD.EXECUTION_RESULT.UPSERT" | "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION" | "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADD" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVE" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVE" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.CHANGE_SELECTION" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_PARENTS" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_DISPLAY_FORM" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_TITLE" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_SELECTION_MODE" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_DEPENDENT_DATE_FILTERS" | "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.ADD" | "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.REMOVE" | "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.MOVE" | "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_MODE" | "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_LIMITING_ITEMS" | "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_DISPLAY_AS_LABEL" | "GDC.DASH/CMD.DATE_FILTER_CONFIG.SET_MODE" | "GDC.DASH/CMD.DATE_FILTER_WITH_DIMENSION_CONFIG.SET_MODE" | "GDC.DASH/CMD.DATE_FILTER_CONFIG.SET_TITLE" | "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM_TO_NEW_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.CHANGE_SECTION_HEADER" | "GDC.DASH/CMD.FLUID_LAYOUT.ADD_ITEMS" | "GDC.DASH/CMD.FLUID_LAYOUT.REPLACE_ITEM" | "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM" | "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM" | "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM_BY_WIDGET_REF" | "GDC.DASH/CMD.FLUID_LAYOUT.UNDO" | "GDC.DASH/CMD.FLUID_LAYOUT.RESIZE_HEIGHT" | "GDC.DASH/CMD.FLUID_LAYOUT.RESIZE_WIDTH" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_HEADER" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_MEASURE" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_COMPARISON" | "GDC.DASH/CMD.KPI_WIDGET.REFRESH" | "GDC.DASH/CMD.KPI_WIDGET.SET_DRILL" | "GDC.DASH/CMD.KPI_WIDGET.REMOVE_DRILL" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_DESCRIPTION" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_CONFIGURATION" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_HEADER" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_DESCRIPTION" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_PROPERTIES" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_CONFIGURATION" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_INSIGHT" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_IGNORE_CROSS_FILTERING" | "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT" | "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS" | "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS" | "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILL_DOWN" | "GDC.DASH/CMD.INSIGHT_WIDGET.ADD_DRILL_DOWN" | "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILL_DOWN" | "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH" | "GDC.DASH/CMD.RICH_TEXT_WIDGET.CHANGE_CONTENT" | "GDC.DASH/CMD.VISUALIZATION_SWITCHER_WIDGET.ADD_VISUALIZATION" | "GDC.DASH/CMD.VISUALIZATION_SWITCHER_WIDGET.UPDATE_VISUALIZATIONS" | "GDC.DASH/CMD.ALERT.CREATE" | "GDC.DASH/CMD.ALERT.SAVE" | "GDC.DASH/CMD.SCHEDULED_EMAIL.CREATE" | "GDC.DASH/CMD.SCHEDULED_EMAIL.SAVE" | "GDC.DASH/CMD.DRILL" | "GDC.DASH/CMD.DRILL.DRILL_DOWN" | "GDC.DASH/CMD.DRILL.DRILL_TO_INSIGHT" | "GDC.DASH/CMD.DRILL.DRILL_TO_DASHBOARD" | "GDC.DASH/CMD.DRILL.DRILL_TO_ATTRIBUTE_URL" | "GDC.DASH/CMD.DRILL.DRILL_TO_CUSTOM_URL" | "GDC.DASH/CMD.DRILL.DRILL_TO_LEGACY_DASHBOARD" | "GDC.DASH/CMD.DRILL.DRILLABLE_ITEMS.CHANGE" | "GDC.DASH/CMD.DRILL.CROSS_FILTERING" | "GDC.DASH/CMD.DRILL_TARGETS.ADD" | "GDC.DASH/CMD.RENDER.ASYNC.REQUEST" | "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE" | "GDC.DASH/CMD.ATTRIBUTE_HIERARCHY_MODIFIED" | "GDC.DASH/CMD.AUTOMATIONS.REFRESH" | "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.SAVE" | "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.DELETE" | "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.APPLY" | "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.CHANGE_DEFAULT_STATUS" | "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.RELOAD";
+export type DashboardCommandType = "GDC.DASH/CMD.INITIALIZE" | "GDC.DASH/CMD.SAVE" | "GDC.DASH/CMD.SAVEAS" | "GDC.DASH/CMD.RESET" | "GDC.DASH/CMD.RENAME" | "GDC.DASH/CMD.DELETE" | "GDC.DASH/CMD.CHANGE_RENDER_MODE" | "GDC.DASH/CMD.SHARING.CHANGE" | "GDC.DASH/CMD.EXPORT.PDF" | "GDC.DASH/CMD.EVENT.TRIGGER" | "GDC.DASH/CMD.EXECUTION_RESULT.UPSERT" | "GDC.DASH/CMD.FILTER_CONTEXT.CHANGE_SELECTION" | "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.ADD" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.REMOVE" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.MOVE" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.CHANGE_SELECTION" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_PARENTS" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_DISPLAY_FORM" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_TITLE" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_SELECTION_MODE" | "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER.SET_DEPENDENT_DATE_FILTERS" | "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.ADD" | "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.REMOVE" | "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.MOVE" | "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_MODE" | "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_LIMITING_ITEMS" | "GDC.DASH/CMD.ATTRIBUTE_FILTER_CONFIG.SET_DISPLAY_AS_LABEL" | "GDC.DASH/CMD.DATE_FILTER_CONFIG.SET_MODE" | "GDC.DASH/CMD.DATE_FILTER_WITH_DIMENSION_CONFIG.SET_MODE" | "GDC.DASH/CMD.DATE_FILTER_CONFIG.SET_TITLE" | "GDC.DASH/CMD.FLUID_LAYOUT.ADD_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM_TO_NEW_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_SECTION" | "GDC.DASH/CMD.FLUID_LAYOUT.CHANGE_SECTION_HEADER" | "GDC.DASH/CMD.FLUID_LAYOUT.ADD_ITEMS" | "GDC.DASH/CMD.FLUID_LAYOUT.REPLACE_ITEM" | "GDC.DASH/CMD.FLUID_LAYOUT.MOVE_ITEM" | "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM" | "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM_BY_WIDGET_REF" | "GDC.DASH/CMD.FLUID_LAYOUT.UNDO" | "GDC.DASH/CMD.FLUID_LAYOUT.RESIZE_HEIGHT" | "GDC.DASH/CMD.FLUID_LAYOUT.RESIZE_WIDTH" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_HEADER" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_MEASURE" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_COMPARISON" | "GDC.DASH/CMD.KPI_WIDGET.REFRESH" | "GDC.DASH/CMD.KPI_WIDGET.SET_DRILL" | "GDC.DASH/CMD.KPI_WIDGET.REMOVE_DRILL" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_DESCRIPTION" | "GDC.DASH/CMD.KPI_WIDGET.CHANGE_CONFIGURATION" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_HEADER" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_DESCRIPTION" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_FILTER_SETTINGS" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_PROPERTIES" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_CONFIGURATION" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_INSIGHT" | "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_IGNORE_CROSS_FILTERING" | "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT" | "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILLS" | "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILLS" | "GDC.DASH/CMD.INSIGHT_WIDGET.REMOVE_DRILL_DOWN" | "GDC.DASH/CMD.INSIGHT_WIDGET.ADD_DRILL_DOWN" | "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILL_DOWN" | "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH" | "GDC.DASH/CMD.RICH_TEXT_WIDGET.CHANGE_CONTENT" | "GDC.DASH/CMD.VISUALIZATION_SWITCHER_WIDGET.ADD_VISUALIZATION" | "GDC.DASH/CMD.VISUALIZATION_SWITCHER_WIDGET.UPDATE_VISUALIZATIONS" | "GDC.DASH/CMD.ALERT.CREATE" | "GDC.DASH/CMD.ALERT.SAVE" | "GDC.DASH/CMD.SCHEDULED_EMAIL.CREATE" | "GDC.DASH/CMD.SCHEDULED_EMAIL.SAVE" | "GDC.DASH/CMD.DRILL" | "GDC.DASH/CMD.DRILL.DRILL_DOWN" | "GDC.DASH/CMD.DRILL.DRILL_TO_INSIGHT" | "GDC.DASH/CMD.DRILL.DRILL_TO_DASHBOARD" | "GDC.DASH/CMD.DRILL.DRILL_TO_ATTRIBUTE_URL" | "GDC.DASH/CMD.DRILL.DRILL_TO_CUSTOM_URL" | "GDC.DASH/CMD.DRILL.DRILL_TO_LEGACY_DASHBOARD" | "GDC.DASH/CMD.DRILL.DRILLABLE_ITEMS.CHANGE" | "GDC.DASH/CMD.DRILL.CROSS_FILTERING" | "GDC.DASH/CMD.DRILL_TARGETS.ADD" | "GDC.DASH/CMD.RENDER.ASYNC.REQUEST" | "GDC.DASH/CMD.RENDER.ASYNC.RESOLVE" | "GDC.DASH/CMD.ATTRIBUTE_HIERARCHY_MODIFIED" | "GDC.DASH/CMD.AUTOMATIONS.INITIALIZE" | "GDC.DASH/CMD.AUTOMATIONS.REFRESH" | "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.SAVE" | "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.DELETE" | "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.APPLY" | "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.CHANGE_DEFAULT_STATUS" | "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.RELOAD";
 
 // @public
 export interface DashboardConfig {
@@ -2750,6 +2766,8 @@ export interface DashboardState {
     drillTargets: EntityState<IDrillTargets>;
     // @beta (undocumented)
     entitlements: EntitlementsState;
+    // (undocumented)
+    executed: ExecutedState;
     // @beta
     executionResults: EntityState<IExecutionResultEnvelope>;
     // (undocumented)
@@ -2770,6 +2788,8 @@ export interface DashboardState {
     loading: LoadingState;
     // @beta (undocumented)
     meta: DashboardMetaState;
+    // @alpha (undocumented)
+    notificationChannels: NotificationChannelsState;
     // (undocumented)
     permissions: PermissionsState;
     // @internal
@@ -2780,16 +2800,12 @@ export interface DashboardState {
     renderMode: RenderModeState;
     // (undocumented)
     saving: SavingState;
-    // @alpha (undocumented)
-    smtps: SmtpsState;
     // @beta
     ui: UiState;
     // (undocumented)
     user: UserState;
     // @alpha (undocumented)
     users: UsersState;
-    // @alpha (undocumented)
-    webhooks: WebhooksState;
 }
 
 // @public
@@ -3463,6 +3479,12 @@ export interface EntitlementsState {
     entitlements?: ResolvedEntitlements;
 }
 
+// @beta (undocumented)
+export interface ExecutedState {
+    // (undocumented)
+    executed: boolean;
+}
+
 // @internal (undocumented)
 export function existBlacklistHierarchyPredicate(reference: IDrillDownReference, attributeHierarchy: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy, attributeIdentifier?: ObjRef): boolean;
 
@@ -3764,7 +3786,6 @@ export interface IAlertingManagementDialogProps {
     onEdit?: (alertingDefinition: IAutomationMetadataObject, widget: IInsightWidget | undefined, anchor: HTMLElement | null, onClosed: () => void) => void;
     onPauseError: (error: GoodDataSdkError, pause: boolean) => void;
     onPauseSuccess: (alert: IAutomationMetadataObject, pause: boolean) => void;
-    webhooks: IWebhookDefinitionObject[];
 }
 
 // @internal (undocumented)
@@ -4705,6 +4726,7 @@ export interface IInsightMenuSubmenu {
 
 // @alpha (undocumented)
 export interface IInsightMenuSubmenuComponentProps {
+    enableTitleConfig?: boolean;
     onClose: () => void;
     onGoBack: () => void;
     widget: IInsightWidget;
@@ -4816,6 +4838,15 @@ export interface IMetricsAndFacts {
     // (undocumented)
     metrics: ICatalogMeasure[];
 }
+
+// @beta
+export interface InitializeAutomations extends IDashboardCommand {
+    // (undocumented)
+    readonly type: "GDC.DASH/CMD.AUTOMATIONS.INITIALIZE";
+}
+
+// @beta
+export function initializeAutomations(correlationId?: string): InitializeAutomations;
 
 // @public
 export interface InitializeDashboard extends IDashboardCommand {
@@ -5060,11 +5091,11 @@ export function isBrokenAlertDateFilterInfo(item: IBrokenAlertFilterBasicInfo): 
 
 // @alpha (undocumented)
 export interface IScheduledEmailDialogProps {
-    automations: IAutomationMetadataObject[];
-    context?: IScheduledEmailDialogPropsContext;
-    editSchedule?: IAutomationMetadataObject;
-    emails: ISmtpDefinitionObject[];
+    dashboardFilters?: FilterContextItem[];
+    insight?: IInsight;
+    isLoading?: boolean;
     isVisible?: boolean;
+    notificationChannels: INotificationChannelMetadataObject[];
     onCancel?: () => void;
     onDeleteError?: (error: GoodDataSdkError) => void;
     onDeleteSuccess?: () => void;
@@ -5073,9 +5104,11 @@ export interface IScheduledEmailDialogProps {
     onSaveError?: (error: GoodDataSdkError) => void;
     onSaveSuccess?: () => void;
     onSubmit?: (scheduledEmailDefinition: IAutomationMetadataObject | IAutomationMetadataObjectDefinition) => void;
-    onSuccess?: () => void;
+    onSuccess?: (scheduledEmailDefinition: IAutomationMetadataObject) => void;
+    scheduledExportToEdit?: IAutomationMetadataObject;
     users: IWorkspaceUser[];
-    webhooks: IWebhookDefinitionObject[];
+    widget?: ExtendedDashboardWidget;
+    widgetFilters?: IFilter[];
 }
 
 // @internal (undocumented)
@@ -5087,17 +5120,15 @@ export interface IScheduledEmailDialogPropsContext {
 // @alpha (undocumented)
 export interface IScheduledEmailManagementDialogProps {
     automations: IAutomationMetadataObject[];
-    context?: IScheduledEmailDialogPropsContext;
-    emails: ISmtpDefinitionObject[];
     isLoadingScheduleData: boolean;
     isVisible?: boolean;
+    notificationChannels: INotificationChannelMetadataObject[];
     onAdd?: () => void;
     onClose?: () => void;
     onDeleteError?: (error: GoodDataSdkError) => void;
     onDeleteSuccess?: () => void;
     onEdit?: (scheduledMail: IAutomationMetadataObject) => void;
     scheduleDataError?: GoodDataSdkError;
-    webhooks: IWebhookDefinitionObject[];
 }
 
 // @internal (undocumented)
@@ -5617,6 +5648,28 @@ export interface IUseCustomWidgetInsightDataViewConfig {
     widget: ICustomWidget;
 }
 
+// @alpha (undocumented)
+export interface IUseDashboardScheduledEmailsFiltersProps {
+    // (undocumented)
+    insight?: IInsight;
+    // (undocumented)
+    scheduledExportToEdit?: IAutomationMetadataObject;
+    // (undocumented)
+    widget?: ExtendedDashboardWidget;
+}
+
+// @alpha (undocumented)
+export interface IUseFiltersForDashboardScheduledExportProps {
+    scheduledExportToEdit?: IAutomationMetadataObject;
+}
+
+// @alpha (undocumented)
+export interface IUseFiltersForWidgetScheduledExportProps {
+    insight?: IInsightDefinition;
+    scheduledExportToEdit?: IAutomationMetadataObjectDefinition;
+    widget?: ExtendedDashboardWidget;
+}
+
 // @public
 export interface IUseInsightWidgetDataView {
     insightWidget?: IInsightWidget;
@@ -5640,6 +5693,8 @@ export type IVisualizationSwitcherDraggingComponentProps = {
 
 // @alpha (undocumented)
 export interface IVisualizationSwitcherToolbarProps {
+    // (undocumented)
+    onClose: () => void;
     // (undocumented)
     onSelectedVisualizationChanged: (visualizationId: string) => void;
     // (undocumented)
@@ -5975,6 +6030,14 @@ export function newLoadingPlaceholderWidget(): PlaceholderWidget;
 
 // @alpha (undocumented)
 export function newPlaceholderWidget(): PlaceholderWidget;
+
+// @alpha (undocumented)
+export interface NotificationChannelsState {
+    // (undocumented)
+    notificationChannels: INotificationChannelMetadataObject[];
+    // (undocumented)
+    notiticationChannelsCount: number;
+}
 
 // @public
 export interface ObjectAvailabilityConfig {
@@ -6384,8 +6447,6 @@ export const ReactDashboardContext: any;
 
 // @beta
 export interface RefreshAutomations extends IDashboardCommand {
-    // (undocumented)
-    readonly payload: object;
     // (undocumented)
     readonly type: "GDC.DASH/CMD.AUTOMATIONS.REFRESH";
 }
@@ -6926,6 +6987,9 @@ export const selectAlertsMap: DashboardSelector<ObjRefMap<IWidgetAlert>>;
 // @alpha
 export const selectAllAnalyticalWidgets: DashboardSelector<IWidget[]>;
 
+// @alpha
+export const selectAllAutomationsCount: DashboardSelector<number>;
+
 // @alpha (undocumented)
 export const selectAllCatalogAttributeHierarchies: DashboardSelector<(ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy)[]>;
 
@@ -6987,31 +7051,13 @@ export const selectAttributeFilterDisplayFormsMap: DashboardSelector<ObjRefMap<I
 export const selectAttributesWithDrillDown: DashboardSelector<(ICatalogAttribute | ICatalogDateAttribute)[]>;
 
 // @alpha
-export const selectAutomations: DashboardSelector<IAutomationMetadataObject[]>;
-
-// @alpha
-export const selectAutomationsAlerts: DashboardSelector<IAutomationMetadataObject[]>;
-
-// @alpha
-export const selectAutomationsAlertsInContext: (widgetLocalIdentifier: string | undefined) => DashboardSelector<IAutomationMetadataObject[]>;
-
-// @alpha
-export const selectAutomationsCount: DashboardSelector<number>;
-
-// @alpha
 export const selectAutomationsError: DashboardSelector<GoodDataSdkError | undefined>;
 
 // @alpha
-export const selectAutomationsFingerprint: DashboardSelector<string>;
+export const selectAutomationsIsInitialized: DashboardSelector<boolean>;
 
 // @alpha
 export const selectAutomationsIsLoading: DashboardSelector<boolean>;
-
-// @alpha
-export const selectAutomationsSchedules: DashboardSelector<IAutomationMetadataObject[]>;
-
-// @alpha
-export const selectAutomationsSchedulesInContext: (widgetLocalIdentifier: string | undefined) => DashboardSelector<IAutomationMetadataObject[]>;
 
 // @public
 export const selectBackendCapabilities: DashboardSelector<IBackendCapabilities>;
@@ -7202,6 +7248,21 @@ export const selectDashboardUri: DashboardSelector<string | undefined>;
 // @public
 export const selectDashboardUriRef: DashboardSelector<UriRef | undefined>;
 
+// @alpha
+export const selectDashboardUserAutomationAlerts: DashboardSelector<IAutomationMetadataObject[]>;
+
+// @alpha
+export const selectDashboardUserAutomationAlertsInContext: (widgetLocalIdentifier: string | undefined) => DashboardSelector<IAutomationMetadataObject[]>;
+
+// @alpha
+export const selectDashboardUserAutomations: DashboardSelector<IAutomationMetadataObject[]>;
+
+// @alpha
+export const selectDashboardUserAutomationSchedules: DashboardSelector<IAutomationMetadataObject[]>;
+
+// @alpha
+export const selectDashboardUserAutomationSchedulesInContext: (widgetLocalIdentifier: string | undefined) => DashboardSelector<IAutomationMetadataObject[]>;
+
 // @internal (undocumented)
 export const selectDashboardWorkingDefinition: DashboardSelector<IDashboardDefinition<IDashboardWidget>>;
 
@@ -7300,6 +7361,9 @@ export const selectEnableAnalyticalDashboardPermissions: DashboardSelector<boole
 
 // @internal
 export const selectEnableAttributeFilterValuesValidation: DashboardSelector<boolean>;
+
+// @alpha (undocumented)
+export const selectEnableAutomations: DashboardSelector<boolean>;
 
 // @public
 export const selectEnableClickableAttributeURL: DashboardSelector<boolean>;
@@ -7541,8 +7605,14 @@ export const selectIsCancelEditModeDialogOpen: DashboardSelector<boolean>;
 // @internal
 export const selectIsCircularDependency: (currentFilterLocalId: string, neighborFilterLocalId: string) => DashboardSelector<boolean>;
 
+// @beta (undocumented)
+export const selectIsCrossFiltering: DashboardSelector<boolean>;
+
 // @internal
 export const selectIsDashboardDirty: DashboardSelector<boolean>;
+
+// @internal (undocumented)
+export const selectIsDashboardExecuted: DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export const selectIsDashboardLoading: DashboardSelector<boolean>;
@@ -7697,6 +7767,12 @@ export const selectMapboxToken: DashboardSelector<string | undefined>;
 // @alpha (undocumented)
 export const selectMenuButtonItemsVisibility: DashboardSelector<IMenuButtonItemsVisibility>;
 
+// @alpha
+export const selectNotificationChannels: DashboardSelector<INotificationChannelMetadataObject[]>;
+
+// @alpha
+export const selectNotificationChannelsCount: DashboardSelector<number>;
+
 // @public
 export const selectObjectAvailabilityConfig: DashboardSelector<ObjectAvailabilityConfig>;
 
@@ -7742,15 +7818,6 @@ export const selectSettings: DashboardSelector<ISettings>;
 // @internal
 export const selectShouldHidePixelPerfectExperience: DashboardSelector<string | number | boolean | object>;
 
-// @alpha
-export const selectSmtps: DashboardSelector<Smtps>;
-
-// @alpha
-export const selectSmtpsError: DashboardSelector<GoodDataSdkError | undefined>;
-
-// @alpha
-export const selectSmtpsIsLoading: DashboardSelector<boolean>;
-
 // @internal
 export const selectStash: DashboardSelector<LayoutStash>;
 
@@ -7794,19 +7861,10 @@ export const selectSupportsSettingConnectingAttributes: DashboardSelector<boolea
 export const selectSupportsSingleSelectDependentFilters: DashboardSelector<boolean>;
 
 // @alpha
-export const selectUsers: DashboardSelector<Users>;
+export const selectUsers: DashboardSelector<IWorkspaceUser[]>;
 
 // @internal (undocumented)
 export const selectValidConfiguredDrillsByWidgetRef: (ref: ObjRef) => DashboardSelector<IImplicitDrillWithPredicates[]>;
-
-// @alpha
-export const selectWebhooks: DashboardSelector<Webhooks>;
-
-// @alpha
-export const selectWebhooksError: DashboardSelector<GoodDataSdkError | undefined>;
-
-// @alpha
-export const selectWebhooksIsLoading: DashboardSelector<boolean>;
 
 // @internal
 export const selectWeekStart: DashboardSelector<WeekStart>;
@@ -8135,19 +8193,6 @@ export class SingleDashboardStoreAccessor {
 
 // @public
 export function singleEventTypeHandler(type: (DashboardEvents | ICustomDashboardEvent)["type"], handler: DashboardEventHandler["handler"]): DashboardEventHandler;
-
-// @alpha
-export type Smtps = ISmtpDefinitionObject[];
-
-// @alpha (undocumented)
-export interface SmtpsState {
-    // (undocumented)
-    error?: GoodDataSdkError;
-    // (undocumented)
-    loading: boolean;
-    // (undocumented)
-    smtps: Smtps;
-}
 
 // @beta
 export type StashedDashboardItemsId = string;
@@ -8532,20 +8577,20 @@ export type UseCustomWidgetInsightDataViewCallbacks = UseCancelablePromiseCallba
 
 // @alpha
 export const useDashboardAlerts: () => {
-    webhooks: Webhooks_2;
+    isInitialized: boolean;
     automations: IAutomationMetadataObject[];
-    alertingLoadError: GoodDataSdkError | undefined;
     alertingToEdit: {
         alert: IAutomationMetadataObject;
         widget: IInsightWidget | undefined;
         anchor: HTMLElement | null;
     } | null;
-    defaultOnAlerting: () => void;
-    defaultOnAlertsManagement: () => void;
+    alertingLoadError: GoodDataSdkError | undefined;
     isAlertingLoading: boolean;
     isAlertsManagementVisible: boolean;
     isAlertingDialogOpen: boolean;
     isAlertingManagementDialogOpen: boolean;
+    defaultOnAlerting: () => void;
+    defaultOnAlertsManagement: () => void;
     onAlertingManagementEdit: (alert: IAutomationMetadataObject, widget: IInsightWidget | undefined, anchor: HTMLElement | null, onClosed: () => void) => void;
     onAlertingManagementClose: () => void;
     onAlertingManagementDeleteSuccess: () => void;
@@ -8565,6 +8610,12 @@ export interface UseDashboardAsyncRender {
 
 // @public
 export const useDashboardAsyncRender: (id: string) => UseDashboardAsyncRender;
+
+// @alpha (undocumented)
+export const useDashboardAutomations: () => {
+    refreshAutomations: () => void;
+    initializeAutomations: () => void;
+};
 
 // @internal (undocumented)
 export const useDashboardCommandProcessing: <TCommand extends DashboardCommands, TCommandCreatorArgs extends any[], TSuccessEventType extends DashboardEventType, TErrorEventType extends DashboardEventType>({ commandCreator, successEvent, errorEvent, onSuccess, onError, onBeforeRun, }: {
@@ -8964,36 +9015,44 @@ export type UseDashboardQueryProcessingResult<TQueryCreatorArgs extends any[], T
 
 // @alpha
 export const useDashboardScheduledEmails: () => {
-    webhooks: Webhooks_2;
-    emails: Smtps_2;
-    users: Users_2;
+    scheduledExportToEdit: IAutomationMetadataObject | undefined;
+    isInitialized: boolean;
+    users: IWorkspaceUser[];
+    notificationChannels: INotificationChannelMetadataObject[];
     automations: IAutomationMetadataObject[];
     automationsCount: number;
-    schedulingLoadError: GoodDataSdkError | undefined;
     numberOfAvailableDestinations: number;
-    isScheduleLoading: boolean;
+    widget: ExtendedDashboardWidget_2 | undefined;
+    insight: IInsight | undefined;
+    automationsLoading: boolean;
+    automationsError: GoodDataSdkError | undefined;
     isScheduledEmailingVisible: boolean;
-    isScheduledManagementEmailingVisible: boolean;
-    defaultOnScheduleEmailing: (widget?: IWidget) => void;
-    defaultOnScheduleEmailingManagement: (widget?: IWidget) => void;
     isScheduleEmailingDialogOpen: boolean;
-    isScheduleEmailingManagementDialogOpen: boolean;
-    scheduleEmailingDialogContext: IScheduleEmailDialogContext_2;
-    scheduleEmailingManagementDialogContext: IScheduleEmailDialogContext_2;
-    onScheduleEmailingOpen: (widget?: IWidget) => void;
-    onScheduleEmailingManagementOpen: (widget?: IWidget) => void;
-    onScheduleEmailingManagementEdit: (schedule: IAutomationMetadataObject, widget?: IWidget) => void;
-    scheduledEmailToEdit: IAutomationMetadataObject | undefined;
-    onScheduleEmailingCancel: (widget?: IWidget) => void;
+    defaultOnScheduleEmailing: (widget?: IWidget | undefined) => void;
+    onScheduleEmailingOpen: (widget?: IWidget | undefined) => void;
+    onScheduleEmailingCancel: (widget?: IWidget | undefined) => void;
     onScheduleEmailingCreateError: () => void;
-    onScheduleEmailingCreateSuccess: (widget?: IWidget) => void;
+    onScheduleEmailingCreateSuccess: (scheduledEmail: IAutomationMetadataObject) => void;
     onScheduleEmailingSaveError: () => void;
-    onScheduleEmailingSaveSuccess: (widget?: IWidget) => void;
-    onScheduleEmailingManagementAdd: (widget?: IWidget) => void;
+    onScheduleEmailingSaveSuccess: (widget?: IWidget | undefined) => void;
+    isScheduledManagementEmailingVisible: boolean;
+    isScheduleEmailingManagementDialogOpen: boolean;
+    defaultOnScheduleEmailingManagement: (widget?: IWidget | undefined) => void;
+    onScheduleEmailingManagementOpen: (widget?: IWidget | undefined) => void;
+    onScheduleEmailingManagementEdit: (schedule: IAutomationMetadataObject, widget?: IWidget | undefined) => void;
+    onScheduleEmailingManagementAdd: (widget?: IWidget | undefined) => void;
     onScheduleEmailingManagementClose: () => void;
     onScheduleEmailingManagementLoadingError: () => void;
     onScheduleEmailingManagementDeleteSuccess: () => void;
     onScheduleEmailingManagementDeleteError: () => void;
+};
+
+// @alpha (undocumented)
+export const useDashboardScheduledEmailsFilters: ({ scheduledExportToEdit, widget, insight, }: IUseDashboardScheduledEmailsFiltersProps) => {
+    widgetFilters: IFilter[] | undefined;
+    widgetFiltersLoading: boolean;
+    widgetFiltersError: GoodDataSdkError | undefined;
+    dashboardFilters: FilterContextItem[] | undefined;
 };
 
 // @public
@@ -9012,6 +9071,8 @@ export const useDashboardUserInteraction: () => {
     addInteractionClicked: () => void;
     attributeHierarchiesInteraction: (eventType: AttributeHierarchiesInteractionType) => void;
     dateFilterInteraction: (eventType: DateFilterInteractionType) => void;
+    visualizationSwitcherInteraction: (eventType: VisualizationSwitcherInteractionType) => void;
+    automationInteraction: (eventData: AutomationInteractionData) => void;
 };
 
 // @internal (undocumented)
@@ -9138,6 +9199,12 @@ export function useEditButtonProps(): IEditButtonProps;
 // @alpha (undocumented)
 export const useFilterBarProps: () => IFilterBarProps;
 
+// @alpha
+export const useFiltersForDashboardScheduledExport: ({ scheduledExportToEdit, }: IUseFiltersForDashboardScheduledExportProps) => FilterContextItem[] | undefined;
+
+// @alpha
+export function useFiltersForWidgetScheduledExport({ scheduledExportToEdit, widget, insight, }: IUseFiltersForWidgetScheduledExportProps): QueryProcessingState<IFilter[]>;
+
 // @public
 export function useInsightWidgetDataView(config: IUseInsightWidgetDataView & UseInsightWidgetInsightDataViewCallbacks): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
 
@@ -9154,7 +9221,7 @@ export type UseParentFiltersResult = Pick<IAttributeFilterBaseProps, "parentFilt
 export type UserInteractionPayload = UserInteractionPayloadWithData | BareUserInteractionPayload;
 
 // @beta (undocumented)
-export type UserInteractionPayloadWithData = KpiAlertDialogOpenedPayload | DescriptionTooltipOpenedPayload | ShareDialogInteractionPayload;
+export type UserInteractionPayloadWithData = KpiAlertDialogOpenedPayload | DescriptionTooltipOpenedPayload | ShareDialogInteractionPayload | AutomationInteractionPayload;
 
 // @beta (undocumented)
 export interface UserInteractionPayloadWithDataBase<TType extends string, TData extends object> {
@@ -9170,13 +9237,10 @@ export function userInteractionTriggered(interactionPayloadOrType: UserInteracti
 // @beta (undocumented)
 export type UserInteractionType = UserInteractionPayload["interaction"];
 
-// @alpha
-export type Users = IWorkspaceUser[];
-
 // @alpha (undocumented)
 export interface UsersState {
     // (undocumented)
-    users: Users;
+    users: IWorkspaceUser[];
 }
 
 // @public (undocumented)
@@ -9187,7 +9251,7 @@ export interface UserState {
 
 // @internal (undocumented)
 export function useSaveAlertToBackend({ onCreateSuccess, onCreateError, onUpdateSuccess, onUpdateError, onPauseSuccess, onPauseError, onResumeSuccess, onResumeError, }: {
-    onCreateSuccess?: () => void;
+    onCreateSuccess?: (alert: IAutomationMetadataObject) => void;
     onCreateError?: (error: Error) => void;
     onUpdateSuccess?: () => void;
     onUpdateError?: (error: Error) => void;
@@ -9260,6 +9324,9 @@ export type VisualizationSwitcherDraggableListItem = BaseDraggableLayoutItem & {
 // @internal (undocumented)
 export type VisualizationSwitcherDraggingComponent = ComponentType<IVisualizationSwitcherDraggingComponentProps>;
 
+// @beta (undocumented)
+export type VisualizationSwitcherInteractionType = "visualizationSwitcherChanged";
+
 // @alpha (undocumented)
 export type VisualizationSwitcherToolbarComponentProvider = (widget: IVisualizationSwitcherWidget) => CustomVisualizationSwitcherToolbarComponent;
 
@@ -9271,19 +9338,6 @@ export function visualizationSwitcherWidgetVisualizationAdded(ctx: DashboardCont
 
 // @internal (undocumented)
 export function visualizationSwitcherWidgetVisualizationsUpdated(ctx: DashboardContext, ref: ObjRef, visualizations: IInsightWidget[], correlationId?: string): DashboardVisualizationSwitcherWidgetVisualizationsUpdated;
-
-// @alpha
-export type Webhooks = IWebhookDefinitionObject[];
-
-// @alpha (undocumented)
-export interface WebhooksState {
-    // (undocumented)
-    error?: GoodDataSdkError;
-    // (undocumented)
-    loading: boolean;
-    // (undocumented)
-    webhooks: Webhooks;
-}
 
 // @public (undocumented)
 export type WidgetComponentProvider = (widget: ExtendedDashboardWidget) => CustomDashboardWidgetComponent;

@@ -1,4 +1,5 @@
 // (C) 2024 GoodData Corporation
+@use "sass:color";
 @use "variables";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
@@ -33,7 +34,11 @@
     .left-section {
         padding: 4px;
         flex: 0 1 auto;
+        &:not(.is-active):hover path {
+            fill: kit-variables.$gd-color-text;
+        }
     }
+
     .vertical-divider {
         flex: 0 0 1px;
         width: 1px;
@@ -57,6 +62,9 @@
         padding: 4px;
         justify-content: center;
         align-items: center;
+        &:not(.is-disabled):hover path {
+            fill: kit-variables.$gd-color-text;
+        }
     }
 
     .right-section {
@@ -94,6 +102,10 @@
         color: var(--gd-palette-complementary-6, #94a1ad);
     }
 
+    .configuration-panel-header-close-button {
+        display: none;
+    }
+
     .visualizations-list {
         max-height: 253px;
         overflow-y: auto;
@@ -122,9 +134,60 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 15px;
         height: 40px;
         cursor: pointer;
+
+        .switcher-visualizations-list-item-content {
+            width: 100%;
+            padding: 0 0 0 15px;
+        }
+
+        .gd-vis-switcher-show-more-button {
+            display: none;
+            position: relative;
+            padding: 5px 14px;
+            border: 1px solid transparent;
+            outline: 0;
+            font: 700 14px/20px gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
+            height: 40px;
+            white-space: nowrap;
+            vertical-align: middle;
+            cursor: pointer;
+            text-align: left;
+            background: transparent;
+        }
+
+        &:not(.is-selected) {
+            .gd-vis-switcher-show-more-button {
+                // stylelint-disable-next-line max-nesting-depth
+                &:hover {
+                    background: var(--gd-palette-complementary-7, #ccd8e2);
+                    color: kit-variables.$gd-color-state-blank;
+                }
+            }
+        }
+        &.is-selected.is-active {
+            background-color: kit-variables.$gd-palette-primary-dimmed;
+
+            .gd-vis-switcher-show-more-button {
+                display: block;
+                background: var(
+                    --gd-palette-primary-dimmed50,
+                    color.mix(kit-variables.$gd-color-highlight, kit-variables.$default-gd-color-white, 30%)
+                );
+                color: var(--gd-palette-primary-0, #14b2e2);
+            }
+        }
+
+        &.is-active:not(.is-selected) {
+            background: kit-variables.$is-focused-background;
+
+            .gd-vis-switcher-show-more-button {
+                display: block;
+                background: var(--gd-palette-complementary-7, #ccd8e2);
+                color: kit-variables.$gd-color-state-blank;
+            }
+        }
 
         &:hover {
             background-color: kit-variables.$is-focused-background;
@@ -132,6 +195,11 @@
             .visualization-title,
             .gd-vis-type {
                 color: kit-variables.$is-focused-color;
+            }
+
+            .gd-vis-switcher-show-more-button {
+                display: block;
+                color: kit-variables.$gd-color-state-blank;
             }
         }
 
@@ -141,8 +209,30 @@
                 font-weight: 700;
                 color: var(--gd-palette-primary-0, #14b2e2);
             }
+
+            .gd-vis-switcher-show-more-button {
+                color: var(--gd-palette-primary-0, #14b2e2);
+            }
+
             &:hover {
                 background-color: kit-variables.$gd-palette-primary-dimmed;
+
+                // stylelint-disable-next-line max-nesting-depth
+                .gd-vis-switcher-show-more-button {
+                    color: var(--gd-palette-primary-0, #14b2e2);
+
+                    // stylelint-disable-next-line max-nesting-depth
+                    &:hover {
+                        background: var(
+                            --gd-palette-primary-dimmed50,
+                            color.mix(
+                                kit-variables.$gd-color-highlight,
+                                kit-variables.$default-gd-color-white,
+                                30%
+                            )
+                        );
+                    }
+                }
             }
         }
         .visualization-title {
@@ -153,11 +243,24 @@
             white-space: nowrap;
             max-width: 150px;
 
-            span {
+            .gd-visualizations-list-item-content-name-text {
                 display: inline-block;
                 width: 100%;
                 white-space: nowrap;
             }
         }
+    }
+}
+
+.gd-vis-swicher-show-more-item-remove {
+    &:hover {
+        background-color: var(--gd-palette-error-lightest, #fff2f1);
+        color: kit-variables.$gd-palette-error-base;
+    }
+}
+
+.gd-vis-switcher-show-more-item {
+    &.is-disabled {
+        cursor: default;
     }
 }

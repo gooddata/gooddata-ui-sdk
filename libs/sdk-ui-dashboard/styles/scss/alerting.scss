@@ -74,6 +74,10 @@
     &:hover {
         background-color: kit-variables.$is-focused-background;
     }
+
+    &--readonly {
+        cursor: default;
+    }
 }
 
 .gd-alerts-list-item__content {
@@ -198,6 +202,7 @@
 }
 
 .gd-edit-alert-configuration__trigger-label {
+    color: kit-variables.$gd-color-text;
     display: flex;
     align-items: center;
     width: 50%;

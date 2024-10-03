@@ -9,6 +9,11 @@ import { AlertActionsDropdown } from "./AlertActionsDropdown.js";
 import { getAlertThreshold, getOperatorTitle } from "./utils.js";
 import { gdColorNegative } from "../../../../constants/colors.js";
 import { useAlertValidation } from "./hooks/useAlertValidation.js";
+import {
+    selectCanManageWorkspace,
+    selectCurrentUser,
+    useDashboardSelector,
+} from "../../../../../model/index.js";
 
 interface IAlertsListItemProps {
     alert: IAutomationMetadataObject;
@@ -30,9 +35,17 @@ export const AlertsListItem: React.FC<IAlertsListItemProps> = ({
     const isPaused = alert.alert?.trigger?.state === "PAUSED";
     const description = `${getOperatorTitle(intl, alert.alert)} ${getAlertThreshold(alert.alert)}`;
     const { isValid } = useAlertValidation(alert);
+    const currentUser = useDashboardSelector(selectCurrentUser);
+    const canManageWorkspace = useDashboardSelector(selectCanManageWorkspace);
+    const canEdit =
+        canManageWorkspace || (currentUser && alert.createdBy && currentUser.login === alert.createdBy.login);
 
     return (
-        <div className="gd-alerts-list-item" key={alert.id} onClick={() => onEditAlert(alert)}>
+        <div
+            className={cx("gd-alerts-list-item", { "gd-alerts-list-item--readonly": !canEdit })}
+            key={alert.id}
+            onClick={canEdit ? () => onEditAlert(alert) : undefined}
+        >
             <div className="gd-alerts-list-item__content s-alert-list-item">
                 <div
                     className={cx("gd-alerts-list-item__icon", {
@@ -54,6 +67,7 @@ export const AlertsListItem: React.FC<IAlertsListItemProps> = ({
             </div>
             <div className="gd-alerts-list-item__actions">
                 <AlertActionsDropdown
+                    isReadOnly={!canEdit}
                     alert={alert}
                     onEdit={() => onEditAlert(alert)}
                     onPause={() => onPauseAlert(alert)}

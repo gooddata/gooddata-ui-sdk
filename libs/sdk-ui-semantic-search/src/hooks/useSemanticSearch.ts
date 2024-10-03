@@ -1,11 +1,7 @@
 // (C) 2024 GoodData Corporation
 
 import { useState, useEffect } from "react";
-import {
-    ISemanticSearchResultItem,
-    GenAISemanticSearchType,
-    ISemanticSearchRelationship,
-} from "@gooddata/sdk-model";
+import { ISemanticSearchResultItem, GenAIObjectType, ISemanticSearchRelationship } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
@@ -55,7 +51,7 @@ export type SemanticSearchHookInput = {
     /**
      * The object types to search for.
      */
-    objectTypes?: GenAISemanticSearchType[];
+    objectTypes?: GenAIObjectType[];
     /**
      * Whether to perform deep search.
      * E.g. find dashboard if it contains matching insight.
@@ -77,7 +73,7 @@ export type SemanticSearchHookInput = {
     workspace?: string;
 };
 
-const DEFAULT_OBJECT_TYPES: GenAISemanticSearchType[] = [];
+const DEFAULT_OBJECT_TYPES: GenAIObjectType[] = [];
 
 /**
  * Hook to perform semantic search.

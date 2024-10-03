@@ -756,6 +756,37 @@ export interface AttributeResultHeader {
     primaryLabelValue: string;
 }
 /**
+ * List of chat interactions
+ * @export
+ * @interface ChatInteraction
+ */
+export interface ChatInteraction {
+    /**
+     * Interaction content.
+     * @type {Array<CreatedVisualizationInteractionWithContext | FoundObjectInteractionWithContext | TextInteractionWithContext>}
+     * @memberof ChatInteraction
+     */
+    content: Array<
+        | CreatedVisualizationInteractionWithContext
+        | FoundObjectInteractionWithContext
+        | TextInteractionWithContext
+    >;
+    /**
+     * Role of actor.
+     * @type {string}
+     * @memberof ChatInteraction
+     */
+    role: ChatInteractionRoleEnum;
+}
+
+export const ChatInteractionRoleEnum = {
+    USER: "USER",
+    AI: "AI",
+} as const;
+
+export type ChatInteractionRoleEnum = typeof ChatInteractionRoleEnum[keyof typeof ChatInteractionRoleEnum];
+
+/**
  *
  * @export
  * @interface ChatRequest
@@ -774,17 +805,23 @@ export interface ChatRequest {
      */
     limitSearch?: number;
     /**
+     * Maximum number of relevant objects included into context for LLM (for each object type).
+     * @type {number}
+     * @memberof ChatRequest
+     */
+    limitCreateContext?: number;
+    /**
      * Maximum number of created results.
      * @type {number}
      * @memberof ChatRequest
      */
     limitCreate?: number;
     /**
-     * List of conversation interactions
-     * @type {Array<ConversationInteraction>}
+     * List of chat interactions
+     * @type {Array<ChatInteraction>}
      * @memberof ChatRequest
      */
-    conversationHistory?: Array<ConversationInteraction>;
+    chatHistory?: Array<ChatInteraction>;
     /**
      *
      * @type {UserContext}
@@ -835,11 +872,11 @@ export interface ChatResult {
      */
     invalidQuestion: boolean;
     /**
-     * List of objects found by similarity search.
-     * @type {Array<SearchResultObject>}
+     *
+     * @type {FoundObjects}
      * @memberof ChatResult
      */
-    foundObjects?: Array<SearchResultObject>;
+    foundObjects?: FoundObjects;
     /**
      *
      * @type {CreatedVisualizations}
@@ -973,37 +1010,6 @@ export type ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum
     typeof ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum[keyof typeof ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum];
 
 /**
- * List of conversation interactions
- * @export
- * @interface ConversationInteraction
- */
-export interface ConversationInteraction {
-    /**
-     *
-     * @type {CreatedVisualizationInteractionWithContext | FoundObjectInteractionWithContext | TextInteractionWithContext}
-     * @memberof ConversationInteraction
-     */
-    content:
-        | CreatedVisualizationInteractionWithContext
-        | FoundObjectInteractionWithContext
-        | TextInteractionWithContext;
-    /**
-     * Role of actor.
-     * @type {string}
-     * @memberof ConversationInteraction
-     */
-    role: ConversationInteractionRoleEnum;
-}
-
-export const ConversationInteractionRoleEnum = {
-    USER: "USER",
-    AI: "AI",
-} as const;
-
-export type ConversationInteractionRoleEnum =
-    typeof ConversationInteractionRoleEnum[keyof typeof ConversationInteractionRoleEnum];
-
-/**
  * Visualization created by AI.
  * @export
  * @interface CreatedVisualization
@@ -1047,6 +1053,7 @@ export const CreatedVisualizationVisualizationTypeEnum = {
     BAR: "BAR",
     LINE: "LINE",
     PIE: "PIE",
+    COLUMN: "COLUMN",
 } as const;
 
 export type CreatedVisualizationVisualizationTypeEnum =
@@ -1063,13 +1070,13 @@ export interface CreatedVisualizationInteractionWithContext {
      * @type {boolean}
      * @memberof CreatedVisualizationInteractionWithContext
      */
-    includeToChatContext: boolean;
+    includeToChatContext?: boolean;
     /**
      * User feedback
      * @type {string}
      * @memberof CreatedVisualizationInteractionWithContext
      */
-    userFeedback: CreatedVisualizationInteractionWithContextUserFeedbackEnum;
+    userFeedback?: CreatedVisualizationInteractionWithContextUserFeedbackEnum;
     /**
      *
      * @type {CreatedVisualization}
@@ -1711,13 +1718,13 @@ export interface FoundObjectInteractionWithContext {
      * @type {boolean}
      * @memberof FoundObjectInteractionWithContext
      */
-    includeToChatContext: boolean;
+    includeToChatContext?: boolean;
     /**
      * User feedback
      * @type {string}
      * @memberof FoundObjectInteractionWithContext
      */
-    userFeedback: FoundObjectInteractionWithContextUserFeedbackEnum;
+    userFeedback?: FoundObjectInteractionWithContextUserFeedbackEnum;
     /**
      *
      * @type {SearchResultObject}
@@ -1747,6 +1754,25 @@ export interface FoundObjectInteractionWithContextAllOf {
      * @memberof FoundObjectInteractionWithContextAllOf
      */
     foundObject?: SearchResultObject;
+}
+/**
+ * List of objects found by similarity search.
+ * @export
+ * @interface FoundObjects
+ */
+export interface FoundObjects {
+    /**
+     * List of objects found with a similarity search.
+     * @type {Array<SearchResultObject>}
+     * @memberof FoundObjects
+     */
+    objects: Array<SearchResultObject>;
+    /**
+     * Reasoning from LLM. Description of how the answer was generated.
+     * @type {string}
+     * @memberof FoundObjects
+     */
+    reasoning: string;
 }
 /**
  * Contains the information specific for a group of headers. These groups correlate to attributes and metric groups.
@@ -1830,13 +1856,13 @@ export interface InteractionWithContext {
      * @type {boolean}
      * @memberof InteractionWithContext
      */
-    includeToChatContext: boolean;
+    includeToChatContext?: boolean;
     /**
      * User feedback
      * @type {string}
      * @memberof InteractionWithContext
      */
-    userFeedback: InteractionWithContextUserFeedbackEnum;
+    userFeedback?: InteractionWithContextUserFeedbackEnum;
 }
 
 export const InteractionWithContextUserFeedbackEnum = {
@@ -3153,13 +3179,13 @@ export interface TextInteractionWithContext {
      * @type {boolean}
      * @memberof TextInteractionWithContext
      */
-    includeToChatContext: boolean;
+    includeToChatContext?: boolean;
     /**
      * User feedback
      * @type {string}
      * @memberof TextInteractionWithContext
      */
-    userFeedback: TextInteractionWithContextUserFeedbackEnum;
+    userFeedback?: TextInteractionWithContextUserFeedbackEnum;
     /**
      * Object found by similarity search.
      * @type {string}

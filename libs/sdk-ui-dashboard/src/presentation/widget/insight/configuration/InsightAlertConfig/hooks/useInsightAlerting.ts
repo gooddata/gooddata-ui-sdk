@@ -3,7 +3,6 @@ import {
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
     IInsightWidget,
-    isAllTimeDateFilter,
 } from "@gooddata/sdk-model";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -14,24 +13,26 @@ import {
     selectEntitlementMaxAutomations,
     selectEntitlementUnlimitedAutomations,
     DEFAULT_MAX_AUTOMATIONS,
-    selectAutomationsCount,
-    selectWebhooks,
+    selectAllAutomationsCount,
     refreshAutomations,
     useDashboardDispatch,
     dispatchAndWaitFor,
-    selectAutomationsAlertsInContext,
+    selectDashboardUserAutomationAlertsInContext,
     selectDashboardId,
-    selectSmtps,
     selectLocale,
     selectCanCreateAutomation,
     selectCurrentUser,
+    useFiltersForWidgetScheduledExport,
+    selectNotificationChannels,
+    useDashboardUserInteraction,
+    selectCanManageWorkspace,
 } from "../../../../../../model/index.js";
 import { createDefaultAlert, getSupportedInsightMeasuresByInsight } from "../utils.js";
 import { messages } from "../messages.js";
-import { useWidgetFilters } from "../../../../common/useWidgetFilters.js";
 import { useSaveAlertToBackend } from "./useSaveAlertToBackend.js";
 import { fillMissingTitles, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { convertUserToAutomationRecipient } from "../../../../../scheduledEmail/DefaultScheduledEmailDialog/utils/automationHelpers.js";
+import { convertUserToAutomationRecipient } from "../../../../../../_staging/automation/index.js";
+import { useMetricsAndFacts } from "../../../../../../_staging/sharedHooks/useMetricsAndFacts.js";
 
 type InsightWidgetAlertingViewMode = "list" | "edit" | "create";
 
@@ -42,29 +43,44 @@ export interface IInsightWidgetAlertingProps {
 
 export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IInsightWidgetAlertingProps) => {
     const { addSuccess, addError } = useToastMessage();
+    const { automationInteraction } = useDashboardUserInteraction();
     const dispatch = useDashboardDispatch();
     const effectiveBackend = useBackendStrict();
     const effectiveWorkspace = useWorkspaceStrict();
-    const webhooks = useDashboardSelector(selectWebhooks);
-    const emails = useDashboardSelector(selectSmtps);
-    const alerts = useDashboardSelector(selectAutomationsAlertsInContext(widget?.localIdentifier));
+    const alerts = useDashboardSelector(
+        selectDashboardUserAutomationAlertsInContext(widget?.localIdentifier),
+    );
     const dashboard = useDashboardSelector(selectDashboardId);
     const insight = useDashboardSelector(selectInsightByWidgetRef(widget?.ref));
-    const automationsCount = useDashboardSelector(selectAutomationsCount);
+    const allAutomationsCount = useDashboardSelector(selectAllAutomationsCount);
     const maxAutomationsEntitlement = useDashboardSelector(selectEntitlementMaxAutomations);
     const unlimitedAutomationsEntitlement = useDashboardSelector(selectEntitlementUnlimitedAutomations);
     const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
     const currentUser = useDashboardSelector(selectCurrentUser);
+    const destinations = useDashboardSelector(selectNotificationChannels);
+    const canManageAutomations = useDashboardSelector(selectCanManageWorkspace);
 
-    const { handleCreateAlert, handleUpdateAlert, handlePauseAlert, handleResumeAlert } =
+    const { handleCreateAlert, handleUpdateAlert, handlePauseAlert, handleResumeAlert, isSavingAlert } =
         useSaveAlertToBackend({
-            onCreateSuccess: () => {
+            onCreateSuccess: (alert: IAutomationMetadataObject) => {
                 setViewMode("list");
                 handleRefreshAutomations();
                 addSuccess(messages.alertAddSuccess);
+
+                const destinationType = destinations.find(
+                    (channel) => channel.id === alert.notificationChannel,
+                )?.type;
+                automationInteraction({
+                    type: "alertCreated",
+                    destination_id: alert.notificationChannel,
+                    destination_type: destinationType,
+                    automation_id: alert.id,
+                    automation_name: alert.title,
+                    automation_visualization_type: insight?.insight.visualizationUrl,
+                    trigger_type: alert.alert?.trigger?.mode,
+                });
             },
             onCreateError: () => {
-                setIsLoading(false);
                 setViewMode("list");
                 addError(messages.alertSaveError);
             },
@@ -74,7 +90,6 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
                 addSuccess(messages.alertUpdateSuccess);
             },
             onUpdateError: () => {
-                setIsLoading(false);
                 cancelAlertEditing();
                 addError(messages.alertSaveError);
             },
@@ -83,7 +98,6 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
                 addSuccess(messages.alertPauseSuccess);
             },
             onPauseError: () => {
-                setIsLoading(false);
                 addError(messages.alertSaveError);
             },
             onResumeSuccess: () => {
@@ -91,13 +105,15 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
                 addSuccess(messages.alertResumeSuccess);
             },
             onResumeError: () => {
-                setIsLoading(false);
                 addError(messages.alertSaveError);
             },
         });
 
-    const { result: widgetFilters, status: widgetFiltersStatus } = useWidgetFilters(widget, insight);
-    const destinations = useMemo(() => [...emails, ...webhooks], [emails, webhooks]);
+    const { result: widgetFilters, status: widgetFiltersStatus } = useFiltersForWidgetScheduledExport({
+        widget,
+        insight,
+    });
+    const { metricsAndFacts, metricsAndFactsLoading, metricsAndFactsLoadingError } = useMetricsAndFacts();
     const locale = useDashboardSelector(selectLocale);
     const supportedMeasures = useMemo(
         () =>
@@ -110,36 +126,10 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     const defaultNotificationChannelId = destinations[0]?.id;
     const hasAlerts = alerts.length > 0;
     const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);
-    const maxAutomationsReached = automationsCount >= maxAutomations && !unlimitedAutomationsEntitlement;
-
-    // Handle async widget filters state
-    useEffect(() => {
-        if (supportedMeasures.length === 0) {
-            setIsLoading(false);
-            return;
-        }
-        if (widgetFiltersStatus === "success") {
-            setIsLoading(false);
-            const sanitizedFilters = widgetFilters.filter((filter) => !isAllTimeDateFilter(filter));
-            setDefaultAlert(
-                createDefaultAlert(sanitizedFilters, defaultMeasure!, defaultNotificationChannelId),
-            );
-        } else if (widgetFiltersStatus === "error") {
-            setIsLoading(false);
-            closeInsightWidgetMenu();
-            addError(messages.alertLoadingError);
-        }
-        // Avoid infinite loop by ignoring addError
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [
-        closeInsightWidgetMenu,
-        defaultMeasure,
-        defaultNotificationChannelId,
-        widgetFilters,
-        widgetFiltersStatus,
-    ]);
-
-    const [isLoading, setIsLoading] = useState(true);
+    const maxAutomationsReached = allAutomationsCount >= maxAutomations && !unlimitedAutomationsEntitlement;
+    const [isRefreshingAutomations, setIsRefreshingAutomations] = useState(false);
+    const [isDeletingAlert, setIsDeletingAlert] = useState(false);
+    const isLoadingFilters = widgetFiltersStatus === "pending" || widgetFiltersStatus === "running";
     const [viewMode, setViewMode] = useState<InsightWidgetAlertingViewMode>(
         alerts.length > 0 || !canCreateAutomation ? "list" : "create",
     );
@@ -148,8 +138,57 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     >(null);
     const [editingAlert, setEditingAlert] = useState<IAutomationMetadataObject | null>(null);
 
+    // Handle async widget filters and catalog state
+    useEffect(() => {
+        if (
+            widgetFiltersStatus === "success" &&
+            defaultMeasure &&
+            defaultNotificationChannelId &&
+            !metricsAndFactsLoading &&
+            !defaultAlert
+        ) {
+            setDefaultAlert(
+                createDefaultAlert(
+                    widgetFilters,
+                    defaultMeasure,
+                    defaultNotificationChannelId,
+                    metricsAndFacts?.metrics ?? [],
+                ),
+            );
+        } else if ((widgetFiltersStatus === "error" || metricsAndFactsLoadingError) && !defaultAlert) {
+            closeInsightWidgetMenu();
+            addError(messages.alertLoadingError);
+        }
+        // Avoid infinite loop by ignoring addError
+        // /eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [
+        closeInsightWidgetMenu,
+        defaultAlert,
+        defaultMeasure,
+        defaultNotificationChannelId,
+        widgetFilters,
+        widgetFiltersStatus,
+        metricsAndFacts,
+        metricsAndFactsLoading,
+        metricsAndFactsLoadingError,
+        addError,
+    ]);
+
+    useEffect(() => {
+        if (alerts.length === 0) {
+            automationInteraction({
+                type: "alertInitialized",
+                automation_visualization_type: insight?.insight.visualizationUrl,
+            });
+        }
+    }, [alerts.length, automationInteraction, insight?.insight.visualizationUrl]);
+
     const initiateAlertCreation = () => {
         setViewMode("create");
+        automationInteraction({
+            type: "alertInitialized",
+            automation_visualization_type: insight?.insight.visualizationUrl,
+        });
     };
 
     const cancelAlertCreation = () => {
@@ -181,14 +220,16 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             metadata: {
                 widget: widget?.localIdentifier,
             },
+            details: {
+                ...alert.details,
+                widgetName: widget?.title ?? "",
+            },
             recipients: [convertUserToAutomationRecipient(currentUser)],
         } as IAutomationMetadataObject;
-        setIsLoading(true);
         handleCreateAlert(alertToCreate);
     };
 
     const updateExistingAlert = (alert: IAutomationMetadataObject) => {
-        setIsLoading(true);
         handleUpdateAlert(alert);
     };
 
@@ -197,7 +238,6 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             ...alert,
             alert: { ...alert.alert, trigger: { ...alert.alert?.trigger, state: "PAUSED" } },
         } as IAutomationMetadataObject;
-        setIsLoading(true);
         handlePauseAlert(alertToPause);
     };
 
@@ -206,32 +246,51 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             ...alert,
             alert: { ...alert.alert, trigger: { ...alert.alert?.trigger, state: "ACTIVE" } },
         } as IAutomationMetadataObject;
-        setIsLoading(true);
         handleResumeAlert(alertToResume);
     };
 
     const deleteExistingAlert = async (alert: IAutomationMetadataObject) => {
-        setIsLoading(true);
+        setIsDeletingAlert(true);
+        const alertCreatorId = alert.createdBy?.login;
+        const currentUserId = currentUser?.login;
+        const isAlertCreatedByCurrentUser =
+            !!alertCreatorId && !!currentUserId && alertCreatorId === currentUserId;
+        const automationService = effectiveBackend.workspace(effectiveWorkspace).automations();
+
+        // If alert is created by current user, or user has permissions to manage automations, delete it, otherwise unsubscribe
+        const deleteMethod =
+            canManageAutomations || isAlertCreatedByCurrentUser
+                ? automationService.deleteAutomation.bind(automationService)
+                : automationService.unsubscribeAutomation.bind(automationService);
+
         try {
-            await effectiveBackend.workspace(effectiveWorkspace).automations().deleteAutomation(alert.id);
+            await deleteMethod(alert.id);
             addSuccess(messages.alertDeleteSuccess);
+            setIsDeletingAlert(false);
             setViewMode(alerts.length === 1 ? "create" : "list");
             handleRefreshAutomations();
         } catch (err) {
             addError(messages.alertDeleteError);
-            setIsLoading(false);
+            setIsDeletingAlert(false);
         }
     };
 
     const handleRefreshAutomations = useCallback(() => {
-        setIsLoading(true);
-        dispatchAndWaitFor(dispatch, refreshAutomations()).then(() => {
-            setIsLoading(false);
-        });
+        setIsRefreshingAutomations(true);
+        dispatchAndWaitFor(dispatch, refreshAutomations())
+            .then(() => {
+                setIsRefreshingAutomations(false);
+            })
+            .catch(() => setIsRefreshingAutomations(false));
     }, [dispatch]);
 
     return {
-        isLoading,
+        isLoading:
+            isSavingAlert ||
+            isLoadingFilters ||
+            isRefreshingAutomations ||
+            isDeletingAlert ||
+            metricsAndFactsLoading,
         destinations,
         alerts,
         viewMode,
@@ -250,5 +309,6 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         supportedMeasures,
         maxAutomationsReached,
         canCreateAutomation,
+        catalogMeasures: metricsAndFacts?.metrics ?? [],
     };
 };

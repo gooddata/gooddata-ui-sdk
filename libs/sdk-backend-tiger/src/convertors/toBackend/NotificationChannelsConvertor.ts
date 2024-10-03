@@ -35,17 +35,7 @@ export function convertCreateWebhookToNotificationChannel(
                 token: webhook.destination?.token,
             },
             customDashboardUrl: webhook.configuration?.dashboardUrl,
-            triggers:
-                webhook.triggers?.map((trigger) => ({
-                    type: trigger.type,
-                    ...(trigger?.allowOn
-                        ? {
-                              metadata: {
-                                  allowedOn: trigger.allowOn,
-                              },
-                          }
-                        : {}),
-                })) ?? [],
+            allowedRecipients: webhook.allowedRecipients,
         },
     };
 }
@@ -94,17 +84,7 @@ function convertCreateCustomEmailToNotificationChannel(
                 password: smtp.destination?.password,
             },
             customDashboardUrl: smtp.configuration?.dashboardUrl,
-            triggers:
-                smtp.triggers?.map((trigger) => ({
-                    type: trigger.type,
-                    ...(trigger?.allowOn
-                        ? {
-                              metadata: {
-                                  allowedOn: trigger.allowOn,
-                              },
-                          }
-                        : {}),
-                })) ?? [],
+            allowedRecipients: smtp.allowedRecipients,
         },
     };
 }
@@ -127,17 +107,7 @@ function convertCreateDefaultEmailToNotificationChannel(
                 fromEmail: smtp.destination?.address ?? "",
             },
             customDashboardUrl: smtp.configuration?.dashboardUrl,
-            triggers:
-                smtp.triggers?.map((trigger) => ({
-                    type: trigger.type,
-                    ...(trigger?.allowOn
-                        ? {
-                              metadata: {
-                                  allowedOn: trigger.allowOn,
-                              },
-                          }
-                        : {}),
-                })) ?? [],
+            allowedRecipients: smtp.allowedRecipients,
         },
     };
 }

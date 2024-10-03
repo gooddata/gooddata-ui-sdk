@@ -2,7 +2,7 @@
 
 import { createSelector } from "@reduxjs/toolkit";
 import { DashboardSelector, DashboardState } from "../types.js";
-import { Users } from "../../types/commonTypes.js";
+import { IWorkspaceUser } from "@gooddata/sdk-model";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -14,6 +14,6 @@ const selectSelf = createSelector(
  *
  * @alpha
  */
-export const selectUsers: DashboardSelector<Users> = createSelector(selectSelf, (state) => {
+export const selectUsers: DashboardSelector<IWorkspaceUser[]> = createSelector(selectSelf, (state) => {
     return state.users;
 });

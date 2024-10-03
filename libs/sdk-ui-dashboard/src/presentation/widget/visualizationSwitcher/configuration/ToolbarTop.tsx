@@ -5,8 +5,7 @@ import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import React, { useCallback } from "react";
 import { IInsightWidget } from "@gooddata/sdk-model";
 import { FormattedMessage } from "react-intl";
-
-import { gdColorStateBlank } from "../../../constants/colors.js";
+import cx from "classnames";
 
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "tc bc", offset: { x: 0, y: -8 } }];
 interface IToolbarTopProps {
@@ -33,7 +32,7 @@ export const ToolbarTop: React.FC<IToolbarTopProps> = ({
 
     const iconColor = visualizationsListShown
         ? theme?.palette?.primary?.base ?? GD_COLOR_HIGHLIGHT
-        : theme?.palette?.complementary?.c6 ?? gdColorStateBlank;
+        : theme?.palette?.complementary?.c7 ?? "#6D7680";
 
     const enabledColor = theme?.palette?.complementary?.c7 ?? "#6D7680";
     const disabledColor = theme?.palette?.complementary?.c5 ?? "#B0BECA";
@@ -59,9 +58,15 @@ export const ToolbarTop: React.FC<IToolbarTopProps> = ({
         onNavigate(nextWidgetId);
     }, [activeWidgetIndex, visualizations, onNavigate, nextDisabled]);
 
+    const leftSectionClassName = cx("left-section", visualizationsListShown ? "is-active" : null);
+
+    const navigatePrevClassName = cx("navigate-button", "navigate-prev", prevDisabled ? "is-disabled" : null);
+
+    const navigateNextClassName = cx("navigate-button", "navigate-next", nextDisabled ? "is-disabled" : null);
+
     return (
         <div className="gd-visualization-switcher-toolbar-top bubble bubble-light">
-            <div className="left-section" onClick={toggleVisualizationsList}>
+            <div className={leftSectionClassName} onClick={toggleVisualizationsList}>
                 <BubbleHoverTrigger eventsOnBubble={true}>
                     <Icon.VisualizationSwitcher color={iconColor} width={20} height={20} />
                     <Bubble alignPoints={bubbleAlignPoints}>
@@ -71,7 +76,7 @@ export const ToolbarTop: React.FC<IToolbarTopProps> = ({
             </div>
             <div className="vertical-divider" />
             <div className="middle-section">
-                <div className="navigate-button navigate-prev" onClick={onNavigatePrev}>
+                <div className={navigatePrevClassName} onClick={onNavigatePrev}>
                     <BubbleHoverTrigger eventsOnBubble={true}>
                         <Icon.ArrowLeft color={prevColor} />
                         <Bubble alignPoints={bubbleAlignPoints}>
@@ -82,7 +87,7 @@ export const ToolbarTop: React.FC<IToolbarTopProps> = ({
                 <div className="status">
                     {activeWidgetIndex + 1}/{visualizations.length}
                 </div>
-                <div className="navigate-button navigate-next" onClick={onNavigateNext}>
+                <div className={navigateNextClassName} onClick={onNavigateNext}>
                     <BubbleHoverTrigger eventsOnBubble={true}>
                         <Icon.ArrowRight color={nextColor} />
                         <Bubble alignPoints={bubbleAlignPoints}>

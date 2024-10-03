@@ -79,6 +79,7 @@ import {
     IAutomationsQuery,
     IAutomationsQueryResult,
     AutomationType,
+    IChatThread,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -125,14 +126,14 @@ import {
     IWebhookDefinition,
     ISmtpDefinitionObject,
     ISmtpDefinition,
-    GenAISemanticSearchType,
     IAutomationMetadataObjectDefinition,
     IAutomationMetadataObject,
-    ISemanticSearchRelationship,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
 import isEmpty from "lodash/isEmpty.js";
 import { AbstractExecutionFactory } from "../toolkit/execution.js";
+import { DummySemanticSearchQueryBuilder } from "./DummySemanticSearch.js";
+import { DummyGenAIChatThread } from "./DummyGenAIChatThread.js";
 
 /**
  * @internal
@@ -379,6 +380,9 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
         },
         genAI(): IGenAIService {
             return {
+                getChatThread(): IChatThread {
+                    return new DummyGenAIChatThread();
+                },
                 getSemanticSearchQuery(): ISemanticSearchQuery {
                     return new DummySemanticSearchQueryBuilder(workspace);
                 },
@@ -870,6 +874,7 @@ class DummyOrganization implements IOrganization {
 
     notificationChannels(): IOrganizationNotificationChannelService {
         return {
+            getCount: () => Promise.resolve(0),
             getAll: () => Promise.resolve([]),
             deleteChannel: () => Promise.resolve(),
             //emails
@@ -1167,65 +1172,6 @@ class DummyWorkspaceMeasuresService implements IWorkspaceMeasuresService {
     }
 }
 
-/**
- * Dummy query builder for semantic search testing
- * @internal
- */
-export class DummySemanticSearchQueryBuilder implements ISemanticSearchQuery {
-    constructor(private readonly workspaceId: string) {}
-    question = "";
-    withQuestion(question: string) {
-        this.question = question;
-        return this;
-    }
-    withLimit() {
-        return this;
-    }
-    withObjectTypes() {
-        return this;
-    }
-    withDeepSearch() {
-        return this;
-    }
-    async query({ signal }: { signal?: AbortSignal } = {}) {
-        await cancellableTimeout(100, signal);
-        return {
-            results: [
-                "dataset",
-                "attribute",
-                "label",
-                "fact",
-                "date",
-                "metric",
-                "visualization",
-                "dashboard",
-            ].map((type) => ({
-                id: type,
-                type: type as GenAISemanticSearchType,
-                workspaceId: this.workspaceId,
-                title: `${type} title`,
-                description: this.question,
-                tags: [] as string[],
-                createdAt: "2023-08-03T13:17:26.923537",
-                modifiedAt: "2023-08-03T13:17:26.923537",
-                visualizationUrl: type === "visualization" ? "local:line" : undefined,
-                score: 0.5,
-            })),
-            relationships: [] as ISemanticSearchRelationship[],
-        };
-    }
-}
-
-const cancellableTimeout = async (ms: number, signal?: AbortSignal) => {
-    return new Promise((res, rej) => {
-        if (signal?.aborted) {
-            rej(signal.reason);
-        }
-        signal?.addEventListener("abort", () => rej(signal.reason));
-        setTimeout(res, ms);
-    });
-};
-
 class DummyWorkspaceAutomationService implements IWorkspaceAutomationService {
     constructor(public readonly workspace: string) {}
 
@@ -1304,6 +1250,10 @@ class DummyWorkspaceAutomationService implements IWorkspaceAutomationService {
         } as IAutomationMetadataObject);
     }
 
+    unsubscribeAutomation(_id: string): Promise<void> {
+        return Promise.resolve(undefined);
+    }
+
     getAutomationsQuery(): IAutomationsQuery {
         return new DummyAutomationsQuery();
     }
@@ -1314,6 +1264,8 @@ class DummyAutomationsQuery implements IAutomationsQuery {
         size: number;
         page: number;
         author: string | null;
+        user: string | null;
+        recipient: string | null;
         dashboard: string | null;
         filter: { title?: string };
         sort: NonNullable<unknown>;
@@ -1323,6 +1275,8 @@ class DummyAutomationsQuery implements IAutomationsQuery {
         size: 100,
         page: 0,
         author: null,
+        user: null,
+        recipient: null,
         dashboard: null,
         filter: {},
         sort: {},
@@ -1368,6 +1322,16 @@ class DummyAutomationsQuery implements IAutomationsQuery {
 
     withAuthor(author: string): IAutomationsQuery {
         this.settings.author = author;
+        return this;
+    }
+
+    withRecipient(recipient: string): IAutomationsQuery {
+        this.settings.recipient = recipient;
+        return this;
+    }
+
+    withUser(user: string): IAutomationsQuery {
+        this.settings.user = user;
         return this;
     }
 

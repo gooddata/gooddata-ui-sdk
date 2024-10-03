@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import {
     IMeasure,
     IPoPMeasureDefinition,
@@ -17,8 +17,11 @@ import { invariant } from "ts-invariant";
 
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../../converters/index.js";
 import { IDashboardFilter } from "../../../../types.js";
-import { selectAllCatalogDateDatasetsMap, useDashboardSelector } from "../../../../model/index.js";
-import { useWidgetFilters } from "../../common/index.js";
+import {
+    selectAllCatalogDateDatasetsMap,
+    useDashboardSelector,
+    useWidgetFilters,
+} from "../../../../model/index.js";
 import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
 
 interface IUseKpiDataConfig {

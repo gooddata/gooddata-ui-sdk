@@ -4,67 +4,84 @@ import React from "react";
 
 import { ScheduledEmailDialog, ScheduledEmailManagementDialog } from "../../scheduledEmail/index.js";
 
-import { useDashboardScheduledEmails } from "../../../model/index.js";
+import { useDashboardScheduledEmails, useDashboardScheduledEmailsFilters } from "../../../model/index.js";
 
 export const ScheduledEmailDialogProvider = () => {
     const {
+        // Shared Local State
+        scheduledExportToEdit,
+        // Data
+        isInitialized,
         users,
-        emails,
-        webhooks,
+        widget,
+        insight,
         automations,
-        schedulingLoadError,
-        isScheduleLoading,
+        automationsLoading,
+        automationsError,
+        notificationChannels,
+        // Single Schedule Dialog
         isScheduleEmailingDialogOpen,
-        scheduleEmailingDialogContext,
-        isScheduleEmailingManagementDialogOpen,
-        scheduleEmailingManagementDialogContext,
         onScheduleEmailingCancel,
-        onScheduleEmailingCreateError,
         onScheduleEmailingCreateSuccess,
+        onScheduleEmailingCreateError,
+        onScheduleEmailingSaveSuccess,
+        onScheduleEmailingSaveError,
+        // Management / List Dialog
+        isScheduleEmailingManagementDialogOpen,
+        onScheduleEmailingManagementClose,
         onScheduleEmailingManagementAdd,
         onScheduleEmailingManagementEdit,
-        scheduledEmailToEdit,
-        onScheduleEmailingSaveError,
-        onScheduleEmailingSaveSuccess,
-        onScheduleEmailingManagementClose,
         onScheduleEmailingManagementDeleteSuccess,
         onScheduleEmailingManagementDeleteError,
     } = useDashboardScheduledEmails();
 
+    const { widgetFilters, dashboardFilters, widgetFiltersError, widgetFiltersLoading } =
+        useDashboardScheduledEmailsFilters({
+            scheduledExportToEdit,
+            widget,
+            insight,
+        });
+
+    const isLoading = [widgetFiltersLoading, automationsLoading].some(Boolean);
+    const loadingError = [widgetFiltersError, automationsError].find(Boolean);
+
+    if (!isInitialized) {
+        return null;
+    }
     return (
         <>
             {isScheduleEmailingManagementDialogOpen ? (
                 <ScheduledEmailManagementDialog
                     isVisible={isScheduleEmailingManagementDialogOpen}
-                    context={scheduleEmailingManagementDialogContext}
+                    automations={automations}
+                    notificationChannels={notificationChannels}
+                    scheduleDataError={loadingError}
+                    isLoadingScheduleData={isLoading}
                     onAdd={onScheduleEmailingManagementAdd}
                     onEdit={onScheduleEmailingManagementEdit}
                     onClose={onScheduleEmailingManagementClose}
                     onDeleteSuccess={onScheduleEmailingManagementDeleteSuccess}
                     onDeleteError={onScheduleEmailingManagementDeleteError}
-                    isLoadingScheduleData={isScheduleLoading}
-                    automations={automations}
-                    webhooks={webhooks}
-                    emails={emails}
-                    scheduleDataError={schedulingLoadError}
                 />
             ) : null}
             {isScheduleEmailingDialogOpen ? (
                 <ScheduledEmailDialog
                     isVisible={isScheduleEmailingDialogOpen}
-                    context={scheduleEmailingDialogContext}
+                    scheduledExportToEdit={scheduledExportToEdit}
+                    users={users}
+                    notificationChannels={notificationChannels}
+                    widget={widget}
+                    insight={insight}
+                    widgetFilters={widgetFilters}
+                    dashboardFilters={dashboardFilters}
+                    isLoading={isLoading}
                     onCancel={onScheduleEmailingCancel}
                     onError={onScheduleEmailingCreateError}
                     onSuccess={onScheduleEmailingCreateSuccess}
-                    editSchedule={scheduledEmailToEdit}
                     onSaveError={onScheduleEmailingSaveError}
                     onSaveSuccess={onScheduleEmailingSaveSuccess}
                     onDeleteSuccess={onScheduleEmailingManagementDeleteSuccess}
                     onDeleteError={onScheduleEmailingManagementDeleteError}
-                    users={users}
-                    webhooks={webhooks}
-                    emails={emails}
-                    automations={automations}
                 />
             ) : null}
         </>

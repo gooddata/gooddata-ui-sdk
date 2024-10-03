@@ -28,10 +28,6 @@ export type {
     IResolvedFilterValues,
     WidgetsOverlayFn,
     IDashboardWidgetOverlay,
-    Webhooks,
-    Smtps,
-    Users,
-    Automations,
 } from "./types/commonTypes.js";
 export type {
     ICustomWidget,

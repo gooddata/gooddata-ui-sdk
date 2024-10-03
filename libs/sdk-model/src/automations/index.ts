@@ -257,7 +257,20 @@ export interface IAutomationAlertComparisonCondition {
     /**
      * Identifier of left side of the condition.
      */
-    left: string;
+    left: {
+        /**
+         * Identifier of the measure.
+         */
+        id: string;
+        /**
+         * Title of the measure.
+         */
+        title?: string;
+        /**
+         * Format of the measure.
+         */
+        format?: string;
+    };
 
     /**
      * Right side of the condition.
@@ -301,12 +314,38 @@ export interface IAutomationAlertRelativeCondition {
         /**
          * Identifier of left side of the condition.
          */
-        left: string;
+        left: {
+            /**
+             * Identifier of the measure.
+             */
+            id: string;
+            /**
+             * Title of the measure.
+             */
+            title?: string;
+            /**
+             * Format of the measure.
+             */
+            format?: string;
+        };
 
         /**
          * Identifier of right side of the condition.
          */
-        right: string;
+        right: {
+            /**
+             * Identifier of the measure.
+             */
+            id: string;
+            /**
+             * Title of the measure.
+             */
+            title?: string;
+            /**
+             * Format of the measure.
+             */
+            format?: string;
+        };
     };
 
     /**

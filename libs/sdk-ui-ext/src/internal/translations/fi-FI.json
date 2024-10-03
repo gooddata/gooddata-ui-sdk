@@ -359,5 +359,9 @@
     "properties.clustering.threshold": "Kynnysarvo",
     "properties.clustering.threshold.placeholder": "0.03",
     "properties.clustering.threshold.tooltip": "Kynnysarvo määrittää, milloin tietoja ryhmitellään. <link>Lisätietoja</link>",
-    "visualizations.headline.tertiary.title": "Verrattuna"
+    "visualizations.headline.tertiary.title": "Verrattuna",
+    "properties.interactions.alerts": "Hälytys",
+    "properties.interactions.alerts.tooltip": "Salli käyttäjien luoda ilmoituksia tälle visualisoinnille dashboardeilla.",
+    "properties.interactions.scheduledExports": "Aikataulutetut viennit",
+    "properties.interactions.scheduledExports.tooltip": "Salli käyttäjien luoda ajoitetut viennit tälle visualisoinnille dashboardeissa."
 }

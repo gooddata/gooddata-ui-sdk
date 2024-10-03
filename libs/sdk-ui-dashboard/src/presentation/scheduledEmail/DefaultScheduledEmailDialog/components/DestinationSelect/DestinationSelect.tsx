@@ -11,7 +11,7 @@ import {
     SingleSelectListItem,
 } from "@gooddata/sdk-ui-kit";
 import { DEFAULT_DROPDOWN_ALIGN_POINTS } from "../../constants.js";
-import { ISmtpDefinitionObject, IWebhookDefinitionObject } from "@gooddata/sdk-model";
+import { INotificationChannelMetadataObject } from "@gooddata/sdk-model";
 
 const DROPDOWN_WIDTH = 199;
 
@@ -21,7 +21,7 @@ interface IDestinationItem {
 }
 
 interface IDestinationSelectProps {
-    notificationChannels: (IWebhookDefinitionObject | ISmtpDefinitionObject)[];
+    notificationChannels: INotificationChannelMetadataObject[];
     selectedItemId: string | undefined;
     onChange: (selectedItemId: string) => void;
 }

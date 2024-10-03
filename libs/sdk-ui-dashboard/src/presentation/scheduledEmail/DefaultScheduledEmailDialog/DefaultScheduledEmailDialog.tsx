@@ -1,5 +1,5 @@
 // (C) 2019-2024 GoodData Corporation
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import noop from "lodash/noop.js";
 import { defineMessage, useIntl } from "react-intl";
 import {
@@ -10,14 +10,12 @@ import {
     EditableLabel,
     Hyperlink,
     RecurrenceForm,
-    normalizeTime,
     Message,
     OverlayControllerProvider,
     OverlayController,
 } from "@gooddata/sdk-ui-kit";
 import { Textarea } from "./components/Textarea.js";
 import { Input } from "./components/Input.js";
-import { Attachments } from "./components/Attachments/Attachments.js";
 import { RecipientsSelect } from "./components/RecipientsSelect/RecipientsSelect.js";
 import { IntlWrapper } from "../../localization/index.js";
 import { DestinationSelect } from "./components/DestinationSelect/DestinationSelect.js";
@@ -26,30 +24,22 @@ import {
     useDashboardSelector,
     selectDateFormat,
     selectWeekStart,
-    selectEnableScheduling,
     selectDashboardTitle,
     selectEntitlementMaxAutomationRecipients,
     selectEntitlementMinimumRecurrenceMinutes,
-    selectWidgetByRef,
+    selectIsCrossFiltering,
 } from "../../../model/index.js";
 import { IScheduledEmailDialogProps } from "../types.js";
-import { invariant } from "ts-invariant";
 import { getDefaultCronExpression, useEditScheduledEmail } from "./hooks/useEditScheduledEmail.js";
 import { useSaveScheduledEmailToBackend } from "./hooks/useSaveScheduledEmailToBackend.js";
-import {
-    IAutomationMetadataObject,
-    IAutomationMetadataObjectDefinition,
-    isExportDefinitionDashboardRequestPayload,
-    isExportDefinitionVisualizationObjectRequestPayload,
-    IExportDefinitionVisualizationObjectContent,
-} from "@gooddata/sdk-model";
+import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
 import { getTimezoneByIdentifier, TIMEZONE_DEFAULT } from "./utils/timezone.js";
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX, DASHBOARD_TITLE_MAX_LENGTH } from "../../constants/index.js";
-import parseISO from "date-fns/parseISO/index.js";
 import { isMobileView } from "./utils/responsive.js";
 import { DeleteScheduleConfirmDialog } from "../DefaultScheduledEmailManagementDialog/components/DeleteScheduleConfirmDialog.js";
-import { areAutomationsEqual } from "./utils/automationHelpers.js";
-import { useScheduleValidation } from "./hooks/useScheduleValidation.js";
+import { DashboardAttachments } from "./components/Attachments/DashboardAttachments.js";
+import { WidgetAttachments } from "./components/Attachments/WidgetAttachments.js";
+import { useFiltersForDashboardScheduledExportInfo } from "./hooks/useFiltersForDashboardScheduledExportInfo.js";
 
 const MAX_MESSAGE_LENGTH = 200;
 const MAX_SUBJECT_LENGTH = 200;
@@ -58,45 +48,58 @@ const DEFAULT_MIN_RECURRENCE_MINUTES = "60";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 
-export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
-    const {
-        onCancel,
-        onDeleteSuccess,
-        onDeleteError,
-        isVisible,
-        editSchedule,
-        users,
-        webhooks,
-        emails,
-        context,
-    } = props;
+export function ScheduledMailDialogRenderer({
+    scheduledExportToEdit,
+    users,
+    notificationChannels,
+    insight,
+    widget,
+    dashboardFilters,
+    widgetFilters,
+    onCancel,
+    onDeleteSuccess,
+    onDeleteError,
+    onError,
+    onSave,
+    onSaveError,
+    onSaveSuccess,
+    onSubmit,
+    onSuccess,
+}: IScheduledEmailDialogProps) {
     const intl = useIntl();
+
     const [scheduledEmailToDelete, setScheduledEmailToDelete] = useState<
         IAutomationMetadataObject | IAutomationMetadataObjectDefinition | null
     >(null);
-    const locale = useDashboardSelector(selectLocale);
-    const dashboardTitle = useDashboardSelector(selectDashboardTitle);
-    const dateFormat = useDashboardSelector(selectDateFormat);
-    const weekStart = useDashboardSelector(selectWeekStart);
-    const enableKPIDashboardSchedule = useDashboardSelector(selectEnableScheduling);
-    const maxAutomationsRecipientsEntitlement = useDashboardSelector(
-        selectEntitlementMaxAutomationRecipients,
-    );
-    const maxAutomationsRecipients = parseInt(
-        maxAutomationsRecipientsEntitlement?.value ?? DEFAULT_MAX_RECIPIENTS,
-        10,
-    );
-    const minimumRecurrenceMinutesEntitlement = useDashboardSelector(
-        selectEntitlementMinimumRecurrenceMinutes,
-    );
-    const allowHourlyRecurrence =
-        parseInt(minimumRecurrenceMinutesEntitlement?.value ?? DEFAULT_MIN_RECURRENCE_MINUTES, 10) === 60;
 
-    const notificationChannels = useMemo(() => [...emails, ...webhooks], [webhooks, emails]);
+    const handleScheduleDeleteSuccess = () => {
+        onDeleteSuccess?.();
+        setScheduledEmailToDelete(null);
+    };
 
     const {
-        automation,
+        locale,
+        dashboardTitle,
+        dateFormat,
+        weekStart,
+        maxAutomationsRecipients,
+        allowHourlyRecurrence,
+        isCrossFiltering,
+    } = useDefaultScheduledEmailDialogData();
+
+    const {
+        editedAutomation,
         originalAutomation,
+        isSubmitDisabled,
+        settings,
+        startDate,
+        showRecipientsSelect,
+        isDashboardExportSelected,
+        isCsvExportSelected,
+        isXlsxExportSelected,
+        areDashboardFiltersChanged,
+        warningMessage,
+        validationErrorMessage,
         onDashboardAttachmentsChange,
         onWidgetAttachmentsChange,
         onWidgetAttachmentsSettingsChange,
@@ -106,101 +109,35 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
         onRecurrenceChange,
         onSubjectChange,
         onTitleChange,
-        isCronValid,
-    } = useEditScheduledEmail(props);
+    } = useEditScheduledEmail({
+        notificationChannels,
+        insight,
+        widget,
+        scheduledExportToEdit,
+        dashboardFilters,
+        widgetFilters,
+        maxAutomationsRecipients,
+    });
+
     const { handleSaveScheduledEmail, isSavingScheduledEmail, savingErrorMessage } =
-        useSaveScheduledEmailToBackend(automation, props);
-    const { isValid: isAutomationValid } = useScheduleValidation(originalAutomation);
-    const errorMessage = savingErrorMessage
-        ? savingErrorMessage
-        : !isAutomationValid
-        ? intl.formatMessage({ id: "dialogs.schedule.email.widgetError" })
-        : undefined;
+        useSaveScheduledEmailToBackend(editedAutomation, {
+            onSuccess,
+            onError,
+            onSubmit,
+            onSaveSuccess,
+            onSaveError,
+            onSave,
+        });
 
-    // It is needed to use originalAutomation here instead of automation, as in edit mode, all attachments may be removed
-    // and no connection to widget would exist anymore and form would fallback to editing of dashboard variant.
-    const editWidgetId = (
-        originalAutomation.exportDefinitions?.find((exportDefinition) =>
-            isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload),
-        )?.requestPayload.content as IExportDefinitionVisualizationObjectContent
-    )?.widget;
-    const editWidgetRef = editWidgetId ? { identifier: editWidgetId } : undefined;
-    const widget = useDashboardSelector(selectWidgetByRef(context?.widgetRef ?? editWidgetRef));
+    const errorMessage = savingErrorMessage ?? validationErrorMessage;
 
-    const isDashboardExportSelected =
-        automation.exportDefinitions?.some((exportDefinition) =>
-            isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload),
-        ) ?? false;
-
-    const isCsvExportSelected =
-        automation.exportDefinitions?.some((exportDefinition) => {
-            if (isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload)) {
-                return exportDefinition.requestPayload.format === "CSV";
-            }
-
-            return false;
-        }) ?? false;
-
-    const isXlsxExportSelected =
-        automation.exportDefinitions?.some((exportDefinition) => {
-            if (isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload)) {
-                return exportDefinition.requestPayload.format === "XLSX";
-            }
-
-            return false;
-        }) ?? false;
-
-    const settings = {
-        mergeHeaders:
-            automation.exportDefinitions?.some((exportDefinition) => {
-                if (isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload)) {
-                    return exportDefinition.requestPayload.settings?.mergeHeaders;
-                }
-
-                return false;
-            }) ?? true,
-    };
-
-    const isValid = (automation.recipients?.length ?? 0) <= maxAutomationsRecipients && isCronValid;
-    const isDestinationEmpty = !automation.notificationChannel;
-    const isAttachmentsEmpty = !automation.exportDefinitions?.length;
-    const isRecipientsEmpty = !automation.recipients || automation.recipients.length === 0;
-    const isSubmitDisabled =
-        !isValid ||
-        isDestinationEmpty ||
-        isAttachmentsEmpty ||
-        isRecipientsEmpty ||
-        (editSchedule && areAutomationsEqual(automation, originalAutomation));
-
-    const selectedNotificationChannel = notificationChannels.find(
-        (channel) => channel.id === automation.notificationChannel,
-    );
-    const showRecipientsSelect = selectedNotificationChannel?.allowedRecipients !== "CREATOR" ?? true;
-
-    const startDate = parseISO(
-        automation.schedule?.firstRun ?? normalizeTime(new Date(), undefined, 60).toISOString(),
-    );
-
-    const handleScheduleDeleteSuccess = () => {
-        onDeleteSuccess?.();
-        setScheduledEmailToDelete(null);
-    };
+    const dashboardScheduledExportFiltersInfo = useFiltersForDashboardScheduledExportInfo({
+        effectiveFilters: dashboardFilters,
+    });
 
     const helpTextId = isMobileView()
         ? defineMessage({ id: "dialogs.schedule.email.footer.title.short" }).id
         : defineMessage({ id: "dialogs.schedule.email.footer.title" }).id;
-
-    // trigger the invariant only if the user tries to open the dialog
-    if (isVisible) {
-        invariant(
-            enableKPIDashboardSchedule,
-            "Feature flag enableKPIDashboardSchedule must be enabled to make ScheduledMailDialog work properly.",
-        );
-    }
-
-    if (!isVisible) {
-        return null;
-    }
 
     return (
         <>
@@ -211,7 +148,7 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
                         isPositive={true}
                         cancelButtonText={intl.formatMessage({ id: "cancel" })}
                         submitButtonText={
-                            editSchedule
+                            scheduledExportToEdit
                                 ? intl.formatMessage({ id: `dialogs.schedule.email.save` })
                                 : intl.formatMessage({ id: `dialogs.schedule.email.create` })
                         }
@@ -223,11 +160,11 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
                                     href="https://www.gooddata.com/docs/cloud/create-dashboards/export/schedule-emailing/"
                                     iconClass="gd-icon-circle-question"
                                 />
-                                {editSchedule ? (
+                                {scheduledExportToEdit ? (
                                     <Button
                                         className="gd-button-link-dimmed"
                                         value={intl.formatMessage({ id: "delete" })}
-                                        onClick={() => setScheduledEmailToDelete(automation)}
+                                        onClick={() => setScheduledEmailToDelete(editedAutomation)}
                                         disabled={isSavingScheduledEmail}
                                     />
                                 ) : null}
@@ -245,13 +182,13 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
                                     onClick={onCancel}
                                 />
                                 <EditableLabel
-                                    value={automation.title ?? ""}
+                                    value={editedAutomation.title ?? ""}
                                     onSubmit={noop}
                                     onChange={onTitleChange}
                                     maxRows={1}
                                     maxLength={40}
                                     className="gd-notifications-channels-dialog-title s-gd-notifications-channels-dialog-title"
-                                    autofocus={!automation.title}
+                                    autofocus={!editedAutomation.title}
                                     placeholder={intl.formatMessage({
                                         id: "dialogs.schedule.email.title.placeholder",
                                     })}
@@ -264,11 +201,11 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
                             <RecurrenceForm
                                 startDate={startDate}
                                 cronExpression={
-                                    automation.schedule?.cron ?? getDefaultCronExpression(startDate)
+                                    editedAutomation.schedule?.cron ?? getDefaultCronExpression(startDate)
                                 }
                                 timezone={
                                     (
-                                        getTimezoneByIdentifier(automation.schedule?.timezone) ??
+                                        getTimezoneByIdentifier(editedAutomation.schedule?.timezone) ??
                                         TIMEZONE_DEFAULT
                                     ).title
                                 }
@@ -281,14 +218,14 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
                             <ContentDivider className="gd-divider-with-margin" />
                             <DestinationSelect
                                 notificationChannels={notificationChannels}
-                                selectedItemId={automation.notificationChannel}
+                                selectedItemId={editedAutomation.notificationChannel}
                                 onChange={onDestinationChange}
                             />
                             <ContentDivider className="gd-divider-with-margin" />
                             {showRecipientsSelect ? (
                                 <RecipientsSelect
                                     users={users}
-                                    value={automation.recipients ?? []}
+                                    value={editedAutomation.recipients ?? []}
                                     originalValue={originalAutomation.recipients || []}
                                     onChange={onRecipientsChange}
                                     allowEmptySelection
@@ -304,7 +241,7 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
                                         ? dashboardTitle.substring(0, DASHBOARD_TITLE_MAX_LENGTH)
                                         : dashboardTitle
                                 }
-                                value={automation.details?.subject ?? ""}
+                                value={editedAutomation.details?.subject ?? ""}
                                 onChange={onSubjectChange}
                             />
                             <Textarea
@@ -316,23 +253,39 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
                                 })}
                                 rows={3}
                                 onChange={onMessageChange}
-                                value={automation.details?.message ?? ""}
+                                value={editedAutomation.details?.message ?? ""}
                             />
-                            <Attachments
-                                dashboardTitle={dashboardTitle}
-                                dashboardSelected={isDashboardExportSelected}
-                                csvSelected={isCsvExportSelected}
-                                xlsxSelected={isXlsxExportSelected}
-                                settings={settings}
-                                onDashboardAttachmentsSelectionChange={onDashboardAttachmentsChange}
-                                onWidgetAttachmentsSelectionChange={onWidgetAttachmentsChange}
-                                onWidgetAttachmentsSettingsChange={onWidgetAttachmentsSettingsChange}
-                                widget={widget}
-                                editSchedule={editSchedule}
-                            />
+                            {widget ? (
+                                <WidgetAttachments
+                                    widgetFilters={widgetFilters}
+                                    areDashboardFiltersChanged={areDashboardFiltersChanged}
+                                    isCrossFiltering={isCrossFiltering}
+                                    scheduledExportToEdit={scheduledExportToEdit}
+                                    csvSelected={isCsvExportSelected}
+                                    xlsxSelected={isXlsxExportSelected}
+                                    settings={settings}
+                                    onWidgetAttachmentsSelectionChange={onWidgetAttachmentsChange}
+                                    onWidgetAttachmentsSettingsChange={onWidgetAttachmentsSettingsChange}
+                                />
+                            ) : (
+                                <DashboardAttachments
+                                    dashboardSelected={isDashboardExportSelected}
+                                    scheduledExportToEdit={scheduledExportToEdit}
+                                    areDashboardFiltersChanged={areDashboardFiltersChanged}
+                                    dashboardFilters={dashboardFilters}
+                                    isCrossFiltering={isCrossFiltering}
+                                    filtersToDisplayInfo={dashboardScheduledExportFiltersInfo}
+                                    onDashboardAttachmentsSelectionChange={onDashboardAttachmentsChange}
+                                />
+                            )}
                             {errorMessage ? (
                                 <Message type="error" className="gd-notifications-channels-dialog-error">
                                     {errorMessage}
+                                </Message>
+                            ) : null}
+                            {warningMessage ? (
+                                <Message type="warning" className="gd-notifications-channels-dialog-warning">
+                                    {warningMessage}
                                 </Message>
                             ) : null}
                             <ContentDivider className="gd-divider-with-margin gd-divider-full-row" />
@@ -356,7 +309,18 @@ export function ScheduledMailDialogRenderer(props: IScheduledEmailDialogProps) {
  * @alpha
  */
 export const DefaultScheduledEmailDialog: React.FC<IScheduledEmailDialogProps> = (props) => {
+    const { isVisible, isLoading } = props;
     const locale = useDashboardSelector(selectLocale);
+
+    /**
+     * The isLoading state typically resolves within milliseconds, as it awaits the widget filters' resolution.
+     * Although brief, this loading period is crucial. We must defer rendering until it completes to ensure
+     * the filters are properly synchronized for the default editing or creation state. Premature rendering
+     * could lead to filter inconsistencies.
+     */
+    if (!isVisible || isLoading) {
+        return null;
+    }
 
     return (
         <IntlWrapper locale={locale}>
@@ -364,3 +328,34 @@ export const DefaultScheduledEmailDialog: React.FC<IScheduledEmailDialogProps> =
         </IntlWrapper>
     );
 };
+
+function useDefaultScheduledEmailDialogData() {
+    const locale = useDashboardSelector(selectLocale);
+    const dashboardTitle = useDashboardSelector(selectDashboardTitle);
+    const dateFormat = useDashboardSelector(selectDateFormat);
+    const weekStart = useDashboardSelector(selectWeekStart);
+    const maxAutomationsRecipientsEntitlement = useDashboardSelector(
+        selectEntitlementMaxAutomationRecipients,
+    );
+    const maxAutomationsRecipients = parseInt(
+        maxAutomationsRecipientsEntitlement?.value ?? DEFAULT_MAX_RECIPIENTS,
+        10,
+    );
+    const minimumRecurrenceMinutesEntitlement = useDashboardSelector(
+        selectEntitlementMinimumRecurrenceMinutes,
+    );
+    const allowHourlyRecurrence =
+        parseInt(minimumRecurrenceMinutesEntitlement?.value ?? DEFAULT_MIN_RECURRENCE_MINUTES, 10) === 60;
+
+    const isCrossFiltering = useDashboardSelector(selectIsCrossFiltering);
+
+    return {
+        locale,
+        dashboardTitle,
+        dateFormat,
+        weekStart,
+        maxAutomationsRecipients,
+        allowHourlyRecurrence,
+        isCrossFiltering,
+    };
+}

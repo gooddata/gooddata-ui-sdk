@@ -1,0 +1,42 @@
+// (C) 2024 GoodData Corporation
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+@use "input";
+@use "variables" as variables;
+@use "messages";
+@use "agentState";
+@use "agentIcon";
+@use "window";
+
+.gd-gen-ai-chat {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: variables.$y-spacing;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: kit-variables.$gd-color-light;
+
+    &__disclaimer {
+        font-size: 12px;
+        color: kit-variables.$gd-color-state-blank;
+        text-align: center;
+        margin: 0 variables.$x-spacing variables.$y-spacing;
+    }
+
+    &__global_error {
+        padding: 4.5px 12px;
+        border-radius: 3px;
+        background: kit-variables.$gd-palette-error-dimmed;
+        margin: variables.$y-spacing variables.$x-spacing;
+
+        p {
+            color: kit-variables.$gd-palette-error-base;
+        }
+
+        &__details {
+            padding: 6px;
+        }
+    }
+}

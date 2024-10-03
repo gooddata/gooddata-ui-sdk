@@ -4,16 +4,10 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 import { IInsight, widgetTitle, insightVisualizationType } from "@gooddata/sdk-model";
 import { VisType } from "@gooddata/sdk-ui";
-import {
-    isInsightAlertingConfigurationEnabled,
-    isInsightScheduledExportsConfigurationEnabled,
-    isInsightSupportedForAlerts,
-    isInsightSupportedForScheduledExports,
-} from "@gooddata/sdk-ui-ext";
+
 import {
     useDashboardSelector,
     selectSettings,
-    isCustomWidget,
     useDashboardScheduledEmails,
 } from "../../../../model/index.js";
 import {
@@ -30,7 +24,7 @@ import { InsightWidgetDescriptionTrigger } from "../../description/InsightWidget
 import { useInsightMenu } from "./useInsightMenu.js";
 import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard.js";
 import { IDefaultDashboardInsightWidgetProps } from "./types.js";
-import { AlertingDisabledReason, SchedulingDisabledReason } from "../../insightMenu/index.js";
+import { useAlertingAndScheduling } from "./useAlertingAndScheduling.js";
 
 export const DefaultDashboardInsightWidget: React.FC<Omit<IDefaultDashboardInsightWidgetProps, "insight">> = (
     props,
@@ -48,11 +42,11 @@ const DefaultDashboardInsightWidgetCore: React.FC<
     const settings = useDashboardSelector(selectSettings);
 
     const {
-        onScheduleEmailingOpen,
-        onScheduleEmailingManagementOpen,
         isScheduledEmailingVisible,
         isScheduledManagementEmailingVisible,
         numberOfAvailableDestinations,
+        onScheduleEmailingOpen,
+        onScheduleEmailingManagementOpen,
     } = useDashboardScheduledEmails();
 
     const visType = insightVisualizationType(insight) as VisType;
@@ -72,43 +66,18 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         onScheduleEmailingManagementOpen(widget);
     }, [onScheduleEmailingManagementOpen, widget]);
 
-    const isStandardWidget = !isCustomWidget(widget);
-    const hasNoDestinations = numberOfAvailableDestinations === 0;
-
-    //NOTE: Check if widget has localIdentifier, if not that is probably widget from old dashboard
-    // and we should not allow to schedule export/alert because we need localIdentifier to identify the widget
-    const widgetHasNoLocalIdentifier = !widget.localIdentifier;
-
-    const isAlertingEnabled = settings.enableAlerting === true;
-    const isInsightTypeSupportedForAlerting = isInsightSupportedForAlerts(insight);
-    const isInsightEnabledForAlerting = isInsightAlertingConfigurationEnabled(insight);
-    const isAlertingVisible = isAlertingEnabled && isStandardWidget && isInsightTypeSupportedForAlerting;
-    const alertingDisabled = hasNoDestinations || !isInsightEnabledForAlerting || widgetHasNoLocalIdentifier;
-    let alertingDisabledReason: AlertingDisabledReason | undefined = undefined;
-    if (widgetHasNoLocalIdentifier) {
-        alertingDisabledReason = "oldWidget";
-    } else if (hasNoDestinations) {
-        alertingDisabledReason = "noDestinations";
-    } else if (!isInsightEnabledForAlerting) {
-        alertingDisabledReason = "disabledOnInsight";
-    }
-
-    const isInsightTypeSupportedForScheduling = isInsightSupportedForScheduledExports(insight);
-    const isInsightEnabledForScheduling = isInsightScheduledExportsConfigurationEnabled(insight);
-    const scheduleExportDisabled =
-        !isInsightTypeSupportedForScheduling ||
-        !isStandardWidget ||
-        !isInsightEnabledForScheduling ||
-        widgetHasNoLocalIdentifier;
-    const scheduleExportManagementDisabled = !isStandardWidget;
-    let scheduleExportDisabledReason: SchedulingDisabledReason | undefined = undefined;
-    if (widgetHasNoLocalIdentifier) {
-        scheduleExportDisabledReason = "oldWidget";
-    } else if (!isStandardWidget) {
-        scheduleExportDisabledReason = "incompatibleWidget";
-    } else if (!isInsightEnabledForScheduling || !isInsightTypeSupportedForScheduling) {
-        scheduleExportDisabledReason = "disabledOnInsight";
-    }
+    const {
+        isAlertingVisible,
+        alertingDisabled,
+        alertingDisabledReason,
+        scheduleExportDisabled,
+        scheduleExportManagementDisabled,
+        scheduleExportDisabledReason,
+    } = useAlertingAndScheduling({
+        widget,
+        insight,
+        numberOfAvailableDestinations,
+    });
 
     ///
     const { closeMenu, isMenuOpen, menuItems, openMenu } = useInsightMenu({

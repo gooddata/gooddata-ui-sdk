@@ -10,12 +10,24 @@ import omit from "lodash/omit.js";
 
 export function useSaveScheduledEmailToBackend(
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
-    { onSuccess, onError, onSubmit, onSaveSuccess, onSaveError, onSave }: IScheduledEmailDialogProps,
+    {
+        onSuccess,
+        onError,
+        onSubmit,
+        onSaveSuccess,
+        onSaveError,
+        onSave,
+    }: Pick<
+        IScheduledEmailDialogProps,
+        "onSuccess" | "onError" | "onSubmit" | "onSaveSuccess" | "onSaveError" | "onSave"
+    >,
 ) {
     const intl = useIntl();
     const [savingErrorMessage, setSavingErrorMessage] = useState<string | undefined>(undefined);
     const scheduledEmailCreator = useCreateScheduledEmail({
-        onSuccess,
+        onSuccess: (scheduledEmail: IAutomationMetadataObject) => {
+            onSuccess?.(scheduledEmail);
+        },
         onError: (error: GoodDataSdkError) => {
             /**
              * Handle 400 error separately as it contains a detailed error message

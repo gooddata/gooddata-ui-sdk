@@ -8,8 +8,8 @@ import {
     dispatchAndWaitFor,
     eagerRemoveSectionItemByWidgetRef,
     selectAnalyticalWidgetByRef,
-    selectAutomationsAlertsInContext,
-    selectAutomationsSchedulesInContext,
+    selectDashboardUserAutomationAlertsInContext,
+    selectDashboardUserAutomationSchedulesInContext,
     selectEnableAlerting,
     selectEnableScheduling,
     selectIsWidgetDeleteDialogOpen,
@@ -60,8 +60,12 @@ export function useWidgetDeleteDialogProps(): IWidgetDeleteDialogProps {
     const isVisible = useDashboardSelector(selectIsWidgetDeleteDialogOpen);
     const isSchedulingEnabled = useDashboardSelector(selectEnableScheduling);
     const isAlertingEnabled = useDashboardSelector(selectEnableAlerting);
-    const alerts = useDashboardSelector(selectAutomationsAlertsInContext(widget?.localIdentifier));
-    const schedules = useDashboardSelector(selectAutomationsSchedulesInContext(widget?.localIdentifier));
+    const alerts = useDashboardSelector(
+        selectDashboardUserAutomationAlertsInContext(widget?.localIdentifier),
+    );
+    const schedules = useDashboardSelector(
+        selectDashboardUserAutomationSchedulesInContext(widget?.localIdentifier),
+    );
 
     return {
         isVisible,

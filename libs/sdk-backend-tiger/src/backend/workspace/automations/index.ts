@@ -149,4 +149,10 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
             await client.entities.deleteEntityAutomations({ workspaceId: this.workspaceId, objectId: id });
         });
     }
+
+    public unsubscribeAutomation(id: string): Promise<void> {
+        return this.authCall(async (client: ITigerClient) => {
+            await client.actions.unsubscribeAutomation({ workspaceId: this.workspaceId, automationId: id });
+        });
+    }
 }

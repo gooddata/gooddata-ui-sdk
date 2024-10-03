@@ -4,7 +4,7 @@ import {
     RelativeOperatorEnum,
     ArithmeticMeasureOperatorEnum,
     JsonApiAutomationIn,
-    JsonApiAutomationPatchAttributesAlert,
+    JsonApiAutomationOutAttributesAlert,
 } from "@gooddata/api-client-tiger";
 import {
     IAutomationAlert,
@@ -17,6 +17,7 @@ import omit from "lodash/omit.js";
 import { v4 as uuidv4 } from "uuid";
 import { convertMeasure } from "./afm/MeasureConverter.js";
 import { convertAfmFilters } from "./afm/AfmFiltersConverter.js";
+import { fixNumber } from "../../utils/fixNumber.js";
 
 export function convertAutomation(
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
@@ -101,7 +102,7 @@ export function convertAutomation(
     };
 }
 
-const convertAlert = (alert: IAutomationAlert): JsonApiAutomationPatchAttributesAlert => {
+const convertAlert = (alert: IAutomationAlert): JsonApiAutomationOutAttributesAlert => {
     const { condition, execution } = alert;
 
     const { filters: convertedFilters } = convertAfmFilters(execution.measures, execution.filters);
@@ -121,7 +122,11 @@ const convertAlert = (alert: IAutomationAlert): JsonApiAutomationPatchAttributes
             condition: {
                 comparison: {
                     operator: condition.operator as ComparisonOperatorEnum,
-                    left: { localIdentifier: condition.left },
+                    left: {
+                        localIdentifier: condition.left.id,
+                        title: condition.left.title,
+                        format: condition.left.format,
+                    },
                     right: { value: condition.right },
                 },
             },
@@ -137,13 +142,21 @@ const convertAlert = (alert: IAutomationAlert): JsonApiAutomationPatchAttributes
                     operator: condition.operator as RelativeOperatorEnum,
                     measure: {
                         operator: condition.measure.operator as ArithmeticMeasureOperatorEnum,
-                        left: { localIdentifier: condition.measure.left },
-                        right: { localIdentifier: condition.measure.right },
+                        left: {
+                            localIdentifier: condition.measure.left.id,
+                            title: condition.measure.left.title,
+                            format: condition.measure.left.format,
+                        },
+                        right: {
+                            localIdentifier: condition.measure.right.id,
+                            title: condition.measure.right.title,
+                            format: condition.measure.right.format,
+                        },
                     },
                     threshold: {
                         ...(condition.measure.operator === ArithmeticMeasureOperatorEnum.CHANGE
                             ? {
-                                  value: condition.threshold / 100,
+                                  value: fixNumber(condition.threshold / 100),
                               }
                             : {
                                   value: condition.threshold,

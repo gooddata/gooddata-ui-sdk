@@ -62,6 +62,8 @@ export interface IAppHeaderProps {
     onInviteItemClick?: (e: React.MouseEvent) => void;
 
     search?: React.ReactNode;
+    showChatItem?: boolean;
+    onChatItemClick?: (e: React.MouseEvent) => void;
 }
 
 /**

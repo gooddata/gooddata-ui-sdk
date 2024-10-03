@@ -53,7 +53,7 @@ const CAPABILITIES: IBackendCapabilities = {
     hasTypeScopedIdentifiers: true,
     canCalculateGrandTotals: true,
     canCalculateSubTotals: true,
-    canCalculateNativeTotals: false,
+    canCalculateNativeTotals: true,
     canCalculateTotals: true,
     canExportCsv: true,
     canExportXlsx: true,

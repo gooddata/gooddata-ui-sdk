@@ -1,7 +1,6 @@
 // (C) 2024 GoodData Corporation
 import * as React from "react";
 import cx from "classnames";
-import { FormattedMessage } from "react-intl";
 import { Overlay } from "../Overlay/index.js";
 import { Button } from "../Button/index.js";
 import { useHeaderSearch } from "./headerSearchContext.js";
@@ -42,9 +41,7 @@ export const HeaderSearchButton: React.FC<HeaderSearchProps> = ({ children, titl
     return (
         <Button title={title} className={classNames} onClick={toggleOpen}>
             <span className="gd-icon-header-search-button"></span>
-            <span className="gd-header-search-label">
-                <FormattedMessage id="gs.header.search" />
-            </span>
+            <span className="gd-header-search-label">{title}</span>
             {isOpen ? (
                 <Overlay
                     isModal={false}

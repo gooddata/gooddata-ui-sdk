@@ -32,8 +32,14 @@ const defaultArrowOffsets: ArrowOffsets = {
 export const AlertingDialog: React.FC<IAlertingDialogProps> = (props) => {
     const { editAlert, editWidget, anchorEl, onCancel = () => noop, onUpdate = () => noop } = props;
 
-    const { hasAlerts, destinations, supportedMeasures, cancelAlertEditing, updateExistingAlert } =
-        useInsightWidgetAlerting({ closeInsightWidgetMenu: onCancel, widget: editWidget });
+    const {
+        hasAlerts,
+        destinations,
+        supportedMeasures,
+        catalogMeasures,
+        cancelAlertEditing,
+        updateExistingAlert,
+    } = useInsightWidgetAlerting({ closeInsightWidgetMenu: onCancel, widget: editWidget });
 
     if (!anchorEl?.id || !editAlert) {
         return null;
@@ -70,6 +76,7 @@ export const AlertingDialog: React.FC<IAlertingDialogProps> = (props) => {
                         }}
                         onClose={onCancel}
                         overlayPositionType="fixed"
+                        catalogMeasures={catalogMeasures}
                     />
                 </OverlayControllerProvider>
             </ScrollablePanel>

@@ -7,4 +7,4 @@ import { ActionsApi, ActionsApiInterface } from "./generated/afm-rest-api/index.
  */
 export const tigerExecutionClientFactory = (
     axios: AxiosInstance,
-): Pick<ActionsApiInterface, "computeReport" | "aiSearch"> => new ActionsApi(undefined, "", axios);
+): Pick<ActionsApiInterface, "computeReport"> => new ActionsApi(undefined, "", axios);

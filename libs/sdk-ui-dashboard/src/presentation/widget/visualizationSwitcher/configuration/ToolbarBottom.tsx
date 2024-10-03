@@ -11,6 +11,7 @@ interface IToolbarBottomProps {
     onVisualizationAdd: (insight: IInsight) => void;
     onVisualizationDelete: (visualizationWidgetId: string) => void;
     onVisualizationSelect: (visualizationWidgetId: string) => void;
+    onVisualizationPositionChange: (visualizationWidgetId: string, direction: string) => void;
     showVisualizationsList: boolean;
 }
 export const ToolbarBottom: React.FC<IToolbarBottomProps> = ({
@@ -19,6 +20,7 @@ export const ToolbarBottom: React.FC<IToolbarBottomProps> = ({
     onVisualizationAdd,
     onVisualizationDelete,
     onVisualizationSelect,
+    onVisualizationPositionChange,
     activeVisualizationId,
 }) => {
     const activeVisualization = visualizations.find(
@@ -34,9 +36,13 @@ export const ToolbarBottom: React.FC<IToolbarBottomProps> = ({
                     onVisualizationAdd={onVisualizationAdd}
                     onVisualizationDeleted={onVisualizationDelete}
                     onVisualizationSelect={onVisualizationSelect}
+                    onVisualizationPositionChange={onVisualizationPositionChange}
                 />
             ) : (
-                <VisualizationConfig widget={activeVisualization} />
+                <VisualizationConfig
+                    widget={activeVisualization}
+                    onVisualizationDeleted={onVisualizationDelete}
+                />
             )}
         </div>
     );

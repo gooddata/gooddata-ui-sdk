@@ -43,6 +43,9 @@ importers:
       '@gooddata/sdk-ui-filters':
         specifier: workspace:*
         version: link:../../libs/sdk-ui-filters
+      '@gooddata/sdk-ui-gen-ai':
+        specifier: workspace:*
+        version: link:../../libs/sdk-ui-gen-ai
       '@gooddata/sdk-ui-geo':
         specifier: workspace:*
         version: link:../../libs/sdk-ui-geo
@@ -3107,6 +3110,199 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@1.0.4)
 
+  ../../libs/sdk-ui-gen-ai:
+    dependencies:
+      '@gooddata/api-client-tiger':
+        specifier: workspace:*
+        version: link:../api-client-tiger
+      '@gooddata/sdk-backend-spi':
+        specifier: workspace:*
+        version: link:../sdk-backend-spi
+      '@gooddata/sdk-model':
+        specifier: workspace:*
+        version: link:../sdk-model
+      '@gooddata/sdk-ui':
+        specifier: workspace:*
+        version: link:../sdk-ui
+      '@gooddata/sdk-ui-charts':
+        specifier: workspace:*
+        version: link:../sdk-ui-charts
+      '@gooddata/sdk-ui-kit':
+        specifier: workspace:*
+        version: link:../sdk-ui-kit
+      '@gooddata/sdk-ui-pivot':
+        specifier: workspace:*
+        version: link:../sdk-ui-pivot
+      '@gooddata/util':
+        specifier: workspace:*
+        version: link:../util
+      '@reduxjs/toolkit':
+        specifier: ^1.9.3
+        version: 1.9.7(react-redux@7.2.9)(react@18.2.0)
+      classnames:
+        specifier: ^2.3.1
+        version: 2.3.2
+      default-import:
+        specifier: 1.1.5
+        version: 1.1.5
+      immer:
+        specifier: ^9.0.3
+        version: 9.0.21
+      react-intl:
+        specifier: ^6.4.1
+        version: 6.5.5(react@18.2.0)(typescript@5.3.3)
+      react-redux:
+        specifier: ^7.2.4
+        version: 7.2.9(react-dom@18.2.0)(react@18.2.0)
+      react-textarea-autosize:
+        specifier: 8.4.0
+        version: 8.4.0(@types/react@18.2.45)(react@18.2.0)
+      redux-saga:
+        specifier: ^1.2.3
+        version: 1.2.3
+      reselect:
+        specifier: 4.1.8
+        version: 4.1.8
+      tslib:
+        specifier: ^2.5.0
+        version: 2.6.2
+      uuid:
+        specifier: ^8.3.2
+        version: 8.3.2
+    devDependencies:
+      '@gooddata/eslint-config':
+        specifier: ^4.1.0
+        version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+      '@gooddata/i18n-toolkit':
+        specifier: workspace:*
+        version: link:../../tools/i18n-toolkit
+      '@gooddata/reference-workspace':
+        specifier: workspace:*
+        version: link:../../tools/reference-workspace
+      '@gooddata/sdk-backend-mockingbird':
+        specifier: workspace:*
+        version: link:../sdk-backend-mockingbird
+      '@microsoft/api-documenter':
+        specifier: ^7.17.0
+        version: 7.23.14(@types/node@18.19.3)
+      '@microsoft/api-extractor':
+        specifier: ^7.36.0
+        version: 7.38.5(@types/node@18.19.3)
+      '@testing-library/dom':
+        specifier: ~9.2.0
+        version: 9.2.0
+      '@testing-library/react':
+        specifier: ^14.0.0
+        version: 14.1.2(react-dom@18.2.0)(react@18.2.0)
+      '@testing-library/user-event':
+        specifier: ^14.4.2
+        version: 14.5.1(@testing-library/dom@9.2.0)
+      '@types/raf':
+        specifier: ^3.4.0
+        version: 3.4.3
+      '@types/react':
+        specifier: ^18.2.0
+        version: 18.2.45
+      '@types/react-dom':
+        specifier: ^18.2.1
+        version: 18.2.17
+      '@types/react-native-listener':
+        specifier: ~1.1.3
+        version: 1.1.3
+      '@types/react-redux':
+        specifier: ^7.1.16
+        version: 7.1.33
+      '@types/uuid':
+        specifier: ^8.3.4
+        version: 8.3.4
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^5.57.1
+        version: 5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.55.0)(typescript@5.3.3)
+      '@typescript-eslint/parser':
+        specifier: ^5.57.1
+        version: 5.62.0(eslint@8.55.0)(typescript@5.3.3)
+      concurrently:
+        specifier: ^6.0.2
+        version: 6.5.1
+      dependency-cruiser:
+        specifier: ^13.0.3
+        version: 13.1.5
+      eslint:
+        specifier: ^8.25.0
+        version: 8.55.0
+      eslint-plugin-header:
+        specifier: ^3.0.0
+        version: 3.1.1(eslint@8.55.0)
+      eslint-plugin-import:
+        specifier: ^2.22.0
+        version: 2.29.0(eslint@8.55.0)
+      eslint-plugin-import-esm:
+        specifier: ^1.2.1
+        version: 1.2.1(eslint@8.55.0)
+      eslint-plugin-jest:
+        specifier: ^27.1.1
+        version: 27.6.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint@8.55.0)(typescript@5.3.3)
+      eslint-plugin-no-only-tests:
+        specifier: ^2.4.0
+        version: 2.6.0
+      eslint-plugin-prettier:
+        specifier: ^4.0.0
+        version: 4.2.1(eslint@8.55.0)(prettier@2.5.1)
+      eslint-plugin-react:
+        specifier: ^7.31.10
+        version: 7.33.2(eslint@8.55.0)
+      eslint-plugin-react-hooks:
+        specifier: ^4.5.0
+        version: 4.6.0(eslint@8.55.0)
+      eslint-plugin-regexp:
+        specifier: ^1.9.0
+        version: 1.15.0(eslint@8.55.0)
+      eslint-plugin-sonarjs:
+        specifier: ^0.16.0
+        version: 0.16.0(eslint@8.55.0)
+      eslint-plugin-tsdoc:
+        specifier: ^0.2.14
+        version: 0.2.17
+      jsdom:
+        specifier: ^22.1.0
+        version: 22.1.0
+      prettier:
+        specifier: ~2.5.0
+        version: 2.5.1
+      raf:
+        specifier: ^3.4.1
+        version: 3.4.1
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+      sass:
+        specifier: ^1.52.3
+        version: 1.69.5
+      stylelint:
+        specifier: ^13.8.0
+        version: 13.13.1
+      stylelint-checkstyle-formatter:
+        specifier: ^0.1.2
+        version: 0.1.2
+      stylelint-config-prettier:
+        specifier: ^8.0.2
+        version: 8.0.2(stylelint@13.13.1)
+      svgo:
+        specifier: ^2.8.0
+        version: 2.8.0
+      typescript:
+        specifier: 5.3.3
+        version: 5.3.3
+      vitest:
+        specifier: 1.0.4
+        version: 1.0.4(jsdom@22.1.0)(sass@1.69.5)
+      vitest-dom:
+        specifier: 0.1.1
+        version: 0.1.1(vitest@1.0.4)
+
   ../../libs/sdk-ui-geo:
     dependencies:
       '@gooddata/number-formatter':
@@ -3872,6 +4068,9 @@ importers:
       '@gooddata/sdk-ui-theme-provider':
         specifier: workspace:*
         version: link:../sdk-ui-theme-provider
+      '@gooddata/util':
+        specifier: workspace:*
+        version: link:../util
       classnames:
         specifier: ^2.3.1
         version: 2.3.2
@@ -3888,6 +4087,9 @@ importers:
       '@gooddata/eslint-config':
         specifier: ^4.1.0
         version: 4.1.0(@typescript-eslint/eslint-plugin@5.62.0)(eslint-plugin-header@3.1.1)(eslint-plugin-import@2.29.0)(eslint-plugin-jest@27.6.0)(eslint-plugin-no-only-tests@2.6.0)(eslint@8.55.0)(typescript@5.3.3)
+      '@gooddata/i18n-toolkit':
+        specifier: workspace:*
+        version: link:../../tools/i18n-toolkit
       '@gooddata/sdk-backend-mockingbird':
         specifier: workspace:*
         version: link:../sdk-backend-mockingbird
@@ -3989,7 +4191,7 @@ importers:
         version: 5.3.3
       vitest:
         specifier: 1.0.4
-        version: 1.0.4(@types/node@18.19.3)(jsdom@22.1.0)(sass@1.69.5)
+        version: 1.0.4(jsdom@22.1.0)(sass@1.69.5)
       vitest-dom:
         specifier: 0.1.1
         version: 0.1.1(vitest@1.0.4)
@@ -4050,6 +4252,9 @@ importers:
       '@gooddata/sdk-ui-filters':
         specifier: workspace:*
         version: link:../sdk-ui-filters
+      '@gooddata/sdk-ui-gen-ai':
+        specifier: workspace:*
+        version: link:../sdk-ui-gen-ai
       '@gooddata/sdk-ui-geo':
         specifier: workspace:*
         version: link:../sdk-ui-geo
@@ -11480,6 +11685,12 @@ packages:
       '@types/react': 18.2.45
     dev: true
 
+  /@types/react-native-listener@1.1.3:
+    resolution: {integrity: sha512-4eSttfDfKBcUmMdNJvkOrWw4PffuALoZmMD/Y5VH49Fpbidkwoc8ZPsEovTQCNo4l415uDcYEBbw5BhyPstg0Q==}
+    dependencies:
+      '@types/react': 18.2.45
+    dev: true
+
   /@types/react-portal@4.0.7:
     resolution: {integrity: sha512-3zQJL6Pqcq7d73+cakVkZDqAYGFBo37XXPfahjhdScr9EdYPlf9evYilL38Fpzs1YGWz7F2SkPtN6+ygTO7ymg==}
     dependencies:
@@ -16239,7 +16450,7 @@ packages:
     resolution: {integrity: sha512-oWb1Z6mkHIskLzEJ/XWX0srkpkTQ7vaopMQkyaEIoq0fmtFVxOthb8cCxeT+p3ynTdkk/RZwbgG4brR5BeWECw==}
     engines: {node: '>= 4.0'}
     os: [darwin]
-    deprecated: The v1 package contains DANGEROUS / INSECURE binaries. Upgrade to safe fsevents v2
+    deprecated: Upgrade to fsevents v2 to mitigate potential security issues
     requiresBuild: true
     dependencies:
       bindings: 1.5.0
@@ -23859,6 +24070,64 @@ packages:
         optional: true
     dependencies:
       '@types/node': 18.19.3
+      '@vitest/expect': 1.0.4
+      '@vitest/runner': 1.0.4
+      '@vitest/snapshot': 1.0.4
+      '@vitest/spy': 1.0.4
+      '@vitest/utils': 1.0.4
+      acorn-walk: 8.3.1
+      cac: 6.7.14
+      chai: 4.3.10
+      debug: 4.3.4(supports-color@8.1.1)
+      execa: 8.0.1
+      jsdom: 22.1.0
+      local-pkg: 0.5.0
+      magic-string: 0.30.5
+      pathe: 1.1.1
+      picocolors: 1.0.0
+      std-env: 3.6.0
+      strip-literal: 1.3.0
+      tinybench: 2.5.1
+      tinypool: 0.8.1
+      vite: 5.4.3(@types/node@18.19.3)(sass@1.69.5)
+      vite-node: 1.0.4(@types/node@18.19.3)(sass@1.69.5)
+      why-is-node-running: 2.2.2
+    transitivePeerDependencies:
+      - less
+      - lightningcss
+      - sass
+      - sass-embedded
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+    dev: true
+
+  /vitest@1.0.4(jsdom@22.1.0)(sass@1.69.5):
+    resolution: {integrity: sha512-s1GQHp/UOeWEo4+aXDOeFBJwFzL6mjycbQwwKWX2QcYfh/7tIerS59hWQ20mxzupTJluA2SdwiBuWwQHH67ckg==}
+    engines: {node: ^18.0.0 || >=20.0.0}
+    hasBin: true
+    peerDependencies:
+      '@edge-runtime/vm': '*'
+      '@types/node': ^18.0.0 || >=20.0.0
+      '@vitest/browser': ^1.0.0
+      '@vitest/ui': ^1.0.0
+      happy-dom: '*'
+      jsdom: '*'
+    peerDependenciesMeta:
+      '@edge-runtime/vm':
+        optional: true
+      '@types/node':
+        optional: true
+      '@vitest/browser':
+        optional: true
+      '@vitest/ui':
+        optional: true
+      happy-dom:
+        optional: true
+      jsdom:
+        optional: true
+    dependencies:
       '@vitest/expect': 1.0.4
       '@vitest/runner': 1.0.4
       '@vitest/snapshot': 1.0.4

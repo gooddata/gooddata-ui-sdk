@@ -46,7 +46,9 @@ describe("alert transforms", () => {
         alert: {
             condition: {
                 type: "comparison",
-                left: "",
+                left: {
+                    id: "",
+                },
                 right: 0,
                 operator: "GREATER_THAN_OR_EQUAL_TO",
             },
@@ -69,8 +71,12 @@ describe("alert transforms", () => {
                 operator: "INCREASES_BY",
                 measure: {
                     operator: "CHANGE",
-                    left: "",
-                    right: "",
+                    left: {
+                        id: "",
+                    },
+                    right: {
+                        id: "",
+                    },
                 },
                 threshold: 0,
             },
@@ -102,6 +108,7 @@ describe("alert transforms", () => {
                 },
             },
         },
+        isPrimary: true,
         comparators: [],
     };
 
@@ -110,6 +117,7 @@ describe("alert transforms", () => {
             measure: {
                 localIdentifier: "localMetric2",
                 title: "metric2",
+                format: "#,##0.00",
                 definition: {
                     measureDefinition: {
                         filters: [],
@@ -121,9 +129,49 @@ describe("alert transforms", () => {
                 },
             },
         },
+        isPrimary: true,
         comparators: [
             {
                 comparator: AlertMetricComparatorType.PreviousPeriod,
+                isPrimary: false,
+                measure: {
+                    measure: {
+                        localIdentifier: "localMetric_pp_1",
+                        title: "metric_pp_1",
+                        definition: {
+                            previousPeriodMeasure: {
+                                measureIdentifier: "localMetric2",
+                                dateDataSets: [{ dataSet: { uri: "dateDataSetUri" }, periodsAgo: 1 }],
+                            },
+                        },
+                    },
+                },
+            },
+        ],
+    };
+
+    const previousPeriodMetric1: AlertMetric = {
+        measure: {
+            measure: {
+                localIdentifier: "localMetric2",
+                title: "metric2",
+                format: "#,##0.00",
+                definition: {
+                    measureDefinition: {
+                        filters: [],
+                        item: {
+                            type: "measure",
+                            identifier: "simple_metric_2",
+                        },
+                    },
+                },
+            },
+        },
+        isPrimary: false,
+        comparators: [
+            {
+                comparator: AlertMetricComparatorType.PreviousPeriod,
+                isPrimary: true,
                 measure: {
                     measure: {
                         localIdentifier: "localMetric_pp_1",
@@ -150,7 +198,11 @@ describe("alert transforms", () => {
                     ...baseComparison.alert,
                     condition: {
                         ...baseComparison.alert.condition,
-                        left: "localMetric1",
+                        left: {
+                            format: "#,##0.00",
+                            id: "localMetric1",
+                            title: "metric1",
+                        },
                     },
                     execution: {
                         ...baseComparison.alert.execution,
@@ -169,7 +221,11 @@ describe("alert transforms", () => {
                     ...baseComparison.alert,
                     condition: {
                         ...baseComparison.alert.condition,
-                        left: "localMetric2",
+                        left: {
+                            format: "#,##0.00",
+                            id: "localMetric2",
+                            title: "metric2",
+                        },
                     },
                     execution: {
                         ...baseComparison.alert.execution,
@@ -189,7 +245,11 @@ describe("alert transforms", () => {
                     condition: {
                         ...baseComparison.alert.condition,
                         operator: "GREATER_THAN",
-                        left: "localMetric1",
+                        left: {
+                            format: "#,##0.00",
+                            id: "localMetric1",
+                            title: "metric1",
+                        },
                     },
                     execution: {
                         ...baseComparison.alert.execution,
@@ -210,13 +270,52 @@ describe("alert transforms", () => {
                         ...baseRelative.alert.condition,
                         measure: {
                             operator: "CHANGE",
-                            left: "localMetric2",
-                            right: "localMetric_pp_1",
+                            left: {
+                                format: "#,##0.00",
+                                id: "localMetric2",
+                                title: "metric2",
+                            },
+                            right: {
+                                format: "#,##0.00",
+                                id: "localMetric_pp_1",
+                                title: "metric_pp_1",
+                            },
                         },
                     },
                     execution: {
                         ...baseRelative.alert.execution,
                         measures: [previousPeriodMetric.measure, previousPeriodMetric.comparators[0].measure],
+                    },
+                },
+            });
+        });
+
+        it("transformAlertByMetric, relative and provide comparison metric, relative isPrimary", () => {
+            const res = transformAlertByMetric(baseRelative, previousPeriodMetric1);
+            expect(res).toEqual({
+                ...baseRelative,
+                title: "metric2",
+                alert: {
+                    ...baseRelative.alert,
+                    condition: {
+                        ...baseRelative.alert.condition,
+                        measure: {
+                            operator: "CHANGE",
+                            left: {
+                                format: "#,##0.00",
+                                id: "localMetric2",
+                                title: "metric2",
+                            },
+                            right: {
+                                format: "#,##0.00",
+                                id: "localMetric_pp_1",
+                                title: "metric_pp_1",
+                            },
+                        },
+                    },
+                    execution: {
+                        ...baseRelative.alert.execution,
+                        measures: [previousPeriodMetric.comparators[0].measure, previousPeriodMetric.measure],
                     },
                 },
             });
@@ -328,7 +427,11 @@ describe("alert transforms", () => {
                         measure: {
                             ...cond.measure,
                             operator: "DIFFERENCE",
-                            right: "localMetric_pp_1",
+                            right: {
+                                format: "#,##0.00",
+                                id: "localMetric_pp_1",
+                                title: "metric_pp_1",
+                            },
                         },
                     },
                     execution: {
@@ -357,7 +460,11 @@ describe("alert transforms", () => {
                         measure: {
                             ...cond.measure,
                             operator: "DIFFERENCE",
-                            right: "localMetric_pp_1",
+                            right: {
+                                format: "#,##0.00",
+                                id: "localMetric_pp_1",
+                                title: "metric_pp_1",
+                            },
                         },
                     },
                     execution: {

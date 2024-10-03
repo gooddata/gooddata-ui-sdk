@@ -98,16 +98,19 @@ export enum TigerFeaturesNames {
     EnableScatterPlotClustering = "enableScatterPlotClustering",
     EnableRichTextDescriptions = "enableRichTextDescriptions",
     EnableSchedulingRollout = "enableSchedulingRollout",
-    EnableRollupTotals = "enableRollupTotals",
     EnableWidgetIdentifiersRollout = "enableWidgetIdentifiersRollout",
     EnableAIFunctions = "enableAIFunctions",
     EnableSemanticSearch = "enableSemanticSearch",
+    EnableSemanticSearchRollout = "enableSemanticSearchRollout",
+    EnableGenAIChat = "enableGenAIChat",
+    EnableGenAIChatRollout = "enableGenAIChatRollout",
     EnableDashboardFilterViews = "enableDashboardFilterViews",
     EnableAlertingRollout = "enableAlertingRollout",
     EnableWorkspaceHierarchySettings = "enableWorkspaceHierarchySettings",
     EnableNewInsightChangedPostMessageEvent = "enableNewInsightChangedPostMessageEvent",
     EnableIgnoreCrossFiltering = "enableIgnoreCrossFiltering",
     EnableHeadlineExport = "enableHeadlineExport",
+    EnableFlightRpcDataSource = "enableFlightRpcDataSource",
 }
 
 export type ITigerFeatureFlags = {
@@ -169,10 +172,12 @@ export type ITigerFeatureFlags = {
     enableScatterPlotClustering: typeof FeatureFlagsValues["enableScatterPlotClustering"][number];
     enableRichTextDescriptions: typeof FeatureFlagsValues["enableRichTextDescriptions"][number];
     enableSchedulingRollout: typeof FeatureFlagsValues["enableSchedulingRollout"][number];
-    enableRollupTotals: typeof FeatureFlagsValues["enableRollupTotals"][number];
     enableWidgetIdentifiersRollout: typeof FeatureFlagsValues["enableWidgetIdentifiersRollout"][number];
     enableAIFunctions: typeof FeatureFlagsValues["enableAIFunctions"][number];
     enableSemanticSearch: typeof FeatureFlagsValues["enableSemanticSearch"][number];
+    enableSemanticSearchRollout: typeof FeatureFlagsValues["enableSemanticSearchRollout"][number];
+    enableGenAIChat: typeof FeatureFlagsValues["enableGenAIChat"][number];
+    enableGenAIChatRollout: typeof FeatureFlagsValues["enableGenAIChatRollout"][number];
     enableAlertingRollout: typeof FeatureFlagsValues["enableAlertingRollout"][number];
     enableDashboardFilterViews: typeof FeatureFlagsValues["enableDashboardFilterViews"][number];
     enableWorkspaceHierarchySettings: typeof FeatureFlagsValues["enableWorkspaceHierarchySettings"][number];
@@ -180,6 +185,7 @@ export type ITigerFeatureFlags = {
     enableKDVisualizationSwitcher: typeof FeatureFlagsValues["enableKDVisualizationSwitcher"][number];
     enableIgnoreCrossFiltering: typeof FeatureFlagsValues["enableIgnoreCrossFiltering"][number];
     enableHeadlineExport: typeof FeatureFlagsValues["enableHeadlineExport"][number];
+    enableFlightRpcDataSource: typeof FeatureFlagsValues["enableFlightRpcDataSource"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -241,17 +247,20 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableScatterPlotClustering: true,
     enableRichTextDescriptions: true,
     enableSchedulingRollout: false,
-    enableRollupTotals: false,
     enableWidgetIdentifiersRollout: true,
     enableAIFunctions: false,
     enableSemanticSearch: false,
+    enableSemanticSearchRollout: false,
+    enableGenAIChat: false,
+    enableGenAIChatRollout: false,
     enableAlertingRollout: false,
     enableDashboardFilterViews: true,
     enableWorkspaceHierarchySettings: false,
     enableNewInsightChangedPostMessageEvent: false,
     enableKDVisualizationSwitcher: false,
-    enableIgnoreCrossFiltering: false,
-    enableHeadlineExport: false,
+    enableIgnoreCrossFiltering: true,
+    enableHeadlineExport: true,
+    enableFlightRpcDataSource: false,
 };
 
 export const FeatureFlagsValues = {
@@ -317,10 +326,12 @@ export const FeatureFlagsValues = {
     enableScatterPlotClustering: [true, false] as const,
     enableRichTextDescriptions: [true, false] as const,
     enableSchedulingRollout: [true, false] as const,
-    enableRollupTotals: [true, false] as const,
     enableWidgetIdentifiersRollout: [true, false] as const,
     enableAIFunctions: [true, false] as const,
     enableSemanticSearch: [true, false] as const,
+    enableSemanticSearchRollout: [true, false] as const,
+    enableGenAIChat: [true, false] as const,
+    enableGenAIChatRollout: [true, false] as const,
     enableAlertingRollout: [true, false] as const,
     enableDashboardFilterViews: [true, false] as const,
     enableWorkspaceHierarchySettings: [true, false] as const,
@@ -328,4 +339,5 @@ export const FeatureFlagsValues = {
     enableKDVisualizationSwitcher: [true, false] as const,
     enableIgnoreCrossFiltering: [true, false] as const,
     enableHeadlineExport: [true, false] as const,
+    enableFlightRpcDataSource: [true, false] as const,
 };

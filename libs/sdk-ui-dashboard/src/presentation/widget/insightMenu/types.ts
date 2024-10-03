@@ -50,6 +50,12 @@ export interface IInsightMenuSubmenuComponentProps {
      * Go back to the root menu.
      */
     onGoBack: () => void;
+
+    /**
+     * If true, the title configuration is shown in submenu.
+     * default: true
+     */
+    enableTitleConfig?: boolean;
 }
 
 /**
@@ -79,6 +85,10 @@ export interface IInsightMenuSubmenu {
      */
     className?: string;
     onClick?: (e: MouseEvent) => void;
+}
+
+export function isIInsightMenuSubmenu(obj: IInsightMenuItem): obj is IInsightMenuSubmenu {
+    return obj !== null && obj.type === "submenu";
 }
 
 /**

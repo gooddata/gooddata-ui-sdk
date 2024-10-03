@@ -2,9 +2,8 @@
 
 import { useCallback, useState } from "react";
 import { IAutomationMetadataObject, IInsightWidget } from "@gooddata/sdk-model";
-import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
-
+import { GoodDataSdkError } from "@gooddata/sdk-ui";
 import {
     uiActions,
     selectCanManageWorkspace,
@@ -12,20 +11,17 @@ import {
     selectIsInViewMode,
     selectIsReadOnly,
     selectMenuButtonItemsVisibility,
-    selectWebhooks,
     selectIsAlertingDialogOpen,
     selectIsAlertsManagementDialogOpen,
     selectEnableAlerting,
-    selectWebhooksIsLoading,
     selectAutomationsIsLoading,
-    selectWebhooksError,
     selectAutomationsError,
-    selectAutomationsAlertsInContext,
-    selectSmtps,
+    selectDashboardUserAutomationAlertsInContext,
+    selectNotificationChannelsCount,
+    selectAutomationsIsInitialized,
 } from "../store/index.js";
 import { messages } from "../../locales.js";
 import { refreshAutomations } from "../commands/index.js";
-
 import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProvider.js";
 
 /**
@@ -35,7 +31,7 @@ import { useDashboardDispatch, useDashboardSelector } from "./DashboardStoreProv
  */
 export const useDashboardAlerts = () => {
     const { addSuccess, addError } = useToastMessage();
-
+    const isInitialized = useDashboardSelector(selectAutomationsIsInitialized);
     const isAlertingDialogOpen = useDashboardSelector(selectIsAlertingDialogOpen) || false;
     const isAlertingManagementDialogOpen = useDashboardSelector(selectIsAlertsManagementDialogOpen) || false;
 
@@ -57,26 +53,11 @@ export const useDashboardAlerts = () => {
     const dispatch = useDashboardDispatch();
     const dashboardRef = useDashboardSelector(selectDashboardRef);
 
-    const webhooks = useDashboardSelector(selectWebhooks);
-    const emails = useDashboardSelector(selectSmtps);
+    const numberOfAvailableDestinations = useDashboardSelector(selectNotificationChannelsCount);
 
-    const numberOfAvailableDestinations = webhooks.length + emails.length;
-
-    const automations = useDashboardSelector(selectAutomationsAlertsInContext(undefined));
+    const automations = useDashboardSelector(selectDashboardUserAutomationAlertsInContext(undefined));
     const automationsLoading = useDashboardSelector(selectAutomationsIsLoading);
     const automationsError = useDashboardSelector(selectAutomationsError);
-
-    const isAlertingLoading = [
-        useDashboardSelector(selectWebhooksIsLoading),
-        useDashboardSelector(selectAutomationsIsLoading),
-        automationsLoading,
-    ].some(Boolean);
-
-    const alertingLoadError = [
-        useDashboardSelector(selectWebhooksError),
-        useDashboardSelector(selectAutomationsError),
-        automationsError,
-    ].find(Boolean);
 
     /**
      * We want to hide scheduling when there are no webhooks unless the user is admin.
@@ -205,16 +186,16 @@ export const useDashboardAlerts = () => {
     }, [closeAlertingDialog, onEditAlertingClosed]);
 
     return {
-        webhooks,
+        isInitialized,
         automations,
-        alertingLoadError,
         alertingToEdit,
-        defaultOnAlerting,
-        defaultOnAlertsManagement,
-        isAlertingLoading,
+        alertingLoadError: automationsError,
+        isAlertingLoading: automationsLoading,
         isAlertsManagementVisible,
         isAlertingDialogOpen,
         isAlertingManagementDialogOpen,
+        defaultOnAlerting,
+        defaultOnAlertsManagement,
         onAlertingManagementEdit,
         onAlertingManagementClose,
         onAlertingManagementDeleteSuccess,

@@ -31,6 +31,12 @@ export abstract class DecoratedAutomationsQuery implements IAutomationsQuery {
     withAuthor(author: string): IAutomationsQuery {
         return this.decorated.withAuthor(author);
     }
+    withRecipient(recipient: string): IAutomationsQuery {
+        return this.decorated.withRecipient(recipient);
+    }
+    withUser(user: string): IAutomationsQuery {
+        return this.decorated.withUser(user);
+    }
     withDashboard(dashboard: string): IAutomationsQuery {
         return this.decorated.withDashboard(dashboard);
     }
@@ -76,5 +82,9 @@ export abstract class DecoratedWorkspaceAutomationsService implements IWorkspace
         options?: IGetAutomationOptions,
     ): Promise<IAutomationMetadataObject> {
         return this.decorated.updateAutomation(automation, options);
+    }
+
+    unsubscribeAutomation(id: string): Promise<void> {
+        return this.decorated.unsubscribeAutomation(id);
     }
 }

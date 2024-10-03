@@ -407,6 +407,18 @@ export const selectEnableScheduling: DashboardSelector<boolean> = createSelector
 export const selectEnableAlerting: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
     return state.settings?.enableAlerting ?? false;
 });
+
+/**
+ * @alpha
+ */
+export const selectEnableAutomations: DashboardSelector<boolean> = createSelector(
+    selectEnableScheduling,
+    selectEnableAlerting,
+    (enableScheduling, enableAlerting) => {
+        return enableScheduling || enableAlerting;
+    },
+);
+
 /**
  * Returns whether analytical dashboard permissions are enabled
  *
@@ -731,6 +743,6 @@ export const selectEnableVisualizationSwitcher: DashboardSelector<boolean> = cre
 export const selectEnableIgnoreCrossFiltering: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableIgnoreCrossFiltering ?? false;
+        return state.settings?.enableIgnoreCrossFiltering ?? true;
     },
 );
