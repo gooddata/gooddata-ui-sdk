@@ -7806,7 +7806,7 @@ export const selectSectionModification: (refs: (ObjRef | undefined)[]) => Dashbo
 // @alpha (undocumented)
 export const selectSelectedFilterIndex: DashboardSelector<number | undefined>;
 
-// @internal (undocumented)
+// @internal
 export const selectSelectedWidgetRef: DashboardSelector<ObjRef | undefined>;
 
 // @public
