@@ -439,10 +439,10 @@ export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition
 export function isEmptyAfm(obj: unknown): obj is EmptyAfmSdkError;
 
 // @internal (undocumented)
-export const isInsightAlertingConfigurationEnabled: (insight: IInsight | IInsightDefinition) => boolean;
+export const isInsightAlertingConfigurationEnabled: (insight: IInsight | IInsightDefinition | undefined) => boolean;
 
 // @internal (undocumented)
-export const isInsightScheduledExportsConfigurationEnabled: (insight: IInsight | IInsightDefinition) => boolean;
+export const isInsightScheduledExportsConfigurationEnabled: (insight: IInsight | IInsightDefinition | undefined) => boolean;
 
 // @internal (undocumented)
 export const isInsightSupportedForAlerts: (insight: IInsight | IInsightDefinition | null | undefined) => boolean;
