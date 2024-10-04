@@ -8,7 +8,7 @@ import { isCronExpressionValid } from "./utils.js";
 import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
 import { Bubble } from "../Bubble/Bubble.js";
 import { Icon } from "../Icon/Icon.js";
-import { GD_COLOR_STATE_BLANK } from "../utils/constants.js";
+import { GD_COLOR_STATE_BLANK, GD_COLOR_STATE_HOVER } from "../utils/constants.js";
 
 const TOOLTIP_ALIGN_POINTS = [{ align: "cr cl" }];
 
@@ -24,6 +24,7 @@ export const CronExpression: React.FC<ICronExpressionProps> = (props) => {
     const { expression, onChange, allowHourlyRecurrence } = props;
     const theme = useTheme();
     const [validationError, setValidationError] = useState<string | null>(null);
+    const [hover, setHover] = useState(false);
 
     const validateExpression = (expression: string) => {
         const isValid = isCronExpressionValid(expression, allowHourlyRecurrence);
@@ -62,29 +63,39 @@ export const CronExpression: React.FC<ICronExpressionProps> = (props) => {
                     </span>
                 ) : null}
             </div>
-            <BubbleHoverTrigger tagName="div" className="gd-recurrence-form-cron-icon" eventsOnBubble={true}>
-                <Icon.QuestionMark
-                    color={theme?.palette?.complementary?.c6 ?? GD_COLOR_STATE_BLANK}
-                    width={14}
-                    height={14}
-                />
-                <Bubble className="bubble-primary" alignPoints={TOOLTIP_ALIGN_POINTS}>
-                    <FormattedMessage
-                        id="recurrence.cron.tooltip"
-                        values={{
-                            a: (chunk: React.ReactNode) => (
-                                <a
-                                    href="https://www.gooddata.com/docs/cloud/experimental-features/scheduled-exports/#cron-format"
-                                    rel="noopener noreferrer"
-                                    target="_blank"
-                                >
-                                    {chunk}
-                                </a>
-                            ),
-                        }}
+            <div onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+                <BubbleHoverTrigger
+                    tagName="div"
+                    className="gd-recurrence-form-cron-icon"
+                    eventsOnBubble={true}
+                >
+                    <Icon.QuestionMark
+                        color={
+                            hover
+                                ? theme?.palette?.complementary?.c6 ?? GD_COLOR_STATE_BLANK
+                                : theme?.palette?.complementary?.c7 ?? GD_COLOR_STATE_HOVER
+                        }
+                        width={14}
+                        height={14}
                     />
-                </Bubble>
-            </BubbleHoverTrigger>
+                    <Bubble className="bubble-primary" alignPoints={TOOLTIP_ALIGN_POINTS}>
+                        <FormattedMessage
+                            id="recurrence.cron.tooltip"
+                            values={{
+                                a: (chunk: React.ReactNode) => (
+                                    <a
+                                        href="https://www.gooddata.com/docs/cloud/create-dashboards/automation/scheduled-exports/#ScheduleExportsinDashboards-CronExpressions"
+                                        rel="noopener noreferrer"
+                                        target="_blank"
+                                    >
+                                        {chunk}
+                                    </a>
+                                ),
+                            }}
+                        />
+                    </Bubble>
+                </BubbleHoverTrigger>
+            </div>
         </>
     );
 };

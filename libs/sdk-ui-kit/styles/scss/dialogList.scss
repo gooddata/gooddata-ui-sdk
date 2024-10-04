@@ -92,8 +92,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-basis: 30px;
-            height: 30px;
+            flex-basis: 32px;
+            height: 32px;
             margin: auto 0;
             background-color: variables.$is-focused-background;
             border-radius: 100px;
@@ -153,7 +153,7 @@
             content: "\e61a";
             position: relative;
             font-family: variables.$gd-font-indigo;
-            color: variables.$gd-color-disabled;
+            color: variables.$gd-color-state-blank;
             font-size: 16px;
             font-weight: 400;
             top: 1px;
