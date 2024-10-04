@@ -303,19 +303,19 @@ describe("alert transforms", () => {
                             operator: "CHANGE",
                             left: {
                                 format: "#,##0.00",
-                                id: "localMetric2",
-                                title: "metric2",
+                                id: "localMetric_pp_1",
+                                title: "metric_pp_1",
                             },
                             right: {
                                 format: "#,##0.00",
-                                id: "localMetric_pp_1",
-                                title: "metric_pp_1",
+                                id: "localMetric2",
+                                title: "metric2",
                             },
                         },
                     },
                     execution: {
                         ...baseRelative.alert.execution,
-                        measures: [previousPeriodMetric.comparators[0].measure, previousPeriodMetric.measure],
+                        measures: [previousPeriodMetric.measure, previousPeriodMetric.comparators[0].measure],
                     },
                 },
             });
@@ -427,6 +427,11 @@ describe("alert transforms", () => {
                         measure: {
                             ...cond.measure,
                             operator: "DIFFERENCE",
+                            left: {
+                                format: "#,##0.00",
+                                id: "localMetric2",
+                                title: "metric2",
+                            },
                             right: {
                                 format: "#,##0.00",
                                 id: "localMetric_pp_1",
@@ -460,6 +465,11 @@ describe("alert transforms", () => {
                         measure: {
                             ...cond.measure,
                             operator: "DIFFERENCE",
+                            left: {
+                                format: "#,##0.00",
+                                id: "localMetric2",
+                                title: "metric2",
+                            },
                             right: {
                                 format: "#,##0.00",
                                 id: "localMetric_pp_1",
