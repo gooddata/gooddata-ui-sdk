@@ -20,7 +20,7 @@ import {
 } from "../../insightMenu/index.js";
 
 type UseInsightMenuConfig = {
-    insight: IInsight;
+    insight?: IInsight;
     widget: IInsightWidget;
     exportCSVEnabled: boolean;
     exportXLSXEnabled: boolean;
@@ -51,7 +51,7 @@ export const useInsightMenu = (
     const defaultMenuItems = useDefaultMenuItems(config, setIsMenuOpen);
 
     const menuItems = useMemo<IInsightMenuItem[]>(() => {
-        return insightMenuItemsProvider
+        return insightMenuItemsProvider && insight
             ? insightMenuItemsProvider(insight, widget, defaultMenuItems, closeMenu, "view")
             : defaultMenuItems;
     }, [insightMenuItemsProvider, insight, widget, defaultMenuItems, closeMenu]);

@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React from "react";
 import {
     insightIsLocked,
@@ -17,12 +17,15 @@ import { DraggableInsightListItemBody } from "../../dashboard/DashboardSidebar/D
  */
 export function InsightDraggingComponent({ item }: IInsightDraggingComponentProps) {
     const insight = item.insight;
-    const visualizationType = insightVisualizationType(insight) as VisType;
+
+    if (!insight) {
+        return <DraggableInsightListItemBody className="move-insight-placeholder" />;
+    }
 
     return (
         <DraggableInsightListItemBody
             className="move-insight-placeholder"
-            type={visualizationType}
+            type={insightVisualizationType(insight) as VisType}
             title={insightTitle(insight)}
             updated={insightUpdated(insight) ?? insightCreated(insight)}
             isLocked={insightIsLocked(insight)}
