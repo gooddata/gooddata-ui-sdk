@@ -1172,12 +1172,12 @@
         "limit": 0
     },
     "widget.error.missing_insight.message": {
-        "value": "Visualization error",
+        "value": "No visualization available",
         "comment": "",
         "limit": 0
     },
     "widget.error.missing_insight.description": {
-        "value": "Visualization not found. It was deleted or you don't have access to it.",
+        "value": "This visualization has been removed or is no longer accessible. Please contact your administrator or remove it from the dashboard.",
         "comment": "",
         "limit": 0
     },
