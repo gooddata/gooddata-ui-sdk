@@ -32,7 +32,7 @@ import {
 import { BucketNames } from "@gooddata/sdk-ui";
 import { IntlShape } from "react-intl";
 
-import { AlertMetric, AlertMetricComparatorType } from "../../types.js";
+import { AlertMetric, AlertMetricComparator, AlertMetricComparatorType } from "../../types.js";
 
 import {
     COMPARISON_OPERATORS,
@@ -404,16 +404,7 @@ export function transformAlertByMetric(
             ...cond,
             measure: {
                 ...cond.measure,
-                left: {
-                    id: measure.measure.measure.localIdentifier,
-                    format: getMeasureFormat(measure.measure, catalogMeasures),
-                    title: getMeasureTitle(measure.measure),
-                },
-                right: {
-                    id: periodMeasure.measure.measure.localIdentifier,
-                    format: getMeasureFormat(periodMeasure.measure, catalogMeasures),
-                    title: getMeasureTitle(periodMeasure.measure),
-                },
+                ...transformRelativeCondition(measure, periodMeasure, catalogMeasures),
             },
         } as IAutomationAlertRelativeCondition;
         return {
@@ -486,14 +477,10 @@ export function transformAlertByRelativeOperator(
         measure: {
             ...cond.measure,
             operator: arithmeticOperator,
-            right: {
-                id: periodMeasure?.measure.measure.localIdentifier ?? "",
-                format: getMeasureFormat(periodMeasure?.measure, catalogMeasures),
-                title: periodMeasure?.measure ? getMeasureTitle(periodMeasure.measure) : undefined,
-            },
+            ...transformRelativeCondition(measure, periodMeasure, catalogMeasures),
         },
         operator: relativeOperator,
-    };
+    } as IAutomationAlertCondition;
     return {
         ...alert,
         alert: {
@@ -600,14 +587,6 @@ function transformAlertExecutionByMetric(
     );
 
     if (condition.type === "relative" && periodMeasure) {
-        // if the period measure is primary, it should be the first measure in the execution
-        if (periodMeasure.isPrimary) {
-            return {
-                ...execution,
-                measures: [periodMeasure.measure, measure.measure],
-            };
-        }
-
         return {
             ...execution,
             measures: [measure.measure, periodMeasure.measure],
@@ -617,6 +596,39 @@ function transformAlertExecutionByMetric(
     return {
         ...execution,
         measures: [measure.measure],
+    };
+}
+
+function transformRelativeCondition(
+    measure: AlertMetric,
+    periodMeasure: AlertMetricComparator | undefined,
+    catalogMeasures?: ICatalogMeasure[],
+) {
+    return {
+        ...(periodMeasure?.isPrimary && {
+            left: {
+                id: periodMeasure.measure.measure.localIdentifier,
+                format: getMeasureFormat(periodMeasure.measure, catalogMeasures),
+                title: getMeasureTitle(periodMeasure.measure),
+            },
+            right: {
+                id: measure.measure.measure.localIdentifier,
+                format: getMeasureFormat(measure.measure, catalogMeasures),
+                title: getMeasureTitle(measure.measure),
+            },
+        }),
+        ...(!periodMeasure?.isPrimary && {
+            left: {
+                id: measure.measure.measure.localIdentifier,
+                format: getMeasureFormat(measure.measure, catalogMeasures),
+                title: getMeasureTitle(measure.measure),
+            },
+            right: {
+                id: periodMeasure?.measure.measure.localIdentifier,
+                format: getMeasureFormat(periodMeasure?.measure, catalogMeasures),
+                title: periodMeasure?.measure ? getMeasureTitle(periodMeasure?.measure) : undefined,
+            },
+        }),
     };
 }
 
