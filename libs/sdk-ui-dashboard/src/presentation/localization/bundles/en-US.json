@@ -1171,6 +1171,16 @@
         "comment": "",
         "limit": 0
     },
+    "widget.error.missing_insight.message": {
+        "value": "No visualization available",
+        "comment": "",
+        "limit": 0
+    },
+    "widget.error.missing_insight.description": {
+        "value": "This visualization has been removed or is no longer accessible. Please contact your administrator or remove it from the dashboard.",
+        "comment": "",
+        "limit": 0
+    },
     "share.button.text": {
         "value": "Share",
         "comment": "Text of button that opens share dialog",

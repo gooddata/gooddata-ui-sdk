@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React from "react";
 import { FormattedMessage, defineMessages } from "react-intl";
 import { DropdownSectionHeader } from "../DropdownSectionHeader.js";
@@ -15,6 +15,7 @@ import {
     selectEnableRenamingProjectToWorkspace,
     useDashboardSelector,
 } from "../../../../../model/index.js";
+import { ObjRef } from "@gooddata/sdk-model";
 
 interface IIdentifierParameter {
     titleIntlKey: string;
@@ -62,7 +63,7 @@ const identifierParametersSection: IIdentifierParameter[] = [
     },
 ];
 
-const getDetailContent = (type: string, title: string): JSX.Element => {
+const getDetailContent = (type: string, title: string, widgetRef: ObjRef): JSX.Element => {
     switch (type) {
         case DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_PROJECT_ID:
         case DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_WORKSPACE_ID:
@@ -70,9 +71,9 @@ const getDetailContent = (type: string, title: string): JSX.Element => {
         case DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_DASHBOARD_ID:
             return <DashboardIdParameterDetail title={title} />;
         case DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_WIDGET_ID:
-            return <WidgetIdParameterDetail title={title} />;
+            return <WidgetIdParameterDetail title={title} widgetRef={widgetRef} />;
         case DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_INSIGHT_ID:
-            return <InsightIdParameterDetail title={title} />;
+            return <InsightIdParameterDetail title={title} widgetRef={widgetRef} />;
         case DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_CLIENT_ID:
             return <ClientIdParameterDetail title={title} />;
         case DRILL_TO_URL_PLACEHOLDER.DRILL_TO_URL_PLACEHOLDER_DATA_PRODUCT_ID:
@@ -88,6 +89,7 @@ export const IdentifierParametersSection: React.FC<IIdentifierParametersSectionP
     enableWidgetIdParameter,
     onAdd,
     intl,
+    widgetRef,
 }) => {
     const enableRenamingProjectToWorkspace = useDashboardSelector(selectEnableRenamingProjectToWorkspace);
 
@@ -125,7 +127,7 @@ export const IdentifierParametersSection: React.FC<IIdentifierParametersSectionP
                         <Parameter
                             key={placeholder}
                             name={title}
-                            detailContent={getDetailContent(placeholder, title)}
+                            detailContent={getDetailContent(placeholder, title, widgetRef)}
                             iconClassName="gd-icon-sharp"
                             onAdd={() => onAdd(placeholder)}
                             intl={intl}
