@@ -26,6 +26,18 @@ export const isInsightSupportedForAlerts = (
         case "scatter":
         case "bubble":
         case "repeater":
+        case "bullet":
+        case "pie":
+        case "donut":
+        case "treemap":
+        case "funnel":
+        case "pyramid":
+        case "heatmap":
+        case "waterfall":
+        case "dependencywheel":
+        case "sankey":
+        case "pushpin":
+        case "table":
             return true;
         default:
             return false;
@@ -46,21 +58,23 @@ export const isInsightSupportedForScheduledExports = (
 /**
  * @internal
  */
-export const isInsightAlertingConfigurationEnabled = (insight: IInsight | IInsightDefinition): boolean => {
-    const visualizationProperties = insightProperties(insight);
+export const isInsightAlertingConfigurationEnabled = (
+    insight: IInsight | IInsightDefinition | undefined,
+): boolean => {
+    const visualizationProperties = insight ? insightProperties(insight) : {};
     const controls = visualizationProperties?.controls ?? {};
 
-    return !controls.disableAlerts;
+    return insight && !controls.disableAlerts;
 };
 
 /**
  * @internal
  */
 export const isInsightScheduledExportsConfigurationEnabled = (
-    insight: IInsight | IInsightDefinition,
+    insight: IInsight | IInsightDefinition | undefined,
 ): boolean => {
-    const visualizationProperties = insightProperties(insight);
+    const visualizationProperties = insight ? insightProperties(insight) : {};
     const controls = visualizationProperties?.controls ?? {};
 
-    return !controls.disableScheduledExports;
+    return insight && !controls.disableScheduledExports;
 };
