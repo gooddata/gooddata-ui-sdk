@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 @use "sass:color";
 @use "../mixins.scss";
 @use "../variables";
@@ -14,7 +14,7 @@ $bubble-skins: primary, secondary, dark, light, warning, negative;
 // Bubble
 $bubble-boxShadow: 0 1px 3px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.1)),
     0 2px 9px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.15));
-$bubble-help-color: #bbb;
+$bubble-help-color: var(--gd-palette-complementary-6, #bbb);
 $bubble-help-color-hover: #999;
 $bubble-borderWidth: 0;
 $bubble-bg-color: var(

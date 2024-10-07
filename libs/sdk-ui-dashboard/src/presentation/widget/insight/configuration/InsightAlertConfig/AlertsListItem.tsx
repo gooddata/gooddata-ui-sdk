@@ -55,9 +55,9 @@ export const AlertsListItem: React.FC<IAlertsListItemProps> = ({
                     {!isValid ? (
                         <Icon.Warning color={theme?.palette?.error?.base ?? gdColorNegative} />
                     ) : isPaused ? (
-                        <Icon.AlertPaused />
+                        <Icon.AlertPaused width={13} height={13} />
                     ) : (
-                        <Icon.Alert />
+                        <Icon.Alert width={11} height={13} />
                     )}
                 </div>
                 <div className="gd-alerts-list-item__details">

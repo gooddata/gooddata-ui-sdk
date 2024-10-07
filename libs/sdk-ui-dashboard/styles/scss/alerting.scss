@@ -152,6 +152,10 @@
     gap: 5px;
     line-height: 21px;
     color: kit-variables.$gd-color-link;
+
+    .inlineBubbleHelp {
+        font-size: 12px;
+    }
 }
 
 .gd-edit-alert__value-input {

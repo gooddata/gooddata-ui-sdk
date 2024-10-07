@@ -111,7 +111,7 @@ export const AlertingManagementDialog: React.FC<IAlertingManagementDialogProps> 
                 <div className="gd-buttons">
                     <Hyperlink
                         text={intl.formatMessage({ id: helpTextId })}
-                        href="https://www.gooddata.com/docs/cloud/create-dashboards/export/schedule-emailing/"
+                        href="https://www.gooddata.com/docs/cloud/create-dashboards/automation/alerts/"
                         iconClass="gd-icon-circle-question"
                     />
                     <Button

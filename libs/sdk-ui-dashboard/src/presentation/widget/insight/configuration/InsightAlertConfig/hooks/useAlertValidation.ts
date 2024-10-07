@@ -16,17 +16,13 @@ export const useAlertValidation = (
 ): { isValid: boolean; invalidityReason: AlertInvalidityReason | undefined } => {
     const widgetLocalId = alert.metadata?.widget;
     const widgetRef = widgetLocalId ? { identifier: widgetLocalId } : undefined;
-    const selectedMeasure = getAlertMeasure(alert.alert);
 
     const widget = useDashboardSelector(selectWidgetByRef(widgetRef));
     const insight = useDashboardSelector(selectInsightByWidgetRef(widget?.ref));
     const supportedMeasures = getSupportedInsightMeasuresByInsight(insight);
+    const selectedMeasureExists = getAlertMeasure(supportedMeasures, alert.alert);
 
-    const selectedMeasureExists = supportedMeasures.some(
-        (measure) => measure.measure.measure.localIdentifier === selectedMeasure,
-    );
-
-    const isValid = isNewAlert || (!!widget && selectedMeasureExists);
+    const isValid = isNewAlert || Boolean(!!widget && selectedMeasureExists);
 
     let invalidityReason: AlertInvalidityReason | undefined = undefined;
     if (!widget) {
