@@ -137,6 +137,13 @@ export const selectHasCatalogDateDatasets: DashboardSelector<boolean> = createSe
 );
 
 /**
+ * @alpha
+ */
+export const selectCatalogIsLoaded: DashboardSelector<boolean> = createSelector(selectSelf, (state) => {
+    return state.attributes !== undefined;
+});
+
+/**
  * @public
  */
 export const selectCatalogDateAttributes: DashboardSelector<ICatalogDateAttribute[]> = createSelector(

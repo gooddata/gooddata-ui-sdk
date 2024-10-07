@@ -234,6 +234,7 @@ export {
 } from "./insights/insightsSelectors.js";
 export type { CatalogState } from "./catalog/catalogState.js";
 export {
+    selectCatalogIsLoaded,
     selectAttributesWithDrillDown,
     selectCatalogAttributes,
     selectCatalogAttributeDisplayForms,
