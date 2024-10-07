@@ -6,6 +6,7 @@
     "semantic-search.id": "ID",
     "semantic-search.tags": "Tags",
     "semantic-search.match": "{score}% de correspondência",
+    "semantic-search.previous-search": "Pesquisa anterior",
     "semantic-search.date.at": "em",
     "gs.date.today": "Hoje",
     "gs.date.yesterday": "Ontem"
