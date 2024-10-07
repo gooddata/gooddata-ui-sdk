@@ -2,7 +2,7 @@
 import React from "react";
 import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
 import { Icon, Overlay } from "@gooddata/sdk-ui-kit";
-import { clearMessagesAction, hasMessagesSelector, RootState } from "../store/index.js";
+import { clearThreadAction, hasMessagesSelector, RootState } from "../store/index.js";
 import cx from "classnames";
 import { HeaderIcon } from "./HeaderIcon.js";
 import { connect } from "react-redux";
@@ -17,7 +17,7 @@ type GenAIChatOverlayStateProps = {
 };
 
 type GenAIChatOverlayDispatchProps = {
-    clearMessages: typeof clearMessagesAction;
+    clearThread: typeof clearThreadAction;
 };
 
 export type GenAIChatOverlayProps = GenAIChatOverlayOwnProps &
@@ -27,7 +27,7 @@ export type GenAIChatOverlayProps = GenAIChatOverlayOwnProps &
 const GenAIChatOverlayComponent: React.FC<GenAIChatOverlayProps & WrappedComponentProps> = ({
     onClose,
     hasMessages,
-    clearMessages,
+    clearThread,
     intl,
 }) => {
     const [isFullScreen, setIsFullScreen] = React.useState(false);
@@ -56,7 +56,7 @@ const GenAIChatOverlayComponent: React.FC<GenAIChatOverlayProps & WrappedCompone
                         Icon={Icon.Undo}
                         className="gd-gen-ai-chat__window__header__icon--reset"
                         tooltip={intl.formatMessage({ id: "gd.gen-ai.header.reset-tooltip" })}
-                        onClick={() => clearMessages()}
+                        onClick={() => clearThread()}
                         disabled={!hasMessages}
                     />
                     <div className="gd-gen-ai-chat__window__header__gap"></div>
@@ -89,7 +89,7 @@ const mapStateToProps = (state: RootState): GenAIChatOverlayStateProps => ({
 });
 
 const mapDispatchToProps: GenAIChatOverlayDispatchProps = {
-    clearMessages: clearMessagesAction,
+    clearThread: clearThreadAction,
 };
 
 export const GenAIChatOverlay = connect(

@@ -1,59 +1,264 @@
 // (C) 2024 GoodData Corporation
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { isAssistantCancelledMessage, isUserTextMessage, Message } from "../../model.js";
+import {
+    AssistantMessage,
+    isAssistantMessage,
+    isUserMessage,
+    makeErrorContents,
+    Message,
+    UserMessage,
+} from "../../model.js";
 
 type MessagesSliceState = {
-    messageOrder: string[];
-    messages: Record<string, Message>;
+    /**
+     * A verbose mode defines how much information is shown in the chat.
+     */
     verbose: boolean;
+    /**
+     * A normalized map of messages indexed by their localId.
+     */
+    messages: Record<string, Message>;
+    /**
+     * An order of messages in the chat.
+     */
+    messageOrder: string[];
+    /**
+     * A global error message. I.e. if something unexpected went wrong,
+     * not on the interaction level.
+     */
+    globalError?: string;
+    /**
+     * If the interface is busy, this specifies the details of the async operation.
+     * Where:
+     * - loading: the thread history is being loaded
+     * - clearing: the thread is being cleared
+     * - evaluating: the new user message is being evaluated by assistant
+     */
+    asyncProcess?: "loading" | "clearing" | "evaluating";
 };
 
 export const LS_VERBOSE_KEY = "gd-gen-ai-verbose";
 export const messagesSliceName = "messages";
 
 const initialState: MessagesSliceState = {
+    // Start with loading state to avoid re-render from empty state on startup
+    asyncProcess: "loading",
     messageOrder: [],
     messages: {},
     verbose: window.localStorage.getItem(LS_VERBOSE_KEY) === "true",
+};
+
+const setNormalizedMessages = (state: MessagesSliceState, messages: Message[]) => {
+    state.messages = messages.reduce((acc, message) => {
+        acc[message.localId] = message;
+        return acc;
+    }, {} as MessagesSliceState["messages"]);
+    state.messageOrder = messages.map((message) => message.localId);
+};
+
+const resolveInteraction = (
+    state: MessagesSliceState,
+    userMessageId: string,
+    assistantMessageId: string,
+): [UserMessage | void, AssistantMessage | void] => {
+    const assistantMessage = state.messages[assistantMessageId];
+    const userMessage = state.messages[userMessageId];
+
+    if (
+        !assistantMessage ||
+        !isAssistantMessage(assistantMessage) ||
+        !userMessage ||
+        !isUserMessage(userMessage)
+    ) {
+        return [undefined, undefined];
+    }
+
+    return [userMessage, assistantMessage];
 };
 
 const messagesSlice = createSlice({
     name: messagesSliceName,
     initialState,
     reducers: {
+        loadThreadAction: (state) => {
+            state.asyncProcess = "loading";
+        },
+        loadThreadErrorAction: (state, { payload: { error } }: PayloadAction<{ error: string }>) => {
+            state.globalError = error;
+            delete state.asyncProcess;
+        },
+        loadThreadSuccessAction: (
+            state,
+            { payload: { messages } }: PayloadAction<{ messages: Message[] }>,
+        ) => {
+            setNormalizedMessages(state, messages);
+            delete state.asyncProcess;
+        },
+        clearThreadAction: (state) => {
+            state.asyncProcess = "clearing";
+        },
+        clearThreadErrorAction: (state, { payload: { error } }: PayloadAction<{ error: string }>) => {
+            state.globalError = error;
+            delete state.asyncProcess;
+        },
+        clearThreadSuccessAction: (state) => {
+            state.messages = {};
+            state.messageOrder = [];
+            delete state.asyncProcess;
+            delete state.globalError;
+        },
+        /**
+         * Add message to the stack
+         */
         newMessageAction: (state, action: PayloadAction<Message>) => {
-            if (isAssistantCancelledMessage(action.payload)) {
-                const lastMessageId = state.messageOrder[state.messageOrder.length - 1];
-                const lastMessage = state.messages[lastMessageId];
+            state.messages[action.payload.localId] = action.payload;
+            state.messageOrder.push(action.payload.localId);
+        },
+        /**
+         * Start the message evaluation, adding new assistant message as an incomplete placeholder
+         */
+        evaluateMessageAction: (
+            state,
+            { payload: { message } }: PayloadAction<{ message: AssistantMessage }>,
+        ) => {
+            state.asyncProcess = "evaluating";
+            state.messages[message.localId] = message;
+            state.messageOrder.push(message.localId);
+        },
+        /**
+         * The evaluation failed, need to update the assistant message and user message.
+         */
+        evaluateMessageErrorAction: (
+            state,
+            {
+                payload,
+            }: PayloadAction<{
+                error: string;
+                assistantMessageId: string;
+                userMessageId: string;
+            }>,
+        ) => {
+            delete state.asyncProcess;
+            const [userMessage, assistantMessage] = resolveInteraction(
+                state,
+                payload.userMessageId,
+                payload.assistantMessageId,
+            );
 
-                if (!lastMessageId || !isUserTextMessage(lastMessage)) {
-                    return;
-                }
-
-                // Mark the last user message as cancelled
-                lastMessage.content.cancelled = true;
+            if (!assistantMessage || !userMessage) {
+                // This should not happen
+                state.globalError = `Unexpected error during message evaluation. ${payload.error}`;
+                return;
             }
 
-            state.messages[action.payload.id] = action.payload;
-            state.messageOrder.push(action.payload.id);
+            assistantMessage.complete = true;
+            assistantMessage.content.push(makeErrorContents(payload.error));
         },
-        clearMessagesAction: (state) => {
-            state.messageOrder = [];
-            state.messages = {};
+        evaluateMessageSuccessAction: (
+            state,
+            {
+                payload,
+            }: PayloadAction<{
+                assistantMessageContents: AssistantMessage["content"];
+                assistantMessageId: string;
+                userMessageId: string;
+            }>,
+        ) => {
+            delete state.asyncProcess;
+            const [userMessage, assistantMessage] = resolveInteraction(
+                state,
+                payload.userMessageId,
+                payload.assistantMessageId,
+            );
+
+            if (!assistantMessage || !userMessage) {
+                // This should not happen
+                state.globalError = `Unexpected error during message evaluation.`;
+                return;
+            }
+
+            assistantMessage.content = payload.assistantMessageContents;
+            assistantMessage.complete = true;
+            assistantMessage.cancelled = false;
+            userMessage.cancelled = false;
         },
-        setMessages: (state, action: PayloadAction<Message[]>) => {
-            state.messages = action.payload.reduce((acc, message) => {
-                acc[message.id] = message;
-                return acc;
-            }, {} as MessagesSliceState["messages"]);
-            state.messageOrder = action.payload.map((message) => message.id);
+        evaluateMessageCancelAction: (
+            state,
+            {
+                payload,
+            }: PayloadAction<{
+                assistantMessageId: string;
+                userMessageId: string;
+            }>,
+        ) => {
+            delete state.asyncProcess;
+            const [userMessage, assistantMessage] = resolveInteraction(
+                state,
+                payload.userMessageId,
+                payload.assistantMessageId,
+            );
+
+            if (!assistantMessage || !userMessage) {
+                // This should not happen
+                state.globalError = `Unexpected error during message evaluation.`;
+                return;
+            }
+
+            assistantMessage.cancelled = true;
+            userMessage.cancelled = true;
         },
-        toggleVerboseAction: (state) => {
-            state.verbose = !state.verbose;
+        cancelLastInteractionAction: (state) => {
+            delete state.asyncProcess;
+            const lastMessageId = state.messageOrder[state.messageOrder.length - 1];
+            const lastMessage = state.messages[lastMessageId];
+            const previousMessageId = state.messageOrder[state.messageOrder.length - 2];
+            const previousMessage = state.messages[previousMessageId];
+
+            if (
+                !lastMessage ||
+                !isAssistantMessage(lastMessage) ||
+                !previousMessage ||
+                !isUserMessage(previousMessage)
+            ) {
+                // This should not happen
+                state.globalError = `Attempting to cancel evaluation on invalid message.`;
+                return;
+            }
+
+            lastMessage.cancelled = true;
+            previousMessage.cancelled = true;
+        },
+        setMessagesAction: (state, { payload: { messages } }: PayloadAction<{ messages: Message[] }>) => {
+            setNormalizedMessages(state, messages);
+        },
+        setVerboseAction: (state, { payload: { verbose } }: PayloadAction<{ verbose: boolean }>) => {
+            state.verbose = verbose;
+        },
+        setGlobalErrorAction: (state, { payload: { error } }: PayloadAction<{ error: string }>) => {
+            state.globalError = error;
+        },
+        cancelAsyncAction: (state) => {
+            delete state.asyncProcess;
         },
     },
 });
 
 export const messagesSliceReducer = messagesSlice.reducer;
-export const { newMessageAction, clearMessagesAction, setMessages, toggleVerboseAction } =
-    messagesSlice.actions;
+export const {
+    loadThreadAction,
+    loadThreadErrorAction,
+    loadThreadSuccessAction,
+    clearThreadAction,
+    clearThreadErrorAction,
+    clearThreadSuccessAction,
+    newMessageAction,
+    evaluateMessageAction,
+    evaluateMessageErrorAction,
+    evaluateMessageSuccessAction,
+    evaluateMessageCancelAction,
+    cancelLastInteractionAction,
+    setMessagesAction,
+    setVerboseAction,
+    setGlobalErrorAction,
+    cancelAsyncAction,
+} = messagesSlice.actions;

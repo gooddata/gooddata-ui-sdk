@@ -3139,6 +3139,9 @@ importers:
       '@reduxjs/toolkit':
         specifier: ^1.9.3
         version: 1.9.7(react-redux@7.2.9)(react@18.2.0)
+      '@types/node':
+        specifier: ^18.17.6
+        version: 18.19.3
       classnames:
         specifier: ^2.3.1
         version: 2.3.2
@@ -3151,6 +3154,9 @@ importers:
       react-intl:
         specifier: ^6.4.1
         version: 6.5.5(react@18.2.0)(typescript@5.3.3)
+      react-loading-skeleton:
+        specifier: ^3.4.0
+        version: 3.4.0(react@18.2.0)
       react-redux:
         specifier: ^7.2.4
         version: 7.2.9(react-dom@18.2.0)(react@18.2.0)
@@ -3298,7 +3304,7 @@ importers:
         version: 5.3.3
       vitest:
         specifier: 1.0.4
-        version: 1.0.4(jsdom@22.1.0)(sass@1.69.5)
+        version: 1.0.4(@types/node@18.19.3)(jsdom@22.1.0)(sass@1.69.5)
       vitest-dom:
         specifier: 0.1.1
         version: 0.1.1(vitest@1.0.4)
@@ -4191,7 +4197,7 @@ importers:
         version: 5.3.3
       vitest:
         specifier: 1.0.4
-        version: 1.0.4(jsdom@22.1.0)(sass@1.69.5)
+        version: 1.0.4(@types/node@18.19.3)(jsdom@22.1.0)(sass@1.69.5)
       vitest-dom:
         specifier: 0.1.1
         version: 0.1.1(vitest@1.0.4)
@@ -24070,64 +24076,6 @@ packages:
         optional: true
     dependencies:
       '@types/node': 18.19.3
-      '@vitest/expect': 1.0.4
-      '@vitest/runner': 1.0.4
-      '@vitest/snapshot': 1.0.4
-      '@vitest/spy': 1.0.4
-      '@vitest/utils': 1.0.4
-      acorn-walk: 8.3.1
-      cac: 6.7.14
-      chai: 4.3.10
-      debug: 4.3.4(supports-color@8.1.1)
-      execa: 8.0.1
-      jsdom: 22.1.0
-      local-pkg: 0.5.0
-      magic-string: 0.30.5
-      pathe: 1.1.1
-      picocolors: 1.0.0
-      std-env: 3.6.0
-      strip-literal: 1.3.0
-      tinybench: 2.5.1
-      tinypool: 0.8.1
-      vite: 5.4.3(@types/node@18.19.3)(sass@1.69.5)
-      vite-node: 1.0.4(@types/node@18.19.3)(sass@1.69.5)
-      why-is-node-running: 2.2.2
-    transitivePeerDependencies:
-      - less
-      - lightningcss
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-    dev: true
-
-  /vitest@1.0.4(jsdom@22.1.0)(sass@1.69.5):
-    resolution: {integrity: sha512-s1GQHp/UOeWEo4+aXDOeFBJwFzL6mjycbQwwKWX2QcYfh/7tIerS59hWQ20mxzupTJluA2SdwiBuWwQHH67ckg==}
-    engines: {node: ^18.0.0 || >=20.0.0}
-    hasBin: true
-    peerDependencies:
-      '@edge-runtime/vm': '*'
-      '@types/node': ^18.0.0 || >=20.0.0
-      '@vitest/browser': ^1.0.0
-      '@vitest/ui': ^1.0.0
-      happy-dom: '*'
-      jsdom: '*'
-    peerDependenciesMeta:
-      '@edge-runtime/vm':
-        optional: true
-      '@types/node':
-        optional: true
-      '@vitest/browser':
-        optional: true
-      '@vitest/ui':
-        optional: true
-      happy-dom:
-        optional: true
-      jsdom:
-        optional: true
-    dependencies:
       '@vitest/expect': 1.0.4
       '@vitest/runner': 1.0.4
       '@vitest/snapshot': 1.0.4

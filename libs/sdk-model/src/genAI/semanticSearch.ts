@@ -26,15 +26,15 @@ export interface ISemanticSearchResultItem {
     /**
      * The description of the found metadata object
      */
-    description: string;
+    description?: string;
     /**
      * The tags of the found metadata object
      */
-    tags: string[];
+    tags?: string[];
     /**
      * The creation date of the found metadata object
      */
-    createdAt: string;
+    createdAt?: string;
     /**
      * The last modification date of the found metadata object
      */
@@ -47,19 +47,19 @@ export interface ISemanticSearchResultItem {
      * Overall similarity score of the found item.
      * Larger is more similar.
      */
-    score: number;
+    score?: number;
     /**
      * Title score of the found item.
      */
-    scoreTitle: number;
+    scoreTitle?: number;
     /**
      * Description score of the found item.
      */
-    scoreDescriptor: number;
+    scoreDescriptor?: number;
     /**
      * 1000 if the found item is an exact match, 0 otherwise.
      */
-    scoreExactMatch: number;
+    scoreExactMatch?: number;
 }
 
 /**

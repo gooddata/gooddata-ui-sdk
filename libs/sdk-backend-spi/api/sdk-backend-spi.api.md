@@ -60,8 +60,10 @@ import { IExportDefinitionMetadataObject } from '@gooddata/sdk-model';
 import { IExportDefinitionMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IFilterContextDefinition } from '@gooddata/sdk-model';
-import { IGenAIChatEvaluation } from '@gooddata/sdk-model';
 import { IGenAIChatInteraction } from '@gooddata/sdk-model';
+import { IGenAIChatRouting } from '@gooddata/sdk-model';
+import { IGenAICreatedVisualizations } from '@gooddata/sdk-model';
+import { IGenAIFoundObjects } from '@gooddata/sdk-model';
 import { IGenAIUserContext } from '@gooddata/sdk-model';
 import { IGranularAccessGrantee } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
@@ -398,16 +400,29 @@ export interface ICancelable<T> {
     withSignal(signal: AbortSignal): T;
 }
 
-// @alpha
+// @beta
 export interface IChatThread {
+    loadHistory(fromInteractionId?: number, options?: {
+        signal?: AbortSignal;
+    }): Promise<IChatThreadHistory>;
+    query(userMessage: string): IChatThreadQuery;
+    reset(): Promise<void>;
+}
+
+// @beta
+export interface IChatThreadHistory {
+    // (undocumented)
+    interactions: IGenAIChatInteraction[];
+}
+
+// @beta
+export interface IChatThreadQuery {
     query(options?: {
         signal?: AbortSignal;
     }): Promise<IGenAIChatEvaluation>;
-    withChatHistory(chatHistory: IGenAIChatInteraction[]): IChatThread;
-    withCreateLimit(createLimit: number): IChatThread;
-    withQuestion(question: string): IChatThread;
-    withSearchLimit(searchLimit: number): IChatThread;
-    withUserContext(userContext: IGenAIUserContext): IChatThread;
+    withCreateLimit(createLimit: number): IChatThreadQuery;
+    withSearchLimit(searchLimit: number): IChatThreadQuery;
+    withUserContext(userContext: IGenAIUserContext): IChatThreadQuery;
 }
 
 // @alpha (undocumented)
@@ -727,6 +742,20 @@ export interface IForecastView {
     low: DataValue[][];
     // (undocumented)
     prediction: DataValue[][];
+}
+
+// @beta
+export interface IGenAIChatEvaluation {
+    // (undocumented)
+    chatHistoryThreadId?: string;
+    // (undocumented)
+    createdVisualizations?: IGenAICreatedVisualizations;
+    // (undocumented)
+    foundObjects?: IGenAIFoundObjects;
+    // (undocumented)
+    routing: IGenAIChatRouting;
+    // (undocumented)
+    textResponse?: string;
 }
 
 // @beta

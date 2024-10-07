@@ -4,46 +4,34 @@
 
 ```ts
 
-import { GenAIChatFoundObjects } from '@gooddata/sdk-model';
+import { GenAIChatRoutingUseCase } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
-import { IGenAIChatEvaluation } from '@gooddata/sdk-model';
+import { IGenAIVisualization } from '@gooddata/sdk-model';
+import { ISemanticSearchResultItem } from '@gooddata/sdk-model';
 import { default as React_2 } from 'react';
 
 // @alpha (undocumented)
-export type AssistantCancelledMessage = BaseMessage & {
-    type: "assistant-cancelled";
-};
-
-// @alpha (undocumented)
-export type AssistantErrorMessage = BaseMessage & {
-    type: "assistant-error";
-    content: {
-        error: string | null;
-        foundObjects?: GenAIChatFoundObjects;
-    };
-};
-
-// @alpha (undocumented)
-export type AssistantMessage = AssistantTextMessage | AssistantErrorMessage | AssistantSearchCreateMessage | AssistantCancelledMessage;
-
-// @alpha (undocumented)
-export type AssistantSearchCreateMessage = BaseMessage & {
-    type: "assistant-search-create";
-    content: IGenAIChatEvaluation;
-};
-
-// @alpha (undocumented)
-export type AssistantTextMessage = BaseMessage & {
-    type: "assistant-text";
-    content: {
-        text: string;
-    };
+export type AssistantMessage = BaseMessage & {
+    role: "assistant";
 };
 
 // @alpha (undocumented)
 export type BaseMessage = {
-    id: string;
+    id?: number;
+    localId: string;
     created: number;
+    cancelled: boolean;
+    complete: boolean;
+    content: Contents[];
+};
+
+// @alpha (undocumented)
+export type Contents = TextContents | RoutingContents | SearchContents | VisualizationContents | ErrorContents;
+
+// @alpha (undocumented)
+export type ErrorContents = {
+    type: "error";
+    text: string;
 };
 
 // @alpha
@@ -57,29 +45,38 @@ export interface GenAIChatProps {
 }
 
 // @alpha
-export type Message = UserMessage | SystemMessage | AssistantMessage;
+export type Message = UserMessage | AssistantMessage;
 
 // @alpha (undocumented)
-export type SystemMessage = SystemTextMessage;
-
-// @alpha (undocumented)
-export type SystemTextMessage = BaseMessage & {
-    type: "system-text";
-    content: {
-        text: string;
-    };
+export type RoutingContents = {
+    type: "routing";
+    text: string;
+    useCase: GenAIChatRoutingUseCase;
 };
 
 // @alpha (undocumented)
-export type UserMessage = UserTextMessage;
+export type SearchContents = {
+    type: "search";
+    text: string;
+    searchResults: ISemanticSearchResultItem[];
+};
 
 // @alpha (undocumented)
-export type UserTextMessage = BaseMessage & {
-    type: "user-text";
-    content: {
-        text: string;
-        cancelled: boolean;
-    };
+export type TextContents = {
+    type: "text";
+    text: string;
+};
+
+// @alpha (undocumented)
+export type UserMessage = BaseMessage & {
+    role: "user";
+};
+
+// @alpha (undocumented)
+export type VisualizationContents = {
+    type: "visualization";
+    text: string;
+    createdVisualizations: IGenAIVisualization[];
 };
 
 ```

@@ -989,25 +989,21 @@ export type {
 } from "./genAI/semanticSearch.js";
 
 export type {
-    IGenAIUserContext,
     IGenAIChatInteraction,
-    IGenAIChatEvaluation,
-    GenAIActiveObject,
+    IGenAIUserContext,
+    IGenAIChatRouting,
+    IGenAICreatedVisualizations,
+    IGenAIFoundObjects,
+    IGenAIVisualization,
+    IGenAIVisualizationDimension,
+    IGenAIVisualizationMetric,
+    IGenAIActiveObject,
+    GenAIChatRoutingUseCase,
+    GenAIChatInteractionUserFeedback,
     GenAIChatRole,
-    GenAIChatInteractionContent,
-    GenAIChatBaseInteractionContent,
-    GenAIChatTextInteractionContent,
-    GenAIChatCreatedVisualization,
-    GenAIChatSearchInteractionContent,
-    GenAIChatVisualizationInteractionContent,
-    GenAIChatMetricType,
-    GenAIChatCreatedVisualizationMetric,
-    GenAIChatVisualizationType,
-    GenAIChatMetricAggregation,
-    GenAIChatCreatedVisualizationDimension,
-    GenAIChatUseCase,
-    GenAIChatCreatedVisualizations,
-    GenAIChatFoundObjects,
-} from "./genAI/flexAI.js";
+    GenAIVisualizationType,
+    GenAIMetricAggregation,
+    GenAIMetricType,
+} from "./genAI/chat.js";
 
 export type { GenAIObjectType } from "./genAI/common.js";
