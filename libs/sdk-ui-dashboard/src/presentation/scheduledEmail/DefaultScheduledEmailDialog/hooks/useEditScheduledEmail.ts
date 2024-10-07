@@ -287,7 +287,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
     const isDashboardExportSelected =
         editedAutomation.exportDefinitions?.some((exportDefinition) =>
             isExportDefinitionDashboardRequestPayload(exportDefinition.requestPayload),
-        ) ?? false;
+        ) ?? true;
 
     const isCsvExportSelected =
         editedAutomation.exportDefinitions?.some((exportDefinition) => {
