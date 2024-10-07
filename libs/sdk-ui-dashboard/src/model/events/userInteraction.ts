@@ -122,7 +122,12 @@ export type AttributeHierarchiesInteractionType =
 /**
  * @beta
  */
-export type VisualizationSwitcherInteractionType = "visualizationSwitcherChanged";
+export type VisualizationSwitcherInteractionType =
+    | "visualizationSwitcherSwitched"
+    | "visualizationSwitcherRemoved"
+    | "visualizationSwitcherOrderChanged"
+    | "visualizationSwitcherVisualizationDetailOpened"
+    | "visualizationSwitcherVisualizationAdded";
 
 /**
  * @alpha

@@ -9328,7 +9328,7 @@ export type VisualizationSwitcherDraggableListItem = BaseDraggableLayoutItem & {
 export type VisualizationSwitcherDraggingComponent = ComponentType<IVisualizationSwitcherDraggingComponentProps>;
 
 // @beta (undocumented)
-export type VisualizationSwitcherInteractionType = "visualizationSwitcherChanged";
+export type VisualizationSwitcherInteractionType = "visualizationSwitcherSwitched" | "visualizationSwitcherRemoved" | "visualizationSwitcherOrderChanged" | "visualizationSwitcherVisualizationDetailOpened" | "visualizationSwitcherVisualizationAdded";
 
 // @alpha (undocumented)
 export type VisualizationSwitcherToolbarComponentProvider = (widget: IVisualizationSwitcherWidget) => CustomVisualizationSwitcherToolbarComponent;

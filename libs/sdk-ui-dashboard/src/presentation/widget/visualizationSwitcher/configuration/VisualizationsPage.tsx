@@ -3,7 +3,11 @@
 import { Button, Typography } from "@gooddata/sdk-ui-kit";
 import React from "react";
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
-import { selectInsightsMap, useDashboardSelector } from "../../../../model/index.js";
+import {
+    selectInsightsMap,
+    useDashboardSelector,
+    useDashboardUserInteraction,
+} from "../../../../model/index.js";
 import { useIntl } from "react-intl";
 import { VisualizationsList } from "./VisualizationsList/VisualizationsList.js";
 import { InsightPicker } from "./InsightPicker.js";
@@ -28,6 +32,7 @@ export const VisualizationsPage: React.FC<IVisualizationsPageProps> = ({
     const [isVisualizationPickerVisible, setVisualizationPickerVisible] = React.useState(false);
 
     const intl = useIntl();
+    const userInteraction = useDashboardUserInteraction();
 
     const insights = useDashboardSelector(selectInsightsMap);
 
@@ -41,6 +46,7 @@ export const VisualizationsPage: React.FC<IVisualizationsPageProps> = ({
     const onAdded = (insight: IInsight) => {
         onVisualizationAdd(insight);
         setVisualizationPickerVisible(false);
+        userInteraction.visualizationSwitcherInteraction("visualizationSwitcherVisualizationAdded");
     };
     return isVisualizationPickerVisible ? (
         <InsightPicker onInsightSelect={onAdded} onBack={onBack} />
