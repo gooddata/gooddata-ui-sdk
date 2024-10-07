@@ -102,10 +102,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
     });
     const intl = useIntl();
     const disableCreateButtonDueToLimits = isNewAlert && maxAutomationsReached;
-    const selectedMeasureIdentifier = getAlertMeasure(updatedAlert.alert);
-    const selectedMeasure = measures.find(
-        (measure) => measure.measure.measure.localIdentifier === selectedMeasureIdentifier,
-    );
+    const selectedMeasure = getAlertMeasure(measures, updatedAlert.alert);
     const { isValid, invalidityReason } = useAlertValidation(alert, isNewAlert);
     const filters = alert.alert?.execution?.filters ?? [];
 
