@@ -72,6 +72,7 @@ import {
 } from "../backendCapabilities/backendCapabilitiesSelectors.js";
 import { existBlacklistHierarchyPredicate } from "../../utils/attributeHierarchyUtils.js";
 import { selectDisableDashboardCrossFiltering } from "../meta/metaSelectors.js";
+import { selectCatalogIsLoaded } from "../catalog/catalogSelectors.js";
 
 /**
  * @internal
@@ -628,17 +629,27 @@ export const selectConfiguredAndImplicitDrillsByWidgetRef: (
     ref: ObjRef,
 ) => DashboardSelector<IImplicitDrillWithPredicates[]> = createMemoizedSelector((ref: ObjRef) =>
     createSelector(
+        selectCatalogIsLoaded,
         selectValidConfiguredDrillsByWidgetRef(ref),
         selectImplicitDrillsDownByWidgetRef(ref),
         selectImplicitDrillsToUrlByWidgetRef(ref),
         selectCrossFilteringByWidgetRef(ref),
-        (configuredDrills, implicitDrillDownDrills, implicitDrillToUrlDrills, crossFiltering) => {
-            return compact([
-                ...configuredDrills,
-                ...implicitDrillDownDrills,
-                ...implicitDrillToUrlDrills,
-                crossFiltering,
-            ]);
+        (
+            catalogIsLoaded,
+            configuredDrills,
+            implicitDrillDownDrills,
+            implicitDrillToUrlDrills,
+            crossFiltering,
+        ) => {
+            // disable drilling until catalog is fully loaded
+            return catalogIsLoaded
+                ? compact([
+                      ...configuredDrills,
+                      ...implicitDrillDownDrills,
+                      ...implicitDrillToUrlDrills,
+                      crossFiltering,
+                  ])
+                : [];
         },
     ),
 );

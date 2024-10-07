@@ -24,7 +24,7 @@ import {
     uriRef,
     isDashboardAttributeFilterReference,
     IKpiWidget,
-    ICatalogDateDataset,
+    //ICatalogDateDataset,
     IAttributeDisplayFormMetadataObject,
     IMetadataObject,
     isInsightWidget,
@@ -38,7 +38,7 @@ import { selectAllFiltersForWidgetByRef, selectWidgetByRef } from "../store/layo
 import { selectInsightByRef } from "../store/insights/insightsSelectors.js";
 import { invalidQueryArguments } from "../events/general.js";
 import compact from "lodash/compact.js";
-import { selectAllCatalogDateDatasetsMap } from "../store/catalog/catalogSelectors.js";
+//import { selectAllCatalogDateDatasetsMap } from "../store/catalog/catalogSelectors.js";
 import { DashboardState } from "../store/types.js";
 import { resolveDisplayFormMetadata } from "../utils/displayFormResolver.js";
 import { invariant } from "ts-invariant";
@@ -64,7 +64,7 @@ interface IFilterDisplayFormPair {
 
 interface IFilterDateDatasetPair {
     filter: IDateFilter;
-    dateDataset: ICatalogDateDataset | undefined;
+    dateDataset: ObjRef | undefined; //ICatalogDateDataset | undefined;
 }
 
 function* loadDisplayFormsForAttributeFilters(
@@ -91,16 +91,16 @@ function* loadDisplayFormsForAttributeFilters(
 }
 
 function selectDateDatasetsForDateFilters(
-    state: DashboardState,
+    _state: DashboardState,
     filters: IDateFilter[],
 ): IFilterDateDatasetPair[] {
-    const fromCatalog = selectAllCatalogDateDatasetsMap(state);
+    //    const fromCatalog = selectAllCatalogDateDatasetsMap(state);
 
     return filters.map((filter): IFilterDateDatasetPair => {
-        const dateDataset = fromCatalog.get(filterObjRef(filter));
+        //        const dateDataset = fromCatalog.get(filterObjRef(filter));
 
         return {
-            dateDataset,
+            dateDataset: filterObjRef(filter),
             filter,
         };
     });
@@ -218,9 +218,8 @@ function resolveWidgetDateFilterIgnore(
     const nonIgnoredCommonDateFilterDateDatasetPairs = commonDateFilterDateDatasetPairs.filter(
         ({ dateDataset }) => {
             return (
-                !!widget.dateDataSet &&
-                dateDataset &&
-                refMatchesMdObject(widget.dateDataSet, dateDataset.dataSet, "dataSet")
+                !!widget.dateDataSet && dateDataset && areObjRefsEqual(widget.dateDataSet, dateDataset)
+                //                refMatchesMdObject(widget.dateDataSet, dateDataset.dataSet, "dataSet")
             );
         },
     );
@@ -230,7 +229,8 @@ function resolveWidgetDateFilterIgnore(
                 dateDataset &&
                 widget.ignoreDashboardFilters
                     ?.filter(isDashboardDateFilterReference)
-                    .some((ignored) => refMatchesMdObject(ignored.dataSet, dateDataset.dataSet, "dataSet"));
+                    //.some((ignored) => refMatchesMdObject(ignored.dataSet, dateDataset.dataSet, "dataSet"));
+                    .some((ignored) => areObjRefsEqual(ignored.dataSet, dateDataset));
 
             return !matches;
         },
@@ -268,7 +268,8 @@ function resolveDateFilters(
         .filter((item) => !!item.dateDataset)
         .reduceRight((acc: IDateFilter[], curr) => {
             const alreadyPresent = acc.some((item) =>
-                refMatchesMdObject(filterObjRef(item), curr.dateDataset!.dataSet, "dataSet"),
+                //refMatchesMdObject(filterObjRef(item), curr.dateDataset!.dataSet, "dataSet"),
+                areObjRefsEqual(filterObjRef(item), curr.dateDataset),
             );
 
             if (!alreadyPresent) {

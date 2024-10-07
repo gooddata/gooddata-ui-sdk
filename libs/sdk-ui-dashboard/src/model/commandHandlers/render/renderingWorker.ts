@@ -6,6 +6,9 @@ import { DashboardContext } from "../../types/commonTypes.js";
 import { newDashboardEventPredicate } from "../../events/index.js";
 import { renderRequested, renderResolved } from "../../events/render.js";
 import { executedActions } from "../../store/executed/index.js";
+import { loadCatalog } from "../dashboard/initializeDashboardHandler/loadCatalog.js";
+import { loadDateHierarchyTemplates } from "../dashboard/initializeDashboardHandler/loadDateHierarchyTemplates.js";
+import { catalogActions } from "../../store/catalog/index.js";
 
 function* wait(ms: number): SagaIterator<true> {
     yield delay(ms);
@@ -103,6 +106,20 @@ export function newRenderingWorker(renderingWorkerConfig: Partial<RenderingWorke
 
             // Notify that the dashboard is fully rendered.
             yield put(renderResolved(ctx, correlationId));
+
+            // TODO: load catalog here
+            const catalog = yield call(loadCatalog, ctx, { payload: { config: {} } } as any);
+            const dateHierarchyTemplates = yield call(loadDateHierarchyTemplates, ctx);
+            yield put(
+                catalogActions.setCatalogItems({
+                    attributes: catalog.attributes(),
+                    dateDatasets: catalog.dateDatasets(),
+                    facts: catalog.facts(),
+                    measures: catalog.measures(),
+                    attributeHierarchies: catalog.attributeHierarchies(),
+                    dateHierarchyTemplates: dateHierarchyTemplates,
+                }),
+            );
         } catch (err) {
             console.error("Rendering worker failed", err);
         }

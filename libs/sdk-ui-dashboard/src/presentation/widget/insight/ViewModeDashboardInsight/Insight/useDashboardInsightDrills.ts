@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import { useCallback, useMemo } from "react";
 import isEqual from "lodash/isEqual.js";
 import {
@@ -10,6 +10,7 @@ import {
     selectConfiguredAndImplicitDrillsByWidgetRef,
     selectIsInEditMode,
     selectEnableKPIDashboardDrillFromAttribute,
+    selectCatalogIsLoaded,
 } from "../../../../../model/index.js";
 import { OnWidgetDrill } from "../../../../drill/types.js";
 import {
@@ -42,6 +43,7 @@ export const useDashboardInsightDrills = ({
     const drillTargets = useDashboardSelector(selectDrillTargetsByWidgetRef(widget.ref));
     const isDrillFromAttributeEnabled = useDashboardSelector(selectEnableKPIDashboardDrillFromAttribute);
     const disableDrillDownOnWidget = insight.insight.properties.controls?.disableDrillDown;
+    const isCatalogLoaded = useDashboardSelector(selectCatalogIsLoaded);
 
     const onPushData = useCallback(
         (data: IPushData): void => {
@@ -97,8 +99,9 @@ export const useDashboardInsightDrills = ({
           }
         : undefined;
 
+    // disable all drills until catalog is loaded
     return {
-        drillableItems,
+        drillableItems: isCatalogLoaded ? drillableItems : [],
         onPushData,
         onDrill,
     };

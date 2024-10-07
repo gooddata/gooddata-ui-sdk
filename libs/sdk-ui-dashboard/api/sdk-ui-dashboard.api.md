@@ -7185,6 +7185,9 @@ export const selectCatalogDateDatasets: DashboardSelector<ICatalogDateDataset[]>
 // @public (undocumented)
 export const selectCatalogFacts: DashboardSelector<ICatalogFact[]>;
 
+// @alpha (undocumented)
+export const selectCatalogIsLoaded: DashboardSelector<boolean>;
+
 // @public (undocumented)
 export const selectCatalogMeasures: DashboardSelector<ICatalogMeasure[]>;
 

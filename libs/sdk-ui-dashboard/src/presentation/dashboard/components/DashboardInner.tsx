@@ -6,6 +6,7 @@ import {
     useDashboardSelector,
     selectLocale,
     selectIsInEditMode,
+    selectCatalogIsLoaded,
     useDashboardAutomations,
 } from "../../../model/index.js";
 import { DashboardHeader } from "../DashboardHeader/DashboardHeader.js";
@@ -29,6 +30,7 @@ const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAY
 export const DashboardInner: React.FC<IDashboardProps> = (props) => {
     const locale = useDashboardSelector(selectLocale);
     const isEditMode = useDashboardSelector(selectIsInEditMode);
+    const isCatalogLoaded = useDashboardSelector(selectCatalogIsLoaded);
 
     const headerRef = useRef(null);
     const layoutRef = useRef(null);
@@ -47,6 +49,7 @@ export const DashboardInner: React.FC<IDashboardProps> = (props) => {
             <div
                 className={cx("component-root", {
                     "sdk-edit-mode-on": isEditMode,
+                    "catalog-is-loaded": isCatalogLoaded,
                 })}
             >
                 <DragLayerComponent />

@@ -14,7 +14,6 @@ import { dateFilterConfigActions } from "../../../store/dateFilterConfig/index.j
 import { DateFilterMergeResult, mergeDateFilterConfigWithOverrides } from "./mergeDateFilterConfigs.js";
 import { resolvePermissions } from "./resolvePermissions.js";
 import { permissionsActions } from "../../../store/permissions/index.js";
-import { loadCatalog } from "./loadCatalog.js";
 import { loadDashboardAlerts } from "./loadDashboardAlerts.js";
 import { catalogActions } from "../../../store/catalog/index.js";
 import { alertsActions } from "../../../store/alerts/index.js";
@@ -41,7 +40,7 @@ import {
     actionsToInitializeNewDashboard,
 } from "../common/stateInitializers.js";
 import { executionResultsActions } from "../../../store/executionResults/index.js";
-import { createDisplayFormMapFromCatalog } from "../../../../_staging/catalog/displayFormMap.js";
+import { createDisplayFormMap } from "../../../../_staging/catalog/displayFormMap.js";
 import { getPrivateContext } from "../../../store/_infra/contexts.js";
 import { accessibleDashboardsActions } from "../../../store/accessibleDashboards/index.js";
 import { loadAccessibleDashboardList } from "./loadAccessibleDashboardList.js";
@@ -163,7 +162,6 @@ function* loadExistingDashboard(
         call(resolveDashboardConfig, ctx, cmd),
         call(resolvePermissions, ctx, cmd),
         call(resolveEntitlements, ctx),
-        call(loadCatalog, ctx, cmd),
         call(loadDashboardAlerts, ctx),
         call(loadUser, ctx),
         call(loadDashboardList, ctx),
@@ -182,7 +180,6 @@ function* loadExistingDashboard(
         config,
         permissions,
         entitlements,
-        catalog,
         alerts,
         user,
         listedDashboards,
@@ -196,7 +193,6 @@ function* loadExistingDashboard(
         SagaReturnType<typeof resolveDashboardConfig>,
         SagaReturnType<typeof resolvePermissions>,
         PromiseFnReturnType<typeof resolveEntitlements>,
-        PromiseFnReturnType<typeof loadCatalog>,
         PromiseFnReturnType<typeof loadDashboardAlerts>,
         PromiseFnReturnType<typeof loadUser>,
         PromiseFnReturnType<typeof loadDashboardList>,
@@ -229,8 +225,8 @@ function* loadExistingDashboard(
         insights,
         config.settings,
         effectiveDateFilterConfig.config,
-        catalog.dateDatasets(),
-        createDisplayFormMapFromCatalog(catalog),
+        [],
+        createDisplayFormMap([], []),
         cmd.payload.persistedDashboard,
     );
 
@@ -253,11 +249,6 @@ function* loadExistingDashboard(
             userActions.setUser(user),
             permissionsActions.setPermissions(permissions),
             catalogActions.setCatalogItems({
-                attributes: catalog.attributes(),
-                dateDatasets: catalog.dateDatasets(),
-                facts: catalog.facts(),
-                measures: catalog.measures(),
-                attributeHierarchies: catalog.attributeHierarchies(),
                 dateHierarchyTemplates: dateHierarchyTemplates,
             }),
             ...initActions,
@@ -306,32 +297,26 @@ function* initializeNewDashboard(
         config,
         permissions,
         entitlements,
-        catalog,
         user,
         listedDashboards,
         accessibleDashboards,
         legacyDashboards,
-        dateHierarchyTemplates,
     ]: [
         SagaReturnType<typeof resolveDashboardConfig>,
         SagaReturnType<typeof resolvePermissions>,
         PromiseFnReturnType<typeof resolveEntitlements>,
-        PromiseFnReturnType<typeof loadCatalog>,
         PromiseFnReturnType<typeof loadUser>,
         PromiseFnReturnType<typeof loadDashboardList>,
         PromiseFnReturnType<typeof loadAccessibleDashboardList>,
         PromiseFnReturnType<typeof loadLegacyDashboards>,
-        PromiseFnReturnType<typeof loadDateHierarchyTemplates>,
     ] = yield all([
         call(resolveDashboardConfig, ctx, cmd),
         call(resolvePermissions, ctx, cmd),
         call(resolveEntitlements, ctx),
-        call(loadCatalog, ctx, cmd),
         call(loadUser, ctx),
         call(loadDashboardList, ctx),
         call(loadAccessibleDashboardList, ctx),
         call(loadLegacyDashboards, ctx),
-        call(loadDateHierarchyTemplates, ctx),
         call(loadFilterViews, ctx),
     ]);
 
@@ -353,14 +338,6 @@ function* initializeNewDashboard(
             entitlementsActions.setEntitlements(entitlements),
             userActions.setUser(user),
             permissionsActions.setPermissions(permissions),
-            catalogActions.setCatalogItems({
-                attributes: catalog.attributes(),
-                dateDatasets: catalog.dateDatasets(),
-                facts: catalog.facts(),
-                measures: catalog.measures(),
-                attributeHierarchies: catalog.attributeHierarchies(),
-                dateHierarchyTemplates: dateHierarchyTemplates,
-            }),
             listedDashboardsActions.setListedDashboards(listedDashboards),
             accessibleDashboardsActions.setAccessibleDashboards(accessibleDashboards),
             legacyDashboardsActions.setLegacyDashboards(legacyDashboards),
