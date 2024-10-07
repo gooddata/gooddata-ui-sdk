@@ -489,14 +489,20 @@ describe("alert transforms", () => {
 
         it("getAlertMeasure - comparison", () => {
             const update = transformAlertByMetric(baseComparison, simpleMetric);
-            const data = getAlertMeasure(update.alert);
-            expect(data).toEqual("localMetric1");
+            const data = getAlertMeasure([simpleMetric], update.alert);
+            expect(data.measure.measure.localIdentifier).toEqual("localMetric1");
         });
 
-        it("getAlertMeasure - relative", () => {
+        it("getAlertMeasure - relative, primary", () => {
             const update = transformAlertByMetric(baseRelative, previousPeriodMetric);
-            const data = getAlertMeasure(update.alert);
-            expect(data).toEqual("localMetric2");
+            const data = getAlertMeasure([previousPeriodMetric], update.alert);
+            expect(data.measure.measure.localIdentifier).toEqual("localMetric2");
+        });
+
+        it("getAlertMeasure - relative, not primary", () => {
+            const update = transformAlertByMetric(baseRelative, previousPeriodMetric1);
+            const data = getAlertMeasure([previousPeriodMetric1], update.alert);
+            expect(data.measure.measure.localIdentifier).toEqual("localMetric2");
         });
 
         it("getAlertCompareOperator - comparison", () => {

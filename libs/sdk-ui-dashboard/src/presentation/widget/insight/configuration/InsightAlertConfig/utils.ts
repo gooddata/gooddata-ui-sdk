@@ -362,11 +362,15 @@ export function getAlertThreshold(alert?: IAutomationAlert): number | undefined 
     return alert?.condition?.right;
 }
 
-export function getAlertMeasure(alert?: IAutomationAlert): string | undefined {
-    if (alert?.condition.type === "relative") {
-        return alert.condition.measure.left.id;
+export function getAlertMeasure(measures: AlertMetric[], alert?: IAutomationAlert): AlertMetric | undefined {
+    const condition = alert?.condition;
+    if (condition?.type === "relative") {
+        return (
+            measures.find((m) => m.measure.measure.localIdentifier === condition.measure.left.id) ??
+            measures.find((m) => m.measure.measure.localIdentifier === condition.measure.right.id)
+        );
     }
-    return alert?.condition.left.id;
+    return measures.find((m) => m.measure.measure.localIdentifier === condition?.left.id);
 }
 
 export function getAlertCompareOperator(alert?: IAutomationAlert): IAlertComparisonOperator | undefined {
