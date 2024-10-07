@@ -6,6 +6,7 @@
     "semantic-search.id": "ID",
     "semantic-search.tags": "Balises",
     "semantic-search.match": "{score}% de correspondance",
+    "semantic-search.previous-search": "Recherche précédente",
     "semantic-search.date.at": "à",
     "gs.date.today": "Aujourd'hui",
     "gs.date.yesterday": "Hier"

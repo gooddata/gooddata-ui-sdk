@@ -620,5 +620,11 @@
     "insightAlert.config.filters.info": "Alerts respect the dashboard filters as set at the time of their creation.{spacer}To modify the time period used for comparison, adjust the date filter.",
     "insightAlert.config.compare_with": "compared to",
     "insightAlert.config.compare_with_sp": "Same period last year",
-    "insightAlert.config.compare_with_pp": "Last term"
+    "insightAlert.config.compare_with_pp": "Last term",
+    "widget.error.missing_insight.message": "No visualisation available",
+    "widget.error.missing_insight.description": "This visualisation has been removed or is no longer accessible. Please contact your administrator or remove it from the dashboard.",
+    "visualizationSwitcher.configurationPanel.remove.from.switcher": "Remove from swapper",
+    "visualizationSwitcher.list.menu.move.up": "Move up",
+    "visualizationSwitcher.list.menu.move.down": "Move down",
+    "visualizationSwitcher.list.menu.remove": "Remove"
 }
