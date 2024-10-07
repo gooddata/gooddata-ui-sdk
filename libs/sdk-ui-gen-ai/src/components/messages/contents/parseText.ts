@@ -41,7 +41,7 @@ export const makeLinkNode = (value: string, href: string): LinkNode => ({
 
 export type Node = TextNode | LinkNode;
 
-const rx = /(\{[\s\S]+?\.[\s\S]+?\})/;
+const rx = /(\{[^}][^.}]*\.[^}]+\})/;
 export const parseText = (text: string, foundObjects: ISemanticSearchResultItem[]): Node[] => {
     return text
         .split(rx)
