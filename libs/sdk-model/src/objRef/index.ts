@@ -57,7 +57,9 @@ export type ObjectType =
     | "dateAttributeHierarchy"
     | "exportDefinition"
     | "automation"
-    | "filterView";
+    | "filterView"
+    | "workspaceDataFilter"
+    | "workspaceDataFilterSetting";
 
 /**
  * Model object reference using object's unique identifier.

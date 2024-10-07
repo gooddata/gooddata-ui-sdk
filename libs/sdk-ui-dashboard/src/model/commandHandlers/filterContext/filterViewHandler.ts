@@ -20,6 +20,7 @@ import {
     SetFilterViewAsDefault,
     reloadFilterViews,
     changeFilterContextSelection,
+    removeAttributeFilters,
 } from "../../commands/index.js";
 import { selectFilterContextDefinition } from "../../store/filterContext/filterContextSelectors.js";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
@@ -125,6 +126,10 @@ export function* applyFilterViewHandler(ctx: DashboardContext, cmd: ApplyFilterV
     );
 
     if (filterView) {
+        const virtualFilters: ReturnType<typeof selectCrossFilteringFiltersLocalIdentifiers> = yield select(
+            selectCrossFilteringFiltersLocalIdentifiers,
+        );
+        yield put(removeAttributeFilters(virtualFilters, cmd.correlationId));
         yield put(changeFilterContextSelection(filterView.filterContext.filters, true, cmd.correlationId));
         yield put(filterViewApplicationSucceeded(ctx, filterView, cmd.correlationId));
     } else {
