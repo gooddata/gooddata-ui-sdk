@@ -30,7 +30,6 @@ import {
 import {
     selectCatalogDateDatasets,
     selectDrillTargetsByWidgetRef,
-    selectSelectedWidgetRef,
     selectWidgetDrills,
     useDashboardSelector,
 } from "../../../../model/index.js";
@@ -97,7 +96,7 @@ const DrillConfigItem: React.FunctionComponent<IDrillConfigItemProps> = ({
         "drill-config-target-with-warning": !!item.warning,
     });
 
-    const widgetRef = useDashboardSelector(selectSelectedWidgetRef);
+    const { widgetRef } = item;
     const widgetDrills = useDashboardSelector(selectWidgetDrills(widgetRef));
     invariant(widgetRef, "mush have widget selected");
 

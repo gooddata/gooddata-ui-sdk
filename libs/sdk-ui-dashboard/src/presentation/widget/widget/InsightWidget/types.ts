@@ -1,10 +1,10 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { IInsight, IInsightWidget, ScreenSize } from "@gooddata/sdk-model";
 import { OnError, OnExportReady, OnLoadingChanged } from "@gooddata/sdk-ui";
 
 export interface IDefaultDashboardInsightWidgetProps {
     widget: IInsightWidget;
-    insight: IInsight;
+    insight?: IInsight;
     screen: ScreenSize;
     dashboardItemClasses: string;
 

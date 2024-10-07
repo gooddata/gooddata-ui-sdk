@@ -11,6 +11,7 @@ import {
     SingleSelectListItem,
 } from "@gooddata/sdk-ui-kit";
 import { useIntl } from "react-intl";
+import { v4 as uuid } from "uuid";
 
 import { IMenuButtonProps } from "./types.js";
 
@@ -26,6 +27,10 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
     const [isOpen, setIsOpen] = useState(false);
     const intl = useIntl();
     const tooltipText = intl.formatMessage({ id: "controlButtons.options.tooltip" });
+
+    // generate unique anchor class name to open dropdown next to the correct button if app uses multiple
+    // dashboard components
+    const dropdownAnchorClassName = useMemo(() => `dash-header-options-anchor-${uuid()}`, []);
 
     const onMenuButtonClick = useCallback(() => {
         setIsOpen((prevIsOpen) => !prevIsOpen);
@@ -48,7 +53,7 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
         return (
             <Overlay
                 key={"topBarMenuButton"}
-                alignTo=".s-header-options-button"
+                alignTo={`.${dropdownAnchorClassName}`}
                 alignPoints={overlayAlignPoints}
                 className="gd-header-menu-overlay"
                 closeOnMouseDrag={true}
@@ -123,9 +128,10 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
                 <Button
                     onClick={onMenuButtonClick}
                     value="&#8943;"
-                    className={
-                        "gd-button-primary dash-header-options-button s-header-options-button gd-button"
-                    }
+                    className={cx(
+                        "gd-button-primary dash-header-options-button s-header-options-button gd-button",
+                        dropdownAnchorClassName,
+                    )}
                     ariaLabel={tooltipText}
                 />
                 {!isOpen ? (

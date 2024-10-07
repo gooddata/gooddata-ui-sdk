@@ -25,6 +25,7 @@ export type MenuItemDependencies = {
     dispatch: ReturnType<typeof useDashboardDispatch>;
     eventDispatch: ReturnType<typeof useDashboardEventDispatch>;
     includeInteractions?: boolean;
+    includeConfigurations?: boolean;
     useWidgetDeleteDialog?: boolean;
 };
 
@@ -38,11 +39,12 @@ export function getDefaultInsightEditMenuItems(
         dispatch,
         eventDispatch,
         includeInteractions = true,
+        includeConfigurations = true,
         useWidgetDeleteDialog = false,
     }: MenuItemDependencies,
 ): IInsightMenuItem[] {
     return compact([
-        {
+        includeConfigurations && {
             type: "submenu",
             itemId: "ConfigurationPanelSubmenu",
             tooltip: "",
@@ -63,7 +65,7 @@ export function getDefaultInsightEditMenuItems(
             SubmenuComponent: InsightInteractions,
             onClick: () => eventDispatch(userInteractionTriggered("interactionPanelOpened")),
         },
-        {
+        (includeConfigurations || includeInteractions) && {
             type: "separator",
             itemId: "InteractionPanelRemoveSeparator",
         },
