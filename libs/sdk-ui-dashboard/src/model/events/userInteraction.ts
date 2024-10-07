@@ -162,6 +162,11 @@ export type AutomationInteractionPayload = UserInteractionPayloadWithDataBase<
 >;
 
 /**
+ * @alpha
+ */
+export type SavedFilterViewInteractionType = "savedFilterViewPanelOpened";
+
+/**
  * @beta
  */
 export interface BareUserInteractionPayload {
@@ -174,7 +179,8 @@ export interface BareUserInteractionPayload {
         | AttributeHierarchiesInteractionType
         | AttributeFilterInteractionType
         | DateFilterInteractionType
-        | VisualizationSwitcherInteractionType;
+        | VisualizationSwitcherInteractionType
+        | SavedFilterViewInteractionType;
 }
 
 /**

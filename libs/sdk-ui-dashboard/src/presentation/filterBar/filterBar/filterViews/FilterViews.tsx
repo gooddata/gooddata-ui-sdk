@@ -19,6 +19,7 @@ import {
     selectFilterViewsDialogMode,
     selectIsNewDashboard,
     selectCanCreateFilterView,
+    useDashboardUserInteraction,
 } from "../../../../model/index.js";
 
 import { FilterViewsList } from "./FilterViewsList.js";
@@ -38,10 +39,16 @@ const DropdownButtonLabel: React.FC<{ filterViews: IDashboardFilterView[] }> = (
     );
 };
 
-const useCallbacks = () => {
+const useCallbacks = (isDialogOpen: boolean) => {
     const dispatch = useDashboardDispatch();
+    const { savedFilterViewInteraction } = useDashboardUserInteraction();
 
-    const toggleDialog = useCallback(() => dispatch(uiActions.toggleFilterViewsDialog()), [dispatch]);
+    const toggleDialog = useCallback(() => {
+        dispatch(uiActions.toggleFilterViewsDialog());
+        if (!isDialogOpen) {
+            savedFilterViewInteraction("savedFilterViewPanelOpened");
+        }
+    }, [dispatch, savedFilterViewInteraction, isDialogOpen]);
 
     const openListDialog = useCallback(
         () =>
@@ -92,7 +99,7 @@ export const FilterViews: React.FC = () => {
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
     const canCreateFilterView = useDashboardSelector(selectCanCreateFilterView);
     const isMobile = useMediaQuery("mobileDevice");
-    const { toggleDialog, openAddDialog, openListDialog, closeDialog } = useCallbacks();
+    const { toggleDialog, openAddDialog, openListDialog, closeDialog } = useCallbacks(isDialogOpen);
 
     useFilterViewsToastMessages();
 
