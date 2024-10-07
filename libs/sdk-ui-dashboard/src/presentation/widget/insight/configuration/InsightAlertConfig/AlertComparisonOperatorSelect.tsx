@@ -1,5 +1,5 @@
 // (C) 2024 GoodData Corporation
-import React from "react";
+import React, { useRef } from "react";
 import { Dropdown, Button, List, SingleSelectListItem, OverlayPositionType } from "@gooddata/sdk-ui-kit";
 import {
     IAlertComparisonOperator,
@@ -46,6 +46,7 @@ export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSel
         : undefined;
 
     const intl = useIntl();
+    const ref = useRef<HTMLElement | null>(null);
 
     const operators = useOperators(props.measure);
 
@@ -59,28 +60,35 @@ export const AlertComparisonOperatorSelect = (props: IAlertComparisonOperatorSel
                 overlayPositionType={overlayPositionType}
                 renderButton={({ isOpen, toggleDropdown }) => {
                     return (
-                        <Button
-                            className={cx(
-                                "gd-alert-comparison-operator-select__button s-alert-operator-select",
-                                {
-                                    "is-active": isOpen,
-                                },
-                            )}
-                            size="small"
-                            variant="secondary"
-                            iconLeft={selectedComparisonItem?.icon ?? selectedRelativeItem?.icon}
-                            iconRight={`gd-icon-navigate${isOpen ? "up" : "down"}`}
-                            onClick={toggleDropdown}
+                        <div
+                            ref={(item) => {
+                                ref.current = item;
+                            }}
                         >
-                            {intl.formatMessage({
-                                id: selectedComparisonItem?.title ?? selectedRelativeItem?.title,
-                            })}
-                        </Button>
+                            <Button
+                                className={cx(
+                                    "gd-alert-comparison-operator-select__button s-alert-operator-select",
+                                    {
+                                        "is-active": isOpen,
+                                    },
+                                )}
+                                size="small"
+                                variant="secondary"
+                                iconLeft={selectedComparisonItem?.icon ?? selectedRelativeItem?.icon}
+                                iconRight={`gd-icon-navigate${isOpen ? "up" : "down"}`}
+                                onClick={toggleDropdown}
+                            >
+                                {intl.formatMessage({
+                                    id: selectedComparisonItem?.title ?? selectedRelativeItem?.title,
+                                })}
+                            </Button>
+                        </div>
                     );
                 }}
                 renderBody={({ closeDropdown }) => {
                     return (
                         <List
+                            width={ref.current?.offsetWidth}
                             className="gd-alert-comparison-operator-select__list s-alert-operator-select-list"
                             items={operators}
                             itemHeightGetter={(idx) =>

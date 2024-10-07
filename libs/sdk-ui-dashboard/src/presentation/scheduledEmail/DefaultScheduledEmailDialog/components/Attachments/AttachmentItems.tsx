@@ -21,11 +21,18 @@ const DROPDOWN_ALIGN_POINTS: IAlignPoint[] = [
 const AttachmentItem: React.FC<{
     format: AttachmentType;
     checked: boolean;
+    disabled?: boolean;
     onChange: () => void;
     className?: string;
-}> = ({ format, checked, onChange, className }) => (
+}> = ({ format, checked, onChange, className, disabled }) => (
     <label className="gd-notifications-channels-attachment-checkbox input-checkbox-label">
-        <input type="checkbox" className="input-checkbox" checked={checked} onChange={onChange} />
+        <input
+            type="checkbox"
+            className="input-checkbox"
+            disabled={disabled}
+            checked={checked}
+            onChange={onChange}
+        />
         <span className="input-label-text" />
         <div
             aria-label="attachment"
@@ -38,11 +45,14 @@ const AttachmentItem: React.FC<{
 
 export const AttachmentDashboard: React.FC<{
     pdfSelected: boolean;
+    disabled?: boolean;
     onSelectionChange: () => void;
 }> = (props) => {
-    const { pdfSelected, onSelectionChange } = props;
+    const { pdfSelected, disabled, onSelectionChange } = props;
 
-    return <AttachmentItem format="PDF" checked={pdfSelected} onChange={onSelectionChange} />;
+    return (
+        <AttachmentItem format="PDF" disabled={disabled} checked={pdfSelected} onChange={onSelectionChange} />
+    );
 };
 
 export const AttachmentWidgets: React.FC<{

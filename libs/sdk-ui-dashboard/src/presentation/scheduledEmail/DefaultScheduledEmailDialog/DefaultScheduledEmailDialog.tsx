@@ -157,7 +157,7 @@ export function ScheduledMailDialogRenderer({
                             <div className="gd-notifications-channels-dialog-footer-link">
                                 <Hyperlink
                                     text={intl.formatMessage({ id: helpTextId })}
-                                    href="https://www.gooddata.com/docs/cloud/create-dashboards/export/schedule-emailing/"
+                                    href="https://www.gooddata.com/docs/cloud/create-dashboards/automation/scheduled-exports/#ScheduleExportsinDashboards-ScheduleExport"
                                     iconClass="gd-icon-circle-question"
                                 />
                                 {scheduledExportToEdit ? (
