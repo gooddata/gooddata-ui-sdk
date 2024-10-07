@@ -1,18 +1,27 @@
 // (C) 2024 GoodData Corporation
 
+import { v4 as uuid } from "uuid";
 import { IDataFiltersService } from "@gooddata/sdk-backend-spi";
-import { IWorkspaceDataFilter, IWorkspaceDataFilterSetting } from "@gooddata/sdk-model";
+import {
+    IWorkspaceDataFilter,
+    IWorkspaceDataFilterSetting,
+    IWorkspaceDataFilterDefinition,
+    ObjRef,
+    idRef,
+} from "@gooddata/sdk-model";
 
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import {
     JsonApiWorkspaceDataFilterSettingOutWithLinks,
     JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum,
+    ITigerClient,
 } from "@gooddata/api-client-tiger";
+import { objRefToIdentifier } from "../../../utils/api.js";
 
 export class TigerDataFiltersService implements IDataFiltersService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard, public readonly workspace: string) {}
 
-    public async getWorkspaceDataFilters(): Promise<IWorkspaceDataFilter[]> {
+    public async getDataFilters(): Promise<IWorkspaceDataFilter[]> {
         return this.authCall(async (client) => {
             const [entitiesResult, settingsResult] = await Promise.all([
                 client.entities.getAllEntitiesWorkspaceDataFilters({
@@ -34,7 +43,9 @@ export class TigerDataFiltersService implements IDataFiltersService {
                 entitiesResult?.data?.data?.map((filter) => {
                     return {
                         id: filter.id,
+                        ref: idRef(filter.id, "workspaceDataFilter"),
                         title: filter.attributes?.title,
+                        columnName: filter.attributes?.columnName,
                         settings: settingsMap[filter.id] || [],
                         isInherited:
                             filter.meta?.origin?.originType ===
@@ -43,6 +54,10 @@ export class TigerDataFiltersService implements IDataFiltersService {
                 }) || []
             );
         });
+    }
+
+    public async getWorkspaceDataFilters(): Promise<IWorkspaceDataFilter[]> {
+        return this.getDataFilters();
     }
 
     private buildSettingsMap(items: JsonApiWorkspaceDataFilterSettingOutWithLinks[]) {
@@ -56,6 +71,7 @@ export class TigerDataFiltersService implements IDataFiltersService {
                 }
                 result[filterId].push({
                     id: setting.id,
+                    ref: idRef(setting.id, "workspaceDataFilterSetting"),
                     title: setting.attributes?.title,
                     filterValues: setting.attributes?.filterValues || [],
                 });
@@ -63,4 +79,109 @@ export class TigerDataFiltersService implements IDataFiltersService {
             return result;
         }, {});
     }
+
+    public createDataFilter = async (
+        newDataFilter: IWorkspaceDataFilterDefinition,
+    ): Promise<IWorkspaceDataFilter> => {
+        return this.authCall(async (client) => {
+            const result = await client.entities.createEntityWorkspaceDataFilters({
+                workspaceId: this.workspace,
+                jsonApiWorkspaceDataFilterInDocument: {
+                    data: {
+                        id: newDataFilter.id ?? uuid(),
+                        type: "workspaceDataFilter",
+                        attributes: {
+                            title: newDataFilter.title,
+                            columnName: newDataFilter.columnName,
+                        },
+                    },
+                },
+            });
+            return {
+                id: result.data.data.id,
+                ref: idRef(result.data.data.id, "workspaceDataFilter"),
+                title: result.data.data.attributes?.title,
+                columnName: result.data.data.attributes?.columnName,
+                settings: [],
+                isInherited: false,
+            };
+        });
+    };
+
+    public updateDataFilter = async (
+        updatedDataFilter: IWorkspaceDataFilter,
+    ): Promise<IWorkspaceDataFilter> => {
+        return this.authCall(async (client) => {
+            const objectId = await objRefToIdentifier(updatedDataFilter.ref, this.authCall);
+            await client.entities.patchEntityWorkspaceDataFilters({
+                workspaceId: this.workspace,
+                objectId,
+                jsonApiWorkspaceDataFilterPatchDocument: {
+                    data: {
+                        id: objectId,
+                        type: "workspaceDataFilter",
+                        attributes: {
+                            title: updatedDataFilter.title,
+                            columnName: updatedDataFilter.columnName,
+                        },
+                    },
+                },
+            });
+            return updatedDataFilter; // no reason to create entity again from response
+        });
+    };
+
+    public updateDataFilterValue = async (dataFilter: ObjRef, value: string): Promise<void> => {
+        return this.authCall(async (client) => {
+            const dataFilterId = await objRefToIdentifier(dataFilter, this.authCall);
+            await this.deleteExistingSettings(client, dataFilterId);
+
+            await client.entities.createEntityWorkspaceDataFilterSettings({
+                workspaceId: this.workspace,
+                jsonApiWorkspaceDataFilterSettingInDocument: {
+                    data: {
+                        id: uuid(),
+                        type: "workspaceDataFilterSetting",
+                        attributes: {
+                            filterValues: [value],
+                        },
+                        relationships: {
+                            workspaceDataFilter: {
+                                data: {
+                                    id: dataFilterId,
+                                    type: "workspaceDataFilter",
+                                },
+                            },
+                        },
+                    },
+                },
+            });
+        });
+    };
+
+    private deleteExistingSettings = async (client: ITigerClient, dataFilterId: string) => {
+        const existingSettings = await client.entities.getAllEntitiesWorkspaceDataFilterSettings({
+            workspaceId: this.workspace,
+            filter: `workspaceDataFilter.id==${dataFilterId}`,
+            include: ["workspaceDataFilter"],
+        });
+        await Promise.all(
+            existingSettings.data.data.map((setting) =>
+                client.entities.deleteEntityWorkspaceDataFilterSettings({
+                    workspaceId: this.workspace,
+                    objectId: setting.id,
+                }),
+            ),
+        );
+    };
+
+    public deleteDataFilter = async (ref: ObjRef): Promise<void> => {
+        return this.authCall(async (client) => {
+            const objectId = await objRefToIdentifier(ref, this.authCall);
+            await client.entities.deleteEntityWorkspaceDataFilters({
+                workspaceId: this.workspace,
+                objectId,
+            });
+        });
+    };
 }

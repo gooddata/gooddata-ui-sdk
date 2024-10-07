@@ -597,7 +597,10 @@ export class FullScreenOverlay extends Overlay<IOverlayState> {
 export const GD_COLOR_HIGHLIGHT = "#14b2e2";
 
 // @internal (undocumented)
-export const GD_COLOR_STATE_BLANK = "#94a1ad";
+export const GD_COLOR_STATE_BLANK = "#6d7680";
+
+// @internal (undocumented)
+export const GD_COLOR_STATE_HOVER = "#94a1ad";
 
 // @internal (undocumented)
 export const GD_COLOR_WHITE = "#fff";
