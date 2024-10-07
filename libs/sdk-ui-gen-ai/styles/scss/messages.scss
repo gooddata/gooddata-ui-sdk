@@ -144,6 +144,10 @@
     }
 }
 
+.gd-gen-ai-chat__messages__content .gd-hyperlink {
+    display: inline;
+}
+
 @keyframes gd-gen-ai-message-in {
     0% {
         opacity: 0;

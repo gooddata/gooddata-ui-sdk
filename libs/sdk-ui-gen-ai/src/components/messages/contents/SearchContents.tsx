@@ -4,7 +4,7 @@ import React from "react";
 import { SearchContents } from "../../../model.js";
 import { Hyperlink, Typography } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
-import { ISemanticSearchResultItem } from "@gooddata/sdk-model";
+import { isTextNode, parseText } from "./parseText.js";
 
 export type SearchContentsProps = {
     content: SearchContents;
@@ -12,28 +12,21 @@ export type SearchContentsProps = {
 
 export const SearchContentsComponent: React.FC<SearchContentsProps> = ({ content }) => {
     const className = cx("gd-gen-ai-chat__messages__content", "gd-gen-ai-chat__messages__content--search");
+    const nodes = React.useMemo(() => {
+        return parseText(content.text, content.searchResults);
+    }, [content.text, content.searchResults]);
 
     return (
         <div className={className}>
-            <Typography tagName="p">{content.text}</Typography>
-            <ul>
-                {content.searchResults?.map((obj) => (
-                    <li key={obj.id}>
-                        <Hyperlink href={getFoundObjectLink(obj)} text={obj.title} />
-                    </li>
-                ))}
-            </ul>
+            <Typography tagName="p">
+                {nodes.map((node, i) => {
+                    if (isTextNode(node)) {
+                        return <span key={i}>{node.value}</span>;
+                    }
+
+                    return <Hyperlink key={i} href={node.href} text={node.value} />;
+                })}
+            </Typography>
         </div>
     );
-};
-
-const getFoundObjectLink = (obj: ISemanticSearchResultItem) => {
-    switch (obj.type) {
-        case "visualization":
-            return `/analyze/#/${obj.workspaceId}/${obj.id}/edit`;
-        case "dashboard":
-            return `/dashboards/#/workspace/${obj.workspaceId}/dashboard/${obj.id}`;
-        default:
-            throw new Error(`Unsupported object type ${obj.type}`);
-    }
 };
