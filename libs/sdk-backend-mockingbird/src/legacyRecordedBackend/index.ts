@@ -205,7 +205,7 @@ function recordedWorkspace(
         getDescriptor(): Promise<IWorkspaceDescriptor> {
             throw new NotSupported("not supported");
         },
-        updateDescriptor(): Promise<void> {
+        updateDescriptor(): Promise<IWorkspaceDescriptor> {
             throw new NotSupported("not supported");
         },
         getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {

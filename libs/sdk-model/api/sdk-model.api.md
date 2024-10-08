@@ -456,6 +456,12 @@ export type DrillTransition = "pop-up" | "in-place" | "new-window";
 // @public
 export type DrillType = "drillToInsight" | "drillToDashboard" | "drillToLegacyDashboard" | "drillToCustomUrl" | "drillToAttributeUrl" | "crossFiltering";
 
+// @beta (undocumented)
+export type EarlyAccessFeatureContext = "WORKSPACE" | "ORGANIZATION";
+
+// @beta (undocumented)
+export type EarlyAccessFeatureStatus = "EXPERIMENTAL" | "BETA";
+
 // @public
 export function emptyDef(workspace: string): IExecutionDefinition;
 
@@ -1720,6 +1726,28 @@ export interface IDrillToLegacyDashboard extends IDrill {
     target: ObjRef;
     transition: "in-place";
     type: "drillToLegacyDashboard";
+}
+
+// @beta (undocumented)
+export interface IEarlyAccessFeatureConfig {
+    // (undocumented)
+    context: EarlyAccessFeatureContext;
+    // (undocumented)
+    description: string;
+    // (undocumented)
+    docs?: string;
+    // (undocumented)
+    earlyAccess: string;
+    // (undocumented)
+    status: EarlyAccessFeatureStatus;
+    // (undocumented)
+    title: string;
+}
+
+// @beta (undocumented)
+export interface IEarlyAccessFeaturesConfig {
+    // (undocumented)
+    features: IEarlyAccessFeatureConfig[];
 }
 
 // @public
@@ -3055,6 +3083,8 @@ export interface ISettings {
     ADMeasureValueFilterNullAsZeroOption?: string;
     alertDefault?: IAlertDefault;
     disableKpiDashboardHeadlineUnderline?: boolean;
+    // @beta
+    earlyAccessFeatures?: IEarlyAccessFeaturesConfig;
     enableAdDescriptionEdit?: boolean;
     enableADMultipleDateFilters?: boolean;
     // @deprecated
@@ -3087,6 +3117,7 @@ export interface ISettings {
     enableDescriptions?: boolean;
     enableDrilledInsightExport?: boolean;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
+    enableEarlyAccessFeaturesRollout?: boolean;
     enableEmbedButtonInAD?: boolean;
     enableEmbedButtonInKD?: boolean;
     enableFlightRpcDataSource?: boolean;

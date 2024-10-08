@@ -520,6 +520,20 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableFlightRpcDataSource,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EarlyAccessFeatures,
+            "earlyAccessFeatures",
+            "JSON",
+            FeatureFlagsValues.earlyAccessFeatures,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableEarlyAccessFeaturesRollout,
+            "enableEarlyAccessFeaturesRollout",
+            "BOOLEAN",
+            FeatureFlagsValues.enableEarlyAccessFeaturesRollout,
+        ),
     };
 }
 
@@ -527,7 +541,7 @@ function loadFeature(
     features: FeaturesMap,
     feature: TigerFeaturesNames,
     name: keyof ITigerFeatureFlags,
-    outputType: "STRING" | "BOOLEAN",
+    outputType: "STRING" | "BOOLEAN" | "JSON",
     possibleValues: readonly any[],
 ) {
     const item = features[feature];
@@ -543,7 +557,7 @@ function loadFeature(
 function getValueByType(
     inputType: FeatureDef["type"],
     value: FeatureDef["value"],
-    outputType: "STRING" | "BOOLEAN",
+    outputType: "STRING" | "BOOLEAN" | "JSON",
     possibleValues: readonly any[],
 ) {
     switch (inputType) {
@@ -556,6 +570,12 @@ function getValueByType(
             const state = convertState(outputType, possibleValues, value);
             if (state !== undefined) {
                 return state;
+            }
+            break;
+        }
+        case "JSON": {
+            if (value !== undefined) {
+                return JSON.parse(value);
             }
             break;
         }

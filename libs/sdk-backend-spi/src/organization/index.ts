@@ -30,7 +30,7 @@ export interface IOrganization {
      *
      * @param descriptor - properties to update
      */
-    updateDescriptor(descriptor: IOrganizationDescriptorUpdate): Promise<void>;
+    updateDescriptor(descriptor: IOrganizationDescriptorUpdate): Promise<IOrganizationDescriptor>;
 
     /**
      * Returns service that can be used to query and update organization security settings.
