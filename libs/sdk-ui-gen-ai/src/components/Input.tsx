@@ -6,13 +6,7 @@ import cx from "classnames";
 import { SendIcon } from "./SendIcon.js";
 import { connect } from "react-redux";
 import { makeTextContents, makeUserMessage } from "../model.js";
-import {
-    asyncProcessSelector,
-    newMessageAction,
-    cancelLastInteractionAction,
-    RootState,
-} from "../store/index.js";
-import { StopIcon } from "./StopIcon.js";
+import { asyncProcessSelector, newMessageAction, RootState } from "../store/index.js";
 import { injectIntl } from "react-intl";
 import { WrappedComponentProps } from "react-intl/src/components/injectIntl.js";
 
@@ -28,14 +22,12 @@ type InputStateProps = {
 
 type InputDispatchProps = {
     newMessage: typeof newMessageAction;
-    cancelMessage: typeof cancelLastInteractionAction;
 };
 
 const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedComponentProps> = ({
     isBusy,
     isEvaluating,
     newMessage,
-    cancelMessage,
     intl,
 }) => {
     const [value, setValue] = React.useState("");
@@ -55,10 +47,6 @@ const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedCom
         setValue("");
     };
 
-    const handleCancel = () => {
-        cancelMessage();
-    };
-
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === "Enter" && !e.shiftKey && !isBusy && value) {
             e.preventDefault();
@@ -70,7 +58,7 @@ const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedCom
         setValue(e.target.value);
     };
 
-    const buttonDisabled = !value || isBusy;
+    const buttonDisabled = !value || isBusy || isEvaluating;
     const buttonClasses = cx("gd-gen-ai-chat__input__send_button", {
         "gd-gen-ai-chat__input__send_button--disabled": buttonDisabled,
     });
@@ -86,24 +74,13 @@ const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedCom
                 onKeyDown={handleKeyDown}
                 disabled={isBusy}
             />
-            {!isEvaluating ? (
-                <div
-                    role="button"
-                    aria-label={intl.formatMessage({ id: "gd.gen-ai.button.send" })}
-                    onClick={!buttonDisabled ? handleSubmit : undefined}
-                >
-                    <SendIcon className={buttonClasses} />
-                </div>
-            ) : null}
-            {isEvaluating ? (
-                <div
-                    role="button"
-                    aria-label={intl.formatMessage({ id: "gd.gen-ai.button.abort" })}
-                    onClick={handleCancel}
-                >
-                    <StopIcon className="gd-gen-ai-chat__input__send_button" />
-                </div>
-            ) : null}
+            <div
+                role="button"
+                aria-label={intl.formatMessage({ id: "gd.gen-ai.button.send" })}
+                onClick={!buttonDisabled ? handleSubmit : undefined}
+            >
+                <SendIcon className={buttonClasses} />
+            </div>
         </div>
     );
 };
@@ -119,7 +96,6 @@ const mapStateToProps = (state: RootState): InputStateProps => {
 
 const mapDispatchToProps = {
     newMessage: newMessageAction,
-    cancelMessage: cancelLastInteractionAction,
 };
 
 export const Input = connect(mapStateToProps, mapDispatchToProps)(injectIntl(InputComponent));

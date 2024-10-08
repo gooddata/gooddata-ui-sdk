@@ -2,6 +2,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
     AssistantMessage,
+    Contents,
     isAssistantMessage,
     isUserMessage,
     makeErrorContents,
@@ -154,79 +155,33 @@ const messagesSlice = createSlice({
             assistantMessage.complete = true;
             assistantMessage.content.push(makeErrorContents(payload.error));
         },
-        evaluateMessageSuccessAction: (
+        evaluateMessagePollingAction: (
             state,
             {
                 payload,
             }: PayloadAction<{
-                assistantMessageContents: AssistantMessage["content"];
-                assistantMessageId: string;
-                userMessageId: string;
+                contents: Contents[];
+                complete: boolean;
+                localId: string;
+                interactionId: number;
             }>,
         ) => {
-            delete state.asyncProcess;
-            const [userMessage, assistantMessage] = resolveInteraction(
-                state,
-                payload.userMessageId,
-                payload.assistantMessageId,
-            );
+            const assistantMessage = state.messages[payload.localId];
 
-            if (!assistantMessage || !userMessage) {
+            if (!assistantMessage || !isAssistantMessage(assistantMessage)) {
                 // This should not happen
                 state.globalError = `Unexpected error during message evaluation.`;
                 return;
             }
 
-            assistantMessage.content = payload.assistantMessageContents;
-            assistantMessage.complete = true;
+            assistantMessage.id = payload.interactionId;
+            assistantMessage.content = payload.contents;
+            assistantMessage.complete = payload.complete;
             assistantMessage.cancelled = false;
-            userMessage.cancelled = false;
-        },
-        evaluateMessageCancelAction: (
-            state,
-            {
-                payload,
-            }: PayloadAction<{
-                assistantMessageId: string;
-                userMessageId: string;
-            }>,
-        ) => {
-            delete state.asyncProcess;
-            const [userMessage, assistantMessage] = resolveInteraction(
-                state,
-                payload.userMessageId,
-                payload.assistantMessageId,
-            );
 
-            if (!assistantMessage || !userMessage) {
-                // This should not happen
-                state.globalError = `Unexpected error during message evaluation.`;
-                return;
+            if (payload.complete) {
+                delete state.asyncProcess;
             }
-
-            assistantMessage.cancelled = true;
-            userMessage.cancelled = true;
-        },
-        cancelLastInteractionAction: (state) => {
-            delete state.asyncProcess;
-            const lastMessageId = state.messageOrder[state.messageOrder.length - 1];
-            const lastMessage = state.messages[lastMessageId];
-            const previousMessageId = state.messageOrder[state.messageOrder.length - 2];
-            const previousMessage = state.messages[previousMessageId];
-
-            if (
-                !lastMessage ||
-                !isAssistantMessage(lastMessage) ||
-                !previousMessage ||
-                !isUserMessage(previousMessage)
-            ) {
-                // This should not happen
-                state.globalError = `Attempting to cancel evaluation on invalid message.`;
-                return;
-            }
-
-            lastMessage.cancelled = true;
-            previousMessage.cancelled = true;
         },
         setMessagesAction: (state, { payload: { messages } }: PayloadAction<{ messages: Message[] }>) => {
             setNormalizedMessages(state, messages);
@@ -254,9 +209,7 @@ export const {
     newMessageAction,
     evaluateMessageAction,
     evaluateMessageErrorAction,
-    evaluateMessageSuccessAction,
-    evaluateMessageCancelAction,
-    cancelLastInteractionAction,
+    evaluateMessagePollingAction,
     setMessagesAction,
     setVerboseAction,
     setGlobalErrorAction,

@@ -37,6 +37,7 @@ describe("parseText", () => {
             ],
         ],
         ["Test test", [{ type: "text", value: "Test test" }]],
+        ["{foo.bar}", [{ type: "text", value: "{foo.bar}" }]],
     ] as [string, Node[]][])("should parse %s", (text: string, expected: Node[]) => {
         expect(parseText(text, foundObjects)).toEqual(expected);
     });
