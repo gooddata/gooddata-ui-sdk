@@ -40,7 +40,7 @@
         "limit": 0
     },
     "messages.dashboardSaveFailed": {
-        "value": "Failed to save dashboard, please try again.",
+        "value": "Dashboard save failed. Remove any unavailable visualizations, then try again, or contact your administrator.",
         "comment": "",
         "limit": 0
     },
