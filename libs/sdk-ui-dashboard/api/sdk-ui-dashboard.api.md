@@ -595,7 +595,7 @@ export interface BackendCapabilitiesState {
 // @beta (undocumented)
 export interface BareUserInteractionPayload {
     // (undocumented)
-    interaction: "kpiAlertDialogClosed" | "poweredByGDLogoClicked" | "filterContextStateReset" | "interactionPanelOpened" | "addInteractionClicked" | AttributeHierarchiesInteractionType | AttributeFilterInteractionType | DateFilterInteractionType | VisualizationSwitcherInteractionType;
+    interaction: "kpiAlertDialogClosed" | "poweredByGDLogoClicked" | "filterContextStateReset" | "interactionPanelOpened" | "addInteractionClicked" | AttributeHierarchiesInteractionType | AttributeFilterInteractionType | DateFilterInteractionType | VisualizationSwitcherInteractionType | SavedFilterViewInteractionType;
 }
 
 // @beta (undocumented)
@@ -6909,6 +6909,9 @@ export interface SaveDashboardPayload {
     readonly title?: string;
 }
 
+// @alpha (undocumented)
+export type SavedFilterViewInteractionType = "savedFilterViewPanelOpened";
+
 // @alpha
 export interface SaveFilterView extends IDashboardCommand {
     // (undocumented)
@@ -9076,6 +9079,7 @@ export const useDashboardUserInteraction: () => {
     dateFilterInteraction: (eventType: DateFilterInteractionType) => void;
     visualizationSwitcherInteraction: (eventType: VisualizationSwitcherInteractionType) => void;
     automationInteraction: (eventData: AutomationInteractionData) => void;
+    savedFilterViewInteraction: (eventType: SavedFilterViewInteractionType) => void;
 };
 
 // @internal (undocumented)
