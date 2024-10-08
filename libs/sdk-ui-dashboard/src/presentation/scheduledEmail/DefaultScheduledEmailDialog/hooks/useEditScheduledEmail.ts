@@ -23,6 +23,7 @@ import {
     isCustomWidget,
     ExtendedDashboardWidget,
     selectCurrentUser,
+    selectTimezone,
 } from "../../../../model/index.js";
 import { normalizeTime } from "@gooddata/sdk-ui-kit";
 import { WidgetAttachmentType } from "../types.js";
@@ -73,6 +74,8 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
     // Dashboard
     const dashboardId = useDashboardSelector(selectDashboardId);
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
+    const timezone = useDashboardSelector(selectTimezone);
+
     const areDashboardFiltersChanged = !!dashboardFilters;
 
     const currentUser = useDashboardSelector(selectCurrentUser);
@@ -85,6 +88,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
             newAutomationMetadataObjectDefinition(
                 isWidget
                     ? {
+                          timezone,
                           dashboardId: dashboardId!,
                           notificationChannel: firstChannel,
                           insight,
@@ -93,6 +97,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
                           widgetFilters,
                       }
                     : {
+                          timezone,
                           dashboardId: dashboardId!,
                           notificationChannel: firstChannel,
                           title: dashboardTitle,
@@ -439,6 +444,7 @@ function newWidgetExportDefinitionMetadataObjectDefinition({
 }
 
 function newAutomationMetadataObjectDefinition({
+    timezone,
     dashboardId,
     notificationChannel,
     title,
@@ -448,6 +454,7 @@ function newAutomationMetadataObjectDefinition({
     dashboardFilters,
     widgetFilters,
 }: {
+    timezone?: string;
     dashboardId: string;
     notificationChannel: string;
     title?: string;
@@ -482,7 +489,7 @@ function newAutomationMetadataObjectDefinition({
         tags: [],
         schedule: {
             firstRun: toModifiedISOString(normalizedFirstRun),
-            timezone: getUserTimezone().identifier,
+            timezone: timezone ?? getUserTimezone().identifier,
             cron,
         },
         details: {
