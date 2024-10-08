@@ -1,15 +1,8 @@
 // (C) 2024 GoodData Corporation
 
 import { IAnalyticalBackend, IChatThreadQuery, IGenAIChatEvaluation } from "@gooddata/sdk-backend-spi";
-import { call, cancelled, getContext, put, race, take } from "redux-saga/effects";
-import {
-    cancelAsyncAction,
-    evaluateMessageAction,
-    evaluateMessageCancelAction,
-    evaluateMessageErrorAction,
-    evaluateMessageSuccessAction,
-} from "../messages/messagesSlice.js";
-import { processContents } from "./converters/interactionsToMessages.js";
+import { call, cancelled, getContext, put } from "redux-saga/effects";
+import { evaluateMessageAction, evaluateMessageErrorAction } from "../messages/messagesSlice.js";
 import { extractError } from "./utils.js";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { isTextContents, isUserMessage, makeAssistantMessage, Message } from "../../model.js";
@@ -22,44 +15,28 @@ export function* onUserMessage({ payload }: PayloadAction<Message>) {
     const newAssistantMessage = makeAssistantMessage([]);
 
     try {
+        // Make sure the message is a user message and it got text contents
         if (!isUserMessage(payload)) {
             return;
         }
 
-        const textContents = payload.content.find((content) => isTextContents(content))?.text;
+        const textContents = payload.content.find(isTextContents)?.text;
 
         if (!textContents) {
-            // TODO - handle error?
             return;
         }
-
-        yield put(evaluateMessageAction({ message: newAssistantMessage }));
 
         // Retrieve backend from context
         const backend: IAnalyticalBackend = yield getContext("backend");
         const workspace: string = yield getContext("workspace");
 
+        // Set evaluation state in store and start polling
+        yield put(evaluateMessageAction({ message: newAssistantMessage }));
+
+        // Make the request to start the evaluation
         const chatThreadQuery = backend.workspace(workspace).genAI().getChatThread().query(textContents);
 
-        const [results, cancelled]: [results: IGenAIChatEvaluation, ReturnType<typeof cancelAsyncAction>] =
-            yield race([call(evaluateUserMessage, chatThreadQuery), take(cancelAsyncAction.type)]);
-
-        if (cancelled) {
-            yield put(
-                evaluateMessageCancelAction({
-                    assistantMessageId: newAssistantMessage.localId,
-                    userMessageId: payload.localId,
-                }),
-            );
-        } else {
-            yield put(
-                evaluateMessageSuccessAction({
-                    userMessageId: payload.localId,
-                    assistantMessageId: newAssistantMessage.localId,
-                    assistantMessageContents: processContents(results),
-                }),
-            );
-        }
+        yield call(evaluateUserMessage, chatThreadQuery);
     } catch (e) {
         yield put(
             evaluateMessageErrorAction({

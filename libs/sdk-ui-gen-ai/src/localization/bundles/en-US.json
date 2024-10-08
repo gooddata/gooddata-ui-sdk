@@ -93,10 +93,5 @@
         "value": "Send",
         "comment": "",
         "limit": 0
-    },
-    "gd.gen-ai.button.abort": {
-        "value": "Abort",
-        "comment": "",
-        "limit": 0
     }
 }

@@ -33,3 +33,8 @@ export const globalErrorSelector: (state: RootState) => string | undefined = cre
     messagesSliceSelector,
     (state) => state.globalError,
 );
+
+export const lastMessageIdSelector: (state: RootState) => number | undefined = createSelector(
+    messagesSelector,
+    (messages) => [...messages].reverse().find((message) => !!message.id)?.id,
+);
