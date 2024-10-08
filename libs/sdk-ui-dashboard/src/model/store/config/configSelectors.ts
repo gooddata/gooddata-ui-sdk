@@ -398,14 +398,14 @@ export const selectEnableInsightExportScheduling: DashboardSelector<boolean> = c
  * @alpha
  */
 export const selectEnableScheduling: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
-    return state.settings?.enableScheduling ?? false;
+    return state.settings?.enableScheduling ?? true;
 });
 
 /**
  * @alpha
  */
 export const selectEnableAlerting: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
-    return state.settings?.enableAlerting ?? false;
+    return state.settings?.enableAlerting ?? true;
 });
 
 /**
