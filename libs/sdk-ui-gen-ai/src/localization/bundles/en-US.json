@@ -1,16 +1,21 @@
 {
     "gd.gen-ai.global-error": {
-        "value": "An unforeseen error has occurred.",
+        "value": "Something went wrong",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.global-error.description": {
+        "value": "Try restarting the chatbot and starting over.",
         "comment": "",
         "limit": 0
     },
     "gd.gen-ai.global-error.button-details": {
-        "value": "Show error details",
+        "value": "See details",
         "comment": "",
         "limit": 0
     },
     "gd.gen-ai.global-error.button-clear": {
-        "value": "Clear conversation and try again",
+        "value": "Restart chatbot",
         "comment": "",
         "limit": 0
     },

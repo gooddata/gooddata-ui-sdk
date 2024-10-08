@@ -2,15 +2,18 @@
 
 import React from "react";
 import { Button, Typography } from "@gooddata/sdk-ui-kit";
-import { FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
+import { injectIntl, WrappedComponentProps } from "react-intl";
+import { ErrorComponent } from "@gooddata/sdk-ui";
 
 type GlobalErrorProps = {
     errorDetails: string;
+    clearing: boolean;
     clearError: () => void;
 };
 
 const GlobalErrorComponent: React.FC<GlobalErrorProps & WrappedComponentProps> = ({
     errorDetails,
+    clearing,
     clearError,
     intl,
 }) => {
@@ -19,24 +22,31 @@ const GlobalErrorComponent: React.FC<GlobalErrorProps & WrappedComponentProps> =
 
     return (
         <div className="gd-gen-ai-chat__global_error">
-            <Typography tagName="p">
-                <FormattedMessage id="gd.gen-ai.global-error" />
-            </Typography>
-            <Button
-                className="gd-button-link"
-                value={intl.formatMessage({ id: "gd.gen-ai.global-error.button-clear" })}
-                onClick={clearError}
-            />
-            {hasShowMoreButton ? (
+            <div>
+                <ErrorComponent
+                    message={intl.formatMessage({ id: "gd.gen-ai.global-error" })}
+                    description={intl.formatMessage({ id: "gd.gen-ai.global-error.description" })}
+                />
+            </div>
+            <div className="gd-gen-ai-chat__global_error__buttons">
                 <Button
                     className="gd-button-link"
-                    value={intl.formatMessage({ id: "gd.gen-ai.global-error.button-details" })}
-                    onClick={() => setShowMore(true)}
+                    value={intl.formatMessage({ id: "gd.gen-ai.global-error.button-clear" })}
+                    onClick={clearError}
+                    disabled={clearing}
                 />
-            ) : null}
+                {hasShowMoreButton ? (
+                    <Button
+                        className="gd-button-link"
+                        value={intl.formatMessage({ id: "gd.gen-ai.global-error.button-details" })}
+                        onClick={() => setShowMore(true)}
+                        disabled={clearing}
+                    />
+                ) : null}
+            </div>
             {showMore ? (
                 <Typography tagName="p" className="gd-gen-ai-chat__global_error__details">
-                    {errorDetails}
+                    <pre>{errorDetails}</pre>
                 </Typography>
             ) : null}
         </div>

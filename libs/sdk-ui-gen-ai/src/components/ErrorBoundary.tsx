@@ -3,11 +3,18 @@ import React from "react";
 import { connect } from "react-redux";
 import { GlobalError } from "./GlobalError.js";
 import { extractError } from "../store/sideEffects/utils.js";
-import { RootState, globalErrorSelector, setGlobalErrorAction, clearThreadAction } from "../store/index.js";
+import {
+    RootState,
+    globalErrorSelector,
+    setGlobalErrorAction,
+    clearThreadAction,
+    asyncProcessSelector,
+} from "../store/index.js";
 
 type ErrorBoundaryProps = {
     children: React.ReactNode;
     globalError?: string;
+    isClearing: boolean;
     setGlobalError: typeof setGlobalErrorAction;
     clearThread: () => void;
 };
@@ -40,7 +47,13 @@ class ErrorBoundaryComponent extends React.Component<ErrorBoundaryProps, ErrorBo
         // And treat them the same
         const error = this.props.globalError || this.state.ownError;
         if (error) {
-            return <GlobalError errorDetails={error} clearError={this.clearError.bind(this)} />;
+            return (
+                <GlobalError
+                    errorDetails={error}
+                    clearError={this.clearError.bind(this)}
+                    clearing={this.props.isClearing}
+                />
+            );
         }
 
         return this.props.children;
@@ -49,6 +62,7 @@ class ErrorBoundaryComponent extends React.Component<ErrorBoundaryProps, ErrorBo
 
 const mapStateToProps = (state: RootState) => ({
     globalError: globalErrorSelector(state),
+    isClearing: asyncProcessSelector(state) === "clearing",
 });
 
 const mapDispatchToProps = {
