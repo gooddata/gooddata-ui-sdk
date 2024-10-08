@@ -257,7 +257,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDashboardFilterViews: true,
     enableWorkspaceHierarchySettings: false,
     enableNewInsightChangedPostMessageEvent: false,
-    enableKDVisualizationSwitcher: false,
+    enableKDVisualizationSwitcher: true,
     enableIgnoreCrossFiltering: true,
     enableHeadlineExport: true,
     enableFlightRpcDataSource: false,

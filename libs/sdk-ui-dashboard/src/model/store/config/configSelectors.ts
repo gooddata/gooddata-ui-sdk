@@ -731,7 +731,7 @@ export const selectEnableFilterViews: DashboardSelector<boolean> = createSelecto
 export const selectEnableVisualizationSwitcher: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableKDVisualizationSwitcher ?? false;
+        return state.settings?.enableKDVisualizationSwitcher ?? true;
     },
 );
 
