@@ -72,6 +72,15 @@ export const selectLocale: DashboardSelector<ILocale> = createSelector(selectCon
 });
 
 /**
+ * Returns timezone
+ *
+ * @public
+ */
+export const selectTimezone: DashboardSelector<string | undefined> = createSelector(selectConfig, (state) => {
+    return state.settings.timezone ?? undefined;
+});
+
+/**
  * Returns number separators to use when rendering numeric values on charts or KPIs.
  *
  * @public

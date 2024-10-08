@@ -312,6 +312,11 @@ export interface ISettings {
     metadataTimeZone?: string;
 
     /**
+     * Timezone
+     */
+    timezone?: string;
+
+    /**
      * Enable new max bucket size items limit for Pivot Table
      */
     enablePivotTableIncreaseBucketSize?: boolean;

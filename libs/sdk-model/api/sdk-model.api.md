@@ -3178,6 +3178,7 @@ export interface ISettings {
     platformEdition?: PlatformEdition;
     responsiveUiDateFormat?: string;
     showHiddenCatalogItems?: boolean;
+    timezone?: string;
     weekStart?: WeekStart;
     whiteLabeling?: IWhiteLabeling;
 }

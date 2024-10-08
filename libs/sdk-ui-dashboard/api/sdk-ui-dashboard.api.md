@@ -7866,6 +7866,9 @@ export const selectSupportsSettingConnectingAttributes: DashboardSelector<boolea
 // @internal
 export const selectSupportsSingleSelectDependentFilters: DashboardSelector<boolean>;
 
+// @public
+export const selectTimezone: DashboardSelector<string | undefined>;
+
 // @alpha
 export const selectUsers: DashboardSelector<IWorkspaceUser[]>;
 
