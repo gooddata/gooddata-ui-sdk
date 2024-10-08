@@ -783,6 +783,10 @@ export type {
     IAlertDefault,
     WeekStart,
     IOpenAiConfig,
+    EarlyAccessFeatureContext,
+    EarlyAccessFeatureStatus,
+    IEarlyAccessFeatureConfig,
+    IEarlyAccessFeaturesConfig,
 } from "./settings/index.js";
 
 export type { IWorkspaceUserGroup } from "./userGroup/index.js";
