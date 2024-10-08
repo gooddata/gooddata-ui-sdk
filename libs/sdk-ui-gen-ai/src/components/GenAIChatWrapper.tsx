@@ -5,12 +5,27 @@ import { Messages } from "./Messages.js";
 import { Typography } from "@gooddata/sdk-ui-kit";
 import { ErrorBoundary } from "./ErrorBoundary.js";
 import { FormattedMessage } from "react-intl";
+import { connect } from "react-redux";
+import { loadThreadAction, cancelAsyncAction } from "../store/index.js";
+
+type GenAIChatWrapperProps = {
+    loadThread: typeof loadThreadAction;
+    cancelLoading: typeof cancelAsyncAction;
+};
 
 /**
  * UI component that renders the Gen AI chat.
  * @internal
  */
-export const GenAIChatWrapper: React.FC = () => {
+const GenAIChatWrapperComponent: React.FC<GenAIChatWrapperProps> = ({ loadThread, cancelLoading }) => {
+    React.useEffect(() => {
+        loadThread();
+
+        return () => {
+            cancelLoading();
+        };
+    }, [loadThread, cancelLoading]);
+
     return (
         <ErrorBoundary>
             <div className="gd-gen-ai-chat">
@@ -23,3 +38,10 @@ export const GenAIChatWrapper: React.FC = () => {
         </ErrorBoundary>
     );
 };
+
+const mapDispatchToProps = {
+    loadThread: loadThreadAction,
+    cancelLoading: cancelAsyncAction,
+};
+
+export const GenAIChatWrapper = connect(null, mapDispatchToProps)(GenAIChatWrapperComponent);

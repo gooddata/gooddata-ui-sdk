@@ -34,6 +34,8 @@ import { ICatalogFact } from '@gooddata/sdk-model';
 import { ICatalogGroup } from '@gooddata/sdk-model';
 import { ICatalogMeasure } from '@gooddata/sdk-model';
 import { IChatThread } from '@gooddata/sdk-backend-spi';
+import { IChatThreadHistory } from '@gooddata/sdk-backend-spi';
+import { IChatThreadQuery } from '@gooddata/sdk-backend-spi';
 import { IClusteringConfig } from '@gooddata/sdk-backend-spi';
 import { IClusteringResult } from '@gooddata/sdk-backend-spi';
 import { IDashboard } from '@gooddata/sdk-model';
@@ -66,7 +68,6 @@ import { IFilter } from '@gooddata/sdk-model';
 import { IFilterContextDefinition } from '@gooddata/sdk-model';
 import { IForecastConfig } from '@gooddata/sdk-backend-spi';
 import { IForecastResult } from '@gooddata/sdk-backend-spi';
-import { IGenAIChatEvaluation } from '@gooddata/sdk-model';
 import { IGetDashboardOptions } from '@gooddata/sdk-backend-spi';
 import { IGetDashboardPluginOptions } from '@gooddata/sdk-backend-spi';
 import { IGetScheduledMailOptions } from '@gooddata/sdk-backend-spi';
@@ -659,19 +660,13 @@ export function dummyDataView(definition: IExecutionDefinition, result?: IExecut
 // @internal
 export class DummyGenAIChatThread implements IChatThread {
     // (undocumented)
-    query({ signal }: {
+    loadHistory(_fromInteractionId: number, { signal }: {
         signal?: AbortSignal;
-    }): Promise<IGenAIChatEvaluation>;
+    }): Promise<IChatThreadHistory>;
     // (undocumented)
-    withChatHistory(): IChatThread;
+    query(_userMessage: string): IChatThreadQuery;
     // (undocumented)
-    withCreateLimit(): IChatThread;
-    // (undocumented)
-    withQuestion(): IChatThread;
-    // (undocumented)
-    withSearchLimit(): IChatThread;
-    // (undocumented)
-    withUserContext(): IChatThread;
+    reset(): Promise<void>;
 }
 
 // @internal

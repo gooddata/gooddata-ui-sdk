@@ -1,9 +1,4 @@
 {
-    "gd.gen-ai.invalid-question": {
-        "value": "Invalid question. Try again.",
-        "comment": "",
-        "limit": 0
-    },
     "gd.gen-ai.global-error": {
         "value": "An unforeseen error has occurred.",
         "comment": "",
@@ -90,13 +85,18 @@
         "limit": 0
     },
     "gd.gen-ai.state.cancelled": {
-        "value": "Cancelled",
+        "value": "Evaluation cancelled…",
+        "comment": "Use ellipsis at the end …",
+        "limit": 0
+    },
+    "gd.gen-ai.button.send": {
+        "value": "Send",
         "comment": "",
         "limit": 0
     },
-    "gd.gen-ai.state.in-progress": {
-        "value": "Generating your response…",
-        "comment": "Use ellipsis at the end …",
+    "gd.gen-ai.button.abort": {
+        "value": "Abort",
+        "comment": "",
         "limit": 0
     }
 }
