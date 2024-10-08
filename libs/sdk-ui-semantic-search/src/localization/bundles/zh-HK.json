@@ -6,6 +6,7 @@
     "semantic-search.id": "身份證",
     "semantic-search.tags": "標籤",
     "semantic-search.match": "{score}％ 匹配",
+    "semantic-search.previous-search": "上一頁搜索",
     "semantic-search.date.at": "係",
     "gs.date.today": "今日",
     "gs.date.yesterday": "琴日"

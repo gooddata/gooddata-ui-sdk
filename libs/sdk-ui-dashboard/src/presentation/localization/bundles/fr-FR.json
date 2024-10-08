@@ -620,5 +620,11 @@
     "insightAlert.config.filters.info": "Les alertes respectent les filtres du tableau de bord tels qu'ils ont été définis au moment de leur création.{spacer}Pour modifier la période de temps utilisée pour la comparaison, ajustez le filtre de date.",
     "insightAlert.config.compare_with": "par rapport à",
     "insightAlert.config.compare_with_sp": "Même période année précédente",
-    "insightAlert.config.compare_with_pp": "Période précédente"
+    "insightAlert.config.compare_with_pp": "Période précédente",
+    "widget.error.missing_insight.message": "Pas de visualisation disponible",
+    "widget.error.missing_insight.description": "Cette visualisation a été supprimée ou n’est plus accessible. Veuillez contacter votre administrateur ou la supprimer du tableau de bord.",
+    "visualizationSwitcher.configurationPanel.remove.from.switcher": "Retirer le sélecteur",
+    "visualizationSwitcher.list.menu.move.up": "Monter",
+    "visualizationSwitcher.list.menu.move.down": "Descendre",
+    "visualizationSwitcher.list.menu.remove": "Supprimer"
 }

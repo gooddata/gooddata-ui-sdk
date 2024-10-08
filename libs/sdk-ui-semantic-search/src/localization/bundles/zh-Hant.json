@@ -6,6 +6,7 @@
     "semantic-search.id": "ID",
     "semantic-search.tags": "標籤",
     "semantic-search.match": "{score}％ 匹配",
+    "semantic-search.previous-search": "之前的搜尋",
     "semantic-search.date.at": "在",
     "gs.date.today": "今天",
     "gs.date.yesterday": "昨天"

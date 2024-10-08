@@ -1,8 +1,9 @@
 // (C) 2024 GoodData Corporation
 
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
+import { v4 as uuid } from "uuid";
 import { IAlignPoint, DropdownButton, useMediaQuery } from "@gooddata/sdk-ui-kit";
 import { IDashboardFilterView } from "@gooddata/sdk-model";
 
@@ -18,6 +19,7 @@ import {
     selectFilterViewsDialogMode,
     selectIsNewDashboard,
     selectCanCreateFilterView,
+    useDashboardUserInteraction,
 } from "../../../../model/index.js";
 
 import { FilterViewsList } from "./FilterViewsList.js";
@@ -37,10 +39,16 @@ const DropdownButtonLabel: React.FC<{ filterViews: IDashboardFilterView[] }> = (
     );
 };
 
-const useCallbacks = () => {
+const useCallbacks = (isDialogOpen: boolean) => {
     const dispatch = useDashboardDispatch();
+    const { savedFilterViewInteraction } = useDashboardUserInteraction();
 
-    const toggleDialog = useCallback(() => dispatch(uiActions.toggleFilterViewsDialog()), [dispatch]);
+    const toggleDialog = useCallback(() => {
+        dispatch(uiActions.toggleFilterViewsDialog());
+        if (!isDialogOpen) {
+            savedFilterViewInteraction("savedFilterViewPanelOpened");
+        }
+    }, [dispatch, savedFilterViewInteraction, isDialogOpen]);
 
     const openListDialog = useCallback(
         () =>
@@ -91,7 +99,7 @@ export const FilterViews: React.FC = () => {
     const isNewDashboard = useDashboardSelector(selectIsNewDashboard);
     const canCreateFilterView = useDashboardSelector(selectCanCreateFilterView);
     const isMobile = useMediaQuery("mobileDevice");
-    const { toggleDialog, openAddDialog, openListDialog, closeDialog } = useCallbacks();
+    const { toggleDialog, openAddDialog, openListDialog, closeDialog } = useCallbacks(isDialogOpen);
 
     useFilterViewsToastMessages();
 
@@ -105,14 +113,13 @@ export const FilterViews: React.FC = () => {
     const showDropdownButton =
         isFilterViewsEnabledForDashboard && isUserPermittedToSeeDropdown && !isNewDashboard && !isMobile;
 
-    const buttonClassNames = cx(
-        "gd-filter-views-button",
-        "gd-filter-views__dropdown-anchor",
-        "gd-button-large",
-        {
-            "gd-filter-views-button--open": isDialogOpen,
-        },
-    );
+    // generate unique anchor class name to open dropdown next to the correct button if app uses multiple
+    // dashboard components
+    const dropdownAnchorClassName = useMemo(() => `gd-filter-views__dropdown-anchor-${uuid()}`, []);
+
+    const buttonClassNames = cx("gd-filter-views-button", dropdownAnchorClassName, "gd-button-large", {
+        "gd-filter-views-button--open": isDialogOpen,
+    });
 
     return (
         <div className="gd-filter-views">
@@ -124,13 +131,13 @@ export const FilterViews: React.FC = () => {
                     {isDashboardEditMode ? <div className="gd-filters-views__panel__divider" /> : null}
                 </>
             ) : (
-                <div className="gd-filter-views__dropdown-anchor" />
+                <div className={dropdownAnchorClassName} />
             )}
             {isDialogOpen ? (
                 <ConfigurationBubble
                     classNames="gd-filters-views__panel"
                     onClose={closeDialog}
-                    alignTo=".gd-filter-views__dropdown-anchor"
+                    alignTo={`.${dropdownAnchorClassName}`}
                     alignPoints={BUBBLE_ALIGN_POINTS}
                 >
                     {dialogMode === "add" ? (

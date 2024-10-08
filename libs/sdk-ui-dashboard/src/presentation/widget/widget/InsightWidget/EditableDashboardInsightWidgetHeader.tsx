@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React, { useCallback } from "react";
 import { IInsight, IInsightWidget, insightTitle } from "@gooddata/sdk-model";
 
@@ -11,7 +11,7 @@ const MAX_VISUALIZATION_TITLE_LENGTH = 200;
 interface IEditableDashboardInsightWidgetHeaderProps {
     clientHeight: number | undefined;
     widget: IInsightWidget;
-    insight: IInsight;
+    insight?: IInsight;
 }
 
 export const EditableDashboardInsightWidgetHeader: React.FC<IEditableDashboardInsightWidgetHeaderProps> = ({

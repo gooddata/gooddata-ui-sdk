@@ -6,7 +6,8 @@
     "semantic-search.id": "ID",
     "semantic-search.tags": "Tagit",
     "semantic-search.match": "{score}% täsmää",
-    "semantic-search.date.at": "at",
+    "semantic-search.previous-search": "Edellinen haku",
+    "semantic-search.date.at": "-",
     "gs.date.today": "Tänään",
     "gs.date.yesterday": "Eilen"
 }
