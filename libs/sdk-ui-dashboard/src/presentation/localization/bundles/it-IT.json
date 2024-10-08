@@ -620,5 +620,11 @@
     "insightAlert.config.filters.info": "Gli avvisi rispettano i filtri del dashboard impostati al momento della loro creazione.{spacer} Per modificare il periodo di tempo utilizzato per il confronto, regolare il filtro della data.",
     "insightAlert.config.compare_with": "rispetto a",
     "insightAlert.config.compare_with_sp": "Stesso periodo dell'anno precedente",
-    "insightAlert.config.compare_with_pp": "Periodo precedente"
+    "insightAlert.config.compare_with_pp": "Periodo precedente",
+    "widget.error.missing_insight.message": "Nessuna visualizzazione disponibile",
+    "widget.error.missing_insight.description": "Questa visualizzazione è stata rimossa o non è più accessibile. Contattare l'amministratore o rimuoverla dal dashboard.",
+    "visualizationSwitcher.configurationPanel.remove.from.switcher": "Rimuovere dal selezionatore",
+    "visualizationSwitcher.list.menu.move.up": "Salire",
+    "visualizationSwitcher.list.menu.move.down": "Scendere",
+    "visualizationSwitcher.list.menu.remove": "Rimuovere"
 }

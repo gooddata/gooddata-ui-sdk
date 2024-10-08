@@ -9,6 +9,7 @@ import {
     VisualizationSwitcherInteractionType,
     DateFilterInteractionType,
     AutomationInteractionData,
+    SavedFilterViewInteractionType,
 } from "../events/index.js";
 
 import { useDashboardEventDispatch } from "./useDashboardEventDispatch.js";
@@ -107,6 +108,13 @@ export const useDashboardUserInteraction = () => {
         [eventDispatch],
     );
 
+    const savedFilterViewInteraction = useCallback(
+        (eventType: SavedFilterViewInteractionType) => {
+            eventDispatch(userInteractionTriggered(eventType));
+        },
+        [eventDispatch],
+    );
+
     return {
         poweredByGDLogoClicked,
         kpiAlertDialogClosed,
@@ -121,5 +129,6 @@ export const useDashboardUserInteraction = () => {
         dateFilterInteraction,
         visualizationSwitcherInteraction,
         automationInteraction,
+        savedFilterViewInteraction,
     };
 };

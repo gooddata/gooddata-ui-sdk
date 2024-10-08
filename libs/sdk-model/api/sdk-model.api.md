@@ -3944,9 +3944,13 @@ export interface IWorkspaceAccess {
 // @alpha
 export interface IWorkspaceDataFilter {
     // (undocumented)
+    columnName?: string;
+    // @deprecated (undocumented)
     id: string;
     // (undocumented)
     isInherited: boolean;
+    // (undocumented)
+    ref: ObjRef;
     // (undocumented)
     settings: IWorkspaceDataFilterSetting[];
     // (undocumented)
@@ -3954,11 +3958,23 @@ export interface IWorkspaceDataFilter {
 }
 
 // @alpha
+export interface IWorkspaceDataFilterDefinition {
+    // (undocumented)
+    columnName: string;
+    // (undocumented)
+    id?: string;
+    // (undocumented)
+    title: string;
+}
+
+// @alpha
 export interface IWorkspaceDataFilterSetting {
     // (undocumented)
     filterValues: string[];
-    // (undocumented)
+    // @deprecated (undocumented)
     id: string;
+    // (undocumented)
+    ref: ObjRef;
     // (undocumented)
     title?: string;
 }
@@ -4285,7 +4301,7 @@ export function newVirtualArithmeticMeasure(measuresOrIds: ReadonlyArray<Measure
 export type NotificationChannelAllowedRecipient = "CREATOR" | "INTERNAL";
 
 // @public
-export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy" | "exportDefinition" | "automation" | "filterView";
+export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy" | "exportDefinition" | "automation" | "filterView" | "workspaceDataFilter" | "workspaceDataFilterSetting";
 
 // @public
 export type ObjRef = UriRef | IdentifierRef;

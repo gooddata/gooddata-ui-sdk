@@ -620,5 +620,11 @@
     "insightAlert.config.filters.info": "Hälytykset noudattavat niiden luontihetkellä asetettuja ohjauspaneelin suodattimia.{spacer}Muokkaa vertailussa käytettyä ajanjaksoa säätämällä päivämääräsuodatinta.",
     "insightAlert.config.compare_with": "verrattuna",
     "insightAlert.config.compare_with_sp": "Sama jakso edellisenä vuonna",
-    "insightAlert.config.compare_with_pp": "Edellinen jakso"
+    "insightAlert.config.compare_with_pp": "Edellinen jakso",
+    "widget.error.missing_insight.message": "Visualisointia ei ole saatavilla",
+    "widget.error.missing_insight.description": "Tämä visualisointi on poistettu tai se ei ole enää käytettävissä. Ota yhteyttä järjestelmänvalvojaan tai poista se ohjauspaneelista.",
+    "visualizationSwitcher.configurationPanel.remove.from.switcher": "Poista vaihtimesta",
+    "visualizationSwitcher.list.menu.move.up": "Siirrä ylös",
+    "visualizationSwitcher.list.menu.move.down": "Siirrä alas",
+    "visualizationSwitcher.list.menu.remove": "Poista"
 }

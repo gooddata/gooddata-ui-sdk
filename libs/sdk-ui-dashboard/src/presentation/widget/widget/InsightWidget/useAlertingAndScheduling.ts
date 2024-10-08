@@ -11,7 +11,7 @@ import {
 } from "@gooddata/sdk-ui-ext";
 
 type UseAlertingAndSchedulingConfig = {
-    insight: IInsight;
+    insight?: IInsight;
     widget: IInsightWidget;
     numberOfAvailableDestinations: number;
 };

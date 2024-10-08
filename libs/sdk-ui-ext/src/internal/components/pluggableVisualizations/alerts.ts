@@ -58,21 +58,23 @@ export const isInsightSupportedForScheduledExports = (
 /**
  * @internal
  */
-export const isInsightAlertingConfigurationEnabled = (insight: IInsight | IInsightDefinition): boolean => {
-    const visualizationProperties = insightProperties(insight);
+export const isInsightAlertingConfigurationEnabled = (
+    insight: IInsight | IInsightDefinition | undefined,
+): boolean => {
+    const visualizationProperties = insight ? insightProperties(insight) : {};
     const controls = visualizationProperties?.controls ?? {};
 
-    return !controls.disableAlerts;
+    return insight && !controls.disableAlerts;
 };
 
 /**
  * @internal
  */
 export const isInsightScheduledExportsConfigurationEnabled = (
-    insight: IInsight | IInsightDefinition,
+    insight: IInsight | IInsightDefinition | undefined,
 ): boolean => {
-    const visualizationProperties = insightProperties(insight);
+    const visualizationProperties = insight ? insightProperties(insight) : {};
     const controls = visualizationProperties?.controls ?? {};
 
-    return !controls.disableScheduledExports;
+    return insight && !controls.disableScheduledExports;
 };

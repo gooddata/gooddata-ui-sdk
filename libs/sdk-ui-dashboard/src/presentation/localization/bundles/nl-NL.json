@@ -620,5 +620,11 @@
     "insightAlert.config.filters.info": "Waarschuwingen respecteren de dashboardfilters zoals ingesteld bij het aanmaken ervan.{spacer}Pas de datumfilter aan om de tijdsperiode aan te passen die wordt gebruikt voor vergelijking.",
     "insightAlert.config.compare_with": "vergeleken met",
     "insightAlert.config.compare_with_sp": "Zelfde periode vorig jaar",
-    "insightAlert.config.compare_with_pp": "Vorige periode"
+    "insightAlert.config.compare_with_pp": "Vorige periode",
+    "widget.error.missing_insight.message": "Geen visualisatie beschikbaar",
+    "widget.error.missing_insight.description": "Deze visualisatie is verwijderd of niet langer toegankelijk. Neem contact op met je beheerder of verwijder de visualisatie van het dashboard.",
+    "visualizationSwitcher.configurationPanel.remove.from.switcher": "Uit switcher verwijderen",
+    "visualizationSwitcher.list.menu.move.up": "Op bewegen",
+    "visualizationSwitcher.list.menu.move.down": "Neer bewegen",
+    "visualizationSwitcher.list.menu.remove": "Verwijderen"
 }

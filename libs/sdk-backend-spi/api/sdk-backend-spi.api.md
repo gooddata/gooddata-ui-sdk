@@ -106,6 +106,7 @@ import { IWidgetAlert } from '@gooddata/sdk-model';
 import { IWidgetAlertDefinition } from '@gooddata/sdk-model';
 import { IWidgetDefinition } from '@gooddata/sdk-model';
 import { IWorkspaceDataFilter } from '@gooddata/sdk-model';
+import { IWorkspaceDataFilterDefinition } from '@gooddata/sdk-model';
 import { IWorkspacePermissionAssignment } from '@gooddata/sdk-model';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { IWorkspaceUser } from '@gooddata/sdk-model';
@@ -463,8 +464,13 @@ export interface IDashboardWithReferences {
 
 // @alpha
 export interface IDataFiltersService {
-    // (undocumented)
+    createDataFilter(newDataFilter: IWorkspaceDataFilterDefinition): Promise<IWorkspaceDataFilter>;
+    deleteDataFilter(ref: ObjRef): Promise<void>;
+    getDataFilters(): Promise<IWorkspaceDataFilter[]>;
+    // @deprecated
     getWorkspaceDataFilters(): Promise<IWorkspaceDataFilter[]>;
+    updateDataFilter(updatedDataFilter: IWorkspaceDataFilter): Promise<IWorkspaceDataFilter>;
+    updateDataFilterValue(dataFilter: ObjRef, value: string): Promise<void>;
 }
 
 // @alpha
