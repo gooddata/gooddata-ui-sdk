@@ -312,7 +312,7 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
         async getDescriptor(): Promise<IWorkspaceDescriptor> {
             return dummyDescriptor(this.workspace);
         },
-        async updateDescriptor(): Promise<void> {
+        async updateDescriptor(): Promise<IWorkspaceDescriptor> {
             throw new NotSupported("not supported");
         },
         getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {
@@ -748,8 +748,12 @@ class DummyOrganization implements IOrganization {
         });
     }
 
-    updateDescriptor(): Promise<void> {
-        return Promise.resolve();
+    // eslint-disable-next-line sonarjs/no-identical-functions
+    updateDescriptor(): Promise<IOrganizationDescriptor> {
+        return Promise.resolve({
+            id: this.organizationId,
+            title: "dummy organization",
+        });
     }
 
     securitySettings(): ISecuritySettingsService {

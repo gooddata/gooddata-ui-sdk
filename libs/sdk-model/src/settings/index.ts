@@ -492,6 +492,17 @@ export interface ISettings {
      */
     enableFlightRpcDataSource?: boolean;
 
+    /**
+     * Early access features configuration.
+     * @beta
+     */
+    earlyAccessFeatures?: IEarlyAccessFeaturesConfig;
+
+    /**
+     * Enable early access features rollout.
+     */
+    enableEarlyAccessFeaturesRollout?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 
@@ -585,3 +596,32 @@ export interface IOpenAiConfig {
  * @public
  */
 export type WeekStart = "Sunday" | "Monday";
+
+/**
+ * @beta
+ */
+export type EarlyAccessFeatureContext = "WORKSPACE" | "ORGANIZATION";
+
+/**
+ * @beta
+ */
+export type EarlyAccessFeatureStatus = "EXPERIMENTAL" | "BETA";
+
+/**
+ * @beta
+ */
+export interface IEarlyAccessFeatureConfig {
+    title: string;
+    description: string;
+    docs?: string;
+    earlyAccess: string;
+    context: EarlyAccessFeatureContext;
+    status: EarlyAccessFeatureStatus;
+}
+
+/**
+ * @beta
+ */
+export interface IEarlyAccessFeaturesConfig {
+    features: IEarlyAccessFeatureConfig[];
+}

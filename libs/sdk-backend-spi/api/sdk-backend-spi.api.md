@@ -249,7 +249,7 @@ export interface IAnalyticalWorkspace {
     permissions(): IWorkspacePermissionsService;
     settings(): IWorkspaceSettingsService;
     styling(): IWorkspaceStylingService;
-    updateDescriptor(descriptor: IWorkspaceDescriptorUpdate): Promise<void>;
+    updateDescriptor(descriptor: IWorkspaceDescriptorUpdate): Promise<IWorkspaceDescriptor>;
     userGroups(): IWorkspaceUserGroupsQuery;
     users(): IWorkspaceUsersQuery;
     // (undocumented)
@@ -856,7 +856,7 @@ export interface IOrganization {
     securitySettings(): ISecuritySettingsService;
     settings(): IOrganizationSettingsService;
     styling(): IOrganizationStylingService;
-    updateDescriptor(descriptor: IOrganizationDescriptorUpdate): Promise<void>;
+    updateDescriptor(descriptor: IOrganizationDescriptorUpdate): Promise<IOrganizationDescriptor>;
     users(): IOrganizationUserService;
 }
 
