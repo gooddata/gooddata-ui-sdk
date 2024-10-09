@@ -38,7 +38,6 @@
         align-self: flex-end;
         margin-bottom: 15px;
         animation: gd-gen-ai-message-in 0.3s ease-out;
-        color: kit-variables.$gd-color-white;
 
         &::after {
             content: "";
@@ -50,6 +49,10 @@
             border-left-width: $tail-width;
             width: 0;
             height: 0;
+        }
+
+        & p {
+            color: kit-variables.$gd-color-white;
         }
     }
 

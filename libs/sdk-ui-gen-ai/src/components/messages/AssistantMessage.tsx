@@ -22,6 +22,7 @@ export const AssistantMessageComponent: React.FC<AssistantMessageProps> = ({ mes
         <div className={classNames}>
             <AgentIcon loading={!message.complete} error={hasError} cancelled={message.cancelled} />
             <MessageContents
+                useMarkdown
                 content={message.content}
                 isComplete={Boolean(message.complete || message.cancelled)}
                 isCancelled={message.cancelled}

@@ -1,8 +1,10 @@
 // (C) 2024 GoodData Corporation
 import React from "react";
 import { extractError } from "../../../store/sideEffects/utils.js";
+import { ErrorComponent } from "@gooddata/sdk-ui";
+import { injectIntl, WrappedComponentProps } from "react-intl";
 
-type ErrorBoundaryProps = {
+type ErrorBoundaryProps = WrappedComponentProps & {
     children: React.ReactNode;
 };
 
@@ -10,7 +12,7 @@ type ErrorBoundaryState = {
     error?: string;
 };
 
-export class VisualizationErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+class VisualizationErrorBoundaryComponent extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
     constructor(props: ErrorBoundaryProps) {
         super(props);
         this.state = { error: "" };
@@ -22,10 +24,13 @@ export class VisualizationErrorBoundary extends React.Component<ErrorBoundaryPro
 
     render() {
         if (this.state.error) {
-            // TODO - proper error
-            return <div>Error! Failed to render the visualization</div>;
+            return (
+                <ErrorComponent message={this.props.intl.formatMessage({ id: "gd.gen-ai.global-error" })} />
+            );
         }
 
         return this.props.children;
     }
 }
+
+export const VisualizationErrorBoundary = injectIntl(VisualizationErrorBoundaryComponent);

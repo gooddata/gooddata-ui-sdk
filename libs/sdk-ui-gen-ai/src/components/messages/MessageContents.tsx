@@ -15,12 +15,14 @@ type MessageContentsProps = {
     content: Contents[];
     isComplete?: boolean;
     isCancelled?: boolean;
+    useMarkdown?: boolean;
 };
 
 export const MessageContents: React.FC<MessageContentsProps> = ({
     content,
     isComplete = true,
     isCancelled = false,
+    useMarkdown = false,
 }) => {
     return (
         <div className="gd-gen-ai-chat__messages__contents">
@@ -28,15 +30,27 @@ export const MessageContents: React.FC<MessageContentsProps> = ({
                 const type = item.type;
                 switch (type) {
                     case "text":
-                        return <TextContentsComponent content={item} key={index} />;
+                        return <TextContentsComponent useMarkdown={useMarkdown} content={item} key={index} />;
                     case "error":
-                        return <ErrorContentsComponent content={item} key={index} />;
+                        return (
+                            <ErrorContentsComponent useMarkdown={useMarkdown} content={item} key={index} />
+                        );
                     case "routing":
-                        return <RoutingContentsComponent content={item} key={index} />;
+                        return (
+                            <RoutingContentsComponent useMarkdown={useMarkdown} content={item} key={index} />
+                        );
                     case "search":
-                        return <SearchContentsComponent content={item} key={index} />;
+                        return (
+                            <SearchContentsComponent useMarkdown={useMarkdown} content={item} key={index} />
+                        );
                     case "visualization":
-                        return <VisualizationContentsComponent content={item} key={index} />;
+                        return (
+                            <VisualizationContentsComponent
+                                useMarkdown={useMarkdown}
+                                content={item}
+                                key={index}
+                            />
+                        );
                     default:
                         return assertNever(type);
                 }
