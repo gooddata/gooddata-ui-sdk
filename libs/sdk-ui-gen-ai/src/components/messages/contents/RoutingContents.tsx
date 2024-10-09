@@ -1,20 +1,21 @@
 // (C) 2024 GoodData Corporation
 
 import React from "react";
-import { RoutingContents } from "../../../model.js";
-import { Typography } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
+import { RoutingContents } from "../../../model.js";
+import { MarkdownComponent } from "./Markdown.js";
 
 export type RoutingContentsProps = {
     content: RoutingContents;
+    useMarkdown?: boolean;
 };
 
-export const RoutingContentsComponent: React.FC<RoutingContentsProps> = ({ content }) => {
+export const RoutingContentsComponent: React.FC<RoutingContentsProps> = ({ content, useMarkdown }) => {
     const className = cx("gd-gen-ai-chat__messages__content", "gd-gen-ai-chat__messages__content--routing");
 
     return (
-        <Typography tagName="p" className={className}>
-            {content.text}
-        </Typography>
+        <div className={className}>
+            <MarkdownComponent allowMarkdown={useMarkdown}>{content.text}</MarkdownComponent>
+        </div>
     );
 };

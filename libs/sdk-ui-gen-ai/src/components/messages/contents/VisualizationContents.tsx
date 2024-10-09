@@ -3,18 +3,22 @@
 import React from "react";
 import cx from "classnames";
 import { IAttribute, IMeasure } from "@gooddata/sdk-model";
-import { Typography } from "@gooddata/sdk-ui-kit";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { BarChart, ColumnChart, Headline, LineChart, PieChart } from "@gooddata/sdk-ui-charts";
 import { VisualizationContents } from "../../../model.js";
 import { useExecution } from "./useExecution.js";
 import { VisualizationErrorBoundary } from "./VisualizationErrorBoundary.js";
+import { MarkdownComponent } from "./Markdown.js";
 
 export type VisualizationContentsProps = {
     content: VisualizationContents;
+    useMarkdown?: boolean;
 };
 
-export const VisualizationContentsComponent: React.FC<VisualizationContentsProps> = ({ content }) => {
+export const VisualizationContentsComponent: React.FC<VisualizationContentsProps> = ({
+    content,
+    useMarkdown,
+}) => {
     const className = cx(
         "gd-gen-ai-chat__messages__content",
         "gd-gen-ai-chat__messages__content--visualization",
@@ -24,9 +28,8 @@ export const VisualizationContentsComponent: React.FC<VisualizationContentsProps
 
     return (
         <div className={className}>
-            <Typography tagName="p">{content.text}</Typography>
+            <MarkdownComponent allowMarkdown={useMarkdown}>{content.text}</MarkdownComponent>
             {visualization ? (
-                // TODO - wrap this into error boundary, as the chart components can throw
                 <div className="gd-gen-ai-chat__visualization">
                     <div className="gd-gen-ai-chat__visualization__wrapper">
                         <VisualizationErrorBoundary>
@@ -50,9 +53,11 @@ export const VisualizationContentsComponent: React.FC<VisualizationContentsProps
                             })()}
                         </VisualizationErrorBoundary>
                     </div>
-                    <Typography tagName="p" className="gd-gen-ai-chat__messages__visualization__title">
-                        {visualization.title}
-                    </Typography>
+                    <div className="gd-gen-ai-chat__messages__visualization__title">
+                        <MarkdownComponent allowMarkdown={useMarkdown}>
+                            {visualization.title}
+                        </MarkdownComponent>
+                    </div>
                 </div>
             ) : null}
         </div>

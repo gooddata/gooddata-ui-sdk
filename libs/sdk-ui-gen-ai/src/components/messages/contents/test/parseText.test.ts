@@ -1,7 +1,7 @@
 // (C) 2024 GoodData Corporation
 
 import { describe, it, expect } from "vitest";
-import { parseText, Node } from "../parseText";
+import { replaceLinks } from "../replaceLinks";
 import { ISemanticSearchResultItem } from "@gooddata/sdk-model";
 
 describe("parseText", () => {
@@ -13,32 +13,14 @@ describe("parseText", () => {
     it.each([
         [
             "Hello, {visualization.foo} and {dashboard.bar}!",
-            [
-                { type: "text", value: "Hello, " },
-                { type: "link", value: "Foo", href: "/analyze/#/baz/foo/edit" },
-                { type: "text", value: " and " },
-                { type: "link", value: "Bar", href: "/dashboards/#/workspace/qux/dashboard/bar" },
-                { type: "text", value: "!" },
-            ],
+            "Hello, [Foo](/analyze/#/baz/foo/edit) and [Bar](/dashboards/#/workspace/qux/dashboard/bar)!",
         ],
-        ["{visualization.foo}", [{ type: "link", value: "Foo", href: "/analyze/#/baz/foo/edit" }]],
-        [
-            "{dashboard.bar} test",
-            [
-                { type: "link", value: "Bar", href: "/dashboards/#/workspace/qux/dashboard/bar" },
-                { type: "text", value: " test" },
-            ],
-        ],
-        [
-            "test {dashboard.bar}",
-            [
-                { type: "text", value: "test " },
-                { type: "link", value: "Bar", href: "/dashboards/#/workspace/qux/dashboard/bar" },
-            ],
-        ],
-        ["Test test", [{ type: "text", value: "Test test" }]],
-        ["{foo.bar}", [{ type: "text", value: "{foo.bar}" }]],
-    ] as [string, Node[]][])("should parse %s", (text: string, expected: Node[]) => {
-        expect(parseText(text, foundObjects)).toEqual(expected);
+        ["{visualization.foo}", "[Foo](/analyze/#/baz/foo/edit)"],
+        ["{dashboard.bar} test", "[Bar](/dashboards/#/workspace/qux/dashboard/bar) test"],
+        ["test {dashboard.bar}", "test [Bar](/dashboards/#/workspace/qux/dashboard/bar)"],
+        ["Test test", "Test test"],
+        ["{foo.bar}", "{foo.bar}"],
+    ] as [string, string][])("should parse %s", (text: string, expected: string) => {
+        expect(replaceLinks(text, foundObjects)).toEqual(expected);
     });
 });
