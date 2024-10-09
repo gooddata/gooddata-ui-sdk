@@ -18,7 +18,7 @@ import {
 } from "../../../../model/index.js";
 
 type UseEditableInsightMenuConfig = {
-    insight: IInsight;
+    insight?: IInsight;
     widget: IInsightWidget;
     closeMenu: () => void;
 };
@@ -48,7 +48,8 @@ export const useEditableInsightMenu = (
     const someAvailableDrillTargetsExist =
         !!availableDrillTargets?.attributes?.length || !!availableDrillTargets?.measures?.length;
 
-    const includeInteractions = someDrillingEnabled && someAvailableDrillTargetsExist;
+    const includeInteractions = someDrillingEnabled && someAvailableDrillTargetsExist && Boolean(insight);
+    const includeConfigurations = Boolean(insight);
 
     const isSchedulingEnabled = useDashboardSelector(selectEnableScheduling);
     const isAlertingEnabled = useDashboardSelector(selectEnableAlerting);
@@ -72,12 +73,21 @@ export const useEditableInsightMenu = (
             dispatch,
             eventDispatch,
             includeInteractions,
+            includeConfigurations,
             useWidgetDeleteDialog,
         });
-    }, [dispatch, eventDispatch, intl, widget, includeInteractions, useWidgetDeleteDialog]);
+    }, [
+        dispatch,
+        eventDispatch,
+        intl,
+        widget,
+        includeInteractions,
+        useWidgetDeleteDialog,
+        includeConfigurations,
+    ]);
 
     const menuItems = useMemo<IInsightMenuItem[]>(() => {
-        return insightMenuItemsProvider
+        return insightMenuItemsProvider && insight
             ? insightMenuItemsProvider(insight, widget, defaultMenuItems, closeMenu, "edit")
             : defaultMenuItems;
     }, [insightMenuItemsProvider, insight, widget, defaultMenuItems, closeMenu]);

@@ -1,60 +1,102 @@
 // (C) 2024 GoodData Corporation
 
-import { IChatThread } from "@gooddata/sdk-backend-spi";
-import { IGenAIChatEvaluation, IGenAIChatInteraction, IGenAIUserContext } from "@gooddata/sdk-model";
+import { IGenAIUserContext } from "@gooddata/sdk-model";
+import {
+    IChatThread,
+    IChatThreadHistory,
+    IChatThreadQuery,
+    IGenAIChatEvaluation,
+} from "@gooddata/sdk-backend-spi";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
-type ChatThreadConfig = {
-    question: string;
-    searchLimit?: number;
-    createLimit?: number;
-    userContext?: IGenAIUserContext;
-    chatHistory?: IGenAIChatInteraction[];
-};
-
-const defaultConfig: ChatThreadConfig = {
-    question: "",
-};
-
-export class ChatThread implements IChatThread {
+/**
+ * Chat thread service.
+ * @beta
+ */
+export class ChatThreadService implements IChatThread {
     constructor(
         private readonly authCall: TigerAuthenticatedCallGuard,
         private readonly workspaceId: string,
-        private readonly config: ChatThreadConfig = { ...defaultConfig },
     ) {}
 
-    withQuestion(question: string): IChatThread {
-        return new ChatThread(this.authCall, this.workspaceId, {
-            ...this.config,
-            question,
+    async loadHistory(
+        fromInteractionId?: number,
+        options?: { signal?: AbortSignal },
+    ): Promise<IChatThreadHistory> {
+        const response = await this.authCall((client) => {
+            return client.genAI.aiChatHistory(
+                {
+                    workspaceId: this.workspaceId,
+                    chatHistoryRequest: {
+                        chatHistoryInteractionId: fromInteractionId,
+                    },
+                },
+                options,
+            );
+        });
+
+        return response.data as IChatThreadHistory;
+    }
+
+    async reset(): Promise<void> {
+        await this.authCall((client) => {
+            return client.genAI.aiChatHistory({
+                workspaceId: this.workspaceId,
+                chatHistoryRequest: {
+                    reset: true,
+                },
+            });
         });
     }
 
-    withSearchLimit(searchLimit: number): IChatThread {
-        return new ChatThread(this.authCall, this.workspaceId, {
+    query(userMessage: string): IChatThreadQuery {
+        return new ChatThreadQuery(this.authCall, {
+            workspaceId: this.workspaceId,
+            userQuestion: userMessage,
+        });
+    }
+}
+
+/**
+ * Chat thread query configuration.
+ * @beta
+ */
+export type ChatThreadQueryConfig = {
+    workspaceId: string;
+    userQuestion: string;
+    limitSearch?: number;
+    limitCreate?: number;
+    userContext?: IGenAIUserContext;
+};
+
+/**
+ * Chat thread query builder.
+ * @beta
+ */
+export class ChatThreadQuery implements IChatThreadQuery {
+    constructor(
+        private readonly authCall: TigerAuthenticatedCallGuard,
+        private readonly config: ChatThreadQueryConfig,
+    ) {}
+
+    withSearchLimit(limitSearch: number): IChatThreadQuery {
+        return new ChatThreadQuery(this.authCall, {
             ...this.config,
-            searchLimit,
+            limitSearch,
         });
     }
 
-    withCreateLimit(createLimit: number): IChatThread {
-        return new ChatThread(this.authCall, this.workspaceId, {
+    withCreateLimit(limitCreate: number): IChatThreadQuery {
+        return new ChatThreadQuery(this.authCall, {
             ...this.config,
-            createLimit,
+            limitCreate,
         });
     }
 
-    withUserContext(userContext: IGenAIUserContext): IChatThread {
-        return new ChatThread(this.authCall, this.workspaceId, {
+    withUserContext(userContext: IGenAIUserContext): IChatThreadQuery {
+        return new ChatThreadQuery(this.authCall, {
             ...this.config,
             userContext,
-        });
-    }
-
-    withChatHistory(chatHistory: IGenAIChatInteraction[]): IChatThread {
-        return new ChatThread(this.authCall, this.workspaceId, {
-            ...this.config,
-            chatHistory,
         });
     }
 
@@ -62,14 +104,18 @@ export class ChatThread implements IChatThread {
         const response = await this.authCall((client) =>
             client.genAI.aiChat(
                 {
-                    workspaceId: this.workspaceId,
-                    chatRequest: this.config,
+                    workspaceId: this.config.workspaceId,
+                    chatRequest: {
+                        question: this.config.userQuestion,
+                        limitSearch: this.config.limitSearch,
+                        limitCreate: this.config.limitCreate,
+                        userContext: this.config.userContext,
+                    },
                 },
                 options,
             ),
         );
 
-        // Casting because api-client has loose typing for object type
         return response.data as IGenAIChatEvaluation;
     }
 }

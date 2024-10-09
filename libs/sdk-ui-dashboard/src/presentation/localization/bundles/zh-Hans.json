@@ -620,5 +620,11 @@
     "insightAlert.config.filters.info": "警报遵守其创建时设置的仪表板过滤器。{spacer}要修改用于比较的时间段，请调整日期过滤器。",
     "insightAlert.config.compare_with": "相比",
     "insightAlert.config.compare_with_sp": "上年同期",
-    "insightAlert.config.compare_with_pp": "上一时间段"
+    "insightAlert.config.compare_with_pp": "上一时间段",
+    "widget.error.missing_insight.message": "没有可用的可视化",
+    "widget.error.missing_insight.description": "此可视化已被移除或无法再访问。请联系您的管理员或将其从仪表板中移除。",
+    "visualizationSwitcher.configurationPanel.remove.from.switcher": "从切换器中移除",
+    "visualizationSwitcher.list.menu.move.up": "向上移动",
+    "visualizationSwitcher.list.menu.move.down": "向下移动",
+    "visualizationSwitcher.list.menu.remove": "删除"
 }

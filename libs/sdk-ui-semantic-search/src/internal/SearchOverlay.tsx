@@ -142,7 +142,7 @@ const SearchOverlayCore: React.FC<
             searchResults
                 .filter((item) => {
                     // Filter out items with similarity score below the threshold
-                    return item.score >= threshold;
+                    return (item.score ?? 0) >= threshold;
                 })
                 .flatMap((item) => {
                     // Look up parent items if available

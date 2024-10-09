@@ -85,7 +85,7 @@ export const VisualizationSwitcherNavigationHeader: React.FC<IVisualizationSwitc
                                         onSelect={(item) => {
                                             onSelect(item);
                                             userInteraction.visualizationSwitcherInteraction(
-                                                "visualizationSwitcherChanged",
+                                                "visualizationSwitcherSwitched",
                                             );
                                         }}
                                         item={visualization}

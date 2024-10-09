@@ -595,7 +595,7 @@ export interface BackendCapabilitiesState {
 // @beta (undocumented)
 export interface BareUserInteractionPayload {
     // (undocumented)
-    interaction: "kpiAlertDialogClosed" | "poweredByGDLogoClicked" | "filterContextStateReset" | "interactionPanelOpened" | "addInteractionClicked" | AttributeHierarchiesInteractionType | AttributeFilterInteractionType | DateFilterInteractionType | VisualizationSwitcherInteractionType;
+    interaction: "kpiAlertDialogClosed" | "poweredByGDLogoClicked" | "filterContextStateReset" | "interactionPanelOpened" | "addInteractionClicked" | AttributeHierarchiesInteractionType | AttributeFilterInteractionType | DateFilterInteractionType | VisualizationSwitcherInteractionType | SavedFilterViewInteractionType;
 }
 
 // @beta (undocumented)
@@ -2069,7 +2069,9 @@ export interface DashboardInitializedPayload {
 }
 
 // @internal (undocumented)
-export const DashboardInsight: (props: IDashboardInsightProps) => JSX.Element;
+export const DashboardInsight: (props: Omit<IDashboardInsightProps, "insight"> & {
+    insight?: IInsight;
+}) => JSX.Element;
 
 // @internal (undocumented)
 export const DashboardInsightMenu: (props: IDashboardInsightMenuProps) => JSX.Element;
@@ -3654,7 +3656,7 @@ export type FluidLayoutCustomizationFn = (layout: IDashboardLayout<ExtendedDashb
 export function getAuthor(capabilities: IBackendCapabilities, user: IUser): string | undefined;
 
 // @internal (undocumented)
-export function getDefaultInsightEditMenuItems(widget: IInsightWidget, { intl, dispatch, eventDispatch, includeInteractions, useWidgetDeleteDialog, }: MenuItemDependencies): IInsightMenuItem[];
+export function getDefaultInsightEditMenuItems(widget: IInsightWidget, { intl, dispatch, eventDispatch, includeInteractions, includeConfigurations, useWidgetDeleteDialog, }: MenuItemDependencies): IInsightMenuItem[];
 
 // @internal (undocumented)
 export function getDefaultInsightMenuItems(intl: IntlShape, config: {
@@ -4181,7 +4183,7 @@ export interface IDashboardInsightCustomizer {
 // @alpha (undocumented)
 export interface IDashboardInsightMenuButtonProps {
     // (undocumented)
-    insight: IInsight;
+    insight?: IInsight;
     // (undocumented)
     isOpen: boolean;
     // (undocumented)
@@ -4195,7 +4197,7 @@ export interface IDashboardInsightMenuButtonProps {
 // @alpha (undocumented)
 export interface IDashboardInsightMenuProps {
     // (undocumented)
-    insight: IInsight;
+    insight?: IInsight;
     // (undocumented)
     isOpen: boolean;
     // (undocumented)
@@ -4209,7 +4211,7 @@ export interface IDashboardInsightMenuProps {
 // @internal (undocumented)
 export interface IDashboardInsightMenuTitleProps {
     // (undocumented)
-    insight: IInsight;
+    insight?: IInsight;
     // (undocumented)
     renderMode: RenderMode;
     // (undocumented)
@@ -4931,16 +4933,16 @@ export type InsightDraggingComponent = ComponentType<IInsightDraggingComponentPr
 export const InsightList: React_2.FC<IInsightListProps>;
 
 // @alpha (undocumented)
-export type InsightMenuButtonComponentProvider = (insight: IInsight, widget: IInsightWidget) => CustomDashboardInsightMenuButtonComponent;
+export type InsightMenuButtonComponentProvider = (insight: IInsight | undefined, widget: IInsightWidget) => CustomDashboardInsightMenuButtonComponent;
 
 // @alpha (undocumented)
-export type InsightMenuComponentProvider = (insight: IInsight, widget: IInsightWidget) => CustomDashboardInsightMenuComponent;
+export type InsightMenuComponentProvider = (insight: IInsight | undefined, widget: IInsightWidget) => CustomDashboardInsightMenuComponent;
 
 // @beta (undocumented)
 export type InsightMenuItemsProvider = (insight: IInsight, widget: IInsightWidget, defaultItems: IInsightMenuItem[], closeMenu: () => void, renderMode: RenderMode) => IInsightMenuItem[];
 
 // @internal (undocumented)
-export type InsightMenuTitleComponentProvider = (insight: IInsight, widget: IInsightWidget) => CustomDashboardInsightMenuTitleComponent;
+export type InsightMenuTitleComponentProvider = (insight: IInsight | undefined, widget: IInsightWidget) => CustomDashboardInsightMenuTitleComponent;
 
 // @internal (undocumented)
 export type InsightPlaceholderDraggableItem = BaseDraggableLayoutItem & {
@@ -5841,6 +5843,7 @@ export type MenuItemDependencies = {
     dispatch: ReturnType<typeof useDashboardDispatch>;
     eventDispatch: ReturnType<typeof useDashboardEventDispatch>;
     includeInteractions?: boolean;
+    includeConfigurations?: boolean;
     useWidgetDeleteDialog?: boolean;
 };
 
@@ -6906,6 +6909,9 @@ export interface SaveDashboardPayload {
     readonly title?: string;
 }
 
+// @alpha (undocumented)
+export type SavedFilterViewInteractionType = "savedFilterViewPanelOpened";
+
 // @alpha
 export interface SaveFilterView extends IDashboardCommand {
     // (undocumented)
@@ -7806,7 +7812,7 @@ export const selectSectionModification: (refs: (ObjRef | undefined)[]) => Dashbo
 // @alpha (undocumented)
 export const selectSelectedFilterIndex: DashboardSelector<number | undefined>;
 
-// @internal (undocumented)
+// @internal
 export const selectSelectedWidgetRef: DashboardSelector<ObjRef | undefined>;
 
 // @public
@@ -9076,6 +9082,7 @@ export const useDashboardUserInteraction: () => {
     dateFilterInteraction: (eventType: DateFilterInteractionType) => void;
     visualizationSwitcherInteraction: (eventType: VisualizationSwitcherInteractionType) => void;
     automationInteraction: (eventData: AutomationInteractionData) => void;
+    savedFilterViewInteraction: (eventType: SavedFilterViewInteractionType) => void;
 };
 
 // @internal (undocumented)
@@ -9328,7 +9335,7 @@ export type VisualizationSwitcherDraggableListItem = BaseDraggableLayoutItem & {
 export type VisualizationSwitcherDraggingComponent = ComponentType<IVisualizationSwitcherDraggingComponentProps>;
 
 // @beta (undocumented)
-export type VisualizationSwitcherInteractionType = "visualizationSwitcherChanged";
+export type VisualizationSwitcherInteractionType = "visualizationSwitcherSwitched" | "visualizationSwitcherRemoved" | "visualizationSwitcherOrderChanged" | "visualizationSwitcherVisualizationDetailOpened" | "visualizationSwitcherVisualizationAdded";
 
 // @alpha (undocumented)
 export type VisualizationSwitcherToolbarComponentProvider = (widget: IVisualizationSwitcherWidget) => CustomVisualizationSwitcherToolbarComponent;

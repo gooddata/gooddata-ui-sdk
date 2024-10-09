@@ -86,8 +86,8 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
         return this.descriptor;
     }
 
-    public async updateDescriptor(descriptor: IWorkspaceDescriptorUpdate): Promise<void> {
-        await this.authCall(async (client) => {
+    public async updateDescriptor(descriptor: IWorkspaceDescriptorUpdate): Promise<IWorkspaceDescriptor> {
+        const result = await this.authCall(async (client) => {
             return client.entities.patchEntityWorkspaces({
                 id: this.workspace,
                 jsonApiWorkspacePatchDocument: {
@@ -95,6 +95,8 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
                 },
             });
         });
+
+        return workspaceConverter(result.data.data, []);
     }
 
     public async getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {

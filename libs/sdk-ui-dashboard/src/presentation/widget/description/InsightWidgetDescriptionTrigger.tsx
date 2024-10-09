@@ -17,7 +17,9 @@ export const InsightWidgetDescriptionTrigger: React.FC<IInsightWidgetDescription
     const { widget, insight } = props;
     const visible = widget.configuration?.description?.visible ?? true;
     const description =
-        widget.configuration?.description?.source === "widget" ? widget.description : insight.insight.summary;
+        widget.configuration?.description?.source === "widget" || !insight
+            ? widget.description
+            : insight.insight.summary;
 
     const trimmedDescription = description?.trim();
     const widgetRefAsString = objRefToString(widgetRef(widget));

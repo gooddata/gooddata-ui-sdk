@@ -216,6 +216,8 @@ export const selectMenuButtonItemsVisibility: DashboardSelector<IMenuButtonItems
 
 /**
  * @internal
+ *
+ * This selector provides selected widget on dashboard. It DOES NOT provide selected widget inside of selected visualization switcher.
  */
 export const selectSelectedWidgetRef: DashboardSelector<ObjRef | undefined> = createSelector(
     selectSelf,

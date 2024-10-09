@@ -19,18 +19,24 @@ export const AgentIcon: React.FC<AgentStateIconProps> = ({
     // A precaution in case there are multiple instances of the component on the same page
     // In-line SVGs must obey the unique ID rule as any other HTML element
     const instanceId = React.useMemo(() => INSTANCE_COUNTER++, []);
+    const isLoading = loading && !cancelled && !error;
 
+    // We are adding only one modifier class at a time
     const className = cx("gd-gen-ai-chat__agent_icon", {
-        "gd-gen-ai-chat__agent_icon--loading": loading,
+        // Error state has the top priority
+        "gd-gen-ai-chat__agent_icon--error": error,
+        // Cancelled state
+        "gd-gen-ai-chat__agent_icon--cancelled": !error && cancelled,
+        // Loading state
+        "gd-gen-ai-chat__agent_icon--loading": isLoading,
+        // The default state with animation on first appearance
         "gd-gen-ai-chat__agent_icon--appear": !loading && !error && !cancelled,
-        "gd-gen-ai-chat__agent_icon--error": !loading && error,
-        "gd-gen-ai-chat__agent_icon--cancelled": !loading && !error && cancelled,
     });
 
     return (
         <svg className={className} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clipPath={`url(#clip_mask_${instanceId})`}>
-                {loading ? (
+                {isLoading ? (
                     <g className="gd-gen-ai-chat__agent_icon__circle">
                         <path d="M 0 -16 A 16 16 0 0 1 0 16" stroke={`url(#first_half_${instanceId})`} />
                         <path d="M 0 16 A 16 16 0 0 1 0 -16" stroke={`url(#second_half_${instanceId})`} />

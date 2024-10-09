@@ -2,29 +2,15 @@
 
 import React from "react";
 import { connect } from "react-redux";
-import { agentLoadingSelector, RootState, visibleMessagesSelector } from "../store/index.js";
-import {
-    AssistantTextMessageComponent,
-    SystemMessageComponent,
-    UserTextMessageComponent,
-    AssistantCancelledMessageComponent,
-} from "./messages/index.js";
-import { AgentState } from "./messages/AgentState.js";
-import {
-    isAssistantErrorMessage,
-    isAssistantSearchCreateMessage,
-    isAssistantTextMessage,
-    isAssistantCancelledMessage,
-    isUserTextMessage,
-    isSystemTextMessage,
-} from "../model.js";
+import { asyncProcessSelector, RootState, messagesSelector } from "../store/index.js";
+import { AssistantMessageComponent, UserMessageComponent } from "./messages/index.js";
 import { EmptyState } from "./EmptyState.js";
-import { AssistantErrorMessageComponent } from "./messages/AssistantErrorMessage.js";
-import { AssistantSearchCreateMessageComponent } from "./messages/AssistantSearchCreateMessage.js";
+import { isAssistantMessage, isUserMessage } from "../model.js";
+import Skeleton from "react-loading-skeleton";
 
 type MessagesComponentProps = {
-    messages: ReturnType<typeof visibleMessagesSelector>;
-    loading: ReturnType<typeof agentLoadingSelector>;
+    messages: ReturnType<typeof messagesSelector>;
+    loading: ReturnType<typeof asyncProcessSelector>;
 };
 
 const MessagesComponent: React.FC<MessagesComponentProps> = ({ messages, loading }) => {
@@ -32,45 +18,31 @@ const MessagesComponent: React.FC<MessagesComponentProps> = ({ messages, loading
 
     const lastMessage = messages[messages.length - 1];
     React.useLayoutEffect(() => {
-        // If either last message or loading state changes, scroll to the bottom
+        // Last message will also change when it's loading state is updated
         scrollRef.current?.scrollTo({
             top: scrollRef.current?.scrollHeight,
             behavior: "smooth",
         });
-    }, [lastMessage, loading]);
+    }, [lastMessage]);
 
     return (
         <div className="gd-gen-ai-chat__messages" ref={scrollRef}>
             <div className="gd-gen-ai-chat__messages__scroll">
-                {!messages.length ? <EmptyState /> : null}
-                {messages.map((message) => {
-                    if (isAssistantTextMessage(message)) {
-                        return <AssistantTextMessageComponent key={message.id} message={message} />;
-                    }
+                {!messages.length && !loading ? <EmptyState /> : null}
+                {loading === "loading" || loading === "clearing" ? <Skeleton count={3} height="2em" /> : null}
+                {loading !== "loading" && loading !== "clearing"
+                    ? messages.map((message) => {
+                          if (isUserMessage(message)) {
+                              return <UserMessageComponent key={message.localId} message={message} />;
+                          }
 
-                    if (isAssistantErrorMessage(message)) {
-                        return <AssistantErrorMessageComponent key={message.id} message={message} />;
-                    }
+                          if (isAssistantMessage(message)) {
+                              return <AssistantMessageComponent key={message.localId} message={message} />;
+                          }
 
-                    if (isAssistantSearchCreateMessage(message)) {
-                        return <AssistantSearchCreateMessageComponent key={message.id} message={message} />;
-                    }
-
-                    if (isUserTextMessage(message)) {
-                        return <UserTextMessageComponent key={message.id} message={message} />;
-                    }
-
-                    if (isAssistantCancelledMessage(message)) {
-                        return <AssistantCancelledMessageComponent key={message.id} message={message} />;
-                    }
-
-                    if (isSystemTextMessage(message)) {
-                        return <SystemMessageComponent key={message.id} message={message} />;
-                    }
-
-                    return assertNever(message);
-                })}
-                {loading ? <AgentState /> : null}
+                          return assertNever(message);
+                      })
+                    : null}
             </div>
         </div>
     );
@@ -81,8 +53,8 @@ const assertNever = (value: never): never => {
 };
 
 const mapStateToProps = (state: RootState): MessagesComponentProps => ({
-    messages: visibleMessagesSelector(state),
-    loading: agentLoadingSelector(state),
+    messages: messagesSelector(state),
+    loading: asyncProcessSelector(state),
 });
 
 export const Messages = connect(mapStateToProps)(MessagesComponent);

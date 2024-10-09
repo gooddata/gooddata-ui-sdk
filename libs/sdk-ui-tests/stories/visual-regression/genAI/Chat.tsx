@@ -13,36 +13,56 @@ const backend = StorybookBackend();
 
 const history: Message[] = [
     {
-        id: "1",
+        localId: "1",
         created: Date.now(),
-        type: "user-text",
-        content: {
-            text: "Hello World from the Username!",
-            cancelled: false,
-        },
+        role: "user",
+        cancelled: false,
+        complete: true,
+        content: [
+            {
+                type: "text",
+                text: "Hello World from the Username!",
+            },
+        ],
     },
     {
-        id: "2",
+        localId: "2",
         created: Date.now() + 1000,
-        type: "assistant-text",
-        content: { text: "Hello World from the Assistant!" },
+        role: "assistant",
+        cancelled: false,
+        complete: true,
+        content: [
+            {
+                type: "text",
+                text: "Hello World from the Assistant!",
+            },
+        ],
     },
     {
-        id: "3",
+        localId: "3",
         created: Date.now() + 2000,
-        type: "user-text",
-        content: {
-            text: "A longer message. ".repeat(30),
-            cancelled: false,
-        },
+        role: "user",
+        cancelled: false,
+        complete: true,
+        content: [
+            {
+                type: "text",
+                text: "A longer message. ".repeat(30),
+            },
+        ],
     },
     {
-        id: "4",
+        localId: "4",
         created: Date.now() + 3000,
-        type: "assistant-text",
-        content: {
-            text: "A longer reply. ".repeat(10),
-        },
+        role: "assistant",
+        cancelled: false,
+        complete: true,
+        content: [
+            {
+                type: "text",
+                text: "A longer reply. ".repeat(10),
+            },
+        ],
     },
 ];
 
@@ -59,6 +79,6 @@ const FlexAIBase: React.FC<{ width?: number }> = ({ width = 500 }) => (
     </div>
 );
 
-storiesOf(`${GenAIStories}/FlexAI`)
+storiesOf(`${GenAIStories}/Chat`)
     .add("full-featured", () => <FlexAIBase />)
     .add("themed", () => wrapWithTheme(<FlexAIBase />));

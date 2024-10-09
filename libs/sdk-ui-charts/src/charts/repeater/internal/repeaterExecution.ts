@@ -24,6 +24,7 @@ import {
     newBucket,
     newDimension,
     newInlineMeasure,
+    isArithmeticMeasure,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { ChartInlineVisualizationType, IInlineVisualizationsConfig } from "../../../interfaces/index.js";
@@ -42,6 +43,9 @@ import { ChartInlineVisualizationType, IInlineVisualizationsConfig } from "../..
  */
 export function transformStandaloneMeasureToInline(measure: IMeasure, mainRowAttributeId: string): IMeasure {
     if (isInlineMeasure(measure)) {
+        return measure;
+    }
+    if (isArithmeticMeasure(measure)) {
         return measure;
     }
 

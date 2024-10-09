@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import {
     ObjRef,
     IInsight,
@@ -11,7 +11,6 @@ import {
     IDashboardWidget,
     IDashboardLayoutItem,
 } from "@gooddata/sdk-model";
-import { invariant } from "ts-invariant";
 import { LRUCache } from "lru-cache";
 import stringify from "json-stable-stringify";
 import flow from "lodash/flow.js";
@@ -106,9 +105,17 @@ export function validateItemsSize<TWidget = IDashboardWidget>(
         const widget = item.facade().widget();
         if (isInsightWidget(widget)) {
             const insight = getInsightByRef(widget.insight);
-            invariant(insight, "Inconsistent insight store");
             const currentSize = item.facade().size().xl;
             const { gridWidth: currentWidth, gridHeight: currentHeight } = currentSize;
+
+            if (!insight) {
+                return item.size({
+                    xl: {
+                        ...currentSize,
+                    },
+                });
+            }
+
             const { validWidth, validHeight } = validateDashboardLayoutWidgetSize(
                 currentWidth,
                 currentHeight,

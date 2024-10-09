@@ -651,6 +651,48 @@
                 }
             }
         },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/chatHistory": {
+            "post": {
+                "tags": ["Smart Functions", "actions"],
+                "summary": "(BETA) Get Chat History",
+                "description": "(BETA) Post thread ID (and optionally interaction ID) to get full/partial chat history.",
+                "operationId": "aiChatHistory",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ChatHistoryRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ChatHistoryResult"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/actions/workspaces/{workspaceId}/ai/chat": {
             "post": {
                 "tags": ["Smart Functions", "actions"],
@@ -2856,17 +2898,7 @@
                 }
             },
             "SearchResultObject": {
-                "required": [
-                    "description",
-                    "id",
-                    "score",
-                    "scoreDescriptor",
-                    "scoreExactMatch",
-                    "scoreTitle",
-                    "title",
-                    "type",
-                    "workspaceId"
-                ],
+                "required": ["id", "title", "type", "workspaceId"],
                 "type": "object",
                 "properties": {
                     "id": {
@@ -2945,86 +2977,53 @@
                 }
             },
             "RouteResult": {
-                "required": ["results"],
-                "type": "object",
-                "properties": {
-                    "results": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/RouteResultObject"
-                        }
-                    }
-                }
-            },
-            "RouteResultObject": {
-                "required": ["exampleDescription", "score", "useCase"],
+                "required": ["reasoning", "useCase"],
                 "type": "object",
                 "properties": {
                     "useCase": {
                         "type": "string",
-                        "description": "Use case where to route, e.g. 'list dashboards' or 'create visualization'."
+                        "description": "Use case where LLM routed based on question.",
+                        "enum": [
+                            "SEARCH_ALL",
+                            "SEARCH_VISUALIZATIONS",
+                            "SEARCH_DASHBOARDS",
+                            "CREATE_VISUALIZATION",
+                            "EXTEND_VISUALIZATION",
+                            "GENERAL",
+                            "INVALID"
+                        ]
                     },
-                    "exampleDescription": {
+                    "reasoning": {
                         "type": "string",
-                        "description": "Use case description, which was hit by the similarity search."
-                    },
-                    "score": {
-                        "type": "number",
-                        "description": "Similarity score between input query and the use case description.",
-                        "format": "float"
+                        "description": "Explanation why LLM picked this use case."
                     }
                 }
             },
-            "ActiveObjectIdentification": {
-                "required": ["id", "type", "workspaceId"],
+            "ChatHistoryRequest": {
                 "type": "object",
                 "properties": {
-                    "id": {
+                    "threadIdSuffix": {
                         "type": "string",
-                        "description": "Object ID."
+                        "description": "Chat History thread suffix appended to ID generated by backend. Enables more chat windows."
                     },
-                    "type": {
-                        "type": "string",
-                        "description": "Object type, e.g. dashboard."
+                    "chatHistoryInteractionId": {
+                        "type": "integer",
+                        "description": "Return chat history records only after this interaction ID. If empty, complete chat history is returned.",
+                        "format": "int64"
                     },
-                    "workspaceId": {
+                    "userFeedback": {
                         "type": "string",
-                        "description": "Workspace ID."
+                        "description": "User feedback.",
+                        "enum": ["POSITIVE", "NEGATIVE", "NONE"]
+                    },
+                    "reset": {
+                        "type": "boolean",
+                        "description": "User feedback."
                     }
-                },
-                "description": "Object, with which the user is actively working."
+                }
             },
-            "ChatInteraction": {
-                "required": ["content", "role"],
-                "type": "object",
-                "properties": {
-                    "content": {
-                        "type": "array",
-                        "description": "Interaction content.",
-                        "items": {
-                            "oneOf": [
-                                {
-                                    "$ref": "#/components/schemas/CreatedVisualizationInteractionWithContext"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/FoundObjectInteractionWithContext"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/TextInteractionWithContext"
-                                }
-                            ]
-                        }
-                    },
-                    "role": {
-                        "type": "string",
-                        "description": "Role of actor.",
-                        "enum": ["USER", "AI"]
-                    }
-                },
-                "description": "List of chat interactions"
-            },
-            "ChatRequest": {
-                "required": ["question"],
+            "ChatHistoryInteraction": {
+                "required": ["chatHistoryInteractionId", "interactionFinished", "question", "routing"],
                 "type": "object",
                 "properties": {
                     "question": {
@@ -3032,57 +3031,45 @@
                         "type": "string",
                         "description": "User question"
                     },
-                    "limitSearch": {
-                        "type": "integer",
-                        "description": "Maximum number of search results.",
-                        "format": "int32",
-                        "default": 5
+                    "threadIdSuffix": {
+                        "type": "string",
+                        "description": "Chat History thread suffix appended to ID generated by backend. Enables more chat windows."
                     },
-                    "limitCreateContext": {
+                    "chatHistoryInteractionId": {
                         "type": "integer",
-                        "description": "Maximum number of relevant objects included into context for LLM (for each object type).",
-                        "format": "int32",
-                        "default": 10
+                        "description": "Chat History interaction ID. Unique ID for each interaction.",
+                        "format": "int64"
                     },
-                    "limitCreate": {
-                        "type": "integer",
-                        "description": "Maximum number of created results.",
-                        "format": "int32",
-                        "default": 3
+                    "interactionFinished": {
+                        "type": "boolean",
+                        "description": "Has the interaction already finished? Can be used for polling when interaction is in progress."
                     },
-                    "chatHistory": {
+                    "routing": {
+                        "$ref": "#/components/schemas/RouteResult"
+                    },
+                    "textResponse": {
+                        "type": "string",
+                        "description": "Text response for general questions."
+                    },
+                    "foundObjects": {
+                        "$ref": "#/components/schemas/FoundObjects"
+                    },
+                    "createdVisualizations": {
+                        "$ref": "#/components/schemas/CreatedVisualizations"
+                    }
+                },
+                "description": "List of chat history interactions."
+            },
+            "ChatHistoryResult": {
+                "required": ["interactions"],
+                "type": "object",
+                "properties": {
+                    "interactions": {
                         "type": "array",
-                        "description": "List of chat interactions",
+                        "description": "List of chat history interactions.",
                         "items": {
-                            "$ref": "#/components/schemas/ChatInteraction"
+                            "$ref": "#/components/schemas/ChatHistoryInteraction"
                         }
-                    },
-                    "userContext": {
-                        "$ref": "#/components/schemas/UserContext"
-                    },
-                    "titleToDescriptorRatio": {
-                        "type": "number",
-                        "description": "Temporary for experiments. Ratio of title score to descriptor score.",
-                        "format": "double",
-                        "default": 0.7
-                    },
-                    "routeScoreThreshold": {
-                        "type": "number",
-                        "description": "Score, below which we set invalidQuestion to true. The question does not match to any use case",
-                        "format": "double",
-                        "default": 0.2
-                    },
-                    "searchScoreThreshold": {
-                        "type": "number",
-                        "description": "Score, above which we return found object(s) and don't call LLM to create new objects.",
-                        "format": "double",
-                        "default": 0.9
-                    },
-                    "relevantScoreThreshold": {
-                        "type": "number",
-                        "description": "Score, above which we return found objects. Below this score objects are not relevant.",
-                        "format": "double",
-                        "default": 0.3
                     }
                 }
             },
@@ -3121,24 +3108,25 @@
                         }
                     }
                 },
-                "description": "Visualization created by AI."
+                "description": "List of created visualization objects"
             },
-            "CreatedVisualizationInteractionWithContext": {
-                "required": ["createdVisualization"],
+            "CreatedVisualizations": {
+                "required": ["objects", "reasoning"],
                 "type": "object",
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/InteractionWithContext"
-                    },
-                    {
-                        "type": "object",
-                        "properties": {
-                            "createdVisualization": {
-                                "$ref": "#/components/schemas/CreatedVisualization"
-                            }
+                "properties": {
+                    "objects": {
+                        "type": "array",
+                        "description": "List of created visualization objects",
+                        "items": {
+                            "$ref": "#/components/schemas/CreatedVisualization"
                         }
+                    },
+                    "reasoning": {
+                        "type": "string",
+                        "description": "Reasoning from LLM. Description of how and why the answer was generated."
                     }
-                ]
+                },
+                "description": "Visualization definitions created by AI."
             },
             "DimAttribute": {
                 "required": ["id", "type"],
@@ -3158,37 +3146,23 @@
                 },
                 "description": "List of attributes representing the dimensionality of the new visualization"
             },
-            "FoundObjectInteractionWithContext": {
-                "required": ["foundObject"],
-                "type": "object",
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/InteractionWithContext"
-                    },
-                    {
-                        "type": "object",
-                        "properties": {
-                            "foundObject": {
-                                "$ref": "#/components/schemas/SearchResultObject"
-                            }
-                        }
-                    }
-                ]
-            },
-            "InteractionWithContext": {
+            "FoundObjects": {
+                "required": ["objects", "reasoning"],
                 "type": "object",
                 "properties": {
-                    "includeToChatContext": {
-                        "type": "boolean",
-                        "description": "Include all in the chat context. Used for further questions. Use if it's not clear which objects relate to the question."
+                    "objects": {
+                        "type": "array",
+                        "description": "List of objects found with a similarity search.",
+                        "items": {
+                            "$ref": "#/components/schemas/SearchResultObject"
+                        }
                     },
-                    "userFeedback": {
+                    "reasoning": {
                         "type": "string",
-                        "description": "User feedback",
-                        "enum": ["POSITIVE", "NEGATIVE", "NONE"]
+                        "description": "Reasoning from LLM. Description of how and why the answer was generated."
                     }
                 },
-                "description": "Interaction content."
+                "description": "List of objects found by similarity search and post-processed by LLM."
             },
             "Metric": {
                 "required": ["id", "type"],
@@ -3213,23 +3187,78 @@
                 },
                 "description": "List of metrics to be used in the new visualization"
             },
-            "TextInteractionWithContext": {
-                "required": ["text"],
+            "ActiveObjectIdentification": {
+                "required": ["id", "type", "workspaceId"],
                 "type": "object",
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/InteractionWithContext"
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Object ID."
                     },
-                    {
-                        "type": "object",
-                        "properties": {
-                            "text": {
-                                "type": "string",
-                                "description": "Object found by similarity search."
-                            }
-                        }
+                    "type": {
+                        "type": "string",
+                        "description": "Object type, e.g. dashboard."
+                    },
+                    "workspaceId": {
+                        "type": "string",
+                        "description": "Workspace ID."
                     }
-                ]
+                },
+                "description": "Object, with which the user is actively working."
+            },
+            "ChatRequest": {
+                "required": ["question"],
+                "type": "object",
+                "properties": {
+                    "question": {
+                        "maxLength": 2000,
+                        "type": "string",
+                        "description": "User question"
+                    },
+                    "limitSearch": {
+                        "type": "integer",
+                        "description": "Maximum number of search results.",
+                        "format": "int32",
+                        "default": 5
+                    },
+                    "limitCreateContext": {
+                        "type": "integer",
+                        "description": "Maximum number of relevant objects included into context for LLM (for each object type).",
+                        "format": "int32",
+                        "default": 10
+                    },
+                    "limitCreate": {
+                        "type": "integer",
+                        "description": "Maximum number of created results.",
+                        "format": "int32",
+                        "default": 3
+                    },
+                    "threadIdSuffix": {
+                        "type": "string",
+                        "description": "Chat History thread suffix appended to ID generated by backend. Enables more chat windows."
+                    },
+                    "userContext": {
+                        "$ref": "#/components/schemas/UserContext"
+                    },
+                    "titleToDescriptorRatio": {
+                        "type": "number",
+                        "description": "Temporary for experiments. Ratio of title score to descriptor score.",
+                        "format": "double",
+                        "default": 0.7
+                    },
+                    "searchScoreThreshold": {
+                        "type": "number",
+                        "description": "Score, above which we return found object(s) and don't call LLM to create new objects.",
+                        "format": "double",
+                        "default": 0.9
+                    },
+                    "relevantScoreThreshold": {
+                        "type": "number",
+                        "description": "Score, above which we return found objects. Below this score objects are not relevant.",
+                        "format": "double",
+                        "default": 0.4
+                    }
+                }
             },
             "UserContext": {
                 "required": ["activeObject"],
@@ -3242,63 +3271,27 @@
                 "description": "User context, which can affect the behavior of the underlying AI features."
             },
             "ChatResult": {
-                "required": ["invalidQuestion", "useCases"],
+                "required": ["routing"],
                 "type": "object",
                 "properties": {
-                    "useCases": {
-                        "type": "array",
-                        "description": "Use cases with scores. The question was routed to the use case with highest score.",
-                        "items": {
-                            "$ref": "#/components/schemas/RouteResultObject"
-                        }
+                    "routing": {
+                        "$ref": "#/components/schemas/RouteResult"
                     },
-                    "invalidQuestion": {
-                        "type": "boolean",
-                        "description": "Flag detecting invalid/irrelevant user question. No user case was found."
+                    "textResponse": {
+                        "type": "string",
+                        "description": "Text response for general questions."
                     },
                     "foundObjects": {
                         "$ref": "#/components/schemas/FoundObjects"
                     },
                     "createdVisualizations": {
                         "$ref": "#/components/schemas/CreatedVisualizations"
+                    },
+                    "threadIdSuffix": {
+                        "type": "string",
+                        "description": "Chat History thread suffix appended to ID generated by backend. Enables more chat windows."
                     }
                 }
-            },
-            "CreatedVisualizations": {
-                "required": ["objects", "reasoning"],
-                "type": "object",
-                "properties": {
-                    "objects": {
-                        "type": "array",
-                        "description": "List of created visualization objects",
-                        "items": {
-                            "$ref": "#/components/schemas/CreatedVisualization"
-                        }
-                    },
-                    "reasoning": {
-                        "type": "string",
-                        "description": "Reasoning from LLM. Description of how the answer was generated."
-                    }
-                },
-                "description": "Visualization definitions created by AI."
-            },
-            "FoundObjects": {
-                "required": ["objects", "reasoning"],
-                "type": "object",
-                "properties": {
-                    "objects": {
-                        "type": "array",
-                        "description": "List of objects found with a similarity search.",
-                        "items": {
-                            "$ref": "#/components/schemas/SearchResultObject"
-                        }
-                    },
-                    "reasoning": {
-                        "type": "string",
-                        "description": "Reasoning from LLM. Description of how the answer was generated."
-                    }
-                },
-                "description": "List of objects found by similarity search."
             },
             "ForecastResult": {
                 "required": ["attribute", "lowerBound", "origin", "prediction", "upperBound"],
