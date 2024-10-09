@@ -2,8 +2,7 @@
 
 import { IAnalyticalBackend, IChatThread, IChatThreadHistory } from "@gooddata/sdk-backend-spi";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { Task } from "redux-saga";
-import { call, cancelled, getContext, race, take, fork, delay, put, select } from "redux-saga/effects";
+import { call, cancelled, getContext, race, take, delay, put, select } from "redux-saga/effects";
 import {
     cancelAsyncAction,
     evaluateMessageErrorAction,
@@ -27,17 +26,25 @@ export function* threadPolling({ payload: { message } }: PayloadAction<{ message
     const workspace: string = yield getContext("workspace");
     const chatThread = backend.workspace(workspace).genAI().getChatThread();
 
-    // Start the polling task
-    const pollingTask: Task = yield fork(fetchChatHistoryPolling, message, chatThread, lastInteractionId);
-
-    // Any of the following actions will cancel the polling
-    // The loser effects will be cancelled automatically, i.e. no need to explicitly cancel polling
-    yield race([
-        pollingTask,
+    const [pollingComplete]: any[] = yield race([
+        call(fetchChatHistoryPolling, message, chatThread, lastInteractionId),
+        // Any of the following actions will cancel the polling
+        delay(30000),
         take(cancelAsyncAction.type),
         take(evaluateMessageErrorAction.type),
         take(newMessageAction.type),
     ]);
+
+    // This will be implemented differently in production
+    // So, it's OK to have this error not in l18n
+    if (!pollingComplete) {
+        yield put(
+            evaluateMessageErrorAction({
+                assistantMessageId: message.localId,
+                error: "Timeout: It took too long to get the response from the server.",
+            }),
+        );
+    }
 }
 
 function* fetchChatHistoryPolling(
@@ -45,9 +52,6 @@ function* fetchChatHistoryPolling(
     preparedChatThread: IChatThread,
     lastInteractionId?: number,
 ) {
-    // +1 to avoid fetching the same interaction again
-    const interactionId = lastInteractionId ? lastInteractionId + 1 : 0;
-
     // The internal loop, each iteration is a single poll
     while (true) {
         try {
@@ -55,14 +59,14 @@ function* fetchChatHistoryPolling(
             yield delay(1000);
 
             // Make the server request
-            const results: IChatThreadHistory = yield call(doTheCall, preparedChatThread, interactionId);
+            const results: IChatThreadHistory = yield call(doTheCall, preparedChatThread, lastInteractionId);
 
             if ((results?.interactions?.length ?? 0) > 1) {
                 // Server feeds do not have stable IDs at the moment, it's hard to
                 // merge the results. We have to make an assumption that a single
                 // evaluation is running at a time.
                 console.warn("Unexpected interactions", results);
-                return;
+                return true;
             }
 
             const interaction = results?.interactions?.[0];
@@ -80,7 +84,7 @@ function* fetchChatHistoryPolling(
 
                 if (interaction.interactionFinished) {
                     // Polling is done, exit the loop
-                    return;
+                    return true;
                 }
             }
         } catch (e) {
@@ -88,7 +92,7 @@ function* fetchChatHistoryPolling(
 
             if (isCancelled) {
                 // Polling is done, exit the loop
-                return;
+                return true;
             }
         }
     }

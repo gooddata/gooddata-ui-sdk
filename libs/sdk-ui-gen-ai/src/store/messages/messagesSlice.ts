@@ -1,14 +1,6 @@
 // (C) 2024 GoodData Corporation
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {
-    AssistantMessage,
-    Contents,
-    isAssistantMessage,
-    isUserMessage,
-    makeErrorContents,
-    Message,
-    UserMessage,
-} from "../../model.js";
+import { AssistantMessage, Contents, isAssistantMessage, makeErrorContents, Message } from "../../model.js";
 
 type MessagesSliceState = {
     /**
@@ -55,26 +47,6 @@ const setNormalizedMessages = (state: MessagesSliceState, messages: Message[]) =
         return acc;
     }, {} as MessagesSliceState["messages"]);
     state.messageOrder = messages.map((message) => message.localId);
-};
-
-const resolveInteraction = (
-    state: MessagesSliceState,
-    userMessageId: string,
-    assistantMessageId: string,
-): [UserMessage | void, AssistantMessage | void] => {
-    const assistantMessage = state.messages[assistantMessageId];
-    const userMessage = state.messages[userMessageId];
-
-    if (
-        !assistantMessage ||
-        !isAssistantMessage(assistantMessage) ||
-        !userMessage ||
-        !isUserMessage(userMessage)
-    ) {
-        return [undefined, undefined];
-    }
-
-    return [userMessage, assistantMessage];
 };
 
 const messagesSlice = createSlice({
@@ -136,17 +108,12 @@ const messagesSlice = createSlice({
             }: PayloadAction<{
                 error: string;
                 assistantMessageId: string;
-                userMessageId: string;
             }>,
         ) => {
             delete state.asyncProcess;
-            const [userMessage, assistantMessage] = resolveInteraction(
-                state,
-                payload.userMessageId,
-                payload.assistantMessageId,
-            );
+            const assistantMessage = state.messages[payload.assistantMessageId];
 
-            if (!assistantMessage || !userMessage) {
+            if (!assistantMessage || !isAssistantMessage(assistantMessage)) {
                 // This should not happen
                 state.globalError = `Unexpected error during message evaluation. ${payload.error}`;
                 return;
