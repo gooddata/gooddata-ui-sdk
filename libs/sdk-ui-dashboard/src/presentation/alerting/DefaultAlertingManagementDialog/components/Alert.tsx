@@ -19,6 +19,7 @@ import { useAlertValidation } from "../../../widget/insight/configuration/Insigh
 import {
     getAlertThreshold,
     getOperatorTitle,
+    getValueSuffix,
 } from "../../../widget/insight/configuration/InsightAlertConfig/utils.js";
 
 interface IAlertProps {
@@ -62,7 +63,8 @@ export const Alert: React.FC<IAlertProps> = (props) => {
     const insightWidget = isInsightWidget(widget) ? widget : undefined;
     const widgetName = insightWidget?.title ?? "";
 
-    const subtitle = [`${getOperatorTitle(intl, alert.alert)} ${threshold}`, widgetName]
+    const valueSuffix = getValueSuffix(alert.alert) ?? "";
+    const subtitle = [`${getOperatorTitle(intl, alert.alert)} ${threshold}${valueSuffix}`, widgetName]
         .filter(Boolean)
         .join(" • ");
 

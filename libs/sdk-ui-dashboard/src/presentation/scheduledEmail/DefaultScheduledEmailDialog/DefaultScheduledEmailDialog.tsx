@@ -28,6 +28,7 @@ import {
     selectEntitlementMaxAutomationRecipients,
     selectEntitlementMinimumRecurrenceMinutes,
     selectIsCrossFiltering,
+    selectIsWhiteLabeled,
 } from "../../../model/index.js";
 import { IScheduledEmailDialogProps } from "../types.js";
 import { getDefaultCronExpression, useEditScheduledEmail } from "./hooks/useEditScheduledEmail.js";
@@ -71,6 +72,8 @@ export function ScheduledMailDialogRenderer({
     const [scheduledEmailToDelete, setScheduledEmailToDelete] = useState<
         IAutomationMetadataObject | IAutomationMetadataObjectDefinition | null
     >(null);
+
+    const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
 
     const handleScheduleDeleteSuccess = () => {
         onDeleteSuccess?.();
@@ -155,11 +158,13 @@ export function ScheduledMailDialogRenderer({
                         showProgressIndicator={isSavingScheduledEmail}
                         footerLeftRenderer={() => (
                             <div className="gd-notifications-channels-dialog-footer-link">
-                                <Hyperlink
-                                    text={intl.formatMessage({ id: helpTextId })}
-                                    href="https://www.gooddata.com/docs/cloud/create-dashboards/automation/scheduled-exports/#ScheduleExportsinDashboards-ScheduleExport"
-                                    iconClass="gd-icon-circle-question"
-                                />
+                                {!isWhiteLabeled ? (
+                                    <Hyperlink
+                                        text={intl.formatMessage({ id: helpTextId })}
+                                        href="https://www.gooddata.com/docs/cloud/create-dashboards/automation/scheduled-exports/#ScheduleExportsinDashboards-ScheduleExport"
+                                        iconClass="gd-icon-circle-question"
+                                    />
+                                ) : null}
                                 {scheduledExportToEdit ? (
                                     <Button
                                         className="gd-button-link-dimmed"
