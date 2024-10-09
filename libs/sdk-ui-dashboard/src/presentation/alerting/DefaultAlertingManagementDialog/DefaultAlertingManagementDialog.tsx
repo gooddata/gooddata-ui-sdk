@@ -16,6 +16,7 @@ import { Alerts } from "./components/AlertsList.js";
 import { DeleteAlertConfirmDialog } from "./components/DeleteAlertConfirmDialog.js";
 import { PauseAlertRunner } from "./components/PauseAlertRunner.js";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
+import { useDashboardSelector, selectIsWhiteLabeled } from "../../../model/index.js";
 
 /**
  * @alpha
@@ -34,6 +35,7 @@ export const AlertingManagementDialog: React.FC<IAlertingManagementDialogProps> 
     const [alertToDelete, setAlertToDelete] = useState<IAutomationMetadataObject | null>(null);
     const [alertToPause, setAlertToPause] = useState<[IAutomationMetadataObject, boolean] | null>(null);
     const intl = useIntl();
+    const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
 
     const handleAlertDelete = useCallback((alert: IAutomationMetadataObject) => {
         setAlertToDelete(alert);
@@ -109,11 +111,13 @@ export const AlertingManagementDialog: React.FC<IAlertingManagementDialogProps> 
                 </div>
                 <div className="gd-content-divider"></div>
                 <div className="gd-buttons">
-                    <Hyperlink
-                        text={intl.formatMessage({ id: helpTextId })}
-                        href="https://www.gooddata.com/docs/cloud/create-dashboards/automation/alerts/"
-                        iconClass="gd-icon-circle-question"
-                    />
+                    {!isWhiteLabeled ? (
+                        <Hyperlink
+                            text={intl.formatMessage({ id: helpTextId })}
+                            href="https://www.gooddata.com/docs/cloud/create-dashboards/automation/alerts/"
+                            iconClass="gd-icon-circle-question"
+                        />
+                    ) : null}
                     <Button
                         onClick={onClose}
                         className="gd-button-secondary s-close-button"
