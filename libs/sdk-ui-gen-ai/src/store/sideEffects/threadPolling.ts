@@ -72,7 +72,7 @@ function* fetchChatHistoryPolling(
                 yield put(
                     evaluateMessagePollingAction({
                         contents: processContents(interaction),
-                        interactionId: interaction.interactionId,
+                        interactionId: interaction.chatHistoryInteractionId,
                         complete: interaction.interactionFinished,
                         localId: message.localId,
                     }),

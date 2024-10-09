@@ -32,7 +32,7 @@ export const interactionsToMessages = (interactions: IGenAIChatInteraction[]): M
                 makeAssistantMessage(
                     assistantMessageContents,
                     interaction.interactionFinished,
-                    interaction.interactionId,
+                    interaction.chatHistoryInteractionId,
                 ),
             );
         }
