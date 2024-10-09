@@ -6,7 +6,7 @@ import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { Icon } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import { AlertActionsDropdown } from "./AlertActionsDropdown.js";
-import { getAlertThreshold, getOperatorTitle } from "./utils.js";
+import { getAlertThreshold, getOperatorTitle, getValueSuffix } from "./utils.js";
 import { gdColorNegative } from "../../../../constants/colors.js";
 import { useAlertValidation } from "./hooks/useAlertValidation.js";
 import {
@@ -33,7 +33,10 @@ export const AlertsListItem: React.FC<IAlertsListItemProps> = ({
     const theme = useTheme();
     const intl = useIntl();
     const isPaused = alert.alert?.trigger?.state === "PAUSED";
-    const description = `${getOperatorTitle(intl, alert.alert)} ${getAlertThreshold(alert.alert)}`;
+    const valueSuffix = getValueSuffix(alert.alert) ?? "";
+    const description = `${getOperatorTitle(intl, alert.alert)} ${getAlertThreshold(
+        alert.alert,
+    )}${valueSuffix}`;
     const { isValid } = useAlertValidation(alert);
     const currentUser = useDashboardSelector(selectCurrentUser);
     const canManageWorkspace = useDashboardSelector(selectCanManageWorkspace);

@@ -16,6 +16,7 @@ import {
     useDashboardSelector,
     DEFAULT_MAX_AUTOMATIONS,
     selectCanCreateAutomation,
+    selectIsWhiteLabeled,
 } from "../../../model/index.js";
 import { messages } from "../../../locales.js";
 import { isMobileView } from "../DefaultScheduledEmailDialog/utils/responsive.js";
@@ -41,6 +42,7 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
     const currentUser = useDashboardSelector(selectCurrentUser);
     const maxAutomationsEntitlement = useDashboardSelector(selectEntitlementMaxAutomations);
     const unlimitedAutomationsEntitlement = useDashboardSelector(selectEntitlementUnlimitedAutomations);
+    const isWhiteLabeled = useDashboardSelector(selectIsWhiteLabeled);
     const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);
     const intl = useIntl();
 
@@ -108,11 +110,13 @@ export const ScheduledEmailManagementDialog: React.FC<IScheduledEmailManagementD
                 </div>
                 <div className="gd-content-divider"></div>
                 <div className="gd-buttons">
-                    <Hyperlink
-                        text={intl.formatMessage({ id: helpTextId })}
-                        href="https://www.gooddata.com/docs/cloud/create-dashboards/automation/scheduled-exports/#ScheduleExportsinDashboards-ScheduleExport"
-                        iconClass="gd-icon-circle-question"
-                    />
+                    {!isWhiteLabeled ? (
+                        <Hyperlink
+                            text={intl.formatMessage({ id: helpTextId })}
+                            href="https://www.gooddata.com/docs/cloud/create-dashboards/automation/scheduled-exports/#ScheduleExportsinDashboards-ScheduleExport"
+                            iconClass="gd-icon-circle-question"
+                        />
+                    ) : null}
                     <Button
                         onClick={onClose}
                         className="gd-button-secondary s-close-button"
