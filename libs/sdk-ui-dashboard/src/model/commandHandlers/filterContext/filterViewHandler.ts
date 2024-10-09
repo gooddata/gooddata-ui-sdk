@@ -25,6 +25,7 @@ import {
 import { selectFilterContextDefinition } from "../../store/filterContext/filterContextSelectors.js";
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
 import { selectFilterViews, filterViewsActions } from "../../store/filterViews/index.js";
+import { drillActions } from "../../store/drill/index.js";
 import {
     filterViewCreationSucceeded,
     filterViewCreationFailed,
@@ -119,6 +120,14 @@ function* findFilterView(ref: ObjRef) {
     return filterViews.find((filterView) => areObjRefsEqual(filterView.ref, ref));
 }
 
+function* resetCrossFiltering(cmd: ApplyFilterView) {
+    const virtualFilters: ReturnType<typeof selectCrossFilteringFiltersLocalIdentifiers> = yield select(
+        selectCrossFilteringFiltersLocalIdentifiers,
+    );
+    yield put(removeAttributeFilters(virtualFilters, cmd.correlationId));
+    yield put(drillActions.resetCrossFiltering());
+}
+
 export function* applyFilterViewHandler(ctx: DashboardContext, cmd: ApplyFilterView): SagaIterator<void> {
     const filterView: PromiseFnReturnType<typeof findFilterView> = yield call(
         findFilterView,
@@ -126,10 +135,7 @@ export function* applyFilterViewHandler(ctx: DashboardContext, cmd: ApplyFilterV
     );
 
     if (filterView) {
-        const virtualFilters: ReturnType<typeof selectCrossFilteringFiltersLocalIdentifiers> = yield select(
-            selectCrossFilteringFiltersLocalIdentifiers,
-        );
-        yield put(removeAttributeFilters(virtualFilters, cmd.correlationId));
+        yield call(resetCrossFiltering, cmd);
         yield put(changeFilterContextSelection(filterView.filterContext.filters, true, cmd.correlationId));
         yield put(filterViewApplicationSucceeded(ctx, filterView, cmd.correlationId));
     } else {
