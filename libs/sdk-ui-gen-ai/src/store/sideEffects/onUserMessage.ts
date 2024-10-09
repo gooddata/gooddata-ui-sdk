@@ -40,7 +40,6 @@ export function* onUserMessage({ payload }: PayloadAction<Message>) {
     } catch (e) {
         yield put(
             evaluateMessageErrorAction({
-                userMessageId: payload.localId,
                 assistantMessageId: newAssistantMessage.localId,
                 error: extractError(e),
             }),
