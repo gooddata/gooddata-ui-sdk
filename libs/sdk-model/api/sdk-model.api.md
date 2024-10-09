@@ -1836,10 +1836,10 @@ export interface IGenAIActiveObject {
 
 // @alpha
 export interface IGenAIChatInteraction {
+    chatHistoryInteractionId: number;
     createdVisualizations?: IGenAICreatedVisualizations;
     foundObjects?: IGenAIFoundObjects;
     interactionFinished: boolean;
-    interactionId: number;
     question: string;
     routing: IGenAIChatRouting;
     textResponse?: string;

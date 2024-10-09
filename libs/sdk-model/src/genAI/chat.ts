@@ -164,7 +164,7 @@ export interface IGenAIChatInteraction {
     /**
      * ID of the interaction within the thread.
      */
-    interactionId: number;
+    chatHistoryInteractionId: number;
     /**
      * Flag indicating whether the interaction is finished.
      */

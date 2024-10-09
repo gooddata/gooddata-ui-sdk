@@ -2248,21 +2248,21 @@ export interface CacheUsageData {
 
 // @public
 export interface ChatHistoryInteraction {
+    chatHistoryInteractionId: number;
     createdVisualizations?: CreatedVisualizations;
     foundObjects?: FoundObjects;
     interactionFinished: boolean;
-    interactionId: number;
     question: string;
     routing: RouteResult;
     textResponse?: string;
-    threadId: string;
+    threadIdSuffix?: string;
 }
 
 // @public
 export interface ChatHistoryRequest {
     chatHistoryInteractionId?: number;
-    chatHistoryThreadId?: string;
     reset?: boolean;
+    threadIdSuffix?: string;
     userFeedback?: ChatHistoryRequestUserFeedbackEnum;
 }
 
@@ -2283,24 +2283,24 @@ export interface ChatHistoryResult {
 
 // @public
 export interface ChatRequest {
-    chatHistoryThreadId?: string;
     limitCreate?: number;
     limitCreateContext?: number;
     limitSearch?: number;
     question: string;
     relevantScoreThreshold?: number;
     searchScoreThreshold?: number;
+    threadIdSuffix?: string;
     titleToDescriptorRatio?: number;
     userContext?: UserContext;
 }
 
 // @public
 export interface ChatResult {
-    chatHistoryThreadId?: string;
     createdVisualizations?: CreatedVisualizations;
     foundObjects?: FoundObjects;
     routing: RouteResult;
     textResponse?: string;
+    threadIdSuffix?: string;
 }
 
 // @public
