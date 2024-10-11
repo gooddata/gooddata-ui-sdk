@@ -164,7 +164,23 @@ export type AutomationInteractionPayload = UserInteractionPayloadWithDataBase<
 /**
  * @alpha
  */
-export type SavedFilterViewInteractionType = "savedFilterViewPanelOpened";
+export type SavedFilterViewInteractionType = "DIALOG_OPENED";
+
+/**
+ * @alpha
+ */
+export interface SavedFilterViewInteractionData {
+    type: SavedFilterViewInteractionType;
+    countOfSavedViews: number;
+}
+
+/**
+ * @alpha
+ */
+export type SavedFilterViewInteractionPayload = UserInteractionPayloadWithDataBase<
+    "savedFilterViewInteraction",
+    SavedFilterViewInteractionData
+>;
 
 /**
  * @beta
@@ -179,8 +195,7 @@ export interface BareUserInteractionPayload {
         | AttributeHierarchiesInteractionType
         | AttributeFilterInteractionType
         | DateFilterInteractionType
-        | VisualizationSwitcherInteractionType
-        | SavedFilterViewInteractionType;
+        | VisualizationSwitcherInteractionType;
 }
 
 /**
@@ -195,7 +210,8 @@ export type UserInteractionPayloadWithData =
     | KpiAlertDialogOpenedPayload
     | DescriptionTooltipOpenedPayload
     | ShareDialogInteractionPayload
-    | AutomationInteractionPayload;
+    | AutomationInteractionPayload
+    | SavedFilterViewInteractionPayload;
 
 /**
  * @beta
