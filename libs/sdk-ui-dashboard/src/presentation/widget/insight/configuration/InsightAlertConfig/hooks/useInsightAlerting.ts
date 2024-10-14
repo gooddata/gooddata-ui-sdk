@@ -26,6 +26,8 @@ import {
     selectNotificationChannels,
     useDashboardUserInteraction,
     selectCanManageWorkspace,
+    selectUsers,
+    selectEntitlementMaxAutomationRecipients,
 } from "../../../../../../model/index.js";
 import { createDefaultAlert, getSupportedInsightMeasuresByInsight } from "../utils.js";
 import { messages } from "../messages.js";
@@ -33,6 +35,7 @@ import { useSaveAlertToBackend } from "./useSaveAlertToBackend.js";
 import { fillMissingTitles, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { convertUserToAutomationRecipient } from "../../../../../../_staging/automation/index.js";
 import { useMetricsAndFacts } from "../../../../../../_staging/sharedHooks/useMetricsAndFacts.js";
+import { DEFAULT_MAX_RECIPIENTS } from "../../../../../scheduledEmail/DefaultScheduledEmailDialog/constants.js";
 
 type InsightWidgetAlertingViewMode = "list" | "edit" | "create";
 
@@ -50,11 +53,19 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     const alerts = useDashboardSelector(
         selectDashboardUserAutomationAlertsInContext(widget?.localIdentifier),
     );
+    const users = useDashboardSelector(selectUsers);
     const dashboard = useDashboardSelector(selectDashboardId);
     const insight = useDashboardSelector(selectInsightByWidgetRef(widget?.ref));
     const allAutomationsCount = useDashboardSelector(selectAllAutomationsCount);
     const maxAutomationsEntitlement = useDashboardSelector(selectEntitlementMaxAutomations);
     const unlimitedAutomationsEntitlement = useDashboardSelector(selectEntitlementUnlimitedAutomations);
+    const maxAutomationsRecipientsEntitlement = useDashboardSelector(
+        selectEntitlementMaxAutomationRecipients,
+    );
+    const maxAutomationsRecipients = parseInt(
+        maxAutomationsRecipientsEntitlement?.value ?? DEFAULT_MAX_RECIPIENTS,
+        10,
+    );
     const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
     const currentUser = useDashboardSelector(selectCurrentUser);
     const destinations = useDashboardSelector(selectNotificationChannels);
@@ -152,6 +163,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
                     widgetFilters,
                     defaultMeasure,
                     defaultNotificationChannelId,
+                    convertUserToAutomationRecipient(currentUser),
                     metricsAndFacts?.metrics ?? [],
                 ),
             );
@@ -159,8 +171,6 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             closeInsightWidgetMenu();
             addError(messages.alertLoadingError);
         }
-        // Avoid infinite loop by ignoring addError
-        // /eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
         closeInsightWidgetMenu,
         defaultAlert,
@@ -172,6 +182,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         metricsAndFactsLoading,
         metricsAndFactsLoadingError,
         addError,
+        currentUser,
     ]);
 
     useEffect(() => {
@@ -224,7 +235,6 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
                 ...alert.details,
                 widgetName: widget?.title ?? "",
             },
-            recipients: [convertUserToAutomationRecipient(currentUser)],
         } as IAutomationMetadataObject;
         handleCreateAlert(alertToCreate);
     };
@@ -292,6 +302,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             isDeletingAlert ||
             metricsAndFactsLoading,
         destinations,
+        users,
         alerts,
         viewMode,
         editingAlert,
@@ -308,6 +319,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         hasAlerts,
         supportedMeasures,
         maxAutomationsReached,
+        maxAutomationsRecipients,
         canCreateAutomation,
         catalogMeasures: metricsAndFacts?.metrics ?? [],
     };

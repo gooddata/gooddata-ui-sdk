@@ -5,6 +5,7 @@ import {
     IAutomationMetadataObjectDefinition,
     ICatalogMeasure,
     INotificationChannelMetadataObject,
+    IWorkspaceUser,
 } from "@gooddata/sdk-model";
 import {
     Bubble,
@@ -31,6 +32,7 @@ import {
     getValueSuffix,
     isChangeOrDifferenceOperator,
 } from "./utils.js";
+import { RecipientsSelect } from "../../../../scheduledEmail/DefaultScheduledEmailDialog/components/RecipientsSelect/RecipientsSelect.js";
 
 const TOOLTIP_ALIGN_POINTS = [{ align: "cl cr" }, { align: "cr cl" }];
 
@@ -53,6 +55,7 @@ interface IEditAlertProps {
     isNewAlert?: boolean;
     hasAlerts: boolean;
     destinations: INotificationChannelMetadataObject[];
+    users: IWorkspaceUser[];
     measures: AlertMetric[];
     catalogMeasures: ICatalogMeasure[];
     onClose: () => void;
@@ -60,6 +63,7 @@ interface IEditAlertProps {
     onCreate?: (alert: IAutomationMetadataObjectDefinition) => void;
     onUpdate?: (alert: IAutomationMetadataObject) => void;
     maxAutomationsReached?: boolean;
+    maxAutomationsRecipients: number;
     overlayPositionType?: OverlayPositionType;
 }
 
@@ -68,12 +72,14 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
     isNewAlert,
     hasAlerts,
     destinations,
+    users,
     measures,
     onClose,
     onCancel,
     onCreate,
     onUpdate,
     maxAutomationsReached = false,
+    maxAutomationsRecipients,
     overlayPositionType,
     catalogMeasures,
 }) => {
@@ -81,12 +87,15 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
         viewMode,
         updatedAlert,
         canSubmit,
+        showRecipientsSelect,
+        warningMessage,
         //
         changeComparisonOperator,
         changeRelativeOperator,
         changeMeasure,
         changeValue,
         changeDestination,
+        changeRecipients,
         //
         configureAlert,
         saveAlertConfiguration,
@@ -99,6 +108,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
         onCreate,
         onUpdate,
         catalogMeasures,
+        destinations,
     });
     const intl = useIntl();
     const disableCreateButtonDueToLimits = isNewAlert && maxAutomationsReached;
@@ -203,7 +213,19 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                                 overlayPositionType={overlayPositionType}
                             />
                         )}
+                        {showRecipientsSelect ? (
+                            <RecipientsSelect
+                                users={users}
+                                value={updatedAlert.recipients ?? []}
+                                originalValue={alert.recipients || []}
+                                onChange={changeRecipients}
+                                allowEmptySelection
+                                maxRecipients={maxAutomationsRecipients}
+                                className="gd-edit-alert__recipients"
+                            />
+                        ) : null}
                     </div>
+                    {warningMessage ? <Message type="warning">{warningMessage}</Message> : null}
                     {!isValid ? (
                         <Message type="error">
                             <FormattedMessage id={invalidMessagesObj[invalidityReason!].id} />

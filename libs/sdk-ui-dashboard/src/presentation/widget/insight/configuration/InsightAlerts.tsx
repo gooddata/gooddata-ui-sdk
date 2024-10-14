@@ -30,9 +30,11 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
         alerts,
         hasAlerts,
         destinations,
+        users,
         viewMode,
         supportedMeasures,
         maxAutomationsReached,
+        maxAutomationsRecipients,
         canCreateAutomation,
         catalogMeasures,
         //
@@ -74,11 +76,13 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
                 alert={editingAlert}
                 hasAlerts={hasAlerts}
                 destinations={destinations}
+                users={users}
                 measures={supportedMeasures}
                 onUpdate={updateExistingAlert}
                 onCancel={cancelAlertEditing}
                 onClose={onClose}
                 catalogMeasures={catalogMeasures}
+                maxAutomationsRecipients={maxAutomationsRecipients}
             />
         );
     } else if (viewMode === "create" && creatingAlert) {
@@ -88,10 +92,12 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
                 measures={supportedMeasures}
                 hasAlerts={hasAlerts}
                 destinations={destinations}
+                users={users}
                 onCreate={saveNewAlert}
                 onCancel={cancelAlertCreation}
                 onClose={onClose}
                 maxAutomationsReached={maxAutomationsReached}
+                maxAutomationsRecipients={maxAutomationsRecipients}
                 catalogMeasures={catalogMeasures}
             />
         );
