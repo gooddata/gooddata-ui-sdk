@@ -34,7 +34,7 @@ import { IScheduledEmailDialogProps } from "../types.js";
 import { getDefaultCronExpression, useEditScheduledEmail } from "./hooks/useEditScheduledEmail.js";
 import { useSaveScheduledEmailToBackend } from "./hooks/useSaveScheduledEmailToBackend.js";
 import { IAutomationMetadataObject, IAutomationMetadataObjectDefinition } from "@gooddata/sdk-model";
-import { getTimezoneByIdentifier, TIMEZONE_DEFAULT } from "./utils/timezone.js";
+import { TIMEZONE_DEFAULT } from "./utils/timezone.js";
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX, DASHBOARD_TITLE_MAX_LENGTH } from "../../constants/index.js";
 import { isMobileView } from "./utils/responsive.js";
 import { DeleteScheduleConfirmDialog } from "../DefaultScheduledEmailManagementDialog/components/DeleteScheduleConfirmDialog.js";
@@ -208,12 +208,7 @@ export function ScheduledMailDialogRenderer({
                                 cronExpression={
                                     editedAutomation.schedule?.cron ?? getDefaultCronExpression(startDate)
                                 }
-                                timezone={
-                                    (
-                                        getTimezoneByIdentifier(editedAutomation.schedule?.timezone) ??
-                                        TIMEZONE_DEFAULT
-                                    ).title
-                                }
+                                timezone={editedAutomation.schedule?.timezone ?? TIMEZONE_DEFAULT.identifier}
                                 dateFormat={dateFormat ?? "MM/dd/yyyy"}
                                 locale={locale}
                                 weekStart={weekStart}
