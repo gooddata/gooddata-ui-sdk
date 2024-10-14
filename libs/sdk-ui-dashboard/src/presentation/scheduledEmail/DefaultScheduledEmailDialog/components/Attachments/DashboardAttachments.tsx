@@ -1,5 +1,5 @@
 // (C) 2019-2024 GoodData Corporation
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { FilterContextItem, IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { Message } from "@gooddata/sdk-ui-kit";
@@ -48,7 +48,6 @@ export const DashboardAttachments = (props: IDashboardAttachmentsProps) => {
          */
         !isEditing || savedFilters ? "edited" : "default",
     );
-    const [attachmentsDisabled, setAttachmentsDisabled] = useState(false);
 
     const showAttachmentFilters = isEditing
         ? attachmentFilterType !== "default"
@@ -72,15 +71,6 @@ export const DashboardAttachments = (props: IDashboardAttachmentsProps) => {
         );
     };
 
-    useEffect(() => {
-        // Because on dashboard we now only have one attachment type, we can just call the callback
-        // and check it by default and disable the attachments. In future we might have more attachment types
-        // and change this behavior.
-        onDashboardAttachmentsSelectionChange(true, undefined);
-        setAttachmentsDisabled(true);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
     return (
         <div className="gd-input-component gd-notifications-channels-attachments s-notifications-channels-attachments">
             <label className="gd-label">
@@ -88,7 +78,7 @@ export const DashboardAttachments = (props: IDashboardAttachmentsProps) => {
             </label>
             <div className="gd-attachment-list">
                 <AttachmentDashboard
-                    disabled={attachmentsDisabled}
+                    disabled
                     pdfSelected={dashboardSelected}
                     onSelectionChange={handleDashboardAttachmentSelectionChange}
                 />
