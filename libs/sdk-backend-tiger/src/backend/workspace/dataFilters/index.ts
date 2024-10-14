@@ -131,7 +131,7 @@ export class TigerDataFiltersService implements IDataFiltersService {
         });
     };
 
-    public updateDataFilterValue = async (dataFilter: ObjRef, value: string): Promise<void> => {
+    public updateDataFilterValue = async (dataFilter: ObjRef, values: string[]): Promise<void> => {
         return this.authCall(async (client) => {
             const dataFilterId = await objRefToIdentifier(dataFilter, this.authCall);
             await this.deleteExistingSettings(client, dataFilterId);
@@ -143,7 +143,7 @@ export class TigerDataFiltersService implements IDataFiltersService {
                         id: uuid(),
                         type: "workspaceDataFilterSetting",
                         attributes: {
-                            filterValues: [value],
+                            filterValues: values,
                         },
                         relationships: {
                             workspaceDataFilter: {

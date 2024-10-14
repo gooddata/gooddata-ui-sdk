@@ -485,7 +485,7 @@ export interface IDataFiltersService {
     // @deprecated
     getWorkspaceDataFilters(): Promise<IWorkspaceDataFilter[]>;
     updateDataFilter(updatedDataFilter: IWorkspaceDataFilter): Promise<IWorkspaceDataFilter>;
-    updateDataFilterValue(dataFilter: ObjRef, value: string): Promise<void>;
+    updateDataFilterValue(dataFilter: ObjRef, values: string[]): Promise<void>;
 }
 
 // @alpha

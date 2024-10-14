@@ -37,9 +37,8 @@ export interface IDataFiltersService {
 
     /**
      * Update value of existing data filter.
-     * TODO support for multiple values in milestone 1?
      */
-    updateDataFilterValue(dataFilter: ObjRef, value: string): Promise<void>;
+    updateDataFilterValue(dataFilter: ObjRef, values: string[]): Promise<void>;
 
     /**
      * Delete an existing data filter.
