@@ -104,6 +104,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
         createAlert,
         updateAlert,
     } = useEditAlert({
+        metrics: measures,
         alert,
         onCreate,
         onUpdate,

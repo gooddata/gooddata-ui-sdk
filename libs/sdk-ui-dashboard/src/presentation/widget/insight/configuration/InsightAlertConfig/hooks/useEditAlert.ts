@@ -26,6 +26,7 @@ import { selectCurrentUser, useDashboardSelector } from "../../../../../../model
 import { convertUserToAutomationRecipient } from "../../../../../../_staging/automation/index.js";
 
 export interface IUseEditAlertProps {
+    metrics: AlertMetric[];
     alert: IAutomationMetadataObject;
     catalogMeasures: ICatalogMeasure[];
     destinations: INotificationChannelMetadataObject[];
@@ -34,6 +35,7 @@ export interface IUseEditAlertProps {
 }
 
 export const useEditAlert = ({
+    metrics,
     alert,
     onCreate,
     onUpdate,
@@ -52,11 +54,13 @@ export const useEditAlert = ({
     const showRecipientsSelect = selectedDestination?.allowedRecipients !== "CREATOR";
 
     const changeMeasure = (measure: AlertMetric) => {
-        setUpdatedAlert((alert) => transformAlertByMetric(alert, measure, catalogMeasures));
+        setUpdatedAlert((alert) => transformAlertByMetric(metrics, alert, measure, catalogMeasures));
     };
 
     const changeComparisonOperator = (measure: AlertMetric, comparisonOperator: IAlertComparisonOperator) => {
-        setUpdatedAlert((alert) => transformAlertByComparisonOperator(alert, measure, comparisonOperator));
+        setUpdatedAlert((alert) =>
+            transformAlertByComparisonOperator(metrics, alert, measure, comparisonOperator),
+        );
     };
 
     const changeRelativeOperator = (
@@ -66,6 +70,7 @@ export const useEditAlert = ({
     ) => {
         setUpdatedAlert((alert) =>
             transformAlertByRelativeOperator(
+                metrics,
                 alert,
                 measure,
                 relativeOperator,

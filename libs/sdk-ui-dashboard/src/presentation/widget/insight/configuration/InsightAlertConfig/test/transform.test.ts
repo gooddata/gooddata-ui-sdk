@@ -92,7 +92,7 @@ describe("alert transforms", () => {
         },
     };
 
-    const simpleMetric: AlertMetric = {
+    const simpleMetric1: AlertMetric = {
         measure: {
             measure: {
                 localIdentifier: "localMetric1",
@@ -112,10 +112,47 @@ describe("alert transforms", () => {
         comparators: [],
     };
 
-    const previousPeriodMetric: AlertMetric = {
+    const simpleMetric2: AlertMetric = {
         measure: {
             measure: {
                 localIdentifier: "localMetric2",
+                title: "metric1",
+                definition: {
+                    measureDefinition: {
+                        filters: [],
+                        item: {
+                            type: "measure",
+                            identifier: "simple_metric_1",
+                        },
+                    },
+                },
+            },
+        },
+        isPrimary: true,
+        comparators: [],
+    };
+
+    const arithmeticMetric1: AlertMetric = {
+        measure: {
+            measure: {
+                localIdentifier: "localArtMetric1",
+                title: "metricArt",
+                definition: {
+                    arithmeticMeasure: {
+                        measureIdentifiers: ["localMetric1", "localMetric2"],
+                        operator: "sum",
+                    },
+                },
+            },
+        },
+        isPrimary: true,
+        comparators: [],
+    };
+
+    const previousPeriodMetric: AlertMetric = {
+        measure: {
+            measure: {
+                localIdentifier: "localPPMetric1",
                 title: "metric2",
                 format: "#,##0.00",
                 definition: {
@@ -153,7 +190,7 @@ describe("alert transforms", () => {
     const previousPeriodMetric1: AlertMetric = {
         measure: {
             measure: {
-                localIdentifier: "localMetric2",
+                localIdentifier: "localPPMetric2",
                 title: "metric2",
                 format: "#,##0.00",
                 definition: {
@@ -188,9 +225,17 @@ describe("alert transforms", () => {
         ],
     };
 
+    const allMetrics = [
+        simpleMetric1,
+        previousPeriodMetric,
+        previousPeriodMetric1,
+        simpleMetric2,
+        arithmeticMetric1,
+    ];
+
     describe("transformAlertByMetric", () => {
         it("transformAlertByMetric, comparison and provide simple metric", () => {
-            const res = transformAlertByMetric(baseComparison, simpleMetric);
+            const res = transformAlertByMetric(allMetrics, baseComparison, simpleMetric1);
             expect(res).toEqual({
                 ...baseComparison,
                 title: "metric1",
@@ -206,14 +251,14 @@ describe("alert transforms", () => {
                     },
                     execution: {
                         ...baseComparison.alert.execution,
-                        measures: [simpleMetric.measure],
+                        measures: [simpleMetric1.measure],
                     },
                 },
             });
         });
 
         it("transformAlertByMetric, comparison and provide previous period metric", () => {
-            const res = transformAlertByMetric(baseComparison, previousPeriodMetric);
+            const res = transformAlertByMetric(allMetrics, baseComparison, previousPeriodMetric);
             expect(res).toEqual({
                 ...baseComparison,
                 title: "metric2",
@@ -223,7 +268,7 @@ describe("alert transforms", () => {
                         ...baseComparison.alert.condition,
                         left: {
                             format: "#,##0.00",
-                            id: "localMetric2",
+                            id: "localPPMetric1",
                             title: "metric2",
                         },
                     },
@@ -236,7 +281,7 @@ describe("alert transforms", () => {
         });
 
         it("transformAlertByMetric, relative and provide simple metric, reset operator dut to condition type change", () => {
-            const res = transformAlertByMetric(baseRelative, simpleMetric);
+            const res = transformAlertByMetric(allMetrics, baseRelative, simpleMetric1);
             expect(res).toEqual({
                 ...baseComparison,
                 title: "metric1",
@@ -253,14 +298,14 @@ describe("alert transforms", () => {
                     },
                     execution: {
                         ...baseComparison.alert.execution,
-                        measures: [simpleMetric.measure],
+                        measures: [simpleMetric1.measure],
                     },
                 },
             });
         });
 
         it("transformAlertByMetric, relative and provide comparison metric", () => {
-            const res = transformAlertByMetric(baseRelative, previousPeriodMetric);
+            const res = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric);
             expect(res).toEqual({
                 ...baseRelative,
                 title: "metric2",
@@ -272,7 +317,7 @@ describe("alert transforms", () => {
                             operator: "CHANGE",
                             left: {
                                 format: "#,##0.00",
-                                id: "localMetric2",
+                                id: "localPPMetric1",
                                 title: "metric2",
                             },
                             right: {
@@ -291,7 +336,7 @@ describe("alert transforms", () => {
         });
 
         it("transformAlertByMetric, relative and provide comparison metric, relative isPrimary", () => {
-            const res = transformAlertByMetric(baseRelative, previousPeriodMetric1);
+            const res = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric1);
             expect(res).toEqual({
                 ...baseRelative,
                 title: "metric2",
@@ -308,14 +353,40 @@ describe("alert transforms", () => {
                             },
                             right: {
                                 format: "#,##0.00",
-                                id: "localMetric2",
+                                id: "localPPMetric2",
                                 title: "metric2",
                             },
                         },
                     },
                     execution: {
                         ...baseRelative.alert.execution,
-                        measures: [previousPeriodMetric.measure, previousPeriodMetric.comparators[0].measure],
+                        measures: [
+                            previousPeriodMetric1.measure,
+                            previousPeriodMetric1.comparators[0].measure,
+                        ],
+                    },
+                },
+            });
+        });
+
+        it("transformAlertByMetric, comparison with arithmetic metric", () => {
+            const res = transformAlertByMetric(allMetrics, baseComparison, arithmeticMetric1);
+            expect(res).toEqual({
+                ...baseComparison,
+                title: "metricArt",
+                alert: {
+                    ...baseComparison.alert,
+                    condition: {
+                        ...baseComparison.alert.condition,
+                        left: {
+                            format: "#,##0.00",
+                            id: "localArtMetric1",
+                            title: "metricArt",
+                        },
+                    },
+                    execution: {
+                        ...baseComparison.alert.execution,
+                        measures: [arithmeticMetric1.measure, simpleMetric1.measure, simpleMetric2.measure],
                     },
                 },
             });
@@ -372,7 +443,12 @@ describe("alert transforms", () => {
 
     describe("transformAlertByComparisonOperator", () => {
         it("transformAlertByComparisonOperator, comparison value", () => {
-            const res = transformAlertByComparisonOperator(baseComparison, simpleMetric, "LESS_THAN");
+            const res = transformAlertByComparisonOperator(
+                allMetrics,
+                baseComparison,
+                simpleMetric1,
+                "LESS_THAN",
+            );
             expect(res).toEqual({
                 ...baseComparison,
                 alert: {
@@ -383,14 +459,19 @@ describe("alert transforms", () => {
                     },
                     execution: {
                         ...baseComparison.alert.execution,
-                        measures: [simpleMetric.measure],
+                        measures: [simpleMetric1.measure],
                     },
                 },
             });
         });
 
         it("transformAlertByComparisonOperator, relative value", () => {
-            const res = transformAlertByComparisonOperator(baseRelative, simpleMetric, "LESS_THAN");
+            const res = transformAlertByComparisonOperator(
+                allMetrics,
+                baseRelative,
+                simpleMetric1,
+                "LESS_THAN",
+            );
             expect(res).toEqual({
                 ...baseComparison,
                 alert: {
@@ -401,7 +482,7 @@ describe("alert transforms", () => {
                     },
                     execution: {
                         ...baseComparison.alert.execution,
-                        measures: [simpleMetric.measure],
+                        measures: [simpleMetric1.measure],
                     },
                 },
             });
@@ -411,6 +492,7 @@ describe("alert transforms", () => {
     describe("transformAlertByRelativeOperator", () => {
         it("transformAlertByRelativeOperator, comparison value", () => {
             const res = transformAlertByRelativeOperator(
+                allMetrics,
                 baseComparison,
                 previousPeriodMetric,
                 "CHANGES_BY",
@@ -429,7 +511,7 @@ describe("alert transforms", () => {
                             operator: "DIFFERENCE",
                             left: {
                                 format: "#,##0.00",
-                                id: "localMetric2",
+                                id: "localPPMetric1",
                                 title: "metric2",
                             },
                             right: {
@@ -449,6 +531,7 @@ describe("alert transforms", () => {
 
         it("transformAlertByRelativeOperator, relative value", () => {
             const res = transformAlertByRelativeOperator(
+                allMetrics,
                 baseRelative,
                 previousPeriodMetric,
                 "CHANGES_BY",
@@ -467,7 +550,7 @@ describe("alert transforms", () => {
                             operator: "DIFFERENCE",
                             left: {
                                 format: "#,##0.00",
-                                id: "localMetric2",
+                                id: "localPPMetric1",
                                 title: "metric2",
                             },
                             right: {
@@ -498,63 +581,70 @@ describe("alert transforms", () => {
         });
 
         it("getAlertMeasure - comparison", () => {
-            const update = transformAlertByMetric(baseComparison, simpleMetric);
-            const data = getAlertMeasure([simpleMetric], update.alert);
+            const update = transformAlertByMetric(allMetrics, baseComparison, simpleMetric1);
+            const data = getAlertMeasure([simpleMetric1], update.alert);
             expect(data.measure.measure.localIdentifier).toEqual("localMetric1");
         });
 
         it("getAlertMeasure - relative, primary", () => {
-            const update = transformAlertByMetric(baseRelative, previousPeriodMetric);
+            const update = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric);
             const data = getAlertMeasure([previousPeriodMetric], update.alert);
-            expect(data.measure.measure.localIdentifier).toEqual("localMetric2");
+            expect(data.measure.measure.localIdentifier).toEqual("localPPMetric1");
         });
 
         it("getAlertMeasure - relative, not primary", () => {
-            const update = transformAlertByMetric(baseRelative, previousPeriodMetric1);
+            const update = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric1);
             const data = getAlertMeasure([previousPeriodMetric1], update.alert);
-            expect(data.measure.measure.localIdentifier).toEqual("localMetric2");
+            expect(data.measure.measure.localIdentifier).toEqual("localPPMetric2");
         });
 
         it("getAlertCompareOperator - comparison", () => {
-            const update = transformAlertByMetric(baseComparison, simpleMetric);
+            const update = transformAlertByMetric(allMetrics, baseComparison, simpleMetric1);
             const data = getAlertCompareOperator(update.alert);
             expect(data).toEqual("GREATER_THAN_OR_EQUAL_TO");
         });
 
         it("getAlertCompareOperator - relative", () => {
-            const update = transformAlertByMetric(baseRelative, previousPeriodMetric);
+            const update = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric);
             const data = getAlertCompareOperator(update.alert);
             expect(data).toEqual(undefined);
         });
 
         it("getAlertRelativeOperator - comparison", () => {
-            const update = transformAlertByMetric(baseComparison, simpleMetric);
+            const update = transformAlertByMetric(allMetrics, baseComparison, simpleMetric1);
             const data = getAlertRelativeOperator(update.alert);
             expect(data).toEqual(undefined);
         });
 
         it("getAlertRelativeOperator - relative", () => {
-            const update = transformAlertByMetric(baseRelative, previousPeriodMetric);
+            const update = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric);
             const data = getAlertRelativeOperator(update.alert);
             expect(data).toEqual(["INCREASES_BY", "CHANGE"]);
         });
 
         it("getAlertRelativeOperator - comparison", () => {
-            const update = transformAlertByMetric(baseComparison, simpleMetric);
+            const update = transformAlertByMetric(allMetrics, baseComparison, simpleMetric1);
             const data = getValueSuffix(update.alert);
             expect(data).toEqual(undefined);
         });
 
         it("getAlertRelativeOperator - relative, change", () => {
-            let update = transformAlertByMetric(baseRelative, previousPeriodMetric);
-            update = transformAlertByRelativeOperator(update, previousPeriodMetric, "CHANGES_BY", "CHANGE");
+            let update = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric);
+            update = transformAlertByRelativeOperator(
+                allMetrics,
+                update,
+                previousPeriodMetric,
+                "CHANGES_BY",
+                "CHANGE",
+            );
             const data = getValueSuffix(update.alert);
             expect(data).toEqual("%");
         });
 
         it("getAlertRelativeOperator - relative, difference", () => {
-            let update = transformAlertByMetric(baseRelative, previousPeriodMetric);
+            let update = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric);
             update = transformAlertByRelativeOperator(
+                allMetrics,
                 update,
                 previousPeriodMetric,
                 "CHANGES_BY",
@@ -567,15 +657,22 @@ describe("alert transforms", () => {
 
     describe("is utils", () => {
         it("isChangeOperator, baseRelative, change", () => {
-            let update = transformAlertByMetric(baseRelative, previousPeriodMetric);
-            update = transformAlertByRelativeOperator(update, previousPeriodMetric, "CHANGES_BY", "CHANGE");
+            let update = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric);
+            update = transformAlertByRelativeOperator(
+                allMetrics,
+                update,
+                previousPeriodMetric,
+                "CHANGES_BY",
+                "CHANGE",
+            );
             const res = isChangeOperator(update.alert);
             expect(res).toEqual(true);
         });
 
         it("isChangeOperator, baseRelative, change", () => {
-            let update = transformAlertByMetric(baseRelative, previousPeriodMetric);
+            let update = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric);
             update = transformAlertByRelativeOperator(
+                allMetrics,
                 update,
                 previousPeriodMetric,
                 "CHANGES_BY",
@@ -586,21 +683,28 @@ describe("alert transforms", () => {
         });
 
         it("isChangeOperator, baseComparison, change", () => {
-            const update = transformAlertByMetric(baseComparison, simpleMetric);
+            const update = transformAlertByMetric(allMetrics, baseComparison, simpleMetric1);
             const res = isChangeOperator(update.alert);
             expect(res).toEqual(false);
         });
 
         it("isDifferenceOperator, baseRelative, change", () => {
-            let update = transformAlertByMetric(baseRelative, previousPeriodMetric);
-            update = transformAlertByRelativeOperator(update, previousPeriodMetric, "CHANGES_BY", "CHANGE");
+            let update = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric);
+            update = transformAlertByRelativeOperator(
+                allMetrics,
+                update,
+                previousPeriodMetric,
+                "CHANGES_BY",
+                "CHANGE",
+            );
             const res = isDifferenceOperator(update.alert);
             expect(res).toEqual(false);
         });
 
         it("isDifferenceOperator, baseRelative, change", () => {
-            let update = transformAlertByMetric(baseRelative, previousPeriodMetric);
+            let update = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric);
             update = transformAlertByRelativeOperator(
+                allMetrics,
                 update,
                 previousPeriodMetric,
                 "CHANGES_BY",
@@ -611,21 +715,28 @@ describe("alert transforms", () => {
         });
 
         it("isDifferenceOperator, baseComparison, change", () => {
-            const update = transformAlertByMetric(baseComparison, simpleMetric);
+            const update = transformAlertByMetric(allMetrics, baseComparison, simpleMetric1);
             const res = isDifferenceOperator(update.alert);
             expect(res).toEqual(false);
         });
 
         it("isChangeOrDifferenceOperator, baseRelative, change", () => {
-            let update = transformAlertByMetric(baseRelative, previousPeriodMetric);
-            update = transformAlertByRelativeOperator(update, previousPeriodMetric, "CHANGES_BY", "CHANGE");
+            let update = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric);
+            update = transformAlertByRelativeOperator(
+                allMetrics,
+                update,
+                previousPeriodMetric,
+                "CHANGES_BY",
+                "CHANGE",
+            );
             const res = isChangeOrDifferenceOperator(update.alert);
             expect(res).toEqual(true);
         });
 
         it("isChangeOrDifferenceOperator, baseRelative, change", () => {
-            let update = transformAlertByMetric(baseRelative, previousPeriodMetric);
+            let update = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric);
             update = transformAlertByRelativeOperator(
+                allMetrics,
                 update,
                 previousPeriodMetric,
                 "CHANGES_BY",
@@ -636,32 +747,32 @@ describe("alert transforms", () => {
         });
 
         it("isChangeOrDifferenceOperator, baseComparison, change", () => {
-            const update = transformAlertByMetric(baseComparison, simpleMetric);
+            const update = transformAlertByMetric(allMetrics, baseComparison, simpleMetric1);
             const res = isChangeOrDifferenceOperator(update.alert);
             expect(res).toEqual(false);
         });
 
         it("isAlertValueDefined, baseRelative", () => {
-            const update = transformAlertByMetric(baseRelative, previousPeriodMetric);
+            const update = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric);
             const res = isAlertValueDefined(update.alert);
             expect(res).toEqual(true);
         });
 
         it("isAlertValueDefined, baseRelative, undefined", () => {
-            let update = transformAlertByMetric(baseRelative, previousPeriodMetric);
+            let update = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric);
             update = transformAlertByValue(update, undefined);
             const res = isAlertValueDefined(update.alert);
             expect(res).toEqual(false);
         });
 
         it("isAlertValueDefined, baseComparison", () => {
-            const update = transformAlertByMetric(baseComparison, simpleMetric);
+            const update = transformAlertByMetric(allMetrics, baseComparison, simpleMetric1);
             const res = isAlertValueDefined(update.alert);
             expect(res).toEqual(true);
         });
 
         it("isAlertValueDefined, baseComparison, undefined", () => {
-            let update = transformAlertByMetric(baseComparison, simpleMetric);
+            let update = transformAlertByMetric(allMetrics, baseComparison, simpleMetric1);
             update = transformAlertByValue(update, undefined);
             const res = isAlertValueDefined(update.alert);
             expect(res).toEqual(false);

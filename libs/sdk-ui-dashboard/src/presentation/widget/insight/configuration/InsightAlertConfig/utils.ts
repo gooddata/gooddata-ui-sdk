@@ -107,31 +107,47 @@ const getRelativeOperatorTitle = (
  */
 export const createDefaultAlert = (
     filters: IFilter[],
+    metrics: AlertMetric[],
     measure: AlertMetric,
     notificationChannelId: string,
     currentUser: IAutomationRecipient,
     catalogMeasures: ICatalogMeasure[] = [],
     comparisonOperator: IAlertComparisonOperator = "GREATER_THAN",
 ): IAutomationMetadataObjectDefinition => {
+    const condition: IAutomationAlertCondition = {
+        type: "comparison",
+        left: {
+            id: measure.measure.measure.localIdentifier,
+            format: getMeasureFormat(measure.measure, catalogMeasures),
+            title: getMeasureTitle(measure.measure),
+        },
+        operator: comparisonOperator,
+        right: undefined!,
+    };
+    const execution = {
+        attributes: [],
+        measures: [measure.measure],
+        filters,
+    };
+
     return {
         type: "automation",
         title: getMeasureTitle(measure.measure),
         notificationChannel: notificationChannelId,
         alert: {
-            condition: {
-                type: "comparison",
-                left: {
-                    id: measure.measure.measure.localIdentifier,
-                    format: getMeasureFormat(measure.measure, catalogMeasures),
-                    title: getMeasureTitle(measure.measure),
-                },
-                operator: comparisonOperator,
-                right: undefined!,
-            },
+            condition,
             execution: {
-                attributes: [],
-                measures: [measure.measure],
-                filters,
+                ...execution,
+                ...transformAlertExecutionByMetric(
+                    metrics,
+                    condition,
+                    {
+                        attributes: [],
+                        measures: [measure.measure],
+                        filters,
+                    },
+                    measure,
+                ),
             },
             trigger: {
                 state: "ACTIVE",
@@ -276,9 +292,11 @@ function collectAllMetric(insight: IInsight | null | undefined): {
         case "waterfall":
         case "dependencywheel":
         case "sankey":
-        case "pushpin":
         case "table": {
             return collectAllMetricsDefault(insight);
+        }
+        case "pushpin": {
+            return collectAllMetricsPushpin(insight);
         }
         case "repeater": {
             return collectAllMetricsRepeater(insight);
@@ -309,6 +327,23 @@ function collectAllMetricsDefault(insight: IInsight) {
             ...(insightSecondaryMeasuresBucket ? bucketMeasures(insightSecondaryMeasuresBucket) : []),
             ...(insightTertiaryMeasuresBucket ? bucketMeasures(insightTertiaryMeasuresBucket) : []),
         ],
+    };
+}
+
+function collectAllMetricsPushpin(insight: IInsight) {
+    const insightSizeBucket: IBucket | undefined = insight
+        ? insightBucket(insight, BucketNames.SIZE)
+        : undefined;
+    const insightColorBucket: IBucket | undefined = insight
+        ? insightBucket(insight, BucketNames.COLOR)
+        : undefined;
+
+    return {
+        primaries: [
+            ...(insightSizeBucket ? bucketMeasures(insightSizeBucket) : []),
+            ...(insightColorBucket ? bucketMeasures(insightColorBucket) : []),
+        ],
+        others: [],
     };
 }
 
@@ -399,6 +434,7 @@ export function getAlertRelativeOperator(
 //alerts transformations
 
 export function transformAlertByMetric(
+    metrics: AlertMetric[],
     alert: IAutomationMetadataObject,
     measure: AlertMetric,
     catalogMeasures?: ICatalogMeasure[],
@@ -424,7 +460,12 @@ export function transformAlertByMetric(
             alert: {
                 ...alert.alert!,
                 condition,
-                execution: transformAlertExecutionByMetric(condition, alert.alert!.execution, measure),
+                execution: transformAlertExecutionByMetric(
+                    metrics,
+                    condition,
+                    alert.alert!.execution,
+                    measure,
+                ),
             },
         };
     }
@@ -444,12 +485,13 @@ export function transformAlertByMetric(
         alert: {
             ...alert.alert!,
             condition,
-            execution: transformAlertExecutionByMetric(condition, alert.alert!.execution, measure),
+            execution: transformAlertExecutionByMetric(metrics, condition, alert.alert!.execution, measure),
         },
     };
 }
 
 export function transformAlertByComparisonOperator(
+    metrics: AlertMetric[],
     alert: IAutomationMetadataObject,
     measure: AlertMetric,
     comparisonOperator: IAlertComparisonOperator,
@@ -464,12 +506,13 @@ export function transformAlertByComparisonOperator(
         alert: {
             ...alert.alert!,
             condition,
-            execution: transformAlertExecutionByMetric(condition, alert.alert!.execution, measure),
+            execution: transformAlertExecutionByMetric(metrics, condition, alert.alert!.execution, measure),
         },
     };
 }
 
 export function transformAlertByRelativeOperator(
+    metrics: AlertMetric[],
     alert: IAutomationMetadataObject,
     measure: AlertMetric,
     relativeOperator: IAlertRelativeOperator,
@@ -497,7 +540,7 @@ export function transformAlertByRelativeOperator(
         alert: {
             ...alert.alert!,
             condition,
-            execution: transformAlertExecutionByMetric(condition, alert.alert!.execution, measure),
+            execution: transformAlertExecutionByMetric(metrics, condition, alert.alert!.execution, measure),
         },
     };
 }
@@ -589,6 +632,7 @@ function transformToRelativeCondition(
 }
 
 function transformAlertExecutionByMetric(
+    metrics: AlertMetric[],
     condition: IAutomationAlertCondition,
     execution: IAutomationAlertExecutionDefinition,
     measure: AlertMetric,
@@ -602,14 +646,28 @@ function transformAlertExecutionByMetric(
     if (condition.type === "relative" && periodMeasure) {
         return {
             ...execution,
-            measures: [measure.measure, periodMeasure.measure],
+            measures: [
+                ...collectAllRelatedMeasures(metrics, measure.measure),
+                ...collectAllRelatedMeasures(metrics, periodMeasure.measure),
+            ],
         };
     }
 
     return {
         ...execution,
-        measures: [measure.measure],
+        measures: collectAllRelatedMeasures(metrics, measure.measure),
     };
+}
+
+function collectAllRelatedMeasures(metrics: AlertMetric[], measure: AlertMetric["measure"]) {
+    if (isArithmeticMeasure(measure)) {
+        const included = measure.measure.definition.arithmeticMeasure.measureIdentifiers;
+        const related = metrics.filter((m) => {
+            return included.includes(m.measure.measure.localIdentifier);
+        });
+        return [measure, ...related.map((m) => m.measure)];
+    }
+    return [measure];
 }
 
 function transformRelativeCondition(
