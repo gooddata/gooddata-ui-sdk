@@ -1,5 +1,6 @@
 // (C) 2024 GoodData Corporation
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "react-loading-skeleton/dist/skeleton.css";
 
 @use "input";
 @use "variables" as variables;
