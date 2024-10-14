@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 @use "sass:color";
 @use "variables";
 @use "zIndexes";
@@ -359,6 +359,10 @@
         .drag-info-placeholder-drop-target {
             width: 100%;
         }
+    }
+
+    .drop-target-message {
+        display: block;
     }
 
     &.type-loading {
