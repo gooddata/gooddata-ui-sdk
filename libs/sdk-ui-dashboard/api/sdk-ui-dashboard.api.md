@@ -595,7 +595,7 @@ export interface BackendCapabilitiesState {
 // @beta (undocumented)
 export interface BareUserInteractionPayload {
     // (undocumented)
-    interaction: "kpiAlertDialogClosed" | "poweredByGDLogoClicked" | "filterContextStateReset" | "interactionPanelOpened" | "addInteractionClicked" | AttributeHierarchiesInteractionType | AttributeFilterInteractionType | DateFilterInteractionType | VisualizationSwitcherInteractionType | SavedFilterViewInteractionType;
+    interaction: "kpiAlertDialogClosed" | "poweredByGDLogoClicked" | "filterContextStateReset" | "interactionPanelOpened" | "addInteractionClicked" | AttributeHierarchiesInteractionType | AttributeFilterInteractionType | DateFilterInteractionType | VisualizationSwitcherInteractionType;
 }
 
 // @beta (undocumented)
@@ -6910,7 +6910,18 @@ export interface SaveDashboardPayload {
 }
 
 // @alpha (undocumented)
-export type SavedFilterViewInteractionType = "savedFilterViewPanelOpened";
+export interface SavedFilterViewInteractionData {
+    // (undocumented)
+    countOfSavedViews: number;
+    // (undocumented)
+    type: SavedFilterViewInteractionType;
+}
+
+// @alpha (undocumented)
+export type SavedFilterViewInteractionPayload = UserInteractionPayloadWithDataBase<"savedFilterViewInteraction", SavedFilterViewInteractionData>;
+
+// @alpha (undocumented)
+export type SavedFilterViewInteractionType = "DIALOG_OPENED";
 
 // @alpha
 export interface SaveFilterView extends IDashboardCommand {
@@ -9082,7 +9093,7 @@ export const useDashboardUserInteraction: () => {
     dateFilterInteraction: (eventType: DateFilterInteractionType) => void;
     visualizationSwitcherInteraction: (eventType: VisualizationSwitcherInteractionType) => void;
     automationInteraction: (eventData: AutomationInteractionData) => void;
-    savedFilterViewInteraction: (eventType: SavedFilterViewInteractionType) => void;
+    savedFilterViewInteraction: (eventData: SavedFilterViewInteractionData) => void;
 };
 
 // @internal (undocumented)
@@ -9231,7 +9242,7 @@ export type UseParentFiltersResult = Pick<IAttributeFilterBaseProps, "parentFilt
 export type UserInteractionPayload = UserInteractionPayloadWithData | BareUserInteractionPayload;
 
 // @beta (undocumented)
-export type UserInteractionPayloadWithData = KpiAlertDialogOpenedPayload | DescriptionTooltipOpenedPayload | ShareDialogInteractionPayload | AutomationInteractionPayload;
+export type UserInteractionPayloadWithData = KpiAlertDialogOpenedPayload | DescriptionTooltipOpenedPayload | ShareDialogInteractionPayload | AutomationInteractionPayload | SavedFilterViewInteractionPayload;
 
 // @beta (undocumented)
 export interface UserInteractionPayloadWithDataBase<TType extends string, TData extends object> {

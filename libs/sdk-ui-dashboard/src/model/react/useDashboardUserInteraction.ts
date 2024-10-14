@@ -9,7 +9,7 @@ import {
     VisualizationSwitcherInteractionType,
     DateFilterInteractionType,
     AutomationInteractionData,
-    SavedFilterViewInteractionType,
+    SavedFilterViewInteractionData,
 } from "../events/index.js";
 
 import { useDashboardEventDispatch } from "./useDashboardEventDispatch.js";
@@ -109,8 +109,10 @@ export const useDashboardUserInteraction = () => {
     );
 
     const savedFilterViewInteraction = useCallback(
-        (eventType: SavedFilterViewInteractionType) => {
-            eventDispatch(userInteractionTriggered(eventType));
+        (eventData: SavedFilterViewInteractionData) => {
+            eventDispatch(
+                userInteractionTriggered({ interaction: "savedFilterViewInteraction", data: eventData }),
+            );
         },
         [eventDispatch],
     );
