@@ -150,6 +150,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             setDefaultAlert(
                 createDefaultAlert(
                     widgetFilters,
+                    supportedMeasures,
                     defaultMeasure,
                     defaultNotificationChannelId,
                     metricsAndFacts?.metrics ?? [],
@@ -166,6 +167,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         defaultAlert,
         defaultMeasure,
         defaultNotificationChannelId,
+        supportedMeasures,
         widgetFilters,
         widgetFiltersStatus,
         metricsAndFacts,

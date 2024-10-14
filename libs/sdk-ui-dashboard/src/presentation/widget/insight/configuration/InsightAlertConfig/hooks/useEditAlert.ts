@@ -20,22 +20,25 @@ import {
 import { AlertMetric } from "../../../types.js";
 
 export interface IUseEditAlertProps {
+    metrics: AlertMetric[];
     alert: IAutomationMetadataObject;
     catalogMeasures: ICatalogMeasure[];
     onCreate?: (alert: IAutomationMetadataObjectDefinition) => void;
     onUpdate?: (alert: IAutomationMetadataObject) => void;
 }
 
-export const useEditAlert = ({ alert, onCreate, onUpdate, catalogMeasures }: IUseEditAlertProps) => {
+export const useEditAlert = ({ metrics, alert, onCreate, onUpdate, catalogMeasures }: IUseEditAlertProps) => {
     const [viewMode, setViewMode] = useState<"edit" | "configuration">("edit");
     const [updatedAlert, setUpdatedAlert] = useState<IAutomationMetadataObject>(alert);
 
     const changeMeasure = (measure: AlertMetric) => {
-        setUpdatedAlert((alert) => transformAlertByMetric(alert, measure, catalogMeasures));
+        setUpdatedAlert((alert) => transformAlertByMetric(metrics, alert, measure, catalogMeasures));
     };
 
     const changeComparisonOperator = (measure: AlertMetric, comparisonOperator: IAlertComparisonOperator) => {
-        setUpdatedAlert((alert) => transformAlertByComparisonOperator(alert, measure, comparisonOperator));
+        setUpdatedAlert((alert) =>
+            transformAlertByComparisonOperator(metrics, alert, measure, comparisonOperator),
+        );
     };
 
     const changeRelativeOperator = (
@@ -45,6 +48,7 @@ export const useEditAlert = ({ alert, onCreate, onUpdate, catalogMeasures }: IUs
     ) => {
         setUpdatedAlert((alert) =>
             transformAlertByRelativeOperator(
+                metrics,
                 alert,
                 measure,
                 relativeOperator,
