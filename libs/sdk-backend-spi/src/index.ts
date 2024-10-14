@@ -253,3 +253,5 @@ export type {
     IAutomationsQuery,
     IAutomationsQueryResult,
 } from "./workspace/automations/index.js";
+
+export type { IOrganizationLlmEndpointsService } from "./organization/llmEndpoints/index.js";

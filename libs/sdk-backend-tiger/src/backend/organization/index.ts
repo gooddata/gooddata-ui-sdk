@@ -9,6 +9,7 @@ import {
     IOrganizationUserService,
     IOrganizationPermissionService,
     IOrganizationNotificationChannelService,
+    IOrganizationLlmEndpointsService,
 } from "@gooddata/sdk-backend-spi";
 import { IOrganizationDescriptor, idRef, IOrganizationDescriptorUpdate } from "@gooddata/sdk-model";
 
@@ -19,6 +20,7 @@ import { OrganizationSettingsService } from "./settings.js";
 import { OrganizationUsersService } from "./users.js";
 import { OrganizationPermissionService } from "./permissions.js";
 import { OrganizationNotificationChannelService } from "./notificationChannels.js";
+import { OrganizationLlmEndpointsService } from "./llmEndpoints.js";
 
 export class TigerOrganization implements IOrganization {
     constructor(
@@ -136,6 +138,10 @@ export class TigerOrganization implements IOrganization {
 
     public notificationChannels(): IOrganizationNotificationChannelService {
         return new OrganizationNotificationChannelService(this.authCall);
+    }
+
+    public llmEndpoints(): IOrganizationLlmEndpointsService {
+        return new OrganizationLlmEndpointsService(this.authCall);
     }
 }
 
