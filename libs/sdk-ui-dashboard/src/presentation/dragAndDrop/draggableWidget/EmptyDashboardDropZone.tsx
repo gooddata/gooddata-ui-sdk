@@ -1,5 +1,5 @@
 // (C) 2022-2024 GoodData Corporation
-import React from "react";
+import React, { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { Typography } from "@gooddata/sdk-ui-kit";
@@ -84,8 +84,16 @@ export const EmptyDashboardDropZone: React.FC = () => {
 
     const { gridWidth = 12, gridHeight } = (item as BaseDraggableLayoutItem)?.size || {};
 
-    const message = <FormattedMessage id="newDashboard.dropInsight" />;
     const widgetCategory = widgetCategoryMapping[itemType];
+    const message =
+        widgetCategory === "visualization" || widgetCategory === "kpi" ? (
+            <FormattedMessage id="newDashboard.dropInsight" />
+        ) : (
+            <FormattedMessage
+                id="dropzone.widget.desc"
+                values={{ b: (chunks: ReactNode) => <b>{chunks}</b> }}
+            />
+        );
 
     return (
         <Col
@@ -112,17 +120,8 @@ export const EmptyDashboardDropZone: React.FC = () => {
                     <div className="drop-target-inner">
                         <Typography
                             tagName="p"
-                            className="drop-target-message visualization-switcher-drop-target"
+                            className={cx("drop-target-message", `${widgetCategory}-drop-target`)}
                         >
-                            {message}
-                        </Typography>
-                        <Typography tagName="p" className="drop-target-message richText-drop-target">
-                            {message}
-                        </Typography>
-                        <Typography tagName="p" className="drop-target-message kpi-drop-target">
-                            {message}
-                        </Typography>
-                        <Typography tagName="p" className="drop-target-message visualization-drop-target">
                             {message}
                         </Typography>
                     </div>

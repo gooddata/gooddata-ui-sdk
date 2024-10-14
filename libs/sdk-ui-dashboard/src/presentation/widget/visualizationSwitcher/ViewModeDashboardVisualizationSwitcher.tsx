@@ -1,8 +1,6 @@
 // (C) 2024 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
-import { Icon, Typography } from "@gooddata/sdk-ui-kit";
-import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import cx from "classnames";
 
 import { IDashboardVisualizationSwitcherProps } from "./types.js";
@@ -71,18 +69,7 @@ export const ViewModeDashboardVisualizationSwitcher: React.FC<IDashboardVisualiz
 };
 
 export const ViewModeDashboardVisualizationSwitcherEmpty: React.FC = () => {
-    const theme = useTheme();
-    const intl = useIntl();
-    const emptyContentIconColor = theme?.palette?.complementary?.c7 ?? "#6D7680";
-
-    return (
-        <div className="gd-visualization-switcher-widget-empty-content">
-            <Icon.VisualizationSwitcher width={32} height={38} color={emptyContentIconColor} />
-            <Typography tagName="p">
-                {intl.formatMessage({ id: "visualizationSwitcher.emptyContent" })}
-            </Typography>
-        </div>
-    );
+    return <div className="gd-visualization-switcher-widget-empty-content" />;
 };
 
 export interface IViewModeDashboardVisualizationSwitcherContentProps

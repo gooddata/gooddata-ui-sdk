@@ -32,6 +32,7 @@
         display: inline-block;
     }
     .left-section {
+        cursor: pointer;
         padding: 4px;
         flex: 0 1 auto;
         &:not(.is-active):hover path {
@@ -62,12 +63,16 @@
         padding: 4px;
         justify-content: center;
         align-items: center;
-        &:not(.is-disabled):hover path {
-            fill: kit-variables.$gd-color-text;
+        &:not(.is-disabled) {
+            cursor: pointer;
+            &:hover path {
+                fill: kit-variables.$gd-color-text;
+            }
         }
     }
 
     .right-section {
+        cursor: pointer;
         display: flex;
         padding: 4px;
         justify-content: center;
