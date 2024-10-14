@@ -3,7 +3,7 @@ import { IInsight, IInsightWidget, ScreenSize } from "@gooddata/sdk-model";
 
 export interface IInsightWidgetDescriptionTriggerProps {
     widget: IInsightWidget;
-    insight: IInsight;
+    insight?: IInsight;
     screen: ScreenSize;
 }
 

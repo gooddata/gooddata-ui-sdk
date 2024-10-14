@@ -101,7 +101,7 @@ export type IInsightMenuItem = IInsightMenuItemButton | IInsightMenuItemSeparato
  */
 export interface IDashboardInsightMenuButtonProps {
     widget: IInsightWidget;
-    insight: IInsight;
+    insight?: IInsight;
     isOpen: boolean;
     onClick: () => void;
     items: IInsightMenuItem[];
@@ -112,7 +112,7 @@ export interface IDashboardInsightMenuButtonProps {
  */
 export interface IDashboardInsightMenuProps {
     widget: IInsightWidget;
-    insight: IInsight;
+    insight?: IInsight;
     isOpen: boolean;
     onClose: () => void;
     items: IInsightMenuItem[];
@@ -123,7 +123,7 @@ export interface IDashboardInsightMenuProps {
  */
 export interface IDashboardInsightMenuTitleProps {
     widget: IInsightWidget;
-    insight: IInsight;
+    insight?: IInsight;
     renderMode: RenderMode;
 }
 

@@ -1,22 +1,17 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React from "react";
 import { useIntl } from "react-intl";
 import { ParameterDetail } from "./ParameterDetail.js";
-import {
-    selectSelectedWidgetRef,
-    selectWidgetByRef,
-    useDashboardSelector,
-    isTemporaryIdentity,
-} from "../../../../../model/index.js";
-import { isInsightWidget } from "@gooddata/sdk-model";
+import { selectWidgetByRef, useDashboardSelector, isTemporaryIdentity } from "../../../../../model/index.js";
+import { ObjRef, isInsightWidget } from "@gooddata/sdk-model";
 
 interface IdentifierDetailProps {
     title: string;
+    widgetRef: ObjRef;
 }
 
-export const WidgetIdParameterDetail: React.FC<IdentifierDetailProps> = ({ title }) => {
+export const WidgetIdParameterDetail: React.FC<IdentifierDetailProps> = ({ title, widgetRef }) => {
     const intl = useIntl();
-    const widgetRef = useDashboardSelector(selectSelectedWidgetRef);
     const widget = useDashboardSelector(selectWidgetByRef(widgetRef));
 
     let values: string[] = [];

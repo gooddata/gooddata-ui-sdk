@@ -41,10 +41,10 @@ import { DeleteScheduleConfirmDialog } from "../DefaultScheduledEmailManagementD
 import { DashboardAttachments } from "./components/Attachments/DashboardAttachments.js";
 import { WidgetAttachments } from "./components/Attachments/WidgetAttachments.js";
 import { useFiltersForDashboardScheduledExportInfo } from "./hooks/useFiltersForDashboardScheduledExportInfo.js";
+import { DEFAULT_MAX_RECIPIENTS } from "./constants.js";
 
 const MAX_MESSAGE_LENGTH = 200;
 const MAX_SUBJECT_LENGTH = 200;
-const DEFAULT_MAX_RECIPIENTS = "10";
 const DEFAULT_MIN_RECURRENCE_MINUTES = "60";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);

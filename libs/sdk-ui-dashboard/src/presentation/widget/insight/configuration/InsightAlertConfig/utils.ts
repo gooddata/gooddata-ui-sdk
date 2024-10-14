@@ -12,6 +12,7 @@ import {
     IAutomationAlertRelativeCondition,
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
+    IAutomationRecipient,
     IBucket,
     ICatalogMeasure,
     IFilter,
@@ -109,6 +110,7 @@ export const createDefaultAlert = (
     metrics: AlertMetric[],
     measure: AlertMetric,
     notificationChannelId: string,
+    currentUser: IAutomationRecipient,
     catalogMeasures: ICatalogMeasure[] = [],
     comparisonOperator: IAlertComparisonOperator = "GREATER_THAN",
 ): IAutomationMetadataObjectDefinition => {
@@ -151,6 +153,7 @@ export const createDefaultAlert = (
                 state: "ACTIVE",
             },
         },
+        recipients: [currentUser],
     };
 };
 
@@ -390,6 +393,10 @@ export function isAlertValueDefined(alert?: IAutomationAlert): boolean {
     return typeof alert?.condition?.right !== "undefined";
 }
 
+export function isAlertRecipientsValid(alert?: IAutomationMetadataObject): boolean {
+    return !!alert?.recipients?.length;
+}
+
 export function getAlertThreshold(alert?: IAutomationAlert): number | undefined {
     if (alert?.condition?.type === "relative") {
         return alert.condition.threshold;
@@ -569,9 +576,11 @@ export function transformAlertByValue(
 export function transformAlertByDestination(
     alert: IAutomationMetadataObject,
     notificationChannel: string,
+    recipients?: IAutomationRecipient[],
 ): IAutomationMetadataObject {
     return {
         ...alert,
+        ...(recipients ? { recipients } : {}),
         notificationChannel,
     };
 }

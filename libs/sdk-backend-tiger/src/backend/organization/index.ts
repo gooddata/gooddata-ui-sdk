@@ -71,10 +71,13 @@ export class TigerOrganization implements IOrganization {
         };
     }
 
-    public async updateDescriptor(descriptor: IOrganizationDescriptorUpdate): Promise<void> {
-        await this.authCall((client) =>
+    public async updateDescriptor(
+        descriptor: IOrganizationDescriptorUpdate,
+    ): Promise<IOrganizationDescriptor> {
+        const result = await this.authCall((client) =>
             client.entities.patchEntityOrganizations({
                 id: this.organizationId,
+                include: ["bootstrapUser", "bootstrapUserGroup"],
                 jsonApiOrganizationPatchDocument: {
                     data: {
                         id: this.organizationId,
@@ -90,6 +93,25 @@ export class TigerOrganization implements IOrganization {
                 },
             }),
         );
+
+        const resultData = result.data.data;
+        // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+        const organizationName = resultData.attributes?.name!;
+        // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+        const bootstrapUser = resultData.relationships?.bootstrapUser?.data!;
+        // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+        const bootstrapUserGroup = resultData.relationships?.bootstrapUserGroup?.data!;
+        const earlyAccess = resultData.attributes?.earlyAccess ?? undefined;
+        const earlyAccessValues = resultData.attributes?.earlyAccessValues ?? undefined;
+
+        return {
+            id: this.organizationId,
+            title: organizationName,
+            bootstrapUser: idRef(bootstrapUser.id, bootstrapUser.type),
+            bootstrapUserGroup: idRef(bootstrapUserGroup.id, bootstrapUserGroup.type),
+            earlyAccess,
+            earlyAccessValues,
+        };
     }
 
     public securitySettings(): ISecuritySettingsService {

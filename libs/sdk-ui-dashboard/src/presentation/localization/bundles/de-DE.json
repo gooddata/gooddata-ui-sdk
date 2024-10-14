@@ -620,5 +620,11 @@
     "insightAlert.config.filters.info": "Warnungen berücksichtigen die Dashboard-Filter, die zum Zeitpunkt ihrer Erstellung festgelegt wurden.{spacer}Um den für den Vergleich verwendeten Zeitraum zu ändern, passen Sie den Datumsfilter an.",
     "insightAlert.config.compare_with": "Vergleichen mit",
     "insightAlert.config.compare_with_sp": "Derselbe Zeitraum im vorherigen Jahr",
-    "insightAlert.config.compare_with_pp": "Vorheriger Zeitraum"
+    "insightAlert.config.compare_with_pp": "Vorheriger Zeitraum",
+    "widget.error.missing_insight.message": "Keine Visualisierung verfügbar",
+    "widget.error.missing_insight.description": "Diese Visualisierung wurde entfernt oder ist nicht mehr zugänglich. Bitte wenden Sie sich an Ihren Administrator oder entfernen Sie ihn aus dem Dashboard.",
+    "visualizationSwitcher.configurationPanel.remove.from.switcher": "Aus dem Umschalter entfernen",
+    "visualizationSwitcher.list.menu.move.up": "Nach oben bewegen",
+    "visualizationSwitcher.list.menu.move.down": "Nach unten bewegen",
+    "visualizationSwitcher.list.menu.remove": "Entfernen"
 }

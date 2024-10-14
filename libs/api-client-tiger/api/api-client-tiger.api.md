@@ -75,6 +75,12 @@ export class ActionsApi extends MetadataBaseApi implements ActionsApiInterface {
 }
 
 // @public
+export interface ActionsApiAiChatHistoryRequest {
+    readonly chatHistoryRequest: ChatHistoryRequest;
+    readonly workspaceId: string;
+}
+
+// @public
 export interface ActionsApiAiChatRequest {
     readonly chatRequest: ChatRequest;
     readonly workspaceId: string;
@@ -659,6 +665,7 @@ export interface AfmAbsoluteDateFilterAbsoluteDateFilter {
 // @public
 export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApiInterface {
     aiChat(requestParameters: ActionsApiAiChatRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ChatResult, any>>;
+    aiChatHistory(requestParameters: ActionsApiAiChatHistoryRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<ChatHistoryResult, any>>;
     aiRoute(requestParameters: ActionsApiAiRouteRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<RouteResult, any>>;
     aiSearch(requestParameters: ActionsApiAiSearchRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<SearchResult, any>>;
     anomalyDetection(requestParameters: ActionsApiAnomalyDetectionRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<SmartFunctionResponse, any>>;
@@ -681,6 +688,7 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
 // @public
 export const AfmActionsApiAxiosParamCreator: (configuration?: LabelElementsConfiguration) => {
     aiChat: (workspaceId: string, chatRequest: ChatRequest, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
+    aiChatHistory: (workspaceId: string, chatHistoryRequest: ChatHistoryRequest, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     aiRoute: (workspaceId: string, routeRequest: RouteRequest, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     aiSearch: (workspaceId: string, searchRequest: SearchRequest, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
     anomalyDetection: (workspaceId: string, resultId: string, anomalyDetectionRequest: AnomalyDetectionRequest, skipCache?: boolean, options?: AxiosRequestConfig) => Promise<LabelElementsRequestArgs>;
@@ -703,6 +711,7 @@ export const AfmActionsApiAxiosParamCreator: (configuration?: LabelElementsConfi
 // @public
 export const AfmActionsApiFactory: (configuration?: LabelElementsConfiguration, basePath?: string, axios?: AxiosInstance) => {
     aiChat(requestParameters: ActionsApiAiChatRequest, options?: AxiosRequestConfig): AxiosPromise<ChatResult>;
+    aiChatHistory(requestParameters: ActionsApiAiChatHistoryRequest, options?: AxiosRequestConfig): AxiosPromise<ChatHistoryResult>;
     aiRoute(requestParameters: ActionsApiAiRouteRequest, options?: AxiosRequestConfig): AxiosPromise<RouteResult>;
     aiSearch(requestParameters: ActionsApiAiSearchRequest, options?: AxiosRequestConfig): AxiosPromise<SearchResult>;
     anomalyDetection(requestParameters: ActionsApiAnomalyDetectionRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
@@ -725,6 +734,7 @@ export const AfmActionsApiFactory: (configuration?: LabelElementsConfiguration, 
 // @public
 export const AfmActionsApiFp: (configuration?: LabelElementsConfiguration) => {
     aiChat(workspaceId: string, chatRequest: ChatRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatResult>>;
+    aiChatHistory(workspaceId: string, chatHistoryRequest: ChatHistoryRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatHistoryResult>>;
     aiRoute(workspaceId: string, routeRequest: RouteRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RouteResult>>;
     aiSearch(workspaceId: string, searchRequest: SearchRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SearchResult>>;
     anomalyDetection(workspaceId: string, resultId: string, anomalyDetectionRequest: AnomalyDetectionRequest, skipCache?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SmartFunctionResponse>>;
@@ -747,6 +757,7 @@ export const AfmActionsApiFp: (configuration?: LabelElementsConfiguration) => {
 // @public
 export interface AfmActionsApiInterface {
     aiChat(requestParameters: ActionsApiAiChatRequest, options?: AxiosRequestConfig): AxiosPromise<ChatResult>;
+    aiChatHistory(requestParameters: ActionsApiAiChatHistoryRequest, options?: AxiosRequestConfig): AxiosPromise<ChatHistoryResult>;
     aiRoute(requestParameters: ActionsApiAiRouteRequest, options?: AxiosRequestConfig): AxiosPromise<RouteResult>;
     aiSearch(requestParameters: ActionsApiAiSearchRequest, options?: AxiosRequestConfig): AxiosPromise<SearchResult>;
     anomalyDetection(requestParameters: ActionsApiAnomalyDetectionRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
@@ -2236,30 +2247,49 @@ export interface CacheUsageData {
 }
 
 // @public
-export interface ChatInteraction {
-    content: Array<CreatedVisualizationInteractionWithContext | FoundObjectInteractionWithContext | TextInteractionWithContext>;
-    role: ChatInteractionRoleEnum;
+export interface ChatHistoryInteraction {
+    chatHistoryInteractionId: number;
+    createdVisualizations?: CreatedVisualizations;
+    foundObjects?: FoundObjects;
+    interactionFinished: boolean;
+    question: string;
+    routing: RouteResult;
+    textResponse?: string;
+    threadIdSuffix?: string;
+}
+
+// @public
+export interface ChatHistoryRequest {
+    chatHistoryInteractionId?: number;
+    reset?: boolean;
+    threadIdSuffix?: string;
+    userFeedback?: ChatHistoryRequestUserFeedbackEnum;
 }
 
 // @public (undocumented)
-export const ChatInteractionRoleEnum: {
-    readonly USER: "USER";
-    readonly AI: "AI";
+export const ChatHistoryRequestUserFeedbackEnum: {
+    readonly POSITIVE: "POSITIVE";
+    readonly NEGATIVE: "NEGATIVE";
+    readonly NONE: "NONE";
 };
 
 // @public (undocumented)
-export type ChatInteractionRoleEnum = typeof ChatInteractionRoleEnum[keyof typeof ChatInteractionRoleEnum];
+export type ChatHistoryRequestUserFeedbackEnum = typeof ChatHistoryRequestUserFeedbackEnum[keyof typeof ChatHistoryRequestUserFeedbackEnum];
+
+// @public
+export interface ChatHistoryResult {
+    interactions: Array<ChatHistoryInteraction>;
+}
 
 // @public
 export interface ChatRequest {
-    chatHistory?: Array<ChatInteraction>;
     limitCreate?: number;
     limitCreateContext?: number;
     limitSearch?: number;
     question: string;
     relevantScoreThreshold?: number;
-    routeScoreThreshold?: number;
     searchScoreThreshold?: number;
+    threadIdSuffix?: string;
     titleToDescriptorRatio?: number;
     userContext?: UserContext;
 }
@@ -2268,8 +2298,9 @@ export interface ChatRequest {
 export interface ChatResult {
     createdVisualizations?: CreatedVisualizations;
     foundObjects?: FoundObjects;
-    invalidQuestion: boolean;
-    useCases: Array<RouteResultObject>;
+    routing: RouteResult;
+    textResponse?: string;
+    threadIdSuffix?: string;
 }
 
 // @public
@@ -2609,23 +2640,6 @@ export interface CreatedVisualization {
     title: string;
     visualizationType: CreatedVisualizationVisualizationTypeEnum;
 }
-
-// @public
-export interface CreatedVisualizationInteractionWithContext {
-    createdVisualization: CreatedVisualization;
-    includeToChatContext?: boolean;
-    userFeedback?: CreatedVisualizationInteractionWithContextUserFeedbackEnum;
-}
-
-// @public (undocumented)
-export const CreatedVisualizationInteractionWithContextUserFeedbackEnum: {
-    readonly POSITIVE: "POSITIVE";
-    readonly NEGATIVE: "NEGATIVE";
-    readonly NONE: "NONE";
-};
-
-// @public (undocumented)
-export type CreatedVisualizationInteractionWithContextUserFeedbackEnum = typeof CreatedVisualizationInteractionWithContextUserFeedbackEnum[keyof typeof CreatedVisualizationInteractionWithContextUserFeedbackEnum];
 
 // @public
 export interface CreatedVisualizations {
@@ -7773,23 +7787,6 @@ export interface ForecastResult {
     prediction: Array<number>;
     upperBound: Array<number>;
 }
-
-// @public
-export interface FoundObjectInteractionWithContext {
-    foundObject: SearchResultObject;
-    includeToChatContext?: boolean;
-    userFeedback?: FoundObjectInteractionWithContextUserFeedbackEnum;
-}
-
-// @public (undocumented)
-export const FoundObjectInteractionWithContextUserFeedbackEnum: {
-    readonly POSITIVE: "POSITIVE";
-    readonly NEGATIVE: "NEGATIVE";
-    readonly NONE: "NONE";
-};
-
-// @public (undocumented)
-export type FoundObjectInteractionWithContextUserFeedbackEnum = typeof FoundObjectInteractionWithContextUserFeedbackEnum[keyof typeof FoundObjectInteractionWithContextUserFeedbackEnum];
 
 // @public
 export interface FoundObjects {
@@ -16691,15 +16688,23 @@ export interface RouteRequest {
 
 // @public
 export interface RouteResult {
-    results: Array<RouteResultObject>;
+    reasoning: string;
+    useCase: RouteResultUseCaseEnum;
 }
 
-// @public
-export interface RouteResultObject {
-    exampleDescription: string;
-    score: number;
-    useCase: string;
-}
+// @public (undocumented)
+export const RouteResultUseCaseEnum: {
+    readonly SEARCH_ALL: "SEARCH_ALL";
+    readonly SEARCH_VISUALIZATIONS: "SEARCH_VISUALIZATIONS";
+    readonly SEARCH_DASHBOARDS: "SEARCH_DASHBOARDS";
+    readonly CREATE_VISUALIZATION: "CREATE_VISUALIZATION";
+    readonly EXTEND_VISUALIZATION: "EXTEND_VISUALIZATION";
+    readonly GENERAL: "GENERAL";
+    readonly INVALID: "INVALID";
+};
+
+// @public (undocumented)
+export type RouteResultUseCaseEnum = typeof RouteResultUseCaseEnum[keyof typeof RouteResultUseCaseEnum];
 
 // @public
 export interface RsaSpecification {
@@ -16940,13 +16945,13 @@ export interface SearchResult {
 // @public
 export interface SearchResultObject {
     createdAt?: string;
-    description: string;
+    description?: string;
     id: string;
     modifiedAt?: string;
-    score: number;
-    scoreDescriptor: number;
-    scoreExactMatch: number;
-    scoreTitle: number;
+    score?: number;
+    scoreDescriptor?: number;
+    scoreExactMatch?: number;
+    scoreTitle?: number;
     tags?: Array<string>;
     title: string;
     type: string;
@@ -17301,23 +17306,6 @@ export interface TestResponse {
     successful: boolean;
 }
 
-// @public
-export interface TextInteractionWithContext {
-    includeToChatContext?: boolean;
-    text: string;
-    userFeedback?: TextInteractionWithContextUserFeedbackEnum;
-}
-
-// @public (undocumented)
-export const TextInteractionWithContextUserFeedbackEnum: {
-    readonly POSITIVE: "POSITIVE";
-    readonly NEGATIVE: "NEGATIVE";
-    readonly NONE: "NONE";
-};
-
-// @public (undocumented)
-export type TextInteractionWithContextUserFeedbackEnum = typeof TextInteractionWithContextUserFeedbackEnum[keyof typeof TextInteractionWithContextUserFeedbackEnum];
-
 // @public (undocumented)
 export const tigerActionsClientFactory: (axios: AxiosInstance) => ActionsApiInterface;
 
@@ -17343,7 +17331,7 @@ export const tigerExecutionResultClientFactory: (axios: AxiosInstance) => Pick<A
 export const tigerExportClientFactory: (axios: AxiosInstance) => ExportActionsApiInterface;
 
 // @public
-export const tigerGenAIClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "aiSearch" | "aiChat">;
+export const tigerGenAIClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "aiSearch" | "aiChat" | "aiChatHistory" | "aiRoute">;
 
 // @public (undocumented)
 export const tigerLabelElementsClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "computeLabelElementsPost">;

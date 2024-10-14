@@ -26,7 +26,7 @@ export class OrganizationDecorator implements IOrganization {
         return this.decorated.getDescriptor(includeAdditionalDetails);
     }
 
-    public updateDescriptor(descriptor: IOrganizationDescriptorUpdate): Promise<void> {
+    public updateDescriptor(descriptor: IOrganizationDescriptorUpdate): Promise<IOrganizationDescriptor> {
         return this.decorated.updateDescriptor(descriptor);
     }
 

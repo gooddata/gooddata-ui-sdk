@@ -2,18 +2,13 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { RootState } from "../types.js";
 import { messagesSliceName } from "./messagesSlice.js";
-import { isSystemTextMessage, Message, VisibleMessage } from "../../model.js";
+import { Message } from "../../model.js";
 
 const messagesSliceSelector = (state: RootState) => state[messagesSliceName];
 
-const messagesOrderSelector = createSelector(messagesSliceSelector, (state) => state.messageOrder);
-
-const messagesSelector = createSelector(messagesSliceSelector, (state) => state.messages);
-
-export const allMessagesSelector: (state: RootState) => Message[] = createSelector(
-    messagesOrderSelector,
-    messagesSelector,
-    (order, messages) => order.map((id) => messages[id]),
+export const messagesSelector: (state: RootState) => Message[] = createSelector(
+    messagesSliceSelector,
+    (state) => state.messageOrder.map((id) => state.messages[id]),
 );
 
 export const isVerboseSelector: (state: RootState) => boolean = createSelector(
@@ -21,25 +16,25 @@ export const isVerboseSelector: (state: RootState) => boolean = createSelector(
     (state) => state.verbose,
 );
 
-export const visibleMessagesSelector: (state: RootState) => VisibleMessage[] = createSelector(
-    allMessagesSelector,
-    isVerboseSelector,
-    (messages, verbose) => {
-        if (verbose) {
-            return messages;
-        }
-
-        return messages.filter((message) => !isSystemTextMessage(message));
-    },
-);
-
 export const lastMessageSelector: (state: RootState) => Message | undefined = createSelector(
-    messagesOrderSelector,
-    messagesSelector,
-    (order, messages) => messages[order[order.length - 1]],
+    messagesSliceSelector,
+    (state) => state.messages[state.messageOrder[state.messageOrder.length - 1]],
 );
 
 export const hasMessagesSelector: (state: RootState) => boolean = createSelector(
-    messagesOrderSelector,
-    (order) => order.length > 0,
+    messagesSliceSelector,
+    (state) => state.messageOrder.length > 0,
+);
+
+export const asyncProcessSelector: (state: RootState) => RootState[typeof messagesSliceName]["asyncProcess"] =
+    createSelector(messagesSliceSelector, (state) => state.asyncProcess);
+
+export const globalErrorSelector: (state: RootState) => string | undefined = createSelector(
+    messagesSliceSelector,
+    (state) => state.globalError,
+);
+
+export const lastMessageIdSelector: (state: RootState) => number | undefined = createSelector(
+    messagesSelector,
+    (messages) => [...messages].reverse().find((message) => !!message.id)?.id,
 );

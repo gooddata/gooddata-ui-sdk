@@ -191,6 +191,15 @@
     color: kit-variables.$gd-color-state-blank;
 }
 
+.gd-edit-alert__recipients {
+    flex-direction: column;
+
+    > label {
+        font-size: 12px;
+        line-height: 21px;
+    }
+}
+
 //
 // Edit alert configuration
 //

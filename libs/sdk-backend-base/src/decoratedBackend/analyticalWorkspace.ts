@@ -42,7 +42,7 @@ export class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
         return this.decorated.getDescriptor(includeParentPrefixes);
     }
 
-    public updateDescriptor(descriptor: IWorkspaceDescriptorUpdate): Promise<void> {
+    public updateDescriptor(descriptor: IWorkspaceDescriptorUpdate): Promise<IWorkspaceDescriptor> {
         return this.decorated.updateDescriptor(descriptor);
     }
 

@@ -196,7 +196,7 @@ function recordedWorkspace(
         async getDescriptor(): Promise<IWorkspaceDescriptor> {
             return recordedDescriptor(this.workspace, implConfig);
         },
-        async updateDescriptor(): Promise<void> {
+        async updateDescriptor(): Promise<IWorkspaceDescriptor> {
             throw new NotSupported("not supported");
         },
         getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {
@@ -364,8 +364,11 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 title: "mock organization",
             });
         },
-        updateDescriptor(): Promise<void> {
-            return Promise.resolve();
+        updateDescriptor(): Promise<IOrganizationDescriptor> {
+            return Promise.resolve({
+                id: organizationId,
+                title: "mock organization",
+            });
         },
         securitySettings(): ISecuritySettingsService {
             return {

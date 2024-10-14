@@ -73,6 +73,7 @@ function getCell(
     rowIndex: number,
     rowHeader: SliceCol | SliceMeasureCol | MixedHeadersCol | MixedValuesCol,
     rowHeaderIndex: number,
+    tableDescriptor: TableDescriptor,
     intl: IntlShape,
 ): {
     field: string;
@@ -87,11 +88,20 @@ function getCell(
         isSubtotal: false,
     };
 
-    if (isResultAttributeHeader(rowHeaderDataItem) || isResultMeasureHeader(rowHeaderDataItem)) {
+    if (isResultAttributeHeader(rowHeaderDataItem)) {
         return {
             ...cell,
             value: valueWithEmptyHandling(
                 getMappingHeaderFormattedName(rowHeaderDataItem),
+                emptyHeaderTitleFromIntl(intl),
+            ),
+        };
+    } else if (isResultMeasureHeader(rowHeaderDataItem)) {
+        const measureDescriptor = tableDescriptor.getMeasures()[rowHeaderDataItem.measureHeaderItem.order];
+        return {
+            ...cell,
+            value: valueWithEmptyHandling(
+                measureDescriptor.measureHeaderItem.name,
                 emptyHeaderTitleFromIntl(intl),
             ),
         };
@@ -140,6 +150,7 @@ export function getRow(
             rowIndex,
             rowHeader,
             rowHeaderIndex,
+            tableDescriptor,
             intl,
         );
         if (isSubtotal) {
@@ -160,6 +171,7 @@ export function getRow(
             rowIndex,
             rowHeader,
             rowHeader.index,
+            tableDescriptor,
             intl,
         );
 

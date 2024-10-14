@@ -60,8 +60,10 @@ import { IExportDefinitionMetadataObject } from '@gooddata/sdk-model';
 import { IExportDefinitionMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { IFilter } from '@gooddata/sdk-model';
 import { IFilterContextDefinition } from '@gooddata/sdk-model';
-import { IGenAIChatEvaluation } from '@gooddata/sdk-model';
 import { IGenAIChatInteraction } from '@gooddata/sdk-model';
+import { IGenAIChatRouting } from '@gooddata/sdk-model';
+import { IGenAICreatedVisualizations } from '@gooddata/sdk-model';
+import { IGenAIFoundObjects } from '@gooddata/sdk-model';
 import { IGenAIUserContext } from '@gooddata/sdk-model';
 import { IGranularAccessGrantee } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
@@ -106,6 +108,7 @@ import { IWidgetAlert } from '@gooddata/sdk-model';
 import { IWidgetAlertDefinition } from '@gooddata/sdk-model';
 import { IWidgetDefinition } from '@gooddata/sdk-model';
 import { IWorkspaceDataFilter } from '@gooddata/sdk-model';
+import { IWorkspaceDataFilterDefinition } from '@gooddata/sdk-model';
 import { IWorkspacePermissionAssignment } from '@gooddata/sdk-model';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { IWorkspaceUser } from '@gooddata/sdk-model';
@@ -248,7 +251,7 @@ export interface IAnalyticalWorkspace {
     permissions(): IWorkspacePermissionsService;
     settings(): IWorkspaceSettingsService;
     styling(): IWorkspaceStylingService;
-    updateDescriptor(descriptor: IWorkspaceDescriptorUpdate): Promise<void>;
+    updateDescriptor(descriptor: IWorkspaceDescriptorUpdate): Promise<IWorkspaceDescriptor>;
     userGroups(): IWorkspaceUserGroupsQuery;
     users(): IWorkspaceUsersQuery;
     // (undocumented)
@@ -397,16 +400,29 @@ export interface ICancelable<T> {
     withSignal(signal: AbortSignal): T;
 }
 
-// @alpha
+// @beta
 export interface IChatThread {
+    loadHistory(fromInteractionId?: number, options?: {
+        signal?: AbortSignal;
+    }): Promise<IChatThreadHistory>;
+    query(userMessage: string): IChatThreadQuery;
+    reset(): Promise<void>;
+}
+
+// @beta
+export interface IChatThreadHistory {
+    // (undocumented)
+    interactions: IGenAIChatInteraction[];
+}
+
+// @beta
+export interface IChatThreadQuery {
     query(options?: {
         signal?: AbortSignal;
     }): Promise<IGenAIChatEvaluation>;
-    withChatHistory(chatHistory: IGenAIChatInteraction[]): IChatThread;
-    withCreateLimit(createLimit: number): IChatThread;
-    withQuestion(question: string): IChatThread;
-    withSearchLimit(searchLimit: number): IChatThread;
-    withUserContext(userContext: IGenAIUserContext): IChatThread;
+    withCreateLimit(createLimit: number): IChatThreadQuery;
+    withSearchLimit(searchLimit: number): IChatThreadQuery;
+    withUserContext(userContext: IGenAIUserContext): IChatThreadQuery;
 }
 
 // @alpha (undocumented)
@@ -463,8 +479,13 @@ export interface IDashboardWithReferences {
 
 // @alpha
 export interface IDataFiltersService {
-    // (undocumented)
+    createDataFilter(newDataFilter: IWorkspaceDataFilterDefinition): Promise<IWorkspaceDataFilter>;
+    deleteDataFilter(ref: ObjRef): Promise<void>;
+    getDataFilters(): Promise<IWorkspaceDataFilter[]>;
+    // @deprecated
     getWorkspaceDataFilters(): Promise<IWorkspaceDataFilter[]>;
+    updateDataFilter(updatedDataFilter: IWorkspaceDataFilter): Promise<IWorkspaceDataFilter>;
+    updateDataFilterValue(dataFilter: ObjRef, value: string): Promise<void>;
 }
 
 // @alpha
@@ -724,6 +745,20 @@ export interface IForecastView {
 }
 
 // @beta
+export interface IGenAIChatEvaluation {
+    // (undocumented)
+    chatHistoryThreadId?: string;
+    // (undocumented)
+    createdVisualizations?: IGenAICreatedVisualizations;
+    // (undocumented)
+    foundObjects?: IGenAIFoundObjects;
+    // (undocumented)
+    routing: IGenAIChatRouting;
+    // (undocumented)
+    textResponse?: string;
+}
+
+// @beta
 export interface IGenAIService {
     getChatThread(): IChatThread;
     getSemanticSearchQuery(): ISemanticSearchQuery;
@@ -850,7 +885,7 @@ export interface IOrganization {
     securitySettings(): ISecuritySettingsService;
     settings(): IOrganizationSettingsService;
     styling(): IOrganizationStylingService;
-    updateDescriptor(descriptor: IOrganizationDescriptorUpdate): Promise<void>;
+    updateDescriptor(descriptor: IOrganizationDescriptorUpdate): Promise<IOrganizationDescriptor>;
     users(): IOrganizationUserService;
 }
 

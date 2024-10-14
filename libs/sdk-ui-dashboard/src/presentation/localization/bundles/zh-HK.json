@@ -620,5 +620,11 @@
     "insightAlert.config.filters.info": "警報遵循喺創建時設置嘅控制面板篩選器。{spacer}要修改用于比較嘅時間段，請調整日期篩選條件。",
     "insightAlert.config.compare_with": "相比",
     "insightAlert.config.compare_with_sp": "上年同期",
-    "insightAlert.config.compare_with_pp": "上一期"
+    "insightAlert.config.compare_with_pp": "上一期",
+    "widget.error.missing_insight.message": "無可用的可視化",
+    "widget.error.missing_insight.description": "此可視化已被刪除或無法再訪問。 請聯繫您的管理員或將其從控制面板中刪除。",
+    "visualizationSwitcher.configurationPanel.remove.from.switcher": "從切換器中刪除",
+    "visualizationSwitcher.list.menu.move.up": "上升",
+    "visualizationSwitcher.list.menu.move.down": "下移",
+    "visualizationSwitcher.list.menu.remove": "刪除"
 }

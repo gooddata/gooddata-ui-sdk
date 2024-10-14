@@ -23,7 +23,7 @@ import { useExportDialogContext } from "../../dashboardContexts/index.js";
 export const useInsightExport = (config: {
     title: string;
     widgetRef: ObjRef;
-    insight: IInsightDefinition;
+    insight?: IInsightDefinition;
 }) => {
     const { title, widgetRef, insight } = config;
     const [isExporting, setIsExporting] = useState(false);
@@ -46,7 +46,9 @@ export const useInsightExport = (config: {
     );
 
     const settings = useDashboardSelector(selectSettings);
-    const isInsightExportable = getInsightVisualizationMeta(insight, settings).supportsExport;
+    const isInsightExportable = insight
+        ? getInsightVisualizationMeta(insight, settings).supportsExport
+        : false;
     const isExportableToCsv = useDashboardSelector(selectIsExecutionResultExportableToCsvByRef(widgetRef));
     const isExportableToXlsx = useDashboardSelector(selectIsExecutionResultExportableToXlsxByRef(widgetRef));
 

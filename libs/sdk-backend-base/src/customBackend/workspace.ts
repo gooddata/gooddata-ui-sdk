@@ -43,7 +43,7 @@ export class CustomWorkspace implements IAnalyticalWorkspace {
         throw new NotSupported("getting workspace descriptor is not supported");
     }
 
-    public updateDescriptor(): Promise<void> {
+    public updateDescriptor(): Promise<IWorkspaceDescriptor> {
         throw new NotSupported("updating workspace descriptor is not supported");
     }
 

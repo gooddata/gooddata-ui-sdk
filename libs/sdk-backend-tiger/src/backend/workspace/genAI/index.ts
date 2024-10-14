@@ -3,7 +3,7 @@
 import { IChatThread, IGenAIService, ISemanticSearchQuery } from "@gooddata/sdk-backend-spi";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { SemanticSearchQuery } from "./SemanticSearchQuery.js";
-import { ChatThread } from "./ChatThread.js";
+import { ChatThreadService } from "./ChatThread.js";
 
 export class GenAIService implements IGenAIService {
     constructor(
@@ -12,7 +12,7 @@ export class GenAIService implements IGenAIService {
     ) {}
 
     getChatThread(): IChatThread {
-        return new ChatThread(this.authCall, this.workspaceId);
+        return new ChatThreadService(this.authCall, this.workspaceId);
     }
 
     getSemanticSearchQuery(): ISemanticSearchQuery {

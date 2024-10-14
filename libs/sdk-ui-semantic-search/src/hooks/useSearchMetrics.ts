@@ -108,7 +108,7 @@ export const useSearchMetrics = (callback?: UseSearchMetricsCallback): UseSearch
                 ...searchMetricsRef.current.state,
                 selectedItemTitle: item.title,
                 selectedItemType: item.type,
-                selectedItemScore: item.score,
+                selectedItemScore: item.score ?? 0,
                 selectedItemIndex: index ?? null,
             });
             // Mark the metrics as reported
@@ -134,7 +134,7 @@ export const useSearchMetrics = (callback?: UseSearchMetricsCallback): UseSearch
                 state: {
                     ...searchMetricsRef.current.state,
                     lastSearchTerm: searchTerm,
-                    lastSearchScores: searchResults?.map((result) => result.item.score) ?? [],
+                    lastSearchScores: searchResults?.map((result) => result.item.score ?? 0) ?? [],
                     searchCount: shouldIncrement ? searchCount + 1 : searchCount,
                 },
                 reported: false,

@@ -6,6 +6,7 @@
     "semantic-search.id": "ID",
     "semantic-search.tags": "Tags",
     "semantic-search.match": "{score}% overeenkomst",
+    "semantic-search.previous-search": "Vorige zoekopdracht",
     "semantic-search.date.at": "bij",
     "gs.date.today": "Vandaag",
     "gs.date.yesterday": "Gisteren"

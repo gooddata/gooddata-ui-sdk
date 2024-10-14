@@ -36,7 +36,7 @@ export const DefaultDashboardInsightWidget: React.FC<Omit<IDefaultDashboardInsig
  * @internal
  */
 const DefaultDashboardInsightWidgetCore: React.FC<
-    IDefaultDashboardInsightWidgetProps & { insight: IInsight }
+    IDefaultDashboardInsightWidgetProps & { insight?: IInsight }
 > = ({ widget, insight, screen, onError, onExportReady, onLoadingChanged, dashboardItemClasses }) => {
     const intl = useIntl();
     const settings = useDashboardSelector(selectSettings);
@@ -49,7 +49,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         onScheduleEmailingManagementOpen,
     } = useDashboardScheduledEmails();
 
-    const visType = insightVisualizationType(insight) as VisType;
+    const visType = insight ? (insightVisualizationType(insight) as VisType) : undefined;
     const { ref: widgetRef } = widget;
 
     const { exportCSVEnabled, exportXLSXEnabled, onExportCSV, onExportXLSX } = useInsightExport({

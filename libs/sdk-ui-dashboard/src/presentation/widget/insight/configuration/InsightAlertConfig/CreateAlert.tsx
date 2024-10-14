@@ -5,6 +5,7 @@ import {
     IAutomationMetadataObjectDefinition,
     ICatalogMeasure,
     INotificationChannelMetadataObject,
+    IWorkspaceUser,
 } from "@gooddata/sdk-model";
 import { AlertMetric } from "../../types.js";
 
@@ -16,9 +17,11 @@ interface ICreateAlertProps {
     onCancel: () => void;
     onCreate?: (alert: IAutomationMetadataObjectDefinition) => void;
     destinations: INotificationChannelMetadataObject[];
+    users: IWorkspaceUser[];
     hasAlerts: boolean;
     measures: AlertMetric[];
     maxAutomationsReached: boolean;
+    maxAutomationsRecipients: number;
     catalogMeasures: ICatalogMeasure[];
 }
 
@@ -28,9 +31,11 @@ export const CreateAlert: React.FC<ICreateAlertProps> = ({
     onCancel,
     onCreate,
     destinations,
+    users,
     hasAlerts,
     measures,
     maxAutomationsReached,
+    maxAutomationsRecipients,
     catalogMeasures,
 }) => {
     return (
@@ -41,9 +46,11 @@ export const CreateAlert: React.FC<ICreateAlertProps> = ({
             onCreate={onCreate}
             isNewAlert
             destinations={destinations}
+            users={users}
             hasAlerts={hasAlerts}
             measures={measures}
             maxAutomationsReached={maxAutomationsReached}
+            maxAutomationsRecipients={maxAutomationsRecipients}
             catalogMeasures={catalogMeasures}
         />
     );

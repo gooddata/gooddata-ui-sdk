@@ -3,8 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import defaultReduxSaga from "redux-saga";
 import { defaultImport } from "default-import";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { messagesSliceName, messagesSliceReducer, setMessages } from "./messages/messagesSlice.js";
-import { agentSliceName, agentSliceReducer } from "./agent/agentSlice.js";
+import { messagesSliceName, messagesSliceReducer, setMessagesAction } from "./messages/messagesSlice.js";
 import { rootSaga } from "./sideEffects/index.js";
 import { Message } from "../model.js";
 
@@ -23,7 +22,6 @@ export const getStore = (backend: IAnalyticalBackend, workspace: string, initial
     const store = configureStore({
         reducer: {
             [messagesSliceName]: messagesSliceReducer,
-            [agentSliceName]: agentSliceReducer,
         },
         middleware: (getDefaultMiddleware) => getDefaultMiddleware().prepend(sagaMiddleware),
         devTools: {
@@ -35,7 +33,7 @@ export const getStore = (backend: IAnalyticalBackend, workspace: string, initial
 
     if (initialHistory?.length) {
         // Set the initial history in store
-        store.dispatch(setMessages(initialHistory));
+        store.dispatch(setMessagesAction({ messages: initialHistory }));
     }
 
     return store;

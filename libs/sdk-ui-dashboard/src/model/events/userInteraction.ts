@@ -122,7 +122,12 @@ export type AttributeHierarchiesInteractionType =
 /**
  * @beta
  */
-export type VisualizationSwitcherInteractionType = "visualizationSwitcherChanged";
+export type VisualizationSwitcherInteractionType =
+    | "visualizationSwitcherSwitched"
+    | "visualizationSwitcherRemoved"
+    | "visualizationSwitcherOrderChanged"
+    | "visualizationSwitcherVisualizationDetailOpened"
+    | "visualizationSwitcherVisualizationAdded";
 
 /**
  * @alpha
@@ -157,6 +162,27 @@ export type AutomationInteractionPayload = UserInteractionPayloadWithDataBase<
 >;
 
 /**
+ * @alpha
+ */
+export type SavedFilterViewInteractionType = "DIALOG_OPENED";
+
+/**
+ * @alpha
+ */
+export interface SavedFilterViewInteractionData {
+    type: SavedFilterViewInteractionType;
+    countOfSavedViews: number;
+}
+
+/**
+ * @alpha
+ */
+export type SavedFilterViewInteractionPayload = UserInteractionPayloadWithDataBase<
+    "savedFilterViewInteraction",
+    SavedFilterViewInteractionData
+>;
+
+/**
  * @beta
  */
 export interface BareUserInteractionPayload {
@@ -184,7 +210,8 @@ export type UserInteractionPayloadWithData =
     | KpiAlertDialogOpenedPayload
     | DescriptionTooltipOpenedPayload
     | ShareDialogInteractionPayload
-    | AutomationInteractionPayload;
+    | AutomationInteractionPayload
+    | SavedFilterViewInteractionPayload;
 
 /**
  * @beta
