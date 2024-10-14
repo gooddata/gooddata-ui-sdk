@@ -25,7 +25,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 8px;
-    background-color: white;
+    background-color: var(--gd-palette-complementary-0, #fff);
     line-height: 0;
 
     .gd-bubble-trigger {
@@ -84,7 +84,7 @@
 
 .gd-visualization-switcher-toolbar-bottom.bubble.bubble-light {
     position: initial;
-    background-color: white;
+    background-color: var(--gd-palette-complementary-0, #fff);
 
     .configuration-panel-header {
         height: 39px;
@@ -136,6 +136,7 @@
         justify-content: space-between;
         height: 40px;
         cursor: pointer;
+        color: var(--gd-palette-complementary-8, #464e56);
 
         .switcher-visualizations-list-item-content {
             width: 100%;
@@ -158,6 +159,9 @@
         }
 
         &:not(.is-selected) {
+            &:hover {
+                color: var(--gd-palette-complementary-9, #464e56);
+            }
             .gd-vis-switcher-show-more-button {
                 // stylelint-disable-next-line max-nesting-depth
                 &:hover {

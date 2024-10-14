@@ -1,5 +1,5 @@
 // (C) 2019-2024 GoodData Corporation
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
 import { IAlignPoint, RichTextWithTooltip } from "@gooddata/sdk-ui-kit";
@@ -77,7 +77,7 @@ export function SectionHeaderEditable(props: ISectionHeaderEditableProps): JSX.E
     );
 
     const [isRichTextEditing, setIsRichTextEditing] = useState(false);
-    const [richTextValue, setRichTextValue] = useState(description);
+    const [richTextValue, setRichTextValue] = useState<string>("");
 
     const onDescriptionClick = useCallback(() => {
         if (!isRichTextEditing) {
@@ -95,6 +95,10 @@ export function SectionHeaderEditable(props: ISectionHeaderEditableProps): JSX.E
     const onRichTextChange = useCallback((value: string) => {
         setRichTextValue(value);
     }, []);
+
+    useEffect(() => {
+        setRichTextValue(description);
+    }, [description]);
 
     return (
         <div className="gd-row-header-edit">

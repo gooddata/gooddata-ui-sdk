@@ -620,5 +620,11 @@
     "insightAlert.config.filters.info": "アラートはダッシュボードのフィルターを作成時に設定されたものとして尊重します。{spacer}比較のために使用する期間を変更するには、日付フィルタを調整してください。",
     "insightAlert.config.compare_with": "比較対象：",
     "insightAlert.config.compare_with_sp": "前年同時期",
-    "insightAlert.config.compare_with_pp": "前期"
+    "insightAlert.config.compare_with_pp": "前期",
+    "widget.error.missing_insight.message": "利用可能なビジュュアライゼーションがありません",
+    "widget.error.missing_insight.description": "このビジュュアライゼーションは削除されたか、またはアクセスできなくなりました。管理者に連絡するか、ダッシュボードから削除してください。",
+    "visualizationSwitcher.configurationPanel.remove.from.switcher": "スイッチャーから外す",
+    "visualizationSwitcher.list.menu.move.up": "上に移動",
+    "visualizationSwitcher.list.menu.move.down": "下に移動",
+    "visualizationSwitcher.list.menu.remove": "削除"
 }

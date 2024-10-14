@@ -6,6 +6,7 @@ import React, { useCallback } from "react";
 import { IInsightWidget } from "@gooddata/sdk-model";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
+import { useDashboardUserInteraction } from "../../../../model/index.js";
 
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "tc bc", offset: { x: 0, y: -8 } }];
 interface IToolbarTopProps {
@@ -25,6 +26,7 @@ export const ToolbarTop: React.FC<IToolbarTopProps> = ({
     visualizationsListShown,
 }) => {
     const theme = useTheme();
+    const userInteraction = useDashboardUserInteraction();
     const activeWidgetIndex = visualizations.findIndex((vis) => vis.identifier === activeWidgetId);
 
     const prevDisabled = activeWidgetIndex <= 0;
@@ -98,7 +100,13 @@ export const ToolbarTop: React.FC<IToolbarTopProps> = ({
             </div>
             <div className="vertical-divider" />
             <div className="right-section">
-                <div className="s-visualization-switcher-remove-button" onClick={onDelete}>
+                <div
+                    className="s-visualization-switcher-remove-button"
+                    onClick={() => {
+                        onDelete();
+                        userInteraction.visualizationSwitcherInteraction("visualizationSwitcherRemoved");
+                    }}
+                >
                     <BubbleHoverTrigger eventsOnBubble={true}>
                         <Icon.Trash className="gd-trash-icon" width={20} />
                         <Bubble alignPoints={bubbleAlignPoints}>

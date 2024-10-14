@@ -92,64 +92,6 @@ $input-height: 28px;
         }
     }
 
-    // custom className from react-select rendered
-    .gd-recipients__menu {
-        padding: 0;
-        border-width: 1px;
-        border-style: solid;
-        border-radius: 0 0 3px 3px;
-        border-color: kit-variables.$gd-palette-primary-base;
-        border-top: 0;
-        border-top-color: button-variables.$button-normal-border-color;
-        margin-top: -2px;
-        outline: 0;
-        box-shadow: inset 0 1px 1px 0 rgba(31, 53, 74, 0.2);
-        color: kit-variables.$gd-color-text;
-        background-color: kit-variables.$gd-color-white;
-
-        // custom className from react-select rendered
-        .gd-recipients__option {
-            padding: 0;
-        }
-
-        // custom className from react-select rendered
-        .gd-recipients__option:first-child {
-            &.gd-recipients__option--is-focused {
-                border-top: 1px solid var(--gd-palette-complementary-4, #ccd8e2);
-            }
-        }
-    }
-
-    .recipient-item-not-valid {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-    }
-
-    // custom className from react-select rendered
-    .gd-recipients__menu-list {
-        padding-top: 0;
-        padding-bottom: 0;
-
-        .gd-recipient-option-item {
-            padding: 6px 8px;
-            font-size: 13px;
-            line-height: 15px;
-
-            .gd-recipient-option-value-item {
-                margin-left: 10px;
-                color: kit-variables.$gd-color-disabled;
-            }
-        }
-
-        .gd-recipient-existed {
-            display: block;
-            width: 100%;
-            padding: 8px 8px 8px 10px;
-            margin-top: 2px;
-        }
-    }
-
     @media #{kit-variables.$xsmall-only} {
         .gd-recipients__value-container {
             // custom className from react-select rendered
@@ -220,6 +162,69 @@ $input-height: 28px;
         &.not-valid {
             color: kit-variables.$gd-color-white;
             background: rgba(229, 77, 66, 0.98);
+        }
+    }
+}
+
+.gd-recipients-overlay {
+    margin-top: 31px;
+
+    // custom className from react-select rendered
+    .gd-recipients__menu {
+        padding: 0;
+        border-width: 1px;
+        border-style: solid;
+        border-radius: 0 0 3px 3px;
+        border-color: kit-variables.$gd-palette-primary-base;
+        border-top: 0;
+        border-top-color: button-variables.$button-normal-border-color;
+        margin-top: -2px;
+        outline: 0;
+        box-shadow: inset 0 1px 1px 0 rgba(31, 53, 74, 0.2);
+        color: kit-variables.$gd-color-text;
+        background-color: kit-variables.$gd-color-white;
+
+        // custom className from react-select rendered
+        .gd-recipients__option {
+            padding: 0;
+        }
+
+        // custom className from react-select rendered
+        .gd-recipients__option:first-child {
+            &.gd-recipients__option--is-focused {
+                border-top: 1px solid var(--gd-palette-complementary-4, #ccd8e2);
+            }
+        }
+    }
+
+    .recipient-item-not-valid {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    // custom className from react-select rendered
+    .gd-recipients__menu-list {
+        padding-top: 0;
+        padding-bottom: 0;
+        overflow-x: hidden;
+
+        .gd-recipient-option-item {
+            padding: 6px 8px;
+            font-size: 13px;
+            line-height: 15px;
+
+            .gd-recipient-option-value-item {
+                margin-left: 10px;
+                color: kit-variables.$gd-color-disabled;
+            }
+        }
+
+        .gd-recipient-existed {
+            display: block;
+            width: 100%;
+            padding: 8px 8px 8px 10px;
+            margin-top: 2px;
         }
     }
 

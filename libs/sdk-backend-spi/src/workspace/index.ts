@@ -48,7 +48,7 @@ export interface IAnalyticalWorkspace {
      *
      * @param descriptor - properties to update
      */
-    updateDescriptor(descriptor: IWorkspaceDescriptorUpdate): Promise<void>;
+    updateDescriptor(descriptor: IWorkspaceDescriptorUpdate): Promise<IWorkspaceDescriptor>;
 
     /**
      * Returns parent analytical workspace when this workspace has a parent, undefined otherwise.

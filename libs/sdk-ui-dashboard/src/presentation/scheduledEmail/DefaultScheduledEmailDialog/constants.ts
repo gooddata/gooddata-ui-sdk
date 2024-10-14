@@ -10,3 +10,5 @@ export const DEFAULT_DROPDOWN_ALIGN_POINTS = [
         align: "tl bl",
     },
 ];
+
+export const DEFAULT_MAX_RECIPIENTS = "10";

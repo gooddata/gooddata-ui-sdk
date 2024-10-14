@@ -28,6 +28,7 @@ export const ParametersPanel: React.FC<IParametersPanelProps> = ({
     dashboardFilters,
     attributeFilterConfigs,
     insightFilters,
+    widgetRef,
 }) => (
     <div>
         <label className="gd-label">
@@ -59,6 +60,7 @@ export const ParametersPanel: React.FC<IParametersPanelProps> = ({
                 enableWidgetIdParameter={enableWidgetIdParameter}
                 onAdd={onAdd}
                 intl={intl}
+                widgetRef={widgetRef}
             />
         </div>
     </div>

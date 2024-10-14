@@ -47,7 +47,7 @@ const renderDescription = (item: ISemanticSearchResultItem) => {
 };
 
 const renderScore = (item: ISemanticSearchResultItem) => {
-    const score = Math.round(Math.min(1, Math.max(0, item.score)) * 100);
+    const score = item.score ? Math.round(Math.min(1, Math.max(0, item.score)) * 100) : 0;
 
     return (
         <div className="gd-semantic-search__results-item__details__contents__match">
