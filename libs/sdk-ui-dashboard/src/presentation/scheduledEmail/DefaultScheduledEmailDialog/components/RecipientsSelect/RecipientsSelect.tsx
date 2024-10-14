@@ -37,10 +37,15 @@ interface IRecipientsSelectProps {
      * Maximum number of recipients
      */
     maxRecipients?: number;
+
+    /**
+     * Additional class name
+     */
+    className?: string;
 }
 
 export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
-    const { users, value, originalValue, onChange, allowEmptySelection, maxRecipients } = props;
+    const { users, value, originalValue, onChange, allowEmptySelection, maxRecipients, className } = props;
 
     const [search, setSearch] = useState<string>();
 
@@ -62,6 +67,7 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
             }}
             allowEmptySelection={allowEmptySelection}
             maxRecipients={maxRecipients}
+            className={className}
         />
     );
 };

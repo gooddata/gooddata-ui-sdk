@@ -35,10 +35,12 @@ export const AlertingDialog: React.FC<IAlertingDialogProps> = (props) => {
     const {
         hasAlerts,
         destinations,
+        users,
         supportedMeasures,
         catalogMeasures,
         cancelAlertEditing,
         updateExistingAlert,
+        maxAutomationsRecipients,
     } = useInsightWidgetAlerting({ closeInsightWidgetMenu: onCancel, widget: editWidget });
 
     if (!anchorEl?.id || !editAlert) {
@@ -66,6 +68,7 @@ export const AlertingDialog: React.FC<IAlertingDialogProps> = (props) => {
                         hasAlerts={hasAlerts}
                         destinations={destinations}
                         measures={supportedMeasures}
+                        users={users}
                         onUpdate={(alert) => {
                             updateExistingAlert(alert);
                             onUpdate(alert);
@@ -77,6 +80,7 @@ export const AlertingDialog: React.FC<IAlertingDialogProps> = (props) => {
                         onClose={onCancel}
                         overlayPositionType="fixed"
                         catalogMeasures={catalogMeasures}
+                        maxAutomationsRecipients={maxAutomationsRecipients}
                     />
                 </OverlayControllerProvider>
             </ScrollablePanel>

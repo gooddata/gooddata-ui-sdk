@@ -2966,6 +2966,11 @@
         "comment": "Title of the section in insight configuration",
         "limit": 0
     },
+    "insightAlert.config.warning.destination": {
+        "value": "The selected destination only supports sending the alert to yourself.",
+        "comment": "Alert warning message",
+        "limit": 0
+    },
     "insightAlert.config.filters": {
         "value": "using {n} {n, plural, one {filter} other {filters}}",
         "comment": "In 'USING {n} {n, plural, one {FILTER} other {FILTERS}}' translate only uppercase word.",

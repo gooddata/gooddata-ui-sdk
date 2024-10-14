@@ -17,10 +17,11 @@ import isEmpty from "lodash/isEmpty.js";
 import isEqual from "lodash/isEqual.js";
 import includes from "lodash/includes.js";
 import { IWorkspaceUsersQueryOptions } from "@gooddata/sdk-backend-spi";
-import { LoadingMask } from "@gooddata/sdk-ui-kit";
+import { LoadingMask, Overlay, OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 
 import { isEmail } from "../../utils/validate.js";
+import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../../../constants/index.js";
 
 const MAXIMUM_RECIPIENTS_RECEIVE = 60;
 const DELAY_TIME = 500;
@@ -30,6 +31,7 @@ const LOADING_MENU_HEIGHT = 50;
 const CREATE_OPTION = "create-option";
 const SELECT_OPTION = "select-option";
 const { Menu, Input } = ReactSelectComponents;
+const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 
 export interface IRecipientsSelectRendererProps {
     /**
@@ -81,6 +83,11 @@ export interface IRecipientsSelectRendererProps {
      * Maximum number of recipients
      */
     maxRecipients?: number;
+
+    /**
+     * Additional class name
+     */
+    className?: string;
 }
 
 interface IRecipientsSelectRendererState {
@@ -116,7 +123,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
     }
 
     public render() {
-        const { isMulti, options, value, maxRecipients } = this.props;
+        const { isMulti, options, value, maxRecipients, className } = this.props;
         const creatableSelectComponent: SelectComponentsConfig<
             IAutomationRecipient,
             boolean,
@@ -130,12 +137,16 @@ export class RecipientsSelectRenderer extends React.PureComponent<
             Placeholder: this.renderEmptyContainer,
             NoOptionsMessage: this.renderNoOptionsContainer,
         };
-
         const maxRecipientsError = maxRecipients && value.length > maxRecipients;
         const showInputError = maxRecipientsError || this.state.minRecipientsError;
 
         return (
-            <div className="gd-input-component gd-recipients-field s-gd-notifications-channels-dialog-recipients">
+            <div
+                className={cx(
+                    "gd-input-component gd-recipients-field s-gd-notifications-channels-dialog-recipients",
+                    className,
+                )}
+            >
                 <label className="gd-label">
                     <FormattedMessage id="dialogs.schedule.email.to.label" />
                 </label>
@@ -190,6 +201,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
             maxWidth: width
                 ? width - PADDING - REMOVE_ICON_WIDTH // label item width equal value item container - padding - remove icon
                 : "100%",
+            width,
         };
     }
 
@@ -219,18 +231,27 @@ export class RecipientsSelectRenderer extends React.PureComponent<
     };
 
     private renderMenuOptionsContainer = (menuProps: MenuProps<any, boolean>): React.ReactElement => {
+        const style = this.getStyle();
         return (
-            <Menu className="s-gd-recipients-menu-container" {...menuProps}>
-                {menuProps.children}
-            </Menu>
+            <OverlayControllerProvider overlayController={overlayController}>
+                <Overlay alignTo={".gd-recipients__value-container"}>
+                    <div className="gd-recipients-overlay" style={{ width: style.width }}>
+                        <Menu className="s-gd-recipients-menu-container" {...menuProps}>
+                            {menuProps.children}
+                        </Menu>
+                    </div>
+                </Overlay>
+            </OverlayControllerProvider>
         );
     };
 
     private renderLoadingIcon = (menuProps: MenuProps<any, boolean>): React.ReactElement => {
         return (
-            <Menu className="s-gd-recipients-menu-container" {...menuProps}>
-                <LoadingMask height={LOADING_MENU_HEIGHT} />
-            </Menu>
+            <OverlayControllerProvider overlayController={overlayController}>
+                <Menu className="s-gd-recipients-menu-container" {...menuProps}>
+                    <LoadingMask height={LOADING_MENU_HEIGHT} />
+                </Menu>
+            </OverlayControllerProvider>
         );
     };
 
@@ -238,9 +259,10 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         label: string,
         removeIcon: React.ReactElement | null,
     ): React.ReactElement => {
+        const style = this.getStyle();
         return (
             <div className="gd-recipient-value-item s-gd-recipient-value-item multiple-value">
-                <div style={this.getStyle()} className="gd-recipient-label">
+                <div style={{ maxWidth: style.maxWidth }} className="gd-recipient-label">
                     {label}
                 </div>
                 <div aria-label="remove-icon" className="s-gd-recipient-remove">
