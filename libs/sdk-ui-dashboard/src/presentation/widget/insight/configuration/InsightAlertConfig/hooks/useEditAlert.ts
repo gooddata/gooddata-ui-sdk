@@ -10,6 +10,7 @@ import {
     IAutomationRecipient,
     ICatalogMeasure,
     INotificationChannelMetadataObject,
+    isAutomationUserRecipient,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
 import {
@@ -24,6 +25,7 @@ import {
 import { AlertMetric } from "../../../types.js";
 import { selectCurrentUser, useDashboardSelector } from "../../../../../../model/index.js";
 import { convertUserToAutomationRecipient } from "../../../../../../_staging/automation/index.js";
+import { isEmail } from "../../../../../scheduledEmail/DefaultScheduledEmailDialog/utils/validate.js";
 
 export interface IUseEditAlertProps {
     metrics: AlertMetric[];
@@ -142,7 +144,14 @@ export const useEditAlert = ({
     const isValueDefined = isAlertValueDefined(updatedAlert.alert);
     const isRecipientsValid = isAlertRecipientsValid(updatedAlert);
     const isAlertChanged = !isEqual(updatedAlert, alert);
-    const canSubmit = isValueDefined && isAlertChanged && isRecipientsValid;
+    const areEmailsValid =
+        selectedDestination?.type === "smtp"
+            ? updatedAlert.recipients?.every((v) =>
+                  isAutomationUserRecipient(v) ? isEmail(v.email ?? "") : true,
+              )
+            : true;
+
+    const canSubmit = isValueDefined && isAlertChanged && isRecipientsValid && areEmailsValid;
 
     return {
         viewMode,

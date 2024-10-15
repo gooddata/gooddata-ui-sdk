@@ -223,6 +223,8 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                                 allowEmptySelection
                                 maxRecipients={maxAutomationsRecipients}
                                 className="gd-edit-alert__recipients"
+                                notificationChannels={destinations}
+                                notificationChannelId={updatedAlert.notificationChannel}
                             />
                         ) : null}
                     </div>

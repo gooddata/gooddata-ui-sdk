@@ -1,6 +1,10 @@
 // (C) 2019-2024 GoodData Corporation
 /* eslint-disable import/named,import/namespace */
-import { IAutomationRecipient, isAutomationUserRecipient } from "@gooddata/sdk-model";
+import {
+    IAutomationRecipient,
+    INotificationChannelMetadataObject,
+    isAutomationUserRecipient,
+} from "@gooddata/sdk-model";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import ReactSelect, {
@@ -17,7 +21,15 @@ import isEmpty from "lodash/isEmpty.js";
 import isEqual from "lodash/isEqual.js";
 import includes from "lodash/includes.js";
 import { IWorkspaceUsersQueryOptions } from "@gooddata/sdk-backend-spi";
-import { LoadingMask, Overlay, OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
+import {
+    Bubble,
+    BubbleHoverTrigger,
+    IAlignPoint,
+    LoadingMask,
+    Overlay,
+    OverlayController,
+    OverlayControllerProvider,
+} from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 
 import { isEmail } from "../../utils/validate.js";
@@ -32,6 +44,17 @@ const CREATE_OPTION = "create-option";
 const SELECT_OPTION = "select-option";
 const { Menu, Input } = ReactSelectComponents;
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
+
+const TOOLTIP_ALIGN_POINTS: IAlignPoint[] = [
+    {
+        align: "cr cl",
+        offset: { x: 0, y: -2 },
+    },
+    {
+        align: "cl cr",
+        offset: { x: 0, y: -2 },
+    },
+];
 
 export interface IRecipientsSelectRendererProps {
     /**
@@ -88,6 +111,11 @@ export interface IRecipientsSelectRendererProps {
      * Additional class name
      */
     className?: string;
+
+    /**
+     * Notification channel
+     */
+    notificationChannel?: INotificationChannelMetadataObject;
 }
 
 interface IRecipientsSelectRendererState {
@@ -137,8 +165,14 @@ export class RecipientsSelectRenderer extends React.PureComponent<
             Placeholder: this.renderEmptyContainer,
             NoOptionsMessage: this.renderNoOptionsContainer,
         };
+
         const maxRecipientsError = maxRecipients && value.length > maxRecipients;
-        const showInputError = maxRecipientsError || this.state.minRecipientsError;
+        const minRecipientsError = this.state.minRecipientsError;
+        const someRecipientsMissingEmail = this.isEmailChannel()
+            ? value.some((v) => (isAutomationUserRecipient(v) ? !isEmail(v.email ?? "") : false))
+            : false;
+
+        const showInputError = maxRecipientsError || minRecipientsError || someRecipientsMissingEmail;
 
         return (
             <div
@@ -179,9 +213,10 @@ export class RecipientsSelectRenderer extends React.PureComponent<
                                     id="dialogs.schedule.email.max.recipients"
                                     values={{ maxRecipients }}
                                 />
-                            ) : (
+                            ) : null}
+                            {minRecipientsError ? (
                                 <FormattedMessage id="dialogs.schedule.email.min.recipients" />
-                            )}
+                            ) : null}
                         </div>
                     ) : null}
                 </div>
@@ -203,6 +238,12 @@ export class RecipientsSelectRenderer extends React.PureComponent<
                 : "100%",
             width,
         };
+    }
+
+    private isEmailChannel() {
+        const { notificationChannel } = this.props;
+
+        return notificationChannel?.type === "smtp";
     }
 
     private renderNoOptionsContainer = (): React.ReactElement | null => {
@@ -258,18 +299,39 @@ export class RecipientsSelectRenderer extends React.PureComponent<
     private renderMultiValueItemContainer = (
         label: string,
         removeIcon: React.ReactElement | null,
+        validation: { hasEmail?: boolean } = {},
     ): React.ReactElement => {
         const style = this.getStyle();
-        return (
-            <div className="gd-recipient-value-item s-gd-recipient-value-item multiple-value">
-                <div style={{ maxWidth: style.maxWidth }} className="gd-recipient-label">
-                    {label}
+
+        const render = () => {
+            return (
+                <div
+                    className={cx("gd-recipient-value-item s-gd-recipient-value-item multiple-value", {
+                        "invalid-email": !validation.hasEmail,
+                    })}
+                >
+                    <div style={{ maxWidth: style.maxWidth }} className="gd-recipient-label">
+                        {label}
+                    </div>
+                    <div aria-label="remove-icon" className="s-gd-recipient-remove">
+                        {removeIcon}
+                    </div>
                 </div>
-                <div aria-label="remove-icon" className="s-gd-recipient-remove">
-                    {removeIcon}
-                </div>
-            </div>
-        );
+            );
+        };
+
+        if (validation.hasEmail === false) {
+            return (
+                <BubbleHoverTrigger>
+                    {render()}
+                    <Bubble className="bubble-negative" alignPoints={TOOLTIP_ALIGN_POINTS}>
+                        <FormattedMessage id="dialogs.schedule.email.user.missing.email" />
+                    </Bubble>
+                </BubbleHoverTrigger>
+            );
+        }
+
+        return render();
     };
 
     private renderMultiValueContainer = (
@@ -280,8 +342,10 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         // MultiValueRemove component from react-select
         const removeIcon: React.ReactElement | null = (children as any)![1];
         const name = data.name ?? data.id;
+        const hasEmail =
+            this.isEmailChannel() && isAutomationUserRecipient(data) ? isEmail(data.email ?? "") : true;
 
-        return this.renderMultiValueItemContainer(name, removeIcon);
+        return this.renderMultiValueItemContainer(name, removeIcon, { hasEmail });
     };
 
     private renderOptionLabel = (recipient: IAutomationRecipient): React.ReactElement | null => {
