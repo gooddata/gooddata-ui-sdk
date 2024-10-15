@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import React from "react";
 import { Dashboard } from "@gooddata/sdk-ui-dashboard";
 import * as Catalog from "../catalog.js";
@@ -12,7 +12,7 @@ export default () => {
     return (
         <>
             <h1>Dashboard component</h1>
-            <Dashboard dashboard={dashboard} />
+            <Dashboard dashboard={dashboard} config={{ isReadOnly: true }} />
 
             <Hint hint="Try to change dashboard in code." />
         </>

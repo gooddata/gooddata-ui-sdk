@@ -71,7 +71,7 @@ function useNotifyDeinitializedOnUnmount(
 export const useInitializeDashboardStore = (
     props: IDashboardStoreProviderProps,
 ): ReduxedDashboardStore | null => {
-    const { dashboard, persistedDashboard } = props;
+    const { dashboard, persistedDashboard, config } = props;
     const backend = useBackendStrict(props.backend);
     const workspace = useWorkspace(props.workspace);
     const mapboxToken = useMapboxToken(props.config?.mapboxToken);
@@ -127,6 +127,7 @@ export const useInitializeDashboardStore = (
                     filterContextRef: currentInitProps.filterContextRef,
                     clientId: currentInitProps.clientId,
                     dataProductId: currentInitProps.dataProductId,
+                    config,
                 },
                 eventing: {
                     initialEventHandlers: props.eventHandlers,

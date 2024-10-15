@@ -20,6 +20,7 @@ import {
     selectIsNewDashboard,
     selectCanCreateFilterView,
     useDashboardUserInteraction,
+    selectIsReadOnly,
 } from "../../../../model/index.js";
 
 import { FilterViewsList } from "./FilterViewsList.js";
@@ -126,6 +127,11 @@ export const FilterViews: React.FC = () => {
     const buttonClassNames = cx("gd-filter-views-button", dropdownAnchorClassName, "gd-button-large", {
         "gd-filter-views-button--open": isDialogOpen,
     });
+
+    const isReadOnly = useDashboardSelector(selectIsReadOnly);
+    if (isReadOnly) {
+        return null;
+    }
 
     return (
         <div className="gd-filter-views">
