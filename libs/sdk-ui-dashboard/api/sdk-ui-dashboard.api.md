@@ -308,7 +308,7 @@ export interface AddAttributeFilter extends IDashboardCommand {
 }
 
 // @beta
-export function addAttributeFilter(displayForm: ObjRef, index: number, correlationId?: string, selectionMode?: DashboardAttributeFilterSelectionMode, mode?: DashboardAttributeFilterConfigMode, initialSelection?: IAttributeElements, initialIsNegativeSelection?: boolean, localIdentifier?: string, primaryDisplayForm?: ObjRef): AddAttributeFilter;
+export function addAttributeFilter(displayForm: ObjRef, index: number, correlationId?: string, selectionMode?: DashboardAttributeFilterSelectionMode, mode?: DashboardAttributeFilterConfigMode, initialSelection?: IAttributeElements, initialIsNegativeSelection?: boolean, localIdentifier?: string, primaryDisplayForm?: ObjRef, title?: string): AddAttributeFilter;
 
 // @internal (undocumented)
 export function AddAttributeFilterButton({ className, isOpen, title }: IAddAttributeFilterButtonProps): React_2.JSX.Element;
@@ -326,6 +326,7 @@ export interface AddAttributeFilterPayload {
     readonly parentFilters?: ReadonlyArray<IDashboardAttributeFilterParent>;
     readonly primaryDisplayForm?: ObjRef;
     readonly selectionMode?: DashboardAttributeFilterSelectionMode;
+    readonly title?: string;
 }
 
 // @internal (undocumented)
@@ -7387,6 +7388,9 @@ export const selectEnableClickableAttributeURL: DashboardSelector<boolean>;
 
 // @public
 export const selectEnableCompanyLogoInEmbeddedUI: DashboardSelector<boolean>;
+
+// @internal
+export const selectEnableCrossFilteringAliasTitles: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableDuplicatedLabelValuesInAttributeFilter: DashboardSelector<boolean>;

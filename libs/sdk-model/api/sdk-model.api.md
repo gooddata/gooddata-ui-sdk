@@ -3099,6 +3099,8 @@ export interface ISettings {
     enableCompanyLogoInEmbeddedUI?: boolean;
     enableCompositeGrain?: boolean;
     enableCreateUser?: boolean;
+    // @internal
+    enableCrossFilteringAliasTitles?: boolean;
     // (undocumented)
     enableCsvUploader?: boolean;
     enableCustomColorPicker?: boolean;

@@ -755,3 +755,15 @@ export const selectEnableIgnoreCrossFiltering: DashboardSelector<boolean> = crea
         return state.settings?.enableIgnoreCrossFiltering ?? true;
     },
 );
+
+/**
+ * Returns whether cross filtering should use alias titles.
+ *
+ * @internal
+ */
+export const selectEnableCrossFilteringAliasTitles: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableCrossFilteringAliasTitles ?? false;
+    },
+);

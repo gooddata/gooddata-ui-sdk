@@ -53,7 +53,7 @@ export const RepeaterChart: React.FC<IRepeaterChartProps> = (props) => {
         let measureIndex = 0;
         return items.map((bucketItem): ColDef => {
             const sharedColDef: ColDef = {
-                headerName: getRepeaterColumnTitle(bucketItem, dataView),
+                headerName: getRepeaterColumnTitle(bucketItem, dataView, config.enableAliasAttributeLabel),
                 field: getRepeaterColumnId(bucketItem),
                 cellClass: "gd-cell",
                 minWidth: MANUALLY_SIZED_MIN_WIDTH,
@@ -360,12 +360,16 @@ function getImageSizing(config?: IChartConfig) {
     return config?.cellImageSizing ?? "fit";
 }
 
-function getRepeaterColumnTitle(columnBucketItem: IAttributeOrMeasure, dataView: DataViewFacade) {
+function getRepeaterColumnTitle(
+    columnBucketItem: IAttributeOrMeasure,
+    dataView: DataViewFacade,
+    enableAliasAttributeLabel?: boolean,
+) {
     if (isMeasure(columnBucketItem)) {
         return getMetricTitle(columnBucketItem, dataView);
     }
 
-    return getAttributeTitle(columnBucketItem, dataView);
+    return getAttributeTitle(columnBucketItem, dataView, enableAliasAttributeLabel);
 }
 
 function getRepeaterColumnId(columnBucketItem: IAttributeOrMeasure) {
@@ -418,13 +422,19 @@ function getMetricDescriptor(measure: IMeasure, dataView: DataViewFacade) {
     return measureDescriptors.find((descriptor) => descriptor.measureHeaderItem.localIdentifier === localId);
 }
 
-function getAttributeTitle(attribute: IAttribute, dataView: DataViewFacade) {
+function getAttributeTitle(
+    attribute: IAttribute,
+    dataView: DataViewFacade,
+    enableAliasAttributeLabel = false,
+) {
     const localId = attributeLocalId(attribute);
     const attributeDescriptors = dataView.meta().attributeDescriptors();
     const attributeDescriptor = attributeDescriptors.find(
         (descriptor) => descriptor.attributeHeader.localIdentifier === localId,
     );
-    return attributeDescriptor?.attributeHeader?.name;
+    return enableAliasAttributeLabel
+        ? attributeDescriptor?.attributeHeader?.formOf.name
+        : attributeDescriptor?.attributeHeader?.name;
 }
 
 function getInlineVisualizationType(measureLocalId: string, config: IChartConfig) {

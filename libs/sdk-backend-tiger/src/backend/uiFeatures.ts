@@ -114,6 +114,7 @@ export enum TigerFeaturesNames {
     EnableFlightRpcDataSource = "enableFlightRpcDataSource",
     EarlyAccessFeatures = "earlyAccessFeatures",
     EnableEarlyAccessFeaturesRollout = "enableEarlyAccessFeaturesRollout",
+    EnableCrossFilteringAliasTitles = "enableCrossFilteringAliasTitles",
 }
 
 export type ITigerFeatureFlags = {
@@ -191,6 +192,7 @@ export type ITigerFeatureFlags = {
     enableFlightRpcDataSource: typeof FeatureFlagsValues["enableFlightRpcDataSource"][number];
     earlyAccessFeatures: typeof FeatureFlagsValues["earlyAccessFeatures"][number];
     enableEarlyAccessFeaturesRollout: typeof FeatureFlagsValues["enableEarlyAccessFeaturesRollout"][number];
+    enableCrossFilteringAliasTitles: typeof FeatureFlagsValues["enableCrossFilteringAliasTitles"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -268,6 +270,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableFlightRpcDataSource: false,
     earlyAccessFeatures: undefined,
     enableEarlyAccessFeaturesRollout: false,
+    enableCrossFilteringAliasTitles: false,
 };
 
 export const FeatureFlagsValues = {
@@ -349,4 +352,5 @@ export const FeatureFlagsValues = {
     enableFlightRpcDataSource: [true, false] as const,
     earlyAccessFeatures: [undefined, {} as IEarlyAccessFeaturesConfig] as const,
     enableEarlyAccessFeaturesRollout: [true, false] as const,
+    enableCrossFilteringAliasTitles: [true, false] as const,
 };
