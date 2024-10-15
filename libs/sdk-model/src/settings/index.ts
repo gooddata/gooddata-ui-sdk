@@ -514,6 +514,11 @@ export interface ISettings {
      */
     enableCrossFilteringAliasTitles?: boolean;
 
+    /**
+     * Enable the use of default SMTP in destinations.
+     */
+    enableDefaultSmtp?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

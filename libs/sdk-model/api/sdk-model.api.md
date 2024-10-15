@@ -3108,6 +3108,7 @@ export interface ISettings {
     enableDataSampling?: boolean;
     // (undocumented)
     enableDataSection?: boolean;
+    enableDefaultSmtp?: boolean;
     enableDescriptions?: boolean;
     enableDrilledInsightExport?: boolean;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
