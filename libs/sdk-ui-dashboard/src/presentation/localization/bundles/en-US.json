@@ -528,6 +528,11 @@
         "comment": "Message for recipients input when the minimum number of recipients is reached",
         "limit": 0
     },
+    "dialogs.schedule.email.user.missing.email": {
+        "value": "This user is missing an email address.",
+        "comment": "Message for recipients input when a user is missing an email address.",
+        "limit": 0
+    },
     "dialogs.schedule.email.subject.label": {
         "value": "Subject",
         "comment": "Subject of the schedule email.",

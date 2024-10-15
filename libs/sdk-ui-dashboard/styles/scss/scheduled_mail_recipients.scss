@@ -49,6 +49,11 @@ $input-height: 28px;
         font-family: Avenir, sans-serif;
         font-size: 12px;
         margin-top: 5px;
+
+        &:empty {
+            display: none;
+            margin-top: 0;
+        }
     }
 
     // custom className from react-select rendered
@@ -159,9 +164,19 @@ $input-height: 28px;
             padding: 0;
         }
 
-        &.not-valid {
-            color: kit-variables.$gd-color-white;
-            background: rgba(229, 77, 66, 0.98);
+        &.not-valid,
+        &.invalid-email {
+            color: kit-variables.$gd-palette-error-base;
+            background: var(--gd-palette-error-dimmed, #fcedec);
+
+            .gd-recipient-label {
+                color: kit-variables.$gd-palette-error-base;
+            }
+
+            .gd-recipients__multi-value__remove,
+            .gd-recipients__multi-value__remove:hover {
+                color: kit-variables.$gd-palette-error-base;
+            }
         }
     }
 }

@@ -230,6 +230,8 @@ export function ScheduledMailDialogRenderer({
                                     onChange={onRecipientsChange}
                                     allowEmptySelection
                                     maxRecipients={maxAutomationsRecipients}
+                                    notificationChannels={notificationChannels}
+                                    notificationChannelId={editedAutomation.notificationChannel}
                                 />
                             ) : null}
                             <Input

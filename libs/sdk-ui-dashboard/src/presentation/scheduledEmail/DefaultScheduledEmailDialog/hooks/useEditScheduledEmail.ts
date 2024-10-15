@@ -13,6 +13,7 @@ import {
     IUser,
     IFilter,
     INotificationChannelMetadataObject,
+    isAutomationUserRecipient,
 } from "@gooddata/sdk-model";
 import parseISO from "date-fns/parseISO/index.js";
 import { getUserTimezone } from "../utils/timezone.js";
@@ -41,6 +42,7 @@ import {
 import { invariant } from "ts-invariant";
 import { useIntl } from "react-intl";
 import { useScheduleValidation } from "./useScheduleValidation.js";
+import { isEmail } from "../utils/validate.js";
 
 export interface IUseEditScheduledEmailProps {
     scheduledExportToEdit?: IAutomationMetadataObject;
@@ -341,9 +343,20 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
     const hasRecipients = (editedAutomation.recipients?.length ?? 0) > 0;
     const hasDestination = !!editedAutomation.notificationChannel;
     const respectsRecipientsLimit = (editedAutomation.recipients?.length ?? 0) <= maxAutomationsRecipients;
+    const hasFilledEmails =
+        selectedNotificationChannel?.type === "smtp"
+            ? editedAutomation.recipients?.every((recipient) =>
+                  isAutomationUserRecipient(recipient) ? isEmail(recipient.email ?? "") : true,
+              )
+            : true;
 
     const isValid =
-        isCronValid && hasRecipients && respectsRecipientsLimit && hasAttachments && hasDestination;
+        isCronValid &&
+        hasRecipients &&
+        respectsRecipientsLimit &&
+        hasAttachments &&
+        hasDestination &&
+        hasFilledEmails;
 
     const isSubmitDisabled =
         !isValid || (scheduledExportToEdit && areAutomationsEqual(originalAutomation, editedAutomation));
