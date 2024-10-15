@@ -11,15 +11,20 @@ interface IRepeatTypeDescriptionProps {
     repeatType: RecurrenceType;
     startDate?: Date | null;
     weekStart?: WeekStart;
+    timezone?: string;
+    showTimezone?: boolean;
 }
 
 export const RepeatTypeDescription: React.FC<IRepeatTypeDescriptionProps> = (props) => {
     const intl = useIntl();
-    const { repeatType, startDate, weekStart } = props;
+    const { repeatType, startDate, weekStart, timezone, showTimezone } = props;
 
     return (
         <div className="gd-recurrence-form-repeat-type-description s-recurrence-form-repeat-type-description">
-            <div>{transformRecurrenceTypeToDescription(intl, repeatType, startDate, weekStart)}</div>
+            <span>
+                {transformRecurrenceTypeToDescription(intl, repeatType, startDate, weekStart)}
+                {showTimezone && timezone ? <> {timezone}</> : null}
+            </span>
         </div>
     );
 };

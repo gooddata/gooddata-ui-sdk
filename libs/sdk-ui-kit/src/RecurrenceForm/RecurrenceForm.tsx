@@ -33,6 +33,7 @@ export interface IRecurrenceFormProps {
     className?: string;
     allowHourlyRecurrence?: boolean;
     showRepeatTypeDescription?: boolean;
+    showTimezoneInOccurrence?: boolean;
     onRecurrenceDropdownOpen?: () => void;
 }
 
@@ -51,6 +52,7 @@ const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
         className,
         allowHourlyRecurrence = true,
         showRepeatTypeDescription,
+        showTimezoneInOccurrence,
         onRecurrenceDropdownOpen,
     } = props;
     const intl = useIntl();
@@ -111,6 +113,8 @@ const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
                 onCronValueChange={onCronValueChange}
                 allowHourlyRecurrence={allowHourlyRecurrence}
                 weekStart={weekStart}
+                timezone={timezone}
+                showTimezoneInOccurrence={showTimezoneInOccurrence}
                 onRecurrenceDropdownOpen={onRecurrenceDropdownOpen}
             />
         </div>
