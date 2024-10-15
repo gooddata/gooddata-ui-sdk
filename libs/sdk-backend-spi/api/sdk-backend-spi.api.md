@@ -69,6 +69,7 @@ import { IGranularAccessGrantee } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { IListedDashboard } from '@gooddata/sdk-model';
+import { ILlmEndpointOpenAI } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureMetadataObject } from '@gooddata/sdk-model';
 import { IMeasureMetadataObjectDefinition } from '@gooddata/sdk-model';
@@ -113,6 +114,7 @@ import { IWorkspacePermissionAssignment } from '@gooddata/sdk-model';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { IWorkspaceUser } from '@gooddata/sdk-model';
 import { IWorkspaceUserGroup } from '@gooddata/sdk-model';
+import { LlmEndpointOpenAIPatch } from '@gooddata/sdk-model';
 import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { OrganizationPermissionAssignment } from '@gooddata/sdk-model';
@@ -879,6 +881,7 @@ export interface IObjectExpressionToken {
 // @public
 export interface IOrganization {
     getDescriptor(includeAdditionalDetails?: boolean): Promise<IOrganizationDescriptor>;
+    llmEndpoints(): IOrganizationLlmEndpointsService;
     notificationChannels(): IOrganizationNotificationChannelService;
     readonly organizationId: string;
     permissions(): IOrganizationPermissionService;
@@ -887,6 +890,17 @@ export interface IOrganization {
     styling(): IOrganizationStylingService;
     updateDescriptor(descriptor: IOrganizationDescriptorUpdate): Promise<IOrganizationDescriptor>;
     users(): IOrganizationUserService;
+}
+
+// @alpha
+export interface IOrganizationLlmEndpointsService {
+    createLlmEndpoint(endpoint: ILlmEndpointOpenAI, token?: string): Promise<ILlmEndpointOpenAI>;
+    deleteLlmEndpoint(id: string): Promise<void>;
+    getAll(): Promise<ILlmEndpointOpenAI[]>;
+    getCount(): Promise<number>;
+    getLlmEndpoint(id: string): Promise<ILlmEndpointOpenAI | undefined>;
+    patchLlmEndpoint(endpoint: LlmEndpointOpenAIPatch, token?: string): Promise<ILlmEndpointOpenAI>;
+    updateLlmEndpoint(endpoint: ILlmEndpointOpenAI, token?: string): Promise<ILlmEndpointOpenAI>;
 }
 
 // @alpha

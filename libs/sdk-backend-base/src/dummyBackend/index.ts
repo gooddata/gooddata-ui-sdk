@@ -80,6 +80,7 @@ import {
     IAutomationsQueryResult,
     AutomationType,
     IChatThread,
+    IOrganizationLlmEndpointsService,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -128,6 +129,7 @@ import {
     ISmtpDefinition,
     IAutomationMetadataObjectDefinition,
     IAutomationMetadataObject,
+    ILlmEndpointOpenAI,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
 import isEmpty from "lodash/isEmpty.js";
@@ -927,6 +929,37 @@ class DummyOrganization implements IOrganization {
                 }),
             getWebhooks: () => Promise.resolve([]),
             updateWebhook: (webhook) => Promise.resolve(webhook),
+        };
+    }
+
+    llmEndpoints(): IOrganizationLlmEndpointsService {
+        const dummyEndpoint: ILlmEndpointOpenAI = {
+            id: "dummyLlmEndpoint",
+            title: "Dummy Llm Endpoint",
+            provider: "OPENAI",
+            model: "gpt-4o-mini",
+        };
+
+        return {
+            getCount: () => Promise.resolve(0),
+            getAll: () => Promise.resolve([]),
+            deleteLlmEndpoint: () => Promise.resolve(),
+            getLlmEndpoint: () =>
+                Promise.resolve({
+                    ...dummyEndpoint,
+                }),
+            createLlmEndpoint: () =>
+                Promise.resolve({
+                    ...dummyEndpoint,
+                }),
+            updateLlmEndpoint: () =>
+                Promise.resolve({
+                    ...dummyEndpoint,
+                }),
+            patchLlmEndpoint: () =>
+                Promise.resolve({
+                    ...dummyEndpoint,
+                }),
         };
     }
 }

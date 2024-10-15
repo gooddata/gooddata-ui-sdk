@@ -2094,6 +2094,20 @@ export interface IListedDashboard extends Readonly<Required<IAuditableDates>>, R
     readonly uri: string;
 }
 
+// @alpha
+export interface ILlmEndpointBase {
+    description?: string;
+    id: string;
+    title: string;
+}
+
+// @alpha
+export interface ILlmEndpointOpenAI extends ILlmEndpointBase {
+    model: string;
+    organization?: string;
+    provider: "OPENAI";
+}
+
 // @public
 export type ILocatorItem = IAttributeLocatorItem | IMeasureLocatorItem | ITotalLocatorItem;
 
@@ -4033,6 +4047,9 @@ export type KpiWidgetDescriptionSourceType = "kpi" | "metric";
 
 // @alpha
 export type ListedDashboardAvailability = "full" | "viaLink";
+
+// @alpha
+export type LlmEndpointOpenAIPatch = Partial<ILlmEndpointOpenAI> & Pick<ILlmEndpointOpenAI, "id">;
 
 // @public
 export type LocalIdRef = {

@@ -1011,3 +1011,5 @@ export type {
 } from "./genAI/chat.js";
 
 export type { GenAIObjectType } from "./genAI/common.js";
+
+export type { ILlmEndpointBase, ILlmEndpointOpenAI, LlmEndpointOpenAIPatch } from "./llmEndpoints/index.js";
