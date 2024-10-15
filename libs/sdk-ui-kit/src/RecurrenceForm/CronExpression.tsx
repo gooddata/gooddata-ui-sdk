@@ -18,10 +18,12 @@ interface ICronExpressionProps {
     expression: string;
     onChange: (expression: string, isValid: boolean) => void;
     allowHourlyRecurrence?: boolean;
+    timezone?: string;
+    showTimezone?: boolean;
 }
 
 export const CronExpression: React.FC<ICronExpressionProps> = (props) => {
-    const { expression, onChange, allowHourlyRecurrence } = props;
+    const { expression, onChange, allowHourlyRecurrence, showTimezone, timezone } = props;
     const theme = useTheme();
     const [validationError, setValidationError] = useState<string | null>(null);
     const [hover, setHover] = useState(false);
@@ -96,6 +98,12 @@ export const CronExpression: React.FC<ICronExpressionProps> = (props) => {
                     </Bubble>
                 </BubbleHoverTrigger>
             </div>
+            {Boolean(showTimezone && timezone) && (
+                <div className="gd-recurrence-form-repeat-type-description s-recurrence-form-repeat-type-description">
+                    <FormattedMessage id="gs.date.at" tagName="span" />
+                    <span> {timezone}</span>
+                </div>
+            )}
         </>
     );
 };
