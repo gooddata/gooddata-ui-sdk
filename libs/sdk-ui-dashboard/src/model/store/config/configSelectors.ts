@@ -767,3 +767,12 @@ export const selectEnableCrossFilteringAliasTitles: DashboardSelector<boolean> =
         return state.settings?.enableCrossFilteringAliasTitles ?? false;
     },
 );
+
+/**
+ * Returns whether nested layout is enabled.
+ *
+ * @internal
+ */
+export const selectEnableNestedLayout: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
+    return state.settings?.enableDashboardNestedLayout ?? false;
+});

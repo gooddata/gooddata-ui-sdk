@@ -7450,6 +7450,9 @@ export const selectEnableKPIDashboardScheduleRecipients: DashboardSelector<boole
 export const selectEnableMultipleDateFilters: DashboardSelector<boolean>;
 
 // @internal
+export const selectEnableNestedLayout: DashboardSelector<boolean>;
+
+// @internal
 export const selectEnableRenamingMeasureToMetric: DashboardSelector<boolean>;
 
 // @internal
