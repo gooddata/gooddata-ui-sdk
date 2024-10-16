@@ -773,6 +773,9 @@ export const selectEnableCrossFilteringAliasTitles: DashboardSelector<boolean> =
  *
  * @internal
  */
-export const selectEnableNestedLayout: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
-    return state.settings?.enableDashboardFlexibleLayout ?? false;
-});
+export const selectEnableFlexibleLayout: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableDashboardFlexibleLayout ?? false;
+    },
+);
