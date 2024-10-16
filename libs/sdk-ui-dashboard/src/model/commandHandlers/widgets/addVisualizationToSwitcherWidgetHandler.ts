@@ -15,6 +15,7 @@ import { validateExistingVisualizationSwitcherWidget } from "./validation/widget
 import { layoutActions } from "../../store/layout/index.js";
 import { insightsActions } from "../../store/insights/index.js";
 import { getSizeInfo } from "../../../_staging/layout/sizing.js";
+import { selectSettings } from "../../store/config/configSelectors.js";
 
 export function* addVisualizationToSwticherWidgetContentHandler(
     ctx: DashboardContext,
@@ -26,8 +27,9 @@ export function* addVisualizationToSwticherWidgetContentHandler(
     } = cmd;
     const widgets: ReturnType<typeof selectWidgetsMap> = yield select(selectWidgetsMap);
     const visualizationSwitcherWidget = validateExistingVisualizationSwitcherWidget(widgets, cmd, ctx);
+    const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
 
-    const newSize = getSizeInfo({ enableKDWidgetCustomHeight: true }, "insight", insight);
+    const newSize = getSizeInfo(settings, "insight", insight);
 
     yield put(
         batchActions([

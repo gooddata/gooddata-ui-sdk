@@ -28,7 +28,7 @@ export abstract class BaseChartDescriptor implements IVisualizationDescriptor {
     ): IVisualizationSizeInfo {
         return {
             width: {
-                default: 6,
+                default: settings.enableDashboardFlexibleLayout ? 4 : 6,
                 min: 4,
                 max: layoutDescriptor.gridColumnsCount,
             },
