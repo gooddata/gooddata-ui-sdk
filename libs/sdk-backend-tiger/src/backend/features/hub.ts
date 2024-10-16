@@ -104,6 +104,10 @@ async function getFeatureHubData(
         featureHubFlags.push(`tier=${encodeURIComponent(context.tier)}`);
     }
 
+    if (context.jsSdkVersion) {
+        featureHubFlags.push(`jsSdkVersion=${encodeURIComponent(context.jsSdkVersion)}`);
+    }
+
     return axios.get("/features", {
         method: "GET",
         baseURL: host,

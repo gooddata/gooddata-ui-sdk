@@ -13,6 +13,7 @@ import { unwrapSettingContent } from "../../../convertors/fromBackend/SettingsCo
 import { TigerSettingsService, mapTypeToKey } from "../../settings/index.js";
 import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "../constants.js";
 import { FeatureContext, isLiveFeatures, isStaticFeatures } from "@gooddata/api-client-tiger";
+import { LIB_VERSION } from "../../../__version.js";
 
 export class TigerWorkspaceSettings
     extends TigerSettingsService<IWorkspaceSettings>
@@ -191,7 +192,9 @@ export function getSettingsForCurrentUser(
 
         const resolvedSettings: ISettings = await resolveSettings(authCall, workspace);
 
-        const context: Partial<FeatureContext> = {};
+        const context: Partial<FeatureContext> = {
+            jsSdkVersion: LIB_VERSION,
+        };
 
         const staticFeaturesEarlyAccess = isStaticFeatures(profile.features)
             ? profile.features?.static?.context?.earlyAccessValues ?? []

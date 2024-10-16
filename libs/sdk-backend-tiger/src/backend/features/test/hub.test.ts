@@ -21,10 +21,11 @@ describe("live features", () => {
         earlyAccessValues: string[] = [],
         organizationId = "",
         tier = "",
+        jsSdkVersion = "",
     ): ILiveFeatures["live"] {
         return {
             configuration: { host: "/", key: "" },
-            context: { earlyAccessValues, organizationId, tier },
+            context: { earlyAccessValues, organizationId, tier, jsSdkVersion },
         };
     }
 
@@ -75,13 +76,13 @@ describe("live features", () => {
 
         await getFeatureHubFeatures(
             createFeatures(),
-            pickContext({ earlyAccessValues: ["omega"] }, "test-org", []),
+            pickContext({ earlyAccessValues: ["omega"] }, "test-org", [], "1.0.0"),
         );
         expect(axiosGetSpy).toHaveBeenCalledWith("/features", {
             baseURL: "/",
             headers: {
                 "Content-type": "application/json",
-                "X-FeatureHub": "organizationId=test-org,earlyAccess=omega",
+                "X-FeatureHub": "organizationId=test-org,earlyAccess=omega,jsSdkVersion=1.0.0",
                 "if-none-match": expect.anything(),
             },
             method: "GET",
@@ -94,12 +95,12 @@ describe("live features", () => {
     it("call axios with context filled", async () => {
         mockReturn([]);
 
-        await getFeatureHubFeatures(createFeatures(["beta"], "org"));
+        await getFeatureHubFeatures(createFeatures(["beta"], "org", "", "1.0.0"));
         expect(axiosGetSpy).toHaveBeenCalledWith("/features", {
             baseURL: "/",
             headers: {
                 "Content-type": "application/json",
-                "X-FeatureHub": "organizationId=org,earlyAccess=beta",
+                "X-FeatureHub": "organizationId=org,earlyAccess=beta,jsSdkVersion=1.0.0",
                 "if-none-match": expect.anything(),
             },
             method: "GET",
@@ -114,13 +115,13 @@ describe("live features", () => {
 
         await getFeatureHubFeatures(
             createFeatures(["beta"], "org"),
-            pickContext({ earlyAccessValues: ["omega"] }, "test-org", entitlements),
+            pickContext({ earlyAccessValues: ["omega"] }, "test-org", entitlements, "1.0.0"),
         );
         expect(axiosGetSpy).toHaveBeenCalledWith("/features", {
             baseURL: "/",
             headers: {
                 "Content-type": "application/json",
-                "X-FeatureHub": "organizationId=test-org,earlyAccess=omega,tier=TRIAL",
+                "X-FeatureHub": "organizationId=test-org,earlyAccess=omega,tier=TRIAL,jsSdkVersion=1.0.0",
                 "if-none-match": expect.anything(),
             },
             method: "GET",
