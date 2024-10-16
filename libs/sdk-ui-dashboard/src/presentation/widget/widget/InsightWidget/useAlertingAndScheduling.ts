@@ -1,7 +1,12 @@
 // (C) 2024 GoodData Corporation
 
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
-import { useDashboardSelector, selectSettings, isCustomWidget } from "../../../../model/index.js";
+import {
+    useDashboardSelector,
+    selectSettings,
+    isCustomWidget,
+    selectIsReadOnly,
+} from "../../../../model/index.js";
 import { AlertingDisabledReason, SchedulingDisabledReason } from "../../insightMenu/index.js";
 import {
     isInsightAlertingConfigurationEnabled,
@@ -29,6 +34,7 @@ export const useAlertingAndScheduling = ({
     scheduleExportDisabledReason?: SchedulingDisabledReason;
 } => {
     const settings = useDashboardSelector(selectSettings);
+    const isReadOnly = useDashboardSelector(selectIsReadOnly);
 
     const isStandardWidget = !isCustomWidget(widget);
     const hasNoDestinations = numberOfAvailableDestinations === 0;
@@ -40,7 +46,8 @@ export const useAlertingAndScheduling = ({
     const isAlertingEnabled = settings.enableAlerting === true;
     const isInsightTypeSupportedForAlerting = isInsightSupportedForAlerts(insight);
     const isInsightEnabledForAlerting = isInsightAlertingConfigurationEnabled(insight);
-    const isAlertingVisible = isAlertingEnabled && isStandardWidget && isInsightTypeSupportedForAlerting;
+    const isAlertingVisible =
+        isAlertingEnabled && isStandardWidget && isInsightTypeSupportedForAlerting && !isReadOnly;
     const alertingDisabled = hasNoDestinations || !isInsightEnabledForAlerting || widgetHasNoLocalIdentifier;
     let alertingDisabledReason: AlertingDisabledReason | undefined = undefined;
     if (widgetHasNoLocalIdentifier) {
