@@ -7646,6 +7646,7 @@ export type FeatureContext = {
     organizationId: string;
     earlyAccessValues: string[];
     tier: string;
+    jsSdkVersion: string;
 };
 
 // @public

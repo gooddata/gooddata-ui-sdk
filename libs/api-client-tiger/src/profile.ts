@@ -6,6 +6,7 @@ export type FeatureContext = {
     organizationId: string;
     earlyAccessValues: string[];
     tier: string;
+    jsSdkVersion: string;
 };
 
 export interface ILiveFeatures {
