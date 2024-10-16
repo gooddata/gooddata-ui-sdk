@@ -449,7 +449,7 @@ export interface ISettings {
     /**
      * Enables new dashboard layout renderer with nesting support.
      */
-    enableDashboardNestedLayout?: boolean;
+    enableDashboardFlexibleLayout?: boolean;
 
     /**
      * Enable GenAI-powered functionality, such as semantic-search.
