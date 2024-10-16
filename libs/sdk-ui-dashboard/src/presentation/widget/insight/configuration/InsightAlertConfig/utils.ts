@@ -646,7 +646,8 @@ function transformAlertExecutionByMetric(
     if (condition.type === "relative" && periodMeasure) {
         return {
             ...execution,
-            measures: [
+            measures: [measure.measure, periodMeasure.measure],
+            auxMeasures: [
                 ...collectAllRelatedMeasures(metrics, measure.measure),
                 ...collectAllRelatedMeasures(metrics, periodMeasure.measure),
             ],
@@ -655,7 +656,8 @@ function transformAlertExecutionByMetric(
 
     return {
         ...execution,
-        measures: collectAllRelatedMeasures(metrics, measure.measure),
+        measures: [measure.measure],
+        auxMeasures: collectAllRelatedMeasures(metrics, measure.measure),
     };
 }
 
@@ -665,9 +667,9 @@ function collectAllRelatedMeasures(metrics: AlertMetric[], measure: AlertMetric[
         const related = metrics.filter((m) => {
             return included.includes(m.measure.measure.localIdentifier);
         });
-        return [measure, ...related.map((m) => m.measure)];
+        return related.map((m) => m.measure);
     }
-    return [measure];
+    return [];
 }
 
 function transformRelativeCondition(
