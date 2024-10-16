@@ -20,6 +20,8 @@ export type IEntitlementsName =
     | "WhiteLabeling"
     | "WorkspaceCount"
     | "Hipaa"
+    | "DailyAlertActionCount"
+    | "UnlimitedDailyAlertActions"
     | "UserTelemetryDisabled"
     | "AutomationCount"
     | "UnlimitedAutomations"

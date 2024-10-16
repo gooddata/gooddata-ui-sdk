@@ -840,7 +840,9 @@ export interface IAutomationAlertComparisonCondition {
 export type IAutomationAlertCondition = IAutomationAlertComparisonCondition | IAutomationAlertRelativeCondition;
 
 // @alpha (undocumented)
-export type IAutomationAlertExecutionDefinition = Pick<IExecutionDefinition, "attributes" | "measures" | "filters">;
+export type IAutomationAlertExecutionDefinition = Pick<IExecutionDefinition, "attributes" | "measures" | "filters"> & {
+    readonly auxMeasures?: IMeasure[];
+};
 
 // @alpha (undocumented)
 export interface IAutomationAlertRelativeCondition {
@@ -1692,7 +1694,7 @@ export interface IEntitlementDescriptor {
 }
 
 // @public
-export type IEntitlementsName = "CacheStrategy" | "Contract" | "CustomTheming" | "ExtraCache" | "ManagedOIDC" | "UiLocalization" | "Tier" | "UserCount" | "PdfExports" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WhiteLabeling" | "WorkspaceCount" | "Hipaa" | "UserTelemetryDisabled" | "AutomationCount" | "UnlimitedAutomations" | "AutomationRecipientCount" | "UnlimitedAutomationRecipients" | "DailyScheduledActionCount" | "UnlimitedDailyScheduledActions" | "ScheduledActionMinimumRecurrenceMinutes" | "FederatedIdentityManagement";
+export type IEntitlementsName = "CacheStrategy" | "Contract" | "CustomTheming" | "ExtraCache" | "ManagedOIDC" | "UiLocalization" | "Tier" | "UserCount" | "PdfExports" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WhiteLabeling" | "WorkspaceCount" | "Hipaa" | "DailyAlertActionCount" | "UnlimitedDailyAlertActions" | "UserTelemetryDisabled" | "AutomationCount" | "UnlimitedAutomations" | "AutomationRecipientCount" | "UnlimitedAutomationRecipients" | "DailyScheduledActionCount" | "UnlimitedDailyScheduledActions" | "ScheduledActionMinimumRecurrenceMinutes" | "FederatedIdentityManagement";
 
 // @public
 export interface IExecutionConfig {
