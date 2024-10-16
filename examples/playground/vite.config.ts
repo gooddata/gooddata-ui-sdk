@@ -2,7 +2,7 @@
 import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
 import mkcert from "vite-plugin-mkcert";
-import path from "path";
+import * as path from "path";
 
 const packagesWithoutStyles = [
     "@gooddata/sdk-model",
@@ -48,7 +48,7 @@ export default defineConfig(({ mode }) => {
     const backendUrl = env.VITE_BACKEND_URL ?? "https://staging.dev-latest.stg11.panther.intgdc.com";
 
     return {
-        plugins: [react(), mkcert()],
+        plugins: [react(), env.VITE_MKCERT === "true" && mkcert()].filter(Boolean),
         optimizeDeps: {
             exclude: [...packagesWithoutStyles, ...packagesWithStyles],
         },
