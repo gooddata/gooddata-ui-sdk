@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import {
     IElementsQueryFactory,
     IWorkspaceAttributesService,
@@ -28,7 +28,6 @@ import {
     AfmValidObjectsQuery,
     AttributeItem,
 } from "@gooddata/api-client-tiger";
-import flatMap from "lodash/flatMap.js";
 import { invariant } from "ts-invariant";
 
 import {
@@ -61,12 +60,37 @@ export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
     };
 
     public getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]> {
-        return this.authCall(async (client) => {
-            const allAttributes = await loadAttributes(client, this.workspace);
+        if (refs.length === 0) {
+            return Promise.resolve([]);
+        }
 
-            return flatMap(allAttributes, (attr) => attr.displayForms).filter((df) =>
-                refs.find((ref) => areObjRefsEqual(ref, df.ref)),
-            );
+        return this.authCall(async (client) => {
+            const filter = refs.map((ref: any) => `id==${ref.identifier}`).join(",");
+            const allDisplayForms = await client.entities.getAllEntitiesLabels({
+                include: ["attribute"],
+                workspaceId: this.workspace,
+                origin: "ALL",
+                filter,
+            });
+            const result = allDisplayForms?.data?.data;
+
+            return result?.map((item) => ({
+                attribute: {
+                    identifier: item.relationships?.attribute?.data?.id || "",
+                    type: item.relationships?.attribute?.data?.type || "attribute",
+                },
+                ref: { identifier: item.id, type: "displayForm" },
+                title: item?.attributes?.title || "",
+                description: item?.attributes?.description || "",
+                tags: item?.attributes?.tags,
+                primary: item?.attributes?.primary,
+                deprecated: false,
+                uri: item.id,
+                type: "displayForm", // item.type is "label"
+                production: true,
+                unlisted: false,
+                id: item.id,
+            }));
         });
     }
 
