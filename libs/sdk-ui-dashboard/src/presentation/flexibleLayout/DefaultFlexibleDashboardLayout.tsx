@@ -20,7 +20,6 @@ import {
     selectInsightsMap,
     selectEnableWidgetCustomHeight,
     selectRenderMode,
-    selectEnableFlexibleLayout,
 } from "../../model/index.js";
 
 import { DashboardLayoutWidget } from "./DashboardLayoutWidget.js";
@@ -37,7 +36,6 @@ import { getMemoizedWidgetSanitizer } from "./DefaultDashboardLayoutUtils.js";
 import { SectionHotspot } from "../dragAndDrop/index.js";
 import { isInitialPlaceholderWidget } from "../../widgets/index.js";
 import { EmptyDashboardLayout } from "./EmptyDashboardLayout.js";
-import { DefaultFlexibleDashboardLayout } from "../flexibleLayout/index.js";
 
 /**
  * Get dashboard layout for exports.
@@ -93,7 +91,10 @@ const itemKeyGetter: IDashboardLayoutItemKeyGetter<ExtendedDashboardWidget> = (k
     return keyGetterProps.item.index().toString();
 };
 
-const LegacyDefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Element => {
+/**
+ * @alpha
+ */
+export const DefaultFlexibleDashboardLayout = (props: IDashboardLayoutProps): JSX.Element => {
     const { onFiltersChange, onDrill, onError } = props;
 
     const layout = useDashboardSelector(selectLayout);
@@ -163,21 +164,10 @@ const LegacyDefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Element
                 sectionHeaderRenderer={renderModeAwareDashboardLayoutSectionHeaderRenderer}
                 renderMode={renderMode}
             />
-            {"old layout"}
+            {"new layout"}
             {!!shouldRenderSectionHotspot && (
                 <SectionHotspot index={transformedLayout.sections.length} targetPosition="below" />
             )}
         </>
     );
-};
-
-/**
- * @alpha
- */
-export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Element => {
-    const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
-    if (isFlexibleLayoutEnabled) {
-        return <DefaultFlexibleDashboardLayout {...props} />;
-    }
-    return <LegacyDefaultDashboardLayout {...props} />;
 };

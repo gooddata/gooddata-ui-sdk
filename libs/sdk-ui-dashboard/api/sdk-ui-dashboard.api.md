@@ -7402,6 +7402,9 @@ export const selectEnableFilterValuesResolutionInDrillEvents: DashboardSelector<
 export const selectEnableFilterViews: DashboardSelector<boolean>;
 
 // @internal
+export const selectEnableFlexibleLayout: DashboardSelector<boolean>;
+
+// @internal
 export const selectEnableIgnoreCrossFiltering: DashboardSelector<boolean>;
 
 // @public
@@ -7448,9 +7451,6 @@ export const selectEnableKPIDashboardScheduleRecipients: DashboardSelector<boole
 
 // @internal
 export const selectEnableMultipleDateFilters: DashboardSelector<boolean>;
-
-// @internal
-export const selectEnableNestedLayout: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableRenamingMeasureToMetric: DashboardSelector<boolean>;
