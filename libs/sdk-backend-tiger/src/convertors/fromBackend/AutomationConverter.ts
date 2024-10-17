@@ -144,6 +144,7 @@ const convertAlert = (
         execution: {
             attributes: [], // TODO: not implemented on BE yet
             measures: execution.measures.map(convertMeasure),
+            auxMeasures: execution.auxMeasures?.map(convertMeasure) ?? [],
             filters: execution.filters.map(convertFilter),
         },
         trigger: {

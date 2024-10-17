@@ -112,6 +112,9 @@ const convertAlert = (alert: IAutomationAlert): JsonApiAutomationOutAttributesAl
             measures: execution.measures.map((measure) => {
                 return omit(convertMeasure(measure), "alias", "format", "title");
             }),
+            auxMeasures: execution.auxMeasures?.map((measure) => {
+                return omit(convertMeasure(measure), "alias", "format", "title");
+            }),
         },
         trigger: alert.trigger.mode,
     };
