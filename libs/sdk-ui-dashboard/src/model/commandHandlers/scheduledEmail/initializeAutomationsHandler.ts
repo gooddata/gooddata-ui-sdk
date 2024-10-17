@@ -6,7 +6,11 @@ import { convertError } from "@gooddata/sdk-ui";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
 import { InitializeAutomations } from "../../commands/scheduledEmail.js";
-import { selectEnableAutomations, selectEnableScheduling } from "../../store/config/configSelectors.js";
+import {
+    selectEnableAutomations,
+    selectEnableScheduling,
+    selectIsReadOnly,
+} from "../../store/config/configSelectors.js";
 import { automationsActions } from "../../store/automations/index.js";
 import { selectDashboardId } from "../../store/meta/metaSelectors.js";
 import { usersActions } from "../../store/users/index.js";
@@ -40,8 +44,16 @@ export function* initializeAutomationsHandler(
     const automationsIsLoading: ReturnType<typeof selectAutomationsIsLoading> = yield select(
         selectAutomationsIsLoading,
     );
+    const isReadOnly: ReturnType<typeof selectIsReadOnly> = yield select(selectIsReadOnly);
 
-    if (!dashboardId || !user || !enableAutomations || automationsInitialized || automationsIsLoading) {
+    if (
+        !dashboardId ||
+        !user ||
+        !enableAutomations ||
+        automationsInitialized ||
+        automationsIsLoading ||
+        isReadOnly
+    ) {
         return;
     }
 

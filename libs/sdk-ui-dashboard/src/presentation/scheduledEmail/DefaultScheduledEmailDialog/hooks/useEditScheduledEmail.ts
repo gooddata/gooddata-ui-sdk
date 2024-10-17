@@ -10,9 +10,9 @@ import {
     isExportDefinitionDashboardRequestPayload,
     IInsight,
     IAutomationMetadataObject,
-    IUser,
     IFilter,
     INotificationChannelMetadataObject,
+    isAutomationUserRecipient,
 } from "@gooddata/sdk-model";
 import parseISO from "date-fns/parseISO/index.js";
 import { getUserTimezone } from "../utils/timezone.js";
@@ -24,13 +24,14 @@ import {
     ExtendedDashboardWidget,
     selectCurrentUser,
     selectTimezone,
+    selectUsers,
 } from "../../../../model/index.js";
 import { normalizeTime } from "@gooddata/sdk-ui-kit";
 import { WidgetAttachmentType } from "../types.js";
 import { toModifiedISOString } from "../../DefaultScheduledEmailManagementDialog/utils.js";
 import {
     areAutomationsEqual,
-    convertUserToAutomationRecipient,
+    convertCurrentUserToAutomationRecipient,
     getAutomationVisualizationFilters,
     isCsvVisualizationAutomation,
     isCsvVisualizationExportDefinition,
@@ -41,6 +42,7 @@ import {
 import { invariant } from "ts-invariant";
 import { useIntl } from "react-intl";
 import { useScheduleValidation } from "./useScheduleValidation.js";
+import { isEmail } from "../utils/validate.js";
 
 export interface IUseEditScheduledEmailProps {
     scheduledExportToEdit?: IAutomationMetadataObject;
@@ -79,7 +81,8 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
     const areDashboardFiltersChanged = !!dashboardFilters;
 
     const currentUser = useDashboardSelector(selectCurrentUser);
-    const defaultRecipient = convertUserToAutomationRecipient(currentUser);
+    const users = useDashboardSelector(selectUsers);
+    const defaultRecipient = convertCurrentUserToAutomationRecipient(users, currentUser);
 
     const firstChannel = notificationChannels[0]?.id;
 
@@ -93,7 +96,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
                           notificationChannel: firstChannel,
                           insight,
                           widget,
-                          user: currentUser,
+                          recipient: defaultRecipient,
                           widgetFilters,
                       }
                     : {
@@ -101,7 +104,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
                           dashboardId: dashboardId!,
                           notificationChannel: firstChannel,
                           title: dashboardTitle,
-                          user: currentUser,
+                          recipient: defaultRecipient,
                           dashboardFilters,
                       },
             ),
@@ -341,9 +344,20 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
     const hasRecipients = (editedAutomation.recipients?.length ?? 0) > 0;
     const hasDestination = !!editedAutomation.notificationChannel;
     const respectsRecipientsLimit = (editedAutomation.recipients?.length ?? 0) <= maxAutomationsRecipients;
+    const hasFilledEmails =
+        selectedNotificationChannel?.type === "smtp"
+            ? editedAutomation.recipients?.every((recipient) =>
+                  isAutomationUserRecipient(recipient) ? isEmail(recipient.email ?? "") : true,
+              )
+            : true;
 
     const isValid =
-        isCronValid && hasRecipients && respectsRecipientsLimit && hasAttachments && hasDestination;
+        isCronValid &&
+        hasRecipients &&
+        respectsRecipientsLimit &&
+        hasAttachments &&
+        hasDestination &&
+        hasFilledEmails;
 
     const isSubmitDisabled =
         !isValid || (scheduledExportToEdit && areAutomationsEqual(originalAutomation, editedAutomation));
@@ -450,7 +464,7 @@ function newAutomationMetadataObjectDefinition({
     title,
     insight,
     widget,
-    user,
+    recipient,
     dashboardFilters,
     widgetFilters,
 }: {
@@ -460,7 +474,7 @@ function newAutomationMetadataObjectDefinition({
     title?: string;
     insight?: IInsight;
     widget?: ExtendedDashboardWidget;
-    user: IUser;
+    recipient: IAutomationRecipient;
     dashboardFilters?: FilterContextItem[];
     widgetFilters?: IFilter[];
 }): IAutomationMetadataObjectDefinition {
@@ -497,7 +511,7 @@ function newAutomationMetadataObjectDefinition({
             subject: "",
         },
         exportDefinitions: [{ ...exportDefinition }],
-        recipients: [convertUserToAutomationRecipient(user)],
+        recipients: [recipient],
         notificationChannel,
         dashboard: dashboardId,
     };

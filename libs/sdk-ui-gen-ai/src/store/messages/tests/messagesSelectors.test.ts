@@ -9,25 +9,35 @@ const dummyState: RootState = {
         messageOrder: ["1", "2"],
         messages: {
             "1": {
-                id: "1",
+                id: 1,
+                localId: "1",
                 created: Date.now(),
-                type: "user-text",
-                content: {
-                    cancelled: false,
-                    text: "Hello",
-                },
+                role: "user",
+                cancelled: false,
+                complete: true,
+                content: [
+                    {
+                        type: "text",
+                        text: "Hello",
+                    },
+                ],
             },
             "2": {
-                id: "2",
+                id: 2,
+                localId: "2",
                 created: Date.now() + 1000,
-                type: "assistant-text",
-                content: { text: "Hi!" },
+                role: "assistant",
+                complete: true,
+                cancelled: true,
+                content: [
+                    {
+                        type: "text",
+                        text: "Hi there!",
+                    },
+                ],
             },
         },
         verbose: false,
-    },
-    agent: {
-        busy: false,
     },
 };
 

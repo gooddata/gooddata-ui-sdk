@@ -40,7 +40,7 @@
         "limit": 0
     },
     "messages.dashboardSaveFailed": {
-        "value": "Failed to save dashboard, please try again.",
+        "value": "Dashboard save failed. Remove any unavailable visualizations, then try again, or contact your administrator.",
         "comment": "",
         "limit": 0
     },
@@ -526,6 +526,11 @@
     "dialogs.schedule.email.min.recipients": {
         "value": "There must be at least one recipient.",
         "comment": "Message for recipients input when the minimum number of recipients is reached",
+        "limit": 0
+    },
+    "dialogs.schedule.email.user.missing.email": {
+        "value": "This user is missing an email address.",
+        "comment": "Message for recipients input when a user is missing an email address.",
         "limit": 0
     },
     "dialogs.schedule.email.subject.label": {
@@ -1168,6 +1173,16 @@
     },
     "widget.options.menu.scheduleExport.edit": {
         "value": "Show schedules",
+        "comment": "",
+        "limit": 0
+    },
+    "widget.error.missing_insight.message": {
+        "value": "No visualization available",
+        "comment": "",
+        "limit": 0
+    },
+    "widget.error.missing_insight.description": {
+        "value": "This visualization has been removed or is no longer accessible. Please contact your administrator or remove it from the dashboard.",
         "comment": "",
         "limit": 0
     },
@@ -2954,6 +2969,11 @@
     "insightAlert.config.when": {
         "value": "When",
         "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
+    "insightAlert.config.warning.destination": {
+        "value": "The selected destination only supports sending the alert to yourself.",
+        "comment": "Alert warning message",
         "limit": 0
     },
     "insightAlert.config.filters": {

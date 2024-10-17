@@ -620,5 +620,11 @@
     "insightAlert.config.filters.info": "Os alertas respeitam os filtros do painel conforme definido no momento de sua criação.{spacer}Para modificar o período de tempo usado para comparação, ajuste o filtro de data.",
     "insightAlert.config.compare_with": "em comparação com",
     "insightAlert.config.compare_with_sp": "Mesmo período do ano anterior",
-    "insightAlert.config.compare_with_pp": "Período anterior"
+    "insightAlert.config.compare_with_pp": "Período anterior",
+    "widget.error.missing_insight.message": "Não existe qualquer visualização disponível",
+    "widget.error.missing_insight.description": "Esta visualização foi removida ou já não está acessível. Entre em contacto com o administrador ou remova-a do painel.",
+    "visualizationSwitcher.configurationPanel.remove.from.switcher": "Remover do switcher",
+    "visualizationSwitcher.list.menu.move.up": "Mover para cima",
+    "visualizationSwitcher.list.menu.move.down": "Mover para baixo",
+    "visualizationSwitcher.list.menu.remove": "Remover"
 }

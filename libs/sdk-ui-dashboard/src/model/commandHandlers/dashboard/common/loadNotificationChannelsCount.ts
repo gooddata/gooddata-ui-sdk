@@ -5,7 +5,7 @@ import { DashboardContext } from "../../../types/commonTypes.js";
 export function loadNotificationChannelsCount(ctx: DashboardContext, settings: ISettings): Promise<number> {
     const { backend } = ctx;
 
-    if (!(settings?.enableScheduling || settings?.enableAlerting)) {
+    if (!(settings?.enableScheduling || settings?.enableAlerting) || ctx.config?.isReadOnly) {
         return Promise.resolve(0);
     }
 

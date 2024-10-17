@@ -456,6 +456,12 @@ export type DrillTransition = "pop-up" | "in-place" | "new-window";
 // @public
 export type DrillType = "drillToInsight" | "drillToDashboard" | "drillToLegacyDashboard" | "drillToCustomUrl" | "drillToAttributeUrl" | "crossFiltering";
 
+// @beta (undocumented)
+export type EarlyAccessFeatureContext = "WORKSPACE" | "ORGANIZATION";
+
+// @beta (undocumented)
+export type EarlyAccessFeatureStatus = "EXPERIMENTAL" | "BETA";
+
 // @public
 export function emptyDef(workspace: string): IExecutionDefinition;
 
@@ -504,94 +510,28 @@ export type ForecastDataValue = {
 };
 
 // @alpha
-export type GenAIActiveObject = {
-    id: string;
-    workspaceId: string;
-    type: GenAIObjectType;
-};
-
-// @alpha
-export type GenAIChatBaseInteractionContent = {
-    includeToChatContext: boolean;
-    userFeedback: "POSITIVE" | "NEGATIVE" | "NONE";
-};
-
-// @alpha
-export type GenAIChatCreatedVisualization = {
-    id: string;
-    title: string;
-    visualizationType: GenAIChatVisualizationType;
-    metrics: GenAIChatCreatedVisualizationMetric[];
-    dimensionality: GenAIChatCreatedVisualizationDimension[];
-};
-
-// @alpha
-export type GenAIChatCreatedVisualizationDimension = {
-    id: string;
-    type: "attribute";
-};
-
-// @alpha
-export type GenAIChatCreatedVisualizationMetric = {
-    id: string;
-    type: GenAIChatMetricType;
-    aggFunction: GenAIChatMetricAggregation;
-};
-
-// @alpha
-export type GenAIChatCreatedVisualizations = {
-    objects?: GenAIChatCreatedVisualization[];
-    reasoning: string;
-};
-
-// @alpha
-export type GenAIChatFoundObjects = {
-    objects?: ISemanticSearchResultItem[];
-    reasoning: string;
-};
-
-// @alpha
-export type GenAIChatInteractionContent = GenAIChatTextInteractionContent | GenAIChatSearchInteractionContent | GenAIChatVisualizationInteractionContent;
-
-// @alpha
-export type GenAIChatMetricAggregation = "COUNT" | "SUM" | "MIN" | "MAX" | "AVG" | "MEDIAN";
-
-// @alpha
-export type GenAIChatMetricType = "metric" | "fact" | "attribute";
+export type GenAIChatInteractionUserFeedback = "POSITIVE" | "NEGATIVE" | "NONE";
 
 // @alpha
 export type GenAIChatRole = "USER" | "AI";
 
 // @alpha
-export type GenAIChatSearchInteractionContent = GenAIChatBaseInteractionContent & {
-    foundObject: ISemanticSearchResultItem;
-};
+export type GenAIChatRoutingUseCase = "SEARCH_ALL" | "SEARCH_VISUALIZATIONS" | "SEARCH_DASHBOARDS" | "CREATE_VISUALIZATION" | "EXTEND_VISUALIZATION" | "GENERAL" | "INVALID";
 
 // @alpha
-export type GenAIChatTextInteractionContent = GenAIChatBaseInteractionContent & {
-    text: string;
-};
+export type GenAIMetricAggregation = "COUNT" | "SUM" | "MIN" | "MAX" | "AVG" | "MEDIAN";
 
 // @alpha
-export type GenAIChatUseCase = {
-    useCase: string;
-    exampleDescription?: string;
-    score: number;
-};
-
-// @alpha
-export type GenAIChatVisualizationInteractionContent = GenAIChatBaseInteractionContent & {
-    createdVisualization: GenAIChatCreatedVisualization;
-};
-
-// @alpha
-export type GenAIChatVisualizationType = "TABLE" | "HEADLINE" | "BAR" | "LINE" | "PIE" | "COLUMN";
+export type GenAIMetricType = "metric" | "fact" | "attribute";
 
 // @beta
 export type GenAIObjectType = "dataset" | "attribute" | "label" | "fact" | "date" | "metric" | "visualization" | "dashboard";
 
 // @beta @deprecated
 export type GenAISemanticSearchType = GenAIObjectType;
+
+// @alpha
+export type GenAIVisualizationType = "TABLE" | "HEADLINE" | "BAR" | "LINE" | "PIE" | "COLUMN";
 
 // @internal
 export function getAttributeElementsItems(attributeElements: IAttributeElements): Array<string | null>;
@@ -900,7 +840,9 @@ export interface IAutomationAlertComparisonCondition {
 export type IAutomationAlertCondition = IAutomationAlertComparisonCondition | IAutomationAlertRelativeCondition;
 
 // @alpha (undocumented)
-export type IAutomationAlertExecutionDefinition = Pick<IExecutionDefinition, "attributes" | "measures" | "filters">;
+export type IAutomationAlertExecutionDefinition = Pick<IExecutionDefinition, "attributes" | "measures" | "filters"> & {
+    readonly auxMeasures?: IMeasure[];
+};
 
 // @alpha (undocumented)
 export interface IAutomationAlertRelativeCondition {
@@ -1722,6 +1664,28 @@ export interface IDrillToLegacyDashboard extends IDrill {
     type: "drillToLegacyDashboard";
 }
 
+// @beta (undocumented)
+export interface IEarlyAccessFeatureConfig {
+    // (undocumented)
+    context: EarlyAccessFeatureContext;
+    // (undocumented)
+    description: string;
+    // (undocumented)
+    docs?: string;
+    // (undocumented)
+    earlyAccess: string;
+    // (undocumented)
+    status: EarlyAccessFeatureStatus;
+    // (undocumented)
+    title: string;
+}
+
+// @beta (undocumented)
+export interface IEarlyAccessFeaturesConfig {
+    // (undocumented)
+    features: IEarlyAccessFeatureConfig[];
+}
+
 // @public
 export interface IEntitlementDescriptor {
     expiry?: string;
@@ -1730,7 +1694,7 @@ export interface IEntitlementDescriptor {
 }
 
 // @public
-export type IEntitlementsName = "CacheStrategy" | "Contract" | "CustomTheming" | "ExtraCache" | "ManagedOIDC" | "UiLocalization" | "Tier" | "UserCount" | "PdfExports" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WhiteLabeling" | "WorkspaceCount" | "Hipaa" | "UserTelemetryDisabled" | "AutomationCount" | "UnlimitedAutomations" | "AutomationRecipientCount" | "UnlimitedAutomationRecipients" | "DailyScheduledActionCount" | "UnlimitedDailyScheduledActions" | "ScheduledActionMinimumRecurrenceMinutes" | "FederatedIdentityManagement";
+export type IEntitlementsName = "CacheStrategy" | "Contract" | "CustomTheming" | "ExtraCache" | "ManagedOIDC" | "UiLocalization" | "Tier" | "UserCount" | "PdfExports" | "UnlimitedUsers" | "UnlimitedWorkspaces" | "WhiteLabeling" | "WorkspaceCount" | "Hipaa" | "DailyAlertActionCount" | "UnlimitedDailyAlertActions" | "UserTelemetryDisabled" | "AutomationCount" | "UnlimitedAutomations" | "AutomationRecipientCount" | "UnlimitedAutomationRecipients" | "DailyScheduledActionCount" | "UnlimitedDailyScheduledActions" | "ScheduledActionMinimumRecurrenceMinutes" | "FederatedIdentityManagement";
 
 // @public
 export interface IExecutionConfig {
@@ -1866,22 +1830,66 @@ export interface IFilterContextDefinition extends IFilterContextBase, Partial<ID
 }
 
 // @alpha
-export interface IGenAIChatEvaluation {
-    createdVisualizations?: GenAIChatCreatedVisualizations;
-    foundObjects?: GenAIChatFoundObjects;
-    invalidQuestion: boolean;
-    useCases?: GenAIChatUseCase[];
+export interface IGenAIActiveObject {
+    id: string;
+    type: GenAIObjectType;
+    workspaceId: string;
 }
 
 // @alpha
 export interface IGenAIChatInteraction {
-    content: GenAIChatInteractionContent[];
-    role: GenAIChatRole;
+    chatHistoryInteractionId: number;
+    createdVisualizations?: IGenAICreatedVisualizations;
+    foundObjects?: IGenAIFoundObjects;
+    interactionFinished: boolean;
+    question: string;
+    routing: IGenAIChatRouting;
+    textResponse?: string;
+}
+
+// @alpha
+export interface IGenAIChatRouting {
+    reasoning: string;
+    useCase: GenAIChatRoutingUseCase;
+}
+
+// @alpha
+export interface IGenAICreatedVisualizations {
+    objects: IGenAIVisualization[];
+    reasoning: string;
+}
+
+// @alpha
+export interface IGenAIFoundObjects {
+    objects: ISemanticSearchResultItem[];
+    reasoning: string;
 }
 
 // @alpha
 export interface IGenAIUserContext {
-    activeObject: GenAIActiveObject;
+    activeObject: IGenAIActiveObject;
+}
+
+// @alpha
+export interface IGenAIVisualization {
+    dimensionality: IGenAIVisualizationDimension[];
+    id: string;
+    metrics: IGenAIVisualizationMetric[];
+    title: string;
+    visualizationType: GenAIVisualizationType;
+}
+
+// @alpha
+export interface IGenAIVisualizationDimension {
+    id: string;
+    type: "attribute";
+}
+
+// @alpha
+export interface IGenAIVisualizationMetric {
+    aggFunction?: GenAIMetricAggregation;
+    id: string;
+    type: GenAIMetricType;
 }
 
 // @public
@@ -2086,6 +2094,20 @@ export interface IListedDashboard extends Readonly<Required<IAuditableDates>>, R
     readonly tags?: string[];
     readonly title: string;
     readonly uri: string;
+}
+
+// @alpha
+export interface ILlmEndpointBase {
+    description?: string;
+    id: string;
+    title: string;
+}
+
+// @alpha
+export interface ILlmEndpointOpenAI extends ILlmEndpointBase {
+    model: string;
+    organization?: string;
+    provider: "OPENAI";
 }
 
 // @public
@@ -3026,15 +3048,15 @@ export interface ISemanticSearchRelationship {
 
 // @beta
 export interface ISemanticSearchResultItem {
-    createdAt: string;
-    description: string;
+    createdAt?: string;
+    description?: string;
     id: string;
     modifiedAt?: string;
-    score: number;
-    scoreDescriptor: number;
-    scoreExactMatch: number;
-    scoreTitle: number;
-    tags: string[];
+    score?: number;
+    scoreDescriptor?: number;
+    scoreExactMatch?: number;
+    scoreTitle?: number;
+    tags?: string[];
     title: string;
     type: GenAIObjectType;
     visualizationUrl?: string;
@@ -3055,6 +3077,8 @@ export interface ISettings {
     ADMeasureValueFilterNullAsZeroOption?: string;
     alertDefault?: IAlertDefault;
     disableKpiDashboardHeadlineUnderline?: boolean;
+    // @beta
+    earlyAccessFeatures?: IEarlyAccessFeaturesConfig;
     enableAdDescriptionEdit?: boolean;
     enableADMultipleDateFilters?: boolean;
     // @deprecated
@@ -3077,16 +3101,21 @@ export interface ISettings {
     enableCompanyLogoInEmbeddedUI?: boolean;
     enableCompositeGrain?: boolean;
     enableCreateUser?: boolean;
+    // @internal
+    enableCrossFilteringAliasTitles?: boolean;
     // (undocumented)
     enableCsvUploader?: boolean;
     enableCustomColorPicker?: boolean;
     enableDashboardFilterViews?: boolean;
+    enableDashboardFlexibleLayout?: boolean;
     enableDataSampling?: boolean;
     // (undocumented)
     enableDataSection?: boolean;
+    enableDefaultSmtp?: boolean;
     enableDescriptions?: boolean;
     enableDrilledInsightExport?: boolean;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
+    enableEarlyAccessFeaturesRollout?: boolean;
     enableEmbedButtonInAD?: boolean;
     enableEmbedButtonInKD?: boolean;
     enableFlightRpcDataSource?: boolean;
@@ -3944,9 +3973,13 @@ export interface IWorkspaceAccess {
 // @alpha
 export interface IWorkspaceDataFilter {
     // (undocumented)
+    columnName?: string;
+    // @deprecated (undocumented)
     id: string;
     // (undocumented)
     isInherited: boolean;
+    // (undocumented)
+    ref: ObjRef;
     // (undocumented)
     settings: IWorkspaceDataFilterSetting[];
     // (undocumented)
@@ -3954,11 +3987,23 @@ export interface IWorkspaceDataFilter {
 }
 
 // @alpha
+export interface IWorkspaceDataFilterDefinition {
+    // (undocumented)
+    columnName: string;
+    // (undocumented)
+    id?: string;
+    // (undocumented)
+    title: string;
+}
+
+// @alpha
 export interface IWorkspaceDataFilterSetting {
     // (undocumented)
     filterValues: string[];
-    // (undocumented)
+    // @deprecated (undocumented)
     id: string;
+    // (undocumented)
+    ref: ObjRef;
     // (undocumented)
     title?: string;
 }
@@ -4008,6 +4053,9 @@ export type KpiWidgetDescriptionSourceType = "kpi" | "metric";
 
 // @alpha
 export type ListedDashboardAvailability = "full" | "viaLink";
+
+// @alpha
+export type LlmEndpointOpenAIPatch = Partial<ILlmEndpointOpenAI> & Pick<ILlmEndpointOpenAI, "id">;
 
 // @public
 export type LocalIdRef = {
@@ -4285,7 +4333,7 @@ export function newVirtualArithmeticMeasure(measuresOrIds: ReadonlyArray<Measure
 export type NotificationChannelAllowedRecipient = "CREATOR" | "INTERNAL";
 
 // @public
-export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy" | "exportDefinition" | "automation" | "filterView";
+export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy" | "exportDefinition" | "automation" | "filterView" | "workspaceDataFilter" | "workspaceDataFilterSetting";
 
 // @public
 export type ObjRef = UriRef | IdentifierRef;

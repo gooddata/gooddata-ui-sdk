@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 
 import { ISettings } from "@gooddata/sdk-model";
 import { IChartConfig } from "../../../interfaces/index.js";
@@ -38,6 +38,10 @@ export function updateConfigWithSettings(config: IChartConfig, settings: ISettin
 
         if (settings.enableKDCrossFiltering) {
             updatedConfig = { ...updatedConfig, useGenericInteractionTooltip: true };
+        }
+
+        if (settings.enableCrossFilteringAliasTitles) {
+            updatedConfig = { ...updatedConfig, enableAliasAttributeLabel: true };
         }
     }
 

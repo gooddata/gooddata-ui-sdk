@@ -159,8 +159,8 @@ const convertAlert = (
                 operator: comparison.operator as IAlertComparisonOperator,
                 left: {
                     id: comparison.left.localIdentifier,
-                    title: comparison.left.title,
-                    format: comparison.left.format,
+                    title: comparison.left.title ?? undefined,
+                    format: comparison.left.format ?? undefined,
                 },
                 right: (comparison.right as any)?.value,
             },
@@ -177,13 +177,13 @@ const convertAlert = (
                     operator: relative.measure.operator,
                     left: {
                         id: relative.measure.left.localIdentifier,
-                        title: relative.measure.left.title,
-                        format: relative.measure.left.format,
+                        title: relative.measure.left.title ?? undefined,
+                        format: relative.measure.left.format ?? undefined,
                     },
                     right: {
                         id: relative.measure.right.localIdentifier,
-                        title: relative.measure.right.title,
-                        format: relative.measure.right.format,
+                        title: relative.measure.right.title ?? undefined,
+                        format: relative.measure.right.format ?? undefined,
                     },
                 },
                 ...(relative.measure.operator === ArithmeticMeasureOperatorEnum.CHANGE

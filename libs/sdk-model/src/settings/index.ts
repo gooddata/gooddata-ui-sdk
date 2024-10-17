@@ -447,6 +447,11 @@ export interface ISettings {
     enableSingleStoreDataSource?: boolean;
 
     /**
+     * Enables new dashboard layout renderer with nesting support.
+     */
+    enableDashboardFlexibleLayout?: boolean;
+
+    /**
      * Enable GenAI-powered functionality, such as semantic-search.
      * @deprecated Use separate flags for semantic search and GenAI chat below.
      */
@@ -496,6 +501,28 @@ export interface ISettings {
      * Enables the FlightRPC (FlexFunctions) data source.
      */
     enableFlightRpcDataSource?: boolean;
+
+    /**
+     * Early access features configuration.
+     * @beta
+     */
+    earlyAccessFeatures?: IEarlyAccessFeaturesConfig;
+
+    /**
+     * Enable early access features rollout.
+     */
+    enableEarlyAccessFeaturesRollout?: boolean;
+
+    /**
+     * Enable the use of alias filter titles in cross filtering.
+     * @internal
+     */
+    enableCrossFilteringAliasTitles?: boolean;
+
+    /**
+     * Enable the use of default SMTP in destinations.
+     */
+    enableDefaultSmtp?: boolean;
 
     [key: string]: number | boolean | string | object | undefined;
 }
@@ -590,3 +617,32 @@ export interface IOpenAiConfig {
  * @public
  */
 export type WeekStart = "Sunday" | "Monday";
+
+/**
+ * @beta
+ */
+export type EarlyAccessFeatureContext = "WORKSPACE" | "ORGANIZATION";
+
+/**
+ * @beta
+ */
+export type EarlyAccessFeatureStatus = "EXPERIMENTAL" | "BETA";
+
+/**
+ * @beta
+ */
+export interface IEarlyAccessFeatureConfig {
+    title: string;
+    description: string;
+    docs?: string;
+    earlyAccess: string;
+    context: EarlyAccessFeatureContext;
+    status: EarlyAccessFeatureStatus;
+}
+
+/**
+ * @beta
+ */
+export interface IEarlyAccessFeaturesConfig {
+    features: IEarlyAccessFeatureConfig[];
+}

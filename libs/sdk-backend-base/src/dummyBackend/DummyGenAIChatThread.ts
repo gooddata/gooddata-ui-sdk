@@ -1,37 +1,66 @@
 // (C) 2024 GoodData Corporation
-import { IChatThread } from "@gooddata/sdk-backend-spi";
-import { IGenAIChatEvaluation } from "@gooddata/sdk-model";
+import {
+    IChatThread,
+    IChatThreadHistory,
+    IChatThreadQuery,
+    IGenAIChatEvaluation,
+} from "@gooddata/sdk-backend-spi";
+
+/**
+ * Dummy chat thread interface for testing.
+ * @internal
+ */
+export class DummyGenAIChatThread implements IChatThread {
+    async loadHistory(
+        _fromInteractionId: number,
+        { signal }: { signal?: AbortSignal },
+    ): Promise<IChatThreadHistory> {
+        await cancellableTimeout(100, signal);
+        return Promise.resolve({
+            interactions: [],
+        });
+    }
+    async reset(): Promise<void> {
+        await cancellableTimeout(100);
+    }
+    query(_userMessage: string): IChatThreadQuery {
+        return new DummyGenAIChatQueryBuilder();
+    }
+}
 
 /**
  * Dummy query builder for GenAI chat
  * @internal
  */
-export class DummyGenAIChatThread implements IChatThread {
-    withChatHistory(): IChatThread {
+export class DummyGenAIChatQueryBuilder implements IChatThreadQuery {
+    withSearchLimit(): IChatThreadQuery {
         return this;
     }
 
-    withSearchLimit(): IChatThread {
+    withCreateLimit(): IChatThreadQuery {
         return this;
     }
 
-    withUserContext(): IChatThread {
-        return this;
-    }
-
-    withCreateLimit(): IChatThread {
-        return this;
-    }
-
-    withQuestion(): IChatThread {
+    withUserContext(): IChatThreadQuery {
         return this;
     }
 
     async query({ signal }: { signal?: AbortSignal }): Promise<IGenAIChatEvaluation> {
         await cancellableTimeout(100, signal);
         return Promise.resolve({
-            invalidQuestion: false,
-            useCases: [],
+            routing: {
+                useCase: "GENERAL",
+                reasoning: "",
+            },
+            textResponse: "",
+            foundObjects: {
+                objects: [],
+                reasoning: "",
+            },
+            createdVisualizations: {
+                objects: [],
+                reasoning: "",
+            },
         });
     }
 }
@@ -41,7 +70,10 @@ const cancellableTimeout = async (ms: number, signal?: AbortSignal) => {
         if (signal?.aborted) {
             rej(signal.reason);
         }
-        signal?.addEventListener("abort", () => rej(signal.reason));
-        setTimeout(res, ms);
+        const tm = setTimeout(res, ms);
+        signal?.addEventListener("abort", () => {
+            clearTimeout(tm);
+            rej(signal.reason);
+        });
     });
 };

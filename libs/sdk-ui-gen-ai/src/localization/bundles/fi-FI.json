@@ -1,1 +1,22 @@
-{}
+{
+    "gd.gen-ai.invalid-question": "Virheellinen kysymys. Yritä uudelleen.",
+    "gd.gen-ai.global-error": "Tapahtui odottamaton virhe.",
+    "gd.gen-ai.global-error.button-details": "Näytä virheen tiedot",
+    "gd.gen-ai.global-error.button-clear": "Tyhjennä keskustelu ja yritä uudelleen",
+    "gd.gen-ai.input-placeholder": "Kysy täältä…",
+    "gd.gen-ai.disclaimer": "Tekoälyassistentit voivat tehdä virheitä. Tarkista ennen näihin vastauksiin luottamista.",
+    "gd.gen-ai.header.reset-tooltip": "Nollaa",
+    "gd.gen-ai.header.contract-tooltip": "Sopimus",
+    "gd.gen-ai.header.expand-tooltip": "Laajenna",
+    "gd.gen-ai.header.close-tooltip": "Sulje",
+    "gd.gen-ai.welcome.line-1": "Hei!",
+    "gd.gen-ai.welcome.line-2": "Miten voin auttaa?",
+    "gd.gen-ai.welcome.option-1.title": "Hae koontinäyttöä tai visualisointia",
+    "gd.gen-ai.welcome.option-1.answer": "Millaisen koontinäytön tai visualisoinnin haluaisit nähdä?",
+    "gd.gen-ai.welcome.option-2.title": "Luo uusi visualisointi",
+    "gd.gen-ai.welcome.option-2.answer": "Toki, millaisen visualisoinnin haluaisit luoda?",
+    "gd.gen-ai.welcome.option-3.title": "Vastaa yrityskysymykseen",
+    "gd.gen-ai.welcome.option-3.answer": "Toki, mihin liikekysymykseen haluaisit vastata?",
+    "gd.gen-ai.state.cancelled": "Peruutettu",
+    "gd.gen-ai.state.in-progress": "Luodaan vastaustasi…"
+}

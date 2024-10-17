@@ -3422,6 +3422,8 @@ export interface IRecurrenceFormProps {
     // (undocumented)
     showRepeatTypeDescription?: boolean;
     // (undocumented)
+    showTimezoneInOccurrence?: boolean;
+    // (undocumented)
     startDate?: Date | null;
     // (undocumented)
     startLabel?: string;
@@ -3452,7 +3454,11 @@ export interface IRecurrenceProps {
     // (undocumented)
     showRepeatTypeDescription?: boolean;
     // (undocumented)
+    showTimezoneInOccurrence?: boolean;
+    // (undocumented)
     startDate?: Date | null;
+    // (undocumented)
+    timezone?: string;
     // (undocumented)
     weekStart?: WeekStart;
 }

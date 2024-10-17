@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { IAttributeDisplayFormMetadataObject, IAttributeMetadataObject, ObjRef } from "@gooddata/sdk-model";
 import { IntlShape } from "react-intl";
 
@@ -11,6 +11,7 @@ export interface IIdentifierParametersSectionProps extends IParametersPanelSecti
     enableClientIdParameter: boolean;
     enableDataProductIdParameter: boolean;
     enableWidgetIdParameter: boolean;
+    widgetRef: ObjRef;
 }
 export interface IAttributeWithDisplayForm {
     attribute: IAttributeMetadataObject;

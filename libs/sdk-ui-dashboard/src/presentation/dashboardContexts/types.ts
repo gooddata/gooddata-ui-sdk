@@ -81,7 +81,7 @@ export type OptionalInsightBodyComponentProvider = OptionalProvider<InsightBodyC
  * @alpha
  */
 export type InsightMenuButtonComponentProvider = (
-    insight: IInsight,
+    insight: IInsight | undefined,
     widget: IInsightWidget,
 ) => CustomDashboardInsightMenuButtonComponent;
 
@@ -94,7 +94,7 @@ export type OptionalInsightMenuButtonComponentProvider = OptionalProvider<Insigh
  * @alpha
  */
 export type InsightMenuComponentProvider = (
-    insight: IInsight,
+    insight: IInsight | undefined,
     widget: IInsightWidget,
 ) => CustomDashboardInsightMenuComponent;
 
@@ -107,7 +107,7 @@ export type OptionalInsightMenuComponentProvider = OptionalProvider<InsightMenuC
  * @internal
  */
 export type InsightMenuTitleComponentProvider = (
-    insight: IInsight,
+    insight: IInsight | undefined,
     widget: IInsightWidget,
 ) => CustomDashboardInsightMenuTitleComponent;
 

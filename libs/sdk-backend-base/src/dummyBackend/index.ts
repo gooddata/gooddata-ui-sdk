@@ -80,6 +80,7 @@ import {
     IAutomationsQueryResult,
     AutomationType,
     IChatThread,
+    IOrganizationLlmEndpointsService,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -128,6 +129,7 @@ import {
     ISmtpDefinition,
     IAutomationMetadataObjectDefinition,
     IAutomationMetadataObject,
+    ILlmEndpointOpenAI,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
 import isEmpty from "lodash/isEmpty.js";
@@ -312,7 +314,7 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
         async getDescriptor(): Promise<IWorkspaceDescriptor> {
             return dummyDescriptor(this.workspace);
         },
-        async updateDescriptor(): Promise<void> {
+        async updateDescriptor(): Promise<IWorkspaceDescriptor> {
             throw new NotSupported("not supported");
         },
         getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {
@@ -748,8 +750,12 @@ class DummyOrganization implements IOrganization {
         });
     }
 
-    updateDescriptor(): Promise<void> {
-        return Promise.resolve();
+    // eslint-disable-next-line sonarjs/no-identical-functions
+    updateDescriptor(): Promise<IOrganizationDescriptor> {
+        return Promise.resolve({
+            id: this.organizationId,
+            title: "dummy organization",
+        });
     }
 
     securitySettings(): ISecuritySettingsService {
@@ -923,6 +929,37 @@ class DummyOrganization implements IOrganization {
                 }),
             getWebhooks: () => Promise.resolve([]),
             updateWebhook: (webhook) => Promise.resolve(webhook),
+        };
+    }
+
+    llmEndpoints(): IOrganizationLlmEndpointsService {
+        const dummyEndpoint: ILlmEndpointOpenAI = {
+            id: "dummyLlmEndpoint",
+            title: "Dummy Llm Endpoint",
+            provider: "OPENAI",
+            model: "gpt-4o-mini",
+        };
+
+        return {
+            getCount: () => Promise.resolve(0),
+            getAll: () => Promise.resolve([]),
+            deleteLlmEndpoint: () => Promise.resolve(),
+            getLlmEndpoint: () =>
+                Promise.resolve({
+                    ...dummyEndpoint,
+                }),
+            createLlmEndpoint: () =>
+                Promise.resolve({
+                    ...dummyEndpoint,
+                }),
+            updateLlmEndpoint: () =>
+                Promise.resolve({
+                    ...dummyEndpoint,
+                }),
+            patchLlmEndpoint: () =>
+                Promise.resolve({
+                    ...dummyEndpoint,
+                }),
         };
     }
 }

@@ -52,6 +52,7 @@ export function* addAttributeFilterHandler(
         mode,
         localIdentifier,
         primaryDisplayForm,
+        title,
     } = cmd.payload;
 
     const isUnderFilterCountLimit: ReturnType<typeof selectCanAddMoreFilters> = yield select(
@@ -137,6 +138,7 @@ export function* addAttributeFilterHandler(
                 parentFilters,
                 selectionMode,
                 localIdentifier,
+                title,
             }),
             filterContextActions.addAttributeFilterDisplayForm(displayFormMetadata),
         ]),

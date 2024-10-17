@@ -1,1 +1,22 @@
-{}
+{
+    "gd.gen-ai.invalid-question": "Invalid question. Try again.",
+    "gd.gen-ai.global-error": "A bloke didn't see this stuff-up coming.",
+    "gd.gen-ai.global-error.button-details": "Display error specifics",
+    "gd.gen-ai.global-error.button-clear": "Clear chat and give it another go",
+    "gd.gen-ai.input-placeholder": "Enquire here…",
+    "gd.gen-ai.disclaimer": "AI mates can stuff up. Double-check before you bank on their responses.",
+    "gd.gen-ai.header.reset-tooltip": "Reset",
+    "gd.gen-ai.header.contract-tooltip": "Contract",
+    "gd.gen-ai.header.expand-tooltip": "Enlarge",
+    "gd.gen-ai.header.close-tooltip": "Shut",
+    "gd.gen-ai.welcome.line-1": "Hello there,",
+    "gd.gen-ai.welcome.line-2": "How can I give you a hand mate?",
+    "gd.gen-ai.welcome.option-1.title": "Search for a dashboard or visualisation",
+    "gd.gen-ai.welcome.option-1.answer": "No worries, what kind of dashboard or visualisation would you like to see?",
+    "gd.gen-ai.welcome.option-2.title": "Create a new visualisation",
+    "gd.gen-ai.welcome.option-2.answer": "Sure thing, what kind of visualisation would you like to create?",
+    "gd.gen-ai.welcome.option-3.title": "Respond to a business query.",
+    "gd.gen-ai.welcome.option-3.answer": "No worries, what business query would you like to respond to?",
+    "gd.gen-ai.state.cancelled": "Called off",
+    "gd.gen-ai.state.in-progress": "Creating your reply…"
+}

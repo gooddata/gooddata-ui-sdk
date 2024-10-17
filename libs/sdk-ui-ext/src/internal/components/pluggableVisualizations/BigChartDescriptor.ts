@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { IInsightDefinition, ISettings } from "@gooddata/sdk-model";
 
@@ -20,7 +20,7 @@ export abstract class BigChartDescriptor extends BaseChartDescriptor {
     ): IVisualizationSizeInfo {
         return {
             width: {
-                default: 6,
+                default: settings.enableDashboardFlexibleLayout ? 4 : 6,
                 min: 4,
                 max: layoutDescriptor.gridColumnsCount,
             },

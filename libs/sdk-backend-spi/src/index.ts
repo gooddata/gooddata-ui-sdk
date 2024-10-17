@@ -100,6 +100,9 @@ export type {
     ISemanticSearchQuery,
     ISemanticSearchResult,
     IChatThread,
+    IChatThreadHistory,
+    IChatThreadQuery,
+    IGenAIChatEvaluation,
 } from "./workspace/genAI/index.js";
 
 export type { IWorkspaceStylingService } from "./workspace/styling/index.js";
@@ -250,3 +253,5 @@ export type {
     IAutomationsQuery,
     IAutomationsQueryResult,
 } from "./workspace/automations/index.js";
+
+export type { IOrganizationLlmEndpointsService } from "./organization/llmEndpoints/index.js";

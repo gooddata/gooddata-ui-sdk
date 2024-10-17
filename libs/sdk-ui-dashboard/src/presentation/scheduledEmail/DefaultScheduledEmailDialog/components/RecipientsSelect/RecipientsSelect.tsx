@@ -1,7 +1,11 @@
 // (C) 2019-2024 GoodData Corporation
 /* eslint-disable import/named,import/namespace */
 import React, { useMemo, useState } from "react";
-import { IAutomationRecipient, IWorkspaceUser } from "@gooddata/sdk-model";
+import {
+    IAutomationRecipient,
+    INotificationChannelMetadataObject,
+    IWorkspaceUser,
+} from "@gooddata/sdk-model";
 import sortBy from "lodash/sortBy.js";
 
 import { RecipientsSelectRenderer } from "./RecipientsSelectRenderer.js";
@@ -37,10 +41,35 @@ interface IRecipientsSelectProps {
      * Maximum number of recipients
      */
     maxRecipients?: number;
+
+    /**
+     * Additional class name
+     */
+    className?: string;
+
+    /**
+     * Notification channels
+     */
+    notificationChannels?: INotificationChannelMetadataObject[];
+
+    /**
+     * Notification channel id
+     */
+    notificationChannelId?: string;
 }
 
 export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
-    const { users, value, originalValue, onChange, allowEmptySelection, maxRecipients } = props;
+    const {
+        users,
+        value,
+        originalValue,
+        onChange,
+        allowEmptySelection,
+        maxRecipients,
+        className,
+        notificationChannels,
+        notificationChannelId,
+    } = props;
 
     const [search, setSearch] = useState<string>();
 
@@ -48,6 +77,10 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
         const filteredUsers = search ? users?.filter((user) => matchUser(user, search)) : users;
         return sortBy(filteredUsers?.map(convertUserToAutomationRecipient) ?? [], "user.email");
     }, [users, search]);
+
+    const notificationChannel = useMemo(() => {
+        return notificationChannels?.find((channel) => channel.id === notificationChannelId);
+    }, [notificationChannelId, notificationChannels]);
 
     return (
         <RecipientsSelectRenderer
@@ -62,6 +95,8 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
             }}
             allowEmptySelection={allowEmptySelection}
             maxRecipients={maxRecipients}
+            className={className}
+            notificationChannel={notificationChannel}
         />
     );
 };

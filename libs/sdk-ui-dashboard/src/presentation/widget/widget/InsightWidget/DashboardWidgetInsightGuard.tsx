@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React from "react";
 
 import { useDashboardSelector, selectInsightsMap } from "../../../../model/index.js";
@@ -16,14 +16,6 @@ export const DashboardWidgetInsightGuard: React.FC<IDashboardWidgetInsightGuardP
     const { widget, Component } = props;
     const insights = useDashboardSelector(selectInsightsMap);
     const insight = insights.get(widget.insight);
-
-    if (!insight) {
-        // eslint-disable-next-line no-console
-        console.debug(
-            "DefaultDashboardInsightWidget rendered before the insights were ready, skipping render.",
-        );
-        return null;
-    }
 
     return <Component {...props} insight={insight} />;
 };

@@ -419,6 +419,9 @@ export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo;
 export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationDefaultSizeInfo;
 
 // @internal (undocumented)
+export const INSIGHT_WIDGET_SIZE_INFO_NEW_DEFAULT: IVisualizationDefaultSizeInfo;
+
+// @internal (undocumented)
 export const InsightError: React_2.FC<WithIntlProps<IInsightErrorProps & WrappedComponentProps>> & {
     WrappedComponent: React_2.ComponentType<IInsightErrorProps & WrappedComponentProps>;
 };
@@ -439,10 +442,10 @@ export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition
 export function isEmptyAfm(obj: unknown): obj is EmptyAfmSdkError;
 
 // @internal (undocumented)
-export const isInsightAlertingConfigurationEnabled: (insight: IInsight | IInsightDefinition) => boolean;
+export const isInsightAlertingConfigurationEnabled: (insight: IInsight | IInsightDefinition | undefined) => boolean;
 
 // @internal (undocumented)
-export const isInsightScheduledExportsConfigurationEnabled: (insight: IInsight | IInsightDefinition) => boolean;
+export const isInsightScheduledExportsConfigurationEnabled: (insight: IInsight | IInsightDefinition | undefined) => boolean;
 
 // @internal (undocumented)
 export const isInsightSupportedForAlerts: (insight: IInsight | IInsightDefinition | null | undefined) => boolean;
@@ -561,6 +564,9 @@ export function provideCreateRoot(createRoot: CreateRoot): void;
 // @internal (undocumented)
 export const RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo;
 
+// @internal (undocumented)
+export const RICH_TEXT_WIDGET_SIZE_INFO_NEW_DEFAULT: IVisualizationDefaultSizeInfo;
+
 // @public
 export interface Root {
     // (undocumented)
@@ -589,6 +595,9 @@ export type UserGroupEditDialogMode = "VIEW" | "WORKSPACE" | "USERS" | "DATA_SOU
 
 // @internal (undocumented)
 export const VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo;
+
+// @internal (undocumented)
+export const VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_NEW_DEFAULT: IVisualizationDefaultSizeInfo;
 
 // @internal (undocumented)
 export const WIDGET_DROPZONE_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo;

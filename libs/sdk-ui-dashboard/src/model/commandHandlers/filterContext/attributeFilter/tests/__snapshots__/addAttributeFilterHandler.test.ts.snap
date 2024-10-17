@@ -31,6 +31,7 @@ exports[`addAttributeFilterHandler > should set the attribute filter in state wh
     "filterElementsBy": undefined,
     "localIdentifier": Any<String>,
     "negativeSelection": true,
+    "title": undefined,
   },
 }
 `;

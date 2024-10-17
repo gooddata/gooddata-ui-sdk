@@ -1,21 +1,21 @@
 {
-    "gd.gen-ai.invalid-question": {
-        "value": "Invalid question. Try again.",
+    "gd.gen-ai.global-error": {
+        "value": "Something went wrong",
         "comment": "",
         "limit": 0
     },
-    "gd.gen-ai.global-error": {
-        "value": "An unforeseen error has occurred.",
+    "gd.gen-ai.global-error.description": {
+        "value": "Try restarting the chatbot and starting over.",
         "comment": "",
         "limit": 0
     },
     "gd.gen-ai.global-error.button-details": {
-        "value": "Show error details",
+        "value": "See details",
         "comment": "",
         "limit": 0
     },
     "gd.gen-ai.global-error.button-clear": {
-        "value": "Clear conversation and try again",
+        "value": "Restart chatbot",
         "comment": "",
         "limit": 0
     },
@@ -90,13 +90,13 @@
         "limit": 0
     },
     "gd.gen-ai.state.cancelled": {
-        "value": "Cancelled",
-        "comment": "",
+        "value": "Evaluation cancelled…",
+        "comment": "Use ellipsis at the end …",
         "limit": 0
     },
-    "gd.gen-ai.state.in-progress": {
-        "value": "Generating your response…",
-        "comment": "Use ellipsis at the end …",
+    "gd.gen-ai.button.send": {
+        "value": "Send",
+        "comment": "",
         "limit": 0
     }
 }

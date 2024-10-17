@@ -15,7 +15,11 @@ import {
     insightTitle,
 } from "@gooddata/sdk-model";
 
-import { selectSettings, useDashboardSelector } from "../../../../model/index.js";
+import {
+    selectSettings,
+    useDashboardSelector,
+    useDashboardUserInteraction,
+} from "../../../../model/index.js";
 import {
     defaultAlignPoints,
     defaultArrowDirections,
@@ -53,6 +57,8 @@ export const Toolbar: React.FC<ToolbarProps> = ({
     onSelectedVisualizationChanged,
     onClose,
 }) => {
+    const userInteraction = useDashboardUserInteraction();
+
     const visualizations = widget.visualizations;
 
     const [isVisualizationsListVisible, setVisualizationsListVisible] = useState(true);
@@ -122,6 +128,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
             }
 
             onVisualizationsChanged(updatedVisualizations);
+            userInteraction.visualizationSwitcherInteraction("visualizationSwitcherOrderChanged");
         },
         [onVisualizationsChanged, visualizations],
     );
@@ -143,6 +150,9 @@ export const Toolbar: React.FC<ToolbarProps> = ({
             setActiveVisualizationId(identifier);
             onSelectedVisualizationChanged?.(identifier);
             setVisualizationsListVisible(false);
+            userInteraction.visualizationSwitcherInteraction(
+                "visualizationSwitcherVisualizationDetailOpened",
+            );
         },
         [onSelectedVisualizationChanged],
     );

@@ -94,6 +94,8 @@ export {
     selectEnableVisualizationSwitcher,
     selectEnableIgnoreCrossFiltering,
     selectEnableAutomations,
+    selectEnableCrossFilteringAliasTitles,
+    selectEnableNestedLayout,
 } from "./config/configSelectors.js";
 export type { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {

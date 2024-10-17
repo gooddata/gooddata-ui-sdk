@@ -7,7 +7,7 @@ import { DashboardContext } from "../../../types/commonTypes.js";
 export function loadFilterViews(ctx: DashboardContext): Promise<IDashboardFilterView[]> {
     const { backend, workspace } = ctx;
 
-    if (!ctx.dashboardRef) {
+    if (!ctx.dashboardRef || ctx.config?.isReadOnly) {
         return Promise.resolve([]);
     }
 

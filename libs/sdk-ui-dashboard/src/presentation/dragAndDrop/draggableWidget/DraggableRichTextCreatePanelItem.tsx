@@ -1,10 +1,15 @@
 // (C) 2022-2024 GoodData Corporation
 import React from "react";
 
-import { RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
+import {
+    RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT,
+    RICH_TEXT_WIDGET_SIZE_INFO_NEW_DEFAULT,
+} from "@gooddata/sdk-ui-ext";
 import { CustomCreatePanelItemComponent } from "../../componentDefinition/index.js";
 import { DraggableCreatePanelItem } from "../DraggableCreatePanelItem.js";
 import { DraggableItem, IWrapCreatePanelItemWithDragComponent } from "../types.js";
+import { useDashboardSelector, selectSettings } from "../../../model/index.js";
+import { ISettings } from "@gooddata/sdk-model";
 
 /**
  * @internal
@@ -14,12 +19,16 @@ interface IDraggableRichTextCreatePanelItemProps {
     WrapCreatePanelItemWithDragComponent?: IWrapCreatePanelItemWithDragComponent;
 }
 
-const dragItem: DraggableItem = {
-    type: "richTextListItem",
-    size: {
-        gridHeight: RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT.height.default,
-        gridWidth: RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT.width.default,
-    },
+const getDragItem = (settings: ISettings): DraggableItem => {
+    return {
+        type: "richTextListItem",
+        size: {
+            gridHeight: RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT.height.default,
+            gridWidth: settings.enableDashboardFlexibleLayout
+                ? RICH_TEXT_WIDGET_SIZE_INFO_NEW_DEFAULT.width.default
+                : RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT.width.default,
+        },
+    };
 };
 
 /**
@@ -29,6 +38,8 @@ export const DraggableRichTextCreatePanelItem: React.FC<IDraggableRichTextCreate
     CreatePanelItemComponent,
     WrapCreatePanelItemWithDragComponent,
 }) => {
+    const settings = useDashboardSelector(selectSettings);
+    const dragItem = getDragItem(settings);
     return (
         <DraggableCreatePanelItem
             Component={CreatePanelItemComponent}

@@ -2,15 +2,17 @@
 
 import {
     GenAIObjectType,
-    IGenAIChatEvaluation,
-    IGenAIChatInteraction,
     IGenAIUserContext,
     ISemanticSearchRelationship,
     ISemanticSearchResultItem,
+    IGenAIChatInteraction,
+    IGenAIChatRouting,
+    IGenAIFoundObjects,
+    IGenAICreatedVisualizations,
 } from "@gooddata/sdk-model";
 
 /**
- * GenAI-powered semantic search service.
+ * GenAI-powered features.
  * @beta
  */
 export interface IGenAIService {
@@ -71,38 +73,64 @@ export interface ISemanticSearchResult {
 }
 
 /**
- * Chatbot thread builder.
- * @alpha
+ * Chatbot thread.
+ * @beta
  */
 export interface IChatThread {
     /**
-     * Define the next user message in the chat thread.
+     * Load chat history for the chat thread.
      */
-    withQuestion(question: string): IChatThread;
+    loadHistory(fromInteractionId?: number, options?: { signal?: AbortSignal }): Promise<IChatThreadHistory>;
+    /**
+     * Reset the chat thread history.
+     */
+    reset(): Promise<void>;
+    /**
+     * Add a user message to the chat thread.
+     */
+    query(userMessage: string): IChatThreadQuery;
+}
 
+/**
+ * Chatbot thread history.
+ * @beta
+ */
+export interface IChatThreadHistory {
+    interactions: IGenAIChatInteraction[];
+}
+
+/**
+ * Chatbot thread query builder.
+ * @beta
+ */
+export interface IChatThreadQuery {
     /**
      * Define the limit for the number of search results returned by the chat thread.
      */
-    withSearchLimit(searchLimit: number): IChatThread;
-
+    withSearchLimit(searchLimit: number): IChatThreadQuery;
     /**
      * Define the limit for the number of created visualization returned by the chat thread.
      */
-    withCreateLimit(createLimit: number): IChatThread;
-
+    withCreateLimit(createLimit: number): IChatThreadQuery;
     /**
      * Define the user context for the chat thread.
      * For example, what dashboard the user is currently looking at.
      */
-    withUserContext(userContext: IGenAIUserContext): IChatThread;
-
-    /**
-     * Define the chat history for the chat thread.
-     */
-    withChatHistory(chatHistory: IGenAIChatInteraction[]): IChatThread;
-
+    withUserContext(userContext: IGenAIUserContext): IChatThreadQuery;
     /**
      * Execute the chat thread.
      */
     query(options?: { signal?: AbortSignal }): Promise<IGenAIChatEvaluation>;
+}
+
+/**
+ * GenAI chat evaluation result.
+ * @beta
+ */
+export interface IGenAIChatEvaluation {
+    routing: IGenAIChatRouting;
+    textResponse?: string;
+    foundObjects?: IGenAIFoundObjects;
+    createdVisualizations?: IGenAICreatedVisualizations;
+    chatHistoryThreadId?: string;
 }

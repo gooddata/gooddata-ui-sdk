@@ -6,6 +6,7 @@ import { IOrganizationStylingService } from "./styling/index.js";
 import { IOrganizationUserService } from "./users/index.js";
 import { IOrganizationPermissionService } from "./permissions/index.js";
 import { IOrganizationNotificationChannelService } from "./notificationChannels/index.js";
+import { IOrganizationLlmEndpointsService } from "./llmEndpoints/index.js";
 
 /**
  * Represents an organization that services analytical workspaces.
@@ -30,7 +31,7 @@ export interface IOrganization {
      *
      * @param descriptor - properties to update
      */
-    updateDescriptor(descriptor: IOrganizationDescriptorUpdate): Promise<void>;
+    updateDescriptor(descriptor: IOrganizationDescriptorUpdate): Promise<IOrganizationDescriptor>;
 
     /**
      * Returns service that can be used to query and update organization security settings.
@@ -61,6 +62,11 @@ export interface IOrganization {
      * Returns service that can be used to query and manage organization notification channels.
      */
     notificationChannels(): IOrganizationNotificationChannelService;
+
+    /**
+     * Returns service that can be used to query and manage organization LLM endpoints.
+     */
+    llmEndpoints(): IOrganizationLlmEndpointsService;
 }
 
 /**

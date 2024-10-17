@@ -52,6 +52,7 @@ import {
     IWorkspaceAutomationService,
     IGenAIService,
     IChatThread,
+    IOrganizationLlmEndpointsService,
 } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
@@ -70,6 +71,7 @@ import {
     ISmtpDefinitionObject,
     idRef,
     ObjRef,
+    ILlmEndpointOpenAI,
 } from "@gooddata/sdk-model";
 import RecordedAttributeHierarchiesService from "./attributeHierarchies.js";
 import { RecordedAttributes } from "./attributes.js";
@@ -196,7 +198,7 @@ function recordedWorkspace(
         async getDescriptor(): Promise<IWorkspaceDescriptor> {
             return recordedDescriptor(this.workspace, implConfig);
         },
-        async updateDescriptor(): Promise<void> {
+        async updateDescriptor(): Promise<IWorkspaceDescriptor> {
             throw new NotSupported("not supported");
         },
         getParentWorkspace(): Promise<IAnalyticalWorkspace | undefined> {
@@ -364,8 +366,11 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 title: "mock organization",
             });
         },
-        updateDescriptor(): Promise<void> {
-            return Promise.resolve();
+        updateDescriptor(): Promise<IOrganizationDescriptor> {
+            return Promise.resolve({
+                id: organizationId,
+                title: "mock organization",
+            });
         },
         securitySettings(): ISecuritySettingsService {
             return {
@@ -539,6 +544,36 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 removeUsersFromUserGroups: () => Promise.resolve(),
                 updateUser: () => Promise.resolve(),
                 updateUserGroup: () => Promise.resolve(),
+            };
+        },
+        llmEndpoints(): IOrganizationLlmEndpointsService {
+            const dummyEndpoint: ILlmEndpointOpenAI = {
+                id: "dummyLlmEndpoint",
+                title: "Dummy Llm Endpoint",
+                provider: "OPENAI",
+                model: "gpt-4o-mini",
+            };
+
+            return {
+                getCount: () => Promise.resolve(0),
+                getAll: () => Promise.resolve([]),
+                deleteLlmEndpoint: () => Promise.resolve(),
+                getLlmEndpoint: () =>
+                    Promise.resolve({
+                        ...dummyEndpoint,
+                    }),
+                createLlmEndpoint: () =>
+                    Promise.resolve({
+                        ...dummyEndpoint,
+                    }),
+                updateLlmEndpoint: () =>
+                    Promise.resolve({
+                        ...dummyEndpoint,
+                    }),
+                patchLlmEndpoint: () =>
+                    Promise.resolve({
+                        ...dummyEndpoint,
+                    }),
             };
         },
     };

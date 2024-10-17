@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import React from "react";
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 import { Button, ItemsWrapper } from "@gooddata/sdk-ui-kit";
@@ -9,7 +9,7 @@ import { RenderMode } from "../../../../../types.js";
 interface IDashboardInsightMenuContainerProps {
     children: React.ReactNode;
     widget: IInsightWidget;
-    insight: IInsight;
+    insight?: IInsight;
     onClose: () => void;
     renderMode: RenderMode;
 }

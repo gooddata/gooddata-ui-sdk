@@ -25,13 +25,14 @@
     align-items: center;
     justify-content: space-between;
     gap: 8px;
-    background-color: white;
+    background-color: var(--gd-palette-complementary-0, #fff);
     line-height: 0;
 
     .gd-bubble-trigger {
         display: inline-block;
     }
     .left-section {
+        cursor: pointer;
         padding: 4px;
         flex: 0 1 auto;
         &:not(.is-active):hover path {
@@ -62,12 +63,16 @@
         padding: 4px;
         justify-content: center;
         align-items: center;
-        &:not(.is-disabled):hover path {
-            fill: kit-variables.$gd-color-text;
+        &:not(.is-disabled) {
+            cursor: pointer;
+            &:hover path {
+                fill: kit-variables.$gd-color-text;
+            }
         }
     }
 
     .right-section {
+        cursor: pointer;
         display: flex;
         padding: 4px;
         justify-content: center;
@@ -84,7 +89,7 @@
 
 .gd-visualization-switcher-toolbar-bottom.bubble.bubble-light {
     position: initial;
-    background-color: white;
+    background-color: var(--gd-palette-complementary-0, #fff);
 
     .configuration-panel-header {
         height: 39px;
@@ -136,6 +141,7 @@
         justify-content: space-between;
         height: 40px;
         cursor: pointer;
+        color: var(--gd-palette-complementary-8, #464e56);
 
         .switcher-visualizations-list-item-content {
             width: 100%;
@@ -158,6 +164,9 @@
         }
 
         &:not(.is-selected) {
+            &:hover {
+                color: var(--gd-palette-complementary-9, #464e56);
+            }
             .gd-vis-switcher-show-more-button {
                 // stylelint-disable-next-line max-nesting-depth
                 &:hover {

@@ -7,7 +7,11 @@ import { DashboardContext } from "../../types/commonTypes.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
 import { RefreshAutomations } from "../../commands/scheduledEmail.js";
 import { loadDashboardUserAutomations, loadWorkspaceAutomationsCount } from "./loadAutomations.js";
-import { selectEnableAlerting, selectEnableScheduling } from "../../store/config/configSelectors.js";
+import {
+    selectEnableAlerting,
+    selectEnableScheduling,
+    selectIsReadOnly,
+} from "../../store/config/configSelectors.js";
 import { automationsActions } from "../../store/automations/index.js";
 import { selectDashboardId } from "../../store/meta/metaSelectors.js";
 import { selectCurrentUser } from "../../store/user/userSelectors.js";
@@ -21,10 +25,10 @@ export function* refreshAutomationsHandlers(ctx: DashboardContext, _cmd: Refresh
     const canManageAutomations: ReturnType<typeof selectCanManageWorkspace> = yield select(
         selectCanManageWorkspace,
     );
-
+    const isReadOnly: ReturnType<typeof selectIsReadOnly> = yield select(selectIsReadOnly);
     const enableAutomations = enableScheduling || enableAlerting;
 
-    if (!dashboardId || !user || !enableAutomations) {
+    if (!dashboardId || !user || !enableAutomations || isReadOnly) {
         return;
     }
 

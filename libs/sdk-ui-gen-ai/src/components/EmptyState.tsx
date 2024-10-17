@@ -2,8 +2,8 @@
 import React from "react";
 import { Button, Icon, Typography } from "@gooddata/sdk-ui-kit";
 import { connect } from "react-redux";
-import { makeAssistantTextMessage, makeUserTextMessage } from "../model.js";
-import { setMessages } from "../store/index.js";
+import { makeAssistantMessage, makeTextContents, makeUserMessage } from "../model.js";
+import { setMessagesAction } from "../store/index.js";
 import { defineMessage, FormattedMessage, injectIntl, WrappedComponentProps } from "react-intl";
 
 const quickOptions = [
@@ -28,11 +28,11 @@ const quickOptions = [
 ];
 
 type EmptyStateDispatchProps = {
-    setMessages: typeof setMessages;
+    setMessagesAction: typeof setMessagesAction;
 };
 
 const EmptyStateComponent: React.FC<EmptyStateDispatchProps & WrappedComponentProps> = ({
-    setMessages,
+    setMessagesAction,
     intl,
 }) => {
     return (
@@ -47,10 +47,15 @@ const EmptyStateComponent: React.FC<EmptyStateDispatchProps & WrappedComponentPr
                 <Button
                     key={option.title.id}
                     onClick={() =>
-                        setMessages([
-                            makeUserTextMessage(intl.formatMessage(option.question)),
-                            makeAssistantTextMessage(intl.formatMessage(option.answer)),
-                        ])
+                        setMessagesAction({
+                            messages: [
+                                makeUserMessage([makeTextContents(intl.formatMessage(option.question))]),
+                                makeAssistantMessage(
+                                    [makeTextContents(intl.formatMessage(option.answer))],
+                                    true,
+                                ),
+                            ],
+                        })
                     }
                     variant="secondary"
                 >
@@ -63,7 +68,7 @@ const EmptyStateComponent: React.FC<EmptyStateDispatchProps & WrappedComponentPr
 };
 
 const mapDispatchToProps: EmptyStateDispatchProps = {
-    setMessages,
+    setMessagesAction,
 };
 
 export const EmptyState = connect(null, mapDispatchToProps)(injectIntl(EmptyStateComponent));

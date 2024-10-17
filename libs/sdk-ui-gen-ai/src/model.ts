@@ -1,209 +1,224 @@
 // (C) 2024 GoodData Corporation
 import { v4 as uuidv4 } from "uuid";
-import { GenAIChatFoundObjects, IGenAIChatEvaluation } from "@gooddata/sdk-model";
+import { GenAIChatRoutingUseCase, IGenAIVisualization, ISemanticSearchResultItem } from "@gooddata/sdk-model";
+
+/**
+ * @alpha
+ */
+export type TextContents = {
+    type: "text";
+    text: string;
+};
+
+/**
+ * @alpha
+ */
+export const isTextContents = (contents: Contents): contents is TextContents => contents.type === "text";
+
+/**
+ * @alpha
+ */
+export const makeTextContents = (text: string): TextContents => ({
+    type: "text",
+    text,
+});
+
+/**
+ * @alpha
+ */
+export type RoutingContents = {
+    type: "routing";
+    text: string;
+    useCase: GenAIChatRoutingUseCase;
+};
+
+/**
+ * @alpha
+ */
+export const isRoutingContents = (contents: Contents): contents is RoutingContents =>
+    contents.type === "routing";
+
+/**
+ * @alpha
+ */
+export const makeRoutingContents = (text: string, useCase: GenAIChatRoutingUseCase): RoutingContents => ({
+    type: "routing",
+    text,
+    useCase,
+});
+
+/**
+ * @alpha
+ */
+export type SearchContents = {
+    type: "search";
+    text: string;
+    searchResults: ISemanticSearchResultItem[];
+};
+
+/**
+ * @alpha
+ */
+export const isSearchContents = (contents: Contents): contents is SearchContents =>
+    contents.type === "search";
+
+/**
+ * @alpha
+ */
+export const makeSearchContents = (
+    text: string,
+    searchResults: ISemanticSearchResultItem[] = [],
+): SearchContents => ({
+    type: "search",
+    text,
+    searchResults,
+});
+
+/**
+ * @alpha
+ */
+export type VisualizationContents = {
+    type: "visualization";
+    text: string;
+    createdVisualizations: IGenAIVisualization[];
+};
+
+/**
+ * @alpha
+ */
+export const isVisualizationContents = (contents: Contents): contents is VisualizationContents =>
+    contents.type === "visualization";
+
+/**
+ * @alpha
+ */
+export const makeVisualizationContents = (
+    text: string,
+    createdVisualizations: IGenAIVisualization[] = [],
+): VisualizationContents => ({
+    type: "visualization",
+    text,
+    createdVisualizations,
+});
+
+/**
+ * @alpha
+ */
+export type ErrorContents = {
+    type: "error";
+    text: string;
+};
+
+/**
+ * @alpha
+ */
+export const isErrorContents = (contents: Contents): contents is ErrorContents => contents.type === "error";
+
+/**
+ * @alpha
+ */
+export const makeErrorContents = (text: string): ErrorContents => ({
+    type: "error",
+    text,
+});
+
+/**
+ * @alpha
+ */
+export type Contents =
+    | TextContents
+    | RoutingContents
+    | SearchContents
+    | VisualizationContents
+    | ErrorContents;
 
 /**
  * @alpha
  */
 export type BaseMessage = {
-    id: string;
+    /**
+     * Server-side ID for the message.
+     */
+    id?: number;
+    /**
+     * Local ID for the message. We need the id right away for optimistic rendering.
+     */
+    localId: string;
+    /**
+     * A timestamp of the message creation.
+     */
     created: number;
+    /**
+     * Specifies if the message processing was cancelled.
+     */
+    cancelled: boolean;
+    /**
+     * Specifies if the message processing is complete.
+     */
+    complete: boolean;
+    /**
+     * The contents of the message.
+     */
+    content: Contents[];
 };
 
 /**
  * @alpha
  */
-export type UserMessage = UserTextMessage;
-
-/**
- * @alpha
- */
-export type UserTextMessage = BaseMessage & {
-    type: "user-text";
-    content: {
-        text: string;
-        cancelled: boolean;
-    };
+export type UserMessage = BaseMessage & {
+    role: "user";
 };
 
 /**
  * @alpha
  */
-export const isUserTextMessage = (message?: Message): message is UserTextMessage =>
-    message?.type === "user-text";
+export const isUserMessage = (message?: Message): message is UserMessage => message?.role === "user";
 
 /**
  * @alpha
  */
-export const makeUserTextMessage = (text: string): UserTextMessage => ({
-    id: uuidv4(),
-    type: "user-text",
+export const makeUserMessage = (content: Contents[]): UserMessage => ({
+    localId: uuidv4(),
+    role: "user",
     created: Date.now(),
-    content: {
-        text,
-        cancelled: false,
-    },
+    cancelled: false,
+    complete: true,
+    content,
 });
 
 /**
  * @alpha
  */
-export type SystemMessage = SystemTextMessage;
-
-/**
- * @alpha
- */
-export type SystemTextMessage = BaseMessage & {
-    type: "system-text";
-    content: {
-        text: string;
-    };
+export type AssistantMessage = BaseMessage & {
+    role: "assistant";
 };
 
 /**
  * @alpha
  */
-export const isSystemTextMessage = (message?: Message): message is SystemMessage =>
-    message?.type === "system-text";
+export const isAssistantMessage = (message?: Message): message is AssistantMessage =>
+    message?.role === "assistant";
 
 /**
+ * Create a new Assistant message. By default, mark it as incomplete.
  * @alpha
  */
-export const makeSystemTextMessage = (text: string): SystemMessage => ({
-    id: uuidv4(),
-    type: "system-text",
+export const makeAssistantMessage = (
+    content: Contents[],
+    complete = false,
+    id?: number,
+): AssistantMessage => ({
+    id: id,
+    localId: uuidv4(),
+    role: "assistant",
     created: Date.now(),
-    content: {
-        text,
-    },
+    cancelled: false,
+    complete,
+    content,
 });
-
-/**
- * @alpha
- */
-export type AssistantTextMessage = BaseMessage & {
-    type: "assistant-text";
-    content: {
-        text: string;
-    };
-};
-
-/**
- * @alpha
- */
-export const isAssistantTextMessage = (message?: Message): message is AssistantTextMessage =>
-    message?.type === "assistant-text";
-
-/**
- * @alpha
- */
-export const makeAssistantTextMessage = (text: string): AssistantTextMessage => ({
-    id: uuidv4(),
-    type: "assistant-text",
-    created: Date.now(),
-    content: {
-        text,
-    },
-});
-
-/**
- * @alpha
- */
-export type AssistantErrorMessage = BaseMessage & {
-    type: "assistant-error";
-    content: {
-        error: string | null;
-        foundObjects?: GenAIChatFoundObjects;
-    };
-};
-
-/**
- * @alpha
- */
-export const isAssistantErrorMessage = (message?: Message): message is AssistantErrorMessage =>
-    message?.type === "assistant-error";
-
-/**
- * @alpha
- */
-export const makeAssistantErrorMessage = (
-    error: string | null,
-    foundObjects?: GenAIChatFoundObjects,
-): AssistantErrorMessage => ({
-    id: uuidv4(),
-    type: "assistant-error",
-    created: Date.now(),
-    content: {
-        foundObjects,
-        error,
-    },
-});
-
-/**
- * @alpha
- */
-export type AssistantSearchCreateMessage = BaseMessage & {
-    type: "assistant-search-create";
-    content: IGenAIChatEvaluation;
-};
-
-/**
- * @alpha
- */
-export const isAssistantSearchCreateMessage = (message?: Message): message is AssistantSearchCreateMessage =>
-    message?.type === "assistant-search-create";
-
-/**
- * @alpha
- */
-export const makeAssistantSearchCreateMessage = (
-    chatEvaluation: IGenAIChatEvaluation,
-): AssistantSearchCreateMessage => ({
-    id: uuidv4(),
-    type: "assistant-search-create",
-    created: Date.now(),
-    content: chatEvaluation,
-});
-
-/**
- * @alpha
- */
-export type AssistantCancelledMessage = BaseMessage & {
-    type: "assistant-cancelled";
-};
-
-/**
- * @alpha
- */
-export const isAssistantCancelledMessage = (message?: Message): message is AssistantCancelledMessage =>
-    message?.type === "assistant-cancelled";
-
-/**
- * @alpha
- */
-export const makeAssistantCancelledMessage = (): AssistantCancelledMessage => ({
-    id: uuidv4(),
-    type: "assistant-cancelled",
-    created: Date.now(),
-});
-
-/**
- * @alpha
- */
-export type AssistantMessage =
-    | AssistantTextMessage
-    | AssistantErrorMessage
-    | AssistantSearchCreateMessage
-    | AssistantCancelledMessage;
 
 /**
  * All messages that can be stored in history.
  * @alpha
  */
-export type Message = UserMessage | SystemMessage | AssistantMessage;
-
-/**
- * Only messages that can be displayed in the chat, including in verbose mode.
- * @alpha
- */
-export type VisibleMessage = UserMessage | SystemMessage | AssistantMessage;
+export type Message = UserMessage | AssistantMessage;

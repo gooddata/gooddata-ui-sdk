@@ -8,6 +8,7 @@ import {
 } from "../exportDefinitions/index.js";
 import { IExecutionDefinition } from "../execution/executionDefinition/index.js";
 import { Identifier } from "../objRef/index.js";
+import { IMeasure } from "../execution/measure/index.js";
 
 /**
  * @alpha
@@ -222,7 +223,12 @@ export type IAutomationRecipient = IAutomationUserRecipient | IAutomationUserGro
 export type IAutomationAlertExecutionDefinition = Pick<
     IExecutionDefinition,
     "attributes" | "measures" | "filters"
->;
+> & {
+    /**
+     * Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.
+     */
+    readonly auxMeasures?: IMeasure[];
+};
 
 /**
  * @alpha

@@ -55,6 +55,7 @@ describe("alert transforms", () => {
             execution: {
                 filters: [],
                 measures: [],
+                auxMeasures: [],
                 attributes: [],
             },
             trigger: {
@@ -83,6 +84,7 @@ describe("alert transforms", () => {
             execution: {
                 filters: [],
                 measures: [],
+                auxMeasures: [],
                 attributes: [],
             },
             trigger: {
@@ -386,7 +388,8 @@ describe("alert transforms", () => {
                     },
                     execution: {
                         ...baseComparison.alert.execution,
-                        measures: [arithmeticMetric1.measure, simpleMetric1.measure, simpleMetric2.measure],
+                        measures: [arithmeticMetric1.measure],
+                        auxMeasures: [simpleMetric1.measure, simpleMetric2.measure],
                     },
                 },
             });

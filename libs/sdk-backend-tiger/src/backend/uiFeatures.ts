@@ -1,4 +1,5 @@
 // (C) 2020-2024 GoodData Corporation
+import { IEarlyAccessFeaturesConfig } from "@gooddata/sdk-model";
 
 /**
  * This is list of feature flags managed on Panther by FeatureHub
@@ -111,6 +112,11 @@ export enum TigerFeaturesNames {
     EnableIgnoreCrossFiltering = "enableIgnoreCrossFiltering",
     EnableHeadlineExport = "enableHeadlineExport",
     EnableFlightRpcDataSource = "enableFlightRpcDataSource",
+    EarlyAccessFeatures = "earlyAccessFeatures",
+    EnableEarlyAccessFeaturesRollout = "enableEarlyAccessFeaturesRollout",
+    EnableCrossFilteringAliasTitles = "enableCrossFilteringAliasTitles",
+    EnableDefaultSmtp = "enableDefaultSmtp",
+    EnableDashboardFlexibleLayout = "enableDashboardFlexibleLayout",
 }
 
 export type ITigerFeatureFlags = {
@@ -186,6 +192,11 @@ export type ITigerFeatureFlags = {
     enableIgnoreCrossFiltering: typeof FeatureFlagsValues["enableIgnoreCrossFiltering"][number];
     enableHeadlineExport: typeof FeatureFlagsValues["enableHeadlineExport"][number];
     enableFlightRpcDataSource: typeof FeatureFlagsValues["enableFlightRpcDataSource"][number];
+    earlyAccessFeatures: typeof FeatureFlagsValues["earlyAccessFeatures"][number];
+    enableEarlyAccessFeaturesRollout: typeof FeatureFlagsValues["enableEarlyAccessFeaturesRollout"][number];
+    enableCrossFilteringAliasTitles: typeof FeatureFlagsValues["enableCrossFilteringAliasTitles"][number];
+    enableDefaultSmtp: typeof FeatureFlagsValues["enableDefaultSmtp"][number];
+    enableDashboardFlexibleLayout: typeof FeatureFlagsValues["enableDashboardFlexibleLayout"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -257,10 +268,15 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDashboardFilterViews: true,
     enableWorkspaceHierarchySettings: false,
     enableNewInsightChangedPostMessageEvent: false,
-    enableKDVisualizationSwitcher: false,
+    enableKDVisualizationSwitcher: true,
     enableIgnoreCrossFiltering: true,
     enableHeadlineExport: true,
     enableFlightRpcDataSource: false,
+    earlyAccessFeatures: undefined,
+    enableEarlyAccessFeaturesRollout: false,
+    enableCrossFilteringAliasTitles: false,
+    enableDefaultSmtp: false,
+    enableDashboardFlexibleLayout: false,
 };
 
 export const FeatureFlagsValues = {
@@ -340,4 +356,9 @@ export const FeatureFlagsValues = {
     enableIgnoreCrossFiltering: [true, false] as const,
     enableHeadlineExport: [true, false] as const,
     enableFlightRpcDataSource: [true, false] as const,
+    earlyAccessFeatures: [undefined, {} as IEarlyAccessFeaturesConfig] as const,
+    enableEarlyAccessFeaturesRollout: [true, false] as const,
+    enableCrossFilteringAliasTitles: [true, false] as const,
+    enableDefaultSmtp: [true, false] as const,
+    enableDashboardFlexibleLayout: [true, false] as const,
 };

@@ -25,6 +25,7 @@ import { uiActions } from "../../store/ui/index.js";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
 import { getSizeInfo } from "../../../_staging/layout/sizing.js";
 import { loadInsight } from "./common/loadInsight.js";
+import { selectSettings } from "../../store/config/configSelectors.js";
 
 export function* changeInsightWidgetInsightHandler(
     ctx: DashboardContext,
@@ -37,6 +38,7 @@ export function* changeInsightWidgetInsightHandler(
 
     const widgetsMap: ReturnType<typeof selectWidgetsMap> = yield select(selectWidgetsMap);
     const widgets: ReturnType<typeof selectWidgets> = yield select(selectWidgets);
+    const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
 
     // Find if changed insight is part of Vis. Switcher
     let visSwitcherRef: ObjRef | undefined;
@@ -79,7 +81,7 @@ export function* changeInsightWidgetInsightHandler(
     const isTitleDifferent = insightTitle(insight) !== originalInsightTitle;
 
     const shouldChangeTitle = !hasCustomName && isTitleDifferent;
-    const newSize = getSizeInfo({ enableKDWidgetCustomHeight: true }, "insight", insight);
+    const newSize = getSizeInfo(settings, "insight", insight);
 
     yield put(
         batchActions([

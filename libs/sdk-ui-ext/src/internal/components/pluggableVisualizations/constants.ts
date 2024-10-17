@@ -43,6 +43,21 @@ export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo = {
 /**
  * @internal
  */
+export const INSIGHT_WIDGET_SIZE_INFO_NEW_DEFAULT: IVisualizationDefaultSizeInfo = {
+    width: {
+        min: 4,
+        default: 4,
+    },
+    height: {
+        default: 22,
+        min: 22,
+        max: 40,
+    },
+};
+
+/**
+ * @internal
+ */
 export const RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo = {
     width: {
         min: 2,
@@ -58,10 +73,40 @@ export const RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo =
 /**
  * @internal
  */
+export const RICH_TEXT_WIDGET_SIZE_INFO_NEW_DEFAULT: IVisualizationDefaultSizeInfo = {
+    width: {
+        min: 2,
+        default: 4,
+    },
+    height: {
+        default: 22,
+        min: 6,
+        max: 40,
+    },
+};
+
+/**
+ * @internal
+ */
 export const VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo = {
     width: {
         min: 4,
         default: 6,
+    },
+    height: {
+        default: 22,
+        min: 12,
+        max: 40,
+    },
+};
+
+/**
+ * @internal
+ */
+export const VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_NEW_DEFAULT: IVisualizationDefaultSizeInfo = {
+    width: {
+        min: 4,
+        default: 4,
     },
     height: {
         default: 22,

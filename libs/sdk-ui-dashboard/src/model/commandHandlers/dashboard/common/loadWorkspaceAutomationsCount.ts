@@ -8,7 +8,7 @@ export async function loadWorkspaceAutomationsCount(
 ): Promise<number> {
     const { backend, workspace } = ctx;
 
-    if (!(settings?.enableScheduling || settings?.enableAlerting)) {
+    if (!(settings?.enableScheduling || settings?.enableAlerting) || ctx.config?.isReadOnly) {
         return Promise.resolve(0);
     }
 

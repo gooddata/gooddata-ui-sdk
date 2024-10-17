@@ -294,7 +294,7 @@ function createDraggableItem(
         };
     } else if (isInsightWidget(widget)) {
         const insight = insights.get(widget.insight)!;
-        const sizeInfo = getSizeInfo(settings, "kpi", insight);
+        const sizeInfo = getSizeInfo(settings, "kpi", insight); // TODO INE: "kpi"???
 
         return {
             type: "insight",

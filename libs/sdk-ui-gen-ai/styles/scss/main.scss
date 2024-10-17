@@ -1,10 +1,10 @@
 // (C) 2024 GoodData Corporation
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "react-loading-skeleton/dist/skeleton.css";
 
 @use "input";
 @use "variables" as variables;
 @use "messages";
-@use "agentState";
 @use "agentIcon";
 @use "window";
 
@@ -26,17 +26,36 @@
     }
 
     &__global_error {
-        padding: 4.5px 12px;
-        border-radius: 3px;
-        background: kit-variables.$gd-palette-error-dimmed;
         margin: variables.$y-spacing variables.$x-spacing;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
 
-        p {
-            color: kit-variables.$gd-palette-error-base;
+        &__buttons {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap: 15px;
         }
 
         &__details {
             padding: 6px;
+            border: 1px solid kit-variables.$gd-border-color;
+            border-radius: 3px;
+            background: kit-variables.$gd-color-light;
+        }
+
+        &__details pre {
+            margin: 0;
+            color: kit-variables.$gd-color-link;
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 18px;
+            padding: 0;
+            resize: none;
+            tab-size: 2;
+            text-align: left;
+            white-space: pre-wrap;
         }
     }
 }
