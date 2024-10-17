@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import {
     IElementsQueryFactory,
     IWorkspaceAttributesService,
@@ -211,7 +211,7 @@ function loadAttributeByDisplayForm(
 }
 
 function loadAttributes(client: ITigerClient, workspaceId: string): Promise<IAttributeMetadataObject[]> {
-    return MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesAttributes, {
+    return MetadataUtilities.getAllPagesOfParallel(client, client.entities.getAllEntitiesAttributes, {
         workspaceId,
         include: ["labels"],
     })

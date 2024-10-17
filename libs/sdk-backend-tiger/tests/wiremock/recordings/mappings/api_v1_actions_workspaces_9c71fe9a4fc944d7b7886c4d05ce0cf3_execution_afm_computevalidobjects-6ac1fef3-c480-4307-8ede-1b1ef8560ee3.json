@@ -1,8 +1,8 @@
 {
-    "id": "7227b396-8d7e-4500-8adc-fab89dc24cea",
-    "name": "api_v1_actions_workspaces_ef5b548074ed4e9cbbb267caea8a9926_execution_afm_computevalidobjects",
+    "id": "6ac1fef3-c480-4307-8ede-1b1ef8560ee3",
+    "name": "api_v1_actions_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_execution_afm_computevalidobjects",
     "request": {
-        "url": "/api/v1/actions/workspaces/ef5b548074ed4e9cbbb267caea8a9926/execution/afm/computeValidObjects",
+        "url": "/api/v1/actions/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/execution/afm/computeValidObjects",
         "method": "POST",
         "headers": {
             "Accept": {
@@ -37,11 +37,11 @@
                 "Access-Control-Request-Headers"
             ],
             "Expires": "0",
-            "X-XSS-Protection": "1; mode=block",
+            "X-XSS-Protection": "0",
             "Content-Type": "application/json"
         }
     },
-    "uuid": "7227b396-8d7e-4500-8adc-fab89dc24cea",
+    "uuid": "6ac1fef3-c480-4307-8ede-1b1ef8560ee3",
     "persistent": true,
-    "insertionIndex": 15
+    "insertionIndex": 13
 }
