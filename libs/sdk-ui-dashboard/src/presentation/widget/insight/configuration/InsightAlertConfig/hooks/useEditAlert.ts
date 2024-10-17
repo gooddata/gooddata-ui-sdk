@@ -23,8 +23,8 @@ import {
     transformAlertByValue,
 } from "../utils.js";
 import { AlertMetric } from "../../../types.js";
-import { selectCurrentUser, useDashboardSelector } from "../../../../../../model/index.js";
-import { convertUserToAutomationRecipient } from "../../../../../../_staging/automation/index.js";
+import { selectCurrentUser, selectUsers, useDashboardSelector } from "../../../../../../model/index.js";
+import { convertCurrentUserToAutomationRecipient } from "../../../../../../_staging/automation/index.js";
 import { isEmail } from "../../../../../scheduledEmail/DefaultScheduledEmailDialog/utils/validate.js";
 
 export interface IUseEditAlertProps {
@@ -48,6 +48,7 @@ export const useEditAlert = ({
     const [updatedAlert, setUpdatedAlert] = useState<IAutomationMetadataObject>(alert);
     const [warningMessage, setWarningMessage] = useState<string | undefined>(undefined);
     const currentUser = useDashboardSelector(selectCurrentUser);
+    const users = useDashboardSelector(selectUsers);
     const intl = useIntl();
 
     const selectedDestination = destinations.find(
@@ -107,7 +108,7 @@ export const useEditAlert = ({
          */
         const updatedRecipients =
             selectedDestination?.allowedRecipients === "CREATOR"
-                ? [convertUserToAutomationRecipient(currentUser)]
+                ? [convertCurrentUserToAutomationRecipient(users, currentUser)]
                 : undefined;
 
         setUpdatedAlert((alert) => transformAlertByDestination(alert, destinationId, updatedRecipients));
