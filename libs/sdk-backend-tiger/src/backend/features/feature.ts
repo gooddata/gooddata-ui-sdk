@@ -550,10 +550,10 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableDashboardNestedLayout,
-            "enableDashboardNestedLayout",
+            TigerFeaturesNames.EnableDashboardFlexibleLayout,
+            "enableDashboardFlexibleLayout",
             "BOOLEAN",
-            FeatureFlagsValues.enableDashboardNestedLayout,
+            FeatureFlagsValues.enableDashboardFlexibleLayout,
         ),
     };
 }

@@ -36,7 +36,7 @@ export class RepeaterDescriptor extends BaseChartDescriptor implements IVisualiz
     ): IVisualizationSizeInfo {
         return {
             width: {
-                default: layoutDescriptor.gridColumnsCount,
+                default: settings.enableDashboardFlexibleLayout ? 4 : layoutDescriptor.gridColumnsCount,
                 min: 3,
                 max: layoutDescriptor.gridColumnsCount,
             },

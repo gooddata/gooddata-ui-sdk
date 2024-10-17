@@ -24,11 +24,14 @@ import {
     getInsightSizeInfo,
     INSIGHT_WIDGET_SIZE_INFO_DEFAULT,
     INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY,
+    INSIGHT_WIDGET_SIZE_INFO_NEW_DEFAULT,
     IVisualizationSizeInfo,
     KPI_WIDGET_SIZE_INFO_DEFAULT,
     KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY,
     RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT,
     VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_DEFAULT,
+    RICH_TEXT_WIDGET_SIZE_INFO_NEW_DEFAULT,
+    VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_NEW_DEFAULT,
 } from "@gooddata/sdk-ui-ext";
 
 import { ObjRefMap } from "../metadata/objRefMap.js";
@@ -55,9 +58,13 @@ export function getSizeInfo(
     if (widgetType === "kpi") {
         return getKpiSizeInfo(settings, widgetContent);
     } else if (widgetType === "richText") {
-        return RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT;
+        return settings.enableDashboardFlexibleLayout
+            ? RICH_TEXT_WIDGET_SIZE_INFO_NEW_DEFAULT
+            : RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT;
     } else if (widgetType === "visualizationSwitcher" && !widgetContent) {
-        return VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_DEFAULT;
+        return settings.enableDashboardFlexibleLayout
+            ? VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_NEW_DEFAULT
+            : VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_DEFAULT;
     }
 
     return getVisualizationSizeInfo(settings, widgetContent);
@@ -83,7 +90,9 @@ function getVisualizationSizeInfo(
         if (!settings.enableKDWidgetCustomHeight) {
             return INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY;
         }
-        return INSIGHT_WIDGET_SIZE_INFO_DEFAULT;
+        return settings.enableDashboardFlexibleLayout
+            ? INSIGHT_WIDGET_SIZE_INFO_NEW_DEFAULT
+            : INSIGHT_WIDGET_SIZE_INFO_DEFAULT;
     }
     return sizeInfo;
 }
