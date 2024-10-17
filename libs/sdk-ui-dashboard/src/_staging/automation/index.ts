@@ -15,6 +15,7 @@ import {
     isFilter,
     isFilterContextItem,
     IUser,
+    IWorkspaceUser,
 } from "@gooddata/sdk-model";
 import omit from "lodash/omit.js";
 import isEqual from "lodash/isEqual.js";
@@ -144,6 +145,15 @@ export const areAutomationsEqual = (
         isEqual(automationWithoutExportDefinitions, origAutomationWithoutExportDefinitions) &&
         isEqual(automationExportDefinitions, origAutomationExportDefinitions)
     );
+};
+
+export const convertCurrentUserToAutomationRecipient = (
+    users: IWorkspaceUser[],
+    user: IUser,
+): IAutomationRecipient => {
+    const foundUser = users.find((u) => u.login === user.login);
+
+    return convertUserToAutomationRecipient(foundUser ?? user);
 };
 
 export const convertUserToAutomationRecipient = (user: IUser): IAutomationRecipient => {

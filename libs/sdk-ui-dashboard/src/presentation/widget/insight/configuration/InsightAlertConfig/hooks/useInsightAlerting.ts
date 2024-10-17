@@ -33,7 +33,7 @@ import { createDefaultAlert, getSupportedInsightMeasuresByInsight } from "../uti
 import { messages } from "../messages.js";
 import { useSaveAlertToBackend } from "./useSaveAlertToBackend.js";
 import { fillMissingTitles, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { convertUserToAutomationRecipient } from "../../../../../../_staging/automation/index.js";
+import { convertCurrentUserToAutomationRecipient } from "../../../../../../_staging/automation/index.js";
 import { useMetricsAndFacts } from "../../../../../../_staging/sharedHooks/useMetricsAndFacts.js";
 import { DEFAULT_MAX_RECIPIENTS } from "../../../../../scheduledEmail/DefaultScheduledEmailDialog/constants.js";
 
@@ -164,7 +164,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
                     supportedMeasures,
                     defaultMeasure,
                     defaultNotificationChannelId,
-                    convertUserToAutomationRecipient(currentUser),
+                    convertCurrentUserToAutomationRecipient(users, currentUser),
                     metricsAndFacts?.metrics ?? [],
                 ),
             );
