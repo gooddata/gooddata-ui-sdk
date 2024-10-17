@@ -1,6 +1,13 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 03 Oct 2024 07:11:15 GMT and should not be manually modified.
+This log was last generated on Thu, 17 Oct 2024 06:56:12 GMT and should not be manually modified.
+
+## 10.12.0
+Thu, 17 Oct 2024 06:56:12 GMT
+
+### Updates
+
+- Introduce support for saved filter views on dashboards. It allows to customize filter context for individual user and dashboard and save it for later use.
 
 ## 10.11.0
 Thu, 03 Oct 2024 07:11:15 GMT
