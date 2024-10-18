@@ -1,8 +1,8 @@
 // (C) 2019-2024 GoodData Corporation
 import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
-import mkcert from "vite-plugin-mkcert";
 import * as path from "path";
+import * as fs from "fs";
 
 const packagesWithoutStyles = [
     "@gooddata/sdk-model",
@@ -42,13 +42,29 @@ function makePackageStylesAlias(packageName: string) {
     };
 }
 
+// Define the directory to store certificates
+const certDir = path.join(process.env.HOME || process.env.USERPROFILE, ".gooddata", "certs");
+let serverOptions = {};
+
+try {
+    serverOptions = {
+        https: {
+            ca: fs.readFileSync(path.join(certDir, "rootCA.pem")),
+            key: fs.readFileSync(path.join(certDir, "localhost-key.pem")),
+            cert: fs.readFileSync(path.join(certDir, "localhost-cert.pem")),
+        },
+    };
+} catch (e) {
+    console.info(`No certificates found in ${certDir}, skipping HTTPS configuration`);
+}
+
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, process.cwd(), "");
     const backendUrl = env.VITE_BACKEND_URL ?? "https://staging.dev-latest.stg11.panther.intgdc.com";
 
     return {
-        plugins: [react(), env.VITE_MKCERT === "true" && mkcert()].filter(Boolean),
+        plugins: [react()],
         optimizeDeps: {
             exclude: [...packagesWithoutStyles, ...packagesWithStyles],
         },
@@ -71,6 +87,7 @@ export default defineConfig(({ mode }) => {
             ],
         },
         server: {
+            ...serverOptions,
             port: 8999,
             fs: {
                 strict: false,
