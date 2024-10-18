@@ -18,7 +18,10 @@ import uniqWith from "lodash/uniqWith.js";
 import { areObjRefsEqual } from "@gooddata/sdk-model";
 import { resolveInsights } from "../../utils/insightResolver.js";
 import { insightReferences } from "./common/insightReferences.js";
-import { selectCatalogDateDatasets } from "../../store/catalog/catalogSelectors.js";
+import {
+    selectCatalogDateDatasets,
+    selectAllCatalogDisplayFormsMap,
+} from "../../store/catalog/catalogSelectors.js";
 import { applyDefaultFilterView } from "./common/filterViews.js";
 import { selectFilterViews } from "../../store/filterViews/filterViewsReducersSelectors.js";
 
@@ -90,6 +93,9 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
             selectCatalogDateDatasets,
         );
 
+        const displayForms: ReturnType<typeof selectAllCatalogDisplayFormsMap> = yield select(
+            selectAllCatalogDisplayFormsMap,
+        );
         const resolvedInsightsValues = Array(...resolvedInsights.resolved.values());
 
         batch = yield call(
@@ -100,6 +106,7 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
             settings,
             effectiveConfig,
             dateDataSets,
+            displayForms,
         );
     } else {
         /*
