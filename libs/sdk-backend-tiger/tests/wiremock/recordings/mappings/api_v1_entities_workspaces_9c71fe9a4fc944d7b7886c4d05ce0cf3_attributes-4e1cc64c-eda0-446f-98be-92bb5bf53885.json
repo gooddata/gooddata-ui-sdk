@@ -1,8 +1,8 @@
 {
-    "id": "5ab87467-3ab1-4c31-8990-95b8aef4d46c",
-    "name": "api_v1_entities_workspaces_ef5b548074ed4e9cbbb267caea8a9926_facts",
+    "id": "4e1cc64c-eda0-446f-98be-92bb5bf53885",
+    "name": "api_v1_entities_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_attributes",
     "request": {
-        "url": "/api/v1/entities/workspaces/ef5b548074ed4e9cbbb267caea8a9926/facts?size=250&page=0",
+        "url": "/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/attributes?include=labels%2CdefaultView%2Cdataset%2CattributeHierarchies&metaInclude=page&size=250&page=0",
         "method": "GET",
         "headers": {
             "Accept": {
@@ -16,7 +16,7 @@
     },
     "response": {
         "status": 200,
-        "bodyFileName": "api_v1_entities_workspaces_ef5b548074ed4e9cbbb267caea8a9926_facts-5ab87467-3ab1-4c31-8990-95b8aef4d46c.json",
+        "bodyFileName": "api_v1_entities_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_attributes-4e1cc64c-eda0-446f-98be-92bb5bf53885.json",
         "headers": {
             "X-Content-Type-Options": "nosniff",
             "Pragma": "no-cache",
@@ -30,11 +30,11 @@
                 "Access-Control-Request-Headers"
             ],
             "Expires": "0",
-            "X-XSS-Protection": "1; mode=block",
+            "X-XSS-Protection": "0",
             "Content-Type": "application/vnd.gooddata.api+json"
         }
     },
-    "uuid": "5ab87467-3ab1-4c31-8990-95b8aef4d46c",
+    "uuid": "4e1cc64c-eda0-446f-98be-92bb5bf53885",
     "persistent": true,
-    "insertionIndex": 4
+    "insertionIndex": 6
 }

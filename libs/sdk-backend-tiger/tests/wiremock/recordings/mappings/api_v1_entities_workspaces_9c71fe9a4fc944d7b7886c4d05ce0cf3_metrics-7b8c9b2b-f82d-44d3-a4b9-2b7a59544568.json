@@ -1,18 +1,22 @@
 {
-    "id": "10046423-aa7d-40e0-8c1f-a020fec1a33e",
-    "name": "api_v1_entities_workspaces_ef5b548074ed4e9cbbb267caea8a9926_visualizationobjects",
+    "id": "7b8c9b2b-f82d-44d3-a4b9-2b7a59544568",
+    "name": "api_v1_entities_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_metrics",
     "request": {
-        "url": "/api/v1/entities/workspaces/ef5b548074ed4e9cbbb267caea8a9926/visualizationObjects?page=0&size=50&sort=modifiedAt%2CcreatedAt%2Ctitle%2Cdesc&metaInclude=page",
+        "url": "/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/metrics?size=250&page=0",
         "method": "GET",
         "headers": {
             "Accept": {
-                "equalTo": "application/json, text/plain, */*"
+                "equalTo": "application/vnd.gooddata.api+json"
+            },
+            "Content-Type": {
+                "equalTo": "application/vnd.gooddata.api+json",
+                "caseInsensitive": true
             }
         }
     },
     "response": {
         "status": 200,
-        "bodyFileName": "api_v1_entities_workspaces_ef5b548074ed4e9cbbb267caea8a9926_visualizationobjects-10046423-aa7d-40e0-8c1f-a020fec1a33e.json",
+        "bodyFileName": "api_v1_entities_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_metrics-7b8c9b2b-f82d-44d3-a4b9-2b7a59544568.json",
         "headers": {
             "X-Content-Type-Options": "nosniff",
             "Pragma": "no-cache",
@@ -26,11 +30,11 @@
                 "Access-Control-Request-Headers"
             ],
             "Expires": "0",
-            "X-XSS-Protection": "1; mode=block",
+            "X-XSS-Protection": "0",
             "Content-Type": "application/vnd.gooddata.api+json"
         }
     },
-    "uuid": "10046423-aa7d-40e0-8c1f-a020fec1a33e",
+    "uuid": "7b8c9b2b-f82d-44d3-a4b9-2b7a59544568",
     "persistent": true,
-    "insertionIndex": 3
+    "insertionIndex": 4
 }
