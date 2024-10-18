@@ -1,5 +1,7 @@
+// (C) 2024 GoodData Corporation
+
 /* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2024-08-22T18:31:49.203Z; */
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2024-10-18T09:13:34.478Z; */
 // @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
 import {
     newAttribute,
@@ -16,14 +18,14 @@ import {
  */
 export const Account = {
     /**
-     * Display Form Title: Account
-     * Display Form ID: attr.f_account.account
-     */
-    Default: newAttribute("attr.f_account.account"),
-    /**
      * Display Form Title: Name
      * Display Form ID: label.f_account.account.name
-     */ Name: newAttribute("label.f_account.account.name"),
+     */
+    Name: newAttribute("label.f_account.account.name"),
+    /**
+     * Display Form Title: Account
+     * Display Form ID: attr.f_account.account
+     */ Default: newAttribute("attr.f_account.account"),
 };
 /**
  * Attribute Title: Activity
@@ -46,18 +48,18 @@ export const Activity = {
  */
 export const Opportunity = {
     /**
-     * Display Form Title: Opportunity Name
-     * Display Form ID: label.f_opportunity.opportunity.name
-     */
-    Name: newAttribute("label.f_opportunity.opportunity.name"),
-    /**
      * Display Form Title: SFDC URL
      * Display Form ID: label.f_opportunity.opportunity.sfdcurl
-     */ SFDCURL: newAttribute("label.f_opportunity.opportunity.sfdcurl"),
+     */
+    SFDCURL: newAttribute("label.f_opportunity.opportunity.sfdcurl"),
     /**
      * Display Form Title: Opportunity
      * Display Form ID: attr.f_opportunity.opportunity
      */ Default: newAttribute("attr.f_opportunity.opportunity"),
+    /**
+     * Display Form Title: Opportunity Name
+     * Display Form ID: label.f_opportunity.opportunity.name
+     */ Name: newAttribute("label.f_opportunity.opportunity.name"),
 };
 /**
  * Attribute Title: Opp. Snapshot
@@ -85,10 +87,14 @@ export const SalesRep = {
  */
 export const Product = {
     /**
+     * Display Form Title: Product
+     * Display Form ID: attr.f_product.product
+     */
+    Default: newAttribute("attr.f_product.product"),
+    /**
      * Display Form Title: Product Name
      * Display Form ID: label.f_product.product.name
-     */
-    Name: newAttribute("label.f_product.product.name"),
+     */ Name: newAttribute("label.f_product.product.name"),
     /**
      * Display Form Title: Product Image
      * Display Form ID: label.f_product.product.image
@@ -97,10 +103,6 @@ export const Product = {
      * Display Form Title: Product Link
      * Display Form ID: label.f_product.product.link
      */ Link: newAttribute("label.f_product.product.link"),
-    /**
-     * Display Form Title: Product
-     * Display Form ID: attr.f_product.product
-     */ Default: newAttribute("attr.f_product.product"),
 };
 /**
  * Attribute Title: Stage History
@@ -172,18 +174,10 @@ export const Status: IAttribute = newAttribute("f_activity.status_id");
  */
 export const City = {
     /**
-     * Display Form Title: City short name
-     * Display Form ID: f_city.id.cityshortname
+     * Display Form Title: City
+     * Display Form ID: f_city.id
      */
-    ShortName: newAttribute("f_city.id.cityshortname"),
-    /**
-     * Display Form Title: Latitude
-     * Display Form ID: f_city.id.latitude
-     */ Latitude: newAttribute("f_city.id.latitude"),
-    /**
-     * Display Form Title: Longitude
-     * Display Form ID: f_city.id.longitude
-     */ Longitude: newAttribute("f_city.id.longitude"),
+    Default: newAttribute("f_city.id"),
     /**
      * Display Form Title: City name
      * Display Form ID: f_city.id.cityname
@@ -193,13 +187,21 @@ export const City = {
      * Display Form ID: f_city.id.location
      */ Location: newAttribute("f_city.id.location"),
     /**
-     * Display Form Title: City
-     * Display Form ID: f_city.id
-     */ Default: newAttribute("f_city.id"),
-    /**
      * Display Form Title: City ascii name
      * Display Form ID: f_city.id.cityasciiname
      */ AsciiName: newAttribute("f_city.id.cityasciiname"),
+    /**
+     * Display Form Title: Longitude
+     * Display Form ID: f_city.id.longitude
+     */ Longitude: newAttribute("f_city.id.longitude"),
+    /**
+     * Display Form Title: City short name
+     * Display Form ID: f_city.id.cityshortname
+     */ ShortName: newAttribute("f_city.id.cityshortname"),
+    /**
+     * Display Form Title: Latitude
+     * Display Form ID: f_city.id.latitude
+     */ Latitude: newAttribute("f_city.id.latitude"),
 };
 /**
  * Attribute Title: Opportunity Id
@@ -312,18 +314,18 @@ export const State = {
  */
 export const UserId = {
     /**
-     * Display Form Title: User Email
-     * Display Form ID: user_id.useremail
+     * Display Form Title: User Name
+     * Display Form ID: user_id.username
      */
-    UserEmail: newAttribute("user_id.useremail"),
+    UserName: newAttribute("user_id.username"),
     /**
      * Display Form Title: User Id
      * Display Form ID: user_id
      */ Default: newAttribute("user_id"),
     /**
-     * Display Form Title: User Name
-     * Display Form ID: user_id.username
-     */ UserName: newAttribute("user_id.username"),
+     * Display Form Title: User Email
+     * Display Form ID: user_id.useremail
+     */ UserEmail: newAttribute("user_id.useremail"),
 };
 /**
  * Attribute Title: Product that is renamed to test the long attribute name
