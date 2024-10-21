@@ -163,7 +163,6 @@ const LegacyDefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Element
                 sectionHeaderRenderer={renderModeAwareDashboardLayoutSectionHeaderRenderer}
                 renderMode={renderMode}
             />
-            {"old layout"}
             {!!shouldRenderSectionHotspot && (
                 <SectionHotspot index={transformedLayout.sections.length} targetPosition="below" />
             )}
