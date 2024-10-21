@@ -2368,6 +2368,11 @@
         "comment": "Title of dialog used for granting workspace permission to users or groups.",
         "limit": 0
     },
+    "userManagement.workspace.edit.title": {
+        "value": "Edit workspace permission",
+        "comment": "Title of dialog used for granting workspace permission to users or groups.",
+        "limit": 0
+    },
     "userManagement.dataSource.searchPlaceholder": {
         "value": "Search data sources",
         "comment": "Placeholder of empty data source dialog search input.",
@@ -2738,9 +2743,114 @@
         "comment": "Tooltip of the data source permission that allows user group to fully manage data sources.",
         "limit": 0
     },
+    "userManagement.workspace.permission.export": {
+        "value": "Exports",
+        "comment": "Name of the workspace permission that allows user to export data in workspace.",
+        "limit": 0
+    },
+    "userManagement.workspace.permission.export.tooltip": {
+        "value": "Adds EXPORT permission to export dashboards and visualizations in various formats.",
+        "comment": "Export permission tooltip",
+        "limit": 0
+    },
+    "userManagement.workspace.permission.exportTabular": {
+        "value": "Export XLSX and CSV",
+        "comment": "Name of the workspace permission that allows user to export data in workspace.",
+        "limit": 0
+    },
+    "userManagement.workspace.permission.exportTabular.tooltip": {
+        "value": "Adds EXPORT_TABULAR permission to export dashboards and visualizations in CSV and XLSX formats.",
+        "comment": "Export tabular permission tooltip",
+        "limit": 0
+    },
+    "userManagement.workspace.permission.exportPdf": {
+        "value": "Export PDF",
+        "comment": "Name of the workspace permission that allows user to export data in workspace.",
+        "limit": 0
+    },
+    "userManagement.workspace.permission.exportPdf.tooltip": {
+        "value": "Adds EXPORT_PDF permission to export dashboards and visualizations as PDF files.",
+        "comment": "Export PDF permission tooltip",
+        "limit": 0
+    },
+    "userManagement.workspace.permission.createFilterView": {
+        "value": "Saved filter views",
+        "comment": "Name of the workspace permission that allows user to create filter views in workspace.",
+        "limit": 0
+    },
+    "userManagement.workspace.permission.createFilterView.tooltip": {
+        "value": "Adds CREATE_FILTER_VIEW permission to create and save dashboard filter combinations for quick reuse.",
+        "comment": "Create saved filter view permission tooltip",
+        "limit": 0
+    },
+    "userManagement.workspace.permission.createAutomation": {
+        "value": "Alerts and scheduled exports",
+        "comment": "Name of the workspace permission that allows user to create automations in workspace.",
+        "limit": 0
+    },
+    "userManagement.workspace.permission.createAutomation.tooltip": {
+        "value": "Adds CREATE_AUTOMATIONS permission to create automated alerts and scheduled exports.",
+        "comment": "Create automation permission tooltip",
+        "limit": 0
+    },
+    "userManagement.workspace.granularPermission.noWorkspace": {
+        "value": "No workspace selected",
+        "comment": "Empty content message",
+        "limit": 0
+    },
+    "userManagement.workspace.granularPermission.hierarchy": {
+        "value": "Include child workspaces",
+        "comment": "Label of option that states that selected permission will be added to the selected workspace and to all workspaces in tree hierarchy of workspaces under it.",
+        "limit": 0
+    },
+    "userManagement.workspace.granularPermission.hierarchy.tooltip": {
+        "value": "Applies the permission to this workspace and all its child workspaces.",
+        "comment": "Tooltip that explains option that adds permission to workspace and children.",
+        "limit": 0
+    },
+    "userManagement.workspace.granularPermission.workspaceAccess.title": {
+        "value": "Workspace access",
+        "comment": "Label of workspace subsection of permissions",
+        "limit": 0
+    },
+    "userManagement.workspace.granularPermission.additionalAccess.title": {
+        "value": "Additional permissions",
+        "comment": "Label of additional subsection of permissions",
+        "limit": 0
+    },
+    "userManagement.workspace.granularPermission.help": {
+        "value": "Learn about workspace permissions",
+        "comment": "Label of help button for permissions",
+        "limit": 0
+    },
+    "userManagement.workspace.granularPermission.view.description": {
+        "value": "Allows users to view dashboards that have been shared with them or their user group.",
+        "comment": "Description of permission",
+        "limit": 0
+    },
+    "userManagement.workspace.granularPermission.analyze.description": {
+        "value": "Allows users to create, edit, or delete dashboards and visualizations, alongside viewing the Logical Data Model (LDM) and metrics.",
+        "comment": "Description of permission",
+        "limit": 0
+    },
+    "userManagement.workspace.granularPermission.manage.description": {
+        "value": "Allows users can to, edit or delete the logical data model and metrics, and access all dashboards and edit their dashboard permissions without limitations.",
+        "comment": "Description of permission",
+        "limit": 0
+    },
+    "userManagement.workspace.granularPermission.warning": {
+        "value": "<b>Caution:</b> This action will remove any redundant combinations.",
+        "comment": "Warning message shown when user tries to add 'Manage' permission to user or user group.",
+        "limit": 0
+    },
     "userManagement.workspace.permission.remove": {
         "value": "Remove",
         "comment": "Label of option that removes workspace permission from user and user group.",
+        "limit": 0
+    },
+    "userManagement.workspace.permission.and": {
+        "value": "and",
+        "comment": "Connection word when concatenating permissions",
         "limit": 0
     },
     "userManagement.groupDetail.id.label": {

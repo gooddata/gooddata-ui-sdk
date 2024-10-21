@@ -2829,6 +2829,9 @@ export function isArithmeticMeasure(obj: unknown): obj is IMeasure<IArithmeticMe
 // @public
 export function isArithmeticMeasureDefinition(obj: unknown): obj is IArithmeticMeasureDefinition;
 
+// @alpha
+export function isAssignedWorkspacePermission(value: unknown): value is AssignedWorkspacePermission;
+
 // @public
 export function isAttribute(obj: unknown): obj is IAttribute;
 

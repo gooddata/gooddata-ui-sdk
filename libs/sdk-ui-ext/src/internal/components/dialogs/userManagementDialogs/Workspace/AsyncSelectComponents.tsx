@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import React from "react";
 import {
     components as ReactSelectComponents,
@@ -44,6 +44,18 @@ export const MenuListRendered = (props: MenuListProps<ISelectOption, false>): JS
 };
 
 export const InputRendered = (props: InputProps): JSX.Element => {
+    return (
+        <div className="gd-share-dialog-input s-user-management-input">
+            <ReactSelectComponents.Input {...props} />
+        </div>
+    );
+};
+
+export const SingleValueInputRenderer = (props: InputProps): JSX.Element => {
+    if (props.hasValue) {
+        return null;
+    }
+
     return (
         <div className="gd-share-dialog-input s-user-management-input">
             <ReactSelectComponents.Input {...props} />

@@ -116,6 +116,7 @@ export const messages = defineMessages({
     addWorkspaceDialogTitle: { id: "userManagement.workspace.title" },
     addWorkspaceDialogCloseButton: { id: "userManagement.users.cancelButton" },
     addWorkspaceDialogSaveButton: { id: "userManagement.workspace.addButton" },
+    editWorkspaceDialogTitle: { id: "userManagement.workspace.edit.title" },
     searchWorkspaceNoMatch: { id: "userManagement.workspace.noMatchingItems" },
     searchDataSourceNoMatch: { id: "userManagement.dataSources.noMatchingItems" },
     searchWorkspacePlaceholder: { id: "userManagement.workspace.searchPlaceholder" },
