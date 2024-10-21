@@ -30,6 +30,13 @@ async function main() {
     // Set the CAROOT environment variable to ensure rootCA is saved in the correct directory
     const env = { ...process.env, CAROOT: certDir };
 
+    // Check if mkcert is installed
+    try {
+        await execCommand(process.platform === 'win32' ? 'where mkcert' : 'command -v mkcert');
+    } catch (error) {
+        throw new Error('Error: mkcert is not installed. Please install mkcert before running this script. See https://github.com/FiloSottile/mkcert for installation instructions.');
+    }
+
     // Check if the certificate directory already exists
     if (await exists(certDir)) {
         console.log(`Certificate directory already exists at ${certDir}. Uninstalling root CA and deleting the directory to recreate certificates.`);
@@ -53,14 +60,6 @@ async function main() {
         console.log(`Created certificate directory at ${certDir}`);
     } catch (mkdirError) {
         throw new Error(`Error: Failed to create certificate directory at ${certDir}. Ensure you have write permissions to the parent directory.`);
-    }
-
-    // Check if mkcert is installed
-    try {
-        await execCommand(process.platform === 'win32' ? 'where mkcert' : 'command -v mkcert');
-        console.log('mkcert is installed.');
-    } catch (error) {
-        throw new Error('Error: mkcert is not installed. Please install mkcert before running this script. See https://github.com/FiloSottile/mkcert for installation instructions.');
     }
 
     // Generate and install the root CA
