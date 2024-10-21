@@ -14375,6 +14375,7 @@ export interface MetadataSyncApiMetadataSyncRequest {
 export class MetadataUtilities {
     static filterValidEntities<T extends MetadataGetEntitiesResult>(result: T): T;
     static getAllPagesOf: <T extends MetadataGetEntitiesResult, P extends MetadataGetEntitiesParams>(client: ITigerClient, entitiesGet: MetadataGetEntitiesFn<T, P>, params: P, options?: MetadataGetEntitiesOptions) => Promise<T[]>;
+    static getAllPagesOfParallel: <T extends MetadataGetEntitiesResult, P extends MetadataGetEntitiesParams>(client: ITigerClient, entitiesGet: MetadataGetEntitiesFn<T, P>, params: P, options?: MetadataGetEntitiesOptions) => Promise<T[]>;
     static mergeEntitiesResults<T extends MetadataGetEntitiesResult>(pages: T[]): T;
 }
 
