@@ -1,17 +1,19 @@
 // (C) 2007-2024 GoodData Corporation
-import { ScreenSize } from "@gooddata/sdk-model";
+import React, { useMemo } from "react";
 import cx from "classnames";
 import isNil from "lodash/isNil.js";
-import React, { useMemo } from "react";
-import { Col } from "react-grid-system";
-import { IDashboardLayoutItemRenderer } from "./interfaces.js";
+import { ScreenSize } from "@gooddata/sdk-model";
+
 import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/fluidLayout/facade/interfaces.js";
+
+import { IDashboardLayoutItemRenderer } from "./interfaces.js";
+import { GridLayoutElement } from "./GridLayoutElement.js";
 
 const isHiddenStyle = { height: 0, width: 0, overflow: "hidden", flex: 0 };
 
 export const DashboardLayoutItemViewRenderer: IDashboardLayoutItemRenderer<unknown> = (props) => {
     const { item, screen, children, className, minHeight = 0, isHidden } = props;
-    const { size, ratio, width, height } = getSizeForItem(item, screen);
+    const { ratio, height } = getSizeForItem(item, screen);
 
     const style = useMemo(() => {
         let computedStyle = {
@@ -28,17 +30,11 @@ export const DashboardLayoutItemViewRenderer: IDashboardLayoutItemRenderer<unkno
     }, [minHeight, isHidden]);
 
     return (
-        <Col
-            xl={size?.xl?.gridWidth}
-            lg={size?.lg?.gridWidth}
-            md={size?.md?.gridWidth}
-            sm={size?.sm?.gridWidth}
-            xs={size?.xs?.gridWidth}
+        <GridLayoutElement
+            type="item"
+            screen={screen}
+            layoutItemSize={item.size()}
             className={cx(
-                "gd-fluidlayout-column",
-                "s-fluid-layout-column",
-                `s-fluid-layout-screen-${screen}`,
-                `s-fluid-layout-column-width-${width}`,
                 {
                     [`s-fluid-layout-column-ratio-${ratio}`]: !isNil(ratio),
                     [`s-fluid-layout-column-height-${height}`]: !isNil(height),
@@ -48,7 +44,7 @@ export const DashboardLayoutItemViewRenderer: IDashboardLayoutItemRenderer<unkno
             style={style}
         >
             {children}
-        </Col>
+        </GridLayoutElement>
     );
 };
 

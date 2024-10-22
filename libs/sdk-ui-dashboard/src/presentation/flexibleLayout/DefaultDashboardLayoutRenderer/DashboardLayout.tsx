@@ -1,18 +1,12 @@
 // (C) 2007-2024 GoodData Corporation
-import { IDashboardLayout, ScreenSize } from "@gooddata/sdk-model";
+import { IDashboardLayout } from "@gooddata/sdk-model";
 import cx from "classnames";
 import isEqual from "lodash/isEqual.js";
 import React, { useCallback, useMemo } from "react";
-import {
-    Container,
-    ScreenClass,
-    ScreenClassProvider,
-    ScreenClassRender,
-    setConfiguration,
-} from "react-grid-system";
+
 import { DashboardLayoutFacade } from "../../../_staging/dashboard/fluidLayout/facade/layout.js";
-import { DASHBOARD_LAYOUT_GRID_CONFIGURATION } from "../../constants/index.js";
 import { emptyDOMRect } from "../constants.js";
+
 import { DashboardLayoutSection } from "./DashboardLayoutSection.js";
 import {
     IDashboardLayoutRenderProps,
@@ -25,8 +19,8 @@ import {
     getResizedItemPositions,
     unifyDashboardLayoutItemHeights,
 } from "./utils/sizing.js";
-
-setConfiguration(DASHBOARD_LAYOUT_GRID_CONFIGURATION);
+import { useScreenSize } from "./useScreenSize.js";
+import { GridLayoutElement } from "./GridLayoutElement.js";
 
 const removeHeights = <TWidget,>(layout: IDashboardLayout<TWidget>, enableCustomHeight: boolean) => {
     if (enableCustomHeight) {
@@ -47,6 +41,8 @@ const defaultSectionKeyGetter: IDashboardLayoutSectionKeyGetter<unknown> = ({ se
 export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWidget>): JSX.Element {
     const {
         layout,
+        screen: providedScreen,
+        parentLayoutItemSize,
         sectionKeyGetter = defaultSectionKeyGetter,
         sectionRenderer,
         sectionHeaderRenderer,
@@ -55,7 +51,6 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
         widgetRenderer,
         gridRowRenderer,
         className,
-        debug,
         onMouseLeave,
         enableCustomHeight,
         renderMode = "view",
@@ -75,12 +70,11 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
             sectionRenderer ? (
                 sectionRenderer({
                     ...renderProps,
-                    debug,
                 })
             ) : (
-                <renderProps.DefaultSectionRenderer {...renderProps} debug={debug} />
+                <renderProps.DefaultSectionRenderer {...renderProps} />
             ),
-        [debug, sectionRenderer],
+        [sectionRenderer],
     );
 
     const getLayoutDimensions = useCallback(function (): DOMRect {
@@ -97,55 +91,55 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
                 widgetRenderer({
                     ...renderProps,
                     isResizedByLayoutSizingStrategy,
-                    debug,
                     getLayoutDimensions: getLayoutDimensions,
                 })
             ) : (
                 <renderProps.DefaultWidgetRenderer
                     {...renderProps}
-                    debug={debug}
                     isResizedByLayoutSizingStrategy={isResizedByLayoutSizingStrategy}
                     getLayoutDimensions={getLayoutDimensions}
                 />
             );
         },
-        [debug, resizedItemPositions, widgetRenderer],
+        [resizedItemPositions, widgetRenderer],
     );
 
+    const detectedScreenSize = useScreenSize(layoutRef);
+    const screenSize = providedScreen ?? detectedScreenSize;
+    const isNestedLayout = parentLayoutItemSize !== undefined;
+
     return (
-        <div
-            className={cx("gd-fluidlayout-container", "s-fluid-layout-container", "gd-dashboards", className)}
+        <GridLayoutElement
+            type={isNestedLayout ? "nested" : "root"}
+            screen={screenSize}
+            layoutItemSize={parentLayoutItemSize}
+            className={cx(
+                {
+                    "gd-dashboards": !isNestedLayout,
+                },
+                className,
+            )}
             onMouseLeave={onMouseLeave}
             ref={layoutRef}
         >
-            <ScreenClassProvider useOwnWidth={false}>
-                <ScreenClassRender
-                    render={(screenClass: ScreenClass) => {
-                        const screen = screenClass as ScreenSize;
-                        return screen ? (
-                            <Container fluid={true} className="gd-fluidlayout-layout s-fluid-layout">
-                                {layoutFacade.sections().map((section) => {
-                                    return (
-                                        <DashboardLayoutSection
-                                            key={sectionKeyGetter({ section, screen })}
-                                            section={section}
-                                            sectionRenderer={sectionRendererWrapped}
-                                            sectionHeaderRenderer={sectionHeaderRenderer}
-                                            itemKeyGetter={itemKeyGetter}
-                                            itemRenderer={itemRenderer}
-                                            gridRowRenderer={gridRowRenderer}
-                                            widgetRenderer={widgetRendererWrapped}
-                                            screen={screen}
-                                            renderMode={renderMode}
-                                            getLayoutDimensions={getLayoutDimensions}
-                                        />
-                                    );
-                                })}
-                            </Container>
-                        ) : null;
-                    }}
-                />
-            </ScreenClassProvider>
-        </div>
+            {layoutFacade.sections().map((section) => {
+                return (
+                    <DashboardLayoutSection
+                        key={sectionKeyGetter({ section, screen: screenSize })}
+                        section={section}
+                        sectionRenderer={sectionRendererWrapped}
+                        sectionHeaderRenderer={sectionHeaderRenderer}
+                        itemKeyGetter={itemKeyGetter}
+                        itemRenderer={itemRenderer}
+                        gridRowRenderer={gridRowRenderer}
+                        widgetRenderer={widgetRendererWrapped}
+                        screen={screenSize}
+                        renderMode={renderMode}
+                        getLayoutDimensions={getLayoutDimensions}
+                        parentLayoutItemSize={parentLayoutItemSize}
+                    />
+                );
+            })}
+        </GridLayoutElement>
     );
 }

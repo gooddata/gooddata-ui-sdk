@@ -95,14 +95,23 @@ const itemKeyGetter: IDashboardLayoutItemKeyGetter<ExtendedDashboardWidget> = (k
  * @alpha
  */
 export const DefaultFlexibleDashboardLayout = (props: IDashboardLayoutProps): JSX.Element => {
-    const { onFiltersChange, onDrill, onError } = props;
+    const {
+        layout: providedLayout,
+        screen: providedScreen,
+        parentLayoutItemSize,
+        onFiltersChange,
+        onDrill,
+        onError,
+    } = props;
 
-    const layout = useDashboardSelector(selectLayout);
+    const selectedLayout = useDashboardSelector(selectLayout);
     const isLayoutEmpty = useDashboardSelector(selectIsLayoutEmpty);
     const enableWidgetCustomHeight = useDashboardSelector(selectEnableWidgetCustomHeight);
     const insights = useDashboardSelector(selectInsightsMap);
     const isExport = useDashboardSelector(selectIsExport);
     const renderMode = useDashboardSelector(selectRenderMode);
+
+    const layout = providedLayout ?? selectedLayout;
 
     const getInsightByRef = useCallback(
         (insightRef: ObjRef): IInsight | undefined => {
@@ -157,6 +166,8 @@ export const DefaultFlexibleDashboardLayout = (props: IDashboardLayoutProps): JS
             <DashboardLayout
                 className={isExport ? "export-mode" : ""}
                 layout={transformedLayout}
+                parentLayoutItemSize={parentLayoutItemSize}
+                screen={providedScreen}
                 itemKeyGetter={itemKeyGetter}
                 widgetRenderer={widgetRenderer}
                 enableCustomHeight={enableWidgetCustomHeight}
@@ -164,7 +175,6 @@ export const DefaultFlexibleDashboardLayout = (props: IDashboardLayoutProps): JS
                 sectionHeaderRenderer={renderModeAwareDashboardLayoutSectionHeaderRenderer}
                 renderMode={renderMode}
             />
-            {"new layout"}
             {!!shouldRenderSectionHotspot && (
                 <SectionHotspot index={transformedLayout.sections.length} targetPosition="below" />
             )}
