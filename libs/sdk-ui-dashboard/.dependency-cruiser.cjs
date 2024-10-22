@@ -197,6 +197,7 @@ options = {
             "src/presentation/drill/DrillSelect/types.ts",
             "src/presentation/drill/DrillConfigPanel/*",
             "src/presentation/drill/types.ts",
+            "src/presentation/flexibleLayout/*",
             "src/presentation/insightList",
             "src/presentation/dashboardList",
             "src/presentation/localization",

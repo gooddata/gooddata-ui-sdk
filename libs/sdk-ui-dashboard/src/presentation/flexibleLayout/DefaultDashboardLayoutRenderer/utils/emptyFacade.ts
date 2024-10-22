@@ -2,14 +2,14 @@
 
 import { IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/fluidLayout/index.js";
 
-export const emptyItemFacadeWithFullSize: IDashboardLayoutItemFacade<unknown> = {
+export const buildEmptyItemFacadeWithSetSize = (gridWidth: number): IDashboardLayoutItemFacade<unknown> => ({
     index: () => 0,
     raw: () => null as any, // TODO: should we allow this in the interface?
     widget: () => null,
     ref: () => undefined,
     section: () => undefined as any, // TODO: should we allow this in the interface?
-    size: () => ({ xl: { gridWidth: 12 } }),
-    sizeForScreen: () => ({ gridWidth: 12 }),
+    size: () => ({ xl: { gridWidth } }),
+    sizeForScreen: () => ({ gridWidth }),
     isLast: () => true,
     widgetEquals: () => false,
     widgetIs: () => false,
@@ -30,4 +30,4 @@ export const emptyItemFacadeWithFullSize: IDashboardLayoutItemFacade<unknown> = 
     isWidgetItemWithKpiRef: () => false,
     isWidgetItemWithRef: () => false,
     isEmpty: () => false,
-};
+});

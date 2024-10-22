@@ -624,6 +624,14 @@
     z-index: zIndexes.$drag-and-drop-draggable-wrapper;
 }
 
+.gd-grid-layout {
+    // fix for grid layout after some classes at the top were removed
+    .dashboard-widget-draggable-wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
 .current-dragging-item {
     width: 0;
     display: none;

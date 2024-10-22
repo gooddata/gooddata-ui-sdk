@@ -173,6 +173,7 @@ import { IDashboardLayout } from '@gooddata/sdk-model';
 import { IDashboardLayoutItem } from '@gooddata/sdk-model';
 import { IDashboardLayoutSection } from '@gooddata/sdk-model';
 import { IDashboardLayoutSectionHeader } from '@gooddata/sdk-model';
+import { IDashboardLayoutSize } from '@gooddata/sdk-model';
 import { IDashboardLayoutSizeByScreenSize } from '@gooddata/sdk-model';
 import { IDashboardObjectIdentity } from '@gooddata/sdk-model';
 import { IDashboardPermissions } from '@gooddata/sdk-model';
@@ -4288,6 +4289,104 @@ export interface IDashboardLayoutCustomizer {
     customizeFluidLayout(fun: FluidLayoutCustomizationFn): IDashboardLayoutCustomizer;
 }
 
+// @beta
+export interface IDashboardLayoutFacade<TWidget> {
+    // (undocumented)
+    raw(): IDashboardLayout<TWidget>;
+    // (undocumented)
+    section(sectionIndex: number): IDashboardLayoutSectionFacade<TWidget> | undefined;
+    // (undocumented)
+    sections(): IDashboardLayoutSectionsFacade<TWidget>;
+    // (undocumented)
+    size(): IDashboardLayoutSize | undefined;
+}
+
+// @beta
+export interface IDashboardLayoutItemFacade<TWidget> {
+    // (undocumented)
+    hasSizeForScreen(screen: ScreenSize): boolean;
+    // (undocumented)
+    index(): number;
+    // (undocumented)
+    indexIs(index: number): boolean;
+    // (undocumented)
+    isCustomItem(): this is IDashboardLayoutItemFacade<Exclude<TWidget, IDashboardWidget>>;
+    // (undocumented)
+    isEmpty(): boolean;
+    // (undocumented)
+    isFirst(): boolean;
+    // (undocumented)
+    isInsightWidgetDefinitionItem(): this is IDashboardLayoutItemFacade<IInsightWidgetDefinition>;
+    // (undocumented)
+    isInsightWidgetItem(): this is IDashboardLayoutItemFacade<IInsightWidget>;
+    // (undocumented)
+    isKpiWidgetDefinitionItem(): this is IDashboardLayoutItemFacade<IKpiWidgetDefinition>;
+    // (undocumented)
+    isKpiWidgetItem(): this is IDashboardLayoutItemFacade<IKpiWidget>;
+    // (undocumented)
+    isLast(): boolean;
+    // (undocumented)
+    isLayoutItem(): this is IDashboardLayoutItemFacade<IDashboardLayout<TWidget>>;
+    // (undocumented)
+    isWidgetDefinitionItem(): this is IDashboardLayoutItemFacade<IWidgetDefinition>;
+    // (undocumented)
+    isWidgetItem(): this is IDashboardLayoutItemFacade<IWidget>;
+    // (undocumented)
+    isWidgetItemWithInsightRef(ref: ObjRef): boolean;
+    // (undocumented)
+    isWidgetItemWithKpiRef(ref: ObjRef): boolean;
+    // (undocumented)
+    isWidgetItemWithRef(ref: ObjRef): boolean;
+    // (undocumented)
+    raw(): IDashboardLayoutItem<TWidget>;
+    // (undocumented)
+    ref(): ObjRef | undefined;
+    // (undocumented)
+    section(): IDashboardLayoutSectionFacade<TWidget>;
+    // (undocumented)
+    size(): IDashboardLayoutSizeByScreenSize;
+    // (undocumented)
+    sizeForScreen(screen: ScreenSize): IDashboardLayoutSize | undefined;
+    // (undocumented)
+    test(pred: (item: IDashboardLayoutItemFacade<TWidget>) => boolean): boolean;
+    // (undocumented)
+    testRaw(pred: (item: IDashboardLayoutItem<TWidget>) => boolean): boolean;
+    // (undocumented)
+    widget(): TWidget | undefined;
+    // (undocumented)
+    widgetEquals(widget: TWidget): boolean;
+    // (undocumented)
+    widgetIs(widget: TWidget): boolean;
+}
+
+// @beta
+export interface IDashboardLayoutItemsFacade<TWidget> {
+    // (undocumented)
+    all(): IDashboardLayoutItemFacade<TWidget>[];
+    // (undocumented)
+    asGridRows(screen: ScreenSize): IDashboardLayoutItemFacade<TWidget>[][];
+    // (undocumented)
+    count(): number;
+    // (undocumented)
+    every(pred: (item: IDashboardLayoutItemFacade<TWidget>) => boolean): boolean;
+    // (undocumented)
+    filter(pred: (item: IDashboardLayoutItemFacade<TWidget>) => boolean): IDashboardLayoutItemFacade<TWidget>[];
+    // (undocumented)
+    find(pred: (item: IDashboardLayoutItemFacade<TWidget>) => boolean): IDashboardLayoutItemFacade<TWidget> | undefined;
+    // (undocumented)
+    flatMap<TReturn>(callback: (widgetFacade: IDashboardLayoutItemFacade<TWidget>) => TReturn[]): TReturn[];
+    // (undocumented)
+    item(index: number): IDashboardLayoutItemFacade<TWidget> | undefined;
+    // (undocumented)
+    map<TReturn>(callback: (item: IDashboardLayoutItemFacade<TWidget>) => TReturn): TReturn[];
+    // (undocumented)
+    raw(): IDashboardLayoutItem<TWidget>[];
+    // (undocumented)
+    reduce<TReturn>(callback: (acc: TReturn, item: IDashboardLayoutItemFacade<TWidget>) => TReturn, initialValue: TReturn): TReturn;
+    // (undocumented)
+    some(pred: (item: IDashboardLayoutItemFacade<TWidget>) => boolean): boolean;
+}
+
 // @alpha (undocumented)
 export interface IDashboardLayoutProps {
     // (undocumented)
@@ -4298,6 +4397,76 @@ export interface IDashboardLayoutProps {
     onError?: OnError;
     // (undocumented)
     onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
+}
+
+// @beta
+export interface IDashboardLayoutSectionFacade<TWidget> {
+    // (undocumented)
+    description(): string | undefined;
+    // (undocumented)
+    descriptionEquals(title: string): boolean;
+    // (undocumented)
+    hasDescription(): boolean;
+    // (undocumented)
+    hasHeader(): boolean;
+    // (undocumented)
+    hasTitle(): boolean;
+    // (undocumented)
+    header(): IDashboardLayoutSectionHeader | undefined;
+    // (undocumented)
+    headerEquals(header: IDashboardLayoutSectionHeader): boolean;
+    // (undocumented)
+    index(): number;
+    // (undocumented)
+    indexIs(index: number): boolean;
+    // (undocumented)
+    isEmpty(): boolean;
+    // (undocumented)
+    isFirst(): boolean;
+    // (undocumented)
+    isLast(): boolean;
+    // (undocumented)
+    item(itemIndex: number): IDashboardLayoutItemFacade<TWidget> | undefined;
+    // (undocumented)
+    items(): IDashboardLayoutItemsFacade<TWidget>;
+    // (undocumented)
+    layout(): IDashboardLayoutFacade<TWidget>;
+    // (undocumented)
+    raw(): IDashboardLayoutSection<TWidget>;
+    // (undocumented)
+    test(pred: (section: IDashboardLayoutSectionFacade<TWidget>) => boolean): boolean;
+    // (undocumented)
+    testRaw(pred: (section: IDashboardLayoutSection<TWidget>) => boolean): boolean;
+    // (undocumented)
+    title(): string | undefined;
+    // (undocumented)
+    titleEquals(title: string): boolean;
+}
+
+// @beta
+export interface IDashboardLayoutSectionsFacade<TWidget> {
+    // (undocumented)
+    all(): IDashboardLayoutSectionFacade<TWidget>[];
+    // (undocumented)
+    count(): number;
+    // (undocumented)
+    every(pred: (section: IDashboardLayoutSectionFacade<TWidget>) => boolean): boolean;
+    // (undocumented)
+    filter(pred: (section: IDashboardLayoutSectionFacade<TWidget>) => boolean): IDashboardLayoutSectionFacade<TWidget>[];
+    // (undocumented)
+    find(pred: (section: IDashboardLayoutSectionFacade<TWidget>) => boolean): IDashboardLayoutSectionFacade<TWidget> | undefined;
+    // (undocumented)
+    flatMap<TReturn>(callback: (section: IDashboardLayoutSectionFacade<TWidget>) => TReturn[]): TReturn[];
+    // (undocumented)
+    map<TReturn>(callback: (section: IDashboardLayoutSectionFacade<TWidget>) => TReturn): TReturn[];
+    // (undocumented)
+    raw(): IDashboardLayoutSection<TWidget>[];
+    // (undocumented)
+    reduce<TReturn>(callback: (acc: TReturn, section: IDashboardLayoutSectionFacade<TWidget>) => TReturn, initialValue: TReturn): TReturn;
+    // (undocumented)
+    section(sectionIndex: number): IDashboardLayoutSectionFacade<TWidget> | undefined;
+    // (undocumented)
+    some(pred: (section: IDashboardLayoutSectionFacade<TWidget>) => boolean): boolean;
 }
 
 // @public
@@ -4439,6 +4608,8 @@ export interface IDashboardWidgetProps {
     onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
     // @alpha
     onWidgetClicked?: () => void;
+    // @alpha
+    parentLayoutItem?: IDashboardLayoutItemFacade<ExtendedDashboardWidget>;
     // @alpha (undocumented)
     screen: ScreenSize;
     // @alpha

@@ -27,3 +27,12 @@ export * from "./converters/index.js";
 export * from "./plugins/index.js";
 export * from "./widgets/index.js";
 export * from "./tools/index.js";
+
+// this will have to be moved to a public API at some point. It's marked as beta for now.
+export type {
+    IDashboardLayoutItemFacade,
+    IDashboardLayoutItemsFacade,
+    IDashboardLayoutSectionFacade,
+    IDashboardLayoutSectionsFacade,
+    IDashboardLayoutFacade,
+} from "./_staging/dashboard/fluidLayout/index.js";

@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { Configuration } from "react-grid-system";
 import { ScreenSize } from "@gooddata/sdk-model";
 
@@ -19,7 +19,7 @@ const DASHBOARD_LAYOUT_BREAKPOINT_SM = SCREEN_BREAKPOINT_SM + 1;
 const DASHBOARD_LAYOUT_BREAKPOINT_MD = SCREEN_BREAKPOINT_LG + 1;
 const DASHBOARD_LAYOUT_BREAKPOINT_LG = SCREEN_BREAKPOINT_XL + 1;
 
-const DASHBOARD_LAYOUT_BREAK_POINTS: number[] = [
+export const DASHBOARD_LAYOUT_BREAK_POINTS: number[] = [
     DASHBOARD_LAYOUT_BREAKPOINT_XS,
     DASHBOARD_LAYOUT_BREAKPOINT_SM,
     DASHBOARD_LAYOUT_BREAKPOINT_MD,
