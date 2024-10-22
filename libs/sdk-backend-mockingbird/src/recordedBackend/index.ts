@@ -242,6 +242,9 @@ function recordedWorkspace(
                 async setLocale(): Promise<void> {
                     return Promise.resolve();
                 },
+                async setSeparators(): Promise<void> {
+                    return Promise.resolve();
+                },
                 async setTimezone(): Promise<void> {
                     return Promise.resolve();
                 },
@@ -442,6 +445,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
             return {
                 setWhiteLabeling: () => Promise.resolve(),
                 setLocale: () => Promise.resolve(),
+                setSeparators: () => Promise.resolve(),
                 setTimezone: () => Promise.resolve(),
                 setDateFormat: () => Promise.resolve(),
                 setWeekStart: () => Promise.resolve(),
@@ -611,6 +615,7 @@ function recordedUserService(implConfig: RecordedBackendConfig): IUserService {
                     ...(implConfig.globalSettings ?? {}),
                 }),
                 setLocale: () => Promise.resolve(),
+                setSeparators: () => Promise.resolve(),
             };
         },
     };

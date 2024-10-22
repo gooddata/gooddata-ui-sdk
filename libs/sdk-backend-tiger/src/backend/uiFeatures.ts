@@ -117,6 +117,7 @@ export enum TigerFeaturesNames {
     EnableCrossFilteringAliasTitles = "enableCrossFilteringAliasTitles",
     EnableDefaultSmtp = "enableDefaultSmtp",
     EnableDashboardFlexibleLayout = "enableDashboardFlexibleLayout",
+    EnableNumberSeparators = "enableNumberSeparators",
 }
 
 export type ITigerFeatureFlags = {
@@ -197,6 +198,7 @@ export type ITigerFeatureFlags = {
     enableCrossFilteringAliasTitles: typeof FeatureFlagsValues["enableCrossFilteringAliasTitles"][number];
     enableDefaultSmtp: typeof FeatureFlagsValues["enableDefaultSmtp"][number];
     enableDashboardFlexibleLayout: typeof FeatureFlagsValues["enableDashboardFlexibleLayout"][number];
+    enableNumberSeparators: typeof FeatureFlagsValues["enableNumberSeparators"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -277,6 +279,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableCrossFilteringAliasTitles: false,
     enableDefaultSmtp: false,
     enableDashboardFlexibleLayout: false,
+    enableNumberSeparators: false,
 };
 
 export const FeatureFlagsValues = {
@@ -361,4 +364,5 @@ export const FeatureFlagsValues = {
     enableCrossFilteringAliasTitles: [true, false] as const,
     enableDefaultSmtp: [true, false] as const,
     enableDashboardFlexibleLayout: [true, false] as const,
+    enableNumberSeparators: [true, false] as const,
 };

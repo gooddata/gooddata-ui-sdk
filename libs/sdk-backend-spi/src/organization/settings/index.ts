@@ -1,6 +1,6 @@
 // (C) 2022-2024 GoodData Corporation
 
-import { ISettings, IWhiteLabeling, IOpenAiConfig, IAlertDefault } from "@gooddata/sdk-model";
+import { ISettings, IWhiteLabeling, IOpenAiConfig, IAlertDefault, ISeparators } from "@gooddata/sdk-model";
 
 /**
  * This service provides access to organization settings
@@ -25,6 +25,15 @@ export interface IOrganizationSettingsService {
      * @returns promise
      */
     setLocale(locale: string): Promise<void>;
+
+    /**
+     * Set separators for the organization
+     *
+     * @param separators - separators for the organization
+     *
+     * @returns promise
+     */
+    setSeparators(separators: ISeparators): Promise<void>;
 
     /**
      * Sets timezone for organization.

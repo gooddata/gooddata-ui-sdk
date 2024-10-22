@@ -1,4 +1,5 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
+import { ISeparators } from "@gooddata/sdk-model";
 import { IUserSettings } from "../../common/settings.js";
 
 /**
@@ -22,4 +23,13 @@ export interface IUserSettingsService {
      * @returns promise
      */
     setLocale(locale: string): Promise<void>;
+
+    /**
+     * Set separators for the current user
+     *
+     * @param separators - separators for the current user
+     *
+     * @returns promise
+     */
+    setSeparators(separators: ISeparators): Promise<void>;
 }

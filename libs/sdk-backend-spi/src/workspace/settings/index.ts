@@ -1,4 +1,5 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
+import { ISeparators } from "@gooddata/sdk-model";
 import { IWorkspaceSettings, IUserWorkspaceSettings } from "../../common/settings.js";
 
 /**
@@ -29,6 +30,15 @@ export interface IWorkspaceSettingsService {
      * @returns promise
      */
     setLocale(locale: string): Promise<void>;
+
+    /**
+     * Set separators for the current workspace
+     *
+     * @param separators - separators for the current workspace
+     *
+     * @returns promise
+     */
+    setSeparators(separators: ISeparators): Promise<void>;
 
     /**
      * Sets timezone for current workspace.

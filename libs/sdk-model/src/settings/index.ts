@@ -11,6 +11,70 @@
  * @public
  */
 export interface ISettings {
+    //
+    // Platform Settings
+    //
+
+    /**
+     * Represents whiteLabeling configuration
+     */
+    whiteLabeling?: IWhiteLabeling;
+
+    /**
+     * Represents alert default configuration
+     */
+    alertDefault?: IAlertDefault;
+
+    /**
+     * Represents configuration for OpenAI integration
+     * @alpha
+     */
+    openAiConfig?: IOpenAiConfig;
+    /**
+     * Indicates current platform edition.
+     */
+    platformEdition?: PlatformEdition;
+
+    /**
+     * Early access features configuration.
+     * @beta
+     */
+    earlyAccessFeatures?: IEarlyAccessFeaturesConfig;
+
+    /**
+     * Week start day
+     */
+    weekStart?: WeekStart;
+
+    /**
+     * Locale code to use for date formatting.
+     */
+    formatLocale?: string;
+
+    /**
+     * Indicates whether "Treat null as zero" option should be displayed in measure value filter configuration and its default state"
+     */
+    ADMeasureValueFilterNullAsZeroOption?: string;
+
+    /**
+     * Indicates the format in which the dates will be displayed
+     */
+    responsiveUiDateFormat?: string;
+
+    /**
+     * IANA identifier of time zone in which the platform metadata are stored.
+     */
+    metadataTimeZone?: string;
+
+    /**
+     * Timezone
+     */
+    timezone?: string;
+
+    //
+    // Feature Flags
+    //
+
     /**
      * Indicates whether the Headline's improvements is available.
      */
@@ -73,11 +137,6 @@ export interface ISettings {
     enableCustomColorPicker?: boolean;
 
     /**
-     * Indicates whether "Treat null as zero" option should be displayed in measure value filter configuration and its default state"
-     */
-    ADMeasureValueFilterNullAsZeroOption?: string;
-
-    /**
      * Indicates whether the catalog groups in analytical designer are expanded by default.
      */
     ADCatalogGroupsExpanded?: boolean;
@@ -86,11 +145,6 @@ export interface ISettings {
      * Indicates whether data point visibility configuration is available in AD
      */
     enableHidingOfDataPoints?: boolean;
-
-    /**
-     * Indicates the format in which the dates will be displayed
-     */
-    responsiveUiDateFormat?: string;
 
     /**
      * Indicates whether multiple dates can be put into buckets
@@ -186,11 +240,6 @@ export interface ISettings {
     enableDataSampling?: boolean;
 
     /**
-     * Indicates current platform edition.
-     */
-    platformEdition?: PlatformEdition;
-
-    /**
      * Indicates whether the company logo should be visible in the embedded dashboard.
      */
     enableCompanyLogoInEmbeddedUI?: boolean;
@@ -256,22 +305,6 @@ export interface ISettings {
     enableSeparateTotalLabels?: boolean;
 
     /**
-     * Represents whiteLabeling configuration
-     */
-    whiteLabeling?: IWhiteLabeling;
-
-    /**
-     * Represents alert default configuration
-     */
-    alertDefault?: IAlertDefault;
-
-    /**
-     * Represents configuration for OpenAI integration
-     * @alpha
-     */
-    openAiConfig?: IOpenAiConfig;
-
-    /**
      * Enable usage of insights, widgets, kpis descriptions.
      */
     enableDescriptions?: boolean;
@@ -282,19 +315,9 @@ export interface ISettings {
     enableAdDescriptionEdit?: boolean;
 
     /**
-     * Locale code to use for date formatting.
-     */
-    formatLocale?: string;
-
-    /**
      * Enable use of composite grain
      */
     enableCompositeGrain?: boolean;
-
-    /**
-     * Week start day
-     */
-    weekStart?: WeekStart;
 
     /**
      * Enable table transposition (metrics in rows)
@@ -305,16 +328,6 @@ export interface ISettings {
      * Enable moving column attribute headers to the left.
      */
     enableColumnHeadersPosition?: boolean;
-
-    /**
-     * IANA identifier of time zone in which the platform metadata are stored.
-     */
-    metadataTimeZone?: string;
-
-    /**
-     * Timezone
-     */
-    timezone?: string;
 
     /**
      * Enable new max bucket size items limit for Pivot Table
@@ -503,12 +516,6 @@ export interface ISettings {
     enableFlightRpcDataSource?: boolean;
 
     /**
-     * Early access features configuration.
-     * @beta
-     */
-    earlyAccessFeatures?: IEarlyAccessFeaturesConfig;
-
-    /**
      * Enable early access features rollout.
      */
     enableEarlyAccessFeaturesRollout?: boolean;
@@ -523,6 +530,11 @@ export interface ISettings {
      * Enable the use of default SMTP in destinations.
      */
     enableDefaultSmtp?: boolean;
+
+    /**
+     * Enable number separators configuration in home-ui (both organization and workspace level).
+     */
+    enableNumberSeparators?: boolean;
 
     [key: string]: number | boolean | string | object | undefined;
 }
