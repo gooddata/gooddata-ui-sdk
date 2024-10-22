@@ -3155,6 +3155,7 @@ export interface ISettings {
     enableNewHeadline?: boolean;
     // (undocumented)
     enableNewNavigationForResponsiveUi?: boolean;
+    enableNumberSeparators?: boolean;
     // (undocumented)
     enableOracleDataSource?: boolean;
     enablePivotTableIncreaseBucketSize?: boolean;

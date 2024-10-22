@@ -76,6 +76,7 @@ import {
     IAbsoluteDateFilter,
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
+    ISeparators,
 } from "@gooddata/sdk-model";
 import { DecoratedWorkspaceAttributesService } from "../decoratedBackend/attributes.js";
 import { DecoratedWorkspaceSettingsService } from "../decoratedBackend/workspaceSettings.js";
@@ -446,6 +447,10 @@ class WithWorkspaceSettingsCaching extends DecoratedWorkspaceSettingsService {
 
     public async setLocale(locale: string): Promise<void> {
         return super.setLocale(locale);
+    }
+
+    public async setSeparators(separators: ISeparators): Promise<void> {
+        return super.setSeparators(separators);
     }
 
     public async setTimezone(timezone: string): Promise<void> {

@@ -4,7 +4,7 @@ import {
     IWorkspaceSettingsService,
     IUserWorkspaceSettings,
 } from "@gooddata/sdk-backend-spi";
-import { ISettings } from "@gooddata/sdk-model";
+import { ISeparators, ISettings } from "@gooddata/sdk-model";
 
 import { TigerAuthenticatedCallGuard, TigerSettingsType } from "../../../types/index.js";
 import { getOrganizationTier, TigerFeaturesService } from "../../features/index.js";
@@ -58,6 +58,10 @@ export class TigerWorkspaceSettings
 
     public async setLocale(locale: string): Promise<void> {
         return this.setSetting("LOCALE", { value: locale });
+    }
+
+    public async setSeparators(separators: ISeparators): Promise<void> {
+        return this.setSetting("SEPARATORS", separators);
     }
 
     public async setTimezone(timezone: string): Promise<void> {

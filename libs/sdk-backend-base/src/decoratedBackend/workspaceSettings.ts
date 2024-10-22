@@ -1,9 +1,10 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import {
     IUserWorkspaceSettings,
     IWorkspaceSettings,
     IWorkspaceSettingsService,
 } from "@gooddata/sdk-backend-spi";
+import { ISeparators } from "@gooddata/sdk-model";
 
 /**
  * @alpha
@@ -21,6 +22,10 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
 
     async setLocale(locale: string): Promise<void> {
         return this.decorated.setLocale(locale);
+    }
+
+    async setSeparators(separators: ISeparators): Promise<void> {
+        return this.decorated.setSeparators(separators);
     }
 
     async setTimezone(timezone: string): Promise<void> {

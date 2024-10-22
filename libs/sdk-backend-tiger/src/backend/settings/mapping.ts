@@ -30,9 +30,23 @@ export function mapTypeToKey(
             return "showHiddenCatalogItems";
         case "OPENAI_CONFIG":
             return "openAiConfig";
+        case "SEPARATORS":
+            return "separators";
         case "organizationSetting":
             return "organizationSetting";
-        default:
+        // These cases are intentionally not mapped to maintain an exhaustive check.
+        // This ensures we're notified when new properties are added, allowing us to decide if they need mapping.
+        case "METADATA_LOCALE":
+        case "OPERATOR_OVERRIDES":
+        case "TIMEZONE_VALIDATION_ENABLED":
+        case "ENABLE_FILE_ANALYTICS":
+        case undefined:
             return fallback;
+        default:
+            return exhaustiveCheck(type, fallback);
     }
+}
+
+function exhaustiveCheck(_type: never, fallback: string): string {
+    return fallback;
 }
