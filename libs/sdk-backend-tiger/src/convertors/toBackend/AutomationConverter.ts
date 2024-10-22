@@ -18,6 +18,7 @@ import { v4 as uuidv4 } from "uuid";
 import { convertMeasure } from "./afm/MeasureConverter.js";
 import { convertAfmFilters } from "./afm/AfmFiltersConverter.js";
 import { fixNumber } from "../../utils/fixNumber.js";
+import { convertAttribute } from "./afm/AttributeConverter.js";
 
 export function convertAutomation(
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
@@ -37,6 +38,7 @@ export function convertAutomation(
         dashboard,
         metadata,
     } = automation;
+
     const relationships = omitBy(
         {
             exportDefinitions: exportDefinitionIds?.length
@@ -74,7 +76,11 @@ export function convertAutomation(
           }
         : {};
     const state = alert ? alert.trigger.state : undefined;
-    const metadataObj = metadata ? { metadata } : {};
+    const metadataObj = metadata
+        ? {
+              metadata,
+          }
+        : {};
 
     const attributes = omitBy(
         {
@@ -115,6 +121,7 @@ const convertAlert = (alert: IAutomationAlert): JsonApiAutomationInAttributesAle
             auxMeasures: execution.auxMeasures?.map((measure) => {
                 return omit(convertMeasure(measure), "alias", "format", "title");
             }),
+            attributes: execution.attributes?.map(convertAttribute),
         },
         trigger: alert.trigger.mode,
     };

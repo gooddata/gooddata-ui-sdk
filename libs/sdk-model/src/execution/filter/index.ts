@@ -1,7 +1,7 @@
 // (C) 2019-2024 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { invariant } from "ts-invariant";
-import { Identifier, ObjRef, ObjRefInScope } from "../../objRef/index.js";
+import { Identifier, isObjRef, ObjRef, ObjRefInScope } from "../../objRef/index.js";
 import { DateAttributeGranularity, AllTimeGranularity } from "../../base/dateGranularities.js";
 
 /**
@@ -47,7 +47,7 @@ export interface IPositiveAttributeFilterBody extends IIdentifiableFilter {
     /**
      * Display form whose attribute elements are included in the 'in' list.
      */
-    displayForm: ObjRef;
+    displayForm: ObjRef | ObjRefInScope;
 
     /**
      * Attribute elements to filter in. The attribute elements can be specified either using
@@ -86,7 +86,7 @@ export interface INegativeAttributeFilterBody extends IIdentifiableFilter {
     /**
      * Display form whose attribute elements are included in the 'notIn' list.
      */
-    displayForm: ObjRef;
+    displayForm: ObjRef | ObjRefInScope;
 
     /**
      * Attribute elements to filter out. The attribute elements can be specified either using
@@ -655,10 +655,10 @@ export function filterObjRef(filter: IFilter): ObjRef | undefined;
 export function filterObjRef(filter: IFilter): ObjRef | undefined {
     invariant(filter, "filter must be specified");
 
-    if (isPositiveAttributeFilter(filter)) {
+    if (isPositiveAttributeFilter(filter) && isObjRef(filter.positiveAttributeFilter.displayForm)) {
         return filter.positiveAttributeFilter.displayForm;
     }
-    if (isNegativeAttributeFilter(filter)) {
+    if (isNegativeAttributeFilter(filter) && isObjRef(filter.negativeAttributeFilter.displayForm)) {
         return filter.negativeAttributeFilter.displayForm;
     }
     if (isAbsoluteDateFilter(filter)) {

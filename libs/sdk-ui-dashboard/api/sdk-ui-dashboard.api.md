@@ -7372,6 +7372,9 @@ export const selectEffectiveDateFiltersModeMap: DashboardSelector<Map<string, Da
 export const selectEffectiveDateFilterTitle: DashboardSelector<string | undefined>;
 
 // @alpha (undocumented)
+export const selectEnableAlertAttributes: DashboardSelector<boolean>;
+
+// @alpha (undocumented)
 export const selectEnableAlerting: DashboardSelector<boolean>;
 
 // @internal
@@ -7492,7 +7495,7 @@ export const selectEntitlementUnlimitedAutomations: DashboardSelector<IEntitleme
 export const selectExecutionResult: (state: DashboardState, id: EntityId) => IExecutionResultEnvelope | undefined;
 
 // @alpha (undocumented)
-export const selectExecutionResultByRef: (ref: ObjRef) => DashboardSelector<IExecutionResultEnvelope | undefined>;
+export const selectExecutionResultByRef: (ref: ObjRef | undefined) => DashboardSelector<IExecutionResultEnvelope | undefined>;
 
 // @alpha (undocumented)
 export const selectFilterBarExpanded: DashboardSelector<boolean>;

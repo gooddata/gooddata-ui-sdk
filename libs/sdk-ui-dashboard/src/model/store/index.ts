@@ -91,6 +91,7 @@ export {
     selectEnableScheduling,
     selectEnableFilterViews,
     selectEnableAlerting,
+    selectEnableAlertAttributes,
     selectEnableVisualizationSwitcher,
     selectEnableIgnoreCrossFiltering,
     selectEnableAutomations,

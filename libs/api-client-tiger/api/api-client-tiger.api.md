@@ -8461,6 +8461,9 @@ export interface Invitation {
 export const isAfmObjectIdentifier: (value: unknown) => value is AfmModelObjectIdentifier;
 
 // @public (undocumented)
+export const isAfmObjectLocalIdentifier: (value: unknown) => value is AfmModelLocalIdentifier;
+
+// @public (undocumented)
 function isAnalyticalDashboard(dashboard: unknown): dashboard is IAnalyticalDashboard;
 
 // @public (undocumented)

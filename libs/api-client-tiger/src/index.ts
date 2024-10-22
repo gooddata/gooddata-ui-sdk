@@ -23,6 +23,7 @@ export {
     AnalyticalDashboardModelV2,
     isAttributeHeader,
     isAfmObjectIdentifier,
+    isAfmObjectLocalIdentifier,
     isResultAttributeHeader,
     isResultMeasureHeader,
     isResultTotalHeader,

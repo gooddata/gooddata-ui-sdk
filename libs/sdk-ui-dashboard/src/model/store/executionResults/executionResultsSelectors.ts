@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import { ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 
@@ -33,15 +33,19 @@ export const selectExecutionResult = adapterSelectors.selectById;
  * @alpha
  */
 export const selectExecutionResultByRef: (
-    ref: ObjRef,
-) => DashboardSelector<IExecutionResultEnvelope | undefined> = createMemoizedSelector((ref: ObjRef) =>
-    createSelector(
-        selectExecutionResultEntities,
-        (executionResults): IExecutionResultEnvelope | undefined => {
-            const key = serializeObjRef(ref);
-            return executionResults[key];
-        },
-    ),
+    ref: ObjRef | undefined,
+) => DashboardSelector<IExecutionResultEnvelope | undefined> = createMemoizedSelector(
+    (ref: ObjRef | undefined) =>
+        createSelector(
+            selectExecutionResultEntities,
+            (executionResults): IExecutionResultEnvelope | undefined => {
+                if (!ref) {
+                    return undefined;
+                }
+                const key = serializeObjRef(ref);
+                return executionResults[key];
+            },
+        ),
 );
 
 /**
