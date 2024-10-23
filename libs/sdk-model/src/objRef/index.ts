@@ -195,7 +195,9 @@ export function objRefToString(objRef: ObjRef | ObjRefInScope): string {
  * @public
  */
 export function serializeObjRef(objRef: ObjRef | ObjRefInScope): string {
-    return stringify(objRef, { space: 0 });
+    const normalized = normalizeObjRef(objRef);
+
+    return stringify(normalized, { space: 0 });
 }
 
 /**
@@ -249,4 +251,30 @@ export function areObjRefsEqual<T extends ObjRefInScope | null | undefined>(a: T
     }
 
     return isLocalIdRef(a) && isLocalIdRef(b) && a.localIdentifier === b.localIdentifier;
+}
+
+/**
+ * Returns a value that normalizes the ObjRef instance to a canonical form.
+ */
+function normalizeObjRef(objRef: ObjRef | ObjRefInScope): ObjRef | ObjRefInScope {
+    if (isIdentifierRef(objRef)) {
+        return {
+            identifier: objRef.identifier,
+            type: objRef.type,
+        };
+    }
+
+    if (isUriRef(objRef)) {
+        return {
+            uri: objRef.uri,
+        };
+    }
+
+    if (isLocalIdRef(objRef)) {
+        return {
+            localIdentifier: objRef.localIdentifier,
+        };
+    }
+
+    return objRef;
 }

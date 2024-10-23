@@ -65,7 +65,7 @@ function findHeader(dataView: DataViewFacade | null, attr: IAttributeMetadataObj
 }
 
 /**
- * This will find indexes for provided attribute descriptor in the execution results data view.
+ * This will find attribute elements array indexes for provided attribute descriptor in the execution results data view.
  * @param dataView - DataViewFacade object to work with execution results data
  * @param header - attribute header to find indexes for
  */
@@ -92,15 +92,18 @@ function findDimIndexes(
 }
 
 /**
- * Based on found indexes in the execution results data view, this function will return attribute values
+ * Based on found indexes in the execution results data view, this function will return attribute elements
  * that are present in the data view.
  * @param dataView - DataViewFacade object to work with execution results data
- * @param i - index of the dimension
- * @param j - index of the item in the dimension
+ * @param dimensionIndex - index of the dimension
+ * @param elementsIndex - index of the item in the dimension
  */
-function findAttributeValues(dataView: DataViewFacade | null, [i, j]: [number, number]) {
+function findAttributeValues(
+    dataView: DataViewFacade | null,
+    [dimensionIndex, elementsIndex]: [number, number],
+) {
     const headers = dataView?.meta().allHeaders() ?? [];
-    const data = (headers[i] ?? [])[j] ?? [];
+    const data = (headers[dimensionIndex] ?? [])[elementsIndex] ?? [];
 
     return data
         .map((item) => {

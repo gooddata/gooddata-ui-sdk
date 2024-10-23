@@ -3,7 +3,6 @@ import {
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
     IInsightWidget,
-    widgetRef,
 } from "@gooddata/sdk-model";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -64,7 +63,8 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     const users = useDashboardSelector(selectUsers);
     const dashboard = useDashboardSelector(selectDashboardId);
     const insight = useDashboardSelector(selectInsightByWidgetRef(widget?.ref));
-    const execResult = useDashboardSelector(selectExecutionResultByRef(widget && widgetRef(widget)));
+    const execResult = useDashboardSelector(selectExecutionResultByRef(widget?.ref));
+
     const allAutomationsCount = useDashboardSelector(selectAllAutomationsCount);
     const maxAutomationsEntitlement = useDashboardSelector(selectEntitlementMaxAutomations);
     const unlimitedAutomationsEntitlement = useDashboardSelector(selectEntitlementUnlimitedAutomations);
