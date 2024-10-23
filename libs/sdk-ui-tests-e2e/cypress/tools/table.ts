@@ -19,6 +19,11 @@ export class Table {
         return this;
     }
 
+    public waitLoadStarted() {
+        this.getElement().find(".s-loading").should("exist");
+        return this;
+    }
+
     public waitLoaded(): this {
         this.getElement().find(".s-loading").should("not.exist");
         this.getElement().find(".s-loading-done").should("exist");
