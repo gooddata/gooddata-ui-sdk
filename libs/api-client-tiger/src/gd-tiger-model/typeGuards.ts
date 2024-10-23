@@ -1,6 +1,7 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 import {
+    AfmLocalIdentifier,
     AfmObjectIdentifier,
     AttributeExecutionResultHeader,
     AttributeHeaderOut,
@@ -33,6 +34,13 @@ export const isAfmObjectIdentifier = (value: unknown): value is AfmObjectIdentif
         (value as Partial<AfmObjectIdentifier>)?.identifier?.id &&
         (value as Partial<AfmObjectIdentifier>)?.identifier?.type
     );
+};
+
+/**
+ * @public
+ */
+export const isAfmObjectLocalIdentifier = (value: unknown): value is AfmLocalIdentifier => {
+    return !!(value as Partial<AfmLocalIdentifier>)?.localIdentifier;
 };
 
 /**

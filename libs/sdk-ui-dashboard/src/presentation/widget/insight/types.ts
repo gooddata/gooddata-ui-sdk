@@ -1,7 +1,14 @@
 // (C) 2020-2024 GoodData Corporation
 import { ComponentType } from "react";
 import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { IColorPalette, IInsight, IInsightWidget, IMeasure, ISeparators } from "@gooddata/sdk-model";
+import {
+    IAttribute,
+    IColorPalette,
+    IInsight,
+    IInsightWidget,
+    IMeasure,
+    ISeparators,
+} from "@gooddata/sdk-model";
 import {
     ExplicitDrill,
     IDrillEventIntersectionElement,
@@ -270,4 +277,11 @@ export type AlertMetric = {
     measure: IMeasure;
     isPrimary: boolean;
     comparators: AlertMetricComparator[];
+};
+
+/**
+ * @internal
+ */
+export type AlertAttribute = {
+    attribute: IAttribute;
 };

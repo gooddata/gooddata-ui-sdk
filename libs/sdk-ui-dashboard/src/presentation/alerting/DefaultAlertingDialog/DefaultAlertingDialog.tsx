@@ -33,11 +33,15 @@ export const AlertingDialog: React.FC<IAlertingDialogProps> = (props) => {
     const { editAlert, editWidget, anchorEl, onCancel = () => noop, onUpdate = () => noop } = props;
 
     const {
+        execResult,
         hasAlerts,
         destinations,
         users,
         supportedMeasures,
+        supportedAttributes,
         catalogMeasures,
+        canManageAttributes,
+        catalogAttributes,
         cancelAlertEditing,
         updateExistingAlert,
         maxAutomationsRecipients,
@@ -48,6 +52,7 @@ export const AlertingDialog: React.FC<IAlertingDialogProps> = (props) => {
     }
 
     const classes = cx(
+        "gd-alerts-configuration-panel",
         "configuration-scrollable-panel",
         "s-configuration-scrollable-panel",
         `s-alert-${editAlert.id}`,
@@ -60,14 +65,18 @@ export const AlertingDialog: React.FC<IAlertingDialogProps> = (props) => {
             alignTo={`#${anchorEl.id}`}
             onClose={onCancel}
             overlayPositionType="fixed"
+            classNames="gd-alerts-configuration-panel-management"
         >
             <ScrollablePanel className={classes}>
                 <OverlayControllerProvider overlayController={overlayController}>
                     <EditAlert
+                        canManageAttributes={canManageAttributes}
+                        execResult={execResult}
                         alert={editAlert}
                         hasAlerts={hasAlerts}
                         destinations={destinations}
                         measures={supportedMeasures}
+                        attributes={supportedAttributes}
                         users={users}
                         onUpdate={(alert) => {
                             updateExistingAlert(alert);
@@ -80,6 +89,7 @@ export const AlertingDialog: React.FC<IAlertingDialogProps> = (props) => {
                         onClose={onCancel}
                         overlayPositionType="fixed"
                         catalogMeasures={catalogMeasures}
+                        catalogAttributes={catalogAttributes}
                         maxAutomationsRecipients={maxAutomationsRecipients}
                     />
                 </OverlayControllerProvider>

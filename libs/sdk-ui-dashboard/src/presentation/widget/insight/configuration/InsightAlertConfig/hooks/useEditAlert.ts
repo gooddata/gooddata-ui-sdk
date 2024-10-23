@@ -5,6 +5,7 @@ import {
     IAlertComparisonOperator,
     IAlertRelativeArithmeticOperator,
     IAlertRelativeOperator,
+    IAttributeMetadataObject,
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
     IAutomationRecipient,
@@ -16,21 +17,24 @@ import isEqual from "lodash/isEqual.js";
 import {
     isAlertRecipientsValid,
     isAlertValueDefined,
+    transformAlertByAttribute,
     transformAlertByComparisonOperator,
     transformAlertByDestination,
     transformAlertByMetric,
     transformAlertByRelativeOperator,
     transformAlertByValue,
 } from "../utils.js";
-import { AlertMetric } from "../../../types.js";
+import { AlertAttribute, AlertMetric } from "../../../types.js";
 import { selectCurrentUser, selectUsers, useDashboardSelector } from "../../../../../../model/index.js";
 import { convertCurrentUserToAutomationRecipient } from "../../../../../../_staging/automation/index.js";
 import { isEmail } from "../../../../../scheduledEmail/DefaultScheduledEmailDialog/utils/validate.js";
 
 export interface IUseEditAlertProps {
     metrics: AlertMetric[];
+    attributes: AlertAttribute[];
     alert: IAutomationMetadataObject;
     catalogMeasures: ICatalogMeasure[];
+    catalogAttributes: IAttributeMetadataObject[];
     destinations: INotificationChannelMetadataObject[];
     onCreate?: (alert: IAutomationMetadataObjectDefinition) => void;
     onUpdate?: (alert: IAutomationMetadataObject) => void;
@@ -38,6 +42,7 @@ export interface IUseEditAlertProps {
 
 export const useEditAlert = ({
     metrics,
+    attributes,
     alert,
     onCreate,
     onUpdate,
@@ -58,6 +63,10 @@ export const useEditAlert = ({
 
     const changeMeasure = (measure: AlertMetric) => {
         setUpdatedAlert((alert) => transformAlertByMetric(metrics, alert, measure, catalogMeasures));
+    };
+
+    const changeAttribute = (attribute: AlertAttribute | undefined, value: string | undefined) => {
+        setUpdatedAlert((alert) => transformAlertByAttribute(attributes, alert, attribute, value));
     };
 
     const changeComparisonOperator = (measure: AlertMetric, comparisonOperator: IAlertComparisonOperator) => {
@@ -164,6 +173,7 @@ export const useEditAlert = ({
         changeComparisonOperator,
         changeRelativeOperator,
         changeMeasure,
+        changeAttribute,
         changeValue,
         changeDestination,
         changeRecipients,

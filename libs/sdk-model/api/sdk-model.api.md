@@ -2287,7 +2287,7 @@ export interface INegativeAttributeFilter {
 
 // @public
 export interface INegativeAttributeFilterBody extends IIdentifiableFilter {
-    displayForm: ObjRef;
+    displayForm: ObjRef | ObjRefInScope;
     notIn: IAttributeElements;
 }
 
@@ -2589,7 +2589,7 @@ export interface IPositiveAttributeFilter {
 
 // @public
 export interface IPositiveAttributeFilterBody extends IIdentifiableFilter {
-    displayForm: ObjRef;
+    displayForm: ObjRef | ObjRefInScope;
     in: IAttributeElements;
 }
 
@@ -3086,6 +3086,7 @@ export interface ISettings {
     enableADMultipleDateFilters?: boolean;
     // @deprecated
     enableAIFunctions?: boolean;
+    enableAlertAttributes?: boolean;
     enableAlerting?: boolean;
     enableAlertingRollout?: boolean;
     enableAlternativeDisplayFormSelection?: boolean;

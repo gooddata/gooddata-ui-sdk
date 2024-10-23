@@ -9,6 +9,8 @@ import {
     OverlayPositionType,
 } from "@gooddata/sdk-ui-kit";
 
+import { IGNORED_CONFIGURATION_MENU_CLICK_CLASS } from "../../../constants/index.js";
+
 interface IConfigurationBubbleProps {
     classNames?: string;
     onClose?: () => void;
@@ -52,7 +54,7 @@ export const ConfigurationBubble: React.FC<IConfigurationBubbleProps> = (props) 
         overlayPositionType,
         arrowDirections = defaultArrowDirections,
     } = props;
-    const ignoreClicksOnByClass = [alignTo]; // do not close on click to the widget
+    const ignoreClicksOnByClass = [alignTo, `.${IGNORED_CONFIGURATION_MENU_CLICK_CLASS}`]; // do not close on click to the widget
 
     return (
         <Bubble

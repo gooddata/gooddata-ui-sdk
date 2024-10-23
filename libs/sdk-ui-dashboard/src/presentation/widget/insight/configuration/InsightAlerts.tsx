@@ -32,11 +32,15 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
         destinations,
         users,
         viewMode,
+        execResult,
         supportedMeasures,
+        supportedAttributes,
         maxAutomationsReached,
         maxAutomationsRecipients,
+        canManageAttributes,
         canCreateAutomation,
         catalogMeasures,
+        catalogAttributes,
         //
         creatingAlert,
         initiateAlertCreation,
@@ -73,23 +77,30 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
     } else if (viewMode === "edit" && editingAlert) {
         content = (
             <EditAlert
+                canManageAttributes={canManageAttributes}
+                execResult={execResult}
                 alert={editingAlert}
                 hasAlerts={hasAlerts}
                 destinations={destinations}
                 users={users}
                 measures={supportedMeasures}
+                attributes={supportedAttributes}
                 onUpdate={updateExistingAlert}
                 onCancel={cancelAlertEditing}
                 onClose={onClose}
                 catalogMeasures={catalogMeasures}
+                catalogAttributes={catalogAttributes}
                 maxAutomationsRecipients={maxAutomationsRecipients}
             />
         );
     } else if (viewMode === "create" && creatingAlert) {
         content = (
             <CreateAlert
+                canManageAttributes={canManageAttributes}
+                execResult={execResult}
                 alert={creatingAlert}
                 measures={supportedMeasures}
+                attributes={supportedAttributes}
                 hasAlerts={hasAlerts}
                 destinations={destinations}
                 users={users}
@@ -99,6 +110,7 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
                 maxAutomationsReached={maxAutomationsReached}
                 maxAutomationsRecipients={maxAutomationsRecipients}
                 catalogMeasures={catalogMeasures}
+                catalogAttributes={catalogAttributes}
             />
         );
     } else {

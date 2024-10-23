@@ -1,10 +1,13 @@
 // (C) 2024 GoodData Corporation
 
 import {
+    attributeAlias,
+    bucketAttributes,
     bucketMeasures,
     IAlertComparisonOperator,
     IAlertRelativeArithmeticOperator,
     IAlertRelativeOperator,
+    IAttribute,
     IAutomationAlert,
     IAutomationAlertComparisonCondition,
     IAutomationAlertCondition,
@@ -23,7 +26,11 @@ import {
     IPoPMeasureDefinition,
     IPreviousPeriodMeasureDefinition,
     isArithmeticMeasure,
+    isAttributeElementsByValue,
+    isLocalIdRef,
+    isNegativeAttributeFilter,
     isPoPMeasure,
+    isPositiveAttributeFilter,
     isPreviousPeriodMeasure,
     isSimpleMeasure,
     measureAlias,
@@ -33,7 +40,12 @@ import {
 import { BucketNames } from "@gooddata/sdk-ui";
 import { IntlShape } from "react-intl";
 
-import { AlertMetric, AlertMetricComparator, AlertMetricComparatorType } from "../../types.js";
+import {
+    AlertAttribute,
+    AlertMetric,
+    AlertMetricComparator,
+    AlertMetricComparatorType,
+} from "../../types.js";
 
 import {
     COMPARISON_OPERATORS,
@@ -48,6 +60,13 @@ import { messages } from "./messages.js";
  */
 export const getMeasureTitle = (measure: IMeasure) => {
     return measure ? measureAlias(measure) ?? measureTitle(measure) : undefined;
+};
+
+/**
+ * @internal
+ */
+export const getAttributeTitle = (attribute: IAttribute) => {
+    return attribute ? attributeAlias(attribute) : undefined;
 };
 
 export const getOperatorTitle = (intl: IntlShape, alert?: IAutomationAlert) => {
@@ -203,6 +222,16 @@ export const getSupportedInsightMeasuresByInsight = (insight: IInsight | null | 
     return simpleMetrics;
 };
 
+export const getSupportedInsightAttributesByInsight = (
+    insight: IInsight | null | undefined,
+): AlertAttribute[] => {
+    const attributes = collectAllAttributes(insight);
+
+    return attributes
+        .map<AlertAttribute | undefined>(transformAttribute())
+        .filter(Boolean) as AlertAttribute[];
+};
+
 function transformMeasure(isPrimary: boolean) {
     return (measure: IMeasure) => {
         if (isSimpleMeasure(measure) || isArithmeticMeasure(measure)) {
@@ -213,6 +242,14 @@ function transformMeasure(isPrimary: boolean) {
             };
         }
         return undefined;
+    };
+}
+
+function transformAttribute() {
+    return (attribute: IAttribute) => {
+        return {
+            attribute,
+        };
     };
 }
 
@@ -358,6 +395,46 @@ function collectAllMetricsRepeater(insight: IInsight) {
     };
 }
 
+function collectAllAttributes(insight: IInsight | null | undefined) {
+    const insightType = insight ? (insightVisualizationType(insight) as InsightType) : null;
+
+    if (!insight) {
+        return [];
+    }
+
+    switch (insightType) {
+        case "headline":
+        case "line": {
+            return collectAllAttributesDefault(insight);
+        }
+        default: {
+            return [];
+        }
+    }
+}
+
+function collectAllAttributesDefault(insight: IInsight) {
+    const insightAttributeBucket: IBucket | undefined = insight
+        ? insightBucket(insight, BucketNames.ATTRIBUTE)
+        : undefined;
+    const insightAttributesBucket: IBucket | undefined = insight
+        ? insightBucket(insight, BucketNames.ATTRIBUTES)
+        : undefined;
+    const insightTrendBucket: IBucket | undefined = insight
+        ? insightBucket(insight, BucketNames.TREND)
+        : undefined;
+    const insightSegmentBucket: IBucket | undefined = insight
+        ? insightBucket(insight, BucketNames.SEGMENT)
+        : undefined;
+
+    return [
+        ...(insightAttributeBucket ? bucketAttributes(insightAttributeBucket) : []),
+        ...(insightAttributesBucket ? bucketAttributes(insightAttributesBucket) : []),
+        ...(insightTrendBucket ? bucketAttributes(insightTrendBucket) : []),
+        ...(insightSegmentBucket ? bucketAttributes(insightSegmentBucket) : []),
+    ];
+}
+
 export function getValueSuffix(alert?: IAutomationAlert): string | undefined {
     if (isChangeOperator(alert)) {
         return "%";
@@ -413,6 +490,33 @@ export function getAlertMeasure(measures: AlertMetric[], alert?: IAutomationAler
         );
     }
     return measures.find((m) => m.measure.measure.localIdentifier === condition?.left.id);
+}
+
+export function getAlertAttribute(
+    attributes: AlertAttribute[],
+    alert?: IAutomationMetadataObject,
+): [AlertAttribute | undefined, string | undefined] {
+    const attr = alert?.alert?.execution.attributes[0];
+    if (attr?.attribute) {
+        const { attribute, filterValue } = getAttributeRelatedFilterInfo(attributes, alert, attr);
+        return [attribute, filterValue];
+    }
+    return [undefined, undefined];
+}
+
+export function getAlertFilters(alert?: IAutomationMetadataObject): IFilter[] {
+    const filters = alert?.alert?.execution?.filters ?? [];
+    const attrs = (alert?.alert?.execution.attributes ?? []).map((a) => a.attribute.localIdentifier);
+
+    return filters.filter((f) => {
+        if (isPositiveAttributeFilter(f) && isLocalIdRef(f.positiveAttributeFilter.displayForm)) {
+            return !attrs.includes(f.positiveAttributeFilter.displayForm.localIdentifier);
+        }
+        if (isNegativeAttributeFilter(f) && isLocalIdRef(f.negativeAttributeFilter.displayForm)) {
+            return !attrs.includes(f.negativeAttributeFilter.displayForm.localIdentifier);
+        }
+        return true;
+    });
 }
 
 export function getAlertCompareOperator(alert?: IAutomationAlert): IAlertComparisonOperator | undefined {
@@ -486,6 +590,64 @@ export function transformAlertByMetric(
             ...alert.alert!,
             condition,
             execution: transformAlertExecutionByMetric(metrics, condition, alert.alert!.execution, measure),
+        },
+    };
+}
+
+/**
+ * This function get selected attributed and optionally value amd added this attribute to execution.
+ * If value is provided, it creates positive attribute filter with this value, otherwise it creates negative attribute filter
+ * that is empty for now.
+ * @param attributes - all available attributes
+ * @param alert - alert to transform
+ * @param attr - optionally selected attribute
+ * @param value - optionally selected value
+ */
+export function transformAlertByAttribute(
+    attributes: AlertAttribute[],
+    alert: IAutomationMetadataObject,
+    attr: AlertAttribute | undefined,
+    value: string | undefined,
+): IAutomationMetadataObject {
+    const { filterDefinition } = getAttributeRelatedFilterInfo(attributes, alert, attr?.attribute);
+    const originalFilters = alert.alert?.execution.filters.filter((f) => f !== filterDefinition) ?? [];
+
+    const customFilters: IFilter[] = [];
+    if (attr) {
+        if (value) {
+            customFilters.push({
+                positiveAttributeFilter: {
+                    displayForm: {
+                        localIdentifier: attr.attribute.attribute.localIdentifier,
+                    },
+                    in: {
+                        values: [value],
+                    },
+                },
+            });
+        } else {
+            customFilters.push({
+                negativeAttributeFilter: {
+                    displayForm: {
+                        localIdentifier: attr.attribute.attribute.localIdentifier,
+                    },
+                    notIn: {
+                        values: [],
+                    },
+                },
+            });
+        }
+    }
+
+    return {
+        ...alert,
+        alert: {
+            ...alert.alert!,
+            execution: {
+                ...alert.alert!.execution,
+                attributes: attr ? [attr.attribute] : [],
+                filters: [...originalFilters, ...customFilters],
+            },
         },
     };
 }
@@ -727,3 +889,62 @@ const findMeasureInCatalog = (
 ): ICatalogMeasure | undefined => {
     return catalogMeasures?.find((m) => m.measure.id === measureIdentifier(measure));
 };
+
+function getAttributeRelatedFilterInfo(
+    attributes: AlertAttribute[],
+    alert?: IAutomationMetadataObject,
+    attr?: IAttribute,
+): {
+    attribute: AlertAttribute | undefined;
+    filterDefinition: IFilter | undefined;
+    filterValue: string | undefined;
+} {
+    const attribute = attributes.find(
+        (a) => a.attribute.attribute.localIdentifier === attr?.attribute.localIdentifier,
+    );
+
+    return {
+        attribute,
+        ...getAttributeRelatedFilter(attribute, alert),
+    };
+}
+
+function getAttributeRelatedFilter(attr: AlertAttribute | undefined, alert?: IAutomationMetadataObject) {
+    const filter = alert?.alert?.execution.filters.filter((f) => {
+        if (isPositiveAttributeFilter(f) && isLocalIdRef(f.positiveAttributeFilter.displayForm)) {
+            return (
+                f.positiveAttributeFilter.displayForm.localIdentifier ===
+                attr?.attribute.attribute.localIdentifier
+            );
+        }
+        if (isNegativeAttributeFilter(f) && isLocalIdRef(f.negativeAttributeFilter.displayForm)) {
+            return (
+                f.negativeAttributeFilter.displayForm.localIdentifier ===
+                attr?.attribute.attribute.localIdentifier
+            );
+        }
+        return false;
+    })[0];
+
+    if (isPositiveAttributeFilter(filter) && isAttributeElementsByValue(filter.positiveAttributeFilter.in)) {
+        return {
+            filterDefinition: filter,
+            filterValue: filter.positiveAttributeFilter.in.values[0] ?? undefined,
+        };
+    }
+
+    if (
+        isNegativeAttributeFilter(filter) &&
+        isAttributeElementsByValue(filter.negativeAttributeFilter.notIn)
+    ) {
+        return {
+            filterDefinition: filter,
+            filterValue: undefined,
+        };
+    }
+
+    return {
+        filterDefinition: undefined,
+        filterValue: undefined,
+    };
+}

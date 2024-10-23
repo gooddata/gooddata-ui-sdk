@@ -21,12 +21,14 @@ import {
     idRef,
     isAutomationUserRecipient,
 } from "@gooddata/sdk-model";
+
 import { convertExportDefinitionMdObject as convertExportDefinitionMdObjectFromBackend } from "./ExportDefinitionsConverter.js";
 import compact from "lodash/compact.js";
 import { convertUserIdentifier } from "./UsersConverter.js";
 import { convertFilter } from "./afm/FilterConverter.js";
 import { convertMeasure } from "./afm/MeasureConverter.js";
 import { fixNumber } from "../../utils/fixNumber.js";
+import { convertAttribute } from "./AttributeConvertor.js";
 
 function convertRecipient(
     userLinkage: JsonApiUserLinkage,
@@ -79,9 +81,18 @@ export function convertAutomation(
     const dashboard = relationships?.analyticalDashboard?.data?.id;
 
     const convertedAlert = convertAlert(alert, state);
-    const alertObj = convertedAlert ? { alert: convertedAlert } : {};
+
+    const alertObj = convertedAlert
+        ? {
+              alert: convertedAlert,
+          }
+        : {};
     const scheduleObj = schedule ? { schedule } : {};
-    const metadataObj = metadata ? { metadata } : {};
+    const metadataObj = metadata
+        ? {
+              metadata,
+          }
+        : {};
 
     return {
         // Core
@@ -142,7 +153,7 @@ const convertAlert = (
 
     const base = {
         execution: {
-            attributes: [], // TODO: not implemented on BE yet
+            attributes: execution.attributes?.map(convertAttribute) ?? [],
             measures: execution.measures.map(convertMeasure),
             auxMeasures: execution.auxMeasures?.map(convertMeasure) ?? [],
             filters: execution.filters.map(convertFilter),

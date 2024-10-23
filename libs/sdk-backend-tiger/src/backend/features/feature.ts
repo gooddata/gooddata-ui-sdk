@@ -291,6 +291,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableAlertingAttributes,
+            "enableAlertAttributes",
+            "BOOLEAN",
+            FeatureFlagsValues.enableAlertAttributes,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableAlertingRollout,
             "enableAlertingRollout",
             "BOOLEAN",
