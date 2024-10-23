@@ -40,6 +40,7 @@ const AddWorkspaceToSubjectsComponent: React.FC<IAddWorkspaceToSubjectsProps> = 
                 isModal={true}
                 positionType="fixed"
                 className="gd-user-management-dialog"
+                resizeObserverThreshold={0.2}
             >
                 <AddWorkspace
                     ids={ids}

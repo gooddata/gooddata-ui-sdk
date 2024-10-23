@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import { IAlignPoint } from "../typings/positioning.js";
 import { Alignment, OverlayPositionType } from "../typings/overlay.js";
 
@@ -15,6 +15,14 @@ export interface IOverlayProps<T> {
     closeOnOutsideClick?: boolean;
     closeOnParentScroll?: boolean;
     closeOnEscape?: boolean;
+
+    /**
+     * Specifies a threshold for resizing the component when its content changes.
+     * The threshold is a percentage (0-1) of the component's height.
+     * For example, a threshold of 0.1 means the component will resize when its content
+     * changes by 10% of its height.
+     */
+    resizeObserverThreshold?: number;
 
     /**
      * Array of refs where user clicks should be ignored
@@ -56,4 +64,5 @@ export interface IOverlayState {
     };
     overflow?: string;
     scrollTop?: number;
+    observedHeight?: number;
 }

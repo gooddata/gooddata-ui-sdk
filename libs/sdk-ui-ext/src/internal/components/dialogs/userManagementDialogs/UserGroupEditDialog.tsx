@@ -178,6 +178,7 @@ const UserGroupEditDialogComponent: React.FC<IUserGroupEditDialogProps> = ({
                 isModal={true}
                 positionType="fixed"
                 className={dialogOverlayClassNames}
+                resizeObserverThreshold={0.2}
             >
                 <div className={dialogWrapperClassNames}>
                     {isLoading ? (

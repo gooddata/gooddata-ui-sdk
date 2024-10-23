@@ -1,6 +1,6 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import { cleanup } from "@testing-library/react";
-import { afterEach, expect } from "vitest";
+import { afterEach, expect, vi } from "vitest";
 
 /**
  * In order to be able to use extended matchers like "toBeInDocument", we use vitest-dom instead of testing-library/jest-dom.
@@ -23,6 +23,18 @@ declare module "vitest" {
 }
 
 expect.extend(matchers);
+
+global.ResizeObserver = class ResizeObserver {
+    observe() {
+        return null;
+    }
+    unobserve() {
+        return null;
+    }
+    disconnect() {
+        return null;
+    }
+};
 
 afterEach(() => {
     cleanup();
