@@ -73,7 +73,9 @@ export function* loadIrrelevantElementsSaga(
             loadOptionsWithElements,
         );
 
-        const relevantElementTitles = relevantElementsResult.elements.map((elem) => elem.title);
+        const relevantElementTitles = relevantElementsResult.elements.map((elem) =>
+            context.enableDuplicatedLabelValuesInAttributeFilter ? elem.uri : elem.title,
+        );
         const irrelevantSelectionTitles = difference(allSelectedElementTitles, relevantElementTitles);
 
         yield put(
