@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 
 import { IExecutionResult, IExportConfig, IExportResult } from "@gooddata/sdk-backend-spi";
 import { IExportFunction, IExtendedExportConfig } from "./Events.js";
@@ -37,6 +37,18 @@ export function createExportFunction(result: IExecutionResult, exportTitle?: str
         const exportRequestConfig = buildExportRequestConfig(exportConfig, exportTitle);
         return result.export(exportRequestConfig);
     };
+}
+
+/**
+ * Creates function to export data in the provided result. This function is typically passed by visualization
+ * components via the onExportReady callback.
+ *
+ * @param result - data view that will be exported
+ * @param exportTitle - specify title
+ * @internal
+ */
+export function createExportRawFunction(result: IExecutionResult): Promise<IExportResult> {
+    return result.exportRaw!();
 }
 
 /**

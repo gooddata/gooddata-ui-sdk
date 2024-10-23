@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { useCallback, useState } from "react";
 import { invariant } from "ts-invariant";
 import { IExtendedExportConfig } from "@gooddata/sdk-ui";
@@ -16,9 +16,12 @@ import {
     exportInsightWidget,
     ExportInsightWidget,
     DashboardInsightWidgetExportResolved,
+    exportRawInsightWidget,
+    ExportRawInsightWidget,
 } from "../../../model/index.js";
 import { useExportHandler } from "./useExportHandler.js";
 import { useExportDialogContext } from "../../dashboardContexts/index.js";
+import { useRawExportHandler } from "./useRawExportHandler.js";
 
 export const useInsightExport = (config: {
     title: string;
@@ -45,6 +48,16 @@ export const useInsightExport = (config: {
         [widgetRef],
     );
 
+    const exportRawFunction = useCallback(
+        //@ts-ignore
+        (configToUse: IExtendedExportConfig) =>
+            dispatchAndWaitFor<ExportRawInsightWidget, DashboardInsightWidgetExportResolved>(
+                dispatch,
+                exportRawInsightWidget(widgetRef, uuid()),
+            ).then((result) => result.payload.result),
+        [widgetRef],
+    );
+
     const isInsightExportable = getInsightVisualizationMeta(insight).supportsExport;
     const isExportableToCsv = useDashboardSelector(selectIsExecutionResultExportableToCsvByRef(widgetRef));
     const isExportableToXlsx = useDashboardSelector(selectIsExecutionResultExportableToXlsxByRef(widgetRef));
@@ -52,6 +65,7 @@ export const useInsightExport = (config: {
     const settings = useDashboardSelector(selectSettings);
 
     const exportHandler = useExportHandler();
+    const exportRawHandler = useRawExportHandler();
     const { openDialog, closeDialog } = useExportDialogContext();
 
     const onExportCSV = useCallback(() => {
@@ -64,6 +78,17 @@ export const useInsightExport = (config: {
         invariant(exportFunction);
         exportHandler(exportFunction, exportConfig).then(() => setIsExporting(false));
     }, [exportFunction, title]);
+
+    const onExportRawCSV = useCallback(() => {
+        setIsExporting(true);
+        const exportConfig: IExtendedExportConfig = {
+            format: "csv",
+            title,
+        };
+        // if this bombs there is an issue with the logic enabling the buttons
+        invariant(exportRawFunction);
+        exportRawHandler(exportRawFunction, exportConfig).then(() => setIsExporting(false));
+    }, [exportRawFunction, title]);
 
     const onExportXLSX = useCallback(() => {
         openDialog({
@@ -93,6 +118,7 @@ export const useInsightExport = (config: {
         exportCSVEnabled,
         exportXLSXEnabled,
         onExportCSV,
+        onExportRawCSV,
         onExportXLSX,
     };
 };

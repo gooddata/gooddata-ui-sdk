@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 //import * as GdcExecution from "@gooddata/api-model-bear/GdcExecution";
 import {
     IExportConfig as IBearExportConfig,
@@ -99,13 +99,35 @@ export class BearExecutionResult implements IExecutionResult {
 
     public async export(options: IExportConfig): Promise<IExportResult> {
         const optionsForBackend = this.buildExportOptions(options);
-        return this.authApiCall((sdk) =>
-            sdk.report.exportResult(
+        const execution = toAfmExecution(this.definition);
+        const uri = await this.authApiCall((sdk) => {
+            return sdk.execution.getExecutionRawResponse(this.definition.workspace, execution);
+        });
+
+        console.log("Uri", uri);
+
+        const paco = this.authApiCall((sdk) => {
+            return sdk.report.exportResult(
                 this.definition.workspace,
                 this.execResponse.links.executionResult,
                 optionsForBackend,
-            ),
-        );
+            );
+        });
+
+        return paco;
+    }
+
+    public async exportRaw(): Promise<IExportResult> {
+        const execution = toAfmExecution(this.definition);
+        // const uri = await this.authApiCall((sdk) => {
+        //     // TODO: WHY IS THIS FAILING? (undefined)
+        //     return sdk.execution.getExecutionRawResponse(this.definition.workspace, execution);
+        // });
+
+        return this.authApiCall((sdk) => {
+            // TODO: not really needed can re-use already existing method
+            return sdk.report.exportRawKD(this.definition.workspace, execution);
+        });
     }
 
     private buildExportOptions(options: IExportConfig): IBearExportConfig {

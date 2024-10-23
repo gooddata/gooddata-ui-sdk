@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import {
     IDataView,
     IExecutionFactory,
@@ -165,6 +165,10 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
 
     public export(options: IExportConfig): Promise<IExportResult> {
         return this.decorated.export(options);
+    }
+
+    public exportRaw(): Promise<IExportResult> {
+        return this.decorated.exportRaw!();
     }
 
     public readAll(): Promise<IDataView> {

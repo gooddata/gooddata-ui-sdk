@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React, { useMemo, useCallback } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -42,11 +42,12 @@ const DefaultDashboardInsightWidgetCore: React.FC<
     const visType = insightVisualizationType(insight) as VisType;
     const { ref: widgetRef } = widget;
 
-    const { exportCSVEnabled, exportXLSXEnabled, onExportCSV, onExportXLSX } = useInsightExport({
-        widgetRef,
-        title: widgetTitle(widget) || intl.formatMessage({ id: "export.defaultTitle" }),
-        insight,
-    });
+    const { exportCSVEnabled, exportXLSXEnabled, onExportCSV, onExportRawCSV, onExportXLSX } =
+        useInsightExport({
+            widgetRef,
+            title: widgetTitle(widget) || intl.formatMessage({ id: "export.defaultTitle" }),
+            insight,
+        });
 
     const { isScheduledEmailingVisible, enableInsightExportScheduling, onScheduleEmailingOpen } =
         useDashboardScheduledEmails();
@@ -64,6 +65,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         exportXLSXEnabled,
         scheduleExportEnabled,
         onExportCSV,
+        onExportRawCSV,
         onExportXLSX,
         onScheduleExport,
         isScheduleExportVisible:

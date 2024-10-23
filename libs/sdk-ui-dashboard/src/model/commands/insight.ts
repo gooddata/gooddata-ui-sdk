@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { IDashboardCommand } from "./base.js";
 import {
@@ -933,6 +933,45 @@ export function exportInsightWidget(
         correlationId,
         payload: {
             config,
+            ref,
+        },
+    };
+}
+
+/**
+ * Payload of the {@link ExportRawInsightWidget} command.
+ * @alpha
+ */
+export interface ExportRawInsightWidgetPayload {
+    /**
+     * Reference to Insight Widget to export.
+     */
+    readonly ref: ObjRef;
+}
+
+/**
+ * @alpha
+ */
+export interface ExportRawInsightWidget extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_RAW";
+    readonly payload: ExportRawInsightWidgetPayload;
+}
+
+/**
+ * Creates the ExportInsightWidget command. Dispatching this command will result in exporting of the widget to a CSV of XLSX file.
+ *
+ * @param ref - reference to the Insight widget to refresh
+ * @param config - configuration of the export operation
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function exportRawInsightWidget(ref: ObjRef, correlationId?: string): ExportRawInsightWidget {
+    return {
+        type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_RAW",
+        correlationId,
+        payload: {
             ref,
         },
     };

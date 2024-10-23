@@ -3,6 +3,7 @@ import {
     CompatibilityFilter,
     IAfm,
     IBaseExportConfig,
+    IExecution,
     IExportConfig,
     IExportResponse,
 } from "@gooddata/api-model-bear";
@@ -91,6 +92,23 @@ export class ReportModule {
      */
     public exportRaw(uri: string, pollingOptions: IPollingOptions = {}): Promise<IExportResponse> {
         return handleHeadPolling(this.xhr.get.bind(this.xhr), uri, isExportFinished, {
+            ...pollingOptions,
+            blobContentType: "csv",
+        }).catch(this.handleExportResultError);
+    }
+
+    public async exportRawKD(
+        projectId: string,
+        execution: IExecution,
+        pollingOptions: IPollingOptions = {},
+    ): Promise<IExportResponse> {
+        const url = await this.xhr
+            .post(`/gdc/app/projects/${projectId}/executeAfmRaw`, { body: JSON.stringify(execution) })
+            .then((apiResponse) => apiResponse.getData())
+            .then(({ uri }) => uri);
+
+        console.log("url", url);
+        return handleHeadPolling(this.xhr.get.bind(this.xhr), url, isExportFinished, {
             ...pollingOptions,
             blobContentType: "csv",
         }).catch(this.handleExportResultError);
