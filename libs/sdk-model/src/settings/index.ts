@@ -536,6 +536,11 @@ export interface ISettings {
      */
     enableNumberSeparators?: boolean;
 
+    /**
+     * Enable the use of granular permissions.
+     */
+    enableGranularPermissions?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

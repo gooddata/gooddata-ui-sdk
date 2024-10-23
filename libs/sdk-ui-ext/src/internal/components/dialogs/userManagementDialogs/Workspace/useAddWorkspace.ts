@@ -16,11 +16,15 @@ export const useAddWorkspace = (
     subjectType: WorkspacePermissionSubject,
     onSubmit: (workspaces: IGrantedWorkspace[]) => void,
     onCancel: () => void,
+    useGranularPermissions: boolean,
+    editWorkspace?: IGrantedWorkspace,
 ) => {
     const { addSuccess, addError } = useToastMessage();
     const backend = useBackendStrict();
     const organizationId = useOrganizationId();
-    const [addedWorkspaces, setAddedWorkspaces] = useState<IGrantedWorkspace[]>([]);
+    const [addedWorkspaces, setAddedWorkspaces] = useState<IGrantedWorkspace[]>(
+        editWorkspace ? [editWorkspace] : [],
+    );
     const [isProcessing, setIsProcessing] = useState(false);
     const trackEvent = useTelemetry();
 
@@ -41,7 +45,9 @@ export const useAddWorkspace = (
             .permissions()
             .assignPermissions({
                 assignees: ids.map((id) => ({ id, type: subjectType })),
-                workspaces: addedWorkspaces.map(grantedWorkspaceAsPermissionAssignment),
+                workspaces: addedWorkspaces.map((w) =>
+                    grantedWorkspaceAsPermissionAssignment(w, useGranularPermissions),
+                ),
             })
             .then(() => {
                 if (ids.length === 1) {
@@ -83,17 +89,11 @@ export const useAddWorkspace = (
     };
 
     const onSelect = ({ id, title }: IWorkspaceDescriptor) => {
-        setAddedWorkspaces(
-            [
-                ...addedWorkspaces,
-                {
-                    id,
-                    title,
-                    permission: "VIEW" as const,
-                    isHierarchical: false,
-                },
-            ].sort(sortByName),
-        );
+        setAddedWorkspaces([...addedWorkspaces, getInitialWorkspaceTemplate(id, title)].sort(sortByName));
+    };
+
+    const onOverwriteSelect = ({ id, title }: IWorkspaceDescriptor) => {
+        setAddedWorkspaces([getInitialWorkspaceTemplate(id, title)]);
     };
 
     return {
@@ -101,7 +101,15 @@ export const useAddWorkspace = (
         onDelete,
         onChange,
         onSelect,
+        onOverwriteSelect,
         onAdd,
         isProcessing,
     };
 };
+
+const getInitialWorkspaceTemplate = (id: string, title: string) => ({
+    id,
+    title,
+    permissions: ["VIEW" as const],
+    isHierarchical: false,
+});

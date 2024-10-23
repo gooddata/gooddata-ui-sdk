@@ -176,6 +176,8 @@ export interface IAddWorkspaceToSubjectsProps extends IWithTelemetryProps {
     // (undocumented)
     areFilterViewsEnabled?: boolean;
     // (undocumented)
+    areGranularPermissionsEnabled?: boolean;
+    // (undocumented)
     ids: string[];
     // (undocumented)
     onClose: () => void;
@@ -473,6 +475,8 @@ export interface IUserEditDialogProps extends IWithTelemetryProps {
     // (undocumented)
     areFilterViewsEnabled?: boolean;
     // (undocumented)
+    areGranularPermissionsEnabled?: boolean;
+    // (undocumented)
     changeUserMembership?: boolean;
     // (undocumented)
     initialView?: UserEditDialogMode;
@@ -494,6 +498,8 @@ export interface IUserEditDialogProps extends IWithTelemetryProps {
 export interface IUserGroupEditDialogProps extends IWithTelemetryProps {
     // (undocumented)
     areFilterViewsEnabled?: boolean;
+    // (undocumented)
+    areGranularPermissionsEnabled?: boolean;
     // (undocumented)
     initialView?: UserGroupEditDialogMode;
     // (undocumented)

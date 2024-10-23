@@ -3354,6 +3354,7 @@ export interface IOverlayProps<T> {
     // (undocumented)
     onMouseUp?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
     positionType?: OverlayPositionType;
+    resizeObserverThreshold?: number;
     // (undocumented)
     shouldCloseOnClick?: (e: Event) => boolean;
     // (undocumented)
@@ -3369,6 +3370,8 @@ export interface IOverlayState {
         right: number;
         align: string;
     };
+    // (undocumented)
+    observedHeight?: number;
     // (undocumented)
     overflow?: string;
     // (undocumented)

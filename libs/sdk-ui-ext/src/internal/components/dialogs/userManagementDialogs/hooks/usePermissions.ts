@@ -18,6 +18,7 @@ export const usePermissions = (
     subjectType: WorkspacePermissionSubject,
     organizationId: string,
     onSuccess: () => void,
+    useGranularPermissions: boolean,
 ) => {
     const { addSuccess, addError } = useToastMessage();
     const backend = useBackendStrict();
@@ -38,8 +39,8 @@ export const usePermissions = (
     // load initial permissions
     useEffect(() => {
         getPermissions(id).then((assignments) => {
-            const workspaces = assignments.workspacePermissions.map(
-                workspacePermissionsAssignmentToGrantedWorkspace,
+            const workspaces = assignments.workspacePermissions.map((w) =>
+                workspacePermissionsAssignmentToGrantedWorkspace(w, useGranularPermissions),
             );
             const dataSources = assignments.dataSourcePermissions.map(
                 dataSourcePermissionsAssignmentToGrantedDataSource,
@@ -47,7 +48,7 @@ export const usePermissions = (
             setGrantedWorkspaces(workspaces);
             setGrantedDataSources(dataSources);
         });
-    }, [getPermissions, id, organizationId]);
+    }, [getPermissions, id, organizationId, useGranularPermissions]);
 
     const removeGrantedWorkspace = (removedWorkspace: IGrantedWorkspace) => {
         backend
@@ -55,7 +56,9 @@ export const usePermissions = (
             .permissions()
             .revokePermissions({
                 assignees: [{ id, type: subjectType }],
-                workspaces: [grantedWorkspaceAsPermissionAssignment(removedWorkspace)],
+                workspaces: [
+                    grantedWorkspaceAsPermissionAssignment(removedWorkspace, useGranularPermissions),
+                ],
             })
             .then(() => {
                 addSuccess(messages.workspaceRemovedSuccess);
@@ -99,7 +102,7 @@ export const usePermissions = (
             .permissions()
             .assignPermissions({
                 assignees: [{ id, type: subjectType }],
-                workspaces: [grantedWorkspaceAsPermissionAssignment(workspace)],
+                workspaces: [grantedWorkspaceAsPermissionAssignment(workspace, useGranularPermissions)],
             })
             .then(() => {
                 addSuccess(messages.workspaceChangeSuccess);

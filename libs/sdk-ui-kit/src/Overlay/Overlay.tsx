@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React, { createRef } from "react";
 import cx from "classnames";
 import { Portal } from "react-portal";
@@ -76,6 +76,8 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         containerClassName: "",
         positionType: "absolute",
 
+        resizeObserverThreshold: 1,
+
         ignoreClicksOn: [],
         ignoreClicksOnByClass: [],
 
@@ -98,6 +100,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
     private alignmentTimeoutId: number;
     static contextType = OverlayContext;
     declare context: React.ContextType<typeof OverlayContext>;
+    private observer: ResizeObserver;
 
     constructor(props: IOverlayProps<T>) {
         super(props);
@@ -109,7 +112,10 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
                 top: INIT_STATE_ALIGN,
                 right: 0,
             },
+            observedHeight: 0,
         };
+
+        this.observer = this.createResizeObserver();
 
         this.isComponentMounted = false;
         this.clickedInside = false;
@@ -133,6 +139,8 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         afterOverlayOpened();
 
         window.addEventListener("resize", this.resizeHandler);
+
+        this.observer.observe(this.overlayRef.current);
 
         this.addListeners(this.props);
 
@@ -163,6 +171,8 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         this.clearAlignmentTimeout();
 
         window.removeEventListener("resize", this.resizeHandler);
+
+        this.observer.disconnect();
 
         this.removeListeners(this.props);
 
@@ -448,6 +458,20 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
             false
         );
     };
+
+    private createResizeObserver() {
+        return new ResizeObserver((entries) => {
+            const newHeightCandidate = entries[0].contentRect.height;
+            const heightDiffersByThreshold =
+                Math.abs(this.state.observedHeight - newHeightCandidate) / this.state.observedHeight >
+                this.props.resizeObserverThreshold;
+
+            if (heightDiffersByThreshold) {
+                this.resizeHandler();
+                this.setState({ observedHeight: newHeightCandidate });
+            }
+        });
+    }
 }
 
 const overlayState = {
