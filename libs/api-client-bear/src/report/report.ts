@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import {
     CompatibilityFilter,
     IAfm,
@@ -74,6 +74,26 @@ export class ReportModule {
                 }),
             )
             .catch(this.handleExportResultError);
+    }
+
+    /**
+     * exportRaw
+     * request new execute raw rexport
+     * request new raw export of existing AFM execution
+     *
+     * Export file is downloaded and attached as Blob data to the current window instance.
+     *
+     * @experimental
+     * @param uri - polling url
+     * @param pollingOptions - for polling (maxAttempts, pollStep)
+     * @returns Resolves if export successfully,
+     *                   Reject if export has error (network error, api error)
+     */
+    public exportRaw(uri: string, pollingOptions: IPollingOptions = {}): Promise<IExportResponse> {
+        return handleHeadPolling(this.xhr.get.bind(this.xhr), uri, isExportFinished, {
+            ...pollingOptions,
+            blobContentType: "csv",
+        }).catch(this.handleExportResultError);
     }
 
     private sanitizeExportConfig(exportConfig: IExportConfig): IExtendedExportConfig {

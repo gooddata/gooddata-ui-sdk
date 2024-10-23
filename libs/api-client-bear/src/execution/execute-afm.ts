@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { invariant } from "ts-invariant";
 import qs from "qs";
 import range from "lodash/range.js";
@@ -92,6 +92,22 @@ export class ExecuteAfmModule {
             .post(`/gdc/app/projects/${projectId}/executeAfm`, { body: convertExecutionToJson(execution) })
             .then((apiResponse) => apiResponse.getData())
             .then(unwrapExecutionResponse);
+    }
+
+    /**
+     * Execute AFM Raw and return execution's response; the response includes link to uri poll.
+     *
+     * @param projectId - GD project identifier
+     * @param execution - what to get the response for
+     *
+     * @returns Promise with `string`
+     */
+    public getExecutionRawResponse(projectId: string, execution: IExecution): Promise<string> {
+        validateNumOfDimensions(execution.execution.resultSpec?.dimensions?.length ?? 0);
+        return this.xhr
+            .post(`/gdc/app/projects/${projectId}/executeAfmRaw`, { body: convertExecutionToJson(execution) })
+            .then((apiResponse) => apiResponse.getData())
+            .then(({ uri }) => uri);
     }
 
     /**
