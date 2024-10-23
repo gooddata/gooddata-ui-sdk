@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { ExperimentalExecutionsModule } from "./execution/experimental-executions.js";
 import { AttributesMapLoaderModule } from "./utils/attributesMapLoader.js";
 import { ExecuteAfmModule } from "./execution/execute-afm.js";
@@ -14,6 +14,7 @@ import { IColumnsAndDefinitions, IVisualizationObjectContent } from "@gooddata/a
 export class ExecutionModule {
     public readonly executeAfm: ExecuteAfmModule["executeAfm"];
     public readonly getExecutionResponse: ExecuteAfmModule["getExecutionResponse"];
+    public readonly getExecutionRawResponse: ExecuteAfmModule["getExecutionRawResponse"];
 
     public readonly _executeVisualization: ExecuteAfmModule["_executeVisualization"];
     public readonly _getVisExecutionResponse: ExecuteAfmModule["_getVisExecutionResponse"];
@@ -28,6 +29,9 @@ export class ExecutionModule {
         this.executeAfmModule = new ExecuteAfmModule(xhr);
         this.executeAfm = this.executeAfmModule.executeAfm.bind(this.executeAfmModule);
         this.getExecutionResponse = this.executeAfmModule.getExecutionResponse.bind(this.executeAfmModule);
+        this.getExecutionRawResponse = this.executeAfmModule.getExecutionRawResponse.bind(
+            this.executeAfmModule,
+        );
         this._executeVisualization = this.executeAfmModule._executeVisualization.bind(this.executeAfmModule);
         this._getVisExecutionResponse = this.executeAfmModule._getVisExecutionResponse.bind(
             this.executeAfmModule,

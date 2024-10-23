@@ -18,6 +18,7 @@ import {
     IEntitlements,
     NotSupported,
     IDataSourcesService,
+    IExportResult,
 } from "@gooddata/sdk-backend-spi";
 import { IInsight } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
@@ -31,6 +32,7 @@ import { convertInsight } from "../convertors/toBackend/InsightConverter.js";
 
 import {
     IBootstrapResource,
+    IExecution,
     IProfileSetting,
     IUISettings,
     IVisualization,
@@ -151,6 +153,7 @@ type BearLegacyFunctions = {
     getObjectsByUri?(workspace: string, uris: string[]): Promise<WrappedObject[]>;
     getVisualizationObject?(workspace: string, uri: string): Promise<IVisualization>;
     getUISettings?(): Promise<{ settings: IUISettings }>;
+    exportRaw?(execution: IExecution, projectId: string): Promise<IExportResult>;
 };
 
 /**
@@ -245,6 +248,14 @@ export class BearBackend implements IAnalyticalBackend {
                     return this.authApiCall((sdk) =>
                         sdk.md.openVisualizationAsReport(workspace, { visualizationObject }),
                     );
+                },
+
+                exportRaw: async (execution, projectId) => {
+                    const uri = await this.authApiCall((sdk) =>
+                        sdk.execution.getExecutionRawResponse(projectId, execution),
+                    );
+
+                    return this.authApiCall((sdk) => sdk.report.exportRaw(uri));
                 },
 
                 getBootstrapResource: (options) => {
