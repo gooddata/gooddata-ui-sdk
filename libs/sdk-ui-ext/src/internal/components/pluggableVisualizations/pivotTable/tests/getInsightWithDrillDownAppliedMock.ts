@@ -120,6 +120,9 @@ const departmentHeader: IDrillIntersectionAttributeItem = {
         },
         identifier: null,
         formOf: null,
+        primaryLabel: {
+            uri: departmentHeaderAttributeUri,
+        },
     },
 };
 
@@ -139,6 +142,9 @@ const statusHeader: IDrillIntersectionAttributeItem = {
         },
         identifier: null,
         formOf: null,
+        primaryLabel: {
+            uri: statusHeaderAttributeUri,
+        },
     },
 };
 
@@ -158,6 +164,9 @@ const regionHeader: IDrillIntersectionAttributeItem = {
         },
         identifier: null,
         formOf: null,
+        primaryLabel: {
+            uri: regionHeaderAttributeUri,
+        },
     },
 };
 

@@ -138,7 +138,7 @@ export function sanitizeTableProperties(insight: IInsight): IInsight {
 export function convertIntersectionToFilters(
     intersections: IDrillEventIntersectionElement[],
     backendSupportsElementUris: boolean = true,
-    enableDuplicatedLabelValuesInAttributeFilter: boolean = false,
+    enableDuplicatedLabelValuesInAttributeFilter: boolean = true,
 ): IFilter[] {
     return intersections
         .map((intersection) => intersection.header)
