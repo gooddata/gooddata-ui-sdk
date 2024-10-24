@@ -124,7 +124,12 @@ describe("Available value filter", () => {
             .selectAttribute(["Cory Owens"])
             .apply();
 
-        widget.waitChartLoaded().getChart().getDataLabelValues().should("deep.equal", ["$2,376,100.41"]);
+        widget
+            .waitLoadStarted()
+            .waitChartLoaded()
+            .getChart()
+            .getDataLabelValues()
+            .should("deep.equal", ["$2,376,100.41"]);
 
         salesRepFilter.open().elementsAreLoaded().deleteFiltervaluesBy("Activity").hasFilterListSize(22);
     });

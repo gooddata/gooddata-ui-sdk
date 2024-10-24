@@ -18,6 +18,11 @@ export class Widget {
         return cy.get(this.getElementSelector());
     }
 
+    waitLoadStarted() {
+        this.getElement().find(".s-loading").should("exist");
+        return this;
+    }
+
     waitChartLoaded() {
         // it needs to see visualization-uri-root to know the chart loading
         this.getElement().find(".visualization-uri-root").should("exist");
