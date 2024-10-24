@@ -6,6 +6,7 @@ import {
     selectSettings,
     isCustomWidget,
     selectIsReadOnly,
+    selectCanManageWorkspace,
 } from "../../../../model/index.js";
 import { AlertingDisabledReason, SchedulingDisabledReason } from "../../insightMenu/index.js";
 import {
@@ -35,7 +36,12 @@ export const useAlertingAndScheduling = ({
 } => {
     const settings = useDashboardSelector(selectSettings);
     const isReadOnly = useDashboardSelector(selectIsReadOnly);
+    const isWorkspaceManager = useDashboardSelector(selectCanManageWorkspace);
 
+    /**
+     * We want to hide automations when there are no destinations unless the user is admin.
+     */
+    const showDueToNumberOfAvailableDestinations = numberOfAvailableDestinations > 0 || isWorkspaceManager;
     const isStandardWidget = !isCustomWidget(widget);
     const hasNoDestinations = numberOfAvailableDestinations === 0;
 
@@ -47,7 +53,11 @@ export const useAlertingAndScheduling = ({
     const isInsightTypeSupportedForAlerting = isInsightSupportedForAlerts(insight);
     const isInsightEnabledForAlerting = isInsightAlertingConfigurationEnabled(insight);
     const isAlertingVisible =
-        isAlertingEnabled && isStandardWidget && isInsightTypeSupportedForAlerting && !isReadOnly;
+        isAlertingEnabled &&
+        isStandardWidget &&
+        isInsightTypeSupportedForAlerting &&
+        !isReadOnly &&
+        showDueToNumberOfAvailableDestinations;
     const alertingDisabled = hasNoDestinations || !isInsightEnabledForAlerting || widgetHasNoLocalIdentifier;
     let alertingDisabledReason: AlertingDisabledReason | undefined = undefined;
     if (widgetHasNoLocalIdentifier) {
