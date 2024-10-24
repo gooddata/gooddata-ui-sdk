@@ -346,6 +346,11 @@ export interface ISettings {
      */
     enableCreateUser?: boolean;
 
+    /**
+     * Enable insights export of raw data when limit is reached.
+     */
+    enableRawExportsInNewUI?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

@@ -1,8 +1,9 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { IntlShape } from "react-intl";
 import compact from "lodash/compact.js";
 
 import { IInsightMenuItem } from "../types.js";
+import { ExportOptions } from "../../insight/configuration/ExportOptions.js";
 
 /**
  * @internal
@@ -18,6 +19,7 @@ export function getDefaultInsightMenuItems(
         onScheduleExport: () => void;
         isScheduleExportVisible: boolean;
         isDataError: boolean;
+        isExportRawInNewUiVisible: boolean;
     },
 ): IInsightMenuItem[] {
     const {
@@ -28,6 +30,7 @@ export function getDefaultInsightMenuItems(
         onExportXLSX,
         onScheduleExport,
         isScheduleExportVisible,
+        isExportRawInNewUiVisible,
         isDataError,
     } = config;
 
@@ -35,8 +38,16 @@ export function getDefaultInsightMenuItems(
         ? intl.formatMessage({ id: "options.menu.unsupported.error" })
         : intl.formatMessage({ id: "options.menu.unsupported.loading" });
 
-    return compact([
-        {
+    const menuItems: (false | IInsightMenuItem)[] = [
+        isExportRawInNewUiVisible && {
+            type: "submenu",
+            itemId: "Exports",
+            itemName: intl.formatMessage({ id: "widget.options.menu.export" }),
+            icon: "gd-icon-download",
+            className: "s-options-menu-exports",
+            SubmenuComponent: ExportOptions,
+        },
+        !isExportRawInNewUiVisible && {
             type: "button",
             itemId: "ExportXLSXBubble",
             itemName: intl.formatMessage({ id: "widget.options.menu.exportToXLSX" }),
@@ -46,7 +57,7 @@ export function getDefaultInsightMenuItems(
             icon: "gd-icon-download",
             className: "s-options-menu-export-xlsx",
         },
-        {
+        !isExportRawInNewUiVisible && {
             type: "button",
             itemId: "ExportCSVBubble",
             itemName: intl.formatMessage({ id: "widget.options.menu.exportToCSV" }),
@@ -66,5 +77,7 @@ export function getDefaultInsightMenuItems(
             icon: "gd-icon-clock",
             className: "s-options-menu-schedule-export",
         },
-    ]);
+    ];
+
+    return compact(menuItems);
 }

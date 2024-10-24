@@ -43,6 +43,7 @@ import {
     RefreshInsightWidget,
     RemoveDrillsForInsightWidget,
     ExportInsightWidget,
+    ExportRawInsightWidget,
     RemoveDrillDownForInsightWidget,
     AddDrillDownForInsightWidget,
     ModifyDrillDownForInsightWidget,
@@ -376,6 +377,9 @@ export {
     ExportInsightWidget,
     ExportInsightWidgetPayload,
     exportInsightWidget,
+    ExportRawInsightWidget,
+    ExportRawInsightWidgetPayload,
+    exportRawInsightWidget,
     AttributeHierarchyModified,
     attributeHierarchyModified,
 } from "./insight.js";
@@ -502,4 +506,5 @@ export type DashboardCommands =
     | MoveDateFilter
     | SetDashboardDateFilterWithDimensionConfigMode
     | SetDateFilterConfigTitle
-    | SetAttributeFilterLimitingItems;
+    | SetAttributeFilterLimitingItems
+    | ExportRawInsightWidget;

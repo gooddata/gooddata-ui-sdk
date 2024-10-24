@@ -41,6 +41,7 @@ import { modifyDrillsForInsightWidgetHandler } from "./widgets/modifyDrillsForIn
 import { removeDrillsForInsightWidgetHandler } from "./widgets/removeDrillsForInsightWidgetHandler.js";
 import { changeRichTextWidgetContentHandler } from "./widgets/changeRichTextWidgetContentHandler.js";
 import { exportInsightWidgetHandler } from "./widgets/exportInsightWidgetHandler.js";
+import { exportRawInsightWidgetHandler } from "./widgets/exportRawInsightWidgetHandler.js";
 import { createAlertHandler } from "./alerts/createAlertHandler.js";
 import { updateAlertHandler } from "./alerts/updateAlertHandler.js";
 import { removeAlertsHandler } from "./alerts/removeAlertsHandler.js";
@@ -159,6 +160,7 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.INSIGHT_WIDGET.MODIFY_DRILL_DOWN": modifyDrillDownForInsightWidgetHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.REFRESH": refreshInsightWidgetHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT": exportInsightWidgetHandler,
+    "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_RAW": exportRawInsightWidgetHandler,
     "GDC.DASH/CMD.RICH_TEXT_WIDGET.CHANGE_CONTENT": changeRichTextWidgetContentHandler,
     "GDC.DASH/CMD.ALERT.CREATE": createAlertHandler,
     "GDC.DASH/CMD.ALERT.UPDATE": updateAlertHandler,

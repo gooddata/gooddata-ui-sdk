@@ -452,6 +452,8 @@ export interface IExecutionResult {
     readonly dimensions: IDimensionDescriptor[];
     equals(other: IExecutionResult): boolean;
     export(options: IExportConfig): Promise<IExportResult>;
+    // @alpha
+    exportRaw?(): Promise<IExportResult>;
     fingerprint(): string;
     readAll(): Promise<IDataView>;
     readWindow(offset: number[], size: number[]): Promise<IDataView>;

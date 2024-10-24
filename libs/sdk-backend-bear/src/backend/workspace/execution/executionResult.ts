@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 //import * as GdcExecution from "@gooddata/api-model-bear/GdcExecution";
 import {
     IExportConfig as IBearExportConfig,
@@ -106,6 +106,15 @@ export class BearExecutionResult implements IExecutionResult {
                 optionsForBackend,
             ),
         );
+    }
+
+    public async exportRaw(): Promise<IExportResult> {
+        const execution = toAfmExecution(this.definition);
+        const uri = await this.authApiCall((sdk) =>
+            sdk.execution.getExecutionRawResponse(this.definition.workspace, execution),
+        );
+
+        return this.authApiCall((sdk) => sdk.report.exportRaw(uri));
     }
 
     private buildExportOptions(options: IExportConfig): IBearExportConfig {
