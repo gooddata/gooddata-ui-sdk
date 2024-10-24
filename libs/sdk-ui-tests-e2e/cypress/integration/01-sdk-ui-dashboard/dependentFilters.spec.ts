@@ -247,8 +247,11 @@ describe("Dependent filter", () => {
             cy.intercept("GET", "**/attributes**").as("attributes");
             topBar.enterEditMode().editButtonIsVisible(false);
             product.open().selectAttributesWithoutApply("TouchAll").apply();
+            // open, close, then open to make sure that attribute filter on child is reloaded to correct valid elements
             cy.wait("@attributes").then(() => {
                 stageName
+                    .open()
+                    .close()
                     .open()
                     .elementsAreLoaded()
                     .hasNoRelevantMessage()
@@ -267,6 +270,8 @@ describe("Dependent filter", () => {
             stateFilter.open().selectAttributesWithoutApply("Alabama").apply();
             cityFilter
                 .open()
+                .close()
+                .open()
                 .elementsAreLoaded()
                 .hasFilterListSize(5)
                 .deleteFiltervaluesBy("State")
@@ -280,7 +285,7 @@ describe("Dependent filter", () => {
         topBar.enterEditMode().editButtonIsVisible(false);
         stateFilter.open().selectAttributesWithoutApply("Alabama").apply();
         cy.wait("@attributes").then(() => {
-            cityFilter.open().elementsAreLoaded().hasFilterListSize(5).close();
+            cityFilter.open().close().open().elementsAreLoaded().hasFilterListSize(5).close();
             stateFilter.removeFilter();
             cityFilter.isLoaded().open().elementsAreLoaded().hasFilterListSize(300);
         });
@@ -294,7 +299,7 @@ describe("Dependent filter", () => {
 
             topBar.enterEditMode().editButtonIsVisible(false);
             cy.wait("@attributes").then(() => {
-                cityFilter.open().selectAttribute(["Portland"]).apply();
+                cityFilter.open().selectAttribute(["Boston", "Nashua"]).apply();
             });
 
             stateFilter
@@ -302,7 +307,7 @@ describe("Dependent filter", () => {
                 .elementsAreLoaded()
                 .configureLimitingParentFilterDependency("City")
                 .hasFilterListSize(2)
-                .selectAttribute(["Oregon"])
+                .selectAttribute(["Massachusetts"])
                 .apply();
 
             stateFilter
@@ -313,7 +318,7 @@ describe("Dependent filter", () => {
                 .close();
 
             stateFilter.open().showAllElementValuesIsVisible(true);
-            table.waitLoaded().getColumnValues(1).should("deep.equal", ["Oregon"]);
+            table.waitLoaded().getColumnValues(1).should("deep.equal", ["Massachusetts"]);
         },
     );
 });
