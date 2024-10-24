@@ -93,7 +93,7 @@ function findDimIndexes(
 
 /**
  * Based on found indexes in the execution results data view, this function will return attribute elements
- * that are present in the data view.
+ * that are present in the data view. Values are unique by their uri.
  * @param dataView - DataViewFacade object to work with execution results data
  * @param dimensionIndex - index of the dimension
  * @param elementsIndex - index of the item in the dimension
@@ -105,7 +105,7 @@ function findAttributeValues(
     const headers = dataView?.meta().allHeaders() ?? [];
     const data = (headers[dimensionIndex] ?? [])[elementsIndex] ?? [];
 
-    return data
+    const values = data
         .map((item) => {
             if (isResultAttributeHeader(item)) {
                 return {
@@ -117,4 +117,8 @@ function findAttributeValues(
             return null;
         })
         .filter(Boolean) as AttributeValue[];
+
+    return values.filter((value, index, self) => {
+        return self.findIndex((v) => v.value === value.value) === index;
+    });
 }
