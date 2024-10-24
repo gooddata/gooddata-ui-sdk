@@ -124,6 +124,8 @@ describe("Available value filter", () => {
             .selectAttribute(["Cory Owens"])
             .apply();
 
+        cy.wait(1000);
+
         widget.waitChartLoaded().getChart().getDataLabelValues().should("deep.equal", ["$2,376,100.41"]);
 
         salesRepFilter.open().elementsAreLoaded().deleteFiltervaluesBy("Activity").hasFilterListSize(22);
