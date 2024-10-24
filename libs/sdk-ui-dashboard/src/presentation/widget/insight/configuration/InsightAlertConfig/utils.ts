@@ -404,7 +404,26 @@ function collectAllAttributes(insight: IInsight | null | undefined) {
 
     switch (insightType) {
         case "headline":
-        case "line": {
+        case "bar":
+        case "column":
+        case "line":
+        case "area":
+        case "combo2":
+        case "scatter":
+        case "bubble":
+        case "bullet":
+        case "pie":
+        case "donut":
+        case "treemap":
+        case "funnel":
+        case "pyramid":
+        case "heatmap":
+        case "waterfall":
+        case "dependencywheel":
+        case "sankey":
+        case "pushpin":
+        case "repeater":
+        case "table": {
             return collectAllAttributesDefault(insight);
         }
         default: {
@@ -426,12 +445,32 @@ function collectAllAttributesDefault(insight: IInsight) {
     const insightSegmentBucket: IBucket | undefined = insight
         ? insightBucket(insight, BucketNames.SEGMENT)
         : undefined;
+    const insightColumnsBucket: IBucket | undefined = insight
+        ? insightBucket(insight, BucketNames.COLUMNS)
+        : undefined;
+    const insightViewBucket: IBucket | undefined = insight
+        ? insightBucket(insight, BucketNames.VIEW)
+        : undefined;
+    const insightStackBucket: IBucket | undefined = insight
+        ? insightBucket(insight, BucketNames.STACK)
+        : undefined;
+    const insightAttributeFromBucket: IBucket | undefined = insight
+        ? insightBucket(insight, BucketNames.ATTRIBUTE_FROM)
+        : undefined;
+    const insightAttributeToBucket: IBucket | undefined = insight
+        ? insightBucket(insight, BucketNames.ATTRIBUTE_TO)
+        : undefined;
 
     return [
         ...(insightAttributeBucket ? bucketAttributes(insightAttributeBucket) : []),
         ...(insightAttributesBucket ? bucketAttributes(insightAttributesBucket) : []),
         ...(insightTrendBucket ? bucketAttributes(insightTrendBucket) : []),
         ...(insightSegmentBucket ? bucketAttributes(insightSegmentBucket) : []),
+        ...(insightColumnsBucket ? bucketAttributes(insightColumnsBucket) : []),
+        ...(insightViewBucket ? bucketAttributes(insightViewBucket) : []),
+        ...(insightStackBucket ? bucketAttributes(insightStackBucket) : []),
+        ...(insightAttributeFromBucket ? bucketAttributes(insightAttributeFromBucket) : []),
+        ...(insightAttributeToBucket ? bucketAttributes(insightAttributeToBucket) : []),
     ];
 }
 
