@@ -75,10 +75,10 @@ export class AttributeFilter {
         return this;
     }
 
-    selectAttribute(attributes: string[]) {
+    selectAttribute(attributes: string[], index = 0) {
         this.clearAllValues();
         attributes.forEach(($attr) => {
-            this.searchAndSelectFilterItem($attr);
+            this.searchAndSelectFilterItem($attr, index);
         });
         return this;
     }
@@ -206,10 +206,11 @@ export class AttributeFilter {
         return this;
     }
 
-    searchAndSelectFilterItem(attributeValue: string) {
+    searchAndSelectFilterItem(attributeValue: string, index = 0) {
         this.search(attributeValue);
         this.getDropdownElement()
             .find(`.s-attribute-filter-list-item-${camelCase(attributeValue)}`)
+            .eq(index)
             .click();
         return this;
     }
