@@ -39,6 +39,7 @@ export interface IDashboardLayoutSectionProps<TWidget> {
     screen: ScreenSize;
     renderMode: RenderMode;
     isDraggingWidget?: boolean;
+    parentLayoutItem?: IDashboardLayoutItemFacade<TWidget>;
 }
 
 const defaultSectionRenderer: IDashboardLayoutSectionRenderer<unknown> = (props) => (
@@ -63,8 +64,9 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
         getLayoutDimensions,
         screen,
         renderMode,
+        parentLayoutItem,
     } = props;
-    const renderProps = { section, screen, renderMode };
+    const renderProps = { section, screen, renderMode, parentLayoutItem };
 
     const items = useMemo(() => {
         if (renderMode === "edit") {
@@ -133,6 +135,7 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
                     section,
                     screen,
                     DefaultSectionHeaderRenderer: DashboardLayoutSectionHeaderRenderer,
+                    parentLayoutItem,
                 })}
                 {items}
                 {renderMode === "edit" ? <DashboardLayoutSectionOverlayController section={section} /> : null}

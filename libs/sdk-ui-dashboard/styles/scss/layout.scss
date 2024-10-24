@@ -408,3 +408,80 @@ $gd-dashboards-section-description-color: var(
         color: var(--gd-palette-complementary-6, #94a1ad);
     }
 }
+
+// ****** FLEXIBLE NESTED LAYOUT ******
+
+// The styles counts with 12 grid columns. The matching constant is defined in
+// src/presentation/flexibleLayout/DefaultDashboardLayoutRenderer/constants.ts
+
+.gd-grid-layout {
+    flex-direction: column;
+}
+
+.gd-grid-layout__container--root {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: min-content; // do not render empty row for potential next grid item (chrome weird behavior)
+    flex-grow: 1; // take the whole width of the page (parent flex container).
+}
+
+.gd-grid-layout__container--nested {
+    display: grid;
+    grid-template-columns: subgrid;
+}
+
+.gd-grid-layout__section {
+    display: grid;
+    grid-template-columns: subgrid;
+}
+
+// generate classes for grid span from 1 to 12
+@for $i from 1 through 12 {
+    .gd-grid-layout__item--span-#{$i} {
+        grid-column: span #{$i};
+    }
+}
+
+// debug classes
+
+.gd-grid-layout__debug {
+    position: absolute;
+    color: #fff;
+    font-size: 8px;
+    padding: 0 3px;
+    z-index: 1000;
+}
+
+.gd-grid-layout__container--root--debug {
+    border: 4px solid #efca17;
+}
+
+.gd-grid-layout__debug--root {
+    background: #efca17;
+}
+
+.gd-grid-layout__container--nested--debug {
+    border: 4px solid #e45e5e;
+}
+
+.gd-grid-layout__debug--nested {
+    background: #e45e5e;
+}
+
+.gd-grid-layout__section--debug {
+    border: 4px solid #57834d;
+}
+
+.gd-grid-layout__debug--section {
+    background: #57834d;
+    margin-left: 30px;
+}
+
+.gd-grid-layout__item--debug {
+    border: 4px solid #9f3d8e;
+}
+
+.gd-grid-layout__debug--item {
+    background: #9f3d8e;
+    margin-left: 60px;
+}

@@ -16,6 +16,7 @@ import {
     isDashboardCommonDateFilter,
     DrillDefinition,
     isVisualizationSwitcherWidget,
+    isDashboardLayout,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import partition from "lodash/partition.js";
@@ -128,26 +129,35 @@ export const selectBasicLayout: DashboardSelector<IDashboardLayout<IWidget>> = c
  *
  * @internal
  */
-export const selectWidgets: DashboardSelector<ExtendedDashboardWidget[]> = createSelector(
-    selectLayout,
-    (layout) => {
-        const items: ExtendedDashboardWidget[] = [];
+const getLayoutWidgets = (layout: IDashboardLayout<ExtendedDashboardWidget>) => {
+    const items: ExtendedDashboardWidget[] = [];
 
-        for (const section of layout.sections) {
-            for (const item of section.items) {
-                if (!item.widget) {
-                    continue;
-                }
-
+    for (const section of layout.sections) {
+        for (const item of section.items) {
+            if (!item.widget) {
+                continue;
+            }
+            if (isDashboardLayout(item.widget)) {
+                items.push(...getLayoutWidgets(item.widget));
+            } else {
                 items.push(item.widget);
                 if (isVisualizationSwitcherWidget(item.widget)) {
                     items.push(...item.widget.visualizations);
                 }
             }
         }
-
-        return items;
-    },
+    }
+    return items;
+};
+/**
+ * Selects dashboard widgets in an obj ref an array. This map will include both analytical and custom
+ * widgets that are placed on the dashboard and also all widgets from visualization switchers
+ *
+ * @internal
+ */
+export const selectWidgets: DashboardSelector<ExtendedDashboardWidget[]> = createSelector(
+    selectLayout,
+    getLayoutWidgets, // process layout recursively
 );
 
 /**

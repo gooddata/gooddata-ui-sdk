@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import {
     ObjRef,
     IKpiWidget,
@@ -143,7 +143,7 @@ export interface IDashboardLayoutSectionsFacade<TWidget> {
  * this is the place where you can put the new methods to cover it.
  *
  * Note: This class serves mainly for getting data from the layout.
- *       If you are looking for the layout transformations, check {@link IDashboardLayoutBuilder}
+ *       If you are looking for the layout transformations, check IDashboardLayoutBuilder
  *
  * @beta
  */

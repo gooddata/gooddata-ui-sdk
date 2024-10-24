@@ -1,12 +1,13 @@
 // (C) 2007-2024 GoodData Corporation
 import { ScreenSize } from "@gooddata/sdk-model";
 import React from "react";
-import { Row } from "react-grid-system";
+
 import { RenderMode } from "../../../types.js";
 import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutSectionFacade,
 } from "../../../_staging/dashboard/fluidLayout/facade/interfaces.js";
+
 import { DashboardLayoutItem } from "./DashboardLayoutItem.js";
 import {
     IDashboardLayoutGridRowRenderer,
@@ -55,7 +56,7 @@ export function DashboardLayoutGridRow<TWidget>(props: DashboardLayoutGridRowPro
     ));
 
     return (
-        <Row className="gd-fluidlayout-row s-gd-fluid-layout-row">
+        <>
             {gridRowRenderer
                 ? gridRowRenderer({
                       children: rowItems,
@@ -65,6 +66,6 @@ export function DashboardLayoutGridRow<TWidget>(props: DashboardLayoutGridRowPro
                       renderMode,
                   })
                 : rowItems}
-        </Row>
+        </>
     );
 }
