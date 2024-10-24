@@ -290,7 +290,7 @@
 
 .gd-alert-attribute-select__menu-item_wrapper {
     // stylelint-disable-next-line declaration-no-important
-    padding: 2px 10px !important;
+    padding: 5px 10px !important;
 
     &::before {
         // stylelint-disable-next-line declaration-no-important
@@ -303,9 +303,13 @@
     }
 }
 
+.gd-alert-attribute-select__submenu-content {
+    min-width: 200px;
+}
+
 .gd-alert-attribute-select__menu-item_search {
     font-size: 13px;
-    margin: 5px 10px 5px 10px;
+    margin: 5px 10px 10px 10px;
     width: auto;
 }
 
@@ -318,7 +322,7 @@
 }
 
 .gd-alert-attribute-select__menu-item__values {
-    max-height: 80vh;
+    max-height: 375px;
     overflow-y: auto;
 }
 
