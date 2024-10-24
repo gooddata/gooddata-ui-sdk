@@ -165,7 +165,12 @@ export const AlertAttributeSelect = ({
                                         }}
                                         className={IGNORED_CONFIGURATION_MENU_CLICK_CLASS}
                                     >
-                                        <div className="s-alert-attribute-submenu-content">
+                                        <div
+                                            className={cx(
+                                                "gd-alert-attribute-select__submenu-content",
+                                                "s-alert-attribute-submenu-content",
+                                            )}
+                                        >
                                             {values.length > 5 && (
                                                 <div>
                                                     <InvertableSelectSearchBar
