@@ -100,7 +100,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
     private alignmentTimeoutId: number;
     static contextType = OverlayContext;
     declare context: React.ContextType<typeof OverlayContext>;
-    private observer: ResizeObserver;
+    private observer: ResizeObserver | undefined;
 
     constructor(props: IOverlayProps<T>) {
         super(props);
@@ -140,7 +140,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
 
         window.addEventListener("resize", this.resizeHandler);
 
-        this.observer.observe(this.overlayRef.current);
+        this.observer?.observe(this.overlayRef.current);
 
         this.addListeners(this.props);
 
@@ -172,7 +172,7 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
 
         window.removeEventListener("resize", this.resizeHandler);
 
-        this.observer.disconnect();
+        this.observer?.disconnect();
 
         this.removeListeners(this.props);
 
@@ -459,7 +459,12 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
         );
     };
 
-    private createResizeObserver() {
+    private createResizeObserver(): ResizeObserver | undefined {
+        // With 100% or more threshold, don't use ResizeObserver
+        if (this.props.resizeObserverThreshold >= 1) {
+            return undefined;
+        }
+
         return new ResizeObserver((entries) => {
             const newHeightCandidate = entries[0].contentRect.height;
             const heightDiffersByThreshold =
