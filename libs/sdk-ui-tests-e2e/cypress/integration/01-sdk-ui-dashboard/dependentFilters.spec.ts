@@ -36,7 +36,11 @@ describe("Dependent filter", () => {
 
         stateFilter.isLoaded().open().selectAttribute(["Connecticut"]).apply();
 
-        table.waitLoaded().getColumnValues(2).should("deep.equal", ["Bridgeport", "Hartford"]);
+        table
+            .waitLoadStarted()
+            .waitLoaded()
+            .getColumnValues(2)
+            .should("deep.equal", ["Bridgeport", "Hartford"]);
 
         cityFilter
             .isLoaded()
@@ -48,13 +52,13 @@ describe("Dependent filter", () => {
             .showAllElementValuesIsVisible(true)
             .showAllElementValues()
             .showAllElementValuesIsVisible(false)
-            .hasFilterListSize(287)
+            .hasFilterListSize(300)
             .selectAttribute(["Hartford"])
             .apply()
             .isLoaded()
             .hasSubtitle("Hartford");
 
-        table.waitLoaded().getColumnValues(2).should("deep.equal", ["Hartford"]);
+        table.waitLoadStarted().waitLoaded().getColumnValues(2).should("deep.equal", ["Hartford"]);
 
         stateFilter.open().selectAttribute(["Oregon"]).apply();
 
@@ -75,7 +79,7 @@ describe("Dependent filter", () => {
             .showAllElementValues()
             .showAllElementValuesIsVisible(false)
             .containElementsListStatus("None")
-            .hasFilterListSize(287)
+            .hasFilterListSize(300)
             .selectAttribute(["New York"])
             .containElementsListStatus("New York")
             .close()
@@ -100,9 +104,9 @@ describe("Dependent filter", () => {
 
         stateFilter.open().selectAttribute(["Connecticut", "Oregon"]).apply();
 
-        cityFilter.open().hasSubtitle("Hartford").hasFilterListSize(10).hasSelectedValueList(["Hartford"]);
+        table.waitLoadStarted().waitLoaded().getColumnValues(2).should("deep.equal", ["Hartford"]);
 
-        table.waitLoaded().getColumnValues(2).should("deep.equal", ["Hartford"]);
+        cityFilter.open().hasSubtitle("Hartford").hasFilterListSize(10).hasSelectedValueList(["Hartford"]);
     });
 
     it("should test parent - child interaction in edit mode", { tags: "pre-merge_isolated_tiger" }, () => {
@@ -156,6 +160,8 @@ describe("Dependent filter", () => {
             ]);
 
         regionFilter.open().selectAttribute(["West Coast"]).apply();
+        table.waitLoadStarted().waitLoaded();
+
         stateFilter
             .open()
             .hasSubtitle("All")
@@ -166,6 +172,9 @@ describe("Dependent filter", () => {
             .apply()
             .isLoaded()
             .hasSubtitle("California");
+
+        cy.wait(1000);
+
         cityFilter
             .open()
             .hasSubtitle("All")
@@ -173,9 +182,11 @@ describe("Dependent filter", () => {
             .configureLimitingParentFilterDependency("Region")
             .hasFilterListSize(7)
             .selectAttribute(["Sacramento"])
-            .apply()
-            .isLoaded()
-            .hasSubtitle("Sacramento");
+            .apply();
+
+        table.waitLoadStarted().waitLoaded();
+
+        cityFilter.isLoaded().hasSubtitle("Sacramento");
 
         table.getColumnValues(0).should("deep.equal", ["West Coast"]);
         table.getColumnValues(1).should("deep.equal", ["California"]);
@@ -188,6 +199,9 @@ describe("Dependent filter", () => {
             .showAllElementValuesIsVisible(false)
             .selectAttribute(["East Coast"])
             .apply();
+
+        cy.wait(1000);
+
         stateFilter
             .open()
             .elementsAreLoaded()
@@ -205,6 +219,9 @@ describe("Dependent filter", () => {
             .showAllElementValuesIsVisible(false)
             .selectAttribute(["West Coast"])
             .apply();
+
+        cy.wait(1000);
+
         stateFilter
             .open()
             .elementsAreLoaded()
@@ -220,7 +237,7 @@ describe("Dependent filter", () => {
 
         regionFilter.isLoaded().open().hasSubtitle("East Coast").hasFilterListSize(4);
         stateFilter.isLoaded().open().hasSubtitle("All").hasFilterListSize(48);
-        cityFilter.isLoaded().open().hasSubtitle("All").hasFilterListSize(287);
+        cityFilter.isLoaded().open().hasSubtitle("All").hasFilterListSize(300);
     });
 
     it(
@@ -254,7 +271,7 @@ describe("Dependent filter", () => {
                 .hasFilterListSize(5)
                 .deleteFiltervaluesBy("State")
                 .elementsAreLoaded()
-                .hasFilterListSize(287);
+                .hasFilterListSize(300);
         },
     );
 
@@ -265,7 +282,7 @@ describe("Dependent filter", () => {
         cy.wait("@attributes").then(() => {
             cityFilter.open().elementsAreLoaded().hasFilterListSize(5).close();
             stateFilter.removeFilter();
-            cityFilter.isLoaded().open().elementsAreLoaded().hasFilterListSize(287);
+            cityFilter.isLoaded().open().elementsAreLoaded().hasFilterListSize(300);
         });
     });
 

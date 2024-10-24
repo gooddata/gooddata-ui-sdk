@@ -41,7 +41,7 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
 
         hiddenElements,
         staticElements,
-        enableDuplicatedLabelValuesInAttributeFilter,
+        enableDuplicatedLabelValuesInAttributeFilter = true,
     } = props;
 
     const [, setInvalidate] = useState(0);

@@ -258,7 +258,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableSingleStoreDataSource: false,
     enableSnowflakeKeyPairAuthentication: true,
     enableInvalidValuesInAttributeFilter: false,
-    enableDuplicatedLabelValuesInAttributeFilter: false,
+    enableDuplicatedLabelValuesInAttributeFilter: true,
     enableWorkspacesHierarchyView: false,
     enableMultipleDataSourcesInWorkspace: true,
     enableScatterPlotSegmentation: true,
