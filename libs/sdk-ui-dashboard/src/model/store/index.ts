@@ -91,11 +91,12 @@ export {
     selectEnableScheduling,
     selectEnableFilterViews,
     selectEnableAlerting,
+    selectEnableAlertAttributes,
     selectEnableVisualizationSwitcher,
     selectEnableIgnoreCrossFiltering,
     selectEnableAutomations,
     selectEnableCrossFilteringAliasTitles,
-    selectEnableNestedLayout,
+    selectEnableFlexibleLayout,
 } from "./config/configSelectors.js";
 export type { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {

@@ -96,6 +96,7 @@ import { IScheduledMailDefinition } from '@gooddata/sdk-model';
 import { ISecuritySettingsService } from '@gooddata/sdk-backend-spi';
 import { ISemanticSearchQuery } from '@gooddata/sdk-backend-spi';
 import { ISemanticSearchRelationship } from '@gooddata/sdk-model';
+import { ISeparators } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
 import { IUser } from '@gooddata/sdk-model';
@@ -614,6 +615,8 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     setDateFormat(dateFormat: string): Promise<void>;
     // (undocumented)
     setLocale(locale: string): Promise<void>;
+    // (undocumented)
+    setSeparators(separators: ISeparators): Promise<void>;
     // (undocumented)
     setTheme(themeId: string): Promise<void>;
     // (undocumented)

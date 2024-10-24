@@ -80,6 +80,7 @@ export enum TigerFeaturesNames {
     EnableOracleDataSource = "enableOracleDataSource",
     EnableAnalyticalCatalog = "enableAnalyticalCatalog",
     EnableAlerting = "enableAlerting",
+    EnableAlertingAttributes = "enableAlertAttributes",
     EnableSmtp = "enableSmtp",
     EnableScheduling = "enableScheduling",
     EnableSmartFunctions = "enableSmartFunctions",
@@ -117,6 +118,8 @@ export enum TigerFeaturesNames {
     EnableCrossFilteringAliasTitles = "enableCrossFilteringAliasTitles",
     EnableDefaultSmtp = "enableDefaultSmtp",
     EnableDashboardFlexibleLayout = "enableDashboardFlexibleLayout",
+    EnableNumberSeparators = "enableNumberSeparators",
+    EnableGranularPermissions = "enableGranularPermissions",
 }
 
 export type ITigerFeatureFlags = {
@@ -159,6 +162,7 @@ export type ITigerFeatureFlags = {
     enableOracleDataSource: typeof FeatureFlagsValues["enableOracleDataSource"][number];
     enableAnalyticalCatalog: typeof FeatureFlagsValues["enableAnalyticalCatalog"][number];
     enableAlerting: typeof FeatureFlagsValues["enableAlerting"][number];
+    enableAlertAttributes: typeof FeatureFlagsValues["enableAlertAttributes"][number];
     enableSmtp: typeof FeatureFlagsValues["enableSmtp"][number];
     enableScheduling: typeof FeatureFlagsValues["enableScheduling"][number];
     enableLabsSmartFunctions: typeof FeatureFlagsValues["enableLabsSmartFunctions"][number];
@@ -197,6 +201,8 @@ export type ITigerFeatureFlags = {
     enableCrossFilteringAliasTitles: typeof FeatureFlagsValues["enableCrossFilteringAliasTitles"][number];
     enableDefaultSmtp: typeof FeatureFlagsValues["enableDefaultSmtp"][number];
     enableDashboardFlexibleLayout: typeof FeatureFlagsValues["enableDashboardFlexibleLayout"][number];
+    enableNumberSeparators: typeof FeatureFlagsValues["enableNumberSeparators"][number];
+    enableGranularPermissions: typeof FeatureFlagsValues["enableGranularPermissions"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -240,6 +246,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableOracleDataSource: false,
     enableAnalyticalCatalog: false,
     enableAlerting: true,
+    enableAlertAttributes: false,
     enableSmtp: true,
     enableScheduling: true,
     enableLabsSmartFunctions: false,
@@ -277,6 +284,8 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableCrossFilteringAliasTitles: false,
     enableDefaultSmtp: false,
     enableDashboardFlexibleLayout: false,
+    enableNumberSeparators: false,
+    enableGranularPermissions: false,
 };
 
 export const FeatureFlagsValues = {
@@ -324,6 +333,7 @@ export const FeatureFlagsValues = {
     enableOracleDataSource: [true, false] as const,
     enableAnalyticalCatalog: [true, false] as const,
     enableAlerting: [true, false] as const,
+    enableAlertAttributes: [true, false] as const,
     enableSmtp: [true, false] as const,
     enableScheduling: [true, false] as const,
     enableLabsSmartFunctions: [true, false] as const,
@@ -361,4 +371,6 @@ export const FeatureFlagsValues = {
     enableCrossFilteringAliasTitles: [true, false] as const,
     enableDefaultSmtp: [true, false] as const,
     enableDashboardFlexibleLayout: [true, false] as const,
+    enableNumberSeparators: [true, false] as const,
+    enableGranularPermissions: [true, false] as const,
 };

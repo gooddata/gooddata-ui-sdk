@@ -130,11 +130,13 @@ const Dropdown: React.FC<IGranularPermissionsDropdownProps> = ({
     areFilterViewsEnabled,
 }) => {
     const intl = useIntl();
-    const [selectedPermission, setSelectedPermission] = useState<WorkspacePermission>(workspace.permission);
+    const [selectedPermission, setSelectedPermission] = useState<WorkspacePermission>(
+        workspace.permissions[0],
+    );
     const trackEvent = useTelemetry();
 
     const handleOnSelect = (permission: WorkspacePermission) => {
-        onChange({ ...workspace, permission });
+        onChange({ ...workspace, permissions: [permission] });
         trackPermissionChange(trackEvent, subjectType, permission);
         setSelectedPermission(permission);
     };

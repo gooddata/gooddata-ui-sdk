@@ -1,6 +1,6 @@
 // (C) 2023-2024 GoodData Corporation
 
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import { LoadingComponent } from "@gooddata/sdk-ui";
 import { Tabs, Overlay, IAlignPoint, Message } from "@gooddata/sdk-ui-kit";
@@ -25,7 +25,7 @@ import { EditUserGroupDetails } from "./Details/EditUserGroupDetails.js";
 import { UserGroupDetailsView } from "./Details/UserGroupDetailsView.js";
 import { UsersList } from "./Users/UsersList.js";
 import { extractUserGroupName } from "./utils.js";
-import { IGrantedDataSource, UserGroupEditDialogMode } from "./types.js";
+import { IGrantedDataSource, IGrantedWorkspace, UserGroupEditDialogMode } from "./types.js";
 import { IWithTelemetryProps, withTelemetry } from "./TelemetryContext.js";
 import { DataSourceList } from "./DataSources/DataSourceList.js";
 import { AddDataSource } from "./DataSources/AddDataSource.js";
@@ -47,6 +47,7 @@ export interface IUserGroupEditDialogProps extends IWithTelemetryProps {
     onClose: () => void;
     renderDataSourceIcon?: (dataSource: IGrantedDataSource) => JSX.Element;
     areFilterViewsEnabled?: boolean;
+    areGranularPermissionsEnabled?: boolean;
 }
 
 const UserGroupEditDialogComponent: React.FC<IUserGroupEditDialogProps> = ({
@@ -58,6 +59,7 @@ const UserGroupEditDialogComponent: React.FC<IUserGroupEditDialogProps> = ({
     initialView = "VIEW",
     renderDataSourceIcon,
     areFilterViewsEnabled = false,
+    areGranularPermissionsEnabled = false,
 }) => {
     const intl = useIntl();
     const { dialogMode, setDialogMode } = useUserGroupDialogMode(initialView);
@@ -76,7 +78,7 @@ const UserGroupEditDialogComponent: React.FC<IUserGroupEditDialogProps> = ({
         onDataSourcesChanged,
         removeGrantedDataSource,
         updateGrantedDataSource,
-    } = usePermissions(userGroupId, "userGroup", organizationId, onSuccess);
+    } = usePermissions(userGroupId, "userGroup", organizationId, onSuccess, areGranularPermissionsEnabled);
     const { grantedUsers, onUsersChanged, removeGrantedUsers } = useUsers(
         userGroupId,
         organizationId,
@@ -135,6 +137,27 @@ const UserGroupEditDialogComponent: React.FC<IUserGroupEditDialogProps> = ({
 
     const isOpenedInEditMode = initialView !== "VIEW";
 
+    const [workspaceToEdit, setWorkspaceToEdit] = useState<IGrantedWorkspace>(undefined);
+
+    const handleWorkspaceEdit = (workspace: IGrantedWorkspace) => {
+        if (!areGranularPermissionsEnabled) {
+            return;
+        }
+
+        setWorkspaceToEdit(workspace);
+        setDialogMode("WORKSPACE");
+    };
+
+    const handleWorkspaceChanged = (workspaces: IGrantedWorkspace[]) => {
+        setWorkspaceToEdit(undefined);
+        onWorkspacesChanged(workspaces);
+    };
+
+    const handleWorkspaceCancel = () => {
+        setWorkspaceToEdit(undefined);
+        setDialogMode("VIEW");
+    };
+
     const isLoading = error
         ? false
         : userGroupIsLoading || !grantedWorkspaces || !grantedUsers || !grantedDataSources;
@@ -155,6 +178,7 @@ const UserGroupEditDialogComponent: React.FC<IUserGroupEditDialogProps> = ({
                 isModal={true}
                 positionType="fixed"
                 className={dialogOverlayClassNames}
+                resizeObserverThreshold={0.2}
             >
                 <div className={dialogWrapperClassNames}>
                     {isLoading ? (
@@ -217,6 +241,8 @@ const UserGroupEditDialogComponent: React.FC<IUserGroupEditDialogProps> = ({
                                             onDelete={removeGrantedWorkspace}
                                             onChange={updateGrantedWorkspace}
                                             areFilterViewsEnabled={areFilterViewsEnabled}
+                                            areGranularPermissionsEnabled={areGranularPermissionsEnabled}
+                                            onClick={handleWorkspaceEdit}
                                         />
                                     )}
                                     {selectedTabId.id === userGroupDialogTabsMessages.dataSources.id && (
@@ -249,10 +275,12 @@ const UserGroupEditDialogComponent: React.FC<IUserGroupEditDialogProps> = ({
                                     subjectType="userGroup"
                                     grantedWorkspaces={grantedWorkspaces}
                                     enableBackButton={!isOpenedInEditMode}
-                                    onSubmit={onWorkspacesChanged}
-                                    onCancel={isOpenedInEditMode ? onClose : () => setDialogMode("VIEW")}
+                                    onSubmit={handleWorkspaceChanged}
+                                    onCancel={isOpenedInEditMode ? onClose : handleWorkspaceCancel}
                                     onClose={onClose}
                                     areFilterViewsEnabled={areFilterViewsEnabled}
+                                    areGranularPermissionsEnabled={areGranularPermissionsEnabled}
+                                    editWorkspace={workspaceToEdit}
                                 />
                             )}
                             {dialogMode === "USERS" && (

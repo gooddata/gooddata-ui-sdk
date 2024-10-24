@@ -1,6 +1,7 @@
 // (C) 2022-2024 GoodData Corporation
 import React from "react";
 import {
+    IAttributeMetadataObject,
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
     ICatalogMeasure,
@@ -22,10 +23,12 @@ import { AlertDestinationSelect } from "./AlertDestinationSelect.js";
 import { EditAlertConfiguration } from "./EditAlertConfiguration.js";
 import { useEditAlert } from "./hooks/useEditAlert.js";
 import { defineMessages, FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
-import { AlertMetric, AlertMetricComparatorType } from "../../types.js";
+import { AlertAttribute, AlertMetric, AlertMetricComparatorType } from "../../types.js";
 import { useAlertValidation, AlertInvalidityReason } from "./hooks/useAlertValidation.js";
 import {
+    getAlertAttribute,
     getAlertCompareOperator,
+    getAlertFilters,
     getAlertMeasure,
     getAlertRelativeOperator,
     getAlertThreshold,
@@ -33,6 +36,8 @@ import {
     isChangeOrDifferenceOperator,
 } from "./utils.js";
 import { RecipientsSelect } from "../../../../scheduledEmail/DefaultScheduledEmailDialog/components/RecipientsSelect/RecipientsSelect.js";
+import { AlertAttributeSelect } from "./AlertAttributeSelecxt.js";
+import { IExecutionResultEnvelope } from "../../../../../model/index.js";
 
 const TOOLTIP_ALIGN_POINTS = [{ align: "cl cr" }, { align: "cr cl" }];
 
@@ -51,13 +56,17 @@ const invalidMessagesObj: Record<AlertInvalidityReason, MessageDescriptor> = {
 };
 
 interface IEditAlertProps {
+    canManageAttributes: boolean;
+    execResult: IExecutionResultEnvelope | undefined;
     alert: IAutomationMetadataObject;
     isNewAlert?: boolean;
     hasAlerts: boolean;
     destinations: INotificationChannelMetadataObject[];
     users: IWorkspaceUser[];
     measures: AlertMetric[];
+    attributes: AlertAttribute[];
     catalogMeasures: ICatalogMeasure[];
+    catalogAttributes: IAttributeMetadataObject[];
     onClose: () => void;
     onCancel: () => void;
     onCreate?: (alert: IAutomationMetadataObjectDefinition) => void;
@@ -69,10 +78,12 @@ interface IEditAlertProps {
 
 export const EditAlert: React.FC<IEditAlertProps> = ({
     alert,
+    execResult,
     isNewAlert,
     hasAlerts,
     destinations,
     users,
+    attributes,
     measures,
     onClose,
     onCancel,
@@ -82,6 +93,8 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
     maxAutomationsRecipients,
     overlayPositionType,
     catalogMeasures,
+    catalogAttributes,
+    canManageAttributes,
 }) => {
     const {
         viewMode,
@@ -93,6 +106,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
         changeComparisonOperator,
         changeRelativeOperator,
         changeMeasure,
+        changeAttribute,
         changeValue,
         changeDestination,
         changeRecipients,
@@ -105,17 +119,20 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
         updateAlert,
     } = useEditAlert({
         metrics: measures,
+        attributes,
         alert,
         onCreate,
         onUpdate,
         catalogMeasures,
+        catalogAttributes,
         destinations,
     });
     const intl = useIntl();
     const disableCreateButtonDueToLimits = isNewAlert && maxAutomationsReached;
     const selectedMeasure = getAlertMeasure(measures, updatedAlert.alert);
+    const [selectedAttribute, selectedValue] = getAlertAttribute(attributes, updatedAlert);
+    const filters = getAlertFilters(updatedAlert);
     const { isValid, invalidityReason } = useAlertValidation(alert, isNewAlert);
-    const filters = alert.alert?.execution?.filters ?? [];
 
     return viewMode === "edit" ? (
         <DashboardInsightSubmenuContainer
@@ -139,6 +156,21 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                             measures={measures}
                             overlayPositionType={overlayPositionType}
                         />
+                        {Boolean(canManageAttributes && attributes.length > 0) && (
+                            <>
+                                <div className="gd-edit-alert__measure-label">
+                                    <FormattedMessage id="insightAlert.config.for" />
+                                </div>
+                                <AlertAttributeSelect
+                                    execResult={execResult}
+                                    selectedAttribute={selectedAttribute}
+                                    selectedValue={selectedValue}
+                                    onAttributeChange={changeAttribute}
+                                    attributes={attributes}
+                                    catalogAttributes={catalogAttributes}
+                                />
+                            </>
+                        )}
                         {filters.length > 0 && (
                             <div className="gd-edit-alert__measure-info">
                                 <FormattedMessage

@@ -2,9 +2,10 @@
 import React from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
-
 import { IWidget, objRefToString, widgetRef } from "@gooddata/sdk-model";
 import { ArrowDirections, ArrowOffsets, Bubble, IAlignPoint } from "@gooddata/sdk-ui-kit";
+
+import { IGNORED_CONFIGURATION_MENU_CLICK_CLASS } from "../../../../constants/index.js";
 
 const alignPoints: IAlignPoint[] = [
     { align: "tr tl" },
@@ -52,6 +53,7 @@ export const DashboardInsightMenuBubble: React.FC<IDashboardInsightMenuBubblePro
             closeOnOutsideClick
             onClose={onClose}
             overlayClassName="gd-configuration-bubble-wrapper sdk-edit-mode-on"
+            ignoreClicksOnByClass={[`.${IGNORED_CONFIGURATION_MENU_CLICK_CLASS}`]}
         >
             {children}
         </Bubble>

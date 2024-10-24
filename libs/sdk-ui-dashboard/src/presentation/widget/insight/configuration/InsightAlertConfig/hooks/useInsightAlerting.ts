@@ -28,14 +28,21 @@ import {
     selectCanManageWorkspace,
     selectUsers,
     selectEntitlementMaxAutomationRecipients,
+    selectExecutionResultByRef,
+    selectEnableAlertAttributes,
 } from "../../../../../../model/index.js";
-import { createDefaultAlert, getSupportedInsightMeasuresByInsight } from "../utils.js";
+import {
+    createDefaultAlert,
+    getSupportedInsightAttributesByInsight,
+    getSupportedInsightMeasuresByInsight,
+} from "../utils.js";
 import { messages } from "../messages.js";
 import { useSaveAlertToBackend } from "./useSaveAlertToBackend.js";
 import { fillMissingTitles, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { convertCurrentUserToAutomationRecipient } from "../../../../../../_staging/automation/index.js";
 import { useMetricsAndFacts } from "../../../../../../_staging/sharedHooks/useMetricsAndFacts.js";
 import { DEFAULT_MAX_RECIPIENTS } from "../../../../../scheduledEmail/DefaultScheduledEmailDialog/constants.js";
+import { useAttributes } from "../../../../../../_staging/sharedHooks/useAttributes.js";
 
 type InsightWidgetAlertingViewMode = "list" | "edit" | "create";
 
@@ -56,6 +63,8 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     const users = useDashboardSelector(selectUsers);
     const dashboard = useDashboardSelector(selectDashboardId);
     const insight = useDashboardSelector(selectInsightByWidgetRef(widget?.ref));
+    const execResult = useDashboardSelector(selectExecutionResultByRef(widget?.ref));
+
     const allAutomationsCount = useDashboardSelector(selectAllAutomationsCount);
     const maxAutomationsEntitlement = useDashboardSelector(selectEntitlementMaxAutomations);
     const unlimitedAutomationsEntitlement = useDashboardSelector(selectEntitlementUnlimitedAutomations);
@@ -66,6 +75,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         maxAutomationsRecipientsEntitlement?.value ?? DEFAULT_MAX_RECIPIENTS,
         10,
     );
+    const canManageAttributes = useDashboardSelector(selectEnableAlertAttributes);
     const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
     const currentUser = useDashboardSelector(selectCurrentUser);
     const destinations = useDashboardSelector(selectNotificationChannels);
@@ -134,6 +144,14 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         [insight, locale],
     );
     const defaultMeasure = supportedMeasures[0];
+
+    const supportedAttributes = useMemo(() => getSupportedInsightAttributesByInsight(insight), [insight]);
+    const displayForms = useMemo(
+        () => supportedAttributes.map((attribute) => attribute.attribute.attribute.displayForm),
+        [supportedAttributes],
+    );
+    const { attributes, attributesLoading, attributesLoadingError } = useAttributes(displayForms);
+
     const defaultNotificationChannelId = destinations[0]?.id;
     const hasAlerts = alerts.length > 0;
     const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);
@@ -156,6 +174,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             defaultMeasure &&
             defaultNotificationChannelId &&
             !metricsAndFactsLoading &&
+            !attributesLoading &&
             !defaultAlert
         ) {
             setDefaultAlert(
@@ -168,7 +187,10 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
                     metricsAndFacts?.metrics ?? [],
                 ),
             );
-        } else if ((widgetFiltersStatus === "error" || metricsAndFactsLoadingError) && !defaultAlert) {
+        } else if (
+            (widgetFiltersStatus === "error" || metricsAndFactsLoadingError || attributesLoadingError) &&
+            !defaultAlert
+        ) {
             closeInsightWidgetMenu();
             addError(messages.alertLoadingError);
         }
@@ -183,6 +205,8 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         metricsAndFacts,
         metricsAndFactsLoading,
         metricsAndFactsLoadingError,
+        attributesLoading,
+        attributesLoadingError,
         addError,
         currentUser,
     ]);
@@ -302,7 +326,8 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             isLoadingFilters ||
             isRefreshingAutomations ||
             isDeletingAlert ||
-            metricsAndFactsLoading,
+            metricsAndFactsLoading ||
+            attributesLoading,
         destinations,
         users,
         alerts,
@@ -319,10 +344,14 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         cancelAlertEditing,
         cancelAlertCreation,
         hasAlerts,
+        execResult,
         supportedMeasures,
+        supportedAttributes,
         maxAutomationsReached,
         maxAutomationsRecipients,
+        canManageAttributes,
         canCreateAutomation,
         catalogMeasures: metricsAndFacts?.metrics ?? [],
+        catalogAttributes: attributes ?? [],
     };
 };

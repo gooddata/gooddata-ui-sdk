@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 
 import {
     EntitiesApiGetAllEntitiesAttributesRequest,
@@ -158,7 +158,7 @@ export async function loadAttributesAndDateDatasetsAndHierarchies(
         rsqlFilter,
     );
 
-    const attributes = await MetadataUtilities.getAllPagesOf(
+    const attributes = await MetadataUtilities.getAllPagesOfParallel(
         client,
         client.entities.getAllEntitiesAttributes,
         params,

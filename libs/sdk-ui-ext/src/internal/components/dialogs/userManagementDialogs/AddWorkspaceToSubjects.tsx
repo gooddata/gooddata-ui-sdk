@@ -21,6 +21,7 @@ export interface IAddWorkspaceToSubjectsProps extends IWithTelemetryProps {
     onSuccess: () => void;
     onClose: () => void;
     areFilterViewsEnabled?: boolean;
+    areGranularPermissionsEnabled?: boolean;
 }
 
 const AddWorkspaceToSubjectsComponent: React.FC<IAddWorkspaceToSubjectsProps> = ({
@@ -30,10 +31,17 @@ const AddWorkspaceToSubjectsComponent: React.FC<IAddWorkspaceToSubjectsProps> = 
     onSuccess,
     onClose,
     areFilterViewsEnabled = false,
+    areGranularPermissionsEnabled = false,
 }) => {
     return (
         <OrganizationIdProvider organizationId={organizationId}>
-            <Overlay alignPoints={alignPoints} isModal={true} positionType="fixed">
+            <Overlay
+                alignPoints={alignPoints}
+                isModal={true}
+                positionType="fixed"
+                className="gd-user-management-dialog"
+                resizeObserverThreshold={0.2}
+            >
                 <AddWorkspace
                     ids={ids}
                     subjectType={subjectType}
@@ -43,6 +51,7 @@ const AddWorkspaceToSubjectsComponent: React.FC<IAddWorkspaceToSubjectsProps> = 
                     onCancel={onClose}
                     onClose={onClose}
                     areFilterViewsEnabled={areFilterViewsEnabled}
+                    areGranularPermissionsEnabled={areGranularPermissionsEnabled}
                 />
             </Overlay>
         </OrganizationIdProvider>

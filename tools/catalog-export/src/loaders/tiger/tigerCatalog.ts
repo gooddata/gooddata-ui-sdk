@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { Attribute, Catalog, Fact, Metric } from "../../base/types.js";
 import {
     JsonApiAttributeOutList,
@@ -71,7 +71,7 @@ export async function loadCatalog(client: ITigerClient, workspaceId: string): Pr
         MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesFacts, {
             workspaceId,
         }).then(MetadataUtilities.mergeEntitiesResults),
-        MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesAttributes, {
+        MetadataUtilities.getAllPagesOfParallel(client, client.entities.getAllEntitiesAttributes, {
             workspaceId,
             include: ["labels"],
         }).then(MetadataUtilities.mergeEntitiesResults),

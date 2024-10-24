@@ -130,6 +130,7 @@ import {
     IAutomationMetadataObjectDefinition,
     IAutomationMetadataObject,
     ILlmEndpointOpenAI,
+    ISeparators,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
 import isEmpty from "lodash/isEmpty.js";
@@ -824,6 +825,7 @@ class DummyOrganization implements IOrganization {
         return {
             setWhiteLabeling: () => Promise.resolve(),
             setLocale: () => Promise.resolve(),
+            setSeparators: () => Promise.resolve(),
             setTimezone: () => Promise.resolve(),
             setDateFormat: () => Promise.resolve(),
             setWeekStart: () => Promise.resolve(),
@@ -988,6 +990,10 @@ class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
     }
 
     setLocale(_locale: string): Promise<void> {
+        return Promise.resolve();
+    }
+
+    setSeparators(_separators: ISeparators): Promise<void> {
         return Promise.resolve();
     }
 

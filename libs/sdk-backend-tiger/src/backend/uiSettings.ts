@@ -4,6 +4,21 @@ import { ISettings } from "@gooddata/sdk-model";
 import { DefaultFeatureFlags } from "./uiFeatures.js";
 
 /**
+ * Locale for the applications.
+ */
+export const DefaultLocale: string = "en-US";
+
+export const DefaultWeekStart: string = "Sunday";
+
+/**
+ * Number separators.
+ */
+export const DefaultSeparators = {
+    thousand: ",",
+    decimal: ".",
+};
+
+/**
  * Tiger does not yet have endpoints for settings. All the UI-specific
  * settings are thus hardcoded here.
  */
@@ -86,22 +101,8 @@ export const DefaultUiSettings: ISettings = {
     enablePivotTableTransposition: true,
     enableColumnHeadersPosition: true,
     metadataTimeZone: "UTC", // Panther/Tiger metadata are always stored in UTC time zone
+    separators: DefaultSeparators,
     ...DefaultFeatureFlags,
-};
-
-/**
- * Locale for the applications.
- */
-export const DefaultLocale: string = "en-US";
-
-export const DefaultWeekStart: string = "Sunday";
-
-/**
- * Number separators.
- */
-export const DefaultSeparators = {
-    thousand: ",",
-    decimal: ".",
 };
 
 /**

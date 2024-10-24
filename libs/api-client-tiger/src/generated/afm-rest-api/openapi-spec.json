@@ -3129,7 +3129,7 @@
                 "description": "Visualization definitions created by AI."
             },
             "DimAttribute": {
-                "required": ["id", "type"],
+                "required": ["id", "title", "type"],
                 "type": "object",
                 "properties": {
                     "id": {
@@ -3142,6 +3142,10 @@
                         "description": "Object type",
                         "example": "attribute",
                         "enum": ["attribute"]
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Title of attribute."
                     }
                 },
                 "description": "List of attributes representing the dimensionality of the new visualization"
@@ -3165,7 +3169,7 @@
                 "description": "List of objects found by similarity search and post-processed by LLM."
             },
             "Metric": {
-                "required": ["id", "type"],
+                "required": ["id", "title", "type"],
                 "type": "object",
                 "properties": {
                     "id": {
@@ -3178,6 +3182,10 @@
                         "description": "Object type",
                         "example": "metric",
                         "enum": ["metric", "fact", "attribute"]
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Title of metric."
                     },
                     "aggFunction": {
                         "type": "string",

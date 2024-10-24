@@ -10,9 +10,10 @@ import {
     RankingFilter,
     RelativeDateFilter,
     isAfmObjectIdentifier,
+    isAfmObjectLocalIdentifier,
 } from "@gooddata/api-client-tiger";
 import { IFilter, ObjRefInScope } from "@gooddata/sdk-model";
-import { toObjRef } from "../ObjRefConverter.js";
+import { toLocalRef, toObjRef } from "../ObjRefConverter.js";
 import { toSdkGranularity } from "../dateGranularityConversions.js";
 
 const isPositiveAttributeFilter = (filter: unknown): filter is PositiveAttributeFilter => {
@@ -47,12 +48,17 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
     if (isPositiveAttributeFilter(filter) && isAfmObjectIdentifier(filter.positiveAttributeFilter.label)) {
         return {
             positiveAttributeFilter: {
-                /**
-                 * We expect that only identifier is used in the filter definition and not localIdentifier.
-                 * Once we support attribute slicing in alerts, we will need to find the possible localIdentifier
-                 * in AFM definition and get filter identifier.
-                 */
                 displayForm: toObjRef(filter.positiveAttributeFilter.label),
+                in: filter.positiveAttributeFilter.in,
+            },
+        };
+    } else if (
+        isPositiveAttributeFilter(filter) &&
+        isAfmObjectLocalIdentifier(filter.positiveAttributeFilter.label)
+    ) {
+        return {
+            positiveAttributeFilter: {
+                displayForm: toLocalRef(filter.positiveAttributeFilter.label),
                 in: filter.positiveAttributeFilter.in,
             },
         };
@@ -62,12 +68,17 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
     ) {
         return {
             negativeAttributeFilter: {
-                /**
-                 * We expect that only identifier is used in the filter definition and not localIdentifier.
-                 * Once we support attribute slicing in alerts, we will need to find the possible localIdentifier
-                 * in AFM definition and get filter identifier.
-                 */
                 displayForm: toObjRef(filter.negativeAttributeFilter.label),
+                notIn: filter.negativeAttributeFilter.notIn,
+            },
+        };
+    } else if (
+        isNegativeAttributeFilter(filter) &&
+        isAfmObjectLocalIdentifier(filter.negativeAttributeFilter.label)
+    ) {
+        return {
+            negativeAttributeFilter: {
+                displayForm: toLocalRef(filter.negativeAttributeFilter.label),
                 notIn: filter.negativeAttributeFilter.notIn,
             },
         };

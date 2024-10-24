@@ -1,4 +1,4 @@
-// (C) 2020-2023 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
 import {
     ObjRef,
@@ -20,7 +20,11 @@ import {
     selectInsightsMap,
     selectEnableWidgetCustomHeight,
     selectRenderMode,
+    selectEnableFlexibleLayout,
 } from "../../model/index.js";
+import { SectionHotspot } from "../dragAndDrop/index.js";
+import { isInitialPlaceholderWidget } from "../../widgets/index.js";
+import { DefaultFlexibleDashboardLayout } from "../flexibleLayout/index.js";
 
 import { DashboardLayoutWidget } from "./DashboardLayoutWidget.js";
 import { IDashboardLayoutProps } from "./types.js";
@@ -33,8 +37,6 @@ import {
 import { renderModeAwareDashboardLayoutSectionRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionRenderer.js";
 import { renderModeAwareDashboardLayoutSectionHeaderRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionHeaderRenderer.js";
 import { getMemoizedWidgetSanitizer } from "./DefaultDashboardLayoutUtils.js";
-import { SectionHotspot } from "../dragAndDrop/index.js";
-import { isInitialPlaceholderWidget } from "../../widgets/index.js";
 import { EmptyDashboardLayout } from "./EmptyDashboardLayout.js";
 
 /**
@@ -91,10 +93,7 @@ const itemKeyGetter: IDashboardLayoutItemKeyGetter<ExtendedDashboardWidget> = (k
     return keyGetterProps.item.index().toString();
 };
 
-/**
- * @alpha
- */
-export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Element => {
+const LegacyDefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Element => {
     const { onFiltersChange, onDrill, onError } = props;
 
     const layout = useDashboardSelector(selectLayout);
@@ -169,4 +168,15 @@ export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Elemen
             )}
         </>
     );
+};
+
+/**
+ * @alpha
+ */
+export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Element => {
+    const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
+    if (isFlexibleLayoutEnabled) {
+        return <DefaultFlexibleDashboardLayout {...props} />;
+    }
+    return <LegacyDefaultDashboardLayout {...props} />;
 };

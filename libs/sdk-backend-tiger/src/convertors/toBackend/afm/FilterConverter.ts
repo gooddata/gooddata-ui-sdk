@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import {
     AbsoluteDateFilter,
     AttributeFilter,
@@ -27,13 +27,19 @@ import {
     isFilter,
     isMeasureValueFilter,
     isNegativeAttributeFilter,
+    isObjRef,
     isPositiveAttributeFilter,
     isRangeCondition,
     isRankingFilter,
     isRelativeDateFilter,
 } from "@gooddata/sdk-model";
 import { toTigerGranularity } from "../../fromBackend/dateGranularityConversions.js";
-import { toLabelQualifier, toAfmIdentifier, toDateDataSetQualifier } from "../ObjRefConverter.js";
+import {
+    toLabelQualifier,
+    toAfmIdentifier,
+    toDateDataSetQualifier,
+    toLocalIdentifier,
+} from "../ObjRefConverter.js";
 
 /**
  * Tiger specific wrapper for IFilter, adding 'applyOnResult' property influencing the place of filter application.
@@ -79,7 +85,9 @@ function convertPositiveFilter(
 
     return {
         positiveAttributeFilter: {
-            label: toLabelQualifier(labelRef),
+            label: isObjRef(labelRef)
+                ? toLabelQualifier(labelRef)
+                : toLocalIdentifier(labelRef.localIdentifier),
             in: {
                 values: extractValuesFromAttributeElements(attributeElements),
             },
@@ -97,7 +105,9 @@ function convertNegativeFilter(
 
     return {
         negativeAttributeFilter: {
-            label: toLabelQualifier(labelRef),
+            label: isObjRef(labelRef)
+                ? toLabelQualifier(labelRef)
+                : toLocalIdentifier(labelRef.localIdentifier),
             notIn: {
                 values: extractValuesFromAttributeElements(attributeElements),
             },

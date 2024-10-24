@@ -70,6 +70,18 @@ export type AssignedWorkspacePermission =
     typeof AssignedWorkspacePermissionValue[keyof typeof AssignedWorkspacePermissionValue];
 
 /**
+ * Type guard to check if a value is an AssignedWorkspacePermission.
+ *
+ * @alpha
+ */
+export function isAssignedWorkspacePermission(value: unknown): value is AssignedWorkspacePermission {
+    return (
+        typeof value === "string" &&
+        Object.values(AssignedWorkspacePermissionValue).includes(value as AssignedWorkspacePermission)
+    );
+}
+
+/**
  * @alpha
  */
 export interface IOrganizationAssignee {
