@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { useCallback, useMemo, useState, Dispatch, SetStateAction } from "react";
 import { useIntl } from "react-intl";
@@ -23,10 +23,12 @@ type UseInsightMenuConfig = {
     exportCSVEnabled: boolean;
     exportXLSXEnabled: boolean;
     scheduleExportEnabled: boolean;
+    isScheduleExportVisible: boolean;
+    isExportRawInNewUiVisible: boolean;
     onExportCSV: () => void;
     onExportXLSX: () => void;
+    onExportRawCSV: () => void;
     onScheduleExport: () => void;
-    isScheduleExportVisible: boolean;
 };
 
 export const useInsightMenu = (
@@ -64,6 +66,7 @@ function useDefaultMenuItems(
         onScheduleExport,
         isScheduleExportVisible,
         widget,
+        isExportRawInNewUiVisible,
     } = config;
 
     const intl = useIntl();
@@ -78,6 +81,7 @@ function useDefaultMenuItems(
             exportCSVDisabled: !exportCSVEnabled,
             exportXLSXDisabled: !exportXLSXEnabled,
             scheduleExportDisabled: !scheduleExportEnabled,
+            isExportRawInNewUiVisible: isExportRawInNewUiVisible,
             onExportCSV: () => {
                 setIsMenuOpen(false);
                 onExportCSV();
@@ -105,5 +109,6 @@ function useDefaultMenuItems(
         isScheduleExportVisible,
         intl,
         setIsMenuOpen,
+        isExportRawInNewUiVisible,
     ]);
 }

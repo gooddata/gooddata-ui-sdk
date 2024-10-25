@@ -2556,6 +2556,7 @@ export interface ISettings {
     enablePivotTableIncreaseBucketSize?: boolean;
     enablePivotTableTransposition?: boolean;
     enablePushpinGeoChart?: boolean;
+    enableRawExportsInNewUI?: boolean;
     enableRenamingMeasureToMetric?: boolean;
     enableReversedStacking?: boolean;
     enableSeparateTotalLabels?: boolean;

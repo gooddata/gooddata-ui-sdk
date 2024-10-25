@@ -290,6 +290,7 @@ export {
     selectIsExecutionResultExportableToCsvByRef,
     selectIsExecutionResultExportableToXlsxByRef,
     selectIsExecutionResultReadyForExportByRef,
+    selectIsExecutionResultExportableToCsvRawByRef,
 } from "./executionResults/executionResultsSelectors.js";
 export { IExecutionResultEnvelope } from "./executionResults/types.js";
 export { UiState, InvalidCustomUrlDrillParameterInfo } from "./ui/uiState.js";
