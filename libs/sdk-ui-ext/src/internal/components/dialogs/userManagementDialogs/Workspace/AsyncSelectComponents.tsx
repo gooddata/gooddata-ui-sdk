@@ -9,6 +9,7 @@ import {
     NoticeProps,
 } from "react-select";
 import { Typography, LoadingMask } from "@gooddata/sdk-ui-kit";
+import { wrapMenuList } from "react-select-async-paginate";
 
 import { ISelectOption, isWorkspaceItem, ISelectErrorOption, isSelectErrorOption } from "../types.js";
 import { getWorkspaceItemTestId } from "../utils.js";
@@ -42,6 +43,18 @@ export const MenuListRendered = (props: MenuListProps<ISelectOption, false>): JS
         </ReactSelectComponents.MenuList>
     );
 };
+
+export const WrappedMenuListRenderer = wrapMenuList(
+    (props: MenuListProps<ISelectOption, false>): JSX.Element => {
+        return (
+            <ReactSelectComponents.MenuList {...props}>
+                <div className="s-user-management-menu" aria-label="Share dialog menu list">
+                    {props.children}
+                </div>
+            </ReactSelectComponents.MenuList>
+        );
+    },
+);
 
 export const InputRendered = (props: InputProps): JSX.Element => {
     return (

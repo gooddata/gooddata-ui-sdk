@@ -1,9 +1,8 @@
 // (C) 2024 GoodData Corporation
-import React, { KeyboardEventHandler, useCallback, useEffect, useMemo, useRef } from "react";
-import debounce from "debounce-promise";
+import React, { KeyboardEventHandler, useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
-import { OnChangeValue, SelectInstance } from "react-select";
-import AsyncSelect from "react-select/async";
+import { OnChangeValue } from "react-select";
+import { AsyncPaginate } from "react-select-async-paginate";
 import { useBackendStrict } from "@gooddata/sdk-ui";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
@@ -14,12 +13,12 @@ import {
     EmptyRenderer,
     GroupHeadingRenderer,
     LoadingMessageRenderer,
-    MenuListRendered,
+    WrappedMenuListRenderer,
     NoOptionsMessageRenderer,
     OptionRenderer,
     SingleValueInputRenderer,
 } from "./AsyncSelectComponents.js";
-import { loadWorkspaceOptionsPromise } from "./backend/loadWorkspaceOptionsPromise.js";
+import { loadPaginatedWorkspaceOptionsPromise } from "./backend/loadWorkspaceOptionsPromise.js";
 
 const SEARCH_INTERVAL = 400;
 
@@ -30,14 +29,8 @@ export const AddSingleWorkspaceSelect: React.FC<IAddSingleWorkspaceSelectProps> 
     mode = "EDIT",
 }) => {
     const backend: IAnalyticalBackend = useBackendStrict();
-
     const intl = useIntl();
-    const selectRef = useRef<SelectInstance<any, false>>(null);
     const isEditMode = mode === "EDIT";
-
-    useEffect(() => {
-        selectRef.current.focus();
-    }, []);
 
     const onSelect = useCallback(
         (value: OnChangeValue<ISelectOption, boolean>) => {
@@ -52,12 +45,9 @@ export const AddSingleWorkspaceSelect: React.FC<IAddSingleWorkspaceSelectProps> 
 
     const noOptionsMessage = useMemo(() => () => intl.formatMessage(messages.searchWorkspaceNoMatch), [intl]);
 
-    const loadOptions = useMemo(
-        () =>
-            isEditMode &&
-            debounce(loadWorkspaceOptionsPromise(backend, intl), SEARCH_INTERVAL, { leading: true }),
-        [backend, intl, isEditMode],
-    );
+    const loadOptions = useMemo(() => {
+        return isEditMode && loadPaginatedWorkspaceOptionsPromise(backend, intl);
+    }, [backend, intl, isEditMode]);
 
     const onKeyDownCallback: KeyboardEventHandler<HTMLInputElement> = useCallback((e) => {
         const target = e.target as HTMLInputElement;
@@ -89,9 +79,9 @@ export const AddSingleWorkspaceSelect: React.FC<IAddSingleWorkspaceSelectProps> 
 
     return (
         <div className="gd-share-dialog-content-select s-user-management-workspace-select">
-            <AsyncSelect
-                ref={selectRef}
-                defaultMenuIsOpen={isEditMode}
+            <AsyncPaginate
+                autoFocus
+                defaultMenuIsOpen={true}
                 classNamePrefix="gd-share-dialog"
                 components={{
                     IndicatorSeparator: EmptyRenderer,
@@ -100,7 +90,7 @@ export const AddSingleWorkspaceSelect: React.FC<IAddSingleWorkspaceSelectProps> 
                     GroupHeading: GroupHeadingRenderer,
                     LoadingMessage: LoadingMessageRenderer,
                     LoadingIndicator: EmptyRenderer,
-                    MenuList: MenuListRendered,
+                    MenuList: WrappedMenuListRenderer,
                     NoOptionsMessage: NoOptionsMessageRenderer,
                     SingleValue: OptionRenderer,
                 }}
@@ -122,6 +112,10 @@ export const AddSingleWorkspaceSelect: React.FC<IAddSingleWorkspaceSelectProps> 
                 isMulti={false}
                 isDisabled={!isEditMode}
                 value={addedWorkspace ? { label: addedWorkspace.title } : null}
+                additional={{
+                    page: 0,
+                }}
+                debounceTimeout={SEARCH_INTERVAL}
             />
         </div>
     );

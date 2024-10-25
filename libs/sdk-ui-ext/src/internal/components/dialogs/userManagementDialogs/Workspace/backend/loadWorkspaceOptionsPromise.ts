@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 
 import { IntlShape, defineMessages } from "react-intl";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -40,5 +40,53 @@ export const loadWorkspaceOptionsPromise =
             }));
         } catch {
             return createErrorOption(intl);
+        }
+    };
+
+const WORKSPACES_LIMIT = 50;
+
+export const loadPaginatedWorkspaceOptionsPromise =
+    (backend: IAnalyticalBackend, intl: IntlShape) =>
+    async (
+        inputValue: string,
+        _options: unknown,
+        { page }: { page: number },
+    ): Promise<{
+        options: ISelectOption[] | ISelectErrorOption[];
+        hasMore: boolean;
+        additional: {
+            page: number;
+        };
+    }> => {
+        const offset = page * WORKSPACES_LIMIT;
+        try {
+            return await backend
+                .workspaces()
+                .forCurrentUser()
+                .withSearch(inputValue)
+                .withLimit(WORKSPACES_LIMIT)
+                .withOffset(offset)
+                .query()
+                .then((result) => Promise.all(result.items.map((workspace) => workspace.getDescriptor())))
+                .then((workspaces) => {
+                    return {
+                        options: [...workspaces.sort(sortByName)].map((workspace) => ({
+                            label: workspace.id,
+                            value: workspace,
+                        })),
+                        hasMore: workspaces.length > 0,
+                        additional: {
+                            page: page + 1,
+                        },
+                    };
+                });
+        } catch {
+            return {
+                options: createErrorOption(intl),
+                hasMore: false,
+                additional: {
+                    page: 0,
+                },
+            };
         }
     };
