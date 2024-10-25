@@ -55,7 +55,7 @@ import { getRefsForSection, getRefsForItem } from "./refs.js";
 /**
  * Tests in KD require widget index for css selectors.
  * Widget index equals to the widget order in the layout.
- * Also placeholders are ignored for this.
+ * Also, placeholders are ignored for this.
  */
 function getWidgetIndex(item: IDashboardLayoutItemFacade<ExtendedDashboardWidget>): number {
     const sectionIndex = item.section().index();
@@ -194,6 +194,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                     onError={onError}
                     onFiltersChange={onFiltersChange}
                     widget={widget as ExtendedDashboardWidget}
+                    parentLayoutItemSize={item.size()}
                     ErrorComponent={ErrorComponent}
                     LoadingComponent={LoadingComponent}
                 />

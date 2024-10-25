@@ -9,11 +9,16 @@ import {
     isKpiWidget,
     isRichTextWidget,
     isVisualizationSwitcherWidget,
+    isDashboardLayout,
 } from "@gooddata/sdk-model";
 import { BackendProvider, convertError, useBackendStrict } from "@gooddata/sdk-ui";
 import { withEventing } from "@gooddata/sdk-backend-base";
 
-import { useDashboardEventDispatch } from "../../../model/index.js";
+import {
+    useDashboardEventDispatch,
+    useDashboardSelector,
+    selectEnableFlexibleLayout,
+} from "../../../model/index.js";
 import {
     widgetExecutionFailed,
     widgetExecutionStarted,
@@ -21,6 +26,8 @@ import {
 } from "../../../model/events/widget.js";
 import { IDashboardWidgetProps } from "./types.js";
 import { safeSerializeObjRef } from "../../../_staging/metadata/safeSerializeObjRef.js";
+import { DashboardLayout } from "../../flexibleLayout/DashboardLayout.js";
+
 import { DefaultDashboardKpiWidget } from "./DefaultDashboardKpiWidget.js";
 import { RenderModeAwareDashboardInsightWidget } from "./InsightWidget/index.js";
 import { RenderModeAwareDashboardRichTextWidget } from "./RichTextWidget/index.js";
@@ -40,7 +47,10 @@ export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget
         backend,
         // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
         index,
+        parentLayoutItemSize,
     } = props;
+
+    const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
 
     if (!isDashboardWidget(widget)) {
         throw new UnexpectedError(
@@ -126,6 +136,15 @@ export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget
         }
 
         return <BackendProvider backend={backendWithEventing}>{renderWidget}</BackendProvider>;
+    } else if (isFlexibleLayoutEnabled && isDashboardLayout(widget)) {
+        return (
+            <DashboardLayout
+                layout={widget}
+                screen={screen}
+                onFiltersChange={onFiltersChange}
+                parentLayoutItemSize={parentLayoutItemSize}
+            />
+        );
     }
 
     return <div>Unknown widget</div>;

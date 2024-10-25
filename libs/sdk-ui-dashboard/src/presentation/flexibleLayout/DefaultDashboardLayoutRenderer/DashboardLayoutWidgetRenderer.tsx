@@ -7,7 +7,6 @@ export function DashboardLayoutWidgetRenderer(props: IDashboardLayoutWidgetRende
     const {
         item,
         screen,
-        debug,
         className,
         contentRef,
         isResizedByLayoutSizingStrategy,
@@ -30,18 +29,8 @@ export function DashboardLayoutWidgetRenderer(props: IDashboardLayoutWidgetRende
             computedStyle.overflowY = "auto";
         }
 
-        if (debug) {
-            if (!heightAsRatio) {
-                computedStyle.outline = "solid 1px yellow";
-            } else {
-                computedStyle.border = isResizedByLayoutSizingStrategy
-                    ? "dashed 1px #d6d6d6"
-                    : "solid 1px green";
-            }
-        }
-
         return computedStyle;
-    }, [minHeight, height, allowOverflow, debug, heightAsRatio, isResizedByLayoutSizingStrategy]);
+    }, [minHeight, height, allowOverflow, heightAsRatio, isResizedByLayoutSizingStrategy]);
 
     return (
         <div

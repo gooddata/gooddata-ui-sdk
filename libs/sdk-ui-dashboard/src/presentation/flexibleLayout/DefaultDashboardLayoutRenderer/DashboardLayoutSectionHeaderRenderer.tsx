@@ -1,20 +1,27 @@
 // (C) 2019-2024 GoodData Corporation
-import * as React from "react";
+
+import React, { useMemo } from "react";
+
 import { DashboardLayoutItemViewRenderer } from "./DashboardLayoutItemViewRenderer.js";
 import { DashboardLayoutSectionHeader } from "./DashboardLayoutSectionHeader.js";
 import { IDashboardLayoutSectionHeaderRenderProps } from "./interfaces.js";
-import { emptyItemFacadeWithFullSize } from "./utils/emptyFacade.js";
+import { buildEmptyItemFacadeWithSetSize } from "./utils/emptyFacade.js";
+import { determineSizeForScreen } from "./utils/sizing.js";
 
 export function DashboardLayoutSectionHeaderRenderer(
     props: IDashboardLayoutSectionHeaderRenderProps<any>,
 ): JSX.Element | null {
-    const { section, screen } = props;
+    const { section, screen, parentLayoutItemSize } = props;
     const sectionHeader = section.header();
+    const gridWidth = determineSizeForScreen(screen, parentLayoutItemSize);
+    const emptyItem = useMemo(() => {
+        return buildEmptyItemFacadeWithSetSize(gridWidth);
+    }, [gridWidth]);
 
     return sectionHeader ? (
         <DashboardLayoutItemViewRenderer
             DefaultItemRenderer={DashboardLayoutItemViewRenderer}
-            item={emptyItemFacadeWithFullSize}
+            item={emptyItem}
             screen={screen}
         >
             <DashboardLayoutSectionHeader

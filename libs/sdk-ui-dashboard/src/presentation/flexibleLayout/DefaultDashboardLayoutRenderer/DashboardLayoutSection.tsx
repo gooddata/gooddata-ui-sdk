@@ -1,5 +1,5 @@
 // (C) 2007-2024 GoodData Corporation
-import { ScreenSize } from "@gooddata/sdk-model";
+import { ScreenSize, IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 import flatMap from "lodash/flatMap.js";
 import React, { useMemo } from "react";
 import { RenderMode } from "../../../types.js";
@@ -39,6 +39,7 @@ export interface IDashboardLayoutSectionProps<TWidget> {
     screen: ScreenSize;
     renderMode: RenderMode;
     isDraggingWidget?: boolean;
+    parentLayoutItemSize?: IDashboardLayoutSizeByScreenSize;
 }
 
 const defaultSectionRenderer: IDashboardLayoutSectionRenderer<unknown> = (props) => (
@@ -63,8 +64,9 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
         getLayoutDimensions,
         screen,
         renderMode,
+        parentLayoutItemSize,
     } = props;
-    const renderProps = { section, screen, renderMode };
+    const renderProps = { section, screen, renderMode, parentLayoutItemSize };
 
     const items = useMemo(() => {
         if (renderMode === "edit") {
@@ -133,6 +135,7 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
                     section,
                     screen,
                     DefaultSectionHeaderRenderer: DashboardLayoutSectionHeaderRenderer,
+                    parentLayoutItemSize,
                 })}
                 {items}
                 {renderMode === "edit" ? <DashboardLayoutSectionOverlayController section={section} /> : null}

@@ -1,10 +1,16 @@
 // (C) 2019-2024 GoodData Corporation
-import { IDashboardLayout, IDashboardWidget, ScreenSize } from "@gooddata/sdk-model";
+import {
+    IDashboardLayout,
+    IDashboardWidget,
+    ScreenSize,
+    IDashboardLayoutSizeByScreenSize,
+} from "@gooddata/sdk-model";
 import { RenderMode } from "../../../types.js";
 import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutSectionFacade,
 } from "../../../_staging/dashboard/fluidLayout/facade/interfaces.js";
+import React from "react";
 
 /**
  * Default props provided to {@link IDashboardLayoutSectionKeyGetter}.
@@ -53,6 +59,11 @@ export interface IDashboardLayoutSectionRenderProps<TWidget = IDashboardWidget> 
     screen: ScreenSize;
 
     /**
+     * The size of layout item in which the section is nested. Undefined, when section is in the root layout.
+     */
+    parentLayoutItemSize?: IDashboardLayoutSizeByScreenSize;
+
+    /**
      * Default renderer of the section - can be used as a fallback for custom sectionRenderer.
      */
     DefaultSectionRenderer: IDashboardLayoutSectionRenderer<TWidget>;
@@ -71,11 +82,6 @@ export interface IDashboardLayoutSectionRenderProps<TWidget = IDashboardWidget> 
      * Additional section css class name.
      */
     className?: string;
-
-    /**
-     * Enable debug mode? (In debug mode, sections & items are highlighted for better overview of the layout structure).
-     */
-    debug?: boolean;
 
     /**
      * Is hidden section? Use this to hide the section without remounting it.
@@ -108,6 +114,12 @@ export interface IDashboardLayoutSectionHeaderRenderProps<TWidget = IDashboardWi
      * Current screen type with respect to the set breakpoints.
      */
     screen: ScreenSize;
+
+    /**
+     * The size of layout item in which the section header is nested. Undefined, when section, to which
+     * this header belongs to, is in the root layout.
+     */
+    parentLayoutItemSize?: IDashboardLayoutSizeByScreenSize;
 
     /**
      * Default renderer of the section header - can be used as a fallback for custom sectionHeaderRenderer.
@@ -260,11 +272,6 @@ export interface IDashboardLayoutWidgetRenderProps<TWidget = IDashboardWidget> {
     isResizedByLayoutSizingStrategy?: boolean;
 
     /**
-     * Enable debug mode? (In debug mode, sections & items are highlighted for better overview of the layout structure).
-     */
-    debug?: boolean;
-
-    /**
      * Get dimensions of layout container element
      */
     getLayoutDimensions: () => DOMRect;
@@ -389,11 +396,6 @@ export interface IDashboardLayoutRenderProps<TWidget = IDashboardWidget> {
     onMouseLeave?: (e: React.MouseEvent<HTMLDivElement>) => void;
 
     /**
-     * Enable debug mode? (In debug mode, sections & items are highlighted for better overview of the layout structure).
-     */
-    debug?: boolean;
-
-    /**
      * Checks if feature flag enableKDWidgetCustomHeight is enabled
      */
     enableCustomHeight?: boolean;
@@ -402,6 +404,17 @@ export interface IDashboardLayoutRenderProps<TWidget = IDashboardWidget> {
      * Dashboard render mode
      */
     renderMode?: RenderMode;
+
+    /**
+     * The current screen size.
+     * If undefined, the screen size will be determined by the layout and provided to its nested layouts.
+     */
+    screen?: ScreenSize;
+
+    /**
+     * The size of layout item in which the layout is nested. Undefined, when the layout is the root layout.
+     */
+    parentLayoutItemSize?: IDashboardLayoutSizeByScreenSize;
 }
 
 /**

@@ -1,9 +1,13 @@
 // (C) 2023-2024 GoodData Corporation
 import React, { useEffect } from "react";
+import cx from "classnames";
+
 import {
     useDispatchDashboardCommand,
     changeFilterContextSelection,
     useWidgetSelection,
+    useDashboardSelector,
+    selectEnableFlexibleLayout,
 } from "../../../model/index.js";
 import { useDashboardDrop, useWidgetDragHoverHandlers } from "../../dragAndDrop/index.js";
 import { DashboardLayout } from "../../layout/index.js";
@@ -39,8 +43,14 @@ export const DefaultDashboardMainContent = (_: IDashboardProps) => {
         }
     }, [handleDragHoverEnd, isOver]);
 
+    const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
+
+    const classNames = cx("gd-flex-container", "root-flex-maincontent", {
+        "gd-grid-layout": isFlexibleLayoutEnabled,
+    });
+
     return (
-        <div className="gd-flex-container root-flex-maincontent" ref={dropRef} onClick={deselectWidgets}>
+        <div className={classNames} ref={dropRef} onClick={deselectWidgets}>
             <DateFilterConfigWarnings />
             <DashboardLayout onFiltersChange={onFiltersChange} />
         </div>

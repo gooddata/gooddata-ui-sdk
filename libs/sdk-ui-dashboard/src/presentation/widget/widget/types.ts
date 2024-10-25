@@ -1,10 +1,16 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import { ComponentType } from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IErrorProps, ILoadingProps, OnError } from "@gooddata/sdk-ui";
+import {
+    ObjRef,
+    ObjRefInScope,
+    FilterContextItem,
+    ScreenSize,
+    IDashboardLayoutSizeByScreenSize,
+} from "@gooddata/sdk-model";
 
 import { IDashboardFilter, OnFiredDashboardDrillEvent } from "../../../types.js";
-import { ObjRef, ObjRefInScope, FilterContextItem, ScreenSize } from "@gooddata/sdk-model";
 import { ExtendedDashboardWidget } from "../../../model/index.js";
 
 /**
@@ -44,6 +50,13 @@ export interface IDashboardWidgetProps {
      * @public
      */
     widget?: ExtendedDashboardWidget;
+
+    /**
+     * The size of layout item in which the item is nested. Undefined, when item is in the root layout.
+     *
+     * @alpha
+     */
+    parentLayoutItemSize?: IDashboardLayoutSizeByScreenSize;
 
     /**
      * Specify date data set to use when passing dashboard date filter to rendered visualization.

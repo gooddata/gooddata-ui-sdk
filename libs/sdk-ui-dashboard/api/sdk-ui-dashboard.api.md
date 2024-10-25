@@ -4439,6 +4439,8 @@ export interface IDashboardWidgetProps {
     onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
     // @alpha
     onWidgetClicked?: () => void;
+    // @alpha
+    parentLayoutItemSize?: IDashboardLayoutSizeByScreenSize;
     // @alpha (undocumented)
     screen: ScreenSize;
     // @alpha

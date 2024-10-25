@@ -37,11 +37,12 @@ import {
     DASHBOARD_LAYOUT_CONTAINER_WIDTHS,
     DASHBOARD_LAYOUT_MAX_HEIGHT_AS_RATIO_XS,
 } from "../../../constants/index.js";
+import { GRID_COLUMNS_COUNT } from "../constants.js";
 
 /**
  * Unify dashboard layout items height for all screens.
  *
- * @param items - dashboard layout items
+ * @param layout - dashboard layout with items
  */
 export function unifyDashboardLayoutItemHeights<TWidget>(
     layout: IDashboardLayout<TWidget>,
@@ -53,7 +54,7 @@ export function unifyDashboardLayoutItemHeights<TWidget>(
     itemsOrLayout: IDashboardLayout<TWidget> | IDashboardLayoutItem<TWidget>[],
 ): IDashboardLayout<TWidget> | IDashboardLayoutItem<TWidget>[] {
     if (isDashboardLayout<TWidget>(itemsOrLayout)) {
-        const updatedLayout: IDashboardLayout<TWidget> = {
+        return {
             ...itemsOrLayout,
             sections: DashboardLayoutFacade.for(itemsOrLayout)
                 .sections()
@@ -65,8 +66,6 @@ export function unifyDashboardLayoutItemHeights<TWidget>(
                     return acc;
                 }, []),
         };
-
-        return updatedLayout;
     }
 
     const itemsWithSizeForAllScreens = itemsOrLayout.map((item) => ({
@@ -74,28 +73,27 @@ export function unifyDashboardLayoutItemHeights<TWidget>(
         size: implicitLayoutItemSizeFromXlSize(item.size.xl),
     }));
 
-    const itemsWithUnifiedHeightForAllScreens: IDashboardLayoutItem<TWidget>[] = ALL_SCREENS.reduce(
-        (acc, screen) => {
-            const itemsAsFutureGridRows = splitDashboardLayoutItemsAsRenderedGridRows(acc, screen);
+    // items with unified height for all screens
+    return ALL_SCREENS.reduce((acc, screen) => {
+        const itemsAsFutureGridRows = splitDashboardLayoutItemsAsRenderedGridRows(acc, screen);
 
-            return flatten(
-                itemsAsFutureGridRows.map((futureGridRow) =>
-                    unifyDashboardLayoutItemHeightsForScreen(futureGridRow, screen),
-                ),
-            );
-        },
-        itemsWithSizeForAllScreens,
-    );
-
-    return itemsWithUnifiedHeightForAllScreens;
+        return flatten(
+            itemsAsFutureGridRows.map((futureGridRow) =>
+                unifyDashboardLayoutItemHeightsForScreen(futureGridRow, screen),
+            ),
+        );
+    }, itemsWithSizeForAllScreens);
 }
 
 /**
  * Derive dashboard layout size for all screens from dashboard layout size defined for xl screen.
+ * We have only xl size saved in metadata, this will create additional screen sizes based on xl.
  *
  * @param xlSize - dashboard layout size for xl screen
  */
-function implicitLayoutItemSizeFromXlSize(xlSize: IDashboardLayoutSize): IDashboardLayoutSizeByScreenSize {
+export function implicitLayoutItemSizeFromXlSize(
+    xlSize: IDashboardLayoutSize,
+): IDashboardLayoutSizeByScreenSize {
     const xlWidth = xlSize.gridWidth;
     const xlHeight = xlSize.gridHeight;
     const ratio = xlSize.heightAsRatio;
@@ -495,3 +493,23 @@ export function validateDashboardLayoutWidgetSize(
         validHeight,
     };
 }
+
+export const determineSizeForScreen = (
+    screen: ScreenSize,
+    layoutItemSize?: IDashboardLayoutSizeByScreenSize,
+) => {
+    // Determine if element has size set in metadata object for the current screen size
+    const providedSizeForScreen = layoutItemSize ? layoutItemSize[screen] : undefined;
+    // Use the provided size for the screen if it is known, otherwise determine the size for the current
+    // screen if we at least know xl size from metadata object, otherwise expect the element to be root
+    // element with that spans the full size.
+    const itemSize =
+        providedSizeForScreen ??
+        implicitLayoutItemSizeFromXlSize(
+            layoutItemSize?.xl ?? {
+                gridWidth: GRID_COLUMNS_COUNT,
+            },
+        )[screen];
+    // Expect element to be full size if we could not get the size for the current screen from the value above.
+    return itemSize?.gridWidth ?? GRID_COLUMNS_COUNT;
+};
