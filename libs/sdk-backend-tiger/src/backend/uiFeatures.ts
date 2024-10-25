@@ -285,7 +285,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDefaultSmtp: false,
     enableDashboardFlexibleLayout: false,
     enableNumberSeparators: false,
-    enableGranularPermissions: false,
+    enableGranularPermissions: true,
 };
 
 export const FeatureFlagsValues = {
