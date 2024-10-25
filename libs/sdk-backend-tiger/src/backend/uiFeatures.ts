@@ -281,7 +281,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableFlightRpcDataSource: false,
     earlyAccessFeatures: undefined,
     enableEarlyAccessFeaturesRollout: false,
-    enableCrossFilteringAliasTitles: false,
+    enableCrossFilteringAliasTitles: true,
     enableDefaultSmtp: false,
     enableDashboardFlexibleLayout: false,
     enableNumberSeparators: false,
