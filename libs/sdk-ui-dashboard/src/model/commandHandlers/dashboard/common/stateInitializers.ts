@@ -19,6 +19,7 @@ import {
     isDashboardDateFilterWithDimension,
     ObjRef,
     isObjRef,
+    isIdentifierRef,
 } from "@gooddata/sdk-model";
 
 import { alertsActions } from "../../../store/alerts/index.js";
@@ -109,8 +110,21 @@ function* sanitizeFilterContext(
 
     let availableRefs: ObjRef[];
     if (displayForms) {
+        let missingRefs: ObjRef[] = [];
+        const missing = usedFilterDisplayForms.filter((df) => !displayForms.get(df));
+        if (missing.length) {
+            missingRefs = yield call(loadAvailableDisplayFormRefs, ctx, missing);
+        }
         availableRefs = usedFilterDisplayForms
-            .map((df) => displayForms.get(df)?.ref ?? null)
+            .map(
+                (df) =>
+                    displayForms.get(df)?.ref ||
+                    missingRefs.find(
+                        (ref) =>
+                            isIdentifierRef(ref) && isIdentifierRef(df) && ref.identifier === df.identifier,
+                    ) ||
+                    null,
+            )
             .filter(isObjRef);
     } else {
         availableRefs = yield call(loadAvailableDisplayFormRefs, ctx, usedFilterDisplayForms);
