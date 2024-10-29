@@ -81,7 +81,7 @@ export const AddSingleWorkspaceSelect: React.FC<IAddSingleWorkspaceSelectProps> 
         <div className="gd-share-dialog-content-select s-user-management-workspace-select">
             <AsyncPaginate
                 autoFocus
-                defaultMenuIsOpen={true}
+                defaultMenuIsOpen={isEditMode}
                 classNamePrefix="gd-share-dialog"
                 components={{
                     IndicatorSeparator: EmptyRenderer,
