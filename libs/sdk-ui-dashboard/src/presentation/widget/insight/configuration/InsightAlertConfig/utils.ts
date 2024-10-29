@@ -534,7 +534,7 @@ export function getAlertMeasure(measures: AlertMetric[], alert?: IAutomationAler
 export function getAlertAttribute(
     attributes: AlertAttribute[],
     alert?: IAutomationMetadataObject,
-): [AlertAttribute | undefined, string | undefined] {
+): [AlertAttribute | undefined, string | null | undefined] {
     const attr = alert?.alert?.execution.attributes[0];
     if (attr?.attribute) {
         const { attribute, filterValue } = getAttributeRelatedFilterInfo(attributes, alert, attr);
@@ -653,7 +653,7 @@ export function transformAlertByAttribute(
 
     const customFilters: IFilter[] = [];
     if (attr) {
-        if (value) {
+        if (value !== undefined) {
             customFilters.push({
                 positiveAttributeFilter: {
                     displayForm: {
@@ -936,7 +936,7 @@ function getAttributeRelatedFilterInfo(
 ): {
     attribute: AlertAttribute | undefined;
     filterDefinition: IFilter | undefined;
-    filterValue: string | undefined;
+    filterValue: string | null | undefined;
 } {
     const attribute = attributes.find(
         (a) => a.attribute.attribute.localIdentifier === attr?.attribute.localIdentifier,
@@ -968,7 +968,7 @@ function getAttributeRelatedFilter(attr: AlertAttribute | undefined, alert?: IAu
     if (isPositiveAttributeFilter(filter) && isAttributeElementsByValue(filter.positiveAttributeFilter.in)) {
         return {
             filterDefinition: filter,
-            filterValue: filter.positiveAttributeFilter.in.values[0] ?? undefined,
+            filterValue: filter.positiveAttributeFilter.in.values[0],
         };
     }
 

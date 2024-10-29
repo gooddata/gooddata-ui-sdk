@@ -1,5 +1,5 @@
 // (C) 2019-2024 GoodData Corporation
-import React, { useRef, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import {
     Button,
     Menu,
@@ -21,12 +21,15 @@ import {
 import { IExecutionResultEnvelope } from "../../../../../model/index.js";
 
 import { getAttributeTitle } from "./utils.js";
-import { useAttributeValuesFromExecResults } from "./hooks/useAttributeValuesFromExecResults.js";
+import {
+    AttributeValue,
+    useAttributeValuesFromExecResults,
+} from "./hooks/useAttributeValuesFromExecResults.js";
 
 export interface IAlertAttributeSelectProps {
     execResult: IExecutionResultEnvelope | undefined;
     selectedAttribute: AlertAttribute | undefined;
-    selectedValue: string | undefined;
+    selectedValue: string | null | undefined;
     onAttributeChange: (attribute: AlertAttribute | undefined, value: string | undefined) => void;
     attributes: AlertAttribute[];
     catalogAttributes: IAttributeMetadataObject[];
@@ -43,14 +46,21 @@ export const AlertAttributeSelect = ({
     const intl = useIntl();
     const ref = useRef<HTMLElement | null>(null);
 
-    const selectedAttr =
-        selectedAttribute && getSelectedCatalogAttribute(catalogAttributes, selectedAttribute);
-
     const [searchString, setSearchString] = useState("");
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenAttribute, setIsOpenAttribute] = useState<string | null>(null);
 
     const { isResultLoading, getAttributeValues } = useAttributeValuesFromExecResults(execResult);
+
+    const selectedAttr = useMemo(
+        () => selectedAttribute && getSelectedCatalogAttribute(catalogAttributes, selectedAttribute),
+        [catalogAttributes, selectedAttribute],
+    );
+    const selectedVal = useMemo(
+        () => getSelectedCatalogAttributeValue(selectedAttr, getAttributeValues, selectedValue),
+        [selectedAttr, getAttributeValues, selectedValue],
+    );
+
     const opened = Boolean(isOpen && !isResultLoading);
 
     return (
@@ -85,8 +95,9 @@ export const AlertAttributeSelect = ({
                                     <span>
                                         {"\u00A0"}/{"\u00A0"}
                                     </span>
-                                    {selectedValue
-                                        ? selectedValue
+                                    {selectedVal
+                                        ? (selectedVal.title ?? selectedVal.name) ||
+                                          `(${intl.formatMessage({ id: "empty_value" })})`
                                         : intl.formatMessage({ id: "insightAlert.config.selectAttribute" })}
                                 </span>
                             ) : (
@@ -146,7 +157,8 @@ export const AlertAttributeSelect = ({
                                             className="gd-alert-attribute-select__menu-item_wrapper"
                                         >
                                             <div className="gd-alert-attribute-select__menu-item s-menu-alert-attribute-item">
-                                                {item.title}
+                                                {item.title ||
+                                                    `(${intl.formatMessage({ id: "empty_value" })})`}
                                             </div>
                                         </Item>
                                     }
@@ -185,7 +197,7 @@ export const AlertAttributeSelect = ({
                                             )}
                                             <Item
                                                 className="gd-alert-attribute-select__menu-item_wrapper"
-                                                checked={Boolean(isSelected && !selectedValue)}
+                                                checked={Boolean(isSelected && !selectedVal)}
                                                 onClick={(e) => {
                                                     onAttributeChange(attribute, undefined);
                                                     setIsOpen(false);
@@ -216,7 +228,8 @@ export const AlertAttributeSelect = ({
                                                         <Item
                                                             key={j}
                                                             checked={Boolean(
-                                                                isSelected && value.value === selectedValue,
+                                                                isSelected &&
+                                                                    value.value === selectedVal?.value,
                                                             )}
                                                             className="gd-alert-attribute-select__menu-item_wrapper"
                                                             onClick={(e) => {
@@ -228,7 +241,10 @@ export const AlertAttributeSelect = ({
                                                             }}
                                                         >
                                                             <div className="gd-alert-attribute-select__menu-item s-menu-alert-attribute-item-value">
-                                                                {value.title ?? value.name}
+                                                                {(value.title ?? value.name) ||
+                                                                    `(${intl.formatMessage({
+                                                                        id: "empty_value",
+                                                                    })})`}
                                                             </div>
                                                         </Item>
                                                     ))}
@@ -259,11 +275,24 @@ function getSelectedCatalogAttribute(
     });
 
     if (!item) {
-        return null;
+        return undefined;
     }
 
     return {
         ...item,
-        title: item?.title ?? getAttributeTitle(attribute.attribute),
+        title: getAttributeTitle(attribute.attribute) ?? item?.title,
     };
+}
+
+function getSelectedCatalogAttributeValue(
+    attribute: IAttributeMetadataObject | undefined,
+    getAttributeValue: (attr: IAttributeMetadataObject) => AttributeValue[],
+    selectedValue: string | null | undefined,
+) {
+    if (!attribute) {
+        return undefined;
+    }
+
+    const values = getAttributeValue(attribute);
+    return values.find((value) => value.value === selectedValue);
 }
