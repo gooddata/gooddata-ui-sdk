@@ -30,6 +30,7 @@ import {
     selectEntitlementMaxAutomationRecipients,
     selectExecutionResultByRef,
     selectEnableAlertAttributes,
+    selectSeparators,
 } from "../../../../../../model/index.js";
 import {
     createDefaultAlert,
@@ -65,6 +66,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     const insight = useDashboardSelector(selectInsightByWidgetRef(widget?.ref));
     const execResult = useDashboardSelector(selectExecutionResultByRef(widget?.ref));
 
+    const separators = useDashboardSelector(selectSeparators);
     const allAutomationsCount = useDashboardSelector(selectAllAutomationsCount);
     const maxAutomationsEntitlement = useDashboardSelector(selectEntitlementMaxAutomations);
     const unlimitedAutomationsEntitlement = useDashboardSelector(selectEntitlementUnlimitedAutomations);
@@ -345,6 +347,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         cancelAlertCreation,
         hasAlerts,
         execResult,
+        separators,
         supportedMeasures,
         supportedAttributes,
         maxAutomationsReached,

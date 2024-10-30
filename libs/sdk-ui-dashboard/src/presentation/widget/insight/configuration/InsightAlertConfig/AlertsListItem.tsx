@@ -1,7 +1,8 @@
 // (C) 2022-2024 GoodData Corporation
 import React from "react";
-import { useIntl } from "react-intl";
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { IntlShape, useIntl } from "react-intl";
+import { IAutomationMetadataObject, ISeparators } from "@gooddata/sdk-model";
+import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { Icon } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
@@ -17,6 +18,7 @@ import {
 
 interface IAlertsListItemProps {
     alert: IAutomationMetadataObject;
+    separators?: ISeparators;
     onEditAlert: (alert: IAutomationMetadataObject) => void;
     onPauseAlert: (alert: IAutomationMetadataObject) => void;
     onDeleteAlert: (alert: IAutomationMetadataObject) => void;
@@ -25,6 +27,7 @@ interface IAlertsListItemProps {
 
 export const AlertsListItem: React.FC<IAlertsListItemProps> = ({
     alert,
+    separators,
     onEditAlert,
     onPauseAlert,
     onDeleteAlert,
@@ -33,10 +36,7 @@ export const AlertsListItem: React.FC<IAlertsListItemProps> = ({
     const theme = useTheme();
     const intl = useIntl();
     const isPaused = alert.alert?.trigger?.state === "PAUSED";
-    const valueSuffix = getValueSuffix(alert.alert) ?? "";
-    const description = `${getOperatorTitle(intl, alert.alert)} ${getAlertThreshold(
-        alert.alert,
-    )}${valueSuffix}`;
+    const description = getDescription(intl, alert, separators);
     const { isValid } = useAlertValidation(alert);
     const currentUser = useDashboardSelector(selectCurrentUser);
     const canManageWorkspace = useDashboardSelector(selectCanManageWorkspace);
@@ -82,3 +82,13 @@ export const AlertsListItem: React.FC<IAlertsListItemProps> = ({
         </div>
     );
 };
+
+function getDescription(intl: IntlShape, alert: IAutomationMetadataObject, separators?: ISeparators): string {
+    const valueSuffix = getValueSuffix(alert.alert) ?? "";
+    const title = getOperatorTitle(intl, alert.alert);
+    const threshold = getAlertThreshold(alert.alert);
+    const convertedValue = ClientFormatterFacade.convertValue(threshold);
+    const { formattedValue } = ClientFormatterFacade.formatValue(convertedValue, undefined, separators);
+
+    return `${title} ${formattedValue}${valueSuffix}`;
+}
