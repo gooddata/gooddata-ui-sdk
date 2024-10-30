@@ -284,7 +284,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableCrossFilteringAliasTitles: true,
     enableDefaultSmtp: false,
     enableDashboardFlexibleLayout: false,
-    enableNumberSeparators: false,
+    enableNumberSeparators: true,
     enableGranularPermissions: true,
 };
 

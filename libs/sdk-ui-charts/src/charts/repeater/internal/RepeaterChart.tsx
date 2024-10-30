@@ -35,9 +35,9 @@ const DEFAULT_COL_DEF = { resizable: true };
 export const RepeaterChart: React.FC<IRepeaterChartProps> = (props) => {
     const { dataView, onError, config } = props;
     const dataSource = useMemo(
-        () => new AgGridDatasource(dataView, { onError }),
+        () => new AgGridDatasource(dataView, { onError }, config),
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        [dataView.fingerprint(), onError],
+        [dataView.fingerprint(), onError, config],
     );
 
     const rowHeight = getRowHeight(config);
