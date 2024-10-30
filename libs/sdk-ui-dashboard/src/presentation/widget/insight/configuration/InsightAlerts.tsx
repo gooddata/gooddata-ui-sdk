@@ -33,6 +33,7 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
         users,
         viewMode,
         execResult,
+        separators,
         supportedMeasures,
         supportedAttributes,
         maxAutomationsReached,
@@ -63,6 +64,7 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
             <AlertsList
                 isLoading={isLoading}
                 alerts={alerts}
+                separators={separators}
                 onCreateAlert={initiateAlertCreation}
                 onEditAlert={initiateAlertEditing}
                 onPauseAlert={pauseExistingAlert}
