@@ -2,6 +2,7 @@
 import { GridApi, IDatasource, IGetRowsParams } from "@ag-grid-community/all-modules";
 import { DataViewFacade } from "@gooddata/sdk-ui";
 import { dataViewToRepeaterData } from "./dataViewToRepeaterData.js";
+import { IRepeaterChartConfig } from "../publicTypes.js";
 
 const MAX_COLUMNS = 1000;
 
@@ -23,12 +24,14 @@ export class AgGridDatasource implements IDatasource {
     public rowCount: number | undefined;
     private dataViewFacade: DataViewFacade;
     private onError: AdGridCallbacks["onError"];
+    private config: IRepeaterChartConfig;
 
-    constructor(dataViewFacade: DataViewFacade, callbacks: AdGridCallbacks) {
+    constructor(dataViewFacade: DataViewFacade, callbacks: AdGridCallbacks, config: IRepeaterChartConfig) {
         const [firstDimCount] = dataViewFacade.dataView.count;
         this.dataViewFacade = dataViewFacade;
         this.rowCount = firstDimCount;
         this.onError = callbacks.onError;
+        this.config = config;
     }
 
     private async loadExecutionWindow(startRow: number, endRow: number) {
@@ -43,7 +46,7 @@ export class AgGridDatasource implements IDatasource {
         this.loadExecutionWindow(startRow, endRow)
             .then((result) => {
                 const dataViewFacade = DataViewFacade.for(result);
-                const transformedResult = dataViewToRepeaterData(dataViewFacade);
+                const transformedResult = dataViewToRepeaterData(dataViewFacade, this.config?.separators);
                 successCallback(transformedResult, result.totalCount[0]);
             })
             .catch((error) => {
