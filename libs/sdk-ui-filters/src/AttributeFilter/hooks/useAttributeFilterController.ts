@@ -12,6 +12,7 @@ import {
     IAbsoluteDateFilter,
     IAttributeDisplayFormMetadataObject,
     IAttributeElement,
+    IAttributeElements,
     IAttributeFilter,
     IRelativeDateFilter,
     isAttributeElementsByRef,
@@ -233,6 +234,17 @@ function useOnError(
 
 const EMPTY_LIMITING_VALIDATION_ITEMS: ObjRef[] = [];
 
+const areElementsEqual = (elementsA: IAttributeElements, elementsB: IAttributeElements) => {
+    return (
+        (isAttributeElementsByRef(elementsA) &&
+            isAttributeElementsByRef(elementsB) &&
+            isEqual([...elementsA.uris].sort(), [...elementsB.uris].sort())) ||
+        (isAttributeElementsByValue(elementsA) &&
+            isAttributeElementsByValue(elementsB) &&
+            isEqual([...elementsA.values].sort(), [...elementsB.values].sort()))
+    );
+};
+
 // omit local identifier and sort elements because they order may change depending on current displayAsLabel order
 const areFiltersEqual = (filterA: IAttributeFilter, filterB: IAttributeFilter) => {
     if (!filterA || !filterB) {
@@ -242,13 +254,8 @@ const areFiltersEqual = (filterA: IAttributeFilter, filterB: IAttributeFilter) =
     const dfsEqual = areObjRefsEqual(filterObjRef(filterA), filterObjRef(filterB));
     const elementsA = filterAttributeElements(filterA);
     const elementsB = filterAttributeElements(filterB);
-    const elementsEqual =
-        (isAttributeElementsByRef(elementsA) &&
-            isAttributeElementsByRef(elementsB) &&
-            isEqual([...elementsA.uris].sort(), [...elementsB.uris].sort())) ||
-        (isAttributeElementsByValue(elementsA) &&
-            isAttributeElementsByValue(elementsB) &&
-            isEqual([...elementsA.values].sort(), [...elementsB.values].sort()));
+    const elementsEqual = areElementsEqual(elementsA, elementsB);
+
     return typeEqual && dfsEqual && elementsEqual;
 };
 
@@ -324,7 +331,6 @@ function useInitOrReload(
         ) => {
             if (enableDuplicatedLabelValuesInAttributeFilter) {
                 return (
-                    handler.getInitStatus() !== "loading" &&
                     !areFiltersEqual(filter, handler.getFilter()) &&
                     !areFiltersEqual(filter, handler.getFilterToDisplay())
                 );
