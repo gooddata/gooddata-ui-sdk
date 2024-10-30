@@ -648,7 +648,11 @@ export function transformAlertByAttribute(
     attr: AlertAttribute | undefined,
     value: string | undefined,
 ): IAutomationMetadataObject {
-    const { filterDefinition } = getAttributeRelatedFilterInfo(attributes, alert, attr?.attribute);
+    const { filterDefinition } = getAttributeRelatedFilterInfo(
+        attributes,
+        alert,
+        alert.alert?.execution.attributes[0],
+    );
     const originalFilters = alert.alert?.execution.filters.filter((f) => f !== filterDefinition) ?? [];
 
     const customFilters: IFilter[] = [];
