@@ -719,8 +719,6 @@ describe("alert transforms", () => {
 
         it("attribute with all values", () => {
             const res = transformAlertByAttribute(allAttributes, baseComparison, attrRegion, undefined);
-            const localIdentifier = (res.alert.execution.filters[0] as INegativeAttributeFilter)
-                .negativeAttributeFilter.localIdentifier;
             expect(res).toEqual({
                 ...baseComparison,
                 alert: {
@@ -747,8 +745,6 @@ describe("alert transforms", () => {
 
         it("attribute with defined value", () => {
             const res = transformAlertByAttribute(allAttributes, baseComparison, attrRegion, "America");
-            const localIdentifier = (res.alert.execution.filters[0] as IPositiveAttributeFilter)
-                .positiveAttributeFilter.localIdentifier;
             expect(res).toEqual({
                 ...baseComparison,
                 alert: {
@@ -771,6 +767,35 @@ describe("alert transforms", () => {
                     },
                 },
             });
+        });
+
+        it("attribute with defined value, switch to empty", () => {
+            let res = transformAlertByAttribute(allAttributes, baseComparison, attrRegion, "America");
+            expect(res).toEqual({
+                ...baseComparison,
+                alert: {
+                    ...baseComparison.alert,
+                    execution: {
+                        ...baseComparison.alert.execution,
+                        attributes: [attrRegion.attribute],
+                        filters: [
+                            {
+                                positiveAttributeFilter: {
+                                    displayForm: {
+                                        localIdentifier: "attr-region",
+                                    },
+                                    in: {
+                                        values: ["America"],
+                                    },
+                                },
+                            },
+                        ],
+                    },
+                },
+            });
+
+            res = transformAlertByAttribute(allAttributes, res, undefined, undefined);
+            expect(res).toEqual(baseComparison);
         });
     });
 
