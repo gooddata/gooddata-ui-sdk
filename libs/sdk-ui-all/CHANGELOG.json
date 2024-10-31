@@ -2,6 +2,21 @@
   "name": "@gooddata/sdk-ui-all",
   "entries": [
     {
+      "version": "10.13.0",
+      "tag": "@gooddata/sdk-ui-all_v10.13.0",
+      "date": "Thu, 31 Oct 2024 08:50:19 GMT",
+      "comments": {
+        "none": [
+          {
+            "comment": "attribute filters now allow improved work with duplicate values by default"
+          },
+          {
+            "comment": "Added new Visualization Switcher widget to render group of visualizations together on dashboard (available for GoodData.CN / GoodData Cloud only)."
+          }
+        ]
+      }
+    },
+    {
       "version": "10.12.0",
       "tag": "@gooddata/sdk-ui-all_v10.12.0",
       "date": "Thu, 17 Oct 2024 06:56:12 GMT",
