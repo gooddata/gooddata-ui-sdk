@@ -1,12 +1,14 @@
 // (C) 2024 GoodData Corporation
 
+import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+
 import {
     selectInsightByWidgetRef,
     selectWidgetByRef,
     useDashboardSelector,
 } from "../../../../../../model/index.js";
-import { getAlertMeasure, getSupportedInsightMeasuresByInsight } from "../utils.js";
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { getSupportedInsightMeasuresByInsight } from "../utils/items.js";
+import { getAlertMeasure } from "../utils/getters.js";
 
 export type AlertInvalidityReason = "missingMetric" | "missingWidget";
 

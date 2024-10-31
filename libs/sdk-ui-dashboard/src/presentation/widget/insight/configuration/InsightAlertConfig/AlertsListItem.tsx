@@ -6,15 +6,17 @@ import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { Icon } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
-import { AlertActionsDropdown } from "./AlertActionsDropdown.js";
-import { getAlertThreshold, getOperatorTitle, getValueSuffix } from "./utils.js";
-import { gdColorNegative } from "../../../../constants/colors.js";
-import { useAlertValidation } from "./hooks/useAlertValidation.js";
+
 import {
     selectCanManageWorkspace,
     selectCurrentUser,
     useDashboardSelector,
 } from "../../../../../model/index.js";
+import { gdColorNegative } from "../../../../constants/colors.js";
+
+import { getAlertThreshold, getOperatorTitle, getValueSuffix } from "./utils/getters.js";
+import { useAlertValidation } from "./hooks/useAlertValidation.js";
+import { AlertActionsDropdown } from "./AlertActionsDropdown.js";
 
 interface IAlertsListItemProps {
     alert: IAutomationMetadataObject;

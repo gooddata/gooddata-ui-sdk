@@ -1,13 +1,16 @@
 // (C) 2019-2024 GoodData Corporation
 
-import {
-    IAutomationAlertRelativeCondition,
-    IAutomationMetadataObject,
-    INegativeAttributeFilter,
-    IPositiveAttributeFilter,
-} from "@gooddata/sdk-model";
+import { IAutomationAlertRelativeCondition, IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { describe, it, expect } from "vitest";
 
+import {
+    transformAlertByAttribute,
+    transformAlertByComparisonOperator,
+    transformAlertByDestination,
+    transformAlertByMetric,
+    transformAlertByRelativeOperator,
+    transformAlertByValue,
+} from "../utils/transformation.js";
 import {
     getAlertAttribute,
     getAlertCompareOperator,
@@ -16,17 +19,13 @@ import {
     getAlertRelativeOperator,
     getAlertThreshold,
     getValueSuffix,
+} from "../utils/getters.js";
+import {
     isAlertValueDefined,
     isChangeOperator,
     isChangeOrDifferenceOperator,
     isDifferenceOperator,
-    transformAlertByAttribute,
-    transformAlertByComparisonOperator,
-    transformAlertByDestination,
-    transformAlertByMetric,
-    transformAlertByRelativeOperator,
-    transformAlertByValue,
-} from "../utils.js";
+} from "../utils/guards.js";
 import { AlertAttribute, AlertMetric, AlertMetricComparatorType } from "../../../types.js";
 
 describe("alert transforms", () => {
@@ -358,6 +357,7 @@ describe("alert transforms", () => {
                 },
             },
         },
+        type: "attribute",
     };
 
     const attrType: AlertAttribute = {
@@ -370,6 +370,7 @@ describe("alert transforms", () => {
                 },
             },
         },
+        type: "attribute",
     };
 
     const allAttributes = [attrRegion, attrType];

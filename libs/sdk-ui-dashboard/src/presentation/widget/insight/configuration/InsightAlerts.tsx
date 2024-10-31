@@ -42,6 +42,7 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
         canCreateAutomation,
         catalogMeasures,
         catalogAttributes,
+        catalogDateDatasets,
         //
         creatingAlert,
         initiateAlertCreation,
@@ -92,6 +93,7 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
                 onClose={onClose}
                 catalogMeasures={catalogMeasures}
                 catalogAttributes={catalogAttributes}
+                catalogDateDatasets={catalogDateDatasets}
                 maxAutomationsRecipients={maxAutomationsRecipients}
             />
         );
@@ -113,6 +115,7 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
                 maxAutomationsRecipients={maxAutomationsRecipients}
                 catalogMeasures={catalogMeasures}
                 catalogAttributes={catalogAttributes}
+                catalogDateDatasets={catalogDateDatasets}
             />
         );
     } else {
