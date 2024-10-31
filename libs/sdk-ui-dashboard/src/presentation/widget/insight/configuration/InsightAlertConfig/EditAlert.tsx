@@ -1,12 +1,13 @@
 // (C) 2022-2024 GoodData Corporation
 import React from "react";
 import {
-    IAttributeMetadataObject,
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
-    ICatalogMeasure,
     INotificationChannelMetadataObject,
+    ICatalogAttribute,
+    ICatalogMeasure,
     IWorkspaceUser,
+    ICatalogDateDataset,
 } from "@gooddata/sdk-model";
 import {
     Bubble,
@@ -16,14 +17,18 @@ import {
     Message,
     OverlayPositionType,
 } from "@gooddata/sdk-ui-kit";
+import { defineMessages, FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
+
 import { DashboardInsightSubmenuContainer } from "../../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/DashboardInsightSubmenuContainer.js";
+import { RecipientsSelect } from "../../../../scheduledEmail/DefaultScheduledEmailDialog/components/RecipientsSelect/RecipientsSelect.js";
+import { AlertAttribute, AlertMetric, AlertMetricComparatorType } from "../../types.js";
+import { IExecutionResultEnvelope } from "../../../../../model/index.js";
+
 import { AlertMeasureSelect } from "./AlertMeasureSelect.js";
 import { AlertComparisonOperatorSelect } from "./AlertComparisonOperatorSelect.js";
 import { AlertDestinationSelect } from "./AlertDestinationSelect.js";
 import { EditAlertConfiguration } from "./EditAlertConfiguration.js";
 import { useEditAlert } from "./hooks/useEditAlert.js";
-import { defineMessages, FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
-import { AlertAttribute, AlertMetric, AlertMetricComparatorType } from "../../types.js";
 import { useAlertValidation, AlertInvalidityReason } from "./hooks/useAlertValidation.js";
 import {
     getAlertAttribute,
@@ -33,11 +38,9 @@ import {
     getAlertRelativeOperator,
     getAlertThreshold,
     getValueSuffix,
-    isChangeOrDifferenceOperator,
-} from "./utils.js";
-import { RecipientsSelect } from "../../../../scheduledEmail/DefaultScheduledEmailDialog/components/RecipientsSelect/RecipientsSelect.js";
-import { AlertAttributeSelect } from "./AlertAttributeSelecxt.js";
-import { IExecutionResultEnvelope } from "../../../../../model/index.js";
+} from "./utils/getters.js";
+import { AlertAttributeSelect } from "./AlertAttributeSelect.js";
+import { isChangeOrDifferenceOperator } from "./utils/guards.js";
 
 const TOOLTIP_ALIGN_POINTS = [{ align: "cl cr" }, { align: "cr cl" }];
 
@@ -66,7 +69,8 @@ interface IEditAlertProps {
     measures: AlertMetric[];
     attributes: AlertAttribute[];
     catalogMeasures: ICatalogMeasure[];
-    catalogAttributes: IAttributeMetadataObject[];
+    catalogAttributes: ICatalogAttribute[];
+    catalogDateDatasets: ICatalogDateDataset[];
     onClose: () => void;
     onCancel: () => void;
     onCreate?: (alert: IAutomationMetadataObjectDefinition) => void;
@@ -94,6 +98,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
     overlayPositionType,
     catalogMeasures,
     catalogAttributes,
+    catalogDateDatasets,
     canManageAttributes,
 }) => {
     const {
@@ -125,6 +130,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
         onUpdate,
         catalogMeasures,
         catalogAttributes,
+        catalogDateDatasets,
         destinations,
     });
     const intl = useIntl();
@@ -156,11 +162,8 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                             measures={measures}
                             overlayPositionType={overlayPositionType}
                         />
-                        {Boolean(canManageAttributes && attributes.length > 0) && (
+                        {Boolean(canManageAttributes) && (
                             <>
-                                <div className="gd-edit-alert__measure-label">
-                                    <FormattedMessage id="insightAlert.config.for" />
-                                </div>
                                 <AlertAttributeSelect
                                     execResult={execResult}
                                     selectedAttribute={selectedAttribute}
@@ -168,6 +171,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                                     onAttributeChange={changeAttribute}
                                     attributes={attributes}
                                     catalogAttributes={catalogAttributes}
+                                    catalogDateDatasets={catalogDateDatasets}
                                 />
                             </>
                         )}

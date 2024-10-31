@@ -284,4 +284,5 @@ export type AlertMetric = {
  */
 export type AlertAttribute = {
     attribute: IAttribute;
+    type: "dateAttribute" | "attribute";
 };

@@ -5,25 +5,25 @@ import {
     IAlertComparisonOperator,
     IAlertRelativeArithmeticOperator,
     IAlertRelativeOperator,
-    IAttributeMetadataObject,
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
     IAutomationRecipient,
+    ICatalogAttribute,
+    ICatalogDateDataset,
     ICatalogMeasure,
     INotificationChannelMetadataObject,
     isAutomationUserRecipient,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
+import { isAlertRecipientsValid, isAlertValueDefined } from "../utils/guards.js";
 import {
-    isAlertRecipientsValid,
-    isAlertValueDefined,
     transformAlertByAttribute,
     transformAlertByComparisonOperator,
     transformAlertByDestination,
     transformAlertByMetric,
     transformAlertByRelativeOperator,
     transformAlertByValue,
-} from "../utils.js";
+} from "../utils/transformation.js";
 import { AlertAttribute, AlertMetric } from "../../../types.js";
 import { selectCurrentUser, selectUsers, useDashboardSelector } from "../../../../../../model/index.js";
 import { convertCurrentUserToAutomationRecipient } from "../../../../../../_staging/automation/index.js";
@@ -34,7 +34,8 @@ export interface IUseEditAlertProps {
     attributes: AlertAttribute[];
     alert: IAutomationMetadataObject;
     catalogMeasures: ICatalogMeasure[];
-    catalogAttributes: IAttributeMetadataObject[];
+    catalogAttributes: ICatalogAttribute[];
+    catalogDateDatasets: ICatalogDateDataset[];
     destinations: INotificationChannelMetadataObject[];
     onCreate?: (alert: IAutomationMetadataObjectDefinition) => void;
     onUpdate?: (alert: IAutomationMetadataObject) => void;

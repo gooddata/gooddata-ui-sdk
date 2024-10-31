@@ -16,13 +16,14 @@ import {
     selectWidgetByRef,
     useDashboardSelector,
 } from "../../../../model/index.js";
-import { AlertDropdown } from "./AlertDropdown.js";
 import { useAlertValidation } from "../../../widget/insight/configuration/InsightAlertConfig/hooks/useAlertValidation.js";
 import {
     getAlertThreshold,
     getOperatorTitle,
     getValueSuffix,
-} from "../../../widget/insight/configuration/InsightAlertConfig/utils.js";
+} from "../../../widget/insight/configuration/InsightAlertConfig/utils/getters.js";
+
+import { AlertDropdown } from "./AlertDropdown.js";
 
 interface IAlertProps {
     onDelete: (alert: IAutomationMetadataObject) => void;

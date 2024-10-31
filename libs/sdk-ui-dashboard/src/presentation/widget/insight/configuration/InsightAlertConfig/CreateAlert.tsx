@@ -1,9 +1,10 @@
 // (C) 2022-2024 GoodData Corporation
 import React from "react";
 import {
-    IAttributeMetadataObject,
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
+    ICatalogAttribute,
+    ICatalogDateDataset,
     ICatalogMeasure,
     INotificationChannelMetadataObject,
     IWorkspaceUser,
@@ -28,7 +29,8 @@ interface ICreateAlertProps {
     maxAutomationsReached: boolean;
     maxAutomationsRecipients: number;
     catalogMeasures: ICatalogMeasure[];
-    catalogAttributes: IAttributeMetadataObject[];
+    catalogAttributes: ICatalogAttribute[];
+    catalogDateDatasets: ICatalogDateDataset[];
 }
 
 export const CreateAlert: React.FC<ICreateAlertProps> = ({
@@ -47,6 +49,7 @@ export const CreateAlert: React.FC<ICreateAlertProps> = ({
     maxAutomationsRecipients,
     catalogMeasures,
     catalogAttributes,
+    catalogDateDatasets,
 }) => {
     return (
         <EditAlert
@@ -66,6 +69,7 @@ export const CreateAlert: React.FC<ICreateAlertProps> = ({
             maxAutomationsRecipients={maxAutomationsRecipients}
             catalogMeasures={catalogMeasures}
             catalogAttributes={catalogAttributes}
+            catalogDateDatasets={catalogDateDatasets}
         />
     );
 };

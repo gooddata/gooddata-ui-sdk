@@ -4,9 +4,10 @@ import { Dropdown, Button, List, SingleSelectListItem, OverlayPositionType } fro
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { getMeasureTitle } from "./utils.js";
-import { DROPDOWN_ITEM_HEIGHT } from "./constants.js";
 import { AlertMetric } from "../../types.js";
+
+import { getMeasureTitle } from "./utils/getters.js";
+import { DROPDOWN_ITEM_HEIGHT } from "./constants.js";
 
 export interface IAlertMetricSelectProps {
     selectedMeasure: AlertMetric | undefined;
