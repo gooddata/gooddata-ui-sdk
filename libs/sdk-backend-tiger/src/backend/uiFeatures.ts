@@ -120,6 +120,7 @@ export enum TigerFeaturesNames {
     EnableDashboardFlexibleLayout = "enableDashboardFlexibleLayout",
     EnableNumberSeparators = "enableNumberSeparators",
     EnableGranularPermissions = "enableGranularPermissions",
+    EnableNewUserCreationFlow = "enableNewUserCreationFlow",
 }
 
 export type ITigerFeatureFlags = {
@@ -203,6 +204,7 @@ export type ITigerFeatureFlags = {
     enableDashboardFlexibleLayout: typeof FeatureFlagsValues["enableDashboardFlexibleLayout"][number];
     enableNumberSeparators: typeof FeatureFlagsValues["enableNumberSeparators"][number];
     enableGranularPermissions: typeof FeatureFlagsValues["enableGranularPermissions"][number];
+    enableNewUserCreationFlow: typeof FeatureFlagsValues["enableNewUserCreationFlow"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -286,6 +288,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDashboardFlexibleLayout: false,
     enableNumberSeparators: true,
     enableGranularPermissions: true,
+    enableNewUserCreationFlow: false,
 };
 
 export const FeatureFlagsValues = {
@@ -373,4 +376,5 @@ export const FeatureFlagsValues = {
     enableDashboardFlexibleLayout: [true, false] as const,
     enableNumberSeparators: [true, false] as const,
     enableGranularPermissions: [true, false] as const,
+    enableNewUserCreationFlow: [true, false] as const,
 };

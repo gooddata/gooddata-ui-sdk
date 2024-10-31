@@ -3160,6 +3160,7 @@ export interface ISettings {
     enableNewHeadline?: boolean;
     // (undocumented)
     enableNewNavigationForResponsiveUi?: boolean;
+    enableNewUserCreationFlow?: boolean;
     enableNumberSeparators?: boolean;
     // (undocumented)
     enableOracleDataSource?: boolean;

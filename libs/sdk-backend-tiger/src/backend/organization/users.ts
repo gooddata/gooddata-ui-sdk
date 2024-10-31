@@ -144,6 +144,15 @@ export class OrganizationUsersService implements IOrganizationUserService {
         });
     };
 
+    public getUsersByEmail = async (email: string): Promise<IUser[]> => {
+        return this.authCall(async (client) => {
+            return client.entities
+                .getAllEntitiesUsers({ filter: `email==${email}` })
+                .then((response) => response.data.data)
+                .then((users) => users.map(convertIncludedUser));
+        });
+    };
+
     public getUsersQuery = () => {
         return new OrganizationUsersQuery(this.authCall);
     };
@@ -241,6 +250,7 @@ export class OrganizationUsersQuery implements IOrganizationUsersQuery {
         group?: string;
         name?: string;
         dataSource?: string;
+        email?: string;
     }): IOrganizationUsersQuery {
         this.filter = filter;
         return this;

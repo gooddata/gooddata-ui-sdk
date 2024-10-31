@@ -546,6 +546,11 @@ export interface ISettings {
      */
     enableGranularPermissions?: boolean;
 
+    /**
+     * Enable the use of new user creation flow.
+     */
+    enableNewUserCreationFlow?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 
