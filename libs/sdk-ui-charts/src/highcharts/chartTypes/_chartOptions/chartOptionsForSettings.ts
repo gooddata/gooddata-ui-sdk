@@ -1,6 +1,6 @@
 // (C) 2007-2024 GoodData Corporation
 
-import { ISettings } from "@gooddata/sdk-model";
+import { ISeparators, ISettings } from "@gooddata/sdk-model";
 import { IChartConfig } from "../../../interfaces/index.js";
 
 /**
@@ -42,6 +42,10 @@ export function updateConfigWithSettings(config: IChartConfig, settings: ISettin
 
         if (settings.enableCrossFilteringAliasTitles) {
             updatedConfig = { ...updatedConfig, enableAliasAttributeLabel: true };
+        }
+
+        if (settings.separators) {
+            updatedConfig = { ...updatedConfig, separators: settings.separators as ISeparators };
         }
     }
 
