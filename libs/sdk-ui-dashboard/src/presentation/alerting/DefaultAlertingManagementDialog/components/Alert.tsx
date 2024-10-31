@@ -1,9 +1,10 @@
 // (C) 2022-2024 GoodData Corporation
 
 import React, { useCallback, useRef, useState } from "react";
-import { useIntl } from "react-intl";
+import { IntlShape, useIntl } from "react-intl";
 import cx from "classnames";
 import { IAutomationMetadataObject, IInsightWidget, isInsightWidget } from "@gooddata/sdk-model";
+import { ClientFormatterFacade, ISeparators } from "@gooddata/number-formatter";
 import { Icon, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
@@ -11,6 +12,7 @@ import { gdColorNegative, gdColorStateBlank } from "../../../constants/colors.js
 import {
     selectCanManageWorkspace,
     selectCurrentUser,
+    selectSeparators,
     selectWidgetByRef,
     useDashboardSelector,
 } from "../../../../model/index.js";
@@ -46,7 +48,6 @@ export const Alert: React.FC<IAlertProps> = (props) => {
 
     const intl = useIntl();
     const { isValid } = useAlertValidation(alert);
-    const threshold = getAlertThreshold(alert.alert);
     const iconColor = theme?.palette?.complementary?.c6 ?? gdColorStateBlank;
     const iconColorError = theme?.palette?.error?.base ?? gdColorNegative;
 
@@ -63,10 +64,8 @@ export const Alert: React.FC<IAlertProps> = (props) => {
     const insightWidget = isInsightWidget(widget) ? widget : undefined;
     const widgetName = insightWidget?.title ?? "";
 
-    const valueSuffix = getValueSuffix(alert.alert) ?? "";
-    const subtitle = [`${getOperatorTitle(intl, alert.alert)} ${threshold}${valueSuffix}`, widgetName]
-        .filter(Boolean)
-        .join(" • ");
+    const separators = useDashboardSelector(selectSeparators);
+    const subtitle = getSubtitle(intl, widgetName, alert, separators);
 
     const [hover, setHover] = useState(false);
 
@@ -165,3 +164,19 @@ export const Alert: React.FC<IAlertProps> = (props) => {
         </div>
     );
 };
+
+function getSubtitle(
+    intl: IntlShape,
+    widgetName: string,
+    alert: IAutomationMetadataObject,
+    separators?: ISeparators,
+): string {
+    const valueSuffix = getValueSuffix(alert.alert) ?? "";
+    const threshold = getAlertThreshold(alert.alert);
+    const convertedValue = ClientFormatterFacade.convertValue(threshold);
+    const { formattedValue } = ClientFormatterFacade.formatValue(convertedValue, undefined, separators);
+
+    return [`${getOperatorTitle(intl, alert.alert)} ${formattedValue}${valueSuffix}`, widgetName]
+        .filter(Boolean)
+        .join(" • ");
+}

@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import React from "react";
 import {
     components as ReactSelectComponents,
@@ -9,6 +9,7 @@ import {
     NoticeProps,
 } from "react-select";
 import { Typography, LoadingMask } from "@gooddata/sdk-ui-kit";
+import { wrapMenuList } from "react-select-async-paginate";
 
 import { ISelectOption, isWorkspaceItem, ISelectErrorOption, isSelectErrorOption } from "../types.js";
 import { getWorkspaceItemTestId } from "../utils.js";
@@ -43,7 +44,31 @@ export const MenuListRendered = (props: MenuListProps<ISelectOption, false>): JS
     );
 };
 
+export const WrappedMenuListRenderer = wrapMenuList(
+    (props: MenuListProps<ISelectOption, false>): JSX.Element => {
+        return (
+            <ReactSelectComponents.MenuList {...props}>
+                <div className="s-user-management-menu" aria-label="Share dialog menu list">
+                    {props.children}
+                </div>
+            </ReactSelectComponents.MenuList>
+        );
+    },
+);
+
 export const InputRendered = (props: InputProps): JSX.Element => {
+    return (
+        <div className="gd-share-dialog-input s-user-management-input">
+            <ReactSelectComponents.Input {...props} />
+        </div>
+    );
+};
+
+export const SingleValueInputRenderer = (props: InputProps): JSX.Element => {
+    if (props.hasValue) {
+        return null;
+    }
+
     return (
         <div className="gd-share-dialog-input s-user-management-input">
             <ReactSelectComponents.Input {...props} />

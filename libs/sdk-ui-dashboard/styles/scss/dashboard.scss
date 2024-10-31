@@ -47,6 +47,7 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5, #b1c1d1);
     align-items: stretch;
     min-height: variables.$item-min-height;
     padding: variables.$item-outer-padding;
+
     // Grid definition
 
     @media #{kit-variables.$small-up} {
@@ -182,6 +183,17 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5, #b1c1d1);
         .dash-item-action-description .dash-item-action-description-trigger {
             display: flex;
         }
+    }
+}
+
+.gd-grid-layout {
+    .dash-item {
+        height: 100%;
+
+        // reset @media rules set for the .dash-item above,
+        // otherwise widgets width will get messed up on screen resize
+        flex: unset;
+        max-width: unset;
     }
 }
 

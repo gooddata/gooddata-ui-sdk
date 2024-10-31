@@ -2971,6 +2971,11 @@
         "comment": "Title of the section in insight configuration",
         "limit": 0
     },
+    "insightAlert.config.for": {
+        "value": "For",
+        "comment": "Title of the section in insight configuration",
+        "limit": 0
+    },
     "insightAlert.config.warning.destination": {
         "value": "The selected destination only supports sending the alert to yourself.",
         "comment": "Alert warning message",
@@ -3089,6 +3094,11 @@
     "insightAlert.config.selectMetric": {
         "value": "Select a metric",
         "comment": "Label of metric select dropdown",
+        "limit": 0
+    },
+    "insightAlert.config.selectAttribute": {
+        "value": "All",
+        "comment": "Label of attribute select dropdown",
         "limit": 0
     }
 }

@@ -18,6 +18,7 @@ import {
     ICatalogDateDataset,
     isDashboardDateFilterWithDimension,
     ObjRef,
+    isObjRef,
 } from "@gooddata/sdk-model";
 
 import { alertsActions } from "../../../store/alerts/index.js";
@@ -38,7 +39,6 @@ import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
 import { ExtendedDashboardWidget } from "../../../types/layoutTypes.js";
 import { getPrivateContext } from "../../../store/_infra/contexts.js";
 import { loadAvailableDisplayFormRefs } from "./loadAvailableDisplayFormRefs.js";
-import { PromiseFnReturnType } from "../../../types/sagas.js";
 import { attributeFilterConfigsActions } from "../../../store/attributeFilterConfigs/index.js";
 import { dateFilterConfigActions } from "../../../store/dateFilterConfig/index.js";
 import { dateFilterConfigsActions } from "../../../store/dateFilterConfigs/index.js";
@@ -92,6 +92,7 @@ function* sanitizeFilterContext(
     ctx: DashboardContext,
     filterContext: IDashboard["filterContext"],
     dateDataSets: ICatalogDateDataset[] = [],
+    displayForms?: ObjRefMap<IAttributeDisplayFormMetadataObject>,
 ): SagaIterator<IDashboard["filterContext"]> {
     // we don't need sanitize filter references, if backend guarantees consistent references
     if (!ctx.backend.capabilities.allowsInconsistentRelations) {
@@ -106,11 +107,14 @@ function* sanitizeFilterContext(
         .filter(isDashboardAttributeFilter)
         .map((f) => f.attributeFilter.displayForm);
 
-    const availableRefs: PromiseFnReturnType<typeof loadAvailableDisplayFormRefs> = yield call(
-        loadAvailableDisplayFormRefs,
-        ctx,
-        usedFilterDisplayForms,
-    );
+    let availableRefs: ObjRef[];
+    if (displayForms) {
+        availableRefs = usedFilterDisplayForms
+            .map((df) => displayForms.get(df)?.ref ?? null)
+            .filter(isObjRef);
+    } else {
+        availableRefs = yield call(loadAvailableDisplayFormRefs, ctx, usedFilterDisplayForms);
+    }
 
     return update(
         "filters",
@@ -171,6 +175,7 @@ export function* actionsToInitializeExistingDashboard(
         ctx,
         dashboard.filterContext,
         dateDataSets,
+        displayForms,
     );
 
     const sanitizedDashboard: IDashboard<ExtendedDashboardWidget> = {

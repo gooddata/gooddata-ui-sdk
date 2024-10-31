@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import { cleanup } from "@testing-library/react";
 import { expect, afterEach, vi } from "vitest";
 
@@ -43,4 +43,16 @@ document.createRange = () => {
     };
 
     return range;
+};
+
+global.ResizeObserver = class ResizeObserver {
+    observe() {
+        return null;
+    }
+    unobserve() {
+        return null;
+    }
+    disconnect() {
+        return null;
+    }
 };

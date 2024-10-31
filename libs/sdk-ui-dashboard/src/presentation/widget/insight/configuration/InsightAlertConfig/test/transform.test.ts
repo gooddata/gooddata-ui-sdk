@@ -1,10 +1,17 @@
 // (C) 2019-2024 GoodData Corporation
 
-import { IAutomationAlertRelativeCondition, IAutomationMetadataObject } from "@gooddata/sdk-model";
+import {
+    IAutomationAlertRelativeCondition,
+    IAutomationMetadataObject,
+    INegativeAttributeFilter,
+    IPositiveAttributeFilter,
+} from "@gooddata/sdk-model";
 import { describe, it, expect } from "vitest";
 
 import {
+    getAlertAttribute,
     getAlertCompareOperator,
+    getAlertFilters,
     getAlertMeasure,
     getAlertRelativeOperator,
     getAlertThreshold,
@@ -13,13 +20,14 @@ import {
     isChangeOperator,
     isChangeOrDifferenceOperator,
     isDifferenceOperator,
+    transformAlertByAttribute,
     transformAlertByComparisonOperator,
     transformAlertByDestination,
     transformAlertByMetric,
     transformAlertByRelativeOperator,
     transformAlertByValue,
 } from "../utils.js";
-import { AlertMetric, AlertMetricComparatorType } from "../../../types.js";
+import { AlertAttribute, AlertMetric, AlertMetricComparatorType } from "../../../types.js";
 
 describe("alert transforms", () => {
     const base: IAutomationMetadataObject = {
@@ -94,6 +102,115 @@ describe("alert transforms", () => {
         },
     };
 
+    const baseAllAttribute: IAutomationMetadataObject = {
+        ...base,
+        alert: {
+            condition: {
+                type: "comparison",
+                left: {
+                    id: "",
+                },
+                right: 0,
+                operator: "GREATER_THAN_OR_EQUAL_TO",
+            },
+            execution: {
+                filters: [
+                    {
+                        negativeAttributeFilter: {
+                            displayForm: {
+                                localIdentifier: "attr-region",
+                            },
+                            notIn: {
+                                values: [],
+                            },
+                        },
+                    },
+                    {
+                        absoluteDateFilter: {
+                            dataSet: {
+                                type: "dataSet",
+                                identifier: "dateDataSet",
+                            },
+                            from: "2019-01-01",
+                            to: "2019-12-31",
+                        },
+                    },
+                ],
+                measures: [],
+                auxMeasures: [],
+                attributes: [
+                    {
+                        attribute: {
+                            localIdentifier: "attr-region",
+                            displayForm: {
+                                type: "displayForm",
+                                identifier: "region",
+                            },
+                        },
+                    },
+                ],
+            },
+            trigger: {
+                state: "ACTIVE",
+                mode: "ALWAYS",
+            },
+        },
+    };
+    const baseValueAttribute: IAutomationMetadataObject = {
+        ...base,
+        alert: {
+            condition: {
+                type: "comparison",
+                left: {
+                    id: "",
+                },
+                right: 0,
+                operator: "GREATER_THAN_OR_EQUAL_TO",
+            },
+            execution: {
+                filters: [
+                    {
+                        positiveAttributeFilter: {
+                            displayForm: {
+                                localIdentifier: "attr-type",
+                            },
+                            in: {
+                                values: ["Social"],
+                            },
+                        },
+                    },
+                    {
+                        absoluteDateFilter: {
+                            dataSet: {
+                                type: "dataSet",
+                                identifier: "dateDataSet",
+                            },
+                            from: "2019-01-01",
+                            to: "2019-12-31",
+                        },
+                    },
+                ],
+                measures: [],
+                auxMeasures: [],
+                attributes: [
+                    {
+                        attribute: {
+                            localIdentifier: "attr-type",
+                            displayForm: {
+                                type: "displayForm",
+                                identifier: "type",
+                            },
+                        },
+                    },
+                ],
+            },
+            trigger: {
+                state: "ACTIVE",
+                mode: "ALWAYS",
+            },
+        },
+    };
+
     const simpleMetric1: AlertMetric = {
         measure: {
             measure: {
@@ -113,7 +230,6 @@ describe("alert transforms", () => {
         isPrimary: true,
         comparators: [],
     };
-
     const simpleMetric2: AlertMetric = {
         measure: {
             measure: {
@@ -133,7 +249,6 @@ describe("alert transforms", () => {
         isPrimary: true,
         comparators: [],
     };
-
     const arithmeticMetric1: AlertMetric = {
         measure: {
             measure: {
@@ -150,7 +265,6 @@ describe("alert transforms", () => {
         isPrimary: true,
         comparators: [],
     };
-
     const previousPeriodMetric: AlertMetric = {
         measure: {
             measure: {
@@ -188,7 +302,6 @@ describe("alert transforms", () => {
             },
         ],
     };
-
     const previousPeriodMetric1: AlertMetric = {
         measure: {
             measure: {
@@ -234,6 +347,32 @@ describe("alert transforms", () => {
         simpleMetric2,
         arithmeticMetric1,
     ];
+
+    const attrRegion: AlertAttribute = {
+        attribute: {
+            attribute: {
+                localIdentifier: "attr-region",
+                displayForm: {
+                    type: "displayForm",
+                    identifier: "region",
+                },
+            },
+        },
+    };
+
+    const attrType: AlertAttribute = {
+        attribute: {
+            attribute: {
+                localIdentifier: "attr-type",
+                displayForm: {
+                    type: "displayForm",
+                    identifier: "type",
+                },
+            },
+        },
+    };
+
+    const allAttributes = [attrRegion, attrType];
 
     describe("transformAlertByMetric", () => {
         it("transformAlertByMetric, comparison and provide simple metric", () => {
@@ -572,6 +711,94 @@ describe("alert transforms", () => {
         });
     });
 
+    describe("transformAlertByAttribute", () => {
+        it("empty attribute", () => {
+            const res = transformAlertByAttribute(allAttributes, baseComparison, undefined, undefined);
+            expect(res).toEqual(baseComparison);
+        });
+
+        it("attribute with all values", () => {
+            const res = transformAlertByAttribute(allAttributes, baseComparison, attrRegion, undefined);
+            expect(res).toEqual({
+                ...baseComparison,
+                alert: {
+                    ...baseComparison.alert,
+                    execution: {
+                        ...baseComparison.alert.execution,
+                        attributes: [attrRegion.attribute],
+                        filters: [
+                            {
+                                negativeAttributeFilter: {
+                                    displayForm: {
+                                        localIdentifier: "attr-region",
+                                    },
+                                    notIn: {
+                                        values: [],
+                                    },
+                                },
+                            },
+                        ],
+                    },
+                },
+            });
+        });
+
+        it("attribute with defined value", () => {
+            const res = transformAlertByAttribute(allAttributes, baseComparison, attrRegion, "America");
+            expect(res).toEqual({
+                ...baseComparison,
+                alert: {
+                    ...baseComparison.alert,
+                    execution: {
+                        ...baseComparison.alert.execution,
+                        attributes: [attrRegion.attribute],
+                        filters: [
+                            {
+                                positiveAttributeFilter: {
+                                    displayForm: {
+                                        localIdentifier: "attr-region",
+                                    },
+                                    in: {
+                                        values: ["America"],
+                                    },
+                                },
+                            },
+                        ],
+                    },
+                },
+            });
+        });
+
+        it("attribute with defined value, switch to empty", () => {
+            let res = transformAlertByAttribute(allAttributes, baseComparison, attrRegion, "America");
+            expect(res).toEqual({
+                ...baseComparison,
+                alert: {
+                    ...baseComparison.alert,
+                    execution: {
+                        ...baseComparison.alert.execution,
+                        attributes: [attrRegion.attribute],
+                        filters: [
+                            {
+                                positiveAttributeFilter: {
+                                    displayForm: {
+                                        localIdentifier: "attr-region",
+                                    },
+                                    in: {
+                                        values: ["America"],
+                                    },
+                                },
+                            },
+                        ],
+                    },
+                },
+            });
+
+            res = transformAlertByAttribute(allAttributes, res, undefined, undefined);
+            expect(res).toEqual(baseComparison);
+        });
+    });
+
     describe("getter utils", () => {
         it("getAlertThreshold - comparison", () => {
             const threshold = getAlertThreshold(baseComparison.alert);
@@ -655,6 +882,35 @@ describe("alert transforms", () => {
             );
             const data = getValueSuffix(update.alert);
             expect(data).toEqual(undefined);
+        });
+
+        it("getAlertAttribute - no attribute", () => {
+            const [attr, value] = getAlertAttribute(allAttributes, baseComparison);
+            expect(attr).toEqual(undefined);
+            expect(value).toEqual(undefined);
+        });
+
+        it("getAlertAttribute - region attribute", () => {
+            const [attr, value] = getAlertAttribute(allAttributes, baseAllAttribute);
+            expect(attr).toEqual(attrRegion);
+            expect(value).toEqual(undefined);
+        });
+
+        it("getAlertAttribute - type attribute", () => {
+            const [attr, value] = getAlertAttribute(allAttributes, baseValueAttribute);
+            expect(attr).toEqual(attrType);
+            expect(value).toEqual("Social");
+        });
+
+        it("getAlertFilters - no filters", () => {
+            const filters = getAlertFilters(baseComparison);
+            expect(filters.length).toEqual(0);
+        });
+
+        it("getAlertFilters - one filter, other ignored", () => {
+            const filters = getAlertFilters(baseAllAttribute);
+            expect(filters.length).toEqual(1);
+            expect(filters[0]).toEqual(baseAllAttribute.alert?.execution.filters[1]);
         });
     });
 

@@ -928,6 +928,7 @@ export {
     AssignedWorkspacePermissionValue,
     OrganizationPermissionAssignmentValue,
     AssignedDataSourcePermissionValue,
+    isAssignedWorkspacePermission,
 } from "./organization/index.js";
 export type { IEntitlementsName, IEntitlementDescriptor } from "./entitlements/index.js";
 export type { DataSourceType, IDataSourceIdentifierDescriptor } from "./dataSources/index.js";

@@ -420,6 +420,16 @@ export const selectEnableAlerting: DashboardSelector<boolean> = createSelector(s
 /**
  * @alpha
  */
+export const selectEnableAlertAttributes: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableAlertAttributes ?? false;
+    },
+);
+
+/**
+ * @alpha
+ */
 export const selectEnableAutomations: DashboardSelector<boolean> = createSelector(
     selectEnableScheduling,
     selectEnableAlerting,
@@ -773,6 +783,9 @@ export const selectEnableCrossFilteringAliasTitles: DashboardSelector<boolean> =
  *
  * @internal
  */
-export const selectEnableNestedLayout: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
-    return state.settings?.enableDashboardFlexibleLayout ?? false;
-});
+export const selectEnableFlexibleLayout: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableDashboardFlexibleLayout ?? false;
+    },
+);

@@ -1,6 +1,6 @@
 // (C) 2022-2024 GoodData Corporation
 import { IOrganizationSettingsService } from "@gooddata/sdk-backend-spi";
-import { ISettings, IWhiteLabeling, IOpenAiConfig, IAlertDefault } from "@gooddata/sdk-model";
+import { ISettings, IWhiteLabeling, IOpenAiConfig, IAlertDefault, ISeparators } from "@gooddata/sdk-model";
 
 import { TigerAuthenticatedCallGuard, TigerSettingsType } from "../../types/index.js";
 import { unwrapSettingContent } from "../../convertors/fromBackend/SettingsConverter.js";
@@ -20,6 +20,10 @@ export class OrganizationSettingsService
 
     public async setTimezone(timezone: string): Promise<void> {
         return this.setSetting("TIMEZONE", { value: timezone });
+    }
+
+    public async setSeparators(separators: ISeparators): Promise<void> {
+        return this.setSetting("SEPARATORS", separators);
     }
 
     public async setDateFormat(dateFormat: string): Promise<void> {

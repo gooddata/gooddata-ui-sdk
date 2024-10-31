@@ -1,7 +1,7 @@
-// (C) 2007-2023 GoodData Corporation
-import { AfmObjectIdentifier } from "@gooddata/api-client-tiger";
+// (C) 2007-2024 GoodData Corporation
+import { AfmLocalIdentifier, AfmObjectIdentifier } from "@gooddata/api-client-tiger";
 import { NotSupported, UnexpectedError } from "@gooddata/sdk-backend-spi";
-import { isUriRef, idRef, ObjRef } from "@gooddata/sdk-model";
+import { isUriRef, idRef, ObjRef, localIdRef, LocalIdRef } from "@gooddata/sdk-model";
 import isEmpty from "lodash/isEmpty.js";
 
 import { TigerObjectType } from "../../types/index.js";
@@ -25,6 +25,10 @@ export function toObjRef(qualifier: AfmObjectIdentifier): ObjRef {
     }
 
     return idRef(qualifier.identifier.id, toObjectType(qualifier.identifier.type as TigerObjectType));
+}
+
+export function toLocalRef(qualifier: AfmLocalIdentifier): LocalIdRef {
+    return localIdRef(qualifier.localIdentifier);
 }
 
 export type JsonApiId = {

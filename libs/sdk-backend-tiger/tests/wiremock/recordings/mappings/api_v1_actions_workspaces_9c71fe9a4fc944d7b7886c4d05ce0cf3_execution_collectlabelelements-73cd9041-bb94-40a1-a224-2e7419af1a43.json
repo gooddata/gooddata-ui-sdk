@@ -1,0 +1,47 @@
+{
+    "id": "73cd9041-bb94-40a1-a224-2e7419af1a43",
+    "name": "api_v1_actions_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_execution_collectlabelelements",
+    "request": {
+        "url": "/api/v1/actions/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/execution/collectLabelElements?offset=0&limit=20",
+        "method": "POST",
+        "headers": {
+            "Accept": {
+                "equalTo": "application/json, text/plain, */*"
+            },
+            "Content-Type": {
+                "equalTo": "application/json",
+                "caseInsensitive": true
+            }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"label\":\"f_account.id\"}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
+    },
+    "response": {
+        "status": 200,
+        "body": "{\"primaryLabel\":{\"id\":\"f_account.id\",\"type\":\"label\"},\"elements\":[{\"title\":\"38\",\"primaryTitle\":\"38\"},{\"title\":\"78\",\"primaryTitle\":\"78\"},{\"title\":\"224\",\"primaryTitle\":\"224\"},{\"title\":\"545\",\"primaryTitle\":\"545\"},{\"title\":\"552\",\"primaryTitle\":\"552\"},{\"title\":\"955129\",\"primaryTitle\":\"955129\"},{\"title\":\"955131\",\"primaryTitle\":\"955131\"},{\"title\":\"955133\",\"primaryTitle\":\"955133\"},{\"title\":\"955139\",\"primaryTitle\":\"955139\"},{\"title\":\"955141\",\"primaryTitle\":\"955141\"},{\"title\":\"955143\",\"primaryTitle\":\"955143\"},{\"title\":\"955145\",\"primaryTitle\":\"955145\"},{\"title\":\"955147\",\"primaryTitle\":\"955147\"},{\"title\":\"955153\",\"primaryTitle\":\"955153\"},{\"title\":\"955155\",\"primaryTitle\":\"955155\"},{\"title\":\"955157\",\"primaryTitle\":\"955157\"},{\"title\":\"955159\",\"primaryTitle\":\"955159\"},{\"title\":\"955163\",\"primaryTitle\":\"955163\"},{\"title\":\"955165\",\"primaryTitle\":\"955165\"},{\"title\":\"955167\",\"primaryTitle\":\"955167\"}],\"paging\":{\"total\":4846,\"count\":20,\"offset\":0,\"next\":\"https://staging.dev-latest.stg11.panther.intgdc.com/api/v1/actions/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/execution/collectLabelElements?limit=20&offset=20\"},\"cacheId\":\"33ca357c024e0e727029b7ad3fa0b1d3\"}",
+        "headers": {
+            "X-Content-Type-Options": "nosniff",
+            "Pragma": "no-cache",
+            "Referrer-Policy": "no-referrer",
+            "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+            "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+            "Vary": [
+                "Accept-Encoding",
+                "Origin",
+                "Access-Control-Request-Method",
+                "Access-Control-Request-Headers"
+            ],
+            "Expires": "0",
+            "X-XSS-Protection": "0",
+            "Content-Type": "application/json"
+        }
+    },
+    "uuid": "73cd9041-bb94-40a1-a224-2e7419af1a43",
+    "persistent": true,
+    "insertionIndex": 9
+}

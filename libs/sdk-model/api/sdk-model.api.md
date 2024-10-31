@@ -2287,7 +2287,7 @@ export interface INegativeAttributeFilter {
 
 // @public
 export interface INegativeAttributeFilterBody extends IIdentifiableFilter {
-    displayForm: ObjRef;
+    displayForm: ObjRef | ObjRefInScope;
     notIn: IAttributeElements;
 }
 
@@ -2589,7 +2589,7 @@ export interface IPositiveAttributeFilter {
 
 // @public
 export interface IPositiveAttributeFilterBody extends IIdentifiableFilter {
-    displayForm: ObjRef;
+    displayForm: ObjRef | ObjRefInScope;
     in: IAttributeElements;
 }
 
@@ -2828,6 +2828,9 @@ export function isArithmeticMeasure(obj: unknown): obj is IMeasure<IArithmeticMe
 
 // @public
 export function isArithmeticMeasureDefinition(obj: unknown): obj is IArithmeticMeasureDefinition;
+
+// @alpha
+export function isAssignedWorkspacePermission(value: unknown): value is AssignedWorkspacePermission;
 
 // @public
 export function isAttribute(obj: unknown): obj is IAttribute;
@@ -3083,6 +3086,7 @@ export interface ISettings {
     enableADMultipleDateFilters?: boolean;
     // @deprecated
     enableAIFunctions?: boolean;
+    enableAlertAttributes?: boolean;
     enableAlerting?: boolean;
     enableAlertingRollout?: boolean;
     enableAlternativeDisplayFormSelection?: boolean;
@@ -3121,6 +3125,7 @@ export interface ISettings {
     enableFlightRpcDataSource?: boolean;
     enableGenAIChat?: boolean;
     enableGenAIChatRollout?: boolean;
+    enableGranularPermissions?: boolean;
     enableHeadlineExport?: boolean;
     enableHidingOfDataPoints?: boolean;
     enableHidingOfWidgetTitle?: boolean;
@@ -3155,6 +3160,7 @@ export interface ISettings {
     enableNewHeadline?: boolean;
     // (undocumented)
     enableNewNavigationForResponsiveUi?: boolean;
+    enableNumberSeparators?: boolean;
     // (undocumented)
     enableOracleDataSource?: boolean;
     enablePivotTableIncreaseBucketSize?: boolean;

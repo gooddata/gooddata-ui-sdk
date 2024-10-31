@@ -1283,6 +1283,12 @@ export interface DimAttribute {
      * @memberof DimAttribute
      */
     type: DimAttributeTypeEnum;
+    /**
+     * Title of attribute.
+     * @type {string}
+     * @memberof DimAttribute
+     */
+    title: string;
 }
 
 export const DimAttributeTypeEnum = {
@@ -2106,6 +2112,12 @@ export interface Metric {
      * @memberof Metric
      */
     type: MetricTypeEnum;
+    /**
+     * Title of metric.
+     * @type {string}
+     * @memberof Metric
+     */
+    title: string;
     /**
      * Agg function. Empty if a stored metric is used.
      * @type {string}

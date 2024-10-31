@@ -11,6 +11,7 @@ import {
     IDataSourcePermissionAssignment,
     AssignedDataSourcePermission,
     IDataSourceIdentifierDescriptor,
+    isAssignedWorkspacePermission,
 } from "@gooddata/sdk-model";
 
 import {
@@ -22,6 +23,7 @@ import {
     DataSourcePermissionSubject,
     IGrantedDataSource,
     DataSourcePermission,
+    WorkspacePermissions,
 } from "./types.js";
 
 export interface IComparableItemWithTitle {
@@ -68,6 +70,10 @@ const asPermissions = (permission: WorkspacePermission): AssignedWorkspacePermis
         default:
             throw Error("Unsupported permission value");
     }
+};
+
+const asGranularPermissions = (permissions: WorkspacePermissions): AssignedWorkspacePermission[] => {
+    return permissions.filter(isAssignedWorkspacePermission);
 };
 
 const asDataSourcePermissions = (permission: DataSourcePermission): AssignedDataSourcePermission[] => {
@@ -148,7 +154,7 @@ export const asPermissionAssignment = (
     subjectType: WorkspacePermissionSubject,
     workspace: IGrantedWorkspace,
 ): IWorkspacePermissionAssignment => {
-    const permissions = asPermissions(workspace.permission);
+    const permissions = asPermissions(workspace.permissions[0]);
     return {
         assigneeIdentifier: {
             id: subjectId,
@@ -196,8 +202,11 @@ export const extractUserGroupName = (userGroup: IOrganizationUserGroup | IUserGr
 
 export const grantedWorkspaceAsPermissionAssignment = (
     grantedWorkspace: IGrantedWorkspace,
+    useGranularPermissions: boolean,
 ): Omit<IWorkspacePermissionAssignment, "assigneeIdentifier"> => {
-    const permissions = asPermissions(grantedWorkspace.permission);
+    const permissions = useGranularPermissions
+        ? asGranularPermissions(grantedWorkspace.permissions)
+        : asPermissions(grantedWorkspace.permissions[0]);
     return {
         workspace: {
             id: grantedWorkspace.id,
@@ -221,15 +230,16 @@ export const grantedDataSourceAsPermissionAssignment = (
 
 export const workspacePermissionsAssignmentToGrantedWorkspace = (
     assignment: IWorkspacePermissionAssignment,
+    useGranularPermissions: boolean,
 ): IGrantedWorkspace => {
     const { workspace } = assignment;
-    const permission = asPermission(
-        assignment.hierarchyPermissions.length > 0 ? assignment.hierarchyPermissions : assignment.permissions,
-    );
+    const assignedPermissions =
+        assignment.hierarchyPermissions.length > 0 ? assignment.hierarchyPermissions : assignment.permissions;
+    const permission = asPermission(assignedPermissions);
     return {
         id: workspace.id,
         title: workspace.name,
-        permission,
+        permissions: useGranularPermissions ? assignedPermissions : [permission],
         isHierarchical: assignment.hierarchyPermissions.length > 0,
     };
 };

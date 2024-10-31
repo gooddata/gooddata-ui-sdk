@@ -147,6 +147,20 @@
       "summary": "Makes projects populate reference workspace with recording definitions or recordings themselves.",
       "shellCommand": "bash common/scripts/populate-ref.sh",
       "safeForSimultaneousRushProcesses": false
+    },
+    {
+      "commandKind": "global",
+      "name": "install-certs",
+      "summary": "Installs rootCA on your system and generates self-signed certificates for local development",
+      "shellCommand": "node common/scripts/install-certs.js",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
+      "name": "uninstall-certs",
+      "summary": "Uninstalls rootCA on your system removes ~/.gooddata/certs folder",
+      "shellCommand": "node common/scripts/uninstall-certs.js",
+      "safeForSimultaneousRushProcesses": true
     }
     // {
     //   /**

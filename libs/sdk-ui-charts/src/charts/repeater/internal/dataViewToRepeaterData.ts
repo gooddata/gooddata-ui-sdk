@@ -1,8 +1,11 @@
 // (C) 2024 GoodData Corporation
 
+import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import {
+    DataValue,
     IResultAttributeHeader,
     IResultAttributeHeaderItem,
+    ISeparators,
     attributeDescriptorLocalId,
     isAttributeDescriptor,
     isMeasureGroupDescriptor,
@@ -38,7 +41,10 @@ export type RepeaterInlineVisualizationDataPoint = {
  *  - It can contain 0..n measures
  *  - It can contain 0 or 1 slicing attribute.
  */
-export function dataViewToRepeaterData(dataViewFacade: DataViewFacade): IRepeaterRow[] {
+export function dataViewToRepeaterData(
+    dataViewFacade: DataViewFacade,
+    separators?: ISeparators,
+): IRepeaterRow[] {
     const rows: IRepeaterRow[] = [];
     const [firstDimDescriptors, secondDimDescriptors] = [
         dataViewFacade.meta().dimensionItemDescriptors(0),
@@ -76,7 +82,7 @@ export function dataViewToRepeaterData(dataViewFacade: DataViewFacade): IRepeate
             // Map each measure to rows
             dimDescriptor.measureGroupHeader.items.forEach((measureDescriptor) => {
                 const allSeries = dataViewFacade
-                    .data()
+                    .data({ valueFormatter: createFormatter(separators) })
                     .series()
                     .allForMeasure(measureDescriptor.measureHeaderItem.localIdentifier);
                 // Map each measure series to rows
@@ -101,5 +107,13 @@ function newRepeaterInlineVisualizationDataPoint(dataPoint: DataPoint): Repeater
     return {
         formattedValue: dataPoint.formattedValue(),
         value: typeof dataPoint.rawValue === "string" ? parseInt(dataPoint.rawValue, 10) : dataPoint.rawValue,
+    };
+}
+
+function createFormatter(separators?: ISeparators) {
+    return function numberFormatter(value: DataValue, format?: string): string {
+        const parsedNumber = ClientFormatterFacade.convertValue(value);
+        const { formattedValue } = ClientFormatterFacade.formatValue(parsedNumber, format, separators);
+        return formattedValue;
     };
 }

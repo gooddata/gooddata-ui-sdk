@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 
 import { Attribute, DateDataSet } from "../../base/types.js";
 import {
@@ -77,10 +77,14 @@ function convertToExportableFormat(
 }
 
 export async function loadDateDataSets(client: ITigerClient, workspaceId: string): Promise<DateDataSet[]> {
-    const result = await MetadataUtilities.getAllPagesOf(client, client.entities.getAllEntitiesAttributes, {
-        workspaceId,
-        include: ["labels", "datasets"],
-    }).then(MetadataUtilities.mergeEntitiesResults);
+    const result = await MetadataUtilities.getAllPagesOfParallel(
+        client,
+        client.entities.getAllEntitiesAttributes,
+        {
+            workspaceId,
+            include: ["labels", "datasets"],
+        },
+    ).then(MetadataUtilities.mergeEntitiesResults);
     const labelsMap = createLabelMap(result.included);
     const datasetsMap = createDatasetMap(result.included);
 

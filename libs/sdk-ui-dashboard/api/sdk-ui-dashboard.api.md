@@ -4439,6 +4439,8 @@ export interface IDashboardWidgetProps {
     onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
     // @alpha
     onWidgetClicked?: () => void;
+    // @alpha
+    parentLayoutItemSize?: IDashboardLayoutSizeByScreenSize;
     // @alpha (undocumented)
     screen: ScreenSize;
     // @alpha
@@ -7372,6 +7374,9 @@ export const selectEffectiveDateFiltersModeMap: DashboardSelector<Map<string, Da
 export const selectEffectiveDateFilterTitle: DashboardSelector<string | undefined>;
 
 // @alpha (undocumented)
+export const selectEnableAlertAttributes: DashboardSelector<boolean>;
+
+// @alpha (undocumented)
 export const selectEnableAlerting: DashboardSelector<boolean>;
 
 // @internal
@@ -7400,6 +7405,9 @@ export const selectEnableFilterValuesResolutionInDrillEvents: DashboardSelector<
 
 // @internal
 export const selectEnableFilterViews: DashboardSelector<boolean>;
+
+// @internal
+export const selectEnableFlexibleLayout: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableIgnoreCrossFiltering: DashboardSelector<boolean>;
@@ -7450,9 +7458,6 @@ export const selectEnableKPIDashboardScheduleRecipients: DashboardSelector<boole
 export const selectEnableMultipleDateFilters: DashboardSelector<boolean>;
 
 // @internal
-export const selectEnableNestedLayout: DashboardSelector<boolean>;
-
-// @internal
 export const selectEnableRenamingMeasureToMetric: DashboardSelector<boolean>;
 
 // @internal
@@ -7492,7 +7497,7 @@ export const selectEntitlementUnlimitedAutomations: DashboardSelector<IEntitleme
 export const selectExecutionResult: (state: DashboardState, id: EntityId) => IExecutionResultEnvelope | undefined;
 
 // @alpha (undocumented)
-export const selectExecutionResultByRef: (ref: ObjRef) => DashboardSelector<IExecutionResultEnvelope | undefined>;
+export const selectExecutionResultByRef: (ref: ObjRef | undefined) => DashboardSelector<IExecutionResultEnvelope | undefined>;
 
 // @alpha (undocumented)
 export const selectFilterBarExpanded: DashboardSelector<boolean>;
