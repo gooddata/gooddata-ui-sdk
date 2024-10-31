@@ -1,6 +1,14 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 17 Oct 2024 06:56:12 GMT and should not be manually modified.
+This log was last generated on Thu, 31 Oct 2024 08:50:19 GMT and should not be manually modified.
+
+## 10.13.0
+Thu, 31 Oct 2024 08:50:19 GMT
+
+### Updates
+
+- attribute filters now allow improved work with duplicate values by default
+- Added new Visualization Switcher widget to render group of visualizations together on dashboard (available for GoodData.CN / GoodData Cloud only).
 
 ## 10.12.0
 Thu, 17 Oct 2024 06:56:12 GMT
