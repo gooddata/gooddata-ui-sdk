@@ -25,7 +25,7 @@ import { ViewDialog } from "./ViewDialog.js";
 import { DeleteConfirmDialog } from "./ConfirmDialogs/DeleteConfirmDialog.js";
 import { OrganizationIdProvider } from "./OrganizationIdContext.js";
 import { extractUserName } from "./utils.js";
-import { UserEditDialogMode, IGrantedDataSource, IGrantedWorkspace } from "./types.js";
+import { UserEditDialogMode, IGrantedDataSource, IGrantedWorkspace, UserTabId } from "./types.js";
 import { IWithTelemetryProps, withTelemetry } from "./TelemetryContext.js";
 import { DataSourceList } from "./DataSources/DataSourceList.js";
 import { AddDataSource } from "./DataSources/AddDataSource.js";
@@ -49,6 +49,7 @@ export interface IUserEditDialogProps extends IWithTelemetryProps {
     renderDataSourceIcon?: (dataSource: IGrantedDataSource) => JSX.Element;
     areFilterViewsEnabled?: boolean;
     areGranularPermissionsEnabled?: boolean;
+    selectedTab?: UserTabId;
 }
 
 const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
@@ -62,6 +63,7 @@ const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
     renderDataSourceIcon,
     areFilterViewsEnabled = false,
     areGranularPermissionsEnabled = false,
+    selectedTab = undefined,
 }) => {
     const intl = useIntl();
     const { dialogMode, setDialogMode } = useUserDialogMode(initialView);
@@ -92,6 +94,7 @@ const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
         grantedUserGroups,
         grantedDataSources,
         isCurrentlyAdmin,
+        selectedTab,
     );
     const {
         isConfirmDeleteOpened,

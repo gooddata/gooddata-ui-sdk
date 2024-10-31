@@ -1007,6 +1007,7 @@ export interface IOrganizationUserService {
     getUserGroupsOfUser(userId: string): Promise<IUserGroup[]>;
     getUserGroupsQuery(): IOrganizationUserGroupsQuery;
     getUsers(): Promise<IOrganizationUser[]>;
+    getUsersByEmail(email: string): Promise<IUser[]>;
     getUsersOfUserGroup(userGroupId: string): Promise<IUser[]>;
     getUsersQuery(): IOrganizationUsersQuery;
     removeUsersFromUserGroups(userIds: string[], userGroupIds: string[]): Promise<void>;
@@ -1022,6 +1023,7 @@ export interface IOrganizationUsersQuery {
         group?: string;
         name?: string;
         dataSource?: string;
+        email?: string;
     }): IOrganizationUsersQuery;
     withPage(page: number): IOrganizationUsersQuery;
     withSize(size: number): IOrganizationUsersQuery;

@@ -87,6 +87,15 @@ export interface IOrganizationUserService {
     getUsers(): Promise<IOrganizationUser[]>;
 
     /**
+     * Get user by email.
+     *
+     * @param email - email of the user.
+     *
+     * @returns promise of array of users
+     */
+    getUsersByEmail(email: string): Promise<IUser[]>;
+
+    /**
      * List users.
      *
      * @returns promise
@@ -182,6 +191,7 @@ export interface IOrganizationUsersQuery {
         group?: string;
         name?: string;
         dataSource?: string;
+        email?: string;
     }): IOrganizationUsersQuery;
 
     /**

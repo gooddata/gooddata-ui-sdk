@@ -491,6 +491,8 @@ export interface IUserEditDialogProps extends IWithTelemetryProps {
     // (undocumented)
     renderDataSourceIcon?: (dataSource: IGrantedDataSource) => JSX.Element;
     // (undocumented)
+    selectedTab?: UserTabId;
+    // (undocumented)
     userId: string;
 }
 
@@ -598,6 +600,9 @@ export const UserGroupEditDialog: React_2.FC<IUserGroupEditDialogProps>;
 
 // @internal (undocumented)
 export type UserGroupEditDialogMode = "VIEW" | "WORKSPACE" | "USERS" | "DATA_SOURCES" | "DETAIL";
+
+// @internal (undocumented)
+export type UserTabId = "WORKSPACES" | "USER_GROUPS" | "DETAILS" | "DATA_SOURCES";
 
 // @internal (undocumented)
 export const VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo;

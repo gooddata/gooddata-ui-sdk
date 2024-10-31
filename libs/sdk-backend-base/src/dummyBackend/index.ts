@@ -874,6 +874,7 @@ class DummyOrganization implements IOrganization {
             getUserGroupsOfUser: () => Promise.resolve([]),
             getUsersOfUserGroup: () => Promise.resolve([]),
             getUsers: () => Promise.resolve([]),
+            getUsersByEmail: () => Promise.resolve([]),
             removeUsersFromUserGroups: () => Promise.resolve(),
             updateUser: () => Promise.resolve(),
             updateUserGroup: () => Promise.resolve(),
