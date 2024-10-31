@@ -3,6 +3,7 @@ import React, { useMemo } from "react";
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { createBackend } from "./createBackend.js";
 import { Playground } from "./playground/Playground.js";
+import "./global.css"; // Import global styles
 
 function hasCredentialsSetup(): boolean {
     return !!import.meta.env.VITE_TIGER_API_TOKEN;

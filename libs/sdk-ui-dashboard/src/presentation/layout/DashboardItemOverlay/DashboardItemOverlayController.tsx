@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React from "react";
 import {
     useDashboardSelector,
@@ -7,7 +7,7 @@ import {
     selectSectionModification,
     uiActions,
 } from "../../../model/index.js";
-import { IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/fluidLayout/index.js";
+import { IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/legacyFluidLayout/index.js";
 import { getRefsForSection } from "../refs.js";
 import { DashboardItemOverlay } from "./DashboardItemOverlay.js";
 

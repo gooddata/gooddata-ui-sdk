@@ -10,9 +10,11 @@ import { createMemoizedSelector } from "../_infra/selectors.js";
 import { IDashboardWidgetOverlay } from "../../types/commonTypes.js";
 import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
 import {
-    ILayoutCoordinates,
     IMenuButtonItemsVisibility,
     IScheduleEmailDialogContext,
+    ILayoutItemPath,
+    ILayoutSectionPath,
+    ILayoutCoordinates,
 } from "../../../types.js";
 import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
 import { InvalidCustomUrlDrillParameterInfo, FilterViewDialogMode } from "./uiState.js";
@@ -131,8 +133,22 @@ export const selectIsCancelEditModeDialogOpen: DashboardSelector<boolean> = crea
 /**
  * @internal
  */
-export const selectKpiDeleteDialogWidgetCoordinates: DashboardSelector<ILayoutCoordinates | undefined> =
+export const selectKpiDeleteDialogWidgetLayoutPath: DashboardSelector<ILayoutItemPath | undefined> =
     createSelector(selectSelf, (state) => state.kpiDeleteDialog.widgetCoordinates);
+
+/**
+ * @internal
+ *
+ * @deprecated The selector returns coordinates in its parent layout. The information is not useful on its
+ *  own when dashboard uses nested layout. For this case use {@link selectKpiDeleteDialogWidgetLayoutPath} instead.
+ *
+ *  TODO LX-648: remove this selector, exported only for backward compatible reasons.
+ */
+export const selectKpiDeleteDialogWidgetCoordinates: DashboardSelector<ILayoutCoordinates | undefined> =
+    createSelector(selectSelf, (state) => {
+        const coordinates = state.kpiDeleteDialog.widgetCoordinates;
+        return coordinates === undefined ? undefined : coordinates[coordinates.length - 1];
+    });
 
 /**
  * @alpha
@@ -288,11 +304,27 @@ export const selectIsDraggingWidget: DashboardSelector<boolean> = createSelector
 );
 
 /**
+ * The selector returns index of active section.
+ *
  * @internal
+ * @deprecated The selector returns index in its parent section layout. The information is not useful on its
+ *  own when dashboard uses nested layout. For this case use {@link selectActiveSection} instead.
+ *
+ *  TODO LX-648: remove this selector, exported only for backward compatible reasons.
  */
 export const selectActiveSectionIndex: DashboardSelector<number | undefined> = createSelector(
     selectSelf,
-    (state) => state.activeSectionIndex,
+    (state) => state.activeSection?.sectionIndex,
+);
+
+/**
+ * The selector returns layout path of active section.
+ *
+ * @internal
+ */
+export const selectActiveSection: DashboardSelector<ILayoutSectionPath | undefined> = createSelector(
+    selectSelf,
+    (state) => state.activeSection,
 );
 
 /**
@@ -360,9 +392,23 @@ export const selectDraggingWidgetSource: DashboardSelector<DraggableLayoutItem |
 /**
  * @internal
  */
+export const selectDraggingWidgetTargetLayoutPath: DashboardSelector<ILayoutItemPath | undefined> =
+    createSelector(selectSelf, (state) => state.draggingWidgetTarget);
+
+/**
+ * @internal
+ *
+ * @deprecated The selector returns coordinates in its parent section layout. The information is not useful on its
+ *  own when dashboard uses nested layout. For this case use {@link selectDraggingWidgetTargetLayoutPath} instead.
+ *
+ *  TODO LX-648: remove this selector, exported only for backward compatible reasons.
+ */
 export const selectDraggingWidgetTarget: DashboardSelector<ILayoutCoordinates | undefined> = createSelector(
     selectSelf,
-    (state) => state.draggingWidgetTarget,
+    (state) =>
+        state.draggingWidgetTarget === undefined
+            ? undefined
+            : state.draggingWidgetTarget[state.draggingWidgetTarget.length - 1],
 );
 
 /**

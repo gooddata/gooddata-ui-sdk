@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React, { useCallback, useEffect, useMemo } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -13,7 +13,7 @@ import {
     selectSeparators,
     selectDisableKpiDashboardHeadlineUnderline,
     useDashboardDispatch,
-    selectWidgetCoordinatesByRef,
+    selectWidgetPathByRef,
     selectFilterContextFilters,
     uiActions,
     useWidgetSelection,
@@ -78,7 +78,7 @@ export const EditModeDashboardKpi = (props: IDashboardKpiProps) => {
     const isEditable = !isSaving;
 
     const dispatch = useDashboardDispatch();
-    const coordinates = useDashboardSelector(selectWidgetCoordinatesByRef(widgetRef(kpiWidget)));
+    const coordinates = useDashboardSelector(selectWidgetPathByRef(widgetRef(kpiWidget)));
     const onWidgetDelete = useCallback(() => {
         dispatch(uiActions.openKpiDeleteDialog(coordinates));
     }, [dispatch, coordinates]);

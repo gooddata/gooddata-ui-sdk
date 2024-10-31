@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { IWidget } from "@gooddata/sdk-model";
 import { SagaIterator } from "redux-saga";
@@ -16,7 +16,14 @@ import {
     DashboardLayoutSectionItemWidthResized,
     layoutSectionItemWidthResized,
 } from "../../events/layout.js";
-import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../_staging/dashboard/fluidLayout/config.js";
+import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../_staging/dashboard/flexibleLayout/config.js";
+import {
+    serializeLayoutItemPath,
+    findSection,
+    findItem,
+    getSectionIndex,
+    getItemIndex,
+} from "../../../_staging/layout/coordinates.js";
 
 function validateLayoutIndexes(
     ctx: DashboardContext,
@@ -24,24 +31,47 @@ function validateLayoutIndexes(
     command: ResizeWidth,
 ) {
     const {
-        payload: { sectionIndex, itemIndex },
+        payload: { itemPath, sectionIndex, itemIndex },
     } = command;
 
-    if (!validateSectionExists(layout, sectionIndex)) {
-        throw invalidArgumentsProvided(
-            ctx,
-            command,
-            `Attempting to resize item from non-existent section at ${sectionIndex}. There are only ${layout.sections.length} sections.`,
-        );
-    }
+    if (itemPath === undefined) {
+        if (!validateSectionExists(layout, sectionIndex)) {
+            throw invalidArgumentsProvided(
+                ctx,
+                command,
+                `Attempting to resize item from non-existent section at ${sectionIndex}. There are only ${layout.sections.length} sections.`,
+            );
+        }
 
-    const fromSection = layout.sections[sectionIndex];
-    if (!validateItemExists(fromSection, itemIndex)) {
-        throw invalidArgumentsProvided(
-            ctx,
-            command,
-            `Attempting to resize non-existent item from index ${itemIndex} in section ${sectionIndex}. There are only ${fromSection.items.length} items in this section.`,
-        );
+        const fromSection = layout.sections[sectionIndex];
+        if (!validateItemExists(fromSection, itemIndex)) {
+            throw invalidArgumentsProvided(
+                ctx,
+                command,
+                `Attempting to resize non-existent item from index ${itemIndex} in section ${sectionIndex}. There are only ${fromSection.items.length} items in this section.`,
+            );
+        }
+    } else {
+        if (!validateSectionExists(layout, itemPath)) {
+            throw invalidArgumentsProvided(
+                ctx,
+                command,
+                `Attempting to resize item from non-existent section at ${serializeLayoutItemPath(
+                    itemPath,
+                )}.`,
+            );
+        }
+
+        const fromSection = findSection(layout, itemPath);
+        if (!validateItemExists(fromSection, itemPath)) {
+            throw invalidArgumentsProvided(
+                ctx,
+                command,
+                `Attempting to resize non-existent item from index ${serializeLayoutItemPath(
+                    itemPath,
+                )}. There are only ${fromSection.items.length} items in this section.`,
+            );
+        }
     }
 }
 
@@ -50,7 +80,7 @@ export function* resizeWidthHandler(
     cmd: ResizeWidth,
 ): SagaIterator<DashboardLayoutSectionItemWidthResized> {
     const {
-        payload: { sectionIndex, itemIndex, width },
+        payload: { itemPath, sectionIndex, itemIndex, width },
     } = cmd;
 
     const layout = yield select(selectLayout);
@@ -59,15 +89,23 @@ export function* resizeWidthHandler(
     validateLayoutIndexes(ctx, layout, cmd);
     validateWidth(ctx, layout, insightsMap, cmd);
 
+    const layoutPath = itemPath === undefined ? [{ sectionIndex, itemIndex }] : itemPath;
+
     yield put(
         layoutActions.changeItemWidth({
-            sectionIndex,
-            itemIndex,
+            layoutPath,
             width,
         }),
     );
 
-    return layoutSectionItemWidthResized(ctx, sectionIndex, itemIndex, width, cmd.correlationId);
+    return layoutSectionItemWidthResized(
+        ctx,
+        getSectionIndex(layoutPath),
+        getItemIndex(layoutPath),
+        layoutPath,
+        width,
+        cmd.correlationId,
+    );
 }
 
 function validateWidth(
@@ -77,17 +115,22 @@ function validateWidth(
     cmd: ResizeWidth,
 ) {
     const {
-        payload: { sectionIndex, itemIndex, width },
+        payload: { itemPath, sectionIndex, itemIndex, width },
     } = cmd;
 
-    const widget = layout.sections[sectionIndex].items[itemIndex].widget as IWidget;
+    const widget =
+        itemPath === undefined
+            ? (layout.sections[sectionIndex].items[itemIndex].widget as IWidget)
+            : (findItem(layout, itemPath).widget as IWidget);
 
     const minLimit = getMinWidth(widget, insightsMap);
-    const maxLimit = DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT;
+    const parent = itemPath !== undefined && findItem(layout, itemPath.slice(0, -1));
 
-    const validHeight = width >= minLimit && width <= maxLimit;
+    const maxLimit = parent ? parent.size.xl.gridWidth : DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT;
 
-    if (!validHeight) {
+    const validWidth = width >= minLimit && width <= maxLimit;
+
+    if (!validWidth) {
         throw invalidArgumentsProvided(
             ctx,
             cmd,

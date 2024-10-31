@@ -40,12 +40,9 @@ import { useDashboardComponentsContext } from "../dashboardContexts/index.js";
 import {
     BaseDraggableLayoutItemSize,
     DraggableLayoutItem,
-    Hotspot,
-    ResizeOverlay,
     useDashboardDrag,
     useResizeItemStatus,
     useWidgetDragEndHandler,
-    WidthResizerHotspot,
 } from "../dragAndDrop/index.js";
 import { DashboardWidget, IDashboardWidgetProps } from "../widget/index.js";
 import { DEFAULT_COLUMN_CLIENT_WIDTH, DEFAULT_WIDTH_RESIZER_HEIGHT } from "./constants.js";
@@ -56,6 +53,9 @@ import {
 } from "./DefaultDashboardLayoutRenderer/index.js";
 import { DashboardItemOverlay } from "./DashboardItemOverlay/DashboardItemOverlay.js";
 import { getRefsForSection, getRefsForItem } from "./refs.js";
+import { ResizeOverlay } from "./dragAndDrop/Resize/ResizeOverlay.js";
+import { WidthResizerHotspot } from "./dragAndDrop/Resize/WidthResizerHotspot.js";
+import { Hotspot } from "./dragAndDrop/draggableWidget/Hotspot.js";
 
 /**
  * Tests in KD require widget index for css selectors.
@@ -299,7 +299,7 @@ function createDraggableItem(
         };
     } else if (isInsightWidget(widget)) {
         const insight = insights.get(widget.insight)!;
-        const sizeInfo = getSizeInfo(settings, "kpi", insight); // TODO INE: "kpi"???
+        const sizeInfo = getSizeInfo(settings, "insight", insight);
 
         return {
             type: "insight",

@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { ScreenSize } from "@gooddata/sdk-model";
 import flatMap from "lodash/flatMap.js";
 import React, { useMemo } from "react";
@@ -6,7 +6,7 @@ import { RenderMode } from "../../../types.js";
 import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutSectionFacade,
-} from "../../../_staging/dashboard/fluidLayout/facade/interfaces.js";
+} from "../../../_staging/dashboard/legacyFluidLayout/facade/interfaces.js";
 import { DashboardLayoutGridRow } from "./DashboardLayoutGridRow.js";
 import { DashboardLayoutSectionHeaderRenderer } from "./DashboardLayoutSectionHeaderRenderer.js";
 import { DashboardLayoutSectionRenderer } from "./DashboardLayoutSectionRenderer.js";

@@ -20,6 +20,7 @@ import { useEditableInsightMenu } from "./useEditableInsightMenu.js";
 import { IDefaultDashboardInsightWidgetProps } from "./types.js";
 import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard.js";
 import { EditableDashboardInsightWidgetHeader } from "./EditableDashboardInsightWidgetHeader.js";
+import { useIsDraggingWidget } from "../../../dragAndDrop/index.js";
 
 export const EditableDashboardInsightWidget: React.FC<
     Omit<IDefaultDashboardInsightWidgetProps, "insight">
@@ -51,6 +52,7 @@ const EditableDashboardInsightWidgetCore: React.FC<
 
     const isSaving = useDashboardSelector(selectIsDashboardSaving);
     const isEditable = !isSaving;
+    const isDraggingWidget = useIsDraggingWidget();
 
     return (
         <DashboardItem
@@ -98,7 +100,7 @@ const EditableDashboardInsightWidgetCore: React.FC<
                         </>
                     );
                 }}
-                contentClassName={cx({ "is-editable": isEditable })}
+                contentClassName={cx({ "is-editable": isEditable, "is-dragging-widget": isDraggingWidget })}
                 visualizationClassName={cx({ "is-editable": isEditable })}
             >
                 {({ clientHeight, clientWidth }) => (

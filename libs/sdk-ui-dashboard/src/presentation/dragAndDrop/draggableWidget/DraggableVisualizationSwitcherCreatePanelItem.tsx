@@ -9,7 +9,7 @@ import {
 import { CustomCreatePanelItemComponent } from "../../componentDefinition/index.js";
 import { DraggableCreatePanelItem } from "../DraggableCreatePanelItem.js";
 import { DraggableItem, IWrapCreatePanelItemWithDragComponent } from "../types.js";
-import { useDashboardSelector, selectSettings } from "../../../model/index.js";
+import { useDashboardSelector, selectSettings, useWidgetSelection } from "../../../model/index.js";
 import { ISettings } from "@gooddata/sdk-model";
 
 /**
@@ -40,12 +40,16 @@ export const DraggableVisualizationSwitcherCreatePanelItem: React.FC<
 > = ({ CreatePanelItemComponent, WrapCreatePanelItemWithDragComponent }) => {
     const settings = useDashboardSelector(selectSettings);
     const dragItem = getDragItem(settings);
+
+    const { deselectWidgets } = useWidgetSelection();
+
     return (
         <DraggableCreatePanelItem
             Component={CreatePanelItemComponent}
             WrapCreatePanelItemWithDragComponent={WrapCreatePanelItemWithDragComponent}
             dragItem={dragItem}
             hideDefaultPreview={false}
+            onDragStart={() => deselectWidgets()}
         />
     );
 };

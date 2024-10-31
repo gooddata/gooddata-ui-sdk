@@ -27,8 +27,8 @@ import {
 import { IDefaultDashboardVisualizationSwitcherWidgetProps } from "./types.js";
 import { DashboardVisualizationSwitcher } from "../../visualizationSwitcher/DashboardVisualizationSwitcher.js";
 import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
-import { DASHBOARD_OVERLAYS_FILTER_Z_INDEX } from "../../../../presentation/constants/index.js";
-
+import { DASHBOARD_OVERLAYS_FILTER_Z_INDEX } from "../../../constants/index.js";
+import { useIsDraggingWidget } from "../../../dragAndDrop/index.js";
 const overlayController = OverlayController.getInstance(DASHBOARD_OVERLAYS_FILTER_Z_INDEX);
 
 /**
@@ -45,6 +45,7 @@ export const EditableDashboardVisualizationSwitcherWidget: React.FC<
     );
     const isSaving = useDashboardSelector(selectIsDashboardSaving);
     const isEditable = !isSaving;
+    const isDraggingWidget = useIsDraggingWidget();
 
     const [activeVisualizationId, setActiveVisualizationId] = useState<string | undefined>(
         widget.visualizations[0]?.identifier,
@@ -108,7 +109,10 @@ export const EditableDashboardVisualizationSwitcherWidget: React.FC<
                     isSelectable={isSelectable}
                     isSelected={isSelected}
                     onSelected={onSelected}
-                    contentClassName={cx({ "is-editable": isEditable })}
+                    contentClassName={cx({
+                        "is-editable": isEditable,
+                        "is-dragging-widget": isDraggingWidget,
+                    })}
                     visualizationClassName="gd-visualization-switcher-widget-wrapper"
                     renderAfterContent={() => {
                         return (

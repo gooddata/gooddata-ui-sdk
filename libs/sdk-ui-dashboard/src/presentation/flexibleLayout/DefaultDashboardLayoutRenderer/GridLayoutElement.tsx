@@ -2,49 +2,20 @@
 
 import React, { CSSProperties, MouseEventHandler, forwardRef } from "react";
 import cx from "classnames";
-import { ScreenSize, IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
+import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
+
+import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
 
 import { determineSizeForScreen } from "./utils/sizing.js";
 
-// internal constant used to enable rendering of debug information that helps with layout issues debugging
-const ENABLE_DEBUG_MODE = false;
-
 export type LayoutElementType = "root" | "nested" | "section" | "item";
 
-const getBubbleDebugClassName = (type: LayoutElementType) => {
+const getElementClassName = (type: LayoutElementType, gridWidth: number) => {
     switch (type) {
         case "root":
-            return "gd-grid-layout__debug--root";
+            return "gd-grid-layout__container--root";
         case "nested":
-            return "gd-grid-layout__debug--nested";
-        case "section":
-            return "gd-grid-layout__debug--section";
-        case "item":
-        default:
-            return "gd-grid-layout__debug--item";
-    }
-};
-
-const getElementDebugClassName = (type: LayoutElementType) => {
-    switch (type) {
-        case "root":
-            return "gd-grid-layout__root--debug";
-        case "nested":
-            return "gd-grid-layout__nested--debug";
-        case "section":
-            return "gd-grid-layout__section--debug";
-        case "item":
-        default:
-            return "gd-grid-layout__item--debug";
-    }
-};
-
-const getElementClassName = (type: LayoutElementType) => {
-    switch (type) {
-        case "root":
-            return "gd-grid-layout__root";
-        case "nested":
-            return "gd-grid-layout__nested";
+            return `gd-grid-layout__container--nested gd-grid-layout__container--nested--width-${gridWidth}`;
         case "section":
             return "gd-grid-layout__section";
         case "item":
@@ -71,17 +42,9 @@ export interface IGridLayoutElementProps {
      */
     style?: CSSProperties | undefined;
     /**
-     * The current scree size.
-     */
-    screen: ScreenSize;
-    /**
      * The sizes of the grid element per each supported screen size.
      */
     layoutItemSize?: IDashboardLayoutSizeByScreenSize;
-    /**
-     * Enable to render debugging information about the element.
-     */
-    debug?: boolean;
     /**
      * Callback called when mouse leave the element.
      */
@@ -89,27 +52,17 @@ export interface IGridLayoutElementProps {
 }
 
 export const GridLayoutElement = forwardRef<HTMLDivElement, IGridLayoutElementProps>(
-    ({ children, className, style, type, layoutItemSize, screen, onMouseLeave }, ref) => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        const enableDebugMode = window.DEBUG_LAYOUT ?? ENABLE_DEBUG_MODE;
+    ({ children, className, style, type, layoutItemSize, onMouseLeave }, ref) => {
+        const screen = useScreenSize();
         const gridWidth = determineSizeForScreen(screen, layoutItemSize);
         const classNames = cx(
-            className,
-            getElementClassName(type),
+            getElementClassName(type, gridWidth),
             `gd-grid-layout__item--span-${gridWidth}`, // CSS Grid columns size class name
-            {
-                [getElementDebugClassName(type)]: enableDebugMode,
-            },
+            className,
         );
 
         return (
             <div className={classNames} style={style} onMouseLeave={onMouseLeave} ref={ref}>
-                {enableDebugMode ? (
-                    <div className={cx("gd-grid-layout__debug", getBubbleDebugClassName(type))}>
-                        {gridWidth} {screen}
-                    </div>
-                ) : null}
                 {children}
             </div>
         );

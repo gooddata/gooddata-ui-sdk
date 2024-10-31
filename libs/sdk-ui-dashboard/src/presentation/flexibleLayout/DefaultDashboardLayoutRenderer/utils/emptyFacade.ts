@@ -1,9 +1,14 @@
 // (C) 2022-2024 GoodData Corporation
 
-import { IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/fluidLayout/index.js";
+import { IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/flexibleLayout/index.js";
+import { ILayoutSectionPath } from "../../../../types.js";
+import { asLayoutItemPath } from "../../../../_staging/layout/coordinates.js";
 
-export const buildEmptyItemFacadeWithSetSize = (gridWidth: number): IDashboardLayoutItemFacade<unknown> => ({
-    index: () => 0,
+export const buildEmptyItemFacadeWithSetSize = (
+    gridWidth: number,
+    sectionIndex: ILayoutSectionPath,
+): IDashboardLayoutItemFacade<unknown> => ({
+    index: () => asLayoutItemPath(sectionIndex, 0),
     raw: () => null as any, // TODO: should we allow this in the interface?
     widget: () => null,
     ref: () => undefined,

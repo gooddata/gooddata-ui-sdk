@@ -130,6 +130,11 @@ export type VisualizationSwitcherInteractionType =
     | "visualizationSwitcherVisualizationAdded";
 
 /**
+ * @beta
+ */
+export type NestedLayoutInteractionType = "nestedLayoutRemoved";
+
+/**
  * @alpha
  */
 export type AutomationInteractionType =
@@ -195,7 +200,8 @@ export interface BareUserInteractionPayload {
         | AttributeHierarchiesInteractionType
         | AttributeFilterInteractionType
         | DateFilterInteractionType
-        | VisualizationSwitcherInteractionType;
+        | VisualizationSwitcherInteractionType
+        | NestedLayoutInteractionType;
 }
 
 /**

@@ -4,15 +4,22 @@ import cx from "classnames";
 import isNil from "lodash/isNil.js";
 import { ScreenSize } from "@gooddata/sdk-model";
 
-import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/fluidLayout/facade/interfaces.js";
+import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 
 import { IDashboardLayoutItemRenderer } from "./interfaces.js";
 import { GridLayoutElement } from "./GridLayoutElement.js";
+import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
 
 const isHiddenStyle = { height: 0, width: 0, overflow: "hidden", flex: 0 };
 
-export const DashboardLayoutItemViewRenderer: IDashboardLayoutItemRenderer<unknown> = (props) => {
-    const { item, screen, children, className, minHeight = 0, isHidden } = props;
+export const DashboardLayoutItemViewRenderer: IDashboardLayoutItemRenderer<unknown> = ({
+    item,
+    children,
+    className,
+    minHeight = 0,
+    isHidden,
+}) => {
+    const screen = useScreenSize();
     const { ratio, height } = getSizeForItem(item, screen);
 
     const style = useMemo(() => {
@@ -32,7 +39,6 @@ export const DashboardLayoutItemViewRenderer: IDashboardLayoutItemRenderer<unkno
     return (
         <GridLayoutElement
             type="item"
-            screen={screen}
             layoutItemSize={item.size()}
             className={cx(
                 {

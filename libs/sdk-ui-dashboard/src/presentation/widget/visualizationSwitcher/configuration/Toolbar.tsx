@@ -19,6 +19,7 @@ import {
     selectSettings,
     useDashboardSelector,
     useDashboardUserInteraction,
+    selectEnableFlexibleLayout,
 } from "../../../../model/index.js";
 import {
     defaultAlignPoints,
@@ -28,12 +29,20 @@ import { getSizeInfo } from "../../../../_staging/layout/sizing.js";
 import { ToolbarTop } from "./ToolbarTop.js";
 import { ToolbarBottom } from "./ToolbarBottom.js";
 
-const defaultArrowOffsets: ArrowOffsets = {
+const defaultFluidArrowOffsets: ArrowOffsets = {
     "tr tl": [7, 18],
     "br bl": [7, -18],
     "tl tr": [-7, 18],
     "tr tr": [-76, 18],
     "br br": [-76, -18],
+};
+
+const defaultFlexibleArrowOffsets: ArrowOffsets = {
+    "tr tl": [7, 8],
+    "br bl": [7, -8],
+    "tl tr": [-7, 8],
+    "tr tr": [-76, 8],
+    "br br": [-76, -8],
 };
 
 interface ToolbarProps {
@@ -65,6 +74,9 @@ export const Toolbar: React.FC<ToolbarProps> = ({
 
     const [activeVisualizationId, setActiveVisualizationId] = useState(visualizations[0]?.identifier);
     const settings = useDashboardSelector(selectSettings);
+
+    const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
+    const arrowOffsets = isFlexibleLayoutEnabled ? defaultFlexibleArrowOffsets : defaultFluidArrowOffsets;
 
     const onVisualizationAdd = useCallback(
         (insight: IInsight) => {
@@ -181,7 +193,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
             overlayClassName="gd-configuration-bubble-wrapper sdk-edit-mode-on gd-visualization-switcher-toolbar-bubble-wrapper"
             alignTo={alignTo}
             alignPoints={defaultAlignPoints}
-            arrowOffsets={defaultArrowOffsets}
+            arrowOffsets={arrowOffsets}
             arrowDirections={defaultArrowDirections}
             closeOnOutsideClick
             closeOnParentScroll={false}

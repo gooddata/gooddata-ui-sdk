@@ -1,0 +1,119 @@
+// (C) 2007-2024 GoodData Corporation
+import cx from "classnames";
+import React, { useMemo } from "react";
+import {
+    selectDraggingWidgetTargetLayoutPath,
+    useDashboardDispatch,
+    useDashboardSelector,
+} from "../../../../model/index.js";
+import { WidgetDropZone } from "./WidgetDropZone.js";
+import { useDashboardDrop } from "../../../dragAndDrop/useDashboardDrop.js";
+import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler.js";
+import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler.js";
+import { useKpiPlaceholderDropHandler } from "./useKpiPlaceholderDropHandler.js";
+import { useMoveWidgetDropHandler } from "./useMoveWidgetHandler.js";
+import { getDashboardLayoutItemHeightForGrid } from "../../../../_staging/layout/sizing.js";
+import { BaseDraggableLayoutItem } from "../../../dragAndDrop/types.js";
+import { useRichTextPlaceholderDropHandler } from "./useRichTextPlaceholderDropHandler.js";
+import { useVisualizationSwitcherPlaceholderDropHandler } from "./useVisualizationSwitcherPlaceholderDropHandler.js";
+import { useDashboardLayoutPlaceholderDropHandler } from "./useDashboardLayoutPlaceholderDropHandler.js";
+import { ILayoutItemPath } from "../../../../types.js";
+import { areLayoutPathsEqual } from "../../../../_staging/layout/coordinates.js";
+import { draggableWidgetDropHandler } from "../../../dragAndDrop/draggableWidget/draggableWidgetDropHandler.js";
+import { GridLayoutElement } from "../../DefaultDashboardLayoutRenderer/GridLayoutElement.js";
+
+export type WidgetDropZoneColumnProps = {
+    layoutPath: ILayoutItemPath;
+    isLastInSection?: boolean;
+};
+
+export const WidgetDropZoneColumn = (props: WidgetDropZoneColumnProps) => {
+    const { layoutPath, isLastInSection = false } = props;
+
+    const dropzoneCoordinates = useDashboardSelector(selectDraggingWidgetTargetLayoutPath);
+
+    const handleInsightListItemDrop = useInsightListItemDropHandler(layoutPath);
+    const handleInsightPlaceholderDrop = useInsightPlaceholderDropHandler(layoutPath);
+    const handleKpiPlaceholderDrop = useKpiPlaceholderDropHandler(layoutPath);
+    const handleRichTextPlaceholderDrop = useRichTextPlaceholderDropHandler(layoutPath);
+    const handleVisualizationSwitcherPlaceholderDrop =
+        useVisualizationSwitcherPlaceholderDropHandler(layoutPath);
+    const handleDashboardLayoutPlaceholderDrop = useDashboardLayoutPlaceholderDropHandler(layoutPath);
+
+    const handleWidgetDrop = useMoveWidgetDropHandler(layoutPath);
+
+    const dispatch = useDashboardDispatch();
+
+    const [collectedProps, dropRef] = useDashboardDrop(
+        [
+            "insightListItem",
+            "kpi-placeholder",
+            "insight-placeholder",
+            "kpi",
+            "insight",
+            "richText",
+            "richTextListItem",
+            "visualizationSwitcher",
+            "visualizationSwitcherListItem",
+            "dashboardLayout",
+            "dashboardLayoutListItem",
+        ],
+        {
+            drop: (item) => {
+                draggableWidgetDropHandler(item, {
+                    handleInsightListItemDrop,
+                    handleKpiPlaceholderDrop,
+                    handleInsightPlaceholderDrop,
+                    handleRichTextPlaceholderDrop,
+                    handleVisualizationSwitcherPlaceholderDrop,
+                    handleDashboardLayoutPlaceholderDrop,
+                    handleWidgetDrop,
+                });
+            },
+        },
+        [
+            dispatch,
+            handleInsightListItemDrop,
+            handleInsightPlaceholderDrop,
+            handleKpiPlaceholderDrop,
+            handleVisualizationSwitcherPlaceholderDrop,
+            handleRichTextPlaceholderDrop,
+            handleWidgetDrop,
+            handleDashboardLayoutPlaceholderDrop,
+        ],
+    );
+
+    const showDropZone = useMemo(
+        () => areLayoutPathsEqual(dropzoneCoordinates, layoutPath),
+        [dropzoneCoordinates, layoutPath],
+    );
+
+    if (!showDropZone) {
+        return null;
+    }
+
+    if (!collectedProps?.item) {
+        return null;
+    }
+
+    const { gridWidth = 12, gridHeight } = (collectedProps.item as BaseDraggableLayoutItem).size;
+
+    return (
+        <GridLayoutElement
+            type="item"
+            layoutItemSize={{
+                xl: { gridWidth, gridHeight },
+                lg: { gridWidth, gridHeight },
+                md: { gridWidth, gridHeight },
+                sm: { gridWidth, gridHeight },
+                xs: { gridWidth, gridHeight },
+            }}
+            className={cx("gd-fluidlayout-column", "gd-fluidlayout-column-dropzone", "s-fluid-layout-column")}
+            style={{
+                minHeight: getDashboardLayoutItemHeightForGrid(gridHeight),
+            }}
+        >
+            <WidgetDropZone isLastInSection={isLastInSection} layoutPath={layoutPath} dropRef={dropRef} />
+        </GridLayoutElement>
+    );
+};

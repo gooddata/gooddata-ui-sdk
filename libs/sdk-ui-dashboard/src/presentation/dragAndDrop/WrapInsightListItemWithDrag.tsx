@@ -1,21 +1,24 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React from "react";
 import classNames from "classnames";
 
 import { useDashboardSelector, selectIsInEditMode, selectSettings } from "../../model/index.js";
 import { useDashboardDrag } from "./useDashboardDrag.js";
-import { useWidgetDragEndHandler } from "./draggableWidget/useWidgetDragEndHandler.js";
 import { getSizeInfo } from "../../_staging/layout/sizing.js";
 import { INSIGHT_WIDGET_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
 import { IWrapInsightListItemWithDragProps } from "./types.js";
+import { useWidgetDragEndHandler } from "./draggableWidget/useWidgetDragEndHandler.js";
 
 /**
  * @internal
  */
-export function WrapInsightListItemWithDrag({ children, insight }: IWrapInsightListItemWithDragProps) {
+export function WrapInsightListItemWithDrag({
+    children,
+    insight,
+    onDragStart,
+}: IWrapInsightListItemWithDragProps) {
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const settings = useDashboardSelector(selectSettings);
-
     const handleDragEnd = useWidgetDragEndHandler();
 
     const [{ isDragging }, dragRef] = useDashboardDrag(
@@ -35,6 +38,7 @@ export function WrapInsightListItemWithDrag({ children, insight }: IWrapInsightL
             canDrag: isInEditMode,
             hideDefaultPreview: false,
             dragEnd: handleDragEnd,
+            dragStart: onDragStart,
         },
         [isInEditMode, insight, handleDragEnd],
     );

@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { IDashboardLayout, ScreenSize } from "@gooddata/sdk-model";
 import cx from "classnames";
 import isEqual from "lodash/isEqual.js";
@@ -10,9 +10,8 @@ import {
     ScreenClassRender,
     setConfiguration,
 } from "react-grid-system";
-import { DashboardLayoutFacade } from "../../../_staging/dashboard/fluidLayout/facade/layout.js";
+import { DashboardLayoutFacade } from "../../../_staging/dashboard/legacyFluidLayout/facade/layout.js";
 import { DASHBOARD_LAYOUT_GRID_CONFIGURATION } from "../../constants/index.js";
-import { emptyDOMRect } from "../constants.js";
 import { DashboardLayoutSection } from "./DashboardLayoutSection.js";
 import {
     IDashboardLayoutRenderProps,
@@ -25,6 +24,7 @@ import {
     getResizedItemPositions,
     unifyDashboardLayoutItemHeights,
 } from "./utils/sizing.js";
+import { emptyDOMRect } from "../../constants.js";
 
 setConfiguration(DASHBOARD_LAYOUT_GRID_CONFIGURATION);
 

@@ -1,40 +1,57 @@
 // (C) 2007-2024 GoodData Corporation
 import React from "react";
-import { IDashboardLayoutSectionRenderer } from "./interfaces.js";
+
+import { selectActiveSection, useDashboardSelector } from "../../../model/index.js";
+import { areSectionLayoutPathsEqual } from "../../../_staging/layout/coordinates.js";
+import { IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/index.js";
 import {
-    DashboardLayoutSectionBorder,
     DashboardLayoutSectionBorderStatus,
-    useIsDraggingWidget,
-} from "../../dragAndDrop/index.js";
-import { selectActiveSectionIndex, useDashboardSelector } from "../../../model/index.js";
+    DashboardLayoutSectionBorder,
+} from "../dragAndDrop/draggableWidget/DashboardLayoutSectionBorder/index.js";
+
+import { IDashboardLayoutSectionRenderer } from "./interfaces.js";
 import { GridLayoutElement } from "./GridLayoutElement.js";
+import { useIsDraggingWidget } from "../../dragAndDrop/draggableWidget/useIsDraggingWidget.js";
 
 const isHiddenStyle = { height: 0, width: 0, overflow: "hidden", flex: 0 };
 const defaultStyle = {};
 
-function useBorderStatus(sectionIndex: number): DashboardLayoutSectionBorderStatus {
-    const activeSectionIndex = useDashboardSelector(selectActiveSectionIndex);
+function useBorderStatus(section: IDashboardLayoutSectionFacade<unknown>): {
+    status: DashboardLayoutSectionBorderStatus;
+    renderBottomBorder?: boolean;
+} {
+    const activeSection = useDashboardSelector(selectActiveSection);
     const isDraggingWidget = useIsDraggingWidget();
     if (isDraggingWidget) {
-        return "muted";
+        return { status: "muted", renderBottomBorder: section.isLast() };
     }
-    const isActive = activeSectionIndex === sectionIndex;
-    return !isActive ? "invisible" : "muted";
+    const isActive = areSectionLayoutPathsEqual(activeSection, section.index());
+    return isActive ? { status: "muted", renderBottomBorder: true } : { status: "invisible" };
 }
 
-export const EditableDashboardLayoutSectionRenderer: IDashboardLayoutSectionRenderer<unknown> = (props) => {
-    const { children, className, isHidden, section, screen, parentLayoutItemSize } = props;
+export const EditableDashboardLayoutSectionRenderer: IDashboardLayoutSectionRenderer<unknown> = ({
+    children,
+    className,
+    isHidden,
+    section,
+    parentLayoutItemSize,
+}) => {
     const style = isHidden ? isHiddenStyle : defaultStyle;
-    const status = useBorderStatus(section.index());
+    const { status, renderBottomBorder } = useBorderStatus(section);
     return (
         <GridLayoutElement
             type="section"
-            screen={screen}
             layoutItemSize={parentLayoutItemSize}
             className={className}
             style={style}
         >
-            <DashboardLayoutSectionBorder status={status}>{children}</DashboardLayoutSectionBorder>
+            <DashboardLayoutSectionBorder
+                status={status}
+                renderBottomBorder={renderBottomBorder}
+                itemSize={parentLayoutItemSize}
+            >
+                {children}
+            </DashboardLayoutSectionBorder>
         </GridLayoutElement>
     );
 };

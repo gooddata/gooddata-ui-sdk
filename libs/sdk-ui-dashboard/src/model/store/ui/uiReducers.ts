@@ -11,7 +11,12 @@ import {
     widgetUri,
 } from "@gooddata/sdk-model";
 import { InvalidCustomUrlDrillParameterInfo, UiState, FilterViewDialogMode } from "./uiState.js";
-import { ILayoutCoordinates, IMenuButtonItemsVisibility, IScheduleEmailContext } from "../../../types.js";
+import {
+    IMenuButtonItemsVisibility,
+    IScheduleEmailContext,
+    ILayoutItemPath,
+    ILayoutSectionPath,
+} from "../../../types.js";
 import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
 import { IDashboardWidgetOverlay } from "../../types/commonTypes.js";
 import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/drillingUtils.js";
@@ -122,7 +127,7 @@ const toggleFilterViewsDialog: UiReducer<
     };
 };
 
-const openKpiDeleteDialog: UiReducer<PayloadAction<ILayoutCoordinates>> = (state, action) => {
+const openKpiDeleteDialog: UiReducer<PayloadAction<ILayoutItemPath>> = (state, action) => {
     state.kpiDeleteDialog.widgetCoordinates = action.payload;
 };
 
@@ -203,12 +208,12 @@ const clearFilterIndexSelection: UiReducer = (state) => {
     state.selectedFilterIndex = undefined;
 };
 
-const setActiveSectionIndex: UiReducer<PayloadAction<number>> = (state, action) => {
-    state.activeSectionIndex = action.payload;
+const setActiveSection: UiReducer<PayloadAction<ILayoutSectionPath>> = (state, action) => {
+    state.activeSection = action.payload;
 };
 
-const clearActiveSectionIndex: UiReducer = (state) => {
-    state.activeSectionIndex = undefined;
+const clearActiveSection: UiReducer = (state) => {
+    state.activeSection = undefined;
 };
 
 const resetInvalidDrillWidgetRefs: UiReducer = (state) => {
@@ -291,14 +296,17 @@ const clearDraggingWidgetSource: UiReducer<PayloadAction<void>> = (state) => {
     state.draggingWidgetSource = undefined;
 };
 
-const setDraggingWidgetTarget: UiReducer<PayloadAction<ILayoutCoordinates>> = (state, action) => {
+const setDraggingWidgetTarget: UiReducer<PayloadAction<ILayoutItemPath>> = (state, action) => {
     state.draggingWidgetTarget = action.payload;
-    state.activeSectionIndex = action.payload.sectionIndex;
+    state.activeSection = {
+        parent: action.payload.length > 1 ? action.payload.slice(0, -1) : undefined, // cut last item out to get parent of the item of section with sectionIndex used below
+        sectionIndex: action.payload[action.payload.length - 1].sectionIndex, // use sectionIndex from the last item
+    };
 };
 
 const clearDraggingWidgetTarget: UiReducer<PayloadAction<void>> = (state) => {
     state.draggingWidgetTarget = undefined;
-    state.activeSectionIndex = undefined;
+    state.activeSection = undefined;
 };
 
 const setWidgetsOverlay: UiReducer<PayloadAction<Record<string, IDashboardWidgetOverlay>>> = (
@@ -375,8 +383,8 @@ export const uiReducers = {
     setFilterAttributeSelectionOpen,
     selectFilterIndex,
     clearFilterIndexSelection,
-    setActiveSectionIndex,
-    clearActiveSectionIndex,
+    setActiveSection,
+    clearActiveSection,
     openCancelEditModeDialog,
     closeCancelEditModeDialog,
     resetInvalidDrillWidgetRefs,

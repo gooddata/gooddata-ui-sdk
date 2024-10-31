@@ -36,8 +36,8 @@ export {
     getDashboardLayoutWidgetDefaultGridWidth,
     validateDashboardLayoutWidgetSize,
 } from "./utils/sizing.js";
-export { DashboardLayoutBuilder } from "../../../_staging/dashboard/fluidLayout/builder/layout.js";
-export { DashboardLayoutFacade } from "../../../_staging/dashboard/fluidLayout/facade/layout.js";
+export { DashboardLayoutBuilder } from "../../../_staging/dashboard/flexibleLayout/builder/layout.js";
+export { DashboardLayoutFacade } from "../../../_staging/dashboard/flexibleLayout/facade/layout.js";
 export type {
     DashboardLayoutItemModifications,
     DashboardLayoutItemsSelector,
@@ -47,11 +47,13 @@ export type {
     IDashboardLayoutBuilder,
     IDashboardLayoutItemBuilder,
     IDashboardLayoutSectionBuilder,
-} from "../../../_staging/dashboard/fluidLayout/builder/interfaces.js";
+} from "../../../_staging/dashboard/flexibleLayout/builder/interfaces.js";
 export type {
     IDashboardLayoutItemFacade,
     IDashboardLayoutItemsFacade,
     IDashboardLayoutFacade,
     IDashboardLayoutSectionFacade,
     IDashboardLayoutSectionsFacade,
-} from "../../../_staging/dashboard/fluidLayout/facade/interfaces.js";
+} from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
+
+export { GridLayoutElement } from "./GridLayoutElement.js";

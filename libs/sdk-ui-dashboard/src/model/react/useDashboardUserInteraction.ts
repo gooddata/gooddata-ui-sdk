@@ -10,6 +10,7 @@ import {
     DateFilterInteractionType,
     AutomationInteractionData,
     SavedFilterViewInteractionData,
+    NestedLayoutInteractionType,
 } from "../events/index.js";
 
 import { useDashboardEventDispatch } from "./useDashboardEventDispatch.js";
@@ -80,6 +81,13 @@ export const useDashboardUserInteraction = () => {
         [eventDispatch],
     );
 
+    const nestedLayoutInteraction = useCallback(
+        (eventType: NestedLayoutInteractionType) => {
+            eventDispatch(userInteractionTriggered(eventType));
+        },
+        [eventDispatch],
+    );
+
     const automationInteraction = useCallback(
         (eventData: AutomationInteractionData) => {
             eventDispatch(
@@ -132,5 +140,6 @@ export const useDashboardUserInteraction = () => {
         visualizationSwitcherInteraction,
         automationInteraction,
         savedFilterViewInteraction,
+        nestedLayoutInteraction,
     };
 };

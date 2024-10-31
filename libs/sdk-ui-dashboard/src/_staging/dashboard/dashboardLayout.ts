@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import {
     IInsight,
@@ -250,9 +250,24 @@ export function dashboardLayoutRemoveIdentity<T extends IDashboardWidget>(
     const updatedSections = layout.sections.map((section) => {
         const updatedItems: IDashboardLayoutItem[] = section.items.map((item) => {
             if (isDashboardLayout(item.widget)) {
+                const identity = getWidgetIdentity(item.widget);
+
+                if (!identity || !identityPredicate(identity)) {
+                    return {
+                        ...item,
+                        widget: dashboardLayoutRemoveIdentity(item.widget, identityPredicate),
+                    };
+                }
+
                 return {
                     ...item,
-                    widget: dashboardLayoutRemoveIdentity(layout, identityPredicate),
+                    widget: {
+                        ...item.widget,
+                        ...dashboardLayoutRemoveIdentity(item.widget, identityPredicate),
+                        ref: undefined,
+                        uri: undefined,
+                        identifier: undefined,
+                    },
                 };
             } else {
                 const identity = getWidgetIdentity(item.widget);

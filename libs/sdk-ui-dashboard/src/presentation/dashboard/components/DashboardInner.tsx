@@ -7,28 +7,32 @@ import {
     selectLocale,
     selectIsInEditMode,
     useDashboardAutomations,
+    selectEnableFlexibleLayout,
 } from "../../../model/index.js";
 import { DashboardHeader } from "../DashboardHeader/DashboardHeader.js";
 import { IDashboardProps } from "../types.js";
 import { DashboardSidebar } from "../DashboardSidebar/DashboardSidebar.js";
 import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeAwareDashboardSidebar.js";
 import {
-    DragLayerComponent,
     useDashboardDragScroll,
     DeleteDropZone,
-    WrapCreatePanelItemWithDrag,
     WrapInsightListItemWithDrag,
 } from "../../dragAndDrop/index.js";
 import { Toolbar } from "../../toolbar/index.js";
 import { OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../constants/index.js";
 import { DashboardContent } from "../DashboardContent.js";
+import { DashboardScreenSizeProvider } from "./DashboardScreenSizeContext.js";
+import { DragLayerComponent as FlexibleDragLayerComponent } from "../../flexibleLayout/dragAndDrop/DragLayer.js";
+import { DragLayerComponent as FlexibleFluidDragLayerComponent } from "../../layout/dragAndDrop/DragLayer.js";
+import { WrapCreatePanelItemWithDrag } from "../../dragAndDrop/WrapCreatePanelItemWithDrag.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 
 export const DashboardInner: React.FC<IDashboardProps> = (props) => {
     const locale = useDashboardSelector(selectLocale);
     const isEditMode = useDashboardSelector(selectIsInEditMode);
+    const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
 
     const headerRef = useRef(null);
     const layoutRef = useRef(null);
@@ -40,6 +44,10 @@ export const DashboardInner: React.FC<IDashboardProps> = (props) => {
     useEffect(() => {
         initializeAutomations();
     }, [initializeAutomations]);
+
+    const DragLayerComponent = isFlexibleLayoutEnabled
+        ? FlexibleDragLayerComponent
+        : FlexibleFluidDragLayerComponent;
 
     return (
         <IntlWrapper locale={locale}>
@@ -63,7 +71,7 @@ export const DashboardInner: React.FC<IDashboardProps> = (props) => {
                             className="gd-dash-header-wrapper gd-dash-header-wrapper-sdk-8-12"
                             ref={headerRef}
                         >
-                            {/* Header z-index start at  6000 so we need force all overlays z-indexes start at 6000 to be under header */}
+                            {/* Header z-index start at  6000, so we need force all overlays z-indexes start at 6000 to be under header */}
                             <OverlayControllerProvider overlayController={overlayController}>
                                 <DashboardHeader />
                             </OverlayControllerProvider>
@@ -72,7 +80,9 @@ export const DashboardInner: React.FC<IDashboardProps> = (props) => {
                             className="gd-flex-item-stretch dash-section dash-section-kpis"
                             ref={layoutRef as RefObject<HTMLDivElement>}
                         >
-                            <DashboardContent {...props} />
+                            <DashboardScreenSizeProvider>
+                                <DashboardContent {...props} />
+                            </DashboardScreenSizeProvider>
                         </div>
                         <div className="gd-dash-bottom-position-pixel" ref={bottomRef} />
                     </div>

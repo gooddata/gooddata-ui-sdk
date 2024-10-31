@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { IWidget } from "@gooddata/sdk-model";
 import { SagaIterator } from "redux-saga";
@@ -15,6 +15,12 @@ import { layoutActions } from "../../store/layout/index.js";
 import { selectLayout } from "../../store/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { validateItemExists, validateSectionExists } from "./validation/layoutValidation.js";
+import {
+    serializeLayoutSectionPath,
+    findSection,
+    asLayoutItemPath,
+    serializeLayoutItemPath,
+} from "../../../_staging/layout/coordinates.js";
 
 function validateLayoutIndexes(
     ctx: DashboardContext,
@@ -24,26 +30,52 @@ function validateLayoutIndexes(
     const {
         payload: { sectionIndex, itemIndexes },
     } = command;
-
-    if (!validateSectionExists(layout, sectionIndex)) {
-        throw invalidArgumentsProvided(
-            ctx,
-            command,
-            `Attempting to resize item from non-existent section at ${sectionIndex}. There are only ${layout.sections.length} sections.`,
-        );
-    }
-
-    const fromSection = layout.sections[sectionIndex];
-
-    itemIndexes.forEach((itemIndex) => {
-        if (!validateItemExists(fromSection, itemIndex)) {
+    if (typeof sectionIndex === "number") {
+        if (!validateSectionExists(layout, sectionIndex)) {
             throw invalidArgumentsProvided(
                 ctx,
                 command,
-                `Attempting to resize non-existent item from index ${itemIndex} in section ${sectionIndex}. There are only ${fromSection.items.length} items in this section.`,
+                `Attempting to resize item from non-existent section at ${sectionIndex}. There are only ${layout.sections.length} sections.`,
             );
         }
-    });
+
+        const fromSection = layout.sections[sectionIndex];
+
+        itemIndexes.forEach((itemIndex) => {
+            if (!validateItemExists(fromSection, itemIndex)) {
+                throw invalidArgumentsProvided(
+                    ctx,
+                    command,
+                    `Attempting to resize non-existent item from index ${itemIndex} in section ${sectionIndex}. There are only ${fromSection.items.length} items in this section.`,
+                );
+            }
+        });
+    } else {
+        if (!validateSectionExists(layout, sectionIndex)) {
+            throw invalidArgumentsProvided(
+                ctx,
+                command,
+                `Attempting to resize item from non-existent section at ${serializeLayoutSectionPath(
+                    sectionIndex,
+                )}.`,
+            );
+        }
+
+        const fromSection = findSection(layout, sectionIndex);
+
+        itemIndexes.forEach((itemIndex) => {
+            const layoutPath = asLayoutItemPath(sectionIndex, itemIndex);
+            if (!validateItemExists(fromSection, layoutPath)) {
+                throw invalidArgumentsProvided(
+                    ctx,
+                    command,
+                    `Attempting to resize non-existent item from index ${serializeLayoutItemPath(
+                        layoutPath,
+                    )}. There are only ${fromSection.items.length} items in this section.`,
+                );
+            }
+        });
+    }
 }
 
 export function* resizeHeightHandler(
@@ -61,15 +93,25 @@ export function* resizeHeightHandler(
 
     validateHeight(ctx, layout, insightsMap, cmd);
 
+    const numericalSectionIndex = typeof sectionIndex === "number" ? sectionIndex : sectionIndex.sectionIndex;
+    const sectionPath = typeof sectionIndex === "number" ? { parent: undefined, sectionIndex } : sectionIndex;
+
     yield put(
         layoutActions.changeItemsHeight({
-            sectionIndex,
+            sectionIndex: sectionPath,
             itemIndexes,
             height,
         }),
     );
 
-    return layoutSectionItemsHeightResized(ctx, sectionIndex, itemIndexes, height, cmd.correlationId);
+    return layoutSectionItemsHeightResized(
+        ctx,
+        numericalSectionIndex,
+        sectionPath,
+        itemIndexes,
+        height,
+        cmd.correlationId,
+    );
 }
 
 function validateHeight(
@@ -82,8 +124,10 @@ function validateHeight(
         payload: { sectionIndex, itemIndexes, height },
     } = cmd;
 
-    const widgets = itemIndexes.map(
-        (itemIndex) => layout.sections[sectionIndex].items[itemIndex].widget as IWidget,
+    const widgets = itemIndexes.map((itemIndex) =>
+        typeof sectionIndex === "number"
+            ? (layout.sections[sectionIndex].items[itemIndex].widget as IWidget)
+            : (findSection(layout, sectionIndex).items[itemIndex].widget as IWidget),
     );
 
     const minLimit = getMinHeight(widgets, insightsMap);

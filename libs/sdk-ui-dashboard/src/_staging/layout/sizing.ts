@@ -18,6 +18,7 @@ import {
     widgetType as getWidgetType,
     isVisualizationSwitcherWidget,
     IVisualizationSwitcherWidget,
+    isDashboardLayout,
 } from "@gooddata/sdk-model";
 import {
     fluidLayoutDescriptor,
@@ -32,6 +33,7 @@ import {
     VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_DEFAULT,
     RICH_TEXT_WIDGET_SIZE_INFO_NEW_DEFAULT,
     VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_NEW_DEFAULT,
+    DASHBOARD_LAYOUT_WIDGET_SIZE_INFO_DEFAULT,
 } from "@gooddata/sdk-ui-ext";
 
 import { ObjRefMap } from "../metadata/objRefMap.js";
@@ -52,7 +54,7 @@ export type MeasurableWidgetContent = IInsightDefinition | IKpi;
  */
 export function getSizeInfo(
     settings: ISettings,
-    widgetType: AnalyticalWidgetType,
+    widgetType: AnalyticalWidgetType | ExtendedDashboardWidget["type"],
     widgetContent?: MeasurableWidgetContent,
 ): IVisualizationSizeInfo {
     if (widgetType === "kpi") {
@@ -61,6 +63,8 @@ export function getSizeInfo(
         return settings.enableDashboardFlexibleLayout
             ? RICH_TEXT_WIDGET_SIZE_INFO_NEW_DEFAULT
             : RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT;
+    } else if (widgetType === "IDashboardLayout") {
+        return DASHBOARD_LAYOUT_WIDGET_SIZE_INFO_DEFAULT;
     } else if (widgetType === "visualizationSwitcher" && !widgetContent) {
         return settings.enableDashboardFlexibleLayout
             ? VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_NEW_DEFAULT
@@ -173,10 +177,17 @@ export function getMinHeight(widgets: IWidget[], insightMap: ObjRefMap<IInsight>
     return Math.max(defaultMin, ...mins);
 }
 
+const MAXIMUM_HEIGHT_OF_ROW_WITH_NESTED_WIDGETS = 2000;
+
 /**
  * @internal
  */
 export function getMaxHeight(widgets: IWidget[], insightMap: ObjRefMap<IInsight>): number {
+    const containsNestedLayout = widgets.some(isDashboardLayout);
+    if (containsNestedLayout) {
+        return MAXIMUM_HEIGHT_OF_ROW_WITH_NESTED_WIDGETS;
+    }
+
     const maxs: number[] = widgets.filter(isDashboardWidget).map((widget) => {
         let widgetContent: MeasurableWidgetContent | undefined;
         if (isKpiWidget(widget)) {

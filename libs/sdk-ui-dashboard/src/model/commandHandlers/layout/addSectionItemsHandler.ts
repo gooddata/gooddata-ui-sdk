@@ -1,25 +1,34 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { SagaIterator } from "redux-saga";
+import { call, put, SagaReturnType, select } from "redux-saga/effects";
+import isEmpty from "lodash/isEmpty.js";
+
 import { DashboardContext } from "../../types/commonTypes.js";
 import { AddSectionItems } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { selectLayout, selectStash } from "../../store/layout/layoutSelectors.js";
-import { call, put, SagaReturnType, select } from "redux-saga/effects";
-import { validateItemPlacement, validateSectionExists } from "./validation/layoutValidation.js";
 import { ExtendedDashboardLayoutSection, InternalDashboardItemDefinition } from "../../types/layoutTypes.js";
-import { validateAndResolveStashedItems } from "./validation/stashValidation.js";
-import isEmpty from "lodash/isEmpty.js";
 import { layoutActions } from "../../store/layout/index.js";
 import { DashboardLayoutSectionItemsAdded, layoutSectionItemsAdded } from "../../events/layout.js";
 import { resolveIndexOfNewItem } from "../../utils/arrayOps.js";
 import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
 import { batchActions } from "redux-batched-actions";
 import { insightsActions } from "../../store/insights/index.js";
+import { addTemporaryIdentityToWidgets } from "../../utils/dashboardItemUtils.js";
+import {
+    serializeLayoutItemPath,
+    getItemIndex,
+    updateItemIndex,
+    findSection,
+    getSectionIndex,
+} from "../../../_staging/layout/coordinates.js";
+
+import { validateItemPlacement, validateSectionExists } from "./validation/layoutValidation.js";
+import { validateAndResolveStashedItems } from "./validation/stashValidation.js";
 import {
     validateAndNormalizeWidgetItems,
     validateAndResolveItemFilterSettings,
 } from "./validation/itemValidation.js";
-import { addTemporaryIdentityToWidgets } from "../../utils/dashboardItemUtils.js";
 
 type AddSectionItemsContext = {
     readonly ctx: DashboardContext;
@@ -37,43 +46,84 @@ function validateAndResolveItems(commandCtx: AddSectionItemsContext) {
         stash,
         items,
         cmd: {
-            payload: { sectionIndex, itemIndex },
+            payload: { itemPath, itemIndex, sectionIndex },
         },
     } = commandCtx;
-    if (!validateSectionExists(layout, sectionIndex)) {
-        throw invalidArgumentsProvided(
-            ctx,
-            commandCtx.cmd,
-            `Attempting to add items to non-existing layout section at index ${sectionIndex}.`,
-        );
+    if (itemPath === undefined) {
+        if (!validateSectionExists(layout, sectionIndex)) {
+            throw invalidArgumentsProvided(
+                ctx,
+                commandCtx.cmd,
+                `Attempting to add items to non-existing layout section at index ${sectionIndex}.`,
+            );
+        }
+
+        const section: ExtendedDashboardLayoutSection = layout.sections[sectionIndex];
+
+        if (!validateItemPlacement(section, itemIndex)) {
+            throw invalidArgumentsProvided(
+                ctx,
+                commandCtx.cmd,
+                `Attempting to insert new item at wrong index ${itemIndex}. There are currently ${section.items.length} items.`,
+            );
+        }
+
+        const stashValidationResult = validateAndResolveStashedItems(stash, items);
+
+        if (!isEmpty(stashValidationResult.missing)) {
+            throw invalidArgumentsProvided(
+                ctx,
+                commandCtx.cmd,
+                `Attempting to use non-existing stashes. Identifiers of missing stashes: ${stashValidationResult.missing.join(
+                    ", ",
+                )}`,
+            );
+        }
+
+        return {
+            stashValidationResult,
+            section,
+        };
+    } else {
+        if (!validateSectionExists(layout, itemPath)) {
+            throw invalidArgumentsProvided(
+                ctx,
+                commandCtx.cmd,
+                `Attempting to add items to non-existing layout section at index ${serializeLayoutItemPath(
+                    itemPath,
+                )}.`,
+            );
+        }
+
+        const section: ExtendedDashboardLayoutSection = findSection(layout, itemPath);
+
+        if (!validateItemPlacement(section, itemPath)) {
+            throw invalidArgumentsProvided(
+                ctx,
+                commandCtx.cmd,
+                `Attempting to insert new item at wrong index ${serializeLayoutItemPath(
+                    itemPath,
+                )}. There are currently ${section.items.length} items.`,
+            );
+        }
+
+        const stashValidationResult = validateAndResolveStashedItems(stash, items);
+
+        if (!isEmpty(stashValidationResult.missing)) {
+            throw invalidArgumentsProvided(
+                ctx,
+                commandCtx.cmd,
+                `Attempting to use non-existing stashes. Identifiers of missing stashes: ${stashValidationResult.missing.join(
+                    ", ",
+                )}`,
+            );
+        }
+
+        return {
+            stashValidationResult,
+            section,
+        };
     }
-
-    const section: ExtendedDashboardLayoutSection = layout.sections[sectionIndex];
-
-    if (!validateItemPlacement(section, itemIndex)) {
-        throw invalidArgumentsProvided(
-            ctx,
-            commandCtx.cmd,
-            `Attempting to insert new item at wrong index ${itemIndex}. There are currently ${section.items.length} items.`,
-        );
-    }
-
-    const stashValidationResult = validateAndResolveStashedItems(stash, items);
-
-    if (!isEmpty(stashValidationResult.missing)) {
-        throw invalidArgumentsProvided(
-            ctx,
-            commandCtx.cmd,
-            `Attempting to use non-existing stashes. Identifiers of missing stashes: ${stashValidationResult.missing.join(
-                ", ",
-            )}`,
-        );
-    }
-
-    return {
-        stashValidationResult,
-        section,
-    };
 }
 
 export function* addSectionItemsHandler(
@@ -94,7 +144,7 @@ export function* addSectionItemsHandler(
 
     const { stashValidationResult, section } = validateAndResolveItems(commandCtx);
     const {
-        payload: { itemIndex, sectionIndex, autoResolveDateFilterDataset },
+        payload: { itemPath, sectionIndex, itemIndex, autoResolveDateFilterDataset },
     } = cmd;
 
     const normalizationResult: SagaReturnType<typeof validateAndNormalizeWidgetItems> = yield call(
@@ -116,8 +166,7 @@ export function* addSectionItemsHandler(
         batchActions([
             insightsActions.addInsights(normalizationResult.resolvedInsights.loaded),
             layoutActions.addSectionItems({
-                sectionIndex,
-                itemIndex,
+                layoutPath: itemPath === undefined ? [{ sectionIndex, itemIndex }] : itemPath,
                 items: itemsToAdd,
                 usedStashes: stashValidationResult.existing,
                 undo: {
@@ -127,10 +176,18 @@ export function* addSectionItemsHandler(
         ]),
     );
 
+    const originalItemIndex = itemPath === undefined ? itemIndex : getItemIndex(itemPath);
+    const newItemIndex = resolveIndexOfNewItem(section.items, originalItemIndex);
+    const updatedLayoutPath =
+        itemPath === undefined
+            ? [{ sectionIndex, itemIndex: newItemIndex }]
+            : updateItemIndex(itemPath, newItemIndex);
+
     return layoutSectionItemsAdded(
         ctx,
-        sectionIndex,
-        resolveIndexOfNewItem(section.items, itemIndex),
+        sectionIndex === undefined ? getSectionIndex(updatedLayoutPath) : sectionIndex,
+        newItemIndex,
+        updatedLayoutPath,
         stashValidationResult.resolved,
         stashValidationResult.existing,
         cmd.correlationId,

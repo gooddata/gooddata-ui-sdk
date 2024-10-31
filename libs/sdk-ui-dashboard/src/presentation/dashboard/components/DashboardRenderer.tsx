@@ -45,6 +45,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { DefaultEmptyLayoutDropZoneBody, LayoutResizeStateProvider } from "../../dragAndDrop/index.js";
 import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeAwareDashboardSidebar.js";
 import { DASHBOARD_OVERLAYS_Z_INDEX } from "../../constants/index.js";
+import { DashboardItemPathAndSizeProvider } from "./DashboardItemPathAndSizeContext.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_OVERLAYS_Z_INDEX);
 /**
@@ -168,7 +169,9 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                         <DashboardConfigProvider menuButtonConfig={props.menuButtonConfig}>
                                             <DndProvider backend={HTML5Backend}>
                                                 <LayoutResizeStateProvider>
-                                                    <DashboardLoading {...props} />
+                                                    <DashboardItemPathAndSizeProvider>
+                                                        <DashboardLoading {...props} />
+                                                    </DashboardItemPathAndSizeProvider>
                                                 </LayoutResizeStateProvider>
                                             </DndProvider>
                                         </DashboardConfigProvider>
