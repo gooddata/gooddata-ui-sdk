@@ -81,6 +81,7 @@ export const CreationPanel: React.FC<ICreationPanelProps> = (props) => {
         supportsKpis,
         supportsRichText,
         enableRichText,
+        enableVisualizationSwitcher,
         WrapCreatePanelItemWithDragComponent,
     ]);
 

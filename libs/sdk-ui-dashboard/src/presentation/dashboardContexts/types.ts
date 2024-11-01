@@ -168,7 +168,7 @@ export type OptionalVisualizationSwitcherToolbarComponentProvider =
     OptionalProvider<VisualizationSwitcherToolbarComponentProvider>;
 
 /**
- * @public
+ * @alpha
  */
 export type OptionalVisualizationSwitcherComponentProvider =
     OptionalProvider<VisualizationSwitcherComponentProvider>;

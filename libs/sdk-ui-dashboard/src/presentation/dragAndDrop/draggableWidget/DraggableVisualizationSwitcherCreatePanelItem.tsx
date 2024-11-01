@@ -15,7 +15,7 @@ import { ISettings } from "@gooddata/sdk-model";
 /**
  * @internal
  */
-interface IDraggableRichTextCreatePanelItemProps {
+interface IDraggableVisualizationSwitcherCreatePanelItemProps {
     CreatePanelItemComponent: CustomCreatePanelItemComponent;
     WrapCreatePanelItemWithDragComponent?: IWrapCreatePanelItemWithDragComponent;
 }
@@ -36,7 +36,7 @@ const getDragItem = (settings: ISettings): DraggableItem => {
  * @internal
  */
 export const DraggableVisualizationSwitcherCreatePanelItem: React.FC<
-    IDraggableRichTextCreatePanelItemProps
+    IDraggableVisualizationSwitcherCreatePanelItemProps
 > = ({ CreatePanelItemComponent, WrapCreatePanelItemWithDragComponent }) => {
     const settings = useDashboardSelector(selectSettings);
     const dragItem = getDragItem(settings);
