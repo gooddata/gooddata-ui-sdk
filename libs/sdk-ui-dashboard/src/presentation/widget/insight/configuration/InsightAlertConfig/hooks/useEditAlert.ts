@@ -66,7 +66,16 @@ export const useEditAlert = ({
         setUpdatedAlert((alert) => transformAlertByMetric(metrics, alert, measure, catalogMeasures));
     };
 
-    const changeAttribute = (attribute: AlertAttribute | undefined, value: string | undefined) => {
+    const changeAttribute = (
+        attribute: AlertAttribute | undefined,
+        value:
+            | {
+                  title: string;
+                  value: string;
+                  name: string;
+              }
+            | undefined,
+    ) => {
         setUpdatedAlert((alert) => transformAlertByAttribute(attributes, alert, attribute, value));
     };
 

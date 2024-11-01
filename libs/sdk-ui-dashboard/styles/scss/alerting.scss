@@ -139,6 +139,8 @@
 
 .gd-edit-alert__form {
     padding: 10px 10px 0 10px;
+    max-height: 350px;
+    overflow: auto;
 }
 
 .gd-edit-alert__measure-label {
