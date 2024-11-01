@@ -103,7 +103,13 @@ export function transformAlertByAttribute(
     attributes: AlertAttribute[],
     alert: IAutomationMetadataObject,
     attr: AlertAttribute | undefined,
-    value: string | undefined,
+    value:
+        | {
+              title: string;
+              value: string;
+              name: string;
+          }
+        | undefined,
 ): IAutomationMetadataObject {
     const { filterDefinition } = getAttributeRelatedFilterInfo(
         attributes,
@@ -121,7 +127,7 @@ export function transformAlertByAttribute(
                         localIdentifier: attr.attribute.attribute.localIdentifier,
                     },
                     in: {
-                        values: [value],
+                        values: [value.name],
                     },
                 },
             });

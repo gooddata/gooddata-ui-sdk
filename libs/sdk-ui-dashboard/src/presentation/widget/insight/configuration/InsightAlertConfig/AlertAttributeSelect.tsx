@@ -20,14 +20,17 @@ import {
 } from "../../../../constants/index.js";
 import { IExecutionResultEnvelope } from "../../../../../model/index.js";
 
-import { useAttributeValuesFromExecResults } from "./hooks/useAttributeValuesFromExecResults.js";
+import {
+    AttributeValue,
+    useAttributeValuesFromExecResults,
+} from "./hooks/useAttributeValuesFromExecResults.js";
 import { getSelectedCatalogAttribute, getSelectedCatalogAttributeValue } from "./utils/getters.js";
 
 export interface IAlertAttributeSelectProps {
     execResult: IExecutionResultEnvelope | undefined;
     selectedAttribute: AlertAttribute | undefined;
     selectedValue: string | null | undefined;
-    onAttributeChange: (attribute: AlertAttribute | undefined, value: string | undefined) => void;
+    onAttributeChange: (attribute: AlertAttribute | undefined, value: AttributeValue | undefined) => void;
     attributes: AlertAttribute[];
     catalogAttributes: ICatalogAttribute[];
     catalogDateDatasets: ICatalogDateDataset[];
@@ -256,7 +259,7 @@ export const AlertAttributeSelect = ({
                                                                 )}
                                                                 className="gd-alert-attribute-select__menu-item_wrapper"
                                                                 onClick={(e) => {
-                                                                    onAttributeChange(attribute, value.value);
+                                                                    onAttributeChange(attribute, value);
                                                                     setIsOpen(false);
                                                                     setIsOpenAttribute(null);
                                                                     e.preventDefault();

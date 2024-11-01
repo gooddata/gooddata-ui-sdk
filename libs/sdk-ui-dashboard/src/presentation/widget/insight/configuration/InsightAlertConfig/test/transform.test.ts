@@ -745,7 +745,11 @@ describe("alert transforms", () => {
         });
 
         it("attribute with defined value", () => {
-            const res = transformAlertByAttribute(allAttributes, baseComparison, attrRegion, "America");
+            const res = transformAlertByAttribute(allAttributes, baseComparison, attrRegion, {
+                name: "America",
+                value: "America",
+                title: "America",
+            });
             expect(res).toEqual({
                 ...baseComparison,
                 alert: {
@@ -771,7 +775,11 @@ describe("alert transforms", () => {
         });
 
         it("attribute with defined value, switch to empty", () => {
-            let res = transformAlertByAttribute(allAttributes, baseComparison, attrRegion, "America");
+            let res = transformAlertByAttribute(allAttributes, baseComparison, attrRegion, {
+                name: "America",
+                value: "America",
+                title: "America",
+            });
             expect(res).toEqual({
                 ...baseComparison,
                 alert: {

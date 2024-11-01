@@ -234,7 +234,10 @@ export function getSelectedCatalogAttributeValue(
     }
 
     const values = getAttributeValue(attribute);
-    return values.find((value) => value.value === selectedValue);
+    return (
+        values.find((value) => value.name === selectedValue) ??
+        values.find((value) => value.value === selectedValue)
+    );
 }
 
 /**
