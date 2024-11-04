@@ -26,6 +26,7 @@ import {
     selectSectionModification,
     selectIsExport,
     useWidgetSelection,
+    isExtendedDashboardLayoutWidget,
 } from "../../model/index.js";
 import { isAnyPlaceholderWidget, isPlaceholderWidget } from "../../widgets/index.js";
 import { getSizeInfo, calculateWidgetMinHeight } from "../../_staging/layout/sizing.js";
@@ -324,6 +325,18 @@ function createDraggableItem(
             sectionIndex,
             itemIndex,
             title: widget.title,
+            isOnlyItemInSection,
+            size: getFilledSize(size, sizeInfo),
+        };
+    } else if (isExtendedDashboardLayoutWidget(widget)) {
+        // TODO INE: create layout specific item
+        const sizeInfo = getSizeInfo(settings, "visualizationSwitcher");
+
+        return {
+            type: "visualizationSwitcher",
+            sectionIndex,
+            itemIndex,
+            title: "",
             isOnlyItemInSection,
             size: getFilledSize(size, sizeInfo),
         };

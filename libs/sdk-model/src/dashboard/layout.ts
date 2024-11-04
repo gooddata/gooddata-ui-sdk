@@ -1,7 +1,9 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import isArray from "lodash/isArray.js";
 import { IWidget, IWidgetDefinition, isWidget, isWidgetDefinition } from "./widget.js";
+import { IDashboardObjectIdentity } from "./common.js";
+import { IBaseWidget } from "./baseWidget.js";
 
 /**
  * Classification of the screen size according to its size with respect to the set breakpoints.
@@ -11,11 +13,23 @@ import { IWidget, IWidgetDefinition, isWidget, isWidgetDefinition } from "./widg
 export type ScreenSize = "xl" | "lg" | "md" | "sm" | "xs";
 
 /**
+ * Widget representing nested layout
+ *
+ * @public
+ */
+export interface IDashboardLayoutWidget
+    extends IDashboardLayout<IDashboardWidget>,
+        IBaseWidget,
+        IDashboardObjectIdentity {
+    type: "IDashboardLayout";
+}
+
+/**
  * Default dashboard widgets - kpi widget, insight widget, or nested layout.
  *
  * @public
  */
-export type IDashboardWidget = IWidget | IWidgetDefinition | IDashboardLayout<IDashboardWidget>;
+export type IDashboardWidget = IWidget | IWidgetDefinition | IDashboardLayoutWidget;
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IDashboardWidget}.

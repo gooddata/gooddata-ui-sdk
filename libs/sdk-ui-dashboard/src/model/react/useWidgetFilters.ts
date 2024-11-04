@@ -21,7 +21,7 @@ import {
     selectCrossFilteringFiltersLocalIdentifiersByWidgetRef,
 } from "../../model/store/index.js";
 import { safeSerializeObjRef } from "../../_staging/metadata/safeSerializeObjRef.js";
-import { ExtendedDashboardWidget } from "../types/layoutTypes.js";
+import { FilterableDashboardWidget } from "../types/layoutTypes.js";
 import {
     QueryProcessingState,
     QueryProcessingStatus,
@@ -44,7 +44,7 @@ import { useDashboardSelector } from "./DashboardStoreProvider.js";
  * @public
  */
 export function useWidgetFilters(
-    widget: ExtendedDashboardWidget | undefined | null,
+    widget: FilterableDashboardWidget | undefined | null,
     insight?: IInsightDefinition,
 ): QueryProcessingState<IFilter[]> {
     const [effectiveFiltersState, setEffectiveFiltersState] = useState<{
@@ -125,7 +125,7 @@ export function useWidgetFilters(
  *
  * @param widget - widget to get the non-ignored filters for
  */
-function useNonIgnoredFilters(widget: ExtendedDashboardWidget | undefined | null) {
+function useNonIgnoredFilters(widget: FilterableDashboardWidget | undefined | null) {
     const dashboardFilters = useDashboardSelector(selectFilterContextFilters);
     const crossFilteringLocalIdentifiersForThisWidget = useDashboardSelector(
         selectCrossFilteringFiltersLocalIdentifiersByWidgetRef(widget?.ref),

@@ -9,7 +9,7 @@ import {
 } from "@gooddata/sdk-model";
 import { useWidgetFilters } from "../useWidgetFilters.js";
 import { getAutomationVisualizationFilters } from "../../../_staging/automation/index.js";
-import { ExtendedDashboardWidget } from "../../types/layoutTypes.js";
+import { FilterableDashboardWidget } from "../../types/layoutTypes.js";
 import { QueryProcessingState } from "../useDashboardQueryProcessing.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";
 import { selectCrossFilteringItems } from "../../store/drill/drillSelectors.js";
@@ -27,7 +27,7 @@ export interface IUseFiltersForWidgetScheduledExportProps {
     /**
      * Widget to get filters for.
      */
-    widget?: ExtendedDashboardWidget;
+    widget?: FilterableDashboardWidget;
 
     /**
      * Insight to get filters for.

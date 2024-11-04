@@ -1342,6 +1342,12 @@ export interface IDashboardLayoutSizeByScreenSize {
 }
 
 // @public
+export interface IDashboardLayoutWidget extends IDashboardLayout<IDashboardWidget>, IBaseWidget, IDashboardObjectIdentity {
+    // (undocumented)
+    type: "IDashboardLayout";
+}
+
+// @public
 export interface IDashboardMetadataObject extends IMetadataObject {
     // (undocumented)
     type: "analyticalDashboard";
@@ -1386,7 +1392,7 @@ export interface IDashboardPluginLink {
 }
 
 // @public
-export type IDashboardWidget = IWidget | IWidgetDefinition | IDashboardLayout<IDashboardWidget>;
+export type IDashboardWidget = IWidget | IWidgetDefinition | IDashboardLayoutWidget;
 
 // @public
 export interface IDataColumn {

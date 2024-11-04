@@ -23,7 +23,11 @@ import partition from "lodash/partition.js";
 import isEmpty from "lodash/isEmpty.js";
 
 import { DashboardSelector, DashboardState } from "../types.js";
-import { ExtendedDashboardWidget, isCustomWidget } from "../../types/layoutTypes.js";
+import {
+    ExtendedDashboardWidget,
+    isCustomWidget,
+    isExtendedDashboardLayoutWidget,
+} from "../../types/layoutTypes.js";
 import { UndoableCommand, createUndoableCommandsMapping } from "../_infra/undoEnhancer.js";
 import { ObjRefMap, newMapForObjectWithIdentity } from "../../../_staging/metadata/objRefMap.js";
 import { selectFilterContextFilters } from "../filterContext/filterContextSelectors.js";
@@ -196,7 +200,7 @@ export const selectWidgetByRef: (
 
 /**
  * Selects analytical widget by its ref. This selector will return undefined if the provided
- * widget ref is for a custom widget.
+ * widget ref is not analytical widget, eg. custom widget or nested layout.
  *
  * @remarks
  * To include custom widgets as well, use {@link selectWidgetByRef}.
@@ -213,7 +217,7 @@ export const selectAnalyticalWidgetByRef: (
 
         const widget = widgetMap.get(ref);
 
-        if (!widget || isCustomWidget(widget)) {
+        if (!widget || isCustomWidget(widget) || isExtendedDashboardLayoutWidget(widget)) {
             return undefined;
         }
 
@@ -269,6 +273,10 @@ export const selectAllFiltersForWidgetByRef: (
             allCrossFilteringLocalIdentifiers,
         ) => {
             invariant(widget, `widget with ref ${objRefToString(ref)} does not exist in the state`);
+
+            if (isExtendedDashboardLayoutWidget(widget)) {
+                return [[], []];
+            }
 
             // Widget is the source of cross-filtering, so filtering out the cross-filtering filters
             const filtersWithoutCrossFilteringFilters = dashboardFilters.filter((f) => {

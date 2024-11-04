@@ -34,7 +34,10 @@ import {
     IVisualizationSwitcherWidget,
 } from "@gooddata/sdk-model";
 import { QueryWidgetFilters } from "../queries/widgets.js";
-import { selectAllFiltersForWidgetByRef, selectWidgetByRef } from "../store/layout/layoutSelectors.js";
+import {
+    selectAllFiltersForWidgetByRef,
+    selectAnalyticalWidgetByRef,
+} from "../store/layout/layoutSelectors.js";
 import { selectInsightByRef } from "../store/insights/insightsSelectors.js";
 import { invalidQueryArguments } from "../events/general.js";
 import compact from "lodash/compact.js";
@@ -43,7 +46,7 @@ import { DashboardState } from "../store/types.js";
 import { resolveDisplayFormMetadata } from "../utils/displayFormResolver.js";
 import { invariant } from "ts-invariant";
 import isEmpty from "lodash/isEmpty.js";
-import { ExtendedDashboardWidget, ICustomWidget } from "../types/layoutTypes.js";
+import { ICustomWidget, FilterableDashboardWidget } from "../types/layoutTypes.js";
 import { selectSupportsMultipleDateFilters } from "../store/backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 
@@ -108,7 +111,7 @@ function selectDateDatasetsForDateFilters(
 
 function* getResolvedInsightAttributeFilters(
     ctx: DashboardContext,
-    widget: ExtendedDashboardWidget,
+    widget: FilterableDashboardWidget,
     dashboardAttributeFilters: IAttributeFilter[],
     insightAttributeFilters: IAttributeFilter[],
 ): SagaIterator<IAttributeFilter[]> {
@@ -125,7 +128,7 @@ function* getResolvedInsightAttributeFilters(
 
 function* getResolvedAttributeFilters(
     ctx: DashboardContext,
-    widget: ExtendedDashboardWidget,
+    widget: FilterableDashboardWidget,
     attributeFilters: IAttributeFilter[],
 ): SagaIterator<IAttributeFilter[]> {
     const attributeFilterDisplayFormPairs: SagaReturnType<typeof loadDisplayFormsForAttributeFilters> =
@@ -144,7 +147,7 @@ function* getResolvedAttributeFilters(
 }
 
 function resolveWidgetFilterIgnore(
-    widget: ExtendedDashboardWidget,
+    widget: FilterableDashboardWidget,
     dashboardNonDateFilterDisplayFormPairs: IFilterDisplayFormPair[],
     displayAsLabelMap: Map<string, ObjRef>,
 ): IFilterDisplayFormPair[] {
@@ -166,7 +169,7 @@ function resolveWidgetFilterIgnore(
 
 function selectResolvedInsightDateFilters(
     state: DashboardState,
-    widget: ExtendedDashboardWidget,
+    widget: FilterableDashboardWidget,
     dashboardCommonDateFilters: IDateFilter[],
     dashboardDateFiltersWithDimensions: IDateFilter[],
     insightDateFilters: IDateFilter[],
@@ -190,7 +193,7 @@ function selectResolvedInsightDateFilters(
 
 function selectResolveWidgetDateFilterIgnore(
     state: DashboardState,
-    widget: ExtendedDashboardWidget,
+    widget: FilterableDashboardWidget,
     dashboardCommonDateFilters: IDateFilter[],
     dashboardDateFiltersWithDimensions: IDateFilter[],
 ): IFilterDateDatasetPair[] {
@@ -211,7 +214,7 @@ function selectResolveWidgetDateFilterIgnore(
 }
 
 function resolveWidgetDateFilterIgnore(
-    widget: ExtendedDashboardWidget,
+    widget: FilterableDashboardWidget,
     commonDateFilterDateDatasetPairs: IFilterDateDatasetPair[],
     widgetDateFilterDateDatasetPairs: IFilterDateDatasetPair[],
 ): IFilterDateDatasetPair[] {
@@ -240,7 +243,7 @@ function resolveWidgetDateFilterIgnore(
 
 function selectResolvedDateFilters(
     state: DashboardState,
-    widget: ExtendedDashboardWidget,
+    widget: FilterableDashboardWidget,
     dashboardCommonDateFilters: IDateFilter[],
     dashboardDateFiltersWithDimensions: IDateFilter[],
     supportsMultipleDateFilters: boolean,
@@ -288,7 +291,7 @@ function resolveDateFilters(
 
 function* queryWithInsight(
     ctx: DashboardContext,
-    widget: ExtendedDashboardWidget,
+    widget: FilterableDashboardWidget,
     insight: IInsightDefinition,
 ): SagaIterator<IFilter[]> {
     const widgetAwareDashboardFiltersSelector = selectAllFiltersForWidgetByRef(widget.ref);
@@ -378,7 +381,7 @@ function* queryService(ctx: DashboardContext, query: QueryWidgetFilters): SagaIt
         payload: { widgetRef, insight },
         correlationId,
     } = query;
-    const widgetSelector = selectWidgetByRef(widgetRef);
+    const widgetSelector = selectAnalyticalWidgetByRef(widgetRef);
     const widget: ReturnType<typeof widgetSelector> = yield select(widgetSelector);
 
     if (!widget) {
