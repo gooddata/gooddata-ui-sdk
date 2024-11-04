@@ -114,4 +114,4 @@ export interface IBaseWidget {
  *
  * @alpha
  */
-export const BuiltInWidgetTypes: string[] = ["kpi", "insight"];
+export const BuiltInWidgetTypes: string[] = ["kpi", "insight", "richText", "visualizationSwitcher"];

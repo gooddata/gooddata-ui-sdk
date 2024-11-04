@@ -124,7 +124,6 @@ import { DrillState as DrillState_2 } from './drillState.js';
 import { EntityId } from '@reduxjs/toolkit';
 import { EntityState } from '@reduxjs/toolkit';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
-import { ExtendedDashboardWidget as ExtendedDashboardWidget_2 } from '../../index.js';
 import { FilterContextItem } from '@gooddata/sdk-model';
 import { FilterViewDialogMode as FilterViewDialogMode_2 } from './uiState.js';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
@@ -3532,10 +3531,19 @@ export type ExtendedDashboardItemTypes<T extends ReadonlyArray<ExtendedDashboard
 export type ExtendedDashboardLayoutSection = IDashboardLayoutSection<ExtendedDashboardWidget>;
 
 // @public
-export type ExtendedDashboardWidget = IWidget | ICustomWidget;
+export interface ExtendedDashboardLayoutWidget extends IDashboardLayout<ExtendedDashboardWidget>, IBaseWidget, IDashboardObjectIdentity {
+    // (undocumented)
+    type: "IDashboardLayout";
+}
+
+// @public
+export type ExtendedDashboardWidget = IWidget | ICustomWidget | ExtendedDashboardLayoutWidget;
 
 // @internal
 export function extendedWidgetDebugStr(widget: ExtendedDashboardWidget): string;
+
+// @public
+export type FilterableDashboardWidget = IWidget | ICustomWidget;
 
 // @internal (undocumented)
 export const FilterBar: (props: IFilterBarProps) => JSX.Element;
@@ -5491,6 +5499,9 @@ export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition
 // @alpha
 export const isDrillTargetsAdded: (obj: unknown) => obj is DrillTargetsAdded;
 
+// @public
+export function isExtendedDashboardLayoutWidget(obj: unknown): obj is ExtendedDashboardLayoutWidget;
+
 // @beta (undocumented)
 export interface IShareButtonProps {
     // (undocumented)
@@ -5660,7 +5671,7 @@ export interface IUseDashboardScheduledEmailsFiltersProps {
     // (undocumented)
     scheduledExportToEdit?: IAutomationMetadataObject;
     // (undocumented)
-    widget?: ExtendedDashboardWidget;
+    widget?: FilterableDashboardWidget;
 }
 
 // @alpha (undocumented)
@@ -5672,7 +5683,7 @@ export interface IUseFiltersForDashboardScheduledExportProps {
 export interface IUseFiltersForWidgetScheduledExportProps {
     insight?: IInsightDefinition;
     scheduledExportToEdit?: IAutomationMetadataObjectDefinition;
-    widget?: ExtendedDashboardWidget;
+    widget?: FilterableDashboardWidget;
 }
 
 // @public
@@ -6167,7 +6178,7 @@ export type OptionalProvider<T> = T extends (...args: infer TArgs) => infer TRes
 // @public (undocumented)
 export type OptionalRichTextComponentProvider = OptionalProvider<RichTextComponentProvider>;
 
-// @public (undocumented)
+// @alpha (undocumented)
 export type OptionalVisualizationSwitcherComponentProvider = OptionalProvider<VisualizationSwitcherComponentProvider>;
 
 // @alpha (undocumented)
@@ -9054,7 +9065,7 @@ export const useDashboardScheduledEmails: () => {
     automations: IAutomationMetadataObject[];
     automationsCount: number;
     numberOfAvailableDestinations: number;
-    widget: ExtendedDashboardWidget_2 | undefined;
+    widget: IWidget | undefined;
     insight: IInsight | undefined;
     automationsLoading: boolean;
     automationsError: GoodDataSdkError | undefined;
@@ -9327,7 +9338,7 @@ export function useWidgetExecutionsHandler(widgetRef: ObjRef): {
 };
 
 // @public
-export function useWidgetFilters(widget: ExtendedDashboardWidget | undefined | null, insight?: IInsightDefinition): QueryProcessingState<IFilter[]>;
+export function useWidgetFilters(widget: FilterableDashboardWidget | undefined | null, insight?: IInsightDefinition): QueryProcessingState<IFilter[]>;
 
 // @internal (undocumented)
 export function useWidgetSelection(widgetRef?: ObjRef): IUseWidgetSelectionResult;
