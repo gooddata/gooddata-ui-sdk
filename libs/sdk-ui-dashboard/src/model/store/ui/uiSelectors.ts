@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
 import { areObjRefsEqual, ObjRef, objRefToString } from "@gooddata/sdk-model";
@@ -102,6 +102,22 @@ const selectHighlightedKpiWidgetRef = createSelector(
 const selectOpenedKpiWidgetRef = createSelector(
     selectSelf,
     (state) => state.kpiAlerts.openedWidgetRef ?? undefined,
+);
+
+const selectClosedPartialResultWarning = createSelector(
+    selectSelf,
+    (state) => state.resultPartialWarning.fingerPrints ?? undefined,
+);
+
+/**
+ * @internal
+ */
+export const selectIsPartialResultWarningOpen = createMemoizedSelector(
+    (fingerPrint: string): ((state: DashboardState) => boolean) => {
+        return createSelector(selectClosedPartialResultWarning, (fingerprints) => {
+            return fingerprints.includes(fingerPrint) ? false : true;
+        });
+    },
 );
 
 /**

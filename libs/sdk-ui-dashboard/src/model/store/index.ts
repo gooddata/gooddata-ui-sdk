@@ -301,6 +301,7 @@ export {
     selectIsShareDialogOpen,
     selectFilterBarExpanded,
     selectIsKpiAlertOpenedByWidgetRef,
+    selectIsPartialResultWarningOpen,
     selectIsKpiAlertHighlightedByWidgetRef,
     selectMenuButtonItemsVisibility,
     selectScheduleEmailDialogDefaultAttachment,

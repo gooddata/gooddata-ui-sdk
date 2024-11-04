@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { ObjRef, Identifier, Uri } from "@gooddata/sdk-model";
 
 import { ILayoutCoordinates, IMenuButtonItemsVisibility } from "../../../types.js";
@@ -72,6 +72,9 @@ export interface UiState {
     draggingWidgetSource: DraggableLayoutItem | undefined;
     draggingWidgetTarget: ILayoutCoordinates | undefined;
     widgetsOverlay: Record<string, IDashboardWidgetOverlay>;
+    resultPartialWarning: {
+        fingerPrints: string[];
+    };
 }
 
 export const uiInitialState: UiState = {
@@ -122,4 +125,7 @@ export const uiInitialState: UiState = {
     draggingWidgetSource: undefined,
     draggingWidgetTarget: undefined,
     widgetsOverlay: {},
+    resultPartialWarning: {
+        fingerPrints: [],
+    },
 };

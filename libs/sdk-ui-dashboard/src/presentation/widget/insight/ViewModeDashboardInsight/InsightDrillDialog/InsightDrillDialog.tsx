@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React, { useCallback, useState } from "react";
 import { idRef, IInsight, insightTitle, IInsightWidget } from "@gooddata/sdk-model";
 import {
@@ -71,7 +71,14 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
 
     const baseInsightTitle = insightTitle(insight);
 
-    const { exportCSVEnabled, exportXLSXEnabled, onExportCSV, onExportXLSX } = useInsightExport({
+    const {
+        exportCSVEnabled,
+        exportXLSXEnabled,
+        isExportRawInNewUiVisible,
+        onExportCSV,
+        onExportXLSX,
+        onExportRawCSV,
+    } = useInsightExport({
         title: getTitleWithBreadcrumbs(baseInsightTitle, breadcrumbs),
         widgetRef: DRILL_MODAL_EXECUTION_PSEUDO_REF,
         insight,
@@ -102,7 +109,9 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
                         exportCSVEnabled={exportCSVEnabled}
                         onExportXLSX={onExportXLSX}
                         onExportCSV={onExportCSV}
+                        onExportCSVRaw={onExportRawCSV}
                         isLoading={isLoading}
+                        isExportRawInNewUiVisible={isExportRawInNewUiVisible}
                     >
                         <WithDrillSelect
                             widgetRef={widget.ref}

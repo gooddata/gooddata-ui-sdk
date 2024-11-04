@@ -25,6 +25,8 @@ import { useInsightMenu } from "./useInsightMenu.js";
 import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard.js";
 import { IDefaultDashboardInsightWidgetProps } from "./types.js";
 import { InsightWidgetDescriptionTrigger } from "../../description/InsightWidgetDescriptionTrigger.js";
+import { useInsightWarning } from "./useInsightWarning.js";
+import { InsightWidgetWarningPartialResult } from "../../warningPartialResult/InsightWidgetWarningPartialResult.js";
 
 export const DefaultDashboardInsightWidget: React.FC<Omit<IDefaultDashboardInsightWidgetProps, "insight">> = (
     props,
@@ -54,6 +56,10 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         title: widgetTitle(widget) || intl.formatMessage({ id: "export.defaultTitle" }),
         insight,
     });
+
+    const { partialResultWarning, fingerprint, isOverlayOpen, executionResult } = useInsightWarning(
+        widget.ref,
+    );
 
     const { isScheduledEmailingVisible, enableInsightExportScheduling, onScheduleEmailingOpen } =
         useDashboardScheduledEmails();
@@ -146,6 +152,24 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                             items={menuItems}
                         />
                     );
+                }}
+                renderAfterVisualization={() => {
+                    if (partialResultWarning.length > 0) {
+                        return (
+                            <InsightWidgetWarningPartialResult
+                                className="gd-warning-partial-result"
+                                partialResultWarning={partialResultWarning}
+                                onExportRawCSV={onExportRawCSV}
+                                fingerprint={fingerprint}
+                                isOverlayOpen={isOverlayOpen}
+                                shouldPreserveCloseStatus={true}
+                                isLoading={executionResult?.isLoading}
+                                isExportRawInNewUiVisible={isExportRawInNewUiVisible}
+                            />
+                        );
+                    }
+
+                    return null;
                 }}
             >
                 {({ clientHeight, clientWidth }) => (

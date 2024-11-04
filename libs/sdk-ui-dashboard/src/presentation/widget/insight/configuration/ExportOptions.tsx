@@ -17,15 +17,10 @@ import { useInsightExport } from "../../common/useInsightExport.js";
 import {
     selectExecutionResultByRef,
     selectInsightByRef,
-    selectIsExecutionResultExportableToCsvRawByRef,
     useDashboardSelector,
 } from "../../../../model/index.js";
 import { IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.js";
-import {
-    isDataError,
-    isDataErrorExceptTooLarge,
-    isDataErrorTooLarge,
-} from "../../../../_staging/errors/errorPredicates.js";
+import { isDataError, isDataErrorTooLarge } from "../../../../_staging/errors/errorPredicates.js";
 
 const alignPoints: IAlignPoint[] = [{ align: "tl bl", offset: { x: 20, y: 0 } }];
 
@@ -48,21 +43,13 @@ const MenuItem: React.FC<IMenuItemProps> = ({ className, disabled, messageId, on
 };
 
 const MenuItemWithBubble = withBubble(MenuItem);
+
 export const ExportOptions: React.FC<IInsightMenuSubmenuComponentProps> = ({ widget, onClose }) => {
     const intl = useIntl();
 
     const insight: IInsightDefinition = useDashboardSelector(selectInsightByRef(widget.insight))!;
 
     const execution = useDashboardSelector(selectExecutionResultByRef(widget.ref));
-
-    const isCSVRawDisabled = isDataErrorExceptTooLarge(execution?.error);
-    const exportCSVRawEnabled = useDashboardSelector(
-        selectIsExecutionResultExportableToCsvRawByRef(widget.ref),
-    );
-
-    const csvRawTooltip = isDataErrorExceptTooLarge(execution?.error)
-        ? "options.menu.unsupported.error"
-        : "options.menu.unsupported.loading";
 
     const tooltip = isDataErrorTooLarge(execution?.error)
         ? "options.menu.data.too.large"
@@ -130,26 +117,15 @@ export const ExportOptions: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
                                     bubbleTextId={tooltip}
                                 />
                             )}
-                            {exportCSVRawEnabled ? (
-                                <MenuItem
-                                    onClick={() => {
-                                        onClose();
-                                        onExportRawCSV();
-                                    }}
-                                    className="gd-export-options-csv-raw"
-                                    disabled={isCSVRawDisabled}
-                                    messageId="widget.options.menu.exportToCSV.raw"
-                                />
-                            ) : (
-                                <MenuItemWithBubble
-                                    className="gd-export-options-csv-raw"
-                                    disabled={!exportCSVRawEnabled}
-                                    messageId="widget.options.menu.exportToCSV.raw"
-                                    showBubble={true}
-                                    alignPoints={alignPoints}
-                                    bubbleTextId={csvRawTooltip}
-                                />
-                            )}
+                            <MenuItem
+                                onClick={() => {
+                                    onClose();
+                                    onExportRawCSV();
+                                }}
+                                className="gd-export-options-csv-raw"
+                                disabled={false}
+                                messageId="widget.options.menu.exportToCSV.raw"
+                            />
                         </>
                     ) : null}
                 </ItemsWrapper>
