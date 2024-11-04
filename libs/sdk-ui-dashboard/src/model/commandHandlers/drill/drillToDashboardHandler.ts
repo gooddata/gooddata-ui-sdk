@@ -1,6 +1,5 @@
 // (C) 2021-2024 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { v4 as uuid } from "uuid";
 import { SagaReturnType, call, put, select } from "redux-saga/effects";
 import compact from "lodash/compact.js";
 import isEmpty from "lodash/isEmpty.js";
@@ -60,6 +59,7 @@ import {
     selectAttributeFilterConfigsDisplayAsLabelMap,
     selectAttributeFilterConfigsOverrides,
 } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { generateFilterLocalIdentifier } from "../../store/_infra/generators.js";
 
 export function* drillToDashboardHandler(
     ctx: DashboardContext,
@@ -195,12 +195,14 @@ function transformToPrimaryLabelFilters(
     drillIntersectionFilters: IConversionResult[],
 ): [IDashboardAttributeFilter[], IDashboardAttributeFilterConfig[]] {
     const attributeFilterConfigs: IDashboardAttributeFilterConfig[] = [];
-    const transformedFilters = drillIntersectionFilters.map((f) => {
+    const transformedFilters = drillIntersectionFilters.map((f, i) => {
         if (
             f.primaryLabel &&
             !areObjRefsEqual(f.primaryLabel, f.attributeFilter.attributeFilter.displayForm)
         ) {
-            const localIdentifier = f.attributeFilter.attributeFilter.localIdentifier ?? uuid();
+            const localIdentifier =
+                f.attributeFilter.attributeFilter.localIdentifier ??
+                generateFilterLocalIdentifier(f.attributeFilter.attributeFilter.displayForm, i);
             attributeFilterConfigs.push({
                 localIdentifier,
                 displayAsLabel: f.attributeFilter.attributeFilter.displayForm,

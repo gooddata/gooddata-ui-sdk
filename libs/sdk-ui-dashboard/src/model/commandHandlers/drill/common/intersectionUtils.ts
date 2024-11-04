@@ -1,5 +1,4 @@
 // (C) 2023-2024 GoodData Corporation
-import { v4 as uuid } from "uuid";
 import {
     DrillEventIntersectionElementHeader,
     IDrillEventIntersectionElement,
@@ -12,6 +11,7 @@ import {
     IDashboardAttributeFilter,
     isAttributeDescriptor,
 } from "@gooddata/sdk-model";
+import { generateFilterLocalIdentifier } from "../../../store/_infra/generators.js";
 
 /**
  *  For correct drill intersection that should be converted into AttributeFilters must be drill intersection:
@@ -57,7 +57,7 @@ export function convertIntersectionToAttributeFilters(
                         attributeElements: { uris: [elementValue] },
                         displayForm: ref,
                         negativeSelection: false,
-                        localIdentifier: uuid(),
+                        localIdentifier: generateFilterLocalIdentifier(ref, result.length),
                         ...titleObj,
                     },
                 },

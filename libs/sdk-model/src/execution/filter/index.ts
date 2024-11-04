@@ -123,22 +123,29 @@ export interface INegativeAttributeFilter {
  * @public
  */
 export interface IAbsoluteDateFilter {
-    absoluteDateFilter: {
-        /**
-         * Date data set for filtering
-         */
-        dataSet: ObjRef;
+    absoluteDateFilter: IAbsoluteDateFilterBody;
+}
 
-        /**
-         * Start date (including): this is in format 'YYYY-MM-DD'
-         */
-        from: string;
+/**
+ * Object defining the {@link IAbsoluteDateFilter} object body.
+ *
+ * @public
+ */
+export interface IAbsoluteDateFilterBody extends IIdentifiableFilter {
+    /**
+     * Date data set for filtering
+     */
+    dataSet: ObjRef;
 
-        /**
-         * End date (including): this is in format 'YYYY-MM-DD'
-         */
-        to: string;
-    };
+    /**
+     * Start date (including): this is in format 'YYYY-MM-DD'
+     */
+    from: string;
+
+    /**
+     * End date (including): this is in format 'YYYY-MM-DD'
+     */
+    to: string;
 }
 
 /**
@@ -153,21 +160,35 @@ export interface IAbsoluteDateFilter {
  */
 export type IRelativeDateFilter =
     | {
-          relativeDateFilter: {
-              dataSet: ObjRef;
-              granularity: DateAttributeGranularity;
-              from: number;
-              to: number;
-          };
+          relativeDateFilter: IRelativeDateFilterBody;
       }
     | {
-          relativeDateFilter: {
-              dataSet: ObjRef;
-              granularity: AllTimeGranularity;
-              from: 0;
-              to: 0;
-          };
+          relativeDateFilter: IRelativeDateFilterAllTimeBody;
       };
+
+/**
+ * Object defining the {@link IRelativeDateFilter} object body.
+ *
+ * @public
+ */
+export interface IRelativeDateFilterBody extends IIdentifiableFilter {
+    dataSet: ObjRef;
+    granularity: DateAttributeGranularity;
+    from: number;
+    to: number;
+}
+
+/**
+ * Object defining the {@link IRelativeDateFilter} object body.
+ *
+ * @public
+ */
+export interface IRelativeDateFilterAllTimeBody extends IIdentifiableFilter {
+    dataSet: ObjRef;
+    granularity: AllTimeGranularity;
+    from: 0;
+    to: 0;
+}
 
 /**
  * Attribute filters limit results of execution to data pertaining to attributes that are or are not specified
@@ -245,7 +266,7 @@ export type MeasureValueFilterCondition = IComparisonCondition | IRangeCondition
  *
  * @public
  */
-export interface IMeasureValueFilterBody {
+export interface IMeasureValueFilterBody extends IIdentifiableFilter {
     measure: ObjRefInScope;
     condition?: MeasureValueFilterCondition;
 }
@@ -267,7 +288,7 @@ export type RankingFilterOperator = "TOP" | "BOTTOM";
  *
  * @public
  */
-export interface IRankingFilterBody {
+export interface IRankingFilterBody extends IIdentifiableFilter {
     measure: ObjRefInScope;
     attributes?: ObjRefInScope[];
     operator: RankingFilterOperator;

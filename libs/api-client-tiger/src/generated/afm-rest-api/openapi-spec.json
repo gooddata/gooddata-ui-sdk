@@ -1216,6 +1216,9 @@
                             "applyOnResult": {
                                 "type": "boolean"
                             },
+                            "localIdentifier": {
+                                "type": "string"
+                            },
                             "dataset": {
                                 "$ref": "#/components/schemas/AfmObjectIdentifierDataset"
                             }
@@ -1527,6 +1530,9 @@
                             "applyOnResult": {
                                 "type": "boolean"
                             },
+                            "localIdentifier": {
+                                "type": "string"
+                            },
                             "label": {
                                 "$ref": "#/components/schemas/AfmIdentifier"
                             }
@@ -1630,6 +1636,9 @@
                             "applyOnResult": {
                                 "type": "boolean"
                             },
+                            "localIdentifier": {
+                                "type": "string"
+                            },
                             "label": {
                                 "$ref": "#/components/schemas/AfmIdentifier"
                             }
@@ -1682,6 +1691,9 @@
                             },
                             "applyOnResult": {
                                 "type": "boolean"
+                            },
+                            "localIdentifier": {
+                                "type": "string"
                             },
                             "dataset": {
                                 "$ref": "#/components/schemas/AfmObjectIdentifierDataset"
@@ -2188,6 +2200,9 @@
                             "applyOnResult": {
                                 "type": "boolean"
                             },
+                            "localIdentifier": {
+                                "type": "string"
+                            },
                             "measure": {
                                 "$ref": "#/components/schemas/AfmIdentifier"
                             }
@@ -2326,6 +2341,9 @@
                             },
                             "applyOnResult": {
                                 "type": "boolean"
+                            },
+                            "localIdentifier": {
+                                "type": "string"
                             }
                         }
                     }
@@ -2372,6 +2390,9 @@
                             "applyOnResult": {
                                 "type": "boolean"
                             },
+                            "localIdentifier": {
+                                "type": "string"
+                            },
                             "measure": {
                                 "$ref": "#/components/schemas/AfmIdentifier"
                             }
@@ -2405,6 +2426,9 @@
                             },
                             "applyOnResult": {
                                 "type": "boolean"
+                            },
+                            "localIdentifier": {
+                                "type": "string"
                             }
                         }
                     }
@@ -3022,6 +3046,52 @@
                     }
                 }
             },
+            "AttributeNegativeFilter": {
+                "required": ["exclude", "using"],
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Filter"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "using": {
+                                "type": "string"
+                            },
+                            "exclude": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "AttributePositiveFilter": {
+                "required": ["include", "using"],
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Filter"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "using": {
+                                "type": "string"
+                            },
+                            "include": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
             "ChatHistoryInteraction": {
                 "required": ["chatHistoryInteractionId", "interactionFinished", "question", "routing"],
                 "type": "object",
@@ -3074,7 +3144,7 @@
                 }
             },
             "CreatedVisualization": {
-                "required": ["dimensionality", "id", "metrics", "title", "visualizationType"],
+                "required": ["dimensionality", "filters", "id", "metrics", "title", "visualizationType"],
                 "type": "object",
                 "properties": {
                     "id": {
@@ -3106,6 +3176,26 @@
                         "items": {
                             "$ref": "#/components/schemas/DimAttribute"
                         }
+                    },
+                    "filters": {
+                        "type": "array",
+                        "description": "List of filters to be applied to the new visualization",
+                        "items": {
+                            "oneOf": [
+                                {
+                                    "$ref": "#/components/schemas/AttributeNegativeFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/AttributePositiveFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/DateAbsoluteFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/DateRelativeFilter"
+                                }
+                            ]
+                        }
                     }
                 },
                 "description": "List of created visualization objects"
@@ -3128,6 +3218,74 @@
                 },
                 "description": "Visualization definitions created by AI."
             },
+            "DateAbsoluteFilter": {
+                "required": ["using"],
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Filter"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "using": {
+                                "type": "string"
+                            },
+                            "from": {
+                                "type": "string"
+                            },
+                            "to": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ]
+            },
+            "DateRelativeFilter": {
+                "required": ["from", "granularity", "to", "using"],
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Filter"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "using": {
+                                "type": "string"
+                            },
+                            "granularity": {
+                                "type": "string",
+                                "enum": [
+                                    "MINUTE",
+                                    "HOUR",
+                                    "DAY",
+                                    "WEEK",
+                                    "MONTH",
+                                    "QUARTER",
+                                    "YEAR",
+                                    "MINUTE_OF_HOUR",
+                                    "HOUR_OF_DAY",
+                                    "DAY_OF_WEEK",
+                                    "DAY_OF_MONTH",
+                                    "DAY_OF_YEAR",
+                                    "WEEK_OF_YEAR",
+                                    "MONTH_OF_YEAR",
+                                    "QUARTER_OF_YEAR"
+                                ]
+                            },
+                            "from": {
+                                "type": "integer",
+                                "format": "int32"
+                            },
+                            "to": {
+                                "type": "integer",
+                                "format": "int32"
+                            }
+                        }
+                    }
+                ]
+            },
             "DimAttribute": {
                 "required": ["id", "title", "type"],
                 "type": "object",
@@ -3149,6 +3307,10 @@
                     }
                 },
                 "description": "List of attributes representing the dimensionality of the new visualization"
+            },
+            "Filter": {
+                "type": "object",
+                "description": "List of filters to be applied to the new visualization"
             },
             "FoundObjects": {
                 "required": ["objects", "reasoning"],

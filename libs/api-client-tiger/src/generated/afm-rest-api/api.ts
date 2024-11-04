@@ -94,6 +94,12 @@ export interface AbsoluteDateFilterAbsoluteDateFilter {
     applyOnResult?: boolean;
     /**
      *
+     * @type {string}
+     * @memberof AbsoluteDateFilterAbsoluteDateFilter
+     */
+    localIdentifier?: string;
+    /**
+     *
      * @type {AfmObjectIdentifierDataset}
      * @memberof AbsoluteDateFilterAbsoluteDateFilter
      */
@@ -737,6 +743,82 @@ export interface AttributeItem {
     showAllValues?: boolean;
 }
 /**
+ *
+ * @export
+ * @interface AttributeNegativeFilter
+ */
+export interface AttributeNegativeFilter {
+    /**
+     *
+     * @type {string}
+     * @memberof AttributeNegativeFilter
+     */
+    using: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof AttributeNegativeFilter
+     */
+    exclude: Array<string>;
+}
+/**
+ *
+ * @export
+ * @interface AttributeNegativeFilterAllOf
+ */
+export interface AttributeNegativeFilterAllOf {
+    /**
+     *
+     * @type {string}
+     * @memberof AttributeNegativeFilterAllOf
+     */
+    using?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof AttributeNegativeFilterAllOf
+     */
+    exclude?: Array<string>;
+}
+/**
+ *
+ * @export
+ * @interface AttributePositiveFilter
+ */
+export interface AttributePositiveFilter {
+    /**
+     *
+     * @type {string}
+     * @memberof AttributePositiveFilter
+     */
+    using: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof AttributePositiveFilter
+     */
+    include: Array<string>;
+}
+/**
+ *
+ * @export
+ * @interface AttributePositiveFilterAllOf
+ */
+export interface AttributePositiveFilterAllOf {
+    /**
+     *
+     * @type {string}
+     * @memberof AttributePositiveFilterAllOf
+     */
+    using?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof AttributePositiveFilterAllOf
+     */
+    include?: Array<string>;
+}
+/**
  * Header containing the information related to attributes.
  * @export
  * @interface AttributeResultHeader
@@ -1069,6 +1151,12 @@ export interface ComparisonMeasureValueFilterComparisonMeasureValueFilter {
     applyOnResult?: boolean;
     /**
      *
+     * @type {string}
+     * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
+     */
+    localIdentifier?: string;
+    /**
+     *
      * @type {AfmIdentifier}
      * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
      */
@@ -1123,6 +1211,14 @@ export interface CreatedVisualization {
      * @memberof CreatedVisualization
      */
     dimensionality: Array<DimAttribute>;
+    /**
+     * List of filters to be applied to the new visualization
+     * @type {Array<AttributeNegativeFilter | AttributePositiveFilter | DateAbsoluteFilter | DateRelativeFilter>}
+     * @memberof CreatedVisualization
+     */
+    filters: Array<
+        AttributeNegativeFilter | AttributePositiveFilter | DateAbsoluteFilter | DateRelativeFilter
+    >;
 }
 
 export const CreatedVisualizationVisualizationTypeEnum = {
@@ -1183,11 +1279,167 @@ export interface DataColumnLocators {
     properties?: { [key: string]: DataColumnLocator };
 }
 /**
+ *
+ * @export
+ * @interface DateAbsoluteFilter
+ */
+export interface DateAbsoluteFilter {
+    /**
+     *
+     * @type {string}
+     * @memberof DateAbsoluteFilter
+     */
+    using: string;
+    /**
+     *
+     * @type {string}
+     * @memberof DateAbsoluteFilter
+     */
+    from?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof DateAbsoluteFilter
+     */
+    to?: string;
+}
+/**
+ *
+ * @export
+ * @interface DateAbsoluteFilterAllOf
+ */
+export interface DateAbsoluteFilterAllOf {
+    /**
+     *
+     * @type {string}
+     * @memberof DateAbsoluteFilterAllOf
+     */
+    using?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof DateAbsoluteFilterAllOf
+     */
+    from?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof DateAbsoluteFilterAllOf
+     */
+    to?: string;
+}
+/**
  * @type DateFilter
  * Abstract filter definition type for dates.
  * @export
  */
 export type DateFilter = AbsoluteDateFilter | RelativeDateFilter;
+
+/**
+ *
+ * @export
+ * @interface DateRelativeFilter
+ */
+export interface DateRelativeFilter {
+    /**
+     *
+     * @type {string}
+     * @memberof DateRelativeFilter
+     */
+    using: string;
+    /**
+     *
+     * @type {string}
+     * @memberof DateRelativeFilter
+     */
+    granularity: DateRelativeFilterGranularityEnum;
+    /**
+     *
+     * @type {number}
+     * @memberof DateRelativeFilter
+     */
+    from: number;
+    /**
+     *
+     * @type {number}
+     * @memberof DateRelativeFilter
+     */
+    to: number;
+}
+
+export const DateRelativeFilterGranularityEnum = {
+    MINUTE: "MINUTE",
+    HOUR: "HOUR",
+    DAY: "DAY",
+    WEEK: "WEEK",
+    MONTH: "MONTH",
+    QUARTER: "QUARTER",
+    YEAR: "YEAR",
+    MINUTE_OF_HOUR: "MINUTE_OF_HOUR",
+    HOUR_OF_DAY: "HOUR_OF_DAY",
+    DAY_OF_WEEK: "DAY_OF_WEEK",
+    DAY_OF_MONTH: "DAY_OF_MONTH",
+    DAY_OF_YEAR: "DAY_OF_YEAR",
+    WEEK_OF_YEAR: "WEEK_OF_YEAR",
+    MONTH_OF_YEAR: "MONTH_OF_YEAR",
+    QUARTER_OF_YEAR: "QUARTER_OF_YEAR",
+} as const;
+
+export type DateRelativeFilterGranularityEnum =
+    typeof DateRelativeFilterGranularityEnum[keyof typeof DateRelativeFilterGranularityEnum];
+
+/**
+ *
+ * @export
+ * @interface DateRelativeFilterAllOf
+ */
+export interface DateRelativeFilterAllOf {
+    /**
+     *
+     * @type {string}
+     * @memberof DateRelativeFilterAllOf
+     */
+    using?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof DateRelativeFilterAllOf
+     */
+    granularity?: DateRelativeFilterAllOfGranularityEnum;
+    /**
+     *
+     * @type {number}
+     * @memberof DateRelativeFilterAllOf
+     */
+    from?: number;
+    /**
+     *
+     * @type {number}
+     * @memberof DateRelativeFilterAllOf
+     */
+    to?: number;
+}
+
+export const DateRelativeFilterAllOfGranularityEnum = {
+    MINUTE: "MINUTE",
+    HOUR: "HOUR",
+    DAY: "DAY",
+    WEEK: "WEEK",
+    MONTH: "MONTH",
+    QUARTER: "QUARTER",
+    YEAR: "YEAR",
+    MINUTE_OF_HOUR: "MINUTE_OF_HOUR",
+    HOUR_OF_DAY: "HOUR_OF_DAY",
+    DAY_OF_WEEK: "DAY_OF_WEEK",
+    DAY_OF_MONTH: "DAY_OF_MONTH",
+    DAY_OF_YEAR: "DAY_OF_YEAR",
+    WEEK_OF_YEAR: "WEEK_OF_YEAR",
+    MONTH_OF_YEAR: "MONTH_OF_YEAR",
+    QUARTER_OF_YEAR: "QUARTER_OF_YEAR",
+} as const;
+
+export type DateRelativeFilterAllOfGranularityEnum =
+    typeof DateRelativeFilterAllOfGranularityEnum[keyof typeof DateRelativeFilterAllOfGranularityEnum];
 
 /**
  * Filter definition type specified by label and values.
@@ -1806,6 +2058,12 @@ export interface InlineFilterDefinitionInline {
      * @memberof InlineFilterDefinitionInline
      */
     applyOnResult?: boolean;
+    /**
+     *
+     * @type {string}
+     * @memberof InlineFilterDefinitionInline
+     */
+    localIdentifier?: string;
 }
 /**
  * Metric defined by the raw MAQL query.
@@ -2177,6 +2435,12 @@ export interface NegativeAttributeFilterNegativeAttributeFilter {
     applyOnResult?: boolean;
     /**
      *
+     * @type {string}
+     * @memberof NegativeAttributeFilterNegativeAttributeFilter
+     */
+    localIdentifier?: string;
+    /**
+     *
      * @type {AfmIdentifier}
      * @memberof NegativeAttributeFilterNegativeAttributeFilter
      */
@@ -2354,6 +2618,12 @@ export interface PositiveAttributeFilterPositiveAttributeFilter {
     applyOnResult?: boolean;
     /**
      *
+     * @type {string}
+     * @memberof PositiveAttributeFilterPositiveAttributeFilter
+     */
+    localIdentifier?: string;
+    /**
+     *
      * @type {AfmIdentifier}
      * @memberof PositiveAttributeFilterPositiveAttributeFilter
      */
@@ -2408,6 +2678,12 @@ export interface RangeMeasureValueFilterRangeMeasureValueFilter {
      * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
      */
     applyOnResult?: boolean;
+    /**
+     *
+     * @type {string}
+     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
+     */
+    localIdentifier?: string;
     /**
      *
      * @type {AfmIdentifier}
@@ -2467,6 +2743,12 @@ export interface RankingFilterRankingFilter {
      * @memberof RankingFilterRankingFilter
      */
     applyOnResult?: boolean;
+    /**
+     *
+     * @type {string}
+     * @memberof RankingFilterRankingFilter
+     */
+    localIdentifier?: string;
 }
 
 export const RankingFilterRankingFilterOperatorEnum = {
@@ -2520,6 +2802,12 @@ export interface RelativeDateFilterRelativeDateFilter {
      * @memberof RelativeDateFilterRelativeDateFilter
      */
     applyOnResult?: boolean;
+    /**
+     *
+     * @type {string}
+     * @memberof RelativeDateFilterRelativeDateFilter
+     */
+    localIdentifier?: string;
     /**
      *
      * @type {AfmObjectIdentifierDataset}

@@ -1,7 +1,6 @@
 // (C) 2021-2024 GoodData Corporation
 
 import { Action, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
-import { v4 as uuidv4 } from "uuid";
 import { invariant } from "ts-invariant";
 import partition from "lodash/partition.js";
 import { FilterContextState } from "./filterContextState.js";
@@ -30,10 +29,9 @@ import {
 } from "@gooddata/sdk-model";
 import { IParentWithConnectingAttributes } from "../../types/attributeFilterTypes.js";
 import { AddDateFilterPayload } from "../../commands/index.js";
+import { generateFilterLocalIdentifier } from "../_infra/generators.js";
 
 type FilterContextReducer<A extends Action> = CaseReducer<FilterContextState, A>;
-
-const generateFilterLocalIdentifier = (): string => uuidv4().replace(/-/g, "");
 
 //
 //
@@ -55,13 +53,14 @@ const setFilterContext: FilterContextReducer<PayloadAction<SetFilterContextPaylo
     } = action.payload;
 
     // make sure attribute filters always have localId
-    const filtersWithLocalId = filterContextDefinition.filters?.map((filter: FilterContextItem) =>
+    const filtersWithLocalId = filterContextDefinition.filters?.map((filter: FilterContextItem, i) =>
         isDashboardAttributeFilter(filter)
             ? {
                   attributeFilter: {
                       ...filter.attributeFilter,
                       localIdentifier:
-                          filter.attributeFilter.localIdentifier ?? generateFilterLocalIdentifier(),
+                          filter.attributeFilter.localIdentifier ??
+                          generateFilterLocalIdentifier(filter.attributeFilter.displayForm, i),
                   },
               }
             : filter,
@@ -274,7 +273,7 @@ const addAttributeFilter: FilterContextReducer<PayloadAction<IAddAttributeFilter
             attributeElements: initialSelection ?? { uris: [] },
             displayForm,
             negativeSelection: isNegative,
-            localIdentifier: localIdentifier ?? generateFilterLocalIdentifier(),
+            localIdentifier: localIdentifier ?? generateFilterLocalIdentifier(displayForm, index),
             filterElementsBy: parentFilters ? [...parentFilters] : undefined,
             ...(selectionMode !== undefined ? { selectionMode } : {}),
             title,

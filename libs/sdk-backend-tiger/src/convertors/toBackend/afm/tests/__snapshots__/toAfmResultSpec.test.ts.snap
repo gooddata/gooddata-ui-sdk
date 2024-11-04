@@ -13,6 +13,7 @@ exports[`converts execution definition to AFM Execution > should remove empty ne
           "type": "label",
         },
       },
+      "localIdentifier": undefined,
     },
   },
   {
@@ -28,6 +29,7 @@ exports[`converts execution definition to AFM Execution > should remove empty ne
           "type": "label",
         },
       },
+      "localIdentifier": undefined,
     },
   },
   {
@@ -38,6 +40,7 @@ exports[`converts execution definition to AFM Execution > should remove empty ne
           "type": "label",
         },
       },
+      "localIdentifier": undefined,
       "notIn": {
         "values": [
           "value 2",
@@ -86,6 +89,7 @@ exports[`converts execution definition to AFM Execution > should return AFM Exec
               "type": "label",
             },
           },
+          "localIdentifier": undefined,
         },
       },
     ],
