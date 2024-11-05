@@ -33,6 +33,8 @@ export const DefaultDashboardMainContent = (_: IDashboardProps) => {
             "richTextListItem",
             "visualizationSwitcher",
             "visualizationSwitcherListItem",
+            "dashboardLayout",
+            "dashboardLayoutListItem",
         ],
         {},
     );

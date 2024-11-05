@@ -12,6 +12,7 @@ import {
     CustomDashboardRichTextComponent,
     CustomDashboardVisualizationSwitcherComponent,
     CustomVisualizationSwitcherToolbarComponent,
+    CustomDashboardNestedLayoutComponent,
 } from "../widget/types.js";
 import { DashboardConfig, ExtendedDashboardWidget } from "../../model/index.js";
 import {
@@ -31,6 +32,7 @@ import {
     IWorkspacePermissions,
     IRichTextWidget,
     IVisualizationSwitcherWidget,
+    IDashboardLayout,
 } from "@gooddata/sdk-model";
 import { ComponentType } from "react";
 
@@ -157,6 +159,13 @@ export type VisualizationSwitcherComponentProvider = (
 /**
  * @alpha
  */
+export type DashboardLayoutComponentProvider = (
+    widget: IDashboardLayout,
+) => CustomDashboardNestedLayoutComponent;
+
+/**
+ * @alpha
+ */
 export type VisualizationSwitcherToolbarComponentProvider = (
     widget: IVisualizationSwitcherWidget,
 ) => CustomVisualizationSwitcherToolbarComponent;
@@ -172,6 +181,11 @@ export type OptionalVisualizationSwitcherToolbarComponentProvider =
  */
 export type OptionalVisualizationSwitcherComponentProvider =
     OptionalProvider<VisualizationSwitcherComponentProvider>;
+
+/**
+ * @alpha
+ */
+export type OptionalDashboardLayoutComponentProvider = OptionalProvider<DashboardLayoutComponentProvider>;
 
 /**
  * @public

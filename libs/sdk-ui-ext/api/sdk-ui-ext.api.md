@@ -76,6 +76,9 @@ export const CreateUserGroupDialog: React_2.FC<ICreateUserGroupDialogProps>;
 export const DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT_PX = 450;
 
 // @internal (undocumented)
+export const DASHBOARD_LAYOUT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo;
+
+// @internal (undocumented)
 export type DataSourcePermission = "USE" | "MANAGE";
 
 // @internal (undocumented)

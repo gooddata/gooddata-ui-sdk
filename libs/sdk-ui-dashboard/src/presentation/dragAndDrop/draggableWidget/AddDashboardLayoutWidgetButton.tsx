@@ -19,17 +19,17 @@ import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "cr cl", offset: { x: 5, y: 0 } }];
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 
-export const AddVisualizationSwitcherWidgetButton: React.FC = () => {
+export const AddDashboardLayoutWidgetButton: React.FC = () => {
     const isMobileDevice = useMediaQuery("mobileDevice");
     const theme = useTheme();
     return (
-        <div className="add-item-placeholder add-panel-item s-add-visualization-switcher">
-            <Icon.VisualizationSwitcher color={theme?.palette?.complementary?.c6 ?? "#94a1ad"} />
-            <FormattedMessage id="addPanel.visualizationSwitcher" />
+        <div className="add-item-placeholder add-panel-item s-add-dashboard-layout">
+            <Icon.Section color={theme?.palette?.complementary?.c6 ?? "#94a1ad"} />
+            <FormattedMessage id="addPanel.dashboardLayout" />
             <OverlayControllerProvider overlayController={overlayController}>
                 <BubbleHoverTrigger
                     eventsOnBubble={true}
-                    className="gd-add-item-placeholder-help-trigger gd-add-visualization-switcher s-add-visualization-switcher-bubble-trigger"
+                    className="gd-add-dashboard-layout gd-add-item-placeholder-help-trigger s-add-dashboard-layout-bubble-trigger"
                 >
                     <div
                         className={cx("s-description-trigger", {
@@ -38,8 +38,8 @@ export const AddVisualizationSwitcherWidgetButton: React.FC = () => {
                     >
                         <div className="gd-icon-circle-question" />
                     </div>
-                    <Bubble alignPoints={bubbleAlignPoints} alignTo=".gd-add-item-placeholder-help-trigger">
-                        <FormattedMessage id="addPanel.visualizationSwitcher.tooltip" />
+                    <Bubble alignPoints={bubbleAlignPoints}>
+                        <FormattedMessage id="addPanel.dashboardLayout.tooltip" />
                     </Bubble>
                 </BubbleHoverTrigger>
             </OverlayControllerProvider>

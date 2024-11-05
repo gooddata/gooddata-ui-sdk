@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { useDashboardDispatch } from "../../../model/index.js";
 import {
     isBaseDraggableMovingItem,
+    isDashboardLayoutDraggableListItem,
     isInsightDraggableItem,
     isInsightDraggableListItem,
     isInsightPlaceholderDraggableItem,
@@ -24,6 +25,7 @@ import { useNewSectionKpiPlaceholderDropHandler } from "./useNewSectionKpiPlaceh
 import { useWidgetDragHoverHandlers } from "./useWidgetDragHoverHandlers.js";
 import { useNewSectionRichTextPlaceholderDropHandler } from "./useNewSectionRichTextPlaceholderDropHandler.js";
 import { useNewSectionVisualizationSwitcherPlaceholderDropHandler } from "./useNewSectionVisualizationSwitcherPlaceholderDropHandler.js";
+import { useNewSectionDashboardLayoutPlaceholderDropHandler } from "./useNewSectionDashboardLayoutPlaceholderDropHandler.js";
 
 export type RowPosition = "above" | "below";
 
@@ -43,6 +45,8 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
     const handleRichTextPlaceholderDrop = useNewSectionRichTextPlaceholderDropHandler(index);
     const handleVisualizationSwitcherPlaceholderDrop =
         useNewSectionVisualizationSwitcherPlaceholderDropHandler(index);
+    const handleDashboardLayoutPlaceholderDrop = useNewSectionDashboardLayoutPlaceholderDropHandler(index);
+
     const moveWidgetToNewSection = useMoveWidgetToNewSectionDropHandler(index);
     const { handleDragHoverEnd } = useWidgetDragHoverHandlers();
 
@@ -57,6 +61,8 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
             "richTextListItem",
             "visualizationSwitcher",
             "visualizationSwitcherListItem",
+            "dashboardLayout",
+            "dashboardLayoutListItem",
         ],
         {
             drop: (item) => {
@@ -81,6 +87,9 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
                 if (isVisualizationSwitcherDraggableListItem(item)) {
                     handleVisualizationSwitcherPlaceholderDrop();
                 }
+                if (isDashboardLayoutDraggableListItem(item)) {
+                    handleDashboardLayoutPlaceholderDrop();
+                }
                 if (isKpiDraggableItem(item)) {
                     moveWidgetToNewSection(item);
                 }
@@ -103,6 +112,7 @@ export const SectionHotspot: React.FC<ISectionHotspotProps> = (props) => {
             handleKpiPlaceholderDrop,
             handleInsightPlaceholderDrop,
             handleVisualizationSwitcherPlaceholderDrop,
+            handleDashboardLayoutPlaceholderDrop,
         ],
     );
 

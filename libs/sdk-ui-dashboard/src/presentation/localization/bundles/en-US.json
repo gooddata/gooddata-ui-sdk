@@ -1532,6 +1532,16 @@
         "comment": "",
         "limit": 0
     },
+    "addPanel.dashboardLayout": {
+        "value": "Container",
+        "comment": "",
+        "limit": 0
+    },
+    "addPanel.dashboardLayout.tooltip": {
+        "value": "Group and display multiple widgets together for more flexible layout. ",
+        "comment": "",
+        "limit": 0
+    },
     "addPanel.kpi.tooltip.no_measures._measure": {
         "value": "The Key Performance Indicator requires a calculated measure.",
         "comment": "",

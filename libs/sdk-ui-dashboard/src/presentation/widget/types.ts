@@ -25,3 +25,8 @@ export type {
 } from "../widget/visualizationSwitcher/types.js";
 
 export type { CustomVisualizationSwitcherToolbarComponent } from "../widget/visualizationSwitcher/configuration/types.js";
+
+export type {
+    CustomDashboardLayoutComponent as CustomDashboardNestedLayoutComponent,
+    IDashboardLayoutProps as IDashboardNestedLayoutProps,
+} from "../widget/dashboardLayout/types.js";

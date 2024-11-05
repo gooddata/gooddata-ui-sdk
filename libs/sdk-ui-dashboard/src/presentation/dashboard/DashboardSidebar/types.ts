@@ -2,6 +2,7 @@
 import { ComponentType } from "react";
 import {
     AttributeFilterComponentSet,
+    DashboardLayoutWidgetComponentSet,
     InsightWidgetComponentSet,
     KpiWidgetComponentSet,
     RichTextWidgetComponentSet,
@@ -82,6 +83,14 @@ export interface ISidebarProps {
      * @internal
      */
     VisualizationSwitcherWidgetComponentSet?: VisualizationSwitcherWidgetComponentSet;
+
+    /**
+     * Layout (nested) widget component set.
+     * Do not set or override this property, it's injected by the Dashboard.
+     *
+     * @internal
+     */
+    DashboardLayoutWidgetComponentSet?: DashboardLayoutWidgetComponentSet;
 
     /**
      * Component, that renders delete drop zone.

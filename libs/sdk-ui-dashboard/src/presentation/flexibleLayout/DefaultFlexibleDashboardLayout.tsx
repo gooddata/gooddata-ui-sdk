@@ -159,7 +159,8 @@ export const DefaultFlexibleDashboardLayout = (props: IDashboardLayoutProps): JS
     // do not render the tailing section hotspot if there is only one section in the layout and it has only initial placeholders in it
     const shouldRenderSectionHotspot =
         transformedLayout.sections.length > 1 ||
-        transformedLayout.sections[0].items.some((i) => !isInitialPlaceholderWidget(i.widget));
+        (transformedLayout.sections.length === 1 &&
+            transformedLayout.sections[0].items.some((i) => !isInitialPlaceholderWidget(i.widget)));
 
     return (
         <>

@@ -170,6 +170,7 @@ import { IDashboardInsightProps as IDashboardInsightProps_2 } from './types.js';
 import { IDashboardKpiProps as IDashboardKpiProps_2 } from './types.js';
 import { IDashboardLayout } from '@gooddata/sdk-model';
 import { IDashboardLayoutItem } from '@gooddata/sdk-model';
+import { IDashboardLayoutProps as IDashboardLayoutProps_2 } from './types.js';
 import { IDashboardLayoutSection } from '@gooddata/sdk-model';
 import { IDashboardLayoutSectionHeader } from '@gooddata/sdk-model';
 import { IDashboardLayoutSizeByScreenSize } from '@gooddata/sdk-model';
@@ -1225,6 +1226,9 @@ export type CustomDashboardKpiComponent = ComponentType<IDashboardKpiProps>;
 
 // @alpha (undocumented)
 export type CustomDashboardLayoutComponent = ComponentType<IDashboardLayoutProps>;
+
+// @alpha (undocumented)
+export type CustomDashboardNestedLayoutComponent = ComponentType<IDashboardNestedLayoutProps>;
 
 // @public (undocumented)
 export type CustomDashboardRichTextComponent = ComponentType<IDashboardRichTextProps>;
@@ -2404,6 +2408,28 @@ export interface DashboardLayoutChangedPayload {
 // @beta (undocumented)
 export type DashboardLayoutCommands = AddLayoutSection | MoveLayoutSection | RemoveLayoutSection | ChangeLayoutSectionHeader | AddSectionItems | MoveSectionItem | RemoveSectionItem | RemoveSectionItemByWidgetRef | ResizeHeight;
 
+// @alpha (undocumented)
+export type DashboardLayoutComponentProvider = (widget: IDashboardLayout) => CustomDashboardNestedLayoutComponent;
+
+// @internal (undocumented)
+export type DashboardLayoutDraggableComponent = {
+    DraggingComponent?: DashboardLayoutDraggingComponent;
+    type: "dashboardLayout";
+};
+
+// @internal (undocumented)
+export type DashboardLayoutDraggableItem = BaseDraggableMovingItem & {
+    type: "dashboardLayout";
+};
+
+// @internal (undocumented)
+export type DashboardLayoutDraggableListItem = BaseDraggableLayoutItem & {
+    type: "dashboardLayoutListItem";
+};
+
+// @internal (undocumented)
+export type DashboardLayoutDraggingComponent = ComponentType<IDashboardLayoutDraggingComponentProps>;
+
 // @beta
 export interface DashboardLayoutSectionAdded extends IDashboardEvent {
     // (undocumented)
@@ -2529,6 +2555,9 @@ export interface DashboardLayoutSectionRemovedPayload {
     readonly section: ExtendedDashboardLayoutSection;
     readonly stashIdentifier?: StashedDashboardItemsId;
 }
+
+// @internal
+export type DashboardLayoutWidgetComponentSet = CustomComponentBase<IDashboardNestedLayoutProps, Parameters<DashboardLayoutComponentProvider>> & DraggableComponent & Partial<CreatableByDragComponent> & Partial<CreatablePlaceholderComponent<IDashboardNestedLayoutProps>> & ConfigurableWidget<IDashboardLayout>;
 
 // @beta (undocumented)
 export interface DashboardMetaState {
@@ -3063,7 +3092,13 @@ export const DefaultDashboardKpiPlaceholderWidget: CustomDashboardWidgetComponen
 export const DefaultDashboardLayout: (props: IDashboardLayoutProps) => JSX.Element;
 
 // @internal (undocumented)
+export function DefaultDashboardLayoutComponentSetFactory(dashboardLayoutComponentProvider: DashboardLayoutComponentProvider): DashboardLayoutWidgetComponentSet;
+
+// @internal (undocumented)
 export const DefaultDashboardMainContent: (_: IDashboardProps) => React_2.JSX.Element;
+
+// @public
+export const DefaultDashboardNestedLayout: ComponentType<IDashboardLayoutProps_2>;
 
 // @public
 export const DefaultDashboardRichText: ComponentType<IDashboardRichTextProps_2>;
@@ -3202,14 +3237,14 @@ export function dispatchAndWaitFor<TCommand extends DashboardCommands, TResult>(
 
 // @internal
 export type DraggableComponent = {
-    dragging: AttributeFilterDraggableComponent | DateFilterDraggableComponent | KpiDraggableComponent | InsightDraggableComponent | RichTextDraggableComponent | VisualizationSwitcherDraggableComponent | CustomDraggableComponent;
+    dragging: AttributeFilterDraggableComponent | DateFilterDraggableComponent | KpiDraggableComponent | InsightDraggableComponent | RichTextDraggableComponent | VisualizationSwitcherDraggableComponent | DashboardLayoutDraggableComponent | CustomDraggableComponent;
 };
 
 // @internal (undocumented)
-export type DraggableContentItem = AttributeFilterDraggableItem | AttributeFilterPlaceholderDraggableItem | DateFilterDraggableItem | InsightDraggableItem | InsightDraggableListItem | InsightPlaceholderDraggableItem | KpiDraggableItem | KpiPlaceholderDraggableItem | RichTextDraggableItem | RichTextDraggableListItem | VisualizationSwitcherDraggableItem | VisualizationSwitcherDraggableListItem | CustomWidgetDraggableItem | CustomDraggableItem;
+export type DraggableContentItem = AttributeFilterDraggableItem | AttributeFilterPlaceholderDraggableItem | DateFilterDraggableItem | InsightDraggableItem | InsightDraggableListItem | InsightPlaceholderDraggableItem | KpiDraggableItem | KpiPlaceholderDraggableItem | RichTextDraggableItem | RichTextDraggableListItem | VisualizationSwitcherDraggableItem | VisualizationSwitcherDraggableListItem | DashboardLayoutDraggableItem | DashboardLayoutDraggableListItem | CustomWidgetDraggableItem | CustomDraggableItem;
 
 // @internal (undocumented)
-export type DraggableContentItemType = "attributeFilter" | "dateFilter" | "attributeFilter-placeholder" | "insightListItem" | "insight" | "insight-placeholder" | "kpi" | "kpi-placeholder" | "richText" | "richTextListItem" | "visualizationSwitcher" | "visualizationSwitcherListItem" | "custom";
+export type DraggableContentItemType = "attributeFilter" | "dateFilter" | "attributeFilter-placeholder" | "insightListItem" | "insight" | "insight-placeholder" | "kpi" | "kpi-placeholder" | "richText" | "richTextListItem" | "visualizationSwitcher" | "visualizationSwitcherListItem" | "dashboardLayout" | "dashboardLayoutListItem" | "custom";
 
 // @internal (undocumented)
 export const DraggableCreatePanelItem: React_2.FC<IDraggableCreatePanelItemProps>;
@@ -3237,6 +3272,8 @@ export type DraggableItemComponentTypeMapping = {
     richTextListItem: RichTextDraggableListItem;
     visualizationSwitcher: VisualizationSwitcherDraggableItem;
     visualizationSwitcherListItem: VisualizationSwitcherDraggableListItem;
+    dashboardLayout: DashboardLayoutDraggableItem;
+    dashboardLayoutListItem: DashboardLayoutDraggableListItem;
     custom: CustomDraggableItem;
 };
 
@@ -3253,7 +3290,7 @@ export type DraggableItemType = DraggableContentItemType | DraggableInternalItem
 export type DraggableItemTypeMapping = DraggableItemComponentTypeMapping & DraggableItemInternalTypeMapping;
 
 // @internal (undocumented)
-export type DraggableLayoutItem = InsightDraggableItem | KpiDraggableItem | RichTextDraggableItem | VisualizationSwitcherDraggableItem | CustomWidgetDraggableItem;
+export type DraggableLayoutItem = InsightDraggableItem | KpiDraggableItem | RichTextDraggableItem | VisualizationSwitcherDraggableItem | DashboardLayoutDraggableItem | CustomWidgetDraggableItem;
 
 // @internal (undocumented)
 export interface DraggingComponentProps {
@@ -4012,6 +4049,7 @@ export interface IDashboardCustomComponentProps {
     DashboardContentComponentProvider?: OptionalDashboardContentComponentProvider;
     // @alpha
     DashboardDateFilterComponentProvider?: OptionalDateFilterComponentProvider;
+    DashboardLayoutComponentProvider?: OptionalDashboardLayoutComponentProvider;
     // @internal
     EmptyLayoutDropZoneBodyComponent?: CustomEmptyLayoutDropZoneBodyComponent;
     // @alpha
@@ -4296,6 +4334,12 @@ export interface IDashboardLayoutCustomizer {
     customizeFluidLayout(fun: FluidLayoutCustomizationFn): IDashboardLayoutCustomizer;
 }
 
+// @internal (undocumented)
+export type IDashboardLayoutDraggingComponentProps = {
+    itemType: "dashboardLayout";
+    item: DashboardLayoutDraggableItem;
+};
+
 // @alpha (undocumented)
 export interface IDashboardLayoutProps {
     // (undocumented)
@@ -4306,6 +4350,28 @@ export interface IDashboardLayoutProps {
     onError?: OnError;
     // (undocumented)
     onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
+}
+
+// @alpha (undocumented)
+export interface IDashboardNestedLayoutProps {
+    backend?: IAnalyticalBackend;
+    clientHeight?: number;
+    clientWidth?: number;
+    // (undocumented)
+    ErrorComponent?: React.ComponentType<IErrorProps>;
+    // (undocumented)
+    layout?: IDashboardLayout<ExtendedDashboardWidget>;
+    // (undocumented)
+    onDrill?: OnFiredDashboardDrillEvent;
+    // (undocumented)
+    onError?: OnError;
+    // (undocumented)
+    onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
+    // (undocumented)
+    parentLayoutItemSize?: IDashboardLayoutSizeByScreenSize;
+    // (undocumented)
+    screen?: ScreenSize;
+    workspace?: string;
 }
 
 // @public
@@ -5397,6 +5463,12 @@ export const isDashboardKpiWidgetMeasureChanged: (obj: unknown) => obj is Dashbo
 // @beta
 export const isDashboardLayoutChanged: (obj: unknown) => obj is DashboardLayoutChanged;
 
+// @internal (undocumented)
+export function isDashboardLayoutDraggableItem(item: any): item is DashboardLayoutDraggableItem;
+
+// @internal (undocumented)
+export function isDashboardLayoutDraggableListItem(item: any): item is DashboardLayoutDraggableListItem;
+
 // @beta
 export const isDashboardLayoutSectionAdded: (obj: unknown) => obj is DashboardLayoutSectionAdded;
 
@@ -5552,6 +5624,8 @@ export interface ISidebarProps {
     // @internal
     AttributeFilterComponentSet?: AttributeFilterComponentSet;
     configurationPanelClassName?: string;
+    // @internal
+    DashboardLayoutWidgetComponentSet?: DashboardLayoutWidgetComponentSet;
     DefaultSidebar: ComponentType<ISidebarProps>;
     // @internal
     DeleteDropZoneComponent?: React.ComponentType;
@@ -6150,6 +6224,9 @@ export type OptionalAttributeFilterComponentProvider = OptionalProvider<Attribut
 
 // @alpha (undocumented)
 export type OptionalDashboardContentComponentProvider = OptionalProvider<DashboardContentComponentProvider>;
+
+// @alpha (undocumented)
+export type OptionalDashboardLayoutComponentProvider = OptionalProvider<DashboardLayoutComponentProvider>;
 
 // @public (undocumented)
 export type OptionalDateFilterComponentProvider = OptionalProvider<DateFilterComponentProvider>;

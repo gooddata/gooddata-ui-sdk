@@ -11,10 +11,12 @@ import {
     IDashboardRichTextProps,
     IDashboardVisualizationSwitcherProps,
     IDashboardWidgetProps,
+    IDashboardNestedLayoutProps,
 } from "../widget/types.js";
 import {
     AttributeFilterDraggableItem,
     CustomDraggableItem,
+    DashboardLayoutDraggableItem,
     DateFilterDraggableItem,
     DraggableContentItemType,
     IWrapCreatePanelItemWithDragComponent,
@@ -31,8 +33,10 @@ import {
     RichTextComponentProvider,
     WidgetComponentProvider,
     VisualizationSwitcherComponentProvider,
+    DashboardLayoutComponentProvider,
 } from "../dashboardContexts/types.js";
 import {
+    IDashboardLayout,
     IInsightWidget,
     IKpiWidget,
     IRichTextWidget,
@@ -117,6 +121,14 @@ export type IVisualizationSwitcherDraggingComponentProps = {
 /**
  * @internal
  */
+export type IDashboardLayoutDraggingComponentProps = {
+    itemType: "dashboardLayout";
+    item: DashboardLayoutDraggableItem;
+};
+
+/**
+ * @internal
+ */
 export type ICustomDraggingComponentProps = {
     itemType: "custom";
     item: CustomDraggableItem;
@@ -152,6 +164,11 @@ export type RichTextDraggingComponent = ComponentType<IRichTextDraggingComponent
  */
 export type VisualizationSwitcherDraggingComponent =
     ComponentType<IVisualizationSwitcherDraggingComponentProps>;
+
+/**
+ * @internal
+ */
+export type DashboardLayoutDraggingComponent = ComponentType<IDashboardLayoutDraggingComponentProps>;
 
 /**
  * @internal
@@ -209,6 +226,14 @@ export type VisualizationSwitcherDraggableComponent = {
 /**
  * @internal
  */
+export type DashboardLayoutDraggableComponent = {
+    DraggingComponent?: DashboardLayoutDraggingComponent;
+    type: "dashboardLayout";
+};
+
+/**
+ * @internal
+ */
 export type CustomDraggableComponent = {
     DraggingComponent: CustomDraggingComponent;
     type: "custom";
@@ -226,6 +251,7 @@ export type DraggableComponent = {
         | InsightDraggableComponent
         | RichTextDraggableComponent
         | VisualizationSwitcherDraggableComponent
+        | DashboardLayoutDraggableComponent
         | CustomDraggableComponent;
 };
 
@@ -395,6 +421,19 @@ export type VisualizationSwitcherWidgetComponentSet = CustomComponentBase<
     Partial<CreatableByDragComponent> &
     Partial<CreatablePlaceholderComponent<IDashboardWidgetProps>> &
     ConfigurableWidget<IVisualizationSwitcherWidget>;
+
+/**
+ * Definition of Dashboard layout widget
+ * @internal
+ */
+export type DashboardLayoutWidgetComponentSet = CustomComponentBase<
+    IDashboardNestedLayoutProps,
+    Parameters<DashboardLayoutComponentProvider>
+> &
+    DraggableComponent &
+    Partial<CreatableByDragComponent> &
+    Partial<CreatablePlaceholderComponent<IDashboardNestedLayoutProps>> &
+    ConfigurableWidget<IDashboardLayout>;
 
 /**
  * Definition of widget

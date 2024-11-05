@@ -41,6 +41,7 @@ import {
 import { CustomSidebarComponent } from "../dashboard/DashboardSidebar/types.js";
 import {
     AttributeFilterComponentSet,
+    DashboardLayoutWidgetComponentSet,
     DateFilterComponentSet,
     InsightWidgetComponentSet,
     KpiWidgetComponentSet,
@@ -86,6 +87,7 @@ interface IDashboardComponentsContext {
     KpiWidgetComponentSet: KpiWidgetComponentSet;
     RichTextWidgetComponentSet: RichTextWidgetComponentSet;
     VisualizationSwitcherWidgetComponentSet: VisualizationSwitcherWidgetComponentSet;
+    DashboardLayoutWidgetComponentSet: DashboardLayoutWidgetComponentSet;
     AttributeFilterComponentSet: AttributeFilterComponentSet;
     DateFilterComponentSet: DateFilterComponentSet;
     EmptyLayoutDropZoneBodyComponent: CustomEmptyLayoutDropZoneBodyComponent;
@@ -138,6 +140,7 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     KpiWidgetComponentSet: null as any, // TODO how to throw here
     RichTextWidgetComponentSet: null as any, // TODO how to throw here
     VisualizationSwitcherWidgetComponentSet: null as any, // TODO how to throw here
+    DashboardLayoutWidgetComponentSet: null as any, // TODO how to throw here
     AttributeFilterComponentSet: null as any, // TODO how to throw here
     DateFilterComponentSet: null as any, // TODO how to throw here
     EmptyLayoutDropZoneBodyComponent: ThrowMissingComponentError("EmptyLayoutDropZoneBodyComponent"),
