@@ -44,6 +44,7 @@ import {
     OptionalRichTextComponentProvider,
     OptionalVisualizationSwitcherComponentProvider,
     OptionalVisualizationSwitcherToolbarComponentProvider,
+    OptionalDashboardLayoutComponentProvider,
 } from "../dashboardContexts/index.js";
 import { CustomSidebarComponent } from "./DashboardSidebar/types.js";
 import { InsightComponentSetProvider } from "../componentDefinition/types.js";
@@ -234,6 +235,19 @@ export interface IDashboardCustomComponentProps {
      * @public
      */
     VisualizationSwitcherComponentProvider?: OptionalVisualizationSwitcherComponentProvider;
+
+    /**
+     * Specify function to obtain custom component to use for rendering a dashboard layout (nested).
+     *
+     * @remarks
+     * -  If not provided, the default implementation {@link DefaultDashboardLayout} will be used.
+     * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardLayout}.
+     *    This is useful if you want to customize just one particular nested layout and keep default rendering for
+     *    the other nested layouts.
+     *
+     * @public
+     */
+    DashboardLayoutComponentProvider?: OptionalDashboardLayoutComponentProvider;
 
     /**
      * Specify function to obtain custom component to use for rendering a visualization switcher toolbar.

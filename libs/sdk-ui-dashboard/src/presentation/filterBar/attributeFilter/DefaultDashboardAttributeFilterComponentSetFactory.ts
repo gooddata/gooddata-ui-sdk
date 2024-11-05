@@ -17,7 +17,7 @@ export function DefaultDashboardAttributeFilterComponentSetFactory(
             CreatingPlaceholderComponent: AttributesDropdown,
             CreatePanelListItemComponent: CreatableAttributeFilter,
             type: "attributeFilter-placeholder",
-            priority: 10,
+            priority: 3,
         },
         dragging: {
             DraggingComponent: DefaultAttributeFilterDraggingComponent,

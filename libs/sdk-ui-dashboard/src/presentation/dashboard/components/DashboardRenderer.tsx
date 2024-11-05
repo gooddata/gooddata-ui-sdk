@@ -75,6 +75,7 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
         richTextWidgetComponentSet,
         visualizationSwitcherWidgetComponentSet,
         visualizationSwitcherToolbarComponentProvider,
+        dashboardLayoutWidgetComponentSet,
     } = useDashboard(props);
 
     const dashboardRender = (
@@ -154,6 +155,7 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                         VisualizationSwitcherWidgetComponentSet={
                                             visualizationSwitcherWidgetComponentSet
                                         }
+                                        DashboardLayoutWidgetComponentSet={dashboardLayoutWidgetComponentSet}
                                         AttributeFilterComponentSet={attributeFilterComponentSet}
                                         DateFilterComponentSet={dateFilterComponentSet}
                                         EmptyLayoutDropZoneBodyComponent={

@@ -1,7 +1,7 @@
 // (C) 2020-2024 GoodData Corporation
 import React from "react";
-import { useDashboardComponentsContext } from "../dashboardContexts/index.js";
-import { IDashboardLayoutProps } from "./types.js";
+import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
+import { IDashboardLayoutProps } from "../../flexibleLayout/types.js";
 
 /**
  * @internal

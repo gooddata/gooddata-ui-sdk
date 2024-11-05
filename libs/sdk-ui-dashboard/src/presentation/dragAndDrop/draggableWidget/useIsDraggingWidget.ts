@@ -14,6 +14,8 @@ export function useIsDraggingWidget() {
             "richTextListItem",
             "visualizationSwitcher",
             "visualizationSwitcherListItem",
+            "dashboardLayout",
+            "dashboardLayoutListItem",
         ],
         {},
         [],

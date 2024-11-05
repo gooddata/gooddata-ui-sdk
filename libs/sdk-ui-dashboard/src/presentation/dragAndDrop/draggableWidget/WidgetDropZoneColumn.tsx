@@ -17,6 +17,7 @@ import { useMoveWidgetDropHandler } from "./useMoveWidgetHandler.js";
 import { getDashboardLayoutItemHeightForGrid } from "../../../_staging/layout/sizing.js";
 import {
     BaseDraggableLayoutItem,
+    isDashboardLayoutDraggableListItem,
     isInsightDraggableItem,
     isInsightDraggableListItem,
     isInsightPlaceholderDraggableItem,
@@ -29,6 +30,7 @@ import {
 } from "../types.js";
 import { useRichTextPlaceholderDropHandler } from "./useRichTextPlaceholderDropHandler.js";
 import { useVisualizationSwitcherPlaceholderDropHandler } from "./useVisualizationSwitcherPlaceholderDropHandler.js";
+import { useDashboardLayoutPlaceholderDropHandler } from "./useDashboardLayoutPlaceholderDropHandler.js";
 
 export type WidgetDropZoneColumnProps = {
     screen: ScreenSize;
@@ -50,6 +52,10 @@ export const WidgetDropZoneColumn = (props: WidgetDropZoneColumnProps) => {
         sectionIndex,
         itemIndex,
     );
+    const handleDashboardLayoutPlaceholderDrop = useDashboardLayoutPlaceholderDropHandler(
+        sectionIndex,
+        itemIndex,
+    );
     const handleWidgetDrop = useMoveWidgetDropHandler(sectionIndex, itemIndex);
 
     const dispatch = useDashboardDispatch();
@@ -65,6 +71,8 @@ export const WidgetDropZoneColumn = (props: WidgetDropZoneColumnProps) => {
             "richTextListItem",
             "visualizationSwitcher",
             "visualizationSwitcherListItem",
+            "dashboardLayout",
+            "dashboardLayoutListItem",
         ],
         {
             drop: (item) => {
@@ -83,6 +91,9 @@ export const WidgetDropZoneColumn = (props: WidgetDropZoneColumnProps) => {
                 if (isVisualizationSwitcherDraggableListItem(item)) {
                     handleVisualizationSwitcherPlaceholderDrop();
                 }
+                if (isDashboardLayoutDraggableListItem(item)) {
+                    handleDashboardLayoutPlaceholderDrop();
+                }
                 if (
                     isInsightDraggableItem(item) ||
                     isKpiDraggableItem(item) ||
@@ -99,6 +110,9 @@ export const WidgetDropZoneColumn = (props: WidgetDropZoneColumnProps) => {
             handleInsightPlaceholderDrop,
             handleKpiPlaceholderDrop,
             handleVisualizationSwitcherPlaceholderDrop,
+            handleRichTextPlaceholderDrop,
+            handleWidgetDrop,
+            handleDashboardLayoutPlaceholderDrop,
         ],
     );
 

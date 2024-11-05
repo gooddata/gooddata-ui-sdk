@@ -8,7 +8,11 @@ import {
     isRichTextWidget,
     isVisualizationSwitcherWidget,
 } from "@gooddata/sdk-model";
-import { IVisualizationSizeInfo, WIDGET_DROPZONE_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
+import {
+    DASHBOARD_LAYOUT_WIDGET_SIZE_INFO_DEFAULT,
+    IVisualizationSizeInfo,
+    WIDGET_DROPZONE_SIZE_INFO_DEFAULT,
+} from "@gooddata/sdk-ui-ext";
 import React, { useRef } from "react";
 import cx from "classnames";
 import {
@@ -330,11 +334,10 @@ function createDraggableItem(
             size: getFilledSize(size, sizeInfo),
         };
     } else if (isExtendedDashboardLayoutWidget(widget)) {
-        // TODO INE: create layout specific item
-        const sizeInfo = getSizeInfo(settings, "visualizationSwitcher");
+        const sizeInfo = DASHBOARD_LAYOUT_WIDGET_SIZE_INFO_DEFAULT;
 
         return {
-            type: "visualizationSwitcher",
+            type: "dashboardLayout",
             sectionIndex,
             itemIndex,
             title: "",
