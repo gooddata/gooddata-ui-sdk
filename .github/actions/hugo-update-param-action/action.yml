@@ -1,7 +1,7 @@
 # (C) 2022 GoodData Corporation
 
 name: "Action to update hugo version param in parmas.toml"
-description: "Action add new version to hugo version config set it latest and remove old one"
+description: "Action add new version to hugo version config set it latest and remove old one blabaababab"
 
 inputs:
     path-to-version-config:
