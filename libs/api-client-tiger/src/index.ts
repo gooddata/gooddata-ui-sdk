@@ -191,6 +191,10 @@ export type {
     UserContext,
     CreatedVisualizations,
     ActiveObjectIdentification,
+    AttributeNegativeFilter,
+    AttributePositiveFilter,
+    DateAbsoluteFilter,
+    DateRelativeFilter,
 } from "./generated/afm-rest-api/api.js";
 export {
     AfmObjectIdentifierAttributeIdentifierTypeEnum as AfmModelObjectIdentifierAttributeIdentifierTypeEnum,
@@ -204,6 +208,7 @@ export {
     ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum as AfmComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum,
     FilterByLabelTypeEnum,
     ElementsRequestSortOrderEnum,
+    DateRelativeFilterGranularityEnum,
     RangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum as AfmRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum,
     RankingFilterRankingFilterOperatorEnum as AfmRankingFilterRankingFilterOperatorEnum,
     RelativeDateFilterRelativeDateFilterGranularityEnum as AfmRelativeDateFilterRelativeDateFilterGranularityEnum,

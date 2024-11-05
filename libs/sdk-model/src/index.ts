@@ -155,6 +155,9 @@ export type {
     RangeConditionOperator,
     IAbsoluteDateFilterValues,
     IRelativeDateFilterValues,
+    IAbsoluteDateFilterBody,
+    IRelativeDateFilterBody,
+    IRelativeDateFilterAllTimeBody,
 } from "./execution/filter/index.js";
 export {
     isRankingFilter,

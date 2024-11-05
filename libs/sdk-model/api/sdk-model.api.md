@@ -557,11 +557,14 @@ export type GuidType = "guid";
 // @public
 export interface IAbsoluteDateFilter {
     // (undocumented)
-    absoluteDateFilter: {
-        dataSet: ObjRef;
-        from: string;
-        to: string;
-    };
+    absoluteDateFilter: IAbsoluteDateFilterBody;
+}
+
+// @public
+export interface IAbsoluteDateFilterBody extends IIdentifiableFilter {
+    dataSet: ObjRef;
+    from: string;
+    to: string;
 }
 
 // @alpha
@@ -2251,7 +2254,7 @@ export interface IMeasureValueFilter {
 }
 
 // @public
-export interface IMeasureValueFilterBody {
+export interface IMeasureValueFilterBody extends IIdentifiableFilter {
     // (undocumented)
     condition?: MeasureValueFilterCondition;
     // (undocumented)
@@ -2658,7 +2661,7 @@ export interface IRankingFilter {
 }
 
 // @public
-export interface IRankingFilterBody {
+export interface IRankingFilterBody extends IIdentifiableFilter {
     // (undocumented)
     attributes?: ObjRefInScope[];
     // (undocumented)
@@ -2671,20 +2674,34 @@ export interface IRankingFilterBody {
 
 // @public
 export type IRelativeDateFilter = {
-    relativeDateFilter: {
-        dataSet: ObjRef;
-        granularity: DateAttributeGranularity;
-        from: number;
-        to: number;
-    };
+    relativeDateFilter: IRelativeDateFilterBody;
 } | {
-    relativeDateFilter: {
-        dataSet: ObjRef;
-        granularity: AllTimeGranularity;
-        from: 0;
-        to: 0;
-    };
+    relativeDateFilter: IRelativeDateFilterAllTimeBody;
 };
+
+// @public
+export interface IRelativeDateFilterAllTimeBody extends IIdentifiableFilter {
+    // (undocumented)
+    dataSet: ObjRef;
+    // (undocumented)
+    from: 0;
+    // (undocumented)
+    granularity: AllTimeGranularity;
+    // (undocumented)
+    to: 0;
+}
+
+// @public
+export interface IRelativeDateFilterBody extends IIdentifiableFilter {
+    // (undocumented)
+    dataSet: ObjRef;
+    // (undocumented)
+    from: number;
+    // (undocumented)
+    granularity: DateAttributeGranularity;
+    // (undocumented)
+    to: number;
+}
 
 // @alpha
 export interface IRelativeDateFilterForm extends IDateFilterOption {

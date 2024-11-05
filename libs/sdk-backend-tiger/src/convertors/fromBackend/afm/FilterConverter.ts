@@ -49,6 +49,7 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
         return {
             positiveAttributeFilter: {
                 displayForm: toObjRef(filter.positiveAttributeFilter.label),
+                localIdentifier: filter.positiveAttributeFilter.localIdentifier,
                 in: filter.positiveAttributeFilter.in,
             },
         };
@@ -59,6 +60,7 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
         return {
             positiveAttributeFilter: {
                 displayForm: toLocalRef(filter.positiveAttributeFilter.label),
+                localIdentifier: filter.positiveAttributeFilter.localIdentifier,
                 in: filter.positiveAttributeFilter.in,
             },
         };
@@ -69,6 +71,7 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
         return {
             negativeAttributeFilter: {
                 displayForm: toObjRef(filter.negativeAttributeFilter.label),
+                localIdentifier: filter.negativeAttributeFilter.localIdentifier,
                 notIn: filter.negativeAttributeFilter.notIn,
             },
         };
@@ -79,6 +82,7 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
         return {
             negativeAttributeFilter: {
                 displayForm: toLocalRef(filter.negativeAttributeFilter.label),
+                localIdentifier: filter.negativeAttributeFilter.localIdentifier,
                 notIn: filter.negativeAttributeFilter.notIn,
             },
         };
@@ -86,6 +90,7 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
         return {
             absoluteDateFilter: {
                 dataSet: toObjRef(filter.absoluteDateFilter.dataset),
+                localIdentifier: filter.absoluteDateFilter.localIdentifier,
                 from: filter.absoluteDateFilter.from,
                 to: filter.absoluteDateFilter.to,
             },
@@ -94,6 +99,7 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
         return {
             relativeDateFilter: {
                 dataSet: toObjRef(filter.relativeDateFilter.dataset),
+                localIdentifier: filter.relativeDateFilter.localIdentifier,
                 from: filter.relativeDateFilter.from,
                 to: filter.relativeDateFilter.to,
                 granularity: toSdkGranularity(filter.relativeDateFilter.granularity),
@@ -104,6 +110,7 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
         return {
             measureValueFilter: {
                 measure: isAfmObjectIdentifier(measure) ? toObjRef(measure) : measure,
+                localIdentifier: filter.comparisonMeasureValueFilter.localIdentifier,
                 condition: {
                     comparison: {
                         operator: filter.comparisonMeasureValueFilter.operator,
@@ -117,6 +124,7 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
         return {
             measureValueFilter: {
                 measure: isAfmObjectIdentifier(measure) ? toObjRef(measure) : measure,
+                localIdentifier: filter.rangeMeasureValueFilter.localIdentifier,
                 condition: {
                     range: {
                         operator: filter.rangeMeasureValueFilter.operator,
@@ -130,6 +138,7 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
         return {
             rankingFilter: {
                 measure: filter.rankingFilter.measures[0] as ObjRefInScope,
+                localIdentifier: filter.rankingFilter.localIdentifier,
                 operator: filter.rankingFilter.operator,
                 value: filter.rankingFilter.value,
             },

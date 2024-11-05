@@ -27,6 +27,7 @@ import {
     selectEnableDuplicatedLabelValuesInAttributeFilter,
 } from "../../store/config/configSelectors.js";
 import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { generateFilterLocalIdentifier } from "../../store/_infra/generators.js";
 
 export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFiltering) {
     yield put(
@@ -80,7 +81,7 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
          */
         crossFilteringItemByWidget?.filterLocalIdentifiers.length <= drillIntersectionFilters.length;
 
-    const virtualFilters = drillIntersectionFilters.map(({ attributeFilter, primaryLabel }) => {
+    const virtualFilters = drillIntersectionFilters.map(({ attributeFilter, primaryLabel }, i) => {
         const { displayForm, attributeElements, negativeSelection, title } = attributeFilter.attributeFilter;
 
         const existingVirtualFilter = shouldUpdateExistingCrossFiltering
@@ -108,7 +109,9 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
                 displayForm,
                 attributeElements,
                 negativeSelection,
-                localIdentifier: existingVirtualFilter?.attributeFilter.localIdentifier ?? uuid(),
+                localIdentifier:
+                    existingVirtualFilter?.attributeFilter.localIdentifier ??
+                    generateFilterLocalIdentifier(displayForm, i),
                 selectionMode: "multi",
                 title,
             },
