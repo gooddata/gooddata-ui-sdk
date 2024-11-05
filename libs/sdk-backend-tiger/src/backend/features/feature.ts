@@ -298,6 +298,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableComparisonInAlerting,
+            "enableComparisonInAlerting",
+            "BOOLEAN",
+            FeatureFlagsValues.enableComparisonInAlerting,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableAlertingRollout,
             "enableAlertingRollout",
             "BOOLEAN",

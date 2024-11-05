@@ -92,6 +92,7 @@ export {
     selectEnableFilterViews,
     selectEnableAlerting,
     selectEnableAlertAttributes,
+    selectEnableComparisonInAlerting,
     selectEnableVisualizationSwitcher,
     selectEnableIgnoreCrossFiltering,
     selectEnableAutomations,

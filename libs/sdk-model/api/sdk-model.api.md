@@ -3126,6 +3126,7 @@ export interface ISettings {
     enableClickableAttributeURL?: boolean;
     enableColumnHeadersPosition?: boolean;
     enableCompanyLogoInEmbeddedUI?: boolean;
+    enableComparisonInAlerting?: boolean;
     enableCompositeGrain?: boolean;
     enableCreateUser?: boolean;
     // @internal

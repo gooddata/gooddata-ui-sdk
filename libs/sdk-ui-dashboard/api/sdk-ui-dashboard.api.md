@@ -7483,6 +7483,9 @@ export const selectEnableClickableAttributeURL: DashboardSelector<boolean>;
 // @public
 export const selectEnableCompanyLogoInEmbeddedUI: DashboardSelector<boolean>;
 
+// @alpha (undocumented)
+export const selectEnableComparisonInAlerting: DashboardSelector<boolean>;
+
 // @internal
 export const selectEnableCrossFilteringAliasTitles: DashboardSelector<boolean>;
 

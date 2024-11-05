@@ -436,6 +436,11 @@ export interface ISettings {
     enableAlertAttributes?: boolean;
 
     /**
+     * Enables comparison in alerting.
+     */
+    enableComparisonInAlerting?: boolean;
+
+    /**
      * Enables alerting rollout of the dashboard widgets.
      */
     enableAlertingRollout?: boolean;
