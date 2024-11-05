@@ -3131,7 +3131,6 @@ export interface ISettings {
     enableFlightRpcDataSource?: boolean;
     enableGenAIChat?: boolean;
     enableGenAIChatRollout?: boolean;
-    enableGranularPermissions?: boolean;
     enableHeadlineExport?: boolean;
     enableHidingOfDataPoints?: boolean;
     enableHidingOfWidgetTitle?: boolean;
