@@ -252,7 +252,10 @@ function collectAllAttributes(insight: IInsight | null | undefined) {
             return collectAllAttributesFrom(insight, [BucketNames.ATTRIBUTE]);
         }
         case "pushpin": {
-            return collectAllAttributesFrom(insight, [BucketNames.LOCATION]);
+            //NOTE: For now we want to disable attributes for pushpin insight
+            // at all because ofg bug https://gooddata.atlassian.net/browse/F1-889
+            //return collectAllAttributesFrom(insight, [BucketNames.LOCATION]);
+            return [];
         }
         default: {
             return [];
