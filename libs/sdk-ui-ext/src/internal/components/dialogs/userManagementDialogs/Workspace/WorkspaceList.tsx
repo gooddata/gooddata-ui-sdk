@@ -3,8 +3,6 @@ import React, { useMemo } from "react";
 
 import { sortByName } from "../utils.js";
 import { IGrantedWorkspace, ListMode, WorkspacePermissionSubject } from "../types.js";
-
-import { WorkspaceItem } from "./WorkspaceItem/WorkspaceItem.js";
 import { WorkspaceListEmpty } from "./WorkspaceListEmpty.js";
 import { GranularPermissionsWorkspaceItem } from "./WorkspaceItem/GranularPermissionsWorkspaceItem.js";
 
@@ -16,18 +14,14 @@ export interface IWorkspaceListProps {
     onChange?: (workspace: IGrantedWorkspace) => void;
     onClick?: (workspace: IGrantedWorkspace) => void;
     areFilterViewsEnabled: boolean;
-    areGranularPermissionsEnabled: boolean;
 }
 
 export const WorkspaceList: React.FC<IWorkspaceListProps> = ({
     workspaces,
     subjectType,
     mode,
-    onChange,
     onDelete,
     onClick,
-    areFilterViewsEnabled,
-    areGranularPermissionsEnabled,
 }) => {
     const sortedWorkspaces = useMemo(() => {
         return workspaces ? [...workspaces].sort(sortByName) : [];
@@ -40,21 +34,12 @@ export const WorkspaceList: React.FC<IWorkspaceListProps> = ({
     return (
         <div className="gd-share-dialog-grantee-list s-user-management-workspaces">
             {sortedWorkspaces.map((workspace) => {
-                return areGranularPermissionsEnabled ? (
+                return (
                     <GranularPermissionsWorkspaceItem
                         key={workspace.id}
                         workspace={workspace}
                         onDelete={onDelete}
                         onClick={onClick}
-                    />
-                ) : (
-                    <WorkspaceItem
-                        key={workspace.id}
-                        workspace={workspace}
-                        subjectType={subjectType}
-                        onChange={onChange}
-                        onDelete={onDelete}
-                        areFilterViewsEnabled={areFilterViewsEnabled}
                     />
                 );
             })}

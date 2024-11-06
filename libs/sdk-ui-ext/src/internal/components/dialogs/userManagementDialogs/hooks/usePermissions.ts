@@ -18,7 +18,6 @@ export const usePermissions = (
     subjectType: WorkspacePermissionSubject,
     organizationId: string,
     onSuccess: () => void,
-    useGranularPermissions: boolean,
 ) => {
     const { addSuccess, addError } = useToastMessage();
     const backend = useBackendStrict();
@@ -40,7 +39,7 @@ export const usePermissions = (
     useEffect(() => {
         getPermissions(id).then((assignments) => {
             const workspaces = assignments.workspacePermissions.map((w) =>
-                workspacePermissionsAssignmentToGrantedWorkspace(w, useGranularPermissions),
+                workspacePermissionsAssignmentToGrantedWorkspace(w),
             );
             const dataSources = assignments.dataSourcePermissions.map(
                 dataSourcePermissionsAssignmentToGrantedDataSource,
@@ -48,7 +47,7 @@ export const usePermissions = (
             setGrantedWorkspaces(workspaces);
             setGrantedDataSources(dataSources);
         });
-    }, [getPermissions, id, organizationId, useGranularPermissions]);
+    }, [getPermissions, id, organizationId]);
 
     const removeGrantedWorkspace = (removedWorkspace: IGrantedWorkspace) => {
         backend
@@ -56,9 +55,7 @@ export const usePermissions = (
             .permissions()
             .revokePermissions({
                 assignees: [{ id, type: subjectType }],
-                workspaces: [
-                    grantedWorkspaceAsPermissionAssignment(removedWorkspace, useGranularPermissions),
-                ],
+                workspaces: [grantedWorkspaceAsPermissionAssignment(removedWorkspace)],
             })
             .then(() => {
                 addSuccess(messages.workspaceRemovedSuccess);
@@ -102,7 +99,7 @@ export const usePermissions = (
             .permissions()
             .assignPermissions({
                 assignees: [{ id, type: subjectType }],
-                workspaces: [grantedWorkspaceAsPermissionAssignment(workspace, useGranularPermissions)],
+                workspaces: [grantedWorkspaceAsPermissionAssignment(workspace)],
             })
             .then(() => {
                 addSuccess(messages.workspaceChangeSuccess);

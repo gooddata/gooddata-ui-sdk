@@ -202,11 +202,8 @@ export const extractUserGroupName = (userGroup: IOrganizationUserGroup | IUserGr
 
 export const grantedWorkspaceAsPermissionAssignment = (
     grantedWorkspace: IGrantedWorkspace,
-    useGranularPermissions: boolean,
 ): Omit<IWorkspacePermissionAssignment, "assigneeIdentifier"> => {
-    const permissions = useGranularPermissions
-        ? asGranularPermissions(grantedWorkspace.permissions)
-        : asPermissions(grantedWorkspace.permissions[0]);
+    const permissions = asGranularPermissions(grantedWorkspace.permissions);
     return {
         workspace: {
             id: grantedWorkspace.id,
@@ -230,16 +227,14 @@ export const grantedDataSourceAsPermissionAssignment = (
 
 export const workspacePermissionsAssignmentToGrantedWorkspace = (
     assignment: IWorkspacePermissionAssignment,
-    useGranularPermissions: boolean,
 ): IGrantedWorkspace => {
     const { workspace } = assignment;
     const assignedPermissions =
         assignment.hierarchyPermissions.length > 0 ? assignment.hierarchyPermissions : assignment.permissions;
-    const permission = asPermission(assignedPermissions);
     return {
         id: workspace.id,
         title: workspace.name,
-        permissions: useGranularPermissions ? assignedPermissions : [permission],
+        permissions: assignedPermissions,
         isHierarchical: assignment.hierarchyPermissions.length > 0,
     };
 };
