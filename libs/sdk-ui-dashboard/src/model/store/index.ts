@@ -185,6 +185,7 @@ export {
     selectStash,
     selectWidgetByRef,
     selectAnalyticalWidgetByRef,
+    selectFilterableWidgetByRef,
     selectWidgets,
     selectWidgetsMap,
     selectAllInsightWidgets,

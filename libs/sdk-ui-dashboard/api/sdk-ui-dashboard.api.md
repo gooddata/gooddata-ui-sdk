@@ -154,6 +154,7 @@ import { ICatalogMeasure } from '@gooddata/sdk-model';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { ICrossFiltering } from '@gooddata/sdk-model';
 import { ICrossFilteringItem as ICrossFilteringItem_2 } from './types.js';
+import { ICustomWidget as ICustomWidget_2 } from '../../index.js';
 import { IDashboard } from '@gooddata/sdk-model';
 import { IDashboardAttributeFilter } from '@gooddata/sdk-model';
 import { IDashboardAttributeFilterByDate } from '@gooddata/sdk-model';
@@ -7587,6 +7588,9 @@ export const selectExecutionResult: (state: DashboardState, id: EntityId) => IEx
 // @alpha (undocumented)
 export const selectExecutionResultByRef: (ref: ObjRef | undefined) => DashboardSelector<IExecutionResultEnvelope | undefined>;
 
+// @alpha
+export const selectFilterableWidgetByRef: (ref: ObjRef | undefined) => DashboardSelector<IWidget | ICustomWidget | undefined>;
+
 // @alpha (undocumented)
 export const selectFilterBarExpanded: DashboardSelector<boolean>;
 
@@ -9142,7 +9146,7 @@ export const useDashboardScheduledEmails: () => {
     automations: IAutomationMetadataObject[];
     automationsCount: number;
     numberOfAvailableDestinations: number;
-    widget: IWidget | undefined;
+    widget: IWidget | ICustomWidget_2 | undefined;
     insight: IInsight | undefined;
     automationsLoading: boolean;
     automationsError: GoodDataSdkError | undefined;

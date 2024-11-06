@@ -36,7 +36,7 @@ import {
 import { QueryWidgetFilters } from "../queries/widgets.js";
 import {
     selectAllFiltersForWidgetByRef,
-    selectAnalyticalWidgetByRef,
+    selectFilterableWidgetByRef,
 } from "../store/layout/layoutSelectors.js";
 import { selectInsightByRef } from "../store/insights/insightsSelectors.js";
 import { invalidQueryArguments } from "../events/general.js";
@@ -381,7 +381,7 @@ function* queryService(ctx: DashboardContext, query: QueryWidgetFilters): SagaIt
         payload: { widgetRef, insight },
         correlationId,
     } = query;
-    const widgetSelector = selectAnalyticalWidgetByRef(widgetRef);
+    const widgetSelector = selectFilterableWidgetByRef(widgetRef);
     const widget: ReturnType<typeof widgetSelector> = yield select(widgetSelector);
 
     if (!widget) {
