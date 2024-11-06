@@ -25,6 +25,7 @@ import isEmpty from "lodash/isEmpty.js";
 import { DashboardSelector, DashboardState } from "../types.js";
 import {
     ExtendedDashboardWidget,
+    ICustomWidget,
     isCustomWidget,
     isExtendedDashboardLayoutWidget,
 } from "../../types/layoutTypes.js";
@@ -195,6 +196,31 @@ export const selectWidgetByRef: (
             }
 
             return widgetMap.get(ref);
+        }),
+);
+
+/**
+ * Selects filterable widget by its ref (including custom widgets).
+ * This selector will return undefined if the provided ref to non-filterable widget.
+ *
+ * @remarks
+ * To limit the scope only to analytical widgets, use {@link selectAnalyticalWidgetByRef}.
+ *
+ * @alpha
+ */
+export const selectFilterableWidgetByRef: (
+    ref: ObjRef | undefined,
+) => DashboardSelector<IWidget | ICustomWidget | undefined> = createMemoizedSelector(
+    (ref: ObjRef | undefined) =>
+        createSelector(selectWidgetsMap, (widgetMap): IWidget | ICustomWidget | undefined => {
+            if (!ref) {
+                return undefined;
+            }
+            const widget = widgetMap.get(ref);
+            if (!widget || isExtendedDashboardLayoutWidget(widget)) {
+                return undefined;
+            }
+            return widget;
         }),
 );
 

@@ -25,7 +25,7 @@ import {
     selectNotificationChannelsCount,
     selectNotificationChannels,
     selectAutomationsIsInitialized,
-    selectAnalyticalWidgetByRef,
+    selectFilterableWidgetByRef,
 } from "../../store/index.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";
 
@@ -106,7 +106,7 @@ export const useDashboardScheduledEmailsData = ({
     )?.widget;
     const editWidgetRef = editWidgetId ? { identifier: editWidgetId } : undefined;
     const widget = useDashboardSelector(
-        selectAnalyticalWidgetByRef(scheduleEmailingDialogContext?.widgetRef ?? editWidgetRef),
+        selectFilterableWidgetByRef(scheduleEmailingDialogContext?.widgetRef ?? editWidgetRef),
     );
     const insight = useDashboardSelector(selectInsightByWidgetRef(widget?.ref));
 

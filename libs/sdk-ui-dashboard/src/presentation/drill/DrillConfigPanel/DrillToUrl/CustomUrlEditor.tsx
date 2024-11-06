@@ -20,7 +20,7 @@ import {
     selectFilterContextAttributeFilters,
     selectAttributeFilterConfigsOverrides,
     useWidgetFilters,
-    selectAnalyticalWidgetByRef,
+    selectFilterableWidgetByRef,
 } from "../../../../model/index.js";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/index.js";
 import {
@@ -410,7 +410,7 @@ export const CustomUrlEditor: React.FC<CustomUrlEditorProps> = (props) => {
 };
 
 function useSanitizedInsightFilters(widgetRef: ObjRef) {
-    const widget = useDashboardSelector(selectAnalyticalWidgetByRef(widgetRef));
+    const widget = useDashboardSelector(selectFilterableWidgetByRef(widgetRef));
     const widgetFiltersResult = useWidgetFilters(widget);
     const sanitizeAttributeFilter = useSanitizeAttributeFilter();
 
