@@ -67,6 +67,7 @@ export interface IAutomationMetadataObjectBase {
      */
     metadata?: {
         widget?: string;
+        filters?: string[];
     };
 }
 

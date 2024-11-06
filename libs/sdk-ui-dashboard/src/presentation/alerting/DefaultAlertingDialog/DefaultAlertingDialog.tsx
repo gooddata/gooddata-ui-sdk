@@ -43,6 +43,7 @@ export const AlertingDialog: React.FC<IAlertingDialogProps> = (props) => {
         catalogAttributes,
         catalogDateDatasets,
         canManageAttributes,
+        canManageComparison,
         cancelAlertEditing,
         updateExistingAlert,
         maxAutomationsRecipients,
@@ -72,6 +73,7 @@ export const AlertingDialog: React.FC<IAlertingDialogProps> = (props) => {
                 <OverlayControllerProvider overlayController={overlayController}>
                     <EditAlert
                         canManageAttributes={canManageAttributes}
+                        canManageComparison={canManageComparison}
                         execResult={execResult}
                         alert={editAlert}
                         hasAlerts={hasAlerts}

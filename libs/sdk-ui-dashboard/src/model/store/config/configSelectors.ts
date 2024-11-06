@@ -430,6 +430,16 @@ export const selectEnableAlertAttributes: DashboardSelector<boolean> = createSel
 /**
  * @alpha
  */
+export const selectEnableComparisonInAlerting: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableComparisonInAlerting ?? false;
+    },
+);
+
+/**
+ * @alpha
+ */
 export const selectEnableAutomations: DashboardSelector<boolean> = createSelector(
     selectEnableScheduling,
     selectEnableAlerting,

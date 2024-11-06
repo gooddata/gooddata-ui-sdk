@@ -16,6 +16,7 @@ import { IExecutionResultEnvelope } from "../../../../../model/index.js";
 
 interface ICreateAlertProps {
     canManageAttributes: boolean;
+    canManageComparison: boolean;
     execResult: IExecutionResultEnvelope | undefined;
     alert: IAutomationMetadataObjectDefinition | null;
     onClose: () => void;
@@ -35,6 +36,7 @@ interface ICreateAlertProps {
 
 export const CreateAlert: React.FC<ICreateAlertProps> = ({
     canManageAttributes,
+    canManageComparison,
     execResult,
     alert,
     onClose,
@@ -54,6 +56,7 @@ export const CreateAlert: React.FC<ICreateAlertProps> = ({
     return (
         <EditAlert
             canManageAttributes={canManageAttributes}
+            canManageComparison={canManageComparison}
             execResult={execResult}
             alert={alert as IAutomationMetadataObject}
             onClose={onClose}

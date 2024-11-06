@@ -890,6 +890,7 @@ export interface IAutomationMetadataObjectBase {
     exportDefinitions?: IExportDefinitionMetadataObject[];
     metadata?: {
         widget?: string;
+        filters?: string[];
     };
     notificationChannel?: string;
     recipients?: IAutomationRecipient[];
@@ -3126,6 +3127,7 @@ export interface ISettings {
     enableClickableAttributeURL?: boolean;
     enableColumnHeadersPosition?: boolean;
     enableCompanyLogoInEmbeddedUI?: boolean;
+    enableComparisonInAlerting?: boolean;
     enableCompositeGrain?: boolean;
     enableCreateUser?: boolean;
     // @internal

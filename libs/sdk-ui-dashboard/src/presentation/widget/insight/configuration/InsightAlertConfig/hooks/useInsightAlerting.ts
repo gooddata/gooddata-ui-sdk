@@ -34,6 +34,7 @@ import {
     selectCatalogAttributes,
     selectCatalogDateDatasets,
     selectSeparators,
+    selectEnableComparisonInAlerting,
 } from "../../../../../../model/index.js";
 import { convertCurrentUserToAutomationRecipient } from "../../../../../../_staging/automation/index.js";
 import { useMetricsAndFacts } from "../../../../../../_staging/sharedHooks/useMetricsAndFacts.js";
@@ -80,6 +81,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         10,
     );
     const canManageAttributes = useDashboardSelector(selectEnableAlertAttributes);
+    const canManageComparison = useDashboardSelector(selectEnableComparisonInAlerting);
     const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
     const catalogAttributes = useDashboardSelector(selectCatalogAttributes);
     const catalogDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
@@ -153,8 +155,10 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         () =>
             getSupportedInsightMeasuresByInsight(
                 insight ? fillMissingTitles(insight, locale, 9999) : insight,
+                catalogDateDatasets,
+                canManageComparison,
             ),
-        [insight, locale],
+        [insight, locale, catalogDateDatasets, canManageComparison],
     );
     const defaultMeasure = supportedMeasures[0];
 
@@ -257,6 +261,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             dashboard,
             metadata: {
                 widget: widget?.localIdentifier,
+                filters: alert?.metadata?.filters,
             },
             details: {
                 ...alert.details,
@@ -351,6 +356,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         maxAutomationsReached,
         maxAutomationsRecipients,
         canManageAttributes,
+        canManageComparison,
         canCreateAutomation,
         catalogMeasures: catalogMetrics ?? [],
         catalogAttributes: catalogAttributes ?? [],
