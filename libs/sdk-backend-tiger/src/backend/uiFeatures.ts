@@ -119,7 +119,6 @@ export enum TigerFeaturesNames {
     EnableDefaultSmtp = "enableDefaultSmtp",
     EnableDashboardFlexibleLayout = "enableDashboardFlexibleLayout",
     EnableNumberSeparators = "enableNumberSeparators",
-    EnableGranularPermissions = "enableGranularPermissions",
     EnableNewUserCreationFlow = "enableNewUserCreationFlow",
 }
 
@@ -203,7 +202,6 @@ export type ITigerFeatureFlags = {
     enableDefaultSmtp: typeof FeatureFlagsValues["enableDefaultSmtp"][number];
     enableDashboardFlexibleLayout: typeof FeatureFlagsValues["enableDashboardFlexibleLayout"][number];
     enableNumberSeparators: typeof FeatureFlagsValues["enableNumberSeparators"][number];
-    enableGranularPermissions: typeof FeatureFlagsValues["enableGranularPermissions"][number];
     enableNewUserCreationFlow: typeof FeatureFlagsValues["enableNewUserCreationFlow"][number];
 };
 
@@ -287,7 +285,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDefaultSmtp: false,
     enableDashboardFlexibleLayout: false,
     enableNumberSeparators: true,
-    enableGranularPermissions: true,
     enableNewUserCreationFlow: false,
 };
 
@@ -375,6 +372,5 @@ export const FeatureFlagsValues = {
     enableDefaultSmtp: [true, false] as const,
     enableDashboardFlexibleLayout: [true, false] as const,
     enableNumberSeparators: [true, false] as const,
-    enableGranularPermissions: [true, false] as const,
     enableNewUserCreationFlow: [true, false] as const,
 };

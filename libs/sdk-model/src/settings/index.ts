@@ -542,11 +542,6 @@ export interface ISettings {
     enableNumberSeparators?: boolean;
 
     /**
-     * Enable the use of granular permissions.
-     */
-    enableGranularPermissions?: boolean;
-
-    /**
      * Enable the use of new user creation flow.
      */
     enableNewUserCreationFlow?: boolean;

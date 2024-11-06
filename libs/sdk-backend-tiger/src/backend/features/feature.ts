@@ -571,13 +571,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableGranularPermissions,
-            "enableGranularPermissions",
-            "BOOLEAN",
-            FeatureFlagsValues.enableGranularPermissions,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableNewUserCreationFlow,
             "enableNewUserCreationFlow",
             "BOOLEAN",
