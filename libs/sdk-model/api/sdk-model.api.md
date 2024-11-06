@@ -890,6 +890,7 @@ export interface IAutomationMetadataObjectBase {
     exportDefinitions?: IExportDefinitionMetadataObject[];
     metadata?: {
         widget?: string;
+        filters?: string[];
     };
     notificationChannel?: string;
     recipients?: IAutomationRecipient[];

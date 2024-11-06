@@ -2,6 +2,8 @@
 import { ComponentType } from "react";
 import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import {
+    IDataSetMetadataObject,
+    DateAttributeGranularity,
     IAttribute,
     IColorPalette,
     IInsight,
@@ -268,6 +270,9 @@ export type AlertMetricComparator = {
     measure: IMeasure;
     isPrimary: boolean;
     comparator: AlertMetricComparatorType;
+    //date attribute related
+    dataset?: IDataSetMetadataObject;
+    granularity?: DateAttributeGranularity;
 };
 
 /**

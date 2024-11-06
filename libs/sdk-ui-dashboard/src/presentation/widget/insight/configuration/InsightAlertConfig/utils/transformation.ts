@@ -9,9 +9,12 @@ import {
     IAutomationAlertRelativeCondition,
     IAutomationMetadataObject,
     IAutomationRecipient,
+    IRelativeDateFilter,
     ICatalogMeasure,
     IFilter,
     isArithmeticMeasure,
+    isRelativeDateFilter,
+    objRefToString,
 } from "@gooddata/sdk-model";
 
 import {
@@ -54,19 +57,24 @@ export function transformAlertByMetric(
                 ...transformRelativeCondition(measure, periodMeasure, catalogMeasures),
             },
         } as IAutomationAlertRelativeCondition;
+
+        const { execution, metadata } = transformAlertExecutionByMetric(
+            metrics,
+            alert,
+            condition,
+            measure,
+            periodMeasure,
+        );
+
         return {
             ...alert,
             title: getMeasureTitle(measure.measure) ?? "",
             alert: {
                 ...alert.alert!,
                 condition,
-                execution: transformAlertExecutionByMetric(
-                    metrics,
-                    condition,
-                    alert.alert!.execution,
-                    measure,
-                ),
+                execution,
             },
+            metadata,
         };
     }
 
@@ -79,14 +87,24 @@ export function transformAlertByMetric(
             title: getMeasureTitle(measure.measure),
         },
     } as IAutomationAlertComparisonCondition;
+
+    const { execution, metadata } = transformAlertExecutionByMetric(
+        metrics,
+        alert,
+        condition,
+        measure,
+        undefined,
+    );
+
     return {
         ...alert,
         title: getMeasureTitle(measure.measure) ?? "",
         alert: {
             ...alert.alert!,
             condition,
-            execution: transformAlertExecutionByMetric(metrics, condition, alert.alert!.execution, measure),
+            execution,
         },
+        metadata,
     };
 }
 
@@ -176,13 +194,23 @@ export function transformAlertByComparisonOperator(
         ...cond,
         operator: comparisonOperator,
     };
+
+    const { execution, metadata } = transformAlertExecutionByMetric(
+        metrics,
+        alert,
+        condition,
+        measure,
+        undefined,
+    );
+
     return {
         ...alert,
         alert: {
             ...alert.alert!,
             condition,
-            execution: transformAlertExecutionByMetric(metrics, condition, alert.alert!.execution, measure),
+            execution,
         },
+        metadata,
     };
 }
 
@@ -194,6 +222,7 @@ export function transformAlertByComparisonOperator(
  * @param relativeOperator - selected relative operator
  * @param arithmeticOperator - selected arithmetic operator
  * @param catalogMeasures - all available measures from catalog
+ * @param comparatorType - selected comparator type
  */
 export function transformAlertByRelativeOperator(
     metrics: AlertMetric[],
@@ -202,11 +231,10 @@ export function transformAlertByRelativeOperator(
     relativeOperator: IAlertRelativeOperator,
     arithmeticOperator: IAlertRelativeArithmeticOperator,
     catalogMeasures?: ICatalogMeasure[],
+    comparatorType?: AlertMetricComparatorType,
 ): IAutomationMetadataObject {
-    const periodMeasure = measure.comparators.find(
-        (c) =>
-            c.comparator === AlertMetricComparatorType.PreviousPeriod ||
-            c.comparator === AlertMetricComparatorType.SamePeriodPreviousYear,
+    const periodMeasure = measure.comparators.filter((c) =>
+        comparatorType ? c.comparator === comparatorType : true,
     );
 
     const cond = transformToRelativeCondition(alert.alert!.condition);
@@ -215,17 +243,27 @@ export function transformAlertByRelativeOperator(
         measure: {
             ...cond.measure,
             operator: arithmeticOperator,
-            ...transformRelativeCondition(measure, periodMeasure, catalogMeasures),
+            ...transformRelativeCondition(measure, periodMeasure[0], catalogMeasures),
         },
         operator: relativeOperator,
     } as IAutomationAlertCondition;
+
+    const { execution, metadata } = transformAlertExecutionByMetric(
+        metrics,
+        alert,
+        condition,
+        measure,
+        periodMeasure[0],
+    );
+
     return {
         ...alert,
         alert: {
             ...alert.alert!,
             condition,
-            execution: transformAlertExecutionByMetric(metrics, condition, alert.alert!.execution, measure),
+            execution,
         },
+        metadata,
     };
 }
 
@@ -283,37 +321,83 @@ export function transformAlertByDestination(
 /**
  * This function transforms alert execution by metric. It changes measures and auxMeasures in execution based on selected metric.
  * @param metrics - all available metrics
+ * @param alert - alert
  * @param condition - alert condition
- * @param execution - alert execution
  * @param measure - selected metric
+ * @param periodMeasure - alert comparison
  */
 export function transformAlertExecutionByMetric(
     metrics: AlertMetric[],
+    alert: Partial<IAutomationMetadataObject>,
     condition: IAutomationAlertCondition,
-    execution: IAutomationAlertExecutionDefinition,
     measure: AlertMetric,
-): IAutomationAlertExecutionDefinition {
-    const periodMeasure = measure.comparators.find(
-        (c) =>
-            c.comparator === AlertMetricComparatorType.PreviousPeriod ||
-            c.comparator === AlertMetricComparatorType.SamePeriodPreviousYear,
-    );
+    periodMeasure: AlertMetricComparator | undefined,
+): { execution: IAutomationAlertExecutionDefinition; metadata: IAutomationMetadataObject["metadata"] } {
+    const execution = alert.alert?.execution;
+
+    // Remove all filters that are create for need of alert
+    const localFilters = alert.metadata?.filters ?? [];
+    const originalFilters =
+        execution?.filters.filter((filter) => {
+            if (isRelativeDateFilter(filter)) {
+                return !localFilters.includes(filter.relativeDateFilter.localIdentifier ?? "");
+            }
+            return true;
+        }) ?? [];
 
     if (condition.type === "relative" && periodMeasure) {
+        const addedFilters: string[] = [];
+
+        // Add filter for period measure only if can be defined
+        // For example headline not used this at all
+        if (periodMeasure.dataset && periodMeasure.granularity) {
+            const localIdentifier = `relativeDateFilter_${objRefToString(periodMeasure.dataset.ref)}_${
+                periodMeasure.granularity
+            }`;
+            const filter: IRelativeDateFilter = {
+                relativeDateFilter: {
+                    from: 0,
+                    to: 0,
+                    dataSet: periodMeasure.dataset.ref,
+                    granularity: periodMeasure.granularity,
+                    localIdentifier,
+                },
+            };
+
+            originalFilters.push(filter);
+            addedFilters.push(localIdentifier);
+        }
+
         return {
-            ...execution,
-            measures: [measure.measure, periodMeasure.measure],
-            auxMeasures: [
-                ...collectAllRelatedMeasures(metrics, measure.measure),
-                ...collectAllRelatedMeasures(metrics, periodMeasure.measure),
-            ],
+            execution: {
+                attributes: [],
+                ...execution,
+                filters: [...originalFilters],
+                measures: [measure.measure, periodMeasure.measure],
+                auxMeasures: [
+                    ...collectAllRelatedMeasures(metrics, measure.measure),
+                    ...collectAllRelatedMeasures(metrics, periodMeasure.measure),
+                ],
+            },
+            metadata: {
+                ...alert.metadata,
+                filters: addedFilters.length ? addedFilters : undefined,
+            },
         };
     }
 
     return {
-        ...execution,
-        measures: [measure.measure],
-        auxMeasures: collectAllRelatedMeasures(metrics, measure.measure),
+        execution: {
+            attributes: [],
+            ...execution,
+            filters: [...originalFilters],
+            measures: [measure.measure],
+            auxMeasures: collectAllRelatedMeasures(metrics, measure.measure),
+        },
+        metadata: {
+            ...alert.metadata,
+            filters: undefined,
+        },
     };
 }
 

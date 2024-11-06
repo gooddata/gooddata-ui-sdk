@@ -19,13 +19,14 @@ import {
     isLocalIdRef,
     isNegativeAttributeFilter,
     isPositiveAttributeFilter,
+    isRelativeDateFilter,
     measureAlias,
     measureIdentifier,
     measureTitle,
 } from "@gooddata/sdk-model";
 import { IntlShape } from "react-intl";
 
-import { AlertAttribute, AlertMetric } from "../../../types.js";
+import { AlertAttribute, AlertMetric, AlertMetricComparator } from "../../../types.js";
 import { messages } from "../messages.js";
 import {
     ARITHMETIC_OPERATORS,
@@ -144,6 +145,25 @@ export function getAlertMeasure(measures: AlertMetric[], alert?: IAutomationAler
 /**
  * @internal
  */
+export function getAlertComparison(
+    measure: AlertMetric | undefined,
+    alert?: IAutomationAlert,
+): AlertMetricComparator | undefined {
+    const condition = alert?.condition;
+    if (measure && condition?.type === "relative") {
+        return (
+            measure.comparators.find(
+                (c) => c.measure.measure.localIdentifier === condition.measure.left.id,
+            ) ??
+            measure.comparators.find((c) => c.measure.measure.localIdentifier === condition.measure.right.id)
+        );
+    }
+    return undefined;
+}
+
+/**
+ * @internal
+ */
 export function getAlertAttribute(
     attributes: AlertAttribute[],
     alert?: IAutomationMetadataObject,
@@ -160,6 +180,7 @@ export function getAlertAttribute(
  * @internal
  */
 export function getAlertFilters(alert?: IAutomationMetadataObject): IFilter[] {
+    const localFilters = alert?.metadata?.filters ?? [];
     const filters = alert?.alert?.execution?.filters ?? [];
     const attrs = (alert?.alert?.execution.attributes ?? []).map((a) => a.attribute.localIdentifier);
 
@@ -169,6 +190,9 @@ export function getAlertFilters(alert?: IAutomationMetadataObject): IFilter[] {
         }
         if (isNegativeAttributeFilter(f) && isLocalIdRef(f.negativeAttributeFilter.displayForm)) {
             return !attrs.includes(f.negativeAttributeFilter.displayForm.localIdentifier);
+        }
+        if (isRelativeDateFilter(f)) {
+            return !localFilters.includes(f.relativeDateFilter.localIdentifier ?? "");
         }
         return true;
     });

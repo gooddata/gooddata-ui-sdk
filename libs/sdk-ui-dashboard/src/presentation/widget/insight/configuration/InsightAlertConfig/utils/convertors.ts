@@ -2,6 +2,7 @@
 import {
     IAlertComparisonOperator,
     IAutomationAlertCondition,
+    IAutomationAlertTrigger,
     IAutomationMetadataObjectDefinition,
     IAutomationRecipient,
     ICatalogMeasure,
@@ -40,28 +41,26 @@ export function createDefaultAlert(
         measures: [measure.measure],
         filters,
     };
+    const trigger: IAutomationAlertTrigger = {
+        state: "ACTIVE",
+    };
 
     return {
         type: "automation",
         title: getMeasureTitle(measure.measure),
         notificationChannel: notificationChannelId,
         alert: {
+            trigger,
             condition,
             execution: {
                 ...execution,
                 ...transformAlertExecutionByMetric(
                     metrics,
+                    { alert: { execution, condition, trigger } },
                     condition,
-                    {
-                        attributes: [],
-                        measures: [measure.measure],
-                        filters,
-                    },
                     measure,
+                    undefined,
                 ),
-            },
-            trigger: {
-                state: "ACTIVE",
             },
         },
         recipients: [currentUser],

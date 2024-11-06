@@ -2996,6 +2996,16 @@
         "comment": "In 'USING {n} {n, plural, one {FILTER} other {FILTERS}}' translate only uppercase word.",
         "limit": 0
     },
+    "insightAlert.config.and": {
+        "value": "and",
+        "comment": "This is a part of sentence 'for This month and 1 filter'",
+        "limit": 0
+    },
+    "insightAlert.config.for.filter": {
+        "value": "for {granularity}",
+        "comment": "This is a part of sentence 'for This month and 1 filter'",
+        "limit": 0
+    },
     "insightAlert.config.filters.info": {
         "value": "Alerts respect the dashboard filters as set at the time of their creation.{spacer}To modify the time period used for comparison, adjust the date filter.",
         "comment": "",
@@ -3109,6 +3119,41 @@
     "insightAlert.config.selectAttribute": {
         "value": "All",
         "comment": "Label of attribute select dropdown",
+        "limit": 0
+    },
+    "granularity.year": {
+        "value": "This year",
+        "comment": "Label of current selected granularity type. Is used in alert create dialog.",
+        "limit": 0
+    },
+    "granularity.week": {
+        "value": "This week",
+        "comment": "Label of current selected granularity type. Is used in alert create dialog.",
+        "limit": 0
+    },
+    "granularity.quarter": {
+        "value": "This quarter",
+        "comment": "Label of current selected granularity type. Is used in alert create dialog.",
+        "limit": 0
+    },
+    "granularity.month": {
+        "value": "This month",
+        "comment": "Label of current selected granularity type. Is used in alert create dialog.",
+        "limit": 0
+    },
+    "granularity.date": {
+        "value": "This day",
+        "comment": "Label of current selected granularity type. Is used in alert create dialog.",
+        "limit": 0
+    },
+    "granularity.hour": {
+        "value": "This hour",
+        "comment": "Label of current selected granularity type. Is used in alert create dialog.",
+        "limit": 0
+    },
+    "granularity.minute": {
+        "value": "This minute",
+        "comment": "Label of current selected granularity type. Is used in alert create dialog.",
         "limit": 0
     }
 }

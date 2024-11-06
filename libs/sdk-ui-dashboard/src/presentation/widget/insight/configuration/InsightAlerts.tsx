@@ -39,6 +39,7 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
         maxAutomationsReached,
         maxAutomationsRecipients,
         canManageAttributes,
+        canManageComparison,
         canCreateAutomation,
         catalogMeasures,
         catalogAttributes,
@@ -81,6 +82,7 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
         content = (
             <EditAlert
                 canManageAttributes={canManageAttributes}
+                canManageComparison={canManageComparison}
                 execResult={execResult}
                 alert={editingAlert}
                 hasAlerts={hasAlerts}
@@ -101,6 +103,7 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
         content = (
             <CreateAlert
                 canManageAttributes={canManageAttributes}
+                canManageComparison={canManageComparison}
                 execResult={execResult}
                 alert={creatingAlert}
                 measures={supportedMeasures}

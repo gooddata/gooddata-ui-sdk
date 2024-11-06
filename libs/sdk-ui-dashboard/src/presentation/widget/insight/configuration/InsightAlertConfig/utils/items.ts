@@ -1,20 +1,30 @@
 // (C) 2022-2024 GoodData Corporation
 import {
+    areObjRefsEqual,
     bucketAttributes,
     bucketMeasures,
+    DateAttributeGranularity,
     IAttribute,
     IBucket,
+    ICatalogDateAttribute,
     ICatalogDateDataset,
+    IFilter,
     IInsight,
     IMeasure,
     insightBucket,
+    insightFilters,
     insightVisualizationType,
     IPoPMeasureDefinition,
     IPreviousPeriodMeasureDefinition,
     isArithmeticMeasure,
     isPoPMeasure,
+    isPoPMeasureDefinition,
     isPreviousPeriodMeasure,
+    isPreviousPeriodMeasureDefinition,
+    isRelativeDateFilter,
     isSimpleMeasure,
+    newPopMeasure,
+    newPreviousPeriodMeasure,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
@@ -45,11 +55,42 @@ type InsightType =
     | "waterfall"
     | "repeater";
 
+const SortedGranularities: DateAttributeGranularity[] = [
+    "GDC.time.year",
+    "GDC.time.quarter",
+    "GDC.time.quarter_in_year",
+    "GDC.time.month",
+    "GDC.time.month_in_quarter",
+    "GDC.time.month_in_year",
+    "GDC.time.week_us",
+    "GDC.time.week_in_year",
+    "GDC.time.week_in_quarter",
+    "GDC.time.week",
+    "GDC.time.euweek_in_year",
+    "GDC.time.euweek_in_quarter",
+    "GDC.time.day_in_year",
+    "GDC.time.day_in_quarter",
+    "GDC.time.day_in_month",
+    "GDC.time.day_in_week",
+    "GDC.time.day_in_euweek",
+    "GDC.time.date",
+    "GDC.time.hour",
+    "GDC.time.hour_in_day",
+    "GDC.time.minute",
+    "GDC.time.minute_in_hour",
+];
+
 /**
  * Get supported insight measures by insight
  * @param insight - insight to get supported measures for
+ * @param dateDatasets - date datasets to filter out date attributes
+ * @param canManageComparison - flag if user can manage comparison
  */
-export function getSupportedInsightMeasuresByInsight(insight: IInsight | null | undefined): AlertMetric[] {
+export function getSupportedInsightMeasuresByInsight(
+    insight: IInsight | null | undefined,
+    dateDatasets: ICatalogDateDataset[] = [],
+    canManageComparison: boolean = false,
+): AlertMetric[] {
     const insightType = insight ? (insightVisualizationType(insight) as InsightType) : null;
 
     const { primaries, others } = collectAllMetric(insight);
@@ -59,17 +100,54 @@ export function getSupportedInsightMeasuresByInsight(insight: IInsight | null | 
         ...(others.map<AlertMetric | undefined>(mapMeasure(false)).filter(Boolean) as AlertMetric[]),
     ];
 
-    //NOTE: For now only headline insight support previous period and same period previous year,
-    // if we want to support other insight types, just add the logic here or remove the condition at
-    // all to support all insight types
-    if (insightType === "headline") {
+    const validComparisonBuckets = canManageComparison ? getSupportedBucketsForComparison(insightType) : null;
+
+    // If insight is supported for comparison, we need to add comparators
+    if (insight && insightType && (insightType === "headline" || validComparisonBuckets)) {
         mapPreviousPeriodMeasure(primaries, simpleMetrics, true);
         mapPreviousPeriodMeasure(others, simpleMetrics, false);
         mapPoPMeasure(primaries, simpleMetrics, true);
         mapPoPMeasure(others, simpleMetrics, false);
     }
 
+    // If insight is supported for comparison, we need to add comparators that
+    // are generated from date attributes used in insight buckets
+    if (insight && insightType && validComparisonBuckets) {
+        transformGranularities(
+            insight,
+            insightFilters(insight),
+            validComparisonBuckets,
+            simpleMetrics,
+            dateDatasets,
+        );
+    }
+
     return simpleMetrics;
+}
+
+function getSupportedBucketsForComparison(insightType: InsightType | null) {
+    switch (insightType) {
+        case "line":
+            return [BucketNames.TREND];
+        case "column":
+        case "bar":
+        case "repeater":
+        case "combo2":
+        case "bullet":
+        case "bubble":
+        case "pie":
+        case "donut":
+        case "waterfall":
+        case "pyramid":
+        case "funnel":
+            return [BucketNames.VIEW];
+        case "table":
+            return [BucketNames.ATTRIBUTE, BucketNames.COLUMNS];
+        case "area":
+            return [BucketNames.VIEW, BucketNames.STACK];
+        default:
+            return null;
+    }
 }
 
 /**
@@ -287,4 +365,156 @@ function collectAllMetricsFrom(insight: IInsight, primaryBuckets: string[], seco
         primaries,
         others,
     };
+}
+
+function transformGranularities(
+    insight: IInsight | null | undefined,
+    insightFilters: IFilter[] = [],
+    buckets: string[],
+    simpleMetrics: AlertMetric[],
+    datasets: ICatalogDateDataset[],
+) {
+    const usedDatasets = collectAllDateDatasets(insight, buckets, datasets);
+
+    fillComparators(simpleMetrics, usedDatasets);
+    fillGranularity(simpleMetrics, usedDatasets);
+    removeInvalidComparators(simpleMetrics, insightFilters);
+}
+
+function collectAllDateDatasets(
+    insight: IInsight | null | undefined,
+    buckets: string[],
+    datasets: ICatalogDateDataset[],
+): ICatalogDateDataset[] {
+    const all = buckets.reduce<IAttribute[]>((acc, bucketId) => {
+        const bucket: IBucket | undefined = insight ? insightBucket(insight, bucketId) : undefined;
+
+        return [...acc, ...(bucket ? bucketAttributes(bucket) : [])];
+    }, []);
+
+    return datasets
+        .map((dataset) => {
+            return {
+                ...dataset,
+                dateAttributes: all
+                    .map((a) => getCatalogAttribute(dataset.dateAttributes, a))
+                    .filter(Boolean) as ICatalogDateAttribute[],
+            };
+        })
+        .filter((d) => d.dateAttributes.length);
+}
+
+function fillComparators(simpleMetrics: AlertMetric[], datasets: ICatalogDateDataset[]) {
+    if (datasets.length === 0) {
+        return;
+    }
+
+    simpleMetrics.forEach((metric) => {
+        const prev = metric.comparators.find(
+            (c) => c.comparator === AlertMetricComparatorType.PreviousPeriod,
+        );
+        if (!prev) {
+            //PP
+            metric.comparators.push({
+                measure: newPreviousPeriodMeasure(
+                    metric.measure.measure.localIdentifier,
+                    [
+                        {
+                            dataSet: datasets[0].dataSet.ref,
+                            periodsAgo: 1,
+                        },
+                    ],
+                    (a) => {
+                        a.format(metric.measure.measure.format);
+                        a.localId(`${metric.measure.measure.localIdentifier}_previous_period`);
+                        return a;
+                    },
+                ),
+                isPrimary: false,
+                comparator: AlertMetricComparatorType.PreviousPeriod,
+                dataset: undefined,
+                granularity: undefined,
+            });
+
+            //PoP
+            metric.comparators.push({
+                measure: newPopMeasure(
+                    metric.measure.measure.localIdentifier,
+                    datasets[0].dateAttributes[0].attribute.ref,
+                    (a) => {
+                        a.format(metric.measure.measure.format);
+                        a.localId(`${metric.measure.measure.localIdentifier}_pop`);
+                        return a;
+                    },
+                ),
+                isPrimary: false,
+                comparator: AlertMetricComparatorType.SamePeriodPreviousYear,
+                dataset: undefined,
+                granularity: undefined,
+            });
+        }
+    });
+}
+
+function fillGranularity(simpleMetrics: AlertMetric[], datasets: ICatalogDateDataset[]) {
+    simpleMetrics.forEach((metric) => {
+        metric.comparators.forEach((comparator) => {
+            const def = comparator.measure.measure.definition;
+            if (isPoPMeasureDefinition(def)) {
+                const attr = def.popMeasureDefinition.popAttribute;
+
+                const dataset = datasets.find((d) => {
+                    return d.dateAttributes.some((a) => areObjRefsEqual(a.attribute.ref, attr));
+                });
+                const dateAttribute = dataset?.dateAttributes.find((a) =>
+                    areObjRefsEqual(a.attribute.ref, attr),
+                );
+
+                if (dataset) {
+                    comparator.dataset = dataset.dataSet;
+                    //comparator.dateAttribute = dateAttribute?.attribute;
+                    comparator.granularity = dateAttribute?.granularity;
+                }
+            }
+            if (isPreviousPeriodMeasureDefinition(def)) {
+                const ds = def.previousPeriodMeasure.dateDataSets[0]?.dataSet;
+
+                const dataset = datasets.find((d) => {
+                    return areObjRefsEqual(d.dataSet.ref, ds);
+                });
+
+                if (dataset) {
+                    const sorted = dataset.dateAttributes.slice().sort((a, b) => {
+                        return (
+                            SortedGranularities.indexOf(b.granularity) -
+                            SortedGranularities.indexOf(a.granularity)
+                        );
+                    });
+                    const lowest = sorted[0];
+                    comparator.dataset = dataset.dataSet;
+                    comparator.granularity = lowest?.granularity;
+                }
+            }
+        });
+    });
+}
+
+function removeInvalidComparators(simpleMetrics: AlertMetric[], insightFilters: IFilter[]) {
+    const validDatasets = insightFilters
+        .map((filter) => {
+            // Only filters that contains this nad future dates are relevant
+            if (isRelativeDateFilter(filter) && filter.relativeDateFilter.to >= 0) {
+                return filter.relativeDateFilter.dataSet;
+            }
+            return null;
+        })
+        .filter(Boolean);
+
+    // We need to remove all comparators that are not contains
+    // valid datasets.
+    simpleMetrics.forEach((metric) => {
+        metric.comparators = metric.comparators.filter((comparator) => {
+            return validDatasets.some((valid) => areObjRefsEqual(comparator.dataset?.ref, valid));
+        });
+    });
 }

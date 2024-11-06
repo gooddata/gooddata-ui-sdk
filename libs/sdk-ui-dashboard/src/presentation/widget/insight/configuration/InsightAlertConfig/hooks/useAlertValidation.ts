@@ -3,6 +3,7 @@
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 
 import {
+    selectCatalogDateDatasets,
     selectInsightByWidgetRef,
     selectWidgetByRef,
     useDashboardSelector,
@@ -21,7 +22,8 @@ export const useAlertValidation = (
 
     const widget = useDashboardSelector(selectWidgetByRef(widgetRef));
     const insight = useDashboardSelector(selectInsightByWidgetRef(widget?.ref));
-    const supportedMeasures = getSupportedInsightMeasuresByInsight(insight);
+    const dateDatasets = useDashboardSelector(selectCatalogDateDatasets);
+    const supportedMeasures = getSupportedInsightMeasuresByInsight(insight, dateDatasets);
     const selectedMeasureExists = getAlertMeasure(supportedMeasures, alert.alert);
 
     const isValid = isNewAlert || Boolean(!!widget && selectedMeasureExists);

@@ -24,7 +24,7 @@ import {
     transformAlertByRelativeOperator,
     transformAlertByValue,
 } from "../utils/transformation.js";
-import { AlertAttribute, AlertMetric } from "../../../types.js";
+import { AlertAttribute, AlertMetric, AlertMetricComparatorType } from "../../../types.js";
 import { selectCurrentUser, selectUsers, useDashboardSelector } from "../../../../../../model/index.js";
 import { convertCurrentUserToAutomationRecipient } from "../../../../../../_staging/automation/index.js";
 import { isEmail } from "../../../../../scheduledEmail/DefaultScheduledEmailDialog/utils/validate.js";
@@ -133,6 +133,28 @@ export const useEditAlert = ({
         setUpdatedAlert((alert) => transformAlertByDestination(alert, destinationId, updatedRecipients));
     };
 
+    const changeComparisonType = (
+        measure: AlertMetric | undefined,
+        relativeOperator: [IAlertRelativeOperator, IAlertRelativeArithmeticOperator] | undefined,
+        comparisonType: AlertMetricComparatorType,
+    ) => {
+        if (!measure || !relativeOperator || !relativeOperator) {
+            return;
+        }
+        const [relativeOperatorValue, arithmeticOperator] = relativeOperator;
+        setUpdatedAlert((alert) =>
+            transformAlertByRelativeOperator(
+                metrics,
+                alert,
+                measure,
+                relativeOperatorValue,
+                arithmeticOperator,
+                catalogMeasures,
+                comparisonType,
+            ),
+        );
+    };
+
     const changeRecipients = (recipients: IAutomationRecipient[]) => {
         setUpdatedAlert((alert) => ({
             ...alert,
@@ -186,6 +208,7 @@ export const useEditAlert = ({
         changeAttribute,
         changeValue,
         changeDestination,
+        changeComparisonType,
         changeRecipients,
         //
         configureAlert,
