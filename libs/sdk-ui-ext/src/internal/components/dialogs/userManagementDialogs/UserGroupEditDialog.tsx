@@ -47,7 +47,6 @@ export interface IUserGroupEditDialogProps extends IWithTelemetryProps {
     onClose: () => void;
     renderDataSourceIcon?: (dataSource: IGrantedDataSource) => JSX.Element;
     areFilterViewsEnabled?: boolean;
-    areGranularPermissionsEnabled?: boolean;
 }
 
 const UserGroupEditDialogComponent: React.FC<IUserGroupEditDialogProps> = ({
@@ -59,7 +58,6 @@ const UserGroupEditDialogComponent: React.FC<IUserGroupEditDialogProps> = ({
     initialView = "VIEW",
     renderDataSourceIcon,
     areFilterViewsEnabled = false,
-    areGranularPermissionsEnabled = false,
 }) => {
     const intl = useIntl();
     const { dialogMode, setDialogMode } = useUserGroupDialogMode(initialView);
@@ -78,7 +76,7 @@ const UserGroupEditDialogComponent: React.FC<IUserGroupEditDialogProps> = ({
         onDataSourcesChanged,
         removeGrantedDataSource,
         updateGrantedDataSource,
-    } = usePermissions(userGroupId, "userGroup", organizationId, onSuccess, areGranularPermissionsEnabled);
+    } = usePermissions(userGroupId, "userGroup", organizationId, onSuccess);
     const { grantedUsers, onUsersChanged, removeGrantedUsers } = useUsers(
         userGroupId,
         organizationId,
@@ -140,10 +138,6 @@ const UserGroupEditDialogComponent: React.FC<IUserGroupEditDialogProps> = ({
     const [workspaceToEdit, setWorkspaceToEdit] = useState<IGrantedWorkspace>(undefined);
 
     const handleWorkspaceEdit = (workspace: IGrantedWorkspace) => {
-        if (!areGranularPermissionsEnabled) {
-            return;
-        }
-
         setWorkspaceToEdit(workspace);
         setDialogMode("WORKSPACE");
     };
@@ -241,7 +235,6 @@ const UserGroupEditDialogComponent: React.FC<IUserGroupEditDialogProps> = ({
                                             onDelete={removeGrantedWorkspace}
                                             onChange={updateGrantedWorkspace}
                                             areFilterViewsEnabled={areFilterViewsEnabled}
-                                            areGranularPermissionsEnabled={areGranularPermissionsEnabled}
                                             onClick={handleWorkspaceEdit}
                                         />
                                     )}
@@ -279,7 +272,6 @@ const UserGroupEditDialogComponent: React.FC<IUserGroupEditDialogProps> = ({
                                     onCancel={isOpenedInEditMode ? onClose : handleWorkspaceCancel}
                                     onClose={onClose}
                                     areFilterViewsEnabled={areFilterViewsEnabled}
-                                    areGranularPermissionsEnabled={areGranularPermissionsEnabled}
                                     editWorkspace={workspaceToEdit}
                                 />
                             )}

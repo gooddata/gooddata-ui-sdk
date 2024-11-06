@@ -7,8 +7,6 @@ import { BackButton, ConfirmDialogBase, Hyperlink } from "@gooddata/sdk-ui-kit";
 import { IGrantedWorkspace, WorkspacePermissionSubject } from "../types.js";
 import { messages } from "../locales.js";
 
-import { AddWorkspaceSelect } from "./AddWorkspaceSelect.js";
-import { WorkspaceList } from "./WorkspaceList.js";
 import { useAddWorkspace } from "./useAddWorkspace.js";
 import { GranularPermissions } from "./WorkspaceItem/GranularPermissions.js";
 import { AddSingleWorkspaceSelect } from "./AddSingleWorkspaceSelect.js";
@@ -26,7 +24,6 @@ export interface IAddWorkspaceProps {
     onCancel: () => void;
     onClose: () => void;
     areFilterViewsEnabled: boolean;
-    areGranularPermissionsEnabled: boolean;
     editWorkspace?: IGrantedWorkspace;
 }
 
@@ -39,12 +36,16 @@ export const AddWorkspace: React.FC<IAddWorkspaceProps> = ({
     onCancel,
     onClose,
     areFilterViewsEnabled,
-    areGranularPermissionsEnabled,
     editWorkspace,
 }) => {
     const intl = useIntl();
-    const { addedWorkspaces, isProcessing, onAdd, onDelete, onChange, onSelect, onOverwriteSelect } =
-        useAddWorkspace(ids, subjectType, onSubmit, onCancel, areGranularPermissionsEnabled, editWorkspace);
+    const { addedWorkspaces, isProcessing, onAdd, onChange, onOverwriteSelect } = useAddWorkspace(
+        ids,
+        subjectType,
+        onSubmit,
+        onCancel,
+        editWorkspace,
+    );
 
     const isGranularPermissionsChanged = useMemo(() => {
         return editWorkspace ? areWorkspacePermissionsEqual(addedWorkspaces[0], editWorkspace) : true;
@@ -59,7 +60,7 @@ export const AddWorkspace: React.FC<IAddWorkspaceProps> = ({
     }, [onCancel]);
 
     const leftFooterRenderer = useCallback(() => {
-        return areGranularPermissionsEnabled ? (
+        return (
             <div className="gd-share-dialog-add-workspace__footer-link">
                 <Hyperlink
                     text={intl.formatMessage({
@@ -69,8 +70,8 @@ export const AddWorkspace: React.FC<IAddWorkspaceProps> = ({
                     iconClass="gd-icon-circle-question"
                 />
             </div>
-        ) : null;
-    }, [intl, areGranularPermissionsEnabled]);
+        );
+    }, [intl]);
 
     return (
         <ConfirmDialogBase
@@ -90,39 +91,18 @@ export const AddWorkspace: React.FC<IAddWorkspaceProps> = ({
             headerLeftButtonRenderer={enableBackButton ? backButtonRenderer : undefined}
             footerLeftRenderer={leftFooterRenderer}
         >
-            {areGranularPermissionsEnabled ? (
-                <>
-                    <AddSingleWorkspaceSelect
-                        addedWorkspace={addedWorkspaces[0]}
-                        grantedWorkspaces={grantedWorkspaces}
-                        onSelectWorkspace={onOverwriteSelect}
-                        mode={editWorkspace ? "VIEW" : "EDIT"}
-                    />
-                    <GranularPermissions
-                        workspace={addedWorkspaces[0]}
-                        onChange={onChange}
-                        areFilterViewsEnabled={areFilterViewsEnabled}
-                        showRedundancyWarningMessage={showRedundancyWarningMessage}
-                    />
-                </>
-            ) : (
-                <>
-                    <AddWorkspaceSelect
-                        addedWorkspaces={addedWorkspaces}
-                        grantedWorkspaces={grantedWorkspaces}
-                        onSelectWorkspace={onSelect}
-                    />
-                    <WorkspaceList
-                        subjectType={subjectType}
-                        mode="EDIT"
-                        workspaces={addedWorkspaces}
-                        onDelete={onDelete}
-                        onChange={onChange}
-                        areFilterViewsEnabled={areFilterViewsEnabled}
-                        areGranularPermissionsEnabled={areGranularPermissionsEnabled}
-                    />
-                </>
-            )}
+            <AddSingleWorkspaceSelect
+                addedWorkspace={addedWorkspaces[0]}
+                grantedWorkspaces={grantedWorkspaces}
+                onSelectWorkspace={onOverwriteSelect}
+                mode={editWorkspace ? "VIEW" : "EDIT"}
+            />
+            <GranularPermissions
+                workspace={addedWorkspaces[0]}
+                onChange={onChange}
+                areFilterViewsEnabled={areFilterViewsEnabled}
+                showRedundancyWarningMessage={showRedundancyWarningMessage}
+            />
         </ConfirmDialogBase>
     );
 };
