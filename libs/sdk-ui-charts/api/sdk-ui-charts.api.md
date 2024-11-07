@@ -301,6 +301,8 @@ export interface IChartConfig {
     cellVerticalAlign?: ChartCellVerticalAlign;
     // @internal
     chart?: any;
+    // @internal
+    chartConfigOverride?: string;
     // @beta
     clustering?: IChartClusteringConfig;
     colorMapping?: IColorMapping[];
@@ -322,6 +324,8 @@ export interface IChartConfig {
     enableReversedStacking?: boolean;
     // (undocumented)
     enableSeparateTotalLabels?: boolean;
+    // @internal
+    enableVisualizationFineTuning?: boolean;
     forceDisableDrillOnAxes?: boolean;
     // @beta
     forecast?: IForecast;

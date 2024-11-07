@@ -114,17 +114,6 @@ const ChartTransformationImpl = (props: IChartTransformationProps) => {
         intl,
         theme,
     );
-    const rendererProps = {
-        chartOptions,
-        hcOptions,
-        height,
-        width,
-        afterRender,
-        onLegendReady,
-        locale,
-        legend: legendOptions,
-        theme,
-    };
 
     let isFilteringRecommended = false;
     if (validationResult.dataTooLarge) {
@@ -178,7 +167,22 @@ const ChartTransformationImpl = (props: IChartTransformationProps) => {
     const resetZoomButtonTooltip = intl
         ? intl.formatMessage({ id: "visualization.tooltip.resetZoom" })
         : null;
-    return renderer({ ...rendererProps, chartRenderer, legendRenderer, resetZoomButtonTooltip });
+
+    return renderer({
+        chartRenderer,
+        legendRenderer,
+        resetZoomButtonTooltip,
+        chartOptions,
+        hcOptions,
+        height,
+        width,
+        afterRender,
+        onLegendReady,
+        locale,
+        legend: legendOptions,
+        theme,
+        config,
+    });
 };
 
 /**

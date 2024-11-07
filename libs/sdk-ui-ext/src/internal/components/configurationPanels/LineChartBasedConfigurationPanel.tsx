@@ -88,6 +88,7 @@ export default class LineChartBasedConfigurationPanel extends BaseChartConfigura
                         />
                     </ConfigSection>
                     {this.renderForecastSection()}
+                    {this.renderAdvancedSection()}
                 </div>
                 <Bubble
                     className={this.getBubbleClassNames()}

@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
@@ -26,6 +26,7 @@ export default class SankeyChartConfigurationPanel extends ConfigurationPanelCon
                     {this.renderLegendSection()}
                     {this.renderInteractionsSection()}
                     {this.renderCanvasSection()}
+                    {this.renderAdvancedSection()}
                 </div>
                 <Bubble
                     className={bubbleClassNames}

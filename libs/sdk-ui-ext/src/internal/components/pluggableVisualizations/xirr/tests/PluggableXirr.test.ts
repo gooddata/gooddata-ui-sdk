@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 import { PluggableXirr } from "../PluggableXirr.js";
@@ -28,6 +28,7 @@ describe("PluggableXirr", () => {
             onError: vi.fn(),
         },
         renderFun: mockRenderFun,
+        unmountFun: vi.fn(),
     };
 
     afterEach(() => {

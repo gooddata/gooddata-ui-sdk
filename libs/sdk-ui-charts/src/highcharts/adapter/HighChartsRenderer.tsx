@@ -9,7 +9,8 @@ import partial from "lodash/partial.js";
 import throttle from "lodash/throttle.js";
 import isNil from "lodash/isNil.js";
 import cx from "classnames";
-import { OnLegendReady } from "../../interfaces/index.js";
+import * as jsYaml from "js-yaml";
+import { OnLegendReady, IChartConfig } from "../../interfaces/index.js";
 import { Chart, IChartProps } from "./Chart.js";
 import {
     isFunnel,
@@ -34,6 +35,7 @@ import { Bubble, BubbleHoverTrigger, Icon } from "@gooddata/sdk-ui-kit";
 import { BOTTOM, LEFT, RIGHT, TOP } from "../typings/mess.js";
 import { ITheme } from "@gooddata/sdk-model";
 import { IChartOptions, ISeriesDataItem, ISeriesItem } from "../typings/unsafe.js";
+import { mergePropertiesWithOverride } from "./propertyMerger.js";
 
 /**
  * @internal
@@ -64,6 +66,7 @@ export interface IHighChartsRendererProps {
     afterRender(): void;
     resetZoomButtonTooltip?: string;
     contentRect?: ContentRect;
+    config?: IChartConfig;
 }
 
 export interface IHighChartsRendererState {
@@ -368,11 +371,27 @@ export class HighChartsRenderer extends React.PureComponent<
         const chartProps = {
             domProps: { className: "viz-react-highchart-wrap gd-viz-highchart-wrap", style },
             ref: this.setChartRef,
-            config,
+            config: this.props.config?.enableVisualizationFineTuning
+                ? mergePropertiesWithOverride(config, this.getHighChartsConfigOverride())
+                : config,
             callback: this.props.afterRender,
         };
         return this.props.chartRenderer(chartProps);
     }
+
+    private getHighChartsConfigOverride = (): Partial<HighchartsOptions> => {
+        try {
+            // YAML value was automatically merged from visualization properties to chart config from where
+            // we will load it now and transform to JSON, expecting that it contains valid partial
+            // HighChart configuration.
+            const rawConfigOverride = this.props.config?.chartConfigOverride;
+            return rawConfigOverride === undefined ? undefined : jsYaml.load(rawConfigOverride);
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error("Visualization properties contains invalid HighCharts config override", e);
+            return undefined;
+        }
+    };
 
     private onZoomOutButtonClick = (): void => {
         this.chartRef.getChart().zoomOut();

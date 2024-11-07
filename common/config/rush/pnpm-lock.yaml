@@ -2244,6 +2244,9 @@ importers:
       hoist-non-react-statics:
         specifier: ^3.3.0
         version: 3.3.2
+      js-yaml:
+        specifier: ^4.1.0
+        version: 4.1.0
       json-stable-stringify:
         specifier: ^1.0.1
         version: 1.1.0
@@ -2293,6 +2296,9 @@ importers:
       '@types/hoist-non-react-statics':
         specifier: ^3.3.1
         version: 3.3.5
+      '@types/js-yaml':
+        specifier: ^4.0.9
+        version: 4.0.9
       '@types/json-stable-stringify':
         specifier: ^1.0.32
         version: 1.0.36
@@ -2702,6 +2708,9 @@ importers:
       classnames:
         specifier: ^2.3.1
         version: 2.3.2
+      codemirror:
+        specifier: ^5.54.0
+        version: 5.65.16
       date-fns:
         specifier: ^2.22.1
         version: 2.30.0
@@ -2714,6 +2723,9 @@ importers:
       fixed-data-table-2:
         specifier: ^1.2.0
         version: 1.2.22(react-dom@18.2.0)(react@18.2.0)
+      js-yaml:
+        specifier: ^4.1.0
+        version: 4.1.0
       json-stable-stringify:
         specifier: ^1.0.1
         version: 1.1.0
@@ -2781,9 +2793,15 @@ importers:
       '@testing-library/user-event':
         specifier: ^14.4.2
         version: 14.5.1(@testing-library/dom@9.2.0)
+      '@types/codemirror':
+        specifier: ^5.60.7
+        version: 5.60.15
       '@types/debounce-promise':
         specifier: ^3.1.4
         version: 3.1.9
+      '@types/js-yaml':
+        specifier: ^4.0.9
+        version: 4.0.9
       '@types/json-stable-stringify':
         specifier: ^1.0.32
         version: 1.0.36
@@ -11435,6 +11453,10 @@ packages:
     resolution: {integrity: sha512-/CLhCW79JUeLKznI6mbVieGbl4QU5Hfn+6udw1YHZoofASjbQ5zaP5LzAUZYDpRYEjS4/P+DhEgyJ/PQmGGTWw==}
     dev: true
 
+  /@types/js-yaml@4.0.9:
+    resolution: {integrity: sha512-k4MGaQl5TGo/iipqb2UDG2UwjXziSWkh0uysQelTlJpX1qGlpUZYm8PnO4DxG1qBomtJUdYJ6qR6xdIah10JLg==}
+    dev: true
+
   /@types/json-schema@7.0.15:
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
 
@@ -12586,7 +12608,6 @@ packages:
 
   /argparse@2.0.1:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
-    dev: true
 
   /aria-query@5.3.0:
     resolution: {integrity: sha512-b0P0sZPKtyu8HkeRAfCq0IfURZK+SuwMjY1UXGBU27wpAiTwQAIlq56IbIO+ytk/JjS1fMR14ee5WBBfKi5J6A==}
@@ -17926,7 +17947,6 @@ packages:
     hasBin: true
     dependencies:
       argparse: 2.0.1
-    dev: true
 
   /jsbn@0.1.1:
     resolution: {integrity: sha512-UVU9dibq2JcFWxQPA6KCqj5O42VOmAY3zQUfEKxU0KpTGXwNoCjkX1e13eHNvw/xPynt6pU0rZ1htjWTNTSXsg==}

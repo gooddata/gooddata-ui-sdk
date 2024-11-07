@@ -124,6 +124,7 @@ export enum TigerFeaturesNames {
     EnableFlexConnectNaming = "enableFlexConnectNaming",
     EnableDestinationTesting = "enableDestinationTesting",
     EnableInPlatformNotifications = "enableInPlatformNotifications",
+    EnableVisualizationFineTuning = "enableVisualizationFineTuning",
 }
 
 export type ITigerFeatureFlags = {
@@ -211,6 +212,7 @@ export type ITigerFeatureFlags = {
     enableFlexConnectNaming: typeof FeatureFlagsValues["enableFlexConnectNaming"][number];
     enableDestinationTesting: typeof FeatureFlagsValues["enableDestinationTesting"][number];
     enableInPlatformNotifications: typeof FeatureFlagsValues["enableInPlatformNotifications"][number];
+    enableVisualizationFineTuning: typeof FeatureFlagsValues["enableVisualizationFineTuning"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -298,6 +300,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableFlexConnectNaming: false,
     enableDestinationTesting: false,
     enableInPlatformNotifications: false,
+    enableVisualizationFineTuning: false,
 };
 
 export const FeatureFlagsValues = {
@@ -389,4 +392,5 @@ export const FeatureFlagsValues = {
     enableFlexConnectNaming: [true, false] as const,
     enableDestinationTesting: [true, false] as const,
     enableInPlatformNotifications: [true, false] as const,
+    enableVisualizationFineTuning: [true, false] as const,
 };

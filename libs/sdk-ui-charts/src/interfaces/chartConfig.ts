@@ -355,6 +355,19 @@ export interface IChartConfig {
      * @internal
      */
     enableAliasAttributeLabel?: boolean;
+
+    /**
+     * User provided override of the HighChart configuration.
+     * @internal
+     */
+    chartConfigOverride?: string;
+
+    /**
+     * Temporary configuration to enable fine-tuning of visualizations, i.e., usage of chartConfigOverride
+     * value during the charts rendering.
+     * @internal
+     */
+    enableVisualizationFineTuning?: boolean;
 }
 
 /**

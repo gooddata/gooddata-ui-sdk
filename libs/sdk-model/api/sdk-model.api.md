@@ -3282,6 +3282,7 @@ export interface ISettings {
     enableTableColumnsManualResizing?: boolean;
     enableUnavailableItemsVisible?: boolean;
     enableUserManagement?: boolean;
+    enableVisualizationFineTuning?: boolean;
     enableWaterfallChart?: boolean;
     enableWeekFilters?: boolean;
     enableWidgetIdentifiersRollout?: boolean;
