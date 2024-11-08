@@ -423,7 +423,7 @@ export const selectEnableAlerting: DashboardSelector<boolean> = createSelector(s
 export const selectEnableAlertAttributes: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableAlertAttributes ?? false;
+        return state.settings?.enableAlertAttributes ?? true;
     },
 );
 
