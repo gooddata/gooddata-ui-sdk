@@ -7,6 +7,7 @@ import {
     IChatThreadQuery,
     IGenAIChatEvaluation,
 } from "@gooddata/sdk-backend-spi";
+import { EventSourceParserStream, EventSourceMessage } from "eventsource-parser/stream";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
 /**
@@ -117,5 +118,72 @@ export class ChatThreadQuery implements IChatThreadQuery {
         );
 
         return response.data as IGenAIChatEvaluation;
+    }
+
+    stream(): ReadableStream<IGenAIChatEvaluation> {
+        // We are using Axios <1.7, which does not support streaming,
+        // as it can't use fetch API instead of XHR.
+        // This method can be simplified once we upgrade to Axios >=1.7.
+        const { authCall, config } = this;
+
+        let lastLoaded = 0;
+        // Generate a stream of string from server, as XHR delivers data in chunks.
+        const textStream = new ReadableStream<string>({
+            start(controller) {
+                authCall((client) =>
+                    client.genAI.aiChatStream(
+                        {
+                            workspaceId: config.workspaceId,
+                            chatRequest: {
+                                question: config.userQuestion,
+                                limitSearch: config.limitSearch,
+                                limitCreate: config.limitCreate,
+                                userContext: config.userContext,
+                            },
+                        },
+                        {
+                            // Abort signal only affecting the request, as the stream is generally
+                            // processed very quickly, and we don't care if an extra event slips through.
+                            headers: {
+                                Accept: "text/event-stream",
+                            },
+                            onDownloadProgress: (evt) => {
+                                const data = evt.event.target.responseText.slice(lastLoaded);
+                                lastLoaded += data.length;
+                                controller.enqueue(data);
+                            },
+                        },
+                    ),
+                )
+                    .catch((error) => {
+                        controller.error(error);
+                    })
+                    .finally(() => {
+                        controller.close();
+                    });
+            },
+        });
+
+        // Convert the text stream to a stream of server sent events using eventsource-parser lib.
+        // and then to a stream of IGenAIChatEvaluation.
+        return textStream
+            .pipeThrough(new EventSourceParserStream())
+            .pipeThrough(new ServerSentEventsDataParser());
+    }
+}
+
+/**
+ * A transform stream from SSE to IGenAIChatEvaluation
+ * @internal
+ */
+class ServerSentEventsDataParser extends TransformStream<EventSourceMessage, IGenAIChatEvaluation> {
+    constructor() {
+        super({
+            transform(event, controller) {
+                if (event.event === "chat-message") {
+                    controller.enqueue(JSON.parse(event.data));
+                }
+            },
+        });
     }
 }

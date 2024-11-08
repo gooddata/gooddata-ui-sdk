@@ -7,5 +7,5 @@ import { ActionsApi, ActionsApiInterface } from "./generated/afm-rest-api/index.
  */
 export const tigerGenAIClientFactory = (
     axios: AxiosInstance,
-): Pick<ActionsApiInterface, "aiSearch" | "aiChat" | "aiChatHistory" | "aiRoute"> =>
+): Pick<ActionsApiInterface, "aiSearch" | "aiChat" | "aiChatStream" | "aiChatHistory" | "aiRoute"> =>
     new ActionsApi(undefined, "", axios);

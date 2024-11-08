@@ -49,6 +49,17 @@ const setNormalizedMessages = (state: MessagesSliceState, messages: Message[]) =
     state.messageOrder = messages.map((message) => message.localId);
 };
 
+const getAssistantMessageStrict = (
+    state: MessagesSliceState,
+    assistantMessageId: string,
+): AssistantMessage => {
+    const message = state.messages[assistantMessageId];
+    if (!isAssistantMessage(message)) {
+        throw new Error(`Unexpected error during message evaluation.`);
+    }
+    return message;
+};
+
 const messagesSlice = createSlice({
     name: messagesSliceName,
     initialState,
@@ -99,7 +110,7 @@ const messagesSlice = createSlice({
             state.messageOrder.push(message.localId);
         },
         /**
-         * The evaluation failed, need to update the assistant message and user message.
+         * The evaluation failed, need to update the assistant message.
          */
         evaluateMessageErrorAction: (
             state,
@@ -110,45 +121,43 @@ const messagesSlice = createSlice({
                 assistantMessageId: string;
             }>,
         ) => {
-            delete state.asyncProcess;
-            const assistantMessage = state.messages[payload.assistantMessageId];
-
-            if (!assistantMessage || !isAssistantMessage(assistantMessage)) {
-                // This should not happen
-                state.globalError = `Unexpected error during message evaluation. ${payload.error}`;
-                return;
-            }
+            const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
 
             assistantMessage.complete = true;
             assistantMessage.content.push(makeErrorContents(payload.error));
+            delete state.asyncProcess;
         },
-        evaluateMessagePollingAction: (
+        /**
+         * Received new chunk from server over SSE.
+         */
+        evaluateMessageStreamingAction: (
             state,
             {
                 payload,
             }: PayloadAction<{
                 contents: Contents[];
-                complete: boolean;
-                localId: string;
-                interactionId: number;
+                assistantMessageId: string;
+                interactionId?: number;
             }>,
         ) => {
-            const assistantMessage = state.messages[payload.localId];
+            const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
 
-            if (!assistantMessage || !isAssistantMessage(assistantMessage)) {
-                // This should not happen
-                state.globalError = `Unexpected error during message evaluation.`;
-                return;
-            }
-
-            assistantMessage.id = payload.interactionId;
-            assistantMessage.content = payload.contents;
-            assistantMessage.complete = payload.complete;
+            assistantMessage.id = payload.interactionId ?? assistantMessage.id;
+            assistantMessage.content.push(...payload.contents);
             assistantMessage.cancelled = false;
+        },
+        evaluateMessageCompleteAction: (
+            state,
+            {
+                payload,
+            }: PayloadAction<{
+                assistantMessageId: string;
+            }>,
+        ) => {
+            const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
 
-            if (payload.complete) {
-                delete state.asyncProcess;
-            }
+            assistantMessage.complete = true;
+            delete state.asyncProcess;
         },
         setMessagesAction: (state, { payload: { messages } }: PayloadAction<{ messages: Message[] }>) => {
             setNormalizedMessages(state, messages);
@@ -176,7 +185,8 @@ export const {
     newMessageAction,
     evaluateMessageAction,
     evaluateMessageErrorAction,
-    evaluateMessagePollingAction,
+    evaluateMessageStreamingAction,
+    evaluateMessageCompleteAction,
     setMessagesAction,
     setVerboseAction,
     setGlobalErrorAction,

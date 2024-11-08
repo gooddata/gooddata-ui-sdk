@@ -63,6 +63,29 @@ export class DummyGenAIChatQueryBuilder implements IChatThreadQuery {
             },
         });
     }
+
+    stream(): ReadableStream<IGenAIChatEvaluation> {
+        return new ReadableStream({
+            start: async (controller) => {
+                await cancellableTimeout(100);
+                controller.enqueue({
+                    routing: {
+                        useCase: "GENERAL",
+                        reasoning: "",
+                    },
+                    textResponse: "",
+                    foundObjects: {
+                        objects: [],
+                        reasoning: "",
+                    },
+                    createdVisualizations: {
+                        objects: [],
+                        reasoning: "",
+                    },
+                });
+            },
+        });
+    }
 }
 
 const cancellableTimeout = async (ms: number, signal?: AbortSignal) => {

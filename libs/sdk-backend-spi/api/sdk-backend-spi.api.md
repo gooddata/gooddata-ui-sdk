@@ -422,6 +422,7 @@ export interface IChatThreadQuery {
     query(options?: {
         signal?: AbortSignal;
     }): Promise<IGenAIChatEvaluation>;
+    stream(): ReadableStream<IGenAIChatEvaluation>;
     withCreateLimit(createLimit: number): IChatThreadQuery;
     withSearchLimit(searchLimit: number): IChatThreadQuery;
     withUserContext(userContext: IGenAIUserContext): IChatThreadQuery;
@@ -748,6 +749,8 @@ export interface IForecastView {
 
 // @beta
 export interface IGenAIChatEvaluation {
+    // (undocumented)
+    chatHistoryInteractionId?: number;
     // (undocumented)
     chatHistoryThreadId?: string;
     // (undocumented)
