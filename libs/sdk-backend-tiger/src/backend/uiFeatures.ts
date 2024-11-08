@@ -248,7 +248,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableOracleDataSource: false,
     enableAnalyticalCatalog: false,
     enableAlerting: true,
-    enableAlertAttributes: false,
+    enableAlertAttributes: true,
     enableComparisonInAlerting: false,
     enableSmtp: true,
     enableScheduling: true,
