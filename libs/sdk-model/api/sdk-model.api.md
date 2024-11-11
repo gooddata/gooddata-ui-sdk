@@ -510,6 +510,13 @@ export type ForecastDataValue = {
 };
 
 // @alpha
+export type GenAIAbsoluteDateFilter = {
+    using: string;
+    from: string;
+    to: string;
+};
+
+// @alpha
 export type GenAIChatInteractionUserFeedback = "POSITIVE" | "NEGATIVE" | "NONE";
 
 // @alpha
@@ -519,16 +526,39 @@ export type GenAIChatRole = "USER" | "AI";
 export type GenAIChatRoutingUseCase = "SEARCH_ALL" | "SEARCH_VISUALIZATIONS" | "SEARCH_DASHBOARDS" | "CREATE_VISUALIZATION" | "EXTEND_VISUALIZATION" | "GENERAL" | "INVALID";
 
 // @alpha
+export type GenAIDateGranularity = "MINUTE" | "HOUR" | "DAY" | "WEEK" | "MONTH" | "QUARTER" | "YEAR" | "MINUTE_OF_HOUR" | "HOUR_OF_DAY" | "DAY_OF_WEEK" | "DAY_OF_MONTH" | "DAY_OF_YEAR" | "WEEK_OF_YEAR" | "MONTH_OF_YEAR" | "QUARTER_OF_YEAR";
+
+// @alpha
+export type GenAIFilter = GenAIPositiveAttributeFilter | GenAINegativeAttributeFilter | GenAIAbsoluteDateFilter | GenAIRelativeDateFilter;
+
+// @alpha
 export type GenAIMetricAggregation = "COUNT" | "SUM" | "MIN" | "MAX" | "AVG" | "MEDIAN";
 
 // @alpha
 export type GenAIMetricType = "metric" | "fact" | "attribute";
 
+// @alpha
+export type GenAINegativeAttributeFilter = {
+    using: string;
+    exclude: string[];
+};
+
 // @beta
 export type GenAIObjectType = "dataset" | "attribute" | "label" | "fact" | "date" | "metric" | "visualization" | "dashboard";
 
-// @beta @deprecated
-export type GenAISemanticSearchType = GenAIObjectType;
+// @alpha
+export type GenAIPositiveAttributeFilter = {
+    using: string;
+    include: string[];
+};
+
+// @alpha
+export type GenAIRelativeDateFilter = {
+    using: string;
+    granularity: GenAIDateGranularity;
+    from: number;
+    to: number;
+};
 
 // @alpha
 export type GenAIVisualizationType = "TABLE" | "HEADLINE" | "BAR" | "LINE" | "PIE" | "COLUMN";
@@ -1883,6 +1913,7 @@ export interface IGenAIUserContext {
 // @alpha
 export interface IGenAIVisualization {
     dimensionality: IGenAIVisualizationDimension[];
+    filters?: GenAIFilter[];
     id: string;
     metrics: IGenAIVisualizationMetric[];
     title: string;
