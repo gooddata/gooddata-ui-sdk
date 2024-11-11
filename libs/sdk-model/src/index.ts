@@ -991,11 +991,7 @@ export {
     isAutomationUserRecipient,
 } from "./automations/index.js";
 
-export type {
-    ISemanticSearchResultItem,
-    ISemanticSearchRelationship,
-    GenAISemanticSearchType,
-} from "./genAI/semanticSearch.js";
+export type { ISemanticSearchResultItem, ISemanticSearchRelationship } from "./genAI/semanticSearch.js";
 
 export type {
     IGenAIChatInteraction,
@@ -1013,6 +1009,12 @@ export type {
     GenAIVisualizationType,
     GenAIMetricAggregation,
     GenAIMetricType,
+    GenAIFilter,
+    GenAIPositiveAttributeFilter,
+    GenAINegativeAttributeFilter,
+    GenAIAbsoluteDateFilter,
+    GenAIRelativeDateFilter,
+    GenAIDateGranularity,
 } from "./genAI/chat.js";
 
 export type { GenAIObjectType } from "./genAI/common.js";

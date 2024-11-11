@@ -758,7 +758,7 @@ export interface IGenAIChatEvaluation {
     // (undocumented)
     foundObjects?: IGenAIFoundObjects;
     // (undocumented)
-    routing: IGenAIChatRouting;
+    routing?: IGenAIChatRouting;
     // (undocumented)
     textResponse?: string;
 }

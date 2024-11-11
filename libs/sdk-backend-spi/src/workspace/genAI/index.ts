@@ -132,7 +132,7 @@ export interface IChatThreadQuery {
  * @beta
  */
 export interface IGenAIChatEvaluation {
-    routing: IGenAIChatRouting;
+    routing?: IGenAIChatRouting;
     textResponse?: string;
     foundObjects?: IGenAIFoundObjects;
     createdVisualizations?: IGenAICreatedVisualizations;
