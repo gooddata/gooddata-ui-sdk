@@ -1633,6 +1633,9 @@ importers:
       date-fns:
         specifier: ^2.22.1
         version: 2.30.0
+      eventsource-parser:
+        specifier: ~3.0.0
+        version: 3.0.0
       exponential-backoff:
         specifier: ^3.1.1
         version: 3.1.1
@@ -4341,7 +4344,7 @@ importers:
         version: 5.62.0(eslint@8.55.0)(typescript@5.3.3)
       babel-loader:
         specifier: ^8.0.5
-        version: 8.3.0(@babel/core@7.23.6)(webpack@5.89.0)
+        version: 8.3.0(@babel/core@7.23.6)(webpack@4.47.0)
       babel-plugin-require-context-hook:
         specifier: ^1.0.0
         version: 1.0.0
@@ -15627,6 +15630,11 @@ packages:
   /events@3.3.0:
     resolution: {integrity: sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==}
     engines: {node: '>=0.8.x'}
+
+  /eventsource-parser@3.0.0:
+    resolution: {integrity: sha512-T1C0XCUimhxVQzW4zFipdx0SficT651NnkR0ZSH3yQwh+mFMdLfgjABVi4YtMTtaL4s168593DaoaRLMqryavA==}
+    engines: {node: '>=18.0.0'}
+    dev: false
 
   /evp_bytestokey@1.0.3:
     resolution: {integrity: sha512-/f2Go4TognH/KvCISP7OUsHn85hT9nUkxxA9BEWxFn+Oj9o8ZNLm/40hdlgSLyuOimsrTKLUMEorQexp/aPQeA==}

@@ -671,6 +671,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "eventsource-parser",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "exponential-backoff",
       "allowedCategories": [ "production" ]
     },

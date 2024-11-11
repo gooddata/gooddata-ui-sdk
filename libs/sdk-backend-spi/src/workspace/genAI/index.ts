@@ -121,6 +121,10 @@ export interface IChatThreadQuery {
      * Execute the chat thread.
      */
     query(options?: { signal?: AbortSignal }): Promise<IGenAIChatEvaluation>;
+    /**
+     * Execute the chat thread and stream the results.
+     */
+    stream(): ReadableStream<IGenAIChatEvaluation>;
 }
 
 /**
@@ -133,4 +137,5 @@ export interface IGenAIChatEvaluation {
     foundObjects?: IGenAIFoundObjects;
     createdVisualizations?: IGenAICreatedVisualizations;
     chatHistoryThreadId?: string;
+    chatHistoryInteractionId?: number;
 }

@@ -184,6 +184,7 @@ export type {
     ChatHistoryRequestUserFeedbackEnum,
     ChatHistoryInteraction,
     ActionsApiAiChatRequest,
+    ActionsApiAiChatStreamRequest,
     ActionsApiAiChatHistoryRequest,
     ChatResult,
     ChatHistoryResult,

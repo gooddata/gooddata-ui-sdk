@@ -1018,7 +1018,7 @@ export interface ChatResult {
      * @type {RouteResult}
      * @memberof ChatResult
      */
-    routing: RouteResult;
+    routing?: RouteResult;
     /**
      * Text response for general questions.
      * @type {string}
@@ -1043,6 +1043,12 @@ export interface ChatResult {
      * @memberof ChatResult
      */
     threadIdSuffix?: string;
+    /**
+     * Chat History interaction ID. Unique ID for each interaction.
+     * @type {number}
+     * @memberof ChatResult
+     */
+    chatHistoryInteractionId?: number;
 }
 /**
  *
@@ -3647,6 +3653,58 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * (BETA) Combines multiple use cases such as search, create visualizations, ...
+         * @summary (BETA) Chat with AI
+         * @param {string} workspaceId Workspace identifier
+         * @param {ChatRequest} chatRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiChatStream: async (
+            workspaceId: string,
+            chatRequest: ChatRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("aiChatStream", "workspaceId", workspaceId);
+            // verify required parameter 'chatRequest' is not null or undefined
+            assertParamExists("aiChatStream", "chatRequest", chatRequest);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chatStream`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof chatRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(chatRequest !== undefined ? chatRequest : {})
+                : chatRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * (BETA) Uses similarity (e.g. cosine distance) to find most similar use cases.
          * @summary (BETA) Route to supported use cases based on this input query.
          * @param {string} workspaceId Workspace identifier
@@ -4691,6 +4749,26 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * (BETA) Combines multiple use cases such as search, create visualizations, ...
+         * @summary (BETA) Chat with AI
+         * @param {string} workspaceId Workspace identifier
+         * @param {ChatRequest} chatRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async aiChatStream(
+            workspaceId: string,
+            chatRequest: ChatRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<object>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.aiChatStream(
+                workspaceId,
+                chatRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * (BETA) Uses similarity (e.g. cosine distance) to find most similar use cases.
          * @summary (BETA) Route to supported use cases based on this input query.
          * @param {string} workspaceId Workspace identifier
@@ -5157,6 +5235,21 @@ export const ActionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * (BETA) Combines multiple use cases such as search, create visualizations, ...
+         * @summary (BETA) Chat with AI
+         * @param {ActionsApiAiChatStreamRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiChatStream(
+            requestParameters: ActionsApiAiChatStreamRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<Array<object>> {
+            return localVarFp
+                .aiChatStream(requestParameters.workspaceId, requestParameters.chatRequest, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * (BETA) Uses similarity (e.g. cosine distance) to find most similar use cases.
          * @summary (BETA) Route to supported use cases based on this input query.
          * @param {ActionsApiAiRouteRequest} requestParameters Request parameters.
@@ -5527,6 +5620,19 @@ export interface ActionsApiInterface {
     ): AxiosPromise<ChatHistoryResult>;
 
     /**
+     * (BETA) Combines multiple use cases such as search, create visualizations, ...
+     * @summary (BETA) Chat with AI
+     * @param {ActionsApiAiChatStreamRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    aiChatStream(
+        requestParameters: ActionsApiAiChatStreamRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<Array<object>>;
+
+    /**
      * (BETA) Uses similarity (e.g. cosine distance) to find most similar use cases.
      * @summary (BETA) Route to supported use cases based on this input query.
      * @param {ActionsApiAiRouteRequest} requestParameters Request parameters.
@@ -5788,6 +5894,27 @@ export interface ActionsApiAiChatHistoryRequest {
      * @memberof ActionsApiAiChatHistory
      */
     readonly chatHistoryRequest: ChatHistoryRequest;
+}
+
+/**
+ * Request parameters for aiChatStream operation in ActionsApi.
+ * @export
+ * @interface ActionsApiAiChatStreamRequest
+ */
+export interface ActionsApiAiChatStreamRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiAiChatStream
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {ChatRequest}
+     * @memberof ActionsApiAiChatStream
+     */
+    readonly chatRequest: ChatRequest;
 }
 
 /**
@@ -6357,6 +6484,20 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     public aiChatHistory(requestParameters: ActionsApiAiChatHistoryRequest, options?: AxiosRequestConfig) {
         return ActionsApiFp(this.configuration)
             .aiChatHistory(requestParameters.workspaceId, requestParameters.chatHistoryRequest, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (BETA) Combines multiple use cases such as search, create visualizations, ...
+     * @summary (BETA) Chat with AI
+     * @param {ActionsApiAiChatStreamRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public aiChatStream(requestParameters: ActionsApiAiChatStreamRequest, options?: AxiosRequestConfig) {
+        return ActionsApiFp(this.configuration)
+            .aiChatStream(requestParameters.workspaceId, requestParameters.chatRequest, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -8400,6 +8541,58 @@ export const SmartFunctionsApiAxiosParamCreator = function (configuration?: Conf
             };
         },
         /**
+         * (BETA) Combines multiple use cases such as search, create visualizations, ...
+         * @summary (BETA) Chat with AI
+         * @param {string} workspaceId Workspace identifier
+         * @param {ChatRequest} chatRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiChatStream: async (
+            workspaceId: string,
+            chatRequest: ChatRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("aiChatStream", "workspaceId", workspaceId);
+            // verify required parameter 'chatRequest' is not null or undefined
+            assertParamExists("aiChatStream", "chatRequest", chatRequest);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chatStream`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof chatRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(chatRequest !== undefined ? chatRequest : {})
+                : chatRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * (BETA) Uses similarity (e.g. cosine distance) to find most similar use cases.
          * @summary (BETA) Route to supported use cases based on this input query.
          * @param {string} workspaceId Workspace identifier
@@ -8908,6 +9101,26 @@ export const SmartFunctionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * (BETA) Combines multiple use cases such as search, create visualizations, ...
+         * @summary (BETA) Chat with AI
+         * @param {string} workspaceId Workspace identifier
+         * @param {ChatRequest} chatRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async aiChatStream(
+            workspaceId: string,
+            chatRequest: ChatRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<object>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.aiChatStream(
+                workspaceId,
+                chatRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * (BETA) Uses similarity (e.g. cosine distance) to find most similar use cases.
          * @summary (BETA) Route to supported use cases based on this input query.
          * @param {string} workspaceId Workspace identifier
@@ -9148,6 +9361,21 @@ export const SmartFunctionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * (BETA) Combines multiple use cases such as search, create visualizations, ...
+         * @summary (BETA) Chat with AI
+         * @param {SmartFunctionsApiAiChatStreamRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiChatStream(
+            requestParameters: SmartFunctionsApiAiChatStreamRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<Array<object>> {
+            return localVarFp
+                .aiChatStream(requestParameters.workspaceId, requestParameters.chatRequest, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * (BETA) Uses similarity (e.g. cosine distance) to find most similar use cases.
          * @summary (BETA) Route to supported use cases based on this input query.
          * @param {SmartFunctionsApiAiRouteRequest} requestParameters Request parameters.
@@ -9339,6 +9567,19 @@ export interface SmartFunctionsApiInterface {
     ): AxiosPromise<ChatHistoryResult>;
 
     /**
+     * (BETA) Combines multiple use cases such as search, create visualizations, ...
+     * @summary (BETA) Chat with AI
+     * @param {SmartFunctionsApiAiChatStreamRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    aiChatStream(
+        requestParameters: SmartFunctionsApiAiChatStreamRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<Array<object>>;
+
+    /**
      * (BETA) Uses similarity (e.g. cosine distance) to find most similar use cases.
      * @summary (BETA) Route to supported use cases based on this input query.
      * @param {SmartFunctionsApiAiRouteRequest} requestParameters Request parameters.
@@ -9483,6 +9724,27 @@ export interface SmartFunctionsApiAiChatHistoryRequest {
      * @memberof SmartFunctionsApiAiChatHistory
      */
     readonly chatHistoryRequest: ChatHistoryRequest;
+}
+
+/**
+ * Request parameters for aiChatStream operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiAiChatStreamRequest
+ */
+export interface SmartFunctionsApiAiChatStreamRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiAiChatStream
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {ChatRequest}
+     * @memberof SmartFunctionsApiAiChatStream
+     */
+    readonly chatRequest: ChatRequest;
 }
 
 /**
@@ -9772,6 +10034,23 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
     ) {
         return SmartFunctionsApiFp(this.configuration)
             .aiChatHistory(requestParameters.workspaceId, requestParameters.chatHistoryRequest, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (BETA) Combines multiple use cases such as search, create visualizations, ...
+     * @summary (BETA) Chat with AI
+     * @param {SmartFunctionsApiAiChatStreamRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public aiChatStream(
+        requestParameters: SmartFunctionsApiAiChatStreamRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return SmartFunctionsApiFp(this.configuration)
+            .aiChatStream(requestParameters.workspaceId, requestParameters.chatRequest, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
