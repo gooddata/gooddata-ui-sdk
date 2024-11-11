@@ -5,7 +5,7 @@ import cx from "classnames";
 
 let INSTANCE_COUNTER = 0;
 
-type AgentStateIconProps = {
+type AgentStateIconProps = React.SVGAttributes<SVGSVGElement> & {
     loading?: boolean;
     error?: boolean;
     cancelled?: boolean;
@@ -15,6 +15,8 @@ export const AgentIcon: React.FC<AgentStateIconProps> = ({
     loading = false,
     error = false,
     cancelled = false,
+    className = "",
+    ...rest
 }) => {
     // A precaution in case there are multiple instances of the component on the same page
     // In-line SVGs must obey the unique ID rule as any other HTML element
@@ -22,19 +24,23 @@ export const AgentIcon: React.FC<AgentStateIconProps> = ({
     const isLoading = loading && !cancelled && !error;
 
     // We are adding only one modifier class at a time
-    const className = cx("gd-gen-ai-chat__agent_icon", {
-        // Error state has the top priority
-        "gd-gen-ai-chat__agent_icon--error": error,
-        // Cancelled state
-        "gd-gen-ai-chat__agent_icon--cancelled": !error && cancelled,
-        // Loading state
-        "gd-gen-ai-chat__agent_icon--loading": isLoading,
-        // The default state with animation on first appearance
-        "gd-gen-ai-chat__agent_icon--appear": !loading && !error && !cancelled,
-    });
+    const cn = cx(
+        "gd-gen-ai-chat__agent_icon",
+        {
+            // Error state has the top priority
+            "gd-gen-ai-chat__agent_icon--error": error,
+            // Cancelled state
+            "gd-gen-ai-chat__agent_icon--cancelled": !error && cancelled,
+            // Loading state
+            "gd-gen-ai-chat__agent_icon--loading": isLoading,
+            // The default state with animation on first appearance
+            "gd-gen-ai-chat__agent_icon--appear": !loading && !error && !cancelled,
+        },
+        className,
+    );
 
     return (
-        <svg className={className} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg {...rest} className={cn} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clipPath={`url(#clip_mask_${instanceId})`}>
                 {isLoading ? (
                     <g className="gd-gen-ai-chat__agent_icon__circle">

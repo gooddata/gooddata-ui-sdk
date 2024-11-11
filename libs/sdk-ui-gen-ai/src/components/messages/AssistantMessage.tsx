@@ -5,12 +5,18 @@ import cx from "classnames";
 import { AssistantMessage, isErrorContents } from "../../model.js";
 import { AgentIcon } from "./AgentIcon.js";
 import { MessageContents } from "./MessageContents.js";
+import { injectIntl, WrappedComponentProps } from "react-intl";
 
 type AssistantMessageProps = {
     message: AssistantMessage;
 };
 
-export const AssistantMessageComponent: React.FC<AssistantMessageProps> = ({ message }) => {
+const labelMessage = { id: "gd.gen-ai.assistant-icon" };
+
+const AssistantMessageComponentCore: React.FC<AssistantMessageProps & WrappedComponentProps> = ({
+    message,
+    intl,
+}) => {
     const classNames = cx(
         "gd-gen-ai-chat__messages__message",
         "gd-gen-ai-chat__messages__message--assistant",
@@ -20,7 +26,12 @@ export const AssistantMessageComponent: React.FC<AssistantMessageProps> = ({ mes
 
     return (
         <div className={classNames}>
-            <AgentIcon loading={!message.complete} error={hasError} cancelled={message.cancelled} />
+            <AgentIcon
+                loading={!message.complete}
+                error={hasError}
+                cancelled={message.cancelled}
+                aria-label={intl.formatMessage(labelMessage)}
+            />
             <MessageContents
                 useMarkdown
                 content={message.content}
@@ -30,3 +41,5 @@ export const AssistantMessageComponent: React.FC<AssistantMessageProps> = ({ mes
         </div>
     );
 };
+
+export const AssistantMessageComponent = injectIntl(AssistantMessageComponentCore);

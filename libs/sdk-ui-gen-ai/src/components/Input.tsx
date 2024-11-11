@@ -7,7 +7,7 @@ import { SendIcon } from "./SendIcon.js";
 import { connect } from "react-redux";
 import { makeTextContents, makeUserMessage } from "../model.js";
 import { asyncProcessSelector, newMessageAction, RootState } from "../store/index.js";
-import { injectIntl } from "react-intl";
+import { defineMessages, injectIntl } from "react-intl";
 import { WrappedComponentProps } from "react-intl/src/components/injectIntl.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
@@ -23,6 +23,18 @@ type InputStateProps = {
 type InputDispatchProps = {
     newMessage: typeof newMessageAction;
 };
+
+const messages = defineMessages({
+    placeholder: {
+        id: "gd.gen-ai.input-placeholder",
+    },
+    label: {
+        id: "gd.gen-ai.input-label",
+    },
+    send: {
+        id: "gd.gen-ai.button.send",
+    },
+});
 
 const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedComponentProps> = ({
     isBusy,
@@ -68,15 +80,16 @@ const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedCom
             <TextareaAutosize
                 ref={textareaRef}
                 className="gd-gen-ai-chat__input__textarea"
-                placeholder={intl.formatMessage({ id: "gd.gen-ai.input-placeholder" })}
+                placeholder={intl.formatMessage(messages.placeholder)}
                 value={value}
                 onChange={handleChange}
                 onKeyDown={handleKeyDown}
                 disabled={isBusy}
+                aria-label={intl.formatMessage(messages.label)}
             />
             <div
                 role="button"
-                aria-label={intl.formatMessage({ id: "gd.gen-ai.button.send" })}
+                aria-label={intl.formatMessage(messages.send)}
                 onClick={!buttonDisabled ? handleSubmit : undefined}
             >
                 <SendIcon className={buttonClasses} />
