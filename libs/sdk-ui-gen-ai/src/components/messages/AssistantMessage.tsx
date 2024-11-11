@@ -5,13 +5,13 @@ import cx from "classnames";
 import { AssistantMessage, isErrorContents } from "../../model.js";
 import { AgentIcon } from "./AgentIcon.js";
 import { MessageContents } from "./MessageContents.js";
-import { injectIntl, WrappedComponentProps } from "react-intl";
+import { defineMessage, injectIntl, WrappedComponentProps } from "react-intl";
 
 type AssistantMessageProps = {
     message: AssistantMessage;
 };
 
-const labelMessage = { id: "gd.gen-ai.assistant-icon" };
+const labelMessage = defineMessage({ id: "gd.gen-ai.assistant-icon" });
 
 const AssistantMessageComponentCore: React.FC<AssistantMessageProps & WrappedComponentProps> = ({
     message,
