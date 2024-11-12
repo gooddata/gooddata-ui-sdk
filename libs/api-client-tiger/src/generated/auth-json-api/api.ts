@@ -124,6 +124,24 @@ export interface Invitation {
      * @memberof Invitation
      */
     email: string;
+    /**
+     *
+     * @type {string}
+     * @memberof Invitation
+     */
+    userId?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof Invitation
+     */
+    firstName?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof Invitation
+     */
+    lastName?: string;
 }
 /**
  *
