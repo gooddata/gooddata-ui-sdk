@@ -700,6 +700,7 @@ export const TestDefinitionRequestTypeEnum = {
     SINGLESTORE: "SINGLESTORE",
     MOTHERDUCK: "MOTHERDUCK",
     FLIGHTRPC: "FLIGHTRPC",
+    FLEXCONNECT: "FLEXCONNECT",
 } as const;
 
 export type TestDefinitionRequestTypeEnum =
