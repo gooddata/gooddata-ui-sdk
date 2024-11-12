@@ -19,6 +19,7 @@ const accountFilter = new AttributeFilter("Account");
 const featureFlags: ISettings = {
     enableAttributeFilterValuesValidation: true,
     enableKDAttributeFilterDatesValidation: true,
+    enableDuplicatedLabelValuesInAttributeFilter: true,
 };
 describe("Available value filter", () => {
     it("should add metric filter by", { tags: "checklist_integrated_tiger" }, () => {
