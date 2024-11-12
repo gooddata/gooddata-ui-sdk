@@ -1,5 +1,6 @@
 // (C) 2024 GoodData Corporation
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { GenAIChatInteractionUserFeedback } from "@gooddata/sdk-model";
 import { AssistantMessage, Contents, isAssistantMessage, makeErrorContents, Message } from "../../model.js";
 
 type MessagesSliceState = {
@@ -171,6 +172,19 @@ const messagesSlice = createSlice({
         cancelAsyncAction: (state) => {
             delete state.asyncProcess;
         },
+        setUserFeedback: (
+            state,
+            {
+                payload,
+            }: PayloadAction<{
+                assistantMessageId: string;
+                feedback: GenAIChatInteractionUserFeedback;
+            }>,
+        ) => {
+            const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
+
+            assistantMessage.feedback = payload.feedback;
+        },
     },
 });
 
@@ -191,4 +205,5 @@ export const {
     setVerboseAction,
     setGlobalErrorAction,
     cancelAsyncAction,
+    setUserFeedback,
 } = messagesSlice.actions;
