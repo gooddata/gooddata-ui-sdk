@@ -16,6 +16,7 @@ import {
     insightVisualizationType,
     IPoPMeasureDefinition,
     IPreviousPeriodMeasureDefinition,
+    IRelativeDateFilter,
     isArithmeticMeasure,
     isPoPMeasure,
     isPoPMeasureDefinition,
@@ -500,10 +501,20 @@ function fillGranularity(simpleMetrics: AlertMetric[], datasets: ICatalogDateDat
 }
 
 function removeInvalidComparators(simpleMetrics: AlertMetric[], insightFilters: IFilter[]) {
-    const validDatasets = insightFilters
+    const dateFilters = insightFilters.filter((filter) =>
+        isRelativeDateFilter(filter),
+    ) as IRelativeDateFilter[];
+
+    // If there are no insight date filters, it means that all time
+    // period filters are valid
+    if (dateFilters.length === 0) {
+        return;
+    }
+
+    const validDatasets = dateFilters
         .map((filter) => {
             // Only filters that contains this nad future dates are relevant
-            if (isRelativeDateFilter(filter) && filter.relativeDateFilter.to >= 0) {
+            if (filter.relativeDateFilter.to >= 0) {
                 return filter.relativeDateFilter.dataSet;
             }
             return null;
@@ -514,6 +525,12 @@ function removeInvalidComparators(simpleMetrics: AlertMetric[], insightFilters: 
     // valid datasets.
     simpleMetrics.forEach((metric) => {
         metric.comparators = metric.comparators.filter((comparator) => {
+            // If comparator has no dataset, it means that it is valid cause its
+            // not related to date
+            if (!comparator.dataset) {
+                return true;
+            }
+            // If comparator has dataset, it must be in valid datasets
             return validDatasets.some((valid) => areObjRefsEqual(comparator.dataset?.ref, valid));
         });
     });
