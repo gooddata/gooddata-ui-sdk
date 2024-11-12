@@ -244,6 +244,15 @@
                     "email": {
                         "type": "string",
                         "format": "email"
+                    },
+                    "userId": {
+                        "type": "string"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
                     }
                 }
             },

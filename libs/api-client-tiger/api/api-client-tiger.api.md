@@ -4165,6 +4165,20 @@ export interface DeclarativeFilterView {
 }
 
 // @public
+export interface DeclarativeIdentityProvider {
+    customClaimMapping?: {
+        [key: string]: string;
+    };
+    id: string;
+    identifiers?: Array<string>;
+    oauthClientId?: string;
+    oauthClientSecret?: string;
+    oauthIssuerId?: string;
+    oauthIssuerLocation?: string;
+    samlMetadata?: string;
+}
+
+// @public
 export interface DeclarativeJwk {
     content: DeclarativeJwkSpecification;
     id: string;
@@ -4241,7 +4255,7 @@ export interface DeclarativeNotificationChannel {
     allowedRecipients?: DeclarativeNotificationChannelAllowedRecipientsEnum;
     customDashboardUrl?: string;
     description?: string;
-    destination?: DefaultSmtp | Smtp | Webhook;
+    destination?: DefaultSmtp | InPlatform | Smtp | Webhook;
     destinationType?: DeclarativeNotificationChannelDestinationTypeEnum;
     id: string;
     name?: string;
@@ -4261,6 +4275,7 @@ export const DeclarativeNotificationChannelDestinationTypeEnum: {
     readonly WEBHOOK: "WEBHOOK";
     readonly SMTP: "SMTP";
     readonly DEFAULT_SMTP: "DEFAULT_SMTP";
+    readonly IN_PLATFORM: "IN_PLATFORM";
 };
 
 // @public (undocumented)
@@ -4288,6 +4303,7 @@ export interface DeclarativeNotificationChannels {
 // @public
 export interface DeclarativeOrganization {
     dataSources?: Array<DeclarativeDataSource>;
+    identityProviders?: Array<DeclarativeIdentityProvider>;
     jwks?: Array<DeclarativeJwk>;
     notificationChannels?: Array<DeclarativeNotificationChannel>;
     organization: DeclarativeOrganizationInfo;
@@ -4299,6 +4315,7 @@ export interface DeclarativeOrganization {
 
 // @public
 export interface DeclarativeOrganizationInfo {
+    allowedOrigins?: Array<string>;
     colorPalettes?: Array<DeclarativeColorPalette>;
     cspDirectives?: Array<DeclarativeCspDirective>;
     // @deprecated
@@ -8349,7 +8366,9 @@ export class IdentityProvidersApi extends MetadataBaseApi implements IdentityPro
     deleteEntityIdentityProviders(requestParameters: IdentityProvidersApiDeleteEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     getAllEntitiesIdentityProviders(requestParameters?: IdentityProvidersApiGetAllEntitiesIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutList, any>>;
     getEntityIdentityProviders(requestParameters: IdentityProvidersApiGetEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any>>;
+    getIdentityProvidersLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeIdentityProvider[], any>>;
     patchEntityIdentityProviders(requestParameters: IdentityProvidersApiPatchEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any>>;
+    setIdentityProviders(requestParameters: IdentityProvidersApiSetIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     updateEntityIdentityProviders(requestParameters: IdentityProvidersApiUpdateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiIdentityProviderOutDocument, any>>;
 }
 
@@ -8359,7 +8378,9 @@ export const IdentityProvidersApiAxiosParamCreator: (configuration?: MetadataCon
     deleteEntityIdentityProviders: (id: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesIdentityProviders: (filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<"page" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityIdentityProviders: (id: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getIdentityProvidersLayout: (options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityIdentityProviders: (id: string, jsonApiIdentityProviderPatchDocument: JsonApiIdentityProviderPatchDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    setIdentityProviders: (declarativeIdentityProvider: Array<DeclarativeIdentityProvider>, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityIdentityProviders: (id: string, jsonApiIdentityProviderInDocument: JsonApiIdentityProviderInDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
 };
 
@@ -8380,7 +8401,9 @@ export const IdentityProvidersApiFactory: (configuration?: MetadataConfiguration
     deleteEntityIdentityProviders(requestParameters: IdentityProvidersApiDeleteEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getAllEntitiesIdentityProviders(requestParameters: IdentityProvidersApiGetAllEntitiesIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutList>;
     getEntityIdentityProviders(requestParameters: IdentityProvidersApiGetEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
+    getIdentityProvidersLayout(options?: AxiosRequestConfig): AxiosPromise<Array<DeclarativeIdentityProvider>>;
     patchEntityIdentityProviders(requestParameters: IdentityProvidersApiPatchEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
+    setIdentityProviders(requestParameters: IdentityProvidersApiSetIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     updateEntityIdentityProviders(requestParameters: IdentityProvidersApiUpdateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
 };
 
@@ -8390,7 +8413,9 @@ export const IdentityProvidersApiFp: (configuration?: MetadataConfiguration) => 
     deleteEntityIdentityProviders(id: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     getAllEntitiesIdentityProviders(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<"page" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiIdentityProviderOutList>>;
     getEntityIdentityProviders(id: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiIdentityProviderOutDocument>>;
+    getIdentityProvidersLayout(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DeclarativeIdentityProvider>>>;
     patchEntityIdentityProviders(id: string, jsonApiIdentityProviderPatchDocument: JsonApiIdentityProviderPatchDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiIdentityProviderOutDocument>>;
+    setIdentityProviders(declarativeIdentityProvider: Array<DeclarativeIdentityProvider>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     updateEntityIdentityProviders(id: string, jsonApiIdentityProviderInDocument: JsonApiIdentityProviderInDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiIdentityProviderOutDocument>>;
 };
 
@@ -8415,7 +8440,9 @@ export interface IdentityProvidersApiInterface {
     deleteEntityIdentityProviders(requestParameters: IdentityProvidersApiDeleteEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getAllEntitiesIdentityProviders(requestParameters: IdentityProvidersApiGetAllEntitiesIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutList>;
     getEntityIdentityProviders(requestParameters: IdentityProvidersApiGetEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
+    getIdentityProvidersLayout(options?: AxiosRequestConfig): AxiosPromise<Array<DeclarativeIdentityProvider>>;
     patchEntityIdentityProviders(requestParameters: IdentityProvidersApiPatchEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
+    setIdentityProviders(requestParameters: IdentityProvidersApiSetIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     updateEntityIdentityProviders(requestParameters: IdentityProvidersApiUpdateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
 }
 
@@ -8424,6 +8451,11 @@ export interface IdentityProvidersApiPatchEntityIdentityProvidersRequest {
     readonly filter?: string;
     readonly id: string;
     readonly jsonApiIdentityProviderPatchDocument: JsonApiIdentityProviderPatchDocument;
+}
+
+// @public
+export interface IdentityProvidersApiSetIdentityProvidersRequest {
+    readonly declarativeIdentityProvider: Array<DeclarativeIdentityProvider>;
 }
 
 // @public
@@ -8541,6 +8573,32 @@ export interface InlineMeasureDefinitionInline {
 }
 
 // @public
+export interface InPlatform {
+    type: InPlatformTypeEnum;
+}
+
+// @public
+export interface InPlatformAllOf {
+    type?: InPlatformAllOfTypeEnum;
+}
+
+// @public (undocumented)
+export const InPlatformAllOfTypeEnum: {
+    readonly IN_PLATFORM: "IN_PLATFORM";
+};
+
+// @public (undocumented)
+export type InPlatformAllOfTypeEnum = typeof InPlatformAllOfTypeEnum[keyof typeof InPlatformAllOfTypeEnum];
+
+// @public (undocumented)
+export const InPlatformTypeEnum: {
+    readonly IN_PLATFORM: "IN_PLATFORM";
+};
+
+// @public (undocumented)
+export type InPlatformTypeEnum = typeof InPlatformTypeEnum[keyof typeof InPlatformTypeEnum];
+
+// @public
 export class InvalidateCacheApi extends MetadataBaseApi implements InvalidateCacheApiInterface {
     registerUploadNotification(requestParameters: InvalidateCacheApiRegisterUploadNotificationRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
 }
@@ -8573,6 +8631,9 @@ export interface InvalidateCacheApiRegisterUploadNotificationRequest {
 // @public
 export interface Invitation {
     email: string;
+    firstName?: string;
+    lastName?: string;
+    userId?: string;
 }
 
 // @public (undocumented)
@@ -9628,7 +9689,7 @@ export type JsonApiColorPalettePatchTypeEnum = typeof JsonApiColorPalettePatchTy
 
 // @public
 export interface JsonApiCookieSecurityConfigurationIn {
-    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationPatchAttributes;
     id: string;
     type: JsonApiCookieSecurityConfigurationInTypeEnum;
 }
@@ -9648,15 +9709,9 @@ export type JsonApiCookieSecurityConfigurationInTypeEnum = typeof JsonApiCookieS
 
 // @public
 export interface JsonApiCookieSecurityConfigurationOut {
-    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationPatchAttributes;
     id: string;
     type: JsonApiCookieSecurityConfigurationOutTypeEnum;
-}
-
-// @public
-export interface JsonApiCookieSecurityConfigurationOutAttributes {
-    lastRotation?: string;
-    rotationInterval?: string;
 }
 
 // @public
@@ -9675,9 +9730,15 @@ export type JsonApiCookieSecurityConfigurationOutTypeEnum = typeof JsonApiCookie
 
 // @public
 export interface JsonApiCookieSecurityConfigurationPatch {
-    attributes?: JsonApiCookieSecurityConfigurationOutAttributes;
+    attributes?: JsonApiCookieSecurityConfigurationPatchAttributes;
     id: string;
     type: JsonApiCookieSecurityConfigurationPatchTypeEnum;
+}
+
+// @public
+export interface JsonApiCookieSecurityConfigurationPatchAttributes {
+    lastRotation?: string;
+    rotationInterval?: string;
 }
 
 // @public
@@ -10252,7 +10313,7 @@ export type JsonApiDatasetToOneLinkage = JsonApiDatasetLinkage;
 export interface JsonApiDataSourceIdentifierOut {
     attributes: JsonApiDataSourceIdentifierOutAttributes;
     id: string;
-    meta?: JsonApiDataSourceIdentifierOutMeta;
+    meta?: JsonApiDataSourceOutMeta;
     type: JsonApiDataSourceIdentifierOutTypeEnum;
 }
 
@@ -10306,20 +10367,6 @@ export interface JsonApiDataSourceIdentifierOutList {
     meta?: JsonApiAnalyticalDashboardOutListMeta;
 }
 
-// @public
-export interface JsonApiDataSourceIdentifierOutMeta {
-    permissions?: Array<JsonApiDataSourceIdentifierOutMetaPermissionsEnum>;
-}
-
-// @public (undocumented)
-export const JsonApiDataSourceIdentifierOutMetaPermissionsEnum: {
-    readonly MANAGE: "MANAGE";
-    readonly USE: "USE";
-};
-
-// @public (undocumented)
-export type JsonApiDataSourceIdentifierOutMetaPermissionsEnum = typeof JsonApiDataSourceIdentifierOutMetaPermissionsEnum[keyof typeof JsonApiDataSourceIdentifierOutMetaPermissionsEnum];
-
 // @public (undocumented)
 export const JsonApiDataSourceIdentifierOutTypeEnum: {
     readonly DATA_SOURCE_IDENTIFIER: "dataSourceIdentifier";
@@ -10333,7 +10380,7 @@ export interface JsonApiDataSourceIdentifierOutWithLinks {
     attributes: JsonApiDataSourceIdentifierOutAttributes;
     id: string;
     links?: ObjectLinks;
-    meta?: JsonApiDataSourceIdentifierOutMeta;
+    meta?: JsonApiDataSourceOutMeta;
     type: JsonApiDataSourceIdentifierOutWithLinksTypeEnum;
 }
 
@@ -10356,7 +10403,7 @@ export interface JsonApiDataSourceIn {
 export interface JsonApiDataSourceInAttributes {
     cacheStrategy?: JsonApiDataSourceInAttributesCacheStrategyEnum;
     name: string;
-    parameters?: Array<JsonApiDataSourceOutAttributesParameters> | null;
+    parameters?: Array<JsonApiDataSourcePatchAttributesParameters> | null;
     password?: string | null;
     privateKey?: string | null;
     privateKeyPassphrase?: string | null;
@@ -10423,7 +10470,7 @@ export type JsonApiDataSourceInTypeEnum = typeof JsonApiDataSourceInTypeEnum[key
 export interface JsonApiDataSourceOut {
     attributes: JsonApiDataSourceOutAttributes;
     id: string;
-    meta?: JsonApiDataSourceIdentifierOutMeta;
+    meta?: JsonApiDataSourceOutMeta;
     type: JsonApiDataSourceOutTypeEnum;
 }
 
@@ -10431,9 +10478,9 @@ export interface JsonApiDataSourceOut {
 export interface JsonApiDataSourceOutAttributes {
     authenticationType?: JsonApiDataSourceOutAttributesAuthenticationTypeEnum;
     cacheStrategy?: JsonApiDataSourceOutAttributesCacheStrategyEnum;
-    decodedParameters?: Array<JsonApiDataSourceOutAttributesParameters> | null;
+    decodedParameters?: Array<JsonApiDataSourcePatchAttributesParameters> | null;
     name: string;
-    parameters?: Array<JsonApiDataSourceOutAttributesParameters> | null;
+    parameters?: Array<JsonApiDataSourcePatchAttributesParameters> | null;
     schema: string;
     type: JsonApiDataSourceOutAttributesTypeEnum;
     url?: string | null;
@@ -10458,12 +10505,6 @@ export const JsonApiDataSourceOutAttributesCacheStrategyEnum: {
 
 // @public (undocumented)
 export type JsonApiDataSourceOutAttributesCacheStrategyEnum = typeof JsonApiDataSourceOutAttributesCacheStrategyEnum[keyof typeof JsonApiDataSourceOutAttributesCacheStrategyEnum];
-
-// @public
-export interface JsonApiDataSourceOutAttributesParameters {
-    name: string;
-    value: string;
-}
 
 // @public (undocumented)
 export const JsonApiDataSourceOutAttributesTypeEnum: {
@@ -10508,6 +10549,20 @@ export interface JsonApiDataSourceOutList {
     meta?: JsonApiAnalyticalDashboardOutListMeta;
 }
 
+// @public
+export interface JsonApiDataSourceOutMeta {
+    permissions?: Array<JsonApiDataSourceOutMetaPermissionsEnum>;
+}
+
+// @public (undocumented)
+export const JsonApiDataSourceOutMetaPermissionsEnum: {
+    readonly MANAGE: "MANAGE";
+    readonly USE: "USE";
+};
+
+// @public (undocumented)
+export type JsonApiDataSourceOutMetaPermissionsEnum = typeof JsonApiDataSourceOutMetaPermissionsEnum[keyof typeof JsonApiDataSourceOutMetaPermissionsEnum];
+
 // @public (undocumented)
 export const JsonApiDataSourceOutTypeEnum: {
     readonly DATA_SOURCE: "dataSource";
@@ -10521,7 +10576,7 @@ export interface JsonApiDataSourceOutWithLinks {
     attributes: JsonApiDataSourceOutAttributes;
     id: string;
     links?: ObjectLinks;
-    meta?: JsonApiDataSourceIdentifierOutMeta;
+    meta?: JsonApiDataSourceOutMeta;
     type: JsonApiDataSourceOutWithLinksTypeEnum;
 }
 
@@ -10544,7 +10599,7 @@ export interface JsonApiDataSourcePatch {
 export interface JsonApiDataSourcePatchAttributes {
     cacheStrategy?: JsonApiDataSourcePatchAttributesCacheStrategyEnum;
     name?: string;
-    parameters?: Array<JsonApiDataSourceOutAttributesParameters> | null;
+    parameters?: Array<JsonApiDataSourcePatchAttributesParameters> | null;
     password?: string | null;
     privateKey?: string | null;
     privateKeyPassphrase?: string | null;
@@ -10563,6 +10618,12 @@ export const JsonApiDataSourcePatchAttributesCacheStrategyEnum: {
 
 // @public (undocumented)
 export type JsonApiDataSourcePatchAttributesCacheStrategyEnum = typeof JsonApiDataSourcePatchAttributesCacheStrategyEnum[keyof typeof JsonApiDataSourcePatchAttributesCacheStrategyEnum];
+
+// @public
+export interface JsonApiDataSourcePatchAttributesParameters {
+    name: string;
+    value: string;
+}
 
 // @public (undocumented)
 export const JsonApiDataSourcePatchAttributesTypeEnum: {
@@ -11205,7 +11266,7 @@ export const jsonApiHeaders: {
 
 // @public
 export interface JsonApiIdentityProviderIn {
-    attributes: JsonApiIdentityProviderOutAttributes;
+    attributes?: JsonApiIdentityProviderPatchAttributes;
     id: string;
     type: JsonApiIdentityProviderInTypeEnum;
 }
@@ -11225,26 +11286,21 @@ export type JsonApiIdentityProviderInTypeEnum = typeof JsonApiIdentityProviderIn
 
 // @public
 export interface JsonApiIdentityProviderOut {
-    attributes: JsonApiIdentityProviderOutAttributes;
+    attributes?: JsonApiIdentityProviderOutAttributes;
     id: string;
     type: JsonApiIdentityProviderOutTypeEnum;
 }
 
 // @public
 export interface JsonApiIdentityProviderOutAttributes {
+    customClaimMapping?: {
+        [key: string]: string;
+    };
     identifiers?: Array<string>;
-    specification: SamlIdpSpecification | OidcIdpSpecification;
-    type: JsonApiIdentityProviderOutAttributesTypeEnum;
+    oauthClientId?: string;
+    oauthIssuerId?: string;
+    oauthIssuerLocation?: string;
 }
-
-// @public (undocumented)
-export const JsonApiIdentityProviderOutAttributesTypeEnum: {
-    readonly SAML: "SAML";
-    readonly OIDC: "OIDC";
-};
-
-// @public (undocumented)
-export type JsonApiIdentityProviderOutAttributesTypeEnum = typeof JsonApiIdentityProviderOutAttributesTypeEnum[keyof typeof JsonApiIdentityProviderOutAttributesTypeEnum];
 
 // @public
 export interface JsonApiIdentityProviderOutDocument {
@@ -11269,7 +11325,7 @@ export type JsonApiIdentityProviderOutTypeEnum = typeof JsonApiIdentityProviderO
 
 // @public
 export interface JsonApiIdentityProviderOutWithLinks {
-    attributes: JsonApiIdentityProviderOutAttributes;
+    attributes?: JsonApiIdentityProviderOutAttributes;
     id: string;
     links?: ObjectLinks;
     type: JsonApiIdentityProviderOutWithLinksTypeEnum;
@@ -11285,26 +11341,23 @@ export type JsonApiIdentityProviderOutWithLinksTypeEnum = typeof JsonApiIdentity
 
 // @public
 export interface JsonApiIdentityProviderPatch {
-    attributes: JsonApiIdentityProviderPatchAttributes;
+    attributes?: JsonApiIdentityProviderPatchAttributes;
     id: string;
     type: JsonApiIdentityProviderPatchTypeEnum;
 }
 
 // @public
 export interface JsonApiIdentityProviderPatchAttributes {
+    customClaimMapping?: {
+        [key: string]: string;
+    };
     identifiers?: Array<string>;
-    specification?: SamlIdpSpecification | OidcIdpSpecification;
-    type?: JsonApiIdentityProviderPatchAttributesTypeEnum;
+    oauthClientId?: string;
+    oauthClientSecret?: string;
+    oauthIssuerId?: string;
+    oauthIssuerLocation?: string;
+    samlMetadata?: string;
 }
-
-// @public (undocumented)
-export const JsonApiIdentityProviderPatchAttributesTypeEnum: {
-    readonly SAML: "SAML";
-    readonly OIDC: "OIDC";
-};
-
-// @public (undocumented)
-export type JsonApiIdentityProviderPatchAttributesTypeEnum = typeof JsonApiIdentityProviderPatchAttributesTypeEnum[keyof typeof JsonApiIdentityProviderPatchAttributesTypeEnum];
 
 // @public
 export interface JsonApiIdentityProviderPatchDocument {
@@ -11321,7 +11374,7 @@ export type JsonApiIdentityProviderPatchTypeEnum = typeof JsonApiIdentityProvide
 
 // @public
 export interface JsonApiJwkIn {
-    attributes?: JsonApiJwkOutAttributes;
+    attributes?: JsonApiJwkPatchAttributes;
     id: string;
     type: JsonApiJwkInTypeEnum;
 }
@@ -11341,14 +11394,9 @@ export type JsonApiJwkInTypeEnum = typeof JsonApiJwkInTypeEnum[keyof typeof Json
 
 // @public
 export interface JsonApiJwkOut {
-    attributes?: JsonApiJwkOutAttributes;
+    attributes?: JsonApiJwkPatchAttributes;
     id: string;
     type: JsonApiJwkOutTypeEnum;
-}
-
-// @public
-export interface JsonApiJwkOutAttributes {
-    content?: RsaSpecification;
 }
 
 // @public
@@ -11374,7 +11422,7 @@ export type JsonApiJwkOutTypeEnum = typeof JsonApiJwkOutTypeEnum[keyof typeof Js
 
 // @public
 export interface JsonApiJwkOutWithLinks {
-    attributes?: JsonApiJwkOutAttributes;
+    attributes?: JsonApiJwkPatchAttributes;
     id: string;
     links?: ObjectLinks;
     type: JsonApiJwkOutWithLinksTypeEnum;
@@ -11390,9 +11438,14 @@ export type JsonApiJwkOutWithLinksTypeEnum = typeof JsonApiJwkOutWithLinksTypeEn
 
 // @public
 export interface JsonApiJwkPatch {
-    attributes?: JsonApiJwkOutAttributes;
+    attributes?: JsonApiJwkPatchAttributes;
     id: string;
     type: JsonApiJwkPatchTypeEnum;
+}
+
+// @public
+export interface JsonApiJwkPatchAttributes {
+    content?: RsaSpecification;
 }
 
 // @public
@@ -11872,7 +11925,7 @@ export interface JsonApiNotificationChannelOutAttributes {
     allowedRecipients?: JsonApiNotificationChannelOutAttributesAllowedRecipientsEnum;
     customDashboardUrl?: string;
     description?: string | null;
-    destination?: DefaultSmtp | Smtp | Webhook;
+    destination?: DefaultSmtp | InPlatform | Smtp | Webhook;
     destinationType?: JsonApiNotificationChannelOutAttributesDestinationTypeEnum;
     name?: string | null;
 }
@@ -11891,6 +11944,7 @@ export const JsonApiNotificationChannelOutAttributesDestinationTypeEnum: {
     readonly WEBHOOK: "WEBHOOK";
     readonly SMTP: "SMTP";
     readonly DEFAULT_SMTP: "DEFAULT_SMTP";
+    readonly IN_PLATFORM: "IN_PLATFORM";
 };
 
 // @public (undocumented)
@@ -12118,7 +12172,7 @@ export type JsonApiOrganizationPatchTypeEnum = typeof JsonApiOrganizationPatchTy
 
 // @public
 export interface JsonApiOrganizationSettingIn {
-    attributes?: JsonApiOrganizationSettingOutAttributes;
+    attributes?: JsonApiWorkspaceSettingOutAttributes;
     id: string;
     type: JsonApiOrganizationSettingInTypeEnum;
 }
@@ -12138,39 +12192,10 @@ export type JsonApiOrganizationSettingInTypeEnum = typeof JsonApiOrganizationSet
 
 // @public
 export interface JsonApiOrganizationSettingOut {
-    attributes?: JsonApiOrganizationSettingOutAttributes;
+    attributes?: JsonApiWorkspaceSettingOutAttributes;
     id: string;
     type: JsonApiOrganizationSettingOutTypeEnum;
 }
-
-// @public
-export interface JsonApiOrganizationSettingOutAttributes {
-    content?: object;
-    type?: JsonApiOrganizationSettingOutAttributesTypeEnum;
-}
-
-// @public (undocumented)
-export const JsonApiOrganizationSettingOutAttributesTypeEnum: {
-    readonly TIMEZONE: "TIMEZONE";
-    readonly ACTIVE_THEME: "ACTIVE_THEME";
-    readonly ACTIVE_COLOR_PALETTE: "ACTIVE_COLOR_PALETTE";
-    readonly WHITE_LABELING: "WHITE_LABELING";
-    readonly LOCALE: "LOCALE";
-    readonly METADATA_LOCALE: "METADATA_LOCALE";
-    readonly FORMAT_LOCALE: "FORMAT_LOCALE";
-    readonly MAPBOX_TOKEN: "MAPBOX_TOKEN";
-    readonly WEEK_START: "WEEK_START";
-    readonly SHOW_HIDDEN_CATALOG_ITEMS: "SHOW_HIDDEN_CATALOG_ITEMS";
-    readonly OPERATOR_OVERRIDES: "OPERATOR_OVERRIDES";
-    readonly TIMEZONE_VALIDATION_ENABLED: "TIMEZONE_VALIDATION_ENABLED";
-    readonly OPENAI_CONFIG: "OPENAI_CONFIG";
-    readonly ENABLE_FILE_ANALYTICS: "ENABLE_FILE_ANALYTICS";
-    readonly ALERT: "ALERT";
-    readonly SEPARATORS: "SEPARATORS";
-};
-
-// @public (undocumented)
-export type JsonApiOrganizationSettingOutAttributesTypeEnum = typeof JsonApiOrganizationSettingOutAttributesTypeEnum[keyof typeof JsonApiOrganizationSettingOutAttributesTypeEnum];
 
 // @public
 export interface JsonApiOrganizationSettingOutDocument {
@@ -12195,7 +12220,7 @@ export type JsonApiOrganizationSettingOutTypeEnum = typeof JsonApiOrganizationSe
 
 // @public
 export interface JsonApiOrganizationSettingOutWithLinks {
-    attributes?: JsonApiOrganizationSettingOutAttributes;
+    attributes?: JsonApiWorkspaceSettingOutAttributes;
     id: string;
     links?: ObjectLinks;
     type: JsonApiOrganizationSettingOutWithLinksTypeEnum;
@@ -12211,7 +12236,7 @@ export type JsonApiOrganizationSettingOutWithLinksTypeEnum = typeof JsonApiOrgan
 
 // @public
 export interface JsonApiOrganizationSettingPatch {
-    attributes?: JsonApiOrganizationSettingOutAttributes;
+    attributes?: JsonApiWorkspaceSettingOutAttributes;
     id: string;
     type: JsonApiOrganizationSettingPatchTypeEnum;
 }
@@ -12534,12 +12559,7 @@ export interface JsonApiUserGroupOutList {
 
 // @public
 export interface JsonApiUserGroupOutRelationships {
-    parents?: JsonApiUserGroupOutRelationshipsParents;
-}
-
-// @public
-export interface JsonApiUserGroupOutRelationshipsParents {
-    data: Array<JsonApiUserGroupLinkage>;
+    parents?: JsonApiUserOutRelationshipsUserGroups;
 }
 
 // @public (undocumented)
@@ -12727,7 +12747,12 @@ export interface JsonApiUserOutList {
 
 // @public
 export interface JsonApiUserOutRelationships {
-    userGroups?: JsonApiUserGroupOutRelationshipsParents;
+    userGroups?: JsonApiUserOutRelationshipsUserGroups;
+}
+
+// @public
+export interface JsonApiUserOutRelationshipsUserGroups {
+    data: Array<JsonApiUserGroupLinkage>;
 }
 
 // @public (undocumented)
@@ -12778,7 +12803,7 @@ export type JsonApiUserPatchTypeEnum = typeof JsonApiUserPatchTypeEnum[keyof typ
 
 // @public
 export interface JsonApiUserSettingIn {
-    attributes?: JsonApiOrganizationSettingOutAttributes;
+    attributes?: JsonApiWorkspaceSettingOutAttributes;
     id: string;
     type: JsonApiUserSettingInTypeEnum;
 }
@@ -12798,7 +12823,7 @@ export type JsonApiUserSettingInTypeEnum = typeof JsonApiUserSettingInTypeEnum[k
 
 // @public
 export interface JsonApiUserSettingOut {
-    attributes?: JsonApiOrganizationSettingOutAttributes;
+    attributes?: JsonApiWorkspaceSettingOutAttributes;
     id: string;
     type: JsonApiUserSettingOutTypeEnum;
 }
@@ -12826,7 +12851,7 @@ export type JsonApiUserSettingOutTypeEnum = typeof JsonApiUserSettingOutTypeEnum
 
 // @public
 export interface JsonApiUserSettingOutWithLinks {
-    attributes?: JsonApiOrganizationSettingOutAttributes;
+    attributes?: JsonApiWorkspaceSettingOutAttributes;
     id: string;
     links?: ObjectLinks;
     type: JsonApiUserSettingOutWithLinksTypeEnum;
@@ -13293,9 +13318,9 @@ export type JsonApiWorkspaceDataFilterToOneLinkage = JsonApiWorkspaceDataFilterL
 
 // @public
 export interface JsonApiWorkspaceIn {
-    attributes?: JsonApiWorkspaceOutAttributes;
+    attributes?: JsonApiWorkspacePatchAttributes;
     id: string;
-    relationships?: JsonApiWorkspaceOutRelationships;
+    relationships?: JsonApiWorkspacePatchRelationships;
     type: JsonApiWorkspaceInTypeEnum;
 }
 
@@ -13328,29 +13353,11 @@ export type JsonApiWorkspaceLinkageTypeEnum = typeof JsonApiWorkspaceLinkageType
 
 // @public
 export interface JsonApiWorkspaceOut {
-    attributes?: JsonApiWorkspaceOutAttributes;
+    attributes?: JsonApiWorkspacePatchAttributes;
     id: string;
     meta?: JsonApiWorkspaceOutMeta;
-    relationships?: JsonApiWorkspaceOutRelationships;
+    relationships?: JsonApiWorkspacePatchRelationships;
     type: JsonApiWorkspaceOutTypeEnum;
-}
-
-// @public
-export interface JsonApiWorkspaceOutAttributes {
-    cacheExtraLimit?: number;
-    dataSource?: JsonApiWorkspaceOutAttributesDataSource;
-    description?: string | null;
-    // @deprecated
-    earlyAccess?: string | null;
-    earlyAccessValues?: Array<string> | null;
-    name?: string | null;
-    prefix?: string | null;
-}
-
-// @public
-export interface JsonApiWorkspaceOutAttributesDataSource {
-    id: string;
-    schemaPath?: Array<string>;
 }
 
 // @public
@@ -13408,16 +13415,6 @@ export const JsonApiWorkspaceOutMetaPermissionsEnum: {
 // @public (undocumented)
 export type JsonApiWorkspaceOutMetaPermissionsEnum = typeof JsonApiWorkspaceOutMetaPermissionsEnum[keyof typeof JsonApiWorkspaceOutMetaPermissionsEnum];
 
-// @public
-export interface JsonApiWorkspaceOutRelationships {
-    parent?: JsonApiWorkspaceOutRelationshipsParent;
-}
-
-// @public
-export interface JsonApiWorkspaceOutRelationshipsParent {
-    data: JsonApiWorkspaceToOneLinkage | null;
-}
-
 // @public (undocumented)
 export const JsonApiWorkspaceOutTypeEnum: {
     readonly WORKSPACE: "workspace";
@@ -13428,11 +13425,11 @@ export type JsonApiWorkspaceOutTypeEnum = typeof JsonApiWorkspaceOutTypeEnum[key
 
 // @public
 export interface JsonApiWorkspaceOutWithLinks {
-    attributes?: JsonApiWorkspaceOutAttributes;
+    attributes?: JsonApiWorkspacePatchAttributes;
     id: string;
     links?: ObjectLinks;
     meta?: JsonApiWorkspaceOutMeta;
-    relationships?: JsonApiWorkspaceOutRelationships;
+    relationships?: JsonApiWorkspacePatchRelationships;
     type: JsonApiWorkspaceOutWithLinksTypeEnum;
 }
 
@@ -13446,15 +13443,43 @@ export type JsonApiWorkspaceOutWithLinksTypeEnum = typeof JsonApiWorkspaceOutWit
 
 // @public
 export interface JsonApiWorkspacePatch {
-    attributes?: JsonApiWorkspaceOutAttributes;
+    attributes?: JsonApiWorkspacePatchAttributes;
     id: string;
-    relationships?: JsonApiWorkspaceOutRelationships;
+    relationships?: JsonApiWorkspacePatchRelationships;
     type: JsonApiWorkspacePatchTypeEnum;
+}
+
+// @public
+export interface JsonApiWorkspacePatchAttributes {
+    cacheExtraLimit?: number;
+    dataSource?: JsonApiWorkspacePatchAttributesDataSource;
+    description?: string | null;
+    // @deprecated
+    earlyAccess?: string | null;
+    earlyAccessValues?: Array<string> | null;
+    name?: string | null;
+    prefix?: string | null;
+}
+
+// @public
+export interface JsonApiWorkspacePatchAttributesDataSource {
+    id: string;
+    schemaPath?: Array<string>;
 }
 
 // @public
 export interface JsonApiWorkspacePatchDocument {
     data: JsonApiWorkspacePatch;
+}
+
+// @public
+export interface JsonApiWorkspacePatchRelationships {
+    parent?: JsonApiWorkspacePatchRelationshipsParent;
+}
+
+// @public
+export interface JsonApiWorkspacePatchRelationshipsParent {
+    data: JsonApiWorkspaceToOneLinkage | null;
 }
 
 // @public (undocumented)
@@ -13467,7 +13492,7 @@ export type JsonApiWorkspacePatchTypeEnum = typeof JsonApiWorkspacePatchTypeEnum
 
 // @public
 export interface JsonApiWorkspaceSettingIn {
-    attributes?: JsonApiOrganizationSettingOutAttributes;
+    attributes?: JsonApiWorkspaceSettingOutAttributes;
     id: string;
     type: JsonApiWorkspaceSettingInTypeEnum;
 }
@@ -13487,11 +13512,40 @@ export type JsonApiWorkspaceSettingInTypeEnum = typeof JsonApiWorkspaceSettingIn
 
 // @public
 export interface JsonApiWorkspaceSettingOut {
-    attributes?: JsonApiOrganizationSettingOutAttributes;
+    attributes?: JsonApiWorkspaceSettingOutAttributes;
     id: string;
     meta?: JsonApiVisualizationObjectOutMeta;
     type: JsonApiWorkspaceSettingOutTypeEnum;
 }
+
+// @public
+export interface JsonApiWorkspaceSettingOutAttributes {
+    content?: object;
+    type?: JsonApiWorkspaceSettingOutAttributesTypeEnum;
+}
+
+// @public (undocumented)
+export const JsonApiWorkspaceSettingOutAttributesTypeEnum: {
+    readonly TIMEZONE: "TIMEZONE";
+    readonly ACTIVE_THEME: "ACTIVE_THEME";
+    readonly ACTIVE_COLOR_PALETTE: "ACTIVE_COLOR_PALETTE";
+    readonly WHITE_LABELING: "WHITE_LABELING";
+    readonly LOCALE: "LOCALE";
+    readonly METADATA_LOCALE: "METADATA_LOCALE";
+    readonly FORMAT_LOCALE: "FORMAT_LOCALE";
+    readonly MAPBOX_TOKEN: "MAPBOX_TOKEN";
+    readonly WEEK_START: "WEEK_START";
+    readonly SHOW_HIDDEN_CATALOG_ITEMS: "SHOW_HIDDEN_CATALOG_ITEMS";
+    readonly OPERATOR_OVERRIDES: "OPERATOR_OVERRIDES";
+    readonly TIMEZONE_VALIDATION_ENABLED: "TIMEZONE_VALIDATION_ENABLED";
+    readonly OPENAI_CONFIG: "OPENAI_CONFIG";
+    readonly ENABLE_FILE_ANALYTICS: "ENABLE_FILE_ANALYTICS";
+    readonly ALERT: "ALERT";
+    readonly SEPARATORS: "SEPARATORS";
+};
+
+// @public (undocumented)
+export type JsonApiWorkspaceSettingOutAttributesTypeEnum = typeof JsonApiWorkspaceSettingOutAttributesTypeEnum[keyof typeof JsonApiWorkspaceSettingOutAttributesTypeEnum];
 
 // @public
 export interface JsonApiWorkspaceSettingOutDocument {
@@ -13516,7 +13570,7 @@ export type JsonApiWorkspaceSettingOutTypeEnum = typeof JsonApiWorkspaceSettingO
 
 // @public
 export interface JsonApiWorkspaceSettingOutWithLinks {
-    attributes?: JsonApiOrganizationSettingOutAttributes;
+    attributes?: JsonApiWorkspaceSettingOutAttributes;
     id: string;
     links?: ObjectLinks;
     meta?: JsonApiVisualizationObjectOutMeta;
@@ -13533,7 +13587,7 @@ export type JsonApiWorkspaceSettingOutWithLinksTypeEnum = typeof JsonApiWorkspac
 
 // @public
 export interface JsonApiWorkspaceSettingPatch {
-    attributes?: JsonApiOrganizationSettingOutAttributes;
+    attributes?: JsonApiWorkspaceSettingOutAttributes;
     id: string;
     type: JsonApiWorkspaceSettingPatchTypeEnum;
 }
@@ -13553,7 +13607,7 @@ export type JsonApiWorkspaceSettingPatchTypeEnum = typeof JsonApiWorkspaceSettin
 
 // @public
 export interface JsonApiWorkspaceSettingPostOptionalId {
-    attributes?: JsonApiOrganizationSettingOutAttributes;
+    attributes?: JsonApiWorkspaceSettingOutAttributes;
     id?: string;
     type: JsonApiWorkspaceSettingPostOptionalIdTypeEnum;
 }
@@ -13861,6 +13915,7 @@ export class LayoutApi extends MetadataBaseApi implements LayoutApiInterface {
     getDataSourcePermissions(requestParameters: LayoutApiGetDataSourcePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeDataSourcePermissions, any>>;
     getDataSourcesLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeDataSources, any>>;
     getFilterViews(requestParameters: LayoutApiGetFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeFilterView[], any>>;
+    getIdentityProvidersLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeIdentityProvider[], any>>;
     getLogicalModel(requestParameters: LayoutApiGetLogicalModelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeModel, any>>;
     getNotificationChannelsLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeNotificationChannels, any>>;
     getOrganizationLayout(requestParameters?: LayoutApiGetOrganizationLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeOrganization, any>>;
@@ -13884,6 +13939,7 @@ export class LayoutApi extends MetadataBaseApi implements LayoutApiInterface {
     setAutomations(requestParameters: LayoutApiSetAutomationsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     setDataSourcePermissions(requestParameters: LayoutApiSetDataSourcePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     setFilterViews(requestParameters: LayoutApiSetFilterViewsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    setIdentityProviders(requestParameters: LayoutApiSetIdentityProvidersRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     setLogicalModel(requestParameters: LayoutApiSetLogicalModelRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     setNotificationChannels(requestParameters: LayoutApiSetNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     setOrganizationLayout(requestParameters: LayoutApiSetOrganizationLayoutRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
@@ -13903,6 +13959,7 @@ export const LayoutApiAxiosParamCreator: (configuration?: MetadataConfiguration)
     getDataSourcePermissions: (dataSourceId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getDataSourcesLayout: (options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getFilterViews: (workspaceId: string, exclude?: Array<"ACTIVITY_INFO">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getIdentityProvidersLayout: (options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getLogicalModel: (workspaceId: string, includeParents?: boolean, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getNotificationChannelsLayout: (options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getOrganizationLayout: (exclude?: Array<"ACTIVITY_INFO">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -13926,6 +13983,7 @@ export const LayoutApiAxiosParamCreator: (configuration?: MetadataConfiguration)
     setAutomations: (workspaceId: string, declarativeAutomation: Array<DeclarativeAutomation>, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     setDataSourcePermissions: (dataSourceId: string, declarativeDataSourcePermissions: DeclarativeDataSourcePermissions, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     setFilterViews: (workspaceId: string, declarativeFilterView: Array<DeclarativeFilterView>, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    setIdentityProviders: (declarativeIdentityProvider: Array<DeclarativeIdentityProvider>, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     setLogicalModel: (workspaceId: string, declarativeModel: DeclarativeModel, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     setNotificationChannels: (declarativeNotificationChannels: DeclarativeNotificationChannels, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     setOrganizationLayout: (declarativeOrganization: DeclarativeOrganization, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
@@ -13945,6 +14003,7 @@ export const LayoutApiFactory: (configuration?: MetadataConfiguration, basePath?
     getDataSourcePermissions(requestParameters: LayoutApiGetDataSourcePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeDataSourcePermissions>;
     getDataSourcesLayout(options?: AxiosRequestConfig): AxiosPromise<DeclarativeDataSources>;
     getFilterViews(requestParameters: LayoutApiGetFilterViewsRequest, options?: AxiosRequestConfig): AxiosPromise<Array<DeclarativeFilterView>>;
+    getIdentityProvidersLayout(options?: AxiosRequestConfig): AxiosPromise<Array<DeclarativeIdentityProvider>>;
     getLogicalModel(requestParameters: LayoutApiGetLogicalModelRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeModel>;
     getNotificationChannelsLayout(options?: AxiosRequestConfig): AxiosPromise<DeclarativeNotificationChannels>;
     getOrganizationLayout(requestParameters: LayoutApiGetOrganizationLayoutRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeOrganization>;
@@ -13968,6 +14027,7 @@ export const LayoutApiFactory: (configuration?: MetadataConfiguration, basePath?
     setAutomations(requestParameters: LayoutApiSetAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     setDataSourcePermissions(requestParameters: LayoutApiSetDataSourcePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     setFilterViews(requestParameters: LayoutApiSetFilterViewsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    setIdentityProviders(requestParameters: LayoutApiSetIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     setLogicalModel(requestParameters: LayoutApiSetLogicalModelRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     setNotificationChannels(requestParameters: LayoutApiSetNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     setOrganizationLayout(requestParameters: LayoutApiSetOrganizationLayoutRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -13987,6 +14047,7 @@ export const LayoutApiFp: (configuration?: MetadataConfiguration) => {
     getDataSourcePermissions(dataSourceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeclarativeDataSourcePermissions>>;
     getDataSourcesLayout(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeclarativeDataSources>>;
     getFilterViews(workspaceId: string, exclude?: Array<"ACTIVITY_INFO">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DeclarativeFilterView>>>;
+    getIdentityProvidersLayout(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<DeclarativeIdentityProvider>>>;
     getLogicalModel(workspaceId: string, includeParents?: boolean, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeclarativeModel>>;
     getNotificationChannelsLayout(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeclarativeNotificationChannels>>;
     getOrganizationLayout(exclude?: Array<"ACTIVITY_INFO">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeclarativeOrganization>>;
@@ -14010,6 +14071,7 @@ export const LayoutApiFp: (configuration?: MetadataConfiguration) => {
     setAutomations(workspaceId: string, declarativeAutomation: Array<DeclarativeAutomation>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     setDataSourcePermissions(dataSourceId: string, declarativeDataSourcePermissions: DeclarativeDataSourcePermissions, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     setFilterViews(workspaceId: string, declarativeFilterView: Array<DeclarativeFilterView>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    setIdentityProviders(declarativeIdentityProvider: Array<DeclarativeIdentityProvider>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     setLogicalModel(workspaceId: string, declarativeModel: DeclarativeModel, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     setNotificationChannels(declarativeNotificationChannels: DeclarativeNotificationChannels, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     setOrganizationLayout(declarativeOrganization: DeclarativeOrganization, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
@@ -14094,6 +14156,7 @@ export interface LayoutApiInterface {
     getDataSourcePermissions(requestParameters: LayoutApiGetDataSourcePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeDataSourcePermissions>;
     getDataSourcesLayout(options?: AxiosRequestConfig): AxiosPromise<DeclarativeDataSources>;
     getFilterViews(requestParameters: LayoutApiGetFilterViewsRequest, options?: AxiosRequestConfig): AxiosPromise<Array<DeclarativeFilterView>>;
+    getIdentityProvidersLayout(options?: AxiosRequestConfig): AxiosPromise<Array<DeclarativeIdentityProvider>>;
     getLogicalModel(requestParameters: LayoutApiGetLogicalModelRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeModel>;
     getNotificationChannelsLayout(options?: AxiosRequestConfig): AxiosPromise<DeclarativeNotificationChannels>;
     getOrganizationLayout(requestParameters: LayoutApiGetOrganizationLayoutRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeOrganization>;
@@ -14117,6 +14180,7 @@ export interface LayoutApiInterface {
     setAutomations(requestParameters: LayoutApiSetAutomationsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     setDataSourcePermissions(requestParameters: LayoutApiSetDataSourcePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     setFilterViews(requestParameters: LayoutApiSetFilterViewsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    setIdentityProviders(requestParameters: LayoutApiSetIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     setLogicalModel(requestParameters: LayoutApiSetLogicalModelRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     setNotificationChannels(requestParameters: LayoutApiSetNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     setOrganizationLayout(requestParameters: LayoutApiSetOrganizationLayoutRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -14177,6 +14241,11 @@ export interface LayoutApiSetDataSourcePermissionsRequest {
 export interface LayoutApiSetFilterViewsRequest {
     readonly declarativeFilterView: Array<DeclarativeFilterView>;
     readonly workspaceId: string;
+}
+
+// @public
+export interface LayoutApiSetIdentityProvidersRequest {
+    readonly declarativeIdentityProvider: Array<DeclarativeIdentityProvider>;
 }
 
 // @public
@@ -14389,6 +14458,58 @@ export interface LocalIdentifier {
     format?: string | null;
     localIdentifier: string;
     title?: string | null;
+}
+
+// @public
+export class ManagePermissionsApi extends MetadataBaseApi implements ManagePermissionsApiInterface {
+    getDataSourcePermissions(requestParameters: ManagePermissionsApiGetDataSourcePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeDataSourcePermissions, any>>;
+    manageDataSourcePermissions(requestParameters: ManagePermissionsApiManageDataSourcePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+    setDataSourcePermissions(requestParameters: ManagePermissionsApiSetDataSourcePermissionsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
+}
+
+// @public
+export const ManagePermissionsApiAxiosParamCreator: (configuration?: MetadataConfiguration) => {
+    getDataSourcePermissions: (dataSourceId: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    manageDataSourcePermissions: (dataSourceId: string, dataSourcePermissionAssignment: Array<DataSourcePermissionAssignment>, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    setDataSourcePermissions: (dataSourceId: string, declarativeDataSourcePermissions: DeclarativeDataSourcePermissions, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+};
+
+// @public
+export const ManagePermissionsApiFactory: (configuration?: MetadataConfiguration, basePath?: string, axios?: AxiosInstance) => {
+    getDataSourcePermissions(requestParameters: ManagePermissionsApiGetDataSourcePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeDataSourcePermissions>;
+    manageDataSourcePermissions(requestParameters: ManagePermissionsApiManageDataSourcePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    setDataSourcePermissions(requestParameters: ManagePermissionsApiSetDataSourcePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+};
+
+// @public
+export const ManagePermissionsApiFp: (configuration?: MetadataConfiguration) => {
+    getDataSourcePermissions(dataSourceId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeclarativeDataSourcePermissions>>;
+    manageDataSourcePermissions(dataSourceId: string, dataSourcePermissionAssignment: Array<DataSourcePermissionAssignment>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+    setDataSourcePermissions(dataSourceId: string, declarativeDataSourcePermissions: DeclarativeDataSourcePermissions, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
+};
+
+// @public
+export interface ManagePermissionsApiGetDataSourcePermissionsRequest {
+    readonly dataSourceId: string;
+}
+
+// @public
+export interface ManagePermissionsApiInterface {
+    getDataSourcePermissions(requestParameters: ManagePermissionsApiGetDataSourcePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<DeclarativeDataSourcePermissions>;
+    manageDataSourcePermissions(requestParameters: ManagePermissionsApiManageDataSourcePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    setDataSourcePermissions(requestParameters: ManagePermissionsApiSetDataSourcePermissionsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+}
+
+// @public
+export interface ManagePermissionsApiManageDataSourcePermissionsRequest {
+    readonly dataSourceId: string;
+    readonly dataSourcePermissionAssignment: Array<DataSourcePermissionAssignment>;
+}
+
+// @public
+export interface ManagePermissionsApiSetDataSourcePermissionsRequest {
+    readonly dataSourceId: string;
+    readonly declarativeDataSourcePermissions: DeclarativeDataSourcePermissions;
 }
 
 // @public
@@ -14801,7 +14922,7 @@ export interface Notes {
 }
 
 // @public
-export type NotificationChannelDestination = DefaultSmtp | Smtp | Webhook;
+export type NotificationChannelDestination = DefaultSmtp | InPlatform | Smtp | Webhook;
 
 // @public
 export class NotificationChannelsApi extends MetadataBaseApi implements NotificationChannelsApiInterface {
@@ -14809,7 +14930,9 @@ export class NotificationChannelsApi extends MetadataBaseApi implements Notifica
     deleteEntityNotificationChannels(requestParameters: NotificationChannelsApiDeleteEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     getAllEntitiesNotificationChannels(requestParameters?: NotificationChannelsApiGetAllEntitiesNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutList, any>>;
     getEntityNotificationChannels(requestParameters: NotificationChannelsApiGetEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any>>;
+    getNotificationChannelsLayout(options?: AxiosRequestConfig): Promise<AxiosResponse<DeclarativeNotificationChannels, any>>;
     patchEntityNotificationChannels(requestParameters: NotificationChannelsApiPatchEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any>>;
+    setNotificationChannels(requestParameters: NotificationChannelsApiSetNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<void, any>>;
     updateEntityNotificationChannels(requestParameters: NotificationChannelsApiUpdateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<JsonApiNotificationChannelOutDocument, any>>;
 }
 
@@ -14819,7 +14942,9 @@ export const NotificationChannelsApiAxiosParamCreator: (configuration?: Metadata
     deleteEntityNotificationChannels: (id: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getAllEntitiesNotificationChannels: (filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<"page" | "all" | "ALL">, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     getEntityNotificationChannels: (id: string, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    getNotificationChannelsLayout: (options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     patchEntityNotificationChannels: (id: string, jsonApiNotificationChannelPatchDocument: JsonApiNotificationChannelPatchDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
+    setNotificationChannels: (declarativeNotificationChannels: DeclarativeNotificationChannels, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
     updateEntityNotificationChannels: (id: string, jsonApiNotificationChannelInDocument: JsonApiNotificationChannelInDocument, filter?: string, options?: AxiosRequestConfig) => Promise<MetadataRequestArgs>;
 };
 
@@ -14840,7 +14965,9 @@ export const NotificationChannelsApiFactory: (configuration?: MetadataConfigurat
     deleteEntityNotificationChannels(requestParameters: NotificationChannelsApiDeleteEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getAllEntitiesNotificationChannels(requestParameters: NotificationChannelsApiGetAllEntitiesNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutList>;
     getEntityNotificationChannels(requestParameters: NotificationChannelsApiGetEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
+    getNotificationChannelsLayout(options?: AxiosRequestConfig): AxiosPromise<DeclarativeNotificationChannels>;
     patchEntityNotificationChannels(requestParameters: NotificationChannelsApiPatchEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
+    setNotificationChannels(requestParameters: NotificationChannelsApiSetNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     updateEntityNotificationChannels(requestParameters: NotificationChannelsApiUpdateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
 };
 
@@ -14850,7 +14977,9 @@ export const NotificationChannelsApiFp: (configuration?: MetadataConfiguration) 
     deleteEntityNotificationChannels(id: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     getAllEntitiesNotificationChannels(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<"page" | "all" | "ALL">, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiNotificationChannelOutList>>;
     getEntityNotificationChannels(id: string, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiNotificationChannelOutDocument>>;
+    getNotificationChannelsLayout(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DeclarativeNotificationChannels>>;
     patchEntityNotificationChannels(id: string, jsonApiNotificationChannelPatchDocument: JsonApiNotificationChannelPatchDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiNotificationChannelOutDocument>>;
+    setNotificationChannels(declarativeNotificationChannels: DeclarativeNotificationChannels, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>>;
     updateEntityNotificationChannels(id: string, jsonApiNotificationChannelInDocument: JsonApiNotificationChannelInDocument, filter?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<JsonApiNotificationChannelOutDocument>>;
 };
 
@@ -14875,7 +15004,9 @@ export interface NotificationChannelsApiInterface {
     deleteEntityNotificationChannels(requestParameters: NotificationChannelsApiDeleteEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     getAllEntitiesNotificationChannels(requestParameters: NotificationChannelsApiGetAllEntitiesNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutList>;
     getEntityNotificationChannels(requestParameters: NotificationChannelsApiGetEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
+    getNotificationChannelsLayout(options?: AxiosRequestConfig): AxiosPromise<DeclarativeNotificationChannels>;
     patchEntityNotificationChannels(requestParameters: NotificationChannelsApiPatchEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
+    setNotificationChannels(requestParameters: NotificationChannelsApiSetNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
     updateEntityNotificationChannels(requestParameters: NotificationChannelsApiUpdateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
 }
 
@@ -14884,6 +15015,11 @@ export interface NotificationChannelsApiPatchEntityNotificationChannelsRequest {
     readonly filter?: string;
     readonly id: string;
     readonly jsonApiNotificationChannelPatchDocument: JsonApiNotificationChannelPatchDocument;
+}
+
+// @public
+export interface NotificationChannelsApiSetNotificationChannelsRequest {
+    readonly declarativeNotificationChannels: DeclarativeNotificationChannels;
 }
 
 // @public
@@ -14901,15 +15037,6 @@ export interface ObjectLinks {
 // @public
 export interface ObjectLinksContainer {
     links?: ObjectLinks;
-}
-
-// @public
-export interface OidcIdpSpecification {
-    oauthClientId: string;
-    oauthClientSecret: string;
-    oauthIssuerId: string;
-    oauthIssuerLocation: string;
-    oauthSubjectIdClaim: string;
 }
 
 // @public
@@ -17000,11 +17127,6 @@ export type RsaSpecificationUseEnum = typeof RsaSpecificationUseEnum[keyof typeo
 export interface RulePermission {
     permissions?: Array<GrantedPermission>;
     type: string;
-}
-
-// @public
-export interface SamlIdpSpecification {
-    metadata: string;
 }
 
 // @public
