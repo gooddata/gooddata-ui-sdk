@@ -3234,11 +3234,11 @@ export interface ExportRawInsightWidget extends IDashboardCommand {
 }
 
 // @alpha
-export function exportRawInsightWidget(ref: ObjRef, correlationId?: string): ExportRawInsightWidget;
+export function exportRawInsightWidget(insight: IInsightDefinition, correlationId?: string): ExportRawInsightWidget;
 
 // @alpha
 export interface ExportRawInsightWidgetPayload {
-    readonly ref: ObjRef;
+    readonly insight: IInsightDefinition;
 }
 
 // @public
@@ -4189,6 +4189,8 @@ export interface IExecutionResultEnvelope {
     id: string;
     // (undocumented)
     isLoading: boolean;
+    // (undocumented)
+    showWarningOverlay?: boolean;
     // (undocumented)
     warnings?: IResultWarning[];
 }
@@ -7017,6 +7019,9 @@ export const selectIsLayoutEmpty: DashboardSelector<boolean>;
 // @internal
 export const selectIsNewDashboard: DashboardSelector<boolean>;
 
+// @internal (undocumented)
+export const selectIsPartialResultWarningOpen: (fingerPrint: string) => (state: DashboardState) => boolean;
+
 // @public
 export const selectIsReadOnly: DashboardSelector<boolean>;
 
@@ -7608,6 +7613,10 @@ payload: Record<string, IDashboardWidgetOverlay_2>;
 type: string;
 }) => void | UiState_2 | WritableDraft<UiState_2>;
 hideAllWidgetsOverlay: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+closePartialResultWarning: (state: WritableDraft<UiState_2>, action: {
+payload: string;
+type: string;
+}) => void | UiState_2 | WritableDraft<UiState_2>;
 }, "uiSlice">;
 
 // @beta (undocumented)
@@ -7653,6 +7662,10 @@ export interface UiState {
     // (undocumented)
     menuButton: {
         itemsVisibility: IMenuButtonItemsVisibility;
+    };
+    // (undocumented)
+    resultPartialWarning: {
+        fingerPrints: string[];
     };
     // (undocumented)
     saveAsDialog: {

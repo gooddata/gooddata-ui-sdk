@@ -1,8 +1,8 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React, { useCallback, useMemo, useState, CSSProperties } from "react";
 import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { createSelector } from "@reduxjs/toolkit";
-import { insightSetFilters, insightVisualizationUrl } from "@gooddata/sdk-model";
+import { idRef, insightSetFilters, insightVisualizationUrl, widgetTitle } from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
     IPushData,
@@ -23,14 +23,19 @@ import {
     selectDrillableItems,
 } from "../../../../../model/index.js";
 import { IDashboardInsightProps } from "../../types.js";
-import { useWidgetFilters } from "../../../common/index.js";
+import { useInsightExport, useWidgetFilters } from "../../../common/index.js";
 import { useResolveDashboardInsightProperties } from "../useResolveDashboardInsightProperties.js";
 import { useDrillDialogInsightDrills } from "./useDrillDialogInsightDrills.js";
 import { CustomError } from "../CustomError/CustomError.js";
 import { IntlWrapper } from "../../../../localization/index.js";
 import { InsightBody } from "../../InsightBody.js";
+import { InsightWidgetWarningPartialResult } from "../../../../../presentation/widget/warningPartialResult/InsightWidgetWarningPartialResult.js";
+import { useInsightWarning } from "../../../../../presentation/widget/widget/InsightWidget/useInsightWarning.js";
+import { useIntl } from "react-intl";
 
 const insightStyle: CSSProperties = { width: "100%", height: "100%", position: "relative", flex: "1 1 auto" };
+
+const DRILL_MODAL_EXECUTION_PSEUDO_REF = idRef("@@GDC_DRILL_MODAL");
 
 const selectCommonDashboardInsightProps = createSelector(
     [selectLocale, selectSettings, selectColorPalette],
@@ -68,6 +73,9 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
         ErrorComponent,
         LoadingComponent,
     } = props;
+
+    // Intl
+    const intl = useIntl();
 
     // Context
     const effectiveBackend = useBackendStrict(backend);
@@ -108,6 +116,14 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
         insight: insightWithAddedFilters ?? insight,
         onDrill: onDrillFn,
     });
+
+    const { isExportRawInNewUiVisible, onExportRawCSV } = useInsightExport({
+        widgetRef: widget.ref,
+        title: widgetTitle(widget) || intl.formatMessage({ id: "export.defaultTitle" }),
+        insight,
+    });
+
+    const { partialResultWarning, executionResult } = useInsightWarning(DRILL_MODAL_EXECUTION_PSEUDO_REF);
 
     const handlePushData = useCallback(
         (data: IPushData) => {
@@ -176,6 +192,17 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
                                 ErrorComponent={ErrorComponent}
                                 LoadingComponent={LoadingComponent}
                             />
+                            {partialResultWarning.length > 0 ? (
+                                <InsightWidgetWarningPartialResult
+                                    className="gd-drill-warning-partial-result"
+                                    partialResultWarning={partialResultWarning}
+                                    onExportRawCSV={onExportRawCSV}
+                                    isOverlayOpen={true}
+                                    shouldPreserveCloseStatus={false}
+                                    isLoading={executionResult?.isLoading}
+                                    isExportRawInNewUiVisible={isExportRawInNewUiVisible}
+                                />
+                            ) : null}
                         </div>
                     ) : null}
                 </IntlWrapper>

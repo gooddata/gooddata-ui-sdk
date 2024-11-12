@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 @use "sass:math";
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins";
 
@@ -675,4 +675,118 @@
 
 .gd-fluidlayout-column-container {
     z-index: 10;
+}
+
+.gd-partial-result-warning {
+    display: flex;
+    padding: 6px 10px 6px 15px;
+    font-family: gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
+    border: 1px solid rgb(204, 216, 226);
+    box-shadow: rgba(0, 0, 0, 0.1) 0 2px 10px;
+    border-radius: 4px;
+    background: rgb(255, 255, 255);
+    color: var(--gd-palette-complementary-6, #94a1ad);
+    align-items: center;
+
+    .gd-warning-partial-result-message {
+        margin-right: 8px;
+        margin-left: 5px;
+    }
+
+    a {
+        color: var(--gd-palette-complementary-6, #94a1ad);
+        cursor: pointer;
+        text-decoration: underline;
+    }
+}
+
+/* stylelint-disable declaration-no-important */
+
+%warning-partial {
+    padding: 0 !important;
+    position: absolute !important;
+    z-index: 4999 !important;
+    left: 0;
+    right: 0;
+    margin-inline: auto;
+}
+
+.gd-warning-partial-result {
+    @extend %warning-partial;
+
+    bottom: 10px;
+    width: fit-content;
+    display: none;
+
+    .gd-warning-partial-result-icon {
+        color: kit-variables.$gd-palette-warning-base-text;
+        margin-right: 8px;
+    }
+
+    .gd-warning-partial-result-close {
+        margin-left: 10px;
+    }
+}
+
+.gd-drill-warning-partial-result {
+    @extend %warning-partial;
+
+    width: fit-content;
+    bottom: 5px;
+
+    .gd-warning-partial-result-icon {
+        color: kit-variables.$gd-palette-warning-base-text;
+        margin-right: 8px;
+    }
+
+    .gd-warning-partial-result-close {
+        margin-left: 10px;
+    }
+}
+
+.dash-item-content:hover {
+    .gd-warning-partial-result:not(.is-mobile) {
+        display: flex;
+    }
+}
+
+.gd-warning-partial-result-content-mobile {
+    display: flex;
+    flex-direction: column;
+    font-family: gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
+    border: 1px solid rgb(204, 216, 226);
+    box-shadow: rgba(0, 0, 0, 0.1) 0 2px 10px;
+    border-radius: 4px;
+    background: rgb(255, 255, 255);
+    color: var(--gd-palette-complementary-6, #94a1ad);
+
+    .gd-warning-partial-result-mobile {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 5px 10px;
+        text-align: start;
+    }
+
+    .gd-warning-partial-result-export {
+        display: flex;
+        justify-content: flex-start;
+        margin-left: 32px;
+        margin-bottom: 10px;
+    }
+
+    .gd-warning-partial-result-close {
+        margin-left: 0;
+        width: 20px;
+    }
+
+    .gd-warning-partial-result-message {
+        margin-right: 8px;
+    }
+
+    a {
+        color: var(--gd-palette-complementary-6, #94a1ad);
+        cursor: pointer;
+        text-decoration: underline;
+    }
 }

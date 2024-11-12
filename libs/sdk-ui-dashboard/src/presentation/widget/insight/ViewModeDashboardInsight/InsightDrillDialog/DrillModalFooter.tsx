@@ -1,10 +1,11 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import React, { useState, useCallback, useMemo } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { BubbleHoverTrigger, Bubble, IAlignPoint } from "@gooddata/sdk-ui-kit";
 
 import DrillModalExportOptions from "./DrillModalExportOptions.js";
+import DrillModalRawExportOptions from "./DrillModalRawExportOptions.js";
 
 export interface IDrillModalFooterProps {
     exportAvailable: boolean;
@@ -12,7 +13,9 @@ export interface IDrillModalFooterProps {
     onExportXLSX: () => void;
     exportCSVEnabled: boolean;
     onExportCSV: () => void;
+    onExportCSVRaw: () => void;
     isLoading: boolean;
+    isExportRawInNewUiVisible: boolean;
 }
 
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "tc bc" }];
@@ -23,7 +26,9 @@ export const DrillModalFooter: React.FC<IDrillModalFooterProps> = ({
     onExportXLSX,
     exportCSVEnabled,
     onExportCSV,
+    onExportCSVRaw,
     isLoading,
+    isExportRawInNewUiVisible,
 }) => {
     const [showDropdown, setShowDropdown] = useState(false);
 
@@ -39,6 +44,11 @@ export const DrillModalFooter: React.FC<IDrillModalFooterProps> = ({
         setShowDropdown(false);
     }, [onExportCSV]);
 
+    const handleOnExportCSVRaw = useCallback(() => {
+        onExportCSVRaw();
+        setShowDropdown(false);
+    }, [onExportCSVRaw]);
+
     const exportDisabled = !exportAvailable || (!exportXLSXEnabled && !exportCSVEnabled);
 
     const toggleButton = useMemo(
@@ -46,7 +56,7 @@ export const DrillModalFooter: React.FC<IDrillModalFooterProps> = ({
             <button
                 onClick={toggleShowDropdown}
                 className={cx("gd-button-link-dimmed gd-button gd-icon-download export-menu-toggle-button", {
-                    disabled: exportDisabled,
+                    disabled: isExportRawInNewUiVisible ? false : exportDisabled,
                 })}
                 type="button"
             >
@@ -61,10 +71,23 @@ export const DrillModalFooter: React.FC<IDrillModalFooterProps> = ({
     return (
         <div
             className={cx("s-export-drilled-insight export-drilled-insight", {
-                "is-disabled": exportDisabled,
+                "is-disabled": isExportRawInNewUiVisible ? false : exportDisabled,
             })}
         >
-            {exportDisabled && !isLoading ? (
+            {isExportRawInNewUiVisible ? (
+                <>
+                    {toggleButton}
+                    <DrillModalRawExportOptions
+                        showDropdown={showDropdown}
+                        toggleShowDropdown={toggleShowDropdown}
+                        exportXLSXEnabled={exportXLSXEnabled}
+                        exportCSVEnabled={exportCSVEnabled}
+                        onExportXLSX={handleOnExportXLSX}
+                        onExportCSV={handleOnExportCSV}
+                        onExportCSVRaw={handleOnExportCSVRaw}
+                    />
+                </>
+            ) : exportDisabled && !isLoading ? (
                 <BubbleHoverTrigger>
                     {toggleButton}
                     <Bubble className="bubble-primary" alignPoints={bubbleAlignPoints}>

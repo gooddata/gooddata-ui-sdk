@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { Action, AnyAction, CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import {
     areObjRefsEqual,
@@ -80,6 +80,10 @@ const setFilterBarExpanded: UiReducer<PayloadAction<boolean>> = (state, action) 
 
 const openKpiAlertDialog: UiReducer<PayloadAction<ObjRef>> = (state, action) => {
     state.kpiAlerts.openedWidgetRef = action.payload;
+};
+
+const closePartialResultWarning: UiReducer<PayloadAction<string>> = (state, action) => {
+    state.resultPartialWarning.fingerPrints.push(action.payload);
 };
 
 const closeKpiAlertDialog: UiReducer = (state) => {
@@ -333,4 +337,5 @@ export const uiReducers = {
     toggleWidgetsOverlay,
     setWidgetsOverlay,
     hideAllWidgetsOverlay,
+    closePartialResultWarning,
 };

@@ -52,7 +52,7 @@ export const useInsightExport = (config: {
         () =>
             dispatchAndWaitFor<ExportRawInsightWidget, DashboardInsightWidgetExportResolved>(
                 dispatch,
-                exportRawInsightWidget(widgetRef, uuid()),
+                exportRawInsightWidget(insight, uuid()),
             ).then((result) => result.payload.result),
         [],
     );

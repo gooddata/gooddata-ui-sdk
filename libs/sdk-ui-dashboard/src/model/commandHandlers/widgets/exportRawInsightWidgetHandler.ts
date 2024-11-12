@@ -1,16 +1,15 @@
 // (C) 2021-2024 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { call, select } from "redux-saga/effects";
+import { call } from "redux-saga/effects";
 import { IExecutionResult, IExportResult, IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { invariant } from "ts-invariant";
 
-import { ExportInsightWidget } from "../../commands/index.js";
+import { ExportRawInsightWidget } from "../../commands/index.js";
 import { DashboardInsightWidgetExportResolved, insightWidgetExportResolved } from "../../events/insight.js";
 
 import { DashboardContext } from "../../types/commonTypes.js";
 import { createExportRawFunction } from "@gooddata/sdk-ui";
 import { PromiseFnReturnType } from "../../types/sagas.js";
-import { selectInsightByWidgetRef } from "../../../model/store/insights/insightsSelectors.js";
 import { defaultDimensionsGenerator, defWithDimensions, newDefForInsight } from "@gooddata/sdk-model";
 
 async function performExport(execution: IExecutionResult): Promise<IExportResult> {
@@ -23,14 +22,10 @@ function getExecutionResult(preparedExecution: IPreparedExecution) {
 
 export function* exportRawInsightWidgetHandler(
     ctx: DashboardContext,
-    cmd: ExportInsightWidget,
+    cmd: ExportRawInsightWidget,
 ): SagaIterator<DashboardInsightWidgetExportResolved> {
-    const { ref } = cmd.payload;
+    const { insight } = cmd.payload;
     const { workspace, backend } = ctx;
-
-    const insight: ReturnType<ReturnType<typeof selectInsightByWidgetRef>> = yield select(
-        selectInsightByWidgetRef(ref),
-    );
 
     const definition = defWithDimensions(
         newDefForInsight(workspace, insight!, insight!.insight.filters),

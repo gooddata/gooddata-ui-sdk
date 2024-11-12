@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { IExecutionDefinition, ITotal, TotalType, ISeparators } from "@gooddata/sdk-model";
 import { ColumnWidthItem } from "../columnWidths.js";
 import {

@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { IDataView, IExportConfig, IExportResult } from "@gooddata/sdk-backend-spi";
 import {
     IColor,
