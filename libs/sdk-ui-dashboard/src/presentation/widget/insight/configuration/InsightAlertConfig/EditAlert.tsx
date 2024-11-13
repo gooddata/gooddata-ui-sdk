@@ -192,10 +192,10 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                                         tagName="span"
                                         id="insightAlert.config.for.filter"
                                         values={{
-                                            granularity: translateGranularity(
-                                                intl,
-                                                selectedComparator?.granularity,
-                                            ),
+                                            granularity: [
+                                                intl.formatMessage({ id: "granularity.this_keyword" }),
+                                                translateGranularity(intl, selectedComparator?.granularity),
+                                            ].join(" "),
                                         }}
                                     />
                                 )}

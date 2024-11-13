@@ -2,6 +2,7 @@
 import {
     areObjRefsEqual,
     attributeAlias,
+    DateAttributeGranularity,
     IAlertComparisonOperator,
     IAlertRelativeArithmeticOperator,
     IAlertRelativeOperator,
@@ -23,6 +24,7 @@ import {
     measureAlias,
     measureIdentifier,
     measureTitle,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import { IntlShape } from "react-intl";
 
@@ -279,6 +281,21 @@ export function getCatalogAttribute<T extends ICatalogDateAttribute | ICatalogAt
             )
         );
     });
+}
+
+export function getFiltersAttribute(
+    datasetsWithGranularity: [ObjRef, DateAttributeGranularity][],
+    dataset: ICatalogDateDataset,
+) {
+    const found = datasetsWithGranularity.find(([ref]) => areObjRefsEqual(ref, dataset.dataSet.ref));
+
+    if (found) {
+        const attribute = dataset.dateAttributes.find((a) => a.granularity === found[1]);
+        if (attribute) {
+            return [attribute];
+        }
+    }
+    return [];
 }
 
 //utils
