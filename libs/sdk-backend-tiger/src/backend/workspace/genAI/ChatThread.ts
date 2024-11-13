@@ -1,6 +1,6 @@
 // (C) 2024 GoodData Corporation
 
-import { IGenAIUserContext } from "@gooddata/sdk-model";
+import { GenAIChatInteractionUserFeedback, IGenAIUserContext } from "@gooddata/sdk-model";
 import {
     IChatThread,
     IChatThreadHistory,
@@ -45,6 +45,21 @@ export class ChatThreadService implements IChatThread {
                 workspaceId: this.workspaceId,
                 chatHistoryRequest: {
                     reset: true,
+                },
+            });
+        });
+    }
+
+    async saveUserFeedback(
+        chatHistoryInteractionId: number,
+        userFeedback: GenAIChatInteractionUserFeedback,
+    ): Promise<void> {
+        await this.authCall((client) => {
+            return client.genAI.aiChatHistory({
+                workspaceId: this.workspaceId,
+                chatHistoryRequest: {
+                    chatHistoryInteractionId,
+                    userFeedback,
                 },
             });
         });

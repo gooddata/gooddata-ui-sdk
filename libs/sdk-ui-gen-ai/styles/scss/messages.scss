@@ -25,6 +25,55 @@
     display: flex;
 }
 
+.gd-gen-ai-chat__messages__message__contents_wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.gd-gen-ai-chat__messages__feedback {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    visibility: hidden;
+    opacity: 0;
+    height: 20px;
+}
+
+.gd-gen-ai-chat__messages__message:last-child .gd-gen-ai-chat__messages__feedback,
+.gd-gen-ai-chat__messages__message:hover .gd-gen-ai-chat__messages__feedback {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.2s;
+}
+
+.gd-gen-ai-chat__messages__feedback__button {
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+
+    & path {
+        opacity: 0.8;
+        transition: opacity 0.2s, fill 0.2s;
+    }
+
+    &:hover path {
+        fill: kit-variables.$gd-palette-primary-base;
+        opacity: 1;
+    }
+
+    &--positive path,
+    &--positive:hover path {
+        fill: kit-variables.$gd-palette-success-base;
+    }
+
+    &--negative path,
+    &--negative:hover path {
+        fill: kit-variables.$gd-palette-error-base;
+    }
+}
+
 .gd-gen-ai-chat__messages__message--user {
     .gd-gen-ai-chat__messages__content--text {
         $tail-height: 7px;
@@ -71,7 +120,7 @@
     flex-direction: row;
     gap: 10px;
     align-items: flex-start;
-    margin-bottom: 39px;
+    margin-bottom: 19px;
 }
 
 .gd-gen-ai-chat__messages__contents {

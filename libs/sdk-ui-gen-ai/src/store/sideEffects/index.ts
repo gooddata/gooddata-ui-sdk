@@ -6,11 +6,13 @@ import {
     loadThreadAction,
     clearThreadAction,
     newMessageAction,
+    setUserFeedback,
 } from "../messages/messagesSlice.js";
 import { onVerboseStore } from "./onVerboseStore.js";
 import { onThreadLoad } from "./onThreadLoad.js";
 import { onThreadClear } from "./onThreadClear.js";
 import { onUserMessage } from "./onUserMessage.js";
+import { onUserFeedback } from "./onUserFeedback.js";
 
 /**
  * One saga to rule them all.
@@ -21,4 +23,5 @@ export function* rootSaga() {
     yield takeLatest(loadThreadAction.type, onThreadLoad);
     yield takeLatest(clearThreadAction.type, onThreadClear);
     yield takeLatest(newMessageAction.type, onUserMessage);
+    yield takeEvery(setUserFeedback.type, onUserFeedback);
 }

@@ -10,6 +10,7 @@ import { CatalogItemType } from '@gooddata/sdk-model';
 import { DataValue } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { FilterContextItem } from '@gooddata/sdk-model';
+import { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
 import { GenAIObjectType } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAccessGrantee } from '@gooddata/sdk-model';
@@ -409,6 +410,7 @@ export interface IChatThread {
     }): Promise<IChatThreadHistory>;
     query(userMessage: string): IChatThreadQuery;
     reset(): Promise<void>;
+    saveUserFeedback(interactionId: number, feedback: GenAIChatInteractionUserFeedback): Promise<void>;
 }
 
 // @beta

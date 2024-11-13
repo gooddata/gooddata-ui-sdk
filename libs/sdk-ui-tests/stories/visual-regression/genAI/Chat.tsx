@@ -29,6 +29,7 @@ const history: Message[] = [
         localId: "2",
         created: Date.now() + 1000,
         role: "assistant",
+        feedback: "NONE",
         cancelled: false,
         complete: true,
         content: [
@@ -55,6 +56,7 @@ const history: Message[] = [
         localId: "4",
         created: Date.now() + 3000,
         role: "assistant",
+        feedback: "NONE",
         cancelled: false,
         complete: true,
         content: [

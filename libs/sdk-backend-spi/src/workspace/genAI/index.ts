@@ -9,6 +9,7 @@ import {
     IGenAIChatRouting,
     IGenAIFoundObjects,
     IGenAICreatedVisualizations,
+    GenAIChatInteractionUserFeedback,
 } from "@gooddata/sdk-model";
 
 /**
@@ -85,6 +86,10 @@ export interface IChatThread {
      * Reset the chat thread history.
      */
     reset(): Promise<void>;
+    /**
+     * Save user feedback for the interaction.
+     */
+    saveUserFeedback(interactionId: number, feedback: GenAIChatInteractionUserFeedback): Promise<void>;
     /**
      * Add a user message to the chat thread.
      */
