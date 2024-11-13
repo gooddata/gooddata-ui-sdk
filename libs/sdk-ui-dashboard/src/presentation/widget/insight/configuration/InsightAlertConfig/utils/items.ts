@@ -26,12 +26,13 @@ import {
     isSimpleMeasure,
     newPopMeasure,
     newPreviousPeriodMeasure,
+    ObjRef,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { AlertAttribute, AlertMetric, AlertMetricComparatorType } from "../../../types.js";
 
-import { getCatalogAttribute } from "./getters.js";
+import { getCatalogAttribute, getFiltersAttribute } from "./getters.js";
 
 type InsightType =
     | "headline"
@@ -375,7 +376,7 @@ function transformGranularities(
     simpleMetrics: AlertMetric[],
     datasets: ICatalogDateDataset[],
 ) {
-    const usedDatasets = collectAllDateDatasets(insight, buckets, datasets);
+    const usedDatasets = collectAllDateDatasets(insight, insightFilters, buckets, datasets);
 
     fillComparators(simpleMetrics, usedDatasets);
     fillGranularity(simpleMetrics, usedDatasets);
@@ -384,6 +385,7 @@ function transformGranularities(
 
 function collectAllDateDatasets(
     insight: IInsight | null | undefined,
+    insightFilters: IFilter[],
     buckets: string[],
     datasets: ICatalogDateDataset[],
 ): ICatalogDateDataset[] {
@@ -393,13 +395,27 @@ function collectAllDateDatasets(
         return [...acc, ...(bucket ? bucketAttributes(bucket) : [])];
     }, []);
 
+    const datasetsWithGranularity = insightFilters
+        .map((filter) => {
+            if (isRelativeDateFilter(filter)) {
+                return [filter.relativeDateFilter.dataSet, filter.relativeDateFilter.granularity];
+            }
+            return null;
+        })
+        .filter(Boolean) as [ObjRef, DateAttributeGranularity][];
+
     return datasets
         .map((dataset) => {
+            const dateAttributesFromBuckets = all
+                .map((a) => getCatalogAttribute(dataset.dateAttributes, a))
+                .filter(Boolean) as ICatalogDateAttribute[];
+            const dateAttributesFromFilters = getFiltersAttribute(datasetsWithGranularity, dataset);
+
             return {
                 ...dataset,
-                dateAttributes: all
-                    .map((a) => getCatalogAttribute(dataset.dateAttributes, a))
-                    .filter(Boolean) as ICatalogDateAttribute[],
+                dateAttributes: [...dateAttributesFromBuckets, ...dateAttributesFromFilters].filter(
+                    (value, index, self) => self.indexOf(value) === index,
+                ),
             };
         })
         .filter((d) => d.dateAttributes.length);

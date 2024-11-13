@@ -3017,13 +3017,23 @@
         "limit": 0
     },
     "insightAlert.config.compare_with_sp": {
-        "value": "Same period previous year",
+        "value": "same period previous year",
         "comment": "",
         "limit": 0
     },
     "insightAlert.config.compare_with_pp": {
-        "value": "Previous period",
+        "value": "previous period",
         "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.compare_with_sp_granularity": {
+        "value": "same {period} previous year",
+        "comment": "Do not translate placeholder {period}. It will be replaced with the name of the selected period in the runtime.",
+        "limit": 0
+    },
+    "insightAlert.config.compare_with_pp_granularity": {
+        "value": "previous {period}",
+        "comment": "Do not translate placeholder {period}. It will be replaced with the name of the selected period in the runtime.",
         "limit": 0
     },
     "insightAlert.config.addAlert": {
@@ -3121,38 +3131,43 @@
         "comment": "Label of attribute select dropdown",
         "limit": 0
     },
+    "granularity.this_keyword": {
+        "value": "This",
+        "comment": "Label that says 'This' in the context of time period. For example 'This month', 'This year'.",
+        "limit": 0
+    },
     "granularity.year": {
-        "value": "This year",
+        "value": "year",
         "comment": "Label of current selected granularity type. Is used in alert create dialog.",
         "limit": 0
     },
     "granularity.week": {
-        "value": "This week",
+        "value": "week",
         "comment": "Label of current selected granularity type. Is used in alert create dialog.",
         "limit": 0
     },
     "granularity.quarter": {
-        "value": "This quarter",
+        "value": "quarter",
         "comment": "Label of current selected granularity type. Is used in alert create dialog.",
         "limit": 0
     },
     "granularity.month": {
-        "value": "This month",
+        "value": "month",
         "comment": "Label of current selected granularity type. Is used in alert create dialog.",
         "limit": 0
     },
     "granularity.date": {
-        "value": "This day",
+        "value": "day",
         "comment": "Label of current selected granularity type. Is used in alert create dialog.",
         "limit": 0
     },
     "granularity.hour": {
-        "value": "This hour",
+        "value": "hour",
         "comment": "Label of current selected granularity type. Is used in alert create dialog.",
         "limit": 0
     },
     "granularity.minute": {
-        "value": "This minute",
+        "value": "minute",
         "comment": "Label of current selected granularity type. Is used in alert create dialog.",
         "limit": 0
     }
