@@ -551,6 +551,11 @@ export interface ISettings {
      */
     enableNewUserCreationFlow?: boolean;
 
+    /**
+     * Enable the use of the new FlexConnect naming (instead of FlexFunctions).
+     */
+    enableFlexConnectNaming?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 
