@@ -626,5 +626,9 @@
     "visualizationSwitcher.configurationPanel.remove.from.switcher": "从切换器中移除",
     "visualizationSwitcher.list.menu.move.up": "向上移动",
     "visualizationSwitcher.list.menu.move.down": "向下移动",
-    "visualizationSwitcher.list.menu.remove": "删除"
+    "visualizationSwitcher.list.menu.remove": "删除",
+    "dialogs.schedule.email.user.missing.email": "该用户缺少电子邮件地址。",
+    "insightAlert.config.for": "为了",
+    "insightAlert.config.warning.destination": "所选目的地仅支持向您自己发送警报。",
+    "insightAlert.config.selectAttribute": "全部"
 }

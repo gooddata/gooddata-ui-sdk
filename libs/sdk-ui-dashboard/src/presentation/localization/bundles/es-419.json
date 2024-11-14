@@ -626,5 +626,9 @@
     "visualizationSwitcher.configurationPanel.remove.from.switcher": "Eliminar del conmutador",
     "visualizationSwitcher.list.menu.move.up": "Subir",
     "visualizationSwitcher.list.menu.move.down": "Bajar",
-    "visualizationSwitcher.list.menu.remove": "Eliminar"
+    "visualizationSwitcher.list.menu.remove": "Eliminar",
+    "dialogs.schedule.email.user.missing.email": "A este usuario le falta una dirección de correo electrónico.",
+    "insightAlert.config.for": "Para",
+    "insightAlert.config.warning.destination": "El destino seleccionado solo admite el envío de la alerta a uno mismo.",
+    "insightAlert.config.selectAttribute": "Todo"
 }

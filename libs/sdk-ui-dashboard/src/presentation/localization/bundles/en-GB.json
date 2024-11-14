@@ -626,5 +626,9 @@
     "visualizationSwitcher.configurationPanel.remove.from.switcher": "Remove from swapper",
     "visualizationSwitcher.list.menu.move.up": "Move up",
     "visualizationSwitcher.list.menu.move.down": "Move down",
-    "visualizationSwitcher.list.menu.remove": "Remove"
+    "visualizationSwitcher.list.menu.remove": "Remove",
+    "dialogs.schedule.email.user.missing.email": "This user is missing an email address.",
+    "insightAlert.config.for": "For",
+    "insightAlert.config.warning.destination": "The selected destination only supports sending the alert to yourself.",
+    "insightAlert.config.selectAttribute": "All"
 }

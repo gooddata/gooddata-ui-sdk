@@ -18,5 +18,7 @@
     "gd.gen-ai.welcome.option-3.title": "Responder a una pregunta de negocios",
     "gd.gen-ai.welcome.option-3.answer": "Claro, ¿a qué pregunta de negocios le gustaría responder?",
     "gd.gen-ai.state.cancelled": "Cancelado",
-    "gd.gen-ai.state.in-progress": "Generando su respuesta…"
+    "gd.gen-ai.state.in-progress": "Generando su respuesta…",
+    "gd.gen-ai.global-error.description": "Intente reiniciar el chatbot y empezar de nuevo.",
+    "gd.gen-ai.button.send": "Enviar"
 }

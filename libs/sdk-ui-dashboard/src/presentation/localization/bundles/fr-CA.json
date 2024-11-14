@@ -626,5 +626,9 @@
     "visualizationSwitcher.configurationPanel.remove.from.switcher": "Retirer de l'aiguilleur",
     "visualizationSwitcher.list.menu.move.up": "Monter",
     "visualizationSwitcher.list.menu.move.down": "Descendre",
-    "visualizationSwitcher.list.menu.remove": "Supprimer"
+    "visualizationSwitcher.list.menu.remove": "Supprimer",
+    "dialogs.schedule.email.user.missing.email": "Il manque une adresse e-mail à cet utilisateur.",
+    "insightAlert.config.for": "Pour",
+    "insightAlert.config.warning.destination": "La destination sélectionnée ne permet d'envoyer l'alerte qu'à vous-même.",
+    "insightAlert.config.selectAttribute": "Tout"
 }

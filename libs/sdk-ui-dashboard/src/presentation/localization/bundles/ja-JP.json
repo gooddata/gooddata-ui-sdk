@@ -626,5 +626,9 @@
     "visualizationSwitcher.configurationPanel.remove.from.switcher": "スイッチャーから外す",
     "visualizationSwitcher.list.menu.move.up": "上に移動",
     "visualizationSwitcher.list.menu.move.down": "下に移動",
-    "visualizationSwitcher.list.menu.remove": "削除"
+    "visualizationSwitcher.list.menu.remove": "削除",
+    "dialogs.schedule.email.user.missing.email": "このユーザーにはメールアドレスがありません。",
+    "insightAlert.config.for": "について",
+    "insightAlert.config.warning.destination": "選択された送信先は、自分自身へのアラート送信にのみ対応しています。",
+    "insightAlert.config.selectAttribute": "すべて"
 }
