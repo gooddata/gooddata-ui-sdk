@@ -3,6 +3,7 @@
 import {
     ActionsApiProcessInvitationRequest,
     ActionsApiReadCsvFileManifestsRequest,
+    AfmExecution,
     AnalyzeCsvRequest,
     AnalyzeCsvResponse,
     ApiEntitlement,
@@ -61,6 +62,7 @@ import toLower from "lodash/toLower.js";
 import {
     ErrorConverter,
     IAnalyticalBackend,
+    IExportResult,
     isUnexpectedResponseError,
     UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
@@ -424,6 +426,7 @@ export type TigerSpecificFunctions = {
     updateCSPDirective?: (directiveId: string, requestData: ICSPDirective) => Promise<ICSPDirective>;
     deleteCSPDirective?: (directiveId: string) => Promise<void>;
     registerUploadNotification?: (dataSourceId: string) => Promise<void>;
+    exportRawData?: (execution: AfmExecution, projectId: string) => Promise<IExportResult>;
 
     /**
      * Return all custom setting of a workspace.
@@ -1538,6 +1541,19 @@ export const buildTigerSpecificFunctions = (
                 dataSourceId,
             });
         });
+    },
+
+    //@ts-ignore
+    exportRawData: async (execution, projectId) => {
+        /*
+         * New endpoint was added for Bear `executeAfmRaw` with the AfmExecution as payload and returned the poll url
+         * with raw data that will be used to export it.
+         */
+        // TODO: Panther - once BE is implemented.
+        // const uri = await authApiCall((sdk) =>
+        //     sdk.executionRawResponse.executionRawResponse(projectId, execution),
+        // );
+        // return authApiCall((sdk) => sdk.export.exportRaw(uri));
     },
 
     scanSql: async (dataSourceId: string, sql: string) => {

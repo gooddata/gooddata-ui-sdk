@@ -314,7 +314,7 @@ export {
     getIntersectionPartAfter,
     fireDrillEvent,
 } from "./vis/drilling.js";
-export { createExportFunction, createExportErrorFunction } from "./vis/export.js";
+export { createExportFunction, createExportRawFunction, createExportErrorFunction } from "./vis/export.js";
 export type {
     VisualizationEnvironment,
     ChartType,

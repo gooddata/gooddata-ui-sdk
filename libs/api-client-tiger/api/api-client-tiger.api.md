@@ -8717,6 +8717,8 @@ export interface ITigerClient {
     entities: ReturnType<typeof tigerEntitiesObjectsClientFactory>;
     // (undocumented)
     execution: ReturnType<typeof tigerExecutionClientFactory>;
+    // @beta (undocumented)
+    executionRawResponse: ReturnType<typeof tigerExecutionRawResponseFactory>;
     // (undocumented)
     executionResult: ReturnType<typeof tigerExecutionResultClientFactory>;
     // (undocumented)
@@ -17709,6 +17711,9 @@ export const tigerEntitiesObjectsClientFactory: (axios: AxiosInstance) => Entiti
 
 // @public
 export const tigerExecutionClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "computeReport">;
+
+// @public
+export const tigerExecutionRawResponseFactory: (axios: AxiosInstance) => AfmActionsApiInterface;
 
 // @public
 export const tigerExecutionResultClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "retrieveResult">;
