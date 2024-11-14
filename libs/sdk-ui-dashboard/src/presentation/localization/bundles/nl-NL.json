@@ -626,5 +626,9 @@
     "visualizationSwitcher.configurationPanel.remove.from.switcher": "Uit switcher verwijderen",
     "visualizationSwitcher.list.menu.move.up": "Op bewegen",
     "visualizationSwitcher.list.menu.move.down": "Neer bewegen",
-    "visualizationSwitcher.list.menu.remove": "Verwijderen"
+    "visualizationSwitcher.list.menu.remove": "Verwijderen",
+    "dialogs.schedule.email.user.missing.email": "Deze gebruiker mist een e-mailadres.",
+    "insightAlert.config.for": "Voor",
+    "insightAlert.config.warning.destination": "De geselecteerde bestemming ondersteunt alleen het verzenden van de waarschuwing naar jezelf.",
+    "insightAlert.config.selectAttribute": "Alles"
 }

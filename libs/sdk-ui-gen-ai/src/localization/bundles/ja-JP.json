@@ -18,5 +18,7 @@
     "gd.gen-ai.welcome.option-3.title": "ビジネス上の質問に答えてほしい",
     "gd.gen-ai.welcome.option-3.answer": "了解です。どんなビジネス上の質問に答えてほしいですか？",
     "gd.gen-ai.state.cancelled": "キャンセルしました",
-    "gd.gen-ai.state.in-progress": "返答を生成中…"
+    "gd.gen-ai.state.in-progress": "返答を生成中…",
+    "gd.gen-ai.global-error.description": "チャットボットを再起動して、やり直してみてください。",
+    "gd.gen-ai.button.send": "送信"
 }

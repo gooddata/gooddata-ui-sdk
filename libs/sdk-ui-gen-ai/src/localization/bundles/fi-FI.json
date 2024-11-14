@@ -18,5 +18,7 @@
     "gd.gen-ai.welcome.option-3.title": "Vastaa yrityskysymykseen",
     "gd.gen-ai.welcome.option-3.answer": "Toki, mihin liikekysymykseen haluaisit vastata?",
     "gd.gen-ai.state.cancelled": "Peruutettu",
-    "gd.gen-ai.state.in-progress": "Luodaan vastaustasi…"
+    "gd.gen-ai.state.in-progress": "Luodaan vastaustasi…",
+    "gd.gen-ai.global-error.description": "Yritä käynnistää chatbotti uudelleen ja aloittaa alusta.",
+    "gd.gen-ai.button.send": "Lähetä"
 }

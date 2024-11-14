@@ -18,5 +18,7 @@
     "gd.gen-ai.welcome.option-3.title": "Respond to a business query.",
     "gd.gen-ai.welcome.option-3.answer": "No worries, what business query would you like to respond to?",
     "gd.gen-ai.state.cancelled": "Called off",
-    "gd.gen-ai.state.in-progress": "Creating your reply…"
+    "gd.gen-ai.state.in-progress": "Creating your reply…",
+    "gd.gen-ai.global-error.description": "Give rebooting the chatbot a go and start afresh.",
+    "gd.gen-ai.button.send": "Send"
 }

@@ -626,5 +626,9 @@
     "visualizationSwitcher.configurationPanel.remove.from.switcher": "Remover do interrutor",
     "visualizationSwitcher.list.menu.move.up": "Mover para cima",
     "visualizationSwitcher.list.menu.move.down": "Mover para baixo",
-    "visualizationSwitcher.list.menu.remove": "Remover"
+    "visualizationSwitcher.list.menu.remove": "Remover",
+    "dialogs.schedule.email.user.missing.email": "Este utilizador não tem um endereço de e-mail.",
+    "insightAlert.config.for": "Por",
+    "insightAlert.config.warning.destination": "O destino selecionado só dá suporte ao envio do alerta para si mesmo.",
+    "insightAlert.config.selectAttribute": "Todos"
 }
