@@ -459,3 +459,18 @@ export const selectFilterViewsDialogMode: DashboardSelector<FilterViewDialogMode
     selectSelf,
     (state) => state.filterViews.mode ?? "list",
 );
+
+const selectClosedPartialResultWarning = createSelector(
+    selectSelf,
+    (state) => state.resultPartialWarning.fingerPrints ?? undefined,
+);
+/**
+ * @internal
+ */
+export const selectIsPartialResultWarningOpen = createMemoizedSelector(
+    (fingerPrint: string): ((state: DashboardState) => boolean) => {
+        return createSelector(selectClosedPartialResultWarning, (fingerprints) => {
+            return fingerprints.includes(fingerPrint) ? false : true;
+        });
+    },
+);

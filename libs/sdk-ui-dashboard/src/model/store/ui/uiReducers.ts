@@ -138,6 +138,10 @@ const openKpiAlertDialog: UiReducer<PayloadAction<ObjRef>> = (state, action) => 
     state.kpiAlerts.openedWidgetRef = action.payload;
 };
 
+const closePartialResultWarning: UiReducer<PayloadAction<string>> = (state, action) => {
+    state.resultPartialWarning.fingerPrints.push(action.payload);
+};
+
 const closeKpiAlertDialog: UiReducer = (state) => {
     state.kpiAlerts.openedWidgetRef = undefined;
 };
@@ -396,4 +400,5 @@ export const uiReducers = {
     toggleFilterViewsDialog,
     openWidgetDeleteDialog,
     closeWidgetDeleteDialog,
+    closePartialResultWarning,
 };
