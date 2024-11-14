@@ -50,6 +50,7 @@ import {
     RefreshInsightWidget,
     RemoveDrillsForInsightWidget,
     ExportInsightWidget,
+    ExportRawInsightWidget,
     RemoveDrillDownForInsightWidget,
     AddDrillDownForInsightWidget,
     ModifyDrillDownForInsightWidget,
@@ -406,6 +407,8 @@ export type {
     ExportInsightWidget,
     ExportInsightWidgetPayload,
     AttributeHierarchyModified,
+    ExportRawInsightWidget,
+    ExportRawInsightWidgetPayload,
 } from "./insight.js";
 export {
     changeInsightWidgetHeader,
@@ -429,6 +432,7 @@ export {
     modifyDrillDownForInsightWidget,
     refreshInsightWidget,
     exportInsightWidget,
+    exportRawInsightWidget,
     attributeHierarchyModified,
 } from "./insight.js";
 
@@ -567,4 +571,5 @@ export type DashboardCommands =
     | DeleteFilterView
     | ApplyFilterView
     | SetFilterViewAsDefault
-    | ReloadFilterViews;
+    | ReloadFilterViews
+    | ExportRawInsightWidget;

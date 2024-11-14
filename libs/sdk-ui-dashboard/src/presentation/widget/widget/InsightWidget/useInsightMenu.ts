@@ -24,8 +24,10 @@ type UseInsightMenuConfig = {
     widget: IInsightWidget;
     exportCSVEnabled: boolean;
     exportXLSXEnabled: boolean;
+    isExportRawVisible: boolean;
     onExportCSV: () => void;
     onExportXLSX: () => void;
+    onExportRawCSV: () => void;
     onScheduleExport: () => void;
     onScheduleManagementExport: () => void;
     isScheduleExportVisible: boolean;
@@ -76,6 +78,7 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
         scheduleExportDisabledReason,
         alertingDisabledReason,
         widget,
+        isExportRawVisible,
     } = config;
 
     const intl = useIntl();
@@ -89,6 +92,7 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
             scheduleExportManagementDisabled,
             scheduleExportDisabled,
             scheduleExportDisabledReason,
+            isExportRawVisible,
             onExportCSV: () => {
                 setIsMenuOpen(false);
                 onExportCSV();
@@ -132,5 +136,6 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
         scheduleExportDisabledReason,
         alertingDisabledReason,
         canCreateAutomation,
+        isExportRawVisible,
     ]);
 }

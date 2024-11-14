@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Button, Bubble, BubbleHoverTrigger, ShortenedText, IAlignPoint } from "@gooddata/sdk-ui-kit";
@@ -18,9 +18,11 @@ export interface DrillDialogProps {
     exportAvailable: boolean;
     onExportXLSX: () => void;
     onExportCSV: () => void;
+    onExportCSVRaw: () => void;
     exportXLSXEnabled: boolean;
     exportCSVEnabled: boolean;
     isLoading: boolean;
+    isExportRawVisible: boolean;
 }
 
 const tooltipAlignPoints: IAlignPoint[] = [{ align: "cc tc", offset: { x: -20, y: 10 } }];
@@ -39,7 +41,9 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
     exportCSVEnabled,
     onExportCSV,
     onExportXLSX,
+    onExportCSVRaw,
     isLoading,
+    isExportRawVisible,
 }) => {
     const settings = useDashboardSelector(selectSettings);
     const canExport = useDashboardSelector(selectCanExportTabular);
@@ -86,7 +90,9 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
                         exportCSVEnabled={exportCSVEnabled}
                         onExportXLSX={onExportXLSX}
                         onExportCSV={onExportCSV}
+                        onExportCSVRaw={onExportCSVRaw}
                         isLoading={isLoading}
+                        isExportRawVisible={isExportRawVisible}
                     />
                 </div>
             ) : null}

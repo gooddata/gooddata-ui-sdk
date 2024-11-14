@@ -99,6 +99,7 @@ import {
     reloadFilterViewsHandler,
 } from "./filterContext/filterViewHandler.js";
 import { changeInsightWidgetIgnoreCrossFilteringHandler } from "./widgets/changeInsightWidgetIgnoreCrossFilteringHandler.js";
+import { exportRawInsightWidgetHandler } from "./widgets/exportRawInsightWidgetHandler.js";
 
 function* notImplementedCommand(ctx: DashboardContext, cmd: IDashboardCommand): SagaIterator<void> {
     yield dispatchDashboardEvent(commandRejected(ctx, cmd.correlationId));
@@ -159,6 +160,7 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.KPI_WIDGET.REMOVE_DRILL": removeDrillForKpiWidgetHandler,
     "GDC.DASH/CMD.KPI_WIDGET.SET_DRILL": setDrillForKpiWidgetHandler,
     "GDC.DASH/CMD.KPI_WIDGET.REFRESH": notImplementedCommand,
+    "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_RAW": exportRawInsightWidgetHandler,
     "GDC.DASH/CMD.KPI_WIDGET.CHANGE_DESCRIPTION": changeKpiWidgetDescriptionHandler,
     "GDC.DASH/CMD.KPI_WIDGET.CHANGE_CONFIGURATION": changeKpiWidgetConfigurationHandler,
     "GDC.DASH/CMD.INSIGHT_WIDGET.CHANGE_HEADER": changeInsightWidgetHeaderHandler,

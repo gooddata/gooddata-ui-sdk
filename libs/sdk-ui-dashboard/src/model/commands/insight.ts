@@ -9,6 +9,7 @@ import {
     InsightDrillDefinition,
     IInsightWidgetConfiguration,
     IDrillDownReference,
+    IInsightDefinition,
 } from "@gooddata/sdk-model";
 import {
     FilterOpReplaceAll,
@@ -954,6 +955,45 @@ export function exportInsightWidget(
         payload: {
             config,
             ref,
+        },
+    };
+}
+
+/**
+ * Payload of the {@link ExportRawInsightWidget} command.
+ * @alpha
+ */
+export interface ExportRawInsightWidgetPayload {
+    /**
+     * Reference to Insight to export.
+     */
+    readonly insight: IInsightDefinition;
+}
+/**
+ * @alpha
+ */
+export interface ExportRawInsightWidget extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_RAW";
+    readonly payload: ExportRawInsightWidgetPayload;
+}
+/**
+ * Creates the ExportRawInsightWidget command. Dispatching this command will result in exporting of the widget to a CSV.
+ *
+ * @param ref - reference to the Insight widget to refresh
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ */
+export function exportRawInsightWidget(
+    insight: IInsightDefinition,
+    correlationId?: string,
+): ExportRawInsightWidget {
+    return {
+        type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_RAW",
+        correlationId,
+        payload: {
+            insight,
         },
     };
 }

@@ -3170,5 +3170,30 @@
         "value": "minute",
         "comment": "Label of current selected granularity type. Is used in alert create dialog.",
         "limit": 0
+    },
+    "widget.drill.dialog.exportToXLSX": {
+        "value": "Export to XLSX",
+        "comment": "",
+        "limit": 0
+    },
+    "widget.drill.dialog.exportToCSV.formatted": {
+        "value": "Export to CSV (formatted)",
+        "comment": "",
+        "limit": 0
+    },
+    "widget.drill.dialog.exportToCSV.raw": {
+        "value": "Export to CSV (raw)",
+        "comment": "",
+        "limit": 0
+    },
+    "widget.drill.modal.data.too.large": {
+        "value": "Cannot export, because the result has too many datapoints.",
+        "comment": "",
+        "limit": 0
+    },
+    "widget.options.menu.export": {
+        "value": "Export",
+        "comment": "Export to file with XLSX extension.",
+        "limit": 0
     }
 }

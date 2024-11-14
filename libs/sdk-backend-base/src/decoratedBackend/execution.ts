@@ -174,6 +174,10 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
         return this.decorated.export(options);
     }
 
+    public exportRaw(): Promise<IExportResult> {
+        return this.decorated.exportRaw!();
+    }
+
     public readAll(): Promise<IDataView> {
         return this.decorated.readAll();
     }

@@ -41,6 +41,7 @@ import {
 import { resolveCustomOverride } from "./utils.js";
 import { parseNameFromContentDisposition } from "../../../utils/downloadFile.js";
 import { transformForecastResult } from "../../../convertors/fromBackend/afm/forecast.js";
+import { toAfmExecution } from "../../../convertors/toBackend/afm/toAfmResultSpec.js";
 
 const TIGER_PAGE_SIZE_LIMIT = 1000;
 const DEFAULT_POLL_DELAY = 5000;
@@ -248,6 +249,30 @@ export class TigerExecutionResult implements IExecutionResult {
                     exportId: tabularExport?.data?.exportResult,
                 },
                 format,
+            );
+        });
+    }
+
+    public exportRaw(): Promise<IExportResult> {
+        //@ts-ignore
+        const execution = toAfmExecution(this.definition);
+
+        /*
+         * New endpoint was added for Bear `executeAfmRaw` with the AfmExecution as payload and returned the poll url
+         * with raw data that will be used to export it.
+         */
+
+        return this.authCall(async (client) => {
+            // Obtain raw export URI from BE
+            // const uri = await client.executionRawResponse.getExecutionRawResponse(this.definition.workspace, execution);
+
+            return await this.handleExportResultPolling(
+                client,
+                {
+                    workspaceId: this.workspace,
+                    exportId: "",
+                },
+                TabularExportRequestFormatEnum.CSV,
             );
         });
     }
