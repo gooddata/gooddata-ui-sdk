@@ -20,3 +20,20 @@ export type {
     VisualizationContents,
     ErrorContents,
 } from "./model.js";
+export {
+    type ChatEventHandler,
+    type BaseEvent,
+    type ChatAssistantMessageEvent,
+    type ChatUserMessageEvent,
+    type ChatClosedEvent,
+    type ChatOpenedEvent,
+    type ChatResetEvent,
+    type ChatFeedbackEvent,
+    type ChatEvent,
+    isChatAssistantMessageEvent,
+    isChatUserMessageEvent,
+    isChatClosedEvent,
+    isChatOpenedEvent,
+    isChatResetEvent,
+    isChatFeedbackEvent,
+} from "./store/events.js";

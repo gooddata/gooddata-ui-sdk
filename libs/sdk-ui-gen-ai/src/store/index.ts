@@ -30,3 +30,7 @@ export {
     asyncProcessSelector,
     globalErrorSelector,
 } from "./messages/messagesSelectors.js";
+
+export { setOpenAction, setFullscreenAction } from "./chatWindow/chatWindowSlice.js";
+
+export { isOpenSelector, isFullscreenSelector } from "./chatWindow/chatWindowSelectors.js";

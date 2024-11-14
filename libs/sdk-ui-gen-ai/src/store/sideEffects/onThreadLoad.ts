@@ -29,7 +29,10 @@ export function* onThreadLoad() {
             // TODO - cancelled during the loading
         } else {
             yield put(
-                loadThreadSuccessAction({ messages: interactionsToMessages(results?.interactions ?? []) }),
+                loadThreadSuccessAction({
+                    messages: interactionsToMessages(results?.interactions ?? []),
+                    threadId: results?.threadId ?? "",
+                }),
             );
         }
     } catch (e) {

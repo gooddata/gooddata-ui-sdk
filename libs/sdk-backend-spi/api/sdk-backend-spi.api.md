@@ -417,6 +417,8 @@ export interface IChatThread {
 export interface IChatThreadHistory {
     // (undocumented)
     interactions: IGenAIChatInteraction[];
+    // (undocumented)
+    threadId: string;
 }
 
 // @beta

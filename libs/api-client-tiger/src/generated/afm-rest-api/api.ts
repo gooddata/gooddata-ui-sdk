@@ -945,6 +945,12 @@ export interface ChatHistoryResult {
      * @memberof ChatHistoryResult
      */
     interactions: Array<ChatHistoryInteraction>;
+    /**
+     * The conversation thread ID.
+     * @type {string}
+     * @memberof ChatHistoryResult
+     */
+    threadId: string;
 }
 /**
  *
