@@ -63,13 +63,6 @@ export interface ISemanticSearchResultItem {
 }
 
 /**
- * Type of the searchable object.
- * @deprecated Use GenAIObjectType instead.
- * @beta
- */
-export type GenAISemanticSearchType = GenAIObjectType;
-
-/**
  * Reference between two metadata objects.
  * @beta
  */

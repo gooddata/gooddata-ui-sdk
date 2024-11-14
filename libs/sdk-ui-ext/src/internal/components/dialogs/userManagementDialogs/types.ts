@@ -54,6 +54,11 @@ export type UserGroupEditDialogMode = "VIEW" | "WORKSPACE" | "USERS" | "DATA_SOU
 export type ListMode = "VIEW" | "EDIT";
 
 /**
+ * @internal
+ */
+export type UserTabId = "WORKSPACES" | "USER_GROUPS" | "DETAILS" | "DATA_SOURCES";
+
+/**
  * We should get rid of the permission combinations and keep only the AssignedWorkspacePermission
  * once the flat permissions are fully in the use.
  */

@@ -13,6 +13,7 @@ import { ErrorConverter } from '@gooddata/sdk-backend-spi';
 import { ExplainConfig } from '@gooddata/sdk-backend-spi';
 import { ExplainType } from '@gooddata/sdk-backend-spi';
 import { FilterContextItem } from '@gooddata/sdk-model';
+import { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
 import { GenAIObjectType } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
@@ -670,6 +671,8 @@ export class DummyGenAIChatThread implements IChatThread {
     query(_userMessage: string): IChatThreadQuery;
     // (undocumented)
     reset(): Promise<void>;
+    // (undocumented)
+    saveUserFeedback(_interactionId: number, _feedback: GenAIChatInteractionUserFeedback): Promise<void>;
 }
 
 // @internal

@@ -13,11 +13,13 @@ export {
     newMessageAction,
     evaluateMessageAction,
     evaluateMessageErrorAction,
-    evaluateMessagePollingAction,
+    evaluateMessageStreamingAction,
+    evaluateMessageCompleteAction,
     setMessagesAction,
     setVerboseAction,
     setGlobalErrorAction,
     cancelAsyncAction,
+    setUserFeedback,
 } from "./messages/messagesSlice.js";
 
 export {

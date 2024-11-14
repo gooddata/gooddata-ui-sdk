@@ -98,7 +98,81 @@ export interface IGenAIVisualization {
      * Dimensions used in the visualization.
      */
     dimensionality: IGenAIVisualizationDimension[];
+    /**
+     * Filters used in the visualization.
+     */
+    filters?: GenAIFilter[];
 }
+
+/**
+ * Positive attribute filter definition for the visualization.
+ * @alpha
+ */
+export type GenAIPositiveAttributeFilter = {
+    using: string;
+    include: string[];
+};
+
+/**
+ * Negative attribute filter definition for the visualization.
+ * @alpha
+ */
+export type GenAINegativeAttributeFilter = {
+    using: string;
+    exclude: string[];
+};
+
+/**
+ * Absolute date filter definition for the visualization.
+ * @alpha
+ */
+export type GenAIAbsoluteDateFilter = {
+    using: string;
+    from: string;
+    to: string;
+};
+
+/**
+ * Relative date filter definition for the visualization.
+ * @alpha
+ */
+export type GenAIRelativeDateFilter = {
+    using: string;
+    granularity: GenAIDateGranularity;
+    from: number;
+    to: number;
+};
+
+/**
+ * Date granularity for the relative date filter.
+ * @alpha
+ */
+export type GenAIDateGranularity =
+    | "MINUTE"
+    | "HOUR"
+    | "DAY"
+    | "WEEK"
+    | "MONTH"
+    | "QUARTER"
+    | "YEAR"
+    | "MINUTE_OF_HOUR"
+    | "HOUR_OF_DAY"
+    | "DAY_OF_WEEK"
+    | "DAY_OF_MONTH"
+    | "DAY_OF_YEAR"
+    | "WEEK_OF_YEAR"
+    | "MONTH_OF_YEAR"
+    | "QUARTER_OF_YEAR";
+
+/**
+ * Filter definition for the visualization.
+ * @alpha
+ */
+export type GenAIFilter =
+    | GenAIPositiveAttributeFilter
+    | GenAINegativeAttributeFilter
+    | GenAIAbsoluteDateFilter
+    | GenAIRelativeDateFilter;
 
 /**
  * Type of the visualization.

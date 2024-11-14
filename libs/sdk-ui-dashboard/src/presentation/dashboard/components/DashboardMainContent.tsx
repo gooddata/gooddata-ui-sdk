@@ -31,6 +31,8 @@ export const DashboardMainContent = forwardRef(function DashboardMainContent(_: 
             "richTextListItem",
             "visualizationSwitcher",
             "visualizationSwitcherListItem",
+            "dashboardLayout",
+            "dashboardLayoutListItem",
         ],
         {},
     );

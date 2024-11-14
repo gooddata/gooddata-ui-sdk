@@ -139,6 +139,8 @@
 
 .gd-edit-alert__form {
     padding: 10px 10px 0 10px;
+    max-height: 350px;
+    overflow: auto;
 }
 
 .gd-edit-alert__measure-label {
@@ -359,15 +361,19 @@
 //
 // Alert destination select
 //
-.gd-alert-destination-select {
+.gd-alert-destination-select,
+.gd-alert-comparison-select {
     margin-bottom: 10px;
 }
 
 // TODO: support "invisible" styling of the Button on sdk-ui-kit component level.
 // For now overload because of clash with other config panel css
-.gd-button.gd-alert-destination-select__button {
+.gd-button.gd-alert-destination-select__button,
+.gd-button.gd-alert-comparison-select__button {
     margin-top: 0;
-    width: 105px;
+    padding-left: 5px;
+    // stylelint-disable-next-line declaration-no-important
+    width: 100% !important;
 
     &:not(&--open, &:hover, &:active, &:focus) {
         box-shadow: none;

@@ -436,6 +436,11 @@ export interface ISettings {
     enableAlertAttributes?: boolean;
 
     /**
+     * Enables comparison in alerting.
+     */
+    enableComparisonInAlerting?: boolean;
+
+    /**
      * Enables alerting rollout of the dashboard widgets.
      */
     enableAlertingRollout?: boolean;
@@ -542,9 +547,14 @@ export interface ISettings {
     enableNumberSeparators?: boolean;
 
     /**
-     * Enable the use of granular permissions.
+     * Enable the use of new user creation flow.
      */
-    enableGranularPermissions?: boolean;
+    enableNewUserCreationFlow?: boolean;
+
+    /**
+     * Enable the use of the new FlexConnect naming (instead of FlexFunctions).
+     */
+    enableFlexConnectNaming?: boolean;
 
     [key: string]: number | boolean | string | object | undefined;
 }

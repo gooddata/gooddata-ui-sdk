@@ -24,6 +24,16 @@
         "comment": "Use ellipsis at the end …",
         "limit": 0
     },
+    "gd.gen-ai.input-label": {
+        "value": "Ask your question",
+        "comment": "",
+        "limit": 0
+    },
+    "gd.gen-ai.assistant-icon": {
+        "value": "chatbot",
+        "comment": "",
+        "limit": 0
+    },
     "gd.gen-ai.disclaimer": {
         "value": "AI assistants can make mistakes. Check before relying on these answers.",
         "comment": "",

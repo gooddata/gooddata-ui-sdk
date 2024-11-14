@@ -21,11 +21,11 @@ import {
     selectIsScheduleEmailDialogOpen,
     selectIsScheduleEmailDialogContext,
     selectIsScheduleEmailManagementDialogOpen,
-    selectWidgetByRef,
     selectInsightByWidgetRef,
     selectNotificationChannelsCount,
     selectNotificationChannels,
     selectAutomationsIsInitialized,
+    selectFilterableWidgetByRef,
 } from "../../store/index.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";
 
@@ -106,7 +106,7 @@ export const useDashboardScheduledEmailsData = ({
     )?.widget;
     const editWidgetRef = editWidgetId ? { identifier: editWidgetId } : undefined;
     const widget = useDashboardSelector(
-        selectWidgetByRef(scheduleEmailingDialogContext?.widgetRef ?? editWidgetRef),
+        selectFilterableWidgetByRef(scheduleEmailingDialogContext?.widgetRef ?? editWidgetRef),
     );
     const insight = useDashboardSelector(selectInsightByWidgetRef(widget?.ref));
 

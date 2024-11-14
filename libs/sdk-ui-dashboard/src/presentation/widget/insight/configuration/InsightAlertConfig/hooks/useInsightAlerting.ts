@@ -5,6 +5,7 @@ import {
     IInsightWidget,
 } from "@gooddata/sdk-model";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
+import { fillMissingTitles, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -30,20 +31,22 @@ import {
     selectEntitlementMaxAutomationRecipients,
     selectExecutionResultByRef,
     selectEnableAlertAttributes,
+    selectCatalogAttributes,
+    selectCatalogDateDatasets,
     selectSeparators,
+    selectEnableComparisonInAlerting,
 } from "../../../../../../model/index.js";
-import {
-    createDefaultAlert,
-    getSupportedInsightAttributesByInsight,
-    getSupportedInsightMeasuresByInsight,
-} from "../utils.js";
-import { messages } from "../messages.js";
-import { useSaveAlertToBackend } from "./useSaveAlertToBackend.js";
-import { fillMissingTitles, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { convertCurrentUserToAutomationRecipient } from "../../../../../../_staging/automation/index.js";
 import { useMetricsAndFacts } from "../../../../../../_staging/sharedHooks/useMetricsAndFacts.js";
 import { DEFAULT_MAX_RECIPIENTS } from "../../../../../scheduledEmail/DefaultScheduledEmailDialog/constants.js";
-import { useAttributes } from "../../../../../../_staging/sharedHooks/useAttributes.js";
+import { messages } from "../messages.js";
+import {
+    getSupportedInsightAttributesByInsight,
+    getSupportedInsightMeasuresByInsight,
+} from "../utils/items.js";
+import { createDefaultAlert } from "../utils/convertors.js";
+
+import { useSaveAlertToBackend } from "./useSaveAlertToBackend.js";
 
 type InsightWidgetAlertingViewMode = "list" | "edit" | "create";
 
@@ -78,7 +81,10 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         10,
     );
     const canManageAttributes = useDashboardSelector(selectEnableAlertAttributes);
+    const canManageComparison = useDashboardSelector(selectEnableComparisonInAlerting);
     const canCreateAutomation = useDashboardSelector(selectCanCreateAutomation);
+    const catalogAttributes = useDashboardSelector(selectCatalogAttributes);
+    const catalogDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
     const currentUser = useDashboardSelector(selectCurrentUser);
     const destinations = useDashboardSelector(selectNotificationChannels);
     const canManageAutomations = useDashboardSelector(selectCanManageWorkspace);
@@ -137,22 +143,24 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         insight,
     });
     const { metricsAndFacts, metricsAndFactsLoading, metricsAndFactsLoadingError } = useMetricsAndFacts();
+    const { metrics: catalogMetrics } = metricsAndFacts ?? { metrics: [] };
     const locale = useDashboardSelector(selectLocale);
+
+    const supportedAttributes = useMemo(
+        () => getSupportedInsightAttributesByInsight(insight, catalogDateDatasets),
+        [insight, catalogDateDatasets],
+    );
+
     const supportedMeasures = useMemo(
         () =>
             getSupportedInsightMeasuresByInsight(
                 insight ? fillMissingTitles(insight, locale, 9999) : insight,
+                catalogDateDatasets,
+                canManageComparison,
             ),
-        [insight, locale],
+        [insight, locale, catalogDateDatasets, canManageComparison],
     );
     const defaultMeasure = supportedMeasures[0];
-
-    const supportedAttributes = useMemo(() => getSupportedInsightAttributesByInsight(insight), [insight]);
-    const displayForms = useMemo(
-        () => supportedAttributes.map((attribute) => attribute.attribute.attribute.displayForm),
-        [supportedAttributes],
-    );
-    const { attributes, attributesLoading, attributesLoadingError } = useAttributes(displayForms);
 
     const defaultNotificationChannelId = destinations[0]?.id;
     const hasAlerts = alerts.length > 0;
@@ -176,7 +184,6 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             defaultMeasure &&
             defaultNotificationChannelId &&
             !metricsAndFactsLoading &&
-            !attributesLoading &&
             !defaultAlert
         ) {
             setDefaultAlert(
@@ -189,10 +196,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
                     metricsAndFacts?.metrics ?? [],
                 ),
             );
-        } else if (
-            (widgetFiltersStatus === "error" || metricsAndFactsLoadingError || attributesLoadingError) &&
-            !defaultAlert
-        ) {
+        } else if ((widgetFiltersStatus === "error" || metricsAndFactsLoadingError) && !defaultAlert) {
             closeInsightWidgetMenu();
             addError(messages.alertLoadingError);
         }
@@ -207,10 +211,9 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         metricsAndFacts,
         metricsAndFactsLoading,
         metricsAndFactsLoadingError,
-        attributesLoading,
-        attributesLoadingError,
         addError,
         currentUser,
+        users,
     ]);
 
     useEffect(() => {
@@ -258,6 +261,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             dashboard,
             metadata: {
                 widget: widget?.localIdentifier,
+                filters: alert?.metadata?.filters,
             },
             details: {
                 ...alert.details,
@@ -328,8 +332,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             isLoadingFilters ||
             isRefreshingAutomations ||
             isDeletingAlert ||
-            metricsAndFactsLoading ||
-            attributesLoading,
+            metricsAndFactsLoading,
         destinations,
         users,
         alerts,
@@ -353,8 +356,10 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         maxAutomationsReached,
         maxAutomationsRecipients,
         canManageAttributes,
+        canManageComparison,
         canCreateAutomation,
-        catalogMeasures: metricsAndFacts?.metrics ?? [],
-        catalogAttributes: attributes ?? [],
+        catalogMeasures: catalogMetrics ?? [],
+        catalogAttributes: catalogAttributes ?? [],
+        catalogDateDatasets: catalogDateDatasets ?? [],
     };
 };

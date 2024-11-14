@@ -1532,6 +1532,16 @@
         "comment": "",
         "limit": 0
     },
+    "addPanel.dashboardLayout": {
+        "value": "Container",
+        "comment": "",
+        "limit": 0
+    },
+    "addPanel.dashboardLayout.tooltip": {
+        "value": "Group and display multiple widgets together for more flexible layout. ",
+        "comment": "",
+        "limit": 0
+    },
     "addPanel.kpi.tooltip.no_measures._measure": {
         "value": "The Key Performance Indicator requires a calculated measure.",
         "comment": "",
@@ -2986,6 +2996,16 @@
         "comment": "In 'USING {n} {n, plural, one {FILTER} other {FILTERS}}' translate only uppercase word.",
         "limit": 0
     },
+    "insightAlert.config.and": {
+        "value": "and",
+        "comment": "This is a part of sentence 'for This month and 1 filter'",
+        "limit": 0
+    },
+    "insightAlert.config.for.filter": {
+        "value": "for {granularity}",
+        "comment": "This is a part of sentence 'for This month and 1 filter'",
+        "limit": 0
+    },
     "insightAlert.config.filters.info": {
         "value": "Alerts respect the dashboard filters as set at the time of their creation.{spacer}To modify the time period used for comparison, adjust the date filter.",
         "comment": "",
@@ -2997,13 +3017,23 @@
         "limit": 0
     },
     "insightAlert.config.compare_with_sp": {
-        "value": "Same period previous year",
+        "value": "same period previous year",
         "comment": "",
         "limit": 0
     },
     "insightAlert.config.compare_with_pp": {
-        "value": "Previous period",
+        "value": "previous period",
         "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.compare_with_sp_granularity": {
+        "value": "same {period} previous year",
+        "comment": "Do not translate placeholder {period}. It will be replaced with the name of the selected period in the runtime.",
+        "limit": 0
+    },
+    "insightAlert.config.compare_with_pp_granularity": {
+        "value": "previous {period}",
+        "comment": "Do not translate placeholder {period}. It will be replaced with the name of the selected period in the runtime.",
         "limit": 0
     },
     "insightAlert.config.addAlert": {
@@ -3099,6 +3129,46 @@
     "insightAlert.config.selectAttribute": {
         "value": "All",
         "comment": "Label of attribute select dropdown",
+        "limit": 0
+    },
+    "granularity.this_keyword": {
+        "value": "This",
+        "comment": "Label that says 'This' in the context of time period. For example 'This month', 'This year'.",
+        "limit": 0
+    },
+    "granularity.year": {
+        "value": "year",
+        "comment": "Label of current selected granularity type. Is used in alert create dialog.",
+        "limit": 0
+    },
+    "granularity.week": {
+        "value": "week",
+        "comment": "Label of current selected granularity type. Is used in alert create dialog.",
+        "limit": 0
+    },
+    "granularity.quarter": {
+        "value": "quarter",
+        "comment": "Label of current selected granularity type. Is used in alert create dialog.",
+        "limit": 0
+    },
+    "granularity.month": {
+        "value": "month",
+        "comment": "Label of current selected granularity type. Is used in alert create dialog.",
+        "limit": 0
+    },
+    "granularity.date": {
+        "value": "day",
+        "comment": "Label of current selected granularity type. Is used in alert create dialog.",
+        "limit": 0
+    },
+    "granularity.hour": {
+        "value": "hour",
+        "comment": "Label of current selected granularity type. Is used in alert create dialog.",
+        "limit": 0
+    },
+    "granularity.minute": {
+        "value": "minute",
+        "comment": "Label of current selected granularity type. Is used in alert create dialog.",
         "limit": 0
     }
 }

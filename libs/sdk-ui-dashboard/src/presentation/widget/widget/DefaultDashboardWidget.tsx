@@ -26,7 +26,7 @@ import {
 } from "../../../model/events/widget.js";
 import { IDashboardWidgetProps } from "./types.js";
 import { safeSerializeObjRef } from "../../../_staging/metadata/safeSerializeObjRef.js";
-import { DashboardLayout } from "../../flexibleLayout/DashboardLayout.js";
+import { DashboardLayout } from "../dashboardLayout/DashboardLayout.js";
 
 import { DefaultDashboardKpiWidget } from "./DefaultDashboardKpiWidget.js";
 import { RenderModeAwareDashboardInsightWidget } from "./InsightWidget/index.js";

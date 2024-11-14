@@ -960,7 +960,8 @@
                             "PINOT",
                             "SINGLESTORE",
                             "MOTHERDUCK",
-                            "FLIGHTRPC"
+                            "FLIGHTRPC",
+                            "FLEXCONNECT"
                         ]
                     },
                     "url": {

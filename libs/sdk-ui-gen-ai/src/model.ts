@@ -1,6 +1,11 @@
 // (C) 2024 GoodData Corporation
 import { v4 as uuidv4 } from "uuid";
-import { GenAIChatRoutingUseCase, IGenAIVisualization, ISemanticSearchResultItem } from "@gooddata/sdk-model";
+import {
+    GenAIChatRoutingUseCase,
+    GenAIChatInteractionUserFeedback,
+    IGenAIVisualization,
+    ISemanticSearchResultItem,
+} from "@gooddata/sdk-model";
 
 /**
  * @alpha
@@ -191,6 +196,7 @@ export const makeUserMessage = (content: Contents[]): UserMessage => ({
  */
 export type AssistantMessage = BaseMessage & {
     role: "assistant";
+    feedback: GenAIChatInteractionUserFeedback;
 };
 
 /**
@@ -211,6 +217,7 @@ export const makeAssistantMessage = (
     id: id,
     localId: uuidv4(),
     role: "assistant",
+    feedback: "NONE",
     created: Date.now(),
     cancelled: false,
     complete,

@@ -2,14 +2,14 @@
 import { IAutomationMetadataObject, IInsight } from "@gooddata/sdk-model";
 import { useFiltersForWidgetScheduledExport } from "./useFiltersForWidgetScheduledExport.js";
 import { useFiltersForDashboardScheduledExport } from "./useFiltersForDashboardScheduledExport.js";
-import { ExtendedDashboardWidget } from "../../../model/types/layoutTypes.js";
+import { FilterableDashboardWidget } from "../../../model/types/layoutTypes.js";
 
 /**
  * @alpha
  */
 export interface IUseDashboardScheduledEmailsFiltersProps {
     scheduledExportToEdit?: IAutomationMetadataObject;
-    widget?: ExtendedDashboardWidget;
+    widget?: FilterableDashboardWidget;
     insight?: IInsight;
 }
 

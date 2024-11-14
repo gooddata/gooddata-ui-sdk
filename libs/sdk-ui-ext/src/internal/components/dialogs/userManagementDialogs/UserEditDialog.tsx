@@ -25,7 +25,7 @@ import { ViewDialog } from "./ViewDialog.js";
 import { DeleteConfirmDialog } from "./ConfirmDialogs/DeleteConfirmDialog.js";
 import { OrganizationIdProvider } from "./OrganizationIdContext.js";
 import { extractUserName } from "./utils.js";
-import { UserEditDialogMode, IGrantedDataSource, IGrantedWorkspace } from "./types.js";
+import { UserEditDialogMode, IGrantedDataSource, IGrantedWorkspace, UserTabId } from "./types.js";
 import { IWithTelemetryProps, withTelemetry } from "./TelemetryContext.js";
 import { DataSourceList } from "./DataSources/DataSourceList.js";
 import { AddDataSource } from "./DataSources/AddDataSource.js";
@@ -48,7 +48,7 @@ export interface IUserEditDialogProps extends IWithTelemetryProps {
     onClose: () => void;
     renderDataSourceIcon?: (dataSource: IGrantedDataSource) => JSX.Element;
     areFilterViewsEnabled?: boolean;
-    areGranularPermissionsEnabled?: boolean;
+    selectedTab?: UserTabId;
 }
 
 const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
@@ -61,7 +61,7 @@ const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
     changeUserMembership = false,
     renderDataSourceIcon,
     areFilterViewsEnabled = false,
-    areGranularPermissionsEnabled = false,
+    selectedTab = undefined,
 }) => {
     const intl = useIntl();
     const { dialogMode, setDialogMode } = useUserDialogMode(initialView);
@@ -83,7 +83,7 @@ const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
         onDataSourcesChanged,
         removeGrantedDataSource,
         updateGrantedDataSource,
-    } = usePermissions(userId, "user", organizationId, onSuccess, areGranularPermissionsEnabled);
+    } = usePermissions(userId, "user", organizationId, onSuccess);
     const { grantedUserGroups, onUserGroupsChanged, removeGrantedUserGroup, removeAdminGroup } =
         useUserGroups(userId, organizationId, bootstrapUserGroupId, onSuccess, setIsAdmin);
 
@@ -92,6 +92,7 @@ const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
         grantedUserGroups,
         grantedDataSources,
         isCurrentlyAdmin,
+        selectedTab,
     );
     const {
         isConfirmDeleteOpened,
@@ -140,10 +141,6 @@ const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
     const [workspaceToEdit, setWorkspaceToEdit] = useState<IGrantedWorkspace>(undefined);
 
     const handleWorkspaceEdit = (workspace: IGrantedWorkspace) => {
-        if (!areGranularPermissionsEnabled) {
-            return;
-        }
-
         setWorkspaceToEdit(workspace);
         setDialogMode("WORKSPACE");
     };
@@ -231,7 +228,6 @@ const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
                                             onDelete={removeGrantedWorkspace}
                                             onChange={updateGrantedWorkspace}
                                             areFilterViewsEnabled={areFilterViewsEnabled}
-                                            areGranularPermissionsEnabled={areGranularPermissionsEnabled}
                                             onClick={handleWorkspaceEdit}
                                         />
                                     )}
@@ -274,7 +270,6 @@ const UserEditDialogComponent: React.FC<IUserEditDialogProps> = ({
                                     onCancel={isOpenedInEditMode ? onClose : handleWorkspaceCancel}
                                     onClose={onClose}
                                     areFilterViewsEnabled={areFilterViewsEnabled}
-                                    areGranularPermissionsEnabled={areGranularPermissionsEnabled}
                                     editWorkspace={workspaceToEdit}
                                 />
                             )}

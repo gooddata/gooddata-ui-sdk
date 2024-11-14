@@ -63,7 +63,8 @@
         "ts-invariant": "^0.7.5",
         "tslib": "^2.5.0",
         "uuid": "^8.3.2",
-        "lru-cache": "^10.0.1"
+        "lru-cache": "^10.0.1",
+        "eventsource-parser": "~3.0.0"
     },
     "devDependencies": {
         "@gooddata/catalog-export": "workspace:*",

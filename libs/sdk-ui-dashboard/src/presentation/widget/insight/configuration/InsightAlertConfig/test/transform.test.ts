@@ -3,31 +3,41 @@
 import {
     IAutomationAlertRelativeCondition,
     IAutomationMetadataObject,
-    INegativeAttributeFilter,
-    IPositiveAttributeFilter,
+    IDataSetMetadataObject,
 } from "@gooddata/sdk-model";
 import { describe, it, expect } from "vitest";
 
 import {
-    getAlertAttribute,
-    getAlertCompareOperator,
-    getAlertFilters,
-    getAlertMeasure,
-    getAlertRelativeOperator,
-    getAlertThreshold,
-    getValueSuffix,
-    isAlertValueDefined,
-    isChangeOperator,
-    isChangeOrDifferenceOperator,
-    isDifferenceOperator,
     transformAlertByAttribute,
     transformAlertByComparisonOperator,
     transformAlertByDestination,
     transformAlertByMetric,
     transformAlertByRelativeOperator,
     transformAlertByValue,
-} from "../utils.js";
-import { AlertAttribute, AlertMetric, AlertMetricComparatorType } from "../../../types.js";
+    transformAlertExecutionByMetric,
+} from "../utils/transformation.js";
+import {
+    getAlertAttribute,
+    getAlertCompareOperator,
+    getAlertComparison,
+    getAlertFilters,
+    getAlertMeasure,
+    getAlertRelativeOperator,
+    getAlertThreshold,
+    getValueSuffix,
+} from "../utils/getters.js";
+import {
+    isAlertValueDefined,
+    isChangeOperator,
+    isChangeOrDifferenceOperator,
+    isDifferenceOperator,
+} from "../utils/guards.js";
+import {
+    AlertAttribute,
+    AlertMetric,
+    AlertMetricComparator,
+    AlertMetricComparatorType,
+} from "../../../types.js";
 
 describe("alert transforms", () => {
     const base: IAutomationMetadataObject = {
@@ -99,6 +109,51 @@ describe("alert transforms", () => {
                 state: "ACTIVE",
                 mode: "ALWAYS",
             },
+        },
+    };
+    const baseRelativeWithFilter: IAutomationMetadataObject = {
+        ...base,
+        alert: {
+            condition: {
+                type: "relative",
+                operator: "INCREASES_BY",
+                measure: {
+                    operator: "CHANGE",
+                    left: {
+                        id: "",
+                    },
+                    right: {
+                        id: "",
+                    },
+                },
+                threshold: 0,
+            },
+            execution: {
+                filters: [
+                    {
+                        relativeDateFilter: {
+                            dataSet: {
+                                identifier: "date",
+                                type: "dataSet",
+                            },
+                            from: 0,
+                            granularity: "GDC.time.quarter",
+                            localIdentifier: "relativeDateFilter_date_GDC.time.quarter",
+                            to: 0,
+                        },
+                    },
+                ],
+                measures: [],
+                auxMeasures: [],
+                attributes: [],
+            },
+            trigger: {
+                state: "ACTIVE",
+                mode: "ALWAYS",
+            },
+        },
+        metadata: {
+            filters: ["relativeDateFilter_date_GDC.time.quarter"],
         },
     };
 
@@ -358,6 +413,7 @@ describe("alert transforms", () => {
                 },
             },
         },
+        type: "attribute",
     };
 
     const attrType: AlertAttribute = {
@@ -370,6 +426,7 @@ describe("alert transforms", () => {
                 },
             },
         },
+        type: "attribute",
     };
 
     const allAttributes = [attrRegion, attrType];
@@ -744,7 +801,11 @@ describe("alert transforms", () => {
         });
 
         it("attribute with defined value", () => {
-            const res = transformAlertByAttribute(allAttributes, baseComparison, attrRegion, "America");
+            const res = transformAlertByAttribute(allAttributes, baseComparison, attrRegion, {
+                name: "America",
+                value: "America",
+                title: "America",
+            });
             expect(res).toEqual({
                 ...baseComparison,
                 alert: {
@@ -770,7 +831,11 @@ describe("alert transforms", () => {
         });
 
         it("attribute with defined value, switch to empty", () => {
-            let res = transformAlertByAttribute(allAttributes, baseComparison, attrRegion, "America");
+            let res = transformAlertByAttribute(allAttributes, baseComparison, attrRegion, {
+                name: "America",
+                value: "America",
+                title: "America",
+            });
             expect(res).toEqual({
                 ...baseComparison,
                 alert: {
@@ -796,6 +861,120 @@ describe("alert transforms", () => {
 
             res = transformAlertByAttribute(allAttributes, res, undefined, undefined);
             expect(res).toEqual(baseComparison);
+        });
+    });
+
+    describe("transformAlertExecutionByMetric", () => {
+        const dataset: IDataSetMetadataObject = {
+            ref: {
+                identifier: "date",
+                type: "dataSet",
+            },
+            title: "Date",
+            description: "",
+            tags: [],
+            id: "date",
+            type: "dataSet",
+            unlisted: false,
+            deprecated: false,
+            production: false,
+            uri: "date",
+        };
+
+        it("no dataset and granularity provided", () => {
+            const comp = previousPeriodMetric.comparators[0];
+            const cond = baseRelative.alert.condition;
+            const { execution, metadata } = transformAlertExecutionByMetric(
+                allMetrics,
+                baseRelative,
+                cond,
+                previousPeriodMetric,
+                comp,
+            );
+
+            expect(execution).toEqual({
+                filters: [],
+                measures: [previousPeriodMetric.measure, previousPeriodMetric.comparators[0].measure],
+                auxMeasures: [],
+                attributes: [],
+            });
+            expect(metadata.filters).toEqual(undefined);
+        });
+
+        it("dataset and granularity provided", () => {
+            const comp1: AlertMetricComparator = {
+                ...previousPeriodMetric.comparators[0],
+                dataset,
+                granularity: "GDC.time.quarter",
+            };
+            const cond = baseRelative.alert.condition;
+
+            const res1 = transformAlertExecutionByMetric(
+                allMetrics,
+                baseRelative,
+                cond,
+                previousPeriodMetric,
+                comp1,
+            );
+
+            expect(res1.execution).toEqual({
+                filters: [
+                    {
+                        relativeDateFilter: {
+                            dataSet: {
+                                identifier: "date",
+                                type: "dataSet",
+                            },
+                            from: 0,
+                            granularity: "GDC.time.quarter",
+                            localIdentifier: "relativeDateFilter_date_GDC.time.quarter",
+                            to: 0,
+                        },
+                    },
+                ],
+                measures: [previousPeriodMetric.measure, previousPeriodMetric.comparators[0].measure],
+                auxMeasures: [],
+                attributes: [],
+            });
+            expect(res1.metadata.filters).toEqual(["relativeDateFilter_date_GDC.time.quarter"]);
+        });
+
+        it("dataset and granularity provided with replacing old filter", () => {
+            const comp1: AlertMetricComparator = {
+                ...previousPeriodMetric.comparators[0],
+                dataset,
+                granularity: "GDC.time.quarter",
+            };
+            const cond = baseRelativeWithFilter.alert.condition;
+
+            const res1 = transformAlertExecutionByMetric(
+                allMetrics,
+                baseRelativeWithFilter,
+                cond,
+                previousPeriodMetric,
+                comp1,
+            );
+
+            expect(res1.execution).toEqual({
+                filters: [
+                    {
+                        relativeDateFilter: {
+                            dataSet: {
+                                identifier: "date",
+                                type: "dataSet",
+                            },
+                            from: 0,
+                            granularity: "GDC.time.quarter",
+                            localIdentifier: "relativeDateFilter_date_GDC.time.quarter",
+                            to: 0,
+                        },
+                    },
+                ],
+                measures: [previousPeriodMetric.measure, previousPeriodMetric.comparators[0].measure],
+                auxMeasures: [],
+                attributes: [],
+            });
+            expect(res1.metadata.filters).toEqual(["relativeDateFilter_date_GDC.time.quarter"]);
         });
     });
 
@@ -911,6 +1090,18 @@ describe("alert transforms", () => {
             const filters = getAlertFilters(baseAllAttribute);
             expect(filters.length).toEqual(1);
             expect(filters[0]).toEqual(baseAllAttribute.alert?.execution.filters[1]);
+        });
+
+        it("getAlertComparison - previous period metric", () => {
+            const res = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric);
+            const comp = getAlertComparison(previousPeriodMetric, res.alert);
+            expect(comp).toEqual(previousPeriodMetric.comparators[0]);
+        });
+
+        it("getAlertComparison - simple metric", () => {
+            const res = transformAlertByMetric(allMetrics, baseComparison, simpleMetric1);
+            const comp = getAlertComparison(simpleMetric1, res.alert);
+            expect(comp).toEqual(undefined);
         });
     });
 

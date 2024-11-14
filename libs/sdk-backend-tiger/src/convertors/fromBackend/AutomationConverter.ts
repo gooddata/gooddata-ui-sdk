@@ -10,7 +10,7 @@ import {
     JsonApiExportDefinitionOutWithLinks,
     JsonApiUserLinkage,
     JsonApiUserOutWithLinks,
-    JsonApiAutomationInAttributesAlert,
+    JsonApiAutomationOutAttributesAlert,
     ArithmeticMeasureOperatorEnum,
 } from "@gooddata/api-client-tiger";
 import {
@@ -134,7 +134,7 @@ export const convertAutomationListToAutomations = (
 };
 
 const convertAlert = (
-    alert: JsonApiAutomationInAttributesAlert | undefined,
+    alert: JsonApiAutomationOutAttributesAlert | undefined,
     state: JsonApiAutomationOutAttributesStateEnum | undefined,
 ): IAutomationAlert | undefined => {
     if (!alert) {

@@ -82,6 +82,7 @@ function convertPositiveFilter(
 ): PositiveAttributeFilter {
     const labelRef = filter.positiveAttributeFilter.displayForm;
     const attributeElements = filter.positiveAttributeFilter.in;
+    const localIdentifier = filter.positiveAttributeFilter.localIdentifier;
 
     return {
         positiveAttributeFilter: {
@@ -91,6 +92,7 @@ function convertPositiveFilter(
             in: {
                 values: extractValuesFromAttributeElements(attributeElements),
             },
+            localIdentifier,
             ...applyOnResultProp,
         },
     };
@@ -102,6 +104,7 @@ function convertNegativeFilter(
 ): NegativeAttributeFilter {
     const labelRef = filter.negativeAttributeFilter.displayForm;
     const attributeElements = filter.negativeAttributeFilter.notIn;
+    const localIdentifier = filter.negativeAttributeFilter.localIdentifier;
 
     return {
         negativeAttributeFilter: {
@@ -111,6 +114,7 @@ function convertNegativeFilter(
             notIn: {
                 values: extractValuesFromAttributeElements(attributeElements),
             },
+            localIdentifier,
             ...applyOnResultProp,
         },
     };
@@ -142,12 +146,14 @@ function convertAbsoluteDateFilter(
     }
 
     const datasetRef = absoluteDateFilter.dataSet;
+    const localIdentifier = absoluteDateFilter.localIdentifier;
 
     return {
         absoluteDateFilter: {
             dataset: toDateDataSetQualifier(datasetRef),
             from: String(absoluteDateFilter.from),
             to: String(absoluteDateFilter.to),
+            localIdentifier,
             ...applyOnResultProp,
         },
     };
@@ -164,6 +170,7 @@ function convertRelativeDateFilter(
     }
 
     const datasetRef = relativeDateFilter.dataSet;
+    const localIdentifier = relativeDateFilter.localIdentifier;
 
     return {
         relativeDateFilter: {
@@ -171,6 +178,7 @@ function convertRelativeDateFilter(
             granularity: toTigerGranularity(relativeDateFilter.granularity as any),
             from: Number(relativeDateFilter.from),
             to: Number(relativeDateFilter.to),
+            localIdentifier,
             ...applyOnResultProp,
         },
     };
@@ -182,6 +190,7 @@ function convertMeasureValueFilter(
 ): MeasureValueFilter | null {
     const { measureValueFilter } = filter;
     const condition = measureValueFilter.condition;
+    const localIdentifier = measureValueFilter.localIdentifier;
 
     if (isComparisonCondition(condition)) {
         const { operator, value, treatNullValuesAs } = condition.comparison;
@@ -192,6 +201,7 @@ function convertMeasureValueFilter(
                 operator,
                 value,
                 treatNullValuesAs,
+                localIdentifier,
                 ...applyOnResultProp,
             },
         };
@@ -220,12 +230,14 @@ function convertMeasureValueFilter(
 function convertRankingFilter(filter: IRankingFilter, applyOnResultProp: ApplyOnResultProp): RankingFilter {
     const { measure, attributes, operator, value } = filter.rankingFilter;
     const dimensionalityProp = attributes ? { dimensionality: attributes.map(toAfmIdentifier) } : {};
+    const localIdentifier = filter.rankingFilter.localIdentifier;
     return {
         rankingFilter: {
             measures: [toAfmIdentifier(measure)],
             ...dimensionalityProp,
             operator,
             value,
+            localIdentifier,
             ...applyOnResultProp,
         },
     };

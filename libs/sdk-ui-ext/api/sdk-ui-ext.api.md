@@ -76,6 +76,9 @@ export const CreateUserGroupDialog: React_2.FC<ICreateUserGroupDialogProps>;
 export const DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT_PX = 450;
 
 // @internal (undocumented)
+export const DASHBOARD_LAYOUT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo;
+
+// @internal (undocumented)
 export type DataSourcePermission = "USE" | "MANAGE";
 
 // @internal (undocumented)
@@ -175,8 +178,6 @@ export interface IAddUsersToUserGroupsDialogProps extends IWithTelemetryProps {
 export interface IAddWorkspaceToSubjectsProps extends IWithTelemetryProps {
     // (undocumented)
     areFilterViewsEnabled?: boolean;
-    // (undocumented)
-    areGranularPermissionsEnabled?: boolean;
     // (undocumented)
     ids: string[];
     // (undocumented)
@@ -475,8 +476,6 @@ export interface IUserEditDialogProps extends IWithTelemetryProps {
     // (undocumented)
     areFilterViewsEnabled?: boolean;
     // (undocumented)
-    areGranularPermissionsEnabled?: boolean;
-    // (undocumented)
     changeUserMembership?: boolean;
     // (undocumented)
     initialView?: UserEditDialogMode;
@@ -491,6 +490,8 @@ export interface IUserEditDialogProps extends IWithTelemetryProps {
     // (undocumented)
     renderDataSourceIcon?: (dataSource: IGrantedDataSource) => JSX.Element;
     // (undocumented)
+    selectedTab?: UserTabId;
+    // (undocumented)
     userId: string;
 }
 
@@ -498,8 +499,6 @@ export interface IUserEditDialogProps extends IWithTelemetryProps {
 export interface IUserGroupEditDialogProps extends IWithTelemetryProps {
     // (undocumented)
     areFilterViewsEnabled?: boolean;
-    // (undocumented)
-    areGranularPermissionsEnabled?: boolean;
     // (undocumented)
     initialView?: UserGroupEditDialogMode;
     // (undocumented)
@@ -598,6 +597,9 @@ export const UserGroupEditDialog: React_2.FC<IUserGroupEditDialogProps>;
 
 // @internal (undocumented)
 export type UserGroupEditDialogMode = "VIEW" | "WORKSPACE" | "USERS" | "DATA_SOURCES" | "DETAIL";
+
+// @internal (undocumented)
+export type UserTabId = "WORKSPACES" | "USER_GROUPS" | "DETAILS" | "DATA_SOURCES";
 
 // @internal (undocumented)
 export const VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo;

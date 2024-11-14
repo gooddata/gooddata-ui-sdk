@@ -323,7 +323,7 @@ export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
 export type DatasetLoadStatus = "RUNNING" | "OK" | "ERROR" | "CANCELLED" | "ERROR_METADATA" | "REFRESHING";
 
 // @alpha (undocumented)
-export type DataSourceType = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "SINGLESTORE" | "MOTHERDUCK" | "FLIGHTRPC";
+export type DataSourceType = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "SINGLESTORE" | "MOTHERDUCK" | "FLIGHTRPC" | "FLEXCONNECT";
 
 // @public
 export type DataValue = null | string | number;
@@ -510,6 +510,13 @@ export type ForecastDataValue = {
 };
 
 // @alpha
+export type GenAIAbsoluteDateFilter = {
+    using: string;
+    from: string;
+    to: string;
+};
+
+// @alpha
 export type GenAIChatInteractionUserFeedback = "POSITIVE" | "NEGATIVE" | "NONE";
 
 // @alpha
@@ -519,16 +526,39 @@ export type GenAIChatRole = "USER" | "AI";
 export type GenAIChatRoutingUseCase = "SEARCH_ALL" | "SEARCH_VISUALIZATIONS" | "SEARCH_DASHBOARDS" | "CREATE_VISUALIZATION" | "EXTEND_VISUALIZATION" | "GENERAL" | "INVALID";
 
 // @alpha
+export type GenAIDateGranularity = "MINUTE" | "HOUR" | "DAY" | "WEEK" | "MONTH" | "QUARTER" | "YEAR" | "MINUTE_OF_HOUR" | "HOUR_OF_DAY" | "DAY_OF_WEEK" | "DAY_OF_MONTH" | "DAY_OF_YEAR" | "WEEK_OF_YEAR" | "MONTH_OF_YEAR" | "QUARTER_OF_YEAR";
+
+// @alpha
+export type GenAIFilter = GenAIPositiveAttributeFilter | GenAINegativeAttributeFilter | GenAIAbsoluteDateFilter | GenAIRelativeDateFilter;
+
+// @alpha
 export type GenAIMetricAggregation = "COUNT" | "SUM" | "MIN" | "MAX" | "AVG" | "MEDIAN";
 
 // @alpha
 export type GenAIMetricType = "metric" | "fact" | "attribute";
 
+// @alpha
+export type GenAINegativeAttributeFilter = {
+    using: string;
+    exclude: string[];
+};
+
 // @beta
 export type GenAIObjectType = "dataset" | "attribute" | "label" | "fact" | "date" | "metric" | "visualization" | "dashboard";
 
-// @beta @deprecated
-export type GenAISemanticSearchType = GenAIObjectType;
+// @alpha
+export type GenAIPositiveAttributeFilter = {
+    using: string;
+    include: string[];
+};
+
+// @alpha
+export type GenAIRelativeDateFilter = {
+    using: string;
+    granularity: GenAIDateGranularity;
+    from: number;
+    to: number;
+};
 
 // @alpha
 export type GenAIVisualizationType = "TABLE" | "HEADLINE" | "BAR" | "LINE" | "PIE" | "COLUMN";
@@ -557,11 +587,14 @@ export type GuidType = "guid";
 // @public
 export interface IAbsoluteDateFilter {
     // (undocumented)
-    absoluteDateFilter: {
-        dataSet: ObjRef;
-        from: string;
-        to: string;
-    };
+    absoluteDateFilter: IAbsoluteDateFilterBody;
+}
+
+// @public
+export interface IAbsoluteDateFilterBody extends IIdentifiableFilter {
+    dataSet: ObjRef;
+    from: string;
+    to: string;
 }
 
 // @alpha
@@ -887,6 +920,7 @@ export interface IAutomationMetadataObjectBase {
     exportDefinitions?: IExportDefinitionMetadataObject[];
     metadata?: {
         widget?: string;
+        filters?: string[];
     };
     notificationChannel?: string;
     recipients?: IAutomationRecipient[];
@@ -1342,6 +1376,12 @@ export interface IDashboardLayoutSizeByScreenSize {
 }
 
 // @public
+export interface IDashboardLayoutWidget extends IDashboardLayout<IDashboardWidget>, IBaseWidget, IDashboardObjectIdentity {
+    // (undocumented)
+    type: "IDashboardLayout";
+}
+
+// @public
 export interface IDashboardMetadataObject extends IMetadataObject {
     // (undocumented)
     type: "analyticalDashboard";
@@ -1386,7 +1426,7 @@ export interface IDashboardPluginLink {
 }
 
 // @public
-export type IDashboardWidget = IWidget | IWidgetDefinition | IDashboardLayout<IDashboardWidget>;
+export type IDashboardWidget = IWidget | IWidgetDefinition | IDashboardLayoutWidget;
 
 // @public
 export interface IDataColumn {
@@ -1873,6 +1913,7 @@ export interface IGenAIUserContext {
 // @alpha
 export interface IGenAIVisualization {
     dimensionality: IGenAIVisualizationDimension[];
+    filters?: GenAIFilter[];
     id: string;
     metrics: IGenAIVisualizationMetric[];
     title: string;
@@ -2245,7 +2286,7 @@ export interface IMeasureValueFilter {
 }
 
 // @public
-export interface IMeasureValueFilterBody {
+export interface IMeasureValueFilterBody extends IIdentifiableFilter {
     // (undocumented)
     condition?: MeasureValueFilterCondition;
     // (undocumented)
@@ -2652,7 +2693,7 @@ export interface IRankingFilter {
 }
 
 // @public
-export interface IRankingFilterBody {
+export interface IRankingFilterBody extends IIdentifiableFilter {
     // (undocumented)
     attributes?: ObjRefInScope[];
     // (undocumented)
@@ -2665,20 +2706,34 @@ export interface IRankingFilterBody {
 
 // @public
 export type IRelativeDateFilter = {
-    relativeDateFilter: {
-        dataSet: ObjRef;
-        granularity: DateAttributeGranularity;
-        from: number;
-        to: number;
-    };
+    relativeDateFilter: IRelativeDateFilterBody;
 } | {
-    relativeDateFilter: {
-        dataSet: ObjRef;
-        granularity: AllTimeGranularity;
-        from: 0;
-        to: 0;
-    };
+    relativeDateFilter: IRelativeDateFilterAllTimeBody;
 };
+
+// @public
+export interface IRelativeDateFilterAllTimeBody extends IIdentifiableFilter {
+    // (undocumented)
+    dataSet: ObjRef;
+    // (undocumented)
+    from: 0;
+    // (undocumented)
+    granularity: AllTimeGranularity;
+    // (undocumented)
+    to: 0;
+}
+
+// @public
+export interface IRelativeDateFilterBody extends IIdentifiableFilter {
+    // (undocumented)
+    dataSet: ObjRef;
+    // (undocumented)
+    from: number;
+    // (undocumented)
+    granularity: DateAttributeGranularity;
+    // (undocumented)
+    to: number;
+}
 
 // @alpha
 export interface IRelativeDateFilterForm extends IDateFilterOption {
@@ -3103,6 +3158,7 @@ export interface ISettings {
     enableClickableAttributeURL?: boolean;
     enableColumnHeadersPosition?: boolean;
     enableCompanyLogoInEmbeddedUI?: boolean;
+    enableComparisonInAlerting?: boolean;
     enableCompositeGrain?: boolean;
     enableCreateUser?: boolean;
     // @internal
@@ -3122,10 +3178,10 @@ export interface ISettings {
     enableEarlyAccessFeaturesRollout?: boolean;
     enableEmbedButtonInAD?: boolean;
     enableEmbedButtonInKD?: boolean;
+    enableFlexConnectNaming?: boolean;
     enableFlightRpcDataSource?: boolean;
     enableGenAIChat?: boolean;
     enableGenAIChatRollout?: boolean;
-    enableGranularPermissions?: boolean;
     enableHeadlineExport?: boolean;
     enableHidingOfDataPoints?: boolean;
     enableHidingOfWidgetTitle?: boolean;
@@ -3160,6 +3216,7 @@ export interface ISettings {
     enableNewHeadline?: boolean;
     // (undocumented)
     enableNewNavigationForResponsiveUi?: boolean;
+    enableNewUserCreationFlow?: boolean;
     enableNumberSeparators?: boolean;
     // (undocumented)
     enableOracleDataSource?: boolean;

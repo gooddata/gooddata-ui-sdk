@@ -298,6 +298,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableComparisonInAlerting,
+            "enableComparisonInAlerting",
+            "BOOLEAN",
+            FeatureFlagsValues.enableComparisonInAlerting,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableAlertingRollout,
             "enableAlertingRollout",
             "BOOLEAN",
@@ -571,10 +578,17 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableGranularPermissions,
-            "enableGranularPermissions",
+            TigerFeaturesNames.EnableNewUserCreationFlow,
+            "enableNewUserCreationFlow",
             "BOOLEAN",
-            FeatureFlagsValues.enableGranularPermissions,
+            FeatureFlagsValues.enableNewUserCreationFlow,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableFlexConnectNaming,
+            "enableFlexConnectNaming",
+            "BOOLEAN",
+            FeatureFlagsValues.enableFlexConnectNaming,
         ),
     };
 }

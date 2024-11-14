@@ -39,9 +39,11 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
         maxAutomationsReached,
         maxAutomationsRecipients,
         canManageAttributes,
+        canManageComparison,
         canCreateAutomation,
         catalogMeasures,
         catalogAttributes,
+        catalogDateDatasets,
         //
         creatingAlert,
         initiateAlertCreation,
@@ -80,6 +82,7 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
         content = (
             <EditAlert
                 canManageAttributes={canManageAttributes}
+                canManageComparison={canManageComparison}
                 execResult={execResult}
                 alert={editingAlert}
                 hasAlerts={hasAlerts}
@@ -92,6 +95,7 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
                 onClose={onClose}
                 catalogMeasures={catalogMeasures}
                 catalogAttributes={catalogAttributes}
+                catalogDateDatasets={catalogDateDatasets}
                 maxAutomationsRecipients={maxAutomationsRecipients}
             />
         );
@@ -99,6 +103,7 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
         content = (
             <CreateAlert
                 canManageAttributes={canManageAttributes}
+                canManageComparison={canManageComparison}
                 execResult={execResult}
                 alert={creatingAlert}
                 measures={supportedMeasures}
@@ -113,6 +118,7 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
                 maxAutomationsRecipients={maxAutomationsRecipients}
                 catalogMeasures={catalogMeasures}
                 catalogAttributes={catalogAttributes}
+                catalogDateDatasets={catalogDateDatasets}
             />
         );
     } else {

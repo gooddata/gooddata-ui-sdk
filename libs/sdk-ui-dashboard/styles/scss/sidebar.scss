@@ -59,42 +59,34 @@
         background-position: center;
     }
 
-    &-rich-text {
+    &.add-panel-item {
         padding: 0 10px 0 0;
 
         svg {
             margin: 0 14px;
         }
-    }
-
-    &-rich-text::before {
-        content: none;
-    }
-
-    &-visualization-switcher {
-        padding: 0 10px 0 0;
-
-        svg {
-            margin: 0 14px;
+        &::before {
+            content: none;
         }
 
         &:hover {
-            .gd-add-visualization-switcher {
+            .gd-add-item-placeholder-help-trigger {
                 display: block;
                 cursor: help;
             }
         }
 
-        .gd-add-visualization-switcher {
+        .gd-add-item-placeholder-help-trigger {
             display: none;
             flex: 0 0 auto;
-            margin-left: 20px;
+            margin-left: auto;
+            margin-right: 5px;
             font-weight: normal;
         }
-    }
 
-    &-visualization-switcher::before {
-        content: none;
+        span {
+            flex: 0 0 auto;
+        }
     }
 
     span {

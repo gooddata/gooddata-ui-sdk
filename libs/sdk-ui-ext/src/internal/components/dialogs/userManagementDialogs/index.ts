@@ -7,6 +7,7 @@ export type {
     DataSourcePermissionSubject,
     IGrantedDataSource,
     DataSourcePermission,
+    UserTabId,
 } from "./types.js";
 export type { IUserEditDialogProps } from "./UserEditDialog.js";
 export { UserEditDialog } from "./UserEditDialog.js";

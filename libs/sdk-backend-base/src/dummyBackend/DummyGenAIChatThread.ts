@@ -5,6 +5,7 @@ import {
     IChatThreadQuery,
     IGenAIChatEvaluation,
 } from "@gooddata/sdk-backend-spi";
+import { GenAIChatInteractionUserFeedback } from "@gooddata/sdk-model";
 
 /**
  * Dummy chat thread interface for testing.
@@ -23,6 +24,10 @@ export class DummyGenAIChatThread implements IChatThread {
     async reset(): Promise<void> {
         await cancellableTimeout(100);
     }
+    async saveUserFeedback(
+        _interactionId: number,
+        _feedback: GenAIChatInteractionUserFeedback,
+    ): Promise<void> {}
     query(_userMessage: string): IChatThreadQuery {
         return new DummyGenAIChatQueryBuilder();
     }
@@ -60,6 +65,29 @@ export class DummyGenAIChatQueryBuilder implements IChatThreadQuery {
             createdVisualizations: {
                 objects: [],
                 reasoning: "",
+            },
+        });
+    }
+
+    stream(): ReadableStream<IGenAIChatEvaluation> {
+        return new ReadableStream({
+            start: async (controller) => {
+                await cancellableTimeout(100);
+                controller.enqueue({
+                    routing: {
+                        useCase: "GENERAL",
+                        reasoning: "",
+                    },
+                    textResponse: "",
+                    foundObjects: {
+                        objects: [],
+                        reasoning: "",
+                    },
+                    createdVisualizations: {
+                        objects: [],
+                        reasoning: "",
+                    },
+                });
             },
         });
     }

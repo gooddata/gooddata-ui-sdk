@@ -24,6 +24,8 @@ import {
     DefaultDashboardVisualizationSwitcher,
     DefaultDashboardVisualizationSwitcherComponentSetFactory,
     DefaultVisualizationSwitcherToolbar,
+    DefaultDashboardNestedLayout,
+    DefaultDashboardLayoutComponentSetFactory,
 } from "../../widget/index.js";
 import { IDashboardProps } from "../types.js";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -41,9 +43,11 @@ import {
     RichTextComponentProvider,
     VisualizationSwitcherComponentProvider,
     VisualizationSwitcherToolbarComponentProvider,
+    DashboardLayoutComponentProvider,
 } from "../../dashboardContexts/index.js";
 import {
     AttributeFilterComponentSet,
+    DashboardLayoutWidgetComponentSet,
     DateFilterComponentSet,
     InsightWidgetComponentSet,
     KpiWidgetComponentSet,
@@ -76,6 +80,8 @@ interface IUseDashboardResult {
     visualizationSwitcherProvider: VisualizationSwitcherComponentProvider;
     visualizationSwitcherWidgetComponentSet: VisualizationSwitcherWidgetComponentSet;
     visualizationSwitcherToolbarComponentProvider: VisualizationSwitcherToolbarComponentProvider;
+    dashboardLayoutProvider: DashboardLayoutComponentProvider;
+    dashboardLayoutWidgetComponentSet: DashboardLayoutWidgetComponentSet;
 }
 
 export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
@@ -95,6 +101,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         RichTextComponentProvider,
         VisualizationSwitcherComponentProvider,
         VisualizationSwitcherToolbarComponentProvider,
+        DashboardLayoutComponentProvider,
     } = props;
 
     const backend = useBackendStrict(props.backend);
@@ -238,6 +245,18 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         return DefaultDashboardVisualizationSwitcherComponentSetFactory(visualizationSwitcherProvider);
     }, [visualizationSwitcherProvider]);
 
+    const dashboardLayoutProvider = useCallback<DashboardLayoutComponentProvider>(
+        (dashboardLayout) => {
+            const userSpecified = DashboardLayoutComponentProvider?.(dashboardLayout);
+            return userSpecified ?? DefaultDashboardNestedLayout;
+        },
+        [DashboardLayoutComponentProvider],
+    );
+
+    const dashboardLayoutWidgetComponentSet = useMemo<DashboardLayoutWidgetComponentSet>(() => {
+        return DefaultDashboardLayoutComponentSetFactory(dashboardLayoutProvider);
+    }, [dashboardLayoutProvider]);
+
     const isThemeLoading = useThemeIsLoading();
     const hasThemeProvider = isThemeLoading !== undefined;
 
@@ -265,5 +284,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         visualizationSwitcherProvider,
         visualizationSwitcherWidgetComponentSet,
         visualizationSwitcherToolbarComponentProvider,
+        dashboardLayoutProvider,
+        dashboardLayoutWidgetComponentSet,
     };
 };

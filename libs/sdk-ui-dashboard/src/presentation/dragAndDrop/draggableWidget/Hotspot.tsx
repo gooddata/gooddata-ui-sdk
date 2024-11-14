@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useRef } from "react";
 
 import { getDropZoneDebugStyle } from "../debug.js";
 import {
+    isDashboardLayoutDraggableListItem,
     isInsightDraggableItem,
     isInsightDraggableListItem,
     isInsightPlaceholderDraggableItem,
@@ -22,6 +23,7 @@ import { useMoveWidgetDropHandler } from "./useMoveWidgetHandler.js";
 import { useWidgetDragHoverHandlers } from "./useWidgetDragHoverHandlers.js";
 import { useRichTextPlaceholderDropHandler } from "./useRichTextPlaceholderDropHandler.js";
 import { useVisualizationSwitcherPlaceholderDropHandler } from "./useVisualizationSwitcherPlaceholderDropHandler.js";
+import { useDashboardLayoutPlaceholderDropHandler } from "./useDashboardLayoutPlaceholderDropHandler.js";
 
 interface IHotspotProps {
     sectionIndex: number;
@@ -47,6 +49,10 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
         sectionIndex,
         targetItemIndex,
     );
+    const handleDashboardLayoutPlaceholderDrop = useDashboardLayoutPlaceholderDropHandler(
+        sectionIndex,
+        targetItemIndex,
+    );
     const handleWidgetDrop = useMoveWidgetDropHandler(sectionIndex, targetItemIndex);
     const { handleDragHoverStart } = useWidgetDragHoverHandlers();
 
@@ -61,6 +67,8 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
             "richTextListItem",
             "visualizationSwitcher",
             "visualizationSwitcherListItem",
+            "dashboardLayout",
+            "dashboardLayoutListItem",
         ],
         {
             drop: (item) => {
@@ -78,6 +86,9 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
                 }
                 if (isVisualizationSwitcherDraggableListItem(item)) {
                     handleVisualizationSwitcherPlaceholderDrop();
+                }
+                if (isDashboardLayoutDraggableListItem(item)) {
+                    handleDashboardLayoutPlaceholderDrop();
                 }
 
                 if (
@@ -98,6 +109,8 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
             handleKpiPlaceholderDrop,
             handleWidgetDrop,
             handleVisualizationSwitcherPlaceholderDrop,
+            handleRichTextPlaceholderDrop,
+            handleDashboardLayoutPlaceholderDrop,
         ],
     );
 

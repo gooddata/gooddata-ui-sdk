@@ -8,7 +8,11 @@ import {
     isRichTextWidget,
     isVisualizationSwitcherWidget,
 } from "@gooddata/sdk-model";
-import { IVisualizationSizeInfo, WIDGET_DROPZONE_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
+import {
+    DASHBOARD_LAYOUT_WIDGET_SIZE_INFO_DEFAULT,
+    IVisualizationSizeInfo,
+    WIDGET_DROPZONE_SIZE_INFO_DEFAULT,
+} from "@gooddata/sdk-ui-ext";
 import React, { useRef } from "react";
 import cx from "classnames";
 import {
@@ -26,6 +30,7 @@ import {
     selectSectionModification,
     selectIsExport,
     useWidgetSelection,
+    isExtendedDashboardLayoutWidget,
 } from "../../model/index.js";
 import { isAnyPlaceholderWidget, isPlaceholderWidget } from "../../widgets/index.js";
 import { getSizeInfo, calculateWidgetMinHeight } from "../../_staging/layout/sizing.js";
@@ -324,6 +329,17 @@ function createDraggableItem(
             sectionIndex,
             itemIndex,
             title: widget.title,
+            isOnlyItemInSection,
+            size: getFilledSize(size, sizeInfo),
+        };
+    } else if (isExtendedDashboardLayoutWidget(widget)) {
+        const sizeInfo = DASHBOARD_LAYOUT_WIDGET_SIZE_INFO_DEFAULT;
+
+        return {
+            type: "dashboardLayout",
+            sectionIndex,
+            itemIndex,
+            title: "",
             isOnlyItemInSection,
             size: getFilledSize(size, sizeInfo),
         };

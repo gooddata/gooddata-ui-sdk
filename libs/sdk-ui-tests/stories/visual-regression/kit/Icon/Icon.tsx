@@ -332,6 +332,12 @@ const IconsTest: React.FC<{ children?: React.ReactNode }> = () => {
                     <IconWrapper name="ChatBubble">
                         <Icon.ChatBubble color="#00f" />
                     </IconWrapper>
+                    <IconWrapper name="ThumbsUp">
+                        <Icon.ThumbsUp color="#00f" />
+                    </IconWrapper>
+                    <IconWrapper name="ThumbsDown">
+                        <Icon.ThumbsDown color="#00f" />
+                    </IconWrapper>
                 </ColumnWrapper>
             </RowWrapper>
         </div>

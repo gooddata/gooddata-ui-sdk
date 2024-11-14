@@ -1,9 +1,10 @@
 // (C) 2022-2024 GoodData Corporation
 import React from "react";
 import {
-    IAttributeMetadataObject,
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
+    ICatalogAttribute,
+    ICatalogDateDataset,
     ICatalogMeasure,
     INotificationChannelMetadataObject,
     IWorkspaceUser,
@@ -15,6 +16,7 @@ import { IExecutionResultEnvelope } from "../../../../../model/index.js";
 
 interface ICreateAlertProps {
     canManageAttributes: boolean;
+    canManageComparison: boolean;
     execResult: IExecutionResultEnvelope | undefined;
     alert: IAutomationMetadataObjectDefinition | null;
     onClose: () => void;
@@ -28,11 +30,13 @@ interface ICreateAlertProps {
     maxAutomationsReached: boolean;
     maxAutomationsRecipients: number;
     catalogMeasures: ICatalogMeasure[];
-    catalogAttributes: IAttributeMetadataObject[];
+    catalogAttributes: ICatalogAttribute[];
+    catalogDateDatasets: ICatalogDateDataset[];
 }
 
 export const CreateAlert: React.FC<ICreateAlertProps> = ({
     canManageAttributes,
+    canManageComparison,
     execResult,
     alert,
     onClose,
@@ -47,10 +51,12 @@ export const CreateAlert: React.FC<ICreateAlertProps> = ({
     maxAutomationsRecipients,
     catalogMeasures,
     catalogAttributes,
+    catalogDateDatasets,
 }) => {
     return (
         <EditAlert
             canManageAttributes={canManageAttributes}
+            canManageComparison={canManageComparison}
             execResult={execResult}
             alert={alert as IAutomationMetadataObject}
             onClose={onClose}
@@ -66,6 +72,7 @@ export const CreateAlert: React.FC<ICreateAlertProps> = ({
             maxAutomationsRecipients={maxAutomationsRecipients}
             catalogMeasures={catalogMeasures}
             catalogAttributes={catalogAttributes}
+            catalogDateDatasets={catalogDateDatasets}
         />
     );
 };

@@ -9,6 +9,7 @@ import {
     IGenAIChatRouting,
     IGenAIFoundObjects,
     IGenAICreatedVisualizations,
+    GenAIChatInteractionUserFeedback,
 } from "@gooddata/sdk-model";
 
 /**
@@ -86,6 +87,10 @@ export interface IChatThread {
      */
     reset(): Promise<void>;
     /**
+     * Save user feedback for the interaction.
+     */
+    saveUserFeedback(interactionId: number, feedback: GenAIChatInteractionUserFeedback): Promise<void>;
+    /**
      * Add a user message to the chat thread.
      */
     query(userMessage: string): IChatThreadQuery;
@@ -121,6 +126,10 @@ export interface IChatThreadQuery {
      * Execute the chat thread.
      */
     query(options?: { signal?: AbortSignal }): Promise<IGenAIChatEvaluation>;
+    /**
+     * Execute the chat thread and stream the results.
+     */
+    stream(): ReadableStream<IGenAIChatEvaluation>;
 }
 
 /**
@@ -128,9 +137,10 @@ export interface IChatThreadQuery {
  * @beta
  */
 export interface IGenAIChatEvaluation {
-    routing: IGenAIChatRouting;
+    routing?: IGenAIChatRouting;
     textResponse?: string;
     foundObjects?: IGenAIFoundObjects;
     createdVisualizations?: IGenAICreatedVisualizations;
     chatHistoryThreadId?: string;
+    chatHistoryInteractionId?: number;
 }

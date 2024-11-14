@@ -81,6 +81,7 @@ export enum TigerFeaturesNames {
     EnableAnalyticalCatalog = "enableAnalyticalCatalog",
     EnableAlerting = "enableAlerting",
     EnableAlertingAttributes = "enableAlertAttributes",
+    EnableComparisonInAlerting = "enableComparisonInAlerting",
     EnableSmtp = "enableSmtp",
     EnableScheduling = "enableScheduling",
     EnableSmartFunctions = "enableSmartFunctions",
@@ -119,7 +120,8 @@ export enum TigerFeaturesNames {
     EnableDefaultSmtp = "enableDefaultSmtp",
     EnableDashboardFlexibleLayout = "enableDashboardFlexibleLayout",
     EnableNumberSeparators = "enableNumberSeparators",
-    EnableGranularPermissions = "enableGranularPermissions",
+    EnableNewUserCreationFlow = "enableNewUserCreationFlow",
+    EnableFlexConnectNaming = "enableFlexConnectNaming",
 }
 
 export type ITigerFeatureFlags = {
@@ -163,6 +165,7 @@ export type ITigerFeatureFlags = {
     enableAnalyticalCatalog: typeof FeatureFlagsValues["enableAnalyticalCatalog"][number];
     enableAlerting: typeof FeatureFlagsValues["enableAlerting"][number];
     enableAlertAttributes: typeof FeatureFlagsValues["enableAlertAttributes"][number];
+    enableComparisonInAlerting: typeof FeatureFlagsValues["enableComparisonInAlerting"][number];
     enableSmtp: typeof FeatureFlagsValues["enableSmtp"][number];
     enableScheduling: typeof FeatureFlagsValues["enableScheduling"][number];
     enableLabsSmartFunctions: typeof FeatureFlagsValues["enableLabsSmartFunctions"][number];
@@ -202,7 +205,8 @@ export type ITigerFeatureFlags = {
     enableDefaultSmtp: typeof FeatureFlagsValues["enableDefaultSmtp"][number];
     enableDashboardFlexibleLayout: typeof FeatureFlagsValues["enableDashboardFlexibleLayout"][number];
     enableNumberSeparators: typeof FeatureFlagsValues["enableNumberSeparators"][number];
-    enableGranularPermissions: typeof FeatureFlagsValues["enableGranularPermissions"][number];
+    enableNewUserCreationFlow: typeof FeatureFlagsValues["enableNewUserCreationFlow"][number];
+    enableFlexConnectNaming: typeof FeatureFlagsValues["enableFlexConnectNaming"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -246,7 +250,8 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableOracleDataSource: false,
     enableAnalyticalCatalog: false,
     enableAlerting: true,
-    enableAlertAttributes: false,
+    enableAlertAttributes: true,
+    enableComparisonInAlerting: false,
     enableSmtp: true,
     enableScheduling: true,
     enableLabsSmartFunctions: false,
@@ -285,7 +290,8 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDefaultSmtp: false,
     enableDashboardFlexibleLayout: false,
     enableNumberSeparators: true,
-    enableGranularPermissions: true,
+    enableNewUserCreationFlow: false,
+    enableFlexConnectNaming: false,
 };
 
 export const FeatureFlagsValues = {
@@ -334,6 +340,7 @@ export const FeatureFlagsValues = {
     enableAnalyticalCatalog: [true, false] as const,
     enableAlerting: [true, false] as const,
     enableAlertAttributes: [true, false] as const,
+    enableComparisonInAlerting: [true, false] as const,
     enableSmtp: [true, false] as const,
     enableScheduling: [true, false] as const,
     enableLabsSmartFunctions: [true, false] as const,
@@ -372,5 +379,6 @@ export const FeatureFlagsValues = {
     enableDefaultSmtp: [true, false] as const,
     enableDashboardFlexibleLayout: [true, false] as const,
     enableNumberSeparators: [true, false] as const,
-    enableGranularPermissions: [true, false] as const,
+    enableNewUserCreationFlow: [true, false] as const,
+    enableFlexConnectNaming: [true, false] as const,
 };

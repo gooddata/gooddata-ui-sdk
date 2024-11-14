@@ -118,6 +118,21 @@ export const VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_NEW_DEFAULT: IVisualization
 /**
  * @internal
  */
+export const DASHBOARD_LAYOUT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo = {
+    width: {
+        min: 4,
+        default: 4,
+    },
+    height: {
+        default: 22,
+        min: 12,
+        max: 40,
+    },
+};
+
+/**
+ * @internal
+ */
 export const KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationDefaultSizeInfo = {
     width: {
         min: 2,

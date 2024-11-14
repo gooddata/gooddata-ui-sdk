@@ -9,6 +9,7 @@ import { useDashboardDrop } from "../useDashboardDrop.js";
 import {
     BaseDraggableLayoutItem,
     DraggableItemType,
+    isDashboardLayoutDraggableListItem,
     isInsightDraggableListItem,
     isInsightPlaceholderDraggableItem,
     isKpiPlaceholderDraggableItem,
@@ -23,6 +24,7 @@ import { useNewSectionInsightPlaceholderDropHandler } from "./useNewSectionInsig
 import { getDashboardLayoutItemHeightForGrid } from "../../../_staging/layout/sizing.js";
 import { useNewSectionRichTextPlaceholderDropHandler } from "./useNewSectionRichTextPlaceholderDropHandler.js";
 import { useNewSectionVisualizationSwitcherPlaceholderDropHandler } from "./useNewSectionVisualizationSwitcherPlaceholderDropHandler.js";
+import { useNewSectionDashboardLayoutPlaceholderDropHandler } from "./useNewSectionDashboardLayoutPlaceholderDropHandler.js";
 
 const widgetCategoryMapping: Partial<{ [D in DraggableItemType]: string }> = {
     "insight-placeholder": "insight",
@@ -30,6 +32,7 @@ const widgetCategoryMapping: Partial<{ [D in DraggableItemType]: string }> = {
     "kpi-placeholder": "kpi",
     richTextListItem: "richText",
     visualizationSwitcherListItem: "visualizationSwitcher",
+    dashboardLayoutListItem: "dashboardLayout",
 };
 
 export const EmptyDashboardDropZone: React.FC = () => {
@@ -44,6 +47,7 @@ export const EmptyDashboardDropZone: React.FC = () => {
     const handleRichTextPlaceholderDrop = useNewSectionRichTextPlaceholderDropHandler(0);
     const handleVisualizationSwitcherPlaceholderDrop =
         useNewSectionVisualizationSwitcherPlaceholderDropHandler(0);
+    const handleDashboardLayoutPlaceholderDrop = useNewSectionDashboardLayoutPlaceholderDropHandler(0);
 
     const [{ canDrop, isOver, itemType, item }, dropRef] = useDashboardDrop(
         [
@@ -52,6 +56,8 @@ export const EmptyDashboardDropZone: React.FC = () => {
             "insight-placeholder",
             "richTextListItem",
             "visualizationSwitcherListItem",
+            "dashboardLayoutListItem",
+            "dashboardLayoutListItem",
         ],
         {
             drop: (item) => {
@@ -70,6 +76,9 @@ export const EmptyDashboardDropZone: React.FC = () => {
                 if (isVisualizationSwitcherDraggableListItem(item)) {
                     handleVisualizationSwitcherPlaceholderDrop();
                 }
+                if (isDashboardLayoutDraggableListItem(item)) {
+                    handleDashboardLayoutPlaceholderDrop();
+                }
             },
         },
         [
@@ -79,6 +88,8 @@ export const EmptyDashboardDropZone: React.FC = () => {
             handleKpiPlaceholderDrop,
             handleInsightPlaceholderDrop,
             handleVisualizationSwitcherPlaceholderDrop,
+            handleRichTextPlaceholderDrop,
+            handleDashboardLayoutPlaceholderDrop,
         ],
     );
 

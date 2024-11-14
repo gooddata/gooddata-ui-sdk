@@ -1,12 +1,15 @@
 // (C) 2024 GoodData Corporation
 
+import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+
 import {
+    selectCatalogDateDatasets,
     selectInsightByWidgetRef,
     selectWidgetByRef,
     useDashboardSelector,
 } from "../../../../../../model/index.js";
-import { getAlertMeasure, getSupportedInsightMeasuresByInsight } from "../utils.js";
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { getSupportedInsightMeasuresByInsight } from "../utils/items.js";
+import { getAlertMeasure } from "../utils/getters.js";
 
 export type AlertInvalidityReason = "missingMetric" | "missingWidget";
 
@@ -19,7 +22,8 @@ export const useAlertValidation = (
 
     const widget = useDashboardSelector(selectWidgetByRef(widgetRef));
     const insight = useDashboardSelector(selectInsightByWidgetRef(widget?.ref));
-    const supportedMeasures = getSupportedInsightMeasuresByInsight(insight);
+    const dateDatasets = useDashboardSelector(selectCatalogDateDatasets);
+    const supportedMeasures = getSupportedInsightMeasuresByInsight(insight, dateDatasets);
     const selectedMeasureExists = getAlertMeasure(supportedMeasures, alert.alert);
 
     const isValid = isNewAlert || Boolean(!!widget && selectedMeasureExists);

@@ -23,13 +23,13 @@ export const AddVisualizationSwitcherWidgetButton: React.FC = () => {
     const isMobileDevice = useMediaQuery("mobileDevice");
     const theme = useTheme();
     return (
-        <div className="add-item-placeholder add-item-placeholder-visualization-switcher s-add-visualization-switcher">
+        <div className="add-item-placeholder add-panel-item s-add-visualization-switcher">
             <Icon.VisualizationSwitcher color={theme?.palette?.complementary?.c6 ?? "#94a1ad"} />
             <FormattedMessage id="addPanel.visualizationSwitcher" />
             <OverlayControllerProvider overlayController={overlayController}>
                 <BubbleHoverTrigger
                     eventsOnBubble={true}
-                    className="gd-add-visualization-switcher s-add-visualization-switcher-bubble-trigger"
+                    className="gd-add-item-placeholder-help-trigger gd-add-visualization-switcher s-add-visualization-switcher-bubble-trigger"
                 >
                     <div
                         className={cx("s-description-trigger", {
@@ -38,7 +38,7 @@ export const AddVisualizationSwitcherWidgetButton: React.FC = () => {
                     >
                         <div className="gd-icon-circle-question" />
                     </div>
-                    <Bubble alignPoints={bubbleAlignPoints}>
+                    <Bubble alignPoints={bubbleAlignPoints} alignTo=".gd-add-item-placeholder-help-trigger">
                         <FormattedMessage id="addPanel.visualizationSwitcher.tooltip" />
                     </Bubble>
                 </BubbleHoverTrigger>

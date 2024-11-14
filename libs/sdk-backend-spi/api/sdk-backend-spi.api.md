@@ -10,6 +10,7 @@ import { CatalogItemType } from '@gooddata/sdk-model';
 import { DataValue } from '@gooddata/sdk-model';
 import { DimensionGenerator } from '@gooddata/sdk-model';
 import { FilterContextItem } from '@gooddata/sdk-model';
+import { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
 import { GenAIObjectType } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAccessGrantee } from '@gooddata/sdk-model';
@@ -409,6 +410,7 @@ export interface IChatThread {
     }): Promise<IChatThreadHistory>;
     query(userMessage: string): IChatThreadQuery;
     reset(): Promise<void>;
+    saveUserFeedback(interactionId: number, feedback: GenAIChatInteractionUserFeedback): Promise<void>;
 }
 
 // @beta
@@ -422,6 +424,7 @@ export interface IChatThreadQuery {
     query(options?: {
         signal?: AbortSignal;
     }): Promise<IGenAIChatEvaluation>;
+    stream(): ReadableStream<IGenAIChatEvaluation>;
     withCreateLimit(createLimit: number): IChatThreadQuery;
     withSearchLimit(searchLimit: number): IChatThreadQuery;
     withUserContext(userContext: IGenAIUserContext): IChatThreadQuery;
@@ -749,13 +752,15 @@ export interface IForecastView {
 // @beta
 export interface IGenAIChatEvaluation {
     // (undocumented)
+    chatHistoryInteractionId?: number;
+    // (undocumented)
     chatHistoryThreadId?: string;
     // (undocumented)
     createdVisualizations?: IGenAICreatedVisualizations;
     // (undocumented)
     foundObjects?: IGenAIFoundObjects;
     // (undocumented)
-    routing: IGenAIChatRouting;
+    routing?: IGenAIChatRouting;
     // (undocumented)
     textResponse?: string;
 }
@@ -1007,6 +1012,7 @@ export interface IOrganizationUserService {
     getUserGroupsOfUser(userId: string): Promise<IUserGroup[]>;
     getUserGroupsQuery(): IOrganizationUserGroupsQuery;
     getUsers(): Promise<IOrganizationUser[]>;
+    getUsersByEmail(email: string): Promise<IUser[]>;
     getUsersOfUserGroup(userGroupId: string): Promise<IUser[]>;
     getUsersQuery(): IOrganizationUsersQuery;
     removeUsersFromUserGroups(userIds: string[], userGroupIds: string[]): Promise<void>;
@@ -1022,6 +1028,7 @@ export interface IOrganizationUsersQuery {
         group?: string;
         name?: string;
         dataSource?: string;
+        email?: string;
     }): IOrganizationUsersQuery;
     withPage(page: number): IOrganizationUsersQuery;
     withSize(size: number): IOrganizationUsersQuery;

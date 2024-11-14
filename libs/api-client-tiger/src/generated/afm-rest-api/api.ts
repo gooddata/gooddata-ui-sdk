@@ -94,6 +94,12 @@ export interface AbsoluteDateFilterAbsoluteDateFilter {
     applyOnResult?: boolean;
     /**
      *
+     * @type {string}
+     * @memberof AbsoluteDateFilterAbsoluteDateFilter
+     */
+    localIdentifier?: string;
+    /**
+     *
      * @type {AfmObjectIdentifierDataset}
      * @memberof AbsoluteDateFilterAbsoluteDateFilter
      */
@@ -737,6 +743,82 @@ export interface AttributeItem {
     showAllValues?: boolean;
 }
 /**
+ *
+ * @export
+ * @interface AttributeNegativeFilter
+ */
+export interface AttributeNegativeFilter {
+    /**
+     *
+     * @type {string}
+     * @memberof AttributeNegativeFilter
+     */
+    using: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof AttributeNegativeFilter
+     */
+    exclude: Array<string>;
+}
+/**
+ *
+ * @export
+ * @interface AttributeNegativeFilterAllOf
+ */
+export interface AttributeNegativeFilterAllOf {
+    /**
+     *
+     * @type {string}
+     * @memberof AttributeNegativeFilterAllOf
+     */
+    using?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof AttributeNegativeFilterAllOf
+     */
+    exclude?: Array<string>;
+}
+/**
+ *
+ * @export
+ * @interface AttributePositiveFilter
+ */
+export interface AttributePositiveFilter {
+    /**
+     *
+     * @type {string}
+     * @memberof AttributePositiveFilter
+     */
+    using: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof AttributePositiveFilter
+     */
+    include: Array<string>;
+}
+/**
+ *
+ * @export
+ * @interface AttributePositiveFilterAllOf
+ */
+export interface AttributePositiveFilterAllOf {
+    /**
+     *
+     * @type {string}
+     * @memberof AttributePositiveFilterAllOf
+     */
+    using?: string;
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof AttributePositiveFilterAllOf
+     */
+    include?: Array<string>;
+}
+/**
  * Header containing the information related to attributes.
  * @export
  * @interface AttributeResultHeader
@@ -936,7 +1018,7 @@ export interface ChatResult {
      * @type {RouteResult}
      * @memberof ChatResult
      */
-    routing: RouteResult;
+    routing?: RouteResult;
     /**
      * Text response for general questions.
      * @type {string}
@@ -961,6 +1043,12 @@ export interface ChatResult {
      * @memberof ChatResult
      */
     threadIdSuffix?: string;
+    /**
+     * Chat History interaction ID. Unique ID for each interaction.
+     * @type {number}
+     * @memberof ChatResult
+     */
+    chatHistoryInteractionId?: number;
 }
 /**
  *
@@ -1069,6 +1157,12 @@ export interface ComparisonMeasureValueFilterComparisonMeasureValueFilter {
     applyOnResult?: boolean;
     /**
      *
+     * @type {string}
+     * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
+     */
+    localIdentifier?: string;
+    /**
+     *
      * @type {AfmIdentifier}
      * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
      */
@@ -1123,6 +1217,14 @@ export interface CreatedVisualization {
      * @memberof CreatedVisualization
      */
     dimensionality: Array<DimAttribute>;
+    /**
+     * List of filters to be applied to the new visualization
+     * @type {Array<AttributeNegativeFilter | AttributePositiveFilter | DateAbsoluteFilter | DateRelativeFilter>}
+     * @memberof CreatedVisualization
+     */
+    filters: Array<
+        AttributeNegativeFilter | AttributePositiveFilter | DateAbsoluteFilter | DateRelativeFilter
+    >;
 }
 
 export const CreatedVisualizationVisualizationTypeEnum = {
@@ -1183,11 +1285,167 @@ export interface DataColumnLocators {
     properties?: { [key: string]: DataColumnLocator };
 }
 /**
+ *
+ * @export
+ * @interface DateAbsoluteFilter
+ */
+export interface DateAbsoluteFilter {
+    /**
+     *
+     * @type {string}
+     * @memberof DateAbsoluteFilter
+     */
+    using: string;
+    /**
+     *
+     * @type {string}
+     * @memberof DateAbsoluteFilter
+     */
+    from?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof DateAbsoluteFilter
+     */
+    to?: string;
+}
+/**
+ *
+ * @export
+ * @interface DateAbsoluteFilterAllOf
+ */
+export interface DateAbsoluteFilterAllOf {
+    /**
+     *
+     * @type {string}
+     * @memberof DateAbsoluteFilterAllOf
+     */
+    using?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof DateAbsoluteFilterAllOf
+     */
+    from?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof DateAbsoluteFilterAllOf
+     */
+    to?: string;
+}
+/**
  * @type DateFilter
  * Abstract filter definition type for dates.
  * @export
  */
 export type DateFilter = AbsoluteDateFilter | RelativeDateFilter;
+
+/**
+ *
+ * @export
+ * @interface DateRelativeFilter
+ */
+export interface DateRelativeFilter {
+    /**
+     *
+     * @type {string}
+     * @memberof DateRelativeFilter
+     */
+    using: string;
+    /**
+     *
+     * @type {string}
+     * @memberof DateRelativeFilter
+     */
+    granularity: DateRelativeFilterGranularityEnum;
+    /**
+     *
+     * @type {number}
+     * @memberof DateRelativeFilter
+     */
+    from: number;
+    /**
+     *
+     * @type {number}
+     * @memberof DateRelativeFilter
+     */
+    to: number;
+}
+
+export const DateRelativeFilterGranularityEnum = {
+    MINUTE: "MINUTE",
+    HOUR: "HOUR",
+    DAY: "DAY",
+    WEEK: "WEEK",
+    MONTH: "MONTH",
+    QUARTER: "QUARTER",
+    YEAR: "YEAR",
+    MINUTE_OF_HOUR: "MINUTE_OF_HOUR",
+    HOUR_OF_DAY: "HOUR_OF_DAY",
+    DAY_OF_WEEK: "DAY_OF_WEEK",
+    DAY_OF_MONTH: "DAY_OF_MONTH",
+    DAY_OF_YEAR: "DAY_OF_YEAR",
+    WEEK_OF_YEAR: "WEEK_OF_YEAR",
+    MONTH_OF_YEAR: "MONTH_OF_YEAR",
+    QUARTER_OF_YEAR: "QUARTER_OF_YEAR",
+} as const;
+
+export type DateRelativeFilterGranularityEnum =
+    typeof DateRelativeFilterGranularityEnum[keyof typeof DateRelativeFilterGranularityEnum];
+
+/**
+ *
+ * @export
+ * @interface DateRelativeFilterAllOf
+ */
+export interface DateRelativeFilterAllOf {
+    /**
+     *
+     * @type {string}
+     * @memberof DateRelativeFilterAllOf
+     */
+    using?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof DateRelativeFilterAllOf
+     */
+    granularity?: DateRelativeFilterAllOfGranularityEnum;
+    /**
+     *
+     * @type {number}
+     * @memberof DateRelativeFilterAllOf
+     */
+    from?: number;
+    /**
+     *
+     * @type {number}
+     * @memberof DateRelativeFilterAllOf
+     */
+    to?: number;
+}
+
+export const DateRelativeFilterAllOfGranularityEnum = {
+    MINUTE: "MINUTE",
+    HOUR: "HOUR",
+    DAY: "DAY",
+    WEEK: "WEEK",
+    MONTH: "MONTH",
+    QUARTER: "QUARTER",
+    YEAR: "YEAR",
+    MINUTE_OF_HOUR: "MINUTE_OF_HOUR",
+    HOUR_OF_DAY: "HOUR_OF_DAY",
+    DAY_OF_WEEK: "DAY_OF_WEEK",
+    DAY_OF_MONTH: "DAY_OF_MONTH",
+    DAY_OF_YEAR: "DAY_OF_YEAR",
+    WEEK_OF_YEAR: "WEEK_OF_YEAR",
+    MONTH_OF_YEAR: "MONTH_OF_YEAR",
+    QUARTER_OF_YEAR: "QUARTER_OF_YEAR",
+} as const;
+
+export type DateRelativeFilterAllOfGranularityEnum =
+    typeof DateRelativeFilterAllOfGranularityEnum[keyof typeof DateRelativeFilterAllOfGranularityEnum];
 
 /**
  * Filter definition type specified by label and values.
@@ -1806,6 +2064,12 @@ export interface InlineFilterDefinitionInline {
      * @memberof InlineFilterDefinitionInline
      */
     applyOnResult?: boolean;
+    /**
+     *
+     * @type {string}
+     * @memberof InlineFilterDefinitionInline
+     */
+    localIdentifier?: string;
 }
 /**
  * Metric defined by the raw MAQL query.
@@ -2177,6 +2441,12 @@ export interface NegativeAttributeFilterNegativeAttributeFilter {
     applyOnResult?: boolean;
     /**
      *
+     * @type {string}
+     * @memberof NegativeAttributeFilterNegativeAttributeFilter
+     */
+    localIdentifier?: string;
+    /**
+     *
      * @type {AfmIdentifier}
      * @memberof NegativeAttributeFilterNegativeAttributeFilter
      */
@@ -2354,6 +2624,12 @@ export interface PositiveAttributeFilterPositiveAttributeFilter {
     applyOnResult?: boolean;
     /**
      *
+     * @type {string}
+     * @memberof PositiveAttributeFilterPositiveAttributeFilter
+     */
+    localIdentifier?: string;
+    /**
+     *
      * @type {AfmIdentifier}
      * @memberof PositiveAttributeFilterPositiveAttributeFilter
      */
@@ -2408,6 +2684,12 @@ export interface RangeMeasureValueFilterRangeMeasureValueFilter {
      * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
      */
     applyOnResult?: boolean;
+    /**
+     *
+     * @type {string}
+     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
+     */
+    localIdentifier?: string;
     /**
      *
      * @type {AfmIdentifier}
@@ -2467,6 +2749,12 @@ export interface RankingFilterRankingFilter {
      * @memberof RankingFilterRankingFilter
      */
     applyOnResult?: boolean;
+    /**
+     *
+     * @type {string}
+     * @memberof RankingFilterRankingFilter
+     */
+    localIdentifier?: string;
 }
 
 export const RankingFilterRankingFilterOperatorEnum = {
@@ -2520,6 +2808,12 @@ export interface RelativeDateFilterRelativeDateFilter {
      * @memberof RelativeDateFilterRelativeDateFilter
      */
     applyOnResult?: boolean;
+    /**
+     *
+     * @type {string}
+     * @memberof RelativeDateFilterRelativeDateFilter
+     */
+    localIdentifier?: string;
     /**
      *
      * @type {AfmObjectIdentifierDataset}
@@ -3352,6 +3646,58 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             localVarRequestOptions.data = needsSerialization
                 ? JSON.stringify(chatHistoryRequest !== undefined ? chatHistoryRequest : {})
                 : chatHistoryRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * (BETA) Combines multiple use cases such as search, create visualizations, ...
+         * @summary (BETA) Chat with AI
+         * @param {string} workspaceId Workspace identifier
+         * @param {ChatRequest} chatRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiChatStream: async (
+            workspaceId: string,
+            chatRequest: ChatRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("aiChatStream", "workspaceId", workspaceId);
+            // verify required parameter 'chatRequest' is not null or undefined
+            assertParamExists("aiChatStream", "chatRequest", chatRequest);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chatStream`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof chatRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(chatRequest !== undefined ? chatRequest : {})
+                : chatRequest || "";
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4403,6 +4749,26 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * (BETA) Combines multiple use cases such as search, create visualizations, ...
+         * @summary (BETA) Chat with AI
+         * @param {string} workspaceId Workspace identifier
+         * @param {ChatRequest} chatRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async aiChatStream(
+            workspaceId: string,
+            chatRequest: ChatRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<object>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.aiChatStream(
+                workspaceId,
+                chatRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * (BETA) Uses similarity (e.g. cosine distance) to find most similar use cases.
          * @summary (BETA) Route to supported use cases based on this input query.
          * @param {string} workspaceId Workspace identifier
@@ -4869,6 +5235,21 @@ export const ActionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * (BETA) Combines multiple use cases such as search, create visualizations, ...
+         * @summary (BETA) Chat with AI
+         * @param {ActionsApiAiChatStreamRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiChatStream(
+            requestParameters: ActionsApiAiChatStreamRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<Array<object>> {
+            return localVarFp
+                .aiChatStream(requestParameters.workspaceId, requestParameters.chatRequest, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * (BETA) Uses similarity (e.g. cosine distance) to find most similar use cases.
          * @summary (BETA) Route to supported use cases based on this input query.
          * @param {ActionsApiAiRouteRequest} requestParameters Request parameters.
@@ -5239,6 +5620,19 @@ export interface ActionsApiInterface {
     ): AxiosPromise<ChatHistoryResult>;
 
     /**
+     * (BETA) Combines multiple use cases such as search, create visualizations, ...
+     * @summary (BETA) Chat with AI
+     * @param {ActionsApiAiChatStreamRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    aiChatStream(
+        requestParameters: ActionsApiAiChatStreamRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<Array<object>>;
+
+    /**
      * (BETA) Uses similarity (e.g. cosine distance) to find most similar use cases.
      * @summary (BETA) Route to supported use cases based on this input query.
      * @param {ActionsApiAiRouteRequest} requestParameters Request parameters.
@@ -5500,6 +5894,27 @@ export interface ActionsApiAiChatHistoryRequest {
      * @memberof ActionsApiAiChatHistory
      */
     readonly chatHistoryRequest: ChatHistoryRequest;
+}
+
+/**
+ * Request parameters for aiChatStream operation in ActionsApi.
+ * @export
+ * @interface ActionsApiAiChatStreamRequest
+ */
+export interface ActionsApiAiChatStreamRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiAiChatStream
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {ChatRequest}
+     * @memberof ActionsApiAiChatStream
+     */
+    readonly chatRequest: ChatRequest;
 }
 
 /**
@@ -6069,6 +6484,20 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     public aiChatHistory(requestParameters: ActionsApiAiChatHistoryRequest, options?: AxiosRequestConfig) {
         return ActionsApiFp(this.configuration)
             .aiChatHistory(requestParameters.workspaceId, requestParameters.chatHistoryRequest, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (BETA) Combines multiple use cases such as search, create visualizations, ...
+     * @summary (BETA) Chat with AI
+     * @param {ActionsApiAiChatStreamRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public aiChatStream(requestParameters: ActionsApiAiChatStreamRequest, options?: AxiosRequestConfig) {
+        return ActionsApiFp(this.configuration)
+            .aiChatStream(requestParameters.workspaceId, requestParameters.chatRequest, options)
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -8112,6 +8541,58 @@ export const SmartFunctionsApiAxiosParamCreator = function (configuration?: Conf
             };
         },
         /**
+         * (BETA) Combines multiple use cases such as search, create visualizations, ...
+         * @summary (BETA) Chat with AI
+         * @param {string} workspaceId Workspace identifier
+         * @param {ChatRequest} chatRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiChatStream: async (
+            workspaceId: string,
+            chatRequest: ChatRequest,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
+            // verify required parameter 'workspaceId' is not null or undefined
+            assertParamExists("aiChatStream", "workspaceId", workspaceId);
+            // verify required parameter 'chatRequest' is not null or undefined
+            assertParamExists("aiChatStream", "chatRequest", chatRequest);
+            const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/chatStream`.replace(
+                `{${"workspaceId"}}`,
+                encodeURIComponent(String(workspaceId)),
+            );
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+            const needsSerialization =
+                typeof chatRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(chatRequest !== undefined ? chatRequest : {})
+                : chatRequest || "";
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * (BETA) Uses similarity (e.g. cosine distance) to find most similar use cases.
          * @summary (BETA) Route to supported use cases based on this input query.
          * @param {string} workspaceId Workspace identifier
@@ -8620,6 +9101,26 @@ export const SmartFunctionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * (BETA) Combines multiple use cases such as search, create visualizations, ...
+         * @summary (BETA) Chat with AI
+         * @param {string} workspaceId Workspace identifier
+         * @param {ChatRequest} chatRequest
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async aiChatStream(
+            workspaceId: string,
+            chatRequest: ChatRequest,
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<object>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.aiChatStream(
+                workspaceId,
+                chatRequest,
+                options,
+            );
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * (BETA) Uses similarity (e.g. cosine distance) to find most similar use cases.
          * @summary (BETA) Route to supported use cases based on this input query.
          * @param {string} workspaceId Workspace identifier
@@ -8860,6 +9361,21 @@ export const SmartFunctionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * (BETA) Combines multiple use cases such as search, create visualizations, ...
+         * @summary (BETA) Chat with AI
+         * @param {SmartFunctionsApiAiChatStreamRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        aiChatStream(
+            requestParameters: SmartFunctionsApiAiChatStreamRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<Array<object>> {
+            return localVarFp
+                .aiChatStream(requestParameters.workspaceId, requestParameters.chatRequest, options)
+                .then((request) => request(axios, basePath));
+        },
+        /**
          * (BETA) Uses similarity (e.g. cosine distance) to find most similar use cases.
          * @summary (BETA) Route to supported use cases based on this input query.
          * @param {SmartFunctionsApiAiRouteRequest} requestParameters Request parameters.
@@ -9051,6 +9567,19 @@ export interface SmartFunctionsApiInterface {
     ): AxiosPromise<ChatHistoryResult>;
 
     /**
+     * (BETA) Combines multiple use cases such as search, create visualizations, ...
+     * @summary (BETA) Chat with AI
+     * @param {SmartFunctionsApiAiChatStreamRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    aiChatStream(
+        requestParameters: SmartFunctionsApiAiChatStreamRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<Array<object>>;
+
+    /**
      * (BETA) Uses similarity (e.g. cosine distance) to find most similar use cases.
      * @summary (BETA) Route to supported use cases based on this input query.
      * @param {SmartFunctionsApiAiRouteRequest} requestParameters Request parameters.
@@ -9195,6 +9724,27 @@ export interface SmartFunctionsApiAiChatHistoryRequest {
      * @memberof SmartFunctionsApiAiChatHistory
      */
     readonly chatHistoryRequest: ChatHistoryRequest;
+}
+
+/**
+ * Request parameters for aiChatStream operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiAiChatStreamRequest
+ */
+export interface SmartFunctionsApiAiChatStreamRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiAiChatStream
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {ChatRequest}
+     * @memberof SmartFunctionsApiAiChatStream
+     */
+    readonly chatRequest: ChatRequest;
 }
 
 /**
@@ -9484,6 +10034,23 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
     ) {
         return SmartFunctionsApiFp(this.configuration)
             .aiChatHistory(requestParameters.workspaceId, requestParameters.chatHistoryRequest, options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * (BETA) Combines multiple use cases such as search, create visualizations, ...
+     * @summary (BETA) Chat with AI
+     * @param {SmartFunctionsApiAiChatStreamRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public aiChatStream(
+        requestParameters: SmartFunctionsApiAiChatStreamRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return SmartFunctionsApiFp(this.configuration)
+            .aiChatStream(requestParameters.workspaceId, requestParameters.chatRequest, options)
             .then((request) => request(this.axios, this.basePath));
     }
 

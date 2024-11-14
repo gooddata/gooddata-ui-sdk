@@ -13,6 +13,7 @@ import {
     IFilter,
     INotificationChannelMetadataObject,
     isAutomationUserRecipient,
+    isWidget,
 } from "@gooddata/sdk-model";
 import parseISO from "date-fns/parseISO/index.js";
 import { getUserTimezone } from "../utils/timezone.js";
@@ -20,7 +21,6 @@ import {
     useDashboardSelector,
     selectDashboardTitle,
     selectDashboardId,
-    isCustomWidget,
     ExtendedDashboardWidget,
     selectCurrentUser,
     selectTimezone,
@@ -430,7 +430,7 @@ function newWidgetExportDefinitionMetadataObjectDefinition({
     widgetFilters?: IFilter[];
     scheduledExportToEdit?: IAutomationMetadataObject | IAutomationMetadataObjectDefinition;
 }): IExportDefinitionMetadataObjectDefinition {
-    const widgetTitle = !isCustomWidget(widget) ? widget?.title : widget?.identifier;
+    const widgetTitle = isWidget(widget) ? widget?.title : widget?.identifier;
     const existingScheduleFilters = [...(getAutomationVisualizationFilters(scheduledExportToEdit) ?? [])];
 
     // in case of editing widget schedule, we never overwrite already stored filters

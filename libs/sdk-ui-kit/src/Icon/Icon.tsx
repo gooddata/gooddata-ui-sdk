@@ -102,6 +102,9 @@ import { GenAI } from "./icons/GenAI.js";
 import { Search } from "./icons/Search.js";
 import { NewVisualization } from "./icons/NewVisualization.js";
 import { ChatBubble } from "./icons/ChatBubble.js";
+import { Container } from "./icons/Container.js";
+import { ThumbsUp } from "./icons/ThumbsUp.js";
+import { ThumbsDown } from "./icons/ThumbsDown.js";
 
 /**
  * @internal
@@ -207,6 +210,9 @@ export const Icon: Record<string, React.FC<IIconProps>> = {
     Search,
     NewVisualization,
     ChatBubble,
+    Section: Container,
+    ThumbsUp,
+    ThumbsDown,
 };
 
 export type { IRowsIconProps, IColumnsIconProps };

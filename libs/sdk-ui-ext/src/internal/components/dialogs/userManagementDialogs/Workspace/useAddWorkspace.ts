@@ -16,7 +16,6 @@ export const useAddWorkspace = (
     subjectType: WorkspacePermissionSubject,
     onSubmit: (workspaces: IGrantedWorkspace[]) => void,
     onCancel: () => void,
-    useGranularPermissions: boolean,
     editWorkspace?: IGrantedWorkspace,
 ) => {
     const { addSuccess, addError } = useToastMessage();
@@ -45,9 +44,7 @@ export const useAddWorkspace = (
             .permissions()
             .assignPermissions({
                 assignees: ids.map((id) => ({ id, type: subjectType })),
-                workspaces: addedWorkspaces.map((w) =>
-                    grantedWorkspaceAsPermissionAssignment(w, useGranularPermissions),
-                ),
+                workspaces: addedWorkspaces.map((w) => grantedWorkspaceAsPermissionAssignment(w)),
             })
             .then(() => {
                 if (ids.length === 1) {

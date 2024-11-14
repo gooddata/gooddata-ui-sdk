@@ -41,6 +41,8 @@ export type {
     RelativeIndex,
     ExtendedDashboardItemType,
     ExtendedDashboardItemTypes,
+    ExtendedDashboardLayoutWidget,
+    FilterableDashboardWidget,
 } from "./types/layoutTypes.js";
 export {
     newCustomWidget,
@@ -50,6 +52,7 @@ export {
     isCustomWidgetBase,
     isCustomWidget,
     extendedWidgetDebugStr,
+    isExtendedDashboardLayoutWidget,
 } from "./types/layoutTypes.js";
 export type {
     FilterOp,
