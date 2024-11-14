@@ -603,3 +603,15 @@
         top: 4px;
     }
 }
+
+.gd-configuration-export-options {
+    width: 100%;
+    .gd-export-options-xlsx,
+    .gd-export-options-csv,
+    .gd-export-options-csv-raw {
+        justify-content: flex-start;
+    }
+    .gd-icon-download {
+        margin-right: 10px;
+    }
+}

@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import {
     isBadRequest,
     isDataTooLargeToCompute,
@@ -32,6 +32,16 @@ export const isNonExportableError = typesUtils.combineGuards(
 /**
  * @internal
  */
+export const isNonExportableErrorExceptTooLarge = typesUtils.combineGuards(
+    isUnknownSdkError,
+    isNoDataSdkError,
+    isProtectedReport,
+    isEmptyAfm,
+);
+
+/**
+ * @internal
+ */
 export const isDataError = typesUtils.combineGuards(
     isUnknownSdkError,
     isBadRequest,
@@ -42,3 +52,19 @@ export const isDataError = typesUtils.combineGuards(
     isEmptyAfm,
     isNegativeValues,
 );
+
+/**
+ * @internal
+ */
+export const isDataErrorExceptTooLarge = typesUtils.combineGuards(
+    isUnknownSdkError,
+    isNoDataSdkError,
+    isProtectedReport,
+    isEmptyAfm,
+    isNegativeValues,
+);
+
+/**
+ * @internal
+ */
+export const isDataErrorTooLarge = typesUtils.combineGuards(isDataTooLargeToCompute, isDataTooLargeToDisplay);

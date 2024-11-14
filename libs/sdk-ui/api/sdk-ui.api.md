@@ -195,6 +195,9 @@ export function createExportErrorFunction(error: GoodDataSdkError): IExportFunct
 // @internal
 export function createExportFunction(result: IExecutionResult, exportTitle?: string): IExportFunction;
 
+// @internal
+export function createExportRawFunction(result: IExecutionResult, filename: string): Promise<IExportResult>;
+
 // @internal (undocumented)
 export function createIntlMock(customMessages?: {}, locale?: string): IntlShape;
 

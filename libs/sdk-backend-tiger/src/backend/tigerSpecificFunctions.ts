@@ -1,8 +1,10 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import {
     ActionsApiProcessInvitationRequest,
     ActionsApiReadCsvFileManifestsRequest,
+    AfmExecution,
+    AfmExport,
     AnalyzeCsvRequest,
     AnalyzeCsvResponse,
     ApiEntitlement,
@@ -54,6 +56,7 @@ import {
     ScanSqlResponse,
     TestDefinitionRequestTypeEnum,
     UploadFileResponse,
+    RawExportActionsRequest,
 } from "@gooddata/api-client-tiger";
 import { convertApiError } from "../utils/errorHandling.js";
 import uniq from "lodash/uniq.js";
@@ -61,7 +64,9 @@ import toLower from "lodash/toLower.js";
 import {
     ErrorConverter,
     IAnalyticalBackend,
+    IExportResult,
     isUnexpectedResponseError,
+    TimeoutError,
     UnexpectedError,
 } from "@gooddata/sdk-backend-spi";
 import isEmpty from "lodash/isEmpty.js";
@@ -69,6 +74,7 @@ import { AuthenticatedAsyncCall } from "@gooddata/sdk-backend-base";
 import { AxiosRequestConfig } from "axios";
 import { IUser } from "@gooddata/sdk-model";
 import { backOff } from "exponential-backoff";
+import { parseNameFromContentDisposition } from "../utils/downloadFile.js";
 
 /**
  * @internal
@@ -431,6 +437,7 @@ export type TigerSpecificFunctions = {
     updateCSPDirective?: (directiveId: string, requestData: ICSPDirective) => Promise<ICSPDirective>;
     deleteCSPDirective?: (directiveId: string) => Promise<void>;
     registerUploadNotification?: (dataSourceId: string) => Promise<void>;
+    exportRawData?: (execution: AfmExecution, projectId: string, fileName: string) => Promise<IExportResult>;
 
     /**
      * Return all custom setting of a workspace.
@@ -1558,6 +1565,53 @@ export const buildTigerSpecificFunctions = (
             await sdk.actions.registerUploadNotification({
                 dataSourceId,
             });
+        });
+    },
+
+    exportRawData: async (execution, projectId, fileName) => {
+        const payload: RawExportActionsRequest = {
+            format: "CSV",
+            execution: execution.execution as AfmExport,
+            fileName,
+        };
+
+        const MAX_POLL_ATTEMPTS = 50;
+        const DEFAULT_POLL_DELAY = 5000;
+
+        return authApiCall(async (client) => {
+            const rawExport = await client.export.createRawExport({
+                workspaceId: projectId,
+                rawExportRequest: payload,
+            });
+
+            for (let i = 0; i < MAX_POLL_ATTEMPTS; i++) {
+                const result = await client.export.getTabularExport(
+                    {
+                        workspaceId: projectId,
+                        exportId: rawExport?.data?.exportResult,
+                    },
+                    {
+                        transformResponse: (x) => x,
+                        responseType: "blob",
+                    },
+                );
+
+                if (result?.status === 200) {
+                    const type = "text/csv";
+                    const blob = new Blob([result?.data as any], { type });
+                    return {
+                        uri: result?.config?.url || "",
+                        objectUrl: URL.createObjectURL(blob),
+                        fileName: parseNameFromContentDisposition(result),
+                    };
+                }
+
+                await new Promise((resolve) => setTimeout(resolve, DEFAULT_POLL_DELAY));
+            }
+
+            throw new TimeoutError(
+                `Export timeout for export id "${rawExport?.data?.exportResult}" in workspace "${projectId}"`,
+            );
         });
     },
 

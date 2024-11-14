@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { useCallback, useState } from "react";
 import { invariant } from "ts-invariant";
 import { IExtendedExportConfig } from "@gooddata/sdk-ui";
@@ -16,9 +16,12 @@ import {
     exportInsightWidget,
     ExportInsightWidget,
     DashboardInsightWidgetExportResolved,
+    ExportRawInsightWidget,
+    exportRawInsightWidget,
 } from "../../../model/index.js";
 import { useExportHandler } from "./useExportHandler.js";
 import { useExportDialogContext } from "../../dashboardContexts/index.js";
+import { useRawExportHandler } from "./useRawExportHandler.js";
 
 export const useInsightExport = (config: {
     title: string;
@@ -45,6 +48,15 @@ export const useInsightExport = (config: {
         [widgetRef],
     );
 
+    const exportRawFunction = useCallback(
+        (title: string) =>
+            dispatchAndWaitFor<ExportRawInsightWidget, DashboardInsightWidgetExportResolved>(
+                dispatch,
+                exportRawInsightWidget(insight!, title, uuid()),
+            ).then((result) => result.payload.result),
+        [insight],
+    );
+
     const settings = useDashboardSelector(selectSettings);
     const isInsightExportable = insight
         ? getInsightVisualizationMeta(insight, settings).supportsExport
@@ -53,6 +65,7 @@ export const useInsightExport = (config: {
     const isExportableToXlsx = useDashboardSelector(selectIsExecutionResultExportableToXlsxByRef(widgetRef));
 
     const exportHandler = useExportHandler();
+    const exportRawHandler = useRawExportHandler();
     const { openDialog, closeDialog } = useExportDialogContext();
 
     const onExportCSV = useCallback(() => {
@@ -65,6 +78,13 @@ export const useInsightExport = (config: {
         invariant(exportFunction);
         exportHandler(exportFunction, exportConfig).then(() => setIsExporting(false));
     }, [exportFunction, title]);
+
+    const onExportRawCSV = useCallback(() => {
+        setIsExporting(true);
+        // if this bombs there is an issue with the logic enabling the buttons
+        invariant(exportRawFunction);
+        exportRawHandler(exportRawFunction, title).then(() => setIsExporting(false));
+    }, [exportRawFunction, title]);
 
     const onExportXLSX = useCallback(() => {
         openDialog({
@@ -90,10 +110,14 @@ export const useInsightExport = (config: {
     const exportCSVEnabled = !isExporting && isInsightExportable && isExportableToCsv;
     const exportXLSXEnabled = !isExporting && isInsightExportable && isExportableToXlsx;
 
+    const isExportRawVisible = settings.enableRawExports === true;
+
     return {
         exportCSVEnabled,
         exportXLSXEnabled,
+        isExportRawVisible,
         onExportCSV,
         onExportXLSX,
+        onExportRawCSV,
     };
 };
