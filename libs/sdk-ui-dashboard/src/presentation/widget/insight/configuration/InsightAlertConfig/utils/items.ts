@@ -427,10 +427,10 @@ function fillComparators(simpleMetrics: AlertMetric[], datasets: ICatalogDateDat
     }
 
     simpleMetrics.forEach((metric) => {
-        const prev = metric.comparators.find(
+        const previousPeriod = metric.comparators.find(
             (c) => c.comparator === AlertMetricComparatorType.PreviousPeriod,
         );
-        if (!prev) {
+        if (!previousPeriod) {
             //PP
             metric.comparators.push({
                 measure: newPreviousPeriodMeasure(
@@ -452,7 +452,12 @@ function fillComparators(simpleMetrics: AlertMetric[], datasets: ICatalogDateDat
                 dataset: undefined,
                 granularity: undefined,
             });
+        }
 
+        const samePeriodPrevYear = metric.comparators.find(
+            (c) => c.comparator === AlertMetricComparatorType.SamePeriodPreviousYear,
+        );
+        if (!samePeriodPrevYear) {
             //PoP
             metric.comparators.push({
                 measure: newPopMeasure(
@@ -483,14 +488,11 @@ function fillGranularity(simpleMetrics: AlertMetric[], datasets: ICatalogDateDat
                 const dataset = datasets.find((d) => {
                     return d.dateAttributes.some((a) => areObjRefsEqual(a.attribute.ref, attr));
                 });
-                const dateAttribute = dataset?.dateAttributes.find((a) =>
-                    areObjRefsEqual(a.attribute.ref, attr),
-                );
 
                 if (dataset) {
+                    const lowest = sortDateAttributes(dataset)[0];
                     comparator.dataset = dataset.dataSet;
-                    //comparator.dateAttribute = dateAttribute?.attribute;
-                    comparator.granularity = dateAttribute?.granularity;
+                    comparator.granularity = lowest?.granularity;
                 }
             }
             if (isPreviousPeriodMeasureDefinition(def)) {
@@ -501,18 +503,18 @@ function fillGranularity(simpleMetrics: AlertMetric[], datasets: ICatalogDateDat
                 });
 
                 if (dataset) {
-                    const sorted = dataset.dateAttributes.slice().sort((a, b) => {
-                        return (
-                            SortedGranularities.indexOf(b.granularity) -
-                            SortedGranularities.indexOf(a.granularity)
-                        );
-                    });
-                    const lowest = sorted[0];
+                    const lowest = sortDateAttributes(dataset)[0];
                     comparator.dataset = dataset.dataSet;
                     comparator.granularity = lowest?.granularity;
                 }
             }
         });
+    });
+}
+
+function sortDateAttributes(dataset: ICatalogDateDataset) {
+    return dataset.dateAttributes.slice().sort((a, b) => {
+        return SortedGranularities.indexOf(b.granularity) - SortedGranularities.indexOf(a.granularity);
     });
 }
 
