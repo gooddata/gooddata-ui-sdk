@@ -234,7 +234,7 @@ export function transformAlertByRelativeOperator(
     comparatorType?: AlertMetricComparatorType,
 ): IAutomationMetadataObject {
     const periodMeasure = measure.comparators.filter((c) =>
-        comparatorType ? c.comparator === comparatorType : true,
+        comparatorType !== undefined ? c.comparator === comparatorType : true,
     );
 
     const cond = transformToRelativeCondition(alert.alert!.condition);

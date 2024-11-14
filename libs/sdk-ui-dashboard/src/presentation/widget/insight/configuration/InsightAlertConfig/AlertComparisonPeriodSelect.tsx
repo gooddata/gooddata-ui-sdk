@@ -1,6 +1,6 @@
 // (C) 2022-2024 GoodData Corporation
 import React, { useMemo } from "react";
-import { IAutomationMetadataObject } from "@gooddata/sdk-model";
+import { DateGranularity, IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { Button, Dropdown, List, OverlayPositionType, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
@@ -44,7 +44,7 @@ export const AlertComparisonPeriodSelect = (props: IAlertComparisonPeriodSelectP
         );
 
         return [
-            sp?.granularity
+            sp?.granularity && pp?.granularity !== DateGranularity.year
                 ? {
                       title: intl.formatMessage(
                           { id: "insightAlert.config.compare_with_sp_granularity" },
@@ -151,7 +151,7 @@ const DropdownButtonLabel = (props: DropdownButtonLabelProps) => {
         return (
             <div className="gd-edit-alert__measure-info">
                 <FormattedMessage id="insightAlert.config.compare_with" />{" "}
-                {selectedOperator.granularity ? (
+                {selectedOperator.granularity && selectedOperator.granularity !== DateGranularity.year ? (
                     <FormattedMessage
                         id="insightAlert.config.compare_with_sp_granularity"
                         values={{
