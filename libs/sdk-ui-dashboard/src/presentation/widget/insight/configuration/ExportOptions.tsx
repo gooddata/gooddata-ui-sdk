@@ -51,11 +51,15 @@ export const ExportOptions: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
 
     const execution = useDashboardSelector(selectExecutionResultByRef(widget.ref));
 
-    const tooltip = isDataErrorTooLarge(execution?.error)
-        ? "options.menu.data.too.large"
-        : isDataError(execution?.error)
-        ? "options.menu.unsupported.error"
-        : "options.menu.unsupported.loading";
+    const partialWarning =
+        execution?.warnings?.filter((warning) => warning.warningCode === "gdc.pixtab.partial") ?? [];
+
+    const tooltip =
+        isDataErrorTooLarge(execution?.error) || partialWarning.length > 0
+            ? "options.menu.data.too.large"
+            : isDataError(execution?.error)
+            ? "options.menu.unsupported.error"
+            : "options.menu.unsupported.loading";
 
     const {
         exportCSVEnabled,

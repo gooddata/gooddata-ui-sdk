@@ -60,8 +60,17 @@ export const selectIsExecutionResultReadyForExportByRef: (ref: ObjRef) => Dashbo
                     return false;
                 }
 
-                const { isLoading, error, executionResult } = widgetExecution;
-                return !!executionResult && !isLoading && !isNonExportableError(error);
+                const { isLoading, error, executionResult, warnings } = widgetExecution;
+
+                const partialWarning =
+                    warnings?.filter((warning) => warning.warningCode === "gdc.pixtab.partial") ?? [];
+
+                return (
+                    !!executionResult &&
+                    !isLoading &&
+                    !isNonExportableError(error) &&
+                    partialWarning.length === 0
+                );
             },
         ),
     );

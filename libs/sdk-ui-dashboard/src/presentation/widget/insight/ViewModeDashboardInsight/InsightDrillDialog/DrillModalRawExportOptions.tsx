@@ -92,11 +92,15 @@ const DrillModalRawExportOptions: React.FC<IDrillModalRawExportOptionsProps> = (
 }) => {
     const execution = useDashboardSelector(selectExecutionResultByRef(DRILL_MODAL_EXECUTION_PSEUDO_REF));
 
-    const tooltip = isDataErrorTooLarge(execution?.error)
-        ? "widget.drill.modal.data.too.large"
-        : isDataError(execution?.error)
-        ? "options.menu.unsupported.error"
-        : "options.menu.unsupported.loading";
+    const partialWarning =
+        execution?.warnings?.filter((warning) => warning.warningCode === "gdc.pixtab.partial") ?? [];
+
+    const tooltip =
+        isDataErrorTooLarge(execution?.error) || partialWarning.length > 0
+            ? "widget.drill.modal.data.too.large"
+            : isDataError(execution?.error)
+            ? "options.menu.unsupported.error"
+            : "options.menu.unsupported.loading";
 
     return showDropdown ? (
         <Overlay
