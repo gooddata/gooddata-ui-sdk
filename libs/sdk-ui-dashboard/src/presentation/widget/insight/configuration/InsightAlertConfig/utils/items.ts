@@ -4,6 +4,7 @@ import {
     bucketAttributes,
     bucketMeasures,
     DateAttributeGranularity,
+    DateGranularity,
     IAttribute,
     IBucket,
     ICatalogDateAttribute,
@@ -383,13 +384,17 @@ function transformGranularities(
     removeInvalidComparators(simpleMetrics, insightFilters);
 }
 
+type ICatalogDateDatasetWithAllowedGranularity = ICatalogDateDataset & {
+    dateAttributesUsed: ICatalogDateAttribute[];
+};
+
 function collectAllDateDatasets(
     insight: IInsight | null | undefined,
     insightFilters: IFilter[],
     buckets: string[],
     datasets: ICatalogDateDataset[],
-): ICatalogDateDataset[] {
-    const all = buckets.reduce<IAttribute[]>((acc, bucketId) => {
+): ICatalogDateDatasetWithAllowedGranularity[] {
+    const attributes = buckets.reduce<IAttribute[]>((acc, bucketId) => {
         const bucket: IBucket | undefined = insight ? insightBucket(insight, bucketId) : undefined;
 
         return [...acc, ...(bucket ? bucketAttributes(bucket) : [])];
@@ -406,22 +411,25 @@ function collectAllDateDatasets(
 
     return datasets
         .map((dataset) => {
-            const dateAttributesFromBuckets = all
+            const dateAttributesFromBuckets = attributes
                 .map((a) => getCatalogAttribute(dataset.dateAttributes, a))
                 .filter(Boolean) as ICatalogDateAttribute[];
             const dateAttributesFromFilters = getFiltersAttribute(datasetsWithGranularity, dataset);
 
             return {
                 ...dataset,
-                dateAttributes: [...dateAttributesFromBuckets, ...dateAttributesFromFilters].filter(
+                dateAttributesUsed: [...dateAttributesFromBuckets, ...dateAttributesFromFilters].filter(
                     (value, index, self) => self.indexOf(value) === index,
                 ),
             };
         })
-        .filter((d) => d.dateAttributes.length);
+        .filter((d) => d.dateAttributesUsed.length);
 }
 
-function fillComparators(simpleMetrics: AlertMetric[], datasets: ICatalogDateDataset[]) {
+function fillComparators(
+    simpleMetrics: AlertMetric[],
+    datasets: ICatalogDateDatasetWithAllowedGranularity[],
+) {
     if (datasets.length === 0) {
         return;
     }
@@ -458,27 +466,33 @@ function fillComparators(simpleMetrics: AlertMetric[], datasets: ICatalogDateDat
             (c) => c.comparator === AlertMetricComparatorType.SamePeriodPreviousYear,
         );
         if (!samePeriodPrevYear) {
-            //PoP
-            metric.comparators.push({
-                measure: newPopMeasure(
-                    metric.measure.measure.localIdentifier,
-                    datasets[0].dateAttributes[0].attribute.ref,
-                    (a) => {
-                        a.format(metric.measure.measure.format);
-                        a.localId(`${metric.measure.measure.localIdentifier}_pop`);
-                        return a;
-                    },
-                ),
-                isPrimary: false,
-                comparator: AlertMetricComparatorType.SamePeriodPreviousYear,
-                dataset: undefined,
-                granularity: undefined,
-            });
+            const yearAttr = datasets[0].dateAttributes.find((a) => a.granularity === DateGranularity.year);
+            if (yearAttr) {
+                //PoP
+                metric.comparators.push({
+                    measure: newPopMeasure(
+                        metric.measure.measure.localIdentifier,
+                        yearAttr.attribute.ref,
+                        (a) => {
+                            a.format(metric.measure.measure.format);
+                            a.localId(`${metric.measure.measure.localIdentifier}_pop`);
+                            return a;
+                        },
+                    ),
+                    isPrimary: false,
+                    comparator: AlertMetricComparatorType.SamePeriodPreviousYear,
+                    dataset: undefined,
+                    granularity: undefined,
+                });
+            }
         }
     });
 }
 
-function fillGranularity(simpleMetrics: AlertMetric[], datasets: ICatalogDateDataset[]) {
+function fillGranularity(
+    simpleMetrics: AlertMetric[],
+    datasets: ICatalogDateDatasetWithAllowedGranularity[],
+) {
     simpleMetrics.forEach((metric) => {
         metric.comparators.forEach((comparator) => {
             const def = comparator.measure.measure.definition;
@@ -512,8 +526,8 @@ function fillGranularity(simpleMetrics: AlertMetric[], datasets: ICatalogDateDat
     });
 }
 
-function sortDateAttributes(dataset: ICatalogDateDataset) {
-    return dataset.dateAttributes.slice().sort((a, b) => {
+function sortDateAttributes(dataset: ICatalogDateDatasetWithAllowedGranularity) {
+    return dataset.dateAttributesUsed.slice().sort((a, b) => {
         return SortedGranularities.indexOf(b.granularity) - SortedGranularities.indexOf(a.granularity);
     });
 }
