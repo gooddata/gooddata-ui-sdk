@@ -63,7 +63,7 @@ export const InsightWidgetWarningPartialResult: React.FC<IInsightWidgetWarningPa
                                 <FormattedMessage
                                     id="warning.partial.result"
                                     values={{
-                                        value: 24,
+                                        value: percentage,
                                         b: (chunks: ReactNode) => <strong>{chunks}</strong>,
                                     }}
                                 />
