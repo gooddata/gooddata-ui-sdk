@@ -259,6 +259,10 @@ export interface IGenAIChatInteraction {
      * A list of created visualizations for the interaction.
      */
     createdVisualizations?: IGenAICreatedVisualizations;
+    /**
+     * User feedback for the assistant reply.
+     */
+    userFeedback?: GenAIChatInteractionUserFeedback;
 }
 
 /**

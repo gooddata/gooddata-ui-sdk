@@ -33,6 +33,7 @@ export const interactionsToMessages = (interactions: IGenAIChatInteraction[]): M
                     assistantMessageContents,
                     interaction.interactionFinished,
                     interaction.chatHistoryInteractionId,
+                    interaction.userFeedback,
                 ),
             );
         }
