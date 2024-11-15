@@ -38,3 +38,8 @@ export const lastMessageIdSelector: (state: RootState) => number | undefined = c
     messagesSelector,
     (messages) => [...messages].reverse().find((message) => !!message.id)?.id,
 );
+
+export const threadIdSelector: (state: RootState) => string | undefined = createSelector(
+    messagesSliceSelector,
+    (state) => state.threadId,
+);

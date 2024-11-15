@@ -44,7 +44,12 @@ const AssistantMessageComponentCore: React.FC<AssistantMessageProps & WrappedCom
                     isComplete={Boolean(message.complete || message.cancelled)}
                     isCancelled={message.cancelled}
                 />
-                <div className="gd-gen-ai-chat__messages__feedback">
+                <div
+                    className={cx({
+                        "gd-gen-ai-chat__messages__feedback": true,
+                        "gd-gen-ai-chat__messages__feedback--assigned": message.feedback !== "NONE",
+                    })}
+                >
                     <button
                         className={cx({
                             "gd-gen-ai-chat__messages__feedback__button": true,

@@ -2367,6 +2367,7 @@ export type ChatHistoryRequestUserFeedbackEnum = typeof ChatHistoryRequestUserFe
 // @public
 export interface ChatHistoryResult {
     interactions: Array<ChatHistoryInteraction>;
+    threadId: string;
 }
 
 // @public

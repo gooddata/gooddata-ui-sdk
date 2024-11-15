@@ -3262,7 +3262,7 @@
                 "description": "List of chat history interactions."
             },
             "ChatHistoryResult": {
-                "required": ["interactions"],
+                "required": ["interactions", "threadId"],
                 "type": "object",
                 "properties": {
                     "interactions": {
@@ -3271,6 +3271,10 @@
                         "items": {
                             "$ref": "#/components/schemas/ChatHistoryInteraction"
                         }
+                    },
+                    "threadId": {
+                        "type": "string",
+                        "description": "The conversation thread ID."
                     }
                 }
             },

@@ -38,10 +38,15 @@
     visibility: hidden;
     opacity: 0;
     height: 20px;
+
+    & path {
+        fill: kit-variables.$gd-color-link;
+    }
 }
 
 .gd-gen-ai-chat__messages__message:last-child .gd-gen-ai-chat__messages__feedback,
-.gd-gen-ai-chat__messages__message:hover .gd-gen-ai-chat__messages__feedback {
+.gd-gen-ai-chat__messages__message:hover .gd-gen-ai-chat__messages__feedback,
+.gd-gen-ai-chat__messages__feedback--assigned {
     visibility: visible;
     opacity: 1;
     transition: opacity 0.2s;
@@ -65,12 +70,12 @@
 
     &--positive path,
     &--positive:hover path {
-        fill: kit-variables.$gd-palette-success-base;
+        fill: kit-variables.$gd-palette-primary-base;
     }
 
     &--negative path,
     &--negative:hover path {
-        fill: kit-variables.$gd-palette-error-base;
+        fill: kit-variables.$gd-palette-primary-base;
     }
 }
 

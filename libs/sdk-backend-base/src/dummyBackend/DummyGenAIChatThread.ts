@@ -19,6 +19,7 @@ export class DummyGenAIChatThread implements IChatThread {
         await cancellableTimeout(100, signal);
         return Promise.resolve({
             interactions: [],
+            threadId: "",
         });
     }
     async reset(): Promise<void> {
