@@ -61,12 +61,14 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
     const crossFilteringItemByWidget: ReturnType<ReturnType<typeof selectCrossFilteringItemByWidgetRef>> =
         yield select(selectCrossFilteringItemByWidgetRef(widgetRef));
 
+    const filtersCount = currentFilters.length;
     const drillIntersectionFilters = convertIntersectionToAttributeFilters(
         cmd.payload.drillEvent.drillContext.intersection ?? [],
         dateDataSetsAttributesRefs,
         backendSupportsElementUris,
         enableDuplicatedLabelValuesInAttributeFilter,
         enableCrossFilteringAliasTitles,
+        filtersCount,
     );
 
     const attributeFilterDisplayAsLabelMap: ReturnType<typeof selectAttributeFilterConfigsDisplayAsLabelMap> =
@@ -111,7 +113,7 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: CrossFilterin
                 negativeSelection,
                 localIdentifier:
                     existingVirtualFilter?.attributeFilter.localIdentifier ??
-                    generateFilterLocalIdentifier(displayForm, i),
+                    generateFilterLocalIdentifier(displayForm, filtersCount + i),
                 selectionMode: "multi",
                 title,
             },

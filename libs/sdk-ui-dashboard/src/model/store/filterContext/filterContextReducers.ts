@@ -264,30 +264,32 @@ const addAttributeFilter: FilterContextReducer<PayloadAction<IAddAttributeFilter
         title,
     } = action.payload;
 
+    // Filters are indexed just for attribute filters, if DateFilter is present should be always first item
+    const isDateFilterPresent = state.filterContextDefinition.filters.findIndex(isDashboardDateFilter) >= 0;
+
     const hasSelection = initialSelection && !attributeElementsIsEmpty(initialSelection);
 
     const isNegative = selectionMode !== "single" && (initialIsNegativeSelection || !hasSelection);
+    // If DateFilter is present we have to move index by 1 because index of filter is calculated just for AttributeFilers array
+    const attributeFilterIndex = isDateFilterPresent ? index + 1 : index;
 
     const filter: IDashboardAttributeFilter = {
         attributeFilter: {
             attributeElements: initialSelection ?? { uris: [] },
             displayForm,
             negativeSelection: isNegative,
-            localIdentifier: localIdentifier ?? generateFilterLocalIdentifier(displayForm, index),
+            localIdentifier:
+                localIdentifier ??
+                generateFilterLocalIdentifier(displayForm, Math.max(0, attributeFilterIndex)),
             filterElementsBy: parentFilters ? [...parentFilters] : undefined,
             ...(selectionMode !== undefined ? { selectionMode } : {}),
             title,
         },
     };
 
-    // Filters are indexed just for attribute filters, if DateFilter is present should be always first item
-    const isDateFilterPresent = state.filterContextDefinition.filters.findIndex(isDashboardDateFilter) >= 0;
-
     if (index === -1) {
         state.filterContextDefinition.filters.push(filter);
     } else {
-        // If DateFilter is present we have to move index by 1 because index of filter is calculated just for AttributeFilers array
-        const attributeFilterIndex = isDateFilterPresent ? index + 1 : index;
         state.filterContextDefinition.filters.splice(attributeFilterIndex, 0, filter);
     }
 };
