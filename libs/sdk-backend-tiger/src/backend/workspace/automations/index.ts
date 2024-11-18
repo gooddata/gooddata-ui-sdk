@@ -11,7 +11,6 @@ import {
 
 import { convertAutomation as convertAutomationFromBackend } from "../../../convertors/fromBackend/AutomationConverter.js";
 import { convertAutomation as convertAutomationToBackend } from "../../../convertors/toBackend/AutomationConverter.js";
-import { convertExportDefinitionMdObjectDefinition as convertExportDefinitionMdObjectDefinitionToBackend } from "../../../convertors/toBackend/ExportDefinitionsConverter.js";
 import { AutomationsQuery } from "./automationsQuery.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
@@ -73,21 +72,8 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
         options?: IGetAutomationOptions,
     ): Promise<IAutomationMetadataObject> => {
         const { loadUserData = false } = options ?? {};
-        const convertedExportDefinitions =
-            automation.exportDefinitions?.map(convertExportDefinitionMdObjectDefinitionToBackend) ?? [];
         return this.authCall(async (client: ITigerClient) => {
-            const createdExportDefinitions = await Promise.all(
-                convertedExportDefinitions.map(async (exportDefinition) => {
-                    return client.entities.createEntityExportDefinitions({
-                        workspaceId: this.workspaceId,
-                        jsonApiExportDefinitionPostOptionalIdDocument: exportDefinition,
-                    });
-                }),
-            );
-            const createdExportDefinitionsIds = createdExportDefinitions.map(
-                (exportDefinition) => exportDefinition.data.data.id,
-            );
-            const convertedAutomation = convertAutomationToBackend(automation, createdExportDefinitionsIds);
+            const convertedAutomation = convertAutomationToBackend(automation);
             const result = await client.entities.createEntityAutomations({
                 workspaceId: this.workspaceId,
                 jsonApiAutomationInDocument: {
@@ -111,21 +97,8 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
         options?: IGetAutomationOptions,
     ): Promise<IAutomationMetadataObject> => {
         const { loadUserData = false } = options ?? {};
-        const convertedExportDefinitions =
-            automation.exportDefinitions?.map(convertExportDefinitionMdObjectDefinitionToBackend) ?? [];
         return this.authCall(async (client: ITigerClient) => {
-            const createdExportDefinitions = await Promise.all(
-                convertedExportDefinitions.map(async (exportDefinition) => {
-                    return client.entities.createEntityExportDefinitions({
-                        workspaceId: this.workspaceId,
-                        jsonApiExportDefinitionPostOptionalIdDocument: exportDefinition,
-                    });
-                }),
-            );
-            const createdExportDefinitionsIds = createdExportDefinitions.map(
-                (exportDefinition) => exportDefinition.data.data.id,
-            );
-            const convertedAutomation = convertAutomationToBackend(automation, createdExportDefinitionsIds);
+            const convertedAutomation = convertAutomationToBackend(automation);
             const result = await client.entities.updateEntityAutomations({
                 objectId: automation.id,
                 workspaceId: this.workspaceId,
