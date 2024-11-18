@@ -364,7 +364,7 @@ export function transformAlertExecutionByMetric(
                 },
             };
 
-            originalFilters.push(filter);
+            originalFilters.unshift(filter);
             addedFilters.push(localIdentifier);
         }
 
