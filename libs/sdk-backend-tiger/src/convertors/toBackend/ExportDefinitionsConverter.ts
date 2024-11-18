@@ -31,7 +31,7 @@ export const convertExportDefinitionMdObjectDefinition = (
     };
 };
 
-const convertExportDefinitionRequestPayload = (
+export const convertExportDefinitionRequestPayload = (
     exportRequest: IExportDefinitionRequestPayload,
 ): TabularExportRequest | VisualExportRequest => {
     if (isExportDefinitionDashboardRequestPayload(exportRequest)) {

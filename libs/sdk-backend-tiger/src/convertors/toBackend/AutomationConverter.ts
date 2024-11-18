@@ -10,6 +10,8 @@ import {
     IAutomationAlert,
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
+    isExportDefinitionDashboardRequestPayload,
+    isExportDefinitionVisualizationObjectRequestPayload,
 } from "@gooddata/sdk-model";
 import omitBy from "lodash/omitBy.js";
 import isEmpty from "lodash/isEmpty.js";
@@ -19,10 +21,10 @@ import { convertMeasure } from "./afm/MeasureConverter.js";
 import { convertAfmFilters } from "./afm/AfmFiltersConverter.js";
 import { fixNumber } from "../../utils/fixNumber.js";
 import { convertAttribute } from "./afm/AttributeConverter.js";
+import { convertExportDefinitionRequestPayload } from "./ExportDefinitionsConverter.js";
 
 export function convertAutomation(
     automation: IAutomationMetadataObject | IAutomationMetadataObjectDefinition,
-    exportDefinitionIds?: string[],
 ): JsonApiAutomationIn {
     const {
         id,
@@ -37,19 +39,11 @@ export function convertAutomation(
         notificationChannel,
         dashboard,
         metadata,
+        exportDefinitions,
     } = automation;
 
     const relationships = omitBy(
         {
-            exportDefinitions: exportDefinitionIds?.length
-                ? {
-                      data:
-                          exportDefinitionIds?.map((exportDefinitionId) => ({
-                              type: "exportDefinition",
-                              id: exportDefinitionId,
-                          })) ?? [],
-                  }
-                : undefined,
             recipients: recipients?.length
                 ? {
                       data: recipients?.map((r) => ({ type: "user", id: r.id })) ?? [],
@@ -82,6 +76,13 @@ export function convertAutomation(
           }
         : {};
 
+    const tabularExports = exportDefinitions
+        ?.filter((ed) => isExportDefinitionVisualizationObjectRequestPayload(ed.requestPayload))
+        .map((ed) => ({ requestPayload: convertExportDefinitionRequestPayload(ed.requestPayload) }));
+    const visualExports = exportDefinitions
+        ?.filter((ed) => isExportDefinitionDashboardRequestPayload(ed.requestPayload))
+        .map((ed) => ({ requestPayload: convertExportDefinitionRequestPayload(ed.requestPayload) }));
+
     const attributes = omitBy(
         {
             title,
@@ -89,6 +90,8 @@ export function convertAutomation(
             tags,
             details,
             state,
+            tabularExports,
+            visualExports,
             ...metadataObj,
             ...scheduleObj,
             ...alertObj,

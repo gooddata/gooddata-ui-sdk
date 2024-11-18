@@ -1,5 +1,7 @@
 // (C) 2020-2024 GoodData Corporation
 import {
+    JsonApiAutomationOutAttributesTabularExports,
+    JsonApiAutomationOutAttributesVisualExports,
     JsonApiExportDefinitionOutIncludes,
     JsonApiExportDefinitionOutWithLinks,
     TabularExportRequest,
@@ -13,9 +15,10 @@ import {
     IExportDefinitionVisualizationObjectSettings,
     IFilter,
 } from "@gooddata/sdk-model";
+import { v4 as uuid } from "uuid";
 import { convertUserIdentifier } from "./UsersConverter.js";
-import isEmpty from "lodash/isEmpty.js";
 import { cloneWithSanitizedIds } from "./IdSanitization.js";
+import isEmpty from "lodash/isEmpty.js";
 
 export const convertExportDefinitionMdObject = (
     exportDefinitionOut: JsonApiExportDefinitionOutWithLinks,
@@ -48,6 +51,31 @@ export const convertExportDefinitionMdObject = (
         updated: modifiedAt,
         createdBy: convertUserIdentifier(createdBy, included),
         updatedBy: convertUserIdentifier(modifiedBy, included),
+        production: true,
+        deprecated: false,
+        unlisted: false,
+    };
+};
+
+export const convertInlineExportDefinitionMdObject = (
+    exportDefinitionOut:
+        | JsonApiAutomationOutAttributesTabularExports
+        | JsonApiAutomationOutAttributesVisualExports,
+): IExportDefinitionMetadataObject => {
+    const id = uuid();
+    const request = convertExportDefinitionRequestPayload(
+        exportDefinitionOut.requestPayload as VisualExportRequest | TabularExportRequest,
+    );
+
+    return {
+        type: "exportDefinition",
+        id,
+        uri: id,
+        ref: idRef(id, "exportDefinition"),
+        title: "",
+        description: "",
+        tags: [],
+        requestPayload: request,
         production: true,
         deprecated: false,
         unlisted: false,

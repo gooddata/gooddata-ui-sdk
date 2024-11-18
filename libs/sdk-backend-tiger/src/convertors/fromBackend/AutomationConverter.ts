@@ -22,7 +22,10 @@ import {
     isAutomationUserRecipient,
 } from "@gooddata/sdk-model";
 
-import { convertExportDefinitionMdObject as convertExportDefinitionMdObjectFromBackend } from "./ExportDefinitionsConverter.js";
+import {
+    convertExportDefinitionMdObject as convertExportDefinitionMdObjectFromBackend,
+    convertInlineExportDefinitionMdObject,
+} from "./ExportDefinitionsConverter.js";
 import compact from "lodash/compact.js";
 import { convertUserIdentifier } from "./UsersConverter.js";
 import { convertFilter } from "./afm/FilterConverter.js";
@@ -57,8 +60,20 @@ export function convertAutomation(
     included: JsonApiAutomationOutIncludes[],
 ): IAutomationMetadataObject {
     const { id, attributes = {}, relationships = {} } = automation;
-    const { title, description, tags, schedule, alert, details, createdAt, modifiedAt, metadata, state } =
-        attributes;
+    const {
+        title,
+        description,
+        tags,
+        schedule,
+        alert,
+        details,
+        createdAt,
+        modifiedAt,
+        metadata,
+        state,
+        visualExports,
+        tabularExports,
+    } = attributes;
     const { createdBy, modifiedBy } = relationships;
 
     const notificationChannel = relationships?.notificationChannel?.data?.id;
@@ -69,9 +84,13 @@ export function convertAutomation(
         ),
     );
 
-    const exportDefinitions = includedExportDefinitions.map((ed) =>
-        convertExportDefinitionMdObjectFromBackend(ed as JsonApiExportDefinitionOutWithLinks),
-    );
+    const exportDefinitions = [
+        ...includedExportDefinitions.map((ed) =>
+            convertExportDefinitionMdObjectFromBackend(ed as JsonApiExportDefinitionOutWithLinks),
+        ),
+        ...(visualExports?.map((ve) => convertInlineExportDefinitionMdObject(ve)) ?? []),
+        ...(tabularExports?.map((te) => convertInlineExportDefinitionMdObject(te)) ?? []),
+    ];
 
     const recipients =
         relationships?.recipients?.data
