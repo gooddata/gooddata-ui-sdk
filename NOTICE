@@ -9,7 +9,7 @@ The following 3rd-party software packages may be used by or distributed with goo
 
 Date generated: 2024-11-18
 
-Revision ID: 845ec7436a84b54ffd8202da0d7b3e541d4bb5a8
+Revision ID: f1e4e63b2d30372409b2f2d6f3e4d12f2170ec3c
 
 ================================================================================
 ================================================================================
@@ -320,7 +320,7 @@ Revision ID: 845ec7436a84b54ffd8202da0d7b3e541d4bb5a8
 - brace-expansion (1.1.11) [MIT]
 - brace-expansion (2.0.1) [MIT]
 - braces (3.0.2) [MIT]
-- browserslist (4.23.1) [MIT]
+- browserslist (4.24.2) [MIT]
 - buffer (5.7.1) [MIT]
 - buffer-from (1.1.2) [MIT]
 - builtins (5.0.1) [MIT]
@@ -330,7 +330,7 @@ Revision ID: 845ec7436a84b54ffd8202da0d7b3e541d4bb5a8
 - cache-parser (1.2.4) [MIT]
 - call-bind (1.0.5) [MIT]
 - callsites (3.1.0) [MIT]
-- caniuse-lite (1.0.30001632) [CC-BY-4.0]
+- caniuse-lite (1.0.30001680) [CC-BY-4.0]
 - ccount (2.0.1) [MIT]
 - chai (4.3.10) [MIT]
 - chalk (4.1.2) [MIT]
@@ -422,7 +422,7 @@ Revision ID: 845ec7436a84b54ffd8202da0d7b3e541d4bb5a8
 - earcut (2.2.4) [ISC]
 - eastasianwidth (0.2.0) [MIT]
 - ee-first (1.1.1) [MIT]
-- electron-to-chromium (1.4.798) [ISC]
+- electron-to-chromium (1.5.62) [ISC]
 - emoji-regex (8.0.0) [MIT]
 - emoji-regex (9.2.2) [MIT]
 - encodeurl (1.0.2) [MIT]
@@ -432,7 +432,7 @@ Revision ID: 845ec7436a84b54ffd8202da0d7b3e541d4bb5a8
 - error-ex (1.3.2) [MIT]
 - es-module-lexer (1.4.1) [MIT]
 - esbuild (0.21.5) [MIT]
-- escalade (3.1.2) [MIT]
+- escalade (3.2.0) [MIT]
 - escape-html (1.0.3) [MIT]
 - escape-string-regexp (1.0.5) [MIT]
 - escape-string-regexp (4.0.0) [MIT]
@@ -681,7 +681,7 @@ Revision ID: 845ec7436a84b54ffd8202da0d7b3e541d4bb5a8
 - negotiator (0.6.3) [MIT]
 - neo-async (2.6.2) [MIT]
 - node-forge (1.3.1) [Multi-license: GPL-2.0-only OR BSD-3-Clause, public-domain, MIT, BSD-3-Clause]
-- node-releases (2.0.14) [MIT]
+- node-releases (2.0.18) [MIT]
 - normalize-path (3.0.0) [MIT]
 - npm-run-path (4.0.1) [MIT]
 - npm-run-path (5.1.0) [MIT]
@@ -726,6 +726,7 @@ Revision ID: 845ec7436a84b54ffd8202da0d7b3e541d4bb5a8
 - pbf (3.2.1) [MIT, BSD-3-Clause]
 - picocolors (1.0.0) [ISC]
 - picocolors (1.0.1) [ISC]
+- picocolors (1.1.1) [ISC]
 - picomatch (2.3.1) [MIT]
 - pify (4.0.1) [MIT]
 - pkg-dir (4.2.0) [MIT]
@@ -929,7 +930,7 @@ Revision ID: 845ec7436a84b54ffd8202da0d7b3e541d4bb5a8
 - universalify (0.2.0) [MIT]
 - universalify (2.0.1) [MIT]
 - unpipe (1.0.0) [MIT]
-- update-browserslist-db (1.0.16) [MIT]
+- update-browserslist-db (1.1.1) [MIT]
 - uri-js (4.4.1) [BSD-2-Clause]
 - url-parse (1.5.10) [MIT]
 - use-composed-ref (1.3.0) [MIT]
@@ -12192,9 +12193,9 @@ THE SOFTWARE.
 
 
 --------------------------------------------------------------------------------
-Package Title: browserslist (4.23.1)
+Package Title: browserslist (4.24.2)
 
-Package Locator: npm+browserslist$4.23.1
+Package Locator: npm+browserslist$4.24.2
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -12543,9 +12544,9 @@ SOFTWARE.
 
 
 --------------------------------------------------------------------------------
-Package Title: caniuse-lite (1.0.30001632)
+Package Title: caniuse-lite (1.0.30001680)
 
-Package Locator: npm+caniuse-lite$1.0.30001632
+Package Locator: npm+caniuse-lite$1.0.30001680
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -16062,9 +16063,9 @@ THE SOFTWARE.
 
 
 --------------------------------------------------------------------------------
-Package Title: electron-to-chromium (1.4.798)
+Package Title: electron-to-chromium (1.5.62)
 
-Package Locator: npm+electron-to-chromium$1.4.798
+Package Locator: npm+electron-to-chromium$1.5.62
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -16383,9 +16384,9 @@ SOFTWARE.
 
 
 --------------------------------------------------------------------------------
-Package Title: escalade (3.1.2)
+Package Title: escalade (3.2.0)
 
-Package Locator: npm+escalade$3.1.2
+Package Locator: npm+escalade$3.2.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -26473,9 +26474,9 @@ This software is covered under the following copyright:
 
 
 --------------------------------------------------------------------------------
-Package Title: node-releases (2.0.14)
+Package Title: node-releases (2.0.18)
 
-Package Locator: npm+node-releases$2.0.14
+Package Locator: npm+node-releases$2.0.18
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -28075,6 +28076,36 @@ ISC
 ISC License
 
 Copyright (c) 2021 Alexey Raspopov, Kostiantyn Denysov, Anton Verinov
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+
+
+--------------------------------------------------------------------------------
+Package Title: picocolors (1.1.1)
+
+Package Locator: npm+picocolors$1.1.1
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+ISC
+
+
+ISC License
+
+Copyright (c) 2021-2024 Oleksii Raspopov, Kostiantyn Denysov, Anton Verinov
 
 Permission to use, copy, modify, and/or distribute this software for any
 purpose with or without fee is hereby granted, provided that the above
@@ -38025,9 +38056,9 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 --------------------------------------------------------------------------------
-Package Title: update-browserslist-db (1.0.16)
+Package Title: update-browserslist-db (1.1.1)
 
-Package Locator: npm+update-browserslist-db$1.0.16
+Package Locator: npm+update-browserslist-db$1.1.1
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -64720,6 +64751,25 @@ INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS
 OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
 TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
 THIS SOFTWARE.
+
+
+* ISC *
+
+ISC License
+
+Copyright (c) 2021-2024 Oleksii Raspopov, Kostiantyn Denysov, Anton Verinov
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
 * ISC *
