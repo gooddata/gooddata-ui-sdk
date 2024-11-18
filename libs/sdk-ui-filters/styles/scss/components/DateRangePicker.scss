@@ -1,4 +1,4 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 @use "sass:color";
 @use "react-day-picker/dist/style.css";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
@@ -151,7 +151,7 @@ $gd-day-picker-width: 267px;
         width: $gd-day-picker-width;
         padding: 18px 15px 15px;
         box-shadow: 0 2px 5px 0
-            var(--gd-shadow-color, color.adjust($gd-date-range-picker-shadow-color, $alpha: -0.85));
+            var(--gd-shadow-color-from-theme, color.adjust($gd-date-range-picker-shadow-color, $alpha: -0.85));
         background: kit-variables.$gd-color-white;
         user-select: none;
 
@@ -221,7 +221,7 @@ $gd-day-picker-width: 267px;
 
         .rdp-head_cell {
             display: table-cell;
-            color: var(--gd-palette-complementary-8, kit-variables.$default-gd-color-state-blank);
+            color: var(--gd-palette-complementary-8-from-theme, kit-variables.$default-gd-color-state-blank);
             cursor: help;
             font-family: kit-variables.$gd-font-primary;
             font-weight: 400;
@@ -373,7 +373,7 @@ $gd-day-picker-width: 267px;
             font-weight: 400;
             font-size: 13px;
             text-align: center;
-            color: var(--gd-palette-complementary-8, kit-variables.$default-gd-color-state-blank);
+            color: var(--gd-palette-complementary-8-from-theme, kit-variables.$default-gd-color-state-blank);
             cursor: help;
 
             abbr {

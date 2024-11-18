@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 @use "react-day-picker/dist/style.css";
 @use "sass:color";
 @use "mixins";
@@ -73,7 +73,7 @@
     @include mixins.box-shadow(
         0 0 5px 0
             var(
-                --gd-shadow-color,
+                --gd-shadow-color-from-theme,
                 color.adjust(datepicker-variables.$gd-datepicker-shadow-color, $alpha: -0.85)
             )
     );
@@ -97,7 +97,7 @@
     @include mixins.box-shadow(
         0 2px 5px 0
             var(
-                --gd-shadow-color,
+                --gd-shadow-color-from-theme,
                 color.adjust(datepicker-variables.$gd-datepicker-shadow-color, $alpha: -0.85)
             )
     );
@@ -167,7 +167,7 @@
 
     .rdp-head_cell {
         display: table-cell;
-        color: var(--gd-palette-complementary-8, variables.$default-gd-color-state-blank);
+        color: var(--gd-palette-complementary-8-from-theme, variables.$default-gd-color-state-blank);
         cursor: help;
         font-family: variables.$gd-font-primary;
         font-weight: 400;
@@ -313,7 +313,7 @@
 
     .DayPicker-Weekday {
         display: table-cell;
-        color: var(--gd-palette-complementary-8, variables.$default-gd-color-state-blank);
+        color: var(--gd-palette-complementary-8-from-theme, variables.$default-gd-color-state-blank);
         cursor: help;
         padding-bottom: 0.5em;
         font-family: variables.$gd-font-primary;

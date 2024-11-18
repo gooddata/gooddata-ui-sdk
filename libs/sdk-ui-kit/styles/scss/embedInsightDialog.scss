@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 @use "variables";
 @use "mixins" as mx;
 @use "Form/_mixins";
@@ -97,7 +97,7 @@
         padding: 7px 10px;
         text-align: center;
         max-width: 254px;
-        color: var(--gd-palette-complementary-8, #687581);
+        color: var(--gd-palette-complementary-8-from-theme, #687581);
 
         a {
             cursor: pointer;

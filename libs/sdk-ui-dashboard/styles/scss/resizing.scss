@@ -150,7 +150,7 @@
         justify-content: center;
         align-items: center;
         padding: 5px;
-        color: var(--gd-palette-complementary-6, variables.$info-text-color);
+        color: var(--gd-palette-complementary-6-from-theme, variables.$info-text-color);
         font-weight: bold;
         text-align: center;
     }
@@ -177,7 +177,7 @@
     }
 
     .passive {
-        fill: var(--gd-palette-complementary-6, kit-variables.$default-gd-color-disabled);
+        fill: var(--gd-palette-complementary-6-from-theme, kit-variables.$default-gd-color-disabled);
     }
 }
 
@@ -188,8 +188,8 @@
     width: 100%;
     padding: 10px 15px 8px;
     background: var(
-        --gd-dashboards-content-backgroundColor,
-        var(--gd-palette-complementary-0, rgba(255, 255, 255, 0.95))
+        --gd-dashboards-content-backgroundColor-from-theme,
+        var(--gd-palette-complementary-0-from-theme, rgba(255, 255, 255, 0.95))
     );
 }
 

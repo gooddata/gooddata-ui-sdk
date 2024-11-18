@@ -107,7 +107,7 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
     width: 240px;
     white-space: nowrap;
     color: variables.$gd-color-state-blank;
-    background-color: var(--gd-palette-complementary-1, #2c343f);
+    background-color: var(--gd-palette-complementary-1-from-theme, #2c343f);
 
     * {
         box-sizing: border-box;
@@ -148,7 +148,7 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
         padding: 9px 15px;
         line-height: 24px;
         white-space: normal;
-        color: var(--gd-palette-complementary-8, variables.$default-gd-color-state-blank);
+        color: var(--gd-palette-complementary-8-from-theme, variables.$default-gd-color-state-blank);
         cursor: pointer;
         font-size: 16px;
 
@@ -173,17 +173,17 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
             height: 1px;
             border-bottom: 1px solid
                 var(
-                    --gd-palette-complementary-4,
+                    --gd-palette-complementary-4-from-theme,
                     color.adjust(variables.$default-gd-color-state-blank, $alpha: -0.8)
                 );
         }
 
         &:hover {
             border: none;
-            color: var(--gd-palette-complementary-9, variables.$default-gd-color-text-light);
+            color: var(--gd-palette-complementary-9-from-theme, variables.$default-gd-color-text-light);
 
             &::before {
-                background-color: var(--gd-palette-complementary-6, inherit);
+                background-color: var(--gd-palette-complementary-6-from-theme, inherit);
             }
 
             &::after {
@@ -193,8 +193,8 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
 
         &.active {
             border: none;
-            color: var(--gd-palette-complementary-9, variables.$default-gd-color-text-light);
-            background-color: var(--gd-palette-complementary-0, #131c28);
+            color: var(--gd-palette-complementary-9-from-theme, variables.$default-gd-color-text-light);
+            background-color: var(--gd-palette-complementary-0-from-theme, #131c28);
             font-weight: bold;
 
             &::after {
@@ -235,7 +235,10 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
     overflow-x: hidden;
     overflow-y: auto;
     border-top: 1px solid
-        var(--gd-palette-complementary-4, color.adjust(variables.$default-gd-color-state-blank, $alpha: -0.8));
+        var(
+            --gd-palette-complementary-4-from-theme,
+            color.adjust(variables.$default-gd-color-state-blank, $alpha: -0.8)
+        );
 
     .gd-header-menu {
         display: block;
@@ -244,7 +247,7 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
     .gd-header-menu li:last-child a {
         border-bottom: 1px solid
             var(
-                --gd-palette-complementary-4,
+                --gd-palette-complementary-4-from-theme,
                 color.adjust(variables.$default-gd-color-state-blank, $alpha: -0.8)
             );
 
@@ -259,7 +262,7 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
         padding: 15px;
         border-bottom: 1px solid
             var(
-                --gd-palette-complementary-4,
+                --gd-palette-complementary-4-from-theme,
                 color.adjust(variables.$default-gd-color-state-blank, $alpha: -0.8)
             );
     }
@@ -301,7 +304,10 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
     left: 0;
     padding: 0 0 15px;
     border-top: 1px solid
-        var(--gd-palette-complementary-4, color.adjust(variables.$default-gd-color-state-blank, $alpha: -0.8));
+        var(
+            --gd-palette-complementary-4-from-theme,
+            color.adjust(variables.$default-gd-color-state-blank, $alpha: -0.8)
+        );
 }
 
 .gd-list-help-menu-item {
@@ -399,8 +405,8 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
         line-height: 45px;
         background-color: variables.$gd-color-white;
         // TODO - looks like these are colors from the old palette
-        border-bottom: 1px solid var(--gd-palette-complementary-4, #c9d5e0);
-        box-shadow: 0 1px 2px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.1));
+        border-bottom: 1px solid var(--gd-palette-complementary-4-from-theme, #c9d5e0);
+        box-shadow: 0 1px 2px 0 var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.1));
         padding: 0 15px;
     }
 }
@@ -762,7 +768,7 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
             top: 21px;
             right: 9px;
             left: 9px;
-            border-color: var(--gd-palette-complementary-6, inherit);
+            border-color: var(--gd-palette-complementary-6-from-theme, inherit);
         }
 
         &::before {
@@ -777,12 +783,12 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
             right: 50%;
             left: 50%;
             opacity: 0;
-            border-color: var(--gd-palette-complementary-6, inherit);
+            border-color: var(--gd-palette-complementary-6-from-theme, inherit);
         }
     }
 
     &.search-open {
-        color: var(--gd-palette-complementary-8, variables.$gd-color-text);
+        color: variables.$gd-color-text;
     }
 }
 
@@ -793,7 +799,7 @@ $button-normal-active-shadow: color.adjust($button-normal-active-border-color, $
     height: 33px;
     margin: 0 15px;
     border: 1px solid color.adjust(variables.$default-gd-color-disabled, $alpha: -0.6);
-    box-shadow: 0 1px 1px 0 var(--gd-shadow-color, color.adjust(#14395d, $alpha: -0.95));
+    box-shadow: 0 1px 1px 0 var(--gd-shadow-color-from-theme, color.adjust(#14395d, $alpha: -0.95));
     color: variables.$gd-color-text-light;
     cursor: pointer;
     transition: 0.2s;

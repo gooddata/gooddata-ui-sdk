@@ -65,10 +65,12 @@
         "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "stylelint": "stylelint '**/*.scss'",
         "stylelint-ci": "stylelint '**/*.scss' --custom-formatter=node_modules/stylelint-checkstyle-formatter > ./ci/results/stylelint-results.xml",
-        "validate": "npm run dep-cruiser && npm run eslint && npm run stylelint && npm run validate-locales && npm run prettier-check",
-        "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run stylelint-ci && npm run validate-locales-ci && npm run prettier-check",
+        "validate": "npm run dep-cruiser && npm run eslint && npm run stylelint && npm run validate-locales && npm run prettier-check && npm run validate-theming",
+        "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run stylelint-ci && npm run validate-locales-ci && npm run prettier-check && npm run validate-theming",
         "validate-locales": "cd ../sdk-ui && npm run validate-locales",
-        "validate-locales-ci": "cd ../sdk-ui && npm run validate-locales-ci"
+        "validate-locales-ci": "cd ../sdk-ui && npm run validate-locales-ci",
+        "validate-theming": "npm run scss && node scripts/validateCss.js",
+        "scss": "sass --load-path=node_modules styles/scss:styles/css"
     },
     "dependencies": {
         "@ag-grid-community/all-modules": "27.3.0",
