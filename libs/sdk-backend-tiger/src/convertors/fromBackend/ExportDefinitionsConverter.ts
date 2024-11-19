@@ -20,6 +20,12 @@ import { convertUserIdentifier } from "./UsersConverter.js";
 import { cloneWithSanitizedIds } from "./IdSanitization.js";
 import isEmpty from "lodash/isEmpty.js";
 
+type MetadataObjectDefinition = {
+    widget?: string;
+    title?: string;
+    filters?: FilterContextItem[];
+};
+
 export const convertExportDefinitionMdObject = (
     exportDefinitionOut: JsonApiExportDefinitionOutWithLinks,
     included: JsonApiExportDefinitionOutIncludes[] = [],
@@ -72,7 +78,7 @@ export const convertInlineExportDefinitionMdObject = (
         id,
         uri: id,
         ref: idRef(id, "exportDefinition"),
-        title: "",
+        title: (exportDefinitionOut.requestPayload.metadata as MetadataObjectDefinition).title ?? "",
         description: "",
         tags: [],
         requestPayload: request,
@@ -86,7 +92,7 @@ const convertExportDefinitionRequestPayload = (
     exportRequest: VisualExportRequest | TabularExportRequest,
 ): IExportDefinitionRequestPayload => {
     if (isTabularRequest(exportRequest)) {
-        const { widget } = (exportRequest.metadata as { widget?: string }) ?? {};
+        const { widget } = (exportRequest.metadata as MetadataObjectDefinition) ?? {};
 
         const filters = exportRequest.visualizationObjectCustomFilters as IFilter[];
         const filtersObj = filters ? { filters: filters.map(cloneWithSanitizedIds) } : {};
@@ -113,7 +119,7 @@ const convertExportDefinitionRequestPayload = (
             ...settingsObj,
         };
     } else {
-        const filters = (exportRequest.metadata as any)?.filters as FilterContextItem[];
+        const filters = (exportRequest.metadata as MetadataObjectDefinition)?.filters;
         const filtersObj = filters ? { filters } : {};
 
         return {

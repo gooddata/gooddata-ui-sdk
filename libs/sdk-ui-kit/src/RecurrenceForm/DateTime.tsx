@@ -8,26 +8,26 @@ import { DEFAULT_DROPDOWN_ZINDEX, MAX_VISIBLE_TIME_ITEMS_COUNT, TIME_ANCHOR } fr
 
 interface IDateTimeProps {
     label: string;
-    date: Date;
+    date: Date | null;
     locale?: string;
     timezone?: string;
     weekStart?: WeekStart;
     dateFormat?: string;
     timeFormat?: string;
-    onDateChange: (date: Date) => void;
+    onDateChange: (date: Date | null, valid: boolean) => void;
 }
 
 export const DateTime: React.FC<IDateTimeProps> = (props) => {
     const { label, date, dateFormat, locale, timezone, onDateChange, weekStart, timeFormat } = props;
 
-    const handleDateChange = (selectedDate: Date) => {
+    const handleDateChange = (selectedDate: Date | null) => {
         const newDate = normalizeTime(date, selectedDate, TIME_ANCHOR);
-        onDateChange(newDate);
+        onDateChange(newDate, !!selectedDate);
     };
 
-    const handleTimeChange = (selectedTime: Date) => {
+    const handleTimeChange = (selectedTime: Date | null) => {
         const newDate = normalizeTime(selectedTime, date, TIME_ANCHOR);
-        onDateChange(newDate);
+        onDateChange(newDate, !!selectedTime);
     };
 
     return (
@@ -40,7 +40,6 @@ export const DateTime: React.FC<IDateTimeProps> = (props) => {
                     dateFormat={dateFormat}
                     locale={locale}
                     placeholder={dateFormat}
-                    resetOnInvalidValue={true}
                     onChange={handleDateChange}
                     weekStart={weekStart}
                 />

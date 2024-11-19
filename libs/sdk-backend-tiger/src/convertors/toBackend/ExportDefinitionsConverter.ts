@@ -25,7 +25,7 @@ export const convertExportDefinitionMdObjectDefinition = (
                 title,
                 description,
                 tags,
-                requestPayload: convertExportDefinitionRequestPayload(requestPayload),
+                requestPayload: convertExportDefinitionRequestPayload(requestPayload, title),
             },
         },
     };
@@ -33,10 +33,21 @@ export const convertExportDefinitionMdObjectDefinition = (
 
 export const convertExportDefinitionRequestPayload = (
     exportRequest: IExportDefinitionRequestPayload,
+    title?: string,
 ): TabularExportRequest | VisualExportRequest => {
     if (isExportDefinitionDashboardRequestPayload(exportRequest)) {
         const { filters, dashboard } = exportRequest.content;
-        const metadataObj = exportRequest.content.filters ? { metadata: { filters } } : {};
+        const isMetadataFilled = title || exportRequest.content.filters;
+        const metadataObj = {
+            ...(isMetadataFilled
+                ? {
+                      metadata: {
+                          ...(exportRequest.content.filters ? { filters } : {}),
+                          ...(title ? { title } : {}),
+                      },
+                  }
+                : {}),
+        };
 
         return {
             fileName: exportRequest.fileName,
@@ -63,6 +74,7 @@ export const convertExportDefinitionRequestPayload = (
         },
         metadata: {
             widget,
+            ...(title ? { title } : {}),
         },
     } as TabularExportRequest;
 };

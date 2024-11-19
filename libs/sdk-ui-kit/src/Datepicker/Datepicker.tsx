@@ -183,7 +183,7 @@ export class WrappedDatePicker extends React.PureComponent<DatePickerProps, IDat
         const { props } = this;
 
         if (props.date > nextProps.date || props.date < nextProps.date) {
-            const selectedDate = this.updateDate(nextProps.date);
+            const selectedDate = this.updateDate(nextProps.date || new Date());
             this.setState({ selectedDate });
             this.setState({ monthDate: selectedDate });
             this.setState({ inputValue: formatDate(selectedDate, props.dateFormat) });

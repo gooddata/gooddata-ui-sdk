@@ -23,7 +23,7 @@ export { normalizeTime, formatTime };
  * @internal
  */
 export interface ITimepickerOwnProps {
-    time: Date;
+    time: Date | null;
     className?: string;
     maxVisibleItemsCount?: number;
     onChange?: (selectedTime: Date) => void;
