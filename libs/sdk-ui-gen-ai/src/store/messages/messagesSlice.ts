@@ -48,12 +48,24 @@ type MessagesSliceState = {
 export const LS_VERBOSE_KEY = "gd-gen-ai-verbose";
 export const messagesSliceName = "messages";
 
+/**
+ * Get the initial verbose state from the local storage,
+ * but provide a fallback for Node.js when running unit tests.
+ */
+const getInitialVerboseState = () => {
+    if (typeof window !== undefined) {
+        return window.localStorage.getItem(LS_VERBOSE_KEY) === "true";
+    }
+
+    return false;
+};
+
 const initialState: MessagesSliceState = {
     // Start with loading state to avoid re-render from empty state on startup
     asyncProcess: "loading",
     messageOrder: [],
     messages: {},
-    verbose: window.localStorage.getItem(LS_VERBOSE_KEY) === "true",
+    verbose: getInitialVerboseState(),
 };
 
 const setNormalizedMessages = (state: MessagesSliceState, messages: Message[]) => {
