@@ -78,10 +78,14 @@ export function convertAutomation(
 
     const tabularExports = exportDefinitions
         ?.filter((ed) => isExportDefinitionVisualizationObjectRequestPayload(ed.requestPayload))
-        .map((ed) => ({ requestPayload: convertExportDefinitionRequestPayload(ed.requestPayload) }));
+        .map((ed) => ({
+            requestPayload: convertExportDefinitionRequestPayload(ed.requestPayload, ed.title),
+        }));
     const visualExports = exportDefinitions
         ?.filter((ed) => isExportDefinitionDashboardRequestPayload(ed.requestPayload))
-        .map((ed) => ({ requestPayload: convertExportDefinitionRequestPayload(ed.requestPayload) }));
+        .map((ed) => ({
+            requestPayload: convertExportDefinitionRequestPayload(ed.requestPayload, ed.title),
+        }));
 
     const attributes = omitBy(
         {

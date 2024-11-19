@@ -72,7 +72,7 @@ export const convertInlineExportDefinitionMdObject = (
         id,
         uri: id,
         ref: idRef(id, "exportDefinition"),
-        title: "",
+        title: (exportDefinitionOut.requestPayload.metadata as any).title ?? "",
         description: "",
         tags: [],
         requestPayload: request,
