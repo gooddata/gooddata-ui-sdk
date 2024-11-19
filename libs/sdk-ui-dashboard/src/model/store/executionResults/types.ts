@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import { IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { IResultWarning } from "@gooddata/sdk-model";
@@ -13,4 +13,5 @@ export interface IExecutionResultEnvelope {
     executionResult?: IExecutionResult;
     error?: GoodDataSdkError;
     warnings?: IResultWarning[];
+    showWarningOverlay?: boolean;
 }

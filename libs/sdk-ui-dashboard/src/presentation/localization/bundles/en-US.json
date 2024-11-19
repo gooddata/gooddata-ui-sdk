@@ -3170,5 +3170,15 @@
         "value": "minute",
         "comment": "Label of current selected granularity type. Is used in alert create dialog.",
         "limit": 0
+    },
+    "warning.partial.result": {
+        "value": "<b>Partial result only:</b> displaying {value}% of the data.",
+        "comment": "",
+        "limit": 0
+    },
+    "warning.partial.result.export": {
+        "value": "<a>Export full result</a>",
+        "comment": "",
+        "limit": 0
     }
 }

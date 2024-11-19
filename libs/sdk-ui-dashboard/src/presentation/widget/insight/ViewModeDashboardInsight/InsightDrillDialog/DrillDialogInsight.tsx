@@ -109,6 +109,8 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
         onDrill: onDrillFn,
     });
 
+    const { partialResultWarning, executionResult } = useInsightWarning(DRILL_MODAL_EXECUTION_PSEUDO_REF);
+
     const handlePushData = useCallback(
         (data: IPushData) => {
             onPushData(data);
@@ -176,6 +178,17 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
                                 ErrorComponent={ErrorComponent}
                                 LoadingComponent={LoadingComponent}
                             />
+                            {partialResultWarning.length > 0 ? (
+                                <InsightWidgetWarningPartialResult
+                                    className="gd-drill-warning-partial-result"
+                                    partialResultWarning={partialResultWarning}
+                                    onExportRawCSV={onExportRawCSV}
+                                    isOverlayOpen={true}
+                                    shouldPreserveCloseStatus={false}
+                                    isLoading={executionResult?.isLoading}
+                                    isExportRawInNewUiVisible={isExportRawInNewUiVisible}
+                                />
+                            ) : null}
                         </div>
                     ) : null}
                 </IntlWrapper>
