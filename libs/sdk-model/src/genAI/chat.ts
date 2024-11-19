@@ -110,7 +110,7 @@ export interface IGenAIVisualization {
  */
 export type GenAIPositiveAttributeFilter = {
     using: string;
-    include: string[];
+    include: Array<string | null>;
 };
 
 /**
@@ -119,7 +119,7 @@ export type GenAIPositiveAttributeFilter = {
  */
 export type GenAINegativeAttributeFilter = {
     using: string;
-    exclude: string[];
+    exclude: Array<string | null>;
 };
 
 /**

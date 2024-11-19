@@ -540,7 +540,7 @@ export type GenAIMetricType = "metric" | "fact" | "attribute";
 // @alpha
 export type GenAINegativeAttributeFilter = {
     using: string;
-    exclude: string[];
+    exclude: Array<string | null>;
 };
 
 // @beta
@@ -549,7 +549,7 @@ export type GenAIObjectType = "dataset" | "attribute" | "label" | "fact" | "date
 // @alpha
 export type GenAIPositiveAttributeFilter = {
     using: string;
-    include: string[];
+    include: Array<string | null>;
 };
 
 // @alpha
