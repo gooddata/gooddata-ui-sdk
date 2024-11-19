@@ -52,11 +52,11 @@ export const useExecution = (vis?: IGenAIVisualization) => {
 
 const convertFilter = (data: GenAIFilter): IFilter | false => {
     if (isPositiveAttributeFilter(data)) {
-        return newPositiveAttributeFilter(data.using, data.include);
+        return newPositiveAttributeFilter(data.using, { values: data.include });
     }
 
     if (isNegativeAttributeFilter(data)) {
-        return newNegativeAttributeFilter(data.using, data.exclude);
+        return newNegativeAttributeFilter(data.using, { values: data.exclude });
     }
 
     if (isRelativeDateFilter(data)) {
