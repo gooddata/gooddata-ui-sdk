@@ -3053,13 +3053,12 @@
                         "type": "string",
                         "description": "Use case where LLM routed based on question.",
                         "enum": [
-                            "SEARCH_ALL",
-                            "SEARCH_VISUALIZATIONS",
-                            "SEARCH_DASHBOARDS",
+                            "INVALID",
+                            "GENERAL",
+                            "SEARCH",
                             "CREATE_VISUALIZATION",
                             "EXTEND_VISUALIZATION",
-                            "GENERAL",
-                            "INVALID"
+                            "HOWTO"
                         ]
                     },
                     "reasoning": {
@@ -3257,6 +3256,11 @@
                     },
                     "createdVisualizations": {
                         "$ref": "#/components/schemas/CreatedVisualizations"
+                    },
+                    "userFeedback": {
+                        "type": "string",
+                        "description": "User feedback.",
+                        "enum": ["POSITIVE", "NEGATIVE", "NONE"]
                     }
                 },
                 "description": "List of chat history interactions."
@@ -3354,7 +3358,7 @@
                 "description": "Visualization definitions created by AI."
             },
             "DateAbsoluteFilter": {
-                "required": ["using"],
+                "required": ["from", "to", "using"],
                 "type": "object",
                 "allOf": [
                     {
