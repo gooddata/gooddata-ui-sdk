@@ -64,10 +64,14 @@ const RecurrenceFormCore: React.FC<IRecurrenceFormProps> = (props) => {
     );
 
     const onDateChange = useCallback(
-        (date: Date) => {
+        (date: Date, valid: boolean) => {
             setDateValue(date);
             const newExpression = constructCronExpression(date, recurrenceType, cronExpression, weekStart);
-            onChange(newExpression, date, isCronExpressionValid(newExpression, allowHourlyRecurrence));
+            onChange(
+                newExpression,
+                date,
+                valid && isCronExpressionValid(newExpression, allowHourlyRecurrence),
+            );
         },
         [cronExpression, onChange, recurrenceType, weekStart, allowHourlyRecurrence],
     );

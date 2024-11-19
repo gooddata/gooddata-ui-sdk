@@ -4170,7 +4170,7 @@ export interface ITimepickerOwnProps {
     // (undocumented)
     skipNormalizeTime?: boolean;
     // (undocumented)
-    time: Date;
+    time: Date | null;
     // (undocumented)
     timeAnchor?: number;
     // (undocumented)
@@ -4429,7 +4429,7 @@ export class MultiSelectListItem extends PureComponent<IMultiSelectListItemProps
 export const NoData: React_2.FC<INoDataProps>;
 
 // @internal
-export function normalizeTime(time: Date, date?: Date, timeAnchor?: number): Date;
+export function normalizeTime(time?: Date, date?: Date, timeAnchor?: number): Date;
 
 // @internal (undocumented)
 export const NumericInput: React_2.FC<INumericInputProps>;
