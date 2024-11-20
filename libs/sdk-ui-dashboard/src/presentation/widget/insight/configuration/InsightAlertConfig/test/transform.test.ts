@@ -438,6 +438,43 @@ describe("alert transforms", () => {
             },
         ],
     };
+    const previousPeriodMetric2: AlertMetric = {
+        measure: {
+            measure: {
+                localIdentifier: "localPPMetric2",
+                title: "metric2",
+                format: "#,##0.00",
+                definition: {
+                    measureDefinition: {
+                        filters: [],
+                        item: {
+                            type: "measure",
+                            identifier: "simple_metric_2",
+                        },
+                    },
+                },
+            },
+        },
+        isPrimary: true,
+        comparators: [
+            {
+                comparator: AlertMetricComparatorType.PreviousPeriod,
+                isPrimary: true,
+                measure: {
+                    measure: {
+                        localIdentifier: "localMetric_pp_1",
+                        title: "metric_pp_1",
+                        definition: {
+                            previousPeriodMeasure: {
+                                measureIdentifier: "localMetric2",
+                                dateDataSets: [{ dataSet: { uri: "dateDataSetUri" }, periodsAgo: 1 }],
+                            },
+                        },
+                    },
+                },
+            },
+        ],
+    };
 
     const allMetrics = [
         simpleMetric1,
@@ -546,7 +583,7 @@ describe("alert transforms", () => {
             });
         });
 
-        it("transformAlertByMetric, relative and provide comparison metric", () => {
+        it("transformAlertByMetric, relative and provide comparison metric, relative isSecondary", () => {
             const res = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric);
             expect(res).toEqual({
                 ...baseRelative,
@@ -605,6 +642,40 @@ describe("alert transforms", () => {
                         measures: [
                             previousPeriodMetric1.measure,
                             previousPeriodMetric1.comparators[0].measure,
+                        ],
+                    },
+                },
+            });
+        });
+
+        it("transformAlertByMetric, relative and provide comparison metric, normal and relative are isPrimary", () => {
+            const res = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric2);
+            expect(res).toEqual({
+                ...baseRelative,
+                title: "metric2",
+                alert: {
+                    ...baseRelative.alert,
+                    condition: {
+                        ...baseRelative.alert.condition,
+                        measure: {
+                            operator: "CHANGE",
+                            left: {
+                                format: "#,##0.00",
+                                id: "localPPMetric2",
+                                title: "metric2",
+                            },
+                            right: {
+                                format: "#,##0.00",
+                                id: "localMetric_pp_1",
+                                title: "metric_pp_1",
+                            },
+                        },
+                    },
+                    execution: {
+                        ...baseRelative.alert.execution,
+                        measures: [
+                            previousPeriodMetric2.measure,
+                            previousPeriodMetric2.comparators[0].measure,
                         ],
                     },
                 },
