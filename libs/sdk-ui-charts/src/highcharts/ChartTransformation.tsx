@@ -125,7 +125,7 @@ const ChartTransformationImpl = (props: IChartTransformationProps) => {
     };
 
     let isFilteringRecommended = false;
-    if (validationResult.dataTooLarge) {
+    if (validationResult.dataTooLarge && !config.enablePartialResults) {
         // always force onDataTooLarge error handling
         invariant(onDataTooLarge, "Visualization's onDataTooLarge callback is missing.");
         onDataTooLarge(chartOptions, getDataTooLargeErrorMessage(config.limits, chartOptions));

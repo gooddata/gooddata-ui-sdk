@@ -220,6 +220,11 @@ export interface IChartConfig {
     enableJoinedAttributeAxisName?: boolean;
 
     /**
+     * Enable partial results which may contain data above limits.
+     */
+    enablePartialResults?: boolean;
+
+    /**
      * Enables custom sorting of visualizations.
      *
      * @remarks

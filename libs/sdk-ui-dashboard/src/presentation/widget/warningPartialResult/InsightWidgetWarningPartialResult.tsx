@@ -1,11 +1,12 @@
 // (C) 2022-2024 GoodData Corporation
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { IResultWarning } from "@gooddata/sdk-model";
 import { Button, DialogBase, useMediaQuery } from "@gooddata/sdk-ui-kit";
 import noop from "lodash/noop.js";
 import { FormattedMessage } from "react-intl";
-import { uiActions, useDashboardDispatch } from "../../../model/index.js";
+import { IExecutionResultEnvelope, uiActions, useDashboardDispatch } from "../../../model/index.js";
 import { MobileWarningPartialResultOverlay } from "./MobileWarningPartialResultOverlay.js";
+import { VisType } from "@gooddata/sdk-ui";
 
 interface IInsightWidgetWarningPartialResultProps {
     className: string;
@@ -13,8 +14,11 @@ interface IInsightWidgetWarningPartialResultProps {
     isOverlayOpen: boolean;
     shouldPreserveCloseStatus: boolean;
     isExportRawInNewUiVisible: boolean;
+    executionResult: IExecutionResultEnvelope;
+    visualizationType: VisType;
     fingerprint?: string;
     isLoading?: boolean;
+
     onExportRawCSV: () => void;
 }
 
@@ -26,14 +30,34 @@ export const InsightWidgetWarningPartialResult: React.FC<IInsightWidgetWarningPa
     shouldPreserveCloseStatus,
     isLoading,
     isExportRawInNewUiVisible,
+    visualizationType,
+    executionResult,
     onExportRawCSV,
 }) => {
     const dispatch = useDashboardDispatch();
     const isMobile = useMediaQuery("mobileDevice");
 
-    const [isOpen, setIsOpen] = useState<boolean>(true);
+    const [percentage, setPercentage] = useState<string>("");
 
-    const percentage = partialResultWarning[0].parameters![0] as string;
+    useEffect(() => {
+        const getPercentage = async () => {
+            const dataView = await executionResult.executionResult?.readAll();
+
+            if (dataView) {
+                const maxCount = Math.max(...dataView.count);
+
+                setPercentage(Math.round((10000 / maxCount) * 100).toString());
+            }
+        };
+
+        if (visualizationType === "table") {
+            setPercentage(partialResultWarning[0].parameters![0] as string);
+        } else {
+            getPercentage();
+        }
+    }, [visualizationType, executionResult, partialResultWarning]);
+
+    const [isOpen, setIsOpen] = useState<boolean>(true);
 
     const handleCloseOverlay = () => {
         if (shouldPreserveCloseStatus) {
@@ -65,21 +89,15 @@ export const InsightWidgetWarningPartialResult: React.FC<IInsightWidgetWarningPa
                                     values={{
                                         value: percentage,
                                         b: (chunks: ReactNode) => <strong>{chunks}</strong>,
+                                        a: (chunk: ReactNode) => {
+                                            if (isExportRawInNewUiVisible) {
+                                                return <a onClick={onExportRawCSV}>{chunk}</a>;
+                                            }
+                                            return null;
+                                        },
                                     }}
                                 />
                             </div>
-                            {isExportRawInNewUiVisible ? (
-                                <div className="gd-warning-partial-result-export">
-                                    <FormattedMessage
-                                        id="warning.partial.result.export"
-                                        values={{
-                                            a: (chunk: ReactNode) => {
-                                                return <a onClick={onExportRawCSV}>{chunk}</a>;
-                                            },
-                                        }}
-                                    />
-                                </div>
-                            ) : null}
                             <Button
                                 className="gd-button-link gd-button-icon-only gd-icon-cross gd-warning-partial-result-close"
                                 onClick={handleCloseOverlay}
