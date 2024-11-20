@@ -20,12 +20,18 @@ export const MobileWarningPartialResultOverlay: React.FC<IMobileWarningPartialRe
         <div className="gd-warning-partial-result-content-mobile">
             <div className="gd-warning-partial-result-mobile">
                 <div className="gd-warning-partial-result-icon gd-icon-warning" />
-                <div>
+                <div className="gd-warning-partial-result-message">
                     <FormattedMessage
                         id="warning.partial.result"
                         values={{
                             value: percentage,
                             b: (chunks: ReactNode) => <strong>{chunks}</strong>,
+                            a: (chunk: ReactNode) => {
+                                if (isExportRawInNewUiVisible) {
+                                    return <a onClick={onExportRawCSV}>{chunk}</a>;
+                                }
+                                return null;
+                            },
                         }}
                     />
                 </div>
@@ -34,19 +40,6 @@ export const MobileWarningPartialResultOverlay: React.FC<IMobileWarningPartialRe
                     onClick={onClose}
                 />
             </div>
-
-            {isExportRawInNewUiVisible ? (
-                <div className="gd-warning-partial-result-export">
-                    <FormattedMessage
-                        id="warning.partial.result.export"
-                        values={{
-                            a: (chunk: ReactNode) => {
-                                return <a onClick={onExportRawCSV}>{chunk}</a>;
-                            },
-                        }}
-                    />
-                </div>
-            ) : null}
         </div>
     );
 };

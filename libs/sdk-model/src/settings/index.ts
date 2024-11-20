@@ -347,6 +347,11 @@ export interface ISettings {
     enableCreateUser?: boolean;
 
     /**
+     * Enable partial reports data.
+     */
+    ["pixtab.enablePartialReports"]?: boolean;
+
+    /**
      * Enable insights export of raw data when limit is reached.
      */
     enableRawExportsInNewUI?: boolean;

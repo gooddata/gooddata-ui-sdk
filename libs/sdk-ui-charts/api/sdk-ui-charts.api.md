@@ -272,6 +272,7 @@ export interface IChartConfig {
     enableChartSorting?: boolean;
     enableCompactSize?: boolean;
     enableJoinedAttributeAxisName?: boolean;
+    enablePartialResults?: boolean;
     enableReversedStacking?: boolean;
     // (undocumented)
     enableSeparateTotalLabels?: boolean;

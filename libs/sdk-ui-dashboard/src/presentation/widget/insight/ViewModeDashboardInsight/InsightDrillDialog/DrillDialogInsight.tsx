@@ -2,7 +2,13 @@
 import React, { useCallback, useMemo, useState, CSSProperties } from "react";
 import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { createSelector } from "@reduxjs/toolkit";
-import { idRef, insightSetFilters, insightVisualizationUrl, widgetTitle } from "@gooddata/sdk-model";
+import {
+    idRef,
+    insightSetFilters,
+    insightVisualizationType,
+    insightVisualizationUrl,
+    widgetTitle,
+} from "@gooddata/sdk-model";
 import {
     GoodDataSdkError,
     IPushData,
@@ -10,6 +16,7 @@ import {
     OnLoadingChanged,
     useBackendStrict,
     useWorkspaceStrict,
+    VisType,
 } from "@gooddata/sdk-ui";
 
 import {
@@ -125,6 +132,8 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
 
     const { partialResultWarning, executionResult } = useInsightWarning(DRILL_MODAL_EXECUTION_PSEUDO_REF);
 
+    const visType = insightVisualizationType(insight) as VisType;
+
     const handlePushData = useCallback(
         (data: IPushData) => {
             onPushData(data);
@@ -192,14 +201,16 @@ export const DrillDialogInsight = (props: IDashboardInsightProps): JSX.Element =
                                 ErrorComponent={ErrorComponent}
                                 LoadingComponent={LoadingComponent}
                             />
-                            {partialResultWarning.length > 0 ? (
+                            {settings["pixtab.enablePartialReports"] && partialResultWarning.length > 0 ? (
                                 <InsightWidgetWarningPartialResult
                                     className="gd-drill-warning-partial-result"
                                     partialResultWarning={partialResultWarning}
                                     onExportRawCSV={onExportRawCSV}
                                     isOverlayOpen={true}
                                     shouldPreserveCloseStatus={false}
+                                    executionResult={executionResult!}
                                     isLoading={executionResult?.isLoading}
+                                    visualizationType={visType}
                                     isExportRawInNewUiVisible={isExportRawInNewUiVisible}
                                 />
                             ) : null}

@@ -154,7 +154,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                     );
                 }}
                 renderAfterVisualization={() => {
-                    if (partialResultWarning.length > 0) {
+                    if (settings["pixtab.enablePartialReports"] && partialResultWarning.length > 0) {
                         return (
                             <InsightWidgetWarningPartialResult
                                 className="gd-warning-partial-result"
@@ -163,8 +163,10 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                                 fingerprint={fingerprint}
                                 isOverlayOpen={isOverlayOpen}
                                 shouldPreserveCloseStatus={true}
+                                executionResult={executionResult!}
                                 isLoading={executionResult?.isLoading}
                                 isExportRawInNewUiVisible={isExportRawInNewUiVisible}
+                                visualizationType={visType}
                             />
                         );
                     }

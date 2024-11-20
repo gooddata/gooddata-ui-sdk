@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { ITheme, IMeasureDescriptor, IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
@@ -375,7 +375,7 @@ export function getChartOptions(
         }`,
     );
 
-    const { type, chart } = config;
+    const { type, chart, enablePartialResults } = config;
     const {
         viewByAttribute,
         viewByParentAttribute,
@@ -426,6 +426,17 @@ export function getChartOptions(
     let categories = viewByParentAttribute
         ? getCategoriesForTwoAttributes(viewByAttribute, viewByParentAttribute, emptyHeaderTitle)
         : getCategories(type, measureGroup, viewByAttribute, stackByAttribute, emptyHeaderTitle);
+
+    // When partial results FF is enabled the check of 10k limit is skipped
+    // so we can display actual warning message. Therefore we need to hard cap
+    // the data to 10k so is able to render on UI.
+    if (enablePartialResults) {
+        for (let i = 0; i < series.length; i += 1) {
+            series[i].data = series[i].data.slice(0, 10000);
+        }
+
+        categories = categories.slice(0, 10000);
+    }
 
     // When custom sorting is enabled and is chart which does the auto-sorting,
     // need to skip this, so the sort specified by the user does not get overriden.
