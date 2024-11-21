@@ -179,3 +179,19 @@ export type IDefaultSmtpDestination = {
      */
     person: string;
 };
+
+//Test
+
+/**
+ * @alpha
+ */
+export interface INotificationChannelTestResponse {
+    /**
+     * Flag indicating whether the test was successful.
+     */
+    successful: boolean;
+    /**
+     * Optional error message in case the test was not successful.
+     */
+    error?: string;
+}

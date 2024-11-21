@@ -2367,6 +2367,12 @@ export interface INotificationChannelMetadataObjectBase {
     type: "webhook" | "smtp";
 }
 
+// @alpha (undocumented)
+export interface INotificationChannelTestResponse {
+    error?: string;
+    successful: boolean;
+}
+
 // @public
 export function insightAttributeFilterConfigs(insight: IInsightDefinition): IAttributeFilterConfigs | undefined;
 

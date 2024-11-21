@@ -3,6 +3,7 @@
 import { ITigerClient } from "@gooddata/api-client-tiger";
 import {
     INotificationChannelDefinitionObject,
+    INotificationChannelTestResponse,
     ISmtpDefinition,
     ISmtpDefinitionObject,
     IWebhookDefinition,
@@ -115,6 +116,31 @@ export class OrganizationNotificationChannelService implements IOrganizationNoti
 
     /**
      * @alpha
+     * Test webhook
+     *
+     * This method will test the webhook by sending a test notification to the destination.
+     * @param webhook - definition of the webhook
+     * @returns Promise resolved with the response from the test.
+     */
+    public testWebhook = async (webhook: IWebhookDefinition): Promise<INotificationChannelTestResponse> => {
+        const obj = convertCreateWebhookToNotificationChannel(webhook);
+        const destination = obj.attributes?.destination;
+        if (!destination) {
+            throw new Error("Missing destination in the webhook");
+        }
+
+        return this.authCall(async (client: ITigerClient) => {
+            const result = await client.automation.testNotificationChannel({
+                testDestinationRequest: {
+                    destination,
+                },
+            });
+            return result.data;
+        });
+    };
+
+    /**
+     * @alpha
      * Update existing webhook
      *
      * @param webhook - definition of the webhook
@@ -196,6 +222,31 @@ export class OrganizationNotificationChannelService implements IOrganizationNoti
                 },
             });
             return convertEmailFromNotificationChannel(channel.data.data);
+        });
+    };
+
+    /**
+     * @alpha
+     * Test email
+     *
+     * This method will test the email by sending a test notification to the destination.
+     * @param smtp - definition of the email
+     * @returns Promise resolved with the response from the test.
+     */
+    public testEmail = async (smtp: ISmtpDefinition): Promise<INotificationChannelTestResponse> => {
+        const obj = convertCreateEmailToNotificationChannel(smtp);
+        const destination = obj.attributes?.destination;
+        if (!destination) {
+            throw new Error("Missing destination in the email");
+        }
+
+        return this.authCall(async (client: ITigerClient) => {
+            const result = await client.automation.testNotificationChannel({
+                testDestinationRequest: {
+                    destination,
+                },
+            });
+            return result.data;
         });
     };
 

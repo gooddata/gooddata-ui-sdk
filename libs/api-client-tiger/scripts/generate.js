@@ -71,6 +71,11 @@ const specs = [
         name: "result-json-api",
         // modelNamePrefix: "Result" // we should consider prefixing in next major, due to lot of name clashes
     },
+    {
+        path: "/api/v1/schemas/automation",
+        name: "automation-json-api",
+        // modelNamePrefix: "Result" // we should consider prefixing in next major, due to lot of name clashes
+    },
 ];
 
 const downloadSpec = async (specMeta, outputDir, outputFile) => {

@@ -912,6 +912,10 @@ class DummyOrganization implements IOrganization {
                 }),
             getEmails: () => Promise.resolve([]),
             updateEmail: (smtp) => Promise.resolve(smtp),
+            testEmail: () =>
+                Promise.resolve({
+                    successful: true,
+                }),
             //webhooks
             createWebhook: (webhook: IWebhookDefinition) =>
                 Promise.resolve({
@@ -932,6 +936,10 @@ class DummyOrganization implements IOrganization {
                 }),
             getWebhooks: () => Promise.resolve([]),
             updateWebhook: (webhook) => Promise.resolve(webhook),
+            testWebhook: () =>
+                Promise.resolve({
+                    successful: true,
+                }),
         };
     }
 
