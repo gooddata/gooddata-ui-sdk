@@ -40,22 +40,19 @@ const GenAIChatOverlayComponent: React.FC<GenAIChatOverlayProps & WrappedCompone
     isFullscreen,
     setFullscreen,
 }) => {
-    const isModal = isFullscreen;
-
     const classNames = cx("gd-gen-ai-chat__window", {
         "gd-gen-ai-chat__window--fullscreen": isFullscreen,
     });
 
     return (
         <Overlay
-            isModal={isModal}
+            isModal={isFullscreen}
             positionType="fixed"
-            alignPoints={[{ align: isModal ? "cc cc" : "br br" }]}
+            alignPoints={[{ align: isFullscreen ? "cc cc" : "br br" }]}
             closeOnEscape={true}
             closeOnParentScroll={false}
             closeOnOutsideClick={false}
             closeOnMouseDrag={false}
-            zIndex={6000}
             onClose={onClose}
         >
             <div className={classNames}>
