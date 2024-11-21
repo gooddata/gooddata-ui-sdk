@@ -11,8 +11,8 @@ import {
 
 import { convertAutomation as convertAutomationFromBackend } from "../../../convertors/fromBackend/AutomationConverter.js";
 import { convertAutomation as convertAutomationToBackend } from "../../../convertors/toBackend/AutomationConverter.js";
-import { AutomationsQuery } from "./automationsQuery.js";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { AutomationsQuery } from "./automationsQuery.js";
 
 export class TigerWorkspaceAutomationService implements IWorkspaceAutomationService {
     constructor(

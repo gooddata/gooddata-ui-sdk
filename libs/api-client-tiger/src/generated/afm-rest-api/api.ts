@@ -891,7 +891,23 @@ export interface ChatHistoryInteraction {
      * @memberof ChatHistoryInteraction
      */
     createdVisualizations?: CreatedVisualizations;
+    /**
+     * User feedback.
+     * @type {string}
+     * @memberof ChatHistoryInteraction
+     */
+    userFeedback?: ChatHistoryInteractionUserFeedbackEnum;
 }
+
+export const ChatHistoryInteractionUserFeedbackEnum = {
+    POSITIVE: "POSITIVE",
+    NEGATIVE: "NEGATIVE",
+    NONE: "NONE",
+} as const;
+
+export type ChatHistoryInteractionUserFeedbackEnum =
+    typeof ChatHistoryInteractionUserFeedbackEnum[keyof typeof ChatHistoryInteractionUserFeedbackEnum];
+
 /**
  *
  * @export
@@ -2977,13 +2993,11 @@ export interface RouteResult {
 }
 
 export const RouteResultUseCaseEnum = {
-    SEARCH_ALL: "SEARCH_ALL",
-    SEARCH_VISUALIZATIONS: "SEARCH_VISUALIZATIONS",
-    SEARCH_DASHBOARDS: "SEARCH_DASHBOARDS",
+    INVALID: "INVALID",
+    GENERAL: "GENERAL",
+    SEARCH: "SEARCH",
     CREATE_VISUALIZATION: "CREATE_VISUALIZATION",
     EXTEND_VISUALIZATION: "EXTEND_VISUALIZATION",
-    GENERAL: "GENERAL",
-    INVALID: "INVALID",
 } as const;
 
 export type RouteResultUseCaseEnum = typeof RouteResultUseCaseEnum[keyof typeof RouteResultUseCaseEnum];

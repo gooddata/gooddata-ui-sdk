@@ -60,6 +60,40 @@ import { tigerResultClientFactory, ResultActionsApiInterface } from "./result.js
 import { tigerUserManagementClientFactory } from "./userManagement.js";
 import { tigerSmartFunctionsClientFactory } from "./smartFunctions.js";
 import { tigerGenAIClientFactory } from "./genAI.js";
+import {
+    AutomationActionsApiInterface,
+    AutomationActionsApiGetNotificationsRequest,
+    AutomationActionsApiMarkAsReadNotificationRequest,
+    AutomationNotification,
+    AutomationActionsApiTestNotificationChannelRequest,
+    AutomationTestResponse,
+    AutomationActionsApiTestExistingNotificationChannelRequest,
+    AutomationTestNotification,
+    AutomationTestDestinationRequest,
+    AutomationAutomationNotification,
+    AutomationNotificationContent,
+    AutomationWebhook,
+    AutomationInPlatform,
+    AutomationDefaultSmtp,
+    AutomationSmtp,
+    AutomationWebhookTypeEnum,
+    AutomationSmtpTypeEnum,
+    AutomationSmtpPortEnum,
+    AutomationWebhookMessage,
+    AutomationInPlatformTypeEnum,
+    AutomationDefaultSmtpTypeEnum,
+    AutomationWebhookMessageTypeEnum,
+    AutomationWebhookMessageData,
+    AutomationAlertDescription,
+    AutomationExportResult,
+    AutomationWebhookRecipient,
+    AutomationWebhookAutomationInfo,
+    AutomationExportResultStatusEnum,
+    AutomationAlertEvaluationRow,
+    AutomationAlertDescriptionStatusEnum,
+    AutomationMetricRecord,
+    tigerAutomationClientFactory,
+} from "./automation.js";
 
 export type {
     MetadataConfigurationParameters,
@@ -84,6 +118,37 @@ export type {
     TabularExportActionsRequest,
     ResultActionsApiInterface,
     ExportActionsPdfTableStyleProperty,
+    AutomationActionsApiInterface,
+    AutomationActionsApiGetNotificationsRequest,
+    AutomationActionsApiMarkAsReadNotificationRequest,
+    AutomationNotification,
+    AutomationActionsApiTestNotificationChannelRequest,
+    AutomationTestResponse,
+    AutomationActionsApiTestExistingNotificationChannelRequest,
+    AutomationTestNotification,
+    AutomationTestDestinationRequest,
+    AutomationAutomationNotification,
+    AutomationNotificationContent,
+    AutomationWebhook,
+    AutomationInPlatform,
+    AutomationDefaultSmtp,
+    AutomationSmtp,
+    AutomationWebhookTypeEnum,
+    AutomationSmtpTypeEnum,
+    AutomationSmtpPortEnum,
+    AutomationWebhookMessage,
+    AutomationInPlatformTypeEnum,
+    AutomationDefaultSmtpTypeEnum,
+    AutomationWebhookMessageTypeEnum,
+    AutomationWebhookMessageData,
+    AutomationAlertDescription,
+    AutomationExportResult,
+    AutomationWebhookRecipient,
+    AutomationWebhookAutomationInfo,
+    AutomationExportResultStatusEnum,
+    AutomationAlertEvaluationRow,
+    AutomationAlertDescriptionStatusEnum,
+    AutomationMetricRecord,
 };
 export {
     tigerExecutionClientFactory,
@@ -99,6 +164,7 @@ export {
     tigerAuthActionsClientFactory,
     tigerScanModelClientFactory,
     tigerExportClientFactory,
+    tigerAutomationClientFactory,
     tigerResultClientFactory,
     tigerUserManagementClientFactory,
     tigerSmartFunctionsClientFactory,
@@ -116,6 +182,7 @@ export {
 
 export interface ITigerClient {
     axios: AxiosInstance;
+    automation: ReturnType<typeof tigerAutomationClientFactory>;
     execution: ReturnType<typeof tigerExecutionClientFactory>;
     executionResult: ReturnType<typeof tigerExecutionResultClientFactory>;
     labelElements: ReturnType<typeof tigerLabelElementsClientFactory>;
@@ -174,9 +241,11 @@ export const tigerClientFactory = (axios: AxiosInstance): ITigerClient => {
     const userManagement = tigerUserManagementClientFactory(axios);
     const smartFunctions = tigerSmartFunctionsClientFactory(axios);
     const genAI = tigerGenAIClientFactory(axios);
+    const automation = tigerAutomationClientFactory(axios);
 
     return {
         axios,
+        automation,
         execution,
         executionResult,
         labelElements,

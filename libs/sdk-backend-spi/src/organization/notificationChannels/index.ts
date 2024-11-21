@@ -6,6 +6,7 @@ import {
     IWebhookDefinition,
     ISmtpDefinitionObject,
     ISmtpDefinition,
+    INotificationChannelTestResponse,
 } from "@gooddata/sdk-model";
 
 /**
@@ -57,6 +58,14 @@ export interface IOrganizationNotificationChannelService {
     createEmail(smtp: ISmtpDefinition): Promise<ISmtpDefinitionObject>;
 
     /**
+     * Test email
+     *
+     * @param email - definition of the email
+     * @returns Promise resolved with test response.
+     */
+    testEmail(email: ISmtpDefinition): Promise<INotificationChannelTestResponse>;
+
+    /**
      * Update existing email
      *
      * @param smtp - definition of the smtp
@@ -95,6 +104,14 @@ export interface IOrganizationNotificationChannelService {
      * @returns Promise resolved with created webhook.
      */
     createWebhook(webhook: IWebhookDefinition): Promise<IWebhookDefinitionObject>;
+
+    /**
+     * Test webhook
+     *
+     * @param webhook - definition of the webhook
+     * @returns Promise resolved with test response.
+     */
+    testWebhook(webhook: IWebhookDefinition): Promise<INotificationChannelTestResponse>;
 
     /**
      * Update existing webhook
