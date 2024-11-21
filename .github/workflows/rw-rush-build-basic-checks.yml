@@ -104,3 +104,6 @@ jobs:
       - name: Rush test-ci
         run: |
           node common/scripts/install-run-rush.js test-ci
+      - name: Rush test-isolated-ci
+        run: |
+          node common/scripts/install-run-rush.js test-isolated-ci
