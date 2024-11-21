@@ -83,7 +83,7 @@ const GenAIChatOverlayComponent: React.FC<GenAIChatOverlayProps & WrappedCompone
                         onClick={onClose}
                     />
                 </div>
-                <GenAIChatWrapper />
+                <GenAIChatWrapper autofocus />
             </div>
         </Overlay>
     );
