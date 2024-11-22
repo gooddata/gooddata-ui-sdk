@@ -1,0 +1,29 @@
+name: check-node
+description: this action will check if node is installed with version given version
+
+inputs:
+  node-version:
+    description: 'Node version to test'
+    required: true
+
+outputs:
+  node-installed:
+    description: 'Flag to indicate if node is installed'
+    value: ${{ steps.check-node.outputs.is_node }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Check if Node.js is installed
+      id: check-node
+      shell: bash
+      env:
+        testing_version: ${{ inputs.node-version }}
+      run: |
+        version=$(node --version || :)
+        echo "node installed with version=$version"
+        if [ "$version" = "v$testing_version" ]; then
+          echo "is_node=true" >> $GITHUB_OUTPUT
+        else
+          echo "is_node=false" >> $GITHUB_OUTPUT
+        fi

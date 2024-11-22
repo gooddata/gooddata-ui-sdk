@@ -1,0 +1,106 @@
+name: rw ~ rush ~ build validate and run unit tests
+on:
+  workflow_call:
+
+jobs:
+  ######################################################
+  # Warm up the cache pnmp and rush
+  ######################################################
+  warm-up-cache:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-cxa-xlarge
+    steps:
+      - uses: actions/checkout@v4
+      - name: Git config user
+        uses: snow-actions/git-config-user@v1.0.0
+        with:
+          name: git-action
+          email: git-action@gooddata.com
+      - name: Warmup rush
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        uses: ./.github/actions/rush/warm-up-rush
+
+  ######################################################
+  # Warm up build cache and build changes see:STL-710
+  ######################################################
+  build:
+    needs: [warm-up-cache]
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-rxa-xlarge
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Git config user
+        uses: snow-actions/git-config-user@v1.0.0
+        with:
+          name: git-action
+          email: git-action@gooddata.com
+      - name: Debug
+        run: git log -1
+      - name: Setup rush
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        uses: ./.github/actions/rush/set-up-rush
+      - name: Rush build
+        run: node common/scripts/install-run-rush.js build
+
+  ######################################################
+  # Validate the changes
+  ######################################################
+  validate:
+    needs: [warm-up-cache,build]
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-rxa-xlarge  # for testing we need bigger runners
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Git config user
+        uses: snow-actions/git-config-user@v1.0.0
+        with:
+          name: git-action
+          email: git-action@gooddata.com
+      - name: Setup rush
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        uses: ./.github/actions/rush/set-up-rush
+      - name: Rush build
+        run: |
+          # build libs first, then the app
+          node common/scripts/install-run-rush.js build
+      - name: Rush validate
+        run: |
+          # build libs first, then the app
+          node common/scripts/install-run-rush.js validate-ci
+
+
+  test:
+    needs: [warm-up-cache,build]
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-mxa-2xlarge #we need bigger runners
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Git config user
+        uses: snow-actions/git-config-user@v1.0.0
+        with:
+          name: git-action
+          email: git-action@gooddata.com
+      - name: Setup rush
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        uses: ./.github/actions/rush/set-up-rush
+      - name: Rush build
+        run: |
+          # build libs first, then the app
+          node common/scripts/install-run-rush.js build
+      - name: Rush test-ci
+        run: |
+          node common/scripts/install-run-rush.js test-ci

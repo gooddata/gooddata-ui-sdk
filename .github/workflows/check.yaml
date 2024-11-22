@@ -1,62 +1,30 @@
 name: check
-on: pull_request
+
+on:
+  pull_request:
+
+concurrency:
+  group: ${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
 jobs:
-  prepare-env:
-    runs-on:
-      group: infra1-runners-arc
-      labels: runners-small
-    outputs:
-      branch: ${{ github.base_ref }}
-      ref: ${{ github.ref }}
-      commit: ${{ github.event.pull_request.head.sha }}
-      pr_number: ${{ github.event.pull_request.number }}
-      project: ${{ github.repository }}
-      changed_files: ${{ steps.changed-files.outputs.all_changed_files }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v40
-  gooddata-ui-sdk-unit-tests:
-    runs-on:
-      group: infra1-runners-arc
-      labels: runners-small
-    needs:
-      - prepare-env
+  build-validate-stage:
     permissions:
-      contents: read
       id-token: write
-    steps:
-      - name: Call Jenkins trigger
-        id: call-jenkins
-        uses: gooddata/github-actions-public/jenkins/trigger@master
-        with:
-          server: ${{ vars.JENKINS_ADDRESS }}
-          folder: gooddata-ui-sdk
-          job-name: gooddata-ui-sdk-unit-tests
-          vault-url: ${{ vars.VAULT_ADDRESS }}
-          params: |-
-            {
-              "GH_BRANCH": "${{ needs.prepare-env.outputs.branch }}",
-              "GH_REF": "${{ needs.prepare-env.outputs.ref }}",
-              "GH_COMMIT": "${{ needs.prepare-env.outputs.commit }}",
-              "GH_URL": "git@github.com:",
-              "GH_CHANGE": "${{ needs.prepare-env.outputs.pr_number }}",
-              "GH_PROJECT": "${{ needs.prepare-env.outputs.project }}",
-              "BUILD_BY_GITHUB": "true",
-              "GH_PIPELINE": "check"
-            }
-          comment-pr: 'true'
+      contents: read
+      pull-requests: read
+    name: build-validate-stage
+    uses: ./.github/workflows/rw-rush-build-basic-checks.yml
+    secrets: inherit
+
   ready-to-merge:
     runs-on:
       group: infra1-runners-arc
       labels: runners-small
     if: always()
     needs:
-      - prepare-env
-      - gooddata-ui-sdk-unit-tests
+      - build-validate-stage
+
     steps:
       - name: Check if needed jobs succeeded
         uses: re-actors/alls-green@release/v1
