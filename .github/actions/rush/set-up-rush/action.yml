@@ -1,0 +1,65 @@
+name: Set up rush with cache
+description: This action sets up rush with cache
+
+runs:
+  using: 'composite'
+  steps:
+    - name: init node Node.js
+      uses: ./.github/actions/node/set-up-node
+      id: node-init
+
+    # The runner is set up to assume a role using a web identity token, which is only possible for runners in the infra1-runners-arc group.
+    # Region and role ARN and token file are passed as environment variables from the runner.
+    - name: Fetch AWS env variables
+      run: |
+        echo "AWS_REGION=$(echo $AWS_REGION)" >> $GITHUB_ENV
+        echo "AWS_ROLE_ARN=$(echo $AWS_ROLE_ARN)" >> $GITHUB_ENV
+        echo "AWS_WEB_IDENTITY_TOKEN_FILE=$(echo $AWS_WEB_IDENTITY_TOKEN_FILE )" >> $GITHUB_ENV
+      shell: bash
+
+    - name: Configure AWS credentials
+      id: aws-credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-region: ${{ env.AWS_REGION }}
+        role-to-assume: ${{ env.AWS_ROLE_ARN }}
+        web-identity-token-file: ${{ env.AWS_WEB_IDENTITY_TOKEN_FILE }}
+
+    - name: Set up rush build cache credentials
+      run: |
+        RUSH_BUILD_CACHE_CREDENTIAL="$AWS_ACCESS_KEY_ID:$AWS_SECRET_ACCESS_KEY:$AWS_SESSION_TOKEN"
+        echo "RUSH_BUILD_CACHE_CREDENTIAL=$RUSH_BUILD_CACHE_CREDENTIAL" >> $GITHUB_ENV
+      shell: bash
+
+    - name: Enable rush build cache via environment variable
+      run: echo "RUSH_BUILD_CACHE_ENABLED=1" >> $GITHUB_ENV
+      shell: bash
+
+    # Restore cache for global rush installation
+    - name: Cache Rush
+      uses: runs-on/cache/restore@v4
+      env:
+        RUNS_ON_S3_BUCKET_CACHE: gdc-github-cache
+      with:
+        path: |
+          common/temp/install-run
+          ~/.rush
+        key: Rush-cache-${{ hashFiles('rush.json') }}
+
+    - name: Cache pnpm
+      id: cache-pnpm
+      uses: runs-on/cache/restore@v4
+      env:
+        RUNS_ON_S3_BUCKET_CACHE: gdc-github-cache
+      with:
+        path: |
+          common/temp/pnpm-store
+        key: pnpm-cache-${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+
+    # Install rush
+    - name: Install rush
+      env:
+        NPM_AUTH_TOKEN: ${{ env.NPM_AUTH_TOKEN }}
+      run: |
+        node common/scripts/install-run-rush.js install
+      shell: bash
