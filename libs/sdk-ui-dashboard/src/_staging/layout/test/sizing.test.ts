@@ -167,7 +167,7 @@ describe("sizing", () => {
                 enableKDWidgetCustomHeight,
             };
             it("should get minimum width for unknown visType", () => {
-                expect(getDashboardLayoutWidgetMinGridWidth(settings, "insight")).toBe(4);
+                expect(getDashboardLayoutWidgetMinGridWidth(settings, "insight")).toBe(2);
             });
 
             it("should get minimum width for kpi", () => {
@@ -179,30 +179,30 @@ describe("sizing", () => {
             });
 
             it("should get minimum width for visualization switcher widget", () => {
-                expect(getDashboardLayoutWidgetMinGridWidth(settings, "visualizationSwitcher")).toBe(4);
+                expect(getDashboardLayoutWidgetMinGridWidth(settings, "visualizationSwitcher")).toBe(2);
             });
 
             type Scenario = [string, string, VisType | undefined, number];
             const scenarios: Scenario[] = [
                 ["KPI", "kpi", undefined, 2],
                 ["Headline", "insight", "headline", 2],
-                ["Column Chart", "insight", "column", 4],
-                ["Bar Chart", "insight", "bar", 4],
-                ["Line Chart", "insight", "line", 4],
-                ["Area Chart", "insight", "area", 4],
-                ["Combo Chart", "insight", "combo", 4],
-                ["Combo2 Chart", "insight", "combo2", 4],
-                ["Scatter Plot", "insight", "scatter", 4],
-                ["Bubble Chart", "insight", "bubble", 4],
-                ["Pie Chart", "insight", "pie", 4],
-                ["Donut Chart", "insight", "donut", 4],
-                ["Treemap", "insight", "treemap", 4],
-                ["Heatmap", "insight", "heatmap", 4],
-                ["Table", "insight", "table", 3],
+                ["Column Chart", "insight", "column", 2],
+                ["Bar Chart", "insight", "bar", 2],
+                ["Line Chart", "insight", "line", 2],
+                ["Area Chart", "insight", "area", 2],
+                ["Combo Chart", "insight", "combo", 2],
+                ["Combo2 Chart", "insight", "combo2", 2],
+                ["Scatter Plot", "insight", "scatter", 2],
+                ["Bubble Chart", "insight", "bubble", 2],
+                ["Pie Chart", "insight", "pie", 2],
+                ["Donut Chart", "insight", "donut", 2],
+                ["Treemap", "insight", "treemap", 2],
+                ["Heatmap", "insight", "heatmap", 2],
+                ["Table", "insight", "table", 2],
                 ["Geochart", "insight", "pushpin", 6],
             ];
             it.each(scenarios)(
-                "should get default height for %s found in widgets by qualifier",
+                "should get min width for %s found in widgets by qualifier",
                 (_name, widgetType, visType, width) => {
                     expect(
                         getDashboardLayoutWidgetMinGridWidth(

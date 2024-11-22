@@ -46,7 +46,7 @@ export class PivotTableDescriptor extends BaseChartDescriptor implements IVisual
         return {
             width: {
                 default: settings.enableDashboardFlexibleLayout ? 4 : layoutDescriptor.gridColumnsCount,
-                min: 3,
+                min: 2,
                 max: layoutDescriptor.gridColumnsCount,
             },
             height: {

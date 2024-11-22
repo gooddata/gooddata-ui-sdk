@@ -193,7 +193,7 @@ describe("sizing", () => {
         type Scenario = [string, VisType, number, number | undefined, number, number | undefined];
         const scenarios: Scenario[] = [
             ["Headline with too big height", "headline", 2, 80, 2, 40],
-            ["Column Chart with too low width", "column", 2, 14, 4, 14],
+            ["Column Chart with too low width", "column", 1, 14, 2, 14],
             ["Table with too low height", "table", 3, 10, 3, 12],
             ["Geochart with too big width and undefined height", "pushpin", 14, undefined, 12, undefined],
         ];

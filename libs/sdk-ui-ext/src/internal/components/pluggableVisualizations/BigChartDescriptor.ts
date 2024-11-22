@@ -21,7 +21,7 @@ export abstract class BigChartDescriptor extends BaseChartDescriptor {
         return {
             width: {
                 default: settings.enableDashboardFlexibleLayout ? 4 : 6,
-                min: 4,
+                min: 2,
                 max: layoutDescriptor.gridColumnsCount,
             },
             height: {
