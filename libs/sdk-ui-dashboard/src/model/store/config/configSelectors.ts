@@ -433,7 +433,7 @@ export const selectEnableAlertAttributes: DashboardSelector<boolean> = createSel
 export const selectEnableComparisonInAlerting: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableComparisonInAlerting ?? false;
+        return state.settings?.enableComparisonInAlerting ?? true;
     },
 );
 
