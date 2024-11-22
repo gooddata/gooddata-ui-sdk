@@ -17,6 +17,10 @@ For the similar package for the GoodData platform, see [`@gooddata/sdk-backend-b
 
 https://gooddata.atlassian.net/wiki/spaces/Quality/pages/1454276716/Play+with+sdk-backend-tiger+on+UI-SDK
 
+## Test
+
+test
+
 ## License
 
 (C) 2017-2022 GoodData Corporation
