@@ -251,7 +251,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAnalyticalCatalog: false,
     enableAlerting: true,
     enableAlertAttributes: true,
-    enableComparisonInAlerting: false,
+    enableComparisonInAlerting: true,
     enableSmtp: true,
     enableScheduling: true,
     enableLabsSmartFunctions: false,
