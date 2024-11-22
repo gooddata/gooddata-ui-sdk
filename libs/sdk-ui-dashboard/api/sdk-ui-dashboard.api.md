@@ -221,7 +221,8 @@ import { IKpiComparisonTypeComparison } from '@gooddata/sdk-model';
 import { IKpiWidget } from '@gooddata/sdk-model';
 import { IKpiWidgetConfiguration } from '@gooddata/sdk-model';
 import { IKpiWidgetDefinition } from '@gooddata/sdk-model';
-import { ILayoutCoordinates as ILayoutCoordinates_2 } from '../../../types.js';
+import { ILayoutItemPath as ILayoutItemPath_2 } from '../../../types.js';
+import { ILayoutSectionPath as ILayoutSectionPath_2 } from '../../../types.js';
 import { IListedDashboard } from '@gooddata/sdk-model';
 import { ILoadingProps } from '@gooddata/sdk-ui';
 import { ILocale } from '@gooddata/sdk-ui';
@@ -411,10 +412,16 @@ export function addLayoutSection(index: number, initialHeader?: IDashboardLayout
 // @beta
 export interface AddLayoutSectionPayload {
     readonly autoResolveDateFilterDataset?: boolean;
-    readonly index: RelativeIndex;
+    readonly index: RelativeIndex | ILayoutSectionPath;
     readonly initialHeader?: IDashboardLayoutSectionHeader;
     readonly initialItems?: DashboardItemDefinition[];
 }
+
+// @alpha
+export function addNestedLayoutSection(index: ILayoutSectionPath, initialHeader?: IDashboardLayoutSectionHeader, initialItems?: DashboardItemDefinition[], autoResolveDateFilterDataset?: boolean, correlationId?: string): AddLayoutSection;
+
+// @alpha
+export function addNestedLayoutSectionItem(itemPath: ILayoutItemPath, item: DashboardItemDefinition, autoResolveDateFilterDataset?: boolean, correlationId?: string): AddSectionItems;
 
 // @beta
 export function addSectionItem(sectionIndex: number, itemIndex: number, item: DashboardItemDefinition, autoResolveDateFilterDataset?: boolean, correlationId?: string): AddSectionItems;
@@ -431,6 +438,7 @@ export interface AddSectionItems extends IDashboardCommand {
 export interface AddSectionItemsPayload {
     readonly autoResolveDateFilterDataset?: boolean;
     readonly itemIndex: RelativeIndex;
+    readonly itemPath?: ILayoutItemPath;
     readonly items: DashboardItemDefinition[];
     readonly sectionIndex: number;
 }
@@ -597,7 +605,7 @@ export interface BackendCapabilitiesState {
 // @beta (undocumented)
 export interface BareUserInteractionPayload {
     // (undocumented)
-    interaction: "kpiAlertDialogClosed" | "poweredByGDLogoClicked" | "filterContextStateReset" | "interactionPanelOpened" | "addInteractionClicked" | AttributeHierarchiesInteractionType | AttributeFilterInteractionType | DateFilterInteractionType | VisualizationSwitcherInteractionType;
+    interaction: "kpiAlertDialogClosed" | "poweredByGDLogoClicked" | "filterContextStateReset" | "interactionPanelOpened" | "addInteractionClicked" | AttributeHierarchiesInteractionType | AttributeFilterInteractionType | DateFilterInteractionType | VisualizationSwitcherInteractionType | NestedLayoutInteractionType;
 }
 
 // @beta (undocumented)
@@ -620,6 +628,7 @@ export type BaseDraggableMovingItem = BaseDraggableLayoutItem & {
     isOnlyItemInSection: boolean;
     sectionIndex: number;
     itemIndex: number;
+    layoutPath?: ILayoutItemPath;
 };
 
 // @alpha
@@ -992,9 +1001,12 @@ export function changeLayoutSectionHeader(index: number, header: IDashboardLayou
 // @public
 export interface ChangeLayoutSectionHeaderPayload {
     readonly header: IDashboardLayoutSectionHeader;
-    readonly index: number;
+    readonly index: number | ILayoutSectionPath;
     readonly merge?: boolean;
 }
+
+// @alpha
+export function changeNestedLayoutSectionHeader(index: ILayoutSectionPath, header: IDashboardLayoutSectionHeader, merge?: boolean, correlationId?: string): ChangeLayoutSectionHeader;
 
 // @beta (undocumented)
 export interface ChangeRenderMode extends IDashboardCommand {
@@ -2441,7 +2453,9 @@ export interface DashboardLayoutSectionAdded extends IDashboardEvent {
 
 // @beta
 export interface DashboardLayoutSectionAddedPayload {
+    // @deprecated
     readonly index: number;
+    readonly path: ILayoutSectionPath;
     readonly section: ExtendedDashboardLayoutSection;
 }
 
@@ -2456,7 +2470,9 @@ export interface DashboardLayoutSectionHeaderChanged extends IDashboardEvent {
 // @beta
 export interface DashboardLayoutSectionHeaderChangedPayload {
     readonly newHeader: IDashboardLayoutSectionHeader;
+    // @deprecated
     readonly sectionIndex: number;
+    readonly sectionPath: ILayoutSectionPath;
 }
 
 // @beta
@@ -2469,11 +2485,17 @@ export interface DashboardLayoutSectionItemMoved extends IDashboardEvent {
 
 // @beta
 export interface DashboardLayoutSectionItemMovedPayload {
+    // @deprecated
     readonly fromIndex: number;
+    readonly fromPath: ILayoutItemPath;
+    // @deprecated
     readonly fromSectionIndex: number;
     readonly item: ExtendedDashboardItem;
     readonly originalSectionRemoved: boolean;
+    // @deprecated
     readonly toIndex: number;
+    readonly toPath: ILayoutItemPath;
+    // @deprecated
     readonly toSectionIndex: number;
 }
 
@@ -2488,7 +2510,9 @@ export interface DashboardLayoutSectionItemRemoved extends IDashboardEvent {
 // @beta
 export interface DashboardLayoutSectionItemRemovedPayload {
     readonly item: ExtendedDashboardItem;
+    // @deprecated
     readonly itemIndex: number;
+    readonly itemPath: ILayoutItemPath;
     readonly section?: ExtendedDashboardLayoutSection;
     readonly stashIdentifier?: StashedDashboardItemsId;
 }
@@ -2503,9 +2527,12 @@ export interface DashboardLayoutSectionItemReplaced extends IDashboardEvent {
 
 // @beta
 export interface DashboardLayoutSectionItemReplacedPayload {
+    // @deprecated
     readonly itemIndex: number;
     readonly items: ReadonlyArray<ExtendedDashboardItem>;
+    readonly path: ILayoutItemPath;
     readonly previousItem: ExtendedDashboardItem;
+    // @deprecated
     readonly sectionIndex: number;
     readonly stashIdentifier?: StashedDashboardItemsId;
 }
@@ -2521,7 +2548,10 @@ export interface DashboardLayoutSectionItemsAdded extends IDashboardEvent {
 // @beta
 export interface DashboardLayoutSectionItemsAddedPayload {
     readonly itemsAdded: ReadonlyArray<ExtendedDashboardItem>;
+    readonly path: ILayoutItemPath;
+    // @deprecated
     readonly sectionIndex: number;
+    // @deprecated
     readonly startIndex: number;
     readonly stashesUsed?: ReadonlyArray<StashedDashboardItemsId>;
 }
@@ -2536,9 +2566,13 @@ export interface DashboardLayoutSectionMoved extends IDashboardEvent {
 
 // @beta
 export interface DashboardLayoutSectionMovedPayload {
+    // @deprecated
     readonly fromIndex: number;
+    readonly fromPath: ILayoutSectionPath;
     readonly section: ExtendedDashboardLayoutSection;
+    // @deprecated
     readonly toIndex: number;
+    readonly toPath: ILayoutSectionPath;
 }
 
 // @beta
@@ -2552,7 +2586,9 @@ export interface DashboardLayoutSectionRemoved extends IDashboardEvent {
 // @beta
 export interface DashboardLayoutSectionRemovedPayload {
     readonly eagerRemoval?: boolean;
+    // @deprecated
     readonly index: number;
+    readonly path: ILayoutSectionPath;
     readonly section: ExtendedDashboardLayoutSection;
     readonly stashIdentifier?: StashedDashboardItemsId;
 }
@@ -3495,6 +3531,9 @@ export type DropTarget = {
 export interface DropTargetComponentProps {
 }
 
+// @alpha
+export function eagerRemoveNestedLayoutSectionItem(itemPath: ILayoutItemPath, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): RemoveSectionItem;
+
 // @beta
 export function eagerRemoveSectionItem(sectionIndex: number, itemIndex: number, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): RemoveSectionItem;
 
@@ -3770,6 +3809,8 @@ export interface HeightResizerDragItem {
     minLimit: number;
     // (undocumented)
     sectionIndex: number;
+    // (undocumented)
+    sectionPath?: ILayoutSectionPath;
     // (undocumented)
     type: "internal-height-resizer";
     // (undocumented)
@@ -4371,7 +4412,9 @@ export interface IDashboardNestedLayoutProps {
     // (undocumented)
     parentLayoutItemSize?: IDashboardLayoutSizeByScreenSize;
     // (undocumented)
-    screen?: ScreenSize;
+    parentLayoutPath?: ILayoutItemPath;
+    // (undocumented)
+    widget?: ExtendedDashboardLayoutWidget;
     workspace?: string;
 }
 
@@ -4516,6 +4559,8 @@ export interface IDashboardWidgetProps {
     onWidgetClicked?: () => void;
     // @alpha
     parentLayoutItemSize?: IDashboardLayoutSizeByScreenSize;
+    // @alpha
+    parentLayoutPath?: ILayoutItemPath;
     // @alpha (undocumented)
     screen: ScreenSize;
     // @alpha
@@ -4574,6 +4619,7 @@ export type IDraggableCreatePanelItemProps = {
     dragItem: DraggableItem;
     hideDefaultPreview?: boolean;
     disabled?: boolean;
+    onDragStart?: (item: DraggableItem) => void;
 };
 
 // @alpha
@@ -4821,6 +4867,15 @@ export type IKpiDraggingComponentProps = {
 // @beta
 export interface ILayoutCoordinates {
     itemIndex: number;
+    sectionIndex: number;
+}
+
+// @alpha
+export type ILayoutItemPath = ILayoutCoordinates[];
+
+// @alpha
+export interface ILayoutSectionPath {
+    parent?: ILayoutItemPath;
     sectionIndex: number;
 }
 
@@ -5668,6 +5723,15 @@ export function isKpiPlaceholderDraggableItem(item: any): item is KpiPlaceholder
 // @alpha
 export function isKpiPlaceholderWidget(obj: unknown): obj is KpiPlaceholderWidget;
 
+// @alpha
+export function isLayoutCoordinates(obj: unknown): obj is ILayoutCoordinates;
+
+// @alpha
+export function isLayoutItemPath(obj: unknown): obj is ILayoutItemPath;
+
+// @alpha
+export function isLayoutSectionPath(obj: unknown): obj is ILayoutSectionPath;
+
 // @internal
 export function isLoadingPlaceholderWidget(obj: unknown): obj is PlaceholderWidget;
 
@@ -5818,6 +5882,7 @@ export type IWrapCreatePanelItemWithDragProps = {
     dragItem: DraggableItem;
     hideDefaultPreview?: boolean;
     disabled?: boolean;
+    onDragStart?: (item: DraggableItem) => void;
 };
 
 // @internal (undocumented)
@@ -5829,6 +5894,8 @@ export interface IWrapInsightListItemWithDragProps {
     children: JSX.Element;
     // (undocumented)
     insight: IInsight;
+    // (undocumented)
+    onDragStart?: (item: DraggableItem) => void;
 }
 
 // @beta (undocumented)
@@ -6033,9 +6100,24 @@ export function moveLayoutSection(sectionIndex: number, toIndex: number, correla
 
 // @beta
 export interface MoveLayoutSectionPayload {
-    readonly sectionIndex: number;
-    readonly toIndex: RelativeIndex;
+    readonly sectionIndex: number | ILayoutSectionPath;
+    readonly toIndex: number | ILayoutSectionPath;
 }
+
+// @alpha
+export function moveNestedLayoutSection(sectionIndex: ILayoutSectionPath, toIndex: ILayoutSectionPath, correlationId?: string): MoveLayoutSection;
+
+// @alpha
+export function moveNestedLayoutSectionItem(fromPath: ILayoutItemPath, toPath: ILayoutItemPath, correlationId?: string): MoveSectionItem;
+
+// @alpha
+export function moveNestedLayoutSectionItemAndRemoveOriginalSectionIfEmpty(fromPath: ILayoutItemPath, toPath: ILayoutItemPath, correlationId?: string): MoveSectionItem;
+
+// @alpha
+export function moveNestedLayoutSectionItemToNewSection(itemPath: ILayoutItemPath, toSection: ILayoutSectionPath, correlationId?: string): MoveSectionItemToNewSection;
+
+// @alpha
+export function moveNestedLayoutSectionItemToNewSectionAndRemoveOriginalSectionIfEmpty(itemPath: ILayoutItemPath, toSection: ILayoutSectionPath, correlationId?: string): MoveSectionItemToNewSection;
 
 // @beta (undocumented)
 export interface MoveSectionItem extends IDashboardCommand {
@@ -6053,10 +6135,12 @@ export function moveSectionItemAndRemoveOriginalSectionIfEmpty(sectionIndex: num
 
 // @beta
 export interface MoveSectionItemPayload {
+    readonly fromPath?: ILayoutItemPath;
     readonly itemIndex: number;
     readonly removeOriginalSectionIfEmpty: boolean;
     readonly sectionIndex: number;
     readonly toItemIndex: RelativeIndex;
+    readonly toPath?: ILayoutItemPath;
     readonly toSectionIndex: RelativeIndex;
 }
 
@@ -6077,10 +6161,15 @@ export function moveSectionItemToNewSectionAndRemoveOriginalSectionIfEmpty(secti
 // @beta
 export interface MoveSectionItemToNewSectionPayload {
     readonly itemIndex: number;
+    readonly itemPath?: ILayoutItemPath;
     readonly removeOriginalSectionIfEmpty: boolean;
     readonly sectionIndex: number;
+    readonly toSection?: ILayoutSectionPath;
     readonly toSectionIndex: RelativeIndex;
 }
+
+// @beta (undocumented)
+export type NestedLayoutInteractionType = "nestedLayoutRemoved";
 
 // @public
 export function newCustomWidget<TExtra = void>(identifier: string, customType: string, extras?: TExtra & Partial<IFilterableWidget>): TExtra & ICustomWidget;
@@ -6694,9 +6783,15 @@ export function removeLayoutSection(index: number, stashIdentifier?: StashedDash
 
 // @beta
 export interface RemoveLayoutSectionPayload {
-    readonly index: RelativeIndex;
+    readonly index: RelativeIndex | ILayoutSectionPath;
     readonly stashIdentifier?: StashedDashboardItemsId;
 }
+
+// @alpha
+export function removeNestedLayoutSection(index: ILayoutSectionPath, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): RemoveLayoutSection;
+
+// @alpha
+export function removeNestedLayoutSectionItem(itemPath: ILayoutItemPath, stashIdentifier?: StashedDashboardItemsId, correlationId?: string): RemoveSectionItem;
 
 // @beta (undocumented)
 export interface RemoveSectionItem extends IDashboardCommand {
@@ -6731,6 +6826,7 @@ export interface RemoveSectionItemByWidgetRefPayload {
 export interface RemoveSectionItemPayload {
     readonly eager?: boolean;
     readonly itemIndex: RelativeIndex;
+    readonly itemPath?: ILayoutItemPath;
     readonly sectionIndex: number;
     readonly stashIdentifier?: StashedDashboardItemsId;
 }
@@ -6796,6 +6892,9 @@ export function replaceKpiWidgetFilterSettings(ref: ObjRef, settings: Omit<Filte
 // @beta
 export function replaceKpiWidgetIgnoredFilters(ref: ObjRef, displayForms?: ObjRef[], correlationId?: string): ChangeKpiWidgetFilterSettings;
 
+// @alpha
+export function replaceNestedLayoutSectionItem(itemPath: ILayoutItemPath, item: DashboardItemDefinition, stashIdentifier?: StashedDashboardItemsId, autoResolveDateFilterDataset?: boolean, correlationId?: string): ReplaceSectionItem;
+
 // @beta (undocumented)
 export interface ReplaceSectionItem extends IDashboardCommand {
     // (undocumented)
@@ -6812,6 +6911,7 @@ export interface ReplaceSectionItemPayload {
     readonly autoResolveDateFilterDataset?: boolean;
     readonly item: DashboardItemDefinition;
     readonly itemIndex: number;
+    readonly itemPath?: ILayoutItemPath;
     readonly sectionIndex: number;
     readonly stashIdentifier?: StashedDashboardItemsId;
 }
@@ -6859,8 +6959,14 @@ export function resizeHeight(sectionIndex: number, itemIndexes: number[], height
 export interface ResizeHeightPayload {
     readonly height: number;
     readonly itemIndexes: number[];
-    readonly sectionIndex: number;
+    readonly sectionIndex: number | ILayoutSectionPath;
 }
+
+// @alpha
+export function resizeNestedLayoutItemsHeight(sectionIndex: ILayoutSectionPath, itemIndexes: number[], height: number, correlationId?: string): ResizeHeight;
+
+// @alpha
+export function resizeNestedLayoutItemWidth(itemPath: ILayoutItemPath, width: number, correlationId?: string): ResizeWidth;
 
 // @beta (undocumented)
 export interface ResizeWidth extends IDashboardCommand {
@@ -6876,6 +6982,7 @@ export function resizeWidth(sectionIndex: number, itemIndex: number, width: numb
 // @beta
 export interface ResizeWidthPayload {
     readonly itemIndex: number;
+    readonly itemPath?: ILayoutItemPath;
     readonly sectionIndex: number;
     readonly width: number;
 }
@@ -7075,7 +7182,10 @@ export const selectAccessibleDashboards: (state: DashboardState) => IListedDashb
 // @alpha
 export const selectAccessibleDashboardsMap: DashboardSelector<ObjRefMap<IListedDashboard>>;
 
-// @internal (undocumented)
+// @internal
+export const selectActiveSection: DashboardSelector<ILayoutSectionPath | undefined>;
+
+// @internal @deprecated
 export const selectActiveSectionIndex: DashboardSelector<number | undefined>;
 
 // @alpha (undocumented)
@@ -7423,8 +7533,11 @@ export const selectDisableKpiDashboardHeadlineUnderline: DashboardSelector<boole
 // @internal (undocumented)
 export const selectDraggingWidgetSource: DashboardSelector<DraggableLayoutItem | undefined>;
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export const selectDraggingWidgetTarget: DashboardSelector<ILayoutCoordinates | undefined>;
+
+// @internal (undocumented)
+export const selectDraggingWidgetTargetLayoutPath: DashboardSelector<ILayoutItemPath | undefined>;
 
 // @alpha
 export const selectDrillableItems: DashboardSelector<ExplicitDrill[]>;
@@ -7693,8 +7806,11 @@ export const selectInsightsMap: DashboardSelector<ObjRefMap<IInsight>>;
 // @internal (undocumented)
 export const selectInsightWidgetPlaceholder: DashboardSelector<ExtendedDashboardWidget | undefined>;
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export const selectInsightWidgetPlaceholderCoordinates: DashboardSelector<ILayoutCoordinates | undefined>;
+
+// @internal (undocumented)
+export const selectInsightWidgetPlaceholderPath: DashboardSelector<ILayoutItemPath | undefined>;
 
 // @internal (undocumented)
 export const selectInvalidDrillWidgetRefs: DashboardSelector<ObjRef[]>;
@@ -7858,14 +7974,20 @@ export const selectIsWidgetDeleteDialogOpen: DashboardSelector<boolean>;
 // @internal (undocumented)
 export const selectIsWidgetLoadingAdditionalDataByWidgetRef: (refs: ObjRef) => DashboardSelector<boolean>;
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export const selectKpiDeleteDialogWidgetCoordinates: DashboardSelector<ILayoutCoordinates | undefined>;
+
+// @internal (undocumented)
+export const selectKpiDeleteDialogWidgetLayoutPath: DashboardSelector<ILayoutItemPath | undefined>;
 
 // @internal (undocumented)
 export const selectKpiWidgetPlaceholder: DashboardSelector<ExtendedDashboardWidget | undefined>;
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export const selectKpiWidgetPlaceholderCoordinates: DashboardSelector<ILayoutCoordinates | undefined>;
+
+// @internal (undocumented)
+export const selectKpiWidgetPlaceholderPath: DashboardSelector<ILayoutItemPath | undefined>;
 
 // @public
 export const selectLayout: DashboardSelector<IDashboardLayout<ExtendedDashboardWidget>>;
@@ -7999,7 +8121,7 @@ export const selectWeekStart: DashboardSelector<WeekStart>;
 // @alpha
 export const selectWidgetByRef: (ref: ObjRef | undefined) => DashboardSelector<ExtendedDashboardWidget | undefined>;
 
-// @alpha
+// @alpha @deprecated
 export const selectWidgetCoordinatesByRef: (ref: ObjRef) => DashboardSelector<ILayoutCoordinates>;
 
 // @internal (undocumented)
@@ -8011,11 +8133,17 @@ export const selectWidgetDeleteDialogWidgetRef: DashboardSelector<ObjRef | undef
 // @alpha
 export const selectWidgetDrills: (ref: ObjRef | undefined) => DashboardSelector<IDrillToLegacyDashboard[] | InsightDrillDefinition[] | DrillDefinition[]>;
 
+// @alpha
+export const selectWidgetPathByRef: (ref: ObjRef) => DashboardSelector<ILayoutItemPath>;
+
 // @internal (undocumented)
 export const selectWidgetPlaceholder: DashboardSelector<ExtendedDashboardWidget | undefined>;
 
-// @internal (undocumented)
+// @internal @deprecated (undocumented)
 export const selectWidgetPlaceholderCoordinates: DashboardSelector<ILayoutCoordinates | undefined>;
+
+// @internal (undocumented)
+export const selectWidgetPlaceholderPath: DashboardSelector<ILayoutItemPath | undefined>;
 
 // @internal
 export const selectWidgets: DashboardSelector<ExtendedDashboardWidget[]>;
@@ -8406,7 +8534,7 @@ closeShareDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void |
 openDeleteDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
 closeDeleteDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
 openKpiDeleteDialog: (state: WritableDraft<UiState_2>, action: {
-payload: ILayoutCoordinates_2;
+payload: ILayoutItemPath_2;
 type: string;
 }) => void | UiState_2 | WritableDraft<UiState_2>;
 closeKpiDeleteDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
@@ -8445,11 +8573,11 @@ payload: number;
 type: string;
 }) => void | UiState_2 | WritableDraft<UiState_2>;
 clearFilterIndexSelection: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-setActiveSectionIndex: (state: WritableDraft<UiState_2>, action: {
-payload: number;
+setActiveSection: (state: WritableDraft<UiState_2>, action: {
+payload: ILayoutSectionPath_2;
 type: string;
 }) => void | UiState_2 | WritableDraft<UiState_2>;
-clearActiveSectionIndex: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
+clearActiveSection: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
 openCancelEditModeDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
 closeCancelEditModeDialog: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
 resetInvalidDrillWidgetRefs: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
@@ -8483,7 +8611,7 @@ payload: void;
 type: string;
 }) => void | UiState_2 | WritableDraft<UiState_2>;
 setDraggingWidgetTarget: (state: WritableDraft<UiState_2>, action: {
-payload: ILayoutCoordinates_2;
+payload: ILayoutItemPath_2;
 type: string;
 }) => void | UiState_2 | WritableDraft<UiState_2>;
 clearDraggingWidgetTarget: (state: WritableDraft<UiState_2>, action: {
@@ -8519,7 +8647,7 @@ closeWidgetDeleteDialog: (state: WritableDraft<UiState_2>, action: AnyAction) =>
 // @beta (undocumented)
 export interface UiState {
     // (undocumented)
-    activeSectionIndex: number | undefined;
+    activeSection: ILayoutSectionPath | undefined;
     // (undocumented)
     alertsDialog: {
         open: boolean;
@@ -8541,7 +8669,7 @@ export interface UiState {
     // @internal (undocumented)
     draggingWidgetSource: DraggableLayoutItem | undefined;
     // (undocumented)
-    draggingWidgetTarget: ILayoutCoordinates | undefined;
+    draggingWidgetTarget: ILayoutItemPath | undefined;
     // @alpha (undocumented)
     drillValidationMessages: {
         invalidDrillWidgetRefs: ObjRef[];
@@ -8567,7 +8695,7 @@ export interface UiState {
     };
     // (undocumented)
     kpiDeleteDialog: {
-        widgetCoordinates: ILayoutCoordinates | undefined;
+        widgetCoordinates: ILayoutItemPath | undefined;
     };
     // (undocumented)
     menuButton: {
@@ -9201,6 +9329,7 @@ export const useDashboardUserInteraction: () => {
     visualizationSwitcherInteraction: (eventType: VisualizationSwitcherInteractionType) => void;
     automationInteraction: (eventData: AutomationInteractionData) => void;
     savedFilterViewInteraction: (eventData: SavedFilterViewInteractionData) => void;
+    nestedLayoutInteraction: (eventType: NestedLayoutInteractionType) => void;
 };
 
 // @internal (undocumented)
@@ -9504,6 +9633,8 @@ export interface WidthResizerDragItem {
     initialLayoutDimensions: DOMRect;
     // (undocumented)
     itemIndex: number;
+    // (undocumented)
+    layoutPath?: ILayoutItemPath;
     // (undocumented)
     maxLimit: number;
     // (undocumented)

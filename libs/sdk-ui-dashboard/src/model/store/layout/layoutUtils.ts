@@ -11,28 +11,29 @@ import {
     isKpiWidget,
     isRichTextWidget,
     isVisualizationSwitcherWidget,
+    isDashboardLayout,
 } from "@gooddata/sdk-model";
 import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
 
-import { ExtendedDashboardWidget } from "../../types/layoutTypes.js";
-import { ILayoutCoordinates } from "../../../types.js";
+import { ExtendedDashboardWidget, isExtendedDashboardLayoutWidget } from "../../types/layoutTypes.js";
+import { ILayoutItemPath, ILayoutCoordinates } from "../../../types.js";
 
 export function getWidgetCoordinates(
     layout: IDashboardLayout<ExtendedDashboardWidget>,
     ref: ObjRef,
-): ILayoutCoordinates | undefined {
+): ILayoutItemPath | undefined {
     const itemData = getWidgetCoordinatesAndItem(layout, ref);
 
     if (itemData) {
-        return {
-            sectionIndex: itemData.sectionIndex,
-            itemIndex: itemData.itemIndex,
-        };
+        return itemData.layoutPath;
     }
     return undefined;
 }
 
-export function getWidgetsOfType(layout: IDashboardLayout<IDashboardWidget>, types: string[]) {
+export function getWidgetsOfType(
+    layout: IDashboardLayout<IDashboardWidget>,
+    types: string[],
+): IDashboardWidget[] {
     const result = [];
     for (let sectionIndex = 0; sectionIndex < layout.sections.length; sectionIndex++) {
         const section = layout.sections[sectionIndex];
@@ -43,30 +44,63 @@ export function getWidgetsOfType(layout: IDashboardLayout<IDashboardWidget>, typ
             if (item.widget?.type !== undefined && types.includes(item.widget?.type)) {
                 result.push(item.widget);
             }
+
+            if (isDashboardLayout(item.widget)) {
+                result.push(...getWidgetsOfType(item.widget, types));
+            }
         }
     }
 
     return result;
 }
 
-export function getWidgetCoordinatesAndItem(layout: IDashboardLayout<ExtendedDashboardWidget>, ref: ObjRef) {
+export interface ILayoutItemWithPath {
+    item: IDashboardLayoutItem<ExtendedDashboardWidget>;
+    layoutPath: ILayoutItemPath;
+}
+
+const processLayout = (
+    layout: IDashboardLayout<ExtendedDashboardWidget>,
+    ref: ObjRef,
+    path: ILayoutCoordinates[],
+): ILayoutItemWithPath | undefined => {
     for (let sectionIndex = 0; sectionIndex < layout.sections.length; sectionIndex++) {
         const section = layout.sections[sectionIndex];
 
         for (let itemIndex = 0; itemIndex < section.items.length; itemIndex++) {
             const item = section.items[itemIndex];
+            const layoutPath: ILayoutItemPath = [
+                ...path,
+                {
+                    sectionIndex,
+                    itemIndex,
+                },
+            ];
 
             if (areObjRefsEqual(item.widget?.ref, ref)) {
                 return {
-                    sectionIndex,
-                    itemIndex,
+                    layoutPath,
                     item,
                 };
+            }
+
+            if (isDashboardLayout(item.widget)) {
+                const result = processLayout(item.widget, ref, layoutPath);
+                if (result !== undefined) {
+                    return result;
+                }
             }
         }
     }
 
     return undefined;
+};
+
+export function getWidgetCoordinatesAndItem(
+    layout: IDashboardLayout<ExtendedDashboardWidget>,
+    ref: ObjRef,
+): ILayoutItemWithPath | undefined {
+    return processLayout(layout, ref, []);
 }
 
 export function isItemWithBaseWidget(
@@ -78,7 +112,8 @@ export function isItemWithBaseWidget(
         isInsightWidget(widget) ||
         isKpiWidget(widget) ||
         isRichTextWidget(widget) ||
-        isVisualizationSwitcherWidget(widget)
+        isVisualizationSwitcherWidget(widget) ||
+        isExtendedDashboardLayoutWidget(widget)
     );
 }
 

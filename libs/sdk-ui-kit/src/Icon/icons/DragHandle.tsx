@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import React from "react";
 
 import { IIconProps } from "../typings.js";

@@ -12,10 +12,10 @@ import {
     IDashboardDefinition,
     IDashboardPluginDefinition,
     IDashboardPluginLink,
-    isDashboardLayout,
     isVisualizationSwitcherWidget,
     isVisualizationSwitcherWidgetDefinition,
     IInsightWidget,
+    isDashboardLayout,
 } from "@gooddata/sdk-model";
 import omit from "lodash/omit.js";
 import { cloneWithSanitizedIds } from "./IdSanitization.js";
@@ -28,23 +28,33 @@ function removeIdentifiers(widget: IDashboardWidget, useWidgetLocalIdentifiers?:
      * We want to keep localIdentifier which is the only widget identity stored on backend.
      * If it is nonexistent, we create a new one.
      */
-    const localIdentifierObj =
-        useWidgetLocalIdentifiers && !isDashboardLayout(widget)
-            ? { localIdentifier: widget.localIdentifier ?? generateWidgetLocalIdentifier() }
-            : {};
-    const updatedWidget: IDashboardWidget = {
-        ...widget,
-        ...localIdentifierObj,
-        // check both types as widget during save as new is already stripped from ref and uri
-        ...(isVisualizationSwitcherWidget(widget) || isVisualizationSwitcherWidgetDefinition(widget)
-            ? {
-                  visualizations: widget.visualizations.map(
-                      (visualization) =>
-                          removeIdentifiers(visualization, useWidgetLocalIdentifiers) as IInsightWidget,
-                  ),
-              }
-            : {}),
-    };
+    const localIdentifierObj = useWidgetLocalIdentifiers
+        ? { localIdentifier: widget.localIdentifier ?? generateWidgetLocalIdentifier() }
+        : {};
+
+    let updatedWidget: IDashboardWidget;
+
+    if (isDashboardLayout(widget)) {
+        updatedWidget = {
+            ...widget,
+            ...localIdentifierObj,
+            ...removeWidgetIdentifiersInLayout(widget, useWidgetLocalIdentifiers),
+        };
+    } else {
+        updatedWidget = {
+            ...widget,
+            ...localIdentifierObj,
+            // check both types as widget during save as new is already stripped from ref and uri
+            ...(isVisualizationSwitcherWidget(widget) || isVisualizationSwitcherWidgetDefinition(widget)
+                ? {
+                      visualizations: widget.visualizations.map(
+                          (visualization) =>
+                              removeIdentifiers(visualization, useWidgetLocalIdentifiers) as IInsightWidget,
+                      ),
+                  }
+                : {}),
+        };
+    }
 
     // omit removes mandatory props, but we do not have type for such stripped widget
     return omit(updatedWidget, ["ref", "uri", "identifier"]) as IDashboardWidget;

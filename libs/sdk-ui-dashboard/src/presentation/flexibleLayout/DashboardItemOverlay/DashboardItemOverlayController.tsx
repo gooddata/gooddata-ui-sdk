@@ -7,7 +7,7 @@ import {
     selectSectionModification,
     uiActions,
 } from "../../../model/index.js";
-import { IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/fluidLayout/index.js";
+import { IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/index.js";
 import { getRefsForSection } from "../refs.js";
 import { DashboardItemOverlay } from "./DashboardItemOverlay.js";
 

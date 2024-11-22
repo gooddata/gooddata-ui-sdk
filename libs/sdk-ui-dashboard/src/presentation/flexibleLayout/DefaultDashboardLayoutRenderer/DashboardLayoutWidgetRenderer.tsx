@@ -2,11 +2,11 @@
 import React, { CSSProperties, useMemo } from "react";
 import cx from "classnames";
 import { IDashboardLayoutWidgetRenderProps } from "./interfaces.js";
+import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
 
 export function DashboardLayoutWidgetRenderer(props: IDashboardLayoutWidgetRenderProps<any>): JSX.Element {
     const {
         item,
-        screen,
         className,
         contentRef,
         isResizedByLayoutSizingStrategy,
@@ -16,6 +16,7 @@ export function DashboardLayoutWidgetRenderer(props: IDashboardLayoutWidgetRende
         children,
     } = props;
 
+    const screen = useScreenSize();
     const { heightAsRatio, gridHeight } = item.size()[screen]!;
 
     const style = useMemo(() => {

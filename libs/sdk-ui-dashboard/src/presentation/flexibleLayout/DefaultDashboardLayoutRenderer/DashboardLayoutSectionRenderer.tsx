@@ -7,13 +7,16 @@ import { GridLayoutElement } from "./GridLayoutElement.js";
 const isHiddenStyle = { height: 0, width: 0, overflow: "hidden", flex: 0 };
 const defaultStyle = {};
 
-export const DashboardLayoutSectionRenderer: IDashboardLayoutSectionRenderer<unknown> = (props) => {
-    const { children, screen, parentLayoutItemSize, className, isHidden } = props;
+export const DashboardLayoutSectionRenderer: IDashboardLayoutSectionRenderer<unknown> = ({
+    children,
+    parentLayoutItemSize,
+    className,
+    isHidden,
+}) => {
     const style = isHidden ? isHiddenStyle : defaultStyle;
     return (
         <GridLayoutElement
             type="section"
-            screen={screen}
             layoutItemSize={parentLayoutItemSize}
             className={className}
             style={style}

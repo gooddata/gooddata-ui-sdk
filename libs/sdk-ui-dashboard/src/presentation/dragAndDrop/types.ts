@@ -1,6 +1,7 @@
 // (C) 2022-2024 GoodData Corporation
 import { IDashboardAttributeFilter, IDashboardDateFilter, IInsight, IKpi } from "@gooddata/sdk-model";
 import { ICustomWidget } from "../../model/types/layoutTypes.js";
+import { ILayoutItemPath, ILayoutSectionPath } from "../../types.js";
 
 /**
  * @internal
@@ -98,15 +99,22 @@ export function isBaseDraggableLayoutItem(item: any): item is BaseDraggableMovin
 export type BaseDraggableMovingItem = BaseDraggableLayoutItem & {
     title: string;
     isOnlyItemInSection: boolean;
+    // TODO LX-608: remove
     sectionIndex: number;
+    // TODO LX-608: remove
     itemIndex: number;
+    // TODO LX-608: make required
+    layoutPath?: ILayoutItemPath;
 };
 
 /**
  * @internal
  */
 export function isBaseDraggableMovingItem(item: any): item is BaseDraggableMovingItem {
-    return isBaseDraggableLayoutItem(item) && item.sectionIndex !== undefined && item.itemIndex !== undefined;
+    return (
+        isBaseDraggableLayoutItem(item) &&
+        (item.layoutPath !== undefined || (item.sectionIndex !== undefined && item.itemIndex !== undefined))
+    );
 }
 
 /**
@@ -373,7 +381,10 @@ export type DraggableItemComponentTypeMapping = {
  */
 export interface HeightResizerDragItem {
     type: "internal-height-resizer";
+    // TODO LX-608: remove
     sectionIndex: number;
+    // TODO LX-608: make required
+    sectionPath?: ILayoutSectionPath;
     itemIndexes: number[];
     widgetHeights: number[];
     initialLayoutDimensions: DOMRect;
@@ -386,8 +397,12 @@ export interface HeightResizerDragItem {
  */
 export interface WidthResizerDragItem {
     type: "internal-width-resizer";
+    // TODO LX-608: remove
     sectionIndex: number;
+    // TODO LX-608: remove
     itemIndex: number;
+    // TODO LX-608: make required
+    layoutPath?: ILayoutItemPath;
     gridColumnWidth: number;
     gridColumnHeightInPx: number;
     currentWidth: number;
@@ -433,6 +448,7 @@ export type IWrapCreatePanelItemWithDragProps = {
     dragItem: DraggableItem;
     hideDefaultPreview?: boolean;
     disabled?: boolean;
+    onDragStart?: (item: DraggableItem) => void;
 };
 
 /**
@@ -459,6 +475,7 @@ export type IWrapCreatePanelItemWithDragComponent = React.ComponentType<IWrapCre
 export interface IWrapInsightListItemWithDragProps {
     children: JSX.Element;
     insight: IInsight;
+    onDragStart?: (item: DraggableItem) => void;
 }
 
 /**

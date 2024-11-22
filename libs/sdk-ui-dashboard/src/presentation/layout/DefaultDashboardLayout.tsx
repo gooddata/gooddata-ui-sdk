@@ -22,7 +22,6 @@ import {
     selectRenderMode,
     selectEnableFlexibleLayout,
 } from "../../model/index.js";
-import { SectionHotspot } from "../dragAndDrop/index.js";
 import { isInitialPlaceholderWidget } from "../../widgets/index.js";
 import { DefaultFlexibleDashboardLayout } from "../flexibleLayout/index.js";
 
@@ -38,6 +37,7 @@ import { renderModeAwareDashboardLayoutSectionRenderer } from "./DefaultDashboar
 import { renderModeAwareDashboardLayoutSectionHeaderRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionHeaderRenderer.js";
 import { getMemoizedWidgetSanitizer } from "./DefaultDashboardLayoutUtils.js";
 import { EmptyDashboardLayout } from "./EmptyDashboardLayout.js";
+import { SectionHotspot } from "./dragAndDrop/draggableWidget/SectionHotspot.js";
 
 /**
  * Get dashboard layout for exports.
@@ -174,6 +174,7 @@ const LegacyDefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Element
  * @alpha
  */
 export const DefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Element => {
+    // this is where legacy fluid layout or new flexible layout is selected as a dashboard renderer
     const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
     if (isFlexibleLayoutEnabled) {
         return <DefaultFlexibleDashboardLayout {...props} />;

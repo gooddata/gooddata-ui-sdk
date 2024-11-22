@@ -34,18 +34,13 @@ import {
 } from "../../model/index.js";
 import { isAnyPlaceholderWidget, isPlaceholderWidget } from "../../widgets/index.js";
 import { getSizeInfo, calculateWidgetMinHeight } from "../../_staging/layout/sizing.js";
-import { getLayoutCoordinates } from "../../_staging/layout/coordinates.js";
 import { ObjRefMap } from "../../_staging/metadata/objRefMap.js";
 import { useDashboardComponentsContext } from "../dashboardContexts/index.js";
 import {
     BaseDraggableLayoutItemSize,
     DraggableLayoutItem,
-    Hotspot,
-    ResizeOverlay,
     useDashboardDrag,
     useResizeItemStatus,
-    useWidgetDragEndHandler,
-    WidthResizerHotspot,
 } from "../dragAndDrop/index.js";
 import { DashboardWidget, IDashboardWidgetProps } from "../widget/index.js";
 import { DEFAULT_COLUMN_CLIENT_WIDTH, DEFAULT_WIDTH_RESIZER_HEIGHT } from "./constants.js";
@@ -56,6 +51,13 @@ import {
 } from "./DefaultDashboardLayoutRenderer/index.js";
 import { DashboardItemOverlay } from "./DashboardItemOverlay/DashboardItemOverlay.js";
 import { getRefsForSection, getRefsForItem } from "./refs.js";
+import { getItemIndex } from "../../_staging/layout/coordinates.js";
+import { useScreenSize } from "../dashboard/components/DashboardScreenSizeContext.js";
+import { ResizeOverlay } from "./dragAndDrop/Resize/ResizeOverlay.js";
+import { WidthResizerHotspot } from "./dragAndDrop/Resize/WidthResizerHotspot.js";
+import { Hotspot } from "./dragAndDrop/draggableWidget/Hotspot.js";
+import { useWidgetDragEndHandler } from "../dragAndDrop/draggableWidget/useWidgetDragEndHandler.js";
+import { DashboardItemPathAndSizeProvider } from "../dashboard/components/DashboardItemPathAndSizeContext.js";
 
 /**
  * Tests in KD require widget index for css selectors.
@@ -63,13 +65,13 @@ import { getRefsForSection, getRefsForItem } from "./refs.js";
  * Also, placeholders are ignored for this.
  */
 function getWidgetIndex(item: IDashboardLayoutItemFacade<ExtendedDashboardWidget>): number {
-    const sectionIndex = item.section().index();
+    const sectionPath = item.section().index();
     const isIgnoredForIndexes = (widget: ExtendedDashboardWidget | undefined) => {
         return !widget || isAnyPlaceholderWidget(widget);
     };
 
     let itemsInSectionsBefore = 0;
-    for (let i = 0; i < sectionIndex; i += 1) {
+    for (let i = 0; i < sectionPath.sectionIndex; i += 1) {
         itemsInSectionsBefore +=
             item
                 .section()
@@ -81,8 +83,10 @@ function getWidgetIndex(item: IDashboardLayoutItemFacade<ExtendedDashboardWidget
     const ignoredWidgetsBeforeItemCount = item
         .section()
         .items()
-        .filter((i) => i.index() < item.index() && isIgnoredForIndexes(i.widget())).length;
-    return itemsInSectionsBefore + item.index() - ignoredWidgetsBeforeItemCount;
+        .filter(
+            (i) => getItemIndex(i.index()) < getItemIndex(item.index()) && isIgnoredForIndexes(i.widget()),
+        ).length;
+    return itemsInSectionsBefore + getItemIndex(item.index()) - ignoredWidgetsBeforeItemCount;
 }
 
 /**
@@ -91,10 +95,8 @@ function getWidgetIndex(item: IDashboardLayoutItemFacade<ExtendedDashboardWidget
 export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     ExtendedDashboardWidget,
     Pick<IDashboardWidgetProps, "onError" | "onDrill" | "onFiltersChange">
-> = (props) => {
-    const { item, screen, DefaultWidgetRenderer, onDrill, onFiltersChange, onError, getLayoutDimensions } =
-        props;
-
+> = ({ item, DefaultWidgetRenderer, onDrill, onFiltersChange, onError, getLayoutDimensions }) => {
+    const screen = useScreenSize();
     const dispatch = useDashboardDispatch();
     const insights = useDashboardSelector(selectInsightsMap);
     const settings = useDashboardSelector(selectSettings);
@@ -112,6 +114,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     const { isSelected } = useWidgetSelection(widget.ref);
     const isRichText = isRichTextWidget(widget);
     const isRichTextWidgetInEditState = isSelected && isRichText;
+    const isNestedLayout = isExtendedDashboardLayoutWidget(widget);
 
     const [{ isDragging }, dragRef] = useDashboardDrag(
         {
@@ -137,7 +140,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
             : undefined;
 
     const allowOverflow = !!currentSize.heightAsRatio;
-    const className = enableWidgetCustomHeight ? "custom-height" : undefined;
+
     const index = getWidgetIndex(item);
 
     const refs = getRefsForItem(item);
@@ -167,16 +170,24 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     function getGridColumnWidth(): number {
         const columnWidthInGC = item.sizeForScreen(screen)?.gridWidth as number;
         const columnWidthInPx = getWidthInPx();
-        return columnWidthInPx / columnWidthInGC;
+        return (columnWidthInPx + 20) / columnWidthInGC;
     }
 
     const canShowHotspot = isInEditMode && !isDragging;
+
+    const className = cx({
+        "custom-height": enableWidgetCustomHeight,
+        "gd-nested-layout-widget-renderer": isNestedLayout,
+    });
+
+    const hotspotClassNames = cx({
+        "gd-nested-layout-hotspot": isNestedLayout,
+    });
 
     return (
         <DefaultWidgetRenderer
             DefaultWidgetRenderer={DefaultWidgetRenderer}
             item={item}
-            screen={screen}
             allowOverflow={allowOverflow}
             height={height}
             minHeight={minHeight}
@@ -188,54 +199,69 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                 ref={dragRef}
                 className={cx([
                     "dashboard-widget-draggable-wrapper",
-                    { "gd-custom-widget-export": isCustom && isExport },
+                    {
+                        "gd-custom-widget-export": isCustom && isExport,
+                        "gd-nested-layout-widget-wrapper": isNestedLayout,
+                    },
                 ])}
             >
-                <DashboardWidget
-                    // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
-                    index={index}
-                    screen={screen}
-                    onDrill={onDrill}
-                    onError={onError}
-                    onFiltersChange={onFiltersChange}
-                    widget={widget as ExtendedDashboardWidget}
-                    parentLayoutItemSize={item.size()}
-                    ErrorComponent={ErrorComponent}
-                    LoadingComponent={LoadingComponent}
-                />
-            </div>
-
-            {canShowHotspot && !isAnyPlaceholderWidget(widget) ? (
-                <>
+                {canShowHotspot && !isAnyPlaceholderWidget(widget) && !isCustomWidget(widget) ? (
+                    <Hotspot
+                        dropZoneType="prev"
+                        layoutPath={item.index()}
+                        isLastInSection={false}
+                        classNames={hotspotClassNames}
+                    />
+                ) : null}
+                <DashboardItemPathAndSizeProvider itemPath={item.index()} itemSize={item.size()}>
+                    <DashboardWidget
+                        // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
+                        index={index}
+                        onDrill={onDrill}
+                        onError={onError}
+                        onFiltersChange={onFiltersChange}
+                        widget={widget as ExtendedDashboardWidget}
+                        parentLayoutItemSize={item.size()}
+                        parentLayoutPath={item.index()}
+                        ErrorComponent={ErrorComponent}
+                        LoadingComponent={LoadingComponent}
+                    />
+                </DashboardItemPathAndSizeProvider>
+                {canShowHotspot && !isAnyPlaceholderWidget(widget) && isActive ? (
                     <ResizeOverlay
                         isActive={isActive}
                         isResizingColumnOrRow={isResizingColumnOrRow}
                         reachedWidthLimit={widthLimitReached}
                         reachedHeightLimit={heightLimitReached}
                     />
-                    {!isCustomWidget(widget) ? (
+                ) : null}
+                {canShowHotspot && !isAnyPlaceholderWidget(widget) ? (
+                    <>
+                        {isCustomWidget(widget) ? null : (
+                            <>
+                                <Hotspot
+                                    dropZoneType="next"
+                                    layoutPath={item.index()}
+                                    isLastInSection={item.isLast()}
+                                    classNames={hotspotClassNames}
+                                />
+                            </>
+                        )}
+                    </>
+                ) : null}
+            </div>
+            {canShowHotspot && !isAnyPlaceholderWidget(widget) ? (
+                <>
+                    {isCustomWidget(widget) ? null : (
                         <>
-                            <Hotspot
-                                dropZoneType="prev"
-                                itemIndex={item.index()}
-                                sectionIndex={item.section().index()}
-                                isLastInSection={false}
-                            />
-                            <Hotspot
-                                dropZoneType="next"
-                                itemIndex={item.index()}
-                                sectionIndex={item.section().index()}
-                                isLastInSection={item.isLast()}
-                            />
                             <WidthResizerHotspot
                                 item={item}
-                                screen={screen}
                                 getGridColumnHeightInPx={getHeightInPx}
                                 getGridColumnWidth={getGridColumnWidth}
                                 getLayoutDimensions={getLayoutDimensions}
                             />
                         </>
-                    ) : null}
+                    )}
                 </>
             ) : null}
 
@@ -280,8 +306,7 @@ function createDraggableItem(
     settings: ISettings,
 ): DraggableLayoutItem {
     const widget = item.widget()!;
-
-    const { sectionIndex, itemIndex } = getLayoutCoordinates(item);
+    const layoutPath = item.index();
     const size = item.size();
 
     const isOnlyItemInSection = item.section().items().count() === 1;
@@ -293,8 +318,9 @@ function createDraggableItem(
             type: "kpi",
             kpi: widget.kpi,
             title: widget.title,
-            sectionIndex,
-            itemIndex,
+            layoutPath,
+            itemIndex: -1, // only for type compatibility reasons, will not be used
+            sectionIndex: -1, // only for type compatibility reasons, will not be used
             isOnlyItemInSection,
             size: getFilledSize(size, sizeInfo),
         };
@@ -305,8 +331,9 @@ function createDraggableItem(
         return {
             type: "insight",
             insight,
-            sectionIndex,
-            itemIndex,
+            layoutPath,
+            itemIndex: -1, // only for type compatibility reasons, will not be used
+            sectionIndex: -1, // only for type compatibility reasons, will not be used
             title: widget.title,
             isOnlyItemInSection,
             size: getFilledSize(size, sizeInfo),
@@ -316,8 +343,9 @@ function createDraggableItem(
 
         return {
             type: "richText",
-            sectionIndex,
-            itemIndex,
+            layoutPath,
+            itemIndex: -1, // only for type compatibility reasons, will not be used
+            sectionIndex: -1, // only for type compatibility reasons, will not be used
             title: widget.title,
             isOnlyItemInSection,
             size: getFilledSize(size, sizeInfo),
@@ -327,29 +355,30 @@ function createDraggableItem(
 
         return {
             type: "visualizationSwitcher",
-            sectionIndex,
-            itemIndex,
+            layoutPath,
+            itemIndex: -1, // only for type compatibility reasons, will not be used
+            sectionIndex: -1, // only for type compatibility reasons, will not be used
             title: widget.title,
             isOnlyItemInSection,
             size: getFilledSize(size, sizeInfo),
         };
     } else if (isExtendedDashboardLayoutWidget(widget)) {
-        const sizeInfo = DASHBOARD_LAYOUT_WIDGET_SIZE_INFO_DEFAULT;
-
         return {
             type: "dashboardLayout",
-            sectionIndex,
-            itemIndex,
+            layoutPath,
+            itemIndex: -1, // only for type compatibility reasons, will not be used
+            sectionIndex: -1, // only for type compatibility reasons, will not be used
             title: "",
             isOnlyItemInSection,
-            size: getFilledSize(size, sizeInfo),
+            size: getFilledSize(size, DASHBOARD_LAYOUT_WIDGET_SIZE_INFO_DEFAULT),
         };
     } else {
         return {
             type: widget.type,
             widget,
-            sectionIndex,
-            itemIndex,
+            layoutPath,
+            itemIndex: -1, // only for type compatibility reasons, will not be used
+            sectionIndex: -1, // only for type compatibility reasons, will not be used
             title: "",
             isOnlyItemInSection,
             size: getFilledSize(size),

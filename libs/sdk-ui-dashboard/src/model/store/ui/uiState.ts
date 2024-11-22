@@ -2,9 +2,10 @@
 import { ObjRef, Identifier, Uri } from "@gooddata/sdk-model";
 
 import {
-    ILayoutCoordinates,
     IMenuButtonItemsVisibility,
     IScheduleEmailDialogContext,
+    ILayoutItemPath,
+    ILayoutSectionPath,
 } from "../../../types.js";
 import { DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
 import { IDashboardWidgetOverlay } from "../../types/commonTypes.js";
@@ -65,7 +66,7 @@ export interface UiState {
         /**
          * Undefined means the dialog should be closed
          */
-        widgetCoordinates: ILayoutCoordinates | undefined;
+        widgetCoordinates: ILayoutItemPath | undefined;
     };
     cancelEditModeDialog: {
         open: boolean;
@@ -87,7 +88,7 @@ export interface UiState {
     widgetsLoadingAdditionalData: ObjRef[];
     filterAttributeSelectionOpen: boolean;
     selectedFilterIndex: number | undefined;
-    activeSectionIndex: number | undefined;
+    activeSection: ILayoutSectionPath | undefined;
     /** @alpha */
     drillValidationMessages: {
         invalidDrillWidgetRefs: ObjRef[];
@@ -95,7 +96,7 @@ export interface UiState {
     };
     /** @internal */
     draggingWidgetSource: DraggableLayoutItem | undefined;
-    draggingWidgetTarget: ILayoutCoordinates | undefined;
+    draggingWidgetTarget: ILayoutItemPath | undefined;
     widgetsOverlay: Record<string, IDashboardWidgetOverlay>;
 }
 
@@ -153,7 +154,7 @@ export const uiInitialState: UiState = {
     widgetsLoadingAdditionalData: [],
     filterAttributeSelectionOpen: false,
     selectedFilterIndex: undefined,
-    activeSectionIndex: undefined,
+    activeSection: undefined,
     drillValidationMessages: {
         invalidDrillWidgetRefs: [],
         invalidCustomUrlDrillParameterWidgets: [],

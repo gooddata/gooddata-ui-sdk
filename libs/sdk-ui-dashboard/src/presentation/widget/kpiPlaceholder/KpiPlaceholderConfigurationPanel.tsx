@@ -1,13 +1,13 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React, { useCallback } from "react";
 import { ObjRef } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 
 import {
-    replaceSectionItem,
+    replaceNestedLayoutSectionItem,
     selectAllCatalogMeasuresMap,
     selectSettings,
-    selectWidgetCoordinatesByRef,
+    selectWidgetPathByRef,
     uiActions,
     useDashboardCommandProcessing,
     useDashboardDispatch,
@@ -30,10 +30,10 @@ export const KpiPlaceholderConfigurationPanel: React.FC<IKpiPlaceholderConfigura
 
     const settings = useDashboardSelector(selectSettings);
     const measuresMap = useDashboardSelector(selectAllCatalogMeasuresMap);
-    const { itemIndex, sectionIndex } = useDashboardSelector(selectWidgetCoordinatesByRef(widget.ref));
+    const layoutPath = useDashboardSelector(selectWidgetPathByRef(widget.ref));
 
     const replaceKpiProcessing = useDashboardCommandProcessing({
-        commandCreator: replaceSectionItem,
+        commandCreator: replaceNestedLayoutSectionItem,
         errorEvent: "GDC.DASH/EVT.COMMAND.FAILED",
         successEvent: "GDC.DASH/EVT.FLUID_LAYOUT.ITEM_REPLACED",
         onSuccess: (event) => {
@@ -52,7 +52,7 @@ export const KpiPlaceholderConfigurationPanel: React.FC<IKpiPlaceholderConfigura
             const sizeInfo = getSizeInfo(settings, "kpi");
 
             // replace the placeholder that is already in place
-            replaceKpiProcessing.run(sectionIndex, itemIndex, {
+            replaceKpiProcessing.run(layoutPath, {
                 type: "IDashboardLayoutItem",
                 size: {
                     xl: {
@@ -75,7 +75,7 @@ export const KpiPlaceholderConfigurationPanel: React.FC<IKpiPlaceholderConfigura
                 },
             });
         },
-        [measuresMap, settings, replaceKpiProcessing, sectionIndex, itemIndex],
+        [measuresMap, settings, replaceKpiProcessing, layoutPath],
     );
 
     return <KpiConfigurationPanelCore onMeasureChange={handleMeasureChanged} onClose={onClose} />;

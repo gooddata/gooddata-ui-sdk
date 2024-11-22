@@ -14,12 +14,15 @@ import {
     DESCRIPTION_LENGTH_WARNING_LIMIT,
 } from "./sectionHeaderHelper.js";
 import {
-    changeLayoutSectionHeader,
+    changeNestedLayoutSectionHeader,
     selectEnableRichTextDescriptions,
     uiActions,
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../model/index.js";
+import { ILayoutSectionPath } from "../../../../types.js";
+
+import { serializeLayoutSectionPath } from "../../../../_staging/layout/coordinates.js";
 
 const richTextTooltipAlignPoints: IAlignPoint[] = [
     { align: "bl tl", offset: { x: 6, y: 1 } },
@@ -29,14 +32,17 @@ const richTextTooltipAlignPoints: IAlignPoint[] = [
 export interface ISectionHeaderEditableProps {
     title: string;
     description: string;
-    index: number;
+    section: ILayoutSectionPath;
 }
 
-export function SectionHeaderEditable(props: ISectionHeaderEditableProps): JSX.Element {
+export function SectionHeaderEditable({
+    title: rawTitle,
+    description: rawDescription,
+    section,
+}: ISectionHeaderEditableProps): JSX.Element {
     const useRichText = useDashboardSelector(selectEnableRichTextDescriptions);
-    const description = useRichText ? props.description : getDescription(props.description);
-    const title = getTitle(props.title);
-    const { index } = props;
+    const description = useRichText ? rawDescription : getDescription(rawDescription);
+    const title = getTitle(rawTitle);
     const intl = useIntl();
     const placeholder = intl.formatMessage({
         id: "layout.header.add.description.placeholder",
@@ -44,20 +50,20 @@ export function SectionHeaderEditable(props: ISectionHeaderEditableProps): JSX.E
 
     const dispatch = useDashboardDispatch();
     const changeTitle = useCallback(
-        (title: string) => dispatch(changeLayoutSectionHeader(index, { title }, true)),
-        [dispatch, index],
+        (title: string) => dispatch(changeNestedLayoutSectionHeader(section, { title }, true)),
+        [dispatch, section],
     );
     const changeDescription = useCallback(
-        (description: string) => dispatch(changeLayoutSectionHeader(index, { description }, true)),
-        [dispatch, index],
+        (description: string) => dispatch(changeNestedLayoutSectionHeader(section, { description }, true)),
+        [dispatch, section],
     );
 
     const onEditingStart = useCallback(() => {
-        dispatch(uiActions.setActiveSectionIndex(index));
-    }, [dispatch, index]);
+        dispatch(uiActions.setActiveSection(section));
+    }, [dispatch, section]);
 
     const onEditingEnd = useCallback(() => {
-        dispatch(uiActions.clearActiveSectionIndex());
+        dispatch(uiActions.clearActiveSection());
     }, [dispatch]);
 
     const onTitleSubmit = useCallback(
@@ -100,17 +106,19 @@ export function SectionHeaderEditable(props: ISectionHeaderEditableProps): JSX.E
         setRichTextValue(description);
     }, [description]);
 
+    const serializedSectionIndex = serializeLayoutSectionPath(section);
+
     return (
         <div className="gd-row-header-edit">
             <div className="gd-editable-label-container gd-row-header-title-wrapper">
                 <EditableLabelWithBubble
-                    className={`gd-title-for-${index} s-fluid-layout-row-title-input title gd-heading-2`}
+                    className={`gd-title-for-${serializedSectionIndex} s-fluid-layout-row-title-input title gd-heading-2`}
                     maxRows={10}
                     value={title || ""}
                     maxLength={MAX_TITLE_LENGTH}
                     warningLimit={TITLE_LENGTH_WARNING_LIMIT}
                     placeholderMessage={intl.formatMessage({ id: "layout.header.add.title.placeholder" })}
-                    alignTo={`.gd-title-for-${index}`}
+                    alignTo={`.gd-title-for-${serializedSectionIndex}`}
                     onSubmit={onTitleSubmit}
                     onEditingStart={onEditingStart}
                     onCancel={onEditingEnd}
@@ -140,8 +148,8 @@ export function SectionHeaderEditable(props: ISectionHeaderEditableProps): JSX.E
                     </div>
                 ) : (
                     <EditableLabelWithBubble
-                        className={`gd-description-for-${index} s-fluid-layout-row-description-input description`}
-                        alignTo={`.gd-description-for-${index}`}
+                        className={`gd-description-for-${serializedSectionIndex} s-fluid-layout-row-description-input description`}
+                        alignTo={`.gd-description-for-${serializedSectionIndex}`}
                         maxRows={15}
                         value={description || ""}
                         maxLength={MAX_DESCRIPTION_LENGTH}

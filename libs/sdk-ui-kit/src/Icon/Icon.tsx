@@ -105,6 +105,7 @@ import { ChatBubble } from "./icons/ChatBubble.js";
 import { Container } from "./icons/Container.js";
 import { ThumbsUp } from "./icons/ThumbsUp.js";
 import { ThumbsDown } from "./icons/ThumbsDown.js";
+import { SmallDragHandle } from "./icons/SmallDragHandle.js";
 
 /**
  * @internal
@@ -213,6 +214,7 @@ export const Icon: Record<string, React.FC<IIconProps>> = {
     Section: Container,
     ThumbsUp,
     ThumbsDown,
+    SmallDragHandle,
 };
 
 export type { IRowsIconProps, IColumnsIconProps };

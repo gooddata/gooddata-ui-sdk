@@ -9,15 +9,21 @@ import {
     useDashboardSelector,
     selectEnableFlexibleLayout,
 } from "../../../model/index.js";
-import { useDashboardDrop, useWidgetDragHoverHandlers } from "../../dragAndDrop/index.js";
+import { useDashboardDrop } from "../../dragAndDrop/index.js";
 import { DashboardLayout } from "../../layout/index.js";
 import { IDashboardProps } from "../types.js";
 
 import { DateFilterConfigWarnings } from "./DateFilterConfigWarnings.js";
+import { useWidgetDragHoverHandlers as useFlexibleWidgetDragHoverHandlers } from "../../flexibleLayout/dragAndDrop/draggableWidget/useWidgetDragHoverHandlers.js";
+import { useWidgetDragHoverHandlers as useFluidWidgetDragHoverHandlers } from "../../layout/dragAndDrop/draggableWidget/useWidgetDragHoverHandlers.js";
 
 export const DashboardMainContent = forwardRef(function DashboardMainContent(_: IDashboardProps, ref) {
     const onFiltersChange = useDispatchDashboardCommand(changeFilterContextSelection);
     const { deselectWidgets } = useWidgetSelection();
+    const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
+    const useWidgetDragHoverHandlers = isFlexibleLayoutEnabled
+        ? useFlexibleWidgetDragHoverHandlers
+        : useFluidWidgetDragHoverHandlers;
 
     const { handleDragHoverEnd } = useWidgetDragHoverHandlers();
     const [{ isOver }, dropRef] = useDashboardDrop(
@@ -42,8 +48,6 @@ export const DashboardMainContent = forwardRef(function DashboardMainContent(_: 
             handleDragHoverEnd();
         }
     }, [handleDragHoverEnd, isOver]);
-
-    const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
 
     const classNames = cx("gd-flex-container", "root-flex-maincontent", {
         "gd-grid-layout": isFlexibleLayoutEnabled,

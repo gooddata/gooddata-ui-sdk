@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import {
     IWidget,
     IWidgetDefinition,
@@ -61,6 +61,11 @@ export function walkLayout<TWidget extends IDashboardWidget>(
                 widgetCallback(item.widget, widgetPath);
             } else if (isDashboardLayout<TWidget>(item.widget)) {
                 // is another layout
+
+                //handle nested layout same as other widgets
+                const widgetPath = [...itemPath, "widget"];
+                widgetCallback(item.widget, widgetPath);
+                //and then traverse down
                 walkLayout(
                     item.widget,
                     {

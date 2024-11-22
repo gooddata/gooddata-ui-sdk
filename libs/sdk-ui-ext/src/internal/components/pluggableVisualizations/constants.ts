@@ -120,7 +120,7 @@ export const VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_NEW_DEFAULT: IVisualization
  */
 export const DASHBOARD_LAYOUT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo = {
     width: {
-        min: 4,
+        min: 2,
         default: 4,
     },
     height: {

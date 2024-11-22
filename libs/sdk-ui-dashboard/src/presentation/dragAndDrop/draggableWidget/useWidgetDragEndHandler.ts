@@ -1,6 +1,5 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import { useCallback } from "react";
-
 import { uiActions, useDashboardDispatch } from "../../../model/index.js";
 
 /**

@@ -2,15 +2,10 @@
 
 import { ComponentType } from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import {
-    FilterContextItem,
-    IDashboardLayout,
-    IDashboardLayoutSizeByScreenSize,
-    ScreenSize,
-} from "@gooddata/sdk-model";
+import { FilterContextItem, IDashboardLayout, IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 import { IErrorProps, OnError } from "@gooddata/sdk-ui";
-import { IDashboardFilter, OnFiredDashboardDrillEvent } from "../../../types.js";
-import { ExtendedDashboardWidget } from "../../../model/index.js";
+import { IDashboardFilter, OnFiredDashboardDrillEvent, ILayoutItemPath } from "../../../types.js";
+import { ExtendedDashboardLayoutWidget, ExtendedDashboardWidget } from "../../../model/index.js";
 
 /**
  * @alpha
@@ -21,14 +16,14 @@ export interface IDashboardLayoutProps {
     onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
     onDrill?: OnFiredDashboardDrillEvent;
     onError?: OnError;
+    // valid only for nested layouts
+    widget?: ExtendedDashboardLayoutWidget;
     // if not provided, root layout from appState will be used
     layout?: IDashboardLayout<ExtendedDashboardWidget>;
-    // if not provided, the layout size will be detected
-    screen?: ScreenSize;
     // if not provided, the layout size will be considered to be default (12 columns)
     parentLayoutItemSize?: IDashboardLayoutSizeByScreenSize;
-
-    // TODO INE: dashboard as a widget props
+    // if not provided, the layout is expected to be root
+    parentLayoutPath?: ILayoutItemPath;
     /**
      * Backend to work with.
      *

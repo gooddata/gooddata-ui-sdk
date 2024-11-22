@@ -1,12 +1,12 @@
 // (C) 2007-2024 GoodData Corporation
-import { ScreenSize, IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
+import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 import flatMap from "lodash/flatMap.js";
 import React, { useMemo } from "react";
-import { RenderMode } from "../../../types.js";
+import { RenderMode, ILayoutItemPath } from "../../../types.js";
 import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutSectionFacade,
-} from "../../../_staging/dashboard/fluidLayout/facade/interfaces.js";
+} from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { DashboardLayoutGridRow } from "./DashboardLayoutGridRow.js";
 import { DashboardLayoutSectionHeaderRenderer } from "./DashboardLayoutSectionHeaderRenderer.js";
 import { DashboardLayoutSectionRenderer } from "./DashboardLayoutSectionRenderer.js";
@@ -22,6 +22,8 @@ import {
 import { DashboardLayoutSectionOverlayController } from "../DashboardItemOverlay/DashboardItemOverlayController.js";
 import last from "lodash/last.js";
 import { DashboardLayoutGridRowEdit } from "./DashboardLayoutGridRowEdit.js";
+import { getItemIndex, serializeLayoutItemPath } from "../../../_staging/layout/coordinates.js";
+import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
 
 /**
  * @alpha
@@ -36,10 +38,10 @@ export interface IDashboardLayoutSectionProps<TWidget> {
     widgetRenderer: IDashboardLayoutWidgetRenderer<TWidget>;
     gridRowRenderer?: IDashboardLayoutGridRowRenderer<TWidget>;
     getLayoutDimensions: () => DOMRect;
-    screen: ScreenSize;
     renderMode: RenderMode;
     isDraggingWidget?: boolean;
     parentLayoutItemSize?: IDashboardLayoutSizeByScreenSize;
+    parentLayoutPath: ILayoutItemPath | undefined;
 }
 
 const defaultSectionRenderer: IDashboardLayoutSectionRenderer<unknown> = (props) => (
@@ -50,7 +52,8 @@ const defaultHeaderRenderer: IDashboardLayoutSectionHeaderRenderer<unknown> = (p
     <DashboardLayoutSectionHeaderRenderer {...props} />
 );
 
-const defaultItemKeyGetter: IDashboardLayoutItemKeyGetter<unknown> = ({ item }) => item.index().toString();
+const defaultItemKeyGetter: IDashboardLayoutItemKeyGetter<unknown> = ({ item }) =>
+    serializeLayoutItemPath(item.index());
 
 export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionProps<TWidget>): JSX.Element {
     const {
@@ -62,20 +65,21 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
         itemRenderer,
         widgetRenderer,
         getLayoutDimensions,
-        screen,
         renderMode,
         parentLayoutItemSize,
+        parentLayoutPath,
     } = props;
-    const renderProps = { section, screen, renderMode, parentLayoutItemSize };
+    const renderProps = { section, renderMode, parentLayoutItemSize, parentLayoutPath };
+    const screen = useScreenSize();
 
     const items = useMemo(() => {
         if (renderMode === "edit") {
             const itemsInRowsByIndex = section
                 .items()
-                .asGridRows(screen)
+                .asGridRows(screen, parentLayoutItemSize?.[screen]?.gridWidth)
                 .map(
                     (itemsInRow) =>
-                        [last(itemsInRow)!.index(), itemsInRow] as [
+                        [getItemIndex(last(itemsInRow)!.index()), itemsInRow] as [
                             number,
                             IDashboardLayoutItemFacade<TWidget>[],
                         ],
@@ -85,7 +89,6 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
 
             return (
                 <DashboardLayoutGridRowEdit
-                    screen={screen}
                     itemsInRowsByIndex={itemsInRowsByIndex}
                     section={section}
                     items={itemsInRow}
@@ -99,31 +102,34 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
             );
         }
 
-        return flatMap(section.items().asGridRows(screen), (itemsInRow, index) => {
-            return (
-                <DashboardLayoutGridRow
-                    key={index.toString()}
-                    screen={screen}
-                    section={section}
-                    items={itemsInRow}
-                    gridRowRenderer={gridRowRenderer}
-                    itemKeyGetter={itemKeyGetter}
-                    itemRenderer={itemRenderer}
-                    widgetRenderer={widgetRenderer}
-                    renderMode={renderMode}
-                    getLayoutDimensions={getLayoutDimensions}
-                />
-            );
-        });
+        return flatMap(
+            section.items().asGridRows(screen, parentLayoutItemSize?.[screen]?.gridWidth),
+            (itemsInRow, index) => {
+                return (
+                    <DashboardLayoutGridRow
+                        key={index.toString()}
+                        section={section}
+                        items={itemsInRow}
+                        gridRowRenderer={gridRowRenderer}
+                        itemKeyGetter={itemKeyGetter}
+                        itemRenderer={itemRenderer}
+                        widgetRenderer={widgetRenderer}
+                        renderMode={renderMode}
+                        getLayoutDimensions={getLayoutDimensions}
+                    />
+                );
+            },
+        );
     }, [
         getLayoutDimensions,
         gridRowRenderer,
         itemKeyGetter,
         itemRenderer,
         renderMode,
-        screen,
         section,
         widgetRenderer,
+        parentLayoutItemSize,
+        screen,
     ]);
 
     return sectionRenderer({
@@ -133,9 +139,9 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
             <>
                 {sectionHeaderRenderer({
                     section,
-                    screen,
                     DefaultSectionHeaderRenderer: DashboardLayoutSectionHeaderRenderer,
                     parentLayoutItemSize,
+                    parentLayoutPath,
                 })}
                 {items}
                 {renderMode === "edit" ? <DashboardLayoutSectionOverlayController section={section} /> : null}

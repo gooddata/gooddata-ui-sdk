@@ -1,13 +1,13 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React, { useCallback } from "react";
 import { ConfirmDialog, Typography } from "@gooddata/sdk-ui-kit";
 import { FormattedMessage, useIntl } from "react-intl";
 import { IKpiDeleteDialogProps } from "./types.js";
 import {
     dispatchAndWaitFor,
-    eagerRemoveSectionItem,
+    eagerRemoveNestedLayoutSectionItem,
     selectIsKpiDeleteDialogOpen,
-    selectKpiDeleteDialogWidgetCoordinates,
+    selectKpiDeleteDialogWidgetLayoutPath,
     uiActions,
     useDashboardDispatch,
     useDashboardSelector,
@@ -18,20 +18,16 @@ import {
  */
 export function useKpiDeleteDialogProps(): IKpiDeleteDialogProps {
     const dispatch = useDashboardDispatch();
-    const coordinates = useDashboardSelector(selectKpiDeleteDialogWidgetCoordinates);
-
+    const layoutPath = useDashboardSelector(selectKpiDeleteDialogWidgetLayoutPath);
     const onCancel = useCallback(() => dispatch(uiActions.closeKpiDeleteDialog()), [dispatch]);
 
-    const onDelete = useCallback(
-        () =>
-            dispatchAndWaitFor(
-                dispatch,
-                eagerRemoveSectionItem(coordinates!.sectionIndex, coordinates!.itemIndex),
-            ).finally(() => {
+    const onDelete = useCallback(() => {
+        if (layoutPath !== undefined) {
+            dispatchAndWaitFor(dispatch, eagerRemoveNestedLayoutSectionItem(layoutPath)).finally(() => {
                 dispatch(uiActions.closeKpiDeleteDialog());
-            }),
-        [coordinates, dispatch],
-    );
+            });
+        }
+    }, [layoutPath, dispatch]);
 
     const isVisible = useDashboardSelector(selectIsKpiDeleteDialogOpen);
 

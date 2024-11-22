@@ -186,17 +186,6 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5, #b1c1d1);
     }
 }
 
-.gd-grid-layout {
-    .dash-item {
-        height: 100%;
-
-        // reset @media rules set for the .dash-item above,
-        // otherwise widgets width will get messed up on screen resize
-        flex: unset;
-        max-width: unset;
-    }
-}
-
 @keyframes alert-highlighted {
     0% {
         top: 50%;
@@ -736,5 +725,33 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5, #b1c1d1);
             margin-right: 10px;
             font-size: 16px;
         }
+    }
+}
+
+.gd-grid-layout {
+    .dash-item {
+        height: 100%;
+        width: 100%;
+        padding: 0; // no place between widgets, render only containers for resizers
+
+        // reset @media rules set for the .dash-item above,
+        // otherwise widgets width will get messed up on screen resize
+        flex: unset;
+        max-width: unset;
+
+        .is-dragging-widget {
+            &.dash-item-content {
+                border-color: kit-variables.$is-focused-background;
+            }
+        }
+    }
+
+    .gd-fluidlayout-column-container {
+        display: flex;
+    }
+
+    .dash-item-action-lw-options {
+        top: 20px;
+        right: 20px;
     }
 }

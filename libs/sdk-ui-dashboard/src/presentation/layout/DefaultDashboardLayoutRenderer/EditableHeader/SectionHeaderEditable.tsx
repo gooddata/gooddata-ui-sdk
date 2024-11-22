@@ -53,11 +53,16 @@ export function SectionHeaderEditable(props: ISectionHeaderEditableProps): JSX.E
     );
 
     const onEditingStart = useCallback(() => {
-        dispatch(uiActions.setActiveSectionIndex(index));
+        dispatch(
+            uiActions.setActiveSection({
+                parent: undefined, // root layout
+                sectionIndex: index,
+            }),
+        );
     }, [dispatch, index]);
 
     const onEditingEnd = useCallback(() => {
-        dispatch(uiActions.clearActiveSectionIndex());
+        dispatch(uiActions.clearActiveSection());
     }, [dispatch]);
 
     const onTitleSubmit = useCallback(

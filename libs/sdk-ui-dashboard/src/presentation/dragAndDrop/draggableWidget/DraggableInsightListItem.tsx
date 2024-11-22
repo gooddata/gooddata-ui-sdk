@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React from "react";
 import { IInsight } from "@gooddata/sdk-model";
 
@@ -7,6 +7,7 @@ import {
     CustomDashboardInsightListItemComponentProps,
     IWrapInsightListItemWithDragComponent,
 } from "../types.js";
+import { useWidgetSelection } from "../../../model/index.js";
 
 /**
  * @internal
@@ -25,8 +26,10 @@ export function DraggableInsightListItem(props: IDraggableInsightListItemProps) 
     const { ListItemComponent, listItemComponentProps, insight } = props;
     const WrapInsightListItemWithDragComponent = props.WrapInsightListItemWithDragComponent!;
 
+    const { deselectWidgets } = useWidgetSelection();
+
     return (
-        <WrapInsightListItemWithDragComponent insight={insight}>
+        <WrapInsightListItemWithDragComponent insight={insight} onDragStart={() => deselectWidgets()}>
             <ListItemComponent {...listItemComponentProps} />
         </WrapInsightListItemWithDragComponent>
     );

@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import {
     AnalyticalWidgetType,
     IDashboardLayout,
@@ -20,10 +20,12 @@ import isNil from "lodash/isNil.js";
 import round from "lodash/round.js";
 import { invariant } from "ts-invariant";
 
-import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../../_staging/dashboard/fluidLayout/index.js";
-import { DashboardLayoutBuilder } from "../../../../_staging/dashboard/fluidLayout/builder/layout.js";
-import { IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/fluidLayout/facade/interfaces.js";
-import { DashboardLayoutFacade } from "../../../../_staging/dashboard/fluidLayout/facade/layout.js";
+import {
+    DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT,
+    DashboardLayoutBuilder,
+    IDashboardLayoutItemFacade,
+    DashboardLayoutFacade,
+} from "../../../../_staging/dashboard/legacyFluidLayout/index.js";
 import {
     getDashboardLayoutItemHeightForGrid,
     MeasurableWidgetContent,

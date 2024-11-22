@@ -1,13 +1,15 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import cx from "classnames";
 import React from "react";
 import { ILayoutCoordinates } from "../../../types.js";
-import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/fluidLayout/facade/interfaces.js";
-import { RowEndHotspot, WidgetDropZoneColumn, useIsDraggingCurrentItem } from "../../dragAndDrop/index.js";
+import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/legacyFluidLayout/facade/interfaces.js";
 import { DashboardLayoutItemViewRenderer } from "./DashboardLayoutItemViewRenderer.js";
 import { IDashboardLayoutItemRenderer } from "./interfaces.js";
 import { renderModeAware } from "../../componentDefinition/index.js";
 import { isCustomWidgetBase } from "../../../model/index.js";
+import { WidgetDropZoneColumn } from "../dragAndDrop/draggableWidget/WidgetDropZoneColumn.js";
+import { RowEndHotspot } from "../dragAndDrop/draggableWidget/RowEndHotspot.js";
+import { useIsDraggingCurrentItem } from "../dragAndDrop/draggableWidget/useIsDraggingCurrentItem.js";
 
 function getLayoutCoordinates(item: IDashboardLayoutItemFacade<unknown>): ILayoutCoordinates {
     return {

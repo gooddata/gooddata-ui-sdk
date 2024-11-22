@@ -1,0 +1,41 @@
+// (C) 2024 GoodData Corporation
+@use "sass:color";
+@use "variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.gd-dashboard-nested-layout-toolbar-bubble-wrapper.gd-configuration-bubble-wrapper.overlay-wrapper.sdk-edit-mode-on {
+    .gd-configuration-bubble.gd-dashboard-nested-layout-toolbar {
+        width: 44px;
+        height: 40px;
+    }
+    .bubble-content {
+        padding: 0;
+        display: flex;
+        width: 100%;
+        .helper {
+            display: none;
+        }
+    }
+    .content {
+        flex: 1;
+        display: flex;
+    }
+}
+
+.gd-dashboard-nested-layout-toolbar.bubble.bubble-light {
+    position: initial;
+    padding: 6px 8px;
+
+    .gd-dashboard-nested-layout-remove-button {
+        flex: 1;
+        text-align: center;
+        padding-top: 3px;
+    }
+
+    .gd-trash-icon:hover {
+        cursor: pointer;
+        path {
+            fill: var(--gd-palette-error-base, #e54d42);
+        }
+    }
+}

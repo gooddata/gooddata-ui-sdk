@@ -2576,6 +2576,31 @@
         "comment": "",
         "limit": 0
     },
+    "nestedLayoutToolbar.remove": {
+        "value": "Remove container and its content",
+        "comment": "",
+        "limit": 0
+    },
+    "nestedLayout.tab.title": {
+        "value": "Container",
+        "comment": "",
+        "limit": 0
+    },
+    "nestedLayout.deleteDialog.header": {
+        "value": "Delete container?",
+        "comment": "",
+        "limit": 0
+    },
+    "nestedLayout.deleteDialog.message": {
+        "value": "The container and all of its content will be irreversibly deleted.",
+        "comment": "",
+        "limit": 0
+    },
+    "nestedLayout.emptyDropZone.message": {
+        "value": "<b>Drag here</b>{br}to add to the container",
+        "comment": "<b>, </b> and {br} are HTML tags. Do not translate them.",
+        "limit": 0
+    },
     "attributesDropdown.valuesLimiting.title": {
         "value": "Filter values by",
         "comment": "The title of section that configures filters for listed values in the filter. There is a list of applied filters below the title.",

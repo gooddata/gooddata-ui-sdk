@@ -10,6 +10,7 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import { IGNORED_CONFIGURATION_MENU_CLICK_CLASS } from "../../../constants/index.js";
+import { useDashboardSelector, selectEnableFlexibleLayout } from "../../../../model/index.js";
 
 interface IConfigurationBubbleProps {
     classNames?: string;
@@ -30,12 +31,20 @@ export const defaultAlignPoints: IAlignPoint[] = [
     { align: "br br" },
 ];
 
-export const defaultArrowOffsets: ArrowOffsets = {
+export const defaultFluidArrowOffsets: ArrowOffsets = {
     "tr tl": [7, 28],
     "br bl": [7, -28],
     "tl tr": [-7, 28],
     "tr tr": [-76, 28],
     "br br": [-76, -28],
+};
+
+export const defaultFlexibleArrowOffsets: ArrowOffsets = {
+    "tr tl": [7, 8],
+    "br bl": [7, -8],
+    "tl tr": [-7, 8],
+    "tr tr": [-76, 8],
+    "br br": [-76, -8],
 };
 
 export const defaultArrowDirections: ArrowDirections = {
@@ -50,11 +59,19 @@ export const ConfigurationBubble: React.FC<IConfigurationBubbleProps> = (props) 
         onClose,
         alignTo = ".s-dash-item.is-selected",
         alignPoints = defaultAlignPoints,
-        arrowOffsets = defaultArrowOffsets,
+        arrowOffsets,
         overlayPositionType,
         arrowDirections = defaultArrowDirections,
     } = props;
     const ignoreClicksOnByClass = [alignTo, `.${IGNORED_CONFIGURATION_MENU_CLICK_CLASS}`]; // do not close on click to the widget
+
+    const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
+    const bubbleArrowOffsets =
+        arrowOffsets === undefined
+            ? isFlexibleLayoutEnabled
+                ? defaultFlexibleArrowOffsets
+                : defaultFluidArrowOffsets
+            : arrowOffsets;
 
     return (
         <Bubble
@@ -62,7 +79,7 @@ export const ConfigurationBubble: React.FC<IConfigurationBubbleProps> = (props) 
             overlayClassName="gd-configuration-bubble-wrapper sdk-edit-mode-on"
             alignTo={alignTo}
             alignPoints={alignPoints}
-            arrowOffsets={arrowOffsets}
+            arrowOffsets={bubbleArrowOffsets}
             arrowDirections={arrowDirections}
             closeOnOutsideClick
             closeOnParentScroll={false}

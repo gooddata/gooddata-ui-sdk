@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { RemoveLayoutSection } from "../../commands/index.js";
@@ -10,6 +10,11 @@ import { DashboardLayoutSectionRemoved, layoutSectionRemoved } from "../../event
 import isEmpty from "lodash/isEmpty.js";
 import { validateSectionExists } from "./validation/layoutValidation.js";
 import { resolveRelativeIndex } from "../../utils/arrayOps.js";
+import {
+    serializeLayoutSectionPath,
+    findSections,
+    updateSectionIndex,
+} from "../../../_staging/layout/coordinates.js";
 
 export function* removeLayoutSectionHandler(
     ctx: DashboardContext,
@@ -17,25 +22,45 @@ export function* removeLayoutSectionHandler(
 ): SagaIterator<DashboardLayoutSectionRemoved> {
     const layout: ReturnType<typeof selectLayout> = yield select(selectLayout);
     const { index, stashIdentifier } = cmd.payload;
+    const isLegacyCommand = typeof index === "number";
+    const sections = isLegacyCommand ? layout.sections : findSections(layout, index);
 
-    if (isEmpty(layout.sections)) {
+    if (isEmpty(sections)) {
         throw invalidArgumentsProvided(ctx, cmd, `Attempting to remove a section from an empty layout.`);
     }
 
-    if (!validateSectionExists(layout, index)) {
-        throw invalidArgumentsProvided(
-            ctx,
-            cmd,
-            `Attempting to remove non-existing layout section at index ${index}.`,
-        );
+    if (isLegacyCommand) {
+        if (!validateSectionExists(layout, index)) {
+            throw invalidArgumentsProvided(
+                ctx,
+                cmd,
+                `Attempting to remove non-existing layout section at index ${index}.`,
+            );
+        }
+    } else {
+        if (!validateSectionExists(layout, index)) {
+            throw invalidArgumentsProvided(
+                ctx,
+                cmd,
+                `Attempting to remove non-existing layout section at index ${serializeLayoutSectionPath(
+                    index,
+                )}.`,
+            );
+        }
     }
 
-    const absoluteIndex = resolveRelativeIndex(layout.sections, index);
-    const section = layout.sections[absoluteIndex];
+    const absoluteIndex = isLegacyCommand
+        ? resolveRelativeIndex(layout.sections, index)
+        : resolveRelativeIndex(sections, index.sectionIndex);
+    const section = sections[absoluteIndex];
+
+    const targetSection = isLegacyCommand
+        ? { parent: undefined, sectionIndex: absoluteIndex }
+        : updateSectionIndex(index, absoluteIndex);
 
     yield put(
         layoutActions.removeSection({
-            index: absoluteIndex,
+            index: targetSection,
             stashIdentifier,
             undo: {
                 cmd,
@@ -43,5 +68,13 @@ export function* removeLayoutSectionHandler(
         }),
     );
 
-    return layoutSectionRemoved(ctx, section, absoluteIndex, false, stashIdentifier, cmd.correlationId);
+    return layoutSectionRemoved(
+        ctx,
+        section,
+        absoluteIndex,
+        targetSection,
+        false,
+        stashIdentifier,
+        cmd.correlationId,
+    );
 }
