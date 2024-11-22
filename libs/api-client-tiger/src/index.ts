@@ -183,6 +183,7 @@ export type {
     ChatHistoryRequest,
     ChatHistoryRequestUserFeedbackEnum,
     ChatHistoryInteraction,
+    ChatHistoryInteractionUserFeedbackEnum,
     ActionsApiAiChatRequest,
     ActionsApiAiChatStreamRequest,
     ActionsApiAiChatHistoryRequest,
@@ -196,7 +197,6 @@ export type {
     AttributePositiveFilter,
     DateAbsoluteFilter,
     DateRelativeFilter,
-    ChatHistoryInteractionUserFeedbackEnum,
 } from "./generated/afm-rest-api/api.js";
 export {
     AfmObjectIdentifierAttributeIdentifierTypeEnum as AfmModelObjectIdentifierAttributeIdentifierTypeEnum,

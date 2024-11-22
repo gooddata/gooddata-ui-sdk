@@ -1885,6 +1885,7 @@ export interface IGenAIChatInteraction {
     question: string;
     routing: IGenAIChatRouting;
     textResponse?: string;
+    userFeedback?: GenAIChatInteractionUserFeedback;
 }
 
 // @alpha
