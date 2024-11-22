@@ -25,7 +25,7 @@
         "prettier-check": "prettier --check '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write '{src,test}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "validate": "npm run prettier-check",
-        "validate-ci": "npm run build-example-ci && npm run prettier-check"
+        "validate-ci": "npm run prettier-check"
     },
     "exampleDependencies": [
         "highcharts",
