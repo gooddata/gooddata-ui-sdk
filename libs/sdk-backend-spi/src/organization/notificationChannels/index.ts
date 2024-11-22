@@ -26,6 +26,14 @@ export interface IOrganizationNotificationChannelService {
     getAll(): Promise<INotificationChannelDefinitionObject[]>;
 
     /**
+     * Test channel
+     *
+     * @param channel - definition of the channel
+     * @returns Promise resolved with test response.
+     */
+    testChannel(channel: IWebhookDefinition | ISmtpDefinition): Promise<INotificationChannelTestResponse>;
+
+    /**
      * Delete channel
      *
      * @param id - id of the channel
@@ -56,14 +64,6 @@ export interface IOrganizationNotificationChannelService {
      * @returns Promise resolved with created smtp.
      */
     createEmail(smtp: ISmtpDefinition): Promise<ISmtpDefinitionObject>;
-
-    /**
-     * Test email
-     *
-     * @param email - definition of the email
-     * @returns Promise resolved with test response.
-     */
-    testEmail(email: ISmtpDefinition): Promise<INotificationChannelTestResponse>;
 
     /**
      * Update existing email
@@ -104,14 +104,6 @@ export interface IOrganizationNotificationChannelService {
      * @returns Promise resolved with created webhook.
      */
     createWebhook(webhook: IWebhookDefinition): Promise<IWebhookDefinitionObject>;
-
-    /**
-     * Test webhook
-     *
-     * @param webhook - definition of the webhook
-     * @returns Promise resolved with test response.
-     */
-    testWebhook(webhook: IWebhookDefinition): Promise<INotificationChannelTestResponse>;
 
     /**
      * Update existing webhook

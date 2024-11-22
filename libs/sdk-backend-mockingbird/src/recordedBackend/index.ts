@@ -463,6 +463,10 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 getCount: () => Promise.resolve(0),
                 getAll: () => Promise.resolve([]),
                 deleteChannel: () => Promise.resolve(),
+                testChannel: () =>
+                    Promise.resolve({
+                        successful: true,
+                    }),
                 //emails
                 createEmail: (webhook: ISmtpDefinition) =>
                     Promise.resolve({
@@ -489,10 +493,6 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                     }),
                 getEmails: () => Promise.resolve([]),
                 updateEmail: (smtp) => Promise.resolve(smtp),
-                testEmail: () =>
-                    Promise.resolve({
-                        successful: true,
-                    }),
                 //webhooks
                 createWebhook: (webhook: IWebhookDefinition) =>
                     Promise.resolve({
@@ -513,10 +513,6 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                     }),
                 getWebhooks: () => Promise.resolve([]),
                 updateWebhook: (webhook) => Promise.resolve(webhook),
-                testWebhook: () =>
-                    Promise.resolve({
-                        successful: true,
-                    }),
             };
         },
         permissions(): IOrganizationPermissionService {
