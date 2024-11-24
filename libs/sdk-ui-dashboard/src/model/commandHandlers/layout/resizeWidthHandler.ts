@@ -124,7 +124,8 @@ function validateWidth(
             : (findItem(layout, itemPath).widget as IWidget);
 
     const minLimit = getMinWidth(widget, insightsMap);
-    const parent = itemPath !== undefined && findItem(layout, itemPath.slice(0, -1));
+    const parent =
+        itemPath !== undefined && itemPath.slice(0, -1).length > 0 && findItem(layout, itemPath.slice(0, -1));
 
     const maxLimit = parent ? parent.size.xl.gridWidth : DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT;
 
