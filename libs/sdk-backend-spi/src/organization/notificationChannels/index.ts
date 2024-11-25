@@ -29,9 +29,13 @@ export interface IOrganizationNotificationChannelService {
      * Test channel
      *
      * @param channel - definition of the channel
+     * @param notificationId - id of the notification to test if its already created
      * @returns Promise resolved with test response.
      */
-    testChannel(channel: IWebhookDefinition | ISmtpDefinition): Promise<INotificationChannelTestResponse>;
+    testChannel(
+        channel: Partial<IWebhookDefinition> | Partial<ISmtpDefinition>,
+        notificationId?: string,
+    ): Promise<INotificationChannelTestResponse>;
 
     /**
      * Delete channel
