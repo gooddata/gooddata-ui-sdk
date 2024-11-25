@@ -3057,7 +3057,8 @@
                             "GENERAL",
                             "SEARCH",
                             "CREATE_VISUALIZATION",
-                            "EXTEND_VISUALIZATION"
+                            "EXTEND_VISUALIZATION",
+                            "HOWTO"
                         ]
                     },
                     "reasoning": {
@@ -3357,7 +3358,7 @@
                 "description": "Visualization definitions created by AI."
             },
             "DateAbsoluteFilter": {
-                "required": ["using"],
+                "required": ["from", "to", "using"],
                 "type": "object",
                 "allOf": [
                     {
