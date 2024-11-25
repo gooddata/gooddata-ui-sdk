@@ -3,6 +3,10 @@ name: check
 on:
   pull_request:
 
+  pull_request_review:
+    types:
+      - submitted
+
 concurrency:
   group: ${{ github.event.pull_request.number }}
   cancel-in-progress: true
@@ -16,6 +20,19 @@ jobs:
     name: build-validate-stage
     uses: ./.github/workflows/rw-rush-build-basic-checks.yml
     secrets: inherit
+
+  e2e-tests:
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    needs:
+      - build-validate-stage
+    if: |
+      (github.event_name == 'pull_request_review' && github.event.review.state == 'approved')
+    steps:
+      - name: Run e2e tests
+        run: echo "Running e2e tests"
+        shell: bash
 
   ready-to-merge:
     runs-on:
