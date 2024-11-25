@@ -924,7 +924,7 @@ export interface IOrganizationNotificationChannelService {
     getEmails(): Promise<ISmtpDefinitionObject[]>;
     getWebhook(id: string): Promise<IWebhookDefinitionObject>;
     getWebhooks(): Promise<IWebhookDefinitionObject[]>;
-    testChannel(channel: IWebhookDefinition | ISmtpDefinition): Promise<INotificationChannelTestResponse>;
+    testChannel(channel: Partial<IWebhookDefinition> | Partial<ISmtpDefinition>, notificationId?: string): Promise<INotificationChannelTestResponse>;
     updateEmail(smtp: ISmtpDefinitionObject): Promise<ISmtpDefinitionObject>;
     updateWebhook(webhook: IWebhookDefinitionObject): Promise<IWebhookDefinitionObject>;
 }
