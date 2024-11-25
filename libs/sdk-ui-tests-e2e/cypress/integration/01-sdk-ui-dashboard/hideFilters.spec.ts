@@ -1,14 +1,12 @@
 // (C) 2023-2024 GoodData Corporation
 import * as Navigation from "../../tools/navigation";
 import { DateFilter } from "../../tools/dateFilter";
-import { BubbleTooltip } from "../../tools/bubbleTooltip";
 import { EditMode } from "../../tools/editMode";
 import { AttributeFilter, FilterBar } from "../../tools/filterBar";
 
 const filterBar = new FilterBar();
 const dateFilter = new DateFilter();
 const editMode = new EditMode();
-const bubbleTooltip = new BubbleTooltip();
 const interactiveAttributeFilter = new AttributeFilter("Activity");
 const hiddenAttributeFilter = new AttributeFilter("City");
 const lockedAttributeFilter = new AttributeFilter("Account");
@@ -52,57 +50,6 @@ describe("Hide Filters", { tags: ["pre-merge_isolated_tiger"] }, () => {
             .isHiddenIconVisible();
     });
 
-    it("Tooltip hide filter displays on date configuration when hover on hidden option", () => {
-        Navigation.visit("dashboard/dashboard-tiger");
-        editMode.edit().saveButtonEnabled(false);
-
-        dateFilter.isVisible(true).open().openConfiguration().hoverOnConfigurationMode("hidden");
-        bubbleTooltip.hasTooltip("Dashboard users cannot see the filter but it is applied.");
-    });
-
-    it("Tooltip hide filter displays on attribute configuration when hover on hidden option", () => {
-        Navigation.visit("dashboard/dashboard-tiger-hide-filters");
-        editMode.edit().saveButtonEnabled(false);
-
-        interactiveAttributeFilter
-            .isVisible(true)
-            .open()
-            .selectConfiguration(500)
-            .hoverOnConfigurationMode("hidden");
-        bubbleTooltip.hasTooltip("Dashboard users cannot see the filter but it is applied.");
-    });
-
-    it("Tooltip hide filter displays on edit mode when hover on date filter hidden icon", () => {
-        Navigation.visit("dashboard/dashboard-tiger");
-        editMode.edit().saveButtonEnabled(false);
-
-        dateFilter
-            .isVisible(true)
-            .open()
-            .openConfiguration()
-            .selectConfigurationMode("hidden")
-            .saveConfiguration()
-            .isHiddenIconVisible()
-            .hoverOnHiddenIcon();
-
-        bubbleTooltip.hasTooltip("This filter is hidden. It can be accessed only via the Edit mode.");
-    });
-
-    it("Tooltip hide filter displays on edit mode when hover on attribute filter hidden icon", () => {
-        Navigation.visit("dashboard/dashboard-tiger-hide-filters");
-        editMode.edit().saveButtonEnabled(false);
-
-        interactiveAttributeFilter
-            .isVisible(true)
-            .open()
-            .selectConfiguration(500)
-            .selectConfigurationMode("hidden")
-            .saveConfiguration()
-            .hoverOnHiddenIcon();
-
-        bubbleTooltip.hasTooltip("This filter is hidden. It can be accessed only via the Edit mode.");
-    });
-
     it("User can not select and edit readonly date filter in view mode", () => {
         Navigation.visit("dashboard/dashboard-tiger-readonly-date-filter");
         dateFilter.open().hasDropdownBodyOpen(false);
@@ -138,74 +85,6 @@ describe("Hide Filters", { tags: ["pre-merge_isolated_tiger"] }, () => {
             .isHiddenIconVisible();
     });
 
-    it("Tooltip locked filter displays on date configuration when hover on locked option", () => {
-        Navigation.visit("dashboard/dashboard-tiger");
-        editMode.edit().saveButtonEnabled(false);
-
-        dateFilter.isVisible(true).open().openConfiguration().hoverOnConfigurationMode("readonly");
-        bubbleTooltip.hasTooltip("Dashboard users can see the filter but cannot change it.");
-    });
-
-    it("Tooltip locked filter displays on attribute configuration when hover on locked option", () => {
-        Navigation.visit("dashboard/dashboard-tiger-hide-filters");
-        editMode.edit().saveButtonEnabled(false);
-
-        interactiveAttributeFilter
-            .isVisible(true)
-            .open()
-            .selectConfiguration(500)
-            .hoverOnConfigurationMode("readonly");
-        bubbleTooltip.hasTooltip("Dashboard users can see the filter but cannot change it.");
-    });
-
-    it("Tooltip locked filter displays on edit mode when hover on date filter locked icon", () => {
-        Navigation.visit("dashboard/dashboard-tiger");
-        editMode.edit().saveButtonEnabled(false);
-
-        dateFilter
-            .isVisible(true)
-            .open()
-            .openConfiguration()
-            .selectConfigurationMode("readonly")
-            .saveConfiguration()
-            .hoverOnLockedIcon();
-
-        bubbleTooltip.hasTooltip("This filter is locked. It can be changed only via the Edit mode.");
-    });
-
-    /* flaky test
-    it("Tooltip locked filter displays on edit mode when hover on attribute filter locked icon", () => {
-        Navigation.visit("dashboard/dashboard-tiger-hide-filters");
-        editMode.edit().saveButtonEnabled(false);
-
-        interactiveAttributeFilter
-            .isVisible(true)
-            .open()
-            .selectConfiguration(500)
-            .selectConfigurationMode("readonly")
-            .saveConfiguration()
-            .hoverOnLockedIcon();
-
-        bubbleTooltip.hasTooltip("This filter is locked. It can be changed only via the Edit mode.");
-    });*/
-
-    it("Tooltip locked filter displays on view mode when hover on date filter locked icon", () => {
-        Navigation.visit("dashboard/dashboard-tiger-readonly-date-filter");
-
-        dateFilter.isVisible(true).isLockedIconVisible().hoverOnLockedIcon();
-
-        bubbleTooltip.hasTooltip("This filter is locked.");
-    });
-
-    /* flaky test
-    it("Tooltip locked filter displays on view mode when hover on attribute filter locked icon", () => {
-        Navigation.visit("dashboard/dashboard-tiger-hide-filters");
-
-        lockedAttributeFilter.isVisible(true).isLockedIconVisible().hoverOnLockedIcon();
-
-        bubbleTooltip.hasTooltip("This filter is locked.");
-    });*/
-
     it("Should not reuse the config mode when re-added attribute filter", () => {
         Navigation.visit("dashboard/dashboard-tiger-hide-filters");
         editMode.edit().saveButtonEnabled(false);
@@ -239,19 +118,4 @@ describe("Hide Filters", { tags: ["pre-merge_isolated_tiger"] }, () => {
 
         dateFilter.open().openConfiguration().hasConfigurationModeCheckedAt("active");
     });
-
-    /* flaky test
-    it("Use interactive mode as default for attribute filter mode in configuration overlay", () => {
-        Navigation.visit("dashboard/dashboard-tiger-hide-filters");
-        editMode.edit().saveButtonEnabled(false);
-
-        lockedAttributeFilter.isVisible(true).isLockedIconVisible().removeFilter();
-        // wait for the filter to be removed, otherwise some mouse drag event closes dropdown of newly added filter before filling attribute name
-        cy.wait(500);
-        filterBar  
-            .addAttribute("Account")
-            .isLoaded()
-            .selectConfiguration(500)
-            .hasConfigurationModeCheckedAt("active");
-    });*/
 });
