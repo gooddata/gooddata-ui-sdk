@@ -77,6 +77,16 @@
     },
     {
       "commandKind": "bulk",
+      "name": "test-isolated-ci",
+      "summary": "Isolated tests run in docker in the pre-merge",
+      "safeForSimultaneousRushProcesses": true,
+      "enableParallelism": true,
+      "ignoreDependencyOrder": true,
+      "ignoreMissingScript": true,
+      "allowWarningsInSuccessfulBuild": true
+    },
+    {
+      "commandKind": "bulk",
       "name": "dep-cruiser",
       "summary": "Run dependency cruiser in all projects",
       "safeForSimultaneousRushProcesses": true,
