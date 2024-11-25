@@ -6,6 +6,11 @@ echo '// (C) 2021 GoodData Corporation' >src/__version.ts
 echo '// DO NOT CHANGE THIS FILE, IT IS RE-GENERATED ON EVERY BUILD' >>src/__version.ts
 node -p "'export const LIB_VERSION = ' + JSON.stringify(require('./package.json').version) + ';' +'\n\n' + 'export const LIB_DESCRIPTION =' + '\n    ' + JSON.stringify(require('./package.json').description) + ';' +'\n\n' + 'export const LIB_NAME = ' + JSON.stringify(require('./package.json').name) + ';'" >>src/__version.ts
 
+if [[ $1 == "--genVersionOnly" ]]; then
+  #we need just version file and it is generated, so we can exit
+  exit 0
+fi;
+
 set -e
 
 PACKAGE_DIR="$(echo $(cd $(dirname $0)/.. && pwd -P))"

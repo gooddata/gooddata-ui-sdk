@@ -24,6 +24,7 @@
         "clean": "rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "clear-recordings": "rm -rf ./tests/wiremock/recordings/*",
         "build": "bash scripts/build.sh",
+        "build-generate-version": "bash scripts/build.sh --genVersionOnly",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "integrated-test": "./scripts/integrated-test.sh",
         "integrated-test-live-backend": "./scripts/integrated-test-live-backend.sh",

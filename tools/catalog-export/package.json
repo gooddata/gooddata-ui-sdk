@@ -24,6 +24,7 @@
     "scripts": {
         "clean": "rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "build": "bash scripts/build.sh",
+        "build-generate-version": "bash scripts/build.sh --genVersionOnly",
         "test": "vitest watch",
         "test-once": "vitest run",
         "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml",

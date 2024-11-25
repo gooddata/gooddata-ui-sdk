@@ -73,6 +73,8 @@ jobs:
         run: |
           # build libs first, then the app
           node common/scripts/install-run-rush.js build
+      - name: Rush generate dynamic files related to build
+        run: node common/scripts/install-run-rush.js build-generate-version
       - name: Rush validate
         run: |
           # build libs first, then the app
@@ -101,6 +103,8 @@ jobs:
         run: |
           # build libs first, then the app
           node common/scripts/install-run-rush.js build
+      - name:  Rush generate dynamic files related to build
+        run: node common/scripts/install-run-rush.js build-generate-version
       - name: Rush test-ci
         run: |
           node common/scripts/install-run-rush.js test-ci
