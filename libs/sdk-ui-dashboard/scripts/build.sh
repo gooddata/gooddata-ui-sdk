@@ -1,20 +1,11 @@
 #!/usr/bin/env bash
 set -e
 
-
 _version() {
-    VERSION=$(node -p "require('./package.json').version")
-    NAME=$(node -p "require('./package.json').name")
-    DESCRIPTION=$(node -p "require('./package.json').description")
-    sed -i \
-        -e "s|\0.\0.\0|$VERSION|" \
-        -e "s|LIB_NAME_PLACEHOLDER|$NAME|" \
-        -e "s|LIB_DESCRIPTION_PLACEHOLDER|$DESCRIPTION|" \
-        esm/__version.js esm/__version.d.ts
-}
-
-_post-build() {
-    _version
+    # prepare the auxiliary __version.ts file so that the code can read the package version as a constant
+    echo '// (C) 2021 GoodData Corporation' >src/__version.ts
+    echo '// DO NOT CHANGE THIS FILE, IT IS RE-GENERATED ON EVERY BUILD' >>src/__version.ts
+    node -p "'export const LIB_VERSION = ' + JSON.stringify(require('./package.json').version) + ';'" >>src/__version.ts
 }
 
 _build_styles() {
@@ -31,13 +22,15 @@ _assets() {
 
 _common-build() {
     _assets
+
     _build_styles
+
+    _version
 }
 
 build() {
     _common-build
     tsc -p tsconfig.json
-    _post-build
     npm run api-extractor
 }
 
