@@ -3180,6 +3180,7 @@ export interface ISettings {
     enableDataSection?: boolean;
     enableDefaultSmtp?: boolean;
     enableDescriptions?: boolean;
+    enableDestinationTesting?: boolean;
     enableDrilledInsightExport?: boolean;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     enableEarlyAccessFeaturesRollout?: boolean;

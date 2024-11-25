@@ -122,6 +122,7 @@ export enum TigerFeaturesNames {
     EnableNumberSeparators = "enableNumberSeparators",
     EnableNewUserCreationFlow = "enableNewUserCreationFlow",
     EnableFlexConnectNaming = "enableFlexConnectNaming",
+    EnableDestinationTesting = "enableDestinationTesting",
 }
 
 export type ITigerFeatureFlags = {
@@ -207,6 +208,7 @@ export type ITigerFeatureFlags = {
     enableNumberSeparators: typeof FeatureFlagsValues["enableNumberSeparators"][number];
     enableNewUserCreationFlow: typeof FeatureFlagsValues["enableNewUserCreationFlow"][number];
     enableFlexConnectNaming: typeof FeatureFlagsValues["enableFlexConnectNaming"][number];
+    enableDestinationTesting: typeof FeatureFlagsValues["enableDestinationTesting"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -292,6 +294,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableNumberSeparators: true,
     enableNewUserCreationFlow: false,
     enableFlexConnectNaming: false,
+    enableDestinationTesting: false,
 };
 
 export const FeatureFlagsValues = {
@@ -381,4 +384,5 @@ export const FeatureFlagsValues = {
     enableNumberSeparators: [true, false] as const,
     enableNewUserCreationFlow: [true, false] as const,
     enableFlexConnectNaming: [true, false] as const,
+    enableDestinationTesting: [true, false] as const,
 };
