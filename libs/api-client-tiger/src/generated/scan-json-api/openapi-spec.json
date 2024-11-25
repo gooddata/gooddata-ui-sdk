@@ -466,6 +466,14 @@
                         "type": "string",
                         "description": "Passphrase for a encrypted version of a private key."
                     },
+                    "clientId": {
+                        "type": "string",
+                        "description": "Id for client based authentication for data sources which supports it."
+                    },
+                    "clientSecret": {
+                        "type": "string",
+                        "description": "Secret for client based authentication for data sources which supports it."
+                    },
                     "parameters": {
                         "type": "array",
                         "items": {
@@ -960,7 +968,6 @@
                             "PINOT",
                             "SINGLESTORE",
                             "MOTHERDUCK",
-                            "FLIGHTRPC",
                             "FLEXCONNECT"
                         ]
                     },
@@ -995,6 +1002,14 @@
                     "privateKeyPassphrase": {
                         "type": "string",
                         "description": "Passphrase for a encrypted version of a private key."
+                    },
+                    "clientId": {
+                        "type": "string",
+                        "description": "Id for client based authentication for data sources which supports it."
+                    },
+                    "clientSecret": {
+                        "type": "string",
+                        "description": "Secret for client based authentication for data sources which supports it."
                     },
                     "parameters": {
                         "type": "array",

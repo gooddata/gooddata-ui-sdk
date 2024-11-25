@@ -1323,13 +1323,13 @@ export interface DateAbsoluteFilter {
      * @type {string}
      * @memberof DateAbsoluteFilter
      */
-    from?: string;
+    from: string;
     /**
      *
      * @type {string}
      * @memberof DateAbsoluteFilter
      */
-    to?: string;
+    to: string;
 }
 /**
  *
@@ -2998,6 +2998,7 @@ export const RouteResultUseCaseEnum = {
     SEARCH: "SEARCH",
     CREATE_VISUALIZATION: "CREATE_VISUALIZATION",
     EXTEND_VISUALIZATION: "EXTEND_VISUALIZATION",
+    HOWTO: "HOWTO",
 } as const;
 
 export type RouteResultUseCaseEnum = typeof RouteResultUseCaseEnum[keyof typeof RouteResultUseCaseEnum];
