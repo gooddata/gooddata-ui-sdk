@@ -32,7 +32,7 @@ runs:
       shell: bash
 
     - name: Enable rush build cache via environment variable
-      run: echo "RUSH_BUILD_CACHE_ENABLED=1" >> $GITHUB_ENV
+      run: echo "RUSH_BUILD_CACHE_ENABLED=0" >> $GITHUB_ENV
       shell: bash
 
     # Restore cache for global rush installation
