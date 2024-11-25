@@ -72,9 +72,6 @@ export interface UiState {
     draggingWidgetSource: DraggableLayoutItem | undefined;
     draggingWidgetTarget: ILayoutCoordinates | undefined;
     widgetsOverlay: Record<string, IDashboardWidgetOverlay>;
-    resultPartialWarning: {
-        fingerPrints: string[];
-    };
 }
 
 export const uiInitialState: UiState = {
@@ -125,7 +122,4 @@ export const uiInitialState: UiState = {
     draggingWidgetSource: undefined,
     draggingWidgetTarget: undefined,
     widgetsOverlay: {},
-    resultPartialWarning: {
-        fingerPrints: [],
-    },
 };

@@ -4,19 +4,14 @@ import { IResultWarning } from "@gooddata/sdk-model";
 import { Button, DialogBase, useMediaQuery } from "@gooddata/sdk-ui-kit";
 import noop from "lodash/noop.js";
 import { FormattedMessage } from "react-intl";
-import { IExecutionResultEnvelope, uiActions, useDashboardDispatch } from "../../../model/index.js";
+import { IExecutionResultEnvelope } from "../../../model/index.js";
 import { MobileWarningPartialResultOverlay } from "./MobileWarningPartialResultOverlay.js";
-import { VisType } from "@gooddata/sdk-ui";
 
 interface IInsightWidgetWarningPartialResultProps {
     className: string;
     partialResultWarning: IResultWarning[];
-    isOverlayOpen: boolean;
-    shouldPreserveCloseStatus: boolean;
     isExportRawInNewUiVisible: boolean;
     executionResult: IExecutionResultEnvelope;
-    visualizationType: VisType;
-    fingerprint?: string;
     isLoading?: boolean;
 
     onExportRawCSV: () => void;
@@ -25,53 +20,28 @@ interface IInsightWidgetWarningPartialResultProps {
 export const InsightWidgetWarningPartialResult: React.FC<IInsightWidgetWarningPartialResultProps> = ({
     className,
     partialResultWarning,
-    fingerprint,
-    isOverlayOpen,
-    shouldPreserveCloseStatus,
     isLoading,
     isExportRawInNewUiVisible,
-    visualizationType,
     executionResult,
     onExportRawCSV,
 }) => {
-    const dispatch = useDashboardDispatch();
     const isMobile = useMediaQuery("mobileDevice");
 
-    const [percentage, setPercentage] = useState<string>("");
-
-    useEffect(() => {
-        const getPercentage = async () => {
-            const dataView = await executionResult.executionResult?.readAll();
-
-            if (dataView) {
-                const maxCount = Math.max(...dataView.count);
-
-                setPercentage(Math.round((10000 / maxCount) * 100).toString());
-            }
-        };
-
-        if (visualizationType === "table") {
-            setPercentage(partialResultWarning[0].parameters![0] as string);
-        } else {
-            getPercentage();
-        }
-    }, [visualizationType, executionResult, partialResultWarning]);
+    const percentage = partialResultWarning[0].parameters![0] as string;
 
     const [isOpen, setIsOpen] = useState<boolean>(true);
 
-    const handleCloseOverlay = () => {
-        if (shouldPreserveCloseStatus) {
-            dispatch(uiActions.closePartialResultWarning(fingerprint!));
-        } else {
-            setIsOpen(false);
-        }
-    };
+    useEffect(() => {
+        setIsOpen(true);
+    }, [executionResult]);
 
-    const isWarningPartialResultOpen = shouldPreserveCloseStatus ? isOverlayOpen : isOpen;
+    const handleCloseOverlay = () => {
+        setIsOpen(false);
+    };
 
     return (
         <>
-            {isWarningPartialResultOpen && !isLoading ? (
+            {isOpen && !isLoading ? (
                 <DialogBase className={className} onMouseUp={noop} submitOnEnterKey={false}>
                     {isMobile ? (
                         <MobileWarningPartialResultOverlay
