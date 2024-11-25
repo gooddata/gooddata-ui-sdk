@@ -5,6 +5,7 @@
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins" as kit-mixins;
 @use "@gooddata/sdk-ui-kit/styles/scss/Form/mixins" as form-mixins;
+@use "@gooddata/sdk-ui-kit/styles/scss/typo-mixins" as typo-mixins;
 
 .gd-gen-ai-chat__messages {
     flex: 1;
@@ -140,6 +141,11 @@
     & .gd-hyperlink,
     & .gd-hyperlink-text {
         white-space: normal;
+    }
+
+    // List contents should be styled same as a pargraph
+    & li {
+        @include typo-mixins.gd-paragraph;
     }
 }
 
