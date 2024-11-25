@@ -19,6 +19,9 @@ import {
     isVisualizationSwitcherWidget,
     IVisualizationSwitcherWidget,
     isDashboardLayout,
+    IDashboardWidget,
+    ScreenSize,
+    IDashboardLayoutItem,
 } from "@gooddata/sdk-model";
 import {
     fluidLayoutDescriptor,
@@ -219,7 +222,7 @@ export function getMaxHeight(widgets: IWidget[], insightMap: ObjRefMap<IInsight>
  */
 export function getDashboardLayoutWidgetMinGridWidth(
     settings: ISettings,
-    widgetType: AnalyticalWidgetType,
+    widgetType: AnalyticalWidgetType | ExtendedDashboardWidget["type"],
     widgetContent?: MeasurableWidgetContent, // undefined for placeholders
 ): number {
     const sizeInfo = getSizeInfo(settings, widgetType, widgetContent);
@@ -249,10 +252,22 @@ function getVisSwitcherHeightWidth(
 
     return result;
 }
+
+function getCurrentWidth(
+    item: IDashboardLayoutItem<IDashboardWidget>,
+    screen: ScreenSize,
+): number | undefined {
+    return item.size[screen]?.gridWidth;
+}
+
 /**
  * @internal
  */
-export function getMinWidth(widget: IWidget, insightMap: ObjRefMap<IInsight>): number {
+export function getMinWidth(
+    widget: IDashboardWidget,
+    insightMap: ObjRefMap<IInsight>,
+    screen: ScreenSize = "xl",
+): number {
     let widgetContent: MeasurableWidgetContent | undefined;
     if (isKpiWidget(widget)) {
         widgetContent = widget.kpi;
@@ -267,11 +282,29 @@ export function getMinWidth(widget: IWidget, insightMap: ObjRefMap<IInsight>): n
                 getDashboardLayoutWidgetMinGridWidth,
             ),
         );
+    } else if (isDashboardLayout(widget)) {
+        const emptyLayoutMinWidth = getDashboardLayoutWidgetMinGridWidth(
+            { enableKDWidgetCustomHeight: true },
+            widget.type,
+        );
+
+        return widget.sections.reduce((acc, section) => {
+            return Math.max(
+                acc,
+                section.items.reduce((acc, item) => {
+                    return Math.max(acc, getCurrentWidth(item, screen) ?? emptyLayoutMinWidth);
+                }, emptyLayoutMinWidth),
+            );
+        }, emptyLayoutMinWidth);
     }
+
+    const widgetType: AnalyticalWidgetType | ExtendedDashboardWidget["type"] = isWidget(widget)
+        ? getWidgetType(widget)
+        : widget.type;
 
     return getDashboardLayoutWidgetMinGridWidth(
         { enableKDWidgetCustomHeight: true },
-        getWidgetType(widget),
+        widgetType,
         widgetContent,
     );
 }
