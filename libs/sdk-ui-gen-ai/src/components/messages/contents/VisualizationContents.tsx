@@ -53,7 +53,7 @@ export const VisualizationContentsComponent: React.FC<VisualizationContentsProps
                             })()}
                         </VisualizationErrorBoundary>
                     </div>
-                    <div className="gd-gen-ai-chat__messages__visualization__title">
+                    <div className="gd-gen-ai-chat__visualization__title">
                         <MarkdownComponent allowMarkdown={useMarkdown}>
                             {visualization.title}
                         </MarkdownComponent>
@@ -77,6 +77,9 @@ const renderBarChart = (metrics: IMeasure[], dimensions: IAttribute[], filters: 
         config={{
             // Better visibility with stacked bars if there are multiple metrics and dimensions
             stackMeasures: metrics.length > 1 && dimensions.length === 2,
+            legend: {
+                responsive: "autoPositionWithPopup",
+            },
         }}
         filters={filters}
     />
@@ -91,6 +94,9 @@ const renderColumnChart = (metrics: IMeasure[], dimensions: IAttribute[], filter
         config={{
             // Better visibility with stacked bars if there are multiple metrics and dimensions
             stackMeasures: metrics.length > 1 && dimensions.length === 2,
+            legend: {
+                responsive: "autoPositionWithPopup",
+            },
         }}
         filters={filters}
     />
@@ -103,6 +109,11 @@ const renderLineChart = (metrics: IMeasure[], dimensions: IAttribute[], filters:
         trendBy={dimensions[0]}
         segmentBy={metrics.length <= 1 ? dimensions[1] : undefined}
         filters={filters}
+        config={{
+            legend: {
+                responsive: "autoPositionWithPopup",
+            },
+        }}
     />
 );
 
