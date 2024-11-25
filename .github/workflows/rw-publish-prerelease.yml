@@ -29,17 +29,17 @@ concurrency:
 
 jobs:
   check-version:
-    runs-on: [ubuntu-latest]
+    runs-on:
+        group: infra1-runners-arc
+        labels: runners-small
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           ref: ${{ inputs.source-branch }}
       - name: Setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18.17.0
-
+        uses: ./.github/actions/node/set-up-node
+        id: node-init
       - name: Get version from branch ${{ inputs.source-branch }}
         uses: gooddata/gooddata-ui-sdk/.github/actions/get-version-action@master
         id: get-version
@@ -63,7 +63,9 @@ jobs:
 
   setup-params:
     needs: [check-version]
-    runs-on: [ubuntu-latest]
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
     outputs:
       prerelease-id: ${{ steps.validate-params.outputs.prerelease-id }}
       prerelease-tag: ${{ steps.validate-params.outputs.prerelease-tag }}
@@ -113,7 +115,9 @@ jobs:
       release-tag: ${{ needs.setup-params.outputs.prerelease-tag }}
 
   slack-notification:
-    runs-on: [ubuntu-latest]
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
     needs: [bump-version, publish-prerelease,setup-params]
     steps:
       - name: Notify to slack with author name
