@@ -1,11 +1,11 @@
 // (C) 2024 GoodData Corporation
 import React from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { BackendProvider, useBackendStrict, useWorkspaceStrict, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { Provider as StoreProvider } from "react-redux";
 import { useGenAIStore } from "../hooks/useGenAIStore.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
 import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
-import { BackendProvider, useBackendStrict, useWorkspaceStrict, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { ChatEventHandler } from "../store/events.js";
 
 /**

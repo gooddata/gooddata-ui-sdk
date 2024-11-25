@@ -18,11 +18,17 @@
     overflow: hidden;
     background-color: kit-variables.$gd-color-light;
 
-    &__disclaimer {
+    // Some apps include typography after the gen-ai styles
+    // this should not happen, but we can never be sure
+    // as the component is embeddable by the end user.
+    // Need to have high specificity selectors
+    &__disclaimer.gd-typography.gd-typography--p {
         font-size: 12px;
         color: kit-variables.$gd-color-state-blank;
         text-align: center;
-        margin: 0 variables.$x-spacing variables.$y-spacing;
+        // Use custom x margin cause some apps user slightly different
+        // font and it may not align properly with larger margin
+        margin: 0 10px variables.$y-spacing;
     }
 
     &__global_error {

@@ -11,13 +11,18 @@ import { loadThreadAction, cancelAsyncAction } from "../store/index.js";
 type GenAIChatWrapperProps = {
     loadThread: typeof loadThreadAction;
     cancelLoading: typeof cancelAsyncAction;
+    autofocus?: boolean;
 };
 
 /**
  * UI component that renders the Gen AI chat.
  * @internal
  */
-const GenAIChatWrapperComponent: React.FC<GenAIChatWrapperProps> = ({ loadThread, cancelLoading }) => {
+const GenAIChatWrapperComponent: React.FC<GenAIChatWrapperProps> = ({
+    loadThread,
+    cancelLoading,
+    autofocus,
+}) => {
     React.useEffect(() => {
         loadThread();
 
@@ -30,7 +35,7 @@ const GenAIChatWrapperComponent: React.FC<GenAIChatWrapperProps> = ({ loadThread
         <ErrorBoundary>
             <div className="gd-gen-ai-chat">
                 <Messages />
-                <Input />
+                <Input autofocus={autofocus} />
                 <Typography tagName="p" className="gd-gen-ai-chat__disclaimer">
                     <FormattedMessage id="gd.gen-ai.disclaimer" />
                 </Typography>

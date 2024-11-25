@@ -18,6 +18,7 @@ const TextareaAutosize = defaultImport(DefaultTextArea);
 type InputStateProps = {
     isBusy: boolean;
     isEvaluating: boolean;
+    autofocus?: boolean;
 };
 
 type InputDispatchProps = {
@@ -40,17 +41,21 @@ const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedCom
     isBusy,
     isEvaluating,
     newMessage,
+    autofocus = false,
     intl,
 }) => {
     const [value, setValue] = React.useState("");
     const textareaRef = React.useRef<HTMLTextAreaElement>(null);
 
+    // Force focus when autofocus is enables on the first mount, right after the initial state is loaded
+    const forceFocusOnce = React.useRef<boolean>(autofocus);
     React.useEffect(() => {
         // Autofocus the textarea when the chat is not disabled and the user is not focusing on another element
         // Important, given the disabled states changes depending on the agent's loading state
         // And it's loosing focus after the loading state changes
-        if (!isBusy && document.activeElement === document.body) {
+        if (!isBusy && (forceFocusOnce.current || document.activeElement === document.body)) {
             textareaRef.current?.focus();
+            forceFocusOnce.current = false;
         }
     }, [isBusy]);
 
@@ -98,7 +103,7 @@ const InputComponent: React.FC<InputStateProps & InputDispatchProps & WrappedCom
     );
 };
 
-const mapStateToProps = (state: RootState): InputStateProps => {
+const mapStateToProps = (state: RootState): { isBusy: boolean; isEvaluating: boolean } => {
     const asyncState = asyncProcessSelector(state);
 
     return {
