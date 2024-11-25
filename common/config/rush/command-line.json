@@ -121,6 +121,14 @@
       "allowWarningsInSuccessfulBuild": false
     },
     {
+      "commandKind": "bulk",
+      "name": "build-generate-version",
+      "summary": "This command will generate dynamic __version.ts files after build is restored from cache, because this files are generated only during build and are not stored in cache.",
+      "enableParallelism": true,
+      "allowWarningsInSuccessfulBuild": true,
+      "ignoreMissingScript": true
+    },
+    {
       "commandKind": "global",
       "name": "audit",
       "summary": "Performs security audit of all dependencies used by projects in this repository. This command uses pnpm audit which in the end calls out to the npmjs API.",

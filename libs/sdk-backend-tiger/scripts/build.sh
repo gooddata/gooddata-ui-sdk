@@ -14,8 +14,11 @@ _common-build() {
 
 build() {
     _common-build
-    tsc -p tsconfig.json
-    npm run api-extractor
+
+    if [[ $1 != "--genVersionOnly" ]]; then
+        tsc -p tsconfig.json
+        npm run api-extractor
+    fi
 }
 
-build
+build $1
