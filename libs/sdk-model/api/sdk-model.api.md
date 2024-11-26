@@ -1931,6 +1931,7 @@ export interface IGenAIVisualizationDimension {
 export interface IGenAIVisualizationMetric {
     aggFunction?: GenAIMetricAggregation;
     id: string;
+    title?: string;
     type: GenAIMetricType;
 }
 

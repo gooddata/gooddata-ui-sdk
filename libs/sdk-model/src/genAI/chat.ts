@@ -194,6 +194,10 @@ export interface IGenAIVisualizationMetric {
      */
     type: GenAIMetricType;
     /**
+     * Title of the metric.
+     */
+    title?: string;
+    /**
      * Aggregation function for the metric.
      */
     aggFunction?: GenAIMetricAggregation;
