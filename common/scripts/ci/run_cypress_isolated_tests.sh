@@ -10,8 +10,6 @@ set -e
 DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P))
 ROOT_DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}")/../../../ && pwd -P))
 E2E_TEST_DIR=$ROOT_DIR/libs/sdk-ui-tests-e2e
-_RUSH="${DIR}/docker_rush.sh"
-_RUSHX="${DIR}/docker_rushx.sh"
 
 pushd $E2E_TEST_DIR
 cat > .env <<-EOF
@@ -20,10 +18,18 @@ CYPRESS_TEST_TAGS=pre-merge_isolated_tiger
 FILTER=${FILTER:-}
 EOF
 
-$_RUSH install
-$_RUSH build -t sdk-ui-tests-e2e
-$_RUSHX libs/sdk-ui-tests-e2e prepare-recording-workspace-id
-$_RUSHX libs/sdk-ui-tests-e2e build-scenarios
+# remove this branch when run only from gh workflow
+if [[ $RUN_ON_GH != "true" ]]; then
+    _RUSH="${DIR}/docker_rush.sh"
+    _RUSHX="${DIR}/docker_rushx.sh"
+    $_RUSH install
+    $_RUSH build -t sdk-ui-tests-e2e
+    $_RUSHX libs/sdk-ui-tests-e2e prepare-recording-workspace-id
+    $_RUSHX libs/sdk-ui-tests-e2e build-scenarios
+else
+    (cd $ROOT_DIR/libs/sdk-ui-tests-e2e; npm run prepare-recording-workspace-id)
+    (cd $ROOT_DIR/libs/sdk-ui-tests-e2e; npm run build-scenarios)
+fi
 
 # Use Dockerfile_local as scenarios have been build in previous steps
 export IMAGE_ID=tiger-gooddata-ui-sdk-scenarios-${EXECUTOR_NUMBER}
