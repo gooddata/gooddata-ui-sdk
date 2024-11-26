@@ -104,22 +104,6 @@ const selectOpenedKpiWidgetRef = createSelector(
     (state) => state.kpiAlerts.openedWidgetRef ?? undefined,
 );
 
-const selectClosedPartialResultWarning = createSelector(
-    selectSelf,
-    (state) => state.resultPartialWarning.fingerPrints ?? undefined,
-);
-
-/**
- * @internal
- */
-export const selectIsPartialResultWarningOpen = createMemoizedSelector(
-    (fingerPrint: string): ((state: DashboardState) => boolean) => {
-        return createSelector(selectClosedPartialResultWarning, (fingerprints) => {
-            return fingerprints.includes(fingerPrint) ? false : true;
-        });
-    },
-);
-
 /**
  * @alpha
  */

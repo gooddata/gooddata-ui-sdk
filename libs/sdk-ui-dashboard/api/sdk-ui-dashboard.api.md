@@ -7019,9 +7019,6 @@ export const selectIsLayoutEmpty: DashboardSelector<boolean>;
 // @internal
 export const selectIsNewDashboard: DashboardSelector<boolean>;
 
-// @internal (undocumented)
-export const selectIsPartialResultWarningOpen: (fingerPrint: string) => (state: DashboardState) => boolean;
-
 // @public
 export const selectIsReadOnly: DashboardSelector<boolean>;
 
@@ -7613,10 +7610,6 @@ payload: Record<string, IDashboardWidgetOverlay_2>;
 type: string;
 }) => void | UiState_2 | WritableDraft<UiState_2>;
 hideAllWidgetsOverlay: (state: WritableDraft<UiState_2>, action: AnyAction) => void | UiState_2 | WritableDraft<UiState_2>;
-closePartialResultWarning: (state: WritableDraft<UiState_2>, action: {
-payload: string;
-type: string;
-}) => void | UiState_2 | WritableDraft<UiState_2>;
 }, "uiSlice">;
 
 // @beta (undocumented)
@@ -7662,10 +7655,6 @@ export interface UiState {
     // (undocumented)
     menuButton: {
         itemsVisibility: IMenuButtonItemsVisibility;
-    };
-    // (undocumented)
-    resultPartialWarning: {
-        fingerPrints: string[];
     };
     // (undocumented)
     saveAsDialog: {

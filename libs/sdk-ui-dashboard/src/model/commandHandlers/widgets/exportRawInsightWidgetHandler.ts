@@ -27,10 +27,7 @@ export function* exportRawInsightWidgetHandler(
     const { insight } = cmd.payload;
     const { workspace, backend } = ctx;
 
-    const definition = defWithDimensions(
-        newDefForInsight(workspace, insight!, insight!.insight.filters),
-        defaultDimensionsGenerator,
-    );
+    const definition = defWithDimensions(newDefForInsight(workspace, insight!), defaultDimensionsGenerator);
 
     const preparedExecution = backend.workspace(workspace).execution().forDefinition(definition);
 

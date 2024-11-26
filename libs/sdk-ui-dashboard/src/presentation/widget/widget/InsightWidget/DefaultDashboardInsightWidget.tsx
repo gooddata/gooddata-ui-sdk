@@ -57,9 +57,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         insight,
     });
 
-    const { partialResultWarning, fingerprint, isOverlayOpen, executionResult } = useInsightWarning(
-        widget.ref,
-    );
+    const { partialResultWarning, executionResult } = useInsightWarning(widget.ref);
 
     const { isScheduledEmailingVisible, enableInsightExportScheduling, onScheduleEmailingOpen } =
         useDashboardScheduledEmails();
@@ -160,13 +158,9 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                                 className="gd-warning-partial-result"
                                 partialResultWarning={partialResultWarning}
                                 onExportRawCSV={onExportRawCSV}
-                                fingerprint={fingerprint}
-                                isOverlayOpen={isOverlayOpen}
-                                shouldPreserveCloseStatus={true}
                                 executionResult={executionResult!}
                                 isLoading={executionResult?.isLoading}
                                 isExportRawInNewUiVisible={isExportRawInNewUiVisible}
-                                visualizationType={visType}
                             />
                         );
                     }
