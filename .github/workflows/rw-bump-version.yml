@@ -86,13 +86,13 @@ jobs:
               env:
                   BUMP: ${{ inputs.bump }}
                   PRERELEASE_ID: ${{ inputs.prerelease-id }}
-              run: rush version --bump --override-bump $BUMP --override-prerelease-id $PRERELEASE_ID
+              run: node common/scripts/install-run-rush.js version --bump --override-bump $BUMP --override-prerelease-id $PRERELEASE_ID
 
             - name: Rush bump version
               if: ${{ !inputs.prerelease-id}}
               env:
                   BUMP: ${{ inputs.bump }}
-              run: rush version --bump --override-bump $BUMP
+              run: node common/scripts/install-run-rush.js version --bump --override-bump $BUMP
 
 
             - name: Get version
