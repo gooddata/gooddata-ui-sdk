@@ -18,8 +18,10 @@ export type GenAIChatDialogProps = {
     eventHandlers?: ChatEventHandler[];
 };
 
-// To render the overlay on top of the header, we need to start at 6000
-const DEFAULT_CHAT_Z_INDEX = 6000;
+// Default z-index:
+// - High enough to be over other dialogs
+// - Below chart tooltips
+const DEFAULT_CHAT_Z_INDEX = 3000;
 
 export const GenAIChatDialog: React.FC<GenAIChatDialogProps> = ({
     backend,
