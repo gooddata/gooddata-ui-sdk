@@ -15,32 +15,33 @@ on:
 
 jobs:
     publish-version:
-        runs-on: [ubuntu-latest]
+        runs-on:
+            group: infra1-runners-arc
+            labels: runners-rxa-xlarge
         permissions:
             contents: read
         steps:
-            - name: Setup node
-              uses: actions/setup-node@v4
-              with:
-                  node-version: 18.17.0
-            - name: Checkout code
+            - name: Checkout repository
               uses: actions/checkout@v4
               with:
-                  ref: ${{ inputs.source-branch }}
+                ref: ${{inputs.source-branch}}
             - name: Add repository to git safe directories to avoid dubious ownership issue
               run: git config --global --add safe.directory $GITHUB_WORKSPACE
-            - name: Install rush
-              run: |
-                  npm install -g @microsoft/rush
-            - name: Rush install
-              run: |
-                  rush install
+            - name: Git config user
+              uses: snow-actions/git-config-user@v1.0.0
+              with:
+                name: git-action
+                email: git-action@gooddata.com
+            - name: Setup rush
+              env:
+                NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+              uses: ./.github/actions/rush/set-up-rush
             - name: Rush build
               run: |
-                  rush build
+                  node common/scripts/install-run-rush.js build
             - name: Rush publish dry run
               run: |
-                  rush publish --include-all --version-policy sdk --set-access-level public
+                  node common/scripts/install-run-rush.js publish --include-all --version-policy sdk --set-access-level public
             - name: Rush publish
               uses: nick-fields/retry@v3
               env:
@@ -52,10 +53,10 @@ jobs:
                   retry_on: error
                   retry_wait_seconds: 10
                   command: |
-                      rush publish --publish --include-all --version-policy sdk --tag $TAG --set-access-level public
+                      node common/scripts/install-run-rush.js publish --publish --include-all --version-policy sdk --tag $TAG --set-access-level public
 
     notify-publish-failed-to-slack:
-        if: ${{ always() && needs.publish-version.result == 'failure' }}
+        if: ${{ !cancelled() && needs.publish-version.result  == 'failure' }}
         needs: publish-version
         runs-on: [ubuntu-latest]
         steps:
