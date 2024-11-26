@@ -14,8 +14,8 @@ if [[ ! "${TEST_BACKEND:?}" =~ 'https://' ]]; then
     export TEST_BACKEND="https://${TEST_BACKEND}"
 fi
 
+if [[ $RUN_ON_GH != "true" ]]; then
 _env_file='./libs/sdk-ui-tests-e2e/.env'
-
 cat > $_env_file <<-EOF
 HOST=$TEST_BACKEND
 CYPRESS_TEST_TAGS=pre-merge_isolated_tiger
@@ -27,35 +27,40 @@ cat >> $_env_file <<-EOF
 TIGER_API_TOKEN=${TIGER_API_TOKEN:?}
 TIGER_DATASOURCES_NAME=${TIGER_DATASOURCES_NAME:?}
 EOF
+else
+
+    export TIGER_DATASOURCES_NAME=vertica_staging-goodsales
+    export HOST=$TEST_BACKEND
+    export CYPRESS_TEST_TAGS=pre-merge_isolated_tiger
+    export FIXTURE_TYPE=goodsales
+    export FILTER=${FILTER:-}
+fi
+
 
 echo "⭐️ 1/8 Preparing .env for recording - Done"
 
-function _docker_run(){
-    docker run --entrypoint '' \
-        -e USERID=$(id -u $USER) \
-        -e HOST=$TEST_BACKEND \
-        -e USER_NAME=$TEST_USER_NAME \
-        -e PASSWORD=$TEST_USER_PASSWORD \
-        -e AUTH_TOKEN=$TEST_PROJECT_TOKEN \
-        -e FIXTURE_TYPE=goodsales \
-        -e BUILD_URL=$BUILD_URL \
-        -w /workspace/libs/sdk-ui-tests-e2e \
-        -v $ROOT_DIR:/workspace \
-        $CYPRESS_IMAGE $@
-}
-
 echo "⭐️ 2/8 Run rush install / build"
-$_RUSH install
-$_RUSH build -t sdk-ui-tests-e2e
+if [[ $RUN_ON_GH != "true" ]]; then
+    $_RUSH install
+    $_RUSH build -t sdk-ui-tests-e2e
+fi
 
 echo "⭐️ 3/8 create reference workspace"
-$_RUSHX libs/sdk-ui-tests-e2e create-ref-workspace
+if [[ $RUN_ON_GH != "true" ]]; then
+    $_RUSHX libs/sdk-ui-tests-e2e create-ref-workspace
+else
+    (cd libs/sdk-ui-tests-e2e && node ../../common/scripts/install-run-rushx.js create-ref-workspace)
+fi
 
 echo "⭐️ 4/8 build gooddata-ui-sdk-scenarios"
-$_RUSHX libs/sdk-ui-tests-e2e build-scenarios
+if [[ $RUN_ON_GH != "true" ]]; then
+    $_RUSHX libs/sdk-ui-tests-e2e build-scenarios
+else
+    (cd libs/sdk-ui-tests-e2e && node ../../common/scripts/install-run-rushx.js build-scenarios)
+fi
 
 echo "⭐️ 5/8 build docker container from gooddata-ui-sdk-scenarios"
-export IMAGE_ID=tiger-gooddata-ui-sdk-scenarios-${EXECUTOR_NUMBER}
+export IMAGE_ID=tiger-gooddata-ui-sdk-scenarios-${EXECUTOR_NUMBER:-default}
 trap "docker rmi --force $IMAGE_ID || true" EXIT
 pushd $E2E_TEST_DIR
 rm -rf ./recordings/mappings
@@ -63,16 +68,18 @@ mkdir -p ./recordings/mappings/TIGER
 docker build --no-cache --file Dockerfile_local -t $IMAGE_ID . || exit 1
 
 echo "⭐️ 6/8 Run isolated recording against TEST_BACKEND=$TEST_BACKEND."
-export USER_UID=$(id -u $USER)
-export USER_GID=$(id -g $USER)
-PROJECT_NAME=tiger-sdk-ui-tests-e2e-${EXECUTOR_NUMBER}
+if [[ $RUN_ON_GH != "true" ]]; then
+    export USER_UID=$(id -u $USER)
+    export USER_GID=$(id -g $USER)
+fi
+PROJECT_NAME=tiger-sdk-ui-tests-e2e-${EXECUTOR_NUMBER:-default}
 MODE=record NO_COLOR=1 docker-compose -f docker-compose-isolated.yaml -p "$PROJECT_NAME" up \
     --abort-on-container-exit --exit-code-from isolated-tests \
     --force-recreate --always-recreate-deps --renew-anon-volumes --no-color
 
 echo "⭐️ 7/8 delete reference workspace on the host"
-$_RUSHX libs/sdk-ui-tests-e2e delete-ref-workspace
-
-
-echo "⭐️ 8/8 create file with test results that will be posted to pull request by the CI job"
-_docker_run node scripts/create_github_report.js
+if [[ $RUN_ON_GH != "true" ]]; then
+    $_RUSHX libs/sdk-ui-tests-e2e delete-ref-workspace
+else
+    (cd libs/sdk-ui-tests-e2e && node ../../common/scripts/install-run-rushx.js delete-ref-workspace)
+fi
