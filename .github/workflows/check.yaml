@@ -2,6 +2,9 @@ name: check
 
 on:
   pull_request:
+    branches:
+      - master
+      - release
 
 concurrency:
   group: ${{ github.event.pull_request.number }}
@@ -15,6 +18,8 @@ jobs:
       pull-requests: read
     name: build-validate-stage
     uses: ./.github/workflows/rw-rush-build-basic-checks.yml
+    with:
+      target-branch: ${{ github.event.pull_request.base.ref }}
     secrets: inherit
 
   ready-to-merge:
