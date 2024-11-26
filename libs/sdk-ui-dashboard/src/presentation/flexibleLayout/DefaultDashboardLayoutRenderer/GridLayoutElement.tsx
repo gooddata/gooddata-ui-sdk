@@ -6,7 +6,7 @@ import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
 import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
 
-import { determineSizeForScreen } from "./utils/sizing.js";
+import { determineWidthForScreen } from "../../../_staging/layout/sizing.js";
 
 export type LayoutElementType = "root" | "nested" | "section" | "item";
 
@@ -54,7 +54,7 @@ export interface IGridLayoutElementProps {
 export const GridLayoutElement = forwardRef<HTMLDivElement, IGridLayoutElementProps>(
     ({ children, className, style, type, layoutItemSize, onMouseLeave }, ref) => {
         const screen = useScreenSize();
-        const gridWidth = determineSizeForScreen(screen, layoutItemSize);
+        const gridWidth = determineWidthForScreen(screen, layoutItemSize);
         const classNames = cx(
             getElementClassName(type, gridWidth),
             `gd-grid-layout__item--span-${gridWidth}`, // CSS Grid columns size class name

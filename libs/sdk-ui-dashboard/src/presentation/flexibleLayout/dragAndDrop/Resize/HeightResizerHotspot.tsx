@@ -14,7 +14,12 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../model/index.js";
-import { calculateWidgetMinHeight, getMaxHeight, getMinHeight } from "../../../../_staging/layout/sizing.js";
+import {
+    calculateWidgetMinHeight,
+    getMaxHeight,
+    getMinHeight,
+    determineWidthForScreen,
+} from "../../../../_staging/layout/sizing.js";
 import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutSectionFacade,
@@ -25,7 +30,6 @@ import { DEFAULT_WIDTH_RESIZER_HEIGHT } from "../../../layout/constants.js";
 import { ExtendedDashboardWidget } from "../../../../model/types/layoutTypes.js";
 import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
 import { getItemIndex } from "../../../../_staging/layout/coordinates.js";
-import { determineSizeForScreen } from "../../DefaultDashboardLayoutRenderer/utils/sizing.js";
 import cx from "classnames";
 import { useScreenSize } from "../../../dashboard/components/DashboardScreenSizeContext.js";
 import { useResizeContext } from "../../../dragAndDrop/index.js";
@@ -50,7 +54,7 @@ export function HeightResizerHotspot({ section, items, getLayoutDimensions }: He
     const widgetIdentifiers = useMemo(() => widgets.map((widget) => widget.identifier), [widgets]);
     const customWidgetsRestrictions = useMemo(() => getCustomWidgetRestrictions(items), [items]);
 
-    const gridWidth = determineSizeForScreen(screen, itemSize);
+    const gridWidth = determineWidthForScreen(screen, itemSize);
 
     const [{ isDragging }, dragRef] = useDashboardDrag(
         {

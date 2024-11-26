@@ -6,7 +6,7 @@ import { DashboardLayoutItemViewRenderer } from "./DashboardLayoutItemViewRender
 import { DashboardLayoutSectionHeader } from "./DashboardLayoutSectionHeader.js";
 import { IDashboardLayoutSectionHeaderRenderProps } from "./interfaces.js";
 import { buildEmptyItemFacadeWithSetSize } from "./utils/emptyFacade.js";
-import { determineSizeForScreen } from "./utils/sizing.js";
+import { determineWidthForScreen } from "../../../_staging/layout/sizing.js";
 import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
 
 export function DashboardLayoutSectionHeaderRenderer(
@@ -15,7 +15,7 @@ export function DashboardLayoutSectionHeaderRenderer(
     const { section, parentLayoutItemSize } = props;
     const sectionHeader = section.header();
     const screen = useScreenSize();
-    const gridWidth = determineSizeForScreen(screen, parentLayoutItemSize);
+    const gridWidth = determineWidthForScreen(screen, parentLayoutItemSize);
     const emptyItem = useMemo(() => {
         return buildEmptyItemFacadeWithSetSize(gridWidth, section.index());
     }, [gridWidth, section]);

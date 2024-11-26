@@ -46,8 +46,8 @@ export function WidthResizerHotspot({
     const itemIndex = item.index();
 
     const currentWidth = item.sizeForScreen(screen)!.gridWidth;
-    const minLimit = getMinWidth(widget, insightsMap);
-    const maxLimit = getDashboardLayoutItemMaxGridWidth(item, "xl");
+    const minLimit = getMinWidth(widget, insightsMap, screen);
+    const maxLimit = getDashboardLayoutItemMaxGridWidth(item, screen);
 
     const [{ isDragging }, dragRef] = useDashboardDrag(
         {

@@ -123,7 +123,7 @@ function validateWidth(
             ? (layout.sections[sectionIndex].items[itemIndex].widget as IWidget)
             : (findItem(layout, itemPath).widget as IWidget);
 
-    const minLimit = getMinWidth(widget, insightsMap);
+    const minLimit = getMinWidth(widget, insightsMap, "xl");
     const parent =
         itemPath !== undefined && itemPath.slice(0, -1).length > 0 && findItem(layout, itemPath.slice(0, -1));
 
