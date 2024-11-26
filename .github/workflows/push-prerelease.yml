@@ -1,6 +1,6 @@
 # (C) 2024 GoodData Corporation
 
-name: Pull request ~ Prerelease
+name: Push ~ Prerelease
 on:
   push:
     branches:
