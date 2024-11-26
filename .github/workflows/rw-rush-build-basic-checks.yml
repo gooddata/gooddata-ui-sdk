@@ -1,6 +1,12 @@
 name: rw ~ rush ~ build validate and run unit tests
 on:
   workflow_call:
+    inputs:
+      target-branch:
+          required: true
+          description: "Target branch to compare with (marge into)"
+          type: string
+
 
 jobs:
   ######################################################
@@ -56,6 +62,9 @@ jobs:
     runs-on:
       group: infra1-runners-arc
       labels: runners-rxa-xlarge  # for testing we need bigger runners
+    env:
+      NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      TARGET_BRANCH: ${{ inputs.target-branch }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -66,19 +75,17 @@ jobs:
           name: git-action
           email: git-action@gooddata.com
       - name: Setup rush
-        env:
-          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         uses: ./.github/actions/rush/set-up-rush
+      - name: fetch target branch
+        run: git fetch origin ${TARGET_BRANCH}
       - name: Rush build
         run: |
-          # build libs first, then the app
           node common/scripts/install-run-rush.js build
       - name: Rush generate dynamic files related to build
         run: node common/scripts/install-run-rush.js build-generate-version
       - name: Rush validate
         run: |
-          # build libs first, then the app
-          node common/scripts/install-run-rush.js validate-ci
+          node common/scripts/install-run-rush.js validate-ci --impacted-by git:origin/${TARGET_BRANCH}
 
 
   test:
@@ -86,6 +93,9 @@ jobs:
     runs-on:
       group: infra1-runners-arc
       labels: runners-mxa-2xlarge #we need bigger runners
+    env:
+      NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      TARGET_BRANCH: ${{ inputs.target-branch }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -99,6 +109,8 @@ jobs:
         env:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         uses: ./.github/actions/rush/set-up-rush
+      - name: fetch target branch
+        run: git fetch origin ${TARGET_BRANCH}
       - name: Rush build
         run: |
           # build libs first, then the app
@@ -107,7 +119,7 @@ jobs:
         run: node common/scripts/install-run-rush.js build-generate-version
       - name: Rush test-ci
         run: |
-          node common/scripts/install-run-rush.js test-ci
+          node common/scripts/install-run-rush.js test-ci --impacted-by git:origin/${TARGET_BRANCH}
       - name: Rush test-isolated-ci
         run: |
-          node common/scripts/install-run-rush.js test-isolated-ci
+          node common/scripts/install-run-rush.js test-isolated-ci --impacted-by git:origin/${TARGET_BRANCH}
