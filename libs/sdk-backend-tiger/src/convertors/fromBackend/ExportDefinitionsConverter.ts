@@ -72,13 +72,14 @@ export const convertInlineExportDefinitionMdObject = (
     const request = convertExportDefinitionRequestPayload(
         exportDefinitionOut.requestPayload as VisualExportRequest | TabularExportRequest,
     );
+    const metadata = exportDefinitionOut.requestPayload.metadata as MetadataObjectDefinition | undefined;
 
     return {
         type: "exportDefinition",
         id,
         uri: id,
         ref: idRef(id, "exportDefinition"),
-        title: (exportDefinitionOut.requestPayload.metadata as MetadataObjectDefinition).title ?? "",
+        title: metadata?.title ?? "",
         description: "",
         tags: [],
         requestPayload: request,
@@ -119,7 +120,8 @@ const convertExportDefinitionRequestPayload = (
             ...settingsObj,
         };
     } else {
-        const filters = (exportRequest.metadata as MetadataObjectDefinition)?.filters;
+        const metadata = exportRequest.metadata as MetadataObjectDefinition | undefined;
+        const filters = metadata?.filters;
         const filtersObj = filters ? { filters } : {};
 
         return {
