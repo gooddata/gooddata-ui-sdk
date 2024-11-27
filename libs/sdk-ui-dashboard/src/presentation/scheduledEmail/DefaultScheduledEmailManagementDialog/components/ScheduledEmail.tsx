@@ -47,7 +47,7 @@ export const ScheduledEmail: React.FC<IScheduledEmailProps> = (props) => {
     const cronDescription = scheduledEmail.schedule?.cronDescription;
     const webhookTitle = notificationChannels.find(
         (channel) => channel.id === scheduledEmail.notificationChannel,
-    )?.destination?.name;
+    )?.title;
     const dashboardTitle = scheduledEmail.exportDefinitions?.[0]?.title;
     const isWidget = isVisualisationAutomation(scheduledEmail);
     const iconColor = theme?.palette?.complementary?.c6 ?? gdColorStateBlank;

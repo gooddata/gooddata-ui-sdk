@@ -333,6 +333,7 @@ export const objectTypeToTigerIdType: {
     filterView: TigerObjectType;
     workspaceDataFilter: TigerObjectType;
     workspaceDataFilterSetting: TigerObjectType;
+    notificationChannel: TigerObjectType;
 };
 
 // @internal (undocumented)

@@ -2,95 +2,52 @@
 
 import { ITigerClient } from "@gooddata/api-client-tiger";
 import {
-    INotificationChannelDefinitionObject,
+    assertNever,
+    INotificationChannelMetadataObject,
+    INotificationChannelMetadataObjectDefinition,
     INotificationChannelTestResponse,
-    ISmtpDefinition,
-    ISmtpDefinitionObject,
-    IWebhookDefinition,
-    IWebhookDefinitionObject,
+    ISmtpNotificationChannelMetadataObject,
+    IWebhookNotificationChannelMetadataObject,
+    ToNotificationChannelMetadataObject,
 } from "@gooddata/sdk-model";
-import { IOrganizationNotificationChannelService } from "@gooddata/sdk-backend-spi";
+import {
+    INotificationChannelsQuery,
+    IOrganizationNotificationChannelService,
+    UnexpectedError,
+} from "@gooddata/sdk-backend-spi";
 
 import { TigerAuthenticatedCallGuard } from "../../types/index.js";
-import {
-    convertChannelFromNotificationChannel,
-    convertEmailFromNotificationChannel,
-    convertWebhookFromNotificationChannel,
-} from "../../convertors/fromBackend/NotificationChannelsConvertor.js";
-import {
-    convertWebhookToNotificationChannel,
-    convertCreateWebhookToNotificationChannel,
-    convertCreateEmailToNotificationChannel,
-    convertEmailToNotificationChannel,
-} from "../../convertors/toBackend/NotificationChannelsConvertor.js";
+import { convertNotificationChannelFromBackend } from "../../convertors/fromBackend/NotificationChannelsConvertor.js";
+import { convertNotificationChannelToBackend } from "../../convertors/toBackend/NotificationChannelsConvertor.js";
+import { NotificationChannelsQuery } from "./notificationChannelsQuery.js";
 
 export class OrganizationNotificationChannelService implements IOrganizationNotificationChannelService {
     constructor(public readonly authCall: TigerAuthenticatedCallGuard) {}
 
     /**
-     * @alpha
+     * Test notification channel
+     * This method will test the notification channel by sending a test notification to the destination.
      *
-     * Get all notification channels count.
-     * @returns Promise resolved with number of notification channels.
-     */
-    public getCount = async (): Promise<number> => {
-        return this.authCall(async (client: ITigerClient) => {
-            const result = await client.entities.getAllEntitiesNotificationChannels({
-                size: 1,
-                metaInclude: ["page"],
-            });
-            return result.data.meta?.page?.totalElements ?? 0;
-        });
-    };
-
-    /**
-     * @alpha
-     *
-     * Get all notification channels
-     * @returns Promise resolved with array of notification channels.
-     */
-    public getAll = async (): Promise<INotificationChannelDefinitionObject[]> => {
-        return this.authCall(async (client: ITigerClient) => {
-            const result = await client.entities.getAllEntitiesNotificationChannels({});
-            const channels = result.data?.data || [];
-            return channels.map((channel) => convertChannelFromNotificationChannel(channel));
-        });
-    };
-
-    /**
-     * @alpha
-     * Test channel
-     *
-     * This method will test the channel by sending a test notification to the destination.
-     * @param channel - definition of the channel
+     * @param channel - definition of the notification channel
      * @param notificationId - id of the notification to be sent
      * @returns Promise resolved with the response from the test.
+     *
+     * @beta
      */
-    public testChannel = async (
-        channel: Partial<IWebhookDefinition> | Partial<ISmtpDefinition>,
-        notificationId?: string,
+    public testNotificationChannel = async (
+        channel: INotificationChannelMetadataObject | INotificationChannelMetadataObjectDefinition,
     ): Promise<INotificationChannelTestResponse> => {
-        let obj;
-        switch (channel.type) {
-            case "webhook":
-                obj = convertCreateWebhookToNotificationChannel(channel);
-                break;
-            case "smtp":
-                obj = convertCreateEmailToNotificationChannel(channel);
-                break;
-            default:
-                throw new Error(`Unknown channel type.`);
-        }
+        const convertedChannel = convertNotificationChannelToBackend(channel);
 
-        const destination = obj.attributes?.destination;
+        const destination = convertedChannel.attributes?.destination;
         if (!destination) {
-            throw new Error("Missing destination in the webhook");
+            throw new UnexpectedError("Cannot test notification channel with empty destination.");
         }
 
-        if (notificationId) {
+        if ("id" in channel && channel.id) {
             return this.authCall(async (client: ITigerClient) => {
                 const result = await client.automation.testExistingNotificationChannel({
-                    notificationChannelId: notificationId,
+                    notificationChannelId: channel.id,
                 });
                 return result.data;
             });
@@ -107,171 +64,138 @@ export class OrganizationNotificationChannelService implements IOrganizationNoti
     };
 
     /**
-     * @alpha
-     * Delete webhook
+     * Get notification channel by id
+     * @param id - id of the notification channel
+     * @returns Promise resolved with notification channel.
      *
-     * @param id - id of the webhook
-     * @returns Promise resolved when the webhook is deleted.
+     * @beta
      */
-    public deleteChannel(id: string): Promise<void> {
+    public getNotificationChannel(id: string): Promise<INotificationChannelMetadataObject> {
+        return this.authCall(async (client: ITigerClient) => {
+            const result = await client.entities.getEntityNotificationChannels({ id });
+            const convertedChannel = convertNotificationChannelFromBackend(result.data.data);
+            if (!convertedChannel) {
+                throw new UnexpectedError(`Notification channel with id ${id} not found`);
+            }
+            return convertedChannel;
+        });
+    }
+
+    /**
+     * Create new notification channel
+     *
+     * @param notificationChannel - definition of the notification channel
+     * @returns Promise resolved with created notification channel.
+     *
+     * @beta
+     */
+    public createNotificationChannel<T extends INotificationChannelMetadataObjectDefinition>(
+        notificationChannel: T,
+    ): Promise<ToNotificationChannelMetadataObject<T>> {
+        return this.authCall(async (client: ITigerClient) => {
+            const channel = await client.entities.createEntityNotificationChannels({
+                jsonApiNotificationChannelPostOptionalIdDocument: {
+                    data: convertNotificationChannelToBackend(notificationChannel),
+                },
+            });
+            const convertedChannel = convertNotificationChannelFromBackend(
+                channel.data.data,
+            ) as ToNotificationChannelMetadataObject<T>;
+            if (!convertedChannel) {
+                throw new UnexpectedError(`Failed to create notification channel`);
+            }
+            return convertedChannel;
+        });
+    }
+
+    /**
+     * Update existing notification channel
+     *
+     * @param notificationChannel - definition of the notification channel
+     * @returns Promise resolved with updated notification channel.
+     *
+     * @beta
+     */
+    public updateNotificationChannel<T extends INotificationChannelMetadataObject>(
+        notificationChannel: T,
+    ): Promise<T> {
+        return this.authCall(async (client: ITigerClient) => {
+            const destinationType = notificationChannel.destinationType;
+            switch (destinationType) {
+                case "smtp":
+                    return this.updateSmtpNotificationChannel(notificationChannel) as unknown as T;
+                case "webhook":
+                    return this.updateWebhookNotificationChannel(notificationChannel) as unknown as T;
+                case "inPlatform": {
+                    const channel = await client.entities.updateEntityNotificationChannels({
+                        id: notificationChannel.id,
+                        jsonApiNotificationChannelInDocument: {
+                            data: convertNotificationChannelToBackend(notificationChannel),
+                        },
+                    });
+                    const convertedChannel = convertNotificationChannelFromBackend(channel.data.data) as T;
+                    if (!convertedChannel) {
+                        throw new UnexpectedError(`Failed to update notification channel`);
+                    }
+                    return convertedChannel;
+                }
+                default:
+                    assertNever(destinationType);
+                    throw new UnexpectedError(`Unknown notification channel type: ${destinationType}`);
+            }
+        });
+    }
+
+    /**
+     * Delete notification channel.
+     *
+     * @param id - id of the notification channel
+     * @returns Promise resolved when the notification channel is deleted.
+     *
+     * @beta
+     */
+    public deleteNotificationChannel(id: string): Promise<void> {
         return this.authCall(async (client: ITigerClient) => {
             await client.entities.deleteEntityNotificationChannels({ id });
         });
     }
 
-    //webhooks
-
     /**
-     * @alpha
-     * Get all webhooks
-     * @returns Promise resolved with array of webhooks.
+     * Query notification channels
+     *
+     * @beta
      */
-    public getWebhooks = async (): Promise<IWebhookDefinitionObject[]> => {
-        return (await this.getAll()).filter(
-            (channel) => channel.type === "webhook",
-        ) as IWebhookDefinitionObject[];
+    public getNotificationChannelsQuery = (): INotificationChannelsQuery => {
+        return new NotificationChannelsQuery(this.authCall);
     };
 
-    /**
-     * @alpha
-     * Get webhook by id
-     *
-     * @param id - id of the webhook
-     */
-    public getWebhook = async (id: string): Promise<IWebhookDefinitionObject> => {
-        return this.authCall(async (client: ITigerClient) => {
-            const result = await client.entities.getEntityNotificationChannels({ id });
-            return convertWebhookFromNotificationChannel(result.data.data);
-        });
-    };
+    //
+    // PRIVATE METHODS
+    //
 
     /**
-     * @alpha
-     * Create new webhook
-     *
-     * @param webhook - definition of the webhook
-     * @returns Promise resolved with created webhook.
+     * @internal
      */
-    public createWebhook = async (webhook: IWebhookDefinition): Promise<IWebhookDefinitionObject> => {
-        return this.authCall(async (client: ITigerClient) => {
-            const channel = await client.entities.createEntityNotificationChannels({
-                jsonApiNotificationChannelPostOptionalIdDocument: {
-                    data: convertCreateWebhookToNotificationChannel(webhook),
-                },
-            });
-            return convertWebhookFromNotificationChannel(channel.data.data);
-        });
-    };
-
-    /**
-     * @alpha
-     * Update existing webhook
-     *
-     * @param webhook - definition of the webhook
-     * @returns Promise resolved when the webhook is updated.
-     */
-    public updateWebhook = async (webhook: IWebhookDefinitionObject): Promise<IWebhookDefinitionObject> => {
-        //NOTE: If webhook has token but token is undefined, we need to patch the webhook
-        // instead of updating it because we want to keep the token on the backend
-        if (webhook.destination?.hasToken && webhook.destination?.token === undefined) {
-            return this.authCall(async (client: ITigerClient) => {
-                const channel = await client.entities.patchEntityNotificationChannels({
-                    id: webhook.id,
-                    jsonApiNotificationChannelPatchDocument: {
-                        data: convertWebhookToNotificationChannel(webhook),
-                    },
-                });
-                return convertWebhookFromNotificationChannel(channel.data.data);
-            });
-        }
-
-        return this.authCall(async (client: ITigerClient) => {
-            const channel = await client.entities.updateEntityNotificationChannels({
-                id: webhook.id,
-                jsonApiNotificationChannelInDocument: {
-                    data: convertWebhookToNotificationChannel(webhook),
-                },
-            });
-            return convertWebhookFromNotificationChannel(channel.data.data);
-        });
-    };
-
-    /**
-     * @alpha
-     * Delete webhook
-     *
-     * @param id - id of the webhook
-     * @returns Promise resolved when the webhook is deleted.
-     */
-    public deleteWebhook(id: string): Promise<void> {
-        return this.deleteChannel(id);
-    }
-
-    //emails
-
-    /**
-     * @alpha
-     * Get all emails
-     * @returns Promise resolved with array of emails.
-     */
-    public getEmails = async (): Promise<ISmtpDefinitionObject[]> => {
-        return (await this.getAll()).filter((channel) => channel.type === "smtp") as ISmtpDefinitionObject[];
-    };
-
-    /**
-     * @alpha
-     * Get email by id
-     *
-     * @param id - id of the email
-     */
-    public getEmail = async (id: string): Promise<ISmtpDefinitionObject> => {
-        return this.authCall(async (client: ITigerClient) => {
-            const result = await client.entities.getEntityNotificationChannels({ id });
-            return convertEmailFromNotificationChannel(result.data.data);
-        });
-    };
-
-    /**
-     * @alpha
-     * Create new email
-     *
-     * @param smtp - definition of the smtp
-     * @returns Promise resolved with created smtp.
-     */
-    public createEmail = async (smtp: ISmtpDefinition): Promise<ISmtpDefinitionObject> => {
-        return this.authCall(async (client: ITigerClient) => {
-            const channel = await client.entities.createEntityNotificationChannels({
-                jsonApiNotificationChannelPostOptionalIdDocument: {
-                    data: convertCreateEmailToNotificationChannel(smtp),
-                },
-            });
-            return convertEmailFromNotificationChannel(channel.data.data);
-        });
-    };
-
-    /**
-     * @alpha
-     * Update existing email
-     *
-     * @param smtp - definition of the email
-     * @returns Promise resolved when the email is updated.
-     */
-    public updateEmail = async (smtp: ISmtpDefinitionObject): Promise<ISmtpDefinitionObject> => {
+    private updateSmtpNotificationChannel = async (
+        smtp: ISmtpNotificationChannelMetadataObject,
+    ): Promise<ISmtpNotificationChannelMetadataObject> => {
         //NOTE: If smtp has password but password is undefined, we need to patch the smtp
         // instead of updating it because we want to keep the password on the backend
-        if (
-            smtp.destination?.type === "custom" &&
-            smtp.destination?.hasPassword &&
-            smtp.destination?.password === undefined
-        ) {
+        if (smtp.destinationConfig?.type === "customSmtp" && !smtp.destinationConfig?.password) {
             return this.authCall(async (client: ITigerClient) => {
                 const channel = await client.entities.patchEntityNotificationChannels({
                     id: smtp.id,
                     jsonApiNotificationChannelPatchDocument: {
-                        data: convertEmailToNotificationChannel(smtp),
+                        data: convertNotificationChannelToBackend(smtp),
                     },
                 });
-                return convertEmailFromNotificationChannel(channel.data.data);
+                const convertedChannel = convertNotificationChannelFromBackend(
+                    channel.data.data,
+                ) as ISmtpNotificationChannelMetadataObject;
+                if (!convertedChannel) {
+                    throw new UnexpectedError(`Failed to update notification channel`);
+                }
+                return convertedChannel;
             });
         }
 
@@ -279,21 +203,63 @@ export class OrganizationNotificationChannelService implements IOrganizationNoti
             const channel = await client.entities.updateEntityNotificationChannels({
                 id: smtp.id,
                 jsonApiNotificationChannelInDocument: {
-                    data: convertEmailToNotificationChannel(smtp),
+                    data: convertNotificationChannelToBackend(smtp),
                 },
             });
-            return convertEmailFromNotificationChannel(channel.data.data);
+            const convertedChannel = convertNotificationChannelFromBackend(
+                channel.data.data,
+            ) as ISmtpNotificationChannelMetadataObject;
+            if (!convertedChannel) {
+                throw new UnexpectedError(`Failed to update notification channel`);
+            }
+            return convertedChannel;
         });
     };
 
     /**
-     * @alpha
-     * Delete email
-     *
-     * @param id - id of the smtp
-     * @returns Promise resolved when the smtp is deleted.
+     * @internal
      */
-    public deleteEmail(id: string): Promise<void> {
-        return this.deleteChannel(id);
-    }
+    private updateWebhookNotificationChannel = async (
+        webhook: IWebhookNotificationChannelMetadataObject,
+    ): Promise<IWebhookNotificationChannelMetadataObject> => {
+        //NOTE: If webhook has token but token is undefined, we need to patch the webhook
+        // instead of updating it because we want to keep the token on the backend
+        if (webhook.destinationConfig?.hasToken && !webhook.destinationConfig?.token) {
+            return this.authCall(async (client: ITigerClient) => {
+                const channel = await client.entities.patchEntityNotificationChannels({
+                    id: webhook.id,
+                    jsonApiNotificationChannelPatchDocument: {
+                        data: convertNotificationChannelToBackend(webhook),
+                    },
+                });
+
+                const convertedChannel = convertNotificationChannelFromBackend(
+                    channel.data.data,
+                ) as IWebhookNotificationChannelMetadataObject;
+
+                if (!convertedChannel) {
+                    throw new UnexpectedError(`Failed to update notification channel`);
+                }
+                return convertedChannel;
+            });
+        }
+
+        return this.authCall(async (client: ITigerClient) => {
+            const channel = await client.entities.updateEntityNotificationChannels({
+                id: webhook.id,
+                jsonApiNotificationChannelInDocument: {
+                    data: convertNotificationChannelToBackend(webhook),
+                },
+            });
+
+            const convertedChannel = convertNotificationChannelFromBackend(
+                channel.data.data,
+            ) as IWebhookNotificationChannelMetadataObject;
+
+            if (!convertedChannel) {
+                throw new UnexpectedError(`Failed to update notification channel`);
+            }
+            return convertedChannel;
+        });
+    };
 }

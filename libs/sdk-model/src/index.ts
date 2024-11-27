@@ -14,6 +14,7 @@ export type { DateAttributeGranularity, AllTimeGranularity } from "./base/dateGr
 export { DateGranularity } from "./base/dateGranularities.js";
 export type { IAuditable, IAuditableDates, IAuditableUsers } from "./base/metadata.js";
 export type { ComparatorDirection, IComparator } from "./base/comparators.js";
+export { assertNever } from "./base/typeUtils.js";
 
 export type { IAttribute, IAttributeBody, AttributePredicate } from "./execution/attribute/index.js";
 export {
@@ -33,20 +34,27 @@ export type { AttributeModifications, AttributeBuilderInput } from "./execution/
 export { newAttribute, modifyAttribute, AttributeBuilder } from "./execution/attribute/factory.js";
 
 export type {
-    IWebhookDestination,
-    ISmtpDestination,
-    IWebhookDefinition,
-    ISmtpDefinition,
-    ISmtpDefinitionObject,
-    IWebhookDefinitionObject,
-    INotificationChannelMetadataObject,
-    INotificationChannelDefinitionObject,
     INotificationChannelMetadataObjectBase,
-    IDefaultSmtpDestination,
-    ICustomSmtpDestination,
-    INotificationChannelConfiguration,
-    NotificationChannelAllowedRecipient,
+    ICustomSmtpDestinationConfiguration,
+    IDefaultSmtpDestinationConfiguration,
+    IInPlatformNotificationChannelMetadataObject,
+    IInPlatformNotificationChannelMetadataObjectDefinition,
+    ISmtpDestinationConfiguration,
+    ISmtpNotificationChannelMetadataObject,
+    ISmtpNotificationChannelMetadataObjectDefinition,
+    IWebhookDestinationConfiguration,
+    IWebhookNotificationChannelMetadataObject,
+    IWebhookNotificationChannelMetadataObjectDefinition,
+    NotificationChannelAllowedRecipients,
+    NotificationChannelDestinationType,
+    INotificationChannelMetadataObject,
+    INotificationChannelMetadataObjectDefinition,
     INotificationChannelTestResponse,
+    ToNotificationChannelMetadataObject,
+} from "./notificationChannels/index.js";
+export {
+    isNotificationChannelMetadataObject,
+    isNotificationChannelMetadataObjectDefinition,
 } from "./notificationChannels/index.js";
 
 export type {
@@ -663,6 +671,11 @@ export type {
     IDashboardMetadataObject,
     IAttributeHierarchyMetadataObject,
     IDateHierarchyTemplate,
+    IMdObject,
+    IMdObjectBase,
+    IMdObjectDefinition,
+    IMdObjectIdentity,
+    ToMdObjectDefinition,
 } from "./ldm/metadata/index.js";
 export {
     isAttributeDisplayFormMetadataObject,
@@ -679,6 +692,8 @@ export {
     attributeDisplayFormMetadataObjectRef,
     attributeDisplayFormMetadataObjectTitle,
     isAttributeHierarchyMetadataObject,
+    isMdObject,
+    isMdObjectDefinition,
 } from "./ldm/metadata/index.js";
 
 export type {

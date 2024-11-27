@@ -98,7 +98,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
 
                 const destinationType = destinations.find(
                     (channel) => channel.id === alert.notificationChannel,
-                )?.type;
+                )?.destinationType;
                 automationInteraction({
                     type: "alertCreated",
                     destination_id: alert.notificationChannel,

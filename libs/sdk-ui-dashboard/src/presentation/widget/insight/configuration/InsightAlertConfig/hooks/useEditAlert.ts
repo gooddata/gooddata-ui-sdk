@@ -60,7 +60,7 @@ export const useEditAlert = ({
     const selectedDestination = destinations.find(
         (destination) => destination.id === updatedAlert.notificationChannel,
     );
-    const showRecipientsSelect = selectedDestination?.allowedRecipients !== "CREATOR";
+    const showRecipientsSelect = selectedDestination?.allowedRecipients !== "creator";
 
     const changeMeasure = (measure: AlertMetric) => {
         setUpdatedAlert((alert) => transformAlertByMetric(metrics, alert, measure, catalogMeasures));
@@ -114,8 +114,8 @@ export const useEditAlert = ({
          * When allowed recipients are changed from "ALL" to "CREATOR", show warning message
          */
         const showWarningMessage =
-            selectedDestination?.allowedRecipients === "CREATOR" &&
-            previousDestination?.allowedRecipients !== "CREATOR";
+            selectedDestination?.allowedRecipients === "creator" &&
+            previousDestination?.allowedRecipients !== "creator";
         setWarningMessage(
             showWarningMessage
                 ? intl.formatMessage({ id: "insightAlert.config.warning.destination" })
@@ -126,7 +126,7 @@ export const useEditAlert = ({
          * Reset recipients when new notification channel only allows the author/creator
          */
         const updatedRecipients =
-            selectedDestination?.allowedRecipients === "CREATOR"
+            selectedDestination?.allowedRecipients === "creator"
                 ? [convertCurrentUserToAutomationRecipient(users, currentUser)]
                 : undefined;
 
@@ -187,7 +187,7 @@ export const useEditAlert = ({
     const isRecipientsValid = isAlertRecipientsValid(updatedAlert);
     const isAlertChanged = !isEqual(updatedAlert, alert);
     const areEmailsValid =
-        selectedDestination?.type === "smtp"
+        selectedDestination?.destinationType === "smtp"
             ? updatedAlert.recipients?.every((v) =>
                   isAutomationUserRecipient(v) ? isEmail(v.email ?? "") : true,
               )

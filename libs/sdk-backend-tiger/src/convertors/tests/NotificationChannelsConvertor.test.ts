@@ -2,22 +2,21 @@
 
 import { describe, it, expect } from "vitest";
 
-import { convertWebhookToNotificationChannel } from "../toBackend/NotificationChannelsConvertor.js";
-import { convertWebhookFromNotificationChannel } from "../fromBackend/NotificationChannelsConvertor.js";
+import { convertNotificationChannelToBackend } from "../toBackend/NotificationChannelsConvertor.js";
+import { convertNotificationChannelFromBackend } from "../fromBackend/NotificationChannelsConvertor.js";
 
 describe("NotificationChannelsConvertor", () => {
     it("should convert webhook to notification channel", () => {
-        const data = convertWebhookToNotificationChannel({
+        const data = convertNotificationChannelToBackend({
             id: "id",
-            type: "webhook",
-            destination: {
-                name: "name",
+            type: "notificationChannel",
+            destinationType: "webhook",
+            title: "name",
+            destinationConfig: {
                 token: "token",
                 endpoint: "endpoint",
             },
-            configuration: {
-                dashboardUrl: "dashboardUrl",
-            },
+            customDashboardUrl: "dashboardUrl",
         });
 
         expect(data).toEqual({
@@ -37,10 +36,12 @@ describe("NotificationChannelsConvertor", () => {
     });
 
     it("should convert webhook from notification channel", () => {
-        const data = convertWebhookFromNotificationChannel({
+        const data = convertNotificationChannelFromBackend({
             id: "id",
+            type: "notificationChannel",
             attributes: {
                 name: "name",
+                description: "description",
                 destinationType: "WEBHOOK",
                 destination: {
                     type: "WEBHOOK",
@@ -48,21 +49,25 @@ describe("NotificationChannelsConvertor", () => {
                     token: "token",
                     hasToken: true,
                 },
+                allowedRecipients: "CREATOR",
+                customDashboardUrl: "dashboardUrl",
             },
         });
 
         expect(data).toEqual({
             id: "id",
-            type: "webhook",
-            destination: {
-                name: "name",
+            type: "notificationChannel",
+            destinationType: "webhook",
+            title: "name",
+            description: "description",
+            destinationConfig: {
                 endpoint: "endpoint",
                 token: "token",
                 hasToken: true,
             },
-            configuration: {
-                dashboardUrl: undefined,
-            },
+            customDashboardUrl: "dashboardUrl",
+            tags: [],
+            allowedRecipients: "creator",
         });
     });
 });

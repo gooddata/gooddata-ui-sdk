@@ -1,127 +1,67 @@
 // (C) 2023-2024 GoodData Corporation
 
 import {
-    INotificationChannelDefinitionObject,
-    IWebhookDefinitionObject,
-    IWebhookDefinition,
-    ISmtpDefinitionObject,
-    ISmtpDefinition,
     INotificationChannelTestResponse,
+    INotificationChannelMetadataObject,
+    INotificationChannelMetadataObjectDefinition,
 } from "@gooddata/sdk-model";
+import { INotificationChannelsQuery } from "./query.js";
 
 /**
  * This service provides access to organization notifications channels.
  *
- * @alpha
+ * @beta
  */
 export interface IOrganizationNotificationChannelService {
     /**
-     * Get count of all notification channels
-     */
-    getCount(): Promise<number>;
-
-    /**
-     * Get all notification channels
-     */
-    getAll(): Promise<INotificationChannelDefinitionObject[]>;
-
-    /**
-     * Test channel
+     * Test notification channel
      *
      * @param channel - definition of the channel
      * @param notificationId - id of the notification to test if its already created
      * @returns Promise resolved with test response.
      */
-    testChannel(
-        channel: Partial<IWebhookDefinition> | Partial<ISmtpDefinition>,
-        notificationId?: string,
+    testNotificationChannel(
+        channel: INotificationChannelMetadataObjectDefinition,
     ): Promise<INotificationChannelTestResponse>;
 
-    /**
-     * Delete channel
+    /*
+     * Get notification channel by id
      *
-     * @param id - id of the channel
-     * @returns Promise resolved when the channel is deleted.
+     * @param id - id of the notification channel
+     * @returns Promise resolved with notification channel.
      */
-    deleteChannel(id: string): Promise<void>;
+    getNotificationChannel(id: string): Promise<INotificationChannelMetadataObject>;
+
+    /*
+     * Create new notification channel
+     *
+     * @param notificationChannel - definition of the notification channel
+     * @returns Promise resolved with created notification channel.
+     */
+    createNotificationChannel(
+        notificationChannel: INotificationChannelMetadataObjectDefinition,
+    ): Promise<INotificationChannelMetadataObject>;
 
     /**
-     * Get all emails
+     * Update existing notification channel
      *
-     * @returns Promise resolved with array of emails.
-     * @throws In case of error.
+     * @param notificationChannel - definition of the notification channel
+     * @returns Promise resolved with updated notification channel.
      */
-    getEmails(): Promise<ISmtpDefinitionObject[]>;
+    updateNotificationChannel(
+        notificationChannel: INotificationChannelMetadataObject,
+    ): Promise<INotificationChannelMetadataObject>;
 
     /**
-     * Get email by id
+     * Delete notification channel
      *
-     * @param id - id of the smtp
-     * @returns Promise resolved with smtp definition or undefined if not found.
+     * @param id - id of the notification channel
+     * @returns Promise resolved when the notification channel is deleted.
      */
-    getEmail(id: string): Promise<ISmtpDefinitionObject>;
+    deleteNotificationChannel(id: string): Promise<void>;
 
     /**
-     * Create new email
-     *
-     * @param smtp - definition of the smtp
-     * @returns Promise resolved with created smtp.
+     * Query list of notification channels
      */
-    createEmail(smtp: ISmtpDefinition): Promise<ISmtpDefinitionObject>;
-
-    /**
-     * Update existing email
-     *
-     * @param smtp - definition of the smtp
-     * @returns Promise resolved when the smtp is updated.
-     */
-    updateEmail(smtp: ISmtpDefinitionObject): Promise<ISmtpDefinitionObject>;
-
-    /**
-     * Delete email
-     *
-     * @param id - id of the smtp
-     * @returns Promise resolved when the smtp is deleted.
-     */
-    deleteEmail(id: string): Promise<void>;
-
-    /**
-     * Get all webhooks
-     *
-     * @returns Promise resolved with array of webhooks.
-     * @throws In case of error.
-     */
-    getWebhooks(): Promise<IWebhookDefinitionObject[]>;
-
-    /**
-     * Get webhook by id
-     *
-     * @param id - id of the webhook
-     * @returns Promise resolved with webhook definition or undefined if not found.
-     */
-    getWebhook(id: string): Promise<IWebhookDefinitionObject>;
-
-    /**
-     * Create new webhook
-     *
-     * @param webhook - definition of the webhook
-     * @returns Promise resolved with created webhook.
-     */
-    createWebhook(webhook: IWebhookDefinition): Promise<IWebhookDefinitionObject>;
-
-    /**
-     * Update existing webhook
-     *
-     * @param webhook - definition of the webhook
-     * @returns Promise resolved when the webhook is updated.
-     */
-    updateWebhook(webhook: IWebhookDefinitionObject): Promise<IWebhookDefinitionObject>;
-
-    /**
-     * Delete webhook
-     *
-     * @param id - id of the webhook
-     * @returns Promise resolved when the webhook is deleted.
-     */
-    deleteWebhook(id: string): Promise<void>;
+    getNotificationChannelsQuery(): INotificationChannelsQuery;
 }

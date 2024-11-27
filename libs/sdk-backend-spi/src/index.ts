@@ -241,6 +241,10 @@ export type {
     IPermissionsAssignment,
 } from "./organization/permissions/index.js";
 export type { IOrganizationNotificationChannelService } from "./organization/notificationChannels/index.js";
+export type {
+    INotificationChannelsQuery,
+    INotificationChannelsQueryResult,
+} from "./organization/notificationChannels/query.js";
 export type { IDataFiltersService } from "./workspace/dataFilter/index.js";
 
 export type { IWorkspaceLogicalModelService, IDateDataset } from "./workspace/ldm/model.js";

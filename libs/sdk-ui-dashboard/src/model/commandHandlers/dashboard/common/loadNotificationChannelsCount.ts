@@ -1,5 +1,5 @@
 // (C) 2021-2024 GoodData Corporation
-import { ISettings } from "@gooddata/sdk-model";
+import { ISettings, NotificationChannelDestinationType } from "@gooddata/sdk-model";
 import { DashboardContext } from "../../../types/commonTypes.js";
 
 export function loadNotificationChannelsCount(ctx: DashboardContext, settings: ISettings): Promise<number> {
@@ -9,10 +9,22 @@ export function loadNotificationChannelsCount(ctx: DashboardContext, settings: I
         return Promise.resolve(0);
     }
 
+    const typesToLoad: NotificationChannelDestinationType[] = ["smtp", "webhook"];
+
+    if (settings?.enableInPlatformNotifications) {
+        typesToLoad.push("inPlatform");
+    }
+
     return backend
         .organizations()
         .getCurrentOrganization()
         .then((organization) => {
-            return organization.notificationChannels().getCount();
-        });
+            return organization
+                .notificationChannels()
+                .getNotificationChannelsQuery()
+                .withTypes(typesToLoad)
+                .withSize(1)
+                .query();
+        })
+        .then((result) => result.totalCount ?? 0);
 }

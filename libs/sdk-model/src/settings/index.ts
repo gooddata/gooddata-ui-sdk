@@ -561,6 +561,11 @@ export interface ISettings {
      */
     enableDestinationTesting?: boolean;
 
+    /**
+     * Enable in-platform notifications.
+     */
+    enableInPlatformNotifications?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

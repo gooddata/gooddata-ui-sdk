@@ -1,113 +1,213 @@
 // (C) 2022-2024 GoodData Corporation
 import {
-    JsonApiNotificationChannelOutTypeEnum,
-    JsonApiNotificationChannelOut,
     JsonApiNotificationChannelPostOptionalId,
+    JsonApiNotificationChannelIn,
     DeclarativeNotificationChannelDestinationTypeEnum,
+    Smtp,
+    DefaultSmtp,
+    Webhook,
+    JsonApiNotificationChannelOutAttributesAllowedRecipientsEnum,
 } from "@gooddata/api-client-tiger";
+import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
-    ISmtpDefinition,
-    ISmtpDefinitionObject,
-    IWebhookDefinition,
-    IWebhookDefinitionObject,
+    INotificationChannelMetadataObject,
+    IInPlatformNotificationChannelMetadataObject,
+    ISmtpNotificationChannelMetadataObject,
+    IWebhookNotificationChannelMetadataObject,
+    NotificationChannelAllowedRecipients,
+    assertNever,
+    IDefaultSmtpDestinationConfiguration,
+    ICustomSmtpDestinationConfiguration,
+    INotificationChannelMetadataObjectDefinition,
+    IInPlatformNotificationChannelMetadataObjectDefinition,
+    ISmtpNotificationChannelMetadataObjectDefinition,
+    IWebhookNotificationChannelMetadataObjectDefinition,
+    isNotificationChannelMetadataObject,
+    NotificationChannelDestinationType,
 } from "@gooddata/sdk-model";
 
-export function convertWebhookToNotificationChannel(
-    webhook: Partial<IWebhookDefinitionObject> & Pick<IWebhookDefinitionObject, "id">,
-): JsonApiNotificationChannelOut {
-    return {
-        id: webhook.id,
-        ...convertCreateWebhookToNotificationChannel(webhook),
-    };
-}
+type BackendReturnType<T> = T extends INotificationChannelMetadataObject
+    ? JsonApiNotificationChannelIn
+    : JsonApiNotificationChannelPostOptionalId;
 
-export function convertCreateWebhookToNotificationChannel(
-    webhook: Partial<IWebhookDefinition>,
-): JsonApiNotificationChannelPostOptionalId {
-    return {
-        type: JsonApiNotificationChannelOutTypeEnum.NOTIFICATION_CHANNEL,
-        attributes: {
-            name: webhook.destination?.name,
-            destinationType: DeclarativeNotificationChannelDestinationTypeEnum.WEBHOOK,
-            destination: {
-                type: DeclarativeNotificationChannelDestinationTypeEnum.WEBHOOK,
-                url: webhook.destination?.endpoint ?? "",
-                token: webhook.destination?.token,
-            },
-            customDashboardUrl: webhook.configuration?.dashboardUrl,
-            allowedRecipients: webhook.allowedRecipients,
-        },
-    };
-}
-
-export function convertEmailToNotificationChannel(
-    smtp: Partial<ISmtpDefinitionObject> & Pick<ISmtpDefinitionObject, "id">,
-): JsonApiNotificationChannelOut {
-    return {
-        id: smtp.id,
-        ...convertCreateEmailToNotificationChannel(smtp),
-    };
-}
-
-export function convertCreateEmailToNotificationChannel(
-    smtp: Partial<ISmtpDefinition>,
-): JsonApiNotificationChannelPostOptionalId {
-    switch (smtp.destination?.type) {
-        case "custom":
-            return convertCreateCustomEmailToNotificationChannel(smtp);
-        case "default":
-            return convertCreateDefaultEmailToNotificationChannel(smtp);
+/**
+ * Converts notification channel from SDK model to backend format.
+ *
+ * @internal
+ */
+export function convertNotificationChannelToBackend<
+    T extends INotificationChannelMetadataObject | INotificationChannelMetadataObjectDefinition,
+>(channel: T): BackendReturnType<T> {
+    switch (channel.destinationType) {
+        case "webhook":
+            return convertWebhookNotificationChannelToBackend(channel) as BackendReturnType<T>;
+        case "smtp":
+            return channel.destinationConfig?.type === "customSmtp"
+                ? (convertCustomSmtpNotificationChannelToBackend(channel) as BackendReturnType<T>)
+                : (convertDefaultSmtpNotificationChannelToBackend(channel) as BackendReturnType<T>);
+        case "inPlatform":
+            return convertInPlatformNotificationChannelToBackend(channel) as BackendReturnType<T>;
         default:
-            throw new Error(`Unknown email channel type.`);
+            assertNever(channel);
+            throw new UnexpectedError(
+                `Unknown notification channel type: ${(channel as any).destinationType}`,
+            );
     }
 }
 
-function convertCreateCustomEmailToNotificationChannel(
-    smtp: Partial<ISmtpDefinition>,
-): JsonApiNotificationChannelPostOptionalId {
-    if (smtp.destination?.type !== "custom") {
-        throw new Error("Only custom SMTP destinations are supported");
+function convertSharedNotificationChannelPropertiesToBackend<
+    T extends INotificationChannelMetadataObject | INotificationChannelMetadataObjectDefinition,
+>(channel: T): BackendReturnType<T> {
+    const notificationChannel: JsonApiNotificationChannelPostOptionalId = {
+        type: "notificationChannel",
+        attributes: {
+            name: channel.title,
+            description: channel.description,
+            customDashboardUrl: channel.customDashboardUrl,
+            allowedRecipients: convertAllowedRecipientsToBackend(channel.allowedRecipients),
+        },
+    };
+
+    if (isNotificationChannelMetadataObject(channel)) {
+        return {
+            id: channel.id,
+            ...notificationChannel,
+        } as BackendReturnType<T>;
     }
+    return notificationChannel as BackendReturnType<T>;
+}
+
+function convertInPlatformNotificationChannelToBackend<
+    T extends
+        | IInPlatformNotificationChannelMetadataObject
+        | IInPlatformNotificationChannelMetadataObjectDefinition,
+>(channel: T): BackendReturnType<T> {
+    const shared = convertSharedNotificationChannelPropertiesToBackend(channel);
+    return {
+        ...shared,
+        attributes: {
+            ...shared.attributes,
+            destinationType: DeclarativeNotificationChannelDestinationTypeEnum.IN_PLATFORM,
+            destination: { type: "IN_PLATFORM" },
+        },
+    };
+}
+
+function convertCustomSmtpNotificationChannelToBackend<
+    T extends ISmtpNotificationChannelMetadataObject | ISmtpNotificationChannelMetadataObjectDefinition,
+>(channel: T): BackendReturnType<T> {
+    const shared = convertSharedNotificationChannelPropertiesToBackend(channel);
+    const config = channel.destinationConfig as ICustomSmtpDestinationConfiguration | undefined;
 
     return {
-        type: JsonApiNotificationChannelOutTypeEnum.NOTIFICATION_CHANNEL,
+        ...shared,
         attributes: {
-            name: smtp.destination?.name,
+            ...shared.attributes,
             destinationType: DeclarativeNotificationChannelDestinationTypeEnum.SMTP,
-            destination: {
-                type: DeclarativeNotificationChannelDestinationTypeEnum.SMTP,
-                host: smtp.destination?.from ?? "",
-                fromEmailName: smtp.destination?.person ?? "",
-                fromEmail: smtp.destination?.address ?? "",
-                username: smtp.destination?.login ?? "",
-                port: smtp.destination?.port ?? 25,
-                password: smtp.destination?.password,
-            },
-            customDashboardUrl: smtp.configuration?.dashboardUrl,
-            allowedRecipients: smtp.allowedRecipients,
+            destination: config
+                ? ({
+                      type: "SMTP",
+                      fromEmail: config.senderEmail,
+                      fromEmailName: config.senderDisplayName,
+                      host: config.host,
+                      port: config.port,
+                      username: config.username,
+                      password: config.password,
+                  } as Smtp)
+                : { type: "SMTP" },
         },
     };
 }
 
-function convertCreateDefaultEmailToNotificationChannel(
-    smtp: Partial<ISmtpDefinition>,
-): JsonApiNotificationChannelPostOptionalId {
-    if (smtp.destination?.type !== "default") {
-        throw new Error("Only default SMTP destinations are supported");
-    }
+function convertDefaultSmtpNotificationChannelToBackend<
+    T extends ISmtpNotificationChannelMetadataObject | ISmtpNotificationChannelMetadataObjectDefinition,
+>(channel: T): BackendReturnType<T> {
+    const shared = convertSharedNotificationChannelPropertiesToBackend(channel);
+    const config = channel.destinationConfig as IDefaultSmtpDestinationConfiguration | undefined;
 
     return {
-        type: JsonApiNotificationChannelOutTypeEnum.NOTIFICATION_CHANNEL,
+        ...shared,
         attributes: {
-            name: smtp.destination?.name,
+            ...shared.attributes,
             destinationType: DeclarativeNotificationChannelDestinationTypeEnum.DEFAULT_SMTP,
-            destination: {
-                type: DeclarativeNotificationChannelDestinationTypeEnum.DEFAULT_SMTP,
-                fromEmailName: smtp.destination?.person ?? "",
-                fromEmail: smtp.destination?.address ?? "",
-            },
-            customDashboardUrl: smtp.configuration?.dashboardUrl,
-            allowedRecipients: smtp.allowedRecipients,
+            destination: config
+                ? ({
+                      type: "DEFAULT_SMTP",
+                      fromEmailName: config.senderDisplayName,
+                      fromEmail: config.senderEmail,
+                  } as DefaultSmtp)
+                : { type: "DEFAULT_SMTP" },
         },
     };
+}
+
+function convertWebhookNotificationChannelToBackend<
+    T extends IWebhookNotificationChannelMetadataObject | IWebhookNotificationChannelMetadataObjectDefinition,
+>(channel: T): BackendReturnType<T> {
+    const shared = convertSharedNotificationChannelPropertiesToBackend(channel);
+    const config = channel.destinationConfig;
+
+    return {
+        ...shared,
+        attributes: {
+            ...shared.attributes,
+            destinationType: DeclarativeNotificationChannelDestinationTypeEnum.WEBHOOK,
+            destination: config
+                ? ({
+                      type: "WEBHOOK",
+                      url: config.endpoint,
+                      token: config.token,
+                      hasToken: config.hasToken,
+                  } as Webhook)
+                : { type: "WEBHOOK" },
+        },
+    };
+}
+
+function convertAllowedRecipientsToBackend(
+    allowedRecipients: NotificationChannelAllowedRecipients | undefined,
+): JsonApiNotificationChannelOutAttributesAllowedRecipientsEnum | undefined {
+    if (!allowedRecipients) {
+        return undefined;
+    }
+
+    switch (allowedRecipients) {
+        case "creator":
+            return JsonApiNotificationChannelOutAttributesAllowedRecipientsEnum.CREATOR;
+        case "internal":
+            return JsonApiNotificationChannelOutAttributesAllowedRecipientsEnum.INTERNAL;
+        default:
+            assertNever(allowedRecipients);
+            return undefined;
+    }
+}
+
+/**
+ * Converts notification channel types from SDK model to backend format.
+ *
+ * @internal
+ */
+export function convertNotificationChannelTypesToBackend(
+    types: NotificationChannelDestinationType[],
+): DeclarativeNotificationChannelDestinationTypeEnum[] {
+    return types.flatMap(convertNotificationChannelTypeToBackend);
+}
+
+function convertNotificationChannelTypeToBackend(
+    type: NotificationChannelDestinationType,
+): DeclarativeNotificationChannelDestinationTypeEnum[] {
+    switch (type) {
+        case "webhook":
+            return [DeclarativeNotificationChannelDestinationTypeEnum.WEBHOOK];
+        case "smtp":
+            return [
+                DeclarativeNotificationChannelDestinationTypeEnum.SMTP,
+                DeclarativeNotificationChannelDestinationTypeEnum.DEFAULT_SMTP,
+            ];
+        case "inPlatform":
+            return [DeclarativeNotificationChannelDestinationTypeEnum.IN_PLATFORM];
+        default:
+            assertNever(type);
+            return [DeclarativeNotificationChannelDestinationTypeEnum.WEBHOOK];
+    }
 }

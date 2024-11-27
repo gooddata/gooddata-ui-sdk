@@ -37,7 +37,7 @@ export const DestinationSelect: React.FC<IDestinationSelectProps> = ({
             notificationChannels?.map(
                 (wh): IDestinationItem => ({
                     id: wh.id,
-                    title: wh.destination?.name ?? wh.id,
+                    title: wh?.title ?? wh.id,
                 }),
             ) ?? []
         );
