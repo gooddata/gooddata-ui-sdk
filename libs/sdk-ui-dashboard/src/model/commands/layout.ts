@@ -1,6 +1,6 @@
 // (C) 2021-2024 GoodData Corporation
 
-import { IDashboardLayoutSectionHeader, ObjRef } from "@gooddata/sdk-model";
+import { IDashboardLayoutSectionHeader, ObjRef, ScreenSize } from "@gooddata/sdk-model";
 import { DashboardItemDefinition, RelativeIndex, StashedDashboardItemsId } from "../types/layoutTypes.js";
 import { ILayoutItemPath, ILayoutSectionPath } from "../../types.js";
 
@@ -1874,6 +1874,48 @@ export function resizeNestedLayoutItemWidth(
             itemIndex: -1,
             itemPath,
             width,
+        },
+    };
+}
+
+/////
+
+/**
+ * Payload of the {@link SetScreenSize} command.
+ * @internal
+ */
+export interface SetScreenSizePayload {
+    screenSize: ScreenSize;
+}
+
+/**
+ * @internal
+ */
+export interface SetScreenSize extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FLUID_LAYOUT.SET_SCREEN_SIZE";
+    readonly payload: SetScreenSizePayload;
+}
+
+/**
+ * Creates the SetScreenSize command.
+ *
+ * @remarks
+ * This command sets new screen size for the dashboard layout.
+ * Do not use this command directly, it is used internally by the dashboard layouting engine.
+ *
+ * @param screenSize - new screen size to set
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @internal
+ *
+ */
+export function setScreenSize(screenSize: ScreenSize, correlationId?: string): SetScreenSize {
+    return {
+        type: "GDC.DASH/CMD.FLUID_LAYOUT.SET_SCREEN_SIZE",
+        correlationId,
+        payload: {
+            screenSize,
         },
     };
 }

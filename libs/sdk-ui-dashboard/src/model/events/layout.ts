@@ -1,5 +1,5 @@
 // (C) 2021-2024 GoodData Corporation
-import { IDashboardLayout, IDashboardLayoutSectionHeader } from "@gooddata/sdk-model";
+import { IDashboardLayout, IDashboardLayoutSectionHeader, ScreenSize } from "@gooddata/sdk-model";
 
 import {
     ExtendedDashboardItem,
@@ -986,4 +986,54 @@ export function layoutChanged(
  */
 export const isDashboardLayoutChanged = eventGuard<DashboardLayoutChanged>(
     "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED",
+);
+
+//
+//
+//
+
+/**
+ * Payload of the {@link ScreenSizeChanged} event.
+ * @beta
+ */
+export interface ScreenSizeChangedPayload {
+    /**
+     * New screen size.
+     */
+    readonly screenSize: ScreenSize;
+}
+
+/**
+ * This event is emitted after change of the dashboard layout screen size.
+ *
+ * @beta
+ */
+export interface ScreenSizeChanged extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SCREEN_SIZE_CHANGED";
+    readonly payload: ScreenSizeChangedPayload;
+}
+
+export function screenSizeChanged(
+    ctx: DashboardContext,
+    screenSize: ScreenSize,
+    correlationId?: string,
+): ScreenSizeChanged {
+    return {
+        type: "GDC.DASH/EVT.FLUID_LAYOUT.SCREEN_SIZE_CHANGED",
+        ctx,
+        correlationId,
+        payload: {
+            screenSize,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link ScreenSizeChanged}.
+ *
+ * @param obj - object to test
+ * @beta
+ */
+export const isScreenSizeChanged = eventGuard<ScreenSizeChanged>(
+    "GDC.DASH/EVT.FLUID_LAYOUT.SCREEN_SIZE_CHANGED",
 );

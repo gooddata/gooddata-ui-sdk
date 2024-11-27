@@ -32,6 +32,7 @@ import {
     getDashboardLayoutWidgetMinGridHeight,
     getDashboardLayoutWidgetMaxGridHeight,
     implicitLayoutItemSizeFromXlSize,
+    determineSizeForScreen,
 } from "../../../../_staging/layout/sizing.js";
 import {
     ALL_SCREENS,
@@ -124,7 +125,7 @@ export function splitDashboardLayoutItemsAsRenderedGridRows<TWidget>(
     let currentRow: IDashboardLayoutItem<TWidget>[] = [];
 
     items.forEach((item) => {
-        const itemSize = item.size[screen];
+        const itemSize = determineSizeForScreen(screen, item.size);
 
         if (isNil(itemSize)) {
             throw Error("Item size for current screen is undefined");
@@ -198,7 +199,7 @@ const updateDashboardLayoutItemHeight = <TWidget>(
     screen: ScreenSize,
     maxHeight: number,
 ): IDashboardLayoutItem<TWidget> => {
-    const itemSizeForCurrentScreen = item.size[screen];
+    const itemSizeForCurrentScreen = determineSizeForScreen(screen, item.size);
     const heightAsRatio = itemSizeForCurrentScreen?.gridWidth
         ? round(maxHeight / itemSizeForCurrentScreen.gridWidth, 2)
         : 0;
@@ -224,7 +225,7 @@ const updateDashboardLayoutItemHeight = <TWidget>(
             size: {
                 ...updatedColumn.size,
                 [screen]: {
-                    ...updatedColumn.size[screen],
+                    ...determineSizeForScreen(screen, updatedColumn.size),
                     heightAsRatio,
                 },
             },

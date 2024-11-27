@@ -99,6 +99,7 @@ import {
     reloadFilterViewsHandler,
 } from "./filterContext/filterViewHandler.js";
 import { changeInsightWidgetIgnoreCrossFilteringHandler } from "./widgets/changeInsightWidgetIgnoreCrossFilteringHandler.js";
+import { setScreenSizeHandler } from "./layout/setScreenSizeHandler.js";
 
 function* notImplementedCommand(ctx: DashboardContext, cmd: IDashboardCommand): SagaIterator<void> {
     yield dispatchDashboardEvent(commandRejected(ctx, cmd.correlationId));
@@ -152,6 +153,7 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.FLUID_LAYOUT.REMOVE_ITEM_BY_WIDGET_REF": removeSectionItemByWidgetRefHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.REPLACE_ITEM": replaceSectionItemHandler,
     "GDC.DASH/CMD.FLUID_LAYOUT.UNDO": undoLayoutChangesHandler,
+    "GDC.DASH/CMD.FLUID_LAYOUT.SET_SCREEN_SIZE": setScreenSizeHandler,
     "GDC.DASH/CMD.KPI_WIDGET.CHANGE_HEADER": changeKpiWidgetHeaderHandler,
     "GDC.DASH/CMD.KPI_WIDGET.CHANGE_MEASURE": changeKpiWidgetMeasureHandler,
     "GDC.DASH/CMD.KPI_WIDGET.CHANGE_FILTER_SETTINGS": changeKpiWidgetFilterSettingsHandler,

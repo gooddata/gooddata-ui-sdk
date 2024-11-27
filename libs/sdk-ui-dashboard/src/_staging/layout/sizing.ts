@@ -362,7 +362,7 @@ export const determineSizeForScreen = (
     layoutItemSize?: IDashboardLayoutSizeByScreenSize,
 ): IDashboardLayoutSize => {
     return {
-        ...(layoutItemSize ? layoutItemSize[screen] : {}),
+        ...(layoutItemSize ? layoutItemSize[screen] ?? {} : {}),
         gridWidth: determineWidthForScreen(screen, layoutItemSize),
     };
 };
@@ -372,7 +372,7 @@ export const determineWidthForScreen = (
     layoutItemSize?: IDashboardLayoutSizeByScreenSize,
 ) => {
     // Determine if element has size set in metadata object for the current screen size
-    const providedSizeForScreen = layoutItemSize ? layoutItemSize[screen] : undefined;
+    const providedSizeForScreen = layoutItemSize?.[screen];
     // Use the provided size for the screen if it is known, otherwise determine the size for the current
     // screen if we at least know xl size from metadata object, otherwise expect the element to be root
     // element with that spans the full size.

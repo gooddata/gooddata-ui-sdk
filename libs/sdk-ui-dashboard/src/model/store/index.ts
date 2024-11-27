@@ -181,9 +181,11 @@ export { selectLegacyDashboards } from "./legacyDashboards/legacyDashboardsSelec
 
 export type { UndoEnhancedState, UndoEntry } from "./_infra/undoEnhancer.js";
 export type { LayoutState, LayoutStash } from "./layout/layoutState.js";
+
 export {
     selectLayout,
     selectStash,
+    selectScreen,
     selectWidgetByRef,
     selectAnalyticalWidgetByRef,
     selectFilterableWidgetByRef,
