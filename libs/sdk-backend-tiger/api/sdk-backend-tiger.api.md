@@ -166,6 +166,8 @@ export interface IDataSourceConnectionInfo {
     // (undocumented)
     cacheStrategy?: IDataSourceCacheStrategy;
     // (undocumented)
+    clientId?: string;
+    // (undocumented)
     decodedParameters?: Array<DataSourceParameter> | null;
     // (undocumented)
     id: string;
@@ -198,6 +200,10 @@ export interface IDataSourcePatchRequest {
     // (undocumented)
     cacheStrategy?: IDataSourceCacheStrategy;
     // (undocumented)
+    clientId?: string | null;
+    // (undocumented)
+    clientSecret?: string | null;
+    // (undocumented)
     id: string;
     // (undocumented)
     name?: string;
@@ -226,6 +232,10 @@ export type IDataSourcePermission = "MANAGE" | "USE";
 
 // @internal (undocumented)
 export interface IDataSourceTestConnectionRequest {
+    // (undocumented)
+    clientId?: string;
+    // (undocumented)
+    clientSecret?: string;
     // (undocumented)
     parameters?: Array<DataSourceParameter>;
     // (undocumented)
@@ -261,6 +271,10 @@ export type IDataSourceType = JsonApiDataSourceInAttributesTypeEnum;
 export interface IDataSourceUpsertRequest {
     // (undocumented)
     cacheStrategy?: IDataSourceCacheStrategy;
+    // (undocumented)
+    clientId?: string;
+    // (undocumented)
+    clientSecret?: string;
     // (undocumented)
     id: string;
     // (undocumented)
