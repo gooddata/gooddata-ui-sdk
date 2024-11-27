@@ -7,7 +7,11 @@ import {
 } from "../../../../model/index.js";
 
 import { ILayoutItemPath } from "../../../../types.js";
-import { areLayoutPathsEqual, getItemIndex } from "../../../../_staging/layout/coordinates.js";
+import {
+    areItemsInSameSection,
+    getItemIndex,
+    updateItemIndex,
+} from "../../../../_staging/layout/coordinates.js";
 import {
     VisualizationSwitcherDraggableItem,
     KpiDraggableItem,
@@ -30,7 +34,7 @@ export function useMoveWidgetDropHandler(layoutPath: ILayoutItemPath) {
         ) => {
             let targetIndex = getItemIndex(layoutPath);
 
-            if (areLayoutPathsEqual(item.layoutPath, layoutPath)) {
+            if (areItemsInSameSection(item.layoutPath, layoutPath)) {
                 const currentItemIndex = getItemIndex(item.layoutPath!);
 
                 // if the item is moved within the same section to bigger index, indexes are shifted by 1
@@ -45,7 +49,10 @@ export function useMoveWidgetDropHandler(layoutPath: ILayoutItemPath) {
             }
 
             dispatch(
-                moveNestedLayoutSectionItemAndRemoveOriginalSectionIfEmpty(item.layoutPath!, layoutPath),
+                moveNestedLayoutSectionItemAndRemoveOriginalSectionIfEmpty(
+                    item.layoutPath!,
+                    updateItemIndex(layoutPath, targetIndex),
+                ),
             );
         },
         [dispatch, layoutPath],
