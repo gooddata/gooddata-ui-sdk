@@ -17,6 +17,7 @@ import {
     DrillDefinition,
     isVisualizationSwitcherWidget,
     isDashboardLayout,
+    ScreenSize,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import partition from "lodash/partition.js";
@@ -91,6 +92,18 @@ export const selectLayout: DashboardSelector<IDashboardLayout<ExtendedDashboardW
         invariant(layoutState.layout, "attempting to access uninitialized layout state");
 
         return layoutState.layout;
+    },
+);
+
+/**
+ * This selector returns dashboard's current layout screen size. Valid screen size is provided after first render.
+ *
+ * @public
+ */
+export const selectScreen: DashboardSelector<ScreenSize | undefined> = createSelector(
+    selectSelf,
+    (layoutState: LayoutState) => {
+        return layoutState.screen;
     },
 );
 

@@ -29,6 +29,7 @@ import {
 import { IDashboardLayoutItemFacade, IDashboardLayoutSectionFacade } from "./interfaces.js";
 import { ILayoutItemPath } from "../../../../types.js";
 import { areLayoutPathsEqual, updateItemIndex } from "../../../layout/coordinates.js";
+import { determineWidthForScreen } from "../../../layout/sizing.js";
 
 /**
  * @alpha
@@ -100,6 +101,13 @@ export class DashboardLayoutItemFacade<TWidget> implements IDashboardLayoutItemF
 
     public sizeForScreen(screen: ScreenSize): IDashboardLayoutSize | undefined {
         return this.size()[screen];
+    }
+
+    public sizeForScreenWithFallback(screen: ScreenSize): IDashboardLayoutSize {
+        return {
+            gridWidth: determineWidthForScreen(screen, this.size()),
+            gridHeight: this.sizeForScreen(screen)?.gridHeight,
+        };
     }
 
     public hasSizeForScreen(screen: ScreenSize): boolean {

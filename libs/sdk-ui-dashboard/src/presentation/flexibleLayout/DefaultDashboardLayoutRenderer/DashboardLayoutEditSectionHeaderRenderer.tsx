@@ -10,7 +10,7 @@ import { DashboardLayoutSectionHeader } from "./DashboardLayoutSectionHeader.js"
 import { IDashboardLayoutSectionHeaderRenderProps } from "./interfaces.js";
 import { SectionHeaderEditable } from "./EditableHeader/SectionHeaderEditable.js";
 import { buildEmptyItemFacadeWithSetSize } from "./utils/emptyFacade.js";
-import { determineSizeForScreen } from "./utils/sizing.js";
+import { determineWidthForScreen } from "../../../_staging/layout/sizing.js";
 import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
 import { SectionHotspot } from "../dragAndDrop/draggableWidget/SectionHotspot.js";
 
@@ -27,7 +27,7 @@ export function DashboardLayoutEditSectionHeaderRenderer(
     const refs = getRefsForSection(section);
     const isEditingDisabled = useDashboardSelector(selectIsSectionInsertedByPlugin(refs));
 
-    const gridWidth = determineSizeForScreen(screen, parentLayoutItemSize);
+    const gridWidth = determineWidthForScreen(screen, parentLayoutItemSize);
     const emptyItem = buildEmptyItemFacadeWithSetSize(gridWidth, section.index());
 
     return (

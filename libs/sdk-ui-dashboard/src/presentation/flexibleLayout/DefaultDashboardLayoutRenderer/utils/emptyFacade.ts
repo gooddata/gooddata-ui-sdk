@@ -15,6 +15,7 @@ export const buildEmptyItemFacadeWithSetSize = (
     section: () => undefined as any, // TODO: should we allow this in the interface?
     size: () => ({ xl: { gridWidth } }),
     sizeForScreen: () => ({ gridWidth }),
+    sizeForScreenWithFallback: () => ({ gridWidth }),
     isLast: () => true,
     widgetEquals: () => false,
     widgetIs: () => false,

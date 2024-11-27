@@ -4,12 +4,24 @@ import React, { useState, useEffect, useContext } from "react";
 import { ScreenSize } from "@gooddata/sdk-model";
 
 import { DASHBOARD_LAYOUT_BREAK_POINTS } from "../../constants/index.js";
+import {
+    selectScreen,
+    useDashboardDispatch,
+    useDashboardSelector,
+    setScreenSize as setScreenSizeAction,
+} from "../../../model/index.js";
+import { AnyAction } from "@reduxjs/toolkit";
 
-const getScreenSize = (ref: React.RefObject<HTMLDivElement>): ScreenSize => {
-    if (!ref.current) {
-        return "xl";
+const getCurrentScreenSize = (): ScreenSize | undefined => {
+    let viewportWidth = 0;
+    if (typeof window !== "undefined" && window.innerWidth) {
+        viewportWidth = window.innerWidth;
     }
-    const viewportWidth = ref.current.clientWidth;
+
+    if (viewportWidth === 0) {
+        return undefined;
+    }
+
     if (viewportWidth >= DASHBOARD_LAYOUT_BREAK_POINTS[3]) {
         return "xl";
     }
@@ -25,6 +37,20 @@ const getScreenSize = (ref: React.RefObject<HTMLDivElement>): ScreenSize => {
     return "xs";
 };
 
+function setNewSize(
+    prevSize: ScreenSize | undefined,
+    setScreenSize: React.Dispatch<React.SetStateAction<ScreenSize | undefined>>,
+    dispatch: React.Dispatch<AnyAction>,
+) {
+    const newSize = getCurrentScreenSize();
+
+    if (newSize && newSize !== prevSize) {
+        // prevent unnecessary re-renders
+        setScreenSize(newSize);
+        dispatch(setScreenSizeAction(newSize));
+    }
+}
+
 export interface IDashboardSizeContextProps {
     children: React.ReactNode;
 }
@@ -33,21 +59,29 @@ const DashboardScreenSizeContext = React.createContext<ScreenSize | undefined>(u
 DashboardScreenSizeContext.displayName = "DashboardScreenSizeContext";
 
 export const DashboardScreenSizeProvider: React.FC<IDashboardSizeContextProps> = ({ children }) => {
-    const layoutRef = React.useRef<HTMLDivElement>(null);
-    const [screenSize, setScreenSize] = useState(() => getScreenSize(layoutRef));
+    const [screenSize, setScreenSize] = useState<ScreenSize | undefined>();
+    const dispatch = useDashboardDispatch();
+
+    const appStateScreenSize = useDashboardSelector(selectScreen);
 
     useEffect(() => {
-        const handleWindowResized = () => setScreenSize(getScreenSize(layoutRef));
+        // set initial screen size to app state for usage in sagas
+        setNewSize(screenSize, setScreenSize, dispatch);
+
+        // register event listener for window resize
+        const handleWindowResized = () => {
+            setNewSize(screenSize, setScreenSize, dispatch);
+        };
         window.addEventListener("resize", handleWindowResized, false);
         return () => {
             window.removeEventListener("resize", handleWindowResized, false);
         };
-    }, [layoutRef]);
+    }, [screenSize, dispatch]);
 
     return (
-        <div ref={layoutRef}>
+        <div className="s-screen-size-container">
             <DashboardScreenSizeContext.Provider value={screenSize}>
-                {children}
+                {appStateScreenSize ? children : null}
             </DashboardScreenSizeContext.Provider>
         </div>
     );

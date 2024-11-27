@@ -6,10 +6,10 @@ import { put, select } from "redux-saga/effects";
 import { ResizeWidth } from "../../commands/layout.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 
-import { getMinWidth } from "../../../_staging/layout/sizing.js";
+import { determineWidthForScreen, getMinWidth } from "../../../_staging/layout/sizing.js";
 import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
 import { layoutActions } from "../../store/layout/index.js";
-import { selectLayout } from "../../store/layout/layoutSelectors.js";
+import { selectLayout, selectScreen } from "../../store/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { validateItemExists, validateSectionExists } from "./validation/layoutValidation.js";
 import {
@@ -85,9 +85,10 @@ export function* resizeWidthHandler(
 
     const layout = yield select(selectLayout);
     const insightsMap = yield select(selectInsightsMap);
+    const screen = yield select(selectScreen);
 
     validateLayoutIndexes(ctx, layout, cmd);
-    validateWidth(ctx, layout, insightsMap, cmd);
+    validateWidth(ctx, layout, insightsMap, cmd, screen);
 
     const layoutPath = itemPath === undefined ? [{ sectionIndex, itemIndex }] : itemPath;
 
@@ -113,6 +114,7 @@ function validateWidth(
     layout: ReturnType<typeof selectLayout>,
     insightsMap: ReturnType<typeof selectInsightsMap>,
     cmd: ResizeWidth,
+    screen: ReturnType<typeof selectScreen> = "xl",
 ) {
     const {
         payload: { itemPath, sectionIndex, itemIndex, width },
@@ -123,11 +125,13 @@ function validateWidth(
             ? (layout.sections[sectionIndex].items[itemIndex].widget as IWidget)
             : (findItem(layout, itemPath).widget as IWidget);
 
-    const minLimit = getMinWidth(widget, insightsMap);
+    const minLimit = getMinWidth(widget, insightsMap, screen);
     const parent =
         itemPath !== undefined && itemPath.slice(0, -1).length > 0 && findItem(layout, itemPath.slice(0, -1));
 
-    const maxLimit = parent ? parent.size.xl.gridWidth : DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT;
+    const maxLimit = parent
+        ? determineWidthForScreen(screen, parent.size)
+        : DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT;
 
     const validWidth = width >= minLimit && width <= maxLimit;
 

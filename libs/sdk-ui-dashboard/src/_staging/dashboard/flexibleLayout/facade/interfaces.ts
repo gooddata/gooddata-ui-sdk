@@ -28,6 +28,7 @@ export interface IDashboardLayoutItemFacade<TWidget> {
     index(): ILayoutItemPath;
     size(): IDashboardLayoutSizeByScreenSize;
     sizeForScreen(screen: ScreenSize): IDashboardLayoutSize | undefined;
+    sizeForScreenWithFallback(screen: ScreenSize): IDashboardLayoutSize;
     widget(): TWidget | undefined;
     section(): IDashboardLayoutSectionFacade<TWidget>;
     ref(): ObjRef | undefined;

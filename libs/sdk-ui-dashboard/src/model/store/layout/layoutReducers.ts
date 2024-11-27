@@ -26,6 +26,7 @@ import {
     isVisualizationSwitcherWidget,
     isDashboardLayout,
     IDashboardLayoutSection,
+    ScreenSize,
 } from "@gooddata/sdk-model";
 import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
 
@@ -876,8 +877,21 @@ const resizeVisualizationSwitcherOnInsightChanged: LayoutReducer<
     }
 };
 
+//
+// Reducers that manipulate the layout itself - the sections and items
+//
+
+type SetScreenActionPayload = {
+    screen: ScreenSize;
+};
+
+const setScreen: LayoutReducer<SetScreenActionPayload> = (state, action) => {
+    state.screen = action.payload.screen;
+};
+
 export const layoutReducers = {
     setLayout,
+    setScreen,
     updateWidgetIdentities,
     removeIgnoredAttributeFilter,
     removeIgnoredDateFilter,
