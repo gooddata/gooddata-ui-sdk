@@ -86,6 +86,7 @@ import {
     ResizeHeight,
     ResizeWidth,
     RemoveSectionItemByWidgetRef,
+    SetScreenSize,
 } from "./layout.js";
 import { CreateAlert, SaveAlert } from "./alerts.js";
 import {
@@ -257,26 +258,43 @@ export type {
     ResizeHeightPayload,
     ResizeWidth,
     ResizeWidthPayload,
+    SetScreenSize,
+    SetScreenSizePayload,
 } from "./layout.js";
 export {
     addLayoutSection,
+    addNestedLayoutSection,
     moveLayoutSection,
+    moveNestedLayoutSection,
     removeLayoutSection,
+    removeNestedLayoutSection,
     changeLayoutSectionHeader,
+    changeNestedLayoutSectionHeader,
     addSectionItem,
+    addNestedLayoutSectionItem,
     replaceSectionItem,
+    replaceNestedLayoutSectionItem,
     moveSectionItem,
+    moveNestedLayoutSectionItem,
     moveSectionItemAndRemoveOriginalSectionIfEmpty,
+    moveNestedLayoutSectionItemAndRemoveOriginalSectionIfEmpty,
     moveSectionItemToNewSection,
+    moveNestedLayoutSectionItemToNewSection,
     moveSectionItemToNewSectionAndRemoveOriginalSectionIfEmpty,
+    moveNestedLayoutSectionItemToNewSectionAndRemoveOriginalSectionIfEmpty,
     removeSectionItem,
+    removeNestedLayoutSectionItem,
     eagerRemoveSectionItem,
+    eagerRemoveNestedLayoutSectionItem,
     removeSectionItemByWidgetRef,
     eagerRemoveSectionItemByWidgetRef,
     undoLayoutChanges,
     revertLastLayoutChange,
     resizeHeight,
+    resizeNestedLayoutItemsHeight,
     resizeWidth,
+    resizeNestedLayoutItemWidth,
+    setScreenSize,
 } from "./layout.js";
 
 export type { CreateAlert, CreateAlertPayload, SaveAlert, SaveAlertPayload } from "./alerts.js";
@@ -567,4 +585,6 @@ export type DashboardCommands =
     | DeleteFilterView
     | ApplyFilterView
     | SetFilterViewAsDefault
-    | ReloadFilterViews;
+    | ReloadFilterViews
+    //internal
+    | SetScreenSize;

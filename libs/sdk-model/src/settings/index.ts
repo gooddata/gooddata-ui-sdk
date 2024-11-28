@@ -556,6 +556,11 @@ export interface ISettings {
      */
     enableFlexConnectNaming?: boolean;
 
+    /**
+     * Enable the possibility to test destinations (emails, webhooks) in the UI.
+     */
+    enableDestinationTesting?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

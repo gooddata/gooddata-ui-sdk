@@ -129,15 +129,20 @@ export function* drillToDashboardHandler(
           )
         : cmd.payload.drillEvent.drillContext.intersection!;
 
+    const filtersCount = dashboardFilters.length;
     const drillIntersectionFilters = convertIntersectionToAttributeFilters(
         filteredIntersection,
         dateAttributes.map((dA) => dA.attribute.ref),
         ctx.backend.capabilities.supportsElementUris ?? true,
         enableDuplicatedLabelValuesInAttributeFilter,
+        false,
+        filtersCount,
     );
 
-    const [transformedFilters, attributeFilterConfigsFromTransformation] =
-        transformToPrimaryLabelFilters(drillIntersectionFilters);
+    const [transformedFilters, attributeFilterConfigsFromTransformation] = transformToPrimaryLabelFilters(
+        drillIntersectionFilters,
+        filtersCount,
+    );
 
     const attributeFilterConfigs: IDashboardAttributeFilterConfig[] =
         enableDuplicatedLabelValuesInAttributeFilter ? attributeFilterConfigsFromTransformation : [];
@@ -193,6 +198,7 @@ function getDashboardFilterConfigs(
 
 function transformToPrimaryLabelFilters(
     drillIntersectionFilters: IConversionResult[],
+    filtersCount: number = 0,
 ): [IDashboardAttributeFilter[], IDashboardAttributeFilterConfig[]] {
     const attributeFilterConfigs: IDashboardAttributeFilterConfig[] = [];
     const transformedFilters = drillIntersectionFilters.map((f, i) => {
@@ -202,7 +208,10 @@ function transformToPrimaryLabelFilters(
         ) {
             const localIdentifier =
                 f.attributeFilter.attributeFilter.localIdentifier ??
-                generateFilterLocalIdentifier(f.attributeFilter.attributeFilter.displayForm, i);
+                generateFilterLocalIdentifier(
+                    f.attributeFilter.attributeFilter.displayForm,
+                    filtersCount + i,
+                );
             attributeFilterConfigs.push({
                 localIdentifier,
                 displayAsLabel: f.attributeFilter.attributeFilter.displayForm,

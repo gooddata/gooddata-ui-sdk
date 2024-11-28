@@ -5,6 +5,7 @@
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins" as kit-mixins;
 @use "@gooddata/sdk-ui-kit/styles/scss/Form/mixins" as form-mixins;
+@use "@gooddata/sdk-ui-kit/styles/scss/typo-mixins" as typo-mixins;
 
 .gd-gen-ai-chat__messages {
     flex: 1;
@@ -29,6 +30,7 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
+    flex-grow: 1;
 }
 
 .gd-gen-ai-chat__messages__feedback {
@@ -38,10 +40,15 @@
     visibility: hidden;
     opacity: 0;
     height: 20px;
+
+    & path {
+        fill: kit-variables.$gd-color-link;
+    }
 }
 
 .gd-gen-ai-chat__messages__message:last-child .gd-gen-ai-chat__messages__feedback,
-.gd-gen-ai-chat__messages__message:hover .gd-gen-ai-chat__messages__feedback {
+.gd-gen-ai-chat__messages__message:hover .gd-gen-ai-chat__messages__feedback,
+.gd-gen-ai-chat__messages__feedback--assigned {
     visibility: visible;
     opacity: 1;
     transition: opacity 0.2s;
@@ -65,12 +72,12 @@
 
     &--positive path,
     &--positive:hover path {
-        fill: kit-variables.$gd-palette-success-base;
+        fill: kit-variables.$gd-palette-primary-base;
     }
 
     &--negative path,
     &--negative:hover path {
-        fill: kit-variables.$gd-palette-error-base;
+        fill: kit-variables.$gd-palette-primary-base;
     }
 }
 
@@ -129,6 +136,17 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
+
+    // UI kit links have white-space nowrap, which is not desired in the chat
+    & .gd-hyperlink,
+    & .gd-hyperlink-text {
+        white-space: normal;
+    }
+
+    // List contents should be styled same as a pargraph
+    & li {
+        @include typo-mixins.gd-paragraph;
+    }
 }
 
 .gd-gen-ai-chat__messages__content--error {
@@ -167,6 +185,7 @@
 
     &__title {
         text-align: center;
+        margin-top: 15px;
     }
 }
 

@@ -110,7 +110,7 @@ export interface IGenAIVisualization {
  */
 export type GenAIPositiveAttributeFilter = {
     using: string;
-    include: string[];
+    include: Array<string | null>;
 };
 
 /**
@@ -119,7 +119,7 @@ export type GenAIPositiveAttributeFilter = {
  */
 export type GenAINegativeAttributeFilter = {
     using: string;
-    exclude: string[];
+    exclude: Array<string | null>;
 };
 
 /**
@@ -194,6 +194,10 @@ export interface IGenAIVisualizationMetric {
      */
     type: GenAIMetricType;
     /**
+     * Title of the metric.
+     */
+    title?: string;
+    /**
      * Aggregation function for the metric.
      */
     aggFunction?: GenAIMetricAggregation;
@@ -259,6 +263,10 @@ export interface IGenAIChatInteraction {
      * A list of created visualizations for the interaction.
      */
     createdVisualizations?: IGenAICreatedVisualizations;
+    /**
+     * User feedback for the assistant reply.
+     */
+    userFeedback?: GenAIChatInteractionUserFeedback;
 }
 
 /**

@@ -35,14 +35,15 @@ on:
 jobs:
     get-version:
       if: ${{ inputs.skip-bump }}
-      runs-on: [ubuntu-latest]
+      runs-on:
+        group: infra1-runners-arc
+        labels: runners-small
       outputs:
         version: ${{ steps.version.outputs.version }}
       steps:
         - name: Setup node
-          uses: actions/setup-node@v4
-          with:
-            node-version: 18.17.0
+          uses: ./.github/actions/node/set-up-node
+          id: node-init
         - name: Checkout code
           uses: actions/checkout@v4
           with:
@@ -55,14 +56,12 @@ jobs:
 
     bump-version-and-commit:
         if: ${{ !inputs.skip-bump && inputs.bump }}
-        runs-on: [ubuntu-latest]
+        runs-on:
+            group: infra1-runners-arc
+            labels: runners-cxa-xlarge
         outputs:
             version: ${{ steps.version.outputs.version }}
         steps:
-            - name: Setup node
-              uses: actions/setup-node@v4
-              with:
-                node-version: 18.17.0
             - name: Checkout code
               uses: actions/checkout@v4
               with:
@@ -72,26 +71,28 @@ jobs:
             - name: Add repository to git safe directories to avoid dubious ownership issue
               run: git config --global --add safe.directory $GITHUB_WORKSPACE
 
-            - name: Install rush
-              run: npm install -g @microsoft/rush
-
-            - name: Config user
-              run: |
-                  git config --global user.email "git-action@gooddata.com"
-                  git config --global user.name "git-action"
+            - name: Git config user
+              uses: snow-actions/git-config-user@v1.0.0
+              with:
+                name: git-action
+                email: git-action@gooddata.com
+            - name: Setup rush
+              env:
+                NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+              uses: ./.github/actions/rush/set-up-rush
 
             - name: Rush bump version and override prerelease-id
               if: ${{ inputs.prerelease-id}}
               env:
                   BUMP: ${{ inputs.bump }}
                   PRERELEASE_ID: ${{ inputs.prerelease-id }}
-              run: rush version --bump --override-bump $BUMP --override-prerelease-id $PRERELEASE_ID
+              run: node common/scripts/install-run-rush.js version --bump --override-bump $BUMP --override-prerelease-id $PRERELEASE_ID
 
             - name: Rush bump version
               if: ${{ !inputs.prerelease-id}}
               env:
                   BUMP: ${{ inputs.bump }}
-              run: rush version --bump --override-bump $BUMP
+              run: node common/scripts/install-run-rush.js version --bump --override-bump $BUMP
 
 
             - name: Get version

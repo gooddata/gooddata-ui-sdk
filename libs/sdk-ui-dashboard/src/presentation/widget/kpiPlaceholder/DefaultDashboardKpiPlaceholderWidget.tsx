@@ -1,11 +1,11 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2024 GoodData Corporation
 import React, { useCallback, useEffect, useRef } from "react";
 import { invariant } from "ts-invariant";
 
 import { isKpiPlaceholderWidget } from "../../../widgets/index.js";
 import {
-    eagerRemoveSectionItem,
-    selectWidgetCoordinatesByRef,
+    eagerRemoveNestedLayoutSectionItem,
+    selectWidgetPathByRef,
     uiActions,
     useDashboardDispatch,
     useDashboardSelector,
@@ -24,7 +24,7 @@ export const DefaultDashboardKpiPlaceholderWidget: CustomDashboardWidgetComponen
     invariant(isKpiPlaceholderWidget(widget));
 
     const dispatch = useDashboardDispatch();
-    const { itemIndex, sectionIndex } = useDashboardSelector(selectWidgetCoordinatesByRef(widget.ref));
+    const layoutPath = useDashboardSelector(selectWidgetPathByRef(widget.ref));
 
     const { isSelectable, isSelected } = useWidgetSelection(widget.ref);
 
@@ -40,14 +40,14 @@ export const DefaultDashboardKpiPlaceholderWidget: CustomDashboardWidgetComponen
         // if the widget was selected in the past and is now not selected, it has just been unselected
         // -> remove its widget placeholder
         if (wasSelected.current && !isSelected) {
-            dispatch(eagerRemoveSectionItem(sectionIndex, itemIndex));
+            dispatch(eagerRemoveNestedLayoutSectionItem(layoutPath));
         }
-    }, [dispatch, isSelected, itemIndex, sectionIndex]);
+    }, [dispatch, isSelected, layoutPath]);
 
     const onClose = useCallback(() => {
         dispatch(uiActions.setConfigurationPanelOpened(false));
-        dispatch(eagerRemoveSectionItem(sectionIndex, itemIndex));
-    }, [dispatch, itemIndex, sectionIndex]);
+        dispatch(eagerRemoveNestedLayoutSectionItem(layoutPath));
+    }, [dispatch, layoutPath]);
 
     return (
         <DashboardItem className="is-selected is-placeholder is-edit-mode" screen={screen}>

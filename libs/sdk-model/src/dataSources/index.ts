@@ -26,7 +26,6 @@ export type DataSourceType =
     | "PINOT"
     | "SINGLESTORE"
     | "MOTHERDUCK"
-    | "FLIGHTRPC"
     | "FLEXCONNECT";
 
 /**

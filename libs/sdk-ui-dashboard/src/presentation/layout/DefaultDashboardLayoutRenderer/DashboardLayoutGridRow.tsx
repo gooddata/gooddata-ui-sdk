@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { ScreenSize } from "@gooddata/sdk-model";
 import React from "react";
 import { Row } from "react-grid-system";
@@ -6,7 +6,7 @@ import { RenderMode } from "../../../types.js";
 import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutSectionFacade,
-} from "../../../_staging/dashboard/fluidLayout/facade/interfaces.js";
+} from "../../../_staging/dashboard/legacyFluidLayout/facade/interfaces.js";
 import { DashboardLayoutItem } from "./DashboardLayoutItem.js";
 import {
     IDashboardLayoutGridRowRenderer,

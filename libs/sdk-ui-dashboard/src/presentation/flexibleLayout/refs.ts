@@ -3,7 +3,7 @@ import { ObjRef } from "@gooddata/sdk-model";
 import {
     IDashboardLayoutSectionFacade,
     IDashboardLayoutItemFacade,
-} from "../../_staging/dashboard/fluidLayout/index.js";
+} from "../../_staging/dashboard/flexibleLayout/index.js";
 
 export function getRefsForSection(section: IDashboardLayoutSectionFacade<unknown>): (ObjRef | undefined)[] {
     return section.items().map((item) => item.ref());

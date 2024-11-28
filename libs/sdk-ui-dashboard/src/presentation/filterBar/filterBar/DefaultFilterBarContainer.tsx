@@ -13,8 +13,8 @@ import {
     selectSupportsCrossFiltering,
     useDashboardSelector,
     selectEnableFilterViews,
+    selectEnableFlexibleLayout,
 } from "../../../model/index.js";
-import { BulletsBar } from "../../dragAndDrop/index.js";
 
 import { ShowAllFiltersButton } from "./ShowAllFiltersButton.js";
 import { useRowsCalculator, CalculatedRows } from "./hooks/useRowsCalculator.js";
@@ -22,6 +22,8 @@ import { useFilterBarState } from "./hooks/useFilterBarState.js";
 import { useFilterExpansionByDragAndDrop } from "./hooks/useFilterExpansionByDragAndDrop.js";
 import { FiltersConfigurationPanel } from "./FiltersConfigurationPanel.js";
 import { FilterViews } from "./filterViews/FilterViews.js";
+import { BulletsBar as FlexibleBulletsBar } from "../../flexibleLayout/dragAndDrop/Resize/BulletsBar/BulletsBar.js";
+import { BulletsBar as FluidBulletsBar } from "../../layout/dragAndDrop/Resize/BulletsBar/BulletsBar.js";
 
 const selectShowFiltersConfigurationPanel = createSelector(
     selectIsInEditMode,
@@ -49,6 +51,7 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
 
     const showFiltersConfigurationPanel = useDashboardSelector(selectShowFiltersConfigurationPanel);
     const isFilterViewsFeatureFlagEnabled = useDashboardSelector(selectEnableFilterViews);
+    const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
 
     return (
         <div className="dash-filters-wrapper s-gd-dashboard-filter-bar" ref={dropRef}>
@@ -71,7 +74,7 @@ const DefaultFilterBarContainerCore: React.FC<{ children?: React.ReactNode }> = 
                 isVisible={rows.length > 1}
                 onToggle={(isExpanded) => setFilterBarExpanded(isExpanded)}
             />
-            <BulletsBar />
+            {isFlexibleLayoutEnabled ? <FlexibleBulletsBar /> : <FluidBulletsBar />}
         </div>
     );
 };

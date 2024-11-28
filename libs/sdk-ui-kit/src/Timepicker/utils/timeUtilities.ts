@@ -24,18 +24,18 @@ export function updateTime(h: number, m: number, date?: Date): Date {
     return selectedTime;
 }
 
-function getNormalizedHourAndMinute(time: Date, timeAnchor = TIME_ANCHOR) {
+function getNormalizedHourAndMinute(time?: Date, timeAnchor = TIME_ANCHOR) {
     let h: number;
     let m: number;
-    const hours = time.getHours();
-    const minutes = time.getMinutes();
+    const hours = time?.getHours() ?? 0;
+    const minutes = time?.getMinutes() ?? 0;
 
     // Do not shift time if it is exactly on the new hour (0 == 60 when timeAnchor is 60)
     if (minutes === 0 && timeAnchor === 60) {
         return { hours, minutes: 0 };
     }
 
-    if (time.getMinutes() < timeAnchor) {
+    if (minutes < timeAnchor) {
         h = hours;
         m = timeAnchor;
     } else {
@@ -56,7 +56,7 @@ function getNormalizedHourAndMinute(time: Date, timeAnchor = TIME_ANCHOR) {
  * return 8:00 if time is 7:35
  * return 0:00 if time is 23:45
  */
-export function normalizeTime(time: Date, date?: Date, timeAnchor = TIME_ANCHOR): Date {
+export function normalizeTime(time?: Date, date?: Date, timeAnchor = TIME_ANCHOR): Date {
     const { hours, minutes } = getNormalizedHourAndMinute(time, timeAnchor);
-    return updateTime(hours, minutes, date);
+    return updateTime(hours, minutes, date || time);
 }

@@ -1,4 +1,4 @@
-# Integrated tests for sdk-backend-tiger with recordings
+# Isolated tests for sdk-backend-tiger with recordings
 
 ## Initiate and build the sdk
 
@@ -9,7 +9,7 @@ rush build -t sdk-backend-tiger
 
 ## Run the tests
 
-Use `rushx integrated-test` to run the tests with recordings
+Use `./scripts/isolated-test.sh` to run the tests with recordings
 
 ## Prepare recordings for tests
 
@@ -38,5 +38,11 @@ When workspace is ready, run
 
 ```
 rushx refresh-md
-rushx refresh-recordings-snapshots
+GD_TIGER_REC=true ./scripts/isolated-test.sh
+```
+
+to update snapshots, run
+
+```
+GD_TIGER_REC=true UPDATE_SNAPSHOTS=true ./scripts/isolated-test.sh
 ```

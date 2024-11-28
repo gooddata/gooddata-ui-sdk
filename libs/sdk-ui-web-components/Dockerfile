@@ -4,9 +4,7 @@
 # as we must not run images in the context of the superuser. This image comes with user 'nginx' with UID 101 and
 # runs as that user by default. The UID of this user is also used in runAsUser directive in the deployment chart.
 # !!! Do not change base image to Alpine flavors due to compliance reasons !!!
-# REPO_PREFIX MUST end with trailing slash
-ARG REPO_PREFIX=
-FROM ${REPO_PREFIX}nginxinc/nginx-unprivileged:1.25.3
+FROM 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/nginxinc/nginx-unprivileged:1.27.2
 
 # BEGIN OF Mastercard security compliance - do not alter or remove
 USER 0

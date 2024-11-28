@@ -17,7 +17,7 @@ export const MIDDLE_VISUALIZATION_HEIGHT = 22;
  */
 export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationDefaultSizeInfo = {
     width: {
-        min: 4,
+        min: 2,
         default: 6,
     },
     height: {
@@ -30,7 +30,7 @@ export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationDefaultSizeI
  */
 export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo = {
     width: {
-        min: 4,
+        min: 2,
         default: 6,
     },
     height: {
@@ -45,7 +45,7 @@ export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo = {
  */
 export const INSIGHT_WIDGET_SIZE_INFO_NEW_DEFAULT: IVisualizationDefaultSizeInfo = {
     width: {
-        min: 4,
+        min: 2,
         default: 4,
     },
     height: {
@@ -90,7 +90,7 @@ export const RICH_TEXT_WIDGET_SIZE_INFO_NEW_DEFAULT: IVisualizationDefaultSizeIn
  */
 export const VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo = {
     width: {
-        min: 4,
+        min: 2,
         default: 6,
     },
     height: {
@@ -105,7 +105,7 @@ export const VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefa
  */
 export const VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_NEW_DEFAULT: IVisualizationDefaultSizeInfo = {
     width: {
-        min: 4,
+        min: 2,
         default: 4,
     },
     height: {
@@ -120,7 +120,7 @@ export const VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_NEW_DEFAULT: IVisualization
  */
 export const DASHBOARD_LAYOUT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo = {
     width: {
-        min: 4,
+        min: 2,
         default: 4,
     },
     height: {

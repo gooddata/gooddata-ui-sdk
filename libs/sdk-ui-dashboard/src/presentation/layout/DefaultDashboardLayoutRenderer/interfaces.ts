@@ -1,10 +1,10 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { IDashboardLayout, IDashboardWidget, ScreenSize } from "@gooddata/sdk-model";
 import { RenderMode } from "../../../types.js";
 import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutSectionFacade,
-} from "../../../_staging/dashboard/fluidLayout/facade/interfaces.js";
+} from "../../../_staging/dashboard/legacyFluidLayout/facade/interfaces.js";
 
 /**
  * Default props provided to {@link IDashboardLayoutSectionKeyGetter}.

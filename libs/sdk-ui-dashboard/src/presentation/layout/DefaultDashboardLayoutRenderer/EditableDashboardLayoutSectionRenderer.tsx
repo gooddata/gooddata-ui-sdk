@@ -1,25 +1,25 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React from "react";
 import { IDashboardLayoutSectionRenderer } from "./interfaces.js";
 import cx from "classnames";
+import { useDashboardSelector, selectActiveSection } from "../../../model/index.js";
 import {
-    DashboardLayoutSectionBorder,
     DashboardLayoutSectionBorderStatus,
-    useIsDraggingWidget,
-} from "../../dragAndDrop/index.js";
-import { selectActiveSectionIndex, useDashboardSelector } from "../../../model/index.js";
+    DashboardLayoutSectionBorder,
+} from "../dragAndDrop/draggableWidget/DashboardLayoutSectionBorder/index.js";
+import { useIsDraggingWidget } from "../../dragAndDrop/index.js";
 
 const isHiddenStyle = { height: 0, width: 0, overflow: "hidden", flex: 0 };
 const defaultStyle = {};
 
 function useBorderStatus(sectionIndex: number): DashboardLayoutSectionBorderStatus {
-    const activeSectionIndex = useDashboardSelector(selectActiveSectionIndex);
+    const activeSection = useDashboardSelector(selectActiveSection);
     const isDraggingWidget = useIsDraggingWidget();
     if (isDraggingWidget) {
         return "muted";
     }
 
-    const isActive = activeSectionIndex === sectionIndex;
+    const isActive = activeSection?.sectionIndex === sectionIndex;
     return !isActive ? "invisible" : "muted";
 }
 

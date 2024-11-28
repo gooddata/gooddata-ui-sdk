@@ -4,8 +4,10 @@ import cx from "classnames";
 import isEqual from "lodash/isEqual.js";
 import React, { useCallback, useMemo } from "react";
 
-import { DashboardLayoutFacade } from "../../../_staging/dashboard/fluidLayout/facade/layout.js";
-import { emptyDOMRect } from "../constants.js";
+import { DashboardLayoutFacade } from "../../../_staging/dashboard/flexibleLayout/facade/layout.js";
+import { serializeLayoutSectionPath, getItemIndex } from "../../../_staging/layout/coordinates.js";
+import { isInitialPlaceholderWidget } from "../../../widgets/index.js";
+import { ILayoutSectionPath } from "../../../types.js";
 
 import { DashboardLayoutSection } from "./DashboardLayoutSection.js";
 import {
@@ -19,8 +21,11 @@ import {
     getResizedItemPositions,
     unifyDashboardLayoutItemHeights,
 } from "./utils/sizing.js";
-import { useScreenSize } from "./useScreenSize.js";
 import { GridLayoutElement } from "./GridLayoutElement.js";
+import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
+import { SectionHotspot } from "../dragAndDrop/draggableWidget/SectionHotspot.js";
+import { emptyDOMRect } from "../../constants.js";
+import { useDashboardItemPathAndSize } from "../../dashboard/components/DashboardItemPathAndSizeContext.js";
 
 const removeHeights = <TWidget,>(layout: IDashboardLayout<TWidget>, enableCustomHeight: boolean) => {
     if (enableCustomHeight) {
@@ -31,7 +36,7 @@ const removeHeights = <TWidget,>(layout: IDashboardLayout<TWidget>, enableCustom
 };
 
 const defaultSectionKeyGetter: IDashboardLayoutSectionKeyGetter<unknown> = ({ section }) =>
-    section.index().toString();
+    serializeLayoutSectionPath(section.index());
 
 /**
  * DashboardLayout is customizable component for rendering {@link IDashboardLayout}.
@@ -41,8 +46,6 @@ const defaultSectionKeyGetter: IDashboardLayoutSectionKeyGetter<unknown> = ({ se
 export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWidget>): JSX.Element {
     const {
         layout,
-        screen: providedScreen,
-        parentLayoutItemSize,
         sectionKeyGetter = defaultSectionKeyGetter,
         sectionRenderer,
         sectionHeaderRenderer,
@@ -57,13 +60,17 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
     } = props;
 
     const layoutRef = React.useRef<HTMLDivElement>(null);
+    const { itemPath, itemSize } = useDashboardItemPathAndSize();
 
     const { layoutFacade, resizedItemPositions } = useMemo(() => {
         const updatedLayout = removeHeights(layout, !!enableCustomHeight);
-        const layoutFacade = DashboardLayoutFacade.for(unifyDashboardLayoutItemHeights(updatedLayout));
-        const resizedItemPositions = getResizedItemPositions(layout, layoutFacade.raw());
+        const layoutFacade = DashboardLayoutFacade.for(
+            unifyDashboardLayoutItemHeights(updatedLayout, itemSize, itemPath),
+            itemPath,
+        );
+        const resizedItemPositions = getResizedItemPositions(layout, layoutFacade.raw(), [], itemPath);
         return { layoutFacade, resizedItemPositions };
-    }, [layout, enableCustomHeight]);
+    }, [layout, enableCustomHeight, itemPath, itemSize]);
 
     const sectionRendererWrapped = useCallback<IDashboardLayoutSectionRenderer<TWidget>>(
         (renderProps) =>
@@ -84,7 +91,10 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
     const widgetRendererWrapped = useCallback<IDashboardLayoutWidgetRenderer<TWidget>>(
         (renderProps) => {
             const isResizedByLayoutSizingStrategy = resizedItemPositions.some((position) =>
-                isEqual(position, [renderProps.item.section().index(), renderProps.item.index()]),
+                isEqual(position, [
+                    renderProps.item.section().index().sectionIndex,
+                    getItemIndex(renderProps.item.index()),
+                ]),
             );
 
             return widgetRenderer ? (
@@ -104,15 +114,27 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
         [resizedItemPositions, widgetRenderer],
     );
 
-    const detectedScreenSize = useScreenSize(layoutRef);
-    const screenSize = providedScreen ?? detectedScreenSize;
-    const isNestedLayout = parentLayoutItemSize !== undefined;
+    const screenSize = useScreenSize();
+    const isNestedLayout = itemPath !== undefined;
+
+    const sectionIndex = useMemo(
+        (): ILayoutSectionPath => ({
+            parent: itemPath,
+            sectionIndex: layout.sections.length,
+        }),
+        [layout, itemPath],
+    );
+
+    // do not render the tailing section hotspot if there is only one section in the layout, and it has only initial placeholders in it
+    const shouldRenderSectionHotspot =
+        layout.sections.length > 1 ||
+        (layout.sections.length === 1 &&
+            layout.sections[0].items.some((i) => !isInitialPlaceholderWidget(i.widget)));
 
     return (
         <GridLayoutElement
             type={isNestedLayout ? "nested" : "root"}
-            screen={screenSize}
-            layoutItemSize={parentLayoutItemSize}
+            layoutItemSize={itemSize}
             className={cx(
                 {
                     "gd-dashboards": !isNestedLayout,
@@ -133,13 +155,18 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
                         itemRenderer={itemRenderer}
                         gridRowRenderer={gridRowRenderer}
                         widgetRenderer={widgetRendererWrapped}
-                        screen={screenSize}
                         renderMode={renderMode}
                         getLayoutDimensions={getLayoutDimensions}
-                        parentLayoutItemSize={parentLayoutItemSize}
+                        parentLayoutItemSize={itemSize}
+                        parentLayoutPath={itemPath}
                     />
                 );
             })}
+            {shouldRenderSectionHotspot ? (
+                <GridLayoutElement type="item" layoutItemSize={itemSize}>
+                    <SectionHotspot index={sectionIndex} targetPosition="below" itemSize={itemSize} />
+                </GridLayoutElement>
+            ) : null}
         </GridLayoutElement>
     );
 }

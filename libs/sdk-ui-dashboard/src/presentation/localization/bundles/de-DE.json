@@ -19,7 +19,7 @@
     "messages.drill.InteractionUpdatedSuccess": "Interaktion aktualisiert.",
     "filterBar.showAll": "Alle anzeigen",
     "filterBar.showLess": "Weniger anzeigen",
-    "options.menu.export.PDF": "Nach PFD exportieren",
+    "options.menu.export.PDF": "Nach PDF exportieren",
     "options.menu.schedule.email": "E-Mailing planen",
     "options.menu.delete": "Löschen",
     "dialogs.export.cells": "ZELLEN",
@@ -626,5 +626,9 @@
     "visualizationSwitcher.configurationPanel.remove.from.switcher": "Aus dem Umschalter entfernen",
     "visualizationSwitcher.list.menu.move.up": "Nach oben bewegen",
     "visualizationSwitcher.list.menu.move.down": "Nach unten bewegen",
-    "visualizationSwitcher.list.menu.remove": "Entfernen"
+    "visualizationSwitcher.list.menu.remove": "Entfernen",
+    "dialogs.schedule.email.user.missing.email": "Für diesen Benutzer fehlt eine E-Mail-Adresse.",
+    "insightAlert.config.for": "Für",
+    "insightAlert.config.warning.destination": "Das ausgewählte Ziel unterstützt nur das Senden des Hinweises an Sie selbst.",
+    "insightAlert.config.selectAttribute": "Alle "
 }

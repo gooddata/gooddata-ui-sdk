@@ -364,7 +364,7 @@ export function transformAlertExecutionByMetric(
                 },
             };
 
-            originalFilters.push(filter);
+            originalFilters.unshift(filter);
             addedFilters.push(localIdentifier);
         }
 
@@ -452,8 +452,13 @@ function transformRelativeCondition(
     periodMeasure: AlertMetricComparator | undefined,
     catalogMeasures?: ICatalogMeasure[],
 ) {
-    return {
-        ...(periodMeasure?.isPrimary && {
+    const isNormalSetup = measure.isPrimary && !periodMeasure?.isPrimary;
+    const isReverseSetup = !measure.isPrimary && periodMeasure?.isPrimary;
+
+    //NOTE: This is case primary for headline where normal measure is in secondary bucket
+    // and period measure is in primary bucket
+    if (isReverseSetup) {
+        return {
             left: {
                 id: periodMeasure.measure.measure.localIdentifier,
                 format: getMeasureFormat(periodMeasure.measure, catalogMeasures),
@@ -464,8 +469,13 @@ function transformRelativeCondition(
                 format: getMeasureFormat(measure.measure, catalogMeasures),
                 title: getMeasureTitle(measure.measure),
             },
-        }),
-        ...(!periodMeasure?.isPrimary && {
+        };
+    }
+
+    //NOTE: This is case for normal setup where normal measure is in primary bucket
+    // and period measure is in secondary bucket
+    if (isNormalSetup) {
+        return {
             left: {
                 id: measure.measure.measure.localIdentifier,
                 format: getMeasureFormat(measure.measure, catalogMeasures),
@@ -476,7 +486,22 @@ function transformRelativeCondition(
                 format: getMeasureFormat(periodMeasure?.measure, catalogMeasures),
                 title: periodMeasure?.measure ? getMeasureTitle(periodMeasure?.measure) : undefined,
             },
-        }),
+        };
+    }
+
+    //NOTE: This is case for normal setup where normal measure and period measure are
+    // in same bucket, primary or secondary, but same bucket
+    return {
+        left: {
+            id: measure.measure.measure.localIdentifier,
+            format: getMeasureFormat(measure.measure, catalogMeasures),
+            title: getMeasureTitle(measure.measure),
+        },
+        right: {
+            id: periodMeasure?.measure.measure.localIdentifier,
+            format: getMeasureFormat(periodMeasure?.measure, catalogMeasures),
+            title: periodMeasure?.measure ? getMeasureTitle(periodMeasure?.measure) : undefined,
+        },
     };
 }
 

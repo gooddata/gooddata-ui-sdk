@@ -18,5 +18,7 @@
     "gd.gen-ai.welcome.option-3.title": "Répondre à une question professionnelle",
     "gd.gen-ai.welcome.option-3.answer": "Bien sûr, à quelle question professionnelle souhaitez-vous répondre ?",
     "gd.gen-ai.state.cancelled": "Annulé",
-    "gd.gen-ai.state.in-progress": "Génération de votre réponse…"
+    "gd.gen-ai.state.in-progress": "Génération de votre réponse…",
+    "gd.gen-ai.global-error.description": "Essayez de redémarrer le chatbot et de recommencer.",
+    "gd.gen-ai.button.send": "Envoyer"
 }

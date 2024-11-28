@@ -156,6 +156,50 @@ describe("alert transforms", () => {
             filters: ["relativeDateFilter_date_GDC.time.quarter"],
         },
     };
+    const baseRelativeWithUserFilter: IAutomationMetadataObject = {
+        ...base,
+        alert: {
+            condition: {
+                type: "relative",
+                operator: "INCREASES_BY",
+                measure: {
+                    operator: "CHANGE",
+                    left: {
+                        id: "",
+                    },
+                    right: {
+                        id: "",
+                    },
+                },
+                threshold: 0,
+            },
+            execution: {
+                filters: [
+                    {
+                        relativeDateFilter: {
+                            dataSet: {
+                                identifier: "date",
+                                type: "dataSet",
+                            },
+                            from: -2,
+                            granularity: "GDC.time.year",
+                            to: 2,
+                        },
+                    },
+                ],
+                measures: [],
+                auxMeasures: [],
+                attributes: [],
+            },
+            trigger: {
+                state: "ACTIVE",
+                mode: "ALWAYS",
+            },
+        },
+        metadata: {
+            filters: ["relativeDateFilter_date_GDC.time.quarter"],
+        },
+    };
 
     const baseAllAttribute: IAutomationMetadataObject = {
         ...base,
@@ -394,6 +438,43 @@ describe("alert transforms", () => {
             },
         ],
     };
+    const previousPeriodMetric2: AlertMetric = {
+        measure: {
+            measure: {
+                localIdentifier: "localPPMetric2",
+                title: "metric2",
+                format: "#,##0.00",
+                definition: {
+                    measureDefinition: {
+                        filters: [],
+                        item: {
+                            type: "measure",
+                            identifier: "simple_metric_2",
+                        },
+                    },
+                },
+            },
+        },
+        isPrimary: true,
+        comparators: [
+            {
+                comparator: AlertMetricComparatorType.PreviousPeriod,
+                isPrimary: true,
+                measure: {
+                    measure: {
+                        localIdentifier: "localMetric_pp_1",
+                        title: "metric_pp_1",
+                        definition: {
+                            previousPeriodMeasure: {
+                                measureIdentifier: "localMetric2",
+                                dateDataSets: [{ dataSet: { uri: "dateDataSetUri" }, periodsAgo: 1 }],
+                            },
+                        },
+                    },
+                },
+            },
+        ],
+    };
 
     const allMetrics = [
         simpleMetric1,
@@ -502,7 +583,7 @@ describe("alert transforms", () => {
             });
         });
 
-        it("transformAlertByMetric, relative and provide comparison metric", () => {
+        it("transformAlertByMetric, relative and provide comparison metric, relative isSecondary", () => {
             const res = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric);
             expect(res).toEqual({
                 ...baseRelative,
@@ -561,6 +642,40 @@ describe("alert transforms", () => {
                         measures: [
                             previousPeriodMetric1.measure,
                             previousPeriodMetric1.comparators[0].measure,
+                        ],
+                    },
+                },
+            });
+        });
+
+        it("transformAlertByMetric, relative and provide comparison metric, normal and relative are isPrimary", () => {
+            const res = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric2);
+            expect(res).toEqual({
+                ...baseRelative,
+                title: "metric2",
+                alert: {
+                    ...baseRelative.alert,
+                    condition: {
+                        ...baseRelative.alert.condition,
+                        measure: {
+                            operator: "CHANGE",
+                            left: {
+                                format: "#,##0.00",
+                                id: "localPPMetric2",
+                                title: "metric2",
+                            },
+                            right: {
+                                format: "#,##0.00",
+                                id: "localMetric_pp_1",
+                                title: "metric_pp_1",
+                            },
+                        },
+                    },
+                    execution: {
+                        ...baseRelative.alert.execution,
+                        measures: [
+                            previousPeriodMetric2.measure,
+                            previousPeriodMetric2.comparators[0].measure,
                         ],
                     },
                 },
@@ -969,6 +1084,45 @@ describe("alert transforms", () => {
                             to: 0,
                         },
                     },
+                ],
+                measures: [previousPeriodMetric.measure, previousPeriodMetric.comparators[0].measure],
+                auxMeasures: [],
+                attributes: [],
+            });
+            expect(res1.metadata.filters).toEqual(["relativeDateFilter_date_GDC.time.quarter"]);
+        });
+
+        it("dataset and granularity provided with existing filter, add on start", () => {
+            const comp1: AlertMetricComparator = {
+                ...previousPeriodMetric.comparators[0],
+                dataset,
+                granularity: "GDC.time.quarter",
+            };
+            const cond = baseRelativeWithUserFilter.alert.condition;
+
+            const res1 = transformAlertExecutionByMetric(
+                allMetrics,
+                baseRelativeWithUserFilter,
+                cond,
+                previousPeriodMetric,
+                comp1,
+            );
+
+            expect(res1.execution).toEqual({
+                filters: [
+                    {
+                        relativeDateFilter: {
+                            dataSet: {
+                                identifier: "date",
+                                type: "dataSet",
+                            },
+                            from: 0,
+                            granularity: "GDC.time.quarter",
+                            localIdentifier: "relativeDateFilter_date_GDC.time.quarter",
+                            to: 0,
+                        },
+                    },
+                    ...baseRelativeWithUserFilter.alert.execution.filters,
                 ],
                 measures: [previousPeriodMetric.measure, previousPeriodMetric.comparators[0].measure],
                 auxMeasures: [],

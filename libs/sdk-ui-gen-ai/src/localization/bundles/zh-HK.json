@@ -18,5 +18,7 @@
     "gd.gen-ai.welcome.option-3.title": "答業務問題",
     "gd.gen-ai.welcome.option-3.answer": "當然，您想答乜嘢商業問題？",
     "gd.gen-ai.state.cancelled": "取消",
-    "gd.gen-ai.state.in-progress": "正在生成您的響應…"
+    "gd.gen-ai.state.in-progress": "正在生成您的響應…",
+    "gd.gen-ai.global-error.description": "嘗試重新啟動聊天機械人並重新開始。",
+    "gd.gen-ai.button.send": "發送"
 }

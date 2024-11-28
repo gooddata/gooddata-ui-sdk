@@ -27,30 +27,35 @@ export interface IDashboardLayoutSectionHeaderProps {
     renderHeader?: React.ReactNode;
 }
 
-export const DashboardLayoutSectionHeader: React.FC<IDashboardLayoutSectionHeaderProps> = (props) => {
-    const { title, description, renderBeforeHeader, renderHeader } = props;
-
+export const DashboardLayoutSectionHeader: React.FC<IDashboardLayoutSectionHeaderProps> = ({
+    title,
+    description,
+    renderBeforeHeader,
+    renderHeader,
+}) => {
     return (
         <div className="gd-fluid-layout-row-header s-fluid-layout-row-header">
             {renderBeforeHeader}
-            <div className="gd-fluid-layout-row-header-container">
-                {renderHeader ?? (
-                    <div className="gd-row-header-view">
-                        {title ? (
-                            <div className="gd-row-header-title-wrapper">
-                                <span className="title">
-                                    <Typography tagName="h2" className="s-fluid-layout-row-title">
-                                        {title}
-                                    </Typography>
-                                </span>
-                            </div>
-                        ) : null}
-                        {description ? (
-                            <DashboardLayoutSectionHeaderDescription description={description} />
-                        ) : null}
-                    </div>
-                )}
-            </div>
+            {title || description || renderHeader ? (
+                <div className="gd-fluid-layout-row-header-container">
+                    {renderHeader ?? (
+                        <div className="gd-row-header-view">
+                            {title ? (
+                                <div className="gd-row-header-title-wrapper">
+                                    <span className="title">
+                                        <Typography tagName="h2" className="s-fluid-layout-row-title">
+                                            {title}
+                                        </Typography>
+                                    </span>
+                                </div>
+                            ) : null}
+                            {description ? (
+                                <DashboardLayoutSectionHeaderDescription description={description} />
+                            ) : null}
+                        </div>
+                    )}
+                </div>
+            ) : null}
         </div>
     );
 };

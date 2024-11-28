@@ -3,6 +3,7 @@
 import { ITigerClient } from "@gooddata/api-client-tiger";
 import {
     INotificationChannelDefinitionObject,
+    INotificationChannelTestResponse,
     ISmtpDefinition,
     ISmtpDefinitionObject,
     IWebhookDefinition,
@@ -53,6 +54,55 @@ export class OrganizationNotificationChannelService implements IOrganizationNoti
             const result = await client.entities.getAllEntitiesNotificationChannels({});
             const channels = result.data?.data || [];
             return channels.map((channel) => convertChannelFromNotificationChannel(channel));
+        });
+    };
+
+    /**
+     * @alpha
+     * Test channel
+     *
+     * This method will test the channel by sending a test notification to the destination.
+     * @param channel - definition of the channel
+     * @param notificationId - id of the notification to be sent
+     * @returns Promise resolved with the response from the test.
+     */
+    public testChannel = async (
+        channel: Partial<IWebhookDefinition> | Partial<ISmtpDefinition>,
+        notificationId?: string,
+    ): Promise<INotificationChannelTestResponse> => {
+        let obj;
+        switch (channel.type) {
+            case "webhook":
+                obj = convertCreateWebhookToNotificationChannel(channel);
+                break;
+            case "smtp":
+                obj = convertCreateEmailToNotificationChannel(channel);
+                break;
+            default:
+                throw new Error(`Unknown channel type.`);
+        }
+
+        const destination = obj.attributes?.destination;
+        if (!destination) {
+            throw new Error("Missing destination in the webhook");
+        }
+
+        if (notificationId) {
+            return this.authCall(async (client: ITigerClient) => {
+                const result = await client.automation.testExistingNotificationChannel({
+                    notificationChannelId: notificationId,
+                });
+                return result.data;
+            });
+        }
+
+        return this.authCall(async (client: ITigerClient) => {
+            const result = await client.automation.testNotificationChannel({
+                testDestinationRequest: {
+                    destination,
+                },
+            });
+            return result.data;
         });
     };
 

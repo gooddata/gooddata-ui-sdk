@@ -46,6 +46,7 @@ export type {
     ICustomSmtpDestination,
     INotificationChannelConfiguration,
     NotificationChannelAllowedRecipient,
+    INotificationChannelTestResponse,
 } from "./notificationChannels/index.js";
 
 export type {

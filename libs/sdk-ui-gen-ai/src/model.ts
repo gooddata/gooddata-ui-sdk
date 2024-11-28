@@ -213,13 +213,14 @@ export const makeAssistantMessage = (
     content: Contents[],
     complete = false,
     id?: number,
+    feedback: GenAIChatInteractionUserFeedback = "NONE",
 ): AssistantMessage => ({
     id: id,
     localId: uuidv4(),
     role: "assistant",
-    feedback: "NONE",
     created: Date.now(),
     cancelled: false,
+    feedback,
     complete,
     content,
 });

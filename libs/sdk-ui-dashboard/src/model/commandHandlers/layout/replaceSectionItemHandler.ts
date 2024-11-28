@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { ReplaceSectionItem } from "../../commands/index.js";
@@ -18,6 +18,13 @@ import { batchActions } from "redux-batched-actions";
 import { insightsActions } from "../../store/insights/index.js";
 import { InternalDashboardItemDefinition } from "../../types/layoutTypes.js";
 import { addTemporaryIdentityToWidgets } from "../../utils/dashboardItemUtils.js";
+import {
+    serializeLayoutItemPath,
+    findSection,
+    findItem,
+    getSectionIndex,
+    getItemIndex,
+} from "../../../_staging/layout/coordinates.js";
 
 type ReplaceSectionItemContext = {
     ctx: DashboardContext;
@@ -31,47 +38,88 @@ function validateAndResolve(commandCtx: ReplaceSectionItemContext) {
     const {
         ctx,
         cmd: {
-            payload: { sectionIndex, itemIndex },
+            payload: { itemPath, itemIndex, sectionIndex },
         },
         items,
         layout,
         stash,
     } = commandCtx;
 
-    if (!validateSectionExists(layout, sectionIndex)) {
-        throw invalidArgumentsProvided(
-            ctx,
-            commandCtx.cmd,
-            `Attempting to replace item from non-existent section at ${sectionIndex}. There are only ${layout.sections.length} sections.`,
-        );
+    if (itemPath === undefined) {
+        if (!validateSectionExists(layout, sectionIndex)) {
+            throw invalidArgumentsProvided(
+                ctx,
+                commandCtx.cmd,
+                `Attempting to replace item from non-existent section at ${sectionIndex}. There are only ${layout.sections.length} sections.`,
+            );
+        }
+
+        const fromSection = layout.sections[sectionIndex];
+
+        if (!validateItemExists(fromSection, itemIndex)) {
+            throw invalidArgumentsProvided(
+                ctx,
+                commandCtx.cmd,
+                `Attempting to replace non-existent item from index ${itemIndex} in section ${sectionIndex}. There are only ${fromSection.items.length} items in this section.`,
+            );
+        }
+
+        const stashValidationResult = validateAndResolveStashedItems(stash, items);
+
+        if (!isEmpty(stashValidationResult.missing)) {
+            throw invalidArgumentsProvided(
+                ctx,
+                commandCtx.cmd,
+                `Attempting to use non-existing stashes. Identifiers of missing stashes: ${stashValidationResult.missing.join(
+                    ", ",
+                )}`,
+            );
+        }
+
+        return {
+            itemToReplace: fromSection.items[itemIndex],
+            stashValidationResult,
+        };
+    } else {
+        if (!validateSectionExists(layout, itemPath)) {
+            throw invalidArgumentsProvided(
+                ctx,
+                commandCtx.cmd,
+                `Attempting to replace item from non-existent section at ${serializeLayoutItemPath(
+                    itemPath,
+                )}.`,
+            );
+        }
+
+        const fromSection = findSection(layout, itemPath);
+
+        if (!validateItemExists(fromSection, itemPath)) {
+            throw invalidArgumentsProvided(
+                ctx,
+                commandCtx.cmd,
+                `Attempting to replace non-existent item from index ${serializeLayoutItemPath(
+                    itemPath,
+                )}. There are only ${fromSection.items.length} items in this section.`,
+            );
+        }
+
+        const stashValidationResult = validateAndResolveStashedItems(stash, items);
+
+        if (!isEmpty(stashValidationResult.missing)) {
+            throw invalidArgumentsProvided(
+                ctx,
+                commandCtx.cmd,
+                `Attempting to use non-existing stashes. Identifiers of missing stashes: ${stashValidationResult.missing.join(
+                    ", ",
+                )}`,
+            );
+        }
+
+        return {
+            itemToReplace: findItem(layout, itemPath),
+            stashValidationResult,
+        };
     }
-
-    const fromSection = layout.sections[sectionIndex];
-
-    if (!validateItemExists(fromSection, itemIndex)) {
-        throw invalidArgumentsProvided(
-            ctx,
-            commandCtx.cmd,
-            `Attempting to replace non-existent item from index ${itemIndex} in section ${sectionIndex}. There are only ${fromSection.items.length} items in this section.`,
-        );
-    }
-
-    const stashValidationResult = validateAndResolveStashedItems(stash, items);
-
-    if (!isEmpty(stashValidationResult.missing)) {
-        throw invalidArgumentsProvided(
-            ctx,
-            commandCtx.cmd,
-            `Attempting to use non-existing stashes. Identifiers of missing stashes: ${stashValidationResult.missing.join(
-                ", ",
-            )}`,
-        );
-    }
-
-    return {
-        itemToReplace: fromSection.items[itemIndex],
-        stashValidationResult,
-    };
 }
 
 export function* replaceSectionItemHandler(
@@ -89,7 +137,7 @@ export function* replaceSectionItemHandler(
         stash: yield select(selectStash),
     };
     const { itemToReplace, stashValidationResult } = validateAndResolve(commandCtx);
-    const { sectionIndex, itemIndex, stashIdentifier, autoResolveDateFilterDataset } = cmd.payload;
+    const { itemPath, sectionIndex, itemIndex, stashIdentifier, autoResolveDateFilterDataset } = cmd.payload;
 
     const normalizationResult: SagaReturnType<typeof validateAndNormalizeWidgetItems> = yield call(
         validateAndNormalizeWidgetItems,
@@ -106,12 +154,13 @@ export function* replaceSectionItemHandler(
         autoResolveDateFilterDataset,
     );
 
+    const layoutPath = itemPath === undefined ? [{ sectionIndex, itemIndex }] : itemPath;
+
     yield put(
         batchActions([
             insightsActions.addInsights(normalizationResult.resolvedInsights.loaded),
             layoutActions.replaceSectionItem({
-                sectionIndex,
-                itemIndex,
+                layoutPath,
                 newItems: itemsToAdd,
                 stashIdentifier,
                 usedStashes: stashValidationResult.existing,
@@ -124,8 +173,9 @@ export function* replaceSectionItemHandler(
 
     return layoutSectionItemReplaced(
         ctx,
-        sectionIndex,
-        itemIndex,
+        sectionIndex === undefined ? getSectionIndex(layoutPath) : sectionIndex,
+        itemIndex === undefined ? getItemIndex(layoutPath) : itemIndex,
+        layoutPath,
         stashValidationResult.resolved,
         itemToReplace,
         stashIdentifier,

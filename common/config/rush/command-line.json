@@ -77,6 +77,16 @@
     },
     {
       "commandKind": "bulk",
+      "name": "test-isolated-ci",
+      "summary": "Isolated tests run in docker in the pre-merge",
+      "safeForSimultaneousRushProcesses": true,
+      "enableParallelism": true,
+      "ignoreDependencyOrder": true,
+      "ignoreMissingScript": true,
+      "allowWarningsInSuccessfulBuild": true
+    },
+    {
+      "commandKind": "bulk",
       "name": "dep-cruiser",
       "summary": "Run dependency cruiser in all projects",
       "safeForSimultaneousRushProcesses": true,
@@ -119,6 +129,14 @@
       "summary": "Run rush build command",
       "enableParallelism": true,
       "allowWarningsInSuccessfulBuild": false
+    },
+    {
+      "commandKind": "bulk",
+      "name": "build-generate-version",
+      "summary": "This command will generate dynamic __version.ts files after build is restored from cache, because this files are generated only during build and are not stored in cache.",
+      "enableParallelism": true,
+      "allowWarningsInSuccessfulBuild": true,
+      "ignoreMissingScript": true
     },
     {
       "commandKind": "global",

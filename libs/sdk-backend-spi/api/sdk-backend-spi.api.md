@@ -76,6 +76,7 @@ import { IMeasureMetadataObject } from '@gooddata/sdk-model';
 import { IMeasureMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { IMetadataObject } from '@gooddata/sdk-model';
 import { INotificationChannelDefinitionObject } from '@gooddata/sdk-model';
+import { INotificationChannelTestResponse } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
 import { IOpenAiConfig } from '@gooddata/sdk-model';
 import { IOrganizationAssignee } from '@gooddata/sdk-model';
@@ -417,6 +418,8 @@ export interface IChatThread {
 export interface IChatThreadHistory {
     // (undocumented)
     interactions: IGenAIChatInteraction[];
+    // (undocumented)
+    threadId: string;
 }
 
 // @beta
@@ -921,6 +924,7 @@ export interface IOrganizationNotificationChannelService {
     getEmails(): Promise<ISmtpDefinitionObject[]>;
     getWebhook(id: string): Promise<IWebhookDefinitionObject>;
     getWebhooks(): Promise<IWebhookDefinitionObject[]>;
+    testChannel(channel: Partial<IWebhookDefinition> | Partial<ISmtpDefinition>, notificationId?: string): Promise<INotificationChannelTestResponse>;
     updateEmail(smtp: ISmtpDefinitionObject): Promise<ISmtpDefinitionObject>;
     updateWebhook(webhook: IWebhookDefinitionObject): Promise<IWebhookDefinitionObject>;
 }

@@ -1,5 +1,7 @@
 // (C) 2020-2024 GoodData Corporation
 import {
+    JsonApiAutomationInAttributesTabularExports,
+    JsonApiAutomationInAttributesVisualExports,
     JsonApiExportDefinitionOutIncludes,
     JsonApiExportDefinitionOutWithLinks,
     TabularExportRequest,
@@ -13,9 +15,16 @@ import {
     IExportDefinitionVisualizationObjectSettings,
     IFilter,
 } from "@gooddata/sdk-model";
+import { v4 as uuid } from "uuid";
 import { convertUserIdentifier } from "./UsersConverter.js";
-import isEmpty from "lodash/isEmpty.js";
 import { cloneWithSanitizedIds } from "./IdSanitization.js";
+import isEmpty from "lodash/isEmpty.js";
+
+type MetadataObjectDefinition = {
+    widget?: string;
+    title?: string;
+    filters?: FilterContextItem[];
+};
 
 export const convertExportDefinitionMdObject = (
     exportDefinitionOut: JsonApiExportDefinitionOutWithLinks,
@@ -54,11 +63,37 @@ export const convertExportDefinitionMdObject = (
     };
 };
 
+export const convertInlineExportDefinitionMdObject = (
+    exportDefinitionOut:
+        | JsonApiAutomationInAttributesTabularExports
+        | JsonApiAutomationInAttributesVisualExports,
+): IExportDefinitionMetadataObject => {
+    const id = uuid();
+    const request = convertExportDefinitionRequestPayload(
+        exportDefinitionOut.requestPayload as VisualExportRequest | TabularExportRequest,
+    );
+    const metadata = exportDefinitionOut.requestPayload.metadata as MetadataObjectDefinition | undefined;
+
+    return {
+        type: "exportDefinition",
+        id,
+        uri: id,
+        ref: idRef(id, "exportDefinition"),
+        title: metadata?.title ?? "",
+        description: "",
+        tags: [],
+        requestPayload: request,
+        production: true,
+        deprecated: false,
+        unlisted: false,
+    };
+};
+
 const convertExportDefinitionRequestPayload = (
     exportRequest: VisualExportRequest | TabularExportRequest,
 ): IExportDefinitionRequestPayload => {
     if (isTabularRequest(exportRequest)) {
-        const { widget } = (exportRequest.metadata as { widget?: string }) ?? {};
+        const { widget } = (exportRequest.metadata as MetadataObjectDefinition) ?? {};
 
         const filters = exportRequest.visualizationObjectCustomFilters as IFilter[];
         const filtersObj = filters ? { filters: filters.map(cloneWithSanitizedIds) } : {};
@@ -85,7 +120,8 @@ const convertExportDefinitionRequestPayload = (
             ...settingsObj,
         };
     } else {
-        const filters = (exportRequest.metadata as any)?.filters as FilterContextItem[];
+        const metadata = exportRequest.metadata as MetadataObjectDefinition | undefined;
+        const filters = metadata?.filters;
         const filtersObj = filters ? { filters } : {};
 
         return {

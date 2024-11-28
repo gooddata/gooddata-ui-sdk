@@ -6,6 +6,7 @@ import {
     IWebhookDefinition,
     ISmtpDefinitionObject,
     ISmtpDefinition,
+    INotificationChannelTestResponse,
 } from "@gooddata/sdk-model";
 
 /**
@@ -23,6 +24,18 @@ export interface IOrganizationNotificationChannelService {
      * Get all notification channels
      */
     getAll(): Promise<INotificationChannelDefinitionObject[]>;
+
+    /**
+     * Test channel
+     *
+     * @param channel - definition of the channel
+     * @param notificationId - id of the notification to test if its already created
+     * @returns Promise resolved with test response.
+     */
+    testChannel(
+        channel: Partial<IWebhookDefinition> | Partial<ISmtpDefinition>,
+        notificationId?: string,
+    ): Promise<INotificationChannelTestResponse>;
 
     /**
      * Delete channel

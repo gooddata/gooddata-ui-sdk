@@ -17,6 +17,11 @@ export type AssistantMessage = BaseMessage & {
     feedback: GenAIChatInteractionUserFeedback;
 };
 
+// @alpha
+export type BaseEvent = {
+    threadId?: string;
+};
+
 // @alpha (undocumented)
 export type BaseMessage = {
     id?: number;
@@ -25,6 +30,50 @@ export type BaseMessage = {
     cancelled: boolean;
     complete: boolean;
     content: Contents[];
+};
+
+// @alpha
+export type ChatAssistantMessageEvent = BaseEvent & {
+    type: "chatAssistantMessage";
+    interactionId?: number;
+    useCase: string;
+};
+
+// @alpha
+export type ChatClosedEvent = BaseEvent & {
+    type: "chatClosed";
+};
+
+// @alpha
+export type ChatEvent = ChatOpenedEvent | ChatClosedEvent | ChatResetEvent | ChatUserMessageEvent | ChatAssistantMessageEvent | ChatFeedbackEvent;
+
+// @alpha
+export interface ChatEventHandler<TEvent extends ChatEvent = any> {
+    eval: (event: ChatEvent) => event is TEvent;
+    handler: (event: TEvent) => void;
+}
+
+// @alpha
+export type ChatFeedbackEvent = BaseEvent & {
+    type: "chatFeedback";
+    interactionId?: number;
+    feedback: "POSITIVE" | "NEGATIVE" | "NONE";
+};
+
+// @alpha
+export type ChatOpenedEvent = BaseEvent & {
+    type: "chatOpened";
+};
+
+// @alpha
+export type ChatResetEvent = BaseEvent & {
+    type: "chatReset";
+};
+
+// @alpha
+export type ChatUserMessageEvent = BaseEvent & {
+    type: "chatUserMessage";
+    question: string;
 };
 
 // @alpha (undocumented)
@@ -42,9 +91,27 @@ export const GenAIChat: React_2.FC<GenAIChatProps>;
 // @alpha
 export interface GenAIChatProps {
     backend?: IAnalyticalBackend;
-    history?: Message[];
+    eventHandlers?: ChatEventHandler[];
     workspace?: string;
 }
+
+// @alpha
+export const isChatAssistantMessageEvent: (event: ChatEvent) => event is ChatAssistantMessageEvent;
+
+// @alpha
+export const isChatClosedEvent: (event: ChatEvent) => event is ChatClosedEvent;
+
+// @alpha
+export const isChatFeedbackEvent: (event: ChatEvent) => event is ChatFeedbackEvent;
+
+// @alpha
+export const isChatOpenedEvent: (event: ChatEvent) => event is ChatOpenedEvent;
+
+// @alpha
+export const isChatResetEvent: (event: ChatEvent) => event is ChatResetEvent;
+
+// @alpha
+export const isChatUserMessageEvent: (event: ChatEvent) => event is ChatUserMessageEvent;
 
 // @alpha
 export type Message = UserMessage | AssistantMessage;

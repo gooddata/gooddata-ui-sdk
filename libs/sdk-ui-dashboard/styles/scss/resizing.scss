@@ -1,10 +1,7 @@
-// (C) 2019-2021 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 @use "variables";
 @use "zIndexes";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
-
-$gd-width-resizer-hotpost-width: 40px;
-$gd-width-resizer-hotpost-height: 40px;
 
 .dash-width-resizer-container {
     position: absolute;
@@ -26,7 +23,7 @@ $gd-width-resizer-hotpost-height: 40px;
 .dash-width-resizer-hotspot,
 .resizer-drag-preview {
     display: flex;
-    width: $gd-width-resizer-hotpost-width;
+    width: 40px;
     padding: 0 0 0 5px;
     cursor: col-resize;
 }
@@ -37,7 +34,7 @@ $gd-width-resizer-hotpost-height: 40px;
     display: flex;
     align-items: center;
     overflow: hidden;
-    height: $gd-width-resizer-hotpost-height;
+    height: 40px;
     cursor: row-resize;
 }
 
@@ -194,4 +191,66 @@ $gd-width-resizer-hotpost-height: 40px;
         --gd-dashboards-content-backgroundColor,
         var(--gd-palette-complementary-0, rgba(255, 255, 255, 0.95))
     );
+}
+
+.gd-grid-layout {
+    .dash-width-resizer-container {
+        right: -20px;
+        width: 20px;
+    }
+
+    .dash-height-resizer-container {
+        position: unset;
+        right: unset;
+        bottom: unset;
+        left: unset;
+        height: 10px;
+    }
+
+    .dash-height-resizer-hotspot {
+        position: unset;
+        display: flex;
+    }
+}
+
+.sdk-edit-mode-on .gd-grid-layout {
+    .dash-width-resizer-hotspot {
+        position: unset;
+        left: unset;
+    }
+
+    .gd-resize-overlay-text {
+        right: -10px;
+        left: -10px;
+    }
+}
+
+.gd-grid-layout__ruler {
+    // layout must not jump when ruler is displayed and must be visible at the top also when page is scrolled out
+    position: absolute;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+
+    .gd-grid-layout__item--span-1 {
+        position: relative;
+    }
+
+    .gd-resize-bullet {
+        position: relative;
+        left: -13px;
+        width: 6px;
+        height: 6px;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .gd-resize-bullet--last {
+        position: absolute;
+        top: 0;
+        right: -13px;
+        left: unset;
+    }
 }

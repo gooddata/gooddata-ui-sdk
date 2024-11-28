@@ -1,16 +1,17 @@
 // (C) 2019-2024 GoodData Corporation
+import React from "react";
 import {
     IDashboardLayout,
     IDashboardWidget,
-    ScreenSize,
     IDashboardLayoutSizeByScreenSize,
+    ScreenSize,
 } from "@gooddata/sdk-model";
-import { RenderMode } from "../../../types.js";
+
+import { RenderMode, ILayoutItemPath } from "../../../types.js";
 import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutSectionFacade,
-} from "../../../_staging/dashboard/fluidLayout/facade/interfaces.js";
-import React from "react";
+} from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 
 /**
  * Default props provided to {@link IDashboardLayoutSectionKeyGetter}.
@@ -54,14 +55,14 @@ export interface IDashboardLayoutSectionRenderProps<TWidget = IDashboardWidget> 
     section: IDashboardLayoutSectionFacade<TWidget>;
 
     /**
-     * Current screen type with respect to the set breakpoints.
-     */
-    screen: ScreenSize;
-
-    /**
      * The size of layout item in which the section is nested. Undefined, when section is in the root layout.
      */
     parentLayoutItemSize?: IDashboardLayoutSizeByScreenSize;
+
+    /**
+     * The path to the layout item in which the section is nested. Undefined if the layout is a root layout.
+     */
+    parentLayoutPath: ILayoutItemPath | undefined;
 
     /**
      * Default renderer of the section - can be used as a fallback for custom sectionRenderer.
@@ -111,15 +112,15 @@ export interface IDashboardLayoutSectionHeaderRenderProps<TWidget = IDashboardWi
     section: IDashboardLayoutSectionFacade<TWidget>;
 
     /**
-     * Current screen type with respect to the set breakpoints.
-     */
-    screen: ScreenSize;
-
-    /**
      * The size of layout item in which the section header is nested. Undefined, when section, to which
      * this header belongs to, is in the root layout.
      */
     parentLayoutItemSize?: IDashboardLayoutSizeByScreenSize;
+
+    /**
+     * The path to the layout item in which the section is nested. Undefined if the layout is a root layout.
+     */
+    parentLayoutPath: ILayoutItemPath | undefined;
 
     /**
      * Default renderer of the section header - can be used as a fallback for custom sectionHeaderRenderer.
@@ -179,11 +180,6 @@ export interface IDashboardLayoutItemRenderProps<TWidget = IDashboardWidget> {
     item: IDashboardLayoutItemFacade<TWidget>;
 
     /**
-     * Current screen type with respect to the set breakpoints.
-     */
-    screen: ScreenSize;
-
-    /**
      * Default renderer of the item - can be used as a fallback for custom columnRenderer.
      */
     DefaultItemRenderer: IDashboardLayoutItemRenderer<TWidget>;
@@ -229,11 +225,6 @@ export interface IDashboardLayoutWidgetRenderProps<TWidget = IDashboardWidget> {
      * Dashboard layout item.
      */
     item: IDashboardLayoutItemFacade<TWidget>;
-
-    /**
-     * Current screen type with respect to the set breakpoints.
-     */
-    screen: ScreenSize;
 
     /**
      * React ref to content element.
@@ -312,11 +303,6 @@ export interface IDashboardLayoutGridRowRenderProps<TWidget = IDashboardWidget> 
      * Layout items - keep in mind that these items are only items in the current grid row, not the entire section.
      */
     items: IDashboardLayoutItemFacade<TWidget>[];
-
-    /**
-     * Current screen type with respect to the set breakpoints.
-     */
-    screen: ScreenSize;
 
     /**
      * Dashboard render mode
@@ -406,15 +392,14 @@ export interface IDashboardLayoutRenderProps<TWidget = IDashboardWidget> {
     renderMode?: RenderMode;
 
     /**
-     * The current screen size.
-     * If undefined, the screen size will be determined by the layout and provided to its nested layouts.
-     */
-    screen?: ScreenSize;
-
-    /**
      * The size of layout item in which the layout is nested. Undefined, when the layout is the root layout.
      */
     parentLayoutItemSize?: IDashboardLayoutSizeByScreenSize;
+
+    /**
+     * The path to the layout item in which the section is nested. Undefined if the layout is a root layout.
+     */
+    parentLayoutPath: ILayoutItemPath | undefined;
 }
 
 /**

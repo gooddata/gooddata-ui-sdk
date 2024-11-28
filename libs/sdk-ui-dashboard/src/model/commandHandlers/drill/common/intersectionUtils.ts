@@ -39,6 +39,7 @@ export function convertIntersectionToAttributeFilters(
     backendSupportsElementUris: boolean,
     enableDuplicatedLabelValuesInAttributeFilter: boolean,
     enableAliasTitles = false,
+    filtersCount: number = 0,
 ): IConversionResult[] {
     return intersection
         .map((i) => i.header)
@@ -57,7 +58,7 @@ export function convertIntersectionToAttributeFilters(
                         attributeElements: { uris: [elementValue] },
                         displayForm: ref,
                         negativeSelection: false,
-                        localIdentifier: generateFilterLocalIdentifier(ref, result.length),
+                        localIdentifier: generateFilterLocalIdentifier(ref, filtersCount + result.length),
                         ...titleObj,
                     },
                 },

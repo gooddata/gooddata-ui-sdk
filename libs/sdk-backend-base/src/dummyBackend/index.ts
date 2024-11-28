@@ -886,6 +886,10 @@ class DummyOrganization implements IOrganization {
             getCount: () => Promise.resolve(0),
             getAll: () => Promise.resolve([]),
             deleteChannel: () => Promise.resolve(),
+            testChannel: () =>
+                Promise.resolve({
+                    successful: true,
+                }),
             //emails
             createEmail: (webhook: ISmtpDefinition) =>
                 Promise.resolve({

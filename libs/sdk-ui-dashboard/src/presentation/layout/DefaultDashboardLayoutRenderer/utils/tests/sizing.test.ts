@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import chunk from "lodash/chunk.js";
 import flatMap from "lodash/flatMap.js";
 import { newKpiWidget } from "@gooddata/sdk-backend-base";
@@ -14,7 +14,7 @@ import { VisType } from "@gooddata/sdk-ui";
 import {
     DashboardLayoutBuilder,
     DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT,
-} from "../../../../../_staging/dashboard/fluidLayout/index.js";
+} from "../../../../../_staging/dashboard/legacyFluidLayout/index.js";
 import { idRef, newInsightDefinition, IDashboardLayoutSize, ScreenSize } from "@gooddata/sdk-model";
 import { ALL_SCREENS } from "../../../../constants/index.js";
 import { describe, it, expect } from "vitest";
@@ -193,7 +193,7 @@ describe("sizing", () => {
         type Scenario = [string, VisType, number, number | undefined, number, number | undefined];
         const scenarios: Scenario[] = [
             ["Headline with too big height", "headline", 2, 80, 2, 40],
-            ["Column Chart with too low width", "column", 2, 14, 4, 14],
+            ["Column Chart with too low width", "column", 1, 14, 2, 14],
             ["Table with too low height", "table", 3, 10, 3, 12],
             ["Geochart with too big width and undefined height", "pushpin", 14, undefined, 12, undefined],
         ];

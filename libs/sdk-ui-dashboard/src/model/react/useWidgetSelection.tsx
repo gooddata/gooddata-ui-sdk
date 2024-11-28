@@ -64,16 +64,18 @@ export function useWidgetSelection(widgetRef?: ObjRef): IUseWidgetSelectionResul
 
     const onSelected = useCallback(
         (e?: MouseEvent) => {
+            let processedDuringWidgetSelectOriginal = false;
             if (e) {
                 /**
                  * Do not stop propagation, just mark event as processed here so that in case come other element
                  * up the tree uses the deselectWidgets function. Without this mark such element would immediately
                  * deselect the widget we just selected with the same click.
                  */
+                processedDuringWidgetSelectOriginal = (e as IHasWidgetSelectMark).processedDuringWidgetSelect;
                 (e as IHasWidgetSelectMark).processedDuringWidgetSelect = true;
             }
 
-            if (isSelectable && widgetRef) {
+            if (isSelectable && widgetRef && !processedDuringWidgetSelectOriginal) {
                 dispatch(uiActions.selectWidget(widgetRef));
                 dispatch(uiActions.setConfigurationPanelOpened(true));
             }

@@ -1,5 +1,5 @@
-// (C) 2021-2023 GoodData Corporation
-import { IDashboardLayout, IDashboardLayoutSectionHeader } from "@gooddata/sdk-model";
+// (C) 2021-2024 GoodData Corporation
+import { IDashboardLayout, IDashboardLayoutSectionHeader, ScreenSize } from "@gooddata/sdk-model";
 
 import {
     ExtendedDashboardItem,
@@ -10,6 +10,7 @@ import {
 import { DashboardContext } from "../types/commonTypes.js";
 import { IDashboardEvent } from "./base.js";
 import { eventGuard } from "./util.js";
+import { ILayoutSectionPath, ILayoutItemPath } from "../../types.js";
 
 /**
  * Payload of the {@link DashboardLayoutSectionAdded} event.
@@ -25,8 +26,17 @@ export interface DashboardLayoutSectionAddedPayload {
      * Index of the new section among other sections in the layout.
      *
      * Index is zero-based.
+     *
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionAddedPayload.path} instead.
+     *
+     * TODO LX-648: Remove property in the next major version.
      */
     readonly index: number;
+
+    /**
+     * Path to the new section among other sections in the layout.
+     */
+    readonly path: ILayoutSectionPath;
 }
 
 /**
@@ -43,6 +53,7 @@ export function layoutSectionAdded(
     ctx: DashboardContext,
     section: ExtendedDashboardLayoutSection,
     index: number,
+    path: ILayoutSectionPath,
     correlationId?: string,
 ): DashboardLayoutSectionAdded {
     return {
@@ -52,6 +63,7 @@ export function layoutSectionAdded(
         payload: {
             section,
             index,
+            path,
         },
     };
 }
@@ -81,12 +93,28 @@ export interface DashboardLayoutSectionMovedPayload {
     readonly section: ExtendedDashboardLayoutSection;
     /**
      * Index from which the section was moved.
+     *
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionMovedPayload.fromPath} instead.
+     *
+     * TODO LX-648: Remove property in the next major SDK version.
      */
     readonly fromIndex: number;
     /**
+     * Path from which the section was moved.
+     */
+    readonly fromPath: ILayoutSectionPath;
+    /**
      * Zero-based index to which the section was moved.
+     *
+     * @deprecated The prop will be removed in the next SDK major version. Use {@link DashboardLayoutSectionMovedPayload.toPath} instead.
+     *
+     * TODO LX-648: Remove property in the next major SDK version.
      */
     readonly toIndex: number;
+    /**
+     * Path to which the section was moved.
+     */
+    readonly toPath: ILayoutSectionPath;
 }
 
 /**
@@ -104,6 +132,8 @@ export function layoutSectionMoved(
     section: ExtendedDashboardLayoutSection,
     fromIndex: number,
     toIndex: number,
+    fromPath: ILayoutSectionPath,
+    toPath: ILayoutSectionPath,
     correlationId?: string,
 ): DashboardLayoutSectionMoved {
     return {
@@ -114,6 +144,8 @@ export function layoutSectionMoved(
             section,
             fromIndex,
             toIndex,
+            fromPath,
+            toPath,
         },
     };
 }
@@ -146,8 +178,17 @@ export interface DashboardLayoutSectionRemovedPayload {
 
     /**
      * Index where the section originally resided.
+     *
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionRemovedPayload.path} instead.
+     *
+     * TODO LX-648: Remove property in the next major SDK version.
      */
     readonly index: number;
+
+    /**
+     * Path where the section originally resided.
+     */
+    readonly path: ILayoutSectionPath;
 
     /**
      * Indicates that the section was removed as part of eager removal of the section items.
@@ -179,6 +220,7 @@ export function layoutSectionRemoved(
     ctx: DashboardContext,
     section: ExtendedDashboardLayoutSection,
     index: number,
+    path: ILayoutSectionPath,
     eagerRemoval?: boolean,
     stashIdentifier?: StashedDashboardItemsId,
     correlationId?: string,
@@ -190,6 +232,7 @@ export function layoutSectionRemoved(
         payload: {
             section,
             index,
+            path,
             eagerRemoval,
             stashIdentifier,
         },
@@ -222,8 +265,16 @@ export interface DashboardLayoutSectionHeaderChangedPayload {
 
     /**
      * Index of the section which had the header updated.
+     *
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionHeaderChangedPayload.sectionPath} instead.
+     *
+     * TODO LX-648: Remove property in the next major version.
      */
     readonly sectionIndex: number;
+    /**
+     * Path of the section which had the header updated.
+     */
+    readonly sectionPath: ILayoutSectionPath;
 }
 
 /**
@@ -240,6 +291,7 @@ export function layoutSectionHeaderChanged(
     ctx: DashboardContext,
     newHeader: IDashboardLayoutSectionHeader,
     sectionIndex: number,
+    sectionPath: ILayoutSectionPath,
     correlationId?: string,
 ): DashboardLayoutSectionHeaderChanged {
     return {
@@ -249,6 +301,7 @@ export function layoutSectionHeaderChanged(
         payload: {
             newHeader,
             sectionIndex,
+            sectionPath,
         },
     };
 }
@@ -260,8 +313,16 @@ export function layoutSectionHeaderChanged(
 export interface DashboardLayoutSectionItemsHeightResizedPayload {
     /**
      * Index of the section which items height was changed.
+     *
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link sectionPath} instead.
+     *
+     * TODO LX-648: Remove property in the next major version.
      */
     readonly sectionIndex: number;
+    /**
+     * Index of the section which items height was changed.
+     */
+    readonly sectionPath: ILayoutSectionPath;
 
     /**
      * Index of the items in section which height was changed.
@@ -287,6 +348,7 @@ export interface DashboardLayoutSectionItemsHeightResized extends IDashboardEven
 export function layoutSectionItemsHeightResized(
     ctx: DashboardContext,
     sectionIndex: number,
+    sectionPath: ILayoutSectionPath,
     itemIndexes: number[],
     newHeight: number,
     correlationId?: string,
@@ -297,6 +359,7 @@ export function layoutSectionItemsHeightResized(
         correlationId,
         payload: {
             sectionIndex,
+            sectionPath,
             itemIndexes,
             newHeight,
         },
@@ -310,13 +373,25 @@ export function layoutSectionItemsHeightResized(
 export interface DashboardLayoutSectionItemWidthResizedPayload {
     /**
      * Index of the section which items height was changed.
+     *
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link path} instead.
+     *
+     * TODO LX-648: Remove property in the next major version.
      */
     readonly sectionIndex: number;
 
     /**
      * Index of the items in section which height was changed.
+     *
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link path} instead.
+     *
+     * TODO LX-648: Remove property in the next major version.
      */
     readonly itemIndex: number;
+    /**
+     * Index of the items in section which height was changed.
+     */
+    readonly path: ILayoutItemPath;
 
     /**
      * New width of items.
@@ -338,6 +413,7 @@ export function layoutSectionItemWidthResized(
     ctx: DashboardContext,
     sectionIndex: number,
     itemIndex: number,
+    path: ILayoutItemPath,
     newWidth: number,
     correlationId?: string,
 ): DashboardLayoutSectionItemWidthResized {
@@ -348,6 +424,7 @@ export function layoutSectionItemWidthResized(
         payload: {
             sectionIndex,
             itemIndex,
+            path,
             newWidth,
         },
     };
@@ -374,13 +451,25 @@ export const isDashboardLayoutSectionHeaderChanged = eventGuard<DashboardLayoutS
 export interface DashboardLayoutSectionItemsAddedPayload {
     /**
      * Index of the section to which the items were added.
+     *
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionItemsAddedPayload.path} instead.
+     *
+     * TODO LX-648: Remove property in the next major version.
      */
     readonly sectionIndex: number;
 
     /**
      * Index within the section at which the items were inserted.
+     *
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionItemsAddedPayload.path} instead.
+     *
+     * TODO LX-648: Remove property in the next major version.
      */
     readonly startIndex: number;
+    /**
+     * Path of the inserted item.
+     */
+    readonly path: ILayoutItemPath;
 
     /**
      * Items that were inserted.
@@ -408,6 +497,7 @@ export function layoutSectionItemsAdded(
     ctx: DashboardContext,
     sectionIndex: number,
     startIndex: number,
+    path: ILayoutItemPath,
     itemsAdded: ExtendedDashboardItem[],
     stashesUsed?: StashedDashboardItemsId[],
     correlationId?: string,
@@ -419,6 +509,7 @@ export function layoutSectionItemsAdded(
         payload: {
             sectionIndex,
             startIndex,
+            path,
             itemsAdded,
             stashesUsed,
         },
@@ -446,13 +537,26 @@ export const isDashboardLayoutSectionItemsAdded = eventGuard<DashboardLayoutSect
 export interface DashboardLayoutSectionItemReplacedPayload {
     /**
      * Index of section where the replacement happened.
+     *
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionItemReplacedPayload.path} instead.
+     *
+     * TODO LX-648: Remove property in the next major version.
      */
     readonly sectionIndex: number;
 
     /**
      * Index of item within the section that was replaced.
+     *
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionItemReplacedPayload.path} instead.
+     *
+     * TODO LX-648: Remove property in the next major version.
      */
     readonly itemIndex: number;
+
+    /**
+     * Path of item that was replaced.
+     */
+    readonly path: ILayoutItemPath;
 
     /**
      * New item definition.
@@ -484,6 +588,7 @@ export function layoutSectionItemReplaced(
     ctx: DashboardContext,
     sectionIndex: number,
     itemIndex: number,
+    path: ILayoutItemPath,
     items: ExtendedDashboardItem[],
     previousItem: ExtendedDashboardItem,
     stashIdentifier?: StashedDashboardItemsId,
@@ -496,6 +601,7 @@ export function layoutSectionItemReplaced(
         payload: {
             sectionIndex,
             itemIndex,
+            path,
             items,
             previousItem,
             stashIdentifier,
@@ -529,11 +635,19 @@ export interface DashboardLayoutSectionItemMovedPayload {
 
     /**
      * Index of section from which the item was moved.
+     *
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionItemMovedPayload.fromPath} instead.
+     *
+     * TODO LX-648: Remove property in the next major version.
      */
     readonly fromSectionIndex: number;
 
     /**
      * Index of section to which the item was moved.
+     *
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionItemMovedPayload.toPath} instead.
+     *
+     * TODO LX-648: Remove property in the next major version.
      *
      * This may be the same as `fromSectionIndex` - which means the move happened within the same section.
      */
@@ -541,13 +655,31 @@ export interface DashboardLayoutSectionItemMovedPayload {
 
     /**
      * Index within the `fromSection` from where the item was moved.
+     *
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionItemMovedPayload.fromPath} instead.
+     *
+     * TODO LX-648: Remove property in the next major version.
      */
     readonly fromIndex: number;
 
     /**
      * Index in `toSection` at which the item was inserted.
+     *
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionItemMovedPayload.toPath} instead.
+     *
+     * TODO LX-648: Remove property in the next major version.
      */
     readonly toIndex: number;
+
+    /**
+     * Path from where the item was moved.
+     */
+    readonly fromPath: ILayoutItemPath;
+
+    /**
+     * Path at which the item was inserted.
+     */
+    readonly toPath: ILayoutItemPath;
 
     /**
      * Indicate, that original section has been removed.
@@ -572,6 +704,8 @@ export function layoutSectionItemMoved(
     toSectionIndex: number,
     fromIndex: number,
     toIndex: number,
+    fromPath: ILayoutItemPath,
+    toPath: ILayoutItemPath,
     originalSectionRemoved: boolean,
     correlationId?: string,
 ): DashboardLayoutSectionItemMoved {
@@ -585,6 +719,8 @@ export function layoutSectionItemMoved(
             toSectionIndex,
             fromIndex,
             toIndex,
+            fromPath,
+            toPath,
             originalSectionRemoved,
         },
     };
@@ -616,6 +752,10 @@ export interface DashboardLayoutSectionItemMovedToNewSectionPayload {
 
     /**
      * Index of section from which the item was moved.
+     *
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionItemMovedToNewSectionPayload.fromPath} instead.
+     *
+     * TODO LX-648: Remove property in the next major version.
      */
     readonly fromSectionIndex: number;
 
@@ -623,18 +763,40 @@ export interface DashboardLayoutSectionItemMovedToNewSectionPayload {
      * Index of section to which the item was moved.
      *
      * This may be the same as `fromSectionIndex` - which means the move happened within the same section.
+     *
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionItemMovedToNewSectionPayload.toPath} instead.
+     *
+     * TODO LX-648: Remove property in the next major version.
      */
     readonly toSectionIndex: number;
 
     /**
      * Index within the `fromSection` from where the item was moved.
+     *
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionItemMovedToNewSectionPayload.fromPath} instead.
+     *
+     * TODO LX-648: Remove property in the next major version.
      */
     readonly fromIndex: number;
 
     /**
      * Index in `toSection` at which the item was inserted.
+     *
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionItemMovedToNewSectionPayload.toPath} instead.
+     *
+     * TODO LX-648: Remove property in the next major version.
      */
     readonly toIndex: number;
+
+    /**
+     * Index from where the item was moved.
+     */
+    readonly fromPath: ILayoutItemPath;
+
+    /**
+     * Index at which the item was inserted.
+     */
+    readonly toPath: ILayoutItemPath;
 
     /**
      * Indicate, that original section has been removed.
@@ -659,6 +821,8 @@ export function layoutSectionItemMovedToNewSection(
     toSectionIndex: number,
     fromIndex: number,
     toIndex: number,
+    fromPath: ILayoutItemPath,
+    toPath: ILayoutItemPath,
     originalSectionRemoved: boolean,
     correlationId?: string,
 ): DashboardLayoutSectionItemMovedToNewSection {
@@ -672,6 +836,8 @@ export function layoutSectionItemMovedToNewSection(
             toSectionIndex,
             fromIndex,
             toIndex,
+            fromPath,
+            toPath,
             originalSectionRemoved,
         },
     };
@@ -704,8 +870,17 @@ export interface DashboardLayoutSectionItemRemovedPayload {
 
     /**
      * Index where the item resided.
+     *
+     * @deprecated The prop will be removed in the next major SDK version. Use {@link DashboardLayoutSectionItemRemovedPayload.itemPath} instead.
+     *
+     * TODO LX-648: Remove property in the next major version.
      */
     readonly itemIndex: number;
+
+    /**
+     * Path where the item resided.
+     */
+    readonly itemPath: ILayoutItemPath;
 
     /**
      * If the removal was eager and removed the entire section, then that section is included here.
@@ -734,6 +909,7 @@ export function layoutSectionItemRemoved(
     ctx: DashboardContext,
     item: ExtendedDashboardItem,
     itemIndex: number,
+    itemPath: ILayoutItemPath,
     section?: ExtendedDashboardLayoutSection,
     stashIdentifier?: StashedDashboardItemsId,
     correlationId?: string,
@@ -745,6 +921,7 @@ export function layoutSectionItemRemoved(
         payload: {
             item,
             itemIndex,
+            itemPath,
             section,
             stashIdentifier,
         },
@@ -809,4 +986,54 @@ export function layoutChanged(
  */
 export const isDashboardLayoutChanged = eventGuard<DashboardLayoutChanged>(
     "GDC.DASH/EVT.FLUID_LAYOUT.LAYOUT_CHANGED",
+);
+
+//
+//
+//
+
+/**
+ * Payload of the {@link ScreenSizeChanged} event.
+ * @beta
+ */
+export interface ScreenSizeChangedPayload {
+    /**
+     * New screen size.
+     */
+    readonly screenSize: ScreenSize;
+}
+
+/**
+ * This event is emitted after change of the dashboard layout screen size.
+ *
+ * @beta
+ */
+export interface ScreenSizeChanged extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.FLUID_LAYOUT.SCREEN_SIZE_CHANGED";
+    readonly payload: ScreenSizeChangedPayload;
+}
+
+export function screenSizeChanged(
+    ctx: DashboardContext,
+    screenSize: ScreenSize,
+    correlationId?: string,
+): ScreenSizeChanged {
+    return {
+        type: "GDC.DASH/EVT.FLUID_LAYOUT.SCREEN_SIZE_CHANGED",
+        ctx,
+        correlationId,
+        payload: {
+            screenSize,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link ScreenSizeChanged}.
+ *
+ * @param obj - object to test
+ * @beta
+ */
+export const isScreenSizeChanged = eventGuard<ScreenSizeChanged>(
+    "GDC.DASH/EVT.FLUID_LAYOUT.SCREEN_SIZE_CHANGED",
 );

@@ -326,6 +326,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableDestinationTesting,
+            "enableDestinationTesting",
+            "BOOLEAN",
+            FeatureFlagsValues.enableDestinationTesting,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableLabsSmartFunctions,
             "enableLabsSmartFunctions",
             "BOOLEAN",

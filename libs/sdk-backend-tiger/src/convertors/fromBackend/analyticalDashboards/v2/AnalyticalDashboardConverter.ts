@@ -27,6 +27,8 @@ import {
     IRichTextWidget,
     IVisualizationSwitcherWidget,
     isVisualizationSwitcherWidget,
+    IDashboardLayoutWidget,
+    isDashboardLayout,
 } from "@gooddata/sdk-model";
 import updateWith from "lodash/updateWith.js";
 import { cloneWithSanitizedIds } from "../../IdSanitization.js";
@@ -51,15 +53,29 @@ function setWidgetRefsInLayout(layout: IDashboardLayout<IDashboardWidget> | unde
         return updateWith(
             layout,
             widgetPath,
-            (widget: IInsightWidget | IRichTextWidget | IVisualizationSwitcherWidget) => {
+            (
+                widget:
+                    | IInsightWidget
+                    | IRichTextWidget
+                    | IVisualizationSwitcherWidget
+                    | IDashboardLayoutWidget,
+            ) => {
                 const id = widget.localIdentifier ?? uuidv4();
 
-                const convertedWidget: IInsightWidget | IRichTextWidget | IVisualizationSwitcherWidget = {
+                const convertedWidget:
+                    | IInsightWidget
+                    | IRichTextWidget
+                    | IVisualizationSwitcherWidget
+                    | IDashboardLayoutWidget = {
                     ...widget,
                     ref: idRef(id),
                     uri: id,
                     identifier: id,
                 };
+
+                if (isDashboardLayout(convertedWidget)) {
+                    return convertedWidget;
+                }
 
                 const isSwitcher = isVisualizationSwitcherWidget(convertedWidget);
 
@@ -264,7 +280,11 @@ export function prepareDrillLocalIdentifierIfMissing(layout?: IDashboardLayout) 
 
     return widgetsPaths.reduce((layout, widgetPath) => {
         return updateWith(layout, widgetPath, (widget: IInsightWidget) => {
-            const drills = widget?.drills.map((it) => ({
+            if (!widget?.drills) {
+                return widget;
+            }
+
+            const drills = widget.drills.map((it) => ({
                 ...it,
                 localIdentifier: it.localIdentifier ?? uuidv4().replace(/-/g, ""),
             }));

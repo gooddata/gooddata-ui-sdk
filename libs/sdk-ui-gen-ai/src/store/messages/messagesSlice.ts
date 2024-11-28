@@ -1,7 +1,15 @@
 // (C) 2024 GoodData Corporation
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { GenAIChatInteractionUserFeedback } from "@gooddata/sdk-model";
-import { AssistantMessage, Contents, isAssistantMessage, makeErrorContents, Message } from "../../model.js";
+import {
+    AssistantMessage,
+    Contents,
+    isAssistantMessage,
+    isUserMessage,
+    makeErrorContents,
+    Message,
+    UserMessage,
+} from "../../model.js";
 
 type MessagesSliceState = {
     /**
@@ -29,17 +37,35 @@ type MessagesSliceState = {
      * - evaluating: the new user message is being evaluated by assistant
      */
     asyncProcess?: "loading" | "clearing" | "evaluating";
+    /**
+     * An ID of the conversation thread.
+     * Not the same as threadIdSuffix in some of the REST APIs,
+     * this one is the actual id from server, useful for telemetry.
+     */
+    threadId?: string;
 };
 
 export const LS_VERBOSE_KEY = "gd-gen-ai-verbose";
 export const messagesSliceName = "messages";
+
+/**
+ * Get the initial verbose state from the local storage,
+ * but provide a fallback for Node.js when running unit tests.
+ */
+const getInitialVerboseState = () => {
+    if (typeof window !== undefined) {
+        return window.localStorage.getItem(LS_VERBOSE_KEY) === "true";
+    }
+
+    return false;
+};
 
 const initialState: MessagesSliceState = {
     // Start with loading state to avoid re-render from empty state on startup
     asyncProcess: "loading",
     messageOrder: [],
     messages: {},
-    verbose: window.localStorage.getItem(LS_VERBOSE_KEY) === "true",
+    verbose: getInitialVerboseState(),
 };
 
 const setNormalizedMessages = (state: MessagesSliceState, messages: Message[]) => {
@@ -61,6 +87,15 @@ const getAssistantMessageStrict = (
     return message;
 };
 
+const getUserMessageBeforeStrict = (state: MessagesSliceState, assistantMessageId: string): UserMessage => {
+    const messageIndex = state.messageOrder.indexOf(assistantMessageId);
+    const message = state.messages[state.messageOrder[messageIndex - 1]];
+    if (!isUserMessage(message)) {
+        throw new Error(`Unexpected error during message evaluation.`);
+    }
+    return message;
+};
+
 const messagesSlice = createSlice({
     name: messagesSliceName,
     initialState,
@@ -74,9 +109,10 @@ const messagesSlice = createSlice({
         },
         loadThreadSuccessAction: (
             state,
-            { payload: { messages } }: PayloadAction<{ messages: Message[] }>,
+            { payload: { messages, threadId } }: PayloadAction<{ messages: Message[]; threadId: string }>,
         ) => {
             setNormalizedMessages(state, messages);
+            state.threadId = threadId;
             delete state.asyncProcess;
         },
         clearThreadAction: (state) => {
@@ -141,11 +177,15 @@ const messagesSlice = createSlice({
                 interactionId?: number;
             }>,
         ) => {
+            // Update assistant message
             const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
-
             assistantMessage.id = payload.interactionId ?? assistantMessage.id;
             assistantMessage.content.push(...payload.contents);
             assistantMessage.cancelled = false;
+
+            // Also update the interaction id in the relevant user message
+            const userMessage = getUserMessageBeforeStrict(state, payload.assistantMessageId);
+            userMessage.id = payload.interactionId ?? userMessage.id;
         },
         evaluateMessageCompleteAction: (
             state,

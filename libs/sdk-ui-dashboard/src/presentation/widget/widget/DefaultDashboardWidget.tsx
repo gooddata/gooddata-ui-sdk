@@ -9,7 +9,6 @@ import {
     isKpiWidget,
     isRichTextWidget,
     isVisualizationSwitcherWidget,
-    isDashboardLayout,
 } from "@gooddata/sdk-model";
 import { BackendProvider, convertError, useBackendStrict } from "@gooddata/sdk-ui";
 import { withEventing } from "@gooddata/sdk-backend-base";
@@ -18,6 +17,7 @@ import {
     useDashboardEventDispatch,
     useDashboardSelector,
     selectEnableFlexibleLayout,
+    isExtendedDashboardLayoutWidget,
 } from "../../../model/index.js";
 import {
     widgetExecutionFailed,
@@ -26,12 +26,12 @@ import {
 } from "../../../model/events/widget.js";
 import { IDashboardWidgetProps } from "./types.js";
 import { safeSerializeObjRef } from "../../../_staging/metadata/safeSerializeObjRef.js";
-import { DashboardLayout } from "../dashboardLayout/DashboardLayout.js";
 
 import { DefaultDashboardKpiWidget } from "./DefaultDashboardKpiWidget.js";
 import { RenderModeAwareDashboardInsightWidget } from "./InsightWidget/index.js";
 import { RenderModeAwareDashboardRichTextWidget } from "./RichTextWidget/index.js";
 import { RenderModeAwareDashboardVisualizationSwitcherWidget } from "./VisualizationSwitcherWidget/RenderModeAwareDashboardVisualizationSwitcherWidget.js";
+import { RenderModeAwareDashboardNestedLayoutWidget } from "./DashboardNestedLayoutWidget/RenderModeAwareDashboardNestedLayoutWidget.js";
 
 /**
  * @internal
@@ -48,6 +48,7 @@ export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget
         // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
         index,
         parentLayoutItemSize,
+        parentLayoutPath,
     } = props;
 
     const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
@@ -136,13 +137,15 @@ export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget
         }
 
         return <BackendProvider backend={backendWithEventing}>{renderWidget}</BackendProvider>;
-    } else if (isFlexibleLayoutEnabled && isDashboardLayout(widget)) {
+    } else if (isFlexibleLayoutEnabled && isExtendedDashboardLayoutWidget(widget)) {
         return (
-            <DashboardLayout
+            <RenderModeAwareDashboardNestedLayoutWidget
+                // nested layout widget merges layout and other widget props into single object. Split them here
+                widget={widget}
                 layout={widget}
-                screen={screen}
                 onFiltersChange={onFiltersChange}
                 parentLayoutItemSize={parentLayoutItemSize}
+                parentLayoutPath={parentLayoutPath}
             />
         );
     }

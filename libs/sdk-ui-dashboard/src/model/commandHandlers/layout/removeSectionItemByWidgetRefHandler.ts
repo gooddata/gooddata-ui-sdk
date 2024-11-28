@@ -1,7 +1,7 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, select } from "redux-saga/effects";
-import { selectWidgetCoordinatesByRef } from "../../store/layout/layoutSelectors.js";
+import { selectWidgetPathByRef } from "../../store/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 
 import { RemoveSectionItemByWidgetRef } from "../../commands/layout.js";
@@ -13,9 +13,9 @@ export function* removeSectionItemByWidgetRefHandler(
     ctx: DashboardContext,
     cmd: RemoveSectionItemByWidgetRef,
 ): SagaIterator<void> {
-    let widgetCoordinates: ReturnType<ReturnType<typeof selectWidgetCoordinatesByRef>>;
+    let widgetCoordinates: ReturnType<ReturnType<typeof selectWidgetPathByRef>>;
     try {
-        widgetCoordinates = yield select(selectWidgetCoordinatesByRef(cmd.payload.widgetRef));
+        widgetCoordinates = yield select(selectWidgetPathByRef(cmd.payload.widgetRef));
     } catch (e: any) {
         throw invalidArgumentsProvided(
             ctx,
@@ -32,7 +32,9 @@ export function* removeSectionItemByWidgetRefHandler(
         {
             correlationId: cmd.correlationId,
             payload: {
-                ...widgetCoordinates,
+                itemPath: widgetCoordinates,
+                sectionIndex: -1, // just for compatibility purposes, information will be ignored
+                itemIndex: -1, // just for compatibility purposes, information will be ignored
                 eager: cmd.payload.eager,
                 stashIdentifier: cmd.payload.stashIdentifier,
             },

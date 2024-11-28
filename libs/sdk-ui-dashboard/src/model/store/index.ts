@@ -181,9 +181,11 @@ export { selectLegacyDashboards } from "./legacyDashboards/legacyDashboardsSelec
 
 export type { UndoEnhancedState, UndoEntry } from "./_infra/undoEnhancer.js";
 export type { LayoutState, LayoutStash } from "./layout/layoutState.js";
+
 export {
     selectLayout,
     selectStash,
+    selectScreen,
     selectWidgetByRef,
     selectAnalyticalWidgetByRef,
     selectFilterableWidgetByRef,
@@ -196,12 +198,16 @@ export {
     selectIsLayoutEmpty,
     selectLayoutHasAnalyticalWidgets,
     selectWidgetDrills,
+    selectWidgetPathByRef,
     selectWidgetCoordinatesByRef,
     selectWidgetPlaceholder,
+    selectWidgetPlaceholderPath,
     selectWidgetPlaceholderCoordinates,
     selectInsightWidgetPlaceholder,
+    selectInsightWidgetPlaceholderPath,
     selectInsightWidgetPlaceholderCoordinates,
     selectKpiWidgetPlaceholder,
+    selectKpiWidgetPlaceholderPath,
     selectKpiWidgetPlaceholderCoordinates,
     selectIgnoredDrillDownHierarchiesByWidgetRef,
 } from "./layout/layoutSelectors.js";
@@ -344,15 +350,18 @@ export {
     selectWidgetDateDatasetAutoSelect,
     selectIsDeleteDialogOpen,
     selectIsKpiDeleteDialogOpen,
+    selectKpiDeleteDialogWidgetLayoutPath,
     selectKpiDeleteDialogWidgetCoordinates,
     selectInsightListLastUpdateRequested,
     selectIsWidgetLoadingAdditionalDataByWidgetRef,
     selectIsFilterAttributeSelectionOpen,
     selectSelectedFilterIndex,
     selectIsDraggingWidget,
+    selectActiveSection,
     selectActiveSectionIndex,
     selectIsCancelEditModeDialogOpen,
     selectDraggingWidgetSource,
+    selectDraggingWidgetTargetLayoutPath,
     selectDraggingWidgetTarget,
     selectWidgetsOverlay,
     selectWidgetsOverlayState,

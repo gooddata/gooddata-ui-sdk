@@ -10,7 +10,7 @@ import {
     IDashboardLayoutSizeByScreenSize,
 } from "@gooddata/sdk-model";
 
-import { IDashboardFilter, OnFiredDashboardDrillEvent } from "../../../types.js";
+import { IDashboardFilter, OnFiredDashboardDrillEvent, ILayoutItemPath } from "../../../types.js";
 import { ExtendedDashboardWidget } from "../../../model/index.js";
 
 /**
@@ -57,6 +57,13 @@ export interface IDashboardWidgetProps {
      * @alpha
      */
     parentLayoutItemSize?: IDashboardLayoutSizeByScreenSize;
+
+    /**
+     * The path to the layout item in which the section is nested
+     *
+     * @alpha
+     */
+    parentLayoutPath?: ILayoutItemPath;
 
     /**
      * Specify date data set to use when passing dashboard date filter to rendered visualization.

@@ -44,40 +44,47 @@ const AssistantMessageComponentCore: React.FC<AssistantMessageProps & WrappedCom
                     isComplete={Boolean(message.complete || message.cancelled)}
                     isCancelled={message.cancelled}
                 />
-                <div className="gd-gen-ai-chat__messages__feedback">
-                    <button
+                {message.complete ? (
+                    <div
                         className={cx({
-                            "gd-gen-ai-chat__messages__feedback__button": true,
-                            "gd-gen-ai-chat__messages__feedback__button--positive":
-                                message.feedback === "POSITIVE",
+                            "gd-gen-ai-chat__messages__feedback": true,
+                            "gd-gen-ai-chat__messages__feedback--assigned": message.feedback !== "NONE",
                         })}
-                        type="button"
-                        onClick={() =>
-                            setUserFeedback({
-                                assistantMessageId: message.localId,
-                                feedback: message.feedback === "POSITIVE" ? "NONE" : "POSITIVE",
-                            })
-                        }
                     >
-                        <Icon.ThumbsUp />
-                    </button>
-                    <button
-                        className={cx({
-                            "gd-gen-ai-chat__messages__feedback__button": true,
-                            "gd-gen-ai-chat__messages__feedback__button--negative":
-                                message.feedback === "NEGATIVE",
-                        })}
-                        type="button"
-                        onClick={() =>
-                            setUserFeedback({
-                                assistantMessageId: message.localId,
-                                feedback: message.feedback === "NEGATIVE" ? "NONE" : "NEGATIVE",
-                            })
-                        }
-                    >
-                        <Icon.ThumbsDown />
-                    </button>
-                </div>
+                        <button
+                            className={cx({
+                                "gd-gen-ai-chat__messages__feedback__button": true,
+                                "gd-gen-ai-chat__messages__feedback__button--positive":
+                                    message.feedback === "POSITIVE",
+                            })}
+                            type="button"
+                            onClick={() =>
+                                setUserFeedback({
+                                    assistantMessageId: message.localId,
+                                    feedback: message.feedback === "POSITIVE" ? "NONE" : "POSITIVE",
+                                })
+                            }
+                        >
+                            <Icon.ThumbsUp />
+                        </button>
+                        <button
+                            className={cx({
+                                "gd-gen-ai-chat__messages__feedback__button": true,
+                                "gd-gen-ai-chat__messages__feedback__button--negative":
+                                    message.feedback === "NEGATIVE",
+                            })}
+                            type="button"
+                            onClick={() =>
+                                setUserFeedback({
+                                    assistantMessageId: message.localId,
+                                    feedback: message.feedback === "NEGATIVE" ? "NONE" : "NEGATIVE",
+                                })
+                            }
+                        >
+                            <Icon.ThumbsDown />
+                        </button>
+                    </div>
+                ) : null}
             </div>
         </div>
     );

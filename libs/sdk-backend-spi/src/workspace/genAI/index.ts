@@ -102,6 +102,7 @@ export interface IChatThread {
  */
 export interface IChatThreadHistory {
     interactions: IGenAIChatInteraction[];
+    threadId: string;
 }
 
 /**

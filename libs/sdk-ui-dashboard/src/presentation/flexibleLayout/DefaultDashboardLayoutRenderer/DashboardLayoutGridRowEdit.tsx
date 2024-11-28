@@ -2,13 +2,17 @@
 import React, { useMemo } from "react";
 import reverse from "lodash/fp/reverse.js";
 
-import { HeightResizerHotspot, useIsDraggingWidget } from "../../dragAndDrop/index.js";
 import { DashboardLayoutGridRowProps } from "./DashboardLayoutGridRow.js";
 import { DashboardLayoutItem } from "./DashboardLayoutItem.js";
 import { IDashboardLayoutItemKeyGetter } from "./interfaces.js";
-import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/fluidLayout/facade/interfaces.js";
+import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
+import { serializeLayoutItemPath } from "../../../_staging/layout/coordinates.js";
+import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
+import { HeightResizerHotspot } from "../dragAndDrop/Resize/HeightResizerHotspot.js";
+import { useIsDraggingWidget } from "../../dragAndDrop/draggableWidget/useIsDraggingWidget.js";
 
-const defaultItemKeyGetter: IDashboardLayoutItemKeyGetter<unknown> = ({ item }) => item.index().toString();
+const defaultItemKeyGetter: IDashboardLayoutItemKeyGetter<unknown> = ({ item }) =>
+    serializeLayoutItemPath(item.index());
 
 export function DashboardLayoutGridRowEdit<TWidget>(
     props: DashboardLayoutGridRowProps<TWidget> & {
@@ -22,11 +26,11 @@ export function DashboardLayoutGridRowEdit<TWidget>(
         itemRenderer,
         widgetRenderer,
         getLayoutDimensions,
-        screen,
         items,
         renderMode,
         itemsInRowsByIndex,
     } = props;
+    const screen = useScreenSize();
 
     const isDraggingWidget = useIsDraggingWidget();
     const rowItems = useMemo(
@@ -37,7 +41,6 @@ export function DashboardLayoutGridRowEdit<TWidget>(
                     item={item}
                     itemRenderer={itemRenderer}
                     widgetRenderer={widgetRenderer}
-                    screen={screen}
                 />
             )),
         [itemKeyGetter, itemRenderer, items, screen, widgetRenderer],
@@ -54,14 +57,13 @@ export function DashboardLayoutGridRowEdit<TWidget>(
                           0,
                           <HeightResizerHotspot
                               key={`HeightResizerHotspot-${index}`}
-                              screen={screen}
                               getLayoutDimensions={getLayoutDimensions}
                               section={section}
                               items={itemsInRow}
                           />,
                       );
                   }, rowItems),
-        [isDraggingWidget, rowItems, itemsInRowsByIndex, screen, getLayoutDimensions, section],
+        [isDraggingWidget, rowItems, itemsInRowsByIndex, getLayoutDimensions, section],
     );
 
     return (
@@ -69,7 +71,6 @@ export function DashboardLayoutGridRowEdit<TWidget>(
             {gridRowRenderer
                 ? gridRowRenderer({
                       children: extendedRows,
-                      screen,
                       section,
                       items,
                       renderMode,

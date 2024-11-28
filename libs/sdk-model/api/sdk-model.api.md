@@ -323,7 +323,7 @@ export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
 export type DatasetLoadStatus = "RUNNING" | "OK" | "ERROR" | "CANCELLED" | "ERROR_METADATA" | "REFRESHING";
 
 // @alpha (undocumented)
-export type DataSourceType = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "SINGLESTORE" | "MOTHERDUCK" | "FLIGHTRPC" | "FLEXCONNECT";
+export type DataSourceType = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "SINGLESTORE" | "MOTHERDUCK" | "FLEXCONNECT";
 
 // @public
 export type DataValue = null | string | number;
@@ -540,7 +540,7 @@ export type GenAIMetricType = "metric" | "fact" | "attribute";
 // @alpha
 export type GenAINegativeAttributeFilter = {
     using: string;
-    exclude: string[];
+    exclude: Array<string | null>;
 };
 
 // @beta
@@ -549,7 +549,7 @@ export type GenAIObjectType = "dataset" | "attribute" | "label" | "fact" | "date
 // @alpha
 export type GenAIPositiveAttributeFilter = {
     using: string;
-    include: string[];
+    include: Array<string | null>;
 };
 
 // @alpha
@@ -1885,6 +1885,7 @@ export interface IGenAIChatInteraction {
     question: string;
     routing: IGenAIChatRouting;
     textResponse?: string;
+    userFeedback?: GenAIChatInteractionUserFeedback;
 }
 
 // @alpha
@@ -1930,6 +1931,7 @@ export interface IGenAIVisualizationDimension {
 export interface IGenAIVisualizationMetric {
     aggFunction?: GenAIMetricAggregation;
     id: string;
+    title?: string;
     type: GenAIMetricType;
 }
 
@@ -2365,6 +2367,12 @@ export interface INotificationChannelMetadataObjectBase {
     allowedRecipients?: NotificationChannelAllowedRecipient;
     destination: IWebhookDestination | ISmtpDestination;
     type: "webhook" | "smtp";
+}
+
+// @alpha (undocumented)
+export interface INotificationChannelTestResponse {
+    error?: string;
+    successful: boolean;
 }
 
 // @public
@@ -3173,6 +3181,7 @@ export interface ISettings {
     enableDataSection?: boolean;
     enableDefaultSmtp?: boolean;
     enableDescriptions?: boolean;
+    enableDestinationTesting?: boolean;
     enableDrilledInsightExport?: boolean;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     enableEarlyAccessFeaturesRollout?: boolean;

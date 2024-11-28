@@ -669,6 +669,18 @@ export interface TestDefinitionRequest {
      */
     privateKeyPassphrase?: string;
     /**
+     * Id for client based authentication for data sources which supports it.
+     * @type {string}
+     * @memberof TestDefinitionRequest
+     */
+    clientId?: string;
+    /**
+     * Secret for client based authentication for data sources which supports it.
+     * @type {string}
+     * @memberof TestDefinitionRequest
+     */
+    clientSecret?: string;
+    /**
      *
      * @type {Array<DataSourceParameter>}
      * @memberof TestDefinitionRequest
@@ -699,7 +711,6 @@ export const TestDefinitionRequestTypeEnum = {
     PINOT: "PINOT",
     SINGLESTORE: "SINGLESTORE",
     MOTHERDUCK: "MOTHERDUCK",
-    FLIGHTRPC: "FLIGHTRPC",
     FLEXCONNECT: "FLEXCONNECT",
 } as const;
 
@@ -773,6 +784,18 @@ export interface TestRequest {
      * @memberof TestRequest
      */
     privateKeyPassphrase?: string;
+    /**
+     * Id for client based authentication for data sources which supports it.
+     * @type {string}
+     * @memberof TestRequest
+     */
+    clientId?: string;
+    /**
+     * Secret for client based authentication for data sources which supports it.
+     * @type {string}
+     * @memberof TestRequest
+     */
+    clientSecret?: string;
     /**
      *
      * @type {Array<DataSourceParameter>}

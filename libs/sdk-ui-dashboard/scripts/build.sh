@@ -20,18 +20,23 @@ _assets() {
     svgo -rqf src/assets esm/assets
 }
 
-_common-build() {
+styles-build() {
     _assets
-
     _build_styles
+}
 
+_common-build() {
     _version
 }
 
 build() {
     _common-build
-    tsc -p tsconfig.json
-    npm run api-extractor
+
+    if [[ $1 != "--genVersionOnly" ]]; then
+        styles-build
+        tsc -p tsconfig.json
+        npm run api-extractor
+    fi
 }
 
-build
+build $1

@@ -1916,8 +1916,8 @@ importers:
   ../../libs/sdk-ui:
     dependencies:
       '@gooddata/number-formatter':
-        specifier: ^1.0.5
-        version: 1.0.5
+        specifier: ^1.0.6
+        version: 1.0.6
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../sdk-backend-spi
@@ -2203,8 +2203,8 @@ importers:
         specifier: 27.3.0
         version: 27.3.0(@ag-grid-community/core@27.3.0)(react-dom@18.2.0)(react@18.2.0)
       '@gooddata/number-formatter':
-        specifier: ^1.0.5
-        version: 1.0.5
+        specifier: ^1.0.6
+        version: 1.0.6
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../sdk-backend-spi
@@ -2408,8 +2408,8 @@ importers:
   ../../libs/sdk-ui-dashboard:
     dependencies:
       '@gooddata/number-formatter':
-        specifier: ^1.0.5
-        version: 1.0.5
+        specifier: ^1.0.6
+        version: 1.0.6
       '@gooddata/sdk-backend-base':
         specifier: workspace:*
         version: link:../sdk-backend-base
@@ -3315,8 +3315,8 @@ importers:
   ../../libs/sdk-ui-geo:
     dependencies:
       '@gooddata/number-formatter':
-        specifier: ^1.0.5
-        version: 1.0.5
+        specifier: ^1.0.6
+        version: 1.0.6
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../sdk-backend-spi
@@ -3490,8 +3490,8 @@ importers:
         specifier: ^2.0.1
         version: 2.1.1(react-dom@18.2.0)(react@18.2.0)
       '@gooddata/number-formatter':
-        specifier: ^1.0.5
-        version: 1.0.5
+        specifier: ^1.0.6
+        version: 1.0.6
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../sdk-backend-spi
@@ -3891,8 +3891,8 @@ importers:
         specifier: 27.3.0
         version: 27.3.0(@ag-grid-community/core@27.3.0)(react-dom@18.2.0)(react@18.2.0)
       '@gooddata/number-formatter':
-        specifier: ^1.0.5
-        version: 1.0.5
+        specifier: ^1.0.6
+        version: 1.0.6
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../sdk-backend-spi
@@ -4878,8 +4878,8 @@ importers:
   ../../libs/sdk-ui-vis-commons:
     dependencies:
       '@gooddata/number-formatter':
-        specifier: ^1.0.5
-        version: 1.0.5
+        specifier: ^1.0.6
+        version: 1.0.6
       '@gooddata/sdk-backend-spi':
         specifier: workspace:*
         version: link:../sdk-backend-spi
@@ -9297,8 +9297,8 @@ packages:
       - encoding
     dev: true
 
-  /@gooddata/number-formatter@1.0.5:
-    resolution: {integrity: sha512-2FmOOcpmfm79mJiSPvHUx5Z1qI+NEgA6PER1UrxHOlKuWX21Kp18g2N7Fih3808q2LjXsjWTTmIIwshlqtDB5A==}
+  /@gooddata/number-formatter@1.0.6:
+    resolution: {integrity: sha512-16+Sqa6SChAR2fHGOe3/aIiXJdBMfB0eU9XzXGCxx93Lbxud1RjddbIo1/t5E1eodf4Ga5QmLMKiKZOWNaLAiQ==}
     dependencies:
       lru-cache: 10.1.0
       ts-invariant: 0.7.5

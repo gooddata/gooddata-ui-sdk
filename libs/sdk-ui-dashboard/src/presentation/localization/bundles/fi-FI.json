@@ -626,5 +626,9 @@
     "visualizationSwitcher.configurationPanel.remove.from.switcher": "Poista vaihtimesta",
     "visualizationSwitcher.list.menu.move.up": "Siirrä ylös",
     "visualizationSwitcher.list.menu.move.down": "Siirrä alas",
-    "visualizationSwitcher.list.menu.remove": "Poista"
+    "visualizationSwitcher.list.menu.remove": "Poista",
+    "dialogs.schedule.email.user.missing.email": "Tältä käyttäjältä puuttuu sähköpostiosoite.",
+    "insightAlert.config.for": "Kohteelle",
+    "insightAlert.config.warning.destination": "Valittu kohde tukee vain hälytyksen lähettämistä itsellesi.",
+    "insightAlert.config.selectAttribute": "Kaikki"
 }

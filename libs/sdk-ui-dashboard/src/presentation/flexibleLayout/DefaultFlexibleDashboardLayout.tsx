@@ -7,6 +7,7 @@ import {
     isWidget,
     IDashboardLayout,
     IDashboardLayoutItem,
+    IDashboardLayoutSizeByScreenSize,
 } from "@gooddata/sdk-model";
 import { LRUCache } from "lru-cache";
 import max from "lodash/max.js";
@@ -14,13 +15,13 @@ import max from "lodash/max.js";
 import {
     useDashboardSelector,
     selectIsExport,
-    selectIsLayoutEmpty,
     selectLayout,
     ExtendedDashboardWidget,
     selectInsightsMap,
     selectEnableWidgetCustomHeight,
     selectRenderMode,
 } from "../../model/index.js";
+import { serializeLayoutItemPath } from "../../_staging/layout/coordinates.js";
 
 import { DashboardLayoutWidget } from "./DashboardLayoutWidget.js";
 import { IDashboardLayoutProps } from "./types.js";
@@ -33,9 +34,11 @@ import {
 import { renderModeAwareDashboardLayoutSectionRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionRenderer.js";
 import { renderModeAwareDashboardLayoutSectionHeaderRenderer } from "./DefaultDashboardLayoutRenderer/RenderModeAwareDashboardLayoutSectionHeaderRenderer.js";
 import { getMemoizedWidgetSanitizer } from "./DefaultDashboardLayoutUtils.js";
-import { SectionHotspot } from "../dragAndDrop/index.js";
-import { isInitialPlaceholderWidget } from "../../widgets/index.js";
 import { EmptyDashboardLayout } from "./EmptyDashboardLayout.js";
+import { EmptyDashboardNestedLayout } from "./EmptyDashboardNestedLayout.js";
+import { useScreenSize } from "../dashboard/components/DashboardScreenSizeContext.js";
+import { useDashboardItemPathAndSize } from "../dashboard/components/DashboardItemPathAndSizeContext.js";
+import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../_staging/dashboard/flexibleLayout/index.js";
 
 /**
  * Get dashboard layout for exports.
@@ -47,12 +50,15 @@ import { EmptyDashboardLayout } from "./EmptyDashboardLayout.js";
  */
 function getDashboardLayoutForExport(
     layout: IDashboardLayout<ExtendedDashboardWidget>,
+    parentSize: IDashboardLayoutSizeByScreenSize | undefined,
 ): IDashboardLayout<ExtendedDashboardWidget> {
     const dashLayout = DashboardLayoutBuilder.for(layout);
     const layoutFacade = dashLayout.facade();
     const sections = layoutFacade.sections();
     const screenSplitSections = sections.map((section) => ({
-        items: section.items().asGridRows("xl"),
+        items: section
+            .items()
+            .asGridRows("xl", parentSize?.["xl"].gridWidth ?? DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT),
         header: section.header(),
     }));
 
@@ -88,30 +94,34 @@ const itemKeyGetter: IDashboardLayoutItemKeyGetter<ExtendedDashboardWidget> = (k
     if (isWidget(widget)) {
         return objRefToString(widget.ref);
     }
-    return keyGetterProps.item.index().toString();
+    return serializeLayoutItemPath(keyGetterProps.item.index());
 };
 
 /**
  * @alpha
  */
 export const DefaultFlexibleDashboardLayout = (props: IDashboardLayoutProps): JSX.Element => {
-    const {
-        layout: providedLayout,
-        screen: providedScreen,
-        parentLayoutItemSize,
-        onFiltersChange,
-        onDrill,
-        onError,
-    } = props;
+    const { layout: providedLayout, onFiltersChange, onDrill, onError } = props;
 
     const selectedLayout = useDashboardSelector(selectLayout);
-    const isLayoutEmpty = useDashboardSelector(selectIsLayoutEmpty);
+
     const enableWidgetCustomHeight = useDashboardSelector(selectEnableWidgetCustomHeight);
     const insights = useDashboardSelector(selectInsightsMap);
     const isExport = useDashboardSelector(selectIsExport);
     const renderMode = useDashboardSelector(selectRenderMode);
 
-    const layout = providedLayout ?? selectedLayout;
+    const screenSize = useScreenSize();
+    const { itemPath, itemSize } = useDashboardItemPathAndSize();
+
+    const layout: IDashboardLayout<ExtendedDashboardWidget> = useMemo(
+        () => ({
+            ...(providedLayout ?? selectedLayout),
+            ...(itemSize ? { size: itemSize[screenSize] } : {}),
+        }),
+        [providedLayout, selectedLayout, itemSize, screenSize],
+    );
+
+    const isLayoutEmpty = !layout.sections.length;
 
     const getInsightByRef = useCallback(
         (insightRef: ObjRef): IInsight | undefined => {
@@ -128,15 +138,15 @@ export const DefaultFlexibleDashboardLayout = (props: IDashboardLayoutProps): JS
 
     const transformedLayout = useMemo(() => {
         if (isExport) {
-            return getDashboardLayoutForExport(layout);
+            return getDashboardLayoutForExport(layout, itemSize);
         }
 
-        return DashboardLayoutBuilder.for(layout)
+        return DashboardLayoutBuilder.for(layout, itemPath)
             .modifySections((section) =>
                 section.modifyItems(sanitizeWidgets(getInsightByRef, enableWidgetCustomHeight)),
             )
             .build();
-    }, [layout, isExport, getInsightByRef, enableWidgetCustomHeight, sanitizeWidgets]);
+    }, [isExport, layout, itemPath, itemSize, sanitizeWidgets, getInsightByRef, enableWidgetCustomHeight]);
 
     const widgetRenderer = useCallback<IDashboardLayoutWidgetRenderer<ExtendedDashboardWidget>>(
         (renderProps) => {
@@ -153,22 +163,19 @@ export const DefaultFlexibleDashboardLayout = (props: IDashboardLayoutProps): JS
     );
 
     if (isLayoutEmpty) {
+        if (providedLayout) {
+            return <EmptyDashboardNestedLayout />;
+        }
         return <EmptyDashboardLayout />;
     }
-
-    // do not render the tailing section hotspot if there is only one section in the layout and it has only initial placeholders in it
-    const shouldRenderSectionHotspot =
-        transformedLayout.sections.length > 1 ||
-        (transformedLayout.sections.length === 1 &&
-            transformedLayout.sections[0].items.some((i) => !isInitialPlaceholderWidget(i.widget)));
 
     return (
         <>
             <DashboardLayout
                 className={isExport ? "export-mode" : ""}
                 layout={transformedLayout}
-                parentLayoutItemSize={parentLayoutItemSize}
-                screen={providedScreen}
+                parentLayoutItemSize={itemSize}
+                parentLayoutPath={itemPath}
                 itemKeyGetter={itemKeyGetter}
                 widgetRenderer={widgetRenderer}
                 enableCustomHeight={enableWidgetCustomHeight}
@@ -176,9 +183,6 @@ export const DefaultFlexibleDashboardLayout = (props: IDashboardLayoutProps): JS
                 sectionHeaderRenderer={renderModeAwareDashboardLayoutSectionHeaderRenderer}
                 renderMode={renderMode}
             />
-            {!!shouldRenderSectionHotspot && (
-                <SectionHotspot index={transformedLayout.sections.length} targetPosition="below" />
-            )}
         </>
     );
 };

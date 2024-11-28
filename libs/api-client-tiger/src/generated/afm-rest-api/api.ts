@@ -891,7 +891,23 @@ export interface ChatHistoryInteraction {
      * @memberof ChatHistoryInteraction
      */
     createdVisualizations?: CreatedVisualizations;
+    /**
+     * User feedback.
+     * @type {string}
+     * @memberof ChatHistoryInteraction
+     */
+    userFeedback?: ChatHistoryInteractionUserFeedbackEnum;
 }
+
+export const ChatHistoryInteractionUserFeedbackEnum = {
+    POSITIVE: "POSITIVE",
+    NEGATIVE: "NEGATIVE",
+    NONE: "NONE",
+} as const;
+
+export type ChatHistoryInteractionUserFeedbackEnum =
+    typeof ChatHistoryInteractionUserFeedbackEnum[keyof typeof ChatHistoryInteractionUserFeedbackEnum];
+
 /**
  *
  * @export
@@ -945,6 +961,12 @@ export interface ChatHistoryResult {
      * @memberof ChatHistoryResult
      */
     interactions: Array<ChatHistoryInteraction>;
+    /**
+     * The conversation thread ID.
+     * @type {string}
+     * @memberof ChatHistoryResult
+     */
+    threadId: string;
 }
 /**
  *
@@ -1301,13 +1323,13 @@ export interface DateAbsoluteFilter {
      * @type {string}
      * @memberof DateAbsoluteFilter
      */
-    from?: string;
+    from: string;
     /**
      *
      * @type {string}
      * @memberof DateAbsoluteFilter
      */
-    to?: string;
+    to: string;
 }
 /**
  *
@@ -2971,13 +2993,12 @@ export interface RouteResult {
 }
 
 export const RouteResultUseCaseEnum = {
-    SEARCH_ALL: "SEARCH_ALL",
-    SEARCH_VISUALIZATIONS: "SEARCH_VISUALIZATIONS",
-    SEARCH_DASHBOARDS: "SEARCH_DASHBOARDS",
+    INVALID: "INVALID",
+    GENERAL: "GENERAL",
+    SEARCH: "SEARCH",
     CREATE_VISUALIZATION: "CREATE_VISUALIZATION",
     EXTEND_VISUALIZATION: "EXTEND_VISUALIZATION",
-    GENERAL: "GENERAL",
-    INVALID: "INVALID",
+    HOWTO: "HOWTO",
 } as const;
 
 export type RouteResultUseCaseEnum = typeof RouteResultUseCaseEnum[keyof typeof RouteResultUseCaseEnum];

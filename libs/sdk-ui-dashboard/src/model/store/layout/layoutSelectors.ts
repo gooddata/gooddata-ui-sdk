@@ -17,6 +17,7 @@ import {
     DrillDefinition,
     isVisualizationSwitcherWidget,
     isDashboardLayout,
+    ScreenSize,
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import partition from "lodash/partition.js";
@@ -34,7 +35,7 @@ import { ObjRefMap, newMapForObjectWithIdentity } from "../../../_staging/metada
 import { selectFilterContextFilters } from "../filterContext/filterContextSelectors.js";
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters/index.js";
 import { createMemoizedSelector } from "../_infra/selectors.js";
-import { IDashboardFilter, ILayoutCoordinates } from "../../../types.js";
+import { IDashboardFilter, ILayoutItemPath, ILayoutCoordinates } from "../../../types.js";
 import {
     isInsightPlaceholderWidget,
     isKpiPlaceholderWidget,
@@ -95,6 +96,18 @@ export const selectLayout: DashboardSelector<IDashboardLayout<ExtendedDashboardW
 );
 
 /**
+ * This selector returns dashboard's current layout screen size. Valid screen size is provided after first render.
+ *
+ * @public
+ */
+export const selectScreen: DashboardSelector<ScreenSize | undefined> = createSelector(
+    selectSelf,
+    (layoutState: LayoutState) => {
+        return layoutState.screen;
+    },
+);
+
+/**
  * This selector returns the basic dashboard layout that does not contain any client-side extensions.
  *
  * This selector exists because analytical backend impls are not yet ready to handle persistence of custom
@@ -143,6 +156,7 @@ const getLayoutWidgets = (layout: IDashboardLayout<ExtendedDashboardWidget>) => 
                 continue;
             }
             if (isDashboardLayout(item.widget)) {
+                items.push(item.widget);
                 items.push(...getLayoutWidgets(item.widget));
             } else {
                 items.push(item.widget);
@@ -419,16 +433,35 @@ export const selectLayoutHasAnalyticalWidgets: DashboardSelector<boolean> = crea
 );
 
 /**
+ * Selects layout path for a given widget.
+ *
+ * @alpha
+ */
+export const selectWidgetPathByRef: (ref: ObjRef) => DashboardSelector<ILayoutItemPath> =
+    createMemoizedSelector((ref: ObjRef) => {
+        return createSelector(selectLayout, (layout): ILayoutItemPath => {
+            const coords = getWidgetCoordinates(layout, ref);
+            invariant(coords, `widget with ref ${objRefToString(ref)} does not exist in the state`);
+            return coords;
+        });
+    });
+
+/**
  * Selects layout coordinates for a given widget.
  *
  * @alpha
+ *
+ * @deprecated The selector returns coordinates in its parent layout. The information is not useful on its
+ *  own when dashboard uses nested layout. For this case use {@link selectWidgetPathByRef} instead.
+ *
+ *  TODO LX-648: remove this selector, exported only for backward compatible reasons.
  */
 export const selectWidgetCoordinatesByRef: (ref: ObjRef) => DashboardSelector<ILayoutCoordinates> =
     createMemoizedSelector((ref: ObjRef) => {
         return createSelector(selectLayout, (layout): ILayoutCoordinates => {
             const coords = getWidgetCoordinates(layout, ref);
             invariant(coords, `widget with ref ${objRefToString(ref)} does not exist in the state`);
-            return coords;
+            return coords[coords.length - 1];
         });
     });
 
@@ -445,9 +478,26 @@ export const selectWidgetPlaceholder: DashboardSelector<ExtendedDashboardWidget 
 /**
  * @internal
  */
+export const selectWidgetPlaceholderPath: DashboardSelector<ILayoutItemPath | undefined> = createSelector(
+    selectWidgetPlaceholder,
+    selectLayout,
+    (widgetPlaceholder, layout) => {
+        return widgetPlaceholder ? getWidgetCoordinates(layout, widgetPlaceholder.ref) : undefined;
+    },
+);
+
+/**
+ * @internal
+ *
+ * @deprecated The selector returns coordinates in its parent layout. The information is not useful on its
+ *  own when dashboard uses nested layout. For this case use {@link selectWidgetPlaceholderPath} instead.
+ *
+ *  TODO LX-648: remove this selector, exported only for backward compatible reasons.
+ */
 export const selectWidgetPlaceholderCoordinates: DashboardSelector<ILayoutCoordinates | undefined> =
     createSelector(selectWidgetPlaceholder, selectLayout, (widgetPlaceholder, layout) => {
-        return widgetPlaceholder ? getWidgetCoordinates(layout, widgetPlaceholder.ref) : undefined;
+        const path = widgetPlaceholder ? getWidgetCoordinates(layout, widgetPlaceholder.ref) : undefined;
+        return path === undefined ? undefined : path[path.length - 1];
     });
 
 /**
@@ -461,9 +511,23 @@ export const selectInsightWidgetPlaceholder: DashboardSelector<ExtendedDashboard
 /**
  * @internal
  */
-export const selectInsightWidgetPlaceholderCoordinates: DashboardSelector<ILayoutCoordinates | undefined> =
+export const selectInsightWidgetPlaceholderPath: DashboardSelector<ILayoutItemPath | undefined> =
     createSelector(selectInsightWidgetPlaceholder, selectLayout, (widgetPlaceholder, layout) => {
         return widgetPlaceholder ? getWidgetCoordinates(layout, widgetPlaceholder.ref) : undefined;
+    });
+
+/**
+ * @internal
+ *
+ * @deprecated The selector returns coordinates in its parent layout. The information is not useful on its
+ *  own when dashboard uses nested layout. For this case use {@link selectInsightWidgetPlaceholderPath} instead.
+ *
+ *  TODO LX-648: remove this selector, exported only for backward compatible reasons.
+ */
+export const selectInsightWidgetPlaceholderCoordinates: DashboardSelector<ILayoutCoordinates | undefined> =
+    createSelector(selectInsightWidgetPlaceholder, selectLayout, (widgetPlaceholder, layout) => {
+        const path = widgetPlaceholder ? getWidgetCoordinates(layout, widgetPlaceholder.ref) : undefined;
+        return path === undefined ? undefined : path[path.length - 1];
     });
 
 /**
@@ -477,9 +541,26 @@ export const selectKpiWidgetPlaceholder: DashboardSelector<ExtendedDashboardWidg
 /**
  * @internal
  */
+export const selectKpiWidgetPlaceholderPath: DashboardSelector<ILayoutItemPath | undefined> = createSelector(
+    selectKpiWidgetPlaceholder,
+    selectLayout,
+    (widgetPlaceholder, layout) => {
+        return widgetPlaceholder ? getWidgetCoordinates(layout, widgetPlaceholder.ref) : undefined;
+    },
+);
+
+/**
+ * @internal
+ *
+ * @deprecated The selector returns coordinates in its parent layout. The information is not useful on its
+ *  own when dashboard uses nested layout. For this case use {@link selectKpiWidgetPlaceholderPath} instead.
+ *
+ *  TODO LX-648: remove this selector, exported only for backward compatible reasons.
+ */
 export const selectKpiWidgetPlaceholderCoordinates: DashboardSelector<ILayoutCoordinates | undefined> =
     createSelector(selectKpiWidgetPlaceholder, selectLayout, (widgetPlaceholder, layout) => {
-        return widgetPlaceholder ? getWidgetCoordinates(layout, widgetPlaceholder.ref) : undefined;
+        const path = widgetPlaceholder ? getWidgetCoordinates(layout, widgetPlaceholder.ref) : undefined;
+        return path === undefined ? undefined : path[path.length - 1];
     });
 
 /**

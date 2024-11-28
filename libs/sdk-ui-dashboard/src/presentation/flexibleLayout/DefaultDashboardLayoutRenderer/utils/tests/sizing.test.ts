@@ -14,7 +14,7 @@ import { VisType } from "@gooddata/sdk-ui";
 import {
     DashboardLayoutBuilder,
     DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT,
-} from "../../../../../_staging/dashboard/fluidLayout/index.js";
+} from "../../../../../_staging/dashboard/flexibleLayout/index.js";
 import { idRef, newInsightDefinition, IDashboardLayoutSize, ScreenSize } from "@gooddata/sdk-model";
 import { ALL_SCREENS } from "../../../../constants/index.js";
 import { describe, it, expect } from "vitest";
@@ -40,7 +40,7 @@ export const allVisTypes: VisType[] = [
     "xirr",
 ];
 
-const layoutBuilder = DashboardLayoutBuilder.forNewLayout();
+const layoutBuilder = DashboardLayoutBuilder.forNewLayout(undefined);
 const measureRef = idRef("measure");
 const kpiWidgetPop = newKpiWidget(measureRef, (w) =>
     w.title("Kpi Pop widget").comparisonType("previousPeriod").comparisonDirection("growIsBad"),
@@ -60,13 +60,15 @@ describe("sizing", () => {
                 }),
             );
 
-            expect(unifyDashboardLayoutItemHeights(layoutBuilder.build())).toMatchSnapshot();
+            expect(
+                unifyDashboardLayoutItemHeights(layoutBuilder.build(), undefined, undefined),
+            ).toMatchSnapshot();
         });
     });
 
     describe("getLayoutWithoutGridHeights", () => {
         it("should remove gridHeight from dashboard layout item size", () => {
-            const layout = DashboardLayoutBuilder.forNewLayout()
+            const layout = DashboardLayoutBuilder.forNewLayout(undefined)
                 .createSection((s) => s.createItem({ gridWidth: 10, gridHeight: 30 }))
                 .build();
             expect(getLayoutWithoutGridHeights(layout)).toMatchSnapshot();
@@ -148,7 +150,7 @@ describe("sizing", () => {
     });
 
     describe("getDashboardLayoutItemMaxGridWidth", () => {
-        const layoutFacade = DashboardLayoutBuilder.forNewLayout()
+        const layoutFacade = DashboardLayoutBuilder.forNewLayout(undefined)
             .createSection((s) =>
                 s
                     .createItem({ gridWidth: 3 })
@@ -193,7 +195,7 @@ describe("sizing", () => {
         type Scenario = [string, VisType, number, number | undefined, number, number | undefined];
         const scenarios: Scenario[] = [
             ["Headline with too big height", "headline", 2, 80, 2, 40],
-            ["Column Chart with too low width", "column", 2, 14, 4, 14],
+            ["Column Chart with too low width", "column", 1, 14, 2, 14],
             ["Table with too low height", "table", 3, 10, 3, 12],
             ["Geochart with too big width and undefined height", "pushpin", 14, undefined, 12, undefined],
         ];

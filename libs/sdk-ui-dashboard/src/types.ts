@@ -273,6 +273,58 @@ export interface ILayoutCoordinates {
 }
 
 /**
+ *  Tests whenever the provided object is layout coordinates object.
+ *  @alpha
+ */
+export function isLayoutCoordinates(obj: unknown): obj is ILayoutCoordinates {
+    return (
+        !isEmpty(obj) &&
+        (obj as ILayoutCoordinates).sectionIndex !== undefined &&
+        (obj as ILayoutCoordinates).itemIndex !== undefined
+    );
+}
+
+/**
+ *  Coordinates of an item in a nested layout.
+ *  @alpha
+ */
+export type ILayoutItemPath = ILayoutCoordinates[];
+
+/**
+ *  Tests whenever the provided object is section path.
+ *  @alpha
+ */
+export function isLayoutItemPath(obj: unknown): obj is ILayoutItemPath {
+    return !isEmpty(obj) && Array.isArray(obj) && obj.every(isLayoutCoordinates);
+}
+
+/**
+ *  Coordinates of a section in a nested layout.
+ *  @alpha
+ */
+export interface ILayoutSectionPath {
+    /**
+     * The path to the parent item that contains this section.
+     *
+     * Undefined when section is in the root layout, otherwise leads to the layout widget in which the section
+     * is nested.
+     */
+    parent?: ILayoutItemPath;
+    /**
+     * Zero based index.
+     */
+    sectionIndex: number;
+}
+
+/**
+ *  Tests whenever the provided object is section path.
+ *  @alpha
+ */
+export function isLayoutSectionPath(obj: unknown): obj is ILayoutSectionPath {
+    return !isEmpty(obj) && (obj as ILayoutSectionPath).sectionIndex !== undefined;
+}
+
+/**
  * @internal
  */
 export interface IGlobalDrillDownAttributeHierarchyDefinition {

@@ -15,7 +15,9 @@ _common-build() {
 build() {
     _common-build
 
-    tsc -p tsconfig.json
+    if [[ $1 != "--genVersionOnly" ]]; then
+        tsc -p tsconfig.json
+    fi
 }
 
-build
+build $1

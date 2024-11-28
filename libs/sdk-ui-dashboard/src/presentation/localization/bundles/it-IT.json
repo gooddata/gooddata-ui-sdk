@@ -626,5 +626,9 @@
     "visualizationSwitcher.configurationPanel.remove.from.switcher": "Rimuovere dal selezionatore",
     "visualizationSwitcher.list.menu.move.up": "Salire",
     "visualizationSwitcher.list.menu.move.down": "Scendere",
-    "visualizationSwitcher.list.menu.remove": "Rimuovere"
+    "visualizationSwitcher.list.menu.remove": "Rimuovere",
+    "dialogs.schedule.email.user.missing.email": "A questo utente manca un indirizzo e-mail.",
+    "insightAlert.config.for": "Per",
+    "insightAlert.config.warning.destination": "La destinazione selezionata supporta solo l'invio dell'avviso a se stessi.",
+    "insightAlert.config.selectAttribute": "Tutto"
 }

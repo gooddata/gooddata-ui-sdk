@@ -20,10 +20,10 @@ import isNil from "lodash/isNil.js";
 import round from "lodash/round.js";
 import { invariant } from "ts-invariant";
 
-import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../../_staging/dashboard/fluidLayout/index.js";
-import { DashboardLayoutBuilder } from "../../../../_staging/dashboard/fluidLayout/builder/layout.js";
-import { IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/fluidLayout/facade/interfaces.js";
-import { DashboardLayoutFacade } from "../../../../_staging/dashboard/fluidLayout/facade/layout.js";
+import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../../_staging/dashboard/flexibleLayout/index.js";
+import { DashboardLayoutBuilder } from "../../../../_staging/dashboard/flexibleLayout/builder/layout.js";
+import { IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
+import { DashboardLayoutFacade } from "../../../../_staging/dashboard/flexibleLayout/facade/layout.js";
 import {
     getDashboardLayoutItemHeightForGrid,
     MeasurableWidgetContent,
@@ -31,37 +31,52 @@ import {
     getDashboardLayoutWidgetMinGridWidth,
     getDashboardLayoutWidgetMinGridHeight,
     getDashboardLayoutWidgetMaxGridHeight,
+    implicitLayoutItemSizeFromXlSize,
+    determineSizeForScreen,
 } from "../../../../_staging/layout/sizing.js";
 import {
     ALL_SCREENS,
     DASHBOARD_LAYOUT_CONTAINER_WIDTHS,
     DASHBOARD_LAYOUT_MAX_HEIGHT_AS_RATIO_XS,
 } from "../../../constants/index.js";
-import { GRID_COLUMNS_COUNT } from "../constants.js";
+import { ILayoutItemPath } from "../../../../types.js";
+import { getItemIndex } from "../../../../_staging/layout/coordinates.js";
 
 /**
  * Unify dashboard layout items height for all screens.
  *
  * @param layout - dashboard layout with items
+ @param layoutSize - the size of layout, undefined if the items are in the root layout
+ * @param parentLayoutPath - path to a layout item the layout is nested in, undefined when root layout is processed.
  */
 export function unifyDashboardLayoutItemHeights<TWidget>(
     layout: IDashboardLayout<TWidget>,
+    parentLayoutSize: IDashboardLayoutSizeByScreenSize | undefined,
+    parentLayoutPath: ILayoutItemPath | undefined,
 ): IDashboardLayout<TWidget>;
 export function unifyDashboardLayoutItemHeights<TWidget>(
     items: IDashboardLayoutItem<TWidget>[],
+    parentLayoutSize: IDashboardLayoutSizeByScreenSize | undefined,
+    parentLayoutPath: ILayoutItemPath | undefined,
 ): IDashboardLayoutItem<TWidget>[];
 export function unifyDashboardLayoutItemHeights<TWidget>(
     itemsOrLayout: IDashboardLayout<TWidget> | IDashboardLayoutItem<TWidget>[],
+    parentLayoutSize: IDashboardLayoutSizeByScreenSize | undefined,
+    parentLayoutPath: ILayoutItemPath | undefined,
 ): IDashboardLayout<TWidget> | IDashboardLayoutItem<TWidget>[] {
     if (isDashboardLayout<TWidget>(itemsOrLayout)) {
         return {
             ...itemsOrLayout,
-            sections: DashboardLayoutFacade.for(itemsOrLayout)
+            sections: DashboardLayoutFacade.for(itemsOrLayout, parentLayoutPath)
                 .sections()
                 .reduce((acc: IDashboardLayoutSection<TWidget>[], section) => {
                     acc.push({
                         ...section.raw(),
-                        items: unifyDashboardLayoutItemHeights(section.items().raw()),
+                        items: unifyDashboardLayoutItemHeights(
+                            section.items().raw(),
+                            parentLayoutSize,
+                            parentLayoutPath,
+                        ),
                     });
                     return acc;
                 }, []),
@@ -75,7 +90,11 @@ export function unifyDashboardLayoutItemHeights<TWidget>(
 
     // items with unified height for all screens
     return ALL_SCREENS.reduce((acc, screen) => {
-        const itemsAsFutureGridRows = splitDashboardLayoutItemsAsRenderedGridRows(acc, screen);
+        const itemsAsFutureGridRows = splitDashboardLayoutItemsAsRenderedGridRows(
+            acc,
+            parentLayoutSize,
+            screen,
+        );
 
         return flatten(
             itemsAsFutureGridRows.map((futureGridRow) =>
@@ -86,138 +105,33 @@ export function unifyDashboardLayoutItemHeights<TWidget>(
 }
 
 /**
- * Derive dashboard layout size for all screens from dashboard layout size defined for xl screen.
- * We have only xl size saved in metadata, this will create additional screen sizes based on xl.
- *
- * @param xlSize - dashboard layout size for xl screen
- */
-export function implicitLayoutItemSizeFromXlSize(
-    xlSize: IDashboardLayoutSize,
-): IDashboardLayoutSizeByScreenSize {
-    const xlWidth = xlSize.gridWidth;
-    const xlHeight = xlSize.gridHeight;
-    const ratio = xlSize.heightAsRatio;
-
-    switch (xlWidth) {
-        case 0:
-            return dashboardLayoutItemSizeForAllScreens(0, 0, 0, 0, 0, 0, 0);
-        case 1:
-            return dashboardLayoutItemSizeForAllScreens(ratio, xlHeight, xlWidth, xlWidth, 2, 6, 12);
-        case 2:
-            return dashboardLayoutItemSizeForAllScreens(ratio, xlHeight, xlWidth, xlWidth, 4, 6, 12);
-        case 3:
-        case 4:
-        case 5:
-        case 6:
-        case 7:
-        case 8:
-        case 9:
-            return dashboardLayoutItemSizeForAllScreens(ratio, xlHeight, xlWidth, xlWidth, 6, 12, 12);
-        case 10:
-            return dashboardLayoutItemSizeForAllScreens(ratio, xlHeight, xlWidth, xlWidth, 12, 12, 12);
-        case 11:
-            return dashboardLayoutItemSizeForAllScreens(ratio, xlHeight, xlWidth, xlWidth, 12, 12, 12);
-        case 12:
-            return dashboardLayoutItemSizeForAllScreens(ratio, xlHeight, xlWidth, xlWidth, 12, 12, 12);
-        default:
-            invariant(false, `Unsupported xlWidth: ${xlWidth}`);
-    }
-}
-
-/**
- * Create dashboard layout item size for all screens,
- * with identical height, defined as ratio,
- * but different width, defined as grid items count.
- *
- * @param heightAsRatio - height as ratio to the width, defined in percents
- * @param gridHeight - height as number of grid rows
- * @param xl - width as grid items count for xl screen
- * @param lg - width as grid items count for lg screen
- * @param md - width as grid items count for md screen
- * @param sm - width as grid items count for sm screen
- * @param xs - width as grid items count for xs screen
- */
-function dashboardLayoutItemSizeForAllScreens(
-    heightAsRatio: number | undefined,
-    gridHeight: number | undefined,
-    xl: number,
-    lg: number,
-    md: number,
-    sm: number,
-    xs: number,
-): IDashboardLayoutSizeByScreenSize {
-    if (gridHeight) {
-        return {
-            xl: {
-                gridWidth: xl,
-                gridHeight,
-            },
-            lg: {
-                gridWidth: lg,
-                gridHeight,
-            },
-            md: {
-                gridWidth: md,
-                gridHeight,
-            },
-            sm: {
-                gridWidth: sm,
-                gridHeight,
-            },
-            xs: {
-                gridWidth: xs,
-                gridHeight,
-            },
-        };
-    }
-    return {
-        xl: {
-            gridWidth: xl,
-            heightAsRatio,
-        },
-        lg: {
-            gridWidth: lg,
-            heightAsRatio,
-        },
-        md: {
-            gridWidth: md,
-            heightAsRatio,
-        },
-        sm: {
-            gridWidth: sm,
-            heightAsRatio,
-        },
-        xs: {
-            gridWidth: xs,
-            heightAsRatio,
-        },
-    };
-}
-
-/**
  * Divide the items into a list representing the future rows of the grid.
  * This is useful for performing item transformations, depending on how they really appear in the grid.
  *
  * @param items - dashboard layout items
+ * @param parentLayoutSize - the size of parent layout, undefined if the items are in the root layout
  * @param screen - responsive screen class
  */
 export function splitDashboardLayoutItemsAsRenderedGridRows<TWidget>(
     items: IDashboardLayoutItem<TWidget>[],
+    parentLayoutSize: IDashboardLayoutSizeByScreenSize | undefined,
     screen: ScreenSize,
 ): IDashboardLayoutItem<TWidget>[][] {
+    const parentLayoutColumnWidth =
+        parentLayoutSize?.[screen]?.gridWidth ?? DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT;
     const renderedRows: IDashboardLayoutItem<TWidget>[][] = [];
 
     let currentRowWidth = 0;
     let currentRow: IDashboardLayoutItem<TWidget>[] = [];
 
     items.forEach((item) => {
-        const itemSize = item.size[screen];
+        const itemSize = determineSizeForScreen(screen, item.size);
 
         if (isNil(itemSize)) {
             throw Error("Item size for current screen is undefined");
         }
 
-        if (currentRowWidth + itemSize.gridWidth > DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT) {
+        if (currentRowWidth + itemSize.gridWidth > parentLayoutColumnWidth) {
             renderedRows.push(currentRow);
             currentRow = [];
             currentRowWidth = 0;
@@ -285,7 +199,7 @@ const updateDashboardLayoutItemHeight = <TWidget>(
     screen: ScreenSize,
     maxHeight: number,
 ): IDashboardLayoutItem<TWidget> => {
-    const itemSizeForCurrentScreen = item.size[screen];
+    const itemSizeForCurrentScreen = determineSizeForScreen(screen, item.size);
     const heightAsRatio = itemSizeForCurrentScreen?.gridWidth
         ? round(maxHeight / itemSizeForCurrentScreen.gridWidth, 2)
         : 0;
@@ -311,7 +225,7 @@ const updateDashboardLayoutItemHeight = <TWidget>(
             size: {
                 ...updatedColumn.size,
                 [screen]: {
-                    ...updatedColumn.size[screen],
+                    ...determineSizeForScreen(screen, updatedColumn.size),
                     heightAsRatio,
                 },
             },
@@ -350,17 +264,18 @@ export const getResizedItemPositions = <TWidget>(
     originalLayout: IDashboardLayout<TWidget>,
     resizedLayout: IDashboardLayout<TWidget>,
     positions: ItemPosition[] = [],
+    parentLayoutPath: ILayoutItemPath | undefined,
 ): ItemPosition[] => {
-    const originalLayoutFacade = DashboardLayoutFacade.for(originalLayout);
-    return DashboardLayoutFacade.for(resizedLayout)
+    const originalLayoutFacade = DashboardLayoutFacade.for(originalLayout, parentLayoutPath);
+    return DashboardLayoutFacade.for(resizedLayout, parentLayoutPath)
         .sections()
         .reduce((acc: ItemPosition[], section) => {
             return section.items().reduce((acc, item) => {
                 const originalColumn = originalLayoutFacade
                     .sections()
-                    .section(section.index())!
+                    .section(section.index().sectionIndex)!
                     .items()
-                    .item(item.index());
+                    .item(getItemIndex(item.index()));
 
                 // if this bombs there is something wrong with the layout
                 invariant(originalColumn);
@@ -370,14 +285,14 @@ export const getResizedItemPositions = <TWidget>(
 
                 // Is nested layout?
                 if (isDashboardLayout(originalContent) && isDashboardLayout(updatedContent)) {
-                    return getResizedItemPositions(originalContent, updatedContent, positions);
+                    return getResizedItemPositions(originalContent, updatedContent, positions, item.index());
                 }
 
                 if (
                     !isEqual(originalColumn.size(), item.size()) &&
                     (isWidget(updatedContent) || isWidgetDefinition(updatedContent))
                 ) {
-                    acc.push([item.section().index(), item.index()]);
+                    acc.push([item.section().index().sectionIndex, getItemIndex(item.index())]);
                 }
 
                 return acc;
@@ -404,24 +319,27 @@ export function getDashboardLayoutItemMaxGridWidth(
     let gridRowWidth = 0;
     const sectionItems = item.section().items().all();
 
+    const parentLayout = item.section().layout();
+    // TODO LX: 664 should not use size() here but new layout method sizeForScreen()
+    const maxGridWidth = parentLayout.size()?.gridWidth ?? DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT;
+
     for (const sectionItem of sectionItems) {
         const newWidth = sectionItem.sizeForScreen(screen)!.gridWidth + gridRowWidth;
 
-        if (newWidth <= DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT) {
-            if (sectionItem.index() === item.index()) {
+        if (newWidth <= maxGridWidth) {
+            if (getItemIndex(sectionItem.index()) === getItemIndex(item.index())) {
                 break;
             }
             gridRowWidth = newWidth;
         } else {
-            if (sectionItem.index() === item.index()) {
-                return DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT;
+            if (getItemIndex(sectionItem.index()) === getItemIndex(item.index())) {
+                return maxGridWidth;
             }
-            // TODO is this default ok?
             gridRowWidth = sectionItem.sizeForScreen(screen)?.gridWidth ?? 1;
         }
     }
 
-    return DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT - gridRowWidth;
+    return maxGridWidth - gridRowWidth;
 }
 
 export function getDashboardLayoutWidgetDefaultGridWidth(
@@ -493,23 +411,3 @@ export function validateDashboardLayoutWidgetSize(
         validHeight,
     };
 }
-
-export const determineSizeForScreen = (
-    screen: ScreenSize,
-    layoutItemSize?: IDashboardLayoutSizeByScreenSize,
-) => {
-    // Determine if element has size set in metadata object for the current screen size
-    const providedSizeForScreen = layoutItemSize ? layoutItemSize[screen] : undefined;
-    // Use the provided size for the screen if it is known, otherwise determine the size for the current
-    // screen if we at least know xl size from metadata object, otherwise expect the element to be root
-    // element with that spans the full size.
-    const itemSize =
-        providedSizeForScreen ??
-        implicitLayoutItemSizeFromXlSize(
-            layoutItemSize?.xl ?? {
-                gridWidth: GRID_COLUMNS_COUNT,
-            },
-        )[screen];
-    // Expect element to be full size if we could not get the size for the current screen from the value above.
-    return itemSize?.gridWidth ?? GRID_COLUMNS_COUNT;
-};

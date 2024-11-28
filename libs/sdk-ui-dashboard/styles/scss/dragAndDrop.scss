@@ -461,6 +461,7 @@
     border-radius: 15px;
     background-color: kit-variables.$gd-palette-primary-dimmed;
 }
+
 .drop-target-inner {
     $inner-padding: 8px;
 
@@ -624,14 +625,6 @@
     z-index: zIndexes.$drag-and-drop-draggable-wrapper;
 }
 
-.gd-grid-layout {
-    // fix for grid layout after some classes at the top were removed
-    .dashboard-widget-draggable-wrapper {
-        display: flex;
-        flex-direction: column;
-    }
-}
-
 .current-dragging-item {
     width: 0;
     display: none;
@@ -649,5 +642,180 @@
         // no pointer events for charts in edit mode,
         // this kills tooltips but allows dragging
         pointer-events: none;
+    }
+}
+
+.gd-grid-layout {
+    .new-row-dropzone {
+        position: absolute;
+        height: unset;
+
+        .widget-dropzone-box {
+            position: unset;
+            height: unset;
+            padding: unset;
+
+            .can-drop {
+                margin: unset;
+            }
+        }
+    }
+
+    .widget-dropzone {
+        height: 100%;
+
+        .widget-dropzone-box {
+            position: relative;
+            height: 100%;
+            padding: 10px;
+            .can-drop {
+                margin: 0;
+            }
+        }
+
+        .drag-info-placeholder-drop-target,
+        .drop-target-inner {
+            position: absolute;
+        }
+
+        .drag-info-placeholder-drop-target {
+            $outter-padding: 10px;
+
+            top: $outter-padding;
+            right: $outter-padding;
+            bottom: $outter-padding;
+            left: $outter-padding;
+        }
+        .drop-target-inner {
+            $inner-padding: 10px;
+
+            top: $inner-padding;
+            right: $inner-padding;
+            bottom: $inner-padding;
+            left: $inner-padding;
+            align-content: center;
+        }
+    }
+
+    .dropzone {
+        &.next {
+            .drop-hint {
+                float: unset;
+            }
+        }
+    }
+
+    .row-hotspot-container {
+        .row-hotspot {
+            top: -20px; // move active dropzone over the section hotspot row
+            right: unset;
+            bottom: unset;
+            left: unset;
+            height: 100%;
+        }
+
+        &.last {
+            top: unset;
+            height: 70px;
+        }
+    }
+
+    .gd-fluid-layout-row-header {
+        .row-hotspot-container {
+            z-index: zIndexes.$drag-and-drop-drop-zone;
+        }
+    }
+
+    .drag-info-placeholder {
+        position: unset;
+
+        .can-drop {
+            margin: unset;
+        }
+    }
+
+    .drag-info-placeholder-inner {
+        padding: 0 20px;
+    }
+
+    .drag-info-placeholder-drop-target {
+        top: unset;
+        right: unset;
+        bottom: unset;
+        left: unset;
+        padding: 10px;
+    }
+
+    .drag-info-placeholder-drop-target,
+    .drop-target-inner {
+        position: unset;
+    }
+
+    .drop-target-inner {
+        top: unset;
+        right: unset;
+        bottom: unset;
+        left: unset;
+        padding: 10px;
+    }
+
+    .drop-target-message {
+        position: unset;
+        top: unset;
+        right: unset;
+        left: unset;
+        transform: unset;
+    }
+
+    .gd-fluidlayout-row-separator {
+        position: unset;
+        right: unset;
+        left: unset;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 5px;
+        height: 20px;
+        background-color: unset;
+
+        &-icon {
+            position: unset;
+            top: unset;
+
+            &-left {
+                left: unset;
+            }
+
+            &-right {
+                right: 0;
+            }
+        }
+
+        &-line {
+            flex-grow: 1;
+            height: 2px;
+            background-color: kit-variables.$gd-color-disabled;
+        }
+
+        &.active {
+            background-color: unset;
+
+            .gd-fluidlayout-row-separator-line {
+                height: 2px;
+                background-color: kit-variables.$gd-palette-primary-base;
+            }
+        }
+    }
+
+    // fix for grid layout after some classes at the top were removed
+    .dashboard-widget-draggable-wrapper:not(.gd-nested-layout-widget-wrapper) {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        padding: 10px 0 10px 0;
+    }
+
+    .gd-fluidlayout-column-row-end-hotspot {
+        min-height: unset;
     }
 }
