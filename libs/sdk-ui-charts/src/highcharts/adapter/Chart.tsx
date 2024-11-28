@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import isEqual from "lodash/isEqual.js";
 import noop from "lodash/noop.js";
 import React from "react";
@@ -95,16 +95,21 @@ export class Chart extends React.Component<IChartProps> {
 
     public createChart(config: HighchartsOptions): void {
         const chartConfig = config.chart;
-        this.chart = new Highcharts.Chart(
-            {
-                ...config,
-                chart: {
-                    ...chartConfig,
-                    renderTo: this.chartRef,
+        try {
+            this.chart = new Highcharts.Chart(
+                {
+                    ...config,
+                    chart: {
+                        ...chartConfig,
+                        renderTo: this.chartRef,
+                    },
                 },
-            },
-            this.props.callback,
-        );
+                this.props.callback,
+            );
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.error("Chart could not be rendered with the current config.", error);
+        }
     }
 
     public render() {

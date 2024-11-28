@@ -561,6 +561,11 @@ export interface ISettings {
      */
     enableInPlatformNotifications?: boolean;
 
+    /**
+     * Enable fine-tuning options for visualization in AD configuration panel.
+     */
+    enableVisualizationFineTuning?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

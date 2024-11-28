@@ -123,6 +123,7 @@ export enum TigerFeaturesNames {
     EnableNewUserCreationFlow = "enableNewUserCreationFlow",
     EnableDestinationTesting = "enableDestinationTesting",
     EnableInPlatformNotifications = "enableInPlatformNotifications",
+    EnableVisualizationFineTuning = "enableVisualizationFineTuning",
 }
 
 export type ITigerFeatureFlags = {
@@ -209,6 +210,7 @@ export type ITigerFeatureFlags = {
     enableNewUserCreationFlow: typeof FeatureFlagsValues["enableNewUserCreationFlow"][number];
     enableDestinationTesting: typeof FeatureFlagsValues["enableDestinationTesting"][number];
     enableInPlatformNotifications: typeof FeatureFlagsValues["enableInPlatformNotifications"][number];
+    enableVisualizationFineTuning: typeof FeatureFlagsValues["enableVisualizationFineTuning"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -295,6 +297,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableNewUserCreationFlow: false,
     enableDestinationTesting: false,
     enableInPlatformNotifications: false,
+    enableVisualizationFineTuning: false,
 };
 
 export const FeatureFlagsValues = {
@@ -385,4 +388,5 @@ export const FeatureFlagsValues = {
     enableNewUserCreationFlow: [true, false] as const,
     enableDestinationTesting: [true, false] as const,
     enableInPlatformNotifications: [true, false] as const,
+    enableVisualizationFineTuning: [true, false] as const,
 };

@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import includes from "lodash/includes.js";
@@ -81,6 +81,7 @@ export default class BaseChartConfigurationPanel<
                     {this.renderLegendSection()}
                     {this.renderInteractionsSection()}
                     {this.renderCanvasSection()}
+                    {this.renderAdvancedSection()}
                 </div>
                 <Bubble
                     className={this.getBubbleClassNames()}

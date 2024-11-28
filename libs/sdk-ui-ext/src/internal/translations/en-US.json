@@ -1588,6 +1588,46 @@
         "comment": "The title for the interactions configuration section",
         "limit": 0
     },
+    "properties.advanced.title": {
+        "value": "Advanced customizations",
+        "comment": "The title for the advanced configuration section",
+        "limit": 0
+    },
+    "properties.advanced.chartConfigOverride.noValueLabel": {
+        "value": "No customizations yet.",
+        "comment": "Text show when user did not define any customization yet.",
+        "limit": 0
+    },
+    "properties.advanced.chartConfigOverride.link": {
+        "value": "Learn more",
+        "comment": "Text of link that leads to feature documentation.",
+        "limit": 0
+    },
+    "properties.advanced.chartConfigOverride.editorButton": {
+        "value": "Open editor",
+        "comment": "Text of button that opens editor of configuration.",
+        "limit": 0
+    },
+    "properties.advanced.chartConfigOverride.title": {
+        "value": "Advanced customization",
+        "comment": "Text of dialog that defines advanced customization of visualization.",
+        "limit": 0
+    },
+    "properties.advanced.chartConfigOverride.snippets.header": {
+        "value": "Snippets",
+        "comment": "The header of list that contains snippets (recipes) of various charts configurations.",
+        "limit": 0
+    },
+    "properties.advanced.chartConfigOverride.button.apply": {
+        "value": "Apply",
+        "comment": "The label of button in dialog that applies the dialog value.",
+        "limit": 0
+    },
+    "properties.advanced.chartConfigOverride.button.cancel": {
+        "value": "Cancel",
+        "comment": "The label of button in dialog that closes the dialog.",
+        "limit": 0
+    },
     "properties.interactions.drillDown": {
         "value": "Drill down",
         "comment": "The text for the drill down checkbox",
