@@ -799,3 +799,15 @@ export const selectEnableFlexibleLayout: DashboardSelector<boolean> = createSele
         return state.settings?.enableDashboardFlexibleLayout ?? false;
     },
 );
+
+/**
+ * Returns whether in-platform notifications are enabled.
+ *
+ * @internal
+ */
+export const selectEnableInPlatformNotifications: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableInPlatformNotifications ?? false;
+    },
+);

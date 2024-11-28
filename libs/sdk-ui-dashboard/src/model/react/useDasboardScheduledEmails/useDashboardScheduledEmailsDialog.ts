@@ -105,7 +105,7 @@ export const useDashboardScheduledEmailsDialog = ({
                 )?.requestPayload.content.filters ?? [];
             const destinationType = destinations.find(
                 (channel) => channel.id === scheduledEmail.notificationChannel,
-            )?.type;
+            )?.destinationType;
             automationInteraction({
                 type: "scheduledExportCreated",
                 destination_id: scheduledEmail.notificationChannel,

@@ -59,7 +59,8 @@ export type ObjectType =
     | "automation"
     | "filterView"
     | "workspaceDataFilter"
-    | "workspaceDataFilterSetting";
+    | "workspaceDataFilterSetting"
+    | "notificationChannel";
 
 /**
  * Model object reference using object's unique identifier.

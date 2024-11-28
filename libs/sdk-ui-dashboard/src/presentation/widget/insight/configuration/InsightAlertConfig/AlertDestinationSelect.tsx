@@ -41,7 +41,7 @@ export const AlertDestinationSelect: React.FC<IAlertDestinationSelectProps> = ({
                                 },
                             )}
                         >
-                            {selectedOption?.destination?.name}
+                            {selectedOption?.title}
                         </Button>
                     );
                 }}
@@ -54,7 +54,7 @@ export const AlertDestinationSelect: React.FC<IAlertDestinationSelectProps> = ({
                             renderItem={(i) => (
                                 <SingleSelectListItem
                                     key={i.rowIndex}
-                                    title={i.item.destination?.name}
+                                    title={i.item?.title}
                                     isSelected={i.item.id === selectedDestination}
                                     onClick={() => {
                                         if (i.item.id !== selectedDestination) {

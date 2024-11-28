@@ -65,6 +65,14 @@ export {
     attributeDisplayFormMetadataObjectTitle,
     isAttributeHierarchyMetadataObject,
 };
+export type {
+    IMdObjectBase,
+    IMdObjectIdentity,
+    IMdObject,
+    IMdObjectDefinition,
+    ToMdObjectDefinition,
+} from "./next.js";
+export { isMdObject, isMdObjectDefinition } from "./next.js";
 
 /**
  * Type that represents any metadata object

@@ -138,8 +138,8 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
          * When allowed recipients are changed from "ALL" to "CREATOR", show warning message
          */
         const showWarningMessage =
-            selectedNotificationChannel?.allowedRecipients === "CREATOR" &&
-            previousNotificationChannel?.allowedRecipients !== "CREATOR";
+            selectedNotificationChannel?.allowedRecipients === "creator" &&
+            previousNotificationChannel?.allowedRecipients !== "creator";
         setWarningMessage(
             showWarningMessage
                 ? intl.formatMessage({ id: "dialogs.schedule.email.destinationWarning" })
@@ -150,7 +150,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
          * Reset recipients when new notification channel only allows the author/creator
          */
         const updatedRecipients =
-            selectedNotificationChannel?.allowedRecipients === "CREATOR"
+            selectedNotificationChannel?.allowedRecipients === "creator"
                 ? { recipients: [defaultRecipient] }
                 : {};
 
@@ -333,7 +333,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
     const selectedNotificationChannel = notificationChannels.find(
         (channel) => channel.id === editedAutomation.notificationChannel,
     );
-    const showRecipientsSelect = selectedNotificationChannel?.allowedRecipients !== "CREATOR";
+    const showRecipientsSelect = selectedNotificationChannel?.allowedRecipients !== "creator";
 
     const { isValid: isOriginalAutomationValid } = useScheduleValidation(originalAutomation);
     const validationErrorMessage = !isOriginalAutomationValid
@@ -345,7 +345,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
     const hasDestination = !!editedAutomation.notificationChannel;
     const respectsRecipientsLimit = (editedAutomation.recipients?.length ?? 0) <= maxAutomationsRecipients;
     const hasFilledEmails =
-        selectedNotificationChannel?.type === "smtp"
+        selectedNotificationChannel?.destinationType === "smtp"
             ? editedAutomation.recipients?.every((recipient) =>
                   isAutomationUserRecipient(recipient) ? isEmail(recipient.email ?? "") : true,
               )

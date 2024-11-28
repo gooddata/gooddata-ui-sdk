@@ -61,6 +61,9 @@ export type ArithmeticMeasureBuilderInput = {
 // @public
 export type ArithmeticMeasureOperator = "sum" | "difference" | "multiplication" | "ratio" | "change";
 
+// @internal
+export const assertNever: (value: never) => void;
+
 // @alpha
 export type AssignedDataSourcePermission = typeof AssignedDataSourcePermissionValue[keyof typeof AssignedDataSourcePermissionValue];
 
@@ -1156,17 +1159,15 @@ export interface ICrossFiltering extends IDrill {
     type: "crossFiltering";
 }
 
-// @alpha (undocumented)
-export type ICustomSmtpDestination = {
-    type: "custom";
-    name: string;
-    from: string;
-    address: string;
-    person: string;
-    port: 25 | 465 | 587 | 2525;
-    login: string;
+// @beta (undocumented)
+export type ICustomSmtpDestinationConfiguration = {
+    type: "customSmtp";
+    senderEmail?: string;
+    senderDisplayName?: string;
+    host?: string;
+    port?: 25 | 465 | 587 | 2525;
+    username?: string;
     password?: string;
-    hasPassword?: boolean;
 };
 
 // @alpha
@@ -1566,12 +1567,11 @@ export interface IDateHierarchyTemplate extends IMetadataObjectIdentity, IMetada
     type: "dateHierarchyTemplate";
 }
 
-// @alpha (undocumented)
-export type IDefaultSmtpDestination = {
-    type: "default";
-    name: string;
-    address: string;
-    person: string;
+// @beta (undocumented)
+export type IDefaultSmtpDestinationConfiguration = {
+    type: "defaultSmtp";
+    senderEmail?: string;
+    senderDisplayName?: string;
 };
 
 // @public
@@ -1997,6 +1997,17 @@ export interface IInlineMeasureDefinition {
     };
 }
 
+// @beta (undocumented)
+export interface IInPlatformNotificationChannelMetadataObject extends INotificationChannelMetadataObjectBase, IMdObject {
+    // (undocumented)
+    destinationType: "inPlatform";
+    // (undocumented)
+    type: "notificationChannel";
+}
+
+// @beta
+export type IInPlatformNotificationChannelMetadataObjectDefinition = ToMdObjectDefinition<IInPlatformNotificationChannelMetadataObject>;
+
 // @public
 export type IInsight = IInsightDefinition & {
     insight: IAuditable & {
@@ -2155,6 +2166,27 @@ export interface ILlmEndpointOpenAI extends ILlmEndpointBase {
 
 // @public
 export type ILocatorItem = IAttributeLocatorItem | IMeasureLocatorItem | ITotalLocatorItem;
+
+// @beta
+export interface IMdObject extends IMdObjectBase, IMdObjectIdentity {
+}
+
+// @beta (undocumented)
+export interface IMdObjectBase {
+    description?: string;
+    tags?: string[];
+    title?: string;
+}
+
+// @beta
+export interface IMdObjectDefinition extends IMdObjectBase, Pick<IMdObjectIdentity, "type"> {
+}
+
+// @beta (undocumented)
+export interface IMdObjectIdentity {
+    id: string;
+    type: ObjectType;
+}
 
 // @public
 export interface IMeasure<T extends IMeasureDefinitionType = IMeasureDefinitionType> extends IMeasureTitle {
@@ -2348,28 +2380,22 @@ export class InlineMeasureBuilder extends MeasureBuilderBase<IInlineMeasureDefin
 // @public
 export type InlineMeasureBuilderInput = string | IMeasure<IInlineMeasureDefinition>;
 
-// @alpha (undocumented)
-export interface INotificationChannelConfiguration {
-    dashboardUrl?: string;
-}
+// @beta (undocumented)
+export type INotificationChannelMetadataObject = IWebhookNotificationChannelMetadataObject | ISmtpNotificationChannelMetadataObject | IInPlatformNotificationChannelMetadataObject;
 
-// @alpha (undocumented)
-export interface INotificationChannelDefinitionObject extends INotificationChannelMetadataObject {
-}
-
-// @alpha (undocumented)
-export interface INotificationChannelMetadataObject extends INotificationChannelMetadataObjectBase {
-    id: string;
-}
-
-// @alpha (undocumented)
+// @beta
 export interface INotificationChannelMetadataObjectBase {
-    allowedRecipients?: NotificationChannelAllowedRecipient;
-    destination: IWebhookDestination | ISmtpDestination;
-    type: "webhook" | "smtp";
+    allowedRecipients?: NotificationChannelAllowedRecipients;
+    customDashboardUrl?: string;
+    destinationType: NotificationChannelDestinationType;
+    // (undocumented)
+    type: "notificationChannel";
 }
 
-// @alpha (undocumented)
+// @beta (undocumented)
+export type INotificationChannelMetadataObjectDefinition = IWebhookNotificationChannelMetadataObjectDefinition | ISmtpNotificationChannelMetadataObjectDefinition | IInPlatformNotificationChannelMetadataObjectDefinition;
+
+// @beta (undocumented)
 export interface INotificationChannelTestResponse {
     error?: string;
     successful: boolean;
@@ -3195,6 +3221,7 @@ export interface ISettings {
     enableHidingOfDataPoints?: boolean;
     enableHidingOfWidgetTitle?: boolean;
     enableIgnoreCrossFiltering?: boolean;
+    enableInPlatformNotifications?: boolean;
     enableInsightExportScheduling?: boolean;
     enableInsightToReport?: boolean;
     enableInvalidValuesInAttributeFilter?: boolean;
@@ -3359,6 +3386,12 @@ export function isKpiWithoutComparison(obj: unknown): obj is IKpiWithoutComparis
 // @public
 export function isLocalIdRef(obj: unknown): obj is LocalIdRef;
 
+// @beta
+export function isMdObject(obj: unknown): obj is IMdObject;
+
+// @beta
+export function isMdObjectDefinition(obj: unknown): obj is IMdObjectDefinition;
+
 // @public
 export function isMeasure(obj: unknown): obj is IMeasure;
 
@@ -3395,28 +3428,32 @@ export function isMeasureValueFilter(obj: unknown): obj is IMeasureValueFilter;
 // @public
 export function isMetadataObject(obj: unknown): obj is IMetadataObject;
 
-// @alpha (undocumented)
-export interface ISmtpDefinition extends INotificationChannelMetadataObjectBase {
+// @beta
+export type ISmtpDestinationConfiguration = ICustomSmtpDestinationConfiguration | IDefaultSmtpDestinationConfiguration;
+
+// @beta (undocumented)
+export interface ISmtpNotificationChannelMetadataObject extends INotificationChannelMetadataObjectBase, IMdObject {
+    destinationConfig?: ISmtpDestinationConfiguration;
     // (undocumented)
-    configuration: INotificationChannelConfiguration;
+    destinationType: "smtp";
     // (undocumented)
-    destination: ISmtpDestination;
-    // (undocumented)
-    type: "smtp";
+    type: "notificationChannel";
 }
 
-// @alpha (undocumented)
-export interface ISmtpDefinitionObject extends Partial<ISmtpDefinition>, Pick<INotificationChannelMetadataObject, "id"> {
-}
-
-// @alpha (undocumented)
-export type ISmtpDestination = ICustomSmtpDestination | IDefaultSmtpDestination;
+// @beta
+export type ISmtpNotificationChannelMetadataObjectDefinition = ToMdObjectDefinition<ISmtpNotificationChannelMetadataObject>;
 
 // @public
 export function isNegativeAttributeFilter(obj: unknown): obj is INegativeAttributeFilter;
 
 // @alpha
 export function isNegativeDashboardAttributeFilter(filter: IDashboardAttributeFilter): boolean;
+
+// @beta
+export function isNotificationChannelMetadataObject(obj: unknown): obj is INotificationChannelMetadataObject;
+
+// @beta
+export function isNotificationChannelMetadataObjectDefinition(obj: unknown): obj is INotificationChannelMetadataObjectDefinition;
 
 // @public
 export function isObjRef(obj: unknown): obj is ObjRef;
@@ -3963,27 +4000,24 @@ export interface IVisualizationSwitcherWidgetBase extends IAnalyticalWidget {
 export interface IVisualizationSwitcherWidgetDefinition extends IVisualizationSwitcherWidgetBase, Partial<IDashboardObjectIdentity> {
 }
 
-// @alpha (undocumented)
-export interface IWebhookDefinition extends INotificationChannelMetadataObjectBase {
-    // (undocumented)
-    configuration: INotificationChannelConfiguration;
-    // (undocumented)
-    destination: IWebhookDestination;
-    // (undocumented)
-    type: "webhook";
-}
-
-// @alpha (undocumented)
-export interface IWebhookDefinitionObject extends Partial<IWebhookDefinition>, Pick<INotificationChannelMetadataObject, "id"> {
-}
-
-// @alpha (undocumented)
-export interface IWebhookDestination {
-    endpoint: string;
+// @beta (undocumented)
+export interface IWebhookDestinationConfiguration {
+    endpoint?: string;
     hasToken?: boolean;
-    name: string;
     token?: string;
 }
+
+// @beta
+export interface IWebhookNotificationChannelMetadataObject extends INotificationChannelMetadataObjectBase, IMdObject {
+    destinationConfig?: IWebhookDestinationConfiguration;
+    // (undocumented)
+    destinationType: "webhook";
+    // (undocumented)
+    type: "notificationChannel";
+}
+
+// @beta
+export type IWebhookNotificationChannelMetadataObjectDefinition = ToMdObjectDefinition<IWebhookNotificationChannelMetadataObject>;
 
 // @public
 export interface IWhiteLabeling {
@@ -4401,11 +4435,14 @@ export function newTwoDimensional(dim1Input: DimensionItem[], dim2Input: Dimensi
 // @internal
 export function newVirtualArithmeticMeasure(measuresOrIds: ReadonlyArray<MeasureOrLocalId>, operator: ArithmeticMeasureOperator, modifications?: MeasureModifications<VirtualArithmeticMeasureBuilder>): IMeasure<IVirtualArithmeticMeasureDefinition>;
 
-// @alpha (undocumented)
-export type NotificationChannelAllowedRecipient = "CREATOR" | "INTERNAL";
+// @beta
+export type NotificationChannelAllowedRecipients = "creator" | "internal";
+
+// @beta
+export type NotificationChannelDestinationType = "webhook" | "smtp" | "inPlatform";
 
 // @public
-export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy" | "exportDefinition" | "automation" | "filterView" | "workspaceDataFilter" | "workspaceDataFilterSetting";
+export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy" | "exportDefinition" | "automation" | "filterView" | "workspaceDataFilter" | "workspaceDataFilterSetting" | "notificationChannel";
 
 // @public
 export type ObjRef = UriRef | IdentifierRef;
@@ -4521,6 +4558,12 @@ export type ThemeColor = string;
 
 // @beta
 export type ThemeFontUri = string;
+
+// @beta
+export type ToMdObjectDefinition<T extends IMdObject> = Omit<T, "id">;
+
+// @beta
+export type ToNotificationChannelMetadataObject<T extends INotificationChannelMetadataObjectDefinition> = T extends IWebhookNotificationChannelMetadataObjectDefinition ? IWebhookNotificationChannelMetadataObject : T extends ISmtpNotificationChannelMetadataObjectDefinition ? ISmtpNotificationChannelMetadataObject : T extends IInPlatformNotificationChannelMetadataObjectDefinition ? IInPlatformNotificationChannelMetadataObject : never;
 
 // @public
 export function totalIsNative(total: ITotal): boolean;

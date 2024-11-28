@@ -65,13 +65,10 @@ import {
     IThemeMetadataObject,
     IUser,
     IWorkspacePermissions,
-    IWebhookDefinition,
-    IWebhookDefinitionObject,
-    ISmtpDefinition,
-    ISmtpDefinitionObject,
     idRef,
     ObjRef,
     ILlmEndpointOpenAI,
+    INotificationChannelMetadataObject,
 } from "@gooddata/sdk-model";
 import RecordedAttributeHierarchiesService from "./attributeHierarchies.js";
 import { RecordedAttributes } from "./attributes.js";
@@ -460,59 +457,17 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
         },
         notificationChannels(): IOrganizationNotificationChannelService {
             return {
-                getCount: () => Promise.resolve(0),
-                getAll: () => Promise.resolve([]),
-                deleteChannel: () => Promise.resolve(),
-                testChannel: () =>
+                testNotificationChannel: () =>
                     Promise.resolve({
                         successful: true,
                     }),
-                //emails
-                createEmail: (webhook: ISmtpDefinition) =>
-                    Promise.resolve({
-                        ...(webhook as ISmtpDefinitionObject),
-                        id: "dummySmtp",
-                    }),
-                deleteEmail: () => Promise.resolve(),
-                getEmail: () =>
-                    Promise.resolve({
-                        id: "dummySmtp",
-                        type: "smtp",
-                        triggers: [],
-                        destination: {
-                            type: "custom",
-                            name: "",
-                            address: "",
-                            person: "",
-                            login: "",
-                            password: "",
-                            from: "",
-                            hasPassword: true,
-                            port: 25,
-                        },
-                    }),
-                getEmails: () => Promise.resolve([]),
-                updateEmail: (smtp) => Promise.resolve(smtp),
-                //webhooks
-                createWebhook: (webhook: IWebhookDefinition) =>
-                    Promise.resolve({
-                        ...(webhook as IWebhookDefinitionObject),
-                        id: "dummyWebhook",
-                    }),
-                deleteWebhook: () => Promise.resolve(),
-                getWebhook: () =>
-                    Promise.resolve({
-                        id: "dummyWebhook",
-                        type: "webhook",
-                        destination: {
-                            name: "Dummy webhook",
-                            endpoint: "https://dummy.webhook",
-                            token: "dummyToken",
-                        },
-                        triggers: [],
-                    }),
-                getWebhooks: () => Promise.resolve([]),
-                updateWebhook: (webhook) => Promise.resolve(webhook),
+                getNotificationChannel: () => Promise.resolve({} as INotificationChannelMetadataObject),
+                createNotificationChannel: () => Promise.resolve({} as INotificationChannelMetadataObject),
+                updateNotificationChannel: () => Promise.resolve({} as INotificationChannelMetadataObject),
+                deleteNotificationChannel: () => Promise.resolve(),
+                getNotificationChannelsQuery: () => {
+                    throw new NotSupported("not supported");
+                },
             };
         },
         permissions(): IOrganizationPermissionService {

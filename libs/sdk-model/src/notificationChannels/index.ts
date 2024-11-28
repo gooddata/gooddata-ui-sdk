@@ -1,189 +1,260 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2024 GoodData Corporation
+import { IMdObject, isMdObject, isMdObjectDefinition, ToMdObjectDefinition } from "../ldm/metadata/next.js";
 
 /**
- * @alpha
+ * Type of the destination of the notification channel, where the notifications are to be sent.
+ *
+ * @beta
  */
-export interface INotificationChannelMetadataObject extends INotificationChannelMetadataObjectBase {
-    /**
-     * Optional identifier of the notification channel.
-     */
-    id: string;
-}
+export type NotificationChannelDestinationType = "webhook" | "smtp" | "inPlatform";
+
 /**
- * @alpha
+ * Allowed recipients of notifications from this channel.
+ *
+ * Creator - only the creator of the report.
+ * Internal - all users within the organization.
+ * @beta
+ */
+export type NotificationChannelAllowedRecipients = "creator" | "internal";
+
+/**
+ * Shared base interface for all notification channel metadata objects.
+ *
+ * @beta
  */
 export interface INotificationChannelMetadataObjectBase {
-    /**
-     * Type of the notification channel.
-     */
-    type: "webhook" | "smtp";
+    type: "notificationChannel";
 
     /**
-     * Destination of the notification channel.
+     * Type of the destination of the notification channel.
      */
-    destination: IWebhookDestination | ISmtpDestination;
+    destinationType: NotificationChannelDestinationType;
 
     /**
      * Allowed recipients of notifications from this channel.
+     *
+     * If creator is specified, the notification will be sent to the creator of the report only.
+     * If internal is specified, the notification will be sent to all internal users.
      */
-    allowedRecipients?: NotificationChannelAllowedRecipient;
-}
+    allowedRecipients?: NotificationChannelAllowedRecipients;
 
-/**
- * @alpha
- */
-export type NotificationChannelAllowedRecipient = "CREATOR" | "INTERNAL";
-
-//Notification channel
-
-/**
- * @alpha
- */
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface INotificationChannelDefinitionObject extends INotificationChannelMetadataObject {}
-
-/**
- * @alpha
- */
-export interface INotificationChannelConfiguration {
     /**
-     * @alpha
-     * URL of the dashboard.
+     * Custom dashboard url that is going to be used in the notification.
+     * If not specified it is going to be deduced based on the context. Allowed placeholders are \{workspaceId\}, \{dashboardId\}.
      */
-    dashboardUrl?: string;
-}
-
-//Webhook
-
-/**
- * @alpha
- */
-export interface IWebhookDefinitionObject
-    extends Partial<IWebhookDefinition>,
-        Pick<INotificationChannelMetadataObject, "id"> {}
-
-/**
- * @alpha
- */
-export interface IWebhookDefinition extends INotificationChannelMetadataObjectBase {
-    type: "webhook";
-    destination: IWebhookDestination;
-    configuration: INotificationChannelConfiguration;
+    customDashboardUrl?: string;
 }
 
 /**
- * @alpha
+ * Metadata object for webhook notification channel.
+ *
+ * @beta
  */
-export interface IWebhookDestination {
+export interface IWebhookNotificationChannelMetadataObject
+    extends INotificationChannelMetadataObjectBase,
+        IMdObject {
+    type: "notificationChannel";
+    destinationType: "webhook";
+
     /**
-     * Name of the webhook.
+     * Configuration of the webhook, where the notifications are to be sent.
      */
-    name: string;
+    destinationConfig?: IWebhookDestinationConfiguration;
+}
+
+/**
+ * Metadata object definition for webhook notification channel.
+ * @beta
+ */
+export type IWebhookNotificationChannelMetadataObjectDefinition =
+    ToMdObjectDefinition<IWebhookNotificationChannelMetadataObject>;
+
+/**
+ * @beta
+ */
+export interface IWebhookDestinationConfiguration {
     /**
      * URL of the webhook endpoint.
      */
-    endpoint: string;
+    endpoint?: string;
+
     /**
      * Optional token to be used for authentication as bearer token.
      */
     token?: string;
+
     /**
      * Flag indicating whether the webhook has setup a token.
      */
     hasToken?: boolean;
 }
 
-//SMTP
-
 /**
- * @alpha
+ * @beta
  */
-export interface ISmtpDefinitionObject
-    extends Partial<ISmtpDefinition>,
-        Pick<INotificationChannelMetadataObject, "id"> {}
+export interface ISmtpNotificationChannelMetadataObject
+    extends INotificationChannelMetadataObjectBase,
+        IMdObject {
+    type: "notificationChannel";
+    destinationType: "smtp";
 
-/**
- * @alpha
- */
-export interface ISmtpDefinition extends INotificationChannelMetadataObjectBase {
-    type: "smtp";
-    destination: ISmtpDestination;
-    configuration: INotificationChannelConfiguration;
+    /**
+     * Configuration of the SMTP, where the notifications are to be sent.
+     */
+    destinationConfig?: ISmtpDestinationConfiguration;
 }
 
 /**
- * @alpha
+ * Metadata object definition for SMTP notification channel.
+ * @beta
  */
-export type ISmtpDestination = ICustomSmtpDestination | IDefaultSmtpDestination;
+export type ISmtpNotificationChannelMetadataObjectDefinition =
+    ToMdObjectDefinition<ISmtpNotificationChannelMetadataObject>;
 
 /**
- * @alpha
+ * Configuration of the SMTP, where the notifications are to be sent.
+ * Custom SMTP - custom SMTP server.
+ * Default SMTP - default SMTP server (users in organization).
+ * @beta
  */
-export type ICustomSmtpDestination = {
+export type ISmtpDestinationConfiguration =
+    | ICustomSmtpDestinationConfiguration
+    | IDefaultSmtpDestinationConfiguration;
+
+/**
+ * @beta
+ */
+export type ICustomSmtpDestinationConfiguration = {
     /**
-     * Type of the SMTP.
+     * Custom SMTP server.
      */
-    type: "custom";
+    type: "customSmtp";
+
     /**
-     * Name of the smtp.
+     * The email address that will appear as the sender of notifications.
      */
-    name: string;
+    senderEmail?: string;
+
     /**
-     * Name of the SMTP server.
+     * The display name that will appear as the sender name in notifications.
      */
-    from: string;
+    senderDisplayName?: string;
+
     /**
-     * Email address of the sender.
+     * The SMTP server address.
      */
-    address: string;
+    host?: string;
+
     /**
-     * Who the email is from.
+     * The SMTP server port.
      */
-    person: string;
+    port?: 25 | 465 | 587 | 2525;
+
     /**
-     * Port of the SMTP server.
+     * The SMTP server username.
      */
-    port: 25 | 465 | 587 | 2525;
+    username?: string;
+
     /**
-     * Login to the SMTP server.
-     */
-    login: string;
-    /**
-     * Password to the SMTP server.
+     * The SMTP server password.
      */
     password?: string;
-    /**
-     * Flag indicating whether the SMTP server has a password.
-     */
-    hasPassword?: boolean;
 };
 
 /**
- * @alpha
+ * @beta
  */
-export type IDefaultSmtpDestination = {
+export type IDefaultSmtpDestinationConfiguration = {
     /**
      * Type of the SMTP.
      */
-    type: "default";
+    type: "defaultSmtp";
+
     /**
-     * Name of the smtp.
+     * The email address that will appear as the sender of notifications.
+     * Note: This setting is currently not used. All notifications are sent from no-reply\@gooddata.com
      */
-    name: string;
+    senderEmail?: string;
+
     /**
-     * Email address of the sender.
+     * The display name that will appear as the sender name in notifications.
+     * Note: This setting is currently not used. All notifications show "GoodData" as the sender name.
      */
-    address: string;
-    /**
-     * Who the email is from.
-     */
-    person: string;
+    senderDisplayName?: string;
 };
 
-//Test
+/**
+ * @beta
+ */
+export interface IInPlatformNotificationChannelMetadataObject
+    extends INotificationChannelMetadataObjectBase,
+        IMdObject {
+    type: "notificationChannel";
+    destinationType: "inPlatform";
+}
 
 /**
- * @alpha
+ * Metadata object definition for SMTP notification channel.
+ * @beta
+ */
+export type IInPlatformNotificationChannelMetadataObjectDefinition =
+    ToMdObjectDefinition<IInPlatformNotificationChannelMetadataObject>;
+
+/**
+ * @beta
+ */
+export type INotificationChannelMetadataObject =
+    | IWebhookNotificationChannelMetadataObject
+    | ISmtpNotificationChannelMetadataObject
+    | IInPlatformNotificationChannelMetadataObject;
+
+/**
+ * Type guard checking whether input is an instance of {@link INotificationChannelMetadataObject}.
+ *
+ * @beta
+ */
+export function isNotificationChannelMetadataObject(obj: unknown): obj is INotificationChannelMetadataObject {
+    return isMdObject(obj) && (obj as INotificationChannelMetadataObject).type === "notificationChannel";
+}
+
+/**
+ * @beta
+ */
+export type INotificationChannelMetadataObjectDefinition =
+    | IWebhookNotificationChannelMetadataObjectDefinition
+    | ISmtpNotificationChannelMetadataObjectDefinition
+    | IInPlatformNotificationChannelMetadataObjectDefinition;
+
+/**
+ * Type guard checking whether input is an instance of {@link INotificationChannelMetadataObjectDefinition}.
+ *
+ * @beta
+ */
+export function isNotificationChannelMetadataObjectDefinition(
+    obj: unknown,
+): obj is INotificationChannelMetadataObjectDefinition {
+    return (
+        isMdObjectDefinition(obj) &&
+        (obj as INotificationChannelMetadataObjectDefinition).type === "notificationChannel"
+    );
+}
+
+/**
+ * Utility type to transform {@link INotificationChannelMetadataObjectDefinition} to relevant {@link INotificationChannelMetadataObject}.
+ *
+ * @beta
+ */
+export type ToNotificationChannelMetadataObject<T extends INotificationChannelMetadataObjectDefinition> =
+    T extends IWebhookNotificationChannelMetadataObjectDefinition
+        ? IWebhookNotificationChannelMetadataObject
+        : T extends ISmtpNotificationChannelMetadataObjectDefinition
+        ? ISmtpNotificationChannelMetadataObject
+        : T extends IInPlatformNotificationChannelMetadataObjectDefinition
+        ? IInPlatformNotificationChannelMetadataObject
+        : never;
+
+/**
+ * @beta
  */
 export interface INotificationChannelTestResponse {
     /**

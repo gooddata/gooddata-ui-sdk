@@ -567,7 +567,7 @@ export function AttributesDropdown({ className, bodyClassName, onClose, onSelect
 export type AutomationInteractionData = {
     type: AutomationInteractionType;
     destination_id?: string;
-    destination_type?: INotificationChannelMetadataObjectBase["type"];
+    destination_type?: INotificationChannelMetadataObjectBase["destinationType"];
     automation_id?: string;
     automation_name?: string;
     automation_source?: "dashboard" | "widget";
@@ -7618,6 +7618,9 @@ export const selectEnableFlexibleLayout: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableIgnoreCrossFiltering: DashboardSelector<boolean>;
+
+// @internal
+export const selectEnableInPlatformNotifications: DashboardSelector<boolean>;
 
 // @public
 export const selectEnableInsightExportScheduling: DashboardSelector<boolean>;

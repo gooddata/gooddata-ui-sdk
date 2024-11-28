@@ -243,7 +243,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
     private isEmailChannel() {
         const { notificationChannel } = this.props;
 
-        return notificationChannel?.type === "smtp";
+        return notificationChannel?.destinationType === "smtp";
     }
 
     private renderNoOptionsContainer = (): React.ReactElement | null => {

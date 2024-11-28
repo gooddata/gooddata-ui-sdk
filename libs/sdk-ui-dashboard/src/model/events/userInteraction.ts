@@ -149,7 +149,7 @@ export type AutomationInteractionType =
 export type AutomationInteractionData = {
     type: AutomationInteractionType;
     destination_id?: string;
-    destination_type?: INotificationChannelMetadataObjectBase["type"];
+    destination_type?: INotificationChannelMetadataObjectBase["destinationType"];
     automation_id?: string;
     automation_name?: string;
     automation_source?: "dashboard" | "widget";

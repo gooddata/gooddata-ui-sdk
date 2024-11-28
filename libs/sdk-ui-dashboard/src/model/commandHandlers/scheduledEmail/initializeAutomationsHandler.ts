@@ -8,6 +8,7 @@ import { PromiseFnReturnType } from "../../types/sagas.js";
 import { InitializeAutomations } from "../../commands/scheduledEmail.js";
 import {
     selectEnableAutomations,
+    selectEnableInPlatformNotifications,
     selectEnableScheduling,
     selectIsReadOnly,
 } from "../../store/config/configSelectors.js";
@@ -34,10 +35,11 @@ export function* initializeAutomationsHandler(
     const canManageAutomations: ReturnType<typeof selectCanManageWorkspace> = yield select(
         selectCanManageWorkspace,
     );
-
     const enableAutomations: ReturnType<typeof selectEnableScheduling> = yield select(
         selectEnableAutomations,
     );
+    const enableInPlatformNotifications: ReturnType<typeof selectEnableInPlatformNotifications> =
+        yield select(selectEnableInPlatformNotifications);
     const automationsInitialized: ReturnType<typeof selectAutomationsIsInitialized> = yield select(
         selectAutomationsIsInitialized,
     );
@@ -68,7 +70,7 @@ export function* initializeAutomationsHandler(
         ] = yield all([
             call(loadDashboardUserAutomations, ctx, dashboardId, user.login, !canManageAutomations),
             call(loadWorkspaceAutomationsCount, ctx),
-            call(loadNotificationChannels, ctx),
+            call(loadNotificationChannels, ctx, enableInPlatformNotifications),
             call(loadWorkspaceUsers, ctx),
         ]);
 
