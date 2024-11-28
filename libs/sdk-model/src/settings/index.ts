@@ -552,11 +552,6 @@ export interface ISettings {
     enableNewUserCreationFlow?: boolean;
 
     /**
-     * Enable the use of the new FlexConnect naming (instead of FlexFunctions).
-     */
-    enableFlexConnectNaming?: boolean;
-
-    /**
      * Enable the possibility to test destinations (emails, webhooks) in the UI.
      */
     enableDestinationTesting?: boolean;
