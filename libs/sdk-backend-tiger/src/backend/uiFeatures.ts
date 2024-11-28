@@ -121,7 +121,6 @@ export enum TigerFeaturesNames {
     EnableDashboardFlexibleLayout = "enableDashboardFlexibleLayout",
     EnableNumberSeparators = "enableNumberSeparators",
     EnableNewUserCreationFlow = "enableNewUserCreationFlow",
-    EnableFlexConnectNaming = "enableFlexConnectNaming",
     EnableDestinationTesting = "enableDestinationTesting",
     EnableInPlatformNotifications = "enableInPlatformNotifications",
 }
@@ -208,7 +207,6 @@ export type ITigerFeatureFlags = {
     enableDashboardFlexibleLayout: typeof FeatureFlagsValues["enableDashboardFlexibleLayout"][number];
     enableNumberSeparators: typeof FeatureFlagsValues["enableNumberSeparators"][number];
     enableNewUserCreationFlow: typeof FeatureFlagsValues["enableNewUserCreationFlow"][number];
-    enableFlexConnectNaming: typeof FeatureFlagsValues["enableFlexConnectNaming"][number];
     enableDestinationTesting: typeof FeatureFlagsValues["enableDestinationTesting"][number];
     enableInPlatformNotifications: typeof FeatureFlagsValues["enableInPlatformNotifications"][number];
 };
@@ -295,7 +293,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDashboardFlexibleLayout: false,
     enableNumberSeparators: true,
     enableNewUserCreationFlow: false,
-    enableFlexConnectNaming: false,
     enableDestinationTesting: false,
     enableInPlatformNotifications: false,
 };
@@ -386,7 +383,6 @@ export const FeatureFlagsValues = {
     enableDashboardFlexibleLayout: [true, false] as const,
     enableNumberSeparators: [true, false] as const,
     enableNewUserCreationFlow: [true, false] as const,
-    enableFlexConnectNaming: [true, false] as const,
     enableDestinationTesting: [true, false] as const,
     enableInPlatformNotifications: [true, false] as const,
 };

@@ -592,13 +592,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableFlexConnectNaming,
-            "enableFlexConnectNaming",
-            "BOOLEAN",
-            FeatureFlagsValues.enableFlexConnectNaming,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableInPlatformNotifications,
             "enableInPlatformNotifications",
             "BOOLEAN",
