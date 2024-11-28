@@ -41,15 +41,14 @@ jobs:
       outputs:
         version: ${{ steps.version.outputs.version }}
       steps:
-        - name: Setup node
-          uses: ./.github/actions/node/set-up-node
-          id: node-init
         - name: Checkout code
           uses: actions/checkout@v4
           with:
               ref: ${{ inputs.source-branch }}
               token: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}
-
+        - name: Setup node
+          uses: ./.github/actions/node/set-up-node
+          id: node-init
         - name: Get version
           uses: gooddata/gooddata-ui-sdk/.github/actions/get-version-action@master
           id: version
