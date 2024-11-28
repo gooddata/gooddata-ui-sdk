@@ -4,6 +4,8 @@
 # It will also return the version which was created.
 # if the 'skip-bump' input is set to true, it will just return the current version without bumping it.
 
+# test
+
 name: rw ~ Rush ~ Bump version
 on:
     workflow_call:
