@@ -19,7 +19,9 @@ on:
 
 jobs:
   build-apidocs:
-    runs-on: [ubuntu-latest]
+    runs-on:
+        group: infra1-runners-arc
+        labels: runners-rxa-xlarge
     permissions:
       contents: write
     steps:
@@ -51,27 +53,21 @@ jobs:
       - name: Add repository to git safe directories to avoid dubious ownership issue
         run: git config --global --add safe.directory $GITHUB_WORKSPACE
 
-      - name: Config user
-        run: |
-            git config --global user.email "git-action@gooddata.com"
-            git config --global user.name "git-action"
-
-      - name: Setup node
-        uses: actions/setup-node@v4
+      - name: Git config user
+        uses: snow-actions/git-config-user@v1.0.0
         with:
-          node-version: 18.17.0
+          name: git-action
+          email: git-action@gooddata.com
 
-      - name: Install rush
-        run: |
-            npm install -g @microsoft/rush
+      - name: Setup rush
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        uses: ./gooddata-ui-sdk/.github/actions/rush/set-up-rush
 
       - name: Build apidocs
         run: |
           cd gooddata-ui-sdk
-          rush install
-          # Use after tagging projects which use api-extractor
-          # rush build --to tag:api-doc
-          rush build
+          node common/scripts/install-run-rush.js build
           symlinks=$([ "$IS_NEW_LATEST" = true ] && echo "--update-symlink" || echo "")
           echo "updating symlinks: $symlinks"
           echo node common/scripts/build-docs.js -v $VERSION $symlinks
