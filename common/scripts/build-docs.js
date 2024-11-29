@@ -104,7 +104,7 @@ function runCommand(command, argv, cwd) {
 
 async function buildVersion(versionName, dev, shouldUpdateSymlink, onSuccess) {
     const dir = __dirname;
-    const rootDir = path.resolve(dir, "../..");
+    const rootDir = path.resolve(dir, "./");
 
     // Root of the ApiDocs repo
     const apiDocDir = path.resolve(rootDir, "../gooddata-ui-apidocs");

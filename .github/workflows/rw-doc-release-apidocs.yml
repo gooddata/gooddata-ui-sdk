@@ -53,11 +53,10 @@ jobs:
       - name: Add repository to git safe directories to avoid dubious ownership issue
         run: git config --global --add safe.directory $GITHUB_WORKSPACE
 
-      - name: Git config user
-        uses: snow-actions/git-config-user@v1.0.0
-        with:
-          name: git-action
-          email: git-action@gooddata.com
+      - name: Config user
+        run: |
+            git config --global user.email "git-action@gooddata.com"
+            git config --global user.name "git-action"
 
       - name: Setup rush
         env:

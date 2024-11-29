@@ -5,7 +5,7 @@ runs:
   using: 'composite'
   steps:
     - name: init node Node.js
-      uses: ./.github/actions/node/set-up-node
+      uses: ../node/set-up-node
       id: node-init
 
     # The runner is set up to assume a role using a web identity token, which is only possible for runners in the infra1-runners-arc group.
