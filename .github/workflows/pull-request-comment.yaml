@@ -18,7 +18,7 @@ jobs:
 
   command-started:
     needs: [guard]
-    if: ${{ startsWith(github.event.comment.body, 'extended test - isolated') }}
+    if: ${{ startsWith(github.event.comment.body, 'extended test') }}
     permissions:
       pull-requests: write
     runs-on:
