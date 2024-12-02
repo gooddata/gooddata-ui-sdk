@@ -28,5 +28,7 @@ services:
             - TIGER_API_TOKEN
             - VISUAL_MODE=false
             - CYPRESS_TEST_TAGS
+            - FIXTURE_TYPE
+            - TIGER_DATASOURCES_NAME
             - NO_COLOR
             - EXECUTION_ENV=$EXECUTION_ENV
