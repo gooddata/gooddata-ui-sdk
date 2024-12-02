@@ -36,7 +36,6 @@
     },
     "scripts": {
         "clean": "rm -rf ci dist esm scenarios/build coverage *.log styles/css",
-        "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "build": "tsc -p tsconfig.build.json",
         "dev": "bash scripts/build.sh --dev-watch",
         "eslint": "eslint -c .eslintrc.cjs --ext js,jsx,ts,tsx ./",
