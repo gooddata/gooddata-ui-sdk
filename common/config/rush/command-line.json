@@ -139,6 +139,14 @@
       "ignoreMissingScript": true
     },
     {
+      "commandKind": "bulk",
+      "name": "api-extractor",
+      "summary": "This command is triggered during the API documentation generation process (via a GitHub Action). It executes the API Extractor for all projects. Documentation-related files are generated in the temporary directory, as these files are not cached.",
+      "enableParallelism": true,
+      "allowWarningsInSuccessfulBuild": true,
+      "ignoreMissingScript": true
+    },
+    {
       "commandKind": "global",
       "name": "audit",
       "summary": "Performs security audit of all dependencies used by projects in this repository. This command uses pnpm audit which in the end calls out to the npmjs API.",

@@ -19,14 +19,12 @@ on:
 
 jobs:
     bump-version-and-commit:
-        runs-on: [ubuntu-latest]
+        runs-on:
+            group: infra1-runners-arc
+            labels: runners-cxa-xlarge
         outputs:
             version: ${{ steps.version.outputs.version }}
         steps:
-            - name: Setup node
-              uses: actions/setup-node@v4
-              with:
-                node-version: 18.17.0
             - name: Checkout code
               uses: actions/checkout@v4
               with:
@@ -36,13 +34,16 @@ jobs:
             - name: Add repository to git safe directories to avoid dubious ownership issue
               run: git config --global --add safe.directory $GITHUB_WORKSPACE
 
-            - name: Install rush
-              run: npm install -g @microsoft/rush
+            - name: Git config user
+              uses: snow-actions/git-config-user@v1.0.0
+              with:
+                name: git-action
+                email: git-action@gooddata.com
+            - name: Setup rush
+              env:
+                NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+              uses: ./.github/actions/rush/set-up-rush
 
-            - name: Config user
-              run: |
-                  git config --global user.email "git-action@gooddata.com"
-                  git config --global user.name "git-action"
             - name: Get current version
               uses: gooddata/gooddata-ui-sdk/.github/actions/get-version-action@master
               id: current_version
@@ -76,7 +77,7 @@ jobs:
 
                 for policy in $policies
                 do
-                    rush version --ensure-version-policy --override-version $NEXT_VERSION --version-policy $policy
+                    node common/scripts/install-run-rush.js version --ensure-version-policy --override-version $NEXT_VERSION --version-policy $policy
                 done
             - name: Git commit and push
               env:
