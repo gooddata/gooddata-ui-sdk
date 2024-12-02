@@ -20,7 +20,7 @@ jobs:
 
   command-started:
     needs: [guard]
-    if: ${{ startsWith(github.event.comment.body, 'extended test' }}
+    if: ${{ startsWith(github.event.comment.body, 'extended test - isolated') }}
     steps:
       - uses: actions/github-script@v7
         with:
@@ -41,7 +41,7 @@ jobs:
 
   e2e-run:
     needs: [guard]
-    if: ${{ github.event.comment.body == 'extended test' }}
+    if: ${{ github.event.comment.body == 'extended test - isolated' }}
     permissions:
       id-token: write
       contents: read
@@ -76,7 +76,7 @@ jobs:
             const issue_number = context.issue.number;
             const repository = context.repo;
             const url = `https://github.com/${repository.owner}/${repository.repo}/actions/runs/${context.runId}`;
-            const testResult = process.env.COMMENT === 'extended test' ? process.env.TEST_RESULT : process.env.TEST_RESULT_RECORD;
+            const testResult = process.env.COMMENT === 'extended test - isolated' ? process.env.TEST_RESULT : process.env.TEST_RESULT_RECORD;
             const icon = testResult === 'success' ? '✅' : '❌';
             const message = `${icon} "${process.env.COMMENT}" finished with result **${testResult}**. Check the results [here](${url}).`;
             github.rest.issues.createComment({

@@ -17,6 +17,6 @@ extended test - backstop
 
 ```
 extended test - tiger-cypress - integrated
-extended test - tiger-cypress - isolated
-extended test - tiger-cypress - record
+extended test - isolated
+extended test - record
 ```
