@@ -21,6 +21,11 @@ jobs:
   command-started:
     needs: [guard]
     if: ${{ startsWith(github.event.comment.body, 'extended test - isolated') }}
+    permissions:
+      pull-requests: write
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
     steps:
       - uses: actions/github-script@v7
         with:
