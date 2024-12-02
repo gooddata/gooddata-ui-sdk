@@ -252,6 +252,12 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     clusteringThreshold: { id: "properties.clustering.threshold" },
     clusteringThresholdPlaceholder: { id: "properties.clustering.threshold.placeholder" },
     clusteringThresholdTooltip: { id: "properties.clustering.threshold.tooltip" },
+    advancedSection: { id: "properties.advanced.title" },
+    chartConfigOverrideNoValueLabel: { id: "properties.advanced.chartConfigOverride.noValueLabel" },
+    chartConfigOverrideLink: { id: "properties.advanced.chartConfigOverride.link" },
+    chartConfigOverrideEditorButton: { id: "properties.advanced.chartConfigOverride.editorButton" },
+    chartConfigOverrideTitle: { id: "properties.advanced.chartConfigOverride.title" },
+    snippetsHeader: { id: "properties.advanced.chartConfigOverride.snippets.header" },
 });
 
 export const comparisonMessages: Record<string, MessageDescriptor> = defineMessages({

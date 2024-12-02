@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -40,6 +40,7 @@ export default class PieChartConfigurationPanel extends ConfigurationPanelConten
                             defaultValue={false}
                         />
                     </ConfigSection>
+                    {this.renderAdvancedSection()}
                 </div>
                 <Bubble
                     className={this.getBubbleClassNames()}

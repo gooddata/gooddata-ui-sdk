@@ -22,6 +22,7 @@ import {
     isInsightSupportedForAlerts,
     isInsightSupportedForScheduledExports,
 } from "../pluggableVisualizations/alerts.js";
+import AdvancedSection from "../configurationControls/advanced/AdvancedSection.js";
 
 export interface IConfigurationPanelContentProps<PanelConfig = any> {
     properties?: IVisualizationProperties;
@@ -170,5 +171,17 @@ export default abstract class ConfigurationPanelContent<
                 pushData={pushData}
             />
         );
+    }
+
+    protected renderAdvancedSection(): React.ReactNode {
+        const { pushData, properties, propertiesMeta, featureFlags } = this.props;
+        return featureFlags.enableVisualizationFineTuning ? (
+            <AdvancedSection
+                controlsDisabled={this.isControlDisabled()}
+                properties={properties}
+                propertiesMeta={propertiesMeta}
+                pushData={pushData}
+            />
+        ) : null;
     }
 }

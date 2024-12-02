@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
@@ -41,6 +41,7 @@ export default class FunnelChartConfigurationPanel extends ConfigurationPanelCon
                             enablePercentLabels={true}
                         />
                     </ConfigSection>
+                    {this.renderAdvancedSection()}
                 </div>
                 <Bubble
                     className={this.getBubbleClassNames()}

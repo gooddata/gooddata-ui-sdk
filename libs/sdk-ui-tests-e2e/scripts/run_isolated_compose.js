@@ -95,8 +95,6 @@ async function main() {
             });
         });
 
-        // all done, create github report
-        execSync(`node ./scripts/create_github_report.js`);
         process.exit(cypressExitCode);
     } catch (e) {
         process.stderr.write(`${e.toString()}\n`);
