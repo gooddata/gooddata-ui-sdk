@@ -174,6 +174,7 @@ export default class ScatterPlotConfigurationPanel extends ConfigurationPanelCon
                             ) : null}
                         </ConfigSection>
                     ) : null}
+                    {this.renderAdvancedSection()}
                 </div>
                 <Bubble
                     className={this.getBubbleClassNames()}

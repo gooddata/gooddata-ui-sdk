@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2024 GoodData Corporation
 import React from "react";
 import { FormattedMessage } from "react-intl";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
@@ -87,6 +87,7 @@ export default class WaterfallChartConfigurationPanel extends BaseChartConfigura
                             pushData={pushData}
                         />
                     </ConfigSection>
+                    {this.renderAdvancedSection()}
                 </div>
                 <Bubble
                     className={this.getBubbleClassNames()}

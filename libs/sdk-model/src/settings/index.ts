@@ -552,11 +552,6 @@ export interface ISettings {
     enableNewUserCreationFlow?: boolean;
 
     /**
-     * Enable the use of the new FlexConnect naming (instead of FlexFunctions).
-     */
-    enableFlexConnectNaming?: boolean;
-
-    /**
      * Enable the possibility to test destinations (emails, webhooks) in the UI.
      */
     enableDestinationTesting?: boolean;
@@ -565,6 +560,11 @@ export interface ISettings {
      * Enable in-platform notifications.
      */
     enableInPlatformNotifications?: boolean;
+
+    /**
+     * Enable fine-tuning options for visualization in AD configuration panel.
+     */
+    enableVisualizationFineTuning?: boolean;
 
     [key: string]: number | boolean | string | object | undefined;
 }

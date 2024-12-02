@@ -3213,7 +3213,6 @@ export interface ISettings {
     enableEarlyAccessFeaturesRollout?: boolean;
     enableEmbedButtonInAD?: boolean;
     enableEmbedButtonInKD?: boolean;
-    enableFlexConnectNaming?: boolean;
     enableFlightRpcDataSource?: boolean;
     enableGenAIChat?: boolean;
     enableGenAIChatRollout?: boolean;
@@ -3282,6 +3281,7 @@ export interface ISettings {
     enableTableColumnsManualResizing?: boolean;
     enableUnavailableItemsVisible?: boolean;
     enableUserManagement?: boolean;
+    enableVisualizationFineTuning?: boolean;
     enableWaterfallChart?: boolean;
     enableWeekFilters?: boolean;
     enableWidgetIdentifiersRollout?: boolean;

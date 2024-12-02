@@ -22,7 +22,7 @@ import {
 } from "./validation/itemValidation.js";
 import { addTemporaryIdentityToWidgets } from "../../utils/dashboardItemUtils.js";
 import { sanitizeHeader } from "./utils.js";
-import { updateSectionIndex } from "../../../_staging/layout/coordinates.js";
+import { updateSectionIndex, findSections } from "../../../_staging/layout/coordinates.js";
 
 type AddLayoutSectionContext = {
     readonly ctx: DashboardContext;
@@ -125,8 +125,12 @@ export function* addLayoutSectionHandler(
         ]),
     );
 
+    const relevantSections = isLegacyCommand
+        ? commandCtx.layout.sections
+        : findSections(commandCtx.layout, index);
+
     const newSectionIndex = resolveIndexOfNewItem(
-        commandCtx.layout.sections,
+        relevantSections,
         isLegacyCommand ? index : index.sectionIndex,
     );
     const updatedSectionPath = isLegacyCommand
