@@ -1,7 +1,7 @@
 {
     "name": "@gooddata/sdk-ui-tests-e2e",
     "version": "1.0.0",
-    "description": "GoodData SDK TypeScript & React skeleton",
+    "description": "GoodData SDK e2e tests",
     "repository": {
         "type": "git",
         "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
