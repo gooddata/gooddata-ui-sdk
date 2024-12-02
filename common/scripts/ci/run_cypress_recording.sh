@@ -9,6 +9,7 @@ E2E_TEST_DIR=$ROOT_DIR/libs/sdk-ui-tests-e2e
 _RUSH="${DIR}/docker_rush.sh"
 _RUSHX="${DIR}/docker_rushx.sh"
 
+echo "${TIGER_API_TOKEN:0:2}"
 echo "⭐️ 1/8 Preparing .env for recording"
 if [[ ! "${TEST_BACKEND:?}" =~ 'https://' ]]; then
     export TEST_BACKEND="https://${TEST_BACKEND}"
