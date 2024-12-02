@@ -81,5 +81,5 @@ echo "⭐️ 7/8 delete reference workspace on the host"
 if [[ $RUN_ON_GH != "true" ]]; then
     $_RUSHX libs/sdk-ui-tests-e2e delete-ref-workspace
 else
-    (cd libs/sdk-ui-tests-e2e && node ../../common/scripts/install-run-rushx.js delete-ref-workspace)
+    node ../../common/scripts/install-run-rushx.js delete-ref-workspace
 fi
