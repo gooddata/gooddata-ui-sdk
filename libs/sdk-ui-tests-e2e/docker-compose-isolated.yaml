@@ -23,6 +23,8 @@ services:
             - HOST
             - TEST_WORKSPACE_ID
             - TIGER_API_TOKEN
+            - TIGER_DATASOURCES_NAME
+            - FIXTURE_TYPE
             - CYPRESS_TEST_TAGS
             - NO_COLOR
             - ZUUL_PIPELINE=$ZUUL_PIPELINE
