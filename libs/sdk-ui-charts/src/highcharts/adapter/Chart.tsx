@@ -19,15 +19,15 @@ import defaultDependencyWheelModule from "highcharts/modules/dependency-wheel.js
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
 // https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
-export const drillmodule = defaultImport(defaultDrillmodule);
-export const treemapModule = defaultImport(defaultTreemapModule);
-export const bulletModule = defaultImport(defaultBulletModule);
-export const funnelModule = defaultImport(defaultFunnelModule);
-export const sankeyModule = defaultImport(defaultSankeyModule);
-export const dependencyWheelModule = defaultImport(defaultDependencyWheelModule);
-export const heatmap = defaultImport(defaultHeatmap);
-export const HighchartsMore = defaultImport(defaultHighchartsMore);
-export const patternFill = defaultImport(defaultPatternFill);
+const drillmodule = defaultImport(defaultDrillmodule);
+const treemapModule = defaultImport(defaultTreemapModule);
+const bulletModule = defaultImport(defaultBulletModule);
+const funnelModule = defaultImport(defaultFunnelModule);
+const sankeyModule = defaultImport(defaultSankeyModule);
+const dependencyWheelModule = defaultImport(defaultDependencyWheelModule);
+const heatmap = defaultImport(defaultHeatmap);
+const HighchartsMore = defaultImport(defaultHighchartsMore);
+const patternFill = defaultImport(defaultPatternFill);
 
 drillmodule(Highcharts);
 treemapModule(Highcharts);
