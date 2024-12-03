@@ -76,7 +76,7 @@ jobs:
     secrets: inherit
 
   e2e-integrated:
-    needs: [guard]
+    needs: [get-pr-info]
     if: ${{ github.event.comment.body == 'extended test - integrated' }}
     permissions:
       id-token: write
