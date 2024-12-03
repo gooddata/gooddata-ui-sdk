@@ -33,7 +33,7 @@ mkdir -p ./recordings/mappings/TIGER
 docker build --no-cache --file Dockerfile_local -t $IMAGE_ID . || exit 1
 
 echo "⭐️ Run isolated recording against TEST_BACKEND=$TEST_BACKEND."
-if [[ $RUN_ON_GH != "true" ]]; then
+if [[ "$GITHUB_ACTIONS" != "true" ]]; then
     export USER_UID=$(id -u $USER)
     export USER_GID=$(id -g $USER)
 fi
