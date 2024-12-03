@@ -3,7 +3,7 @@
     "version": "10.17.0-alpha.3",
     "title": "Dependent Filters Example",
     "description": "This example demonstrates how to use multiple attribute filters linked together to filter data in a visualization.",
-    "author": "GoodData Corporation",
+    "author": "GoodData",
     "private": false,
     "license": "LicenseRef-LICENSE",
     "type": "module",

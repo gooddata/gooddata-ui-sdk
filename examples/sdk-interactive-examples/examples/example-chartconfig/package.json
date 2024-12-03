@@ -3,7 +3,7 @@
     "version": "10.17.0-alpha.3",
     "title": "Chart config manipulation",
     "description": "This interactive example demonstrates how to manipulate the chart config.",
-    "author": "GoodData Corporation",
+    "author": "GoodData",
     "private": false,
     "license": "LicenseRef-LICENSE",
     "type": "module",

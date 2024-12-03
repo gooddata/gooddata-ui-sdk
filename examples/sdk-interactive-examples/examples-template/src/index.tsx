@@ -1,4 +1,4 @@
-// (C) 2019-2023 GoodData Corporation
+// (C) 2024 GoodData Corporation
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { provideCreateRoot } from "@gooddata/sdk-ui-ext";
