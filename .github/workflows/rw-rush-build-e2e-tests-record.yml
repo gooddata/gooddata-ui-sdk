@@ -6,6 +6,10 @@ on:
           required: false
           description: "List of spec files to filter"
           type: string
+      source-ref:
+          required: false
+          description: "source ref of the current code"
+          type: string
 
 jobs:
   warm-up-cache:
@@ -14,6 +18,9 @@ jobs:
       labels: runners-cxa-xlarge
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.source-ref }}
+          fetch-depth: 2
       - name: Git config user
         uses: snow-actions/git-config-user@v1.0.0
         with:
@@ -31,6 +38,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ inputs.source-ref }}
           fetch-depth: 2
       - name: Git config user
         uses: snow-actions/git-config-user@v1.0.0
@@ -54,6 +62,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ inputs.source-ref }}
           fetch-depth: 2
       - name: Git config user
         uses: snow-actions/git-config-user@v1.0.0

@@ -4,20 +4,29 @@ on:
     types:
       - created
 jobs:
-  guard:
+  get-pr-info:
+    if: github.event.issue.pull_request != null && startsWith(github.event.comment.body, 'extended test')
     runs-on:
       group: infra1-runners-arc
       labels: runners-small
+    outputs:
+      sha: ${{ steps.get-sha.outputs.sha }}
     steps:
-      - name: Set changed components from command
-        id: command
+      - uses: actions/checkout@v4
+        with:
+          ref: refs/pull/${{ github.event.issue.number }}/head
+      - name: get-sha
+        id: get-sha
         run: |
-          echo "COMMENT=$COMMENT"
+          SHA=$(git log -1 --format='%H')
+          echo "Comment is $COMMENT"
+          echo "Exporting ${{ github.event.issue.number }} as $SHA"
+          echo "sha=$SHA" >> $GITHUB_OUTPUT
         env:
           COMMENT: ${{ github.event.comment.body }}
 
   command-started:
-    needs: [guard]
+    needs: [get-pr-info]
     if: ${{ startsWith(github.event.comment.body, 'extended test') }}
     permissions:
       pull-requests: write
@@ -43,23 +52,27 @@ jobs:
           COMMENT: ${{ github.event.comment.body }}
 
   e2e-run:
-    needs: [guard]
+    needs: [get-pr-info]
     if: ${{ github.event.comment.body == 'extended test - isolated' }}
     permissions:
       id-token: write
       contents: read
       pull-requests: read
     uses: ./.github/workflows/rw-rush-build-e2e-tests.yml
+    with:
+      source-ref: ${{ needs.get-pr-info.outputs.sha }}
     secrets: inherit
 
   e2e-record:
-    needs: [guard]
+    needs: [get-pr-info]
     if: ${{ github.event.comment.body == 'extended test - record' }}
     permissions:
       id-token: write
       contents: read
       pull-requests: read
     uses: ./.github/workflows/rw-rush-build-e2e-tests-record.yml
+    with:
+      source-ref: ${{ needs.get-pr-info.outputs.sha }}
     secrets: inherit
 
 
