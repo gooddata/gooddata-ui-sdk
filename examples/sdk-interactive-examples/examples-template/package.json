@@ -3,7 +3,7 @@
     "version": "10.17.0-alpha.2",
     "title": "GoodData interactive example template",
     "description": "GoodData interactive example template",
-    "author": "GoodData Corporation",
+    "author": "GoodData",
     "private": false,
     "license": "LicenseRef-LICENSE",
     "type": "module",
