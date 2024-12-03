@@ -11,6 +11,7 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
     useWidgetSelection,
+    toggleLayoutSectionHeaders,
 } from "../../../../model/index.js";
 
 import { DASHBOARD_OVERLAYS_FILTER_Z_INDEX } from "../../../constants/index.js";
@@ -71,7 +72,16 @@ export const EditableDashboardNestedLayoutWidget: React.FC<IDashboardLayoutProps
                             <>
                                 {hasConfigPanelOpen ? (
                                     <Toolbar
+                                        layout={layout!}
                                         onWidgetDelete={() => setIsConfirmDeleteDialogVisible(true)}
+                                        onToggleHeaders={(areSectionHeadersEnabled: boolean) => {
+                                            dispatch(
+                                                toggleLayoutSectionHeaders(
+                                                    parentLayoutPath,
+                                                    areSectionHeadersEnabled,
+                                                ),
+                                            );
+                                        }}
                                         onClose={closeConfigPanel}
                                     />
                                 ) : null}
@@ -107,7 +117,10 @@ export const EditableDashboardNestedLayoutWidget: React.FC<IDashboardLayoutProps
                 <OverlayControllerProvider overlayController={overlayController}>
                     <ConfirmDialog
                         className="s-dashboard-nested-layout-remove-confirm-dialog"
-                        onSubmit={() => dispatch(eagerRemoveSectionItemByWidgetRef(widget!.ref))}
+                        onSubmit={() => {
+                            dispatch(eagerRemoveSectionItemByWidgetRef(widget!.ref));
+                            setIsConfirmDeleteDialogVisible(false);
+                        }}
                         onCancel={() => setIsConfirmDeleteDialogVisible(false)}
                         headline={intl.formatMessage({ id: "nestedLayout.deleteDialog.header" })}
                         submitButtonText={intl.formatMessage({ id: "delete" })}

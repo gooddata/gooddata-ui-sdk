@@ -45,6 +45,11 @@ export function useNewSectionDashboardLayoutPlaceholderDropHandler(sectionIndex:
                         sections: [],
                         ref: idRef(id),
                         uri: `/${id}`,
+                        configuration: {
+                            sections: {
+                                enableHeader: false,
+                            },
+                        },
                     },
                 },
             ]);

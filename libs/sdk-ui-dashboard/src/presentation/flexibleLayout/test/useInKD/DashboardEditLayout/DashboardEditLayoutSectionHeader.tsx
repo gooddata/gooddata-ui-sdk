@@ -1,7 +1,7 @@
 // (C) 2019-2024 GoodData Corporation
 import * as React from "react";
 
-import { DashboardLayoutSectionHeader } from "../../../DefaultDashboardLayoutRenderer/index.js";
+import { DashboardLayoutEditSectionHeader } from "../../../DefaultDashboardLayoutRenderer/index.js";
 
 export interface IDashboardEditLayoutSectionHeaderOwnProps {
     title: string;
@@ -19,7 +19,7 @@ export const RenderDashboardEditLayoutSectionHeader: React.FC<IDashboardEditLayo
     const isDashboardEditing = true;
 
     return (
-        <DashboardLayoutSectionHeader
+        <DashboardLayoutEditSectionHeader
             title={title}
             description={description}
             renderHeader={

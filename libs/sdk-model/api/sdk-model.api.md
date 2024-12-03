@@ -1335,9 +1335,17 @@ export interface IDashboardFilterViewSaveRequest {
 
 // @public
 export interface IDashboardLayout<TWidget = IDashboardWidget> {
+    // @alpha
+    configuration?: IDashboardLayoutConfiguration;
     sections: IDashboardLayoutSection<TWidget>[];
     size?: IDashboardLayoutSize;
     type: "IDashboardLayout";
+}
+
+// @alpha
+export interface IDashboardLayoutConfiguration {
+    // (undocumented)
+    sections?: IDashboardLayoutSectionsConfiguration;
 }
 
 // @public
@@ -1358,6 +1366,12 @@ export interface IDashboardLayoutSection<TWidget = IDashboardWidget> {
 export interface IDashboardLayoutSectionHeader {
     description?: string;
     title?: string;
+}
+
+// @alpha
+export interface IDashboardLayoutSectionsConfiguration {
+    // (undocumented)
+    enableHeader: boolean;
 }
 
 // @public

@@ -117,6 +117,7 @@
         @include typo-mixins.gd-heading-3;
 
         color: dialog-variables.$gd-modal-title-color;
+        font-weight: 400;
     }
 }
 

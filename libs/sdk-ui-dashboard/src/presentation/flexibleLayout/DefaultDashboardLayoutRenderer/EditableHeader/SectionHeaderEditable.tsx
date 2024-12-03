@@ -20,24 +20,21 @@ import {
     useDashboardDispatch,
     useDashboardSelector,
 } from "../../../../model/index.js";
-import { ILayoutSectionPath } from "../../../../types.js";
 
 import { serializeLayoutSectionPath } from "../../../../_staging/layout/coordinates.js";
+import { IDashboardLayoutSectionFacade } from "../../../../_staging/dashboard/flexibleLayout/index.js";
 
-const richTextTooltipAlignPoints: IAlignPoint[] = [
-    { align: "bl tl", offset: { x: 6, y: 1 } },
-    { align: "tl bl", offset: { x: 6, y: -1 } },
-];
+const richTextTooltipAlignPoints: IAlignPoint[] = [{ align: "tl bl", offset: { x: 6, y: -4 } }];
 
 export interface ISectionHeaderEditableProps {
-    title: string;
-    description: string;
-    section: ILayoutSectionPath;
+    title: string | undefined;
+    description: string | undefined;
+    section: IDashboardLayoutSectionFacade<unknown>;
 }
 
 export function SectionHeaderEditable({
-    title: rawTitle,
-    description: rawDescription,
+    title: rawTitle = "",
+    description: rawDescription = "",
     section,
 }: ISectionHeaderEditableProps): JSX.Element {
     const useRichText = useDashboardSelector(selectEnableRichTextDescriptions);
@@ -50,16 +47,17 @@ export function SectionHeaderEditable({
 
     const dispatch = useDashboardDispatch();
     const changeTitle = useCallback(
-        (title: string) => dispatch(changeNestedLayoutSectionHeader(section, { title }, true)),
+        (title: string) => dispatch(changeNestedLayoutSectionHeader(section.index(), { title }, true)),
         [dispatch, section],
     );
     const changeDescription = useCallback(
-        (description: string) => dispatch(changeNestedLayoutSectionHeader(section, { description }, true)),
+        (description: string) =>
+            dispatch(changeNestedLayoutSectionHeader(section.index(), { description }, true)),
         [dispatch, section],
     );
 
     const onEditingStart = useCallback(() => {
-        dispatch(uiActions.setActiveSection(section));
+        dispatch(uiActions.setActiveSection(section.index()));
     }, [dispatch, section]);
 
     const onEditingEnd = useCallback(() => {
@@ -106,13 +104,22 @@ export function SectionHeaderEditable({
         setRichTextValue(description);
     }, [description]);
 
-    const serializedSectionIndex = serializeLayoutSectionPath(section);
+    const serializedSectionIndex = serializeLayoutSectionPath(section.index());
+    const isNestedLayout = section.layout().parent() !== undefined;
 
     return (
-        <div className="gd-row-header-edit">
+        <div className={cx("gd-row-header-edit", { "gd-row-header-edit--nested": isNestedLayout })}>
             <div className="gd-editable-label-container gd-row-header-title-wrapper">
                 <EditableLabelWithBubble
-                    className={`gd-title-for-${serializedSectionIndex} s-fluid-layout-row-title-input title gd-heading-2`}
+                    className={cx(
+                        `gd-title-for-${serializedSectionIndex}`,
+                        "s-fluid-layout-row-title-input",
+                        "title",
+                        {
+                            "gd-heading-2": !isNestedLayout,
+                            "gd-heading-3": isNestedLayout,
+                        },
+                    )}
                     maxRows={10}
                     value={title || ""}
                     maxLength={MAX_TITLE_LENGTH}
@@ -144,6 +151,7 @@ export function SectionHeaderEditable({
                             }
                             showTooltip={isRichTextEditing}
                             tooltipAlignPoints={richTextTooltipAlignPoints}
+                            autoResize={true}
                         />
                     </div>
                 ) : (

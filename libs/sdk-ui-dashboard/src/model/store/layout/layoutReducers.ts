@@ -27,6 +27,7 @@ import {
     isDashboardLayout,
     IDashboardLayoutSection,
     ScreenSize,
+    isDashboardLayoutItem,
 } from "@gooddata/sdk-model";
 import { IVisualizationSizeInfo } from "@gooddata/sdk-ui-ext";
 
@@ -154,6 +155,35 @@ const changeSectionHeader: LayoutReducer<ChangeSectionActionPayload> = (state, a
     const { index, header } = action.payload;
 
     findSection(state.layout, index).header = header;
+};
+
+//
+//
+//
+
+type ToggleLayoutSectionHeadersPayload = {
+    layoutPath: ILayoutItemPath | undefined;
+    enableSectionHeaders: boolean;
+};
+
+const toggleLayoutSectionHeaders: LayoutReducer<ToggleLayoutSectionHeadersPayload> = (state, action) => {
+    invariant(state.layout);
+
+    const { layoutPath, enableSectionHeaders } = action.payload;
+    const layout = layoutPath === undefined ? state.layout : findItem(state.layout, layoutPath);
+
+    if (isDashboardLayoutItem(layout) && isDashboardLayout(layout.widget)) {
+        layout.widget = {
+            ...layout.widget,
+            configuration: {
+                ...(layout.widget.configuration ?? {}),
+                sections: {
+                    ...(layout.widget.configuration?.sections ?? {}),
+                    enableHeader: enableSectionHeaders,
+                },
+            },
+        };
+    }
 };
 
 //
@@ -932,4 +962,5 @@ export const layoutReducers = {
     changeItemWidth: changeItemWidth,
     changeWidgetIgnoreCrossFiltering: withUndo(changeWidgetIgnoreCrossFiltering),
     resizeVisualizationSwitcherOnInsightChanged: withUndo(resizeVisualizationSwitcherOnInsightChanged),
+    toggleLayoutSectionHeaders: withUndo(toggleLayoutSectionHeaders),
 };

@@ -70,6 +70,24 @@ export function isDashboardLayoutItem<TWidget>(obj: unknown): obj is IDashboardL
 }
 
 /**
+ * Configuration that affects all sections of the layout.
+ *
+ * @alpha
+ */
+export interface IDashboardLayoutSectionsConfiguration {
+    enableHeader: boolean;
+}
+
+/**
+ * Layout configuration.
+ *
+ * @alpha
+ */
+export interface IDashboardLayoutConfiguration {
+    sections?: IDashboardLayoutSectionsConfiguration;
+}
+
+/**
  * Dashboard layout describes the data to be displayed on the dashboard, and their structure for UI rendering.
  * Generic TWidget param is here to support type checking with custom widgets (e.g. in Dashboard component).
  *
@@ -90,6 +108,13 @@ export interface IDashboardLayout<TWidget = IDashboardWidget> {
      * Layout size.
      */
     size?: IDashboardLayoutSize;
+
+    /**
+     * Layout configuration.
+     *
+     * @alpha
+     */
+    configuration?: IDashboardLayoutConfiguration;
 }
 
 /**

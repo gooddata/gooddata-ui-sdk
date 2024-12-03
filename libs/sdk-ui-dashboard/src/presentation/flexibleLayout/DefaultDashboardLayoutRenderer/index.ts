@@ -25,7 +25,7 @@ export { DashboardLayoutItemRenderer } from "./DashboardLayoutItemRenderer.js";
 export { DashboardLayoutItemViewRenderer } from "./DashboardLayoutItemViewRenderer.js";
 export type { IDashboardLayoutSectionProps } from "./DashboardLayoutSection.js";
 export { DashboardLayoutSection } from "./DashboardLayoutSection.js";
-export { DashboardLayoutSectionHeader } from "./DashboardLayoutSectionHeader.js";
+export { DashboardLayoutEditSectionHeader } from "./DashboardLayoutEditSectionHeader.js";
 export { DashboardLayoutSectionHeaderRenderer } from "./DashboardLayoutSectionHeaderRenderer.js";
 export { DashboardLayoutSectionRenderer } from "./DashboardLayoutSectionRenderer.js";
 export { DashboardLayoutWidgetRenderer } from "./DashboardLayoutWidgetRenderer.js";
