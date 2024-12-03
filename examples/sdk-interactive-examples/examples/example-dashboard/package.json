@@ -3,7 +3,7 @@
     "version": "10.17.0-alpha.2",
     "title": "Dashboard component",
     "description": "This example shows how to use the Dashboard component.",
-    "author": "GoodData Corporation",
+    "author": "GoodData",
     "private": false,
     "license": "LicenseRef-LICENSE",
     "type": "module",
