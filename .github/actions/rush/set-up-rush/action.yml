@@ -1,6 +1,11 @@
 name: Set up rush with cache
 description: This action sets up rush with cache
 
+inputs:
+    install-dependencies:
+        description: 'Whether to call install-run-rush.js install; useful in situation where you need to call rush operations (rush bump, rush list) but not need to install dependencies (node_modules)'
+        required: false
+        default: 'true'
 runs:
   using: 'composite'
   steps:
@@ -47,6 +52,7 @@ runs:
         key: Rush-cache-${{ hashFiles('rush.json') }}
 
     - name: Cache pnpm
+      if: ${{ inputs.install-dependencies == 'true' }}
       id: cache-pnpm
       uses: runs-on/cache/restore@v4
       env:
@@ -58,6 +64,7 @@ runs:
 
     # Install rush
     - name: Install rush
+      if: ${{ inputs.install-dependencies == 'true' }}
       env:
         NPM_AUTH_TOKEN: ${{ env.NPM_AUTH_TOKEN }}
       run: |
