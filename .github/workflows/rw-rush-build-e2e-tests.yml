@@ -41,6 +41,8 @@ jobs:
         with:
           ref: ${{ inputs.source-ref }}
           fetch-depth: 2
+      - name: Debug
+        run: git log -1
       - name: Git config user
         uses: snow-actions/git-config-user@v1.0.0
         with:
