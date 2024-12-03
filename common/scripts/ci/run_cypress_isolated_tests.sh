@@ -27,6 +27,11 @@ trap "rm -f $E2E_TEST_DIR/.env; docker rmi --force $IMAGE_ID || true" EXIT
 
 docker build --no-cache --file Dockerfile_local -t $IMAGE_ID . || exit 1
 
+if [[ "$GITHUB_ACTIONS" != "true" ]]; then
+    export USER_UID=$(id -u $USER)
+    export USER_GID=$(id -g $USER)
+fi
+
 PROJECT_NAME=tiger-sdk-ui-tests-e2e-${EXECUTOR_NUMBER}
 NO_COLOR=1 docker-compose -f docker-compose-isolated.yaml -p "$PROJECT_NAME" up \
   --abort-on-container-exit --exit-code-from isolated-tests \

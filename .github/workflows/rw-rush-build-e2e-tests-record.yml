@@ -80,7 +80,6 @@ jobs:
         run: node common/scripts/install-run-rush.js build-generate-version
       - name: Run e2e tests
         run: |
-          export RUN_ON_GH=true
           export TEST_BACKEND=https://staging-automation.dev-latest.stg11.panther.intgdc.com
           export EXECUTOR_NUMBER=$GH_RUN_ID
           if [ -n "$USER_FILTER" ]; then
