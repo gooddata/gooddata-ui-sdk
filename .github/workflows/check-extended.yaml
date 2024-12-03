@@ -38,7 +38,7 @@ jobs:
         id: changed-files
         uses: tj-actions/changed-files@v40
     # keep this workflow only for integrated tests, for isolated run & record, see pull-request-comment.yaml workflow
-    if: ${{ github.event.issue.pull_request && github.event.comment.body == 'extended test - tiger-cypress - integrated' }}
+    if: ${{ github.event.issue.pull_request && github.event.comment.body == 'extended test - backstop' }}
   gooddata-ui-sdk-pull-request-dispatcher-pipeline:
     runs-on:
       group: infra1-runners-arc
