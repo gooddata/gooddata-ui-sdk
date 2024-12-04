@@ -3,7 +3,7 @@ import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { ReplaceSectionItem } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { selectLayout, selectStash } from "../../store/layout/layoutSelectors.js";
+import { selectLayout, selectScreen, selectStash } from "../../store/layout/layoutSelectors.js";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { validateItemExists, validateSectionExists } from "./validation/layoutValidation.js";
 import { layoutActions } from "../../store/layout/index.js";
@@ -25,6 +25,8 @@ import {
     getSectionIndex,
     getItemIndex,
 } from "../../../_staging/layout/coordinates.js";
+import { normalizeItemSizeToParent } from "../../../_staging/layout/sizing.js";
+import { selectSettings } from "../../store/config/configSelectors.js";
 
 type ReplaceSectionItemContext = {
     ctx: DashboardContext;
@@ -154,14 +156,26 @@ export function* replaceSectionItemHandler(
         autoResolveDateFilterDataset,
     );
 
+    const settings: SagaReturnType<typeof selectSettings> = yield select(selectSettings);
+    const screen: SagaReturnType<typeof selectScreen> = yield select(selectScreen);
+
     const layoutPath = itemPath === undefined ? [{ sectionIndex, itemIndex }] : itemPath;
+
+    const { item: itemWithNormalizedSize } = normalizeItemSizeToParent(
+        itemsToAdd[0],
+        layoutPath,
+        commandCtx.layout,
+        settings,
+        normalizationResult.resolvedInsights.resolved,
+        screen,
+    );
 
     yield put(
         batchActions([
             insightsActions.addInsights(normalizationResult.resolvedInsights.loaded),
             layoutActions.replaceSectionItem({
                 layoutPath,
-                newItems: itemsToAdd,
+                newItems: [itemWithNormalizedSize],
                 stashIdentifier,
                 usedStashes: stashValidationResult.existing,
                 undo: {
@@ -176,7 +190,7 @@ export function* replaceSectionItemHandler(
         sectionIndex === undefined ? getSectionIndex(layoutPath) : sectionIndex,
         itemIndex === undefined ? getItemIndex(layoutPath) : itemIndex,
         layoutPath,
-        stashValidationResult.resolved,
+        [itemWithNormalizedSize],
         itemToReplace,
         stashIdentifier,
         cmd.correlationId,

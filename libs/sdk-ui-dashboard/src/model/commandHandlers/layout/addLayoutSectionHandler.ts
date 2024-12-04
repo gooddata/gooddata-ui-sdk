@@ -4,7 +4,7 @@ import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { AddLayoutSection } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { selectLayout, selectStash } from "../../store/layout/layoutSelectors.js";
+import { selectLayout, selectScreen, selectStash } from "../../store/layout/layoutSelectors.js";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import { ExtendedDashboardLayoutSection, InternalDashboardItemDefinition } from "../../types/layoutTypes.js";
 import isEmpty from "lodash/isEmpty.js";
@@ -22,7 +22,9 @@ import {
 } from "./validation/itemValidation.js";
 import { addTemporaryIdentityToWidgets } from "../../utils/dashboardItemUtils.js";
 import { sanitizeHeader } from "./utils.js";
-import { updateSectionIndex, findSections } from "../../../_staging/layout/coordinates.js";
+import { updateSectionIndex, findSections, asLayoutItemPath } from "../../../_staging/layout/coordinates.js";
+import { selectSettings } from "../../store/config/configSelectors.js";
+import { normalizeItemSizeToParent } from "../../../_staging/layout/sizing.js";
 
 type AddLayoutSectionContext = {
     readonly ctx: DashboardContext;
@@ -103,13 +105,29 @@ export function* addLayoutSectionHandler(
         autoResolveDateFilterDataset,
     );
 
+    const isLegacyCommand = typeof index === "number";
+    const settings = yield select(selectSettings);
+    const screen: SagaReturnType<typeof selectScreen> = yield select(selectScreen);
+
+    const itemsWithNormalizedSize = isLegacyCommand
+        ? itemsToAdd
+        : itemsToAdd.map((item) => {
+              const { item: itemWithNormalizedSize } = normalizeItemSizeToParent(
+                  item,
+                  asLayoutItemPath(index, 0),
+                  commandCtx.layout,
+                  settings,
+                  normalizationResult.resolvedInsights.resolved,
+                  screen,
+              );
+              return itemWithNormalizedSize;
+          });
+
     const section: ExtendedDashboardLayoutSection = {
         type: "IDashboardLayoutSection",
         header: sanitizeHeader(initialHeader),
-        items: itemsToAdd,
+        items: itemsWithNormalizedSize,
     };
-
-    const isLegacyCommand = typeof index === "number";
 
     yield put(
         batchActions([

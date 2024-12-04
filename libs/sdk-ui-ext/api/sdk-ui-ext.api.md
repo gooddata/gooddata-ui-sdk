@@ -553,6 +553,9 @@ export const KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationDefaultSizeInfo;
 // @alpha (undocumented)
 export type LayoutType = "fluid";
 
+// @internal (undocumented)
+export const MIN_VISUALIZATION_WIDTH = 2;
+
 // @alpha (undocumented)
 export const PluggableVisualizationErrorCodes: {
     INVALID_BUCKETS: string;
