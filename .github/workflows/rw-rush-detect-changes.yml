@@ -41,7 +41,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ inputs.source-branch }}
-          fetch-depth: 2
+          fetch-depth: 100
       - name: Debug
         run: git log -10
       - name: Git config user
@@ -58,12 +58,17 @@ jobs:
       - name: fetch target branch
         run: |
             echo "Target branch is: ${TARGET_BRANCH#refs/heads/}"
-            git fetch origin ${TARGET_BRANCH#refs/heads/}
+            git fetch origin ${TARGET_BRANCH#refs/heads/} --depth=100
       - name: Rush detect changes
         id: detect-changes
         run: |
           # Get the list of impacted projects
-          impacted_projects=$(node common/scripts/install-run-rush.js list --impacted-by git:origin/${TARGET_BRANCH#refs/heads/})
+
+          impacted_projects=$(node common/scripts/install-run-rush.js list --impacted-by git:origin/${TARGET_BRANCH#refs/heads/}) || {
+            echo "Rush failed to detect changes continue and changes to true"
+            echo "is_changed=true" >> $GITHUB_ENV
+            exit 0
+          }
 
           echo "Impacted projects: $impacted_projects"
           echo "Package name: $PACKAGE_NAME"

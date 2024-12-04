@@ -16,6 +16,8 @@ jobs:
       package-name: "@gooddata/sdk-ui-tests-e2e"
 
   e2e-stage:
+    needs: [detect-changes]
+    if: ${{ needs.detect-changes.outputs.is-changed == 'true' }}
     permissions:
       id-token: write
       contents: read
