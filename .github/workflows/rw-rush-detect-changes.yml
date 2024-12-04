@@ -43,7 +43,7 @@ jobs:
           ref: ${{ inputs.source-branch }}
           fetch-depth: 2
       - name: Debug
-        run: git log -1
+        run: git log -10
       - name: Git config user
         uses: snow-actions/git-config-user@v1.0.0
         with:
