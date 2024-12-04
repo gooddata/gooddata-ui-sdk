@@ -23,7 +23,7 @@ describe("RichText - isolated", { tags: ["pre-merge_isolated_tiger"] }, () => {
         const richText = widget.getRichText();
         richText.exist();
 
-        richText.getContentElement().find("h1").should("exist").should("have.text", "Title");
+        richText.getContentElement().find("h1").should("exist").should("have.text", "Title123");
         richText.getContentElement().find("img").should("exist").should("have.attr", "src", "/image.png");
     });
 
