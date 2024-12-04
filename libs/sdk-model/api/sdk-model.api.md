@@ -1880,6 +1880,7 @@ export interface IGenAIActiveObject {
 export interface IGenAIChatInteraction {
     chatHistoryInteractionId: number;
     createdVisualizations?: IGenAICreatedVisualizations;
+    errorResponse?: string;
     foundObjects?: IGenAIFoundObjects;
     interactionFinished: boolean;
     question: string;

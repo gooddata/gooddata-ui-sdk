@@ -2583,6 +2583,7 @@ export interface CacheUsageData {
 export interface ChatHistoryInteraction {
     chatHistoryInteractionId: number;
     createdVisualizations?: CreatedVisualizations;
+    errorResponse?: string;
     foundObjects?: FoundObjects;
     interactionFinished: boolean;
     question: string;
@@ -2643,6 +2644,7 @@ export interface ChatRequest {
 export interface ChatResult {
     chatHistoryInteractionId?: number;
     createdVisualizations?: CreatedVisualizations;
+    errorResponse?: string;
     foundObjects?: FoundObjects;
     routing?: RouteResult;
     textResponse?: string;

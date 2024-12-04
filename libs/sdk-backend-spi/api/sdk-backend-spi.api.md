@@ -759,6 +759,8 @@ export interface IGenAIChatEvaluation {
     // (undocumented)
     createdVisualizations?: IGenAICreatedVisualizations;
     // (undocumented)
+    errorResponse?: string;
+    // (undocumented)
     foundObjects?: IGenAIFoundObjects;
     // (undocumented)
     routing?: IGenAIChatRouting;

@@ -4,6 +4,7 @@ import { IGenAIChatInteraction } from "@gooddata/sdk-model";
 import {
     Contents,
     makeAssistantMessage,
+    makeErrorContents,
     makeRoutingContents,
     makeSearchContents,
     makeTextContents,
@@ -64,6 +65,10 @@ export const processContents = (item: IGenAIChatEvaluation | IGenAIChatInteracti
                 item.createdVisualizations.objects,
             ),
         );
+    }
+
+    if (item.errorResponse) {
+        contents.push(makeErrorContents(item.errorResponse));
     }
 
     return contents;
