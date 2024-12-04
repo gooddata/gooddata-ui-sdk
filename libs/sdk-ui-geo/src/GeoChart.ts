@@ -1,4 +1,5 @@
 // (C) 2020-2024 GoodData Corporation
+import type mapboxgl from "mapbox-gl";
 import { IAttribute, IColorPalette, IExecutionConfig } from "@gooddata/sdk-model";
 import {
     AttributeOrPlaceholder,
