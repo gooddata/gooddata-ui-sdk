@@ -98,15 +98,15 @@
 
 .gd-mobile-dropdown-overlay {
     height: 100%;
-    background-color: var(--gd-palette-complementary-0, #f8fafb);
+    background-color: var(--gd-palette-complementary-0-from-theme, #f8fafb);
 
     .gd-mobile-dropdown-header {
         .gd-button,
         .gd-header-project {
             margin: 0;
-            box-shadow: 0 1px 2px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.1));
-            color: var(--gd-palette-complementary-8, variables.$default-gd-color-dark);
-            border-bottom: 1px solid var(--gd-palette-complementary-4, #c9d5e0);
+            box-shadow: 0 1px 2px 0 var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.1));
+            color: var(--gd-palette-complementary-8-from-theme, variables.$default-gd-color-dark);
+            border-bottom: 1px solid var(--gd-palette-complementary-4-from-theme, #c9d5e0);
 
             &.is-expanded,
             &.is-collapsed {

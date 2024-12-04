@@ -11,7 +11,7 @@
 @use "item-states";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
-$dashboard-menu-item-icon-color: var(--gd-palette-complementary-5, #b1c1d1);
+$dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b1c1d1);
 
 // this must be used on the body element in gdc-dashboards
 .gd-dashboards-root {
@@ -105,13 +105,13 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5, #b1c1d1);
             .kpi-value {
                 color: var(
                     --gd-dashboards-content-kpiWidget-kpi-primaryMeasureColor,
-                    var(--gd-palette-complementary-9, kit-variables.$default-gd-color-link)
+                    var(--gd-palette-complementary-9-from-theme, kit-variables.$default-gd-color-link)
                 );
             }
             .kpi-value.is-empty-value {
                 color: var(
-                    --gd-dashboards-content-kpiWidget-kpi-secondaryInfoColor,
-                    var(--gd-palette-complementary-6, inherit)
+                    --gd-dashboards-content-kpiWidget-kpi-secondaryInfoColor-from-theme,
+                    var(--gd-palette-complementary-6-from-theme, inherit)
                 );
             }
         }
@@ -342,7 +342,7 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5, #b1c1d1);
     background-color: variables.$button-grey-background;
 
     &:hover {
-        background-color: var(--gd-palette-complementary-7, kit-variables.$gd-color-text-dimmed);
+        background-color: var(--gd-palette-complementary-7-from-theme, kit-variables.$gd-color-text-dimmed);
 
         svg path {
             fill: kit-variables.$gd-color-white;
@@ -397,7 +397,7 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5, #b1c1d1);
     .dash-item-action-options:not(.disabled):hover,
     .dash-item-action-widget-options-active {
         color: kit-variables.$gd-color-text-light;
-        background-color: var(--gd-palette-complementary-7, kit-variables.$gd-color-text-dimmed);
+        background-color: var(--gd-palette-complementary-7-from-theme, kit-variables.$gd-color-text-dimmed);
     }
 }
 
@@ -435,8 +435,8 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5, #b1c1d1);
     }
 
     &:hover:not(.disabled) {
-        color: var(--gd-palette-complementary-0, inherit);
-        background-color: var(--gd-palette-complementary-7, inherit);
+        color: var(--gd-palette-complementary-0-from-theme, inherit);
+        background-color: var(--gd-palette-complementary-7-from-theme, inherit);
     }
 }
 
@@ -521,7 +521,7 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5, #b1c1d1);
     }
 
     &:hover {
-        background-color: var(--gd-palette-complementary-7, kit-variables.$gd-color-text-dimmed);
+        background-color: var(--gd-palette-complementary-7-from-theme, kit-variables.$gd-color-text-dimmed);
 
         .gd-icon-circle-question {
             color: kit-variables.$gd-color-text-light;
@@ -530,7 +530,7 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5, #b1c1d1);
 }
 
 .dash-item-action-description-active .dash-item-action-description-trigger {
-    background-color: var(--gd-palette-complementary-7, kit-variables.$gd-color-text-dimmed);
+    background-color: var(--gd-palette-complementary-7-from-theme, kit-variables.$gd-color-text-dimmed);
 
     .gd-icon-circle-question {
         color: kit-variables.$gd-color-text-light;
@@ -619,7 +619,7 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5, #b1c1d1);
 
     &:hover,
     &.dash-item-action-widget-options-active {
-        background-color: var(--gd-palette-complementary-7, kit-variables.$gd-color-text-dimmed);
+        background-color: var(--gd-palette-complementary-7-from-theme, kit-variables.$gd-color-text-dimmed);
         &::before {
             color: kit-variables.$gd-color-white;
         }
@@ -631,7 +631,7 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5, #b1c1d1);
     right: 30px;
     display: none;
     border-radius: 50%;
-    background-color: var(--gd-palette-complementary-2, variables.$grey-background);
+    background-color: var(--gd-palette-complementary-2-from-theme, variables.$grey-background);
     width: 36px;
     height: 36px;
     transition: variables.$transition-length;

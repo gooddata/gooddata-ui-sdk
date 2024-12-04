@@ -11,6 +11,8 @@
  */
 export type { IThemeProviderProps, ThemeModifier } from "./ThemeProvider/ThemeProvider.js";
 export { ThemeProvider, isDarkTheme } from "./ThemeProvider/ThemeProvider.js";
+export { ScopedThemeProvider } from "./ThemeProvider/ScopedThemeProvider.js";
+export type { IScopedThemeProviderProps } from "./ThemeProvider/ScopedThemeProvider.js";
 export type { IThemeContextProviderProps, ThemeStatus } from "./ThemeProvider/Context.js";
 export {
     withTheme,

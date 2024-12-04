@@ -31,7 +31,7 @@
         &::after {
             border-color: kit-variables.$gd-border-color;
             background: var(
-                --gd-palette-complementary-0,
+                --gd-palette-complementary-0-from-theme,
                 color.adjust(kit-variables.$default-gd-color-white, $alpha: -0.05)
             );
         }
@@ -285,7 +285,7 @@
         }
     }
 
-    background-color: var(--gd-palette-complementary-0, white);
+    background-color: var(--gd-palette-complementary-0, #fff);
 }
 
 .row-hotspot-container {
@@ -415,10 +415,13 @@
     border-radius: 15px;
     border: 2px dashed
         var(
-            --gd-palette-complementary-3,
+            --gd-palette-complementary-3-from-theme,
             color.adjust(kit-variables.$default-gd-color-disabled, $alpha: -0.55)
         );
-    background: var(--gd-palette-complementary-1, color.adjust(variables.$dialog-border, $alpha: -0.95));
+    background: var(
+        --gd-palette-complementary-1-from-theme,
+        color.adjust(variables.$dialog-border, $alpha: -0.95)
+    );
     text-align: center;
 
     h2 {
@@ -566,7 +569,7 @@
     padding: 0 10px 0 50px;
     font-size: 12px;
     border: 1px solid transparentize(variables.$dialog-border, 1);
-    border-color: var(--gd-palette-complementary-5, transparentize(variables.$dialog-border, 0.5));
+    border-color: var(--gd-palette-complementary-5-from-theme, transparentize(variables.$dialog-border, 0.5));
     border-radius: 2px;
     box-shadow: 0 1px 3px 0 kit-button-variables.$button-shadow-lighter,
         0 2px 9px 0 kit-button-variables.$button-shadow-darker;
@@ -601,7 +604,7 @@
     width: 215px;
     height: 42px;
     border: 1px solid transparentize(variables.$dialog-border, 1);
-    border-color: var(--gd-palette-complementary-5, transparentize(variables.$dialog-border, 0.5));
+    border-color: var(--gd-palette-complementary-5-from-theme, transparentize(variables.$dialog-border, 0.5));
     border-radius: 2px;
     box-shadow: 0 1px 3px 0 kit-button-variables.$button-shadow-lighter,
         0 2px 9px 0 kit-button-variables.$button-shadow-darker;

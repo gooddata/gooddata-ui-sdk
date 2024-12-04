@@ -40,7 +40,7 @@ $input-height: 28px;
         border-radius: 3px;
 
         &:hover {
-            border-color: var(--gd-palette-complementary-5, #b3b3b3);
+            border-color: var(--gd-palette-complementary-5-from-theme, #b3b3b3);
         }
     }
 
@@ -245,7 +245,7 @@ $input-height: 28px;
 
     // custom className from react-select rendered
     .gd-recipients__option--is-focused {
-        color: var(--gd-palette-complementary-9, inherit);
+        color: var(--gd-palette-complementary-9-from-theme, inherit);
         background: none;
         background-color: kit-variables.$is-focused-background;
 

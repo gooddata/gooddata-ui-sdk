@@ -165,12 +165,12 @@
 
         &:not(.is-selected) {
             &:hover {
-                color: var(--gd-palette-complementary-9, #464e56);
+                color: var(--gd-palette-complementary-9-from-theme, #464e56);
             }
             .gd-vis-switcher-show-more-button {
                 // stylelint-disable-next-line max-nesting-depth
                 &:hover {
-                    background: var(--gd-palette-complementary-7, #ccd8e2);
+                    background: var(--gd-palette-complementary-7-from-theme, #ccd8e2);
                     color: kit-variables.$gd-color-state-blank;
                 }
             }
@@ -181,10 +181,10 @@
             .gd-vis-switcher-show-more-button {
                 display: block;
                 background: var(
-                    --gd-palette-primary-dimmed50,
+                    --gd-palette-primary-dimmed50-from-theme,
                     color.mix(kit-variables.$gd-color-highlight, kit-variables.$default-gd-color-white, 30%)
                 );
-                color: var(--gd-palette-primary-0, #14b2e2);
+                color: var(--gd-palette-primary-base, #14b2e2);
             }
         }
 
@@ -193,7 +193,7 @@
 
             .gd-vis-switcher-show-more-button {
                 display: block;
-                background: var(--gd-palette-complementary-7, #ccd8e2);
+                background: var(--gd-palette-complementary-7-from-theme, #ccd8e2);
                 color: kit-variables.$gd-color-state-blank;
             }
         }
@@ -216,11 +216,11 @@
             .visualization-title,
             .gd-vis-type {
                 font-weight: 700;
-                color: var(--gd-palette-primary-0, #14b2e2);
+                color: var(--gd-palette-primary-base, #14b2e2);
             }
 
             .gd-vis-switcher-show-more-button {
-                color: var(--gd-palette-primary-0, #14b2e2);
+                color: var(--gd-palette-primary-base, #14b2e2);
             }
 
             &:hover {
@@ -228,12 +228,12 @@
 
                 // stylelint-disable-next-line max-nesting-depth
                 .gd-vis-switcher-show-more-button {
-                    color: var(--gd-palette-primary-0, #14b2e2);
+                    color: var(--gd-palette-primary-base, #14b2e2);
 
                     // stylelint-disable-next-line max-nesting-depth
                     &:hover {
                         background: var(
-                            --gd-palette-primary-dimmed50,
+                            --gd-palette-primary-dimmed50-from-theme,
                             color.mix(
                                 kit-variables.$gd-color-highlight,
                                 kit-variables.$default-gd-color-white,

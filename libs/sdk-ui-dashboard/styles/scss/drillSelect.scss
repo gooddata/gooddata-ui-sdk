@@ -18,7 +18,8 @@
     width: 230px;
     background-color: var(--gd-palette-complementary-0, #fff);
     border-radius: 3px;
-    border: 1px solid var(--gd-palette-complementary-3, button-variables.$default-button-normal-border-color);
+    border: 1px solid
+        var(--gd-palette-complementary-3-from-theme, button-variables.$default-button-normal-border-color);
     box-shadow: bubble-variables.$bubble-boxShadow;
     $item-padding-side: 12px;
     $item-height: 27px;
@@ -81,7 +82,7 @@
         &:focus {
             background: var(--gd-palette-complementary-2, #ebeff4);
             span {
-                color: var(--gd-palette-complementary-9);
+                color: var(--gd-palette-complementary-9-from-theme);
             }
         }
     }

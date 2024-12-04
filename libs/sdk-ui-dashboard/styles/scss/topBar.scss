@@ -88,7 +88,7 @@
         white-space: nowrap;
 
         &::placeholder {
-            color: var(--gd-palette-complementary-6, inherit);
+            color: var(--gd-palette-complementary-6-from-theme, inherit);
         }
     }
 

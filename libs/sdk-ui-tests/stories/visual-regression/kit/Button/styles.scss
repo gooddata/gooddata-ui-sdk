@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 @import "../styles/goodstrap.scss";
 
 .icons-list {
@@ -13,7 +13,7 @@
         &:hover,
         &:active {
             &::before {
-                color: var(--gd-palette-complementary-7, #777);
+                color: var(--gd-palette-complementary-7-from-theme, #777);
             }
         }
 
@@ -24,7 +24,7 @@
         }
 
         span {
-            color: var(--gd-palette-complementary-5, #aaa);
+            color: var(--gd-palette-complementary-5-from-theme, #aaa);
             text-decoration: none;
             text-transform: none;
         }

@@ -51,8 +51,10 @@
         "stylelint-ci": "stylelint '**/*.scss' --custom-formatter=node_modules/stylelint-checkstyle-formatter > ./ci/results/stylelint-results.xml",
         "validate-locales": "i18n-toolkit --debug",
         "validate-locales-ci": "i18n-toolkit",
-        "validate": "npm run dep-cruiser && npm run eslint && npm run stylelint && npm run validate-locales && npm run prettier-check",
-        "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run stylelint-ci && npm run validate-locales-ci && npm run prettier-check"
+        "validate": "npm run dep-cruiser && npm run eslint && npm run stylelint && npm run validate-locales && npm run prettier-check && npm run validate-theming",
+        "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run stylelint-ci && npm run validate-locales-ci && npm run prettier-check && npm run validate-theming",
+        "validate-theming": "npm run scss && node scripts/validateCss.js",
+        "scss": "sass --load-path=node_modules styles/scss:styles/css"
     },
     "dependencies": {
         "lodash": "^4.17.21",

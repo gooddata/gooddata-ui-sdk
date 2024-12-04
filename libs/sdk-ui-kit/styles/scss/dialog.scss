@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 @use "Dialog/_mixins" as dialog-mixins;
 @use "variables";
 @use "Dialog/variables" as dialog-variables;
@@ -412,7 +412,8 @@
             border: 1px solid rgba(0, 0, 0, 0.1);
             outline: 0;
             border-radius: var(--gd-button-borderRadius, 3px);
-            box-shadow: var(--gd-button-dropShadow, 1px 1px 0) var(--gd-shadow-color, rgba(20, 56, 93, 0.09));
+            box-shadow: var(--gd-button-dropShadow, 1px 1px 0)
+                var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.09));
             font: 700 14px/20px gdcustomfont, avenir, "Helvetica Neue", arial, sans-serif;
             white-space: nowrap;
             vertical-align: middle;

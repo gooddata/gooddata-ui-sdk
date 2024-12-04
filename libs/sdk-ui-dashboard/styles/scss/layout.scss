@@ -358,8 +358,8 @@ $gd-dashboards-section-description-color: var(
     &.added,
     &.modified {
         background: var(
-            --gd-dashboards-content-backgroundColor,
-            var(--gd-palette-complementary-0, rgba(255, 255, 255, 0.95))
+            --gd-dashboards-content-backgroundColor-from-theme,
+            var(--gd-palette-complementary-0-from-theme, rgba(255, 255, 255, 0.95))
         );
     }
 

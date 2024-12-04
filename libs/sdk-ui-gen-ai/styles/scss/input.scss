@@ -19,7 +19,7 @@
 
         @include kit-mixins.placeholder {
             color: var(
-                --gd-palette-complementary-6,
+                --gd-palette-complementary-6-from-theme,
                 color.adjust(kit-variables.$default-gd-color-link, $alpha: -0.25)
             );
 

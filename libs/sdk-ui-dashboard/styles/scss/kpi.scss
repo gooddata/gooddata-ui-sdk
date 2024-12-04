@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 @use "sass:map";
 @use "variables";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
@@ -82,7 +82,10 @@ $kpi-with-pop-min-height: $kpi-min-height + $pop-height;
     }
 
     &:hover {
-        color: var(--gd-dashboards-content-kpiWidget-kpi-primaryMeasureColor, kit-variables.$gd-color-text);
+        color: var(
+            --gd-dashboards-content-kpiWidget-kpi-primaryMeasureColor-from-theme,
+            kit-variables.$gd-color-text
+        );
         opacity: 0.6;
     }
 
@@ -110,7 +113,7 @@ $kpi-with-pop-min-height: $kpi-min-height + $pop-height;
             border-bottom: 2px solid
                 var(
                     --gd-dashboards-content-kpiWidget-kpi-primaryMeasureColor,
-                    var(--gd-palette-complementary-9, kit-variables.$default-gd-color-link)
+                    var(--gd-palette-complementary-9-from-theme, kit-variables.$default-gd-color-link)
                 );
         }
 
@@ -134,7 +137,10 @@ $kpi-with-pop-min-height: $kpi-min-height + $pop-height;
     line-height: $value-height;
     white-space: nowrap;
     vertical-align: bottom;
-    color: var(--gd-dashboards-content-kpiWidget-kpi-primaryMeasureColor, kit-variables.$gd-color-dark);
+    color: var(
+        --gd-dashboards-content-kpiWidget-kpi-primaryMeasureColor-from-theme,
+        kit-variables.$gd-color-dark
+    );
 
     &.is-smallest-height {
         margin: 0;

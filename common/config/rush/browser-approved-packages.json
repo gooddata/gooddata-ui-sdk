@@ -523,10 +523,6 @@
       "allowedCategories": [ "examples", "tools" ]
     },
     {
-      "name": "chalk",
-      "allowedCategories": [ "tools" ]
-    },
-    {
       "name": "chokidar",
       "allowedCategories": [ "tools" ]
     },
@@ -731,6 +727,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "glob",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "happy-dom",
       "allowedCategories": [ "production", "tools" ]
     },
@@ -761,6 +761,10 @@
     {
       "name": "http-status-codes",
       "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "chalk",
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "immer",
@@ -872,6 +876,14 @@
     },
     {
       "name": "polished",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "postcss",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "postcss-value-parser",
       "allowedCategories": [ "production" ]
     },
     {

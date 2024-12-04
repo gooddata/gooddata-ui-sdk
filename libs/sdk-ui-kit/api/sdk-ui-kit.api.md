@@ -100,6 +100,12 @@ export class AutoSize extends Component<IAutoSizeProps> {
 // @internal (undocumented)
 export const BackButton: React_2.FC<IBackButtonProps>;
 
+// @internal
+export const bem: (block: `gd-ui-kit-${string}`) => {
+    b: (props?: StyleProps) => string;
+    e: (element: string, props?: StyleProps) => string;
+};
+
 // @internal (undocumented)
 export class Bubble extends React_2.Component<IBubbleProps, IBubbleState> {
     constructor(props: IBubbleProps);
@@ -300,6 +306,9 @@ export const CommunityEditionDialog: React_2.FC<ICommunityEditionDialogProps>;
 
 // @internal (undocumented)
 export const ComponentLabelsProvider: React_2.FC<IComponentLabelsProviderProps>;
+
+// @internal (undocumented)
+export function ComponentTable<TProps extends object, TProp extends keyof TProps>({ Component, columnsBy, rowsBy, baseProps, debug, codeSnippet, cellWidth, cellHeight, align, }: IComponentTableProps<TProps, TProp>): React_2.JSX.Element;
 
 // @internal (undocumented)
 export class ConfirmDialog extends PureComponent<IConfirmDialogBaseProps> {
@@ -1197,6 +1206,28 @@ export type IComponentLabelsProviderProps = {
 };
 
 // @internal (undocumented)
+export interface IComponentTableProps<TProps extends object, TProp extends keyof TProps> {
+    // (undocumented)
+    align?: "center" | "flex-start";
+    // (undocumented)
+    baseProps?: Partial<TProps>;
+    // (undocumented)
+    cellHeight?: number;
+    // (undocumented)
+    cellWidth?: number;
+    // (undocumented)
+    codeSnippet?: string;
+    // (undocumented)
+    columnsBy: IPropCombination<TProps, TProp>;
+    // (undocumented)
+    Component: React_2.ComponentType<TProps>;
+    // (undocumented)
+    debug?: boolean;
+    // (undocumented)
+    rowsBy: IPropCombination<TProps, TProp>[];
+}
+
+// @internal (undocumented)
 export const Icon: Record<string, React.FC<IIconProps>>;
 
 // @internal (undocumented)
@@ -1232,6 +1263,9 @@ export interface IConfirmDialogBaseProps extends IDialogBaseProps {
     // (undocumented)
     warning?: string | React_2.ReactElement;
 }
+
+// @internal (undocumented)
+export type IconType = "check" | "plus" | "sync";
 
 // @internal (undocumented)
 export interface ICustomizableCheckmarkProps {
@@ -3387,6 +3421,16 @@ export interface IPositioning {
 }
 
 // @internal (undocumented)
+export interface IPropCombination<TProps extends object, TProp extends keyof TProps> {
+    // (undocumented)
+    baseProps?: Partial<TProps>;
+    // (undocumented)
+    prop: TProp;
+    // (undocumented)
+    values: TProps[TProp][];
+}
+
+// @internal (undocumented)
 export interface IReactOptions {
     // (undocumented)
     codeType: CodeLanguageType;
@@ -4512,6 +4556,9 @@ export enum PresetType {
 }
 
 // @internal (undocumented)
+export function propCombinationsFor<TProps extends object>(baseProps: TProps): <TProp extends keyof TProps>(prop: TProp, values: TProps[TProp][], additionalProps?: Partial<TProps>) => IPropCombination<TProps, TProp>;
+
+// @internal (undocumented)
 export const recommendedHeader: IDateDatasetHeader;
 
 // @internal
@@ -4665,6 +4712,15 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
 export type SingleSelectListItemType = "header" | "separator";
 
 // @internal (undocumented)
+export type SizeLarge = "large";
+
+// @internal (undocumented)
+export type SizeMedium = "medium";
+
+// @internal (undocumented)
+export type SizeSmall = "small";
+
+// @internal (undocumented)
 export enum SnapPoint {
     // (undocumented)
     BottomCenter = "bc",
@@ -4721,6 +4777,9 @@ export class Spinner extends PureComponent<ISpinnerProps> {
 
 // @internal (undocumented)
 export type SpinnerSize = "large" | "small";
+
+// @internal
+export type StyleProps = Record<string, string | boolean>;
 
 // @internal (undocumented)
 export const StylingEditorDialog: <T extends StylingPickerItemContent>(props: IStylingEditorDialogProps<T>) => React_2.JSX.Element;
@@ -4819,6 +4878,9 @@ export class TextAreaWithSubmit extends Component<ITextAreaWithSubmitProps, ITex
 }
 
 // @internal (undocumented)
+export type ThemeColor = "primary" | "warning" | "error" | "complementary-0" | "complementary-1" | "complementary-2" | "complementary-3" | "complementary-4" | "complementary-5" | "complementary-6" | "complementary-7" | "complementary-8" | "complementary-9";
+
+// @internal (undocumented)
 export class Timepicker extends React_2.PureComponent<ITimepickerOwnProps> {
     // (undocumented)
     render(): React_2.JSX.Element;
@@ -4858,6 +4920,46 @@ export type TUTMContent = "main_menu_help_documentation" | "main_menu_help_unive
 
 // @internal (undocumented)
 export const Typography: React_2.FC<ITypographyProps>;
+
+// @internal (undocumented)
+export const UiButton: ({ size, variant, label, isDisabled, isLoading, iconBefore, iconAfter, }: UiButtonProps) => React_2.JSX.Element;
+
+// @internal (undocumented)
+export interface UiButtonProps {
+    // (undocumented)
+    iconAfter?: IconType;
+    // (undocumented)
+    iconBefore?: IconType;
+    // (undocumented)
+    isDisabled?: boolean;
+    // (undocumented)
+    isLoading?: boolean;
+    // (undocumented)
+    label: string;
+    // (undocumented)
+    onClick?: () => void;
+    // (undocumented)
+    size?: SizeSmall | SizeMedium | SizeLarge;
+    // (undocumented)
+    tooltip?: React_2.ReactNode;
+    // (undocumented)
+    variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger;
+}
+
+// @internal (undocumented)
+export const UiIcon: ({ type, label, color, size }: UiIconProps) => React_2.JSX.Element;
+
+// @internal (undocumented)
+export interface UiIconProps {
+    // (undocumented)
+    color?: ThemeColor;
+    // (undocumented)
+    label: string;
+    // (undocumented)
+    size?: number;
+    // (undocumented)
+    type: IconType;
+}
 
 // @internal (undocumented)
 export type UnitsType = "px" | "%" | "rem" | "em";
@@ -4923,6 +5025,21 @@ export interface UseToastMessageType {
     // (undocumented)
     removeMessage: (id: string) => void;
 }
+
+// @internal (undocumented)
+export type VariantDanger = "danger";
+
+// @internal (undocumented)
+export type VariantPopOut = "popout";
+
+// @internal (undocumented)
+export type VariantPrimary = "primary";
+
+// @internal (undocumented)
+export type VariantSecondary = "secondary";
+
+// @internal (undocumented)
+export type VariantTertiary = "tertiary";
 
 // @internal (undocumented)
 export function withBubble<T>(WrappedComponent: React_2.ComponentType<T>): React_2.FC<T & IWithBubbleProps>;

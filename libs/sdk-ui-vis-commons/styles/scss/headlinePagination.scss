@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 @use "sass:color";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins";
@@ -37,11 +37,11 @@ $legend-paging-background: #eee;
 
             @include mixins.active-states-and-self {
                 text-decoration: none;
-                background-color: var(--gd-palette-complementary-2, $legend-paging-background);
+                background-color: var(--gd-palette-complementary-2-from-theme, $legend-paging-background);
 
                 // stylelint-disable-next-line max-nesting-depth
                 &::before {
-                    color: var(--gd-palette-complementary-7, kit-variables.$default-gd-color-dark);
+                    color: var(--gd-palette-complementary-7-from-theme, kit-variables.$default-gd-color-dark);
                 }
             }
 
@@ -56,7 +56,7 @@ $legend-paging-background: #eee;
                 // stylelint-disable-next-line max-nesting-depth
                 @include mixins.active-states-and-self {
                     background-color: var(
-                        --gd-palette-complementary-1,
+                        --gd-palette-complementary-1-from-theme,
                         color.adjust($legend-paging-background, $alpha: -0.5)
                     );
 
@@ -134,9 +134,9 @@ $legend-paging-background: #eee;
                 border-left: 0;
                 border-bottom: 1px dashed
                     var(
-                        --gd-dashboards-content-kpiWidget-kpi-secondaryInfoColor,
+                        --gd-dashboards-content-kpiWidget-kpi-secondaryInfoColor-from-theme,
                         var(
-                            --gd-palette-complementary-3,
+                            --gd-palette-complementary-3-from-theme,
                             color.adjust(kit-variables.$default-gd-color-disabled, $alpha: -0.5)
                         )
                     );
@@ -165,7 +165,7 @@ $legend-paging-background: #eee;
                 var(
                     --gd-kpi-secondaryInfoColor,
                     var(
-                        --gd-palette-complementary-3,
+                        --gd-palette-complementary-3-from-theme,
                         color.adjust(kit-variables.$default-gd-color-disabled, $alpha: -0.5)
                     )
                 );

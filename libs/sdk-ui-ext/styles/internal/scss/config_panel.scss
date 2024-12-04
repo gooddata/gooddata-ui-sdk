@@ -1,6 +1,6 @@
 // (C) 2007-2024 GoodData Corporation
-@use "codemirror";
-@use "codemirror/addon/lint/lint";
+@use "codemirror/lib/codemirror.css";
+@use "codemirror/addon/lint/lint.css";
 @use "sass:color";
 @use "variables.scss";
 @use "@gooddata/sdk-ui-kit/styles/scss/colorPicker";
@@ -195,7 +195,7 @@ $color-picker-spacing: 5px;
         max-height: 150px;
         overflow: hidden;
         border-bottom: 1px solid var(--gd-palette-complementary-3, #dde4eb);
-        color: var(--gd-palette-complementary-1, #303442);
+        color: var(--gd-palette-complementary-1-from-theme, #303442);
     }
 
     .gd-chart-override-value {
