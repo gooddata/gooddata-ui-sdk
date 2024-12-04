@@ -85,7 +85,7 @@ jobs:
         run: node common/scripts/install-run-rush.js build-generate-version
       - name: Rush validate
         run: |
-          node common/scripts/install-run-rush.js validate-ci --impacted-by git:origin/${TARGET_BRANCH}
+          node common/scripts/install-run-rush.js validate-ci --only git:origin/${TARGET_BRANCH}
 
 
   test:
