@@ -3251,6 +3251,10 @@
                         "type": "string",
                         "description": "Text response for general questions."
                     },
+                    "errorResponse": {
+                        "type": "string",
+                        "description": "Error response in anything fails."
+                    },
                     "foundObjects": {
                         "$ref": "#/components/schemas/FoundObjects"
                     },
@@ -3505,6 +3509,10 @@
                     "textResponse": {
                         "type": "string",
                         "description": "Text response for general questions."
+                    },
+                    "errorResponse": {
+                        "type": "string",
+                        "description": "Error response in anything fails."
                     },
                     "foundObjects": {
                         "$ref": "#/components/schemas/FoundObjects"

@@ -267,6 +267,10 @@ export interface IGenAIChatInteraction {
      * User feedback for the assistant reply.
      */
     userFeedback?: GenAIChatInteractionUserFeedback;
+    /**
+     * An error message in case the interaction failed.
+     */
+    errorResponse?: string;
 }
 
 /**

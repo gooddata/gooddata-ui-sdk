@@ -142,6 +142,7 @@ export interface IGenAIChatEvaluation {
     textResponse?: string;
     foundObjects?: IGenAIFoundObjects;
     createdVisualizations?: IGenAICreatedVisualizations;
+    errorResponse?: string;
     chatHistoryThreadId?: string;
     chatHistoryInteractionId?: number;
 }
