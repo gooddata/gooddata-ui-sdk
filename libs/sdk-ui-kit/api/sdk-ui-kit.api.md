@@ -447,73 +447,6 @@ export const DropdownTabs: React_2.FC<IDropdownTagsProps>;
 // @internal (undocumented)
 export const EditableLabel: React_2.ForwardRefExoticComponent<IEditableLabelProps & React_2.RefAttributes<HTMLDivElement>>;
 
-// @internal (undocumented)
-export class EditableLabelInner extends Component<IEditableLabelInnerProps, IEditableLabelState> {
-    constructor(props: IEditableLabelInnerProps);
-    // (undocumented)
-    componentDidMount(): void;
-    // (undocumented)
-    componentWillUnmount(): void;
-    // (undocumented)
-    static defaultProps: {
-        children: boolean;
-        className: string;
-        maxLength: number;
-        maxRows: number;
-        onCancel: {
-            <T>(value: T): T;
-            (): undefined;
-        };
-        onEditingStart: {
-            <T>(value: T): T;
-            (): undefined;
-        };
-        onChange: {
-            <T>(value: T): T;
-            (): undefined;
-        };
-        placeholder: string;
-        scrollToEndOnEditingStart: boolean;
-        textareaInOverlay: boolean;
-        autofocus: boolean;
-        isEditableLabelWidthBasedOnText: boolean;
-    };
-    // (undocumented)
-    edit: (_e?: React_2.MouseEvent<HTMLDivElement>) => void;
-    // (undocumented)
-    isClickOutsideTextarea(clickedTarget: EventTarget): boolean;
-    // (undocumented)
-    isMultiLine(): boolean;
-    // (undocumented)
-    measureRootDimensions(): void;
-    // (undocumented)
-    onCancel: () => void;
-    // (undocumented)
-    onChange: (e: React_2.ChangeEvent<HTMLTextAreaElement>) => void;
-    // (undocumented)
-    onDocumentClick: (e: MouseEvent) => void;
-    // (undocumented)
-    onKeyDown: (e: React_2.KeyboardEvent<HTMLTextAreaElement>) => void;
-    // (undocumented)
-    onSelectStart(e: React_2.MouseEvent): void;
-    // (undocumented)
-    onSubmit: () => void;
-    // (undocumented)
-    removeListeners(): void;
-    // (undocumented)
-    render(): ReactNode;
-    // (undocumented)
-    renderEditableLabelEdit(): ReactNode;
-    // (undocumented)
-    renderTextarea(style?: {}): ReactNode;
-    // (undocumented)
-    renderTextAreaInOverlay(): ReactNode;
-    // (undocumented)
-    selectAndFocus: () => void;
-    // (undocumented)
-    UNSAFE_componentWillReceiveProps(newProps: IEditableLabelProps): void;
-}
-
 // @internal
 export const EllipsisText: React_2.FC<IEllipsisTextProps>;
 
@@ -1671,12 +1604,6 @@ export interface IDropdownTagsProps {
 }
 
 // @internal (undocumented)
-export interface IEditableLabelInnerProps extends IEditableLabelProps {
-    // (undocumented)
-    innerRef: React_2.ForwardedRef<HTMLDivElement>;
-}
-
-// @internal (undocumented)
 export interface IEditableLabelProps {
     // (undocumented)
     autofocus?: boolean;
@@ -1712,6 +1639,8 @@ export interface IEditableLabelProps {
 export interface IEditableLabelState {
     // (undocumented)
     isEditing: boolean;
+    // (undocumented)
+    rootWidth: number;
     // (undocumented)
     textareaFontSize?: number;
     // (undocumented)
