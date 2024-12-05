@@ -97,5 +97,5 @@ jobs:
         with:
           name: cypress-test-artifacts
           path: |
-            libs/sdk-ui-tests-e2e/recordings/mappings/**/*.spec.ts.json
+            libs/sdk-ui-tests-e2e/recordings/mappings/TIGER/**/*.spec.ts.json
             libs/sdk-ui-tests-e2e/cypress/videos/**/*.mp4
