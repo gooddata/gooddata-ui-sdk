@@ -1,5 +1,5 @@
-// (C) 2007-2022 GoodData Corporation
-import React, { Component, ReactNode, RefObject } from "react";
+// (C) 2007-2024 GoodData Corporation
+import React, { forwardRef, useEffect, useRef, useState, ReactNode, useCallback, useMemo } from "react";
 import { v4 as uuid } from "uuid";
 import identity from "lodash/identity.js";
 import ReactTextareaAutosize from "react-textarea-autosize";
@@ -9,14 +9,7 @@ import { defaultImport } from "default-import";
 import { Overlay } from "../Overlay/index.js";
 import { ENUM_KEY_CODE } from "../typings/utilities.js";
 
-import { IEditableLabelProps, IEditableLabelState } from "./typings.js";
-
-/**
- * @internal
- */
-export interface IEditableLabelInnerProps extends IEditableLabelProps {
-    innerRef: React.ForwardedRef<HTMLDivElement>;
-}
+import { IEditableLabelProps } from "./typings.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
@@ -26,76 +19,147 @@ const TextareaAutosize = defaultImport(ReactTextareaAutosize);
 /**
  * @internal
  */
-export class EditableLabelInner extends Component<IEditableLabelInnerProps, IEditableLabelState> {
-    static defaultProps = {
-        children: false,
-        className: "",
-        maxLength: 100000,
-        maxRows: 1,
-        onCancel: identity,
-        onEditingStart: identity,
-        onChange: identity,
-        placeholder: "",
-        scrollToEndOnEditingStart: true,
-        textareaInOverlay: false,
-        autofocus: false,
-        isEditableLabelWidthBasedOnText: false,
-    };
-    private readonly root: RefObject<any>;
-    private readonly textarea: RefObject<HTMLTextAreaElement>;
-    private focusTimeout: number = 0;
+export const EditableLabel = forwardRef<HTMLDivElement, IEditableLabelProps>((props, ref) => {
+    const {
+        children = false,
+        className = "",
+        maxLength = 100000,
+        maxRows = 1,
+        onSubmit,
+        onCancel = identity,
+        onEditingStart = identity,
+        onChange = identity,
+        placeholder = "",
+        scrollToEndOnEditingStart = true,
+        textareaInOverlay = false,
+        autofocus = false,
+        isEditableLabelWidthBasedOnText = false,
+    } = props;
 
-    constructor(props: IEditableLabelInnerProps) {
-        super(props);
+    const rootRef = useRef<HTMLDivElement>(null);
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
+    const focusTimeoutRef = useRef<number | null>(null);
+    const resizeObserverRef = useRef<ResizeObserver | null>(null);
 
-        this.state = {
-            value: props.value,
-            isEditing: false,
-            textareaWidth: 100,
+    const [value, setValue] = useState(props.value);
+    const [isEditing, setIsEditing] = useState(false);
+    const [doFocus, setDoFocus] = useState(false);
+    const [rootWidth, setRootWidth] = useState(0);
+    const [textareaWidth, setTextareaWidth] = useState(100);
+    const [textareaFontSize, setTextareaFontSize] = useState<number | undefined>(undefined);
+
+    useEffect(() => {
+        setValue(props.value);
+    }, [props.value]);
+
+    const onDocumentClick = useCallback((e: MouseEvent): void => {
+        if (isClickOutsideTextarea(e.target)) {
+            const textAreaNode = textareaRef.current;
+            if (textAreaNode) {
+                textAreaNode.blur();
+            }
+        }
+    }, []);
+
+    const removeListeners = useCallback((): void => {
+        document.removeEventListener("click", onDocumentClick);
+    }, [onDocumentClick]);
+
+    const isMultiLine = useMemo((): boolean => {
+        return maxRows > 1;
+    }, [maxRows]);
+
+    const measureRootDimensions = useCallback((): void => {
+        const rootElement = rootRef.current;
+        const rootElementFontSize = getComputedStyle(rootElement).fontSize;
+
+        setTextareaWidth(rootElement.offsetWidth);
+        setTextareaFontSize(Math.floor(parseInt(rootElementFontSize, 10)));
+    }, [rootRef]);
+
+    const selectAndFocus = useCallback((): void => {
+        const componentElement = textareaRef.current;
+
+        if (componentElement) {
+            window.clearTimeout(focusTimeoutRef.current);
+            // without the timeout the focus sometimes got stolen by the previously active item for some reason
+            focusTimeoutRef.current = window.setTimeout(() => {
+                componentElement.focus();
+
+                if (scrollToEndOnEditingStart && isMultiLine) {
+                    componentElement.scrollTop = componentElement.scrollHeight;
+                }
+
+                componentElement.select();
+
+                if (textareaInOverlay) {
+                    measureRootDimensions();
+                }
+            }, 1);
+        }
+    }, [scrollToEndOnEditingStart, isMultiLine, textareaInOverlay, measureRootDimensions]);
+
+    const edit = useCallback(
+        (_e?: React.MouseEvent<HTMLDivElement>): void => {
+            if (!isEditing) {
+                setIsEditing(true);
+                document.addEventListener("mousedown", onDocumentClick);
+                setDoFocus(true);
+
+                onEditingStart();
+            }
+        },
+        [isEditing, onEditingStart, onDocumentClick],
+    );
+
+    useEffect(() => {
+        const rootNode = rootRef.current;
+        const focusTimeoutId = focusTimeoutRef.current;
+
+        const onSelectStart = (e: DragEvent): void => {
+            e.stopPropagation();
         };
 
-        this.root = React.createRef();
-        this.textarea = React.createRef();
-    }
-
-    componentDidMount(): void {
-        const rootNode = this.root.current;
-        rootNode.addEventListener("dragstart", this.onSelectStart);
-        rootNode.addEventListener("selectstart", this.onSelectStart);
-
-        if (this.props.autofocus) {
-            this.edit();
-        }
-    }
-
-    UNSAFE_componentWillReceiveProps(newProps: IEditableLabelProps): void {
-        if (this.props.value !== newProps.value) {
-            this.setState({
-                value: newProps.value,
+        if (rootNode) {
+            rootNode.addEventListener("dragstart", onSelectStart);
+            rootNode.addEventListener("selectstart", onSelectStart);
+            resizeObserverRef.current = new ResizeObserver(() => {
+                setRootWidth(rootNode.offsetWidth);
             });
+
+            resizeObserverRef.current.observe(rootNode);
         }
-    }
 
-    componentWillUnmount(): void {
-        const rootNode = this.root.current;
-        rootNode.removeEventListener("dragstart", this.onSelectStart);
-        rootNode.removeEventListener("selectstart", this.onSelectStart);
-        this.removeListeners();
-        clearTimeout(this.focusTimeout);
-    }
+        document.addEventListener("click", onDocumentClick);
 
-    onDocumentClick = (e: MouseEvent): void => {
-        if (this.isClickOutsideTextarea(e.target)) {
-            const textAreaNode = this.textarea.current;
-            textAreaNode.blur();
+        if (autofocus) {
+            edit();
         }
-    };
 
-    onSelectStart(e: React.MouseEvent): void {
-        e.stopPropagation();
-    }
+        return () => {
+            if (rootNode) {
+                rootNode.removeEventListener("dragstart", onSelectStart);
+                rootNode.removeEventListener("selectstart", onSelectStart);
+                if (resizeObserverRef.current) {
+                    resizeObserverRef.current.unobserve(rootNode);
+                }
+            }
+            removeListeners();
+            if (focusTimeoutId) {
+                clearTimeout(focusTimeoutId);
+            }
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-    onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>): void => {
+    useEffect(() => {
+        if (doFocus && isEditing) {
+            selectAndFocus();
+            setDoFocus(false);
+        }
+    }, [doFocus, isEditing, selectAndFocus]);
+
+    const onKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>): void => {
         const isSubmit = e.keyCode === ENUM_KEY_CODE.KEY_CODE_ENTER;
         const isCancel = e.keyCode === ENUM_KEY_CODE.KEY_CODE_ESCAPE;
 
@@ -105,124 +169,81 @@ export class EditableLabelInner extends Component<IEditableLabelInnerProps, IEdi
         }
 
         if (isSubmit) {
-            this.onSubmit();
+            onSubmitHandler();
         }
         if (isCancel) {
-            this.onCancel();
+            onCancelHandler();
         }
     };
 
-    onSubmit = (): void => {
-        const oldValue = this.props.value;
-        const newTrimmedValue = this.state.value.trim();
+    const onSubmitHandler = (): void => {
+        const oldValue = props.value;
+        const newTrimmedValue = value.trim();
 
         if (newTrimmedValue === "") {
-            this.setState({
-                value: "",
-            });
+            setValue("");
         }
 
         if (oldValue !== newTrimmedValue) {
-            this.props.onSubmit(newTrimmedValue);
+            onSubmit(newTrimmedValue);
         } else {
-            this.props.onCancel(oldValue);
+            onCancel(oldValue);
         }
 
-        this.setState({
-            value: newTrimmedValue,
-            isEditing: false,
-        });
-        this.removeListeners();
+        setValue(newTrimmedValue);
+        setIsEditing(false);
+        removeListeners();
     };
 
-    onCancel = (): void => {
-        const { value } = this.props;
-
-        this.props.onCancel(value);
-
-        this.setState({
-            value,
-            isEditing: false,
-        });
-        this.removeListeners();
+    const onCancelHandler = (): void => {
+        onCancel(props.value);
+        setValue(props.value);
+        setIsEditing(false);
+        removeListeners();
     };
 
-    onChange = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
+    const onChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
         const { value } = e.target;
-        this.setState({ value }, () => {
-            this.props.onChange(value);
-        });
+        setValue(value);
+        onChange(value);
     };
 
-    edit = (_e?: React.MouseEvent<HTMLDivElement>): void => {
-        if (!this.state.isEditing) {
-            this.setState(
-                {
-                    isEditing: true,
-                },
-                () => {
-                    this.selectAndFocus();
-                    document.addEventListener("mousedown", this.onDocumentClick);
-                },
-            );
-
-            this.props.onEditingStart();
-        }
+    const isClickOutsideTextarea = (target: EventTarget | null): boolean => {
+        const textAreaNode = textareaRef.current;
+        return textAreaNode && !textAreaNode.contains(target as Node);
     };
 
-    isClickOutsideTextarea(clickedTarget: EventTarget): boolean {
-        return this.textarea.current && !this.textarea.current.contains(clickedTarget as HTMLElement);
-    }
-
-    isMultiLine(): boolean {
-        return this.props.maxRows > 1;
-    }
-
-    removeListeners(): void {
-        document.removeEventListener("mousedown", this.onDocumentClick);
-    }
-
-    measureRootDimensions(): void {
-        const rootElement = this.root.current;
-        const rootElementFontSize = getComputedStyle(rootElement).fontSize;
-
-        this.setState({
-            textareaWidth: rootElement.offsetWidth,
-            textareaFontSize: Math.floor(parseInt(rootElementFontSize, 10)),
-        });
-    }
-
-    selectAndFocus = (): void => {
-        const componentElement = this.textarea.current;
-        const { scrollToEndOnEditingStart, textareaInOverlay } = this.props;
-
-        if (componentElement) {
-            window.clearTimeout(this.focusTimeout);
-            // without the timeout the focus sometimes got stolen by the previously active item for some reason
-            this.focusTimeout = window.setTimeout(() => {
-                componentElement.focus();
-
-                if (scrollToEndOnEditingStart && this.isMultiLine()) {
-                    componentElement.scrollTop = componentElement.scrollHeight;
-                }
-
-                componentElement.select();
-
-                if (textareaInOverlay) {
-                    this.measureRootDimensions();
-                }
-            }, 1);
-        }
+    const renderTextarea = (style = {}): ReactNode => {
+        return (
+            <TextareaAutosize
+                style={style}
+                rows={1}
+                maxRows={maxRows}
+                maxLength={maxLength}
+                onKeyDown={onKeyDown}
+                onBlur={onSubmitHandler}
+                onChange={onChangeHandler}
+                defaultValue={props.value}
+                placeholder={placeholder}
+                ref={textareaRef}
+            />
+        );
     };
 
-    renderTextAreaInOverlay(): ReactNode {
+    const renderEditableLabelEdit = (): ReactNode => {
+        return textareaInOverlay
+            ? renderTextAreaInOverlay()
+            : renderTextarea(rootRef.current && isEditableLabelWidthBasedOnText ? { width: rootWidth } : {});
+    };
+
+    const renderTextAreaInOverlay = (): ReactNode => {
         const alignId = `gd-editable-label-${uuid()}`;
 
         const style = {
-            width: this.state.textareaWidth,
-            fontSize: `${this.state.textareaFontSize}px`,
+            width: textareaWidth,
+            fontSize: `${textareaFontSize}px`,
             // http://stackoverflow.com/a/6295222
-            lineHeight: `${this.state.textareaFontSize * 1.25}px`,
+            lineHeight: `${textareaFontSize * 1.25}px`,
         };
 
         return (
@@ -235,70 +256,31 @@ export class EditableLabelInner extends Component<IEditableLabelInnerProps, IEdi
                         },
                     ]}
                 >
-                    <div className="gd-editable-label-overlay">{this.renderTextarea(style)}</div>
+                    <div className="gd-editable-label-overlay">{renderTextarea(style)}</div>
                 </Overlay>
             </div>
         );
-    }
+    };
 
-    renderTextarea(style = {}): ReactNode {
-        return (
-            <TextareaAutosize
-                style={style}
-                rows={1}
-                maxRows={this.props.maxRows}
-                maxLength={this.props.maxLength}
-                onKeyDown={this.onKeyDown}
-                onBlur={this.onSubmit}
-                onChange={this.onChange}
-                defaultValue={this.props.value}
-                placeholder={this.props.placeholder}
-                ref={this.textarea}
-            />
-        );
-    }
+    const editableLabelClasses = cx(
+        {
+            "gd-editable-label": true,
+            "s-editable-label": true,
+            "is-editing": isEditing,
+            placeholder: value === "",
+        },
+        className,
+    );
 
-    renderEditableLabelEdit(): ReactNode {
-        return this.props.textareaInOverlay
-            ? this.renderTextAreaInOverlay()
-            : this.renderTextarea(
-                  this.root.current && this.props.isEditableLabelWidthBasedOnText
-                      ? { width: this.root.current.getBoundingClientRect().width }
-                      : {},
-              );
-    }
+    const displayValue = children || value || placeholder;
 
-    render(): ReactNode {
-        const editableLabelClasses = cx(
-            {
-                "gd-editable-label": true,
-                "s-editable-label": true,
-                "is-editing": this.state.isEditing,
-                placeholder: this.state.value === "",
-            },
-            this.props.className,
-        );
-
-        const displayValue = this.props.children || this.state.value || this.props.placeholder;
-
-        return (
-            <div
-                role="editable-label"
-                ref={this.props.innerRef}
-                className={editableLabelClasses}
-                onClick={this.edit}
-            >
-                <div className="gd-editable-label-inner" ref={this.root}>
-                    {this.state.isEditing ? this.renderEditableLabelEdit() : displayValue}
-                </div>
+    return (
+        <div role="editable-label" ref={ref} className={editableLabelClasses} onClick={edit}>
+            <div className="gd-editable-label-inner" ref={rootRef}>
+                {isEditing ? renderEditableLabelEdit() : displayValue}
             </div>
-        );
-    }
-}
-
-/**
- * @internal
- */
-export const EditableLabel = React.forwardRef<HTMLDivElement, IEditableLabelProps>((props, ref) => {
-    return <EditableLabelInner {...props} innerRef={ref} />;
+        </div>
+    );
 });
+
+EditableLabel.displayName = "EditableLabel";
