@@ -22,7 +22,7 @@
 }
 
 @mixin gd-heading-base {
-    color: variables.$gd-color-dark;
+    color: variables.$gd-color-text;
 
     @include gd-font-base;
 }
