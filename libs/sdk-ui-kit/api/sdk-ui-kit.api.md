@@ -4374,7 +4374,7 @@ export type MenuAlignment = ["bottom", "right"] | ["bottom", "left"] | ["top", "
 export const Message: React_2.FC<IMessageProps>;
 
 // @internal (undocumented)
-export type MessageParameters = Pick<IMessageDefinition, "duration" | "intensive" | "values">;
+export type MessageParameters = Pick<IMessageDefinition, "duration" | "intensive" | "values" | "showMore" | "showLess" | "errorDetail">;
 
 // @internal (undocumented)
 export const Messages: React_2.FC<IMessagesProps>;

@@ -104,20 +104,14 @@
         @include mixins.text-overflow();
 
         line-height: 1.2;
-        color: dialog-variables.$gd-modal-title-color;
     }
 
     h2 {
         @include typo-mixins.gd-heading-2;
-
-        color: dialog-variables.$gd-modal-title-color;
     }
 
     h3 {
         @include typo-mixins.gd-heading-3;
-
-        color: dialog-variables.$gd-modal-title-color;
-        font-weight: 400;
     }
 }
 

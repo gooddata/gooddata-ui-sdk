@@ -427,6 +427,10 @@ $gd-dashboards-section-description-color: var(
 
                 color: $gd-dashboards-section-title-color;
             }
+
+            .placeholder {
+                color: kit-variables.$gd-color-state-blank;
+            }
         }
 
         .gd-editable-label {

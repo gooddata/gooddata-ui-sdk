@@ -8,7 +8,10 @@ import { IMessageDefinition, MessageType } from "./typings.js";
 /**
  * @internal
  */
-export type MessageParameters = Pick<IMessageDefinition, "duration" | "intensive" | "values">;
+export type MessageParameters = Pick<
+    IMessageDefinition,
+    "duration" | "intensive" | "values" | "showMore" | "showLess" | "errorDetail"
+>;
 
 /**
  * @internal
