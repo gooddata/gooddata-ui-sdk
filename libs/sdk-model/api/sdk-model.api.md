@@ -4124,6 +4124,8 @@ export interface IWorkspaceDataFilterSetting {
     // @deprecated (undocumented)
     id: string;
     // (undocumented)
+    isInherited: boolean;
+    // (undocumented)
     ref: ObjRef;
     // (undocumented)
     title?: string;

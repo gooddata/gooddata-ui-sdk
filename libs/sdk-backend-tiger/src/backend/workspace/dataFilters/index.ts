@@ -74,6 +74,9 @@ export class TigerDataFiltersService implements IDataFiltersService {
                     ref: idRef(setting.id, "workspaceDataFilterSetting"),
                     title: setting.attributes?.title,
                     filterValues: setting.attributes?.filterValues || [],
+                    isInherited:
+                        setting.meta?.origin?.originType ===
+                        JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum.PARENT,
                 });
             }
             return result;
@@ -166,12 +169,18 @@ export class TigerDataFiltersService implements IDataFiltersService {
             include: ["workspaceDataFilter"],
         });
         await Promise.all(
-            existingSettings.data.data.map((setting) =>
-                client.entities.deleteEntityWorkspaceDataFilterSettings({
-                    workspaceId: this.workspace,
-                    objectId: setting.id,
-                }),
-            ),
+            existingSettings.data.data
+                .filter(
+                    (setting) =>
+                        setting.meta?.origin?.originType ===
+                        JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum.NATIVE,
+                )
+                .map((setting) =>
+                    client.entities.deleteEntityWorkspaceDataFilterSettings({
+                        workspaceId: this.workspace,
+                        objectId: setting.id,
+                    }),
+                ),
         );
     };
 
