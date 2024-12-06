@@ -1,10 +1,13 @@
 // (C) 2024 GoodData Corporation
 
-import React from "react";
+import React, { useRef, useEffect, useCallback } from "react";
 import Markdown from "react-markdown";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 import { IntlWrapper } from "@gooddata/sdk-ui";
+
+// lineHeight from CSS, used to calculate max textarea height based on provided row count
+const RICH_TEXT_TEXTAREA_ROW_HEIGHT = 19;
 
 const RICH_TEXT_PLACEHOLDER = `
 # Heading 1
@@ -25,6 +28,11 @@ export interface IRichTextProps {
     editRows?: number;
     emptyElement?: JSX.Element;
     className?: string;
+    /**
+     * If provided, the textarea starts at just 1 row,
+     * resizing dynamically up to editRows value.
+     */
+    autoResize?: boolean;
 }
 
 const RichTextCore: React.FC<IRichTextProps> = ({
@@ -35,6 +43,7 @@ const RichTextCore: React.FC<IRichTextProps> = ({
     editRows,
     emptyElement,
     className,
+    autoResize,
 }) => {
     return (
         <div
@@ -53,6 +62,7 @@ const RichTextCore: React.FC<IRichTextProps> = ({
                     onChange={(updatedValue) => onChange?.(updatedValue)}
                     placeholder={editPlaceholder}
                     rows={editRows}
+                    autoResize={autoResize}
                 />
             ) : (
                 <RichTextView value={value} emptyElement={emptyElement} />
@@ -66,9 +76,17 @@ interface IRichTextEditProps {
     onChange: (text: string) => void;
     placeholder?: string;
     rows?: number;
+    autoResize?: boolean;
 }
 
-const RichTextEdit: React.FC<IRichTextEditProps> = ({ value, onChange, placeholder, rows = 10 }) => {
+const RichTextEdit: React.FC<IRichTextEditProps> = ({
+    value,
+    onChange,
+    placeholder,
+    rows = 10,
+    autoResize = false,
+}) => {
+    const textareaRef = useRef(null);
     const intl = useIntl();
     const placeholderText =
         placeholder ?? `${intl.formatMessage({ id: "richText.placeholder" })}\n${RICH_TEXT_PLACEHOLDER}`;
@@ -79,14 +97,40 @@ const RichTextEdit: React.FC<IRichTextEditProps> = ({ value, onChange, placehold
         event.target.setSelectionRange(position, position);
     };
 
+    const handleInput = useCallback(() => {
+        if (autoResize) {
+            const textarea = textareaRef.current;
+
+            // Reset height to calculate new content height
+            textarea.style.height = "auto";
+
+            // Get the scroll height to adjust dynamically
+            const scrollHeight = textarea.scrollHeight;
+
+            // Set maxHeight equivalent to the number of provided rows
+            const maxHeight = RICH_TEXT_TEXTAREA_ROW_HEIGHT * rows;
+
+            // Apply height up to maxHeight, and allow scrolling if content exceeds it
+            textarea.style.height = `${Math.min(scrollHeight, maxHeight)}px`;
+            textarea.style.overflowY = scrollHeight > maxHeight ? "scroll" : "hidden";
+        }
+    }, [autoResize, rows]);
+
+    // the effect will be called just once during initialization to set the textarea height
+    useEffect(() => {
+        handleInput();
+    }, [handleInput]);
+
     return (
         <textarea
+            ref={textareaRef}
             className="gd-visible-scrollbar"
             value={value}
             autoFocus
             placeholder={placeholderText}
             onChange={(event) => onChange(event.target.value)}
-            rows={rows}
+            onInput={handleInput}
+            rows={autoResize ? 1 : rows}
             onFocus={moveCaretToEnd}
         />
     );

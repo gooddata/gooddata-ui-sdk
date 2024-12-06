@@ -1228,7 +1228,7 @@ export interface IComponentTableProps<TProps extends object, TProp extends keyof
 }
 
 // @internal (undocumented)
-export const Icon: Record<string, React.FC<IIconProps>>;
+export const Icon: Record<string, React_2.FC<IIconProps>>;
 
 // @internal (undocumented)
 export interface IConfirmDialogBaseProps extends IDialogBaseProps {
@@ -3570,6 +3570,7 @@ export interface IResponsiveTextProps {
 
 // @internal (undocumented)
 export interface IRichTextProps {
+    autoResize?: boolean;
     // (undocumented)
     className?: string;
     // (undocumented)
@@ -4244,7 +4245,7 @@ export interface ITypographyProps {
     // (undocumented)
     onClick?: (e: React_2.MouseEvent) => void;
     // (undocumented)
-    tagName: "h1" | "h2" | "h3" | "p";
+    tagName: TypographyTagName;
     // (undocumented)
     title?: string;
 }
@@ -4920,6 +4921,9 @@ export type TUTMContent = "main_menu_help_documentation" | "main_menu_help_unive
 
 // @internal (undocumented)
 export const Typography: React_2.FC<ITypographyProps>;
+
+// @internal (undocumented)
+export type TypographyTagName = "h1" | "h2" | "h3" | "p";
 
 // @internal (undocumented)
 export const UiButton: ({ size, variant, label, isDisabled, isLoading, iconBefore, iconAfter, }: UiButtonProps) => React_2.JSX.Element;

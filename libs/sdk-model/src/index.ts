@@ -758,6 +758,8 @@ export type {
     IDashboardLayoutSizeByScreenSize,
     IDashboardLayoutItem,
     IDashboardLayoutWidget,
+    IDashboardLayoutConfiguration,
+    IDashboardLayoutSectionsConfiguration,
     ScreenSize,
 } from "./dashboard/layout.js";
 export {
