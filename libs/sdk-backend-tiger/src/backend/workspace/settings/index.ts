@@ -4,7 +4,7 @@ import {
     IWorkspaceSettingsService,
     IUserWorkspaceSettings,
 } from "@gooddata/sdk-backend-spi";
-import { ISeparators, ISettings } from "@gooddata/sdk-model";
+import { IAlertDefault, ISeparators, ISettings } from "@gooddata/sdk-model";
 
 import { TigerAuthenticatedCallGuard, TigerSettingsType } from "../../../types/index.js";
 import { getOrganizationTier, TigerFeaturesService } from "../../features/index.js";
@@ -54,6 +54,10 @@ export class TigerWorkspaceSettings
                 ...settings,
             };
         });
+    }
+
+    public async setAlertDefault(value: IAlertDefault): Promise<void> {
+        return this.setSetting("ALERT", value);
     }
 
     public async setLocale(locale: string): Promise<void> {

@@ -59,6 +59,12 @@ export interface AlertDescription {
      * @type {number}
      * @memberof AlertDescription
      */
+    filterCount?: number;
+    /**
+     *
+     * @type {number}
+     * @memberof AlertDescription
+     */
     totalValueCount?: number;
     /**
      *
@@ -364,6 +370,57 @@ export interface NotificationContent {
     type: string;
 }
 /**
+ *
+ * @export
+ * @interface Notifications
+ */
+export interface Notifications {
+    /**
+     *
+     * @type {Array<Notification>}
+     * @memberof Notifications
+     */
+    data: Array<Notification>;
+    /**
+     *
+     * @type {NotificationsMeta}
+     * @memberof Notifications
+     */
+    meta: NotificationsMeta;
+}
+/**
+ *
+ * @export
+ * @interface NotificationsMeta
+ */
+export interface NotificationsMeta {
+    /**
+     *
+     * @type {NotificationsMetaTotal}
+     * @memberof NotificationsMeta
+     */
+    total?: NotificationsMetaTotal;
+}
+/**
+ *
+ * @export
+ * @interface NotificationsMetaTotal
+ */
+export interface NotificationsMetaTotal {
+    /**
+     *
+     * @type {number}
+     * @memberof NotificationsMetaTotal
+     */
+    unread: number;
+    /**
+     *
+     * @type {number}
+     * @memberof NotificationsMetaTotal
+     */
+    all: number;
+}
+/**
  * Custom SMTP destination for notifications. The properties host, port, username, and password are required on create and update
  * @export
  * @interface Smtp
@@ -662,6 +719,7 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
          * @param {string} [workspaceId] Workspace ID to filter notifications by.
          * @param {string} [page] Zero-based page index (0..N)
          * @param {string} [size] The size of the page to be returned.
+         * @param {Array<'total' | 'ALL'>} [metaInclude] Additional meta information to include in the response.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -669,9 +727,10 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             workspaceId?: string,
             page?: string,
             size?: string,
+            metaInclude?: Array<"total" | "ALL">,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
-            const localVarPath = `/api/v1/notifications`;
+            const localVarPath = `/api/v1/actions/notifications`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -692,6 +751,10 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
 
             if (size !== undefined) {
                 localVarQueryParameter["size"] = size;
+            }
+
+            if (metaInclude) {
+                localVarQueryParameter["metaInclude"] = Array.from(metaInclude);
             }
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
@@ -720,7 +783,7 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
         ): Promise<RequestArgs> => {
             // verify required parameter 'notificationId' is not null or undefined
             assertParamExists("markAsReadNotification", "notificationId", notificationId);
-            const localVarPath = `/api/v1/notifications/{notificationId}/markAsRead`.replace(
+            const localVarPath = `/api/v1/actions/notifications/{notificationId}/markAsRead`.replace(
                 `{${"notificationId"}}`,
                 encodeURIComponent(String(notificationId)),
             );
@@ -748,14 +811,47 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             };
         },
         /**
+         * Mark all user in-platform notifications as read.
+         * @summary Mark all notifications as read.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        markAsReadNotificationAll: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/v1/actions/notifications/markAsRead`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+            const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
          * Tests the existing notification channel by sending a test notification.
          * @summary Test existing notification channel.
          * @param {string} notificationChannelId
+         * @param {TestDestinationRequest} [testDestinationRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         testExistingNotificationChannel: async (
             notificationChannelId: string,
+            testDestinationRequest?: TestDestinationRequest,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'notificationChannelId' is not null or undefined
@@ -778,6 +874,8 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {
@@ -785,6 +883,12 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
                 ...headersFromBaseOptions,
                 ...options.headers,
             };
+            const needsSerialization =
+                typeof testDestinationRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(testDestinationRequest !== undefined ? testDestinationRequest : {})
+                : testDestinationRequest || "";
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -852,6 +956,7 @@ export const ActionsApiFp = function (configuration?: Configuration) {
          * @param {string} [workspaceId] Workspace ID to filter notifications by.
          * @param {string} [page] Zero-based page index (0..N)
          * @param {string} [size] The size of the page to be returned.
+         * @param {Array<'total' | 'ALL'>} [metaInclude] Additional meta information to include in the response.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -859,12 +964,14 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             workspaceId?: string,
             page?: string,
             size?: string,
+            metaInclude?: Array<"total" | "ALL">,
             options?: AxiosRequestConfig,
-        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Notification>>> {
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Notifications>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getNotifications(
                 workspaceId,
                 page,
                 size,
+                metaInclude,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -887,18 +994,33 @@ export const ActionsApiFp = function (configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
+         * Mark all user in-platform notifications as read.
+         * @summary Mark all notifications as read.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async markAsReadNotificationAll(
+            options?: AxiosRequestConfig,
+        ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.markAsReadNotificationAll(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
          * Tests the existing notification channel by sending a test notification.
          * @summary Test existing notification channel.
          * @param {string} notificationChannelId
+         * @param {TestDestinationRequest} [testDestinationRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async testExistingNotificationChannel(
             notificationChannelId: string,
+            testDestinationRequest?: TestDestinationRequest,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.testExistingNotificationChannel(
                 notificationChannelId,
+                testDestinationRequest,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -944,12 +1066,13 @@ export const ActionsApiFactory = function (
         getNotifications(
             requestParameters: ActionsApiGetNotificationsRequest,
             options?: AxiosRequestConfig,
-        ): AxiosPromise<Array<Notification>> {
+        ): AxiosPromise<Notifications> {
             return localVarFp
                 .getNotifications(
                     requestParameters.workspaceId,
                     requestParameters.page,
                     requestParameters.size,
+                    requestParameters.metaInclude,
                     options,
                 )
                 .then((request) => request(axios, basePath));
@@ -970,6 +1093,15 @@ export const ActionsApiFactory = function (
                 .then((request) => request(axios, basePath));
         },
         /**
+         * Mark all user in-platform notifications as read.
+         * @summary Mark all notifications as read.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        markAsReadNotificationAll(options?: AxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.markAsReadNotificationAll(options).then((request) => request(axios, basePath));
+        },
+        /**
          * Tests the existing notification channel by sending a test notification.
          * @summary Test existing notification channel.
          * @param {ActionsApiTestExistingNotificationChannelRequest} requestParameters Request parameters.
@@ -981,7 +1113,11 @@ export const ActionsApiFactory = function (
             options?: AxiosRequestConfig,
         ): AxiosPromise<TestResponse> {
             return localVarFp
-                .testExistingNotificationChannel(requestParameters.notificationChannelId, options)
+                .testExistingNotificationChannel(
+                    requestParameters.notificationChannelId,
+                    requestParameters.testDestinationRequest,
+                    options,
+                )
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -1019,7 +1155,7 @@ export interface ActionsApiInterface {
     getNotifications(
         requestParameters: ActionsApiGetNotificationsRequest,
         options?: AxiosRequestConfig,
-    ): AxiosPromise<Array<Notification>>;
+    ): AxiosPromise<Notifications>;
 
     /**
      * Mark in-platform notification by its ID as read.
@@ -1033,6 +1169,15 @@ export interface ActionsApiInterface {
         requestParameters: ActionsApiMarkAsReadNotificationRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<void>;
+
+    /**
+     * Mark all user in-platform notifications as read.
+     * @summary Mark all notifications as read.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    markAsReadNotificationAll(options?: AxiosRequestConfig): AxiosPromise<void>;
 
     /**
      * Tests the existing notification channel by sending a test notification.
@@ -1087,6 +1232,13 @@ export interface ActionsApiGetNotificationsRequest {
      * @memberof ActionsApiGetNotifications
      */
     readonly size?: string;
+
+    /**
+     * Additional meta information to include in the response.
+     * @type {Array<'total' | 'ALL'>}
+     * @memberof ActionsApiGetNotifications
+     */
+    readonly metaInclude?: Array<"total" | "ALL">;
 }
 
 /**
@@ -1115,6 +1267,13 @@ export interface ActionsApiTestExistingNotificationChannelRequest {
      * @memberof ActionsApiTestExistingNotificationChannel
      */
     readonly notificationChannelId: string;
+
+    /**
+     *
+     * @type {TestDestinationRequest}
+     * @memberof ActionsApiTestExistingNotificationChannel
+     */
+    readonly testDestinationRequest?: TestDestinationRequest;
 }
 
 /**
@@ -1155,6 +1314,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
                 requestParameters.workspaceId,
                 requestParameters.page,
                 requestParameters.size,
+                requestParameters.metaInclude,
                 options,
             )
             .then((request) => request(this.axios, this.basePath));
@@ -1178,6 +1338,19 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
+     * Mark all user in-platform notifications as read.
+     * @summary Mark all notifications as read.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public markAsReadNotificationAll(options?: AxiosRequestConfig) {
+        return ActionsApiFp(this.configuration)
+            .markAsReadNotificationAll(options)
+            .then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
      * Tests the existing notification channel by sending a test notification.
      * @summary Test existing notification channel.
      * @param {ActionsApiTestExistingNotificationChannelRequest} requestParameters Request parameters.
@@ -1190,7 +1363,11 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
         options?: AxiosRequestConfig,
     ) {
         return ActionsApiFp(this.configuration)
-            .testExistingNotificationChannel(requestParameters.notificationChannelId, options)
+            .testExistingNotificationChannel(
+                requestParameters.notificationChannelId,
+                requestParameters.testDestinationRequest,
+                options,
+            )
             .then((request) => request(this.axios, this.basePath));
     }
 
@@ -1222,11 +1399,13 @@ export const NotificationChannelsApiAxiosParamCreator = function (configuration?
          * Tests the existing notification channel by sending a test notification.
          * @summary Test existing notification channel.
          * @param {string} notificationChannelId
+         * @param {TestDestinationRequest} [testDestinationRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         testExistingNotificationChannel: async (
             notificationChannelId: string,
+            testDestinationRequest?: TestDestinationRequest,
             options: AxiosRequestConfig = {},
         ): Promise<RequestArgs> => {
             // verify required parameter 'notificationChannelId' is not null or undefined
@@ -1249,6 +1428,8 @@ export const NotificationChannelsApiAxiosParamCreator = function (configuration?
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
+            localVarHeaderParameter["Content-Type"] = "application/json";
+
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {
@@ -1256,6 +1437,12 @@ export const NotificationChannelsApiAxiosParamCreator = function (configuration?
                 ...headersFromBaseOptions,
                 ...options.headers,
             };
+            const needsSerialization =
+                typeof testDestinationRequest !== "string" ||
+                localVarRequestOptions.headers["Content-Type"] === "application/json";
+            localVarRequestOptions.data = needsSerialization
+                ? JSON.stringify(testDestinationRequest !== undefined ? testDestinationRequest : {})
+                : testDestinationRequest || "";
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1321,15 +1508,18 @@ export const NotificationChannelsApiFp = function (configuration?: Configuration
          * Tests the existing notification channel by sending a test notification.
          * @summary Test existing notification channel.
          * @param {string} notificationChannelId
+         * @param {TestDestinationRequest} [testDestinationRequest]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async testExistingNotificationChannel(
             notificationChannelId: string,
+            testDestinationRequest?: TestDestinationRequest,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TestResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.testExistingNotificationChannel(
                 notificationChannelId,
+                testDestinationRequest,
                 options,
             );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
@@ -1377,7 +1567,11 @@ export const NotificationChannelsApiFactory = function (
             options?: AxiosRequestConfig,
         ): AxiosPromise<TestResponse> {
             return localVarFp
-                .testExistingNotificationChannel(requestParameters.notificationChannelId, options)
+                .testExistingNotificationChannel(
+                    requestParameters.notificationChannelId,
+                    requestParameters.testDestinationRequest,
+                    options,
+                )
                 .then((request) => request(axios, basePath));
         },
         /**
@@ -1443,6 +1637,13 @@ export interface NotificationChannelsApiTestExistingNotificationChannelRequest {
      * @memberof NotificationChannelsApiTestExistingNotificationChannel
      */
     readonly notificationChannelId: string;
+
+    /**
+     *
+     * @type {TestDestinationRequest}
+     * @memberof NotificationChannelsApiTestExistingNotificationChannel
+     */
+    readonly testDestinationRequest?: TestDestinationRequest;
 }
 
 /**
@@ -1479,7 +1680,11 @@ export class NotificationChannelsApi extends BaseAPI implements NotificationChan
         options?: AxiosRequestConfig,
     ) {
         return NotificationChannelsApiFp(this.configuration)
-            .testExistingNotificationChannel(requestParameters.notificationChannelId, options)
+            .testExistingNotificationChannel(
+                requestParameters.notificationChannelId,
+                requestParameters.testDestinationRequest,
+                options,
+            )
             .then((request) => request(this.axios, this.basePath));
     }
 

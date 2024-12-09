@@ -81,6 +81,7 @@ import {
     AutomationType,
     IChatThread,
     IOrganizationLlmEndpointsService,
+    IOrganizationNotificationService,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -128,6 +129,7 @@ import {
     ILlmEndpointOpenAI,
     ISeparators,
     INotificationChannelMetadataObject,
+    IAlertDefault,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
 import isEmpty from "lodash/isEmpty.js";
@@ -924,6 +926,16 @@ class DummyOrganization implements IOrganization {
                 }),
         };
     }
+
+    public notifications(): IOrganizationNotificationService {
+        return {
+            markNotificationAsRead: () => Promise.reject(new NotSupported("not supported")),
+            markAllNotificationsAsRead: () => Promise.reject(new NotSupported("not supported")),
+            getNotificationsQuery: () => {
+                throw new NotSupported("not supported");
+            },
+        };
+    }
 }
 
 class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
@@ -947,6 +959,10 @@ class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
                 decimal: ".",
             },
         });
+    }
+
+    setAlertDefault(_value: IAlertDefault): Promise<void> {
+        return Promise.resolve();
     }
 
     setLocale(_locale: string): Promise<void> {
