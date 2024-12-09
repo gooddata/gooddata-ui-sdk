@@ -25,6 +25,7 @@ import { GridLayoutElement } from "../../DefaultDashboardLayoutRenderer/GridLayo
 export type WidgetDropZoneColumnProps = {
     layoutPath: ILayoutItemPath;
     isLastInSection?: boolean;
+    gridWidthOverride?: number;
 };
 
 export const WidgetDropZoneColumn = (props: WidgetDropZoneColumnProps) => {
@@ -92,21 +93,23 @@ export const WidgetDropZoneColumn = (props: WidgetDropZoneColumnProps) => {
         return null;
     }
 
-    if (!collectedProps?.item) {
+    if (!collectedProps?.item || !collectedProps.canDrop) {
         return null;
     }
 
     const { gridWidth = 12, gridHeight } = (collectedProps.item as BaseDraggableLayoutItem).size;
 
+    const usedWidth = props.gridWidthOverride ?? gridWidth;
+
     return (
         <GridLayoutElement
             type="item"
             layoutItemSize={{
-                xl: { gridWidth, gridHeight },
-                lg: { gridWidth, gridHeight },
-                md: { gridWidth, gridHeight },
-                sm: { gridWidth, gridHeight },
-                xs: { gridWidth, gridHeight },
+                xl: { gridWidth: usedWidth, gridHeight },
+                lg: { gridWidth: usedWidth, gridHeight },
+                md: { gridWidth: usedWidth, gridHeight },
+                sm: { gridWidth: usedWidth, gridHeight },
+                xs: { gridWidth: usedWidth, gridHeight },
             }}
             className={cx("gd-fluidlayout-column", "gd-fluidlayout-column-dropzone", "s-fluid-layout-column")}
             style={{
