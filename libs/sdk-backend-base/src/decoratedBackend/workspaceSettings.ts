@@ -4,13 +4,17 @@ import {
     IWorkspaceSettings,
     IWorkspaceSettingsService,
 } from "@gooddata/sdk-backend-spi";
-import { ISeparators } from "@gooddata/sdk-model";
+import { IAlertDefault, ISeparators } from "@gooddata/sdk-model";
 
 /**
  * @alpha
  */
 export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSettingsService {
     protected constructor(protected decorated: IWorkspaceSettingsService) {}
+
+    async setAlertDefault(value: IAlertDefault): Promise<void> {
+        return this.decorated.setAlertDefault(value);
+    }
 
     async getSettings(): Promise<IWorkspaceSettings> {
         return this.decorated.getSettings();

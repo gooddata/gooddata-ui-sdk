@@ -259,3 +259,6 @@ export type {
 } from "./workspace/automations/index.js";
 
 export type { IOrganizationLlmEndpointsService } from "./organization/llmEndpoints/index.js";
+
+export type { IOrganizationNotificationService } from "./organization/notifications/index.js";
+export type { INotificationsQuery, INotificationsQueryResult } from "./organization/notifications/query.js";

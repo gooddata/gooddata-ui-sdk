@@ -8,6 +8,7 @@ import {
     IOrganizationPermissionService,
     IOrganizationNotificationChannelService,
     IOrganizationLlmEndpointsService,
+    IOrganizationNotificationService,
 } from "@gooddata/sdk-backend-spi";
 import { IOrganizationDescriptor, IOrganizationDescriptorUpdate } from "@gooddata/sdk-model";
 import { DecoratorFactories } from "./types.js";
@@ -63,5 +64,9 @@ export class OrganizationDecorator implements IOrganization {
 
     public llmEndpoints(): IOrganizationLlmEndpointsService {
         return this.decorated.llmEndpoints();
+    }
+
+    public notifications(): IOrganizationNotificationService {
+        return this.decorated.notifications();
     }
 }

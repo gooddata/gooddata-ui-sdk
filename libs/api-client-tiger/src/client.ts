@@ -93,6 +93,9 @@ import {
     AutomationAlertDescriptionStatusEnum,
     AutomationMetricRecord,
     tigerAutomationClientFactory,
+    AutomationNotifications,
+    AutomationNotificationsMeta,
+    AutomationNotificationsMetaTotal,
 } from "./automation.js";
 
 export type {
@@ -149,6 +152,9 @@ export type {
     AutomationAlertEvaluationRow,
     AutomationAlertDescriptionStatusEnum,
     AutomationMetricRecord,
+    AutomationNotifications,
+    AutomationNotificationsMeta,
+    AutomationNotificationsMetaTotal,
 };
 export {
     tigerExecutionClientFactory,
