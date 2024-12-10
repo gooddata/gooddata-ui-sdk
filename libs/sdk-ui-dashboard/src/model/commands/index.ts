@@ -87,6 +87,7 @@ import {
     ResizeWidth,
     RemoveSectionItemByWidgetRef,
     SetScreenSize,
+    ToggleLayoutSectionHeaders,
 } from "./layout.js";
 import { CreateAlert, SaveAlert } from "./alerts.js";
 import {
@@ -260,6 +261,8 @@ export type {
     ResizeWidthPayload,
     SetScreenSize,
     SetScreenSizePayload,
+    ToggleLayoutSectionHeaders,
+    ToggleLayoutSectionHeadersPayload,
 } from "./layout.js";
 export {
     addLayoutSection,
@@ -295,6 +298,7 @@ export {
     resizeWidth,
     resizeNestedLayoutItemWidth,
     setScreenSize,
+    toggleLayoutSectionHeaders,
 } from "./layout.js";
 
 export type { CreateAlert, CreateAlertPayload, SaveAlert, SaveAlertPayload } from "./alerts.js";
@@ -586,5 +590,6 @@ export type DashboardCommands =
     | ApplyFilterView
     | SetFilterViewAsDefault
     | ReloadFilterViews
+    | ToggleLayoutSectionHeaders
     //internal
     | SetScreenSize;

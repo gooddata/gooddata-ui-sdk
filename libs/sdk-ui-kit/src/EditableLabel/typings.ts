@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 
 import React from "react";
 
@@ -28,6 +28,7 @@ export interface IEditableLabelProps {
 export interface IEditableLabelState {
     value: string;
     isEditing: boolean;
+    rootWidth: number;
     textareaWidth: number;
     textareaFontSize?: number;
 }

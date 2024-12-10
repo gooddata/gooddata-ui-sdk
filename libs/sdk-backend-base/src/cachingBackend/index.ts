@@ -77,6 +77,7 @@ import {
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
     ISeparators,
+    IAlertDefault,
 } from "@gooddata/sdk-model";
 import { DecoratedWorkspaceAttributesService } from "../decoratedBackend/attributes.js";
 import { DecoratedWorkspaceSettingsService } from "../decoratedBackend/workspaceSettings.js";
@@ -443,6 +444,10 @@ class WithWorkspaceSettingsCaching extends DecoratedWorkspaceSettingsService {
         }
 
         return userWorkspaceSettings;
+    }
+
+    public async setAlertDefault(value: IAlertDefault): Promise<void> {
+        return super.setAlertDefault(value);
     }
 
     public async setLocale(locale: string): Promise<void> {

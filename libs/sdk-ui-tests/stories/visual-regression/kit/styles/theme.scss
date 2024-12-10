@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 .theme {
     margin-bottom: 90px;
 
@@ -43,7 +43,7 @@
 
     code {
         padding: 2px 4px;
-        border: 1px solid var(--gd-palette-complementary-3, #ccc);
+        border: 1px solid var(--gd-palette-complementary-3-from-theme, #ccc);
         white-space: nowrap;
         background: var(--gd-palette-complementary-0, #fff);
         font-size: 90%;
@@ -57,7 +57,7 @@
     }
 
     > div {
-        color: var(--gd-palette-complementary-5, #a4b2bf);
+        color: var(--gd-palette-complementary-5-from-theme, #a4b2bf);
         font-size: 14px;
     }
 }

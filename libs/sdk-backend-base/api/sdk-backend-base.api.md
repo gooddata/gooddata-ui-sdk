@@ -15,6 +15,7 @@ import { ExplainType } from '@gooddata/sdk-backend-spi';
 import { FilterContextItem } from '@gooddata/sdk-model';
 import { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
 import { GenAIObjectType } from '@gooddata/sdk-model';
+import { IAlertDefault } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { IAnomalyDetectionConfig } from '@gooddata/sdk-backend-spi';
@@ -610,6 +611,8 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     getSettings(): Promise<IWorkspaceSettings>;
     // (undocumented)
     getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings>;
+    // (undocumented)
+    setAlertDefault(value: IAlertDefault): Promise<void>;
     // (undocumented)
     setColorPalette(colorPaletteId: string): Promise<void>;
     // (undocumented)

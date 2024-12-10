@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 @use "sass:color";
 @use "Form/_mixins" as form-mixins;
 @use "Form/_variables" as form-variables;
@@ -35,7 +35,7 @@
 
     @include mixins.placeholder {
         color: var(
-            --gd-palette-complementary-6,
+            --gd-palette-complementary-6-from-theme,
             color.adjust(variables.$default-gd-color-link, $alpha: -0.25)
         );
 
@@ -306,10 +306,10 @@ textarea {
     flex: 0 0 auto;
     @include form-mixins.gd-input-base;
 
-    color: var(--gd-palette-complementary-6, variables.$default-gd-color-disabled);
+    color: var(--gd-palette-complementary-6-from-theme, variables.$default-gd-color-disabled);
     min-width: 30px;
     text-align: center;
-    background-color: var(--gd-palette-complementary-1, variables.$default-gd-color-light);
+    background-color: var(--gd-palette-complementary-1-from-theme, variables.$default-gd-color-light);
 }
 
 .gd-input-prefix {
@@ -376,7 +376,7 @@ textarea {
             ~ .input-label-text::before {
                 box-shadow: none;
                 border-color: var(
-                    --gd-palette-complementary-3,
+                    --gd-palette-complementary-3-from-theme,
                     color.adjust(variables.$default-gd-input-text-border, $alpha: -0.3)
                 );
                 background-color: variables.$gd-color-light;
@@ -520,7 +520,7 @@ textarea {
             content: "";
             position: absolute;
             box-sizing: content-box;
-            background: var(--gd-palette-complementary-0, #f3f6f7);
+            background: var(--gd-palette-complementary-0-from-theme, #f3f6f7);
             cursor: pointer;
             transition: all 0.4s;
         }
@@ -530,7 +530,7 @@ textarea {
             right: 0;
             width: 28px;
             height: 12px;
-            border: 1px solid var(--gd-palette-complementary-4, #c9d5e0);
+            border: 1px solid var(--gd-palette-complementary-4-from-theme, #c9d5e0);
             border-radius: 7px;
         }
 
@@ -555,8 +555,9 @@ textarea {
     &:hover,
     &:active {
         .input-label-text::after {
-            border: 1px solid var(--gd-palette-complementary-5, variables.$default-gd-color-state-blank);
-            background: var(--gd-palette-complementary-3, #d7dfe5);
+            border: 1px solid
+                var(--gd-palette-complementary-5-from-theme, variables.$default-gd-color-state-blank);
+            background: var(--gd-palette-complementary-3-from-theme, #d7dfe5);
         }
 
         input:checked ~ .input-label-text::after {
@@ -574,7 +575,7 @@ textarea {
                 box-shadow: none;
                 cursor: default;
                 border-color: var(
-                    --gd-palette-complementary-3,
+                    --gd-palette-complementary-3-from-theme,
                     color.adjust(variables.$default-gd-input-text-border, $alpha: -0.5)
                 );
                 background-color: variables.$gd-color-light;

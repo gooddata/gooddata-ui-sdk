@@ -19,10 +19,10 @@ import {
     isVisualizationSwitcherWidget,
     IVisualizationSwitcherWidget,
     isDashboardLayout,
-    IDashboardWidget,
     ScreenSize,
     IDashboardLayoutItem,
     IDashboardLayoutSizeByScreenSize,
+    IDashboardLayout,
 } from "@gooddata/sdk-model";
 import {
     fluidLayoutDescriptor,
@@ -38,6 +38,7 @@ import {
     RICH_TEXT_WIDGET_SIZE_INFO_NEW_DEFAULT,
     VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_NEW_DEFAULT,
     DASHBOARD_LAYOUT_WIDGET_SIZE_INFO_DEFAULT,
+    MIN_VISUALIZATION_WIDTH,
 } from "@gooddata/sdk-ui-ext";
 
 import { ObjRefMap } from "../metadata/objRefMap.js";
@@ -46,10 +47,12 @@ import {
     KPI_WITH_COMPARISON_SIZE_INFO,
     GRID_ROW_HEIGHT_IN_PX,
 } from "./constants.js";
-import { ExtendedDashboardWidget } from "../../model/types/layoutTypes.js";
+import { ExtendedDashboardWidget, isCustomWidget } from "../../model/types/layoutTypes.js";
 
 import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../dashboard/flexibleLayout/config.js";
 import { invariant } from "ts-invariant";
+import { findItem, hasParent } from "./coordinates.js";
+import { ILayoutItemPath } from "../../types.js";
 
 /**
  * @internal
@@ -257,22 +260,19 @@ function getVisSwitcherHeightWidth(
     return result;
 }
 
-function getCurrentWidth(
-    item: IDashboardLayoutItem<IDashboardWidget>,
-    screen: ScreenSize,
-): number | undefined {
-    return determineWidthForScreen(screen, item.size);
-}
-
 /**
  * @internal
  */
 export function getMinWidth(
-    widget: IDashboardWidget,
+    widget: ExtendedDashboardWidget,
     insightMap: ObjRefMap<IInsight>,
     screen: ScreenSize,
+    settings: ISettings = { enableKDWidgetCustomHeight: true },
 ): number {
     let widgetContent: MeasurableWidgetContent | undefined;
+    if (isCustomWidget(widget)) {
+        return MIN_VISUALIZATION_WIDTH;
+    }
     if (isKpiWidget(widget)) {
         widgetContent = widget.kpi;
     } else if (isInsightWidget(widget)) {
@@ -287,16 +287,13 @@ export function getMinWidth(
             ),
         );
     } else if (isDashboardLayout(widget)) {
-        const emptyLayoutMinWidth = getDashboardLayoutWidgetMinGridWidth(
-            { enableKDWidgetCustomHeight: true },
-            widget.type,
-        );
+        const emptyLayoutMinWidth = getDashboardLayoutWidgetMinGridWidth(settings, widget.type);
 
         return widget.sections.reduce((acc, section) => {
             return Math.max(
                 acc,
                 section.items.reduce((acc, item) => {
-                    return Math.max(acc, getCurrentWidth(item, screen) ?? emptyLayoutMinWidth);
+                    return Math.max(acc, determineWidthForScreen(screen, item.size) ?? emptyLayoutMinWidth);
                 }, emptyLayoutMinWidth),
             );
         }, emptyLayoutMinWidth);
@@ -306,11 +303,55 @@ export function getMinWidth(
         ? getWidgetType(widget)
         : widget.type;
 
-    return getDashboardLayoutWidgetMinGridWidth(
-        { enableKDWidgetCustomHeight: true },
-        widgetType,
-        widgetContent,
-    );
+    return getDashboardLayoutWidgetMinGridWidth(settings, widgetType, widgetContent);
+}
+
+export function normalizeItemSizeToParent(
+    itemToCheck: IDashboardLayoutItem<ExtendedDashboardWidget>,
+    itemPath: ILayoutItemPath | undefined,
+    layout: IDashboardLayout<ExtendedDashboardWidget>,
+    settings: ISettings,
+    insightsMap: ObjRefMap<IInsight>,
+    screen: ScreenSize = "xl",
+): {
+    item: IDashboardLayoutItem<ExtendedDashboardWidget>;
+    sizeChanged: boolean;
+} {
+    if (itemPath && hasParent(itemPath) && itemToCheck.widget) {
+        const widget = itemToCheck.widget;
+
+        const minWidth = getMinWidth(widget, insightsMap, screen, settings);
+        const parent = findItem(layout, itemPath.slice(0, -1));
+        const newSize = normalizeSizeToParent(itemToCheck.size, minWidth, parent, screen);
+        const sizeChanged = newSize.xl.gridWidth !== itemToCheck.size.xl.gridWidth;
+
+        const item = {
+            ...itemToCheck,
+            size: newSize,
+        };
+
+        return {
+            item,
+            sizeChanged,
+        };
+    }
+    return { item: itemToCheck, sizeChanged: false };
+}
+
+function normalizeSizeToParent(
+    itemSize: IDashboardLayoutSizeByScreenSize,
+    itemMinWidth: number,
+    parent: IDashboardLayoutItem<ExtendedDashboardWidget>,
+    screen: ScreenSize = "xl",
+): IDashboardLayoutSizeByScreenSize {
+    const width = determineWidthForScreen(screen, itemSize);
+    const parentWidth = determineWidthForScreen(screen, parent.size);
+    return {
+        xl: {
+            gridHeight: itemSize.xl.gridHeight, // keep height untouched as container can be extended freely in this direction
+            gridWidth: width <= parentWidth ? width : itemMinWidth,
+        },
+    };
 }
 
 /**

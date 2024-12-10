@@ -880,6 +880,12 @@ export interface ChatHistoryInteraction {
      */
     textResponse?: string;
     /**
+     * Error response in anything fails.
+     * @type {string}
+     * @memberof ChatHistoryInteraction
+     */
+    errorResponse?: string;
+    /**
      *
      * @type {FoundObjects}
      * @memberof ChatHistoryInteraction
@@ -1047,6 +1053,12 @@ export interface ChatResult {
      * @memberof ChatResult
      */
     textResponse?: string;
+    /**
+     * Error response in anything fails.
+     * @type {string}
+     * @memberof ChatResult
+     */
+    errorResponse?: string;
     /**
      *
      * @type {FoundObjects}

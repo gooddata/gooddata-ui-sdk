@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 @use "sass:list";
 @use "sass:map";
 @use "variables";
@@ -22,7 +22,7 @@
 }
 
 @mixin gd-heading-base {
-    color: variables.$gd-color-dark;
+    color: variables.$gd-color-text;
 
     @include gd-font-base;
 }
@@ -46,7 +46,7 @@
 
 @mixin gd-heading-3 {
     @include gd-heading-base;
-    @include gd-font-regular;
+    @include gd-font-bold;
 
     line-height: list.nth(map.get(variables.$gd-typo, heading-line-heights), 3);
     font-size: list.nth(map.get(variables.$gd-typo, font-sizes), 3);

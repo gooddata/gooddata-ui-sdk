@@ -132,7 +132,10 @@ export type VisualizationSwitcherInteractionType =
 /**
  * @beta
  */
-export type NestedLayoutInteractionType = "nestedLayoutRemoved";
+export type NestedLayoutInteractionType =
+    | "nestedLayoutRemoved"
+    | "nestedLayoutHeaderEnabled"
+    | "nestedLayoutHeaderDisabled";
 
 /**
  * @alpha

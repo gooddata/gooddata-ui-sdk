@@ -20,6 +20,7 @@ provideCreateRoot(createRoot);
 
 const rootDOMNode = document.createElement("div");
 rootDOMNode.className = "root";
+rootDOMNode.style.height = "100%";
 document.body.appendChild(rootDOMNode);
 
 const root = createRoot(rootDOMNode);

@@ -1,7 +1,8 @@
 // (C) 2021-2024 GoodData Corporation
 
-import { IIconProps } from "./typings.js";
+import React from "react";
 
+import { IIconProps } from "./typings.js";
 import { Book } from "./icons/Book.js";
 import { Lock } from "./icons/Lock.js";
 import { Refresh } from "./icons/Refresh.js";
@@ -106,6 +107,7 @@ import { Container } from "./icons/Container.js";
 import { ThumbsUp } from "./icons/ThumbsUp.js";
 import { ThumbsDown } from "./icons/ThumbsDown.js";
 import { SmallDragHandle } from "./icons/SmallDragHandle.js";
+import { Header } from "./icons/Header.js";
 
 /**
  * @internal
@@ -211,10 +213,11 @@ export const Icon: Record<string, React.FC<IIconProps>> = {
     Search,
     NewVisualization,
     ChatBubble,
-    Section: Container,
+    Container,
     ThumbsUp,
     ThumbsDown,
     SmallDragHandle,
+    Header,
 };
 
 export type { IRowsIconProps, IColumnsIconProps };

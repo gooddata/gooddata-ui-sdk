@@ -1,12 +1,17 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 
 /**
  * @internal
  */
+export type TypographyTagName = "h1" | "h2" | "h3" | "p";
+
+/**
+ * @internal
+ */
 export interface ITypographyProps {
-    tagName: "h1" | "h2" | "h3" | "p";
+    tagName: TypographyTagName;
     children: React.ReactNode;
     className?: string;
     onClick?: (e: React.MouseEvent) => void;

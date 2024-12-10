@@ -45,9 +45,9 @@
         "build-storybook": "npm run build && sb build -c .storybook -o dist-storybook --quiet",
         "storybook-serve": "bash stories/serve-storybook.sh",
         "backstop-prepare": "npm run build-storybook && npm run story-extractor",
-        "backstop-test": "npm run backstop-prepare && bash backstop/run-backstop.sh test",
-        "backstop-approve": "bash backstop/run-backstop.sh approve",
-        "backstop-reference": "npm run backstop-prepare && bash backstop/run-backstop.sh reference"
+        "backstop-test": "npm run backstop-prepare && bash backstop/run-backstop-compose.sh test",
+        "backstop-approve": "bash backstop/run-backstop-compose.sh approve",
+        "backstop-reference": "npm run backstop-prepare && bash backstop/run-backstop-compose.sh reference"
     },
     "peerDependencies": {
         "@gooddata/sdk-ui": "workspace:*",

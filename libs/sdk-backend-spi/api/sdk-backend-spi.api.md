@@ -75,6 +75,7 @@ import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureMetadataObject } from '@gooddata/sdk-model';
 import { IMeasureMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { IMetadataObject } from '@gooddata/sdk-model';
+import { INotification } from '@gooddata/sdk-model';
 import { INotificationChannelMetadataObject } from '@gooddata/sdk-model';
 import { INotificationChannelMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { INotificationChannelTestResponse } from '@gooddata/sdk-model';
@@ -759,6 +760,8 @@ export interface IGenAIChatEvaluation {
     // (undocumented)
     createdVisualizations?: IGenAICreatedVisualizations;
     // (undocumented)
+    errorResponse?: string;
+    // (undocumented)
     foundObjects?: IGenAIFoundObjects;
     // (undocumented)
     routing?: IGenAIChatRouting;
@@ -883,6 +886,18 @@ export interface INotificationChannelsQuery {
 // @beta
 export type INotificationChannelsQueryResult = IPagedResource<INotificationChannelMetadataObject>;
 
+// @beta
+export interface INotificationsQuery {
+    query(): Promise<INotificationsQueryResult>;
+    queryAll(): Promise<INotification[]>;
+    withPage(page: number): INotificationsQuery;
+    withSize(size: number): INotificationsQuery;
+    withWorkspace(workspaceId: string): INotificationsQuery;
+}
+
+// @beta
+export type INotificationsQueryResult = IPagedResource<INotification>;
+
 // @public
 export type InsightOrdering = "id" | "title" | "updated";
 
@@ -902,6 +917,7 @@ export interface IOrganization {
     getDescriptor(includeAdditionalDetails?: boolean): Promise<IOrganizationDescriptor>;
     llmEndpoints(): IOrganizationLlmEndpointsService;
     notificationChannels(): IOrganizationNotificationChannelService;
+    notifications(): IOrganizationNotificationService;
     readonly organizationId: string;
     permissions(): IOrganizationPermissionService;
     securitySettings(): ISecuritySettingsService;
@@ -932,6 +948,13 @@ export interface IOrganizationNotificationChannelService {
     getNotificationChannelsQuery(): INotificationChannelsQuery;
     testNotificationChannel(channel: INotificationChannelMetadataObjectDefinition): Promise<INotificationChannelTestResponse>;
     updateNotificationChannel(notificationChannel: INotificationChannelMetadataObject): Promise<INotificationChannelMetadataObject>;
+}
+
+// @beta
+export interface IOrganizationNotificationService {
+    getNotificationsQuery(): INotificationsQuery;
+    markAllNotificationsAsRead(): Promise<void>;
+    markNotificationAsRead(notificationId: string): Promise<void>;
 }
 
 // @alpha
@@ -1455,6 +1478,7 @@ export interface IWorkspaceSettingsService {
     deleteTheme(): Promise<void>;
     getSettings(): Promise<IWorkspaceSettings>;
     getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings>;
+    setAlertDefault(value: IAlertDefault): Promise<void>;
     setColorPalette(colorPaletteId: string): Promise<void>;
     setDateFormat(dateFormat: string): Promise<void>;
     setLocale(locale: string): Promise<void>;

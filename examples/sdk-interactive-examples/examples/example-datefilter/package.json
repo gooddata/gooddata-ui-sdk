@@ -3,7 +3,7 @@
     "version": "10.17.0-alpha.17",
     "title": "DateFilter",
     "description": "Example demonstrates usage of Date Filter component.",
-    "author": "GoodData Corporation",
+    "author": "GoodData",
     "private": false,
     "license": "LicenseRef-LICENSE",
     "type": "module",

@@ -6,7 +6,7 @@ import isEmpty from "lodash/isEmpty.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { AddSectionItems } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { selectLayout, selectStash } from "../../store/layout/layoutSelectors.js";
+import { selectLayout, selectScreen, selectStash } from "../../store/layout/layoutSelectors.js";
 import { ExtendedDashboardLayoutSection, InternalDashboardItemDefinition } from "../../types/layoutTypes.js";
 import { layoutActions } from "../../store/layout/index.js";
 import { DashboardLayoutSectionItemsAdded, layoutSectionItemsAdded } from "../../events/layout.js";
@@ -29,6 +29,8 @@ import {
     validateAndNormalizeWidgetItems,
     validateAndResolveItemFilterSettings,
 } from "./validation/itemValidation.js";
+import { selectSettings } from "../../store/config/configSelectors.js";
+import { normalizeItemSizeToParent } from "../../../_staging/layout/sizing.js";
 
 type AddSectionItemsContext = {
     readonly ctx: DashboardContext;
@@ -162,12 +164,28 @@ export function* addSectionItemsHandler(
         autoResolveDateFilterDataset,
     );
 
+    const layoutPath = itemPath === undefined ? [{ sectionIndex, itemIndex }] : itemPath;
+    const settings = yield select(selectSettings);
+    const screen: SagaReturnType<typeof selectScreen> = yield select(selectScreen);
+
+    const itemsWithNormalizedSize = itemsToAdd.map((item) => {
+        const { item: itemWithNormalizedSize } = normalizeItemSizeToParent(
+            item,
+            layoutPath,
+            commandCtx.layout,
+            settings,
+            normalizationResult.resolvedInsights.resolved,
+            screen,
+        );
+        return itemWithNormalizedSize;
+    });
+
     yield put(
         batchActions([
             insightsActions.addInsights(normalizationResult.resolvedInsights.loaded),
             layoutActions.addSectionItems({
-                layoutPath: itemPath === undefined ? [{ sectionIndex, itemIndex }] : itemPath,
-                items: itemsToAdd,
+                layoutPath,
+                items: itemsWithNormalizedSize,
                 usedStashes: stashValidationResult.existing,
                 undo: {
                     cmd,
@@ -188,7 +206,7 @@ export function* addSectionItemsHandler(
         sectionIndex === undefined ? getSectionIndex(updatedLayoutPath) : sectionIndex,
         newItemIndex,
         updatedLayoutPath,
-        stashValidationResult.resolved,
+        itemsWithNormalizedSize,
         stashValidationResult.existing,
         cmd.correlationId,
     );

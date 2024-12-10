@@ -13,6 +13,7 @@ const BASE_PROPERTIES = [
     "disableDrillDown",
     "disableAlerts",
     "disableScheduledExports",
+    "chartConfigOverride",
 ];
 
 const FORECAST_PROPERTIES = ["forecast"];
@@ -215,6 +216,7 @@ export const SCATTERPLOT_SUPPORTED_PROPERTIES = [
     "clustering.enabled",
     "clustering.numberOfClusters",
     "clustering.threshold",
+    "chartConfigOverride",
 ];
 
 export const PIECHART_SUPPORTED_PROPERTIES = [
@@ -225,6 +227,7 @@ export const PIECHART_SUPPORTED_PROPERTIES = [
     "disableDrillDown",
     "disableAlerts",
     "disableScheduledExports",
+    "chartConfigOverride",
 ];
 
 export const FUNNELCHART_SUPPORTED_PROPERTIES = [
@@ -236,6 +239,7 @@ export const FUNNELCHART_SUPPORTED_PROPERTIES = [
     "disableDrillDown",
     "disableAlerts",
     "disableScheduledExports",
+    "chartConfigOverride",
 ];
 
 export const TREEMAP_SUPPORTED_PROPERTIES = [
@@ -246,6 +250,7 @@ export const TREEMAP_SUPPORTED_PROPERTIES = [
     "disableDrillDown",
     "disableAlerts",
     "disableScheduledExports",
+    "chartConfigOverride",
 ];
 
 export const HEATMAP_SUPPORTED_PROPERTIES = [
@@ -267,6 +272,7 @@ export const HEATMAP_SUPPORTED_PROPERTIES = [
     "disableDrillDown",
     "disableAlerts",
     "disableScheduledExports",
+    "chartConfigOverride",
 ];
 
 export const BULLET_CHART_SUPPORTED_PROPERTIES = [
@@ -292,6 +298,7 @@ export const BULLET_CHART_SUPPORTED_PROPERTIES = [
     "disableDrillDown",
     "disableAlerts",
     "disableScheduledExports",
+    "chartConfigOverride",
 ];
 
 export const GEOPUSHPIN_SUPPORTED_PROPERTIES = [
@@ -306,6 +313,7 @@ export const GEOPUSHPIN_SUPPORTED_PROPERTIES = [
     "colorMapping",
     "disableAlerts",
     "disableScheduledExports",
+    "chartConfigOverride",
 ];
 
 export const PIVOT_TABLE_SUPPORTED_PROPERTIES = [
@@ -315,6 +323,7 @@ export const PIVOT_TABLE_SUPPORTED_PROPERTIES = [
     "disableDrillDown",
     "disableAlerts",
     "disableScheduledExports",
+    "chartConfigOverride",
 ];
 
 export const SANKEY_CHART_SUPPORTED_PROPERTIES = [
@@ -324,6 +333,7 @@ export const SANKEY_CHART_SUPPORTED_PROPERTIES = [
     "disableDrillDown",
     "disableAlerts",
     "disableScheduledExports",
+    "chartConfigOverride",
 ];
 
 const WATERFALL_PRIMARY_X_AXIS_PROPERTIES = [
@@ -331,6 +341,7 @@ const WATERFALL_PRIMARY_X_AXIS_PROPERTIES = [
     "xaxis.min",
     "xaxis.max",
     "xaxis.format",
+    "chartConfigOverride",
 ];
 
 export const WATERFALL_CHART_SUPPORTED_PROPERTIES = [

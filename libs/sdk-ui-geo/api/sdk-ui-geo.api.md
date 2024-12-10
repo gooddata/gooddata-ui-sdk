@@ -4,7 +4,6 @@
 
 ```ts
 
-/// <reference types="mapbox-gl" />
 /// <reference types="react" />
 
 import { AttributeMeasureOrPlaceholder } from '@gooddata/sdk-ui';

@@ -176,7 +176,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
         css.push(`.${guid} .gd-header-menu-section { border-color: ${separatorColor}}`);
         css.push(`.${guid} .gd-header-menu-item:hover { border-color: ${itemHoverColor}}`);
         css.push(
-            `.${guid} .gd-header-menu-item.active { border-color: var(--gd-palette-primary-base, ${itemActiveColor})}`,
+            `.${guid} .gd-header-menu-item.active { border-color: var(--gd-palette-primary-base-from-theme, ${itemActiveColor})}`,
         );
         css.push(`.${guid} .gd-header-project { border-color: ${separatorColor}}`);
         css.push(

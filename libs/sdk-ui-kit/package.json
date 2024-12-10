@@ -30,6 +30,7 @@
         "esm/**/*.d.ts",
         "esm/**/*.map",
         "esm/**/*.svg",
+        "src/**/*.scss",
         "styles"
     ],
     "scripts": {
@@ -42,16 +43,19 @@
         "eslint": "eslint -c .eslintrc.cjs src/",
         "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
         "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs src/",
+        "generate-theme": "node scripts/generateDefaultThemeScss.js && prettier --write ./src/@ui/defaultTheme.scss",
         "prettier-check": "prettier --check '{src,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "prettier-write": "prettier --write '{src,styles,__mocks__}/**/*.{ts,tsx,json,scss,md,yaml,html}'",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "stylelint": "stylelint '**/*.scss'",
         "stylelint-ci": "stylelint '**/*.scss' --custom-formatter=node_modules/stylelint-checkstyle-formatter > ./ci/results/stylelint-results.xml",
-        "validate": "npm run dep-cruiser && npm run eslint && npm run stylelint && npm run validate-locales && npm run prettier-check",
-        "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run stylelint-ci && npm run validate-locales-ci && npm run prettier-check",
+        "validate": "npm run dep-cruiser && npm run eslint && npm run stylelint && npm run validate-locales && npm run prettier-check && npm run validate-theming",
+        "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run stylelint-ci && npm run validate-locales-ci && npm run prettier-check && npm run validate-theming",
         "validate-locales": "cd ../sdk-ui && npm run validate-locales",
-        "validate-locales-ci": "cd ../sdk-ui && npm run validate-locales-ci"
+        "validate-locales-ci": "cd ../sdk-ui && npm run validate-locales-ci",
+        "validate-theming": "npm run scss && node scripts/validateCss.js",
+        "scss": "sass --load-path=node_modules --load-path=node_modules/fixed-data-table-2/dist --load-path=node_modules/codemirror/lib styles/scss:styles/css"
     },
     "dependencies": {
         "@aaronhayes/react-use-hubspot-form": "^2.0.1",

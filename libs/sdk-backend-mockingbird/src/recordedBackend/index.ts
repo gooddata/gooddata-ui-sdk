@@ -53,6 +53,7 @@ import {
     IGenAIService,
     IChatThread,
     IOrganizationLlmEndpointsService,
+    IOrganizationNotificationService,
 } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
@@ -235,6 +236,9 @@ function recordedWorkspace(
                         separators,
                         ...(implConfig.globalSettings ?? {}),
                     };
+                },
+                async setAlertDefault(): Promise<void> {
+                    return Promise.resolve();
                 },
                 async setLocale(): Promise<void> {
                     return Promise.resolve();
@@ -466,6 +470,15 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 updateNotificationChannel: () => Promise.resolve({} as INotificationChannelMetadataObject),
                 deleteNotificationChannel: () => Promise.resolve(),
                 getNotificationChannelsQuery: () => {
+                    throw new NotSupported("not supported");
+                },
+            };
+        },
+        notifications(): IOrganizationNotificationService {
+            return {
+                markNotificationAsRead: () => Promise.reject(new NotSupported("not supported")),
+                markAllNotificationsAsRead: () => Promise.reject(new NotSupported("not supported")),
+                getNotificationsQuery: () => {
                     throw new NotSupported("not supported");
                 },
             };

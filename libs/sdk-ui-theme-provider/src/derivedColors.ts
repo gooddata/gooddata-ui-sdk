@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { transparentize, darken, lighten, mix, setLightness } from "polished";
 import { ThemeColor, IThemePalette } from "@gooddata/sdk-model";
 import { CssProperty, getCssProperty } from "./cssProperty.js";
@@ -235,6 +235,26 @@ const getComplementaryPaletteDerivedColors = (palette: IThemePalette) => [
     getCssProperty(
         "palette-complementary-0-t10",
         palette?.complementary?.c0 && transparentize(0.1, palette.complementary.c0),
+    ),
+    getCssProperty(
+        "palette-complementary-5-t40",
+        palette?.complementary?.c5 && transparentize(0.4, palette.complementary.c5),
+    ),
+    getCssProperty(
+        "palette-complementary-9-t50",
+        palette?.complementary?.c9 && transparentize(0.5, palette.complementary.c9),
+    ),
+    getCssProperty(
+        "palette-complementary-9-t80",
+        palette?.complementary?.c9 && transparentize(0.8, palette.complementary.c9),
+    ),
+    getCssProperty(
+        "palette-complementary-9-t85",
+        palette?.complementary?.c9 && transparentize(0.85, palette.complementary.c9),
+    ),
+    getCssProperty(
+        "palette-complementary-9-t90",
+        palette?.complementary?.c9 && transparentize(0.9, palette.complementary.c9),
     ),
 ];
 

@@ -147,6 +147,15 @@ const ScenarioConfig = [
             misMatchThreshold: 0.01,
         },
     },
+    {
+        /*
+         * Tests for new Ui-Kit Components
+         */
+        idRegex: /(15).*/g,
+        config: {
+            readySelector: ".screenshot-target",
+        },
+    },
 ];
 
 // --------------------------------------------------------------------

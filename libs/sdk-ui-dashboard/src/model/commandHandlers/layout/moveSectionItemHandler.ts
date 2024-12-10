@@ -1,12 +1,12 @@
 // (C) 2021-2024 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { batchActions } from "redux-batched-actions";
-import { put, select } from "redux-saga/effects";
+import { SagaReturnType, put, select } from "redux-saga/effects";
 
 import { DashboardContext } from "../../types/commonTypes.js";
 import { MoveSectionItem } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { selectLayout } from "../../store/layout/layoutSelectors.js";
+import { selectLayout, selectScreen } from "../../store/layout/layoutSelectors.js";
 import { layoutActions } from "../../store/layout/index.js";
 import { DashboardLayoutSectionItemMoved, layoutSectionItemMoved } from "../../events/layout.js";
 import { resolveIndexOfNewItem, resolveRelativeIndex } from "../../utils/arrayOps.js";
@@ -28,6 +28,9 @@ import {
     validateSectionExists,
     validateSectionPlacement,
 } from "./validation/layoutValidation.js";
+import { selectSettings } from "../../store/config/configSelectors.js";
+import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
+import { normalizeItemSizeToParent } from "../../../_staging/layout/sizing.js";
 
 type MoveSectionItemContext = {
     readonly ctx: DashboardContext;
@@ -208,6 +211,19 @@ export function* moveSectionItemHandler(
         validateAndResolve(commandCtx);
     const { fromPath, itemIndex, sectionIndex } = cmd.payload;
 
+    const settings = yield select(selectSettings);
+    const insightsMap: SagaReturnType<typeof selectInsightsMap> = yield select(selectInsightsMap);
+    const screen: SagaReturnType<typeof selectScreen> = yield select(selectScreen);
+
+    const { item: itemWithNormalizedSize, sizeChanged: shouldChangeSize } = normalizeItemSizeToParent(
+        itemToMove,
+        targetIndex,
+        commandCtx.layout,
+        settings,
+        insightsMap,
+        screen,
+    );
+
     yield put(
         batchActions([
             layoutActions.moveSectionItem({
@@ -233,6 +249,17 @@ export function* moveSectionItemHandler(
                       }),
                   ]
                 : []),
+            ...(shouldChangeSize
+                ? [
+                      layoutActions.changeItemWidth({
+                          layoutPath:
+                              targetIndex === undefined
+                                  ? [{ sectionIndex: targetSectionIndex, itemIndex: targetItemIndex }]
+                                  : targetIndex,
+                          width: itemWithNormalizedSize.size.xl.gridWidth,
+                      }),
+                  ]
+                : []),
         ]),
     );
 
@@ -245,7 +272,7 @@ export function* moveSectionItemHandler(
 
     return layoutSectionItemMoved(
         ctx,
-        itemToMove,
+        itemWithNormalizedSize,
         fromPath === undefined ? sectionIndex : getSectionIndex(fromPath),
         targetSectionIndexUpdated,
         fromPath === undefined ? itemIndex : getItemIndex(fromPath),
