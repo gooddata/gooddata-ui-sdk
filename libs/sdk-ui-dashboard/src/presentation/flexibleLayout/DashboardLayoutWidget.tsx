@@ -34,6 +34,7 @@ import {
 } from "../../model/index.js";
 import { isAnyPlaceholderWidget, isPlaceholderWidget } from "../../widgets/index.js";
 import { getSizeInfo, calculateWidgetMinHeight } from "../../_staging/layout/sizing.js";
+import { getRemainingWidthInRow } from "./rowEndHotspotHelper.js";
 import { ObjRefMap } from "../../_staging/metadata/objRefMap.js";
 import { useDashboardComponentsContext } from "../dashboardContexts/index.js";
 import {
@@ -58,6 +59,7 @@ import { WidthResizerHotspot } from "./dragAndDrop/Resize/WidthResizerHotspot.js
 import { Hotspot } from "./dragAndDrop/draggableWidget/Hotspot.js";
 import { useWidgetDragEndHandler } from "../dragAndDrop/draggableWidget/useWidgetDragEndHandler.js";
 import { DashboardItemPathAndSizeProvider } from "../dashboard/components/DashboardItemPathAndSizeContext.js";
+import { shouldShowRowEndDropZone } from "./dragAndDrop/draggableWidget/RowEndHotspot.js";
 
 /**
  * Tests in KD require widget index for css selectors.
@@ -184,6 +186,8 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
         "gd-nested-layout-hotspot": isNestedLayout,
     });
 
+    const remainingGridWidth = isCustomWidget(widget) ? 0 : getRemainingWidthInRow(item, screen);
+
     return (
         <DefaultWidgetRenderer
             DefaultWidgetRenderer={DefaultWidgetRenderer}
@@ -244,6 +248,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                                     layoutPath={item.index()}
                                     isLastInSection={item.isLast()}
                                     classNames={hotspotClassNames}
+                                    hideBorder={item.isLast() && shouldShowRowEndDropZone(remainingGridWidth)}
                                 />
                             </>
                         )}

@@ -820,5 +820,21 @@
 
     .gd-fluidlayout-column-row-end-hotspot {
         min-height: unset;
+        .widget-dropzone-box {
+            padding: 10px 0;
+        }
+        .drag-info-placeholder-inner {
+            padding: 0;
+        }
+        .drag-info-placeholder-drop-target,
+        .drop-target-inner {
+            position: unset;
+            height: 100%;
+        }
+    }
+    .gd-fluidlayout-column-row-end-hotspot.gd-fluidlayout-column-dropzone__text--hidden {
+        .drop-target-message.kpi-drop-target {
+            display: none;
+        }
     }
 }
