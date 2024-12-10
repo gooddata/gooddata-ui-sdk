@@ -2243,6 +2243,7 @@ export interface ILlmEndpointBase {
     description?: string;
     id: string;
     title: string;
+    workspaceIds: string[];
 }
 
 // @alpha
@@ -4589,7 +4590,7 @@ export function newTwoDimensional(dim1Input: DimensionItem[], dim2Input: Dimensi
 export function newVirtualArithmeticMeasure(measuresOrIds: ReadonlyArray<MeasureOrLocalId>, operator: ArithmeticMeasureOperator, modifications?: MeasureModifications<VirtualArithmeticMeasureBuilder>): IMeasure<IVirtualArithmeticMeasureDefinition>;
 
 // @beta
-export type NotificationChannelAllowedRecipients = "creator" | "internal";
+export type NotificationChannelAllowedRecipients = "creator" | "internal" | "external";
 
 // @beta
 export type NotificationChannelDestinationType = "webhook" | "smtp" | "inPlatform";

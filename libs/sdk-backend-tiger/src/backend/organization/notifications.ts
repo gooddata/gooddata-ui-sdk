@@ -32,7 +32,7 @@ export class OrganizationNotificationService implements IOrganizationNotificatio
      */
     public markAllNotificationsAsRead(): Promise<void> {
         return this.authCall(async (client: ITigerClient) => {
-            await client.automation.markAsReadNotificationAll();
+            await client.automation.markAsReadNotificationAll({});
         });
     }
 

@@ -47,6 +47,18 @@
                 "summary": "Mark all notifications as read.",
                 "description": "Mark all user in-platform notifications as read.",
                 "operationId": "markAsReadNotificationAll",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "query",
+                        "description": "Workspace ID where to mark notifications as read.",
+                        "required": false,
+                        "style": "form",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
                 "responses": {
                     "204": {
                         "description": "No Content"
@@ -168,6 +180,16 @@
                         "style": "form",
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    {
+                        "name": "isRead",
+                        "in": "query",
+                        "description": "Filter notifications by read status.",
+                        "required": false,
+                        "style": "form",
+                        "schema": {
+                            "type": "boolean"
                         }
                     },
                     {
@@ -447,6 +469,10 @@
                     "upperThreshold": {
                         "type": "number",
                         "format": "double"
+                    },
+                    "remainingAlertEvaluationCount": {
+                        "type": "integer",
+                        "format": "int32"
                     },
                     "status": {
                         "type": "string",

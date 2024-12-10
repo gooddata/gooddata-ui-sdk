@@ -18,6 +18,10 @@ export interface ILlmEndpointBase {
      * Endpoint description
      */
     description?: string;
+    /**
+     * A list of workspace identifier this endpoint should be used for
+     */
+    workspaceIds: string[];
 }
 
 /**
