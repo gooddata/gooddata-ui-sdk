@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 /* eslint-disable sonarjs/cognitive-complexity */
 
 import { spawn, execSync } from "child_process";
@@ -97,22 +97,10 @@ export function runCypress(configParams = {}) {
         args.push("--browser", browser);
     }
 
-    const { CURRENTS_PROJECT_ID, CURRENTS_CI_BUILD_ID, RUN_PARALLEL } = process.env;
-
     let cypressCommand = "cypress";
 
-    if (RUN_PARALLEL === "true") {
-        console.log("Going to run paralle test");
-        args.push("--record");
-        args.push("--parallel");
-        args.push("--ci-build-id", CURRENTS_CI_BUILD_ID);
-        cypressCommand = "currents";
-    }
-
     if (config) {
-        args.push("--config", config + (CURRENTS_PROJECT_ID ? `,projectId=${CURRENTS_PROJECT_ID}` : ""));
-    } else if (CURRENTS_PROJECT_ID) {
-        args.push("--config", `projectId=${CURRENTS_PROJECT_ID}`);
+        args.push("--config", config);
     }
 
     if (deleteCypressResults) {
