@@ -98,6 +98,12 @@ export interface AlertDescription {
     upperThreshold?: number;
     /**
      *
+     * @type {number}
+     * @memberof AlertDescription
+     */
+    remainingAlertEvaluationCount?: number;
+    /**
+     *
      * @type {string}
      * @memberof AlertDescription
      */
@@ -717,6 +723,7 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
          * Get latest in-platform notifications for the current user.
          * @summary Get latest notifications.
          * @param {string} [workspaceId] Workspace ID to filter notifications by.
+         * @param {boolean} [isRead] Filter notifications by read status.
          * @param {string} [page] Zero-based page index (0..N)
          * @param {string} [size] The size of the page to be returned.
          * @param {Array<'total' | 'ALL'>} [metaInclude] Additional meta information to include in the response.
@@ -725,6 +732,7 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
          */
         getNotifications: async (
             workspaceId?: string,
+            isRead?: boolean,
             page?: string,
             size?: string,
             metaInclude?: Array<"total" | "ALL">,
@@ -743,6 +751,10 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
 
             if (workspaceId !== undefined) {
                 localVarQueryParameter["workspaceId"] = workspaceId;
+            }
+
+            if (isRead !== undefined) {
+                localVarQueryParameter["isRead"] = isRead;
             }
 
             if (page !== undefined) {
@@ -813,10 +825,14 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Mark all user in-platform notifications as read.
          * @summary Mark all notifications as read.
+         * @param {string} [workspaceId] Workspace ID where to mark notifications as read.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        markAsReadNotificationAll: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        markAsReadNotificationAll: async (
+            workspaceId?: string,
+            options: AxiosRequestConfig = {},
+        ): Promise<RequestArgs> => {
             const localVarPath = `/api/v1/actions/notifications/markAsRead`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -827,6 +843,10 @@ export const ActionsApiAxiosParamCreator = function (configuration?: Configurati
             const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+
+            if (workspaceId !== undefined) {
+                localVarQueryParameter["workspaceId"] = workspaceId;
+            }
 
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
@@ -954,6 +974,7 @@ export const ActionsApiFp = function (configuration?: Configuration) {
          * Get latest in-platform notifications for the current user.
          * @summary Get latest notifications.
          * @param {string} [workspaceId] Workspace ID to filter notifications by.
+         * @param {boolean} [isRead] Filter notifications by read status.
          * @param {string} [page] Zero-based page index (0..N)
          * @param {string} [size] The size of the page to be returned.
          * @param {Array<'total' | 'ALL'>} [metaInclude] Additional meta information to include in the response.
@@ -962,6 +983,7 @@ export const ActionsApiFp = function (configuration?: Configuration) {
          */
         async getNotifications(
             workspaceId?: string,
+            isRead?: boolean,
             page?: string,
             size?: string,
             metaInclude?: Array<"total" | "ALL">,
@@ -969,6 +991,7 @@ export const ActionsApiFp = function (configuration?: Configuration) {
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Notifications>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getNotifications(
                 workspaceId,
+                isRead,
                 page,
                 size,
                 metaInclude,
@@ -996,13 +1019,18 @@ export const ActionsApiFp = function (configuration?: Configuration) {
         /**
          * Mark all user in-platform notifications as read.
          * @summary Mark all notifications as read.
+         * @param {string} [workspaceId] Workspace ID where to mark notifications as read.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async markAsReadNotificationAll(
+            workspaceId?: string,
             options?: AxiosRequestConfig,
         ): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.markAsReadNotificationAll(options);
+            const localVarAxiosArgs = await localVarAxiosParamCreator.markAsReadNotificationAll(
+                workspaceId,
+                options,
+            );
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1070,6 +1098,7 @@ export const ActionsApiFactory = function (
             return localVarFp
                 .getNotifications(
                     requestParameters.workspaceId,
+                    requestParameters.isRead,
                     requestParameters.page,
                     requestParameters.size,
                     requestParameters.metaInclude,
@@ -1095,11 +1124,17 @@ export const ActionsApiFactory = function (
         /**
          * Mark all user in-platform notifications as read.
          * @summary Mark all notifications as read.
+         * @param {ActionsApiMarkAsReadNotificationAllRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        markAsReadNotificationAll(options?: AxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.markAsReadNotificationAll(options).then((request) => request(axios, basePath));
+        markAsReadNotificationAll(
+            requestParameters: ActionsApiMarkAsReadNotificationAllRequest,
+            options?: AxiosRequestConfig,
+        ): AxiosPromise<void> {
+            return localVarFp
+                .markAsReadNotificationAll(requestParameters.workspaceId, options)
+                .then((request) => request(axios, basePath));
         },
         /**
          * Tests the existing notification channel by sending a test notification.
@@ -1173,11 +1208,15 @@ export interface ActionsApiInterface {
     /**
      * Mark all user in-platform notifications as read.
      * @summary Mark all notifications as read.
+     * @param {ActionsApiMarkAsReadNotificationAllRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ActionsApiInterface
      */
-    markAsReadNotificationAll(options?: AxiosRequestConfig): AxiosPromise<void>;
+    markAsReadNotificationAll(
+        requestParameters: ActionsApiMarkAsReadNotificationAllRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<void>;
 
     /**
      * Tests the existing notification channel by sending a test notification.
@@ -1220,6 +1259,13 @@ export interface ActionsApiGetNotificationsRequest {
     readonly workspaceId?: string;
 
     /**
+     * Filter notifications by read status.
+     * @type {boolean}
+     * @memberof ActionsApiGetNotifications
+     */
+    readonly isRead?: boolean;
+
+    /**
      * Zero-based page index (0..N)
      * @type {string}
      * @memberof ActionsApiGetNotifications
@@ -1253,6 +1299,20 @@ export interface ActionsApiMarkAsReadNotificationRequest {
      * @memberof ActionsApiMarkAsReadNotification
      */
     readonly notificationId: string;
+}
+
+/**
+ * Request parameters for markAsReadNotificationAll operation in ActionsApi.
+ * @export
+ * @interface ActionsApiMarkAsReadNotificationAllRequest
+ */
+export interface ActionsApiMarkAsReadNotificationAllRequest {
+    /**
+     * Workspace ID where to mark notifications as read.
+     * @type {string}
+     * @memberof ActionsApiMarkAsReadNotificationAll
+     */
+    readonly workspaceId?: string;
 }
 
 /**
@@ -1312,6 +1372,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
         return ActionsApiFp(this.configuration)
             .getNotifications(
                 requestParameters.workspaceId,
+                requestParameters.isRead,
                 requestParameters.page,
                 requestParameters.size,
                 requestParameters.metaInclude,
@@ -1340,13 +1401,17 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     /**
      * Mark all user in-platform notifications as read.
      * @summary Mark all notifications as read.
+     * @param {ActionsApiMarkAsReadNotificationAllRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ActionsApi
      */
-    public markAsReadNotificationAll(options?: AxiosRequestConfig) {
+    public markAsReadNotificationAll(
+        requestParameters: ActionsApiMarkAsReadNotificationAllRequest = {},
+        options?: AxiosRequestConfig,
+    ) {
         return ActionsApiFp(this.configuration)
-            .markAsReadNotificationAll(options)
+            .markAsReadNotificationAll(requestParameters.workspaceId, options)
             .then((request) => request(this.axios, this.basePath));
     }
 

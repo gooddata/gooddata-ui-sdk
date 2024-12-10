@@ -902,6 +902,7 @@ class DummyOrganization implements IOrganization {
             title: "Dummy Llm Endpoint",
             provider: "OPENAI",
             model: "gpt-4o-mini",
+            workspaceIds: [],
         };
 
         return {

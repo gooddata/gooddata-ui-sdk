@@ -529,6 +529,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 title: "Dummy Llm Endpoint",
                 provider: "OPENAI",
                 model: "gpt-4o-mini",
+                workspaceIds: [],
             };
 
             return {

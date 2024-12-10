@@ -15,7 +15,7 @@ export type NotificationChannelDestinationType = "webhook" | "smtp" | "inPlatfor
  * Internal - all users within the organization.
  * @beta
  */
-export type NotificationChannelAllowedRecipients = "creator" | "internal";
+export type NotificationChannelAllowedRecipients = "creator" | "internal" | "external";
 
 /**
  * Shared base interface for all notification channel metadata objects.
