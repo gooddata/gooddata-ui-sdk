@@ -204,9 +204,15 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             return null;
         }
 
-        const { filters = [] } = convertFromBackendExportMetadata(metadata);
+        const convertedExportMetadata = convertFromBackendExportMetadata(metadata);
+
+        // Fallback to default filters if no filters are present in the export metadata
+        if (!convertedExportMetadata) {
+            return null;
+        }
+
         return {
-            filters,
+            filters: convertedExportMetadata.filters,
             title: `temp-filter-context-${exportId}`,
             description: "temp-filter-context-description",
             ref: { identifier: `identifier-${exportId}` },
