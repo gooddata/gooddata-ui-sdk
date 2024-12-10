@@ -147,7 +147,7 @@ jobs:
     runs-on:
       group: infra1-runners-arc
       labels: runners-small
-    needs: [publish-prerelease,setup-params]
+    needs: [bump-version, publish-prerelease,setup-params]
     steps:
       - name: Set user
         run: |
@@ -156,6 +156,10 @@ jobs:
           else
             echo "UPD_AUTHOR=${{ inputs.author-name }}" >> $GITHUB_ENV
           fi
+      - name: Wait for NPM registry
+        run: |
+          #wait for npm registry to be updated
+          sleep 30
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v3
         with:
@@ -165,4 +169,5 @@ jobs:
           client-payload: |
             {
               "githubuser": "${{ env.UPD_AUTHOR }}"
+              "version": "${{ needs.bump-version.outputs.version }}"
             }
