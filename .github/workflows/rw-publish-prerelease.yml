@@ -168,6 +168,6 @@ jobs:
           event-type: public-sdk-update
           client-payload: |
             {
-              "githubuser": "${{ env.UPD_AUTHOR }}"
+              "githubuser": "${{ env.UPD_AUTHOR }}",
               "version": "${{ needs.bump-version.outputs.version }}"
             }
