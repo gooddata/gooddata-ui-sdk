@@ -1,0 +1,43 @@
+name: rw ~ validate slack mappings
+
+on:
+  workflow_call:
+    inputs:
+      githubuser:
+        type: string
+        required: true
+        description: "GitHub user for whom the Slack ID should be found in mappings."
+
+jobs:
+  github-user-slack-mappings:
+    runs-on:
+        group: infra1-runners-arc
+        labels: runners-small
+    steps:
+        - uses: actions/checkout@v4
+        - name: get slack user id
+          id: get-slack-user-id
+          uses: ./.github/actions/slack/get-slack-user
+          with:
+            github-user: ${{ inputs.githubuser }}
+            users-mapping: ./.github/users.yml
+        - name: validate github user vs slack id mappings
+          run: |
+            githubuser="${{ inputs.githubuser }}"
+
+            #some system users do not have slack mappings and could be skipped in validation
+            skip_users=("gdrenovate" "yenkins-admin" "yenkins")
+
+            if [[ " ${skip_users[@]} " =~ " ${githubuser} " ]]; then
+              echo "Skipping validation for user: ${githubuser}"
+              exit 0
+            fi
+
+            if [ "${{ steps.get-slack-user-id.outputs.has-mappings }}" == "false" ]; then
+              echo "GitHub user: ${{ inputs.githubuser }} not found in slack-github users mappings file."
+              echo "Please add your slack user mapping to the file .github/users.yml"
+              echo "Check this link for more information how to add your slack user mapping: https://github.com/gooddata/gooddata-ui-sdk/blob/master/README.md#slack-mapping-pr-validation"
+              exit 1
+            fi
+          shell: bash
+

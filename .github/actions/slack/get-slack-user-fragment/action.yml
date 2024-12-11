@@ -1,0 +1,40 @@
+name: Get Slack message user fragment
+description: This action returns the Slack message user tag for a GitHub user. If the user is defined in the mapping file, it returns the user ID tag (<@user_ID>). Otherwise, it returns the GitHub username in bold (*GitHub_user*).
+inputs:
+  github-user:
+    description: 'The GitHub user for whom the Slack ID should be found.'
+    required: true
+  users-mapping:
+    description: 'Path to the configuration file a YML with user mappings.'
+    required: true
+
+outputs:
+  slack-user-fragment:
+    description: 'Slack ID for the GitHub user'
+    value: ${{ steps.slack-message-user-fragment.outputs.user }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: map github user to slack user id
+      id: map-slack-user
+      uses: ./.github/actions/slack/get-slack-user
+      with:
+        github-user: ${{ inputs.github-user }}
+        users-mapping: ${{ inputs.users-mapping }}
+
+    - name: prepare slack message user fragment
+      id: slack-message-user-fragment
+      env:
+        has_mappings: ${{ steps.map-slack-user.outputs.has-mappings }}
+        slack_user_id: ${{ steps.map-slack-user.outputs.slack-user-id }}
+        git_user: ${{ inputs.github-user }}
+      run: |
+        if [ "${has_mappings}" == "false" ]; then
+          echo "Slack ID not found for GitHub user: ${git_user} we are not tagging anyone"
+          echo "user=*${git_user}*" >> $GITHUB_OUTPUT
+          exit 0
+        fi
+        echo "Slack ID for GitHub user ${git_user} is ${slack_user_id}"
+        echo "user=<@${slack_user_id}>" >> $GITHUB_OUTPUT
+      shell: bash

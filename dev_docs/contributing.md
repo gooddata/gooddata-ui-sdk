@@ -415,3 +415,26 @@ Try to run the following sequence of commands `npm un -g @microsoft/rush pnpm &&
 ### Conflict in pnpm-lock.yaml.
 
 Run `rush update --recheck` and it should fix conflicts.
+
+## Slack mapping PR validation
+
+As part of our workflow, we run end-to-end (E2E) tests in the post-merge phase. If these tests fail, a status update is posted in the Slack channel [#javascript-notifications](https://gooddata.slack.com/archives/CQXRLUXQE) Please add yourself to this channel to monitor if your changes cause any E2E test failures.
+
+If a test fails, we need to tag the author of the pull request (PR) responsible for the failure. Additionally, we should tag the user when NPM packages are published successfully.
+
+Each user must define their GitHub username and Slack ID in the .github/users.yml file:`.github/users.yml`
+
+```
+  - github_user: mygithubusername
+    slack_id: <slackID>
+```
+
+To pass PR validation, you need to add this information to the file and commit it to your PR as a separate commit. This action only needs to be done once.
+
+### how to get your slack id
+
+In slack application
+
+1. Click on your profile picture
+2. Click to "Profile" or "View profile"
+3. Click ellipses icon (three dot icon) and in menu choose "Copy member ID"
