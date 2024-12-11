@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import React, { forwardRef, MouseEvent } from "react";
 import cx from "classnames";
 
@@ -8,10 +8,15 @@ interface IDashboardItemContentProps {
     isSelectable?: boolean;
     isSelected?: boolean;
     onSelected?: (e?: MouseEvent) => void;
+    onEnter?: () => void;
+    onLeave?: () => void;
 }
 
 export const DashboardItemContent = forwardRef<HTMLDivElement, IDashboardItemContentProps>(
-    function DashboardItemContent({ children, className, isSelectable, isSelected, onSelected }, ref) {
+    function DashboardItemContent(
+        { children, className, isSelectable, isSelected, onSelected, onEnter, onLeave },
+        ref,
+    ) {
         return (
             <div
                 className={cx("dash-item-content", className, {
@@ -20,6 +25,8 @@ export const DashboardItemContent = forwardRef<HTMLDivElement, IDashboardItemCon
                 })}
                 ref={ref}
                 onClick={onSelected}
+                onMouseOver={onEnter}
+                onMouseOut={onLeave}
             >
                 {children}
             </div>

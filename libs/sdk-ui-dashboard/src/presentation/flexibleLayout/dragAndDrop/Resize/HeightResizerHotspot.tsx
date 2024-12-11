@@ -1,6 +1,6 @@
 // (C) 2021-2024 GoodData Corporation
 import React, { useEffect, useMemo, useState } from "react";
-import { ISettings, IWidget, ScreenSize, IInsight } from "@gooddata/sdk-model";
+import { ISettings, IWidget, ScreenSize, IInsight, areObjRefsEqual } from "@gooddata/sdk-model";
 import { fluidLayoutDescriptor, INSIGHT_WIDGET_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
 import isEqual from "lodash/fp/isEqual.js";
 import isEmpty from "lodash/isEmpty.js";
@@ -34,6 +34,7 @@ import cx from "classnames";
 import { useScreenSize } from "../../../dashboard/components/DashboardScreenSizeContext.js";
 import { useResizeContext } from "../../../dragAndDrop/index.js";
 import { useDashboardItemPathAndSize } from "../../../dashboard/components/DashboardItemPathAndSizeContext.js";
+import { useHoveredWidget } from "../../../dragAndDrop/HoveredWidgetContext.js";
 
 export type HeightResizerHotspotProps = {
     section: IDashboardLayoutSectionFacade<unknown>;
@@ -53,6 +54,13 @@ export function HeightResizerHotspot({ section, items, getLayoutDimensions }: He
     const widgets = useMemo(() => items.map((item) => item.widget() as IWidget), [items]);
     const widgetIdentifiers = useMemo(() => widgets.map((widget) => widget.identifier), [widgets]);
     const customWidgetsRestrictions = useMemo(() => getCustomWidgetRestrictions(items), [items]);
+
+    const { hoveredWidget } = useHoveredWidget();
+
+    const showDefault = useMemo(
+        () => hoveredWidget && widgets.some((widget) => areObjRefsEqual(hoveredWidget, widget.ref)),
+        [hoveredWidget, widgets],
+    );
 
     const gridWidth = determineWidthForScreen(screen, itemSize);
 
@@ -117,7 +125,7 @@ export function HeightResizerHotspot({ section, items, getLayoutDimensions }: He
     const shouldRenderResizer =
         (areWidgetsResizing || isResizerVisible) && !isColumnResizing && !isOtherRowResizing;
 
-    const status = isDragging ? "muted" : "active";
+    const status = isDragging ? "muted" : showDefault ? "default" : "active";
 
     return (
         <div
@@ -126,6 +134,11 @@ export function HeightResizerHotspot({ section, items, getLayoutDimensions }: He
                 `gd-grid-layout__item--span-${gridWidth}`,
             )}
         >
+            {status === "default" ? (
+                <div className="dash-height-resizer-hotspot s-dash-height-resizer-hotspot">
+                    {<HeightResizer status={status} />}
+                </div>
+            ) : null}
             {customWidgetsRestrictions.allowHeightResize ? (
                 <div
                     ref={dragRef}

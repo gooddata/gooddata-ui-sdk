@@ -58,6 +58,9 @@
         height: 100%;
         border-left: 2px dashed;
 
+        &.default {
+            border-color: kit-variables.$gd-color-disabled;
+        }
         &.muted {
             border-color: kit-variables.$gd-color-text;
         }
@@ -89,6 +92,10 @@
         width: 100%;
         border-top: 2px dashed;
         border-color: kit-variables.$gd-palette-primary-base;
+
+        &.default {
+            border-color: kit-variables.$gd-color-disabled;
+        }
 
         &.muted {
             border-color: kit-variables.$gd-color-text;
@@ -193,10 +200,20 @@
     );
 }
 
+.gd-grid-layout-resizer-drag-preview,
 .gd-grid-layout {
-    .dash-width-resizer-container {
-        right: -20px;
-        width: 20px;
+    .gd-fluidlayout-width-resizer {
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        border-radius: 4px;
+
+        .width-resizer-line {
+            flex: 1 0 auto;
+            width: 0;
+            margin-left: 4px;
+            height: unset;
+        }
     }
 
     .dash-height-resizer-container {
@@ -205,11 +222,60 @@
         bottom: unset;
         left: unset;
         height: 10px;
+        padding-top: 4px;
+        padding-bottom: 4px;
+    }
+
+    .width-resizer-drag-handler {
+        $width-resizer-center-size: 10px;
+
+        width: $width-resizer-center-size;
+        height: $width-resizer-center-size;
+        border: 2px solid;
+        border-radius: 3px;
+        flex: 0 0 $width-resizer-center-size;
+        &.default {
+            border-color: kit-variables.$gd-color-disabled;
+        }
+        &.muted {
+            border-color: kit-variables.$gd-color-text;
+        }
+
+        &.active {
+            border-color: kit-variables.$gd-palette-primary-base;
+        }
+
+        &.error {
+            border-color: kit-variables.$gd-palette-error-base;
+        }
+    }
+    .gd-fluidlayout-height-resizer {
+        padding: 0;
+        display: flex;
+        flex-direction: row;
+        border-radius: 4px;
+
+        .height-resizer-line {
+            flex: 1 0 auto;
+            margin-top: 4px;
+            width: unset;
+        }
+    }
+}
+
+.gd-grid-layout {
+    .dash-width-resizer-container {
+        right: -20px;
+        width: 20px;
     }
 
     .dash-height-resizer-hotspot {
         position: unset;
         display: flex;
+    }
+    .gd-hover-detector {
+        width: 100%;
+        height: 100%;
     }
 }
 

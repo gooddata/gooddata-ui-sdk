@@ -1,5 +1,5 @@
 // (C) 2019-2024 GoodData Corporation
-import { IWidget } from "@gooddata/sdk-model";
+import { IWidget, areObjRefsEqual } from "@gooddata/sdk-model";
 import React, { useEffect, useMemo, useState } from "react";
 
 import {
@@ -15,6 +15,7 @@ import { getSizeAndXCoords } from "../DragLayerPreview/WidthResizerDragPreview.j
 import { useDashboardDrag, useResizeHandlers, useResizeWidthItemStatus } from "../../../dragAndDrop/index.js";
 import { WidthResizer } from "./WidthResizer.js";
 import { useScreenSize } from "../../../dashboard/components/DashboardScreenSizeContext.js";
+import { useHoveredWidget } from "../../../dragAndDrop/HoveredWidgetContext.js";
 
 export type WidthResizerHotspotProps = {
     item: IDashboardLayoutItemFacade<unknown>;
@@ -37,6 +38,7 @@ export function WidthResizerHotspot({
     const widget = useMemo(() => item.widget() as IWidget, [item]);
     const widgetIdentifier = widget.identifier;
     const { isWidthResizing, isActive } = useResizeWidthItemStatus(widgetIdentifier);
+    const { hoveredWidget } = useHoveredWidget();
 
     const [isResizerVisible, setResizerVisibility] = useState<boolean>(false);
     const onMouseEnter = () => setResizerVisibility(true);
@@ -94,7 +96,11 @@ export function WidthResizerHotspot({
 
     const showHotspot = !isDragging || isWidthResizing || isResizerVisible;
     const showResizer = isResizerVisible || isThisResizing;
-    const status = isDragging ? "muted" : "active";
+    const status = isDragging
+        ? "muted"
+        : hoveredWidget && areObjRefsEqual(hoveredWidget, widget.ref)
+        ? "default"
+        : "active";
 
     if (!showHotspot) {
         return null;
@@ -102,6 +108,11 @@ export function WidthResizerHotspot({
 
     return (
         <div className="dash-width-resizer-container">
+            {status === "default" ? (
+                <div className="dash-width-resizer-hotspot s-dash-width-resizer-hotspot">
+                    {<WidthResizer status={status} />}
+                </div>
+            ) : null}
             <div
                 className="dash-width-resizer-hotspot s-dash-width-resizer-hotspot"
                 onMouseEnter={onMouseEnter}
