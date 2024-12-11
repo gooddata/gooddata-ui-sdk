@@ -1,0 +1,65 @@
+# (C) 2024 GoodData Corporation
+
+name: Test ~ run checklist e2e tests with ${{ inputs.CYPRESS_TEST_TAGS }}
+on:
+  workflow_dispatch:
+    inputs:
+      GIT_REVISION:
+        description: 'GIT REVISION'
+        default: master
+        required: true
+        type: string
+      TEST_BACKEND:
+        default: 'https://checklist.staging.stg11.panther.intgdc.com'
+        required: true
+      TIGER_DATASOURCES_NAME:
+        description: 'Tiger DS name'
+        default: 'vertica_staging-goodsales'
+        required: true
+        type: string
+      CYPRESS_TEST_TAGS:
+        description: 'Test tags should be run. Tip: can get them inside each spec file'
+        required: true
+        default: 'checklist_integrated_tiger, checklist_integrated_tiger_export'
+        type: string
+      FILTER:
+        type: string
+        required: false
+        description: 'Test files to be filtered'
+  workflow_call:
+    inputs:
+      GIT_REVISION:
+        default: master
+        required: true
+        type: string
+      TEST_BACKEND:
+        default: 'https://checklist.staging.stg11.panther.intgdc.com'
+        required: true
+      TIGER_DATASOURCES_NAME:
+        default: 'vertica_staging-goodsales'
+        required: true
+        type: string
+      CYPRESS_TEST_TAGS:
+        required: true
+        type: string
+
+jobs:
+  e2e-checklist:
+    permissions:
+      id-token: write
+      contents: read
+    secrets: inherit
+    timeout-minutes: 60
+    steps:
+      - name: Get vault secrets
+        uses: hashicorp/vault-action@v3
+        id: secrets
+        with:
+          url: https://vault.ord1.infra.intgdc.com
+          method: jwt
+          path: jwt/github
+          role: front-end
+          secrets: |-
+            secret/data/v3/dev/panther/qa-org-bootstrap-token token | TIGER_API_TOKEN ;
+      - name: e2e integrated tests
+        uses: ./.github/workflows/rw-rush-build-e2e-tests-integrated.yml
