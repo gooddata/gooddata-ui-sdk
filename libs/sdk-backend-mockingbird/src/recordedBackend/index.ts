@@ -636,5 +636,10 @@ function recordedDateFilterConfig(implConfig: RecordedBackendConfig): IDateFilte
 
             return Promise.resolve(new InMemoryPaging(dateFilterConfig ? [dateFilterConfig] : []));
         },
+        queryCustomDateFilterConfig(): Promise<IDateFilterConfigsQueryResult> {
+            const { dateFilterConfig } = implConfig;
+
+            return Promise.resolve(new InMemoryPaging(dateFilterConfig ? [dateFilterConfig] : []));
+        },
     };
 }

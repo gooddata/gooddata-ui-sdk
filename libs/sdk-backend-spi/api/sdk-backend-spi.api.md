@@ -544,6 +544,7 @@ export interface IDateDataset {
 // @alpha
 export interface IDateFilterConfigsQuery {
     query(): Promise<IDateFilterConfigsQueryResult>;
+    queryCustomDateFilterConfig(): Promise<IDateFilterConfigsQueryResult>;
     withLimit(limit: number): IDateFilterConfigsQuery;
     withOffset(offset: number): IDateFilterConfigsQuery;
 }
