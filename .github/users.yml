@@ -1,0 +1,4 @@
+#this file define github users mapping to slack users member ID
+users:
+  - github_user: ivanmjartan
+    slack_id: UC1K6TL7K

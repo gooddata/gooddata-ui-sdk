@@ -1,4 +1,4 @@
-name: check
+name: Pull request ~ status check
 
 on:
   pull_request:
@@ -22,16 +22,22 @@ jobs:
       target-branch: ${{ github.event.pull_request.base.ref }}
     secrets: inherit
 
+  validate-user-stage:
+    name : validate-user-stage
+    uses: ./.github/workflows/rw-validate-slack-mappings.yml
+    with:
+      githubuser: ${{ github.event.pull_request.user.login }}
+
   ready-to-merge:
     runs-on:
       group: infra1-runners-arc
       labels: runners-small
-    if: always()
+    if: ${{ !cancelled() }}
     needs:
       - build-validate-stage
+      - validate-user-stage
     steps:
       - name: Check if needed jobs succeeded
         uses: re-actors/alls-green@release/v1
         with:
-          allowed-skips: ${{ toJSON(needs) }}
           jobs: ${{ toJSON(needs) }}
