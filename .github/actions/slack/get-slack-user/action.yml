@@ -1,0 +1,43 @@
+name: Get Slack user
+description: This action gets Slack user from GitHub user
+inputs:
+  github-user:
+    description: 'The GitHub user for whom the Slack ID should be found.'
+    required: true
+  users-mapping:
+    description: 'Path to the configuration file a YML with user mappings.'
+    required: true
+
+outputs:
+  slack-user-id:
+    description: 'Slack ID for the GitHub user'
+    value: ${{ steps.find_slack_id.outputs.slack_id }}
+  has-mappings:
+    description: 'Boolean as string value if mapping exists'
+    value: ${{ steps.find_slack_id.outputs.has_mappings }}
+
+runs:
+  using: 'composite'
+  steps:
+      - name: Use yq to find Slack ID
+        id: ym_find
+        run: |
+          slack_id=$(yq e '.users[] | select(.github_user == "'${{ inputs.github-user }}'") | .slack_id' ${{ inputs.users-mapping }})
+          echo "result=$slack_id" >> $GITHUB_OUTPUT
+        shell: bash
+      - name: Use yq to find Slack ID
+        id: find_slack_id
+        env:
+          SLACK_ID: ${{ steps.ym_find.outputs.result }}
+        run: |
+            if [ -z "$SLACK_ID" ]; then
+              echo "Slack ID not found for GitHub user: ${{ inputs.github-user }}"
+              echo "slack_id=unknown" >> $GITHUB_OUTPUT
+              echo "has_mappings=false" >> $GITHUB_OUTPUT
+              exit 0
+            fi
+
+            echo "Slack ID for GitHub user ${{ inputs.github-user }} is $SLACK_ID"
+            echo "slack_id=$SLACK_ID" >> $GITHUB_OUTPUT
+            echo "has_mappings=true" >> $GITHUB_OUTPUT
+        shell: bash

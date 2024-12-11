@@ -1,0 +1,56 @@
+#this file define github users mapping to slack users member ID
+users:
+  - github_user: ivanmjartan
+    slack_id: UC1K6TL7K
+  - github_user: pbenes
+    slack_id: U0G51Q9U5
+  - github_user: scavnickyj
+    slack_id: U013P5H3QAU
+  - github_user: hackerstanislav
+    slack_id: U026TUKM89Z
+  - github_user: xMort
+    slack_id: U894G75BP
+  - github_user: NestorEncinas
+    slack_id: U016R30L54H
+  - github_user: kandl
+    slack_id: U7LLS4W75
+  - github_user: andriichumak
+    slack_id: U026KDFKEV7
+  - github_user: no23reason
+    slack_id: UE8Q197PG
+  - github_user: myhoai
+    slack_id: U013P4XBW5N
+  - github_user: thuongnguyengdc
+    slack_id: UT590TG65
+  - github_user: minhphong
+    slack_id: U2D2E0N3E
+  - github_user: ivan-nejezchleb
+    slack_id: U41DH64TU
+  - github_user: myduong243
+    slack_id: U2D2UB341
+  - github_user: hkad98
+    slack_id: U02FE0UQWPM
+  - github_user: GoodMeepanya
+    slack_id: U04LP1V5X19
+  - github_user: nknbich
+    slack_id: U6J42V92N
+  - github_user: Tubt
+    slack_id: UEWS8B4JD
+  - github_user: chrisbonilla95
+    slack_id: U06SY4V0YSW
+  - github_user: LucyGoodData
+    slack_id: U07ERSH41N1
+  - github_user: KhuongNguyen29118
+    slack_id: U07ALHH2SGM
+  - github_user: Vojtasii
+    slack_id: U01G6MG3EA3
+  - github_user: tuan-tran-thanh
+    slack_id: U6CAAPY6B
+  - github_user: mouchar
+    slack_id: UEWU63FS4
+  - github_user: thao-luong
+    slack_id: UUSH95T71
+  - github_user: petr-klemsinsky
+    slack_id: UDPMXBEHW
+  - github_user: huyenthanh09
+    slack_id: U5MJ2CEN6
