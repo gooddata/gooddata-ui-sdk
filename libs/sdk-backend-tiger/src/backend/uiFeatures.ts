@@ -113,7 +113,6 @@ export enum TigerFeaturesNames {
     EnableNewInsightChangedPostMessageEvent = "enableNewInsightChangedPostMessageEvent",
     EnableIgnoreCrossFiltering = "enableIgnoreCrossFiltering",
     EnableHeadlineExport = "enableHeadlineExport",
-    EnableFlightRpcDataSource = "enableFlightRpcDataSource",
     EarlyAccessFeatures = "earlyAccessFeatures",
     EnableEarlyAccessFeaturesRollout = "enableEarlyAccessFeaturesRollout",
     EnableCrossFilteringAliasTitles = "enableCrossFilteringAliasTitles",
@@ -201,7 +200,6 @@ export type ITigerFeatureFlags = {
     enableKDVisualizationSwitcher: typeof FeatureFlagsValues["enableKDVisualizationSwitcher"][number];
     enableIgnoreCrossFiltering: typeof FeatureFlagsValues["enableIgnoreCrossFiltering"][number];
     enableHeadlineExport: typeof FeatureFlagsValues["enableHeadlineExport"][number];
-    enableFlightRpcDataSource: typeof FeatureFlagsValues["enableFlightRpcDataSource"][number];
     earlyAccessFeatures: typeof FeatureFlagsValues["earlyAccessFeatures"][number];
     enableEarlyAccessFeaturesRollout: typeof FeatureFlagsValues["enableEarlyAccessFeaturesRollout"][number];
     enableCrossFilteringAliasTitles: typeof FeatureFlagsValues["enableCrossFilteringAliasTitles"][number];
@@ -289,7 +287,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableKDVisualizationSwitcher: true,
     enableIgnoreCrossFiltering: true,
     enableHeadlineExport: true,
-    enableFlightRpcDataSource: false,
     earlyAccessFeatures: undefined,
     enableEarlyAccessFeaturesRollout: false,
     enableCrossFilteringAliasTitles: true,
@@ -381,7 +378,6 @@ export const FeatureFlagsValues = {
     enableKDVisualizationSwitcher: [true, false] as const,
     enableIgnoreCrossFiltering: [true, false] as const,
     enableHeadlineExport: [true, false] as const,
-    enableFlightRpcDataSource: [true, false] as const,
     earlyAccessFeatures: [undefined, {} as IEarlyAccessFeaturesConfig] as const,
     enableEarlyAccessFeaturesRollout: [true, false] as const,
     enableCrossFilteringAliasTitles: [true, false] as const,

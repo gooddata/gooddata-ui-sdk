@@ -3339,7 +3339,6 @@ export interface ISettings {
     enableEmbedButtonInAD?: boolean;
     enableEmbedButtonInKD?: boolean;
     enableExternalRecipients?: boolean;
-    enableFlightRpcDataSource?: boolean;
     enableGenAIChat?: boolean;
     enableGenAIChatRollout?: boolean;
     enableHeadlineExport?: boolean;

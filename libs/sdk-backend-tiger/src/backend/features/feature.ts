@@ -536,13 +536,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableFlightRpcDataSource,
-            "enableFlightRpcDataSource",
-            "BOOLEAN",
-            FeatureFlagsValues.enableFlightRpcDataSource,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EarlyAccessFeatures,
             "earlyAccessFeatures",
             "JSON",
