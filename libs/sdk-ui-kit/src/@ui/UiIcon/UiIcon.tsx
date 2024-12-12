@@ -11,7 +11,7 @@ import { IconType } from "../@types/icon.js";
 export interface UiIconProps {
     type: IconType;
     color?: ThemeColor;
-    label: string;
+    label?: string;
     size?: number;
 }
 
@@ -27,7 +27,7 @@ export const UiIcon = ({ type, label, color, size = 20 }: UiIconProps) => {
             height={size}
             preserveAspectRatio="xMidYMid meet"
         >
-            <title>{label}</title>
+            {label ? <title>{label}</title> : null}
             {iconsConfig[type].content}
         </svg>
     );

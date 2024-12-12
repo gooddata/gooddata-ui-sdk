@@ -37,6 +37,14 @@ export interface INotificationsQuery {
     withWorkspace(workspaceId: string): INotificationsQuery;
 
     /**
+     * Filter notifications by read status.
+     *
+     * @param status - "read" or "unread"
+     * @returns notifications query
+     */
+    withStatus(status: "read" | "unread"): INotificationsQuery;
+
+    /**
      * Starts the notifications query.
      *
      * @returns promise of first page of the results

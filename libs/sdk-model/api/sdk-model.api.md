@@ -3002,6 +3002,9 @@ export const isAbsoluteDateFilterPreset: (obj: unknown) => obj is IAbsoluteDateF
 export function isAdhocMeasure(obj: unknown): obj is IMeasure<IMeasureDefinition>;
 
 // @alpha
+export function isAlertNotification(notification: unknown): notification is IAlertNotification;
+
+// @alpha
 export function isAllTimeDashboardDateFilter(obj: unknown): boolean;
 
 // @public
@@ -3564,6 +3567,9 @@ export function isNegativeAttributeFilter(obj: unknown): obj is INegativeAttribu
 // @alpha
 export function isNegativeDashboardAttributeFilter(filter: IDashboardAttributeFilter): boolean;
 
+// @alpha
+export function isNotification(notification: unknown): notification is INotification;
+
 // @beta
 export function isNotificationChannelMetadataObject(obj: unknown): obj is INotificationChannelMetadataObject;
 
@@ -3635,6 +3641,9 @@ export function isRichTextWidget(obj: unknown): obj is IRichTextWidget;
 // @alpha
 export function isRichTextWidgetDefinition(obj: unknown): obj is IRichTextWidgetDefinition;
 
+// @alpha
+export function isScheduleNotification(notification: unknown): notification is IScheduleNotification;
+
 // @public
 export function isSimpleMeasure(obj: unknown): obj is IMeasure<IMeasureDefinition>;
 
@@ -3646,6 +3655,9 @@ export function isSingleSelectionFilter(filter: IDashboardAttributeFilter): bool
 
 // @alpha
 export function isTempFilterContext(obj: unknown): obj is ITempFilterContext;
+
+// @alpha
+export function isTestNotification(notification: unknown): notification is ITestNotification;
 
 // @public
 export function isTotal(obj: unknown): obj is ITotal;

@@ -230,6 +230,14 @@ export interface DashboardConfig {
      * If set to false or not set, user filter reset will be enabled if the dashboard is configured to support it.
      */
     disableUserFilterReset?: boolean;
+
+    /**
+     * @beta
+     * If provided, the dashboard will be opened in the context of the given automation.
+     * This means, that target widget will be highlighted in the dashboard,
+     * and filter context will be set to the one used in the automation.
+     */
+    automationId?: string;
 }
 
 /**
@@ -245,7 +253,10 @@ export interface DashboardConfig {
  *
  * @public
  */
-export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "exportId"> &
+export type ResolvedDashboardConfig = Omit<
+    Required<DashboardConfig>,
+    "mapboxToken" | "exportId" | "automationId"
+> &
     DashboardConfig;
 
 /**
