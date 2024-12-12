@@ -1,6 +1,14 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 28 Nov 2024 11:23:13 GMT and should not be manually modified.
+This log was last generated on Thu, 12 Dec 2024 07:29:13 GMT and should not be manually modified.
+
+## 10.16.0
+
+Thu, 12 Dec 2024 07:29:13 GMT
+
+### Updates
+
+-   Add support for nested dashboard layouts (hidden behind a feature flag)
 
 ## 10.15.0
 
