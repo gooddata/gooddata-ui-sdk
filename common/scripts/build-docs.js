@@ -107,7 +107,7 @@ async function buildVersion(versionName, dev, shouldUpdateSymlink, onSuccess) {
     const rootDir = path.resolve(dir, "../..");
 
     // Root of the ApiDocs repo
-    const apiDocDir = path.resolve(rootDir, "../gooddata-ui-apidocs");
+    const apiDocDir = path.resolve(rootDir, "./gooddata-ui-apidocs");
 
     // Root of the affected version
     const apiDocDirVersioned = path.resolve(apiDocDir, `v${versionName}`);
