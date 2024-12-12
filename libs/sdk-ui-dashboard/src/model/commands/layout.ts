@@ -1901,7 +1901,7 @@ export interface SetScreenSize extends IDashboardCommand {
  *
  * @remarks
  * This command sets new screen size for the dashboard layout.
- * Do not use this command directly, it is used internally by the dashboard layouting engine.
+ * Do not use this command directly, it is used internally by the dashboard layout engine.
  *
  * @param screenSize - new screen size to set
  * @param correlationId - specify correlation id to use for this command. this will be included in all
@@ -1916,6 +1916,54 @@ export function setScreenSize(screenSize: ScreenSize, correlationId?: string): S
         correlationId,
         payload: {
             screenSize,
+        },
+    };
+}
+
+/////
+
+/**
+ * Payload of the {@link ToggleLayoutSectionHeaders} command.
+ * @internal
+ */
+export interface ToggleLayoutSectionHeadersPayload {
+    layoutPath: ILayoutItemPath | undefined;
+    enableSectionHeaders: boolean;
+}
+
+/**
+ * @internal
+ */
+export interface ToggleLayoutSectionHeaders extends IDashboardCommand {
+    readonly type: "GDC.DASH/CMD.FLEXIBLE_LAYOUT.TOGGLE_LAYOUT_SECTION_HEADERS";
+    readonly payload: ToggleLayoutSectionHeadersPayload;
+}
+
+/**
+ * Creates the ToggleLayoutSectionHeaders command.
+ *
+ * @remarks
+ * This command toggles headers of the sections for the dashboard layout.
+ *
+ * @param layoutPath - layout for which the sections will have the headers toggled.
+ * @param enableSectionHeaders - value of that determines state of the headers of the layout sections. True to enable headers, false to disable them.
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @alpha
+ *
+ */
+export function toggleLayoutSectionHeaders(
+    layoutPath: ILayoutItemPath | undefined,
+    enableSectionHeaders: boolean,
+    correlationId?: string,
+): ToggleLayoutSectionHeaders {
+    return {
+        type: "GDC.DASH/CMD.FLEXIBLE_LAYOUT.TOGGLE_LAYOUT_SECTION_HEADERS",
+        correlationId,
+        payload: {
+            layoutPath,
+            enableSectionHeaders,
         },
     };
 }

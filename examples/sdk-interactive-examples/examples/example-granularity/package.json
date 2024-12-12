@@ -3,7 +3,7 @@
     "version": "10.17.0-alpha.25",
     "title": "Granularity",
     "description": "This example exmplains DateFilter granularity ",
-    "author": "GoodData Corporation",
+    "author": "GoodData",
     "private": false,
     "license": "LicenseRef-LICENSE",
     "type": "module",

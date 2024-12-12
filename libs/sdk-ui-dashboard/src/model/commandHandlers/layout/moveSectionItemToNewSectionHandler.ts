@@ -1,7 +1,7 @@
 // (C) 2021-2024 GoodData Corporation
 import { batchActions } from "redux-batched-actions";
 import { SagaIterator } from "redux-saga";
-import { put, select } from "redux-saga/effects";
+import { SagaReturnType, put, select } from "redux-saga/effects";
 import { MoveSectionItemToNewSection } from "../../commands/layout.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import {
@@ -9,7 +9,7 @@ import {
     layoutSectionItemMovedToNewSection,
 } from "../../events/layout.js";
 import { layoutActions } from "../../store/layout/index.js";
-import { selectLayout } from "../../store/layout/layoutSelectors.js";
+import { selectLayout, selectScreen } from "../../store/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { ExtendedDashboardLayoutSection } from "../../types/layoutTypes.js";
 import {
@@ -28,6 +28,9 @@ import {
     getItemIndex,
 } from "../../../_staging/layout/coordinates.js";
 import { ILayoutItemPath } from "../../../types.js";
+import { selectSettings } from "../../store/config/configSelectors.js";
+import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
+import { normalizeItemSizeToParent } from "../../../_staging/layout/sizing.js";
 
 type MoveSectionItemToNewSectionContext = {
     readonly ctx: DashboardContext;
@@ -196,6 +199,19 @@ export function* moveSectionItemToNewSectionHandler(
 
     const itemPathWithSectionsShifted = getItemPathWithSectionsShifted(itemPath, toItemIndex);
 
+    const settings = yield select(selectSettings);
+    const insightsMap = yield select(selectInsightsMap);
+    const screen: SagaReturnType<typeof selectScreen> = yield select(selectScreen);
+
+    const { item: itemWithNormalizedSize, sizeChanged: shouldChangeSize } = normalizeItemSizeToParent(
+        itemToMove,
+        toItemIndex,
+        commandCtx.layout,
+        settings,
+        insightsMap,
+        screen,
+    );
+
     yield put(
         batchActions([
             layoutActions.addSection({
@@ -222,6 +238,17 @@ export function* moveSectionItemToNewSectionHandler(
                     cmd,
                 },
             }),
+            ...(shouldChangeSize
+                ? [
+                      layoutActions.changeItemWidth({
+                          layoutPath:
+                              toItemIndex === undefined
+                                  ? [{ sectionIndex: targetSectionIndex, itemIndex: targetItemIndex }]
+                                  : toItemIndex,
+                          width: itemWithNormalizedSize.size.xl.gridWidth,
+                      }),
+                  ]
+                : []),
             ...(shouldRemoveSection
                 ? [
                       layoutActions.removeSection({
@@ -240,7 +267,7 @@ export function* moveSectionItemToNewSectionHandler(
 
     return layoutSectionItemMovedToNewSection(
         ctx,
-        itemToMove,
+        itemWithNormalizedSize,
         itemPath === undefined ? sectionIndex : getSectionIndex(itemPath),
         targetSectionIndex === undefined ? getSectionIndex(toItemIndex) : targetSectionIndex,
         itemPath === undefined ? itemIndex : getItemIndex(itemPath),

@@ -2576,8 +2576,18 @@
         "comment": "",
         "limit": 0
     },
+    "nestedLayoutToolbar.hideHeader": {
+        "value": "Hide title and description.",
+        "comment": "",
+        "limit": 0
+    },
+    "nestedLayoutToolbar.showHeader": {
+        "value": "Show title and description.",
+        "comment": "",
+        "limit": 0
+    },
     "nestedLayoutToolbar.remove": {
-        "value": "Remove container and its content",
+        "value": "Remove from dashboard.",
         "comment": "",
         "limit": 0
     },

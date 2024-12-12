@@ -42,6 +42,7 @@ const RichTextWithTooltipCore: React.FC<IRichTextWithTooltipProps> = ({
     tooltipAlignPoints = alignPoints,
     tooltipDescription,
     tooltipMarkdown = descriptionMarkdown,
+    autoResize,
 }) => {
     const intl = useIntl();
     const description = tooltipDescription ?? intl.formatMessage({ id: "richText.tooltip" });
@@ -56,9 +57,10 @@ const RichTextWithTooltipCore: React.FC<IRichTextWithTooltipProps> = ({
                 editRows={editRows}
                 emptyElement={emptyElement}
                 className={className}
+                autoResize={autoResize}
             />
         );
-    }, [value, onChange, renderMode, editPlaceholder, editRows, emptyElement, className]);
+    }, [value, onChange, renderMode, editPlaceholder, editRows, emptyElement, className, autoResize]);
 
     if (!showTooltip) {
         return Component;

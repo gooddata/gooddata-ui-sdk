@@ -40,6 +40,7 @@ export function mapTypeToKey(
         case "OPERATOR_OVERRIDES":
         case "TIMEZONE_VALIDATION_ENABLED":
         case "ENABLE_FILE_ANALYTICS":
+        case "DATE_FILTER_CONFIG":
         case undefined:
             return fallback;
         default:

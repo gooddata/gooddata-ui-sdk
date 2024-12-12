@@ -609,48 +609,6 @@
                 }
             }
         },
-        "/api/v1/actions/workspaces/{workspaceId}/ai/route": {
-            "post": {
-                "tags": ["Smart Functions", "actions"],
-                "summary": "(BETA) Route to supported use cases based on this input query.",
-                "description": "(BETA) Uses similarity (e.g. cosine distance) to find most similar use cases.",
-                "operationId": "aiRoute",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "description": "Workspace identifier",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/RouteRequest"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/RouteResult"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/api/v1/actions/workspaces/{workspaceId}/ai/chatStream": {
             "post": {
                 "tags": ["Smart Functions", "actions"],
@@ -2528,7 +2486,7 @@
                             },
                             "sortType": {
                                 "type": "string",
-                                "description": "Mechanism by which this attribute should be sorted. Available options are:\n- DEFAULT: sorting based on default rules (using sort column if defined, otherwise this label) \n- LABEL: sorting by this label values \n- ATTRIBUTE: sorting by values of this label's attribute (or rather the primary label) \n- AREA: sorting by area (total or subtotal) corresponding to each attribute value. The area is computed by summing up all metric values in all other dimensions.",
+                                "description": "Mechanism by which this attribute should be sorted. Available options are:\n- DEFAULT: sorting based on default rules (using sort column if defined, otherwise this label) \n- LABEL: sorting by this label values \n- ATTRIBUTE: sorting by values of this label's attribute (or rather the primary label) \n- ATTRIBUTE: sorting by values of this label's attribute (or rather the primary label)- AREA: sorting by area (total or subtotal) corresponding to each attribute value. The area is computed by summing up all metric values in all other dimensions.",
                                 "default": "DEFAULT",
                                 "enum": ["DEFAULT", "LABEL", "ATTRIBUTE", "AREA"]
                             },
@@ -3034,39 +2992,6 @@
                     }
                 }
             },
-            "RouteRequest": {
-                "required": ["question"],
-                "type": "object",
-                "properties": {
-                    "question": {
-                        "maxLength": 1000,
-                        "type": "string",
-                        "description": "Route to supported use cases based on this input query."
-                    }
-                }
-            },
-            "RouteResult": {
-                "required": ["reasoning", "useCase"],
-                "type": "object",
-                "properties": {
-                    "useCase": {
-                        "type": "string",
-                        "description": "Use case where LLM routed based on question.",
-                        "enum": [
-                            "INVALID",
-                            "GENERAL",
-                            "SEARCH",
-                            "CREATE_VISUALIZATION",
-                            "EXTEND_VISUALIZATION",
-                            "HOWTO"
-                        ]
-                    },
-                    "reasoning": {
-                        "type": "string",
-                        "description": "Explanation why LLM picked this use case."
-                    }
-                }
-            },
             "ActiveObjectIdentification": {
                 "required": ["id", "type", "workspaceId"],
                 "type": "object",
@@ -3250,6 +3175,10 @@
                     "textResponse": {
                         "type": "string",
                         "description": "Text response for general questions."
+                    },
+                    "errorResponse": {
+                        "type": "string",
+                        "description": "Error response in anything fails."
                     },
                     "foundObjects": {
                         "$ref": "#/components/schemas/FoundObjects"
@@ -3496,6 +3425,29 @@
                 },
                 "description": "List of metrics to be used in the new visualization"
             },
+            "RouteResult": {
+                "required": ["reasoning", "useCase"],
+                "type": "object",
+                "properties": {
+                    "useCase": {
+                        "type": "string",
+                        "description": "Use case where LLM routed based on question.",
+                        "enum": [
+                            "INVALID",
+                            "GENERAL",
+                            "SEARCH",
+                            "CREATE_VISUALIZATION",
+                            "EXTEND_VISUALIZATION",
+                            "HOWTO"
+                        ]
+                    },
+                    "reasoning": {
+                        "type": "string",
+                        "description": "Explanation why LLM picked this use case."
+                    }
+                },
+                "description": "Question -> Use Case routing. May contain final answer is a special use case is not required."
+            },
             "ChatResult": {
                 "type": "object",
                 "properties": {
@@ -3505,6 +3457,10 @@
                     "textResponse": {
                         "type": "string",
                         "description": "Text response for general questions."
+                    },
+                    "errorResponse": {
+                        "type": "string",
+                        "description": "Error response in anything fails."
                     },
                     "foundObjects": {
                         "$ref": "#/components/schemas/FoundObjects"

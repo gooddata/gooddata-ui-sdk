@@ -11,13 +11,17 @@ export const DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT_PX = 450;
 export const MAX_VISUALIZATION_HEIGHT = 40;
 export const MIN_VISUALIZATION_HEIGHT = 12;
 export const MIDDLE_VISUALIZATION_HEIGHT = 22;
+/**
+ * @internal
+ */
+export const MIN_VISUALIZATION_WIDTH = 2;
 
 /**
  * @internal
  */
 export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationDefaultSizeInfo = {
     width: {
-        min: 2,
+        min: MIN_VISUALIZATION_WIDTH,
         default: 6,
     },
     height: {
@@ -30,7 +34,7 @@ export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationDefaultSizeI
  */
 export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo = {
     width: {
-        min: 2,
+        min: MIN_VISUALIZATION_WIDTH,
         default: 6,
     },
     height: {
@@ -45,7 +49,7 @@ export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo = {
  */
 export const INSIGHT_WIDGET_SIZE_INFO_NEW_DEFAULT: IVisualizationDefaultSizeInfo = {
     width: {
-        min: 2,
+        min: MIN_VISUALIZATION_WIDTH,
         default: 4,
     },
     height: {
@@ -60,7 +64,7 @@ export const INSIGHT_WIDGET_SIZE_INFO_NEW_DEFAULT: IVisualizationDefaultSizeInfo
  */
 export const RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo = {
     width: {
-        min: 2,
+        min: MIN_VISUALIZATION_WIDTH,
         default: 6,
     },
     height: {
@@ -75,7 +79,7 @@ export const RICH_TEXT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo =
  */
 export const RICH_TEXT_WIDGET_SIZE_INFO_NEW_DEFAULT: IVisualizationDefaultSizeInfo = {
     width: {
-        min: 2,
+        min: MIN_VISUALIZATION_WIDTH,
         default: 4,
     },
     height: {
@@ -90,7 +94,7 @@ export const RICH_TEXT_WIDGET_SIZE_INFO_NEW_DEFAULT: IVisualizationDefaultSizeIn
  */
 export const VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo = {
     width: {
-        min: 2,
+        min: MIN_VISUALIZATION_WIDTH,
         default: 6,
     },
     height: {
@@ -105,7 +109,7 @@ export const VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefa
  */
 export const VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_NEW_DEFAULT: IVisualizationDefaultSizeInfo = {
     width: {
-        min: 2,
+        min: MIN_VISUALIZATION_WIDTH,
         default: 4,
     },
     height: {
@@ -120,7 +124,7 @@ export const VISUALIZATION_SWITCHER_WIDGET_SIZE_INFO_NEW_DEFAULT: IVisualization
  */
 export const DASHBOARD_LAYOUT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo = {
     width: {
-        min: 2,
+        min: MIN_VISUALIZATION_WIDTH,
         default: 4,
     },
     height: {
@@ -135,7 +139,7 @@ export const DASHBOARD_LAYOUT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSiz
  */
 export const KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationDefaultSizeInfo = {
     width: {
-        min: 2,
+        min: MIN_VISUALIZATION_WIDTH,
         default: 2,
     },
     height: {
@@ -150,7 +154,7 @@ export const KPI_WIDGET_SIZE_INFO_DEFAULT_LEGACY: IVisualizationDefaultSizeInfo 
  */
 export const KPI_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo = {
     width: {
-        min: 2,
+        min: MIN_VISUALIZATION_WIDTH,
         default: 2,
     },
     height: {

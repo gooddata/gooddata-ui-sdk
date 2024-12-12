@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React, { Component } from "react";
 import { Bubble, BubbleHoverTrigger, BubbleFocusTrigger, Button } from "@gooddata/sdk-ui-kit";
 import { storiesOf } from "../../../_infra/storyRepository.js";
@@ -248,4 +248,4 @@ storiesOf(`${UiKit}/Bubble`)
             },
         },
     )
-    .add("themed", () => wrapWithTheme(<BubbleExamples />), { screenshot: true });
+    .add("themed", () => wrapWithTheme(<BubbleExamples />));

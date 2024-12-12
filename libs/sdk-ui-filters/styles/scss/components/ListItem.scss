@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 @use "sass:list";
 @use "sass:map";
 @use "@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
@@ -23,12 +23,12 @@
         }
 
         .gd-list-item-tooltip {
-            color: var(--gd-palette-complementary-8, initial);
+            color: var(--gd-palette-complementary-8-from-theme, initial);
         }
 
         &:hover {
             .gd-list-item-tooltip {
-                color: var(--gd-palette-complementary-9, initial);
+                color: var(--gd-palette-complementary-9-from-theme, initial);
             }
         }
     }

@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 @use "typo-mixins";
 @use "variables";
 
@@ -30,7 +30,7 @@
     text-align: center;
 
     &:hover {
-        color: var(--gd-palette-complementary-8, variables.$is-focused-color);
+        color: var(--gd-palette-complementary-8-from-theme, variables.$is-focused-color);
         border-bottom: 3px solid variables.$gd-border-color;
     }
 

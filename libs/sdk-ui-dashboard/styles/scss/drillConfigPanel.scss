@@ -368,7 +368,7 @@
         width: 100%;
         height: 100%;
         padding: 10px;
-        background-color: var(--gd-palette-complementary-2, #e3e9f0);
+        background-color: var(--gd-palette-complementary-2-from-theme, #e3e9f0);
 
         .empty-attribute-hierarchy-info-content {
             position: relative;
@@ -611,7 +611,7 @@ $gd-gd-drill-to-url-body-width: 230px;
     }
 
     .gd-icon-circle-question {
-        color: var(--gd-palette-complementary-5, inherit);
+        color: var(--gd-palette-complementary-5-from-theme, inherit);
         pointer-events: all;
     }
 
@@ -628,7 +628,7 @@ $gd-gd-drill-to-url-body-width: 230px;
         overflow: auto;
         width: 200px;
         height: 270px;
-        border: 1px solid var(--gd-palette-complementary-3, variables.$dialog-border);
+        border: 1px solid var(--gd-palette-complementary-3-from-theme, variables.$dialog-border);
         border-radius: 3px 3px 0 0;
 
         .gd-list-item {
@@ -683,7 +683,7 @@ $gd-gd-drill-to-url-body-width: 230px;
         font-size: 12px;
 
         .gd-icon-circle-question {
-            color: var(--gd-palette-complementary-5, inherit);
+            color: var(--gd-palette-complementary-5-from-theme, inherit);
             margin-right: 4px;
         }
 

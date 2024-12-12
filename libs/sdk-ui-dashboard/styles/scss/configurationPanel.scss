@@ -530,11 +530,11 @@
             margin-top: -3px;
 
             &:hover::before {
-                color: var(--gd-palette-complementary-5, #999);
+                color: var(--gd-palette-complementary-5-from-theme, #999);
             }
             &::before {
                 font: 14px/1 "Indigo", sans-serif;
-                color: var(--gd-palette-complementary-5, #bbb);
+                color: var(--gd-palette-complementary-5-from-theme, #bbb);
             }
         }
 

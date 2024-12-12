@@ -76,6 +76,10 @@ export default defineConfig(({ mode }) => {
                     replacement: path.resolve(__dirname, "./../../libs/sdk-ui-kit/styles"),
                 },
                 {
+                    find: "@gooddata/sdk-ui-kit/src/@ui",
+                    replacement: path.resolve(__dirname, "./../../libs/sdk-ui-kit/src/@ui"),
+                },
+                {
                     find: "~@gooddata/sdk-ui-dashboard/esm/assets",
                     replacement: path.resolve(__dirname, "./../../libs/sdk-ui-dashboard/src/assets"),
                 },

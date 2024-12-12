@@ -1,0 +1,16 @@
+name: Push ~ Run integrated e2e tests
+on:
+  push:
+    branches:
+      - master
+      - release
+
+jobs:
+  e2e-integrated:
+    if: ${{ !(startsWith(github.event.head_commit.message, 'Release ') || startsWith(github.event.head_commit.message, format('chore{0} bump versions to', ':'))) }}
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: read
+    uses: ./.github/workflows/rw-rush-build-e2e-tests-integrated.yml
+    secrets: inherit

@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 
 $goodstrap-fontFamily: gdcustomfont, "Helvetica Neue", "Helvetica", helvetica, arial, sans-serif;
 
@@ -58,7 +58,7 @@ $goodstrap-bg-color: var(--gd-palette-complementary-0, #fff);
     position: relative;
     margin: 15px 0;
     padding: 20px 20px 0;
-    border: 1px solid var(--gd-palette-complementary-3, #ccc);
+    border: 1px solid var(--gd-palette-complementary-3-from-theme, #ccc);
     background: var(--gd-palette-complementary-0, #fff);
     min-height: 20px;
     border-radius: 4px 4px 4px 0;
@@ -71,19 +71,19 @@ $goodstrap-bg-color: var(--gd-palette-complementary-0, #fff);
     display: block;
     margin: 20px -20px 0;
     padding: 5px 7px;
-    color: var(--gd-palette-complementary-7, #555);
+    color: var(--gd-palette-complementary-7-from-theme, #555);
     cursor: pointer;
-    border-top: 1px dotted var(--gd-palette-complementary-2, #eee);
+    border-top: 1px dotted var(--gd-palette-complementary-2-from-theme, #eee);
     font-size: 12px;
     @include gradient-linear(
         var(--gd-palette-complementary-0, #fff),
-        var(--gd-palette-complementary-3, #ccc)
+        var(--gd-palette-complementary-3-from-theme, #ccc)
     );
 }
 
 pre.prettyprint,
 code.prettyprint {
-    background-color: var(--gd-palette-complementary-2, #eee);
+    background-color: var(--gd-palette-complementary-2-from-theme, #eee);
     @include transition("background-color", 0.8s);
 
     &.flash {
@@ -93,7 +93,7 @@ code.prettyprint {
 
 pre.prettyprint {
     padding: 1em 1.5em;
-    border: 1px solid var(--gd-palette-complementary-4, #ddd);
+    border: 1px solid var(--gd-palette-complementary-4-from-theme, #ddd);
     white-space: pre-wrap;
     border-radius: 5px;
 }
@@ -127,7 +127,7 @@ pre.prettyprint {
                 right: 0;
                 left: 50px;
                 height: 1px;
-                background: var(--gd-palette-complementary-4, #ddd);
+                background: var(--gd-palette-complementary-4-from-theme, #ddd);
             }
         }
     }
@@ -165,7 +165,7 @@ pre.prettyprint {
         }
         tr td {
             padding: 10px;
-            border-top: 1px solid var(--gd-palette-complementary-3, #ccc);
+            border-top: 1px solid var(--gd-palette-complementary-3-from-theme, #ccc);
         }
     }
 
@@ -208,7 +208,7 @@ pre.prettyprint {
 
     code {
         padding: 2px 4px;
-        border: 1px solid var(--gd-palette-complementary-3, #ccc);
+        border: 1px solid var(--gd-palette-complementary-3-from-theme, #ccc);
         white-space: nowrap;
         background: var(--gd-palette-complementary-0, #fff);
         font-size: 90%;

@@ -4,6 +4,11 @@
 
 ```ts
 
+import { IExportResult } from '@gooddata/sdk-model';
+
+export { IExportResult }
+export { IExportResult as IExportResultModel }
+
 
 export * from "@gooddata/sdk-backend-spi";
 export * from "@gooddata/sdk-model";

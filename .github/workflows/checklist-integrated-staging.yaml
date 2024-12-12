@@ -1,0 +1,61 @@
+# (C) 2024 GoodData Corporation
+
+name: Checklist ~ run integrated e2e tests
+on:
+  workflow_dispatch:
+    inputs:
+      run-cypress-sdk:
+        description: 'Cypress SDK on top of Tiger'
+        required: false
+        default: true
+        type: boolean
+      run-export:
+        description: 'Cypress SDK Export Test'
+        required: false
+        default: true
+        type: boolean
+jobs:
+  setup-stage:
+    name: Setup env variables
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    outputs:
+      run-cypress-sdk: ${{ steps.test-suite-options.outputs.run-cypress-sdk }}
+      run-export: ${{ steps.test-suite-options.outputs.run-export }}
+    steps:
+      - name: Set test suite options
+        id: test-suite-options
+        run: |
+          if [ -z "${{ inputs.run-cypress-sdk }}" ]; then
+            echo 'run-cypress-sdk=false' >> $GITHUB_OUTPUT
+          else
+            echo "run-cypress-sdk=${{ inputs.run-cypress-sdk }}" >> $GITHUB_OUTPUT
+          fi
+          if [ -z "${{ inputs.run-export }}" ]; then
+            echo 'run-export=false' >> $GITHUB_OUTPUT
+          else
+            echo "run-export=${{ inputs.run-export }}" >> $GITHUB_OUTPUT
+          fi
+  checklist-SDK:
+    name: Cypress SDK on top of Tiger
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/checklist-cypress-ui-test.yaml
+    needs: [ setup-stage ]
+    if: ${{ needs.setup-stage.outputs.run-cypress-sdk == 'true'}}
+    with:
+      CYPRESS_TEST_TAGS: 'checklist_integrated_tiger'
+  checklist-export:
+    name: Cypress SDK Export Test
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/checklist-cypress-ui-test.yaml
+    needs: [ setup-stage ]
+    if: ${{ needs.setup-stage.outputs.run-export == 'true'}}
+    with:
+      CYPRESS_TEST_TAGS: 'checklist_integrated_tiger_export'

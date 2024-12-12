@@ -65,10 +65,12 @@
         "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "stylelint": "stylelint '**/*.scss'",
         "stylelint-ci": "stylelint '**/*.scss' --custom-formatter=node_modules/stylelint-checkstyle-formatter > ./ci/results/stylelint-results.xml",
-        "validate": "npm run dep-cruiser && npm run eslint && npm run stylelint && npm run validate-locales && npm run prettier-check",
-        "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run stylelint-ci && npm run validate-locales-ci && npm run prettier-check",
+        "validate": "npm run dep-cruiser && npm run eslint && npm run stylelint && npm run validate-locales && npm run prettier-check && npm run validate-theming",
+        "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run stylelint-ci && npm run validate-locales-ci && npm run prettier-check && npm run validate-theming",
         "validate-locales": "cd ../sdk-ui && npm run validate-locales",
-        "validate-locales-ci": "cd ../sdk-ui && npm run validate-locales-ci"
+        "validate-locales-ci": "cd ../sdk-ui && npm run validate-locales-ci",
+        "validate-theming": "npm run scss && node scripts/validateCss.js",
+        "scss": "sass --load-path=node_modules styles/scss:styles/css"
     },
     "dependencies": {
         "@ag-grid-community/all-modules": "27.3.0",
@@ -87,6 +89,7 @@
         "default-import": "1.1.5",
         "highcharts": "9.3.0",
         "hoist-non-react-statics": "^3.3.0",
+        "js-yaml": "^4.1.0",
         "json-stable-stringify": "^1.0.1",
         "lodash": "^4.17.21",
         "polished": "^3.6.7",
@@ -146,6 +149,7 @@
         "stylelint-config-prettier": "^8.0.2",
         "typescript": "5.3.3",
         "vitest": "1.0.4",
-        "vitest-dom": "0.1.1"
+        "vitest-dom": "0.1.1",
+        "@types/js-yaml": "^4.0.9"
     }
 }

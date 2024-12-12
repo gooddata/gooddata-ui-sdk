@@ -4,7 +4,20 @@ on:
     types:
       - checks_requested
 jobs:
+  detect-changes:
+    secrets: inherit
+    permissions:
+      contents: write
+      id-token: write
+    uses: ./.github/workflows/rw-rush-detect-changes.yml
+    with:
+      source-branch: ${{ github.event.merge_group.head_sha }}
+      target-branch: ${{ github.event.merge_group.base_ref }}
+      package-name: "@gooddata/sdk-ui-tests-e2e"
+
   e2e-stage:
+    needs: [detect-changes]
+    if: ${{ needs.detect-changes.outputs.is-changed == 'true' }}
     permissions:
       id-token: write
       contents: read

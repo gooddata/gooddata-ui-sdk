@@ -1,5 +1,5 @@
 // (C) 2019-2024 GoodData Corporation
-import { ISeparators } from "@gooddata/sdk-model";
+import { IAlertDefault, ISeparators } from "@gooddata/sdk-model";
 import { IWorkspaceSettings, IUserWorkspaceSettings } from "../../common/settings.js";
 
 /**
@@ -8,6 +8,15 @@ import { IWorkspaceSettings, IUserWorkspaceSettings } from "../../common/setting
  * @public
  */
 export interface IWorkspaceSettingsService {
+    /**
+     * Sets alert default
+     *
+     * @param value - describes parameters for alerting.
+     *
+     * @returns promise
+     */
+    setAlertDefault(value: IAlertDefault): Promise<void>;
+
     /**
      * Asynchronously queries actual feature flags.
      *

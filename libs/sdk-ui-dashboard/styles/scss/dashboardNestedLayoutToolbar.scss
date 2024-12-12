@@ -3,39 +3,64 @@
 @use "variables";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
-.gd-dashboard-nested-layout-toolbar-bubble-wrapper.gd-configuration-bubble-wrapper.overlay-wrapper.sdk-edit-mode-on {
-    .gd-configuration-bubble.gd-dashboard-nested-layout-toolbar {
-        width: 44px;
-        height: 40px;
-    }
+.gd-nested-layout__toolbar.overlay-wrapper {
+    width: unset;
+
     .bubble-content {
         padding: 0;
+    }
+
+    .helper {
+        display: none;
+    }
+
+    .gd-bubble-trigger {
         display: flex;
-        width: 100%;
-        .helper {
-            display: none;
+    }
+
+    .content {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 8px;
+    }
+
+    .gd-nested-layout__toolbar__delimiter {
+        width: 1px;
+        height: 28px;
+        background-color: variables.$button-grey-background;
+    }
+
+    .gd-nested-layout__toolbar__button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        cursor: pointer;
+    }
+
+    .gd-nested-layout__toolbar__icon--headers-active {
+        path {
+            fill: kit-variables.$gd-palette-primary-base;
         }
     }
-    .content {
-        flex: 1;
-        display: flex;
-    }
-}
 
-.gd-dashboard-nested-layout-toolbar.bubble.bubble-light {
-    position: initial;
-    padding: 6px 8px;
-
-    .gd-dashboard-nested-layout-remove-button {
-        flex: 1;
-        text-align: center;
-        padding-top: 3px;
-    }
-
-    .gd-trash-icon:hover {
-        cursor: pointer;
+    .gd-nested-layout__toolbar__icon--headers-disabled {
         path {
-            fill: var(--gd-palette-error-base, #e54d42);
+            fill: kit-variables.$default-gd-color-link;
+        }
+
+        &:hover {
+            path {
+                fill: var(--gd-palette-complementary-8, kit-variables.$default-gd-color-text);
+            }
+        }
+    }
+
+    .gd-nested-layout__toolbar__icon--remove:hover {
+        path {
+            fill: var(--gd-palette-error-base, kit-variables.$gd-color-negative);
         }
     }
 }

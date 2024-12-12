@@ -92,6 +92,10 @@
         margin-bottom: 0;
     }
 
+    p + p {
+        margin-top: 0.625rem;
+    }
+
     hr {
         border-top: 0;
         border-bottom: 1px solid variables.$gd-border-color;

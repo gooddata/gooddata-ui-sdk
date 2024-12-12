@@ -40,6 +40,7 @@ export default class RepeaterConfigurationPanel extends ConfigurationPanelConten
                         <TextWrappingControl pushData={pushData} properties={properties} />
                         <ImageControl pushData={pushData} properties={properties} />
                     </ConfigSection>
+                    {this.renderAdvancedSection()}
                 </div>
                 <Bubble
                     className={this.getBubbleClassNames()}

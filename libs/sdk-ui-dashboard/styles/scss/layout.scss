@@ -123,7 +123,8 @@ $gd-dashboards-section-description-color: var(
     .gd-row-header-title-wrapper {
         display: flex;
 
-        h2 {
+        h2,
+        h3 {
             color: $gd-dashboards-section-title-color;
         }
 
@@ -358,8 +359,8 @@ $gd-dashboards-section-description-color: var(
     &.added,
     &.modified {
         background: var(
-            --gd-dashboards-content-backgroundColor,
-            var(--gd-palette-complementary-0, rgba(255, 255, 255, 0.95))
+            --gd-dashboards-content-backgroundColor-from-theme,
+            var(--gd-palette-complementary-0-from-theme, rgba(255, 255, 255, 0.95))
         );
     }
 
@@ -419,6 +420,45 @@ $gd-dashboards-section-description-color: var(
 
     .gd-fluid-layout-row-header {
         position: relative;
+
+        .gd-row-header-edit--nested {
+            .title {
+                @include typo-mixins.gd-heading-3;
+
+                color: $gd-dashboards-section-title-color;
+            }
+
+            .placeholder {
+                color: kit-variables.$gd-color-state-blank;
+            }
+        }
+
+        .gd-editable-label {
+            @include mixins.active-states {
+                border-color: variables.$editable-label-border;
+                border-radius: 3px;
+            }
+
+            &.is-editing {
+                border-radius: 3px;
+            }
+        }
+
+        .gd-editable-label-richtext {
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+    }
+
+    .gd-fluid-layout-row-header-container--no-headers,
+    .gd-fluid-layout-row-header-container--with-headers {
+        margin-top: 16px;
+    }
+
+    .gd-dashboard-nested-layout-content:not(.is-dragging-widget) {
+        .gd-fluid-layout-row-header-container--no-headers {
+            margin-top: 0;
+        }
     }
 
     .gd-fluidlayout-column-container {

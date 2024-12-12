@@ -150,6 +150,8 @@ function convertAllowedRecipientsFromBackend(
             return "creator";
         case JsonApiNotificationChannelOutAttributesAllowedRecipientsEnum.INTERNAL:
             return "internal";
+        case JsonApiNotificationChannelOutAttributesAllowedRecipientsEnum.EXTERNAL:
+            return "external";
         default:
             assertNever(allowedRecipients);
             return undefined;

@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 @use "@gooddata/sdk-ui-kit/styles/scss/variables";
 
 $item-border: 2px;
@@ -61,7 +61,7 @@ $gd-dashboards-content-kpiWidget-dropShadow: var(
     $gd-dashboards-content-widget-dropShadow
 );
 $gd-kpi-primaryMeasureColor: var(
-    --gd-dashboards-content-kpiWidget-kpi-primaryMeasureColor,
+    --gd-dashboards-content-kpiWidget-kpi-primaryMeasureColor-from-theme,
     variables.$gd-color-link
 );
 

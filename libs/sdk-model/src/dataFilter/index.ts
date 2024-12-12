@@ -32,6 +32,7 @@ export interface IWorkspaceDataFilterSetting {
     ref: ObjRef;
     title?: string;
     filterValues: string[];
+    isInherited: boolean;
 }
 
 /**

@@ -1,4 +1,6 @@
 // (C) 2007-2024 GoodData Corporation
+@use "codemirror/lib/codemirror.css";
+@use "codemirror/addon/lint/lint.css";
 @use "sass:color";
 @use "variables.scss";
 @use "@gooddata/sdk-ui-kit/styles/scss/colorPicker";
@@ -178,5 +180,239 @@ $color-picker-spacing: 5px;
 .gd-forecast-section.adi-bucket-configuration {
     .gd-slicedForecast-message {
         margin-top: 15px;
+    }
+}
+
+.gd-advanced-section.adi-bucket-configuration {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 0 15px 0;
+    align-items: center;
+
+    .gd-chart-override-value-preview {
+        width: 100%;
+        max-height: 150px;
+        overflow: hidden;
+        border-bottom: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+        color: var(--gd-palette-complementary-1-from-theme, #303442);
+    }
+
+    .gd-chart-override-value {
+        width: calc(100% - 26px);
+        padding: 13px;
+        margin: 0;
+        background: rgba(255, 255, 255, 0.6);
+        font-size: 11px;
+        white-space: pre-wrap;
+    }
+
+    .fade-out {
+        mask-image: linear-gradient(
+            to bottom,
+            black 50%,
+            transparent 90%,
+            transparent calc(100% - 1px),
+            black 90%
+        );
+    }
+
+    .gd-chart-override-no-value {
+        color: kit-variables.$gd-color-state-blank;
+        font-size: 12px;
+        padding-top: 14px;
+    }
+
+    .gd-chart-override-link {
+        font-size: 12px;
+    }
+}
+
+.gd-icon-code {
+    background-image: url("~@gooddata/sdk-ui-ext/esm/internal/assets/icons/icon-code.svg");
+}
+
+.gd-advanced-customization-dialog {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    height: inherit;
+    font-size: 12px;
+
+    .gd-advanced-customization-dialog__header {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 12px;
+        background-color: kit-variables.$is-focused-background;
+        border-bottom: 1px solid kit-variables.$gd-border-color;
+
+        & > span {
+            color: kit-variables.$gd-color-state-blank;
+            text-transform: uppercase;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .gd-button-link {
+            width: 12px;
+            height: 19px;
+            line-height: 12px;
+
+            &::before {
+                font-size: 12px;
+            }
+        }
+    }
+
+    .gd-advanced-customization-dialog__content {
+        display: flex;
+    }
+
+    .gd-advanced-customization-dialog__main {
+        width: 400px;
+        padding: 10px;
+    }
+
+    .gd-advanced-customization-dialog__snippets {
+        width: 200px;
+        max-height: 320px;
+        overflow: auto;
+        border-left: 1px solid kit-variables.$gd-border-color;
+        color: var(--gd-palette-complementary-8, #464e56);
+        padding: 0 5px;
+    }
+
+    .gd-advanced-customization-dialog__snippets--header {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        text-transform: uppercase;
+        font-weight: bold;
+        padding: 10px 5px;
+        color: var(--gd-palette-complementary-6, #94a1ad);
+        font-size: 10px;
+
+        .gd-advanced-customization-dialog__snippets--header__line {
+            flex-grow: 1;
+            border-top: 1px solid kit-variables.$gd-border-color;
+        }
+    }
+
+    .gd-advanced-customization-dialog__snippet--header {
+        text-transform: uppercase;
+        color: var(--gd-palette-complementary-6, #94a1ad);
+        padding: 5px;
+        font-size: 11px;
+    }
+
+    .gd-advanced-customization-dialog__snippet {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 5px;
+        cursor: pointer;
+        font-size: 12px;
+
+        .gd-advanced-customization-dialog__snippet__tooltip__trigger {
+            display: none;
+        }
+
+        &:hover {
+            background: var(--gd-palette-complementary-2, #ebeff4);
+
+            .gd-advanced-customization-dialog__snippet__tooltip__trigger {
+                display: block;
+            }
+        }
+    }
+
+    .gd-advanced-customization-dialog__footer {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        border-top: 1px solid kit-variables.$gd-border-color;
+        text-align: right;
+    }
+}
+
+.gd-advanced-customization-dialog__snippet__tooltip {
+    padding: 10px;
+}
+
+.gd-advanced-customization-dialog__snippet__tooltip__header {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.gd-advanced-customization-dialog__snippet__tooltip__body {
+    font-size: 12px;
+    color: var(--gd-palette-complementary-7, #6d7680);
+}
+
+@mixin code-mirror-icon--error {
+    background-image: url("~@gooddata/sdk-ui-ext/esm/internal/assets/icons/icon-error.svg");
+    background-size: 12px 12px;
+}
+
+// class name generated from provided "theme" prop with value "gd-advanced-customization-dialog__theme"
+.cm-s-gd-advanced-customization-dialog__theme {
+    // The colors in this section are not themed in any way for now.
+    // The feature is for internal use only for now.
+    &.CodeMirror {
+        border: 1px solid kit-variables.$gd-border-color;
+        border-radius: 3px;
+
+        .cm-keyword {
+            color: #7364cf;
+        }
+        .cm-variable,
+        .cm-atom {
+            color: #7364cf;
+        }
+        .cm-string,
+        .cm-meta {
+            color: #464e56;
+        }
+        .cm-number {
+            color: #464e56;
+        }
+        .cm-comment {
+            color: #94a1ad;
+            font-style: italic;
+        }
+
+        .CodeMirror-gutters {
+            background: #fff;
+            border-right: 1px solid #ebeff4;
+        }
+
+        .CodeMirror-lint-marker-error {
+            @include code-mirror-icon--error;
+        }
+
+        .CodeMirror-line {
+            padding: 0 10px;
+        }
+    }
+}
+
+// For some reason the tooltip wrapper does not provided "theme" prop
+// "gd-advanced-customization-dialog__theme" prefixed with "cm-s-" as the main container.
+.gd-advanced-customization-dialog__theme {
+    &.CodeMirror-lint-tooltip {
+        z-index: 6000;
+        border: 1px solid kit-variables.$gd-border-color;
+        background: white;
+        color: var(--gd-palette-complementary-8, #464e56);
+        padding: 10px;
+
+        .CodeMirror-lint-message {
+            padding-left: 25px;
+            background-position: top 4px left;
+        }
+
+        .CodeMirror-lint-message-error {
+            @include code-mirror-icon--error;
+        }
     }
 }

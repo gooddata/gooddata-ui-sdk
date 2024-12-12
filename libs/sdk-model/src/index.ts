@@ -56,6 +56,28 @@ export {
     isNotificationChannelMetadataObject,
     isNotificationChannelMetadataObjectDefinition,
 } from "./notificationChannels/index.js";
+export type {
+    AlertDescriptionStatus,
+    AutomationNotificationType,
+    IAlertDescription,
+    IAlertEvaluationRow,
+    IAlertEvaluationRowMetric,
+    IAlertNotification,
+    IAlertNotificationDetails,
+    IAutomationNotificationDetailsBase,
+    INotification,
+    INotificationBase,
+    IScheduleNotification,
+    IScheduleNotificationDetails,
+    ITestNotification,
+    ITestNotificationDetails,
+    IWebhookAutomationInfo,
+    IWebhookMessageDataAlert,
+    IWebhookMessageDataBase,
+    IWebhookMessageDataSchedule,
+    NotificationType,
+    WebhookRecipient,
+} from "./notifications/index.js";
 
 export type {
     ObjectType,
@@ -758,6 +780,8 @@ export type {
     IDashboardLayoutSizeByScreenSize,
     IDashboardLayoutItem,
     IDashboardLayoutWidget,
+    IDashboardLayoutConfiguration,
+    IDashboardLayoutSectionsConfiguration,
     ScreenSize,
 } from "./dashboard/layout.js";
 export {
@@ -964,14 +988,16 @@ export type {
     IExportDefinitionDashboardContent,
     IExportDefinitionVisualizationObjectContent,
     IExportDefinitionMetadataObjectDefinition,
-} from "./exportDefinitions/index.js";
+    IExportResult,
+    IExportResultStatus,
+} from "./exports/index.js";
 export {
     exportDefinitionTitle,
     exportDefinitionCreated,
     exportDefinitionUpdated,
     isExportDefinitionDashboardRequestPayload,
     isExportDefinitionVisualizationObjectRequestPayload,
-} from "./exportDefinitions/index.js";
+} from "./exports/index.js";
 
 export type {
     IWorkspaceDataFilter,
@@ -999,6 +1025,7 @@ export type {
     IAlertRelativeOperator,
     IAlertRelativeArithmeticOperator,
     IAutomationAlertRelativeCondition,
+    IAutomationDetails,
 } from "./automations/index.js";
 export {
     isAutomationMetadataObject,

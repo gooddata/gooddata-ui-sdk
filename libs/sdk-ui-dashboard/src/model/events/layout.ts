@@ -1037,3 +1037,59 @@ export function screenSizeChanged(
 export const isScreenSizeChanged = eventGuard<ScreenSizeChanged>(
     "GDC.DASH/EVT.FLUID_LAYOUT.SCREEN_SIZE_CHANGED",
 );
+
+//
+//
+//
+
+/**
+ * Payload of the {@link LayoutSectionHeadersToggled} event.
+ * @beta
+ */
+export interface LayoutSectionHeadersToggledPayload {
+    /**
+     * Layout that got the section headers state toggled.
+     */
+    layoutPath: ILayoutItemPath | undefined;
+    /**
+     * The new state of the layout section headers
+     */
+    areSectionHeadersEnabled: boolean;
+}
+
+/**
+ * This event is emitted after layout section headers were toggled.
+ *
+ * @alpha
+ */
+export interface LayoutSectionHeadersToggled extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.FLEXIBLE_LAYOUT.LAYOUT_SECTION_HEADERS_TOGGLED";
+    readonly payload: LayoutSectionHeadersToggledPayload;
+}
+
+export function layoutSectionHeadersToggled(
+    ctx: DashboardContext,
+    layoutPath: ILayoutItemPath | undefined,
+    areSectionHeadersEnabled: boolean,
+    correlationId?: string,
+): LayoutSectionHeadersToggled {
+    return {
+        type: "GDC.DASH/EVT.FLEXIBLE_LAYOUT.LAYOUT_SECTION_HEADERS_TOGGLED",
+        ctx,
+        correlationId,
+        payload: {
+            layoutPath,
+            areSectionHeadersEnabled,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link LayoutSectionHeadersToggled}.
+ *
+ * @param obj - object to test
+ * @beta
+ */
+export const isLayoutSectionHeadersToggled = eventGuard<LayoutSectionHeadersToggled>(
+    "GDC.DASH/EVT.FLEXIBLE_LAYOUT.LAYOUT_SECTION_HEADERS_TOGGLED",
+);

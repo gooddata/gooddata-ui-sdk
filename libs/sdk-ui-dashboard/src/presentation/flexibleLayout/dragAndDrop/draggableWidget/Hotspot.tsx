@@ -29,10 +29,11 @@ interface IHotspotProps {
     isEndingHotspot?: boolean;
     classNames?: string;
     dropZoneType: "prev" | "next";
+    hideBorder?: boolean;
 }
 
 export const Hotspot: React.FC<IHotspotProps> = (props) => {
-    const { layoutPath, classNames, dropZoneType, isEndingHotspot } = props;
+    const { layoutPath, classNames, dropZoneType, isEndingHotspot, hideBorder = false } = props;
     const isOverLastValue = useRef(false);
 
     const currentItemIndex = getItemIndex(layoutPath);
@@ -135,7 +136,22 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
             style={debugStyle}
             ref={dropRef}
         >
-            <div className="gd-hotspot-border" />
+            {hideBorder ? null : <HotspotBorder />}
+        </div>
+    );
+};
+
+/**
+ * A functional component that render hotspot border as dropzone
+ * @returns A JSX element representing the hotspot border.
+ */
+const HotspotBorder: React.FC = () => {
+    const status = "active";
+    return (
+        <div className="gd-hotspot-border__container">
+            <div className={`gd-hotspot-border__drop-target ${status}`}>
+                <div className="drop-target-inner" />
+            </div>
         </div>
     );
 };

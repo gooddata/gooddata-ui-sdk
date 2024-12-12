@@ -9,3 +9,4 @@ export const ConfigurationControls = "11 Configuration Controls";
 export const UiKit = "12 UI Kit";
 export const WebComponents = "13 Web Components";
 export const GenAIStories = "14 GenAI";
+export const UiStories = "15 Ui";

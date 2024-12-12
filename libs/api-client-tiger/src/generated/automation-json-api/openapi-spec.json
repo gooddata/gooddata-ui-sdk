@@ -17,7 +17,7 @@
         }
     ],
     "paths": {
-        "/api/v1/notifications/{notificationId}/markAsRead": {
+        "/api/v1/actions/notifications/{notificationId}/markAsRead": {
             "post": {
                 "tags": ["actions"],
                 "summary": "Mark notification as read.",
@@ -29,6 +29,31 @@
                         "in": "path",
                         "description": "Notification ID to mark as read.",
                         "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/api/v1/actions/notifications/markAsRead": {
+            "post": {
+                "tags": ["actions"],
+                "summary": "Mark all notifications as read.",
+                "description": "Mark all user in-platform notifications as read.",
+                "operationId": "markAsReadNotificationAll",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "query",
+                        "description": "Workspace ID where to mark notifications as read.",
+                        "required": false,
+                        "style": "form",
                         "schema": {
                             "type": "string"
                         }
@@ -57,6 +82,15 @@
                         }
                     }
                 ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TestDestinationRequest"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "The result of the test of a notification channel connection.",
@@ -131,7 +165,7 @@
                 }
             }
         },
-        "/api/v1/notifications": {
+        "/api/v1/actions/notifications": {
             "get": {
                 "tags": ["actions"],
                 "summary": "Get latest notifications.",
@@ -146,6 +180,16 @@
                         "style": "form",
                         "schema": {
                             "type": "string"
+                        }
+                    },
+                    {
+                        "name": "isRead",
+                        "in": "query",
+                        "description": "Filter notifications by read status.",
+                        "required": false,
+                        "style": "form",
+                        "schema": {
+                            "type": "boolean"
                         }
                     },
                     {
@@ -167,9 +211,25 @@
                         "required": false,
                         "style": "form",
                         "schema": {
-                            "minimum": 0,
+                            "minimum": 1,
                             "type": "string",
                             "default": "20"
+                        }
+                    },
+                    {
+                        "name": "metaInclude",
+                        "in": "query",
+                        "description": "Additional meta information to include in the response.",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "uniqueItems": true,
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": ["total", "ALL"]
+                            }
                         }
                     }
                 ],
@@ -179,10 +239,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/Notification"
-                                    }
+                                    "$ref": "#/components/schemas/Notifications"
                                 }
                             }
                         }
@@ -386,6 +443,10 @@
                     "attribute": {
                         "type": "string"
                     },
+                    "filterCount": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
                     "totalValueCount": {
                         "type": "integer",
                         "format": "int32"
@@ -408,6 +469,10 @@
                     "upperThreshold": {
                         "type": "number",
                         "format": "double"
+                    },
+                    "remainingAlertEvaluationCount": {
+                        "type": "integer",
+                        "format": "int32"
                     },
                     "status": {
                         "type": "string",
@@ -538,6 +603,43 @@
                     "mapping": {
                         "AUTOMATION": "#/components/schemas/AutomationNotification",
                         "TEST": "#/components/schemas/TestNotification"
+                    }
+                }
+            },
+            "Notifications": {
+                "required": ["data", "meta"],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Notification"
+                        }
+                    },
+                    "meta": {
+                        "$ref": "#/components/schemas/NotificationsMeta"
+                    }
+                }
+            },
+            "NotificationsMeta": {
+                "type": "object",
+                "properties": {
+                    "total": {
+                        "$ref": "#/components/schemas/NotificationsMetaTotal"
+                    }
+                }
+            },
+            "NotificationsMetaTotal": {
+                "required": ["all", "unread"],
+                "type": "object",
+                "properties": {
+                    "unread": {
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    "all": {
+                        "type": "integer",
+                        "format": "int64"
                     }
                 }
             },

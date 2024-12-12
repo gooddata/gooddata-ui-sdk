@@ -147,6 +147,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "@gooddata/sdk-ui-charts",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
       "name": "@gooddata/sdk-ui-dashboard",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -164,10 +168,6 @@
     },
     {
       "name": "@gooddata/sdk-ui-geo",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "@gooddata/sdk-ui-charts",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
@@ -313,6 +313,10 @@
     {
       "name": "@types/isomorphic-fetch",
       "allowedCategories": [ "examples", "production" ]
+    },
+    {
+      "name": "@types/js-yaml",
+      "allowedCategories": [ "production" ]
     },
     {
       "name": "@types/json-stable-stringify",
@@ -519,6 +523,10 @@
       "allowedCategories": [ "examples", "tools" ]
     },
     {
+      "name": "chokidar",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "circular-dependency-plugin",
       "allowedCategories": [ "examples", "production" ]
     },
@@ -719,6 +727,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "glob",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "happy-dom",
       "allowedCategories": [ "production", "tools" ]
     },
@@ -752,11 +764,7 @@
     },
     {
       "name": "chalk",
-      "allowedCategories": [ "tools" ]
-    },
-    {
-      "name": "chokidar",
-      "allowedCategories": [ "tools" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "immer",
@@ -772,6 +780,10 @@
     },
     {
       "name": "js-object-pretty-print",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "js-yaml",
       "allowedCategories": [ "production" ]
     },
     {
@@ -864,6 +876,14 @@
     },
     {
       "name": "polished",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "postcss",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "postcss-value-parser",
       "allowedCategories": [ "production" ]
     },
     {
@@ -1003,16 +1023,16 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "recharts",
+      "allowedCategories": [ "examples" ]
+    },
+    {
       "name": "redux-batched-actions",
       "allowedCategories": [ "production" ]
     },
     {
       "name": "redux-saga",
       "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "recharts",
-      "allowedCategories": [ "examples" ]
     },
     {
       "name": "require-from-string",
@@ -1071,11 +1091,11 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "stylelint-config-prettier",
+      "name": "stylelint-checkstyle-formatter",
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "stylelint-checkstyle-formatter",
+      "name": "stylelint-config-prettier",
       "allowedCategories": [ "production" ]
     },
     {

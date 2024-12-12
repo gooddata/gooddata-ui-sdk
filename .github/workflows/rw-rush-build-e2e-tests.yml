@@ -1,10 +1,14 @@
-name: rw ~ rush ~ build validate and run unit tests
+name: rw ~ rush ~ e2e tests
 on:
   workflow_call:
     inputs:
       filter:
           required: false
           description: "List of spec files to filter"
+          type: string
+      source-ref:
+          required: false
+          description: "source ref of the current code"
           type: string
 
 jobs:
@@ -14,6 +18,10 @@ jobs:
       labels: runners-cxa-xlarge
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.source-ref }}
+          fetch-depth: 2
+
       - name: Git config user
         uses: snow-actions/git-config-user@v1.0.0
         with:
@@ -31,7 +39,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ inputs.source-ref }}
           fetch-depth: 2
+      - name: Debug
+        run: git log -1
       - name: Git config user
         uses: snow-actions/git-config-user@v1.0.0
         with:
@@ -91,6 +102,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ inputs.source-ref }}
           fetch-depth: 2
       - name: Git config user
         uses: snow-actions/git-config-user@v1.0.0
@@ -108,7 +120,6 @@ jobs:
         run: node common/scripts/install-run-rush.js build-generate-version
       - name: Run e2e tests
         run: |
-          export RUN_ON_GH=true
           export EXECUTOR_NUMBER=$GH_RUN_ID
           if [ -n "$USER_FILTER" ]; then
             export FILTER=$USER_FILTER
@@ -122,3 +133,10 @@ jobs:
           RUNNER: ${{ matrix.runner }}
           RUNNERS_COUNT: ${{ needs.e2e-prepare-matrix.outputs.count }}
           USER_FILTER: ${{ inputs.filter }}
+      - name: Archive the cypress test artifacts
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: cypress-test-artifacts-${{matrix.runner}}
+          path: |
+            libs/sdk-ui-tests-e2e/cypress/videos/**/*.mp4

@@ -48,6 +48,7 @@ class HeadlineConfigurationPanel extends ConfigurationPanelContent<
                         pushData={pushData}
                     />
                     {this.renderInteractionsSection()}
+                    {this.renderAdvancedSection()}
                 </div>
                 <Bubble
                     className={bubbleClassNames}

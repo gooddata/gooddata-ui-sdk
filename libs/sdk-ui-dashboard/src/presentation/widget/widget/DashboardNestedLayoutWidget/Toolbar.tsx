@@ -1,70 +1,94 @@
 // (C) 2024 GoodData Corporation
 
-import { ArrowOffsets, Bubble, BubbleHoverTrigger, IAlignPoint, Icon } from "@gooddata/sdk-ui-kit";
 import React from "react";
+import { FormattedMessage } from "react-intl";
+import { Bubble, BubbleHoverTrigger, IAlignPoint, Icon } from "@gooddata/sdk-ui-kit";
+import { IDashboardLayout } from "@gooddata/sdk-model";
 import cx from "classnames";
 
-import { useDashboardUserInteraction } from "../../../../model/index.js";
-import {
-    defaultAlignPoints,
-    defaultArrowDirections,
-} from "../../common/configuration/ConfigurationBubble.js";
-import { FormattedMessage } from "react-intl";
+import { useDashboardUserInteraction, ExtendedDashboardWidget } from "../../../../model/index.js";
+import { useLayoutSectionsConfiguration } from "../../common/useLayoutSectionsConfiguration.js";
 
-const defaultArrowOffsets: ArrowOffsets = {
-    "tr tl": [7, 8],
-    "br bl": [7, -8],
-    "tl tr": [-7, 8],
-    "tr tr": [-76, 8],
-    "br br": [-76, -8],
-};
-
-const bubbleAlignPoints: IAlignPoint[] = [{ align: "tc bc", offset: { x: 0, y: -8 } }];
+const TOOLBAR_ALIGN_POINTS: IAlignPoint[] = [
+    { align: "tr tl", offset: { x: 0, y: 11 } },
+    { align: "tl tr", offset: { x: -2, y: 11 } },
+];
+const TOOLTIP_ALIGN_POINTS: IAlignPoint[] = [{ align: "tc bc", offset: { x: 0, y: -7 } }];
+const ARROW_STYLES = { display: "none" };
+const ALIGN_TOOLBAR_TO = ".s-dash-item.is-selected";
+const IGNORE_TOOLBAR_CLICKS_ON_BY_CLASS = [ALIGN_TOOLBAR_TO]; // do not close on click to the widget
 
 interface ToolbarProps {
+    layout: IDashboardLayout<ExtendedDashboardWidget>;
     onWidgetDelete: () => void;
+    onToggleHeaders: (areSectionHeadersEnabled: boolean) => void;
     onClose: () => void;
 }
 
-export const Toolbar: React.FC<ToolbarProps> = ({ onWidgetDelete, onClose }) => {
+export const Toolbar: React.FC<ToolbarProps> = ({ layout, onWidgetDelete, onToggleHeaders, onClose }) => {
     const userInteraction = useDashboardUserInteraction();
-
-    const alignTo = ".s-dash-item.is-selected";
-    const ignoreClicksOnByClass = [alignTo]; // do not close on click to the widget
-    const configBubbleClassNames = cx(
-        "edit-insight-config",
-        "s-edit-insight-config",
-        "edit-insight-config-title-1-line",
-        "edit-insight-config-arrow-color",
-    );
-
+    const { areSectionHeadersEnabled } = useLayoutSectionsConfiguration(layout);
     return (
         <Bubble
-            className={cx(
-                "bubble-light gd-configuration-bubble gd-dashboard-nested-layout-toolbar s-gd-dashboard-nested-layout-toolbar-bubble",
-                configBubbleClassNames,
-            )}
-            overlayClassName="gd-configuration-bubble-wrapper gd-dashboard-nested-layout-toolbar-bubble-wrapper sdk-edit-mode-on"
-            alignTo={alignTo}
-            alignPoints={defaultAlignPoints}
-            arrowOffsets={defaultArrowOffsets}
-            arrowDirections={defaultArrowDirections}
-            closeOnOutsideClick
+            className="bubble-light"
+            overlayClassName="gd-nested-layout__toolbar s-nested-layout__toolbar"
+            alignTo={ALIGN_TOOLBAR_TO}
+            alignPoints={TOOLBAR_ALIGN_POINTS}
+            closeOnOutsideClick={true}
             closeOnParentScroll={false}
-            ignoreClicksOnByClass={ignoreClicksOnByClass}
-            arrowStyle={{ display: "none" }}
+            ignoreClicksOnByClass={IGNORE_TOOLBAR_CLICKS_ON_BY_CLASS}
+            arrowStyle={ARROW_STYLES}
             onClose={onClose}
         >
-            <div
-                className="s-dashboard-nested-layout-remove-button gd-dashboard-nested-layout-remove-button "
-                onClick={() => {
-                    onWidgetDelete();
-                    userInteraction.nestedLayoutInteraction("nestedLayoutRemoved");
-                }}
-            >
+            <div>
                 <BubbleHoverTrigger eventsOnBubble={true}>
-                    <Icon.Trash className="gd-trash-icon" width={20} height={20} />
-                    <Bubble alignPoints={bubbleAlignPoints}>
+                    <div
+                        className="gd-nested-layout__toolbar__button s-nested-layout__button--headers"
+                        onClick={() => {
+                            onToggleHeaders(!areSectionHeadersEnabled);
+                            userInteraction.nestedLayoutInteraction(
+                                areSectionHeadersEnabled
+                                    ? "nestedLayoutHeaderDisabled"
+                                    : "nestedLayoutHeaderEnabled",
+                            );
+                        }}
+                    >
+                        <Icon.Header
+                            className={cx({
+                                "gd-nested-layout__toolbar__icon--headers-active": areSectionHeadersEnabled,
+                                "gd-nested-layout__toolbar__icon--headers-disabled":
+                                    !areSectionHeadersEnabled,
+                            })}
+                            width={28}
+                            height={28}
+                        />
+                    </div>
+                    <Bubble alignPoints={TOOLTIP_ALIGN_POINTS}>
+                        {areSectionHeadersEnabled ? (
+                            <FormattedMessage id="nestedLayoutToolbar.hideHeader" />
+                        ) : (
+                            <FormattedMessage id="nestedLayoutToolbar.showHeader" />
+                        )}
+                    </Bubble>
+                </BubbleHoverTrigger>
+            </div>
+            <div className="gd-nested-layout__toolbar__delimiter" />
+            <div>
+                <BubbleHoverTrigger eventsOnBubble={true}>
+                    <div
+                        className="gd-nested-layout__toolbar__button s-nested-layout__button--remove"
+                        onClick={() => {
+                            onWidgetDelete();
+                            userInteraction.nestedLayoutInteraction("nestedLayoutRemoved");
+                        }}
+                    >
+                        <Icon.Trash
+                            className="gd-nested-layout__toolbar__icon--remove"
+                            width={20}
+                            height={20}
+                        />
+                    </div>
+                    <Bubble alignPoints={TOOLTIP_ALIGN_POINTS}>
                         <FormattedMessage id="nestedLayoutToolbar.remove" />
                     </Bubble>
                 </BubbleHoverTrigger>

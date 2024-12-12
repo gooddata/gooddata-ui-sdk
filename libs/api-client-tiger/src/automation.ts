@@ -6,6 +6,7 @@ import {
     ActionsApiGetNotificationsRequest,
     Notification,
     ActionsApiMarkAsReadNotificationRequest,
+    ActionsApiMarkAsReadNotificationAllRequest,
     ActionsApiTestExistingNotificationChannelRequest,
     TestResponse,
     ActionsApiTestNotificationChannelRequest,
@@ -33,6 +34,9 @@ import {
     AlertDescriptionStatusEnum,
     ExportResultStatusEnum,
     MetricRecord,
+    Notifications,
+    NotificationsMeta,
+    NotificationsMetaTotal,
 } from "./generated/automation-json-api/index.js";
 
 /**
@@ -46,6 +50,7 @@ export type {
     ActionsApiGetNotificationsRequest as AutomationActionsApiGetNotificationsRequest,
     Notification as AutomationNotification,
     ActionsApiMarkAsReadNotificationRequest as AutomationActionsApiMarkAsReadNotificationRequest,
+    ActionsApiMarkAsReadNotificationAllRequest as AutomationActionsApiMarkAsReadNotificationAllRequest,
     ActionsApiTestExistingNotificationChannelRequest as AutomationActionsApiTestExistingNotificationChannelRequest,
     TestResponse as AutomationTestResponse,
     ActionsApiTestNotificationChannelRequest as AutomationActionsApiTestNotificationChannelRequest,
@@ -73,4 +78,7 @@ export type {
     AlertDescriptionStatusEnum as AutomationAlertDescriptionStatusEnum,
     ExportResultStatusEnum as AutomationExportResultStatusEnum,
     MetricRecord as AutomationMetricRecord,
+    Notifications as AutomationNotifications,
+    NotificationsMeta as AutomationNotificationsMeta,
+    NotificationsMetaTotal as AutomationNotificationsMetaTotal,
 };

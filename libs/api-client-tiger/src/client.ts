@@ -64,6 +64,7 @@ import {
     AutomationActionsApiInterface,
     AutomationActionsApiGetNotificationsRequest,
     AutomationActionsApiMarkAsReadNotificationRequest,
+    AutomationActionsApiMarkAsReadNotificationAllRequest,
     AutomationNotification,
     AutomationActionsApiTestNotificationChannelRequest,
     AutomationTestResponse,
@@ -93,6 +94,9 @@ import {
     AutomationAlertDescriptionStatusEnum,
     AutomationMetricRecord,
     tigerAutomationClientFactory,
+    AutomationNotifications,
+    AutomationNotificationsMeta,
+    AutomationNotificationsMetaTotal,
 } from "./automation.js";
 
 export type {
@@ -121,6 +125,7 @@ export type {
     AutomationActionsApiInterface,
     AutomationActionsApiGetNotificationsRequest,
     AutomationActionsApiMarkAsReadNotificationRequest,
+    AutomationActionsApiMarkAsReadNotificationAllRequest,
     AutomationNotification,
     AutomationActionsApiTestNotificationChannelRequest,
     AutomationTestResponse,
@@ -149,6 +154,9 @@ export type {
     AutomationAlertEvaluationRow,
     AutomationAlertDescriptionStatusEnum,
     AutomationMetricRecord,
+    AutomationNotifications,
+    AutomationNotificationsMeta,
+    AutomationNotificationsMetaTotal,
 };
 export {
     tigerExecutionClientFactory,

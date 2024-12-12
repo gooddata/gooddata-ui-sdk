@@ -3,7 +3,7 @@
     "version": "10.17.0-alpha.25",
     "title": "Repeater Example",
     "description": "This example demonstrates how to use Repeater component.",
-    "author": "GoodData Corporation",
+    "author": "GoodData",
     "private": false,
     "license": "LicenseRef-LICENSE",
     "type": "module",

@@ -43,6 +43,11 @@ export function useDashboardLayoutPlaceholderDropHandler(layoutPath: ILayoutItem
                     identifier: id,
                     ref: idRef(id),
                     uri: `/${id}`,
+                    configuration: {
+                        sections: {
+                            enableHeader: false,
+                        },
+                    },
                 },
             });
         },

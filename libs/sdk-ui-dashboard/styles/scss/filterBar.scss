@@ -258,7 +258,7 @@ $attribute-filter-drag-handle-left: 10px;
     padding: 3px;
     border: 2px dashed
         var(
-            --gd-palette-complementary-3,
+            --gd-palette-complementary-3-from-theme,
             color.adjust(kit-variables.$default-gd-color-disabled, $alpha: -0.55)
         );
     color: kit-variables.$gd-color-state-blank;
@@ -267,7 +267,7 @@ $attribute-filter-drag-handle-left: 10px;
 
     &:hover {
         border-color: var(
-            --gd-palette-complementary-5,
+            --gd-palette-complementary-5-from-theme,
             color.adjust(kit-variables.$default-gd-color-disabled, $alpha: -0.15)
         );
         color: kit-variables.$gd-color-link;
@@ -362,8 +362,8 @@ $attribute-filter-drag-handle-left: 10px;
     border-radius: 3px;
     border-style: solid;
     border-width: 1px;
-    border-color: var(--gd-palette-complementary-3, #c9d5e0);
-    box-shadow: 0 1px 3px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.1)),
+    border-color: var(--gd-palette-complementary-3-from-theme, #c9d5e0);
+    box-shadow: 0 1px 3px 0 var(--gd-shadow-color-from-theme, rgba(20, 56, 93, 0.1)),
         0 2px 9px 0 var(--gd-shadow-color, rgba(20, 56, 93, 0.15));
     background: var(--gd-palette-complementary-0, #fff);
 

@@ -30,7 +30,7 @@ const ARROW_DIRECTIONS: ArrowDirections = {
 export const X_SHIFT = 7;
 export const Y_SHIFT = 11;
 
-// FIXME: constants are bad, we know :(
+// FIXME: constants are bad, we know
 const ARROW_OFFSETS: ArrowOffsets = {
     ".. cc": [0, 0],
 

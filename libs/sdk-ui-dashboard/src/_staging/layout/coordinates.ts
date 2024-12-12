@@ -8,7 +8,13 @@ import {
 } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 
-import { ILayoutCoordinates, ILayoutItemPath, ILayoutSectionPath, isLayoutSectionPath } from "../../types.js";
+import {
+    ILayoutCoordinates,
+    ILayoutItemPath,
+    ILayoutSectionPath,
+    isLayoutItemPath,
+    isLayoutSectionPath,
+} from "../../types.js";
 import { IDashboardLayoutItemFacade } from "../dashboard/legacyFluidLayout/facade/interfaces.js";
 import { ExtendedDashboardWidget } from "../../model/types/layoutTypes.js";
 
@@ -290,4 +296,11 @@ export const updateItem = (
             itemIndex: newItemIndex,
         },
     ];
+};
+
+export const hasParent = (path: ILayoutItemPath | ILayoutSectionPath): boolean => {
+    return (
+        (isLayoutItemPath(path) && path.length > 1) ||
+        (isLayoutSectionPath(path) && path.parent !== undefined && path.parent.length > 0)
+    );
 };

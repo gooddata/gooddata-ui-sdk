@@ -5,14 +5,8 @@
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/_variables" as button-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/mixins";
 
-$custom-foreground-color: var(
-    --gd-table-valueColor,
-    var(--gd-palette-complementary-8, kit-variables.$gd-color-text)
-);
-$custom-secondary-foreground-color: var(
-    --gd-table-valueColor,
-    var(--gd-palette-complementary-8, kit-variables.$gd-color-text)
-);
+$custom-foreground-color: var(--gd-table-valueColor, kit-variables.$gd-color-text);
+$custom-secondary-foreground-color: var(--gd-table-valueColor, kit-variables.$gd-color-text);
 
 $default-background: kit-variables.$default-gd-color-white;
 $custom-background-color: kit-variables.$gd-table-background;
@@ -20,7 +14,10 @@ $custom-background-color: kit-variables.$gd-table-background;
 $cell-border: 1px dashed transparent;
 $cell-border-color: var(
     --gd-table-gridColor,
-    var(--gd-palette-complementary-4, color.adjust(kit-variables.$default-gd-color-disabled, $alpha: -0.5))
+    var(
+        --gd-palette-complementary-4-from-theme,
+        color.adjust(kit-variables.$default-gd-color-disabled, $alpha: -0.5)
+    )
 );
 $header-cell-resize-width: 20px;
 $table-menu-hover: var(
@@ -33,46 +30,43 @@ $table-menu-hover: var(
 
 $header-label-color: var(
     --gd-table-headerLabelColor,
-    var(--gd-palette-complementary-7, kit-variables.$gd-color-text)
+    var(--gd-palette-complementary-7-from-theme, kit-variables.$gd-color-text)
 );
 
 $header-hover-background-color: var(
     --gd-table-headerHoverBackgroundColor,
-    var(--gd-palette-complementary-1, kit-variables.$gd-palette-primary-dimmed)
+    var(--gd-palette-complementary-1-from-theme, kit-variables.$gd-palette-primary-dimmed)
 );
 
 $total-background-color: var(
     --gd-table-totalBackgroundColor,
-    var(--gd-palette-complementary-2, rgba(176, 190, 202, 0.2))
+    var(--gd-palette-complementary-2-from-theme, rgba(176, 190, 202, 0.2))
 );
 
 $row-column-subtotal-background-color: var(
-    --gd-table-totalBackgroundColor,
-    var(--gd-palette-complementary-1, rgba(176, 190, 202, 0.3))
+    --gd-table-totalBackgroundColor-from-theme,
+    var(--gd-palette-complementary-1-from-theme, rgba(176, 190, 202, 0.3))
 );
 
 $row-total-column-subtotal-background-color: var(
-    --gd-table-totalBackgroundColor,
-    var(--gd-palette-complementary-1, rgba(176, 190, 202, 0.3))
+    --gd-table-totalBackgroundColor-from-theme,
+    var(--gd-palette-complementary-1-from-theme, rgba(176, 190, 202, 0.3))
 );
 
 $row-column-total-background-color: var(
-    --gd-table-totalBackgroundColor,
-    var(--gd-palette-complementary-1, rgba(176, 190, 202, 0.4))
+    --gd-table-totalBackgroundColor-from-theme,
+    var(--gd-palette-complementary-1-from-theme, rgba(176, 190, 202, 0.4))
 );
 
-$total-value-color: var(
-    --gd-table-totalValueColor,
-    var(--gd-palette-complementary-9, kit-variables.$gd-color-dark)
-);
+$total-value-color: var(--gd-table-totalValueColor, kit-variables.$gd-color-dark);
 
 $subtotal-even-background-color: var(
-    --gd-table-subtotalBackgroundColor,
-    var(--gd-palette-complementary-1, rgba(176, 190, 202, 0.15))
+    --gd-table-subtotalBackgroundColor-from-theme,
+    var(--gd-palette-complementary-1-from-theme, rgba(176, 190, 202, 0.15))
 );
 $subtotal-odd-background-color: var(
     --gd-table-subtotalBackgroundColor,
-    var(--gd-palette-complementary-1, rgba(176, 190, 202, 0.1))
+    var(--gd-palette-complementary-1-from-theme, rgba(176, 190, 202, 0.1))
 );
 
 @use "@ag-grid-community/all-modules/dist/styles/ag-theme-balham/sass/ag-theme-balham-mixin" as ag-balham;
@@ -191,7 +185,7 @@ $subtotal-odd-background-color: var(
                     var(
                         --gd-table-hoverBackgroundColor,
                         var(
-                            --gd-palette-complementary-1,
+                            --gd-palette-complementary-1-from-theme,
                             color.adjust(kit-variables.$default-gd-color-label, $alpha: -0.9)
                         )
                     ),

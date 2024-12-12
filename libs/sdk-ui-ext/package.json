@@ -50,10 +50,12 @@
         "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "stylelint": "stylelint '**/*.scss'",
         "stylelint-ci": "stylelint '**/*.scss' --custom-formatter=node_modules/stylelint-checkstyle-formatter > ./ci/results/stylelint-results.xml",
-        "validate": "npm run dep-cruiser && npm run eslint && npm run stylelint && npm run validate-locales && npm run prettier-check",
-        "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run stylelint-ci && npm run validate-locales-ci && npm run prettier-check",
+        "validate": "npm run dep-cruiser && npm run eslint && npm run stylelint && npm run validate-locales && npm run prettier-check && npm run validate-theming",
+        "validate-ci": "npm run dep-cruiser-ci && npm run eslint-ci && npm run stylelint-ci && npm run validate-locales-ci && npm run prettier-check && npm run validate-theming",
         "validate-locales": "i18n-toolkit --debug",
-        "validate-locales-ci": "i18n-toolkit"
+        "validate-locales-ci": "i18n-toolkit",
+        "validate-theming": "npm run scss && node scripts/validateCss.js",
+        "scss": "sass --load-path=node_modules styles/internal/scss:styles/internal/css && sass --load-path=node_modules styles/scss:styles/css"
     },
     "dependencies": {
         "@gooddata/sdk-backend-base": "workspace:*",
@@ -69,9 +71,13 @@
         "@gooddata/sdk-ui-vis-commons": "workspace:*",
         "@gooddata/util": "workspace:*",
         "classnames": "^2.3.1",
+        "codemirror": "^5.54.0",
         "date-fns": "^2.22.1",
+        "debounce-promise": "^3.1.2",
         "default-import": "1.1.5",
         "fixed-data-table-2": "^1.2.0",
+        "js-yaml": "^4.1.0",
+        "json-stable-stringify": "^1.0.1",
         "lodash": "^4.17.21",
         "lru-cache": "^10.0.1",
         "react-intl": "^6.4.1",
@@ -82,9 +88,7 @@
         "react-transition-group": "^4.4.2",
         "ts-invariant": "^0.7.5",
         "tslib": "^2.5.0",
-        "uuid": "^8.3.2",
-        "debounce-promise": "^3.1.2",
-        "json-stable-stringify": "^1.0.1"
+        "uuid": "^8.3.2"
     },
     "peerDependencies": {
         "react": "^16.10.0 || ^17.0.0 || ^18.0.0",
@@ -141,6 +145,8 @@
         "vitest": "1.0.4",
         "vitest-dom": "0.1.1",
         "@types/debounce-promise": "^3.1.4",
-        "@types/json-stable-stringify": "^1.0.32"
+        "@types/json-stable-stringify": "^1.0.32",
+        "@types/codemirror": "^5.60.7",
+        "@types/js-yaml": "^4.0.9"
     }
 }

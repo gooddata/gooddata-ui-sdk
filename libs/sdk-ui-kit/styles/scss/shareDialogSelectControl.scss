@@ -27,7 +27,7 @@
         border-radius: 3px;
         min-height: 32px;
         &:hover {
-            border-color: var(--gd-palette-complementary-5, #b3b3b3);
+            border-color: var(--gd-palette-complementary-5-from-theme, #b3b3b3);
         }
     }
 
@@ -68,7 +68,7 @@
     .gd-share-dialog__placeholder {
         position: absolute;
         color: var(
-            --gd-palette-complementary-6,
+            --gd-palette-complementary-6-from-theme,
             color.adjust(variables.$default-gd-color-link, $alpha: -0.25)
         );
     }

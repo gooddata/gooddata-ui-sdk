@@ -11,6 +11,7 @@ export function convertLlmEndpoint(endpoint: JsonApiLlmEndpointOutWithLinks): IL
             provider: "OPENAI",
             model: endpoint.attributes?.llmModel,
             organization: endpoint.attributes?.llmOrganization,
+            workspaceIds: endpoint.attributes?.workspaceIds ?? [],
         } as ILlmEndpointOpenAI;
     }
 

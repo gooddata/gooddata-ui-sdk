@@ -5,10 +5,25 @@ import { IAuditable } from "../base/metadata.js";
 import {
     IExportDefinitionMetadataObject,
     IExportDefinitionMetadataObjectDefinition,
-} from "../exportDefinitions/index.js";
+} from "../exports/index.js";
 import { IExecutionDefinition } from "../execution/executionDefinition/index.js";
 import { Identifier } from "../objRef/index.js";
 import { IMeasure } from "../execution/measure/index.js";
+
+/**
+ * @alpha
+ */
+export interface IAutomationDetails {
+    /**
+     * Subject of the email.
+     */
+    subject?: string;
+
+    /**
+     * Message of the email.
+     */
+    message?: string;
+}
 
 /**
  * @alpha
@@ -38,24 +53,13 @@ export interface IAutomationMetadataObjectBase {
 
     /**
      * Recipients of the automation.
-     * Array of strings with user ids.
      */
     recipients?: IAutomationRecipient[];
 
     /**
      * Details of the automation.
      */
-    details?: {
-        /**
-         * Subject of the email.
-         */
-        subject?: string;
-
-        /**
-         * Message of the email.
-         */
-        message?: string;
-    };
+    details?: IAutomationDetails;
 
     /**
      * Dashboard that automation is related to.

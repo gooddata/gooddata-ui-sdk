@@ -53,6 +53,7 @@ import {
     IGenAIService,
     IChatThread,
     IOrganizationLlmEndpointsService,
+    IOrganizationNotificationService,
 } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
@@ -235,6 +236,9 @@ function recordedWorkspace(
                         separators,
                         ...(implConfig.globalSettings ?? {}),
                     };
+                },
+                async setAlertDefault(): Promise<void> {
+                    return Promise.resolve();
                 },
                 async setLocale(): Promise<void> {
                     return Promise.resolve();
@@ -470,6 +474,15 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 },
             };
         },
+        notifications(): IOrganizationNotificationService {
+            return {
+                markNotificationAsRead: () => Promise.reject(new NotSupported("not supported")),
+                markAllNotificationsAsRead: () => Promise.reject(new NotSupported("not supported")),
+                getNotificationsQuery: () => {
+                    throw new NotSupported("not supported");
+                },
+            };
+        },
         permissions(): IOrganizationPermissionService {
             return {
                 getOrganizationPermissionForUser: () => Promise.resolve([]),
@@ -516,6 +529,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 title: "Dummy Llm Endpoint",
                 provider: "OPENAI",
                 model: "gpt-4o-mini",
+                workspaceIds: [],
             };
 
             return {

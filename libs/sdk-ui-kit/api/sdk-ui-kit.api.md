@@ -100,6 +100,12 @@ export class AutoSize extends Component<IAutoSizeProps> {
 // @internal (undocumented)
 export const BackButton: React_2.FC<IBackButtonProps>;
 
+// @internal
+export const bem: (block: `gd-ui-kit-${string}`) => {
+    b: (props?: StyleProps) => string;
+    e: (element: string, props?: StyleProps) => string;
+};
+
 // @internal (undocumented)
 export class Bubble extends React_2.Component<IBubbleProps, IBubbleState> {
     constructor(props: IBubbleProps);
@@ -302,6 +308,9 @@ export const CommunityEditionDialog: React_2.FC<ICommunityEditionDialogProps>;
 export const ComponentLabelsProvider: React_2.FC<IComponentLabelsProviderProps>;
 
 // @internal (undocumented)
+export function ComponentTable<TProps extends object, TProp extends keyof TProps>({ Component, columnsBy, rowsBy, baseProps, debug, codeSnippet, cellWidth, cellHeight, align, }: IComponentTableProps<TProps, TProp>): React_2.JSX.Element;
+
+// @internal (undocumented)
 export class ConfirmDialog extends PureComponent<IConfirmDialogBaseProps> {
     // (undocumented)
     render(): JSX.Element;
@@ -437,73 +446,6 @@ export const DropdownTabs: React_2.FC<IDropdownTagsProps>;
 
 // @internal (undocumented)
 export const EditableLabel: React_2.ForwardRefExoticComponent<IEditableLabelProps & React_2.RefAttributes<HTMLDivElement>>;
-
-// @internal (undocumented)
-export class EditableLabelInner extends Component<IEditableLabelInnerProps, IEditableLabelState> {
-    constructor(props: IEditableLabelInnerProps);
-    // (undocumented)
-    componentDidMount(): void;
-    // (undocumented)
-    componentWillUnmount(): void;
-    // (undocumented)
-    static defaultProps: {
-        children: boolean;
-        className: string;
-        maxLength: number;
-        maxRows: number;
-        onCancel: {
-            <T>(value: T): T;
-            (): undefined;
-        };
-        onEditingStart: {
-            <T>(value: T): T;
-            (): undefined;
-        };
-        onChange: {
-            <T>(value: T): T;
-            (): undefined;
-        };
-        placeholder: string;
-        scrollToEndOnEditingStart: boolean;
-        textareaInOverlay: boolean;
-        autofocus: boolean;
-        isEditableLabelWidthBasedOnText: boolean;
-    };
-    // (undocumented)
-    edit: (_e?: React_2.MouseEvent<HTMLDivElement>) => void;
-    // (undocumented)
-    isClickOutsideTextarea(clickedTarget: EventTarget): boolean;
-    // (undocumented)
-    isMultiLine(): boolean;
-    // (undocumented)
-    measureRootDimensions(): void;
-    // (undocumented)
-    onCancel: () => void;
-    // (undocumented)
-    onChange: (e: React_2.ChangeEvent<HTMLTextAreaElement>) => void;
-    // (undocumented)
-    onDocumentClick: (e: MouseEvent) => void;
-    // (undocumented)
-    onKeyDown: (e: React_2.KeyboardEvent<HTMLTextAreaElement>) => void;
-    // (undocumented)
-    onSelectStart(e: React_2.MouseEvent): void;
-    // (undocumented)
-    onSubmit: () => void;
-    // (undocumented)
-    removeListeners(): void;
-    // (undocumented)
-    render(): ReactNode;
-    // (undocumented)
-    renderEditableLabelEdit(): ReactNode;
-    // (undocumented)
-    renderTextarea(style?: {}): ReactNode;
-    // (undocumented)
-    renderTextAreaInOverlay(): ReactNode;
-    // (undocumented)
-    selectAndFocus: () => void;
-    // (undocumented)
-    UNSAFE_componentWillReceiveProps(newProps: IEditableLabelProps): void;
-}
 
 // @internal
 export const EllipsisText: React_2.FC<IEllipsisTextProps>;
@@ -1197,7 +1139,29 @@ export type IComponentLabelsProviderProps = {
 };
 
 // @internal (undocumented)
-export const Icon: Record<string, React.FC<IIconProps>>;
+export interface IComponentTableProps<TProps extends object, TProp extends keyof TProps> {
+    // (undocumented)
+    align?: "center" | "flex-start";
+    // (undocumented)
+    baseProps?: Partial<TProps>;
+    // (undocumented)
+    cellHeight?: number;
+    // (undocumented)
+    cellWidth?: number;
+    // (undocumented)
+    codeSnippet?: string;
+    // (undocumented)
+    columnsBy: IPropCombination<TProps, TProp>;
+    // (undocumented)
+    Component: React_2.ComponentType<TProps>;
+    // (undocumented)
+    debug?: boolean;
+    // (undocumented)
+    rowsBy: IPropCombination<TProps, TProp>[];
+}
+
+// @internal (undocumented)
+export const Icon: Record<string, React_2.FC<IIconProps>>;
 
 // @internal (undocumented)
 export interface IConfirmDialogBaseProps extends IDialogBaseProps {
@@ -1232,6 +1196,9 @@ export interface IConfirmDialogBaseProps extends IDialogBaseProps {
     // (undocumented)
     warning?: string | React_2.ReactElement;
 }
+
+// @internal (undocumented)
+export type IconType = "check" | "plus" | "sync";
 
 // @internal (undocumented)
 export interface ICustomizableCheckmarkProps {
@@ -1637,12 +1604,6 @@ export interface IDropdownTagsProps {
 }
 
 // @internal (undocumented)
-export interface IEditableLabelInnerProps extends IEditableLabelProps {
-    // (undocumented)
-    innerRef: React_2.ForwardedRef<HTMLDivElement>;
-}
-
-// @internal (undocumented)
 export interface IEditableLabelProps {
     // (undocumented)
     autofocus?: boolean;
@@ -1678,6 +1639,8 @@ export interface IEditableLabelProps {
 export interface IEditableLabelState {
     // (undocumented)
     isEditing: boolean;
+    // (undocumented)
+    rootWidth: number;
     // (undocumented)
     textareaFontSize?: number;
     // (undocumented)
@@ -3387,6 +3350,16 @@ export interface IPositioning {
 }
 
 // @internal (undocumented)
+export interface IPropCombination<TProps extends object, TProp extends keyof TProps> {
+    // (undocumented)
+    baseProps?: Partial<TProps>;
+    // (undocumented)
+    prop: TProp;
+    // (undocumented)
+    values: TProps[TProp][];
+}
+
+// @internal (undocumented)
 export interface IReactOptions {
     // (undocumented)
     codeType: CodeLanguageType;
@@ -3526,6 +3499,7 @@ export interface IResponsiveTextProps {
 
 // @internal (undocumented)
 export interface IRichTextProps {
+    autoResize?: boolean;
     // (undocumented)
     className?: string;
     // (undocumented)
@@ -4200,7 +4174,7 @@ export interface ITypographyProps {
     // (undocumented)
     onClick?: (e: React_2.MouseEvent) => void;
     // (undocumented)
-    tagName: "h1" | "h2" | "h3" | "p";
+    tagName: TypographyTagName;
     // (undocumented)
     title?: string;
 }
@@ -4400,7 +4374,7 @@ export type MenuAlignment = ["bottom", "right"] | ["bottom", "left"] | ["top", "
 export const Message: React_2.FC<IMessageProps>;
 
 // @internal (undocumented)
-export type MessageParameters = Pick<IMessageDefinition, "duration" | "intensive" | "values">;
+export type MessageParameters = Pick<IMessageDefinition, "duration" | "intensive" | "values" | "showMore" | "showLess" | "errorDetail">;
 
 // @internal (undocumented)
 export const Messages: React_2.FC<IMessagesProps>;
@@ -4510,6 +4484,9 @@ export enum PresetType {
     // (undocumented)
     CUSTOM_FORMAT = "customFormat"
 }
+
+// @internal (undocumented)
+export function propCombinationsFor<TProps extends object>(baseProps: TProps): <TProp extends keyof TProps>(prop: TProp, values: TProps[TProp][], additionalProps?: Partial<TProps>) => IPropCombination<TProps, TProp>;
 
 // @internal (undocumented)
 export const recommendedHeader: IDateDatasetHeader;
@@ -4665,6 +4642,15 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
 export type SingleSelectListItemType = "header" | "separator";
 
 // @internal (undocumented)
+export type SizeLarge = "large";
+
+// @internal (undocumented)
+export type SizeMedium = "medium";
+
+// @internal (undocumented)
+export type SizeSmall = "small";
+
+// @internal (undocumented)
 export enum SnapPoint {
     // (undocumented)
     BottomCenter = "bc",
@@ -4721,6 +4707,9 @@ export class Spinner extends PureComponent<ISpinnerProps> {
 
 // @internal (undocumented)
 export type SpinnerSize = "large" | "small";
+
+// @internal
+export type StyleProps = Record<string, string | boolean>;
 
 // @internal (undocumented)
 export const StylingEditorDialog: <T extends StylingPickerItemContent>(props: IStylingEditorDialogProps<T>) => React_2.JSX.Element;
@@ -4819,6 +4808,9 @@ export class TextAreaWithSubmit extends Component<ITextAreaWithSubmitProps, ITex
 }
 
 // @internal (undocumented)
+export type ThemeColor = "primary" | "warning" | "error" | "complementary-0" | "complementary-1" | "complementary-2" | "complementary-3" | "complementary-4" | "complementary-5" | "complementary-6" | "complementary-7" | "complementary-8" | "complementary-9";
+
+// @internal (undocumented)
 export class Timepicker extends React_2.PureComponent<ITimepickerOwnProps> {
     // (undocumented)
     render(): React_2.JSX.Element;
@@ -4858,6 +4850,49 @@ export type TUTMContent = "main_menu_help_documentation" | "main_menu_help_unive
 
 // @internal (undocumented)
 export const Typography: React_2.FC<ITypographyProps>;
+
+// @internal (undocumented)
+export type TypographyTagName = "h1" | "h2" | "h3" | "p";
+
+// @internal (undocumented)
+export const UiButton: ({ size, variant, label, isDisabled, isLoading, iconBefore, iconAfter, }: UiButtonProps) => React_2.JSX.Element;
+
+// @internal (undocumented)
+export interface UiButtonProps {
+    // (undocumented)
+    iconAfter?: IconType;
+    // (undocumented)
+    iconBefore?: IconType;
+    // (undocumented)
+    isDisabled?: boolean;
+    // (undocumented)
+    isLoading?: boolean;
+    // (undocumented)
+    label: string;
+    // (undocumented)
+    onClick?: () => void;
+    // (undocumented)
+    size?: SizeSmall | SizeMedium | SizeLarge;
+    // (undocumented)
+    tooltip?: React_2.ReactNode;
+    // (undocumented)
+    variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger;
+}
+
+// @internal (undocumented)
+export const UiIcon: ({ type, label, color, size }: UiIconProps) => React_2.JSX.Element;
+
+// @internal (undocumented)
+export interface UiIconProps {
+    // (undocumented)
+    color?: ThemeColor;
+    // (undocumented)
+    label: string;
+    // (undocumented)
+    size?: number;
+    // (undocumented)
+    type: IconType;
+}
 
 // @internal (undocumented)
 export type UnitsType = "px" | "%" | "rem" | "em";
@@ -4923,6 +4958,21 @@ export interface UseToastMessageType {
     // (undocumented)
     removeMessage: (id: string) => void;
 }
+
+// @internal (undocumented)
+export type VariantDanger = "danger";
+
+// @internal (undocumented)
+export type VariantPopOut = "popout";
+
+// @internal (undocumented)
+export type VariantPrimary = "primary";
+
+// @internal (undocumented)
+export type VariantSecondary = "secondary";
+
+// @internal (undocumented)
+export type VariantTertiary = "tertiary";
 
 // @internal (undocumented)
 export function withBubble<T>(WrappedComponent: React_2.ComponentType<T>): React_2.FC<T & IWithBubbleProps>;
