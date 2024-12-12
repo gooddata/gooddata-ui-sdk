@@ -1,0 +1,19 @@
+// (C) 2024 GoodData Corporation
+
+@use "./components/DetailsDialog.scss";
+@use "./components/Skeleton.scss";
+@use "./components/VirtualList.scss";
+// Panel
+@use "./NotificationsPanel/DefaultNotificationsPanel.scss";
+@use "./NotificationsPanel/DefaultNotificationsPanelHeader.scss";
+@use "./NotificationsPanel/DefaultOpenNotificationsPanelButton.scss";
+// List
+@use "./NotificationsList/DefaultNotificationsList.scss";
+@use "./NotificationsList/DefaultNotificationsListEmptyState.scss";
+@use "./NotificationsList/DefaultNotificationsListErrorState.scss";
+// Notification
+@use "./Notification/DefaultNotification.scss";
+// Notification filters detail
+@use "./NotificationFiltersDetail/NotificationFiltersDetailDialog.scss";
+// Notification triggers detail
+@use "./NotificationTriggersDetail/NotificationTriggersDetailDialog.scss";

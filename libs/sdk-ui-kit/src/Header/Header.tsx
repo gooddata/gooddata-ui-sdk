@@ -443,6 +443,8 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
 
                 {this.props.showChatItem ? <HeaderChatButton onClick={this.props.onChatItemClick} /> : null}
 
+                {this.props.notificationsPanel ?? null}
+
                 {this.props.search ? (
                     <HeaderSearchProvider
                         isOpen={this.state.isSearchMenuOpen}

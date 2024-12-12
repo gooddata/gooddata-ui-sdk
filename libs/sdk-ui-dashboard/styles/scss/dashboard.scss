@@ -161,6 +161,10 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
         }
     }
 
+    &.gd-highlighted .dash-item-content {
+        border-color: kit-variables.$gd-palette-primary-base;
+    }
+
     &.is-selected {
         .dash-item-action-lw-options {
             display: block;

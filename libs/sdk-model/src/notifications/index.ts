@@ -1,6 +1,7 @@
 // (C) 2024 GoodData Corporation
 import { IExportResult } from "../exports/index.js";
 import { IAutomationDetails } from "../automations/index.js";
+import isEmpty from "lodash/isEmpty.js";
 
 /**
  * Type of the notification.
@@ -388,3 +389,55 @@ export type AlertDescriptionStatus = "SUCCESS" | "ERROR" | "INTERNAL_ERROR" | "T
  * @alpha
  */
 export type INotification = IAlertNotification | IScheduleNotification | ITestNotification;
+
+/**
+ * Type guard to check if the notification is an alert notification.
+ *
+ * @alpha
+ */
+export function isAlertNotification(notification: unknown): notification is IAlertNotification {
+    if (isEmpty(notification)) {
+        return false;
+    }
+
+    return (notification as INotification).notificationType === "alertNotification";
+}
+
+/**
+ * Type guard to check if the notification is a schedule notification.
+ *
+ * @alpha
+ */
+export function isScheduleNotification(notification: unknown): notification is IScheduleNotification {
+    if (isEmpty(notification)) {
+        return false;
+    }
+
+    return (notification as INotification).notificationType === "scheduleNotification";
+}
+
+/**
+ * Type guard to check if the notification is a test notification.
+ *
+ * @alpha
+ */
+export function isTestNotification(notification: unknown): notification is ITestNotification {
+    if (isEmpty(notification)) {
+        return false;
+    }
+
+    return (notification as INotification).notificationType === "testNotification";
+}
+
+/**
+ * Type guard to check if the notification is a test notification.
+ *
+ * @alpha
+ */
+export function isNotification(notification: unknown): notification is INotification {
+    return (
+        isAlertNotification(notification) ||
+        isScheduleNotification(notification) ||
+        isTestNotification(notification)
+    );
+}

@@ -2007,5 +2007,85 @@
         "value": "Versus",
         "comment": "Means comparison of two values - for example '100 (this week) VERSUS 10 (last week)'.",
         "limit": 0
+    },
+    "gs.date.yesterday": {
+        "value": "Yesterday",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.tab.unread": {
+        "value": "Unread ({count})",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.tab.all": {
+        "value": "All",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.markAllAsRead": {
+        "value": "Mark all as read",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.error.loading": {
+        "value": "Error loading notifications",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.empty.all": {
+        "value": "No notifications",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.empty.unread": {
+        "value": "No unread notifications",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.unsupported.notification.type": {
+        "value": "Unsupported notification type",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.markAsRead": {
+        "value": "Mark as read",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.filters.buttonLabel": {
+        "value": "{count} filters",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.filters.dialog.title": {
+        "value": "Applied filters",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.filters.dialog.dateRange": {
+        "value": "Date Range",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.triggers.title": {
+        "value": "for {triggeredCount}/{totalCount} items",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.triggers.dialog.newValue": {
+        "value": "New value",
+        "comment": "",
+        "limit": 0
+    },
+    "close": {
+        "value": "Close",
+        "comment": "Label of a button for closing a dialog window",
+        "limit": 0
+    },
+    "notifications.panel.triggers.dialog.title": {
+        "value": "Triggered for",
+        "comment": "",
+        "limit": 0
     }
 }

@@ -1,0 +1,28 @@
+// (C) 2024 GoodData Corporation
+
+.gd-ui-ext-notifications-panel-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 15px;
+    padding-right: 15px;
+
+    width: 100%;
+
+    &__tabs {
+        width: 100%;
+        height: 28px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-end;
+    }
+
+    &__mark-all-as-read-button {
+        height: 28px;
+        white-space: nowrap;
+        border-bottom: 1px solid var(--gd-palette-complementary-3);
+    }
+}

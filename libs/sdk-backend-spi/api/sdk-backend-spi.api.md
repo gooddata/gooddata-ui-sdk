@@ -893,6 +893,7 @@ export interface INotificationsQuery {
     queryAll(): Promise<INotification[]>;
     withPage(page: number): INotificationsQuery;
     withSize(size: number): INotificationsQuery;
+    withStatus(status: "read" | "unread"): INotificationsQuery;
     withWorkspace(workspaceId: string): INotificationsQuery;
 }
 

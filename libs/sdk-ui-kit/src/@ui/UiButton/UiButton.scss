@@ -57,7 +57,8 @@
         &-small {
             height: var(--gd-button-S);
             padding: var(--gd-spacing-6px) var(--gd-spacing-10px);
-            font-size: 14px;
+            font-size: 12px;
+            line-height: 14px;
 
             &#{$root}--iconPosition {
                 &-left {
@@ -74,7 +75,7 @@
             height: var(--gd-button-M);
             padding: var(--gd-spacing-6px) var(--gd-spacing-15px);
             font-size: 14px;
-
+            line-height: 16px;
             &#{$root}--iconPosition {
                 &-left {
                     padding-left: var(--gd-spacing-10px);
@@ -90,7 +91,7 @@
             height: var(--gd-button-L);
             padding: var(--gd-spacing-6px) var(--gd-spacing-20px);
             font-size: 16px;
-
+            line-height: 18px;
             &#{$root}--iconPosition {
                 &-left {
                     padding-left: var(--gd-spacing-15px);
@@ -221,12 +222,10 @@
 
             &#{$root}--size {
                 &-small,
-                &-medium {
-                    padding: var(--gd-spacing-6px) var(--gd-spacing-5px);
-                }
-
+                &-medium,
                 &-large {
-                    padding: var(--gd-spacing-6px) var(--gd-spacing-10px);
+                    padding: 0;
+                    height: auto;
                 }
             }
         }
@@ -260,12 +259,10 @@
 
             &#{$root}--size {
                 &-small,
-                &-medium {
-                    padding: var(--gd-spacing-6px) var(--gd-spacing-5px);
-                }
-
+                &-medium,
                 &-large {
-                    padding: var(--gd-spacing-6px) var(--gd-spacing-10px);
+                    padding: 0;
+                    height: auto;
                 }
             }
         }

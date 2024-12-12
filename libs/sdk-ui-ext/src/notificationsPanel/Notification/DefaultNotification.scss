@@ -1,0 +1,134 @@
+// (C) 2024 GoodData Corporation
+
+.gd-ui-ext-notification {
+    $root: &;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-self: stretch;
+
+    border-radius: 3px;
+    border: 1px solid var(--gd-palette-complementary-3);
+
+    padding: 10px;
+    height: 52px;
+    gap: 10px;
+
+    font-size: 12px;
+    line-height: 14px;
+
+    cursor: pointer;
+
+    transition: var(--gd-transition-all);
+
+    &:hover {
+        &:not(#{$root}--isUnsupported) {
+            background: var(--gd-palette-complementary-2);
+        }
+
+        &:not(#{$root}--isRead) {
+            #{$root}__mark-as-read-button {
+                display: flex;
+            }
+
+            #{$root}__time {
+                display: none;
+            }
+        }
+    }
+
+    &__unsupported {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 1;
+
+        width: 100%;
+        height: 100%;
+        cursor: default;
+    }
+
+    &__icon {
+        width: 27px;
+        height: 27px;
+        border-radius: 51%;
+
+        background-color: var(--gd-palette-complementary-2);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+
+        position: relative;
+    }
+
+    &__unread-status {
+        width: 7px;
+        height: 7px;
+        border-radius: 51%;
+        background-color: var(--gd-palette-primary-base);
+        position: absolute;
+        top: 0;
+        right: 0;
+        border: 1.4px solid var(--gd-palette-complementary-0);
+        box-sizing: content-box;
+    }
+
+    &__details {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex-shrink: 1;
+
+        width: 100%;
+        height: 100%;
+
+        overflow: hidden;
+    }
+
+    &__title {
+        font-weight: 600;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: var(--gd-palette-complementary-8);
+        flex-shrink: 0;
+
+        &--isRead {
+            font-weight: 400;
+        }
+    }
+
+    &__time {
+        text-align: right;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+
+        height: 100%;
+        color: var(--gd-palette-complementary-7);
+
+        flex-shrink: 0;
+    }
+
+    &__mark-as-read-button {
+        display: none;
+        align-items: flex-start;
+        justify-content: flex-start;
+
+        height: 100%;
+    }
+
+    &__links {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+}

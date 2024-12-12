@@ -7,6 +7,7 @@ import { DashboardContext } from "../../types/commonTypes.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
 import { InitializeAutomations } from "../../commands/scheduledEmail.js";
 import {
+    selectAutomationId,
     selectEnableAutomations,
     selectEnableInPlatformNotifications,
     selectEnableScheduling,
@@ -25,6 +26,16 @@ import {
     selectAutomationsIsLoading,
 } from "../../store/automations/automationsSelectors.js";
 import { selectCanManageWorkspace } from "../../store/permissions/permissionsSelectors.js";
+import {
+    filterObjRef,
+    IAttributeFilter,
+    IDateFilter,
+    isDateFilter,
+    isRelativeDateFilter,
+} from "@gooddata/sdk-model";
+import { changeFilterContextSelectionHandler } from "../filterContext/changeFilterContextSelectionHandler.js";
+import { changeFilterContextSelection } from "../../commands/filters.js";
+import omit from "lodash/omit.js";
 
 export function* initializeAutomationsHandler(
     ctx: DashboardContext,
@@ -47,6 +58,7 @@ export function* initializeAutomationsHandler(
         selectAutomationsIsLoading,
     );
     const isReadOnly: ReturnType<typeof selectIsReadOnly> = yield select(selectIsReadOnly);
+    const automationId: ReturnType<typeof selectAutomationId> = yield select(selectAutomationId);
 
     if (
         !dashboardId ||
@@ -73,6 +85,32 @@ export function* initializeAutomationsHandler(
             call(loadNotificationChannels, ctx, enableInPlatformNotifications),
             call(loadWorkspaceUsers, ctx),
         ]);
+
+        // Set filters according to provided automationId
+        if (automationId) {
+            const targetAutomation = automations.find((a) => a.id === automationId);
+            const targetWidget = targetAutomation?.metadata?.widget;
+            const targetFilters = targetAutomation?.alert?.execution?.filters;
+            const filtersWithObjRef = targetFilters
+                ?.filter((f) => {
+                    const objRef = filterObjRef(f);
+                    return !!objRef;
+                })
+                .map((f) => {
+                    if (isDateFilter(f)) {
+                        if (isRelativeDateFilter(f)) {
+                            return omit(f, "relativeDateFilter.dataSet");
+                        }
+                        return omit(f, "absoluteDateFilter.dataSet");
+                    }
+                    return f;
+                }) as (IAttributeFilter | IDateFilter)[];
+
+            if (targetWidget && filtersWithObjRef?.length) {
+                const cmd = changeFilterContextSelection(filtersWithObjRef, true, automationId);
+                yield call(changeFilterContextSelectionHandler, ctx, cmd);
+            }
+        }
 
         yield put(
             batchActions([
