@@ -52,7 +52,7 @@ jobs:
       - name: Setup rush
         env:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        uses: ./gooddata-ui-sdk/.github/actions/rush/set-up-rush
+        uses: ./.github/actions/rush/set-up-rush
 
       - name: Build sdk
         run: |
