@@ -3212,7 +3212,15 @@
                 }
             },
             "CreatedVisualization": {
-                "required": ["dimensionality", "filters", "id", "metrics", "title", "visualizationType"],
+                "required": [
+                    "dimensionality",
+                    "filters",
+                    "id",
+                    "metrics",
+                    "suggestions",
+                    "title",
+                    "visualizationType"
+                ],
                 "type": "object",
                 "properties": {
                     "id": {
@@ -3263,6 +3271,13 @@
                                     "$ref": "#/components/schemas/DateRelativeFilter"
                                 }
                             ]
+                        }
+                    },
+                    "suggestions": {
+                        "type": "array",
+                        "description": "Suggestions for next steps",
+                        "items": {
+                            "$ref": "#/components/schemas/Suggestion"
                         }
                     }
                 },
@@ -3447,6 +3462,21 @@
                     }
                 },
                 "description": "Question -> Use Case routing. May contain final answer is a special use case is not required."
+            },
+            "Suggestion": {
+                "required": ["label", "query"],
+                "type": "object",
+                "properties": {
+                    "query": {
+                        "type": "string",
+                        "description": "Suggestion query"
+                    },
+                    "label": {
+                        "type": "string",
+                        "description": "Suggestion button label"
+                    }
+                },
+                "description": "Suggestions for next steps"
             },
             "ChatResult": {
                 "type": "object",

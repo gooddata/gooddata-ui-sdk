@@ -102,6 +102,10 @@ export interface IGenAIVisualization {
      * Filters used in the visualization.
      */
     filters?: GenAIFilter[];
+    /**
+     * Suggestions for the visualization.
+     */
+    suggestions?: IGenAISuggestion[];
 }
 
 /**
@@ -173,6 +177,21 @@ export type GenAIFilter =
     | GenAINegativeAttributeFilter
     | GenAIAbsoluteDateFilter
     | GenAIRelativeDateFilter;
+
+/**
+ * Suggestion for the visualization.
+ * @alpha
+ */
+export type IGenAISuggestion = {
+    /**
+     * The actual suggestion.
+     */
+    query: string;
+    /**
+     * The label of the suggestion.
+     */
+    label: string;
+};
 
 /**
  * Type of the visualization.

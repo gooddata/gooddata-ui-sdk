@@ -1995,6 +1995,12 @@ export interface IGenAIFoundObjects {
 }
 
 // @alpha
+export type IGenAISuggestion = {
+    query: string;
+    label: string;
+};
+
+// @alpha
 export interface IGenAIUserContext {
     activeObject: IGenAIActiveObject;
 }
@@ -2005,6 +2011,7 @@ export interface IGenAIVisualization {
     filters?: GenAIFilter[];
     id: string;
     metrics: IGenAIVisualizationMetric[];
+    suggestions?: IGenAISuggestion[];
     title: string;
     visualizationType: GenAIVisualizationType;
 }

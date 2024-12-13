@@ -7,9 +7,10 @@ import { MessageContents } from "./MessageContents.js";
 
 type UserMessageProps = {
     message: UserMessage;
+    isLast?: boolean;
 };
 
-export const UserMessageComponent: React.FC<UserMessageProps> = ({ message }) => {
+export const UserMessageComponent: React.FC<UserMessageProps> = ({ message, isLast }) => {
     const classNames = cx(
         "gd-gen-ai-chat__messages__message",
         "gd-gen-ai-chat__messages__message--user",
@@ -18,7 +19,7 @@ export const UserMessageComponent: React.FC<UserMessageProps> = ({ message }) =>
 
     return (
         <div className={classNames}>
-            <MessageContents content={message.content} />
+            <MessageContents content={message.content} isLastMessage={isLast} />
         </div>
     );
 };
