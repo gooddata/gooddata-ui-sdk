@@ -2674,6 +2674,12 @@ export interface ChatResult {
 }
 
 // @public
+export interface ChatSuggestion {
+    label: string;
+    query: string;
+}
+
+// @public
 export interface ClusteringRequest {
     numberOfClusters: number;
     threshold?: number;
@@ -3039,6 +3045,7 @@ export interface CreatedVisualization {
     filters: Array<AttributeNegativeFilter | AttributePositiveFilter | DateAbsoluteFilter | DateRelativeFilter>;
     id: string;
     metrics: Array<Metric>;
+    suggestions: Array<ChatSuggestion>;
     title: string;
     visualizationType: CreatedVisualizationVisualizationTypeEnum;
 }

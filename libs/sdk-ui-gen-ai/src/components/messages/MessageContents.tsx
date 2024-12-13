@@ -15,6 +15,7 @@ type MessageContentsProps = {
     content: Contents[];
     isComplete?: boolean;
     isCancelled?: boolean;
+    isLastMessage?: boolean;
     useMarkdown?: boolean;
 };
 
@@ -22,6 +23,7 @@ export const MessageContents: React.FC<MessageContentsProps> = ({
     content,
     isComplete = true,
     isCancelled = false,
+    isLastMessage = false,
     useMarkdown = false,
 }) => {
     return (
@@ -49,6 +51,7 @@ export const MessageContents: React.FC<MessageContentsProps> = ({
                                 useMarkdown={useMarkdown}
                                 content={item}
                                 key={index}
+                                showSuggestions={isLastMessage}
                             />
                         );
                     default:
