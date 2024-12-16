@@ -60,6 +60,7 @@ import { Hotspot } from "./dragAndDrop/draggableWidget/Hotspot.js";
 import { useWidgetDragEndHandler } from "../dragAndDrop/draggableWidget/useWidgetDragEndHandler.js";
 import { DashboardItemPathAndSizeProvider } from "../dashboard/components/DashboardItemPathAndSizeContext.js";
 import { shouldShowRowEndDropZone } from "./dragAndDrop/draggableWidget/RowEndHotspot.js";
+import { HoverDetector } from "./dragAndDrop/Resize/HoverDetector.js";
 
 /**
  * Tests in KD require widget index for css selectors.
@@ -218,18 +219,20 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                     />
                 ) : null}
                 <DashboardItemPathAndSizeProvider itemPath={item.index()} itemSize={item.size()}>
-                    <DashboardWidget
-                        // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
-                        index={index}
-                        onDrill={onDrill}
-                        onError={onError}
-                        onFiltersChange={onFiltersChange}
-                        widget={widget as ExtendedDashboardWidget}
-                        parentLayoutItemSize={item.size()}
-                        parentLayoutPath={item.index()}
-                        ErrorComponent={ErrorComponent}
-                        LoadingComponent={LoadingComponent}
-                    />
+                    <HoverDetector widgetRef={widget.ref}>
+                        <DashboardWidget
+                            // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
+                            index={index}
+                            onDrill={onDrill}
+                            onError={onError}
+                            onFiltersChange={onFiltersChange}
+                            widget={widget as ExtendedDashboardWidget}
+                            parentLayoutItemSize={item.size()}
+                            parentLayoutPath={item.index()}
+                            ErrorComponent={ErrorComponent}
+                            LoadingComponent={LoadingComponent}
+                        />
+                    </HoverDetector>
                 </DashboardItemPathAndSizeProvider>
                 {canShowHotspot && !isAnyPlaceholderWidget(widget) && isActive ? (
                     <ResizeOverlay
