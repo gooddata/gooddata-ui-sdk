@@ -20,6 +20,29 @@ export const selectNotificationChannels: DashboardSelector<INotificationChannelM
     });
 
 /**
+ * Returns notification channels suitable for scheduled exports.
+ *
+ * @alpha
+ */
+export const selectNotificationChannelsForScheduledExports: DashboardSelector<
+    INotificationChannelMetadataObject[]
+> = createSelector(selectSelf, (state) => {
+    return state.notificationChannels.filter((channel) => channel.destinationType !== "inPlatform");
+});
+
+/**
+ * Returns notification channels suitable for scheduled exports.
+ *
+ * @alpha
+ */
+export const selectNotificationChannelsCountForScheduledExports: DashboardSelector<number> = createSelector(
+    selectNotificationChannelsForScheduledExports,
+    (notificationChannels) => {
+        return notificationChannels.length;
+    },
+);
+
+/**
  * Returns organization notification channels count.
  *
  * @alpha

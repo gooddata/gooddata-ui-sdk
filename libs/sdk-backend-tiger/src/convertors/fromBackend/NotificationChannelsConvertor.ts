@@ -86,6 +86,7 @@ function convertCustomSmtpNotificationChannelFromBackend(
     return {
         ...shared,
         destinationType: "smtp",
+        sendInPlatformNotifications: channel.attributes?.inPlatformNotification === "ENABLED",
         destinationConfig: destination
             ? {
                   type: "customSmtp",
@@ -109,6 +110,7 @@ function convertDefaultSmtpNotificationChannelFromBackend(
     return {
         ...shared,
         destinationType: "smtp",
+        sendInPlatformNotifications: channel.attributes?.inPlatformNotification === "ENABLED",
         destinationConfig: destination
             ? {
                   type: "defaultSmtp",
@@ -128,6 +130,7 @@ function convertWebhookNotificationChannelFromBackend(
     return {
         ...shared,
         destinationType: "webhook",
+        sendInPlatformNotifications: channel.attributes?.inPlatformNotification === "ENABLED",
         destinationConfig: destination
             ? {
                   endpoint: destination.url,

@@ -75,21 +75,48 @@ export interface INotificationsPanelCustomComponentsProps {
  * @alpha
  */
 export interface INotificationsPanelProps extends INotificationsPanelCustomComponentsProps {
-    workspace?: string;
+    /**
+     * Backend to use.
+     */
     backend?: IAnalyticalBackend;
+
+    /**
+     * Workspace ID to use.
+     */
+    workspace?: string;
+
+    /**
+     * Refresh interval in milliseconds.
+     * Default is 10 minutes.
+     * If set to 0, notifications will not be refreshed automatically.
+     */
+    refreshInterval?: number;
+
+    /**
+     * Locale to use.
+     */
     locale?: ILocale;
+
+    /**
+     * Handler for notification click.
+     */
     onNotificationClick: (notification: INotification) => void;
 }
+
+/**
+ * 10 minutes in milliseconds.
+ */
+const TEN_MINUTES = 1000 * 60 * 10;
 
 /**
  * @alpha
  */
 export function NotificationsPanel(props: INotificationsPanelProps) {
-    const { locale } = props;
+    const { locale, refreshInterval = TEN_MINUTES, backend, workspace } = props;
 
     return (
         <OrganizationProvider>
-            <NotificationsProvider>
+            <NotificationsProvider backend={backend} workspace={workspace} refreshInterval={refreshInterval}>
                 <IntlWrapper locale={locale}>
                     <NotificationsPanelController {...props} />
                 </IntlWrapper>

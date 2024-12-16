@@ -3561,6 +3561,7 @@ export interface ISmtpNotificationChannelMetadataObject extends INotificationCha
     destinationConfig?: ISmtpDestinationConfiguration;
     // (undocumented)
     destinationType: "smtp";
+    sendInPlatformNotifications: boolean;
     // (undocumented)
     type: "notificationChannel";
 }
@@ -4183,6 +4184,7 @@ export interface IWebhookNotificationChannelMetadataObject extends INotification
     destinationConfig?: IWebhookDestinationConfiguration;
     // (undocumented)
     destinationType: "webhook";
+    sendInPlatformNotifications: boolean;
     // (undocumented)
     type: "notificationChannel";
 }
