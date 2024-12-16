@@ -533,13 +533,10 @@ export interface INotificationsPanelHeaderComponentProps {
 
 // @alpha (undocumented)
 export interface INotificationsPanelProps extends INotificationsPanelCustomComponentsProps {
-    // (undocumented)
     backend?: IAnalyticalBackend;
-    // (undocumented)
     locale?: ILocale;
-    // (undocumented)
     onNotificationClick: (notification: INotification) => void;
-    // (undocumented)
+    refreshInterval?: number;
     workspace?: string;
 }
 

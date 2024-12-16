@@ -2,7 +2,7 @@
 import { GoodDataSdkError, useCancelablePromise, useWorkspace } from "@gooddata/sdk-ui";
 import { useOrganization } from "../@staging/OrganizationContext/OrganizationContext.js";
 import { INotification } from "@gooddata/sdk-model";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { INotificationsQueryResult } from "@gooddata/sdk-backend-spi";
 
 /**
@@ -20,18 +20,43 @@ export interface IUseFetchNotificationsProps {
      * If not provided, all notifications will be fetched.
      */
     readStatus?: "unread" | "read";
+
+    /**
+     * Refresh interval in milliseconds.
+     */
+    refreshInterval: number;
 }
 
 /**
  * @alpha
  */
-export function useFetchNotifications({ workspace, readStatus }: IUseFetchNotificationsProps) {
+export function useFetchNotifications({
+    workspace,
+    readStatus,
+    refreshInterval,
+}: IUseFetchNotificationsProps) {
     const effectiveWorkspace = useWorkspace(workspace);
     const { result: organizationService } = useOrganization();
     const [page, setPage] = useState(0);
     const [hasNextPage, setHasNextPage] = useState(false);
     const [notifications, setNotifications] = useState<INotification[]>([]);
     const [totalNotificationsCount, setTotalNotificationsCount] = useState(0);
+    const [invalidationId, setInvalidationId] = useState<number>(0);
+
+    useEffect(() => {
+        let interval: NodeJS.Timeout;
+        if (refreshInterval > 0) {
+            interval = setInterval(() => {
+                setPage(0);
+                setNotifications([]);
+                setInvalidationId((x) => x + 1);
+            }, refreshInterval);
+        }
+
+        return () => {
+            clearInterval(interval);
+        };
+    }, [refreshInterval]);
 
     const { status, error } = useCancelablePromise<INotificationsQueryResult, GoodDataSdkError>(
         {
@@ -61,7 +86,7 @@ export function useFetchNotifications({ workspace, readStatus }: IUseFetchNotifi
                 setTotalNotificationsCount(result.totalCount);
             },
         },
-        [effectiveWorkspace, organizationService, page],
+        [effectiveWorkspace, organizationService, page, invalidationId],
     );
 
     const loadNextPage = useCallback(() => {

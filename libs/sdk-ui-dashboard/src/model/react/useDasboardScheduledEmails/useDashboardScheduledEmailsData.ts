@@ -22,10 +22,10 @@ import {
     selectIsScheduleEmailDialogContext,
     selectIsScheduleEmailManagementDialogOpen,
     selectInsightByWidgetRef,
-    selectNotificationChannelsCount,
-    selectNotificationChannels,
     selectAutomationsIsInitialized,
     selectFilterableWidgetByRef,
+    selectNotificationChannelsForScheduledExports,
+    selectNotificationChannelsCountForScheduledExports,
 } from "../../store/index.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";
 
@@ -72,8 +72,10 @@ export const useDashboardScheduledEmailsData = ({
     const unlimitedAutomationsEntitlement = useDashboardSelector(selectEntitlementUnlimitedAutomations);
     const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);
 
-    const notificationChannels = useDashboardSelector(selectNotificationChannels);
-    const numberOfAvailableDestinations = useDashboardSelector(selectNotificationChannelsCount);
+    const notificationChannels = useDashboardSelector(selectNotificationChannelsForScheduledExports);
+    const numberOfAvailableDestinations = useDashboardSelector(
+        selectNotificationChannelsCountForScheduledExports,
+    );
     const maxAutomationsReached = automationsCount >= maxAutomations && !unlimitedAutomationsEntitlement;
 
     /**

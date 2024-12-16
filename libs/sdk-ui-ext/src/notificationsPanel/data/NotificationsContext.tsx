@@ -21,14 +21,16 @@ export interface INotificationsProviderProps {
     backend?: IAnalyticalBackend;
     workspace?: string;
     children?: React.ReactNode;
+    refreshInterval?: number;
 }
 
 export const NotificationsProvider: React.FC<INotificationsProviderProps> = ({
     children,
     backend,
     workspace,
+    refreshInterval,
 }) => {
-    const notifications = useNotifications({ backend, workspace });
+    const notifications = useNotifications({ backend, workspace, refreshInterval });
 
     return <NotificationsContext.Provider value={notifications}>{children}</NotificationsContext.Provider>;
 };

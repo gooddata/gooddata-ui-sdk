@@ -104,6 +104,7 @@ function convertCustomSmtpNotificationChannelToBackend<
         attributes: {
             ...shared.attributes,
             destinationType: DeclarativeNotificationChannelDestinationTypeEnum.SMTP,
+            inPlatformNotification: channel.sendInPlatformNotifications ? "ENABLED" : "DISABLED",
             destination: config
                 ? ({
                       type: "SMTP",
@@ -130,6 +131,7 @@ function convertDefaultSmtpNotificationChannelToBackend<
         attributes: {
             ...shared.attributes,
             destinationType: DeclarativeNotificationChannelDestinationTypeEnum.DEFAULT_SMTP,
+            inPlatformNotification: channel.sendInPlatformNotifications ? "ENABLED" : "DISABLED",
             destination: config
                 ? ({
                       type: "DEFAULT_SMTP",
@@ -152,6 +154,7 @@ function convertWebhookNotificationChannelToBackend<
         attributes: {
             ...shared.attributes,
             destinationType: DeclarativeNotificationChannelDestinationTypeEnum.WEBHOOK,
+            inPlatformNotification: channel.sendInPlatformNotifications ? "ENABLED" : "DISABLED",
             destination: config
                 ? ({
                       type: "WEBHOOK",

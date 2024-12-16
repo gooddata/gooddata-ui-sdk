@@ -33,6 +33,6 @@ export function useFetchOrganization({ backend, organizationId }: IUseFetchOrgan
                     : effectiveBackend.organizations().getCurrentOrganization();
             },
         },
-        [effectiveBackend],
+        [effectiveBackend, organizationId],
     );
 }

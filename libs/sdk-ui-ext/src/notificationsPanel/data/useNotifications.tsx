@@ -6,18 +6,20 @@ import { UnexpectedSdkError, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { useCallback, useMemo, useState } from "react";
 import { useOrganization } from "../@staging/OrganizationContext/OrganizationContext.js";
 import { useFetchNotifications } from "./useFetchNotifications.js";
+
 /**
  * @alpha
  */
 export interface IUseNotificationsProps {
     workspace?: string;
     backend?: IAnalyticalBackend;
+    refreshInterval?: number;
 }
 
 /**
  * @alpha
  */
-export function useNotifications({ workspace }: IUseNotificationsProps) {
+export function useNotifications({ workspace, refreshInterval }: IUseNotificationsProps) {
     const effectiveWorkspace = useWorkspaceStrict(workspace, "useNotifications");
     const {
         notifications,
@@ -27,6 +29,7 @@ export function useNotifications({ workspace }: IUseNotificationsProps) {
         status: notificationsStatus,
     } = useFetchNotifications({
         workspace: effectiveWorkspace,
+        refreshInterval,
     });
     const {
         error: unreadNotificationsError,
@@ -38,6 +41,7 @@ export function useNotifications({ workspace }: IUseNotificationsProps) {
     } = useFetchNotifications({
         workspace: effectiveWorkspace,
         readStatus: "unread",
+        refreshInterval,
     });
 
     const { result: organizationService, status: organizationStatus } = useOrganization();

@@ -8062,6 +8062,12 @@ export const selectNotificationChannels: DashboardSelector<INotificationChannelM
 // @alpha
 export const selectNotificationChannelsCount: DashboardSelector<number>;
 
+// @alpha
+export const selectNotificationChannelsCountForScheduledExports: DashboardSelector<number>;
+
+// @alpha
+export const selectNotificationChannelsForScheduledExports: DashboardSelector<INotificationChannelMetadataObject[]>;
+
 // @public
 export const selectObjectAvailabilityConfig: DashboardSelector<ObjectAvailabilityConfig>;
 
