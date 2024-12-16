@@ -349,7 +349,7 @@ function normalizeSizeToParent(
     return {
         xl: {
             gridHeight: itemSize.xl.gridHeight, // keep height untouched as container can be extended freely in this direction
-            gridWidth: width <= parentWidth ? width : itemMinWidth,
+            gridWidth: width <= parentWidth ? width : Math.max(parentWidth, itemMinWidth),
         },
     };
 }
