@@ -750,6 +750,10 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
         }
     }
 
+    .gd-empty-nested-layout {
+        padding: 10px 0;
+    }
+
     .gd-fluidlayout-column-container {
         display: flex;
     }
