@@ -62,16 +62,18 @@ As a general recommendation, we encourage you to always use the latest available
 Each version of GoodData.UI goes through the following phases:
 
 1. **General Availability** (GA)
-    * **When it starts:** When a major version is publicly released. To get notified about a new version, subscribe to the [Release Notes](https://support.gooddata.com/hc/en-us/sections/203564877).
-    * **What it means:** A version in GA is going through active development, receives all new features and bug fixes, which are applied on top of the last minor version.
+
+    - **When it starts:** When a major version is publicly released. To get notified about a new version, subscribe to the [Release Notes](https://support.gooddata.com/hc/en-us/sections/203564877).
+    - **What it means:** A version in GA is going through active development, receives all new features and bug fixes, which are applied on top of the last minor version.
 
 2. **End-of-Development** (EOD)
-    * **When it starts:** When a newer major version is publicly released.
-    * **What it means:** A version in EOD receives only security fixes (unless they can be resolved by a SemVer-compatible upgrade) and fixes for critical issues. Only production dependencies receive the security fixes. These fixes are applied on top of the last minor version. No new features are added.
+
+    - **When it starts:** When a newer major version is publicly released.
+    - **What it means:** A version in EOD receives only security fixes (unless they can be resolved by a SemVer-compatible upgrade) and fixes for critical issues. Only production dependencies receive the security fixes. These fixes are applied on top of the last minor version. No new features are added.
 
 3. **End-of-Support** (EOS)
-    * **When it starts:** The date is defined by GoodData.
-    * **What it means:** A version in EOS receives neither new features nor bug fixes. No technical support is provided. Although the version is still available on NPM, we do not recommend that you use it.
+    - **When it starts:** The date is defined by GoodData.
+    - **What it means:** A version in EOS receives neither new features nor bug fixes. No technical support is provided. Although the version is still available on NPM, we do not recommend that you use it.
 
 ### GoodData Cloud & GoodData.CN
 
@@ -83,9 +85,9 @@ The following table provides the lifecycle phases of GoodData.UI versions:
 
 | Major Version | Status              | GA              | EOD               | EOS               |
 | :------------ | :------------------ | :-------------- | :---------------- | :---------------- |
-| 10            | Generally available | April 18, 2023   | _Not yet defined_ | _Not yet defined_ |
-| 9             | End-of-Development | July 27, 2023   | April 18 + 6 months | _Not yet defined_ |
-| 8             | End-of-Support      | October 8, 2020 | July 27, 2023     | April 18 + 6 months |
+| 10            | Generally available | April 18, 2023  | _Not yet defined_ | _Not yet defined_ |
+| 9             | End-of-Development  | July 27, 2023   | October 18, 2023  | _Not yet defined_ |
+| 8             | End-of-Support      | October 8, 2020 | July 27, 2023     | October 18, 2023  |
 | 7             | End-of-Support      | May 21, 2019    | October 8, 2020   | March 31, 2022    |
 
 ### GoodData Platform
@@ -95,5 +97,5 @@ GoodData Platform users must stay on GoodData.UI version 9, do not update to ver
 | Major Version | Status              | GA              | EOD               | EOS               |
 | :------------ | :------------------ | :-------------- | :---------------- | :---------------- |
 | 9             | Generally available | July 27, 2023   | _Not yet defined_ | _Not yet defined_ |
-| 8             | End-of-Support      | October 8, 2020 | July 27, 2023     | April 18 + 6 months |
+| 8             | End-of-Support      | October 8, 2020 | July 27, 2023     | October 18, 2023  |
 | 7             | End-of-Support      | May 21, 2019    | October 8, 2020   | March 31, 2022    |
