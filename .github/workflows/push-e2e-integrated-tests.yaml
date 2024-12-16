@@ -7,9 +7,8 @@ on:
 
 jobs:
   pull-request-info:
-    runs-on:
-      group: infra1-runners-arc
-      labels: runners-small
+    if: ${{ !(startsWith(github.event.head_commit.message, format('chore{0} bump versions to', ':')) || startsWith(github.event.head_commit.message, format('chore{0} update Hugo version to', ':'))) }}
+    runs-on: [ubuntu-latest]
     outputs:
       author: ${{ steps.author.outputs.result }}
     steps:
@@ -27,7 +26,7 @@ jobs:
           result-encoding: string
 
   e2e-integrated:
-    if: ${{ !(startsWith(github.event.head_commit.message, format('chore{0} bump versions to', ':')) || startsWith(github.event.head_commit.message, format('chore{0} update Hugo version to', ':'))) }}
+    needs: [pull-request-info]
     permissions:
       id-token: write
       contents: read
