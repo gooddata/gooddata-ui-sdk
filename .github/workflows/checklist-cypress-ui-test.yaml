@@ -12,6 +12,7 @@ on:
       TEST_BACKEND:
         default: 'https://checklist.staging.stg11.panther.intgdc.com'
         required: true
+        type: string
       TIGER_DATASOURCES_NAME:
         description: 'Tiger DS name'
         default: 'vertica_staging-goodsales'
@@ -95,6 +96,9 @@ jobs:
     runs-on:
       group: infra1-runners-arc
       labels: runners-rxa-xlarge
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v4
         with:
