@@ -1,5 +1,5 @@
 // (C) 2019-2024 GoodData Corporation
-import { IWidget, areObjRefsEqual } from "@gooddata/sdk-model";
+import { IWidget } from "@gooddata/sdk-model";
 import React, { useEffect, useMemo, useState } from "react";
 
 import {
@@ -38,7 +38,7 @@ export function WidthResizerHotspot({
     const widget = useMemo(() => item.widget() as IWidget, [item]);
     const widgetIdentifier = widget.identifier;
     const { isWidthResizing, isActive } = useResizeWidthItemStatus(widgetIdentifier);
-    const { hoveredWidget } = useHoveredWidget();
+    const { isHovered } = useHoveredWidget();
 
     const [isResizerVisible, setResizerVisibility] = useState<boolean>(false);
     const onMouseEnter = () => setResizerVisibility(true);
@@ -96,11 +96,7 @@ export function WidthResizerHotspot({
 
     const showHotspot = !isDragging || isWidthResizing || isResizerVisible;
     const showResizer = isResizerVisible || isThisResizing;
-    const status = isDragging
-        ? "muted"
-        : hoveredWidget && areObjRefsEqual(hoveredWidget, widget.ref)
-        ? "default"
-        : "active";
+    const status = isDragging ? "muted" : isHovered(widget.ref) ? "default" : "active";
 
     if (!showHotspot) {
         return null;

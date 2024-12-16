@@ -9,7 +9,7 @@ export const HeightResizer: React.FC<ResizerProps> = (props) => {
     const handlerClassName = cx("width-resizer-drag-handler", status);
     const lineClassName = cx("height-resizer-line", status);
 
-    const showDragHandler = status === "active" || status === "default";
+    const showDragHandler = status === "active";
 
     return (
         <div className={boxClassName}>

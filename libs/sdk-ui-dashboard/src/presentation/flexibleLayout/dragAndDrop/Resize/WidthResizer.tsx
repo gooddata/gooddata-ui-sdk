@@ -8,17 +8,19 @@ export function WidthResizer({ status }: ResizerProps) {
     const lineClassName = cx("width-resizer-line", status);
     const handlerClassName = cx("width-resizer-drag-handler", status);
 
-    const showDragHandler = status === "active" || status === "default";
+    const showDragHandler = status === "active";
 
     return (
-        <div className={boxClassName}>
-            <div className={lineClassName} />
-            {showDragHandler ? (
-                <>
-                    <div className={handlerClassName} />
-                    <div className={lineClassName} />
-                </>
-            ) : null}
+        <div className="gd-fluidlayout-width-resizer__container">
+            <div className={boxClassName}>
+                <div className={lineClassName} />
+                {showDragHandler ? (
+                    <>
+                        <div className={handlerClassName} />
+                        <div className={lineClassName} />
+                    </>
+                ) : null}
+            </div>
         </div>
     );
 }

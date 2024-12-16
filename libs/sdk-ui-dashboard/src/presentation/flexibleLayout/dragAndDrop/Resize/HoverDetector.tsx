@@ -1,5 +1,5 @@
 // (C) 2019-2024 GoodData Corporation
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { ObjRef } from "@gooddata/sdk-model";
 import { useHoveredWidget } from "../../../dragAndDrop/HoveredWidgetContext.js";
 
@@ -9,14 +9,33 @@ interface HoverDetectorProps {
 }
 
 export const HoverDetector: React.FC<HoverDetectorProps> = ({ widgetRef, children }) => {
-    const { setHoveredWidget } = useHoveredWidget();
+    const { addHoveredWidget, removeHoveredWidget } = useHoveredWidget();
+    const divRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleMouseEnter = () => {
+            addHoveredWidget(widgetRef);
+        };
+        const handleMouseLeave = () => {
+            removeHoveredWidget(widgetRef);
+        };
+
+        const divElement = divRef.current;
+        if (divElement) {
+            divElement.addEventListener("mouseenter", handleMouseEnter);
+            divElement.addEventListener("mouseleave", handleMouseLeave);
+        }
+
+        return () => {
+            if (divElement) {
+                divElement.removeEventListener("mouseenter", handleMouseEnter);
+                divElement.removeEventListener("mouseleave", handleMouseLeave);
+            }
+        };
+    }, [addHoveredWidget, removeHoveredWidget, widgetRef]);
 
     return (
-        <div
-            onMouseOver={() => setHoveredWidget(widgetRef)}
-            onMouseOut={() => setHoveredWidget(null)}
-            className="gd-hover-detector"
-        >
+        <div ref={divRef} className="gd-hover-detector">
             {children}
         </div>
     );
