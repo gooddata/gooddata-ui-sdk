@@ -56,7 +56,6 @@ const DefaultDashboardInsightWidgetCore: React.FC<
     const {
         isScheduledEmailingVisible,
         isScheduledManagementEmailingVisible,
-        numberOfAvailableDestinations,
         onScheduleEmailingOpen,
         onScheduleEmailingManagementOpen,
     } = useDashboardScheduledEmails();
@@ -88,7 +87,6 @@ const DefaultDashboardInsightWidgetCore: React.FC<
     } = useAlertingAndScheduling({
         widget,
         insight,
-        numberOfAvailableDestinations,
     });
 
     ///

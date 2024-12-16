@@ -110,7 +110,6 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
         onScheduleEmailingManagementOpen,
         isScheduledEmailingVisible,
         isScheduledManagementEmailingVisible,
-        numberOfAvailableDestinations,
     } = useDashboardScheduledEmails();
 
     const onScheduleExport = useCallback(() => {
@@ -131,7 +130,6 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
     } = useAlertingAndScheduling({
         widget: activeVisualization,
         insight,
-        numberOfAvailableDestinations,
     });
 
     const { closeMenu, isMenuOpen, menuItems, openMenu } = useInsightMenu({
