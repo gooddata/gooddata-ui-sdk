@@ -99,6 +99,7 @@ export {
     selectEnableCrossFilteringAliasTitles,
     selectEnableFlexibleLayout,
     selectEnableInPlatformNotifications,
+    selectAutomationId,
 } from "./config/configSelectors.js";
 export type { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {
@@ -409,6 +410,8 @@ export {
 export {
     selectNotificationChannels,
     selectNotificationChannelsCount,
+    selectNotificationChannelsForScheduledExports,
+    selectNotificationChannelsCountForScheduledExports,
 } from "./notificationChannels/notificationChannelsSelectors.js";
 export type { NotificationChannelsState } from "./notificationChannels/notificationChannelsState.js";
 export type { AutomationsState } from "./automations/automationsState.js";

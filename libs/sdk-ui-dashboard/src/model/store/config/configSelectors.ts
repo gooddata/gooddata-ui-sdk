@@ -811,3 +811,15 @@ export const selectEnableInPlatformNotifications: DashboardSelector<boolean> = c
         return state.settings?.enableInPlatformNotifications ?? false;
     },
 );
+
+/**
+ * Returns whether in-platform notifications are enabled.
+ *
+ * @beta
+ */
+export const selectAutomationId: DashboardSelector<string | undefined> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.automationId;
+    },
+);

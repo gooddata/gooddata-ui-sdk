@@ -2,6 +2,8 @@
 
 name: Checklist ~ run integrated e2e tests
 on:
+  schedule:
+    - cron: '6 8 * * *'
   workflow_dispatch:
     inputs:
       run-cypress-sdk:
@@ -14,6 +16,11 @@ on:
         required: false
         default: true
         type: boolean
+      test-branch:
+        description: 'Test branch to run tests'
+        required: false
+        default: master
+        type: string
 jobs:
   setup-stage:
     name: Setup env variables
@@ -48,6 +55,9 @@ jobs:
     if: ${{ needs.setup-stage.outputs.run-cypress-sdk == 'true'}}
     with:
       CYPRESS_TEST_TAGS: 'checklist_integrated_tiger'
+      GIT_REVISION: ${{ inputs.GIT_REVISION }}
+      TEST_BACKEND: 'https://checklist.staging.stg11.panther.intgdc.com'
+      TIGER_DATASOURCES_NAME: 'vertica_staging-goodsales'
   checklist-export:
     name: Cypress SDK Export Test
     permissions:
@@ -55,7 +65,10 @@ jobs:
       pages: write
       id-token: write
     uses: ./.github/workflows/checklist-cypress-ui-test.yaml
-    needs: [ setup-stage ]
-    if: ${{ needs.setup-stage.outputs.run-export == 'true'}}
+    needs: [ setup-stage, checklist-SDK ]
+    if: ${{ !cancelled() && (needs.setup-stage.outputs.run-export == 'true') }}
     with:
       CYPRESS_TEST_TAGS: 'checklist_integrated_tiger_export'
+      GIT_REVISION: ${{ inputs.GIT_REVISION }}
+      TEST_BACKEND: 'https://checklist.staging.stg11.panther.intgdc.com'
+      TIGER_DATASOURCES_NAME: 'vertica_staging-goodsales'

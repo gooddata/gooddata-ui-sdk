@@ -13,3 +13,4 @@ export * from "./useDashboardDragScroll.js";
 export * from "./LayoutResizeContext.js";
 export * from "./WrapInsightListItemWithDrag.js";
 export * from "./useCurrentDateFilterConfig.js";
+export * from "./HoveredWidgetContext.js";

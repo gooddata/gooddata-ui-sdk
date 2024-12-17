@@ -57,6 +57,11 @@ export interface IWebhookNotificationChannelMetadataObject
     destinationType: "webhook";
 
     /**
+     * Send also in-platform notifications for this channel.
+     */
+    sendInPlatformNotifications: boolean;
+
+    /**
      * Configuration of the webhook, where the notifications are to be sent.
      */
     destinationConfig?: IWebhookDestinationConfiguration;
@@ -97,6 +102,11 @@ export interface ISmtpNotificationChannelMetadataObject
         IMdObject {
     type: "notificationChannel";
     destinationType: "smtp";
+
+    /**
+     * Send also in-platform notifications for this channel.
+     */
+    sendInPlatformNotifications: boolean;
 
     /**
      * Configuration of the SMTP, where the notifications are to be sent.

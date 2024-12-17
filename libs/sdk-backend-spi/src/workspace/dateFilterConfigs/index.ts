@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2024 GoodData Corporation
 import { IDateFilterConfig } from "@gooddata/sdk-model";
 
 import { IPagedResource } from "../../common/paging.js";
@@ -36,6 +36,13 @@ export interface IDateFilterConfigsQuery {
      * @returns promise of first page of the results
      */
     query(): Promise<IDateFilterConfigsQueryResult>;
+
+    /**
+     * Starts the custom date filter confis by settings query.
+     *
+     * @returns promise of first page of the results
+     */
+    queryCustomDateFilterConfig(): Promise<IDateFilterConfigsQueryResult>;
 }
 
 /**

@@ -1,0 +1,26 @@
+// (C) 2024 GoodData Corporation
+
+.gd-ui-ext-virtual-list {
+    height: 100%;
+    width: 100%;
+
+    &--hasScroll {
+        padding-right: 4px;
+    }
+
+    &__scroll-container {
+        overflow: auto;
+        overflow-x: hidden;
+
+        &::-webkit-scrollbar {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 6px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: var(--gd-palette-complementary-2);
+            border-radius: 3px;
+        }
+    }
+}

@@ -3,4 +3,4 @@
 /**
  * @internal
  */
-export type IconType = "check" | "plus" | "sync";
+export type IconType = "check" | "plus" | "sync" | "alert" | "close";

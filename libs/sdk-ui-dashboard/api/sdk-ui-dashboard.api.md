@@ -1553,6 +1553,8 @@ export interface DashboardConfig {
     // @internal
     allowCreateInsightRequest?: boolean;
     allowUnfinishedFeatures?: boolean;
+    // @beta
+    automationId?: string;
     colorPalette?: IColorPalette;
     dateFilterConfig?: IDateFilterConfig;
     disableCrossFiltering?: boolean;
@@ -7029,7 +7031,7 @@ export interface ResolveAsyncRenderPayload {
 }
 
 // @public
-export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "exportId"> & DashboardConfig;
+export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "exportId" | "automationId"> & DashboardConfig;
 
 // @alpha (undocumented)
 export type ResolvedDateFilterValues = IResolvedDateFilterValue[];
@@ -7303,6 +7305,9 @@ export const selectAttributeFilterDisplayFormsMap: DashboardSelector<ObjRefMap<I
 
 // @alpha (undocumented)
 export const selectAttributesWithDrillDown: DashboardSelector<(ICatalogAttribute | ICatalogDateAttribute)[]>;
+
+// @beta
+export const selectAutomationId: DashboardSelector<string | undefined>;
 
 // @alpha
 export const selectAutomationsError: DashboardSelector<GoodDataSdkError | undefined>;
@@ -8056,6 +8061,12 @@ export const selectNotificationChannels: DashboardSelector<INotificationChannelM
 
 // @alpha
 export const selectNotificationChannelsCount: DashboardSelector<number>;
+
+// @alpha
+export const selectNotificationChannelsCountForScheduledExports: DashboardSelector<number>;
+
+// @alpha
+export const selectNotificationChannelsForScheduledExports: DashboardSelector<INotificationChannelMetadataObject[]>;
 
 // @public
 export const selectObjectAvailabilityConfig: DashboardSelector<ObjectAvailabilityConfig>;
