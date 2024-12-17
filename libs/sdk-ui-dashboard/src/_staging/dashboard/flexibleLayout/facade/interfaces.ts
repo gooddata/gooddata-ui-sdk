@@ -65,7 +65,7 @@ export interface IDashboardLayoutItemsFacade<TWidget> {
     raw(): IDashboardLayoutItem<TWidget>[];
     item(index: number): IDashboardLayoutItemFacade<TWidget> | undefined;
     all(): IDashboardLayoutItemFacade<TWidget>[];
-    asGridRows(screen: ScreenSize, parentWidth?: number): IDashboardLayoutItemFacade<TWidget>[][];
+    asGridRows(screen: ScreenSize): IDashboardLayoutItemFacade<TWidget>[][];
     count(): number;
     flatMap<TReturn>(callback: (widgetFacade: IDashboardLayoutItemFacade<TWidget>) => TReturn[]): TReturn[];
     map<TReturn>(callback: (item: IDashboardLayoutItemFacade<TWidget>) => TReturn): TReturn[];

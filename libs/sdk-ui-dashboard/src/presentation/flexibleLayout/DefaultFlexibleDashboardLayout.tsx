@@ -7,7 +7,6 @@ import {
     isWidget,
     IDashboardLayout,
     IDashboardLayoutItem,
-    IDashboardLayoutSizeByScreenSize,
 } from "@gooddata/sdk-model";
 import { LRUCache } from "lru-cache";
 import max from "lodash/max.js";
@@ -38,7 +37,6 @@ import { EmptyDashboardLayout } from "./EmptyDashboardLayout.js";
 import { EmptyDashboardNestedLayout } from "./EmptyDashboardNestedLayout.js";
 import { useScreenSize } from "../dashboard/components/DashboardScreenSizeContext.js";
 import { useDashboardItemPathAndSize } from "../dashboard/components/DashboardItemPathAndSizeContext.js";
-import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../_staging/dashboard/flexibleLayout/index.js";
 
 /**
  * Get dashboard layout for exports.
@@ -50,15 +48,12 @@ import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../_staging/dashboard/fl
  */
 function getDashboardLayoutForExport(
     layout: IDashboardLayout<ExtendedDashboardWidget>,
-    parentSize: IDashboardLayoutSizeByScreenSize | undefined,
 ): IDashboardLayout<ExtendedDashboardWidget> {
     const dashLayout = DashboardLayoutBuilder.for(layout);
     const layoutFacade = dashLayout.facade();
     const sections = layoutFacade.sections();
     const screenSplitSections = sections.map((section) => ({
-        items: section
-            .items()
-            .asGridRows("xl", parentSize?.["xl"].gridWidth ?? DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT),
+        items: section.items().asGridRows("xl"),
         header: section.header(),
     }));
 
@@ -138,7 +133,7 @@ export const DefaultFlexibleDashboardLayout = (props: IDashboardLayoutProps): JS
 
     const transformedLayout = useMemo(() => {
         if (isExport) {
-            return getDashboardLayoutForExport(layout, itemSize);
+            return getDashboardLayoutForExport(layout);
         }
 
         return DashboardLayoutBuilder.for(layout, itemPath)
@@ -146,7 +141,7 @@ export const DefaultFlexibleDashboardLayout = (props: IDashboardLayoutProps): JS
                 section.modifyItems(sanitizeWidgets(getInsightByRef, enableWidgetCustomHeight)),
             )
             .build();
-    }, [isExport, layout, itemPath, itemSize, sanitizeWidgets, getInsightByRef, enableWidgetCustomHeight]);
+    }, [isExport, layout, itemPath, sanitizeWidgets, getInsightByRef, enableWidgetCustomHeight]);
 
     const widgetRenderer = useCallback<IDashboardLayoutWidgetRenderer<ExtendedDashboardWidget>>(
         (renderProps) => {
