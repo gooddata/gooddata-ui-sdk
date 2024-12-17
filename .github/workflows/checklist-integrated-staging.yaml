@@ -2,6 +2,9 @@
 
 name: Checklist ~ run integrated e2e tests
 on:
+  schedule:
+    - cron: '30 20 * * 0-4' #master branch
+    - cron: '30 13 * * 0,2,4' #release branch
   workflow_dispatch:
     inputs:
       run-cypress-sdk:
@@ -11,6 +14,11 @@ on:
         type: boolean
       run-export:
         description: 'Cypress SDK Export Test'
+        required: false
+        default: true
+        type: boolean
+      run-boiler-app:
+        description: 'Boiler app test'
         required: false
         default: true
         type: boolean
@@ -33,6 +41,7 @@ jobs:
     outputs:
       run-cypress-sdk: ${{ steps.test-suite-options.outputs.run-cypress-sdk }}
       run-export: ${{ steps.test-suite-options.outputs.run-export }}
+      run-boiler-app: ${{ steps.test-suite-options.outputs.run-boiler-app }}
       send_message_to_slack_channel: ${{ steps.test-suite-options.outputs.send_message_to_slack_channel }}
     steps:
       - name: Set test suite options
@@ -48,6 +57,11 @@ jobs:
           else
             echo "run-export=${{ inputs.run-export }}" >> $GITHUB_OUTPUT
           fi
+          if [ -z "${{ inputs.run-boiler-app }}" ]; then
+            echo 'run-boiler-app=true' >> $GITHUB_OUTPUT
+          else
+            echo "run-boiler-app=${{ inputs.run-boiler-app }}" >> $GITHUB_OUTPUT
+          fi
           if [ -z "${{ inputs.send_message_to_slack_channel }}" ]; then
             echo 'send_message_to_slack_channel=true' >> $GITHUB_OUTPUT
           else
@@ -61,10 +75,10 @@ jobs:
       id-token: write
     uses: ./.github/workflows/checklist-cypress-ui-test.yaml
     needs: [ setup-stage ]
-    if: ${{ needs.setup-stage.outputs.run-cypress-sdk == 'true'}}
+    if: ${{ (needs.setup-stage.outputs.run-cypress-sdk == 'true') && (github.event.schedule != '30 13 * * 0,2,4') }}
     with:
       CYPRESS_TEST_TAGS: 'checklist_integrated_tiger'
-      GIT_REVISION: ${{ inputs.test-branch || master }}
+      GIT_REVISION: ${{ inputs.test-branch || 'master' }}
       TEST_BACKEND: 'https://checklist.staging.stg11.panther.intgdc.com'
       TIGER_DATASOURCES_NAME: 'vertica_staging-goodsales'
   checklist-export:
@@ -75,18 +89,82 @@ jobs:
       id-token: write
     uses: ./.github/workflows/checklist-cypress-ui-test.yaml
     needs: [ setup-stage, checklist-SDK ]
-    if: ${{ !cancelled() && (needs.setup-stage.outputs.run-export == 'true') }}
+    if: ${{ !cancelled() && (needs.setup-stage.outputs.run-export == 'true') && (github.event.schedule != '30 13 * * 0,2,4') }}
     with:
       CYPRESS_TEST_TAGS: 'checklist_integrated_tiger_export'
-      GIT_REVISION: ${{ inputs.test-branch || master }}
+      GIT_REVISION: ${{ inputs.test-branch || 'master' }}
       TEST_BACKEND: 'https://checklist.staging.stg11.panther.intgdc.com'
       TIGER_DATASOURCES_NAME: 'vertica_staging-goodsales'
+  checklist-boiler-app:
+    name: Boiler app test
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/checklist-run-boiler-app.yaml
+    needs: [ setup-stage ]
+    if: ${{ (needs.setup-stage.outputs.run-boiler-app == 'true') && (github.event.schedule != '30 13 * * 0,2,4') }}
+    with:
+      GIT_REVISION: ${{ inputs.test-branch || 'master' }}
+      TEST_BACKEND: 'https://checklist.staging.stg11.panther.intgdc.com'
+      TIGER_DATASOURCES_NAME: 'vertica_staging-goodsales'
+      SDK_VERSION: 'latest'
+      SDK_LANG: 'js'
+      FILTER: 'boilerapp.spec.ts'
+  checklist-SDK-release:
+    name: Cypress SDK on top of Tiger release
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/checklist-cypress-ui-test.yaml
+    needs: [ setup-stage ]
+    if: ${{ (needs.setup-stage.outputs.run-cypress-sdk == 'true') && (github.event.schedule == '30 13 * * 0,2,4') }}
+    with:
+      CYPRESS_TEST_TAGS: 'checklist_integrated_tiger'
+      GIT_REVISION: 'release'
+      TEST_BACKEND: 'https://checklist.staging.stg11.panther.intgdc.com'
+      TIGER_DATASOURCES_NAME: 'vertica_staging-goodsales'
+  checklist-export-release:
+    name: Cypress SDK Export Test release
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/checklist-cypress-ui-test.yaml
+    needs: [ setup-stage, checklist-SDK-release ]
+    if: ${{ !cancelled() && (needs.setup-stage.outputs.run-export == 'true') && (github.event.schedule == '30 13 * * 0,2,4') }}
+    with:
+      CYPRESS_TEST_TAGS: 'checklist_integrated_tiger_export'
+      GIT_REVISION: 'release'
+      TEST_BACKEND: 'https://checklist.staging.stg11.panther.intgdc.com'
+      TIGER_DATASOURCES_NAME: 'vertica_staging-goodsales'
+  checklist-boiler-app-release:
+    name: Boiler app test release
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/checklist-run-boiler-app.yaml
+    needs: [ setup-stage ]
+    if: ${{ (needs.setup-stage.outputs.run-boiler-app == 'true') && (github.event.schedule == '30 13 * * 0,2,4') }}
+    with:
+      GIT_REVISION: 'release'
+      TEST_BACKEND: 'https://checklist.staging.stg11.panther.intgdc.com'
+      TIGER_DATASOURCES_NAME: 'vertica_staging-goodsales'
+      SDK_VERSION: 'latest'
+      SDK_LANG: 'js'
+      FILTER: 'boilerapp.spec.ts'
   status-check-notify-slack:
     needs:
       - setup-stage
       - checklist-SDK
       - checklist-export
-    if: ${{ !canceled() }}
+      - checklist-boiler-app
+      - checklist-SDK-release
+      - checklist-export-release
+      - checklist-boiler-app-release
+    if: ${{ !cancelled() }}
     runs-on:
       group: infra1-runners-arc
       labels: runners-small
@@ -95,7 +173,7 @@ jobs:
         id: alls-green
         uses: re-actors/alls-green@release/v1
         with:
-          allowed-skips: checklist-SDK, checklist-export
+          allowed-skips: checklist-SDK, checklist-export, checklist-boiler-app, checklist-SDK-release, checklist-export-release, checklist-boiler-app-release
           jobs: ${{ toJSON(needs) }}
       - name: Send Slack notification
         uses: slackapi/slack-github-action@v1.27.1
