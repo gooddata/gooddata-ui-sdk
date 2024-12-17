@@ -10,6 +10,7 @@ import {
     DateFilterGranularity,
     DateString,
     idRef,
+    isDateFilterGranularity,
 } from "@gooddata/sdk-model";
 
 export const DefaultDateFilterConfig: IDateFilterConfig = {
@@ -310,9 +311,17 @@ const convertAbsoluteForm = (absoluteForm: IDateFilterBase): IAbsoluteDateFilter
 
 const convertRelativeForm = (relativeForm: IDateFilterRelativeForm): IRelativeDateFilterForm => {
     const { granularities: availableGranularities, ...other } = relativeForm;
+
+    if (!availableGranularities) {
+        return DefaultDateFilterConfig.relativeForm!;
+    }
+
+    const validGranularities: DateFilterGranularity[] =
+        availableGranularities.filter(isDateFilterGranularity);
+
     return {
         type: "relativeForm",
-        availableGranularities,
+        availableGranularities: validGranularities,
         ...other,
     };
 };
