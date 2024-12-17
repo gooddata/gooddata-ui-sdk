@@ -231,7 +231,7 @@
     }
 
     .dash-height-resizer-container {
-        position: unset;
+        position: relative;
         right: unset;
         bottom: unset;
         left: unset;
@@ -291,7 +291,8 @@
     }
 
     .dash-height-resizer-hotspot {
-        position: unset;
+        position: absolute;
+        bottom: -10px;
         display: flex;
     }
     .gd-hover-detector {
