@@ -240,6 +240,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                         isResizingColumnOrRow={isResizingColumnOrRow}
                         reachedWidthLimit={widthLimitReached}
                         reachedHeightLimit={heightLimitReached}
+                        isOverNestedLayout={isNestedLayout}
                     />
                 ) : null}
                 {canShowHotspot && !isAnyPlaceholderWidget(widget) ? (

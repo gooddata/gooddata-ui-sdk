@@ -23,6 +23,7 @@ export interface ResizeOverlayProps {
     isActive: boolean;
     reachedWidthLimit: ReachedResizingLimit;
     reachedHeightLimit: ReachedResizingLimit;
+    isOverNestedLayout?: boolean;
 }
 
 function getMessage({
@@ -68,6 +69,7 @@ function getStatus({
 
 export function ResizeOverlay(props: ResizeOverlayProps) {
     const status = getStatus(props);
+    const { isOverNestedLayout = false } = props;
 
     if (status === ResizeOverlayStatus.None) {
         return null;
@@ -79,6 +81,7 @@ export function ResizeOverlay(props: ResizeOverlayProps) {
     const classes = cx("gd-resize-overlay", {
         active: isActive,
         error: isInError,
+        squared: isOverNestedLayout,
     });
 
     const message = getMessage({
