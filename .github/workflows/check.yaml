@@ -7,7 +7,7 @@ on:
       - release
 
 concurrency:
-  group: ${{ github.event.pull_request.number }}
+  group: check-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
 jobs:
@@ -26,12 +26,11 @@ jobs:
     runs-on:
       group: infra1-runners-arc
       labels: runners-small
-    if: always()
+    if: ${{ !cancelled() }}
     needs:
       - build-validate-stage
     steps:
       - name: Check if needed jobs succeeded
         uses: re-actors/alls-green@release/v1
         with:
-          allowed-skips: ${{ toJSON(needs) }}
           jobs: ${{ toJSON(needs) }}
