@@ -20,5 +20,7 @@
     "gd.gen-ai.state.cancelled": "取消",
     "gd.gen-ai.state.in-progress": "正在產生您的回覆…",
     "gd.gen-ai.global-error.description": "嘗試重新啟動聊天機器人並重新開始。",
-    "gd.gen-ai.button.send": "傳送"
+    "gd.gen-ai.button.send": "傳送",
+    "gd.gen-ai.input-label": "問你的問題",
+    "gd.gen-ai.assistant-icon": "聊天機器人"
 }

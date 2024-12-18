@@ -20,5 +20,7 @@
     "gd.gen-ai.state.cancelled": "Abgebrochen",
     "gd.gen-ai.state.in-progress": "Ihre Antwort wird generiert…",
     "gd.gen-ai.global-error.description": "Versuchen Sie, den Chatbot neu zu starten und von vorne zu beginnen.",
-    "gd.gen-ai.button.send": "Senden"
+    "gd.gen-ai.button.send": "Senden",
+    "gd.gen-ai.input-label": "Stellen Sie Ihre Frage",
+    "gd.gen-ai.assistant-icon": "Chatbot"
 }
