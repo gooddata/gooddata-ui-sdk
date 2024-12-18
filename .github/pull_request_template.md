@@ -5,13 +5,13 @@ Description of changes.
 ---
 
 > [!IMPORTANT]
-> Please, **don't forget to run `rush change`** for the commits that introduce **new features** 🙏
+> Please, **don't forget to run `rush change`** for the commits that introduce **new features** or **significant changes** 🙏 This information is used to generate the [change log](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md).
 
 ---
 
-Refer to [documentation](https://github.com/gooddata/gooddata-ui-sdk/blob/master/dev_docs/continuous_integration.md) to see how to run checks and tests in the pull request. This is the list of the most used commands:
-
 ### Run extended test by pull request comment
+
+Commands can be triggered by posting a comment with specific text on the pull request. It is possible to trigger multiple commands simultaneously.
 
 ```
 extended-test --backstop | --integrated | --isolated | --record [--filter <file1>,<file2>,...,<fileN>]
