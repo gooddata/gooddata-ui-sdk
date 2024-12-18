@@ -98,7 +98,7 @@ jobs:
 
   e2e-run-isolated:
     needs: [get-pr-info,extract-filter]
-    if: $${{ startsWith(github.event.comment.body, 'extended-test --isolated') }}
+    if: ${{ startsWith(github.event.comment.body, 'extended-test --isolated') }}
     permissions:
       id-token: write
       contents: read
@@ -165,16 +165,16 @@ jobs:
             const url = `https://github.com/${repository.owner}/${repository.repo}/actions/runs/${context.runId}`;
 
             let testResult = "'command not recognized'";
-            if (process.env.COMMENT.startsWith('extended-test --isolated')) {
+            if (process.env.COMMENT?.startsWith('extended-test --isolated')) {
                 testResult = process.env.TEST_RESULT_ISOLATED;
             }
-            if (process.env.COMMENT.startsWith('extended-test --record')) {
+            if (process.env.COMMENT?.startsWith('extended-test --record')) {
                 testResult = process.env.TEST_RESULT_RECORD;
             }
-            if (process.env.COMMENT.startsWith('extended-test --integrated')) {
+            if (process.env.COMMENT?.startsWith('extended-test --integrated')) {
                 testResult = process.env.TEST_RESULT_INTEGRATED;
             }
-            if (process.env.COMMENT.startsWith('extended-test --backstop')) {
+            if (process.env.COMMENT?.startsWith('extended-test --backstop')) {
                 testResult = process.env.TEST_RESULT_BACKSTOP;
             }
 
