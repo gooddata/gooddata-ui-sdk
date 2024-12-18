@@ -15,7 +15,10 @@ import { asLayoutItemPath } from "../../../layout/coordinates.js";
  * @alpha
  */
 export class DashboardLayoutItemsFacade<TWidget> implements IDashboardLayoutItemsFacade<TWidget> {
-    protected constructor(protected readonly itemFacades: IDashboardLayoutItemFacade<TWidget>[]) {}
+    protected constructor(
+        protected readonly sectionFacade: IDashboardLayoutSectionFacade<TWidget>,
+        protected readonly itemFacades: IDashboardLayoutItemFacade<TWidget>[],
+    ) {}
 
     public static for<TWidget>(
         sectionFacade: IDashboardLayoutSectionFacade<TWidget>,
@@ -28,7 +31,7 @@ export class DashboardLayoutItemsFacade<TWidget> implements IDashboardLayoutItem
                 asLayoutItemPath(sectionFacade.index(), index),
             ),
         );
-        return new DashboardLayoutItemsFacade(itemFacades);
+        return new DashboardLayoutItemsFacade(sectionFacade, itemFacades);
     }
 
     public raw(): IDashboardLayoutItem<TWidget>[] {
@@ -43,11 +46,10 @@ export class DashboardLayoutItemsFacade<TWidget> implements IDashboardLayoutItem
         return this.itemFacades;
     }
 
-    public asGridRows(
-        screen: ScreenSize,
-        parentWidth: number = DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT,
-    ): IDashboardLayoutItemFacade<TWidget>[][] {
+    public asGridRows(screen: ScreenSize): IDashboardLayoutItemFacade<TWidget>[][] {
         const renderedRows: IDashboardLayoutItemFacade<TWidget>[][] = [];
+        const parentWidth =
+            this.sectionFacade.layout().size()?.gridWidth ?? DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT;
 
         let currentRowWidth = 0;
         let currentRow: IDashboardLayoutItemFacade<TWidget>[] = [];

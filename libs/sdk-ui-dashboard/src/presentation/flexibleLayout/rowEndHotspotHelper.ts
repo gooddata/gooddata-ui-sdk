@@ -8,11 +8,12 @@ export function getRemainingWidthInRow(
     item: IDashboardLayoutItemFacade<unknown>,
     screen: ScreenSize,
 ): number {
+    const parentWidth = item.section().layout().size()?.gridWidth ?? DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT;
     const rows = item.section().items().asGridRows(screen);
     const lastRow = rows[rows.length - 1];
     const lastRowLength = lastRow.reduce(
         (acc, item) => acc + item.sizeForScreenWithFallback(screen).gridWidth,
         0,
     );
-    return (item.section().layout().size()?.gridWidth ?? DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT) - lastRowLength;
+    return parentWidth - lastRowLength;
 }

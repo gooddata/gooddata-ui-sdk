@@ -149,6 +149,12 @@
         &.error {
             background: variables.$gd-palette-primary-base-mix15-white;
         }
+        &.squared {
+            left: 0;
+            right: 0;
+            margin: 0;
+            border-radius: 0;
+        }
     }
 
     .gd-resize-overlay-text {
@@ -225,7 +231,7 @@
     }
 
     .dash-height-resizer-container {
-        position: unset;
+        position: relative;
         right: unset;
         bottom: unset;
         left: unset;
@@ -281,10 +287,12 @@
 
     .gd-fluidlayout-width-resizer__container {
         background: variables.$gd-dashboards-content-backgroundColor;
+        width: 100%;
     }
 
     .dash-height-resizer-hotspot {
-        position: unset;
+        position: absolute;
+        bottom: -10px;
         display: flex;
     }
     .gd-hover-detector {
