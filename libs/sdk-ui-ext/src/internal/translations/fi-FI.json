@@ -363,5 +363,13 @@
     "properties.interactions.alerts": "Hälytys",
     "properties.interactions.alerts.tooltip": "Salli käyttäjien luoda ilmoituksia tälle visualisoinnille dashboardeilla.",
     "properties.interactions.scheduledExports": "Aikataulutetut viennit",
-    "properties.interactions.scheduledExports.tooltip": "Salli käyttäjien luoda ajoitetut viennit tälle visualisoinnille dashboardeissa."
+    "properties.interactions.scheduledExports.tooltip": "Salli käyttäjien luoda ajoitetut viennit tälle visualisoinnille dashboardeissa.",
+    "properties.advanced.title": "Edistyneet mukautukset",
+    "properties.advanced.chartConfigOverride.noValueLabel": "Ei vielä mukautuksia.",
+    "properties.advanced.chartConfigOverride.link": "Lue lisää",
+    "properties.advanced.chartConfigOverride.editorButton": "Avaa editori",
+    "properties.advanced.chartConfigOverride.title": "Edistynyt mukautus",
+    "properties.advanced.chartConfigOverride.snippets.header": "Katkelmat",
+    "properties.advanced.chartConfigOverride.button.apply": "Käytä",
+    "properties.advanced.chartConfigOverride.button.cancel": "Peruuta"
 }

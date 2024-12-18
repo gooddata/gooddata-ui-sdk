@@ -363,5 +363,13 @@
     "properties.interactions.alerts": "Alerta",
     "properties.interactions.alerts.tooltip": "Permitir a los usuarios crear alertas para esta visualización en los cuadros de mando.",
     "properties.interactions.scheduledExports": "Exportaciones programadas",
-    "properties.interactions.scheduledExports.tooltip": "Permitir a los usuarios crear exportaciones programadas para esta visualización en los cuadros de mando."
+    "properties.interactions.scheduledExports.tooltip": "Permitir a los usuarios crear exportaciones programadas para esta visualización en los cuadros de mando.",
+    "properties.advanced.title": "Personalizaciones avanzadas",
+    "properties.advanced.chartConfigOverride.noValueLabel": "Aún no hay personalizaciones",
+    "properties.advanced.chartConfigOverride.link": "Más información",
+    "properties.advanced.chartConfigOverride.editorButton": "Abrir editor",
+    "properties.advanced.chartConfigOverride.title": "Personalización avanzada",
+    "properties.advanced.chartConfigOverride.snippets.header": "Fragmentos",
+    "properties.advanced.chartConfigOverride.button.apply": "Aplicar",
+    "properties.advanced.chartConfigOverride.button.cancel": "Cancelar"
 }

@@ -363,5 +363,13 @@
     "properties.interactions.alerts": "アラート",
     "properties.interactions.alerts.tooltip": "ユーザーがダッシュボード上でこのビジュアライゼーションのためのアラートを作成できます。",
     "properties.interactions.scheduledExports": "エクスポート予定",
-    "properties.interactions.scheduledExports.tooltip": "ユーザーがダッシュボード上でこのビジュアライゼーションのためのエクスポート予定を作成できます。"
+    "properties.interactions.scheduledExports.tooltip": "ユーザーがダッシュボード上でこのビジュアライゼーションのためのエクスポート予定を作成できます。",
+    "properties.advanced.title": "高度なカスタマイズ",
+    "properties.advanced.chartConfigOverride.noValueLabel": "カスタマイズはまだありません。",
+    "properties.advanced.chartConfigOverride.link": "詳細",
+    "properties.advanced.chartConfigOverride.editorButton": "エディタを開く",
+    "properties.advanced.chartConfigOverride.title": "高度なカスタマイズ",
+    "properties.advanced.chartConfigOverride.snippets.header": "抜粋",
+    "properties.advanced.chartConfigOverride.button.apply": "適用",
+    "properties.advanced.chartConfigOverride.button.cancel": "キャンセル"
 }

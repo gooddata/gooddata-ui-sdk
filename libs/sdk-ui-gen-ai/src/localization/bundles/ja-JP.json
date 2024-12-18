@@ -20,5 +20,7 @@
     "gd.gen-ai.state.cancelled": "キャンセルしました",
     "gd.gen-ai.state.in-progress": "返答を生成中…",
     "gd.gen-ai.global-error.description": "チャットボットを再起動して、やり直してみてください。",
-    "gd.gen-ai.button.send": "送信"
+    "gd.gen-ai.button.send": "送信",
+    "gd.gen-ai.input-label": "お問い合わせ",
+    "gd.gen-ai.assistant-icon": "チャットボット"
 }

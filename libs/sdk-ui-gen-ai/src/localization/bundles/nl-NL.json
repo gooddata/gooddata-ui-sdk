@@ -20,5 +20,7 @@
     "gd.gen-ai.state.cancelled": "Geannuleerd",
     "gd.gen-ai.state.in-progress": "Je antwoord genereren…",
     "gd.gen-ai.global-error.description": "Probeer de chatbot opnieuw op te starten en opnieuw beginnen.",
-    "gd.gen-ai.button.send": "Sturen"
+    "gd.gen-ai.button.send": "Sturen",
+    "gd.gen-ai.input-label": "Stel uw vraag",
+    "gd.gen-ai.assistant-icon": "chatbot"
 }
