@@ -16,7 +16,7 @@ export TEST_BACKEND_NO_PREFIX=$(sed <<< $TEST_BACKEND -E "s#^https?:\/\/##")
 
 export HOST=${TEST_BACKEND}
 export TEST_BACKEND=${TEST_BACKEND:-}
-export CYPRESS_TEST_TAGS=post-merge_integrated_tiger
+export CYPRESS_TEST_TAGS=${CYPRESS_TEST_TAGS:-}
 export FIXTURE_TYPE=goodsales
 export FILTER=${FILTER:-}
 export TIGER_API_TOKEN=${TIGER_API_TOKEN:?}
