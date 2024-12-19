@@ -7,7 +7,7 @@ import { Skeleton } from "./Skeleton.js";
 import { bem } from "../bem.js";
 
 export interface IPagedVirtualListProps<T> {
-    maxHeight?: number;
+    maxHeight: number;
     items?: T[];
     itemHeight: number;
     itemsGap: number;
@@ -80,12 +80,12 @@ function useVirtualList<T>(props: IPagedVirtualListProps<T>) {
     const {
         items,
         itemHeight,
-        maxHeight = 500,
         itemsGap,
         skeletonItemsCount,
         hasNextPage,
         loadNextPage,
         isLoading,
+        maxHeight,
     } = props;
 
     const scrollContainerRef = React.useRef<HTMLDivElement>(null);
@@ -99,12 +99,12 @@ function useVirtualList<T>(props: IPagedVirtualListProps<T>) {
         renderItemsCount = skeletonItemsCount;
     }
 
-    const height = Math.min(
+    const realHeight =
         itemsCount > 0
             ? (itemHeight + itemsGap) * itemsCount + itemsGap
-            : skeletonItemsCount * (itemHeight + itemsGap) + itemsGap,
-        maxHeight,
-    );
+            : skeletonItemsCount * (itemHeight + itemsGap) + itemsGap;
+
+    const height = Math.min(maxHeight, realHeight);
 
     const hasScroll = scrollContainerRef.current
         ? scrollContainerRef.current?.scrollHeight >

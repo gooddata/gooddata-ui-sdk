@@ -11,6 +11,11 @@ const ALIGN_POINTS = [
         overlayAlignPoint: "top-right",
         offset: { x: 2, y: 3 },
     }),
+    alignConfigToAlignPoint({
+        triggerAlignPoint: "bottom-left",
+        overlayAlignPoint: "top-left",
+        offset: { x: 2, y: 3 },
+    }),
 ];
 
 const messages = defineMessages({
@@ -39,13 +44,13 @@ export function NotificationTriggerDetail({ notification }: INotificationTrigger
         <>
             <UiButton
                 buttonRef={ref}
-                onClick={(e) => {
-                    e.stopPropagation();
+                onClick={() => {
                     toggleTriggersDialog();
                 }}
                 variant="tertiary"
                 size="small"
                 label={triggersTitle}
+                dataId="notification-detail"
             />
             {isTriggersDialogOpen ? (
                 <Overlay
@@ -57,7 +62,6 @@ export function NotificationTriggerDetail({ notification }: INotificationTrigger
                     closeOnParentScroll={false}
                     closeOnMouseDrag={false}
                     onClose={closeTriggersDialog}
-                    ignoreClicksOnByClass={[".gd-bubble"]}
                 >
                     <NotificationTriggersDetailDialog
                         notification={notification}

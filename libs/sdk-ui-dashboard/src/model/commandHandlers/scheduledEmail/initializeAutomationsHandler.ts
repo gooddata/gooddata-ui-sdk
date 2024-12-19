@@ -27,15 +27,17 @@ import {
 } from "../../store/automations/automationsSelectors.js";
 import { selectCanManageWorkspace } from "../../store/permissions/permissionsSelectors.js";
 import {
+    filterLocalIdentifier,
     filterObjRef,
-    IAttributeFilter,
-    IDateFilter,
-    isDateFilter,
-    isRelativeDateFilter,
+    idRef,
+    IFilter,
+    IInsight,
+    insightFilters,
 } from "@gooddata/sdk-model";
 import { changeFilterContextSelectionHandler } from "../filterContext/changeFilterContextSelectionHandler.js";
 import { changeFilterContextSelection } from "../../commands/filters.js";
-import omit from "lodash/omit.js";
+import { IDashboardFilter, isDashboardFilter } from "../../../types.js";
+import { selectInsightByWidgetRef } from "../../store/insights/insightsSelectors.js";
 
 export function* initializeAutomationsHandler(
     ctx: DashboardContext,
@@ -90,24 +92,16 @@ export function* initializeAutomationsHandler(
         if (automationId) {
             const targetAutomation = automations.find((a) => a.id === automationId);
             const targetWidget = targetAutomation?.metadata?.widget;
-            const targetFilters = targetAutomation?.alert?.execution?.filters;
-            const filtersWithObjRef = targetFilters
-                ?.filter((f) => {
-                    const objRef = filterObjRef(f);
-                    return !!objRef;
-                })
-                .map((f) => {
-                    if (isDateFilter(f)) {
-                        if (isRelativeDateFilter(f)) {
-                            return omit(f, "relativeDateFilter.dataSet");
-                        }
-                        return omit(f, "absoluteDateFilter.dataSet");
-                    }
-                    return f;
-                }) as (IAttributeFilter | IDateFilter)[];
+            const targetFilters = targetAutomation?.alert?.execution?.filters.filter(isDashboardFilter);
+            if (targetWidget && targetFilters) {
+                const insight: ReturnType<ReturnType<typeof selectInsightByWidgetRef>> = yield select(
+                    selectInsightByWidgetRef(idRef(targetWidget)),
+                );
+                const filtersToSet = insight
+                    ? getDashboardFiltersOnly(targetFilters, insight)
+                    : targetFilters;
 
-            if (targetWidget && filtersWithObjRef?.length) {
-                const cmd = changeFilterContextSelection(filtersWithObjRef, true, automationId);
+                const cmd = changeFilterContextSelection(filtersToSet, true, automationId);
                 yield call(changeFilterContextSelectionHandler, ctx, cmd);
             }
         }
@@ -131,4 +125,29 @@ export function* initializeAutomationsHandler(
             ]),
         );
     }
+}
+
+/**
+ * Filter out insight filters from the list of filters
+ * @internal
+ */
+function getDashboardFiltersOnly(filters: IFilter[], insight: IInsight) {
+    return removeAlertFilters(filters).filter((f) => {
+        const insightFilter = insightFilters(insight).find((f2) => {
+            return filterLocalIdentifier(f) === filterLocalIdentifier(f2);
+        });
+
+        return !insightFilter;
+    }) as IDashboardFilter[];
+}
+
+/**
+ * Remove alert filters (these that are set during creation of the alert sliced by attribute) from the list of filters
+ * @internal
+ */
+function removeAlertFilters(filters: IFilter[]) {
+    return filters?.filter((f) => {
+        const objRef = filterObjRef(f);
+        return !!objRef;
+    });
 }

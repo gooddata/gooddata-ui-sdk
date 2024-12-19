@@ -1,5 +1,5 @@
 // (C) 2024 GoodData Corporation
-import React from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
 import { GoodDataSdkError, UseCancelablePromiseStatus } from "@gooddata/sdk-ui";
 import { INotificationComponentProps } from "../Notification/DefaultNotification.js";
 import { bem } from "../bem.js";
@@ -55,8 +55,31 @@ export function DefaultNotificationsList({
     const isLoading = status === "loading" || status === "pending";
     const isSuccess = status === "success" && (notifications?.length ?? 0) > 0;
 
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [availableHeight, setAvailableHeight] = useState<number>(0);
+
+    useLayoutEffect(() => {
+        const resizeObserver = new ResizeObserver((entries) => {
+            const [entry] = entries;
+            if (entry) {
+                setAvailableHeight(entry.contentRect.height);
+            }
+        });
+
+        if (containerRef.current) {
+            resizeObserver.observe(containerRef.current);
+        }
+
+        return () => {
+            if (resizeObserver) {
+                resizeObserver.disconnect();
+                setAvailableHeight(0);
+            }
+        };
+    }, []);
+
     return (
-        <div className={b()}>
+        <div className={b()} ref={containerRef}>
             {isError ? <DefaultNotificationsListErrorState error={error} /> : null}
             {isEmpty ? <DefaultNotificationsListEmptyState activeView={activeView} /> : null}
             {isLoading || isSuccess ? (
@@ -69,6 +92,7 @@ export function DefaultNotificationsList({
                     hasNextPage={hasNextPage}
                     loadNextPage={loadNextPage}
                     isLoading={isLoading}
+                    maxHeight={Math.max(527, availableHeight)}
                 >
                     {(notification) => (
                         <div className={e("notification")}>
