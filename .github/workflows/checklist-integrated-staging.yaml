@@ -14,6 +14,16 @@ on:
         required: false
         default: true
         type: boolean
+      test-branch:
+        description: 'Test branch to run tests'
+        required: false
+        default: master
+        type: string
+      send_message_to_slack_channel:
+        description: 'Notify result to slack'
+        required: false
+        default: true
+        type: boolean
 jobs:
   setup-stage:
     name: Setup env variables
@@ -23,19 +33,25 @@ jobs:
     outputs:
       run-cypress-sdk: ${{ steps.test-suite-options.outputs.run-cypress-sdk }}
       run-export: ${{ steps.test-suite-options.outputs.run-export }}
+      send_message_to_slack_channel: ${{ steps.test-suite-options.outputs.send_message_to_slack_channel }}
     steps:
       - name: Set test suite options
         id: test-suite-options
         run: |
           if [ -z "${{ inputs.run-cypress-sdk }}" ]; then
-            echo 'run-cypress-sdk=false' >> $GITHUB_OUTPUT
+            echo 'run-cypress-sdk=true' >> $GITHUB_OUTPUT
           else
             echo "run-cypress-sdk=${{ inputs.run-cypress-sdk }}" >> $GITHUB_OUTPUT
           fi
           if [ -z "${{ inputs.run-export }}" ]; then
-            echo 'run-export=false' >> $GITHUB_OUTPUT
+            echo 'run-export=true' >> $GITHUB_OUTPUT
           else
             echo "run-export=${{ inputs.run-export }}" >> $GITHUB_OUTPUT
+          fi
+          if [ -z "${{ inputs.send_message_to_slack_channel }}" ]; then
+            echo 'send_message_to_slack_channel=true' >> $GITHUB_OUTPUT
+          else
+            echo "send_message_to_slack_channel=${{ inputs.send_message_to_slack_channel }}" >> $GITHUB_OUTPUT
           fi
   checklist-SDK:
     name: Cypress SDK on top of Tiger
@@ -48,6 +64,9 @@ jobs:
     if: ${{ needs.setup-stage.outputs.run-cypress-sdk == 'true'}}
     with:
       CYPRESS_TEST_TAGS: 'checklist_integrated_tiger'
+      GIT_REVISION: ${{ inputs.test-branch || master }}
+      TEST_BACKEND: 'https://checklist.staging.stg11.panther.intgdc.com'
+      TIGER_DATASOURCES_NAME: 'vertica_staging-goodsales'
   checklist-export:
     name: Cypress SDK Export Test
     permissions:
@@ -55,7 +74,34 @@ jobs:
       pages: write
       id-token: write
     uses: ./.github/workflows/checklist-cypress-ui-test.yaml
-    needs: [ setup-stage ]
-    if: ${{ needs.setup-stage.outputs.run-export == 'true'}}
+    needs: [ setup-stage, checklist-SDK ]
+    if: ${{ !cancelled() && (needs.setup-stage.outputs.run-export == 'true') }}
     with:
       CYPRESS_TEST_TAGS: 'checklist_integrated_tiger_export'
+      GIT_REVISION: ${{ inputs.test-branch || master }}
+      TEST_BACKEND: 'https://checklist.staging.stg11.panther.intgdc.com'
+      TIGER_DATASOURCES_NAME: 'vertica_staging-goodsales'
+  status-check-notify-slack:
+    needs:
+      - setup-stage
+      - checklist-SDK
+      - checklist-export
+    if: ${{ !canceled() }}
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    steps:
+      - name: Decide whether the needed jobs succeeded or failed
+        id: alls-green
+        uses: re-actors/alls-green@release/v1
+        with:
+          allowed-skips: checklist-SDK, checklist-export
+          jobs: ${{ toJSON(needs) }}
+      - name: Send Slack notification
+        uses: slackapi/slack-github-action@v1.27.1
+        if: ${{ needs.setup-stage.outputs.send_message_to_slack_channel == 'true' }}
+        with:
+          channel-id: qa_tests
+          slack-message: "${{ steps.alls-green.outcome == 'success' &&  ':unicorn_face:' || ':robot_panic:' }} `checklist-SDK-${{ github.ref_name }}-branch: ` *${{ steps.alls-green.outcome == 'success' &&  'success' || 'failed' }}*; please check *<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|the logs>*."
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}

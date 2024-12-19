@@ -83,6 +83,7 @@ jobs:
           export TEST_BACKEND=https://staging-automation.dev-latest.stg11.panther.intgdc.com
           export TIGER_DATASOURCES_NAME=pg_staging-goodsales
           export EXECUTOR_NUMBER=$GH_RUN_ID
+          export CYPRESS_TEST_TAGS=post-merge_integrated_tiger
           if [ -n "$USER_FILTER" ]; then
             export FILTER=$USER_FILTER
           fi
