@@ -22,9 +22,9 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     })
     .addScenario("two measures with single row attr sorted by first measure", {
         ...PivotTableWithTwoMeasuresAndSingleRowAttr,
-        sortBy: [newMeasureSort(ReferenceMd.Amount, "desc")],
+        sortBy: [newMeasureSort(ReferenceMd.Amount, "asc")],
     })
     .addScenario("two measures with single row attr sorted by second measure", {
         ...PivotTableWithTwoMeasuresAndSingleRowAttr,
-        sortBy: [newMeasureSort(ReferenceMd.Won, "desc")],
+        sortBy: [newMeasureSort(ReferenceMd.Won, "asc")],
     });

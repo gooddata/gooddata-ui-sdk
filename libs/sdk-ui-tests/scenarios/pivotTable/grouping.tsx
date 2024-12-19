@@ -17,7 +17,7 @@ export default scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
     .withVisualTestConfig({ screenshotSize: { width: 1000, height: 800 } })
     .addScenario("single measure pivot with grouping sorted by first row attr", {
         ...PivotTableWithMeasureAndTwoAttributesThatHasAdjacentCellsWhenSortedByMeasure,
-        sortBy: [newAttributeSort(ReferenceMd.Department.Default, "desc")],
+        sortBy: [newAttributeSort(ReferenceMd.Department.Default, "asc")],
     })
     .addScenario("single measure pivot with grouping sorted by second row attr", {
         ...PivotTableWithMeasureAndTwoAttributesThatHasAdjacentCellsWhenSortedByMeasure,

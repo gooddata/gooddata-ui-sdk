@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 
 import { scenariosFor } from "../../../src/index.js";
 import { ColumnChart, IColumnChartProps } from "@gooddata/sdk-ui-charts";
@@ -88,14 +88,14 @@ export default scenariosFor<IColumnChartProps>("ColumnChart", ColumnChart)
     .addScenario("stack measures to 100% with dual axis and axis min/max", {
         ...ColumnChartWithArithmeticMeasuresAndViewBy,
         config: {
-            stackMeasuresToPercent: true,
+            stackMeasuresToPercent: false,
             yaxis: {
                 min: "0.1",
-                max: "0.9",
+                max: "10",
             },
             secondary_yaxis: {
                 min: "1",
-                max: "2",
+                max: "10",
                 measures: [measureLocalId(ReferenceMdExt.CalculatedWonLostRatio)],
             },
         },

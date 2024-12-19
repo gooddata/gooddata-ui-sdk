@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import { ColumnChart, IColumnChartProps } from "@gooddata/sdk-ui-charts";
 import { scenariosFor } from "../../../src/index.js";
 import { BlackColor, CustomColorPalette, CustomPaletteColor, RedColor } from "../../_infra/colors.js";
@@ -32,7 +32,7 @@ const colorAssignment = scenariosFor<IColumnChartProps>("ColumnChart", ColumnCha
                 colorMapping: [
                     {
                         predicate: AmountMeasurePredicate,
-                        color: BlackColor,
+                        color: RedColor,
                     },
                     {
                         predicate: WonMeasurePredicate,
@@ -71,7 +71,7 @@ const colorAssignment = scenariosFor<IColumnChartProps>("ColumnChart", ColumnCha
                 colorMapping: [
                     {
                         predicate: AttributeElements.Region.EastCoast,
-                        color: BlackColor,
+                        color: RedColor,
                     },
                     {
                         predicate: AttributeElements.Region.WestCoast,
