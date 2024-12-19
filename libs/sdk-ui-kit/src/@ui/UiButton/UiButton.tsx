@@ -27,6 +27,7 @@ export interface UiButtonProps {
     isLoading?: boolean;
     tooltip?: React.ReactNode;
     onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    dataId?: string;
 }
 
 const { b, e } = bem("gd-ui-kit-button");
@@ -44,6 +45,7 @@ export const UiButton = ({
     iconBefore,
     iconAfter,
     onClick,
+    dataId,
 }: UiButtonProps) => {
     const iconPosition = iconBefore ? "left" : iconAfter ? "right" : undefined;
 
@@ -54,6 +56,7 @@ export const UiButton = ({
             disabled={isDisabled}
             tabIndex={0}
             onClick={onClick}
+            data-id={dataId}
         >
             {iconBefore ? (
                 <span className={e("icon")}>

@@ -537,6 +537,7 @@ export interface INotificationsPanelProps extends INotificationsPanelCustomCompo
     locale?: ILocale;
     onNotificationClick: (notification: INotification) => void;
     refreshInterval?: number;
+    renderInline?: boolean;
     workspace?: string;
 }
 

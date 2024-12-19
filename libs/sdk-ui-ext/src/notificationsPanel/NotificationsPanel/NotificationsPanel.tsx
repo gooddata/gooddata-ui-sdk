@@ -98,6 +98,11 @@ export interface INotificationsPanelProps extends INotificationsPanelCustomCompo
     locale?: ILocale;
 
     /**
+     * Render notifications panel inline (without button + clicking on it).
+     */
+    renderInline?: boolean;
+
+    /**
      * Handler for notification click.
      */
     onNotificationClick: (notification: INotification) => void;
@@ -137,6 +142,7 @@ function NotificationsPanelController({
     NotificationsListErrorState = DefaultNotificationsListErrorState,
     Notification = DefaultNotification,
     onNotificationClick,
+    renderInline = false,
 }: INotificationsPanelProps) {
     const {
         buttonRef,
@@ -170,48 +176,75 @@ function NotificationsPanelController({
 
     return (
         <>
-            <OpenNotificationsPanelButton
-                buttonRef={buttonRef}
-                isNotificationPanelOpen={isOpen}
-                toggleNotificationPanel={toggleNotificationsPanel}
-                openNotificationPanel={openNotificationsPanel}
-                closeNotificationPanel={closeNotificationsPanel}
-                hasUnreadNotifications={unreadNotificationsCount > 0}
-            />
-            {isOpen ? (
-                <Overlay
-                    isModal={false}
-                    alignTo={buttonRef.current}
-                    alignPoints={ALIGN_POINTS}
-                    closeOnEscape
-                    closeOnOutsideClick
-                    closeOnParentScroll={false}
-                    closeOnMouseDrag={false}
-                    onClose={closeNotificationsPanel}
-                >
-                    <NotificationsPanel
-                        NotificationsPanelHeader={NotificationsPanelHeader}
-                        NotificationsList={NotificationsList}
-                        NotificationsListEmptyState={NotificationsListEmptyState}
-                        NotificationsListErrorState={NotificationsListErrorState}
-                        Notification={Notification}
-                        toggleNotificationsPanel={toggleNotificationsPanel}
-                        openNotificationsPanel={openNotificationsPanel}
-                        closeNotificationsPanel={closeNotificationsPanel}
-                        activeView={activeView}
-                        changeActiveView={changeActiveView}
-                        markNotificationAsRead={markNotificationAsRead}
-                        markAllNotificationsAsRead={markAllNotificationsAsRead}
-                        unreadNotificationsCount={unreadNotificationsCount}
-                        activeNotifications={activeNotifications}
-                        onNotificationClick={handleNotificationClick}
-                        status={status}
-                        error={error}
-                        loadNextPage={loadNextPage}
-                        hasNextPage={hasNextPage}
+            {renderInline ? (
+                <NotificationsPanel
+                    NotificationsPanelHeader={NotificationsPanelHeader}
+                    NotificationsList={NotificationsList}
+                    NotificationsListEmptyState={NotificationsListEmptyState}
+                    NotificationsListErrorState={NotificationsListErrorState}
+                    Notification={Notification}
+                    toggleNotificationsPanel={toggleNotificationsPanel}
+                    openNotificationsPanel={openNotificationsPanel}
+                    closeNotificationsPanel={closeNotificationsPanel}
+                    activeView={activeView}
+                    changeActiveView={changeActiveView}
+                    markNotificationAsRead={markNotificationAsRead}
+                    markAllNotificationsAsRead={markAllNotificationsAsRead}
+                    unreadNotificationsCount={unreadNotificationsCount}
+                    activeNotifications={activeNotifications}
+                    onNotificationClick={handleNotificationClick}
+                    status={status}
+                    error={error}
+                    loadNextPage={loadNextPage}
+                    hasNextPage={hasNextPage}
+                />
+            ) : (
+                <>
+                    <OpenNotificationsPanelButton
+                        buttonRef={buttonRef}
+                        isNotificationPanelOpen={isOpen}
+                        toggleNotificationPanel={toggleNotificationsPanel}
+                        openNotificationPanel={openNotificationsPanel}
+                        closeNotificationPanel={closeNotificationsPanel}
+                        hasUnreadNotifications={unreadNotificationsCount > 0}
                     />
-                </Overlay>
-            ) : null}
+                    {isOpen ? (
+                        <Overlay
+                            className="gd-ui-ext-notifications-panel-overlay"
+                            isModal={false}
+                            alignTo={buttonRef.current}
+                            alignPoints={ALIGN_POINTS}
+                            closeOnEscape
+                            closeOnOutsideClick
+                            closeOnParentScroll={false}
+                            closeOnMouseDrag={false}
+                            onClose={closeNotificationsPanel}
+                        >
+                            <NotificationsPanel
+                                NotificationsPanelHeader={NotificationsPanelHeader}
+                                NotificationsList={NotificationsList}
+                                NotificationsListEmptyState={NotificationsListEmptyState}
+                                NotificationsListErrorState={NotificationsListErrorState}
+                                Notification={Notification}
+                                toggleNotificationsPanel={toggleNotificationsPanel}
+                                openNotificationsPanel={openNotificationsPanel}
+                                closeNotificationsPanel={closeNotificationsPanel}
+                                activeView={activeView}
+                                changeActiveView={changeActiveView}
+                                markNotificationAsRead={markNotificationAsRead}
+                                markAllNotificationsAsRead={markAllNotificationsAsRead}
+                                unreadNotificationsCount={unreadNotificationsCount}
+                                activeNotifications={activeNotifications}
+                                onNotificationClick={handleNotificationClick}
+                                status={status}
+                                error={error}
+                                loadNextPage={loadNextPage}
+                                hasNextPage={hasNextPage}
+                            />
+                        </Overlay>
+                    ) : null}
+                </>
+            )}
         </>
     );
 }

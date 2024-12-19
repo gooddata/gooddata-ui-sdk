@@ -13,7 +13,7 @@ import { useFetchNotifications } from "./useFetchNotifications.js";
 export interface IUseNotificationsProps {
     workspace?: string;
     backend?: IAnalyticalBackend;
-    refreshInterval?: number;
+    refreshInterval: number;
 }
 
 /**
@@ -27,6 +27,7 @@ export function useNotifications({ workspace, refreshInterval }: IUseNotificatio
         error: notificationsError,
         loadNextPage: notificationsLoadNextPage,
         status: notificationsStatus,
+        reset: notificationsReset,
     } = useFetchNotifications({
         workspace: effectiveWorkspace,
         refreshInterval,
@@ -38,6 +39,7 @@ export function useNotifications({ workspace, refreshInterval }: IUseNotificatio
         notifications: unreadNotifications,
         status: unreadNotificationsStatus,
         totalNotificationsCount: unreadNotificationsCount,
+        reset: unreadNotificationsReset,
     } = useFetchNotifications({
         workspace: effectiveWorkspace,
         readStatus: "unread",
@@ -83,13 +85,14 @@ export function useNotifications({ workspace, refreshInterval }: IUseNotificatio
 
         await organizationService.notifications().markAllNotificationsAsRead();
 
-        setMarkedAsReadNotifications(notifications.map((notification) => notification.id) ?? []);
+        notificationsReset();
+        unreadNotificationsReset();
     }, [
         organizationService,
         organizationStatus,
-        notifications,
         notificationsStatus,
-        setMarkedAsReadNotifications,
+        notificationsReset,
+        unreadNotificationsReset,
     ]);
 
     const effectiveNotifications = useMemo(() => {

@@ -4,7 +4,7 @@ import { IAlertDescription, IAlertNotification, INotification } from "@gooddata/
 import { getDateTimeConfig, IDateConfig, UiIcon } from "@gooddata/sdk-ui-kit";
 import { bem } from "../bem.js";
 import { Tooltip } from "../components/Tooltip.js";
-import { NotificationFiltersDetail } from "../NotificationFiltersDetail/NotificationFiltersDetail.js";
+// import { NotificationFiltersDetail } from "../NotificationFiltersDetail/NotificationFiltersDetail.js";
 import { NotificationTriggerDetail } from "../NotificationTriggersDetail/NotificationTriggersDetail.js";
 import { defineMessages, FormattedDate, FormattedMessage, FormattedTime, useIntl } from "react-intl";
 
@@ -34,13 +34,24 @@ export function AlertNotification({
         markAsRead(notification.id);
     };
 
-    const clickNotification = useCallback(() => {
-        onNotificationClick(notification);
-    }, [onNotificationClick, notification]);
+    const clickNotification = useCallback(
+        (event: React.MouseEvent<HTMLDivElement>) => {
+            const target = event.target;
+            const targetIsElement = target instanceof Element;
+            const isNotificationsDetailsLink =
+                targetIsElement && target.closest(`[data-id="notification-detail"]`);
+            if (isNotificationsDetailsLink) {
+                return;
+            }
+            onNotificationClick(notification);
+        },
+        [onNotificationClick, notification],
+    );
 
-    const filterCount = notification.details.data.alert.filterCount;
-    const isSliced = notification.details.data.alert.attribute;
-    const showSeparator = filterCount && filterCount > 0 && isSliced;
+    // Hide filters for now, as there is lot of unresolved cases to consider
+    // const filterCount = notification.details.data.alert.filterCount;
+    // const isSliced = notification.details.data.alert.attribute;
+    // const showSeparator = filterCount && filterCount > 0 && isSliced;
     const notificationTitle = getNotificationTitle(notification);
 
     return (
@@ -54,8 +65,8 @@ export function AlertNotification({
                     {notificationTitle}
                 </div>
                 <div className={e("links")}>
-                    <NotificationFiltersDetail notification={notification} />
-                    {showSeparator ? "・" : null}
+                    {/* <NotificationFiltersDetail notification={notification} />
+                    {showSeparator ? "・" : null} */}
                     <NotificationTriggerDetail notification={notification} />
                 </div>
             </div>

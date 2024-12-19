@@ -12,7 +12,7 @@
 
     &__tabs {
         width: 100%;
-        height: 28px;
+        height: 23px;
 
         display: flex;
         flex-direction: column;
@@ -21,7 +21,10 @@
     }
 
     &__mark-all-as-read-button {
-        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 23px;
         white-space: nowrap;
         border-bottom: 1px solid var(--gd-palette-complementary-3);
     }

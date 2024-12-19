@@ -827,7 +827,10 @@ export interface IAppHeaderProps {
     // (undocumented)
     menuItemsGroups?: IHeaderMenuItem[][];
     // (undocumented)
-    notificationsPanel?: React_2.ReactNode;
+    notificationsPanel?: (props: {
+        isMobile: boolean;
+        closeNotificationsOverlay: () => void;
+    }) => React_2.ReactNode;
     // (undocumented)
     onChatItemClick?: (e: React_2.MouseEvent) => void;
     // (undocumented)
@@ -866,6 +869,8 @@ export interface IAppHeaderState {
     guid: string;
     // (undocumented)
     isHelpMenuOpen: boolean;
+    // (undocumented)
+    isNotificationsMenuOpen: boolean;
     // (undocumented)
     isOverlayMenuOpen: boolean;
     // (undocumented)
@@ -2013,6 +2018,8 @@ export interface IHeaderMenuItem {
     className?: string;
     // (undocumented)
     href?: string;
+    // (undocumented)
+    icon?: React_2.ReactNode;
     // (undocumented)
     iconName?: string;
     // (undocumented)
@@ -4879,12 +4886,14 @@ export const Typography: React_2.FC<ITypographyProps>;
 export type TypographyTagName = "h1" | "h2" | "h3" | "p";
 
 // @internal (undocumented)
-export const UiButton: ({ buttonRef, size, variant, label, isDisabled, isLoading, iconBefore, iconAfter, onClick, }: UiButtonProps) => React_2.JSX.Element;
+export const UiButton: ({ buttonRef, size, variant, label, isDisabled, isLoading, iconBefore, iconAfter, onClick, dataId, }: UiButtonProps) => React_2.JSX.Element;
 
 // @internal (undocumented)
 export interface UiButtonProps {
     // (undocumented)
     buttonRef?: React_2.RefObject<HTMLButtonElement>;
+    // (undocumented)
+    dataId?: string;
     // (undocumented)
     iconAfter?: IconType;
     // (undocumented)
