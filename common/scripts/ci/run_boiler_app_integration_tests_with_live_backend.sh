@@ -33,6 +33,7 @@ $_RUSH build -t sdk-ui-tests-e2e
 trap "docker rmi --force $CYPRESS_IMAGE || true" EXIT
 
 docker run --rm --entrypoint '' \
+--user root \
 -e BOILER_APP_NAME \
 -e BOILER_APP_VERSION \
 -e SDK_LANG \
