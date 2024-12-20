@@ -110,3 +110,18 @@ export * from "./internal/components/dialogs/userManagementDialogs/index.js";
 export * from "./internal/components/attributeHierarchies/index.js";
 
 export * from "./internal/components/pluggableVisualizations/alerts.js";
+
+export { DefaultOpenNotificationsPanelButton } from "./notificationsPanel/NotificationsPanel/DefaultOpenNotificationsPanelButton.js";
+export { NotificationsPanel } from "./notificationsPanel/NotificationsPanel/NotificationsPanel.js";
+export type {
+    INotificationsPanelProps,
+    INotificationsPanelCustomComponentsProps,
+} from "./notificationsPanel/NotificationsPanel/NotificationsPanel.js";
+export type { INotificationsPanelComponentProps } from "./notificationsPanel/NotificationsPanel/DefaultNotificationsPanel.js";
+export type { IOpenNotificationsPanelButtonComponentProps } from "./notificationsPanel/NotificationsPanel/DefaultOpenNotificationsPanelButton.js";
+export type { INotificationsPanelHeaderComponentProps } from "./notificationsPanel/NotificationsPanel/DefaultNotificationsPanelHeader.js";
+export type { INotificationsListComponentProps } from "./notificationsPanel/NotificationsList/DefaultNotificationsList.js";
+export type { INotificationsListEmptyStateComponentProps } from "./notificationsPanel/NotificationsList/DefaultNotificationsListEmptyState.js";
+export type { INotificationsListErrorStateComponentProps } from "./notificationsPanel/NotificationsList/DefaultNotificationsListErrorState.js";
+export type { INotificationComponentProps } from "./notificationsPanel/Notification/DefaultNotification.js";
+export type { INotificationsPanelView } from "./notificationsPanel/types.js";

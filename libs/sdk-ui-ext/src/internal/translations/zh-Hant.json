@@ -363,5 +363,13 @@
     "properties.interactions.alerts": "警報",
     "properties.interactions.alerts.tooltip": "使用戶能夠在儀表板上為此視覺化建立警報。",
     "properties.interactions.scheduledExports": "預定出口",
-    "properties.interactions.scheduledExports.tooltip": "使用戶能夠在儀表板上為此視覺化建立計劃匯出。"
+    "properties.interactions.scheduledExports.tooltip": "使用戶能夠在儀表板上為此視覺化建立計劃匯出。",
+    "properties.advanced.title": "高級訂製",
+    "properties.advanced.chartConfigOverride.noValueLabel": "還沒有訂製。",
+    "properties.advanced.chartConfigOverride.link": "了解更多",
+    "properties.advanced.chartConfigOverride.editorButton": "開啟編輯器",
+    "properties.advanced.chartConfigOverride.title": "高級訂製",
+    "properties.advanced.chartConfigOverride.snippets.header": "片段",
+    "properties.advanced.chartConfigOverride.button.apply": "申請",
+    "properties.advanced.chartConfigOverride.button.cancel": "取消"
 }

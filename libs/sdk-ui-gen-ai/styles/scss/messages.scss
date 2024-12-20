@@ -187,6 +187,17 @@
         text-align: center;
         margin-top: 15px;
     }
+
+    &__suggestions {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        gap: 10px;
+
+        .gd-button + .gd-button {
+            margin-left: 0;
+        }
+    }
 }
 
 .gd-gen-ai-chat__messages__empty {

@@ -182,6 +182,7 @@ export type {
     ChatHistoryRequestUserFeedbackEnum,
     ChatHistoryInteraction,
     ChatHistoryInteractionUserFeedbackEnum,
+    Suggestion as ChatSuggestion,
     ActionsApiAiChatRequest,
     ActionsApiAiChatStreamRequest,
     ActionsApiAiChatHistoryRequest,

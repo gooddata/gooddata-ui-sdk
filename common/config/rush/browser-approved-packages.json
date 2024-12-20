@@ -147,10 +147,6 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
-      "name": "@gooddata/sdk-ui-charts",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
       "name": "@gooddata/sdk-ui-dashboard",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -168,6 +164,10 @@
     },
     {
       "name": "@gooddata/sdk-ui-geo",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "@gooddata/sdk-ui-charts",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
@@ -248,6 +248,10 @@
     },
     {
       "name": "@storybook/react-webpack5",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@tanstack/react-virtual",
       "allowedCategories": [ "production" ]
     },
     {
@@ -523,10 +527,6 @@
       "allowedCategories": [ "examples", "tools" ]
     },
     {
-      "name": "chokidar",
-      "allowedCategories": [ "tools" ]
-    },
-    {
       "name": "circular-dependency-plugin",
       "allowedCategories": [ "examples", "production" ]
     },
@@ -765,6 +765,10 @@
     {
       "name": "chalk",
       "allowedCategories": [ "production", "tools" ]
+    },
+    {
+      "name": "chokidar",
+      "allowedCategories": [ "tools" ]
     },
     {
       "name": "immer",
@@ -1023,16 +1027,16 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "recharts",
-      "allowedCategories": [ "examples" ]
-    },
-    {
       "name": "redux-batched-actions",
       "allowedCategories": [ "production" ]
     },
     {
       "name": "redux-saga",
       "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "recharts",
+      "allowedCategories": [ "examples" ]
     },
     {
       "name": "require-from-string",
@@ -1091,11 +1095,11 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "stylelint-checkstyle-formatter",
+      "name": "stylelint-config-prettier",
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "stylelint-config-prettier",
+      "name": "stylelint-checkstyle-formatter",
       "allowedCategories": [ "production" ]
     },
     {

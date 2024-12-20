@@ -78,6 +78,12 @@ export type {
     NotificationType,
     WebhookRecipient,
 } from "./notifications/index.js";
+export {
+    isAlertNotification,
+    isScheduleNotification,
+    isTestNotification,
+    isNotification,
+} from "./notifications/index.js";
 
 export type {
     ObjectType,
@@ -1046,6 +1052,7 @@ export type {
     IGenAIVisualizationDimension,
     IGenAIVisualizationMetric,
     IGenAIActiveObject,
+    IGenAISuggestion,
     GenAIChatRoutingUseCase,
     GenAIChatInteractionUserFeedback,
     GenAIChatRole,

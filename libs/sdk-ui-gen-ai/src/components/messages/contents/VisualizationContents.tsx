@@ -5,20 +5,26 @@ import cx from "classnames";
 import { IAttribute, IFilter, IMeasure } from "@gooddata/sdk-model";
 import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { BarChart, ColumnChart, Headline, LineChart, PieChart } from "@gooddata/sdk-ui-charts";
-import { VisualizationContents } from "../../../model.js";
+import { makeTextContents, makeUserMessage, VisualizationContents } from "../../../model.js";
 import { useExecution } from "./useExecution.js";
 import { VisualizationErrorBoundary } from "./VisualizationErrorBoundary.js";
 import { MarkdownComponent } from "./Markdown.js";
+import { Button } from "@gooddata/sdk-ui-kit";
+import { useDispatch } from "react-redux";
+import { newMessageAction } from "../../../store/index.js";
 
 export type VisualizationContentsProps = {
     content: VisualizationContents;
     useMarkdown?: boolean;
+    showSuggestions?: boolean;
 };
 
 export const VisualizationContentsComponent: React.FC<VisualizationContentsProps> = ({
     content,
     useMarkdown,
+    showSuggestions = false,
 }) => {
+    const dispatch = useDispatch();
     const className = cx(
         "gd-gen-ai-chat__messages__content",
         "gd-gen-ai-chat__messages__content--visualization",
@@ -58,6 +64,24 @@ export const VisualizationContentsComponent: React.FC<VisualizationContentsProps
                             {visualization.title}
                         </MarkdownComponent>
                     </div>
+                </div>
+            ) : null}
+            {showSuggestions && visualization?.suggestions?.length ? (
+                <div className="gd-gen-ai-chat__visualization__suggestions">
+                    {visualization.suggestions.map((suggestion) => (
+                        <Button
+                            key={suggestion.label}
+                            variant="secondary"
+                            title={suggestion.query}
+                            onClick={() => {
+                                dispatch(
+                                    newMessageAction(makeUserMessage([makeTextContents(suggestion.query)])),
+                                );
+                            }}
+                        >
+                            {suggestion.label}
+                        </Button>
+                    ))}
                 </div>
             ) : null}
         </div>

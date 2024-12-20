@@ -29,6 +29,7 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
                     "notificationChannel",
                     "recipients",
                     "exportDefinitions",
+                    "analyticalDashboard",
                     ...(loadUserData ? (["createdBy", "modifiedBy"] as const) : []),
                 ],
                 origin: "NATIVE", // ensures that no inherited automations are returned
@@ -60,6 +61,7 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
                     "notificationChannel",
                     "recipients",
                     "exportDefinitions",
+                    "analyticalDashboard",
                     ...(loadUserData ? (["createdBy", "modifiedBy"] as const) : []),
                 ],
             });

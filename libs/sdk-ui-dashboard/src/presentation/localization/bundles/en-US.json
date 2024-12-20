@@ -764,7 +764,7 @@
         "limit": 0
     },
     "dialogs.alerting.management.delete.dialog.confirm": {
-        "value": "<b>The alert</b> will be permanently deleted.",
+        "value": "<b>The alert</b> will be permanently deleted, along with all its notifications.",
         "comment": "Do not translate html tags <b>, </b>",
         "limit": 0
     },
@@ -3117,7 +3117,7 @@
         "limit": 0
     },
     "insightAlert.config.delete.message": {
-        "value": "The alert for <b>{title}</b> will be permanently deleted.",
+        "value": "The alert for <b>{title}</b> will be permanently deleted, along with all its notifications.",
         "comment": "Do not translate html tags <b>, </b> or {title} placeholder",
         "limit": 0
     },
