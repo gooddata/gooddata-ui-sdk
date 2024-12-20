@@ -92,7 +92,7 @@ jobs:
       - name: Rush build
         run: node common/scripts/install-run-rush.js build --to @gooddata/sdk-ui-tests-e2e
   e2e:
-    needs: [ warm-up-cache,build ]
+    needs: [ warm-up-cache, build ]
     runs-on:
       group: infra1-runners-arc
       labels: runners-rxa-xlarge
@@ -148,4 +148,6 @@ jobs:
         with:
           name: cypress-test-artifacts
           path: |
-            libs/sdk-ui-tests-e2e/cypress/videos/**/*.mp4
+            libs/sdk-ui-tests-e2e/cypress/${{ inputs.GIT_REVISION }}/videos/**/*.mp4
+            libs/sdk-ui-tests-e2e/cypress/${{ inputs.GIT_REVISION }}/screenshots/**/*
+            libs/sdk-ui-tests-e2e/cypress/${{ inputs.GIT_REVISION }}/results/**/*

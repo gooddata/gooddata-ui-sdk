@@ -56,11 +56,9 @@ on:
         default: 'latest'
       SDK_LANG:
         description: 'Programming Language to be used'
-        type: choice
+        type: string
         default: 'js'
-        options:
-          - js
-          - ts
+        required: true
       FILTER:
         type: string
         required: true
@@ -93,6 +91,7 @@ jobs:
       labels: runners-rxa-xlarge
     permissions:
       contents: read
+      pages: write
       id-token: write
     steps:
       - uses: actions/checkout@v4
@@ -118,6 +117,7 @@ jobs:
         run: |
           export HOST=${{ inputs.TEST_BACKEND }}
           export TIGER_DATASOURCES_NAME=${{ inputs.TIGER_DATASOURCES_NAME }}
+          export FIXTURE_TYPE=goodsales
           export SDK_LANG=${{ inputs.SDK_LANG }}
           export FILTER=${{ inputs.FILTER }}
           if [[ -z ${{ inputs.SDK_VERSION }} || ${{ inputs.SDK_VERSION }} == "latest" ]]; then
@@ -126,13 +126,12 @@ jobs:
             export SDK_VERSION=${{ inputs.SDK_VERSION }}
           fi
           echo "The boiler app will be run with sdk version $SDK_VERSION"
-
           ./common/scripts/ci/run_boiler_app_integration_tests_with_live_backend.sh
       - name: Archive the cypress test artifacts
         uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
-          name: cypress-test-artifacts
+          name: cypress-boiler-test-artifacts
           path: |
             libs/sdk-ui-tests-e2e/cypress/videos/**/*.mp4
             libs/sdk-ui-tests-e2e/cypress/screenshots/**/*
