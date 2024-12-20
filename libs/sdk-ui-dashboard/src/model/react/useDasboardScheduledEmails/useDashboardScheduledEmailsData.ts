@@ -12,7 +12,6 @@ import {
     selectMenuButtonItemsVisibility,
     selectEntitlementMaxAutomations,
     selectAllAutomationsCount,
-    selectUsers,
     selectAutomationsIsLoading,
     selectAutomationsError,
     selectDashboardUserAutomationSchedulesInContext,
@@ -45,8 +44,6 @@ interface IUseDashboardScheduledEmailsDataProps {
 export const useDashboardScheduledEmailsData = ({
     scheduledExportToEdit,
 }: IUseDashboardScheduledEmailsDataProps) => {
-    const users = useDashboardSelector(selectUsers);
-
     const isInitialized = useDashboardSelector(selectAutomationsIsInitialized);
     const automations = useDashboardSelector(selectDashboardUserAutomationSchedulesInContext(undefined));
     const automationsCount = useDashboardSelector(selectAllAutomationsCount);
@@ -115,7 +112,6 @@ export const useDashboardScheduledEmailsData = ({
     return {
         // Data
         isInitialized,
-        users,
         notificationChannels,
         automations,
         automationsLoading,

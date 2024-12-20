@@ -33,7 +33,6 @@ export const AlertingDialogProvider = () => {
         <>
             {isAlertingManagementDialogOpen ? (
                 <AlertingManagementDialog
-                    isVisible={isAlertingManagementDialogOpen}
                     onEdit={onAlertingManagementEdit}
                     onClose={onAlertingManagementClose}
                     onDeleteSuccess={onAlertingManagementDeleteSuccess}
@@ -50,7 +49,6 @@ export const AlertingDialogProvider = () => {
                     anchorEl={alertingToEdit?.anchor}
                     editAlert={alertingToEdit?.alert}
                     editWidget={alertingToEdit?.widget}
-                    isVisible={isAlertingDialogOpen}
                     onCancel={onAlertingCancel}
                     onUpdate={onAlertingUpdate}
                 />

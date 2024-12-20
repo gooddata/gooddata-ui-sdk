@@ -15,11 +15,9 @@ import {
 } from "../../store/config/configSelectors.js";
 import { automationsActions } from "../../store/automations/index.js";
 import { selectDashboardId } from "../../store/meta/metaSelectors.js";
-import { usersActions } from "../../store/users/index.js";
 import { notificationChannelsActions } from "../../store/notificationChannels/index.js";
 import { loadDashboardUserAutomations, loadWorkspaceAutomationsCount } from "./loadAutomations.js";
 import { loadNotificationChannels } from "./loadNotificationChannels.js";
-import { loadWorkspaceUsers } from "./loadWorkspaceUsers.js";
 import { selectCurrentUser } from "../../store/user/userSelectors.js";
 import {
     selectAutomationsIsInitialized,
@@ -76,16 +74,14 @@ export function* initializeAutomationsHandler(
     yield put(automationsActions.setAutomationsLoading(true));
 
     try {
-        const [automations, allAutomationsCount, notificationChannels, users]: [
+        const [automations, allAutomationsCount, notificationChannels]: [
             PromiseFnReturnType<typeof loadDashboardUserAutomations>,
             PromiseFnReturnType<typeof loadWorkspaceAutomationsCount>,
             PromiseFnReturnType<typeof loadNotificationChannels>,
-            PromiseFnReturnType<typeof loadWorkspaceUsers>,
         ] = yield all([
             call(loadDashboardUserAutomations, ctx, dashboardId, user.login, !canManageAutomations),
             call(loadWorkspaceAutomationsCount, ctx),
             call(loadNotificationChannels, ctx, enableInPlatformNotifications),
-            call(loadWorkspaceUsers, ctx),
         ]);
 
         // Set filters according to provided automationId
@@ -113,7 +109,6 @@ export function* initializeAutomationsHandler(
                 automationsActions.setUserAutomations(automations),
                 automationsActions.setAllAutomationsCount(allAutomationsCount),
                 notificationChannelsActions.setNotificationChannels(notificationChannels),
-                usersActions.setUsers(users),
             ]),
         );
     } catch (e) {

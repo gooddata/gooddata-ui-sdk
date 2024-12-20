@@ -85,3 +85,5 @@ export type { ThemeColor } from "./@ui/@types/themeColors.js";
 export type { IconType } from "./@ui/@types/icon.js";
 export { UiIcon } from "./@ui/UiIcon/UiIcon.js";
 export type { UiIconProps } from "./@ui/UiIcon/UiIcon.js";
+export { UiSkeleton } from "./@ui/UiSkeleton/UiSkeleton.js";
+export type { UiSkeletonProps } from "./@ui/UiSkeleton/UiSkeleton.js";

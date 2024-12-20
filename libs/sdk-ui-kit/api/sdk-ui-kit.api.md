@@ -4930,6 +4930,18 @@ export interface UiIconProps {
 }
 
 // @internal (undocumented)
+export function UiSkeleton({ itemsCount, itemHeight, itemWidth, gap, direction, }: UiSkeletonProps): React_2.JSX.Element;
+
+// @internal (undocumented)
+export interface UiSkeletonProps {
+    direction?: "row" | "column";
+    gap?: number;
+    itemHeight?: (number | string) | (number | string)[];
+    itemsCount?: number;
+    itemWidth?: (number | string) | (number | string)[];
+}
+
+// @internal (undocumented)
 export type UnitsType = "px" | "%" | "rem" | "em";
 
 // @internal (undocumented)

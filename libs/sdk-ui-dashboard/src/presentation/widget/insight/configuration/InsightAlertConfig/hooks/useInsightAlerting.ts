@@ -27,7 +27,6 @@ import {
     selectNotificationChannels,
     useDashboardUserInteraction,
     selectCanManageWorkspace,
-    selectUsers,
     selectEntitlementMaxAutomationRecipients,
     selectExecutionResultByRef,
     selectEnableAlertAttributes,
@@ -35,6 +34,7 @@ import {
     selectCatalogDateDatasets,
     selectSeparators,
     selectEnableComparisonInAlerting,
+    useWorkspaceUsers,
 } from "../../../../../../model/index.js";
 import { convertCurrentUserToAutomationRecipient } from "../../../../../../_staging/automation/index.js";
 import { useMetricsAndFacts } from "../../../../../../_staging/sharedHooks/useMetricsAndFacts.js";
@@ -64,7 +64,8 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     const alerts = useDashboardSelector(
         selectDashboardUserAutomationAlertsInContext(widget?.localIdentifier),
     );
-    const users = useDashboardSelector(selectUsers);
+    const { users, status: usersStatus } = useWorkspaceUsers();
+    const isLoadingUsers = usersStatus === "pending" || usersStatus === "loading";
     const dashboard = useDashboardSelector(selectDashboardId);
     const insight = useDashboardSelector(selectInsightByWidgetRef(widget?.ref));
     const execResult = useDashboardSelector(selectExecutionResultByRef(widget?.ref));
@@ -181,6 +182,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     useEffect(() => {
         if (
             widgetFiltersStatus === "success" &&
+            usersStatus === "success" &&
             defaultMeasure &&
             defaultNotificationChannelId &&
             !metricsAndFactsLoading &&
@@ -192,11 +194,14 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
                     supportedMeasures,
                     defaultMeasure,
                     defaultNotificationChannelId,
-                    convertCurrentUserToAutomationRecipient(users, currentUser),
+                    convertCurrentUserToAutomationRecipient(users ?? [], currentUser),
                     metricsAndFacts?.metrics ?? [],
                 ),
             );
-        } else if ((widgetFiltersStatus === "error" || metricsAndFactsLoadingError) && !defaultAlert) {
+        } else if (
+            (widgetFiltersStatus === "error" || usersStatus === "error" || metricsAndFactsLoadingError) &&
+            !defaultAlert
+        ) {
             closeInsightWidgetMenu();
             addError(messages.alertLoadingError);
         }
@@ -214,6 +219,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         addError,
         currentUser,
         users,
+        usersStatus,
     ]);
 
     useEffect(() => {
@@ -332,7 +338,8 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             isLoadingFilters ||
             isRefreshingAutomations ||
             isDeletingAlert ||
-            metricsAndFactsLoading,
+            metricsAndFactsLoading ||
+            isLoadingUsers,
         destinations,
         users,
         alerts,
