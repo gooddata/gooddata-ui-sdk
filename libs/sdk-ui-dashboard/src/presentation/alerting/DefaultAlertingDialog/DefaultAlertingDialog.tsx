@@ -80,7 +80,7 @@ export const AlertingDialog: React.FC<IAlertingDialogProps> = (props) => {
                         destinations={destinations}
                         measures={supportedMeasures}
                         attributes={supportedAttributes}
-                        users={users}
+                        users={users ?? []}
                         onUpdate={(alert) => {
                             updateExistingAlert(alert);
                             onUpdate(alert);

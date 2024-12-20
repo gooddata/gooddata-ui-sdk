@@ -428,7 +428,7 @@ export {
 } from "./automations/automationsSelectors.js";
 
 export type { UsersState } from "./users/usersState.js";
-export { selectUsers } from "./users/usersSelectors.js";
+export { selectUsers, selectErrorUsers, selectUsersLoadingStatus } from "./users/usersSelectors.js";
 
 export type { IFilterViews, FilterViewsState } from "./filterViews/index.js";
 export { selectFilterViews, selectFilterViewsAreLoading } from "./filterViews/index.js";

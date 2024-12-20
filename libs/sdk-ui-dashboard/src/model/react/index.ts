@@ -42,3 +42,4 @@ export type { IUseFiltersForWidgetScheduledExportProps } from "./useDasboardSche
 export { useDashboardScheduledEmailsFilters } from "./useDasboardScheduledEmails/useDashboardScheduledEmailsFilters.js";
 export type { IUseDashboardScheduledEmailsFiltersProps } from "./useDasboardScheduledEmails/useDashboardScheduledEmailsFilters.js";
 export { useDashboardAutomations } from "./useDasboardScheduledEmails/useDashboardAutomations.js";
+export { useWorkspaceUsers } from "./useWorkspaceUsers.js";

@@ -1,9 +1,9 @@
 // (C) 2024 GoodData Corporation
 
 import React, { useEffect } from "react";
+import { UiSkeleton } from "@gooddata/sdk-ui-kit";
 import { useVirtualizer } from "@tanstack/react-virtual";
 
-import { Skeleton } from "./Skeleton.js";
 import { bem } from "../bem.js";
 
 export interface IPagedVirtualListProps<T> {
@@ -63,7 +63,7 @@ export function PagedVirtualList<T>(props: IPagedVirtualListProps<T>) {
                         return (
                             <div key={virtualRow.index} style={style}>
                                 {isSkeletonItem ? (
-                                    <Skeleton itemHeight={itemHeight} key={virtualRow.index} />
+                                    <UiSkeleton itemHeight={itemHeight} key={virtualRow.index} />
                                 ) : (
                                     children(item!)
                                 )}

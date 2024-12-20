@@ -21,7 +21,6 @@ export const useDashboardScheduledEmails = () => {
     const {
         // Data
         isInitialized,
-        users,
         automations,
         automationsLoading,
         automationsError,
@@ -64,7 +63,6 @@ export const useDashboardScheduledEmails = () => {
         scheduledExportToEdit,
         // Data
         isInitialized,
-        users,
         notificationChannels,
         automations,
         automationsCount,

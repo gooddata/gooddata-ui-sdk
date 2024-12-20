@@ -29,11 +29,6 @@ export interface IScheduledEmailDialogPropsContext {
  */
 export interface IScheduledEmailDialogProps {
     /**
-     * Is scheduled e-mail dialog visible?
-     */
-    isVisible?: boolean;
-
-    /**
      * In case, we are not creating new schedule, but editing existing one, this is the active schedule to be edited.
      */
     scheduledExportToEdit?: IAutomationMetadataObject;
@@ -147,11 +142,6 @@ export interface IScheduledEmailDialogProps {
  * @alpha
  */
 export interface IScheduledEmailManagementDialogProps {
-    /**
-     * Is scheduled email management dialog visible?
-     */
-    isVisible?: boolean;
-
     /**
      * Is loading schedule data?
      */
