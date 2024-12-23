@@ -8,7 +8,11 @@ import {
     IDateFilterProps,
     IFilterConfigurationProps,
 } from "@gooddata/sdk-ui-filters";
-import { areObjRefsEqual, DashboardDateFilterConfigModeValues } from "@gooddata/sdk-model";
+import {
+    areObjRefsEqual,
+    DashboardDateFilterConfigModeValues,
+    DateFilterGranularity,
+} from "@gooddata/sdk-model";
 
 import { dateFilterOptionToDashboardDateFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
 import { matchDateFilterToDateFilterOptionWithPreference } from "../../../_staging/dateFilterConfig/dateFilterOptionMapping.js";
@@ -86,6 +90,14 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
         intl,
     );
 
+    const hoursMinutesGranularities: DateFilterGranularity[] = ["GDC.time.minute", "GDC.time.hour"];
+    const hasHoursMinutesGranularities = hoursMinutesGranularities.every((granularity) =>
+        config.availableGranularities.includes(granularity),
+    );
+
+    const isTimeForAbsoluteRangeEnabled =
+        !!capabilities.supportsTimeGranularities && hasHoursMinutesGranularities;
+
     const isConfigurationEnabled =
         isInEditMode &&
         (!!capabilities.supportsHiddenAndLockedFiltersOnUI || !!capabilities.supportsMultipleDateFilters);
@@ -118,7 +130,7 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
             onApply={onApply}
             dateFormat={dateFormat}
             locale={locale}
-            isTimeForAbsoluteRangeEnabled={!!capabilities.supportsTimeGranularities}
+            isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled}
             isEditMode={isInEditMode}
             openOnInit={autoOpen}
             weekStart={weekStart}

@@ -12,7 +12,6 @@ import {
     selectMenuButtonItemsVisibility,
     selectEntitlementMaxAutomations,
     selectAllAutomationsCount,
-    selectUsers,
     selectAutomationsIsLoading,
     selectAutomationsError,
     selectDashboardUserAutomationSchedulesInContext,
@@ -22,10 +21,10 @@ import {
     selectIsScheduleEmailDialogContext,
     selectIsScheduleEmailManagementDialogOpen,
     selectInsightByWidgetRef,
-    selectNotificationChannelsCount,
-    selectNotificationChannels,
     selectAutomationsIsInitialized,
     selectFilterableWidgetByRef,
+    selectNotificationChannelsForScheduledExports,
+    selectNotificationChannelsCountForScheduledExports,
 } from "../../store/index.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";
 
@@ -45,8 +44,6 @@ interface IUseDashboardScheduledEmailsDataProps {
 export const useDashboardScheduledEmailsData = ({
     scheduledExportToEdit,
 }: IUseDashboardScheduledEmailsDataProps) => {
-    const users = useDashboardSelector(selectUsers);
-
     const isInitialized = useDashboardSelector(selectAutomationsIsInitialized);
     const automations = useDashboardSelector(selectDashboardUserAutomationSchedulesInContext(undefined));
     const automationsCount = useDashboardSelector(selectAllAutomationsCount);
@@ -72,8 +69,10 @@ export const useDashboardScheduledEmailsData = ({
     const unlimitedAutomationsEntitlement = useDashboardSelector(selectEntitlementUnlimitedAutomations);
     const maxAutomations = parseInt(maxAutomationsEntitlement?.value ?? DEFAULT_MAX_AUTOMATIONS, 10);
 
-    const notificationChannels = useDashboardSelector(selectNotificationChannels);
-    const numberOfAvailableDestinations = useDashboardSelector(selectNotificationChannelsCount);
+    const notificationChannels = useDashboardSelector(selectNotificationChannelsForScheduledExports);
+    const numberOfAvailableDestinations = useDashboardSelector(
+        selectNotificationChannelsCountForScheduledExports,
+    );
     const maxAutomationsReached = automationsCount >= maxAutomations && !unlimitedAutomationsEntitlement;
 
     /**
@@ -113,7 +112,6 @@ export const useDashboardScheduledEmailsData = ({
     return {
         // Data
         isInitialized,
-        users,
         notificationChannels,
         automations,
         automationsLoading,

@@ -19,6 +19,11 @@
         "comment": "A global semantic search button label in the main menu",
         "limit": 0
     },
+    "gs.header.notifications": {
+        "value": "Notifications",
+        "comment": "A global notifications button label in the main menu",
+        "limit": 0
+    },
     "gs.header.logout": {
         "value": "Logout",
         "comment": "",

@@ -363,5 +363,13 @@
     "properties.interactions.alerts": "Waarschuwing",
     "properties.interactions.alerts.tooltip": "Stel gebruikers in staat om waarschuwingen te maken voor deze visualisatie op dashboards.",
     "properties.interactions.scheduledExports": "Geplande export",
-    "properties.interactions.scheduledExports.tooltip": "Stel gebruikers in staat om geplande exports te maken voor deze visualisatie op dashboards."
+    "properties.interactions.scheduledExports.tooltip": "Stel gebruikers in staat om geplande exports te maken voor deze visualisatie op dashboards.",
+    "properties.advanced.title": "Geavanceerde aanpassingen",
+    "properties.advanced.chartConfigOverride.noValueLabel": "Nog geen aanpassingen.",
+    "properties.advanced.chartConfigOverride.link": "Meer informatie",
+    "properties.advanced.chartConfigOverride.editorButton": "Editor openen",
+    "properties.advanced.chartConfigOverride.title": "Geavanceerde aanpassing",
+    "properties.advanced.chartConfigOverride.snippets.header": "Fragmenten ",
+    "properties.advanced.chartConfigOverride.button.apply": "Toepassen",
+    "properties.advanced.chartConfigOverride.button.cancel": "Annuleren"
 }

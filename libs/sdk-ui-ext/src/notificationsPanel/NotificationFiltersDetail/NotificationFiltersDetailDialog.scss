@@ -1,0 +1,29 @@
+// (C) 2024 GoodData Corporation
+
+.gd-ui-ext-notification-filters-detail-dialog {
+    padding: 5px 0;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+
+    &__item {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__values {
+        color: var(--gd-palette-complementary-8);
+
+        font-size: 12px;
+        font-weight: 700;
+        line-height: normal;
+    }
+
+    &__label {
+        color: var(--gd-palette-complementary-7);
+
+        font-size: 12px;
+        font-weight: 400;
+        line-height: normal;
+    }
+}

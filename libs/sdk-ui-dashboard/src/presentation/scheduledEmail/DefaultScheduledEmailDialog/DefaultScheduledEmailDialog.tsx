@@ -42,6 +42,7 @@ import { DashboardAttachments } from "./components/Attachments/DashboardAttachme
 import { WidgetAttachments } from "./components/Attachments/WidgetAttachments.js";
 import { useFiltersForDashboardScheduledExportInfo } from "./hooks/useFiltersForDashboardScheduledExportInfo.js";
 import { DEFAULT_MAX_RECIPIENTS } from "./constants.js";
+import { DefaultLoadingScheduledEmailDialog } from "./DefaultLoadingScheduledEmailDialog.js";
 
 const MAX_MESSAGE_LENGTH = 200;
 const MAX_SUBJECT_LENGTH = 200;
@@ -311,17 +312,16 @@ export function ScheduledMailDialogRenderer({
  * @alpha
  */
 export const DefaultScheduledEmailDialog: React.FC<IScheduledEmailDialogProps> = (props) => {
-    const { isVisible, isLoading } = props;
+    const { isLoading, onCancel, scheduledExportToEdit } = props;
     const locale = useDashboardSelector(selectLocale);
 
-    /**
-     * The isLoading state typically resolves within milliseconds, as it awaits the widget filters' resolution.
-     * Although brief, this loading period is crucial. We must defer rendering until it completes to ensure
-     * the filters are properly synchronized for the default editing or creation state. Premature rendering
-     * could lead to filter inconsistencies.
-     */
-    if (!isVisible || isLoading) {
-        return null;
+    if (isLoading) {
+        return (
+            <DefaultLoadingScheduledEmailDialog
+                onCancel={onCancel}
+                scheduledExportToEdit={scheduledExportToEdit}
+            />
+        );
     }
 
     return (

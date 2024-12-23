@@ -363,5 +363,13 @@
     "properties.interactions.alerts": "Alert",
     "properties.interactions.alerts.tooltip": "Enable users to create alerts for this visualisation on dashboards.",
     "properties.interactions.scheduledExports": "Scheduled exports",
-    "properties.interactions.scheduledExports.tooltip": "Enable users to create scheduled exports for this visualisation on dashboards."
+    "properties.interactions.scheduledExports.tooltip": "Enable users to create scheduled exports for this visualisation on dashboards.",
+    "properties.advanced.title": "Advanced customisations",
+    "properties.advanced.chartConfigOverride.noValueLabel": "No customisations yet.",
+    "properties.advanced.chartConfigOverride.link": "Find out more",
+    "properties.advanced.chartConfigOverride.editorButton": "Open editor",
+    "properties.advanced.chartConfigOverride.title": "Advanced customisation",
+    "properties.advanced.chartConfigOverride.snippets.header": "Snippets",
+    "properties.advanced.chartConfigOverride.button.apply": "Apply",
+    "properties.advanced.chartConfigOverride.button.cancel": "Cancel"
 }

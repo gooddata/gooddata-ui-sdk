@@ -164,7 +164,7 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
     }
 
     public dateFilterConfigs(): IDateFilterConfigsQuery {
-        return new TigerWorkspaceDateFilterConfigsQuery();
+        return new TigerWorkspaceDateFilterConfigsQuery(this.authCall, this.workspace);
     }
 
     public attributeHierarchies(): IAttributeHierarchiesService {

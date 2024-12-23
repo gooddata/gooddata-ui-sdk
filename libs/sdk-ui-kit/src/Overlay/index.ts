@@ -12,3 +12,5 @@ export {
 } from "./OverlayContext.js";
 export type { IErrorOverlayProps } from "./ErrorOverlay.js";
 export { ErrorOverlay } from "./ErrorOverlay.js";
+export { alignConfigToAlignPoint } from "./utils.js";
+export type { AlignConfig, HorizontalPosition, VerticalPosition, PositionPoint } from "./utils.js";

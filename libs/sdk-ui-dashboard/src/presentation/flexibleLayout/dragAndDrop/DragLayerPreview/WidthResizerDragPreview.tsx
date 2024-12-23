@@ -61,7 +61,10 @@ export function WidthResizerDragPreview(props: WidthResizerDragPreviewProps) {
     ]);
 
     return (
-        <div className="s-resizer-drag-preview resizer-drag-preview" style={style}>
+        <div
+            className="s-resizer-drag-preview resizer-drag-preview gd-grid-layout-resizer-drag-preview gd-grid-layout-width-resizer-drag-preview"
+            style={style}
+        >
             <WidthResizer status="active" />
         </div>
     );

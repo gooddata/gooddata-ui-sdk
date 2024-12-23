@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import groupBy from "lodash/groupBy.js";
 import isEmpty from "lodash/isEmpty.js";
 import {
@@ -139,7 +139,10 @@ export function filterOutWeeks(config: IDateFilterConfig): IDateFilterConfig {
     };
 }
 
-const FallbackToDefault: DateFilterConfigValidationResult[] = ["ConflictingIdentifiers", "NoVisibleOptions"];
+export const FallbackToDefault: DateFilterConfigValidationResult[] = [
+    "ConflictingIdentifiers",
+    "NoVisibleOptions",
+];
 
 /**
  * Given the date filter config loaded from backend and the settings, this function will perform validation

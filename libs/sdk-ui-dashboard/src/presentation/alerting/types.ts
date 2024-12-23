@@ -12,11 +12,6 @@ import { GoodDataSdkError } from "@gooddata/sdk-ui";
  */
 export interface IAlertingDialogProps {
     /**
-     * Is alerting e-mail dialog visible?
-     */
-    isVisible?: boolean;
-
-    /**
      * Callback to be called, when user save the existing alert.
      */
     onUpdate?: (alertingDefinition: IAutomationMetadataObject) => void;
@@ -46,11 +41,6 @@ export interface IAlertingDialogProps {
  * @alpha
  */
 export interface IAlertingManagementDialogProps {
-    /**
-     * Is alerting management dialog visible?
-     */
-    isVisible?: boolean;
-
     /**
      * Callback to be called, when user clicks alert item for editing.
      */
