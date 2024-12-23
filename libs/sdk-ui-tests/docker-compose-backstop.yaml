@@ -4,7 +4,7 @@ services:
     backstop:
         user: "$USER_UID:$USER_GID"
         command: ["--config=/src/backstop.config.js", "${COMMAND}"]
-        image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/backstopjs/backstopjs:5.1.0
+        image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/backstopjs/backstopjs:6.3.24
         volumes:
             - ./backstop:/src
         depends_on:
