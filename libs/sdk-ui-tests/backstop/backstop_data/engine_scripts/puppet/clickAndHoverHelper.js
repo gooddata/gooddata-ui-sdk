@@ -40,7 +40,7 @@ module.exports = async (page, scenario) => {
     if (keyPressSelectors) {
         for (const keyPressSelector of [].concat(keyPressSelectors)) {
             if (typeof keyPressSelector === "string") {
-                await withVisibleSelector(page, scenario, keyPressSelector, () => {
+                await withVisibleSelector(page, scenario, keyPressSelector.selector, () => {
                     return page.type(keyPressSelector.selector, keyPressSelector.keyPress);
                 });
             } else {
