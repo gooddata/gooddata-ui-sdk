@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React from "react";
 import { ConfigPanelClassName } from "@gooddata/sdk-ui-ext/internal";
 
@@ -47,6 +47,10 @@ export class ConfigurationPanelWrapper extends React.Component<IConfigurationPan
 
         return (
             <>
+                <div style={{ background: "red" }}>
+                    <div> {window.outerWidth} </div>
+                    <div> {window.outerHeight} </div>
+                </div>
                 <div
                     className={expandAllClassName}
                     style={{ cursor: "pointer" }}
