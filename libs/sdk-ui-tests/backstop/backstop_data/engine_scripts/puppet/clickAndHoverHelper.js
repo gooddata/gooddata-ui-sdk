@@ -1,9 +1,9 @@
 // (C) 2024 GoodData Corporation
 
 /* eslint-disable no-console,header/header */
-import { setTimeout } from "node:timers/promises";
-
 const debug = process.env.BACKSTOP_DEBUG;
+
+const waitTime = (ms) => new Promise((res) => setTimeout(res, ms));
 
 async function withVisibleSelector(page, scenario, selector, fun) {
     if (debug) {
@@ -48,7 +48,7 @@ module.exports = async (page, scenario) => {
                     console.log("DEBUG >", scenario.label, "| Waiting for ", keyPressSelector, "millis");
                 }
 
-                await setTimeout(keyPressSelector.selector);
+                await waitTime(keyPressSelector.selector);
             }
         }
     }
@@ -64,7 +64,7 @@ module.exports = async (page, scenario) => {
                     console.log("DEBUG >", scenario.label, "| Waiting for ", hoverSelector, "millis");
                 }
 
-                await setTimeout(hoverSelector);
+                await waitTime(hoverSelector);
             }
         }
     }
@@ -80,7 +80,7 @@ module.exports = async (page, scenario) => {
                     console.log("DEBUG >", scenario.label, "| Waiting for ", clickSelector, "millis");
                 }
 
-                await setTimeout(clickSelector);
+                await waitTime(clickSelector);
             }
         }
     }
@@ -102,7 +102,7 @@ module.exports = async (page, scenario) => {
                 console.log("DEBUG >", scenario.label, "| Waiting for ", postInteractionWait, "millis");
             }
 
-            await setTimeout(postInteractionWait);
+            await waitTime(postInteractionWait);
         }
     }
 
