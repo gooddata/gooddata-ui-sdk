@@ -1,0 +1,3 @@
+FROM 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/backstopjs/backstopjs:6.3.24
+
+RUN useradd -u 1001 -m node1
