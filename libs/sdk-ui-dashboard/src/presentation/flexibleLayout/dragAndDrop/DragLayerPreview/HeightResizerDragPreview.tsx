@@ -48,7 +48,10 @@ export const HeightResizerDragPreview = (props: HeightResizerDragPreviewProps) =
     };
 
     return (
-        <div className="height-resizer-drag-preview s-height-resizer-drag-preview" style={style}>
+        <div
+            className="height-resizer-drag-preview s-height-resizer-drag-preview gd-grid-layout-resizer-drag-preview"
+            style={style}
+        >
             <HeightResizer status={"active"} />
         </div>
     );

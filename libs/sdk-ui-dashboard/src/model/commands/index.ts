@@ -110,6 +110,7 @@ import {
 import { AddDrillTargets } from "./drillTargets.js";
 import { RequestAsyncRender, ResolveAsyncRender } from "./render.js";
 import { ChangeRenderMode } from "./renderMode.js";
+import { LoadAllWorkspaceUsers } from "./users.js";
 
 export type { DashboardCommandType, IDashboardCommand, CommandProcessingMeta } from "./base.js";
 export type {
@@ -453,6 +454,8 @@ export {
     exportInsightWidget,
     attributeHierarchyModified,
 } from "./insight.js";
+export { loadAllWorkspaceUsers } from "./users.js";
+export type { LoadAllWorkspaceUsers } from "./users.js";
 
 export type { ChangeRichTextWidgetContent, ChangeRichTextWidgetContentPayload } from "./richText.js";
 export { changeRichTextWidgetContent } from "./richText.js";
@@ -592,4 +595,5 @@ export type DashboardCommands =
     | ReloadFilterViews
     | ToggleLayoutSectionHeaders
     //internal
-    | SetScreenSize;
+    | SetScreenSize
+    | LoadAllWorkspaceUsers;

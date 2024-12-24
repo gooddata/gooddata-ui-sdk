@@ -1259,6 +1259,12 @@ export interface CreatedVisualization {
     filters: Array<
         AttributeNegativeFilter | AttributePositiveFilter | DateAbsoluteFilter | DateRelativeFilter
     >;
+    /**
+     * Suggestions for next steps
+     * @type {Array<Suggestion>}
+     * @memberof CreatedVisualization
+     */
+    suggestions: Array<Suggestion>;
 }
 
 export const CreatedVisualizationVisualizationTypeEnum = {
@@ -3441,6 +3447,25 @@ export const SortKeyValueValueDirectionEnum = {
 export type SortKeyValueValueDirectionEnum =
     typeof SortKeyValueValueDirectionEnum[keyof typeof SortKeyValueValueDirectionEnum];
 
+/**
+ * Suggestions for next steps
+ * @export
+ * @interface Suggestion
+ */
+export interface Suggestion {
+    /**
+     * Suggestion query
+     * @type {string}
+     * @memberof Suggestion
+     */
+    query: string;
+    /**
+     * Suggestion button label
+     * @type {string}
+     * @memberof Suggestion
+     */
+    label: string;
+}
 /**
  * Definition of a total. There are two types of totals: grand totals and subtotals. Grand total data will be returned in a separate section of the result structure while subtotals are fully integrated into the main result data. The mechanism for this distinction is automatic and it\'s described in `TotalDimension`
  * @export

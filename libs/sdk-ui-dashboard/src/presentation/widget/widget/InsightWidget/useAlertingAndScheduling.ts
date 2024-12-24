@@ -7,6 +7,7 @@ import {
     isCustomWidget,
     selectIsReadOnly,
     selectCanManageWorkspace,
+    selectNotificationChannelsCount,
 } from "../../../../model/index.js";
 import { AlertingDisabledReason, SchedulingDisabledReason } from "../../insightMenu/index.js";
 import {
@@ -19,13 +20,11 @@ import {
 type UseAlertingAndSchedulingConfig = {
     insight?: IInsight;
     widget: IInsightWidget;
-    numberOfAvailableDestinations: number;
 };
 
 export const useAlertingAndScheduling = ({
     widget,
     insight,
-    numberOfAvailableDestinations,
 }: UseAlertingAndSchedulingConfig): {
     isAlertingVisible: boolean;
     alertingDisabled: boolean;
@@ -38,6 +37,7 @@ export const useAlertingAndScheduling = ({
     const isReadOnly = useDashboardSelector(selectIsReadOnly);
     const isWorkspaceManager = useDashboardSelector(selectCanManageWorkspace);
 
+    const numberOfAvailableDestinations = useDashboardSelector(selectNotificationChannelsCount);
     /**
      * We want to hide automations when there are no destinations unless the user is admin.
      */

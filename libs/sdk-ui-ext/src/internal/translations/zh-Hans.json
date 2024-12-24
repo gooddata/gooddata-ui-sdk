@@ -363,5 +363,13 @@
     "properties.interactions.alerts": "警报",
     "properties.interactions.alerts.tooltip": "允许用户在仪表板上为此可视化创建警报。",
     "properties.interactions.scheduledExports": "已计划的导出",
-    "properties.interactions.scheduledExports.tooltip": "允许用户在仪表板上为此可视化创建计划导出。"
+    "properties.interactions.scheduledExports.tooltip": "允许用户在仪表板上为此可视化创建计划导出。",
+    "properties.advanced.title": "高级自定义",
+    "properties.advanced.chartConfigOverride.noValueLabel": "尚无任何定制。",
+    "properties.advanced.chartConfigOverride.link": "了解更多",
+    "properties.advanced.chartConfigOverride.editorButton": "打开编辑器",
+    "properties.advanced.chartConfigOverride.title": "高级定制",
+    "properties.advanced.chartConfigOverride.snippets.header": "片段",
+    "properties.advanced.chartConfigOverride.button.apply": "应用",
+    "properties.advanced.chartConfigOverride.button.cancel": "取消"
 }

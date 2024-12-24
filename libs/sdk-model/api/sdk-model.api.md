@@ -1995,6 +1995,12 @@ export interface IGenAIFoundObjects {
 }
 
 // @alpha
+export type IGenAISuggestion = {
+    query: string;
+    label: string;
+};
+
+// @alpha
 export interface IGenAIUserContext {
     activeObject: IGenAIActiveObject;
 }
@@ -2005,6 +2011,7 @@ export interface IGenAIVisualization {
     filters?: GenAIFilter[];
     id: string;
     metrics: IGenAIVisualizationMetric[];
+    suggestions?: IGenAISuggestion[];
     title: string;
     visualizationType: GenAIVisualizationType;
 }
@@ -3002,6 +3009,9 @@ export const isAbsoluteDateFilterPreset: (obj: unknown) => obj is IAbsoluteDateF
 export function isAdhocMeasure(obj: unknown): obj is IMeasure<IMeasureDefinition>;
 
 // @alpha
+export function isAlertNotification(notification: unknown): notification is IAlertNotification;
+
+// @alpha
 export function isAllTimeDashboardDateFilter(obj: unknown): boolean;
 
 // @public
@@ -3551,6 +3561,7 @@ export interface ISmtpNotificationChannelMetadataObject extends INotificationCha
     destinationConfig?: ISmtpDestinationConfiguration;
     // (undocumented)
     destinationType: "smtp";
+    sendInPlatformNotifications: boolean;
     // (undocumented)
     type: "notificationChannel";
 }
@@ -3563,6 +3574,9 @@ export function isNegativeAttributeFilter(obj: unknown): obj is INegativeAttribu
 
 // @alpha
 export function isNegativeDashboardAttributeFilter(filter: IDashboardAttributeFilter): boolean;
+
+// @alpha
+export function isNotification(notification: unknown): notification is INotification;
 
 // @beta
 export function isNotificationChannelMetadataObject(obj: unknown): obj is INotificationChannelMetadataObject;
@@ -3635,6 +3649,9 @@ export function isRichTextWidget(obj: unknown): obj is IRichTextWidget;
 // @alpha
 export function isRichTextWidgetDefinition(obj: unknown): obj is IRichTextWidgetDefinition;
 
+// @alpha
+export function isScheduleNotification(notification: unknown): notification is IScheduleNotification;
+
 // @public
 export function isSimpleMeasure(obj: unknown): obj is IMeasure<IMeasureDefinition>;
 
@@ -3646,6 +3663,9 @@ export function isSingleSelectionFilter(filter: IDashboardAttributeFilter): bool
 
 // @alpha
 export function isTempFilterContext(obj: unknown): obj is ITempFilterContext;
+
+// @alpha
+export function isTestNotification(notification: unknown): notification is ITestNotification;
 
 // @public
 export function isTotal(obj: unknown): obj is ITotal;
@@ -4164,6 +4184,7 @@ export interface IWebhookNotificationChannelMetadataObject extends INotification
     destinationConfig?: IWebhookDestinationConfiguration;
     // (undocumented)
     destinationType: "webhook";
+    sendInPlatformNotifications: boolean;
     // (undocumented)
     type: "notificationChannel";
 }

@@ -53,6 +53,9 @@ export interface IDashboardItemBaseProps {
      * Callback to call when an item is selected. Called with the relevant mouse event if originating from a click.
      */
     onSelected?: (e?: MouseEvent) => void;
+
+    onEnter?: () => void;
+    onLeave?: () => void;
 }
 
 const noopRender = () => null;
@@ -70,6 +73,8 @@ export const DashboardItemBase: React.FC<IDashboardItemBaseProps> = ({
     isSelectable = false,
     isSelected = false,
     onSelected,
+    onEnter,
+    onLeave,
 }) => {
     return (
         <DashboardItemContentWrapper>
@@ -82,6 +87,8 @@ export const DashboardItemBase: React.FC<IDashboardItemBaseProps> = ({
                         isSelectable={isSelectable}
                         isSelected={isSelected}
                         onSelected={onSelected}
+                        onEnter={onEnter}
+                        onLeave={onLeave}
                     >
                         {renderBeforeVisualization()}
                         <div className={visualizationClassName}>
