@@ -146,8 +146,8 @@ jobs:
         uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
-          name: cypress-test-artifacts
+          name: cypress-${{ inputs.CYPRESS_TEST_TAGS }}-artifacts
           path: |
-            libs/sdk-ui-tests-e2e/cypress/${{ inputs.GIT_REVISION }}/videos/**/*.mp4
-            libs/sdk-ui-tests-e2e/cypress/${{ inputs.GIT_REVISION }}/screenshots/**/*
-            libs/sdk-ui-tests-e2e/cypress/${{ inputs.GIT_REVISION }}/results/**/*
+            libs/sdk-ui-tests-e2e/cypress/videos/**/*.mp4
+            libs/sdk-ui-tests-e2e/cypress/screenshots/**/*
+            libs/sdk-ui-tests-e2e/cypress/results/**/*
