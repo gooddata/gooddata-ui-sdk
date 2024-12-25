@@ -82,7 +82,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
 
     const currentUser = useDashboardSelector(selectCurrentUser);
     const users = useDashboardSelector(selectUsers);
-    const defaultRecipient = convertCurrentUserToAutomationRecipient(users, currentUser);
+    const defaultRecipient = convertCurrentUserToAutomationRecipient(users ?? [], currentUser);
 
     const firstChannel = notificationChannels[0]?.id;
 

@@ -25,6 +25,7 @@ import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { ILoadingProps } from '@gooddata/sdk-ui';
 import { ILocale } from '@gooddata/sdk-ui';
+import { INotification } from '@gooddata/sdk-model';
 import { IPivotTableConfig } from '@gooddata/sdk-ui-pivot';
 import { ISettings } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
@@ -34,6 +35,8 @@ import { LocalIdRef } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { OnError } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
+import { RefObject } from 'react';
+import { UseCancelablePromiseStatus } from '@gooddata/sdk-ui';
 import { WithIntlProps } from 'react-intl';
 import { WrappedComponentProps } from 'react-intl';
 
@@ -83,6 +86,9 @@ export type DataSourcePermission = "USE" | "MANAGE";
 
 // @internal (undocumented)
 export type DataSourcePermissionSubject = "user" | "userGroup";
+
+// @internal (undocumented)
+export function DefaultOpenNotificationsPanelButton({ buttonRef, isNotificationPanelOpen, toggleNotificationPanel, hasUnreadNotifications, }: IOpenNotificationsPanelButtonComponentProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export const DeleteUserDialog: React_2.FC<IDeleteUserDialogProps>;
@@ -415,6 +421,129 @@ export interface ILayoutDescriptor {
     type: LayoutType;
 }
 
+// @alpha (undocumented)
+export interface INotificationComponentProps {
+    // (undocumented)
+    markAsRead: (id: string) => void;
+    // (undocumented)
+    notification: INotification;
+    // (undocumented)
+    onNotificationClick: (notification: INotification) => void;
+}
+
+// @alpha (undocumented)
+export interface INotificationsListComponentProps {
+    // (undocumented)
+    activeView: INotificationsPanelView;
+    // (undocumented)
+    error?: GoodDataSdkError;
+    // (undocumented)
+    hasNextPage: boolean;
+    // (undocumented)
+    loadNextPage: () => void;
+    // (undocumented)
+    markNotificationAsRead: (notificationId: string) => Promise<void>;
+    // (undocumented)
+    Notification: React_2.ComponentType<INotificationComponentProps>;
+    // (undocumented)
+    notifications?: INotification[];
+    // (undocumented)
+    NotificationsListEmptyState: React_2.ComponentType<INotificationsListEmptyStateComponentProps>;
+    // (undocumented)
+    NotificationsListErrorState: React_2.ComponentType<INotificationsListErrorStateComponentProps>;
+    // (undocumented)
+    onNotificationClick: (notification: INotification) => void;
+    // (undocumented)
+    status: UseCancelablePromiseStatus;
+}
+
+// @alpha (undocumented)
+export interface INotificationsListEmptyStateComponentProps {
+    // (undocumented)
+    activeView: INotificationsPanelView;
+}
+
+// @alpha (undocumented)
+export interface INotificationsListErrorStateComponentProps {
+    // (undocumented)
+    error?: GoodDataSdkError;
+}
+
+// @alpha (undocumented)
+export interface INotificationsPanelComponentProps {
+    // (undocumented)
+    activeNotifications: INotification[];
+    // (undocumented)
+    activeView: INotificationsPanelView;
+    // (undocumented)
+    changeActiveView: (view: INotificationsPanelView) => void;
+    // (undocumented)
+    closeNotificationsPanel: () => void;
+    // (undocumented)
+    error?: GoodDataSdkError;
+    // (undocumented)
+    hasNextPage: boolean;
+    // (undocumented)
+    loadNextPage: () => void;
+    // (undocumented)
+    markAllNotificationsAsRead: () => Promise<void>;
+    // (undocumented)
+    markNotificationAsRead: (notificationId: string) => Promise<void>;
+    // (undocumented)
+    Notification: React_2.ComponentType<INotificationComponentProps>;
+    // (undocumented)
+    NotificationsList: React_2.ComponentType<INotificationsListComponentProps>;
+    // (undocumented)
+    NotificationsListEmptyState: React_2.ComponentType<INotificationsListEmptyStateComponentProps>;
+    // (undocumented)
+    NotificationsListErrorState: React_2.ComponentType<INotificationsListErrorStateComponentProps>;
+    // (undocumented)
+    NotificationsPanelHeader: React_2.ComponentType<INotificationsPanelHeaderComponentProps>;
+    // (undocumented)
+    onNotificationClick: (notification: INotification) => void;
+    // (undocumented)
+    openNotificationsPanel: () => void;
+    // (undocumented)
+    status: UseCancelablePromiseStatus;
+    // (undocumented)
+    toggleNotificationsPanel: () => void;
+    // (undocumented)
+    unreadNotificationsCount: number;
+}
+
+// @alpha (undocumented)
+export interface INotificationsPanelCustomComponentsProps {
+    Notification?: React_2.ComponentType<INotificationComponentProps>;
+    NotificationsList?: React_2.ComponentType<INotificationsListComponentProps>;
+    NotificationsListEmptyState?: React_2.ComponentType<INotificationsListEmptyStateComponentProps>;
+    NotificationsListErrorState?: React_2.ComponentType<INotificationsListErrorStateComponentProps>;
+    NotificationsPanel?: React_2.ComponentType<INotificationsPanelComponentProps>;
+    NotificationsPanelHeader?: React_2.ComponentType<INotificationsPanelHeaderComponentProps>;
+    OpenNotificationsPanelButton: React_2.ComponentType<IOpenNotificationsPanelButtonComponentProps>;
+}
+
+// @alpha (undocumented)
+export interface INotificationsPanelHeaderComponentProps {
+    activeView: INotificationsPanelView;
+    changeActiveView: (view: INotificationsPanelView) => void;
+    hasUnreadNotifications: boolean;
+    markAllAsRead: () => void;
+    unreadNotificationsCount: number;
+}
+
+// @alpha (undocumented)
+export interface INotificationsPanelProps extends INotificationsPanelCustomComponentsProps {
+    backend?: IAnalyticalBackend;
+    locale?: ILocale;
+    onNotificationClick: (notification: INotification) => void;
+    refreshInterval?: number;
+    renderInline?: boolean;
+    workspace?: string;
+}
+
+// @alpha (undocumented)
+export type INotificationsPanelView = "all" | "unread";
+
 // @internal (undocumented)
 export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo;
 
@@ -436,6 +565,16 @@ export const InsightRenderer: React_2.FC<IInsightRendererProps>;
 export class InsightView extends React_2.Component<IInsightViewProps> {
     // (undocumented)
     render(): React_2.JSX.Element;
+}
+
+// @alpha (undocumented)
+export interface IOpenNotificationsPanelButtonComponentProps {
+    buttonRef: RefObject<HTMLElement | null>;
+    closeNotificationPanel: () => void;
+    hasUnreadNotifications: boolean;
+    isNotificationPanelOpen: boolean;
+    openNotificationPanel: () => void;
+    toggleNotificationPanel: () => void;
 }
 
 // @beta
@@ -555,6 +694,9 @@ export type LayoutType = "fluid";
 
 // @internal (undocumented)
 export const MIN_VISUALIZATION_WIDTH = 2;
+
+// @alpha (undocumented)
+export function NotificationsPanel(props: INotificationsPanelProps): React_2.JSX.Element;
 
 // @alpha (undocumented)
 export const PluggableVisualizationErrorCodes: {

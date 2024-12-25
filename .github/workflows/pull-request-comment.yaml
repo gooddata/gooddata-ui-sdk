@@ -5,7 +5,7 @@ on:
       - created
 jobs:
   get-pr-info:
-    if: github.event.issue.pull_request != null && startsWith(github.event.comment.body, 'extended test')
+    if: github.event.issue.pull_request != null && startsWith(github.event.comment.body, 'extended-test')
     runs-on:
       group: infra1-runners-arc
       labels: runners-small
@@ -27,7 +27,7 @@ jobs:
 
   command-started:
     needs: [get-pr-info]
-    if: ${{ startsWith(github.event.comment.body, 'extended test') }}
+    if: ${{ startsWith(github.event.comment.body, 'extended-test') }}
     permissions:
       pull-requests: write
     runs-on:
@@ -51,9 +51,54 @@ jobs:
         env:
           COMMENT: ${{ github.event.comment.body }}
 
-  e2e-run-isolated:
+  extract-filter:
     needs: [get-pr-info]
-    if: ${{ github.event.comment.body == 'extended test - isolated' }}
+    outputs:
+      filter: ${{ steps.extract-filter.outputs.filter_output }}
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-small
+    steps:
+      - name: Extract filter
+        id: extract-filter
+        run: |
+          # Allowed commands
+          commands=("extended-test --isolated" "extended-test --integrated" "extended-test --record")
+
+          # Check if the command matches one of the allowed commands
+          is_valid_command=false
+          for cmd in "${commands[@]}"; do
+            if [[ $command_string == $cmd* ]]; then
+              is_valid_command=true
+              break
+            fi
+          done
+
+          # Initialize filter_value as empty
+          filter_value=""
+
+          if $is_valid_command; then
+            # Extract the --filter value if present
+            filter_pattern="--filter ([^ ]+)"
+            if [[ $command_string =~ $filter_pattern ]]; then
+              filter_value=${BASH_REMATCH[1]}
+            fi
+          fi
+
+          # Output the filter value if set
+          if [[ -n $filter_value ]]; then
+            echo "Filter value: $filter_value"
+            echo "filter_output=$filter_value" >> $GITHUB_OUTPUT
+          else
+            echo "No filter found."
+          fi
+        env:
+          command_string: ${{ github.event.comment.body }}
+
+
+  e2e-run-isolated:
+    needs: [get-pr-info,extract-filter]
+    if: ${{ startsWith(github.event.comment.body, 'extended-test --isolated') }}
     permissions:
       id-token: write
       contents: read
@@ -61,11 +106,12 @@ jobs:
     uses: ./.github/workflows/rw-rush-build-e2e-tests.yml
     with:
       source-ref: ${{ needs.get-pr-info.outputs.sha }}
+      filter: ${{ needs.extract-filter.outputs.filter }}
     secrets: inherit
 
   e2e-record:
-    needs: [get-pr-info]
-    if: ${{ github.event.comment.body == 'extended test - record' }}
+    needs: [get-pr-info,extract-filter]
+    if: ${{ startsWith(github.event.comment.body, 'extended-test --record') }}
     permissions:
       id-token: write
       contents: read
@@ -73,11 +119,12 @@ jobs:
     uses: ./.github/workflows/rw-rush-build-e2e-tests-record.yml
     with:
       source-ref: ${{ needs.get-pr-info.outputs.sha }}
+      filter: ${{ needs.extract-filter.outputs.filter }}
     secrets: inherit
 
   e2e-integrated:
-    needs: [get-pr-info]
-    if: ${{ github.event.comment.body == 'extended test - integrated' }}
+    needs: [get-pr-info,extract-filter]
+    if: ${{ startsWith(github.event.comment.body, 'extended-test --integrated') }}
     permissions:
       id-token: write
       contents: read
@@ -85,11 +132,12 @@ jobs:
     uses: ./.github/workflows/rw-rush-build-e2e-tests-integrated.yml
     with:
       source-ref: ${{ needs.get-pr-info.outputs.sha }}
+      filter: ${{ needs.extract-filter.outputs.filter }}
     secrets: inherit
 
   e2e-backstop:
     needs: [get-pr-info]
-    if: ${{ github.event.comment.body == 'extended test - backstop' }}
+    if: ${{ startsWith(github.event.comment.body, 'extended-test --backstop') }}
     permissions:
       id-token: write
       contents: read
@@ -103,7 +151,7 @@ jobs:
     permissions:
       pull-requests: write
     needs: [e2e-run-isolated,e2e-record,e2e-integrated,e2e-backstop]
-    if: ${{ !cancelled() && startsWith(github.event.comment.body, 'extended test') }}
+    if: ${{ !cancelled() && startsWith(github.event.comment.body, 'extended-test') }}
     runs-on:
       group: infra1-runners-arc
       labels: runners-small
@@ -117,16 +165,16 @@ jobs:
             const url = `https://github.com/${repository.owner}/${repository.repo}/actions/runs/${context.runId}`;
 
             let testResult = "'command not recognized'";
-            if (process.env.COMMENT === 'extended test - isolated') {
+            if (process.env.COMMENT?.startsWith('extended-test --isolated')) {
                 testResult = process.env.TEST_RESULT_ISOLATED;
             }
-            if (process.env.COMMENT === 'extended test - record') {
+            if (process.env.COMMENT?.startsWith('extended-test --record')) {
                 testResult = process.env.TEST_RESULT_RECORD;
             }
-            if (process.env.COMMENT === 'extended test - integrated') {
+            if (process.env.COMMENT?.startsWith('extended-test --integrated')) {
                 testResult = process.env.TEST_RESULT_INTEGRATED;
             }
-            if (process.env.COMMENT === 'extended test - backstop') {
+            if (process.env.COMMENT?.startsWith('extended-test --backstop')) {
                 testResult = process.env.TEST_RESULT_BACKSTOP;
             }
 

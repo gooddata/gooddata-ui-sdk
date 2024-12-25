@@ -13,6 +13,7 @@ export class NotificationsQuery implements INotificationsQuery {
     private page = 0;
     private workspaceId?: string;
     private totalCount: number | undefined = undefined;
+    private status: "read" | "unread" | undefined = undefined;
 
     constructor(public readonly authCall: TigerAuthenticatedCallGuard) {}
 
@@ -35,15 +36,34 @@ export class NotificationsQuery implements INotificationsQuery {
         return this;
     }
 
+    withStatus(status: "read" | "unread"): INotificationsQuery {
+        this.status = status;
+        return this;
+    }
+
     query(): Promise<INotificationsQueryResult> {
         return ServerPaging.for(
             async ({ limit, offset }) => {
-                const params: AutomationActionsApiGetNotificationsRequest = {
+                let params: AutomationActionsApiGetNotificationsRequest = {
                     workspaceId: this.workspaceId,
                     page: String(offset / limit),
                     size: String(limit),
                     metaInclude: ["total", "ALL"],
                 };
+
+                if (this.status) {
+                    if (this.status === "read") {
+                        params = {
+                            ...params,
+                            isRead: true,
+                        };
+                    } else if (this.status === "unread") {
+                        params = {
+                            ...params,
+                            isRead: false,
+                        };
+                    }
+                }
 
                 const response = await this.authCall((client) => client.automation.getNotifications(params));
 
@@ -53,7 +73,11 @@ export class NotificationsQuery implements INotificationsQuery {
                     this.setTotalCount(totalCount);
                 }
 
-                return { items, totalCount: this.totalCount! };
+                return {
+                    items,
+                    totalCount:
+                        this.status === "unread" ? response.data.meta.total?.unread ?? 0 : this.totalCount!,
+                };
             },
             this.size,
             this.page * this.size,

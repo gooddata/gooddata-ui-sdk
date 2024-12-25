@@ -12,6 +12,7 @@ describe("NotificationChannelsConvertor", () => {
             type: "notificationChannel",
             destinationType: "webhook",
             title: "name",
+            sendInPlatformNotifications: false,
             destinationConfig: {
                 token: "token",
                 endpoint: "endpoint",
@@ -22,6 +23,7 @@ describe("NotificationChannelsConvertor", () => {
         expect(data).toEqual({
             attributes: {
                 name: "name",
+                inPlatformNotification: "DISABLED",
                 destinationType: "WEBHOOK",
                 destination: {
                     type: "WEBHOOK",
@@ -43,6 +45,7 @@ describe("NotificationChannelsConvertor", () => {
                 name: "name",
                 description: "description",
                 destinationType: "WEBHOOK",
+                inPlatformNotification: "ENABLED",
                 destination: {
                     type: "WEBHOOK",
                     url: "endpoint",
@@ -60,6 +63,7 @@ describe("NotificationChannelsConvertor", () => {
             destinationType: "webhook",
             title: "name",
             description: "description",
+            sendInPlatformNotifications: true,
             destinationConfig: {
                 endpoint: "endpoint",
                 token: "token",

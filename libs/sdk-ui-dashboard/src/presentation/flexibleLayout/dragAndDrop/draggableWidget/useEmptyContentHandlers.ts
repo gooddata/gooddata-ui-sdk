@@ -19,8 +19,9 @@ import {
     isKpiDraggableItem,
     isRichTextDraggableItem,
     isVisualizationSwitcherDraggableItem,
+    isDashboardLayoutDraggableItem,
 } from "../../../dragAndDrop/index.js";
-import { isDashboardLayoutItem } from "@gooddata/sdk-model";
+
 import { useMoveWidgetToNewSectionDropHandler } from "./useMoveWidgetToNewSectionDropHandler.js";
 
 export const useEmptyContentHandlers = (sectionPath: ILayoutSectionPath) => {
@@ -73,7 +74,7 @@ export const useEmptyContentHandlers = (sectionPath: ILayoutSectionPath) => {
                     isKpiDraggableItem(item) ||
                     isRichTextDraggableItem(item) ||
                     isVisualizationSwitcherDraggableItem(item) ||
-                    isDashboardLayoutItem(item)
+                    isDashboardLayoutDraggableItem(item)
                 ) {
                     moveWidgetToNewSection(item);
                 }
