@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
 import {
     ObjRef,
@@ -10,6 +10,7 @@ import {
 } from "@gooddata/sdk-model";
 import { LRUCache } from "lru-cache";
 import max from "lodash/max.js";
+import cx from "classnames";
 
 import {
     useDashboardSelector,
@@ -96,7 +97,7 @@ const itemKeyGetter: IDashboardLayoutItemKeyGetter<ExtendedDashboardWidget> = (k
  * @alpha
  */
 export const DefaultFlexibleDashboardLayout = (props: IDashboardLayoutProps): JSX.Element => {
-    const { layout: providedLayout, onFiltersChange, onDrill, onError } = props;
+    const { layout: providedLayout, onFiltersChange, onDrill, onError, dashboardItemClasses } = props;
 
     const selectedLayout = useDashboardSelector(selectLayout);
 
@@ -167,7 +168,9 @@ export const DefaultFlexibleDashboardLayout = (props: IDashboardLayoutProps): JS
     return (
         <>
             <DashboardLayout
-                className={isExport ? "export-mode" : ""}
+                className={cx(dashboardItemClasses, {
+                    "export-mode": isExport,
+                })}
                 layout={transformedLayout}
                 parentLayoutItemSize={itemSize}
                 parentLayoutPath={itemPath}

@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { useMemo } from "react";
 import { IDataView, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
@@ -96,7 +96,10 @@ export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget
         });
     }, [effectiveBackend, dispatchEvent, safeSerializeObjRef(ref)]);
 
-    const dashboardItemClasses = `s-dash-item-${index}`;
+    const pathItems = parentLayoutPath
+        ? parentLayoutPath.map((pathItem) => `-${pathItem.itemIndex}`).join("")
+        : "";
+    const dashboardItemClasses = parentLayoutPath ? `s-dash-item${pathItems}` : `s-dash-item-${index}`;
 
     if (isWidget(widget)) {
         let renderWidget = null;
@@ -138,6 +141,9 @@ export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget
 
         return <BackendProvider backend={backendWithEventing}>{renderWidget}</BackendProvider>;
     } else if (isFlexibleLayoutEnabled && isExtendedDashboardLayoutWidget(widget)) {
+        const dashboardItemClasses = parentLayoutPath
+            ? `s-dash-item${pathItems}--container`
+            : `s-dash-item-${index}--container`;
         return (
             <RenderModeAwareDashboardNestedLayoutWidget
                 // nested layout widget merges layout and other widget props into single object. Split them here
@@ -146,6 +152,7 @@ export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget
                 onFiltersChange={onFiltersChange}
                 parentLayoutItemSize={parentLayoutItemSize}
                 parentLayoutPath={parentLayoutPath}
+                dashboardItemClasses={dashboardItemClasses}
             />
         );
     }

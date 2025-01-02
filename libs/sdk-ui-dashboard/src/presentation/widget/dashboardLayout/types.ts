@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { ComponentType } from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -10,20 +10,30 @@ import { ExtendedDashboardLayoutWidget, ExtendedDashboardWidget } from "../../..
 /**
  * @alpha
  */
-export interface IDashboardLayoutProps {
-    ErrorComponent?: React.ComponentType<IErrorProps>;
-    // TODO: is this necessary? (there are events for it)
-    onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
-    onDrill?: OnFiredDashboardDrillEvent;
-    onError?: OnError;
-    // valid only for nested layouts
+export interface INestedLayoutProps {
+    /**
+     * Nested layout widget to render.
+     */
     widget?: ExtendedDashboardLayoutWidget;
-    // if not provided, root layout from appState will be used
+    /**
+     * Corresponding layout.
+     * If not provided, root layout from appState will be used.
+     */
     layout?: IDashboardLayout<ExtendedDashboardWidget>;
-    // if not provided, the layout size will be considered to be default (12 columns)
+    /**
+     * Item size.
+     * If not provided, the layout size will be considered to be default (12 columns)
+     */
     parentLayoutItemSize?: IDashboardLayoutSizeByScreenSize;
-    // if not provided, the layout is expected to be root
+    /**
+     * Item path.
+     * If not provided, the layout is expected to be root
+     */
     parentLayoutPath?: ILayoutItemPath;
+    /**
+     * CSS classes to apply to the nested layout dashboard item.
+     */
+    dashboardItemClasses?: string;
     /**
      * Backend to work with.
      *
@@ -59,6 +69,17 @@ export interface IDashboardLayoutProps {
      * @alpha
      */
     clientWidth?: number;
+}
+
+/**
+ * @alpha
+ */
+export interface IDashboardLayoutProps extends INestedLayoutProps {
+    ErrorComponent?: React.ComponentType<IErrorProps>;
+    // TODO: is this necessary? (there are events for it)
+    onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
+    onDrill?: OnFiredDashboardDrillEvent;
+    onError?: OnError;
 }
 
 /**
