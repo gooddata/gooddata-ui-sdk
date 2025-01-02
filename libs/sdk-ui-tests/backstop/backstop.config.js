@@ -12,8 +12,8 @@ const backstopConfig = {
     viewports: [
         {
             label: "desktop",
-            width: 1200,
-            height: 900,
+            width: 1044,
+            height: 788,
         },
     ],
     onBeforeScript: "puppet/onBefore.js",
