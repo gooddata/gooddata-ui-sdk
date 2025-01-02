@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import { ITigerClient } from "@gooddata/api-client-tiger";
 import {
@@ -29,7 +29,6 @@ export class OrganizationNotificationChannelService implements IOrganizationNoti
      * This method will test the notification channel by sending a test notification to the destination.
      *
      * @param channel - definition of the notification channel
-     * @param notificationId - id of the notification to be sent
      * @returns Promise resolved with the response from the test.
      *
      * @beta
@@ -48,6 +47,9 @@ export class OrganizationNotificationChannelService implements IOrganizationNoti
             return this.authCall(async (client: ITigerClient) => {
                 const result = await client.automation.testExistingNotificationChannel({
                     notificationChannelId: channel.id,
+                    testDestinationRequest: {
+                        destination,
+                    },
                 });
                 return result.data;
             });
