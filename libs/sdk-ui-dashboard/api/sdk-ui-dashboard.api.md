@@ -4395,27 +4395,15 @@ export interface IDashboardLayoutProps {
 }
 
 // @alpha (undocumented)
-export interface IDashboardNestedLayoutProps {
-    backend?: IAnalyticalBackend;
-    clientHeight?: number;
-    clientWidth?: number;
+export interface IDashboardNestedLayoutProps extends INestedLayoutProps {
     // (undocumented)
     ErrorComponent?: React.ComponentType<IErrorProps>;
-    // (undocumented)
-    layout?: IDashboardLayout<ExtendedDashboardWidget>;
     // (undocumented)
     onDrill?: OnFiredDashboardDrillEvent;
     // (undocumented)
     onError?: OnError;
     // (undocumented)
     onFiltersChange?: (filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean) => void;
-    // (undocumented)
-    parentLayoutItemSize?: IDashboardLayoutSizeByScreenSize;
-    // (undocumented)
-    parentLayoutPath?: ILayoutItemPath;
-    // (undocumented)
-    widget?: ExtendedDashboardLayoutWidget;
-    workspace?: string;
 }
 
 // @public
@@ -4972,6 +4960,19 @@ export interface IMetricsAndFacts {
     facts: ICatalogFact[];
     // (undocumented)
     metrics: ICatalogMeasure[];
+}
+
+// @alpha (undocumented)
+export interface INestedLayoutProps {
+    backend?: IAnalyticalBackend;
+    clientHeight?: number;
+    clientWidth?: number;
+    dashboardItemClasses?: string;
+    layout?: IDashboardLayout<ExtendedDashboardWidget>;
+    parentLayoutItemSize?: IDashboardLayoutSizeByScreenSize;
+    parentLayoutPath?: ILayoutItemPath;
+    widget?: ExtendedDashboardLayoutWidget;
+    workspace?: string;
 }
 
 // @beta
