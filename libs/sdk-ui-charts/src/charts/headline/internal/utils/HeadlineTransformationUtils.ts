@@ -1,6 +1,7 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
 import isEmpty from "lodash/isEmpty.js";
+import isNil from "lodash/isNil.js";
 import isNumber from "lodash/isNumber.js";
 import { IDataView } from "@gooddata/sdk-backend-spi";
 import { invariant } from "ts-invariant";
@@ -68,7 +69,7 @@ export function createHeadlineDataItem(
     return {
         localIdentifier: executionDataItem.measureHeaderItem.localIdentifier,
         title: executionDataItem.measureHeaderItem.name,
-        value: executionDataItem.value ? String(executionDataItem.value) : null,
+        value: !isNil(executionDataItem.value) ? String(executionDataItem.value) : null,
         format: executionDataItem.measureHeaderItem.format,
         isDrillable: !!isDrillable,
     };
