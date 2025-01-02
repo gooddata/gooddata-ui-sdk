@@ -47,10 +47,6 @@ export class ConfigurationPanelWrapper extends React.Component<IConfigurationPan
 
         return (
             <>
-                <div style={{ background: "red" }}>
-                    <div> {window.outerWidth} </div>
-                    <div> {window.outerHeight} </div>
-                </div>
                 <div
                     className={expandAllClassName}
                     style={{ cursor: "pointer" }}
