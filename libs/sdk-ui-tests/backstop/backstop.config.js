@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 const scenarios = require("./scenarios.config");
 
@@ -12,8 +12,8 @@ const backstopConfig = {
     viewports: [
         {
             label: "desktop",
-            width: 1024,
-            height: 768,
+            width: 1200,
+            height: 900,
         },
     ],
     onBeforeScript: "puppet/onBefore.js",
