@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 /* eslint-disable */
 /**
@@ -37,7 +37,7 @@ export interface AFM {
      */
     attributes: Array<AttributeItem>;
     /**
-     * Various filter types to filter execution result.
+     * Various filter types to filter the execution result.
      * @type {Array<FilterDefinition>}
      * @memberof AFM
      */
@@ -88,16 +88,16 @@ export interface AbsoluteDateFilterAbsoluteDateFilter {
     to: string;
     /**
      *
-     * @type {boolean}
-     * @memberof AbsoluteDateFilterAbsoluteDateFilter
-     */
-    applyOnResult?: boolean;
-    /**
-     *
      * @type {string}
      * @memberof AbsoluteDateFilterAbsoluteDateFilter
      */
     localIdentifier?: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof AbsoluteDateFilterAbsoluteDateFilter
+     */
+    applyOnResult?: boolean;
     /**
      *
      * @type {AfmObjectIdentifierDataset}
@@ -165,7 +165,7 @@ export interface AfmExecution {
     settings?: ExecutionSettings;
 }
 /**
- *
+ * Response to AFM execution request
  * @export
  * @interface AfmExecutionResponse
  */
@@ -179,6 +179,7 @@ export interface AfmExecutionResponse {
 }
 /**
  * @type AfmIdentifier
+ * Reference to the attribute label to which the filter should be applied.
  * @export
  */
 export type AfmIdentifier = AfmLocalIdentifier | AfmObjectIdentifier;
@@ -210,7 +211,7 @@ export interface AfmObjectIdentifier {
     identifier: AfmObjectIdentifierIdentifier;
 }
 /**
- *
+ * Reference to the date attribute to use.
  * @export
  * @interface AfmObjectIdentifierAttribute
  */
@@ -250,7 +251,7 @@ export type AfmObjectIdentifierAttributeIdentifierTypeEnum =
     typeof AfmObjectIdentifierAttributeIdentifierTypeEnum[keyof typeof AfmObjectIdentifierAttributeIdentifierTypeEnum];
 
 /**
- *
+ * Reference to the metric, fact or attribute object to use for the metric.
  * @export
  * @interface AfmObjectIdentifierCore
  */
@@ -293,7 +294,7 @@ export type AfmObjectIdentifierCoreIdentifierTypeEnum =
     typeof AfmObjectIdentifierCoreIdentifierTypeEnum[keyof typeof AfmObjectIdentifierCoreIdentifierTypeEnum];
 
 /**
- *
+ * Reference to the date dataset to which the filter should be applied.
  * @export
  * @interface AfmObjectIdentifierDataset
  */
@@ -515,7 +516,7 @@ export interface AnomalyDetectionResult {
     anomalyFlag: Array<boolean>;
 }
 /**
- * Metric representing arithmetics between metrics.
+ * Metric representing arithmetics between other metrics.
  * @export
  * @interface ArithmeticMeasureDefinition
  */
@@ -592,19 +593,19 @@ export interface AttributeFilterElements {
     values: Array<string | null>;
 }
 /**
- *
+ * Attribute format describes formatting information to effectively format attribute values when needed.
  * @export
  * @interface AttributeFormat
  */
 export interface AttributeFormat {
     /**
-     * Format locale
+     * Format locale code like \'en-US\', \'cs-CZ\', etc.
      * @type {string}
      * @memberof AttributeFormat
      */
     locale: string;
     /**
-     * Format pattern
+     * ICU formatting pattern like \'y\', \'dd.MM.y\', etc.
      * @type {string}
      * @memberof AttributeFormat
      */
@@ -613,79 +614,79 @@ export interface AttributeFormat {
 /**
  *
  * @export
- * @interface AttributeHeaderOut
+ * @interface AttributeHeader
  */
-export interface AttributeHeaderOut {
+export interface AttributeHeader {
     /**
      *
-     * @type {AttributeHeaderOutAttributeHeader}
-     * @memberof AttributeHeaderOut
+     * @type {AttributeHeaderAttributeHeader}
+     * @memberof AttributeHeader
      */
-    attributeHeader: AttributeHeaderOutAttributeHeader;
+    attributeHeader: AttributeHeaderAttributeHeader;
 }
 /**
  *
  * @export
- * @interface AttributeHeaderOutAttributeHeader
+ * @interface AttributeHeaderAttributeHeader
  */
-export interface AttributeHeaderOutAttributeHeader {
+export interface AttributeHeaderAttributeHeader {
     /**
-     *
+     * Local identifier of the attribute this header relates to.
      * @type {string}
-     * @memberof AttributeHeaderOutAttributeHeader
+     * @memberof AttributeHeaderAttributeHeader
      */
     localIdentifier: string;
     /**
      *
      * @type {RestApiIdentifier}
-     * @memberof AttributeHeaderOutAttributeHeader
+     * @memberof AttributeHeaderAttributeHeader
      */
     label: RestApiIdentifier;
     /**
-     *
+     * Label name.
      * @type {string}
-     * @memberof AttributeHeaderOutAttributeHeader
+     * @memberof AttributeHeaderAttributeHeader
      */
     labelName: string;
     /**
      *
      * @type {RestApiIdentifier}
-     * @memberof AttributeHeaderOutAttributeHeader
+     * @memberof AttributeHeaderAttributeHeader
      */
     attribute: RestApiIdentifier;
     /**
-     *
+     * Attribute name.
      * @type {string}
-     * @memberof AttributeHeaderOutAttributeHeader
+     * @memberof AttributeHeaderAttributeHeader
      */
     attributeName: string;
     /**
-     *
+     * Date granularity of the attribute, only filled for date attributes.
      * @type {string}
-     * @memberof AttributeHeaderOutAttributeHeader
+     * @memberof AttributeHeaderAttributeHeader
      */
-    granularity?: AttributeHeaderOutAttributeHeaderGranularityEnum;
+    granularity?: AttributeHeaderAttributeHeaderGranularityEnum;
     /**
      *
      * @type {RestApiIdentifier}
-     * @memberof AttributeHeaderOutAttributeHeader
+     * @memberof AttributeHeaderAttributeHeader
      */
     primaryLabel: RestApiIdentifier;
     /**
      *
      * @type {AttributeFormat}
-     * @memberof AttributeHeaderOutAttributeHeader
+     * @memberof AttributeHeaderAttributeHeader
      */
     format?: AttributeFormat;
     /**
-     *
+     * Attribute value type.
      * @type {string}
-     * @memberof AttributeHeaderOutAttributeHeader
+     * @memberof AttributeHeaderAttributeHeader
      */
-    valueType?: AttributeHeaderOutAttributeHeaderValueTypeEnum;
+    valueType?: AttributeHeaderAttributeHeaderValueTypeEnum;
 }
 
-export const AttributeHeaderOutAttributeHeaderGranularityEnum = {
+export const AttributeHeaderAttributeHeaderGranularityEnum = {
     MINUTE: "MINUTE",
     HOUR: "HOUR",
     DAY: "DAY",
@@ -703,9 +704,9 @@ export const AttributeHeaderOutAttributeHeaderGranularityEnum = {
     QUARTER_OF_YEAR: "QUARTER_OF_YEAR",
 } as const;
 
-export type AttributeHeaderOutAttributeHeaderGranularityEnum =
-    typeof AttributeHeaderOutAttributeHeaderGranularityEnum[keyof typeof AttributeHeaderOutAttributeHeaderGranularityEnum];
-export const AttributeHeaderOutAttributeHeaderValueTypeEnum = {
+export type AttributeHeaderAttributeHeaderGranularityEnum =
+    typeof AttributeHeaderAttributeHeaderGranularityEnum[keyof typeof AttributeHeaderAttributeHeaderGranularityEnum];
+export const AttributeHeaderAttributeHeaderValueTypeEnum = {
     TEXT: "TEXT",
     HYPERLINK: "HYPERLINK",
     GEO: "GEO",
@@ -714,8 +715,8 @@ export const AttributeHeaderOutAttributeHeaderValueTypeEnum = {
     IMAGE: "IMAGE",
 } as const;
 
-export type AttributeHeaderOutAttributeHeaderValueTypeEnum =
-    typeof AttributeHeaderOutAttributeHeaderValueTypeEnum[keyof typeof AttributeHeaderOutAttributeHeaderValueTypeEnum];
+export type AttributeHeaderAttributeHeaderValueTypeEnum =
+    typeof AttributeHeaderAttributeHeaderValueTypeEnum[keyof typeof AttributeHeaderAttributeHeaderValueTypeEnum];
 
 /**
  *
@@ -724,7 +725,7 @@ export type AttributeHeaderOutAttributeHeaderValueTypeEnum =
  */
 export interface AttributeItem {
     /**
-     *
+     * Local identifier of the attribute. This can be used to reference the attribute in other parts of the execution definition.
      * @type {string}
      * @memberof AttributeItem
      */
@@ -736,7 +737,7 @@ export interface AttributeItem {
      */
     label: AfmObjectIdentifierLabel;
     /**
-     * Specifies that the label should be outer-joined.
+     * Indicates whether to show all values of given attribute even if the data bound to those values is not available.
      * @type {boolean}
      * @memberof AttributeItem
      */
@@ -1166,7 +1167,13 @@ export interface ComparisonMeasureValueFilter {
  */
 export interface ComparisonMeasureValueFilterComparisonMeasureValueFilter {
     /**
-     *
+     * References to the attributes to be used when filtering.
+     * @type {Array<AfmIdentifier>}
+     * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
+     */
+    dimensionality?: Array<AfmIdentifier>;
+    /**
+     * A value that will be substituted for null values in the metric for the comparisons.
      * @type {number}
      * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
      */
@@ -1185,16 +1192,16 @@ export interface ComparisonMeasureValueFilterComparisonMeasureValueFilter {
     value: number;
     /**
      *
-     * @type {boolean}
-     * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
-     */
-    applyOnResult?: boolean;
-    /**
-     *
      * @type {string}
      * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
      */
     localIdentifier?: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof ComparisonMeasureValueFilterComparisonMeasureValueFilter
+     */
+    applyOnResult?: boolean;
     /**
      *
      * @type {AfmIdentifier}
@@ -1312,7 +1319,7 @@ export interface DataColumnLocator {
     properties: { [key: string]: string };
 }
 /**
- *
+ * Data column locators for the values.
  * @export
  * @interface DataColumnLocators
  */
@@ -1801,26 +1808,26 @@ export type ElementsResponseGranularityEnum =
     typeof ElementsResponseGranularityEnum[keyof typeof ElementsResponseGranularityEnum];
 
 /**
- *
+ * Links to the execution result.
  * @export
  * @interface ExecutionLinks
  */
 export interface ExecutionLinks {
     /**
-     *
+     * Link to the result data.
      * @type {string}
      * @memberof ExecutionLinks
      */
     executionResult: string;
 }
 /**
- *
+ * Response to AFM execution request body
  * @export
  * @interface ExecutionResponse
  */
 export interface ExecutionResponse {
     /**
-     *
+     * Dimensions of the result
      * @type {Array<ResultDimension>}
      * @memberof ExecutionResponse
      */
@@ -2093,23 +2100,23 @@ export interface InlineFilterDefinition {
  */
 export interface InlineFilterDefinitionInline {
     /**
-     *
+     * MAQL query representing the filter.
      * @type {string}
      * @memberof InlineFilterDefinitionInline
      */
     filter: string;
     /**
      *
-     * @type {boolean}
-     * @memberof InlineFilterDefinitionInline
-     */
-    applyOnResult?: boolean;
-    /**
-     *
      * @type {string}
      * @memberof InlineFilterDefinitionInline
      */
     localIdentifier?: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof InlineFilterDefinitionInline
+     */
+    applyOnResult?: boolean;
 }
 /**
  * Metric defined by the raw MAQL query.
@@ -2131,7 +2138,7 @@ export interface InlineMeasureDefinition {
  */
 export interface InlineMeasureDefinitionInline {
     /**
-     *
+     * MAQL query defining the metric.
      * @type {string}
      * @memberof InlineMeasureDefinitionInline
      */
@@ -2310,63 +2317,63 @@ export interface MeasureExecutionResultHeader {
     measureHeader: MeasureResultHeader;
 }
 /**
- *
+ * Measure group headers
  * @export
  * @interface MeasureGroupHeaders
  */
 export interface MeasureGroupHeaders {
     /**
      *
-     * @type {Array<MeasureHeaderOut>}
+     * @type {Array<MeasureHeader>}
      * @memberof MeasureGroupHeaders
      */
-    measureGroupHeaders?: Array<MeasureHeaderOut>;
+    measureGroupHeaders?: Array<MeasureHeader>;
     /**
      *
-     * @type {MeasureHeaderOut}
+     * @type {MeasureHeader}
      * @memberof MeasureGroupHeaders
      */
-    first?: MeasureHeaderOut;
+    first?: MeasureHeader;
     /**
      *
-     * @type {MeasureHeaderOut}
+     * @type {MeasureHeader}
      * @memberof MeasureGroupHeaders
      */
-    last?: MeasureHeaderOut;
+    last?: MeasureHeader;
 }
 /**
  *
  * @export
- * @interface MeasureHeaderOut
+ * @interface MeasureHeader
  */
-export interface MeasureHeaderOut {
+export interface MeasureHeader {
     /**
-     *
+     * Local identifier of the measure this header relates to.
      * @type {string}
-     * @memberof MeasureHeaderOut
+     * @memberof MeasureHeader
      */
     localIdentifier: string;
     /**
-     *
+     * Format to be used to format the measure data.
      * @type {string}
-     * @memberof MeasureHeaderOut
+     * @memberof MeasureHeader
      */
     format?: string;
     /**
-     *
+     * Name of the measure.
      * @type {string}
-     * @memberof MeasureHeaderOut
+     * @memberof MeasureHeader
      */
     name?: string;
 }
 /**
- *
+ * Metric is a quantity that is calculated from the data.
  * @export
  * @interface MeasureItem
  */
 export interface MeasureItem {
     /**
-     *
+     * Local identifier of the metric. This can be used to reference the metric in other parts of the execution definition.
      * @type {string}
      * @memberof MeasureItem
      */
@@ -2475,16 +2482,16 @@ export interface NegativeAttributeFilterNegativeAttributeFilter {
     notIn: AttributeFilterElements;
     /**
      *
-     * @type {boolean}
-     * @memberof NegativeAttributeFilterNegativeAttributeFilter
-     */
-    applyOnResult?: boolean;
-    /**
-     *
      * @type {string}
      * @memberof NegativeAttributeFilterNegativeAttributeFilter
      */
     localIdentifier?: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof NegativeAttributeFilterNegativeAttributeFilter
+     */
+    applyOnResult?: boolean;
     /**
      *
      * @type {AfmIdentifier}
@@ -2524,7 +2531,7 @@ export interface Paging {
     next?: string;
 }
 /**
- *
+ * Combination of the date data set to use and how many periods ago to calculate the previous period for.
  * @export
  * @interface PopDataset
  */
@@ -2536,7 +2543,7 @@ export interface PopDataset {
      */
     dataset: AfmObjectIdentifierDataset;
     /**
-     *
+     * Number of periods ago to calculate the previous period for.
      * @type {number}
      * @memberof PopDataset
      */
@@ -2568,14 +2575,14 @@ export interface PopDatasetMeasureDefinitionPreviousPeriodMeasure {
      */
     measureIdentifier: AfmLocalIdentifier;
     /**
-     *
+     * Specification of which date data sets to use for determining the period to calculate the previous period for.
      * @type {Array<PopDataset>}
      * @memberof PopDatasetMeasureDefinitionPreviousPeriodMeasure
      */
     dateDatasets: Array<PopDataset>;
 }
 /**
- *
+ * Combination of the date attribute to use and how many periods ago to calculate the PoP for.
  * @export
  * @interface PopDate
  */
@@ -2587,7 +2594,7 @@ export interface PopDate {
      */
     attribute: AfmObjectIdentifierAttribute;
     /**
-     *
+     * Number of periods ago to calculate the previous period for.
      * @type {number}
      * @memberof PopDate
      */
@@ -2619,7 +2626,7 @@ export interface PopDateMeasureDefinitionOverPeriodMeasure {
      */
     measureIdentifier: AfmLocalIdentifier;
     /**
-     *
+     * Attributes to use for determining the period to calculate the PoP for.
      * @type {Array<PopDate>}
      * @memberof PopDateMeasureDefinitionOverPeriodMeasure
      */
@@ -2658,16 +2665,16 @@ export interface PositiveAttributeFilterPositiveAttributeFilter {
     in: AttributeFilterElements;
     /**
      *
-     * @type {boolean}
-     * @memberof PositiveAttributeFilterPositiveAttributeFilter
-     */
-    applyOnResult?: boolean;
-    /**
-     *
      * @type {string}
      * @memberof PositiveAttributeFilterPositiveAttributeFilter
      */
     localIdentifier?: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof PositiveAttributeFilterPositiveAttributeFilter
+     */
+    applyOnResult?: boolean;
     /**
      *
      * @type {AfmIdentifier}
@@ -2695,7 +2702,13 @@ export interface RangeMeasureValueFilter {
  */
 export interface RangeMeasureValueFilterRangeMeasureValueFilter {
     /**
-     *
+     * References to the attributes to be used when filtering.
+     * @type {Array<AfmIdentifier>}
+     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
+     */
+    dimensionality?: Array<AfmIdentifier>;
+    /**
+     * A value that will be substituted for null values in the metric for the comparisons.
      * @type {number}
      * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
      */
@@ -2720,16 +2733,16 @@ export interface RangeMeasureValueFilterRangeMeasureValueFilter {
     to: number;
     /**
      *
-     * @type {boolean}
-     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
-     */
-    applyOnResult?: boolean;
-    /**
-     *
      * @type {string}
      * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
      */
     localIdentifier?: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof RangeMeasureValueFilterRangeMeasureValueFilter
+     */
+    applyOnResult?: boolean;
     /**
      *
      * @type {AfmIdentifier}
@@ -2766,35 +2779,41 @@ export interface RankingFilter {
  */
 export interface RankingFilterRankingFilter {
     /**
-     *
+     * References to the attributes to be used when filtering.
+     * @type {Array<AfmIdentifier>}
+     * @memberof RankingFilterRankingFilter
+     */
+    dimensionality?: Array<AfmIdentifier>;
+    /**
+     * References to the metrics to be used when filtering.
      * @type {Array<AfmIdentifier>}
      * @memberof RankingFilterRankingFilter
      */
     measures: Array<AfmIdentifier>;
     /**
-     *
+     * The type of ranking to use, TOP or BOTTOM.
      * @type {string}
      * @memberof RankingFilterRankingFilter
      */
     operator: RankingFilterRankingFilterOperatorEnum;
     /**
-     *
+     * Number of top/bottom values to filter.
      * @type {number}
      * @memberof RankingFilterRankingFilter
      */
     value: number;
     /**
      *
-     * @type {boolean}
-     * @memberof RankingFilterRankingFilter
-     */
-    applyOnResult?: boolean;
-    /**
-     *
      * @type {string}
      * @memberof RankingFilterRankingFilter
      */
     localIdentifier?: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof RankingFilterRankingFilter
+     */
+    applyOnResult?: boolean;
 }
 
 export const RankingFilterRankingFilterOperatorEnum = {
@@ -2844,16 +2863,16 @@ export interface RelativeDateFilterRelativeDateFilter {
     to: number;
     /**
      *
-     * @type {boolean}
-     * @memberof RelativeDateFilterRelativeDateFilter
-     */
-    applyOnResult?: boolean;
-    /**
-     *
      * @type {string}
      * @memberof RelativeDateFilterRelativeDateFilter
      */
     localIdentifier?: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof RelativeDateFilterRelativeDateFilter
+     */
+    applyOnResult?: boolean;
     /**
      *
      * @type {AfmObjectIdentifierDataset}
@@ -2934,7 +2953,7 @@ export interface ResultCacheMetadata {
     resultSize: number;
 }
 /**
- *
+ * Single result dimension
  * @export
  * @interface ResultDimension
  */
@@ -2946,7 +2965,7 @@ export interface ResultDimension {
      */
     headers: Array<ResultDimensionHeader>;
     /**
-     *
+     * Local identifier of the dimension.
      * @type {string}
      * @memberof ResultDimension
      */
@@ -2954,9 +2973,10 @@ export interface ResultDimension {
 }
 /**
  * @type ResultDimensionHeader
+ * One of the headers in a result dimension.
  * @export
  */
-export type ResultDimensionHeader = AttributeHeaderOut | MeasureGroupHeaders;
+export type ResultDimensionHeader = AttributeHeader | MeasureGroupHeaders;
 
 /**
  * Specifies how the result data will be formatted (```dimensions```) and which additional data shall be computed (```totals```).
@@ -3226,7 +3246,7 @@ export interface SearchResultObject {
     scoreExactMatch?: number;
 }
 /**
- *
+ * Metric defined by referencing a MAQL metric or an LDM fact object with aggregation.
  * @export
  * @interface SimpleMeasureDefinition
  */
@@ -3257,7 +3277,7 @@ export interface SimpleMeasureDefinitionMeasure {
      */
     aggregation?: SimpleMeasureDefinitionMeasureAggregationEnum;
     /**
-     * If true compute the percentage of given metric values (broken down by AFM attributes) to the total (not broken down).
+     * If true, compute the percentage of given metric values (broken down by AFM attributes) to the total (not broken down).
      * @type {boolean}
      * @memberof SimpleMeasureDefinitionMeasure
      */
@@ -3379,7 +3399,7 @@ export interface SortKeyTotal {
  */
 export interface SortKeyTotalTotal {
     /**
-     *
+     * Local identifier of the total to sort by.
      * @type {string}
      * @memberof SortKeyTotalTotal
      */
