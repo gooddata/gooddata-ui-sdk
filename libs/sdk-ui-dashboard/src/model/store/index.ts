@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 export type {
     DashboardDispatch,
     DashboardState,
@@ -99,6 +99,7 @@ export {
     selectEnableCrossFilteringAliasTitles,
     selectEnableFlexibleLayout,
     selectEnableInPlatformNotifications,
+    selectEnableExternalRecipients,
     selectAutomationId,
 } from "./config/configSelectors.js";
 export type { EntitlementsState } from "./entitlements/entitlementsState.js";

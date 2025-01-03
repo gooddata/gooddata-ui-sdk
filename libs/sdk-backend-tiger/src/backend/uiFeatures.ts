@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { IEarlyAccessFeaturesConfig } from "@gooddata/sdk-model";
 
 /**
@@ -123,6 +123,7 @@ export enum TigerFeaturesNames {
     EnableNewUserCreationFlow = "enableNewUserCreationFlow",
     EnableDestinationTesting = "enableDestinationTesting",
     EnableInPlatformNotifications = "enableInPlatformNotifications",
+    EnableExternalRecipients = "enableExternalRecipients",
     EnableVisualizationFineTuning = "enableVisualizationFineTuning",
 }
 
@@ -211,6 +212,7 @@ export type ITigerFeatureFlags = {
     enableDestinationTesting: typeof FeatureFlagsValues["enableDestinationTesting"][number];
     enableInPlatformNotifications: typeof FeatureFlagsValues["enableInPlatformNotifications"][number];
     enableVisualizationFineTuning: typeof FeatureFlagsValues["enableVisualizationFineTuning"][number];
+    enableExternalRecipients: typeof FeatureFlagsValues["enableExternalRecipients"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -298,6 +300,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDestinationTesting: false,
     enableInPlatformNotifications: false,
     enableVisualizationFineTuning: false,
+    enableExternalRecipients: false,
 };
 
 export const FeatureFlagsValues = {
@@ -389,4 +392,5 @@ export const FeatureFlagsValues = {
     enableDestinationTesting: [true, false] as const,
     enableInPlatformNotifications: [true, false] as const,
     enableVisualizationFineTuning: [true, false] as const,
+    enableExternalRecipients: [true, false] as const,
 };

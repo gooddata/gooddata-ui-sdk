@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 import { FeatureFlagsValues, ITigerFeatureFlags, TigerFeaturesNames } from "../uiFeatures.js";
 import { convertState } from "./state.js";
@@ -603,6 +603,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableVisualizationFineTuning",
             "BOOLEAN",
             FeatureFlagsValues.enableVisualizationFineTuning,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableExternalRecipients,
+            "enableExternalRecipients",
+            "BOOLEAN",
+            FeatureFlagsValues.enableExternalRecipients,
         ),
     };
 }
