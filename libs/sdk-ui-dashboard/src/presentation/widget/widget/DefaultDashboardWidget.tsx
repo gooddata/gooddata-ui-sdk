@@ -97,7 +97,7 @@ export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget
     }, [effectiveBackend, dispatchEvent, safeSerializeObjRef(ref)]);
 
     const pathItems = parentLayoutPath
-        ? parentLayoutPath.map((pathItem) => `-${pathItem.itemIndex}`).join("")
+        ? parentLayoutPath.map((pathItem) => `-${pathItem.sectionIndex}_${pathItem.itemIndex}`).join("")
         : "";
     const dashboardItemClasses = parentLayoutPath ? `s-dash-item${pathItems}` : `s-dash-item-${index}`;
 
