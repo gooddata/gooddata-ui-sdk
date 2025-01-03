@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 /**
  * Settings are obtained from backend and are effectively a collection of feature flags or settings with
@@ -565,6 +565,11 @@ export interface ISettings {
      * Enable fine-tuning options for visualization in AD configuration panel.
      */
     enableVisualizationFineTuning?: boolean;
+
+    /**
+     * Enable external recipients options
+     */
+    enableExternalRecipients?: boolean;
 
     [key: string]: number | boolean | string | object | undefined;
 }

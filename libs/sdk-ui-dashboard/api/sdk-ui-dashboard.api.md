@@ -7651,6 +7651,9 @@ export const selectEnableCrossFilteringAliasTitles: DashboardSelector<boolean>;
 // @internal
 export const selectEnableDuplicatedLabelValuesInAttributeFilter: DashboardSelector<boolean>;
 
+// @internal
+export const selectEnableExternalRecipients: DashboardSelector<boolean>;
+
 // @public
 export const selectEnableFilterValuesResolutionInDrillEvents: DashboardSelector<boolean>;
 

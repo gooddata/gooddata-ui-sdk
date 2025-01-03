@@ -3338,6 +3338,7 @@ export interface ISettings {
     enableEarlyAccessFeaturesRollout?: boolean;
     enableEmbedButtonInAD?: boolean;
     enableEmbedButtonInKD?: boolean;
+    enableExternalRecipients?: boolean;
     enableFlightRpcDataSource?: boolean;
     enableGenAIChat?: boolean;
     enableGenAIChatRollout?: boolean;
