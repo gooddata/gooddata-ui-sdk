@@ -808,7 +808,7 @@ export const selectEnableFlexibleLayout: DashboardSelector<boolean> = createSele
 export const selectEnableInPlatformNotifications: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableInPlatformNotifications ?? false;
+        return state.settings?.enableInPlatformNotifications ?? true;
     },
 );
 
