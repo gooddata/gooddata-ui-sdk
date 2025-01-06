@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import {
     IColorPalette,
     IDateFilterConfig,
@@ -808,6 +808,6 @@ export const selectEnableFlexibleLayout: DashboardSelector<boolean> = createSele
 export const selectEnableInPlatformNotifications: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableInPlatformNotifications ?? false;
+        return state.settings?.enableInPlatformNotifications ?? true;
     },
 );

@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { IEarlyAccessFeaturesConfig } from "@gooddata/sdk-model";
 
 /**
@@ -296,7 +296,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableNumberSeparators: true,
     enableNewUserCreationFlow: false,
     enableDestinationTesting: false,
-    enableInPlatformNotifications: false,
+    enableInPlatformNotifications: true,
     enableVisualizationFineTuning: false,
 };
 
