@@ -100,6 +100,7 @@ export {
     selectEnableFlexibleLayout,
     selectEnableInPlatformNotifications,
     selectEnableExternalRecipients,
+    selectEnableDrilledTooltip,
     selectAutomationId,
 } from "./config/configSelectors.js";
 export type { EntitlementsState } from "./entitlements/entitlementsState.js";

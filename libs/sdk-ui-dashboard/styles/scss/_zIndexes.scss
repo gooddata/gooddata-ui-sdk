@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 $configuration-panel: 1000;
 $configuration-panel-sticky: 10;
@@ -13,7 +13,9 @@ $filterbar-old: 100;
 $filterbar-sdk-8-12: 6000;
 
 $drill-dialog-basic: 1;
+$drill-dialog-description: $drill-dialog-basic + 1;
 $drill-dialog-loading: 3;
+$drill-dialog-description-button: 9999;
 $drill-dialog-error: $drill-dialog-loading + 1;
 $drill-select: 5002;
 $drill-dialog-charts: $filterbar-sdk-8-12 + 1;

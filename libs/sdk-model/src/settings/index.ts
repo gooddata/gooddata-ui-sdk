@@ -566,6 +566,11 @@ export interface ISettings {
      */
     enableExternalRecipients?: boolean;
 
+    /**
+     * Enable drilled tooltip in drill dialog
+     */
+    enableDrilledTooltip?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

@@ -1,8 +1,10 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { useCallback, useMemo, useState } from "react";
+import { isIdentifierRef } from "@gooddata/sdk-model";
 import last from "lodash/last.js";
 import {
     selectCatalogAttributeDisplayFormsById,
+    selectEnableDrilledTooltip,
     selectLocale,
     useDashboardSelector,
 } from "../../../../model/index.js";
@@ -12,11 +14,10 @@ import {
     OnDrillDownSuccess,
     OnDrillToInsightSuccess,
 } from "../../../drill/index.js";
+import { IDashboardInsightProps } from "../types.js";
 import { IDrillDownDefinition, isDrillDownDefinition } from "../../../../types.js";
 import { DashboardInsightWithDrillSelect } from "./Insight/DashboardInsightWithDrillSelect.js";
 import { InsightDrillDialog } from "./InsightDrillDialog/InsightDrillDialog.js";
-import { IDashboardInsightProps } from "../types.js";
-import { isIdentifierRef } from "@gooddata/sdk-model";
 
 /**
  * @internal
@@ -27,6 +28,7 @@ export const DashboardInsightWithDrillDialog = (props: IDashboardInsightProps): 
     const insight = activeDrillStep?.insight;
     const widget = props.widget;
     const attributeDisplayForms = useDashboardSelector(selectCatalogAttributeDisplayFormsById);
+    const enableDrillDescription = useDashboardSelector(selectEnableDrilledTooltip);
 
     const breadcrumbs = useMemo(
         () =>
@@ -81,6 +83,7 @@ export const DashboardInsightWithDrillDialog = (props: IDashboardInsightProps): 
                     onDrillDown={onDrillDown}
                     onBackButtonClick={goBack}
                     onClose={onClose}
+                    enableDrillDescription={enableDrillDescription}
                 />
             ) : null}
         </>

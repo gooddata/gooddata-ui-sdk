@@ -3334,6 +3334,7 @@ export interface ISettings {
     enableDescriptions?: boolean;
     enableDestinationTesting?: boolean;
     enableDrilledInsightExport?: boolean;
+    enableDrilledTooltip?: boolean;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     enableEarlyAccessFeaturesRollout?: boolean;
     enableEmbedButtonInAD?: boolean;

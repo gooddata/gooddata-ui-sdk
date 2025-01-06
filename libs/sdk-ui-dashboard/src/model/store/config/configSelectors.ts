@@ -835,3 +835,15 @@ export const selectEnableExternalRecipients: DashboardSelector<boolean> = create
         return state.settings?.enableExternalRecipients ?? false;
     },
 );
+
+/**
+ * Returns whether drill dialog tooltip is enabled.
+ *
+ * @internal
+ */
+export const selectEnableDrilledTooltip: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableDrilledTooltip ?? false;
+    },
+);

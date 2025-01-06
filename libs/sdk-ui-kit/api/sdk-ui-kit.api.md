@@ -1224,7 +1224,7 @@ export interface IConfirmDialogBaseProps extends IDialogBaseProps {
 }
 
 // @internal (undocumented)
-export type IconType = "check" | "plus" | "sync" | "alert" | "close";
+export type IconType = "check" | "plus" | "sync" | "alert" | "close" | "question";
 
 // @internal (undocumented)
 export interface ICustomizableCheckmarkProps {
