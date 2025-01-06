@@ -123,6 +123,7 @@ export enum TigerFeaturesNames {
     EnableDestinationTesting = "enableDestinationTesting",
     EnableInPlatformNotifications = "enableInPlatformNotifications",
     EnableExternalRecipients = "enableExternalRecipients",
+    EnableDrilledTooltip = "enableDrilledTooltip",
     EnableVisualizationFineTuning = "enableVisualizationFineTuning",
 }
 
@@ -211,6 +212,7 @@ export type ITigerFeatureFlags = {
     enableInPlatformNotifications: typeof FeatureFlagsValues["enableInPlatformNotifications"][number];
     enableVisualizationFineTuning: typeof FeatureFlagsValues["enableVisualizationFineTuning"][number];
     enableExternalRecipients: typeof FeatureFlagsValues["enableExternalRecipients"][number];
+    enableDrilledTooltip: typeof FeatureFlagsValues["enableDrilledTooltip"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -298,6 +300,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableInPlatformNotifications: false,
     enableVisualizationFineTuning: false,
     enableExternalRecipients: false,
+    enableDrilledTooltip: false,
 };
 
 export const FeatureFlagsValues = {
@@ -389,4 +392,5 @@ export const FeatureFlagsValues = {
     enableInPlatformNotifications: [true, false] as const,
     enableVisualizationFineTuning: [true, false] as const,
     enableExternalRecipients: [true, false] as const,
+    enableDrilledTooltip: [true, false] as const,
 };

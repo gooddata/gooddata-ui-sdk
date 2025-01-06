@@ -1,5 +1,6 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
+import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 import { Button, Bubble, BubbleHoverTrigger, ShortenedText, IAlignPoint } from "@gooddata/sdk-ui-kit";
 import { selectCanExportTabular, selectSettings, useDashboardSelector } from "../../../../../model/index.js";
@@ -21,6 +22,7 @@ export interface DrillDialogProps {
     exportXLSXEnabled: boolean;
     exportCSVEnabled: boolean;
     isLoading: boolean;
+    enableDrillDescription: boolean;
 }
 
 const tooltipAlignPoints: IAlignPoint[] = [{ align: "cc tc", offset: { x: -20, y: 10 } }];
@@ -34,6 +36,7 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
     isBackButtonVisible,
     children,
 
+    enableDrillDescription,
     exportAvailable,
     exportXLSXEnabled,
     exportCSVEnabled,
@@ -48,8 +51,16 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
     const titleWithBreadcrumbs = getTitleWithBreadcrumbs(insightTitle, breadcrumbs);
 
     return (
-        <div className="gd-dialog gd-drill-modal-dialog s-drill-modal-dialog">
-            <div className="gd-dialog-header gd-dialog-header-with-border gd-drill-modal-dialog-header">
+        <div
+            className={cx("gd-dialog gd-drill-modal-dialog s-drill-modal-dialog", {
+                "gd-ff-drill-description": enableDrillDescription,
+            })}
+        >
+            <div
+                className={cx("gd-dialog-header gd-dialog-header-with-border gd-drill-modal-dialog-header", {
+                    "gd-ff-drill-description": enableDrillDescription,
+                })}
+            >
                 {isBackButtonVisible ? (
                     <BubbleHoverTrigger>
                         <Button
@@ -75,7 +86,11 @@ export const DrillDialog: React.FC<DrillDialogProps> = ({
                     onClick={onCloseDialog}
                 />
             </div>
-            <div className="gd-drill-modal-dialog-content visualization">
+            <div
+                className={cx("gd-drill-modal-dialog-content visualization", {
+                    "gd-ff-drill-description": enableDrillDescription,
+                })}
+            >
                 <div className="gd-drill-modal-dialog-content-base">{children}</div>
             </div>
             {shouldShowDrilledInsightExport ? (

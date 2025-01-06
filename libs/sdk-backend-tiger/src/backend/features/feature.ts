@@ -604,6 +604,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableExternalRecipients,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableDrilledTooltip,
+            "enableDrilledTooltip",
+            "BOOLEAN",
+            FeatureFlagsValues.enableDrilledTooltip,
+        ),
     };
 }
 

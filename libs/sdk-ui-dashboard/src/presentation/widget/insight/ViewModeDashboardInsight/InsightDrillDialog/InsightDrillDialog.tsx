@@ -1,25 +1,36 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { useCallback, useState } from "react";
-import { idRef, IInsight, insightTitle, IInsightWidget } from "@gooddata/sdk-model";
+import {
+    idRef,
+    IInsight,
+    insightTitle,
+    IInsightWidget,
+    IInsightWidgetDescriptionConfiguration,
+} from "@gooddata/sdk-model";
 import {
     FullScreenOverlay,
     Overlay,
     OverlayController,
     OverlayControllerProvider,
+    RichText,
+    UiIcon,
     useMediaQuery,
 } from "@gooddata/sdk-ui-kit";
 import { ILocale, OnLoadingChanged } from "@gooddata/sdk-ui";
+import cx from "classnames";
+
 import { DOWNLOADER_ID } from "../../../../../_staging/fileUtils/downloadFile.js";
 import { useInsightExport } from "../../../common/index.js";
 import { OnDrillDownSuccess, WithDrillSelect } from "../../../../drill/index.js";
 import { IntlWrapper } from "../../../../localization/index.js";
-import { DrillDialog } from "./DrillDialog.js";
-import { DrillDialogInsight } from "./DrillDialogInsight.js";
-import { useWidgetExecutionsHandler } from "../../../../../model/index.js";
-import { getTitleWithBreadcrumbs } from "./getTitleWithBreadcrumbs.js";
 import { useDashboardComponentsContext } from "../../../../dashboardContexts/index.js";
+import { useWidgetExecutionsHandler } from "../../../../../model/index.js";
 import { ThemedLoadingEqualizer } from "../../../../presentationComponents/index.js";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../../constants/index.js";
+
+import { DrillDialog } from "./DrillDialog.js";
+import { DrillDialogInsight } from "./DrillDialogInsight.js";
+import { getTitleWithBreadcrumbs } from "./getTitleWithBreadcrumbs.js";
 
 // Header z-index start at  6000 so we need force all overlays z-indexes start at 6000 to be above header
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
@@ -28,6 +39,7 @@ const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAY
  * @internal
  */
 export interface InsightDrillDialogProps {
+    enableDrillDescription: boolean;
     locale: ILocale;
     breadcrumbs: string[];
     widget: IInsightWidget;
@@ -45,10 +57,38 @@ const overlayIgnoredClasses = [
     `#${DOWNLOADER_ID}`,
 ];
 
+const defaultDescriptionConfig: IInsightWidgetDescriptionConfiguration = {
+    source: "insight",
+    includeMetrics: false,
+    visible: true,
+};
+
+const getInsightWidgetDescription = (
+    descriptionConfig: IInsightWidgetDescriptionConfiguration,
+    widgetDescription: string | undefined,
+    insightDescription: string | undefined,
+): string | undefined => {
+    if (!descriptionConfig.visible) {
+        return undefined;
+    }
+
+    const useInsightDescription = descriptionConfig.source === "insight";
+    return useInsightDescription ? insightDescription : widgetDescription;
+};
+
 const DRILL_MODAL_EXECUTION_PSEUDO_REF = idRef("@@GDC_DRILL_MODAL");
 
 export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element => {
-    const { widget, locale, breadcrumbs, insight, onClose, onBackButtonClick, onDrillDown } = props;
+    const {
+        widget,
+        locale,
+        breadcrumbs,
+        insight,
+        enableDrillDescription,
+        onClose,
+        onBackButtonClick,
+        onDrillDown,
+    } = props;
 
     const isMobileDevice = useMediaQuery("mobileDevice");
 
@@ -79,6 +119,14 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
 
     const OverlayComponent = isMobileDevice ? FullScreenOverlay : Overlay;
 
+    const [isOpen, setIsOpen] = useState(false);
+    const descriptionConfig = widget.configuration?.description ?? defaultDescriptionConfig;
+    const description = getInsightWidgetDescription(
+        descriptionConfig,
+        widget.description,
+        insight.insight.summary,
+    );
+
     return (
         <OverlayControllerProvider overlayController={overlayController}>
             <OverlayComponent
@@ -100,6 +148,7 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
                         exportAvailable={exportXLSXEnabled || exportCSVEnabled}
                         exportXLSXEnabled={exportXLSXEnabled}
                         exportCSVEnabled={exportCSVEnabled}
+                        enableDrillDescription={enableDrillDescription}
                         onExportXLSX={onExportXLSX}
                         onExportCSV={onExportCSV}
                         isLoading={isLoading}
@@ -110,7 +159,42 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
                             onDrillDownSuccess={onDrillDown}
                         >
                             {({ onDrill }) => {
-                                return (
+                                return description && enableDrillDescription ? (
+                                    <div className="drill-dialog-insight-container">
+                                        <div
+                                            className={cx("drill-dialog-insight-container-description", {
+                                                "drill-dialog-insight-container-description--open": isOpen,
+                                                "drill-dialog-insight-container-description--mobile":
+                                                    isMobileDevice,
+                                            })}
+                                        >
+                                            <div className="drill-dialog-insight-container-description-content">
+                                                <RichText value={description} renderMode="view" />
+                                            </div>
+                                        </div>
+                                        <div className="drill-dialog-insight-container-insight">
+                                            <div
+                                                className={cx("drill-dialog-insight-container-button", {
+                                                    "drill-dialog-insight-container-button--open": isOpen,
+                                                    "drill-dialog-insight-container-button--mobile":
+                                                        isMobileDevice,
+                                                })}
+                                                onClick={() => setIsOpen((open) => !open)}
+                                            >
+                                                <UiIcon type="question" size={20} />
+                                            </div>
+                                            <DrillDialogInsight
+                                                {...props}
+                                                onDrill={onDrill}
+                                                onLoadingChanged={handleLoadingChanged}
+                                                onError={executionsHandler.onError}
+                                                pushData={executionsHandler.onPushData}
+                                                ErrorComponent={ErrorComponent}
+                                                LoadingComponent={LoadingComponent}
+                                            />
+                                        </div>
+                                    </div>
+                                ) : (
                                     <DrillDialogInsight
                                         {...props}
                                         onDrill={onDrill}
