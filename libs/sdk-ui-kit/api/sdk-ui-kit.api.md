@@ -1480,6 +1480,8 @@ export interface IDropdownBodyRenderProps {
 // @internal (undocumented)
 export interface IDropdownButtonProps {
     // (undocumented)
+    ariaLabel?: string;
+    // (undocumented)
     children?: ReactNode;
     // (undocumented)
     className?: string;
