@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import {
     INotification,
@@ -84,6 +84,7 @@ function convertWebhookMessageData(
             id: data.automation.id,
             title: data.automation.title,
             dashboardURL: data.automation.dashboardURL,
+            isCustomDashboardURL: data.automation.isCustomDashboardURL,
         },
         recipients: data.recipients,
         details: data.details,

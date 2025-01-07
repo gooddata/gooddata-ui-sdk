@@ -4152,6 +4152,7 @@ export interface IVisualizationSwitcherWidgetDefinition extends IVisualizationSw
 export interface IWebhookAutomationInfo {
     dashboardURL: string;
     id: string;
+    isCustomDashboardURL?: boolean;
     title?: string;
 }
 
