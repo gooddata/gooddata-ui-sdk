@@ -110,7 +110,6 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
         // resize map when component is updated
         // for example: toggle legend, change position of legend
         this.chart.resize();
-        this.updateViewport();
 
         // only update map when style is ready
         // work around for ticket SD-898
@@ -148,6 +147,7 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
         this.createMap();
         this.createMapControls();
         this.handleMapEvent();
+        this.updateViewport();
     }
 
     private generateLocale() {
@@ -299,7 +299,11 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
         const { bounds } = getViewportOptions(data, config);
 
         if (bounds) {
-            this.chart.fitBounds(bounds, DEFAULT_MAPBOX_OPTIONS.fitBoundsOptions);
+            try {
+                this.chart.fitBounds(bounds, DEFAULT_MAPBOX_OPTIONS.fitBoundsOptions);
+            } catch (error) {
+                // sometimes fitBounds is called before this.chart.resize() takes all effects and map area is invisible/small which leads to error in mapbox division by 0 -> NaN. Next re-render will fix it.
+            }
         }
     };
 
@@ -329,6 +333,7 @@ class GeoChartRenderer extends React.Component<IGeoChartRendererProps> {
         chart.on("moveend", this.handlePushpinMoveEnd);
         chart.on("zoomend", this.handlePushpinZoomEnd);
         chart.on("error", this.handleMapboxError);
+        chart.on("resize", this.updateViewport);
     };
 
     /*
