@@ -296,7 +296,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDashboardFlexibleLayout: false,
     enableNumberSeparators: true,
     enableNewUserCreationFlow: false,
-    enableDestinationTesting: false,
+    enableDestinationTesting: true,
     enableInPlatformNotifications: false,
     enableVisualizationFineTuning: false,
     enableExternalRecipients: false,

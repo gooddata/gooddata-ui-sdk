@@ -10,6 +10,7 @@ import {
     isRichTextWidget,
     isVisualizationSwitcherWidget,
 } from "@gooddata/sdk-model";
+import cx from "classnames";
 import { BackendProvider, convertError, useBackendStrict } from "@gooddata/sdk-ui";
 import { withEventing } from "@gooddata/sdk-backend-base";
 
@@ -32,6 +33,7 @@ import { RenderModeAwareDashboardInsightWidget } from "./InsightWidget/index.js"
 import { RenderModeAwareDashboardRichTextWidget } from "./RichTextWidget/index.js";
 import { RenderModeAwareDashboardVisualizationSwitcherWidget } from "./VisualizationSwitcherWidget/RenderModeAwareDashboardVisualizationSwitcherWidget.js";
 import { RenderModeAwareDashboardNestedLayoutWidget } from "./DashboardNestedLayoutWidget/RenderModeAwareDashboardNestedLayoutWidget.js";
+import { isFirstInContainer } from "../../../_staging/layout/coordinates.js";
 
 /**
  * @internal
@@ -101,6 +103,8 @@ export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget
         : "";
     const dashboardItemClasses = parentLayoutPath ? `s-dash-item${pathItems}` : `s-dash-item-${index}`;
 
+    const firstInContainer = isFirstInContainer(parentLayoutPath);
+
     if (isWidget(widget)) {
         let renderWidget = null;
         if (isInsightWidget(widget)) {
@@ -108,7 +112,9 @@ export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget
                 <RenderModeAwareDashboardInsightWidget
                     widget={widget}
                     screen={screen}
-                    dashboardItemClasses={dashboardItemClasses}
+                    dashboardItemClasses={cx(dashboardItemClasses, {
+                        "gd-first-in-container": firstInContainer,
+                    })}
                 />
             );
         } else if (isKpiWidget(widget)) {
@@ -116,7 +122,9 @@ export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget
                 <DefaultDashboardKpiWidget
                     kpiWidget={widget}
                     screen={screen}
-                    dashboardItemClasses={dashboardItemClasses}
+                    dashboardItemClasses={cx(dashboardItemClasses, {
+                        "gd-first-in-container": firstInContainer,
+                    })}
                     onFiltersChange={onFiltersChange}
                     onError={onError}
                 />
@@ -126,7 +134,9 @@ export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget
                 <RenderModeAwareDashboardRichTextWidget
                     widget={widget}
                     screen={screen}
-                    dashboardItemClasses={dashboardItemClasses}
+                    dashboardItemClasses={cx(dashboardItemClasses, {
+                        "gd-first-in-container": firstInContainer,
+                    })}
                 />
             );
         } else if (isVisualizationSwitcherWidget(widget)) {
@@ -134,7 +144,9 @@ export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget
                 <RenderModeAwareDashboardVisualizationSwitcherWidget
                     widget={widget}
                     screen={screen}
-                    dashboardItemClasses={dashboardItemClasses}
+                    dashboardItemClasses={cx(dashboardItemClasses, {
+                        "gd-first-in-container": firstInContainer,
+                    })}
                 />
             );
         }
@@ -152,7 +164,9 @@ export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget
                 onFiltersChange={onFiltersChange}
                 parentLayoutItemSize={parentLayoutItemSize}
                 parentLayoutPath={parentLayoutPath}
-                dashboardItemClasses={dashboardItemClasses}
+                dashboardItemClasses={cx(dashboardItemClasses, {
+                    "gd-first-in-container": firstInContainer,
+                })}
             />
         );
     }
