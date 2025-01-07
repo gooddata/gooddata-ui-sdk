@@ -1,7 +1,7 @@
 // (C) 2024 GoodData Corporation
 import { IAlertNotification } from "@gooddata/sdk-model";
 import React from "react";
-import { Skeleton } from "../components/Skeleton.js";
+import { UiSkeleton } from "@gooddata/sdk-ui-kit";
 import { DetailsDialog } from "../components/DetailsDialog.js";
 import { useNotificationsFilterDetail } from "../data/useNotificationFiltersDetail.js";
 import { bem } from "../bem.js";
@@ -40,7 +40,7 @@ export function NotificationFiltersDetailDialog({
             content={
                 <div className={b()}>
                     {automationPromise.status !== "success" ? (
-                        <Skeleton itemHeight={32} itemsCount={filtersCount} />
+                        <UiSkeleton itemHeight={32} itemsCount={filtersCount} />
                     ) : (
                         filtersInfo?.map(({ title, subtitle }, idx) => (
                             <div className={e("item")} key={idx}>

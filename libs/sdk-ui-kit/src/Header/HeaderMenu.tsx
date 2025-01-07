@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React, { PureComponent, ReactNode } from "react";
 import { injectIntl, FormattedMessage, WrappedComponentProps } from "react-intl";
 import { v4 as uuid } from "uuid";
@@ -38,6 +38,7 @@ class WrappedHeaderMenu extends PureComponent<IHeaderMenuProps & WrappedComponen
                         target={item.target}
                         rel={item.target === "_blank" ? "noreferrer noopener" : undefined}
                     >
+                        {item.icon ? item.icon : null}
                         {item.iconName ? <i className={cx(item.iconName, "gd-icon")} /> : null}
                         <span className={item.className}>
                             <FormattedMessage id={item.key} />

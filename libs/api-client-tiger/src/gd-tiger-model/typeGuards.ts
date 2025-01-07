@@ -1,10 +1,10 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
     AfmLocalIdentifier,
     AfmObjectIdentifier,
     AttributeExecutionResultHeader,
-    AttributeHeaderOut,
+    AttributeHeader,
     ExecutionResultHeader,
     ResultDimensionHeader,
     MeasureExecutionResultHeader,
@@ -22,8 +22,8 @@ import {
 /**
  * @public
  */
-export function isAttributeHeader(header: ResultDimensionHeader): header is AttributeHeaderOut {
-    return header && (header as AttributeHeaderOut).attributeHeader !== undefined;
+export function isAttributeHeader(header: ResultDimensionHeader): header is AttributeHeader {
+    return header && (header as AttributeHeader).attributeHeader !== undefined;
 }
 
 /**

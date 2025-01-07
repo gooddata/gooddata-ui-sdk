@@ -1106,14 +1106,12 @@
     "options.menu.unsupported.schedulingForInsightNotEnabled": {
         "value": "You cannot schedule an export for this widget.",
         "comment": "Tooltip for the widget that does not support scheduling, because it's disabled on the insight.",
-        "limit": 0,
-        "translate": false
+        "limit": 0
     },
     "options.menu.unsupported.alertingForInsightNotEnabled": {
         "value": "You cannot create an alert for this widget.",
         "comment": "Tooltip for the widget that does not support alerting, because it's disabled on the insight.",
-        "limit": 0,
-        "translate": false
+        "limit": 0
     },
     "options.menu.unsupported.oldWidget": {
         "value": "Unable to schedule the export. Please resave the dashboard or contact your administrator.",

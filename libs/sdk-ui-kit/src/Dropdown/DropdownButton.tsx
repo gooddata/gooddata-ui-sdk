@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { ReactNode } from "react";
 import cx from "classnames";
 import { Button } from "../Button/Button.js";
@@ -12,6 +12,7 @@ export interface IDropdownButtonProps {
 
     value?: ReactNode;
     title?: string;
+    ariaLabel?: string;
     disabled?: boolean;
 
     isOpen?: boolean;
@@ -32,6 +33,7 @@ export const DropdownButton: React.FC<IDropdownButtonProps> = ({
 
     value,
     title = value,
+    ariaLabel,
     disabled,
 
     isOpen,
@@ -57,6 +59,7 @@ export const DropdownButton: React.FC<IDropdownButtonProps> = ({
         <Button
             id={id}
             title={title && typeof title === "string" ? title : undefined}
+            ariaLabel={ariaLabel}
             className={buttonClasses}
             value={value}
             iconLeft={iconLeft}

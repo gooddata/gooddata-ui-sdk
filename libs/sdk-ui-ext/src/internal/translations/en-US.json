@@ -2054,7 +2054,7 @@
         "limit": 0
     },
     "notifications.filters.buttonLabel": {
-        "value": "{count} filters",
+        "value": "Show filters",
         "comment": "",
         "limit": 0
     },

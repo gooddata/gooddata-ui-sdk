@@ -1,7 +1,7 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 /**
- * This package provides the Dashboard component that can be used to embed dashboards into your application as React components.
+ * This package provides a Dashboard component that enables you to embed dashboards into your application as React components.
  *
  * @remarks
  * The component also allows for customization of the embedded dashboard using plugins.

@@ -363,5 +363,13 @@
     "properties.interactions.alerts": "Avviso",
     "properties.interactions.alerts.tooltip": "Consente agli utenti di creare avvisi per questa visualizzazione sui dashboard.",
     "properties.interactions.scheduledExports": "Esportazioni programmate",
-    "properties.interactions.scheduledExports.tooltip": "Consente agli utenti di creare esportazioni programmate per questa visualizzazione sui dashboard."
+    "properties.interactions.scheduledExports.tooltip": "Consente agli utenti di creare esportazioni programmate per questa visualizzazione sui dashboard.",
+    "properties.advanced.title": "Personalizzazioni avanzate",
+    "properties.advanced.chartConfigOverride.noValueLabel": "Non ci sono ancora personalizzazioni.",
+    "properties.advanced.chartConfigOverride.link": "Maggiori informazioni",
+    "properties.advanced.chartConfigOverride.editorButton": "Aprire l'editor",
+    "properties.advanced.chartConfigOverride.title": "Personalizzazione avanzata",
+    "properties.advanced.chartConfigOverride.snippets.header": "Snippet",
+    "properties.advanced.chartConfigOverride.button.apply": "Applica",
+    "properties.advanced.chartConfigOverride.button.cancel": "Annulla"
 }

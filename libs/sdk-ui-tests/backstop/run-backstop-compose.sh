@@ -3,10 +3,8 @@
 # Absolute root dir .. for the docker volumes
 ROOT_DIR=$(echo $(cd $(dirname $0)/.. && pwd -P))
 
-if [[ "$GITHUB_ACTIONS" != "true" ]]; then
-    export USER_UID=$(id -u)
-    export USER_GID=$(id -g)
-fi
+export USER_UID=$(id -u)
+export USER_GID=$(id -g)
 
 cd $ROOT_DIR
 

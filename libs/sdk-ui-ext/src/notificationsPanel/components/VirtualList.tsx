@@ -1,13 +1,13 @@
 // (C) 2024 GoodData Corporation
 
 import React, { useEffect } from "react";
+import { UiSkeleton } from "@gooddata/sdk-ui-kit";
 import { useVirtualizer } from "@tanstack/react-virtual";
 
-import { Skeleton } from "./Skeleton.js";
 import { bem } from "../bem.js";
 
 export interface IPagedVirtualListProps<T> {
-    maxHeight?: number;
+    maxHeight: number;
     items?: T[];
     itemHeight: number;
     itemsGap: number;
@@ -63,7 +63,7 @@ export function PagedVirtualList<T>(props: IPagedVirtualListProps<T>) {
                         return (
                             <div key={virtualRow.index} style={style}>
                                 {isSkeletonItem ? (
-                                    <Skeleton itemHeight={itemHeight} key={virtualRow.index} />
+                                    <UiSkeleton itemHeight={itemHeight} key={virtualRow.index} />
                                 ) : (
                                     children(item!)
                                 )}
@@ -80,12 +80,12 @@ function useVirtualList<T>(props: IPagedVirtualListProps<T>) {
     const {
         items,
         itemHeight,
-        maxHeight = 500,
         itemsGap,
         skeletonItemsCount,
         hasNextPage,
         loadNextPage,
         isLoading,
+        maxHeight,
     } = props;
 
     const scrollContainerRef = React.useRef<HTMLDivElement>(null);
@@ -99,12 +99,12 @@ function useVirtualList<T>(props: IPagedVirtualListProps<T>) {
         renderItemsCount = skeletonItemsCount;
     }
 
-    const height = Math.min(
+    const realHeight =
         itemsCount > 0
             ? (itemHeight + itemsGap) * itemsCount + itemsGap
-            : skeletonItemsCount * (itemHeight + itemsGap) + itemsGap,
-        maxHeight,
-    );
+            : skeletonItemsCount * (itemHeight + itemsGap) + itemsGap;
+
+    const height = Math.min(maxHeight, realHeight);
 
     const hasScroll = scrollContainerRef.current
         ? scrollContainerRef.current?.scrollHeight >

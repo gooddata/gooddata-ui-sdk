@@ -3334,11 +3334,12 @@ export interface ISettings {
     enableDescriptions?: boolean;
     enableDestinationTesting?: boolean;
     enableDrilledInsightExport?: boolean;
+    enableDrilledTooltip?: boolean;
     enableDuplicatedLabelValuesInAttributeFilter?: boolean;
     enableEarlyAccessFeaturesRollout?: boolean;
     enableEmbedButtonInAD?: boolean;
     enableEmbedButtonInKD?: boolean;
-    enableFlightRpcDataSource?: boolean;
+    enableExternalRecipients?: boolean;
     enableGenAIChat?: boolean;
     enableGenAIChatRollout?: boolean;
     enableHeadlineExport?: boolean;

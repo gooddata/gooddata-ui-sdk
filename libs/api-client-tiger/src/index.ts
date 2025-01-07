@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 /**
  * This package provides low-level functions for communication with GoodData Cloud and GoodData.CN.
  *
@@ -60,8 +60,8 @@ export type {
     AttributeExecutionResultHeader,
     AttributeFilter as AfmAttributeFilter,
     AttributeFilterElements as AfmAttributeFilterElements,
-    AttributeHeaderOut,
-    AttributeHeaderOutAttributeHeader,
+    AttributeHeader,
+    AttributeHeaderAttributeHeader,
     AttributeItem as AfmAttributeItem,
     AttributeResultHeader,
     ComparisonMeasureValueFilter as AfmComparisonMeasureValueFilter,
@@ -92,7 +92,7 @@ export type {
     MeasureDefinition as AfmMeasureDefinition,
     MeasureExecutionResultHeader,
     MeasureGroupHeaders,
-    MeasureHeaderOut,
+    MeasureHeader,
     MeasureItem as AfmMeasureItem,
     MeasureResultHeader,
     MeasureValueFilter,
@@ -205,7 +205,7 @@ export {
     AfmObjectIdentifierLabelIdentifierTypeEnum as AfmModelObjectIdentifierLabelIdentifierTypeEnum,
     AfmValidObjectsQueryTypesEnum,
     ArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum as AfmArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum,
-    AttributeHeaderOutAttributeHeaderGranularityEnum,
+    AttributeHeaderAttributeHeaderGranularityEnum,
     ComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum as AfmComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum,
     FilterByLabelTypeEnum,
     ElementsRequestSortOrderEnum,
@@ -224,7 +224,7 @@ export {
     ActionsApi as AfmActionsApi,
     TotalFunctionEnum,
     ElementsResponseGranularityEnum,
-    AttributeHeaderOutAttributeHeaderValueTypeEnum,
+    AttributeHeaderAttributeHeaderValueTypeEnum,
     KeyDriversRequestSortDirectionEnum,
     KeyDriversDimensionGranularityEnum,
     KeyDriversDimensionValueTypeEnum,

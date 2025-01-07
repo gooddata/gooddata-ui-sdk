@@ -9,12 +9,17 @@ import {
     LocalIdRef,
     IAlertNotification,
     ObjRef,
+    idRef,
+    IInsightWidget,
+    IdentifierRef,
+    filterLocalIdentifier,
 } from "@gooddata/sdk-model";
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { useMemo } from "react";
 import { translateAttributeFilter } from "./attributeFilterNaming.js";
 import { defineMessages, useIntl } from "react-intl";
 import { translateDateFilter } from "./dateFilterNaming.js";
+import { IAnalyticalBackend, layoutWidgets } from "@gooddata/sdk-backend-spi";
 
 const messages = defineMessages({
     title: {
@@ -32,6 +37,18 @@ function getObjRefInScopeLocalId(attributeFilter: IAttributeFilter) {
     return (attributeFilter.negativeAttributeFilter.displayForm as LocalIdRef).localIdentifier;
 }
 
+function fetchAutomation(backend: IAnalyticalBackend, workspaceId: string, automationId: string) {
+    return backend.workspace(workspaceId).automations().getAutomation(automationId);
+}
+
+function fetchDashboard(backend: IAnalyticalBackend, workspaceId: string, dashboardId: string) {
+    return backend.workspace(workspaceId).dashboards().getDashboardWithReferences(idRef(dashboardId));
+}
+
+function fetchLabels(backend: IAnalyticalBackend, workspaceId: string, filterDisplayFormsRefs: ObjRef[]) {
+    return backend.workspace(workspaceId).attributes().getAttributeDisplayForms(filterDisplayFormsRefs);
+}
+
 export function useNotificationsFilterDetail(notification: IAlertNotification) {
     const workspaceId = useWorkspaceStrict(undefined, "NotificationTriggerDetails");
     const backend = useBackendStrict(undefined, "NotificationTriggerDetails");
@@ -42,10 +59,8 @@ export function useNotificationsFilterDetail(notification: IAlertNotification) {
                 if (!notification.automationId) {
                     return null;
                 }
-                const automation = await backend
-                    .workspace(workspaceId)
-                    .automations()
-                    .getAutomation(notification.automationId);
+
+                const automation = await fetchAutomation(backend, workspaceId, notification.automationId);
 
                 const automationAlert = automation?.alert;
                 if (!automationAlert) {
@@ -73,12 +88,17 @@ export function useNotificationsFilterDetail(notification: IAlertNotification) {
                     })
                     .filter(Boolean) as ObjRef[];
 
-                const labels = await backend
-                    .workspace(workspaceId)
-                    .attributes()
-                    .getAttributeDisplayForms(filterDisplayFormsRefs);
+                const dashboardId = automation?.dashboard;
 
-                return { automation, labels };
+                const dashboardPromise = dashboardId
+                    ? fetchDashboard(backend, workspaceId, dashboardId)
+                    : Promise.resolve(null);
+
+                const labelsPromise = fetchLabels(backend, workspaceId, filterDisplayFormsRefs);
+
+                const [dashboard, labels] = await Promise.all([dashboardPromise, labelsPromise]);
+
+                return { automation, dashboard, labels };
             },
         },
         [notification.automationId, workspaceId],
@@ -88,14 +108,26 @@ export function useNotificationsFilterDetail(notification: IAlertNotification) {
         if (!automationPromise.result) {
             return null;
         }
-        const { automation, labels } = automationPromise.result;
+        const { automation, dashboard, labels } = automationPromise.result;
 
         const alert = automation?.alert;
         if (!alert) {
             return [];
         }
 
-        return alert.execution.filters
+        const widgets = dashboard?.dashboard.layout ? layoutWidgets(dashboard.dashboard.layout) : [];
+        const widget = widgets.find((w) => w.identifier === automation.metadata?.widget);
+        const insight = dashboard?.references.insights.find(
+            (i) => i.insight.identifier === ((widget as IInsightWidget).insight as IdentifierRef).identifier,
+        );
+        const filtersWithoutInsightFilters = alert.execution.filters.filter((f) => {
+            const insightFilter = insight?.insight.filters.find((f2) => {
+                return filterLocalIdentifier(f) === filterLocalIdentifier(f2);
+            });
+            return !insightFilter;
+        });
+
+        return filtersWithoutInsightFilters
             .map((filter) => {
                 let ref = filterObjRef(filter);
                 let subtitle = "";

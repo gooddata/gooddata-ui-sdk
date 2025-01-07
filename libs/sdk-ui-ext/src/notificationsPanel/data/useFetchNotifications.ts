@@ -95,6 +95,14 @@ export function useFetchNotifications({
         }
     }, [status, hasNextPage]);
 
+    const reset = useCallback(() => {
+        setPage(0);
+        setNotifications([]);
+        setHasNextPage(false);
+        setTotalNotificationsCount(0);
+        setInvalidationId((x) => x + 1);
+    }, []);
+
     return {
         notifications,
         status,
@@ -102,5 +110,6 @@ export function useFetchNotifications({
         hasNextPage,
         loadNextPage,
         totalNotificationsCount,
+        reset,
     };
 }

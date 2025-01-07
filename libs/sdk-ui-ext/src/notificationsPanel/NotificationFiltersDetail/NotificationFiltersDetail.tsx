@@ -49,7 +49,7 @@ export function NotificationFiltersDetail({ notification }: INotificationFilters
                     onClick={onButtonClick}
                     variant="tertiary"
                     size="small"
-                    label={intl.formatMessage(messages.buttonLabel, { count: filterCount })}
+                    label={intl.formatMessage(messages.buttonLabel)}
                 />
             ) : null}
             {isFiltersDialogOpen ? (

@@ -12,6 +12,7 @@ on:
       TEST_BACKEND:
         default: 'https://checklist.staging.stg11.panther.intgdc.com'
         required: true
+        type: string
       TIGER_DATASOURCES_NAME:
         description: 'Tiger DS name'
         default: 'vertica_staging-goodsales'
@@ -91,10 +92,13 @@ jobs:
       - name: Rush build
         run: node common/scripts/install-run-rush.js build --to @gooddata/sdk-ui-tests-e2e
   e2e:
-    needs: [ warm-up-cache,build ]
+    needs: [ warm-up-cache, build ]
     runs-on:
       group: infra1-runners-arc
       labels: runners-rxa-xlarge
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -142,6 +146,8 @@ jobs:
         uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
-          name: cypress-test-artifacts
+          name: cypress-${{ inputs.CYPRESS_TEST_TAGS }}-artifacts
           path: |
             libs/sdk-ui-tests-e2e/cypress/videos/**/*.mp4
+            libs/sdk-ui-tests-e2e/cypress/screenshots/**/*
+            libs/sdk-ui-tests-e2e/cypress/results/**/*

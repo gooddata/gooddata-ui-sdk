@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import {
     IColorPalette,
     IDateFilterConfig,
@@ -821,5 +821,29 @@ export const selectAutomationId: DashboardSelector<string | undefined> = createS
     selectConfig,
     (state) => {
         return state.automationId;
+    },
+);
+
+/**
+ * Returns whether external recipients are enabled.
+ *
+ * @internal
+ */
+export const selectEnableExternalRecipients: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableExternalRecipients ?? false;
+    },
+);
+
+/**
+ * Returns whether drill dialog tooltip is enabled.
+ *
+ * @internal
+ */
+export const selectEnableDrilledTooltip: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableDrilledTooltip ?? true;
     },
 );

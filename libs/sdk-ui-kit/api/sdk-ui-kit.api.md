@@ -827,7 +827,10 @@ export interface IAppHeaderProps {
     // (undocumented)
     menuItemsGroups?: IHeaderMenuItem[][];
     // (undocumented)
-    notificationsPanel?: React_2.ReactNode;
+    notificationsPanel?: (props: {
+        isMobile: boolean;
+        closeNotificationsOverlay: () => void;
+    }) => React_2.ReactNode;
     // (undocumented)
     onChatItemClick?: (e: React_2.MouseEvent) => void;
     // (undocumented)
@@ -866,6 +869,8 @@ export interface IAppHeaderState {
     guid: string;
     // (undocumented)
     isHelpMenuOpen: boolean;
+    // (undocumented)
+    isNotificationsMenuOpen: boolean;
     // (undocumented)
     isOverlayMenuOpen: boolean;
     // (undocumented)
@@ -1219,7 +1224,7 @@ export interface IConfirmDialogBaseProps extends IDialogBaseProps {
 }
 
 // @internal (undocumented)
-export type IconType = "check" | "plus" | "sync" | "alert" | "close";
+export type IconType = "check" | "plus" | "sync" | "alert" | "close" | "question";
 
 // @internal (undocumented)
 export interface ICustomizableCheckmarkProps {
@@ -1474,6 +1479,8 @@ export interface IDropdownBodyRenderProps {
 
 // @internal (undocumented)
 export interface IDropdownButtonProps {
+    // (undocumented)
+    ariaLabel?: string;
     // (undocumented)
     children?: ReactNode;
     // (undocumented)
@@ -2013,6 +2020,8 @@ export interface IHeaderMenuItem {
     className?: string;
     // (undocumented)
     href?: string;
+    // (undocumented)
+    icon?: React_2.ReactNode;
     // (undocumented)
     iconName?: string;
     // (undocumented)
@@ -4879,12 +4888,14 @@ export const Typography: React_2.FC<ITypographyProps>;
 export type TypographyTagName = "h1" | "h2" | "h3" | "p";
 
 // @internal (undocumented)
-export const UiButton: ({ buttonRef, size, variant, label, isDisabled, isLoading, iconBefore, iconAfter, onClick, }: UiButtonProps) => React_2.JSX.Element;
+export const UiButton: ({ buttonRef, size, variant, label, isDisabled, isLoading, iconBefore, iconAfter, onClick, dataId, }: UiButtonProps) => React_2.JSX.Element;
 
 // @internal (undocumented)
 export interface UiButtonProps {
     // (undocumented)
     buttonRef?: React_2.RefObject<HTMLButtonElement>;
+    // (undocumented)
+    dataId?: string;
     // (undocumented)
     iconAfter?: IconType;
     // (undocumented)
@@ -4918,6 +4929,18 @@ export interface UiIconProps {
     size?: number;
     // (undocumented)
     type: IconType;
+}
+
+// @internal (undocumented)
+export function UiSkeleton({ itemsCount, itemHeight, itemWidth, gap, direction, }: UiSkeletonProps): React_2.JSX.Element;
+
+// @internal (undocumented)
+export interface UiSkeletonProps {
+    direction?: "row" | "column";
+    gap?: number;
+    itemHeight?: (number | string) | (number | string)[];
+    itemsCount?: number;
+    itemWidth?: (number | string) | (number | string)[];
 }
 
 // @internal (undocumented)

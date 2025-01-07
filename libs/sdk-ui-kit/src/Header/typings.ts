@@ -14,6 +14,7 @@ export interface IHeaderMenuItem {
     className?: string;
     target?: string;
     iconName?: string;
+    icon?: React.ReactNode;
     onClick?: (obj: any) => void;
 }
 
@@ -62,7 +63,10 @@ export interface IAppHeaderProps {
     onInviteItemClick?: (e: React.MouseEvent) => void;
 
     search?: React.ReactNode;
-    notificationsPanel?: React.ReactNode;
+    notificationsPanel?: (props: {
+        isMobile: boolean;
+        closeNotificationsOverlay: () => void;
+    }) => React.ReactNode;
     showChatItem?: boolean;
     onChatItemClick?: (e: React.MouseEvent) => void;
 }
@@ -77,6 +81,7 @@ export interface IAppHeaderState {
     responsiveMode: boolean;
     isHelpMenuOpen: boolean;
     isSearchMenuOpen: boolean;
+    isNotificationsMenuOpen: boolean;
 }
 
 /**

@@ -80,10 +80,14 @@ jobs:
           ./common/scripts/ci/run_backstop_tests.sh
         env:
           GH_RUN_ID: ${{ github.run_id }}
+      - name: Cleanup backstop artifacts
+        if: ${{ !cancelled() && failure() }}
+        run: |
+          node libs/sdk-ui-tests/backstop/backstop-cleanup-artifacts.cjs
       - name: Archive the cypress test artifacts
         uses: actions/upload-artifact@v4
         if: ${{ !cancelled() && failure() }}
         with:
-          name: backstop-test-artifacts
+          name: backstop-test-artifacts-failed
           path: |
             libs/sdk-ui-tests/backstop/output/**/*
