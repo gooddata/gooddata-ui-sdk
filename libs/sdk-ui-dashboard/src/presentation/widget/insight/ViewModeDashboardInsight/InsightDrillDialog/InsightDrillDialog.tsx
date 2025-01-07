@@ -31,6 +31,7 @@ import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../../constants/index.j
 import { DrillDialog } from "./DrillDialog.js";
 import { DrillDialogInsight } from "./DrillDialogInsight.js";
 import { getTitleWithBreadcrumbs } from "./getTitleWithBreadcrumbs.js";
+import { useIntl } from "react-intl";
 
 // Header z-index start at  6000 so we need force all overlays z-indexes start at 6000 to be above header
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
@@ -161,28 +162,17 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
                             {({ onDrill }) => {
                                 return description && enableDrillDescription ? (
                                     <div className="drill-dialog-insight-container">
-                                        <div
-                                            className={cx("drill-dialog-insight-container-description", {
-                                                "drill-dialog-insight-container-description--open": isOpen,
-                                                "drill-dialog-insight-container-description--mobile":
-                                                    isMobileDevice,
-                                            })}
-                                        >
-                                            <div className="drill-dialog-insight-container-description-content">
-                                                <RichText value={description} renderMode="view" />
-                                            </div>
-                                        </div>
+                                        <InsightDrillDialogDescriptionContent
+                                            isOpen={isOpen}
+                                            isMobileDevice={isMobileDevice}
+                                            description={description}
+                                        />
                                         <div className="drill-dialog-insight-container-insight">
-                                            <div
-                                                className={cx("drill-dialog-insight-container-button", {
-                                                    "drill-dialog-insight-container-button--open": isOpen,
-                                                    "drill-dialog-insight-container-button--mobile":
-                                                        isMobileDevice,
-                                                })}
-                                                onClick={() => setIsOpen((open) => !open)}
-                                            >
-                                                <UiIcon type="question" size={20} />
-                                            </div>
+                                            <InsightDrillDialogDescriptionButton
+                                                isOpen={isOpen}
+                                                isMobileDevice={isMobileDevice}
+                                                setIsOpen={setIsOpen}
+                                            />
                                             <DrillDialogInsight
                                                 {...props}
                                                 onDrill={onDrill}
@@ -213,3 +203,55 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
         </OverlayControllerProvider>
     );
 };
+
+interface InsightDrillDialogDescriptionButtonProps {
+    isMobileDevice: boolean;
+    isOpen: boolean;
+    setIsOpen: (fn: (open: boolean) => boolean) => void;
+}
+
+function InsightDrillDialogDescriptionButton({
+    isOpen,
+    isMobileDevice,
+    setIsOpen,
+}: InsightDrillDialogDescriptionButtonProps) {
+    const { formatMessage } = useIntl();
+
+    return (
+        <div
+            className={cx("drill-dialog-insight-container-button", {
+                "drill-dialog-insight-container-button--open": isOpen,
+                "drill-dialog-insight-container-button--mobile": isMobileDevice,
+            })}
+            onClick={() => setIsOpen((open) => !open)}
+            aria-label={formatMessage({ id: "widget.options.description" })}
+        >
+            <UiIcon type="question" size={20} />
+        </div>
+    );
+}
+
+interface InsightDrillDialogDescriptionContentProps {
+    isMobileDevice: boolean;
+    isOpen: boolean;
+    description: string;
+}
+
+function InsightDrillDialogDescriptionContent({
+    isOpen,
+    isMobileDevice,
+    description,
+}: InsightDrillDialogDescriptionContentProps) {
+    return (
+        <div
+            className={cx("drill-dialog-insight-container-description", {
+                "drill-dialog-insight-container-description--open": isOpen,
+                "drill-dialog-insight-container-description--mobile": isMobileDevice,
+            })}
+        >
+            <div className="drill-dialog-insight-container-description-content">
+                <RichText value={description} renderMode="view" />
+            </div>
+        </div>
+    );
+}
