@@ -844,6 +844,6 @@ export const selectEnableExternalRecipients: DashboardSelector<boolean> = create
 export const selectEnableDrilledTooltip: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableDrilledTooltip ?? false;
+        return state.settings?.enableDrilledTooltip ?? true;
     },
 );

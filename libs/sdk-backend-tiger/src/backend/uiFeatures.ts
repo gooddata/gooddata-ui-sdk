@@ -300,7 +300,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableInPlatformNotifications: false,
     enableVisualizationFineTuning: false,
     enableExternalRecipients: false,
-    enableDrilledTooltip: false,
+    enableDrilledTooltip: true,
 };
 
 export const FeatureFlagsValues = {
