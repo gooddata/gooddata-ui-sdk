@@ -1,6 +1,7 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React, { useEffect } from "react";
 import { XYCoord } from "react-dnd";
+import cx from "classnames";
 
 import { WidthResizer } from "../Resize/WidthResizer.js";
 import { WidthResizerDragItem } from "../../../dragAndDrop/types.js";
@@ -8,6 +9,7 @@ import { WidthResizerDragItem } from "../../../dragAndDrop/types.js";
 import { applySizeLimitation } from "./sizeLimiting.js";
 import { DragResizeProps } from "../../../dragAndDrop/DragLayerPreview/types.js";
 import { useResizeHandlers } from "../../../dragAndDrop/index.js";
+import { isFirstInContainer } from "../../../../_staging/layout/coordinates.js";
 
 interface IWidthResizerDragPreviewOwnProps {
     item: WidthResizerDragItem;
@@ -30,7 +32,9 @@ export function WidthResizerDragPreview(props: WidthResizerDragPreviewProps) {
 
     const { item, differenceFromInitialOffset, initialOffset, scrollCorrection, getDragLayerPosition } =
         props;
-    const { gridColumnHeightInPx } = item;
+    const { gridColumnHeightInPx, layoutPath } = item;
+    const firstInContainer = isFirstInContainer(layoutPath);
+
     const sizeAndCoords = getSizeAndXCoords(
         item,
         initialOffset.x,
@@ -62,7 +66,15 @@ export function WidthResizerDragPreview(props: WidthResizerDragPreviewProps) {
 
     return (
         <div
-            className="s-resizer-drag-preview resizer-drag-preview gd-grid-layout-resizer-drag-preview gd-grid-layout-width-resizer-drag-preview"
+            className={cx(
+                "s-resizer-drag-preview",
+                "resizer-drag-preview",
+                "gd-grid-layout-resizer-drag-preview",
+                "gd-grid-layout-width-resizer-drag-preview",
+                {
+                    "gd-first-in-container": firstInContainer,
+                },
+            )}
             style={style}
         >
             <WidthResizer status="active" />

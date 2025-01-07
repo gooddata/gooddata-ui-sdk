@@ -1,6 +1,7 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { IWidget } from "@gooddata/sdk-model";
 import React, { useEffect, useMemo, useState } from "react";
+import cx from "classnames";
 
 import {
     resizeNestedLayoutItemWidth,
@@ -16,6 +17,7 @@ import { useDashboardDrag, useResizeHandlers, useResizeWidthItemStatus } from ".
 import { WidthResizer } from "./WidthResizer.js";
 import { useScreenSize } from "../../../dashboard/components/DashboardScreenSizeContext.js";
 import { useHoveredWidget } from "../../../dragAndDrop/HoveredWidgetContext.js";
+import { isFirstInContainer } from "../../../../_staging/layout/coordinates.js";
 
 export type WidthResizerHotspotProps = {
     item: IDashboardLayoutItemFacade<unknown>;
@@ -44,6 +46,7 @@ export function WidthResizerHotspot({
     const onMouseEnter = () => setResizerVisibility(true);
     const onMouseLeave = () => setResizerVisibility(false);
     const layoutPath = item.index();
+    const firstInContainer = isFirstInContainer(layoutPath);
 
     const currentWidth = item.sizeForScreen(screen)!.gridWidth;
     const minLimit = getMinWidth(widget, insightsMap, screen);
@@ -103,7 +106,11 @@ export function WidthResizerHotspot({
     }
 
     return (
-        <div className="dash-width-resizer-container">
+        <div
+            className={cx("dash-width-resizer-container", {
+                "gd-first-in-container": firstInContainer,
+            })}
+        >
             {status === "default" ? (
                 <div className="dash-width-resizer-hotspot s-dash-width-resizer-hotspot">
                     {<WidthResizer status={status} />}

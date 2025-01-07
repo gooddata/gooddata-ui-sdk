@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 @use "sass:color";
 @use "variables";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
@@ -6,12 +6,12 @@
 .gd-dashboard-nested-layout-widget {
     .gd-dashboard-nested-layout-content.dash-item-content {
         border-radius: 0;
-        padding: 10px;
+        padding: 19px 10px 18px 0;
     }
     & .is-selectable {
         &.gd-dashboard-nested-layout-content.dash-item-content:not(.is-selected):hover,
         &.gd-dashboard-nested-layout-content.dash-item-content.is-dragging-widget {
-            border-style: dashed;
+            border-style: solid;
         }
         &.dash-item-content:not(.is-selected):hover
             > .gd-dashboard-nested-layout-widget-visualization-content:first-child
@@ -70,10 +70,6 @@
     }
     & > .gd-dashboard-nested-layout-tab__text {
         z-index: 1;
-        margin-left: 0;
-        transition: margin 300ms ease-out;
-    }
-    &:hover > .gd-dashboard-nested-layout-tab__text {
         margin-left: 11px;
     }
 }
@@ -91,6 +87,9 @@
         height: 100%;
         margin: 0;
         align-content: center;
+    }
+    .drag-info-placeholder {
+        padding: 0 0 0 10px;
     }
 }
 

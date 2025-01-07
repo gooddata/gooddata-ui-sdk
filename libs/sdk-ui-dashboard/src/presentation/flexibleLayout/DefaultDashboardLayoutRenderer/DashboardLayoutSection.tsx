@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 import flatMap from "lodash/flatMap.js";
 import React, { useMemo } from "react";
@@ -69,7 +69,8 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
         parentLayoutItemSize,
         parentLayoutPath,
     } = props;
-    const renderProps = { section, renderMode, parentLayoutItemSize, parentLayoutPath };
+    const showBorders = parentLayoutPath === undefined || parentLayoutPath.length === 0;
+    const renderProps = { section, renderMode, parentLayoutItemSize, parentLayoutPath, showBorders };
     const screen = useScreenSize();
 
     const items = useMemo(() => {
