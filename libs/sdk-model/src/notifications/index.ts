@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import { IExportResult } from "../exports/index.js";
 import { IAutomationDetails } from "../automations/index.js";
 import isEmpty from "lodash/isEmpty.js";
@@ -236,6 +236,10 @@ export interface IWebhookAutomationInfo {
      * URL of the dashboard, or custom dashboard URL (if configured on automation).
      */
     dashboardURL: string;
+    /**
+     * Indicates whether the dashboard URL is custom.
+     */
+    isCustomDashboardURL?: boolean;
 }
 
 /**
