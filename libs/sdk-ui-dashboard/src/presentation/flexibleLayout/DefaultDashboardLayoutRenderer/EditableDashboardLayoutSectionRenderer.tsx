@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 
 import { selectActiveSection, useDashboardSelector } from "../../../model/index.js";
@@ -35,6 +35,7 @@ export const EditableDashboardLayoutSectionRenderer: IDashboardLayoutSectionRend
     isHidden,
     section,
     parentLayoutItemSize,
+    showBorders,
 }) => {
     const style = isHidden ? isHiddenStyle : defaultStyle;
     const { status, renderBottomBorder } = useBorderStatus(section);
@@ -45,13 +46,17 @@ export const EditableDashboardLayoutSectionRenderer: IDashboardLayoutSectionRend
             className={className}
             style={style}
         >
-            <DashboardLayoutSectionBorder
-                status={status}
-                renderBottomBorder={renderBottomBorder}
-                itemSize={parentLayoutItemSize}
-            >
-                {children}
-            </DashboardLayoutSectionBorder>
+            {showBorders ? (
+                <DashboardLayoutSectionBorder
+                    status={status}
+                    renderBottomBorder={renderBottomBorder}
+                    itemSize={parentLayoutItemSize}
+                >
+                    {children}
+                </DashboardLayoutSectionBorder>
+            ) : (
+                children
+            )}
         </GridLayoutElement>
     );
 };

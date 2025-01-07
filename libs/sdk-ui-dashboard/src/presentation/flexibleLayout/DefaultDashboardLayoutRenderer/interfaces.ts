@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import {
     IDashboardLayout,
@@ -88,6 +88,11 @@ export interface IDashboardLayoutSectionRenderProps<TWidget = IDashboardWidget> 
      * Is hidden section? Use this to hide the section without remounting it.
      */
     isHidden?: boolean;
+
+    /**
+     * Is section with borders. Default true.
+     */
+    showBorders?: boolean;
 }
 
 /**

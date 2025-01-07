@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { IDashboardLayout } from "@gooddata/sdk-model";
 import cx from "classnames";
 import isEqual from "lodash/isEqual.js";
@@ -129,7 +129,8 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
     const shouldRenderSectionHotspot =
         layout.sections.length > 1 ||
         (layout.sections.length === 1 &&
-            layout.sections[0].items.some((i) => !isInitialPlaceholderWidget(i.widget)));
+            layout.sections[0].items.some((i) => !isInitialPlaceholderWidget(i.widget)) &&
+            !isNestedLayout);
 
     return (
         <GridLayoutElement

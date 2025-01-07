@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
@@ -31,9 +31,12 @@ export const DashboardLayoutEditSectionHeader: React.FC<IDashboardLayoutSectionH
     if (isEmptySection) {
         return null;
     }
+    const path = section.index();
     return (
         <div className="gd-fluid-layout-row-header s-fluid-layout-row-header">
-            <SectionHotspot index={section.index()} targetPosition="above" itemSize={parentLayoutItemSize} />
+            {path.parent && path.parent?.length >= 0 ? null : (
+                <SectionHotspot index={path} targetPosition="above" itemSize={parentLayoutItemSize} />
+            )}
             <div
                 className={cx({
                     "gd-fluid-layout-row-header-container--with-headers": areSectionHeadersEnabled,

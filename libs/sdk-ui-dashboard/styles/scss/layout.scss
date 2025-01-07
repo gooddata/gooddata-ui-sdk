@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
 @use "@gooddata/sdk-ui-kit/styles/scss/typo";
@@ -450,7 +450,6 @@ $gd-dashboards-section-description-color: var(
         }
     }
 
-    .gd-fluid-layout-row-header-container--no-headers,
     .gd-fluid-layout-row-header-container--with-headers {
         margin-top: 16px;
     }
