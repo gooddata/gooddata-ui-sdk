@@ -102,6 +102,7 @@ export {
     selectEnableExternalRecipients,
     selectEnableDrilledTooltip,
     selectAutomationId,
+    selectEnableDashboardDescriptionDynamicHeight,
 } from "./config/configSelectors.js";
 export type { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {

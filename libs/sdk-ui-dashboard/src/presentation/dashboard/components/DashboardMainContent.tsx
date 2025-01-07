@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { forwardRef, RefObject, useEffect } from "react";
 import cx from "classnames";
 
@@ -8,6 +8,7 @@ import {
     useWidgetSelection,
     useDashboardSelector,
     selectEnableFlexibleLayout,
+    selectEnableDashboardDescriptionDynamicHeight,
 } from "../../../model/index.js";
 import { useDashboardDrop } from "../../dragAndDrop/index.js";
 import { DashboardLayout } from "../../layout/index.js";
@@ -21,6 +22,7 @@ export const DashboardMainContent = forwardRef(function DashboardMainContent(_: 
     const onFiltersChange = useDispatchDashboardCommand(changeFilterContextSelection);
     const { deselectWidgets } = useWidgetSelection();
     const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
+    const isDescriptionDynamicHeight = useDashboardSelector(selectEnableDashboardDescriptionDynamicHeight);
     const useWidgetDragHoverHandlers = isFlexibleLayoutEnabled
         ? useFlexibleWidgetDragHoverHandlers
         : useFluidWidgetDragHoverHandlers;
@@ -51,6 +53,7 @@ export const DashboardMainContent = forwardRef(function DashboardMainContent(_: 
 
     const classNames = cx("gd-flex-container", "root-flex-maincontent", {
         "gd-grid-layout": isFlexibleLayoutEnabled,
+        "gd-auto-resized-dashboard-descriptions": isFlexibleLayoutEnabled || isDescriptionDynamicHeight,
     });
 
     return (
