@@ -661,7 +661,7 @@
                 ]
             },
             "WebhookAutomationInfo": {
-                "required": ["dashboardURL", "id"],
+                "required": ["dashboardURL", "id", "isCustomDashboardURL"],
                 "type": "object",
                 "properties": {
                     "id": {
@@ -672,6 +672,9 @@
                     },
                     "dashboardURL": {
                         "type": "string"
+                    },
+                    "isCustomDashboardURL": {
+                        "type": "boolean"
                     }
                 }
             },
