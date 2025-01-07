@@ -1,10 +1,10 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import {
     ComparisonOperatorEnum,
     RelativeOperatorEnum,
     ArithmeticMeasureOperatorEnum,
     JsonApiAutomationIn,
-    JsonApiAutomationOutAttributesAlert,
+    JsonApiAutomationPatchAttributesAlert,
 } from "@gooddata/api-client-tiger";
 import {
     IAutomationAlert,
@@ -115,7 +115,7 @@ export function convertAutomation(
     };
 }
 
-const convertAlert = (alert: IAutomationAlert): JsonApiAutomationOutAttributesAlert => {
+const convertAlert = (alert: IAutomationAlert): JsonApiAutomationPatchAttributesAlert => {
     const { condition, execution } = alert;
 
     const { filters: convertedFilters } = convertAfmFilters(execution.measures, execution.filters);

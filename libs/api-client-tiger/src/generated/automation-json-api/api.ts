@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 /* eslint-disable */
 /**
@@ -610,6 +610,12 @@ export interface WebhookAutomationInfo {
      * @memberof WebhookAutomationInfo
      */
     dashboardURL: string;
+    /**
+     *
+     * @type {boolean}
+     * @memberof WebhookAutomationInfo
+     */
+    isCustomDashboardURL: boolean;
 }
 /**
  *
