@@ -162,6 +162,9 @@ module.exports = async (env, argv) => {
                 static: {
                     directory: path.join(__dirname, "build"),
                 },
+                client: {
+                    overlay: false, // disable full screen overlay
+                },
                 devMiddleware: {
                     stats: "errors-only",
                 },
