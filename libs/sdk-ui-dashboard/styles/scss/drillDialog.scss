@@ -177,7 +177,6 @@ $description-width-mobile: 320px;
 
     &.gd-ff-drill-description {
         max-height: 100%;
-        overflow: hidden;
         flex-shrink: 1;
     }
 }
@@ -202,49 +201,51 @@ $description-width-mobile: 320px;
 .drill-dialog-insight-container-button {
     position: absolute;
     top: 10px;
-    left: 10px;
+    left: 0;
     z-index: zIndexes.$drill-dialog-description-button;
-
-    display: flex;
-    width: var(--gd-button-M);
-    height: var(--gd-button-M);
-    padding: var(--spacing-6px) var(--spacing-10px);
-    justify-content: center;
-    align-items: center;
-    gap: var(--spacing-5px);
-    flex-shrink: 0;
-
-    border-radius: var(--gd-button-borderRadius);
-    border: 1px solid var(--gd-palette-complementary-4);
-    background: var(--gd-palette-complementary-0);
-    cursor: pointer;
     transition: all 0.3s ease-in-out;
 
-    &.drill-dialog-insight-container-button--open {
-        border-radius: 3px;
-        border: 1px solid var(--gd-palette-complementary-5);
-        background: var(--gd-palette-complementary-3);
+    &.gd-button-icon-only {
+        width: 32px;
+        height: 32px;
+        padding-right: 0;
 
-        /* Shadow/Button/Secondary/Active */
-        box-shadow: 0 2px 0 0 var(--gd-palette-complementary-9-t85) inset;
+        span {
+            display: block;
+            margin: auto;
+            text-align: center;
+        }
+
+        &:hover span svg path {
+            fill: var(--gd-palette-primary-base);
+        }
+
+        span svg path {
+            fill: var(--gd-palette-complementary-7);
+        }
+    }
+
+    &.drill-dialog-insight-container-button--open {
+        left: 10px;
     }
 
     &.drill-dialog-insight-container-button--open.drill-dialog-insight-container-button--mobile {
-        left: $description-width-mobile + 10px;
+        left: min($description-width-mobile + 10px, calc(100vw - 60px));
     }
 }
 
 .drill-dialog-insight-container-description {
     width: 0;
-    height: 100%;
+    margin-top: -20px;
+    height: calc(100% + 40px);
     flex-shrink: 0;
-    border-right: 1px solid var(--gd-palette-complementary-3);
     overflow: hidden;
     overflow-y: auto;
     transition: width 0.3s ease-in-out;
     position: relative;
 
     &.drill-dialog-insight-container-description--open {
+        border-right: 1px solid var(--gd-palette-complementary-3);
         width: $description-width;
 
         .drill-dialog-insight-container-description-content {
@@ -254,17 +255,22 @@ $description-width-mobile: 320px;
 
     &.drill-dialog-insight-container-description--open.drill-dialog-insight-container-description--mobile {
         width: $description-width-mobile;
+        max-width: calc(100vw - 70px);
 
         .drill-dialog-insight-container-description-content {
             width: $description-width-mobile;
+            max-width: calc(100vw - 70px);
         }
     }
 
     &.drill-dialog-insight-container-description--mobile {
+        margin-top: 0;
+        height: auto;
         background: var(--gd-palette-complementary-0);
         position: absolute;
+        top: -20px;
         left: 0;
-        bottom: 0;
+        bottom: -20px;
         z-index: zIndexes.$drill-dialog-description;
     }
 

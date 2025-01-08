@@ -8,6 +8,7 @@ import {
     IInsightWidgetDescriptionConfiguration,
 } from "@gooddata/sdk-model";
 import {
+    Button,
     FullScreenOverlay,
     Overlay,
     OverlayController,
@@ -218,16 +219,16 @@ function InsightDrillDialogDescriptionButton({
     const { formatMessage } = useIntl();
 
     return (
-        <div
-            className={cx("drill-dialog-insight-container-button", {
+        <Button
+            className={cx("gd-button-primary gd-button-icon-only drill-dialog-insight-container-button", {
+                "is-active": isOpen,
                 "drill-dialog-insight-container-button--open": isOpen,
                 "drill-dialog-insight-container-button--mobile": isMobileDevice,
             })}
             onClick={() => setIsOpen((open) => !open)}
-            aria-label={formatMessage({ id: "widget.options.description" })}
-        >
-            <UiIcon type="question" size={20} />
-        </div>
+            ariaLabel={formatMessage({ id: "widget.options.description" })}
+            value={<UiIcon type="question" size={18} />}
+        />
     );
 }
 
