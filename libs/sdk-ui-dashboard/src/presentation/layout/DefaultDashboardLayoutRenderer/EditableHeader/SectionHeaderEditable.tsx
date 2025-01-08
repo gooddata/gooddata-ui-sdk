@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React, { useCallback, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
@@ -19,12 +19,15 @@ import {
     uiActions,
     useDashboardDispatch,
     useDashboardSelector,
+    selectEnableDashboardDescriptionDynamicHeight,
 } from "../../../../model/index.js";
 
 const richTextTooltipAlignPoints: IAlignPoint[] = [
     { align: "bl tl", offset: { x: 6, y: 1 } },
     { align: "tl bl", offset: { x: 6, y: -1 } },
 ];
+
+const dynamicRichTextTooltipAlignPoints: IAlignPoint[] = [{ align: "tl bl", offset: { x: 6, y: -4 } }];
 
 export interface ISectionHeaderEditableProps {
     title: string;
@@ -34,6 +37,9 @@ export interface ISectionHeaderEditableProps {
 
 export function SectionHeaderEditable(props: ISectionHeaderEditableProps): JSX.Element {
     const useRichText = useDashboardSelector(selectEnableRichTextDescriptions);
+    const isDescriptionDynamicHeightEnabled = useDashboardSelector(
+        selectEnableDashboardDescriptionDynamicHeight,
+    );
     const description = useRichText ? props.description : getDescription(props.description);
     const title = getTitle(props.title);
     const { index } = props;
@@ -140,7 +146,12 @@ export function SectionHeaderEditable(props: ISectionHeaderEditableProps): JSX.E
                                 <div className="gd-editable-label-richtext-empty">{placeholder}</div>
                             }
                             showTooltip={isRichTextEditing}
-                            tooltipAlignPoints={richTextTooltipAlignPoints}
+                            tooltipAlignPoints={
+                                isDescriptionDynamicHeightEnabled
+                                    ? dynamicRichTextTooltipAlignPoints
+                                    : richTextTooltipAlignPoints
+                            }
+                            autoResize={isDescriptionDynamicHeightEnabled}
                         />
                     </div>
                 ) : (

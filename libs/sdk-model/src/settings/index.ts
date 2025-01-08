@@ -571,6 +571,11 @@ export interface ISettings {
      */
     enableDrilledTooltip?: boolean;
 
+    /**
+     * Enable dynamic height of the dashboard section description fields in dashboard edit mode.
+     */
+    enableDashboardDescriptionDynamicHeight?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

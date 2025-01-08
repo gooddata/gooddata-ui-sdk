@@ -847,3 +847,15 @@ export const selectEnableDrilledTooltip: DashboardSelector<boolean> = createSele
         return state.settings?.enableDrilledTooltip ?? true;
     },
 );
+
+/**
+ * Returns whether dynamic height of the dashboard section description fields in dashboard edit mode is enabled.
+ *
+ * @internal
+ */
+export const selectEnableDashboardDescriptionDynamicHeight: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableDashboardDescriptionDynamicHeight ?? false;
+    },
+);

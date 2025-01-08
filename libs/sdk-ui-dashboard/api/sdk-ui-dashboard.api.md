@@ -7649,6 +7649,9 @@ export const selectEnableComparisonInAlerting: DashboardSelector<boolean>;
 export const selectEnableCrossFilteringAliasTitles: DashboardSelector<boolean>;
 
 // @internal
+export const selectEnableDashboardDescriptionDynamicHeight: DashboardSelector<boolean>;
+
+// @internal
 export const selectEnableDrilledTooltip: DashboardSelector<boolean>;
 
 // @internal
