@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, select, put, all } from "redux-saga/effects";
 import { batchActions } from "redux-batched-actions";
@@ -16,8 +16,9 @@ import { automationsActions } from "../../store/automations/index.js";
 import { selectDashboardId } from "../../store/meta/metaSelectors.js";
 import { selectCurrentUser } from "../../store/user/userSelectors.js";
 import { selectCanManageWorkspace } from "../../store/permissions/permissionsSelectors.js";
+import { automationsRefreshed } from "../../events/scheduledEmail.js";
 
-export function* refreshAutomationsHandlers(ctx: DashboardContext, _cmd: RefreshAutomations): SagaIterator {
+export function* refreshAutomationsHandlers(ctx: DashboardContext, cmd: RefreshAutomations): SagaIterator {
     const dashboardId: ReturnType<typeof selectDashboardId> = yield select(selectDashboardId);
     const user: ReturnType<typeof selectCurrentUser> = yield select(selectCurrentUser);
     const enableScheduling: ReturnType<typeof selectEnableScheduling> = yield select(selectEnableScheduling);
@@ -52,6 +53,12 @@ export function* refreshAutomationsHandlers(ctx: DashboardContext, _cmd: Refresh
         );
     } catch (e) {
         yield put(automationsActions.setAutomationsLoading(false));
-        yield put(automationsActions.setAutomationsError(convertError(e)));
+
+        batchActions([
+            automationsActions.setAutomationsLoading(false),
+            automationsActions.setAutomationsError(convertError(e)),
+        ]);
     }
+
+    return automationsRefreshed(ctx, cmd.correlationId);
 }

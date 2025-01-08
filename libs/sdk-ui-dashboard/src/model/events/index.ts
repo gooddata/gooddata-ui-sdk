@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import {
     DashboardInitialized,
     DashboardDeinitialized,
@@ -78,7 +78,11 @@ import {
     DashboardWidgetExecutionFailed,
 } from "./widget.js";
 import { DashboardAlertCreated, DashboardAlertSaved } from "./alerts.js";
-import { DashboardScheduledEmailCreated, DashboardScheduledEmailSaved } from "./scheduledEmail.js";
+import {
+    DashboardScheduledEmailCreated,
+    DashboardScheduledEmailSaved,
+    DashboardAutomationsRefreshed,
+} from "./scheduledEmail.js";
 import { DashboardUserInteractionTriggered } from "./userInteraction.js";
 import { Action } from "@reduxjs/toolkit";
 import {
@@ -392,8 +396,13 @@ export type {
     DashboardScheduledEmailCreated,
     DashboardScheduledEmailCreatedPayload,
     DashboardScheduledEmailSaved,
+    DashboardAutomationsRefreshed,
 } from "./scheduledEmail.js";
-export { isDashboardScheduledEmailCreated, isDashboardScheduledEmailSaved } from "./scheduledEmail.js";
+export {
+    isDashboardScheduledEmailCreated,
+    isDashboardScheduledEmailSaved,
+    isDashboardAutomationsRefreshed,
+} from "./scheduledEmail.js";
 
 export type {
     DashboardDrillRequested,
@@ -573,6 +582,7 @@ export type DashboardEvents =
     | DashboardAlertSaved
     | DashboardScheduledEmailCreated
     | DashboardScheduledEmailSaved
+    | DashboardAutomationsRefreshed
     //alpha
     | DashboardDrillDownResolved
     | DashboardDrillToAttributeUrlResolved
