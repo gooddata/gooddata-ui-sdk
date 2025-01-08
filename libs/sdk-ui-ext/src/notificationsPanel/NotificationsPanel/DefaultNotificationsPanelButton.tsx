@@ -1,19 +1,21 @@
-// (C) 2024 GoodData Corporation
-import React, { RefObject } from "react";
+// (C) 2024-2025 GoodData Corporation
+import React from "react";
 import cx from "classnames";
 import { UiIcon } from "@gooddata/sdk-ui-kit";
 import { bem } from "../bem.js";
 
-const { b, e } = bem("gd-ui-ext-open-notifications-button");
+const { b, e } = bem("gd-ui-ext-notifications-panel-button");
 
 /**
- * @alpha
+ * OpenNotificationsPanelButton component props.
+ *
+ * @public
  */
-export interface IOpenNotificationsPanelButtonComponentProps {
+export interface INotificationsPanelButtonComponentProps {
     /**
      * Ref to the button element - is required for proper alignment of the notification panel.
      */
-    buttonRef: RefObject<HTMLElement | null>;
+    buttonRef: React.RefObject<HTMLButtonElement>;
 
     /**
      * Opens the notification panel.
@@ -44,15 +46,15 @@ export interface IOpenNotificationsPanelButtonComponentProps {
 /**
  * @internal
  */
-export function DefaultOpenNotificationsPanelButton({
+export function DefaultNotificationsPanelButton({
     buttonRef,
     isNotificationPanelOpen,
     toggleNotificationPanel,
     hasUnreadNotifications,
-}: IOpenNotificationsPanelButtonComponentProps) {
+}: INotificationsPanelButtonComponentProps) {
     return (
         <button
-            ref={buttonRef as RefObject<HTMLButtonElement>}
+            ref={buttonRef}
             className={cx(`gd-button gd-header-button ${b({ isOpen: isNotificationPanelOpen })}`)}
             onClick={toggleNotificationPanel}
         >

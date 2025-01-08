@@ -32,6 +32,7 @@ import { IUser } from '@gooddata/sdk-model';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { LocalIdRef } from '@gooddata/sdk-model';
 import { MessageDescriptor } from 'react-intl';
+import { MutableRefObject } from 'react';
 import { ObjRef } from '@gooddata/sdk-model';
 import { OverlayController as OverlayController_2 } from './OverlayController.js';
 import { PureComponent } from 'react';
@@ -3331,11 +3332,17 @@ export interface IOverlayProps<T> {
     closeOnParentScroll?: boolean;
     // (undocumented)
     containerClassName?: string;
+    // (undocumented)
+    height?: number | string;
     ignoreClicksOn?: T[];
     // (undocumented)
     ignoreClicksOnByClass?: string[];
     // (undocumented)
     isModal?: boolean;
+    // (undocumented)
+    maxHeight?: number | string;
+    // (undocumented)
+    maxWidth?: number | string;
     // (undocumented)
     onAlign?: (optimalAlign: Alignment) => void;
     // (undocumented)
@@ -3350,6 +3357,8 @@ export interface IOverlayProps<T> {
     resizeObserverThreshold?: number;
     // (undocumented)
     shouldCloseOnClick?: (e: Event) => boolean;
+    // (undocumented)
+    width?: number | string;
     // (undocumented)
     zIndex?: number | undefined;
 }
@@ -4932,14 +4941,49 @@ export interface UiIconProps {
 }
 
 // @internal (undocumented)
-export function UiSkeleton({ itemsCount, itemHeight, itemWidth, gap, direction, }: UiSkeletonProps): React_2.JSX.Element;
+export function UiPagedVirtualList<T>(props: UiPagedVirtualListProps<T>): React_2.JSX.Element;
+
+// @internal (undocumented)
+export interface UiPagedVirtualListProps<T> {
+    // (undocumented)
+    children: (item: T) => React_2.ReactNode;
+    // (undocumented)
+    hasNextPage?: boolean;
+    // (undocumented)
+    isLoading?: boolean;
+    // (undocumented)
+    itemHeight: number;
+    // (undocumented)
+    itemPadding: number;
+    // (undocumented)
+    items?: T[];
+    // (undocumented)
+    itemsGap: number;
+    // (undocumented)
+    loadNextPage?: () => void;
+    // (undocumented)
+    maxHeight: number;
+    // (undocumented)
+    SkeletonItem?: React_2.ComponentType<UiPagedVirtualListSkeletonItemProps>;
+    // (undocumented)
+    skeletonItemsCount: number;
+}
+
+// @internal (undocumented)
+export interface UiPagedVirtualListSkeletonItemProps {
+    // (undocumented)
+    itemHeight: number;
+}
+
+// @internal (undocumented)
+export function UiSkeleton({ itemsCount, itemHeight, itemWidth, itemsGap, direction, }: UiSkeletonProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export interface UiSkeletonProps {
     direction?: "row" | "column";
-    gap?: number;
     itemHeight?: (number | string) | (number | string)[];
     itemsCount?: number;
+    itemsGap?: number;
     itemWidth?: (number | string) | (number | string)[];
 }
 
@@ -4965,6 +5009,13 @@ T,
 T,
 (value: T) => void
 ];
+
+// @internal (undocumented)
+export function useElementSize(): {
+    ref: MutableRefObject<HTMLElement>;
+    height: number;
+    width: number;
+};
 
 // @internal
 export const useHeaderSearch: () => HeaderSearchContext;

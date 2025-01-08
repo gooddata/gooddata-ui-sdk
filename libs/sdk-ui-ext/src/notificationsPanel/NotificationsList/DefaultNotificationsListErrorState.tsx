@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import React from "react";
 import { bem } from "../bem.js";
 import { GoodDataSdkError } from "@gooddata/sdk-ui";
@@ -7,9 +7,14 @@ import { defineMessages, useIntl } from "react-intl";
 const { b } = bem("gd-ui-ext-notifications-list-error-state");
 
 /**
- * @alpha
+ * Props for the NotificationsListErrorState component.
+ *
+ * @public
  */
 export interface INotificationsListErrorStateComponentProps {
+    /**
+     * Error to display.
+     */
     error?: GoodDataSdkError;
 }
 
@@ -20,7 +25,9 @@ const messages = defineMessages({
 });
 
 /**
- * @internal
+ * Default implementation of the NotificationsListErrorState component.
+ *
+ * @public
  */
 export function DefaultNotificationsListErrorState({ error }: INotificationsListErrorStateComponentProps) {
     const intl = useIntl();

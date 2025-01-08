@@ -2708,9 +2708,6 @@ importers:
       '@gooddata/util':
         specifier: workspace:*
         version: link:../util
-      '@tanstack/react-virtual':
-        specifier: ^3.11.1
-        version: 3.11.1(react-dom@18.2.0)(react@18.2.0)
       classnames:
         specifier: ^2.3.1
         version: 2.3.2
@@ -2747,6 +2744,9 @@ importers:
       react-lines-ellipsis:
         specifier: ^0.15.0
         version: 0.15.4(react-dom@18.2.0)(react@18.2.0)
+      react-loading-skeleton:
+        specifier: ^3.4.0
+        version: 3.4.0(react@18.2.0)
       react-measure:
         specifier: ^2.5.2
         version: 2.5.2(react-dom@18.2.0)(react@18.2.0)
@@ -3537,6 +3537,9 @@ importers:
       '@gooddata/util':
         specifier: workspace:*
         version: link:../util
+      '@tanstack/react-virtual':
+        specifier: ^3.11.1
+        version: 3.11.1(react-dom@18.2.0)(react@18.2.0)
       classnames:
         specifier: ^2.3.1
         version: 2.3.2
@@ -4377,7 +4380,7 @@ importers:
         version: 5.62.0(eslint@8.55.0)(typescript@5.3.3)
       babel-loader:
         specifier: ^8.0.5
-        version: 8.3.0(@babel/core@7.23.6)(webpack@4.47.0)
+        version: 8.3.0(@babel/core@7.23.6)(webpack@5.89.0)
       babel-plugin-require-context-hook:
         specifier: ^1.0.0
         version: 1.0.0

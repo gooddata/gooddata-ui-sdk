@@ -1,26 +1,48 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { UnexpectedSdkError, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { UnexpectedSdkError, useWorkspace } from "@gooddata/sdk-ui";
 
 import { useCallback, useMemo, useState } from "react";
 import { useOrganization } from "../@staging/OrganizationContext/OrganizationContext.js";
 import { useFetchNotifications } from "./useFetchNotifications.js";
 
 /**
- * @alpha
+ * Hook for fetching all and unread notifications.
+ *
+ * @public
  */
 export interface IUseNotificationsProps {
+    /**
+     * Workspace to fetch notifications from.
+     *
+     * - If not provided, the workspace from WorkspaceProvider is used.
+     * - If not provided and there is no WorkspaceProvider, notifications will be loaded from all workspaces.
+     */
     workspace?: string;
+
+    /**
+     * Backend to fetch notifications from.
+     */
     backend?: IAnalyticalBackend;
+
+    /**
+     * Refresh interval in milliseconds.
+     */
     refreshInterval: number;
+
+    /**
+     * Number of items per page.
+     */
+    itemsPerPage: number;
 }
 
 /**
- * @alpha
+ * @public
  */
-export function useNotifications({ workspace, refreshInterval }: IUseNotificationsProps) {
-    const effectiveWorkspace = useWorkspaceStrict(workspace, "useNotifications");
+export function useNotifications({ workspace, refreshInterval, itemsPerPage }: IUseNotificationsProps) {
+    const effectiveWorkspace = useWorkspace(workspace);
+
     const {
         notifications,
         hasNextPage: notificationsHasNextPage,
@@ -31,6 +53,7 @@ export function useNotifications({ workspace, refreshInterval }: IUseNotificatio
     } = useFetchNotifications({
         workspace: effectiveWorkspace,
         refreshInterval,
+        itemsPerPage,
     });
     const {
         error: unreadNotificationsError,
@@ -44,6 +67,7 @@ export function useNotifications({ workspace, refreshInterval }: IUseNotificatio
         workspace: effectiveWorkspace,
         readStatus: "unread",
         refreshInterval,
+        itemsPerPage,
     });
 
     const { result: organizationService, status: organizationStatus } = useOrganization();
@@ -129,11 +153,13 @@ export function useNotifications({ workspace, refreshInterval }: IUseNotificatio
         notificationsError,
         notificationsHasNextPage,
         notificationsLoadNextPage,
+        notificationsReset,
         unreadNotifications: effectiveUnreadNotifications,
         unreadNotificationsStatus: unreadNotificationsStatus,
         unreadNotificationsError: unreadNotificationsError,
         unreadNotificationsHasNextPage: unreadNotificationsHasNextPage,
         unreadNotificationsLoadNextPage: unreadNotificationsLoadNextPage,
+        unreadNotificationsReset,
         unreadNotificationsCount: Math.max(0, unreadNotificationsCount - markedAsReadNotifications.length),
         markNotificationAsRead,
         markAllNotificationsAsRead,

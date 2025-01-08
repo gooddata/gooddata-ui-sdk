@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import { IAlertNotification } from "@gooddata/sdk-model";
 import React from "react";
 import { DetailsDialog } from "../components/DetailsDialog.js";
@@ -7,6 +7,9 @@ import { useIntl, defineMessages } from "react-intl";
 
 const { b, e } = bem("gd-ui-ext-notification-triggers-detail-dialog");
 
+/**
+ * @internal
+ */
 interface INotificationTriggersDetailDialogProps {
     notification: IAlertNotification;
     onClose: () => void;
@@ -22,7 +25,7 @@ const messages = defineMessages({
 });
 
 /**
- * @alpha
+ * @internal
  */
 export function NotificationTriggersDetailDialog({
     notification,

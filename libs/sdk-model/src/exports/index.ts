@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { invariant } from "ts-invariant";
 import { Identifier } from "../objRef/index.js";
@@ -191,7 +191,7 @@ export function exportDefinitionUpdated(
 /**
  * Export result.
  *
- * @alpha
+ * @public
  */
 export interface IExportResult {
     /**
@@ -228,6 +228,6 @@ export interface IExportResult {
 /**
  * Export result status.
  *
- * @alpha
+ * @public
  */
 export type IExportResultStatus = "SUCCESS" | "ERROR" | "INTERNAL_ERROR" | "TIMEOUT";

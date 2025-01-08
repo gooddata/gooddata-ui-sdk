@@ -1,12 +1,23 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React, { useEffect } from "react";
-import { UiSkeleton } from "@gooddata/sdk-ui-kit";
 import { useVirtualizer } from "@tanstack/react-virtual";
+import { UiSkeleton } from "../UiSkeleton/UiSkeleton.js";
+import { bem } from "../@utils/bem.js";
 
-import { bem } from "../bem.js";
+const { b, e } = bem("gd-ui-kit-paged-virtual-list");
 
-export interface IPagedVirtualListProps<T> {
+/**
+ * @internal
+ */
+export interface UiPagedVirtualListSkeletonItemProps {
+    itemHeight: number;
+}
+
+/**
+ * @internal
+ */
+export interface UiPagedVirtualListProps<T> {
     maxHeight: number;
     items?: T[];
     itemHeight: number;
@@ -17,12 +28,14 @@ export interface IPagedVirtualListProps<T> {
     loadNextPage?: () => void;
     isLoading?: boolean;
     children: (item: T) => React.ReactNode;
+    SkeletonItem?: React.ComponentType<UiPagedVirtualListSkeletonItemProps>;
 }
 
-const { b, e } = bem("gd-ui-ext-virtual-list");
-
-export function PagedVirtualList<T>(props: IPagedVirtualListProps<T>) {
-    const { items, itemHeight, itemsGap, itemPadding, children } = props;
+/**
+ * @internal
+ */
+export function UiPagedVirtualList<T>(props: UiPagedVirtualListProps<T>) {
+    const { SkeletonItem = UiSkeleton, items, itemHeight, itemsGap, itemPadding, children } = props;
 
     const { itemsCount, scrollContainerRef, height, hasScroll, rowVirtualizer, virtualItems } =
         useVirtualList(props);
@@ -50,9 +63,6 @@ export function PagedVirtualList<T>(props: IPagedVirtualListProps<T>) {
                         const isSkeletonItem = virtualRow.index > itemsCount - 1;
 
                         const style: React.CSSProperties = {
-                            position: "absolute",
-                            top: 0,
-                            left: 0,
                             width: `calc(100% + ${hasScroll ? "10px" : "0px"})`,
                             height: `${virtualRow.size}px`,
                             transform: `translateY(${virtualRow.start}px)`,
@@ -61,12 +71,13 @@ export function PagedVirtualList<T>(props: IPagedVirtualListProps<T>) {
                         };
 
                         return (
-                            <div key={virtualRow.index} style={style}>
+                            <div key={virtualRow.index} className={e("item")} style={style}>
                                 {isSkeletonItem ? (
-                                    <UiSkeleton itemHeight={itemHeight} key={virtualRow.index} />
+                                    <SkeletonItem key={virtualRow.index} itemHeight={itemHeight} />
                                 ) : (
                                     children(item!)
                                 )}
+                                <div className={e("gap")} style={{ height: itemsGap }} />
                             </div>
                         );
                     })}
@@ -76,7 +87,7 @@ export function PagedVirtualList<T>(props: IPagedVirtualListProps<T>) {
     );
 }
 
-function useVirtualList<T>(props: IPagedVirtualListProps<T>) {
+function useVirtualList<T>(props: UiPagedVirtualListProps<T>) {
     const {
         items,
         itemHeight,
@@ -99,6 +110,7 @@ function useVirtualList<T>(props: IPagedVirtualListProps<T>) {
         renderItemsCount = skeletonItemsCount;
     }
 
+    //
     const realHeight =
         itemsCount > 0
             ? (itemHeight + itemsGap) * itemsCount + itemsGap

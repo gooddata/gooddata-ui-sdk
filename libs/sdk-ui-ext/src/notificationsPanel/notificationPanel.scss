@@ -1,11 +1,16 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
+@use "@gooddata/sdk-ui-kit/styles/scss/overlay.scss";
+@use "@gooddata/sdk-ui-kit/styles/scss/tabs.scss";
+@use "@gooddata/sdk-ui-kit/src/@ui/UiIcon/UiIcon.scss";
+@use "@gooddata/sdk-ui-kit/src/@ui/UiButton/UiButton.scss";
+@use "@gooddata/sdk-ui-kit/src/@ui/UiSkeleton/UiSkeleton.scss";
+@use "@gooddata/sdk-ui-kit/src/@ui/UiPagedVirtualList/UiPagedVirtualList.scss";
 
 @use "./components/DetailsDialog.scss";
-@use "./components/VirtualList.scss";
 // Panel
 @use "./NotificationsPanel/DefaultNotificationsPanel.scss";
 @use "./NotificationsPanel/DefaultNotificationsPanelHeader.scss";
-@use "./NotificationsPanel/DefaultOpenNotificationsPanelButton.scss";
+@use "./NotificationsPanel/DefaultNotificationsPanelButton.scss";
 // List
 @use "./NotificationsList/DefaultNotificationsList.scss";
 @use "./NotificationsList/DefaultNotificationsListEmptyState.scss";

@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { createRef } from "react";
 import cx from "classnames";
 import { Portal } from "react-portal";
@@ -284,6 +284,10 @@ export class Overlay<T = HTMLElement> extends React.Component<IOverlayProps<T>, 
             top: alignment.top,
             zIndex: this.getZIndex(),
             visibility: this.isAligned() ? undefined : "hidden",
+            width: this.props.width,
+            height: this.props.height,
+            maxWidth: this.props.maxWidth,
+            maxHeight: this.props.maxHeight,
         };
     };
 

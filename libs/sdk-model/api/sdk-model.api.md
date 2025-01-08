@@ -17,7 +17,7 @@ export type AccessGranteeDetail = IUserAccess | IUserGroupAccess | IGranularUser
 // @public
 export type AccessGranularPermission = "VIEW" | "EDIT" | "SHARE";
 
-// @alpha
+// @public
 export type AlertDescriptionStatus = "SUCCESS" | "ERROR" | "INTERNAL_ERROR" | "TIMEOUT";
 
 // @public
@@ -192,7 +192,7 @@ export function attributeShowAllValues(attribute: IAttribute): boolean | undefin
 // @public
 export function attributeUri(attribute: IAttribute): string | undefined;
 
-// @alpha
+// @public
 export type AutomationNotificationType = "automation-task.completed" | "automation-task.limit-exceeded";
 
 // @public
@@ -647,7 +647,7 @@ export interface IAlertDefault {
     defaultTimezone: string;
 }
 
-// @alpha
+// @public
 export interface IAlertDescription {
     attribute?: string;
     condition: string;
@@ -665,7 +665,7 @@ export interface IAlertDescription {
     upperThreshold?: number;
 }
 
-// @alpha
+// @public
 export interface IAlertEvaluationRow {
     computedMetric?: IAlertEvaluationRowMetric;
     labelValue?: string;
@@ -673,13 +673,13 @@ export interface IAlertEvaluationRow {
     secondaryMetric?: IAlertEvaluationRowMetric;
 }
 
-// @alpha
+// @public
 export interface IAlertEvaluationRowMetric {
     formattedValue?: string;
     value: number;
 }
 
-// @alpha
+// @public
 export interface IAlertNotification extends INotificationBase {
     automationId?: string;
     details: IAlertNotificationDetails;
@@ -687,7 +687,7 @@ export interface IAlertNotification extends INotificationBase {
     notificationType: "alertNotification";
 }
 
-// @alpha
+// @public
 export interface IAlertNotificationDetails extends IAutomationNotificationDetailsBase {
     data: IWebhookMessageDataAlert;
 }
@@ -957,7 +957,7 @@ export interface IAutomationAlertTrigger {
     state: IAlertTriggerState;
 }
 
-// @alpha (undocumented)
+// @public (undocumented)
 export interface IAutomationDetails {
     message?: string;
     subject?: string;
@@ -992,7 +992,7 @@ export interface IAutomationMetadataObjectDefinition extends Omit<IAutomationMet
     type: "automation";
 }
 
-// @alpha
+// @public
 export interface IAutomationNotificationDetailsBase {
     timestamp: string;
     webhookMessageType: AutomationNotificationType;
@@ -1912,7 +1912,7 @@ export interface IExportOptions {
     mergeHeaders?: boolean;
 }
 
-// @alpha
+// @public
 export interface IExportResult {
     errorMessage?: string;
     exportId: string;
@@ -1922,7 +1922,7 @@ export interface IExportResult {
     traceId?: string;
 }
 
-// @alpha
+// @public
 export type IExportResultStatus = "SUCCESS" | "ERROR" | "INTERNAL_ERROR" | "TIMEOUT";
 
 // @public
@@ -2476,10 +2476,10 @@ export class InlineMeasureBuilder extends MeasureBuilderBase<IInlineMeasureDefin
 // @public
 export type InlineMeasureBuilderInput = string | IMeasure<IInlineMeasureDefinition>;
 
-// @alpha
+// @public
 export type INotification = IAlertNotification | IScheduleNotification | ITestNotification;
 
-// @alpha
+// @public
 export interface INotificationBase {
     createdAt: string;
     id: string;
@@ -3008,7 +3008,7 @@ export const isAbsoluteDateFilterPreset: (obj: unknown) => obj is IAbsoluteDateF
 // @public
 export function isAdhocMeasure(obj: unknown): obj is IMeasure<IMeasureDefinition>;
 
-// @alpha
+// @public
 export function isAlertNotification(notification: unknown): notification is IAlertNotification;
 
 // @alpha
@@ -3139,7 +3139,7 @@ export interface IScheduledMailBase {
 export interface IScheduledMailDefinition extends IScheduledMailBase, Partial<IDashboardObjectIdentity> {
 }
 
-// @alpha
+// @public
 export interface IScheduleNotification extends INotificationBase {
     automationId?: string;
     details: IScheduleNotificationDetails;
@@ -3147,7 +3147,7 @@ export interface IScheduleNotification extends INotificationBase {
     notificationType: "scheduleNotification";
 }
 
-// @alpha
+// @public
 export interface IScheduleNotificationDetails extends IAutomationNotificationDetailsBase {
     data: IWebhookMessageDataSchedule;
 }
@@ -3577,7 +3577,7 @@ export function isNegativeAttributeFilter(obj: unknown): obj is INegativeAttribu
 // @alpha
 export function isNegativeDashboardAttributeFilter(filter: IDashboardAttributeFilter): boolean;
 
-// @alpha
+// @public
 export function isNotification(notification: unknown): notification is INotification;
 
 // @beta
@@ -3651,7 +3651,7 @@ export function isRichTextWidget(obj: unknown): obj is IRichTextWidget;
 // @alpha
 export function isRichTextWidgetDefinition(obj: unknown): obj is IRichTextWidgetDefinition;
 
-// @alpha
+// @public
 export function isScheduleNotification(notification: unknown): notification is IScheduleNotification;
 
 // @public
@@ -3666,7 +3666,7 @@ export function isSingleSelectionFilter(filter: IDashboardAttributeFilter): bool
 // @alpha
 export function isTempFilterContext(obj: unknown): obj is ITempFilterContext;
 
-// @alpha
+// @public
 export function isTestNotification(notification: unknown): notification is ITestNotification;
 
 // @public
@@ -3744,14 +3744,14 @@ export interface ITempFilterContext {
     readonly uri: string;
 }
 
-// @alpha
+// @public
 export interface ITestNotification extends INotificationBase {
     details: ITestNotificationDetails;
     // (undocumented)
     notificationType: "testNotification";
 }
 
-// @alpha
+// @public
 export interface ITestNotificationDetails {
     message: string;
 }
@@ -4149,7 +4149,7 @@ export interface IVisualizationSwitcherWidgetBase extends IAnalyticalWidget {
 export interface IVisualizationSwitcherWidgetDefinition extends IVisualizationSwitcherWidgetBase, Partial<IDashboardObjectIdentity> {
 }
 
-// @alpha
+// @public
 export interface IWebhookAutomationInfo {
     dashboardURL: string;
     id: string;
@@ -4164,12 +4164,12 @@ export interface IWebhookDestinationConfiguration {
     token?: string;
 }
 
-// @alpha
+// @public
 export interface IWebhookMessageDataAlert extends IWebhookMessageDataBase {
     alert: IAlertDescription;
 }
 
-// @alpha
+// @public
 export interface IWebhookMessageDataBase {
     automation: IWebhookAutomationInfo;
     details?: IAutomationDetails;
@@ -4179,7 +4179,7 @@ export interface IWebhookMessageDataBase {
     visualExports?: IExportResult[];
 }
 
-// @alpha
+// @public
 export type IWebhookMessageDataSchedule = IWebhookMessageDataBase;
 
 // @beta
@@ -4619,7 +4619,7 @@ export type NotificationChannelAllowedRecipients = "creator" | "internal" | "ext
 // @beta
 export type NotificationChannelDestinationType = "webhook" | "smtp" | "inPlatform";
 
-// @alpha
+// @public
 export type NotificationType = "alertNotification" | "scheduleNotification" | "testNotification";
 
 // @public
@@ -4793,7 +4793,7 @@ export type VisualizationProperties = {
     [key: string]: any;
 };
 
-// @alpha
+// @public
 export type WebhookRecipient = {
     id: string;
     email: string;

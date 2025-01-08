@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import React, { useCallback } from "react";
 import { IAlertDescription, IAlertNotification, INotification } from "@gooddata/sdk-model";
 import { getDateTimeConfig, IDateConfig, UiIcon } from "@gooddata/sdk-ui-kit";
@@ -13,7 +13,7 @@ import { defineMessages, FormattedDate, FormattedMessage, FormattedTime, useIntl
  */
 export interface IAlertNotificationsProps {
     notification: IAlertNotification;
-    markAsRead: (id: string) => void;
+    markNotificationAsRead: (id: string) => void;
     onNotificationClick: (notification: IAlertNotification) => void;
 }
 
@@ -24,14 +24,14 @@ const { b, e } = bem("gd-ui-ext-notification");
  */
 export function AlertNotification({
     notification,
-    markAsRead,
+    markNotificationAsRead,
     onNotificationClick,
 }: IAlertNotificationsProps) {
     const intl = useIntl();
 
     const onMarkAsReadClick = (e: React.MouseEvent<HTMLSpanElement>) => {
         e.stopPropagation();
-        markAsRead(notification.id);
+        markNotificationAsRead(notification.id);
     };
 
     const clickNotification = useCallback(

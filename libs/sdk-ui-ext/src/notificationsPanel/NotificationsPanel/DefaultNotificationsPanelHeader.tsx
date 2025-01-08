@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
 import { ITab, Tabs, UiButton } from "@gooddata/sdk-ui-kit";
 import { bem } from "../bem.js";
@@ -6,7 +6,9 @@ import { INotificationsPanelView } from "../types.js";
 import { defineMessages, useIntl } from "react-intl";
 
 /**
- * @alpha
+ * Props for the NotificationsPanelHeader component.
+ *
+ * @public
  */
 export interface INotificationsPanelHeaderComponentProps {
     /**
@@ -32,18 +34,20 @@ export interface INotificationsPanelHeaderComponentProps {
     /**
      * The callback to mark all notifications as read.
      */
-    markAllAsRead: () => void;
+    markAllNotificationsAsRead: () => void;
 }
 
 const { b, e } = bem("gd-ui-ext-notifications-panel-header");
 
 /**
- * @internal
+ * Default implementation of the notifications panel header.
+ *
+ * @public
  */
 export function DefaultNotificationsPanelHeader({
     activeView,
     changeActiveView,
-    markAllAsRead,
+    markAllNotificationsAsRead,
     hasUnreadNotifications,
     unreadNotificationsCount,
 }: INotificationsPanelHeaderComponentProps) {
@@ -70,7 +74,7 @@ export function DefaultNotificationsPanelHeader({
                     variant="popout"
                     size="small"
                     label={intl.formatMessage(messages.markAllAsRead)}
-                    onClick={markAllAsRead}
+                    onClick={markAllNotificationsAsRead}
                     isDisabled={!hasUnreadNotifications}
                 />
             </div>

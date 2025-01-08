@@ -1,6 +1,6 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
-.gd-ui-ext-virtual-list {
+.gd-ui-kit-paged-virtual-list {
     display: flex;
     flex-direction: column;
     min-height: 0;
@@ -28,5 +28,17 @@
             background-color: var(--gd-palette-complementary-2);
             border-radius: 3px;
         }
+    }
+
+    &__item {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    &__gap {
+        width: 100%;
     }
 }

@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import { GoodDataSdkError, useCancelablePromise, useWorkspace } from "@gooddata/sdk-ui";
 import { useOrganization } from "../@staging/OrganizationContext/OrganizationContext.js";
 import { INotification } from "@gooddata/sdk-model";
@@ -6,18 +6,16 @@ import { useCallback, useEffect, useState } from "react";
 import { INotificationsQueryResult } from "@gooddata/sdk-backend-spi";
 
 /**
- * @alpha
+ * @internal
  */
 export interface IUseFetchNotificationsProps {
     /**
-     * Workspace to use.
-     * If not provided, it will be taken from the WorkspaceProvider context.
+     * Filter notifications by workspace.
      */
     workspace?: string;
 
     /**
      * Filter notifications by status.
-     * If not provided, all notifications will be fetched.
      */
     readStatus?: "unread" | "read";
 
@@ -25,15 +23,21 @@ export interface IUseFetchNotificationsProps {
      * Refresh interval in milliseconds.
      */
     refreshInterval: number;
+
+    /**
+     * Number of items to fetch per page.
+     */
+    itemsPerPage: number;
 }
 
 /**
- * @alpha
+ * @internal
  */
 export function useFetchNotifications({
     workspace,
     readStatus,
     refreshInterval,
+    itemsPerPage,
 }: IUseFetchNotificationsProps) {
     const effectiveWorkspace = useWorkspace(workspace);
     const { result: organizationService } = useOrganization();
@@ -63,10 +67,14 @@ export function useFetchNotifications({
             promise: !organizationService
                 ? null
                 : async () => {
-                      let query = organizationService.notifications().getNotificationsQuery().withSize(50);
+                      let query = organizationService.notifications().getNotificationsQuery();
 
                       if (effectiveWorkspace) {
                           query = query.withWorkspace(effectiveWorkspace);
+                      }
+
+                      if (itemsPerPage) {
+                          query = query.withSize(itemsPerPage);
                       }
 
                       if (page) {
@@ -80,7 +88,7 @@ export function useFetchNotifications({
                       return query.query();
                   },
             onSuccess: (result) => {
-                const hasNextPage = result.totalCount > (page + 1) * 50;
+                const hasNextPage = result.totalCount > (page + 1) * itemsPerPage;
                 setHasNextPage(hasNextPage);
                 setNotifications((prev) => [...prev, ...result.items]);
                 setTotalNotificationsCount(result.totalCount);
@@ -104,12 +112,12 @@ export function useFetchNotifications({
     }, []);
 
     return {
-        notifications,
         status,
         error,
         hasNextPage,
-        loadNextPage,
+        notifications,
         totalNotificationsCount,
+        loadNextPage,
         reset,
     };
 }

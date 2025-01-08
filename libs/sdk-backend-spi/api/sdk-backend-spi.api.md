@@ -887,7 +887,7 @@ export interface INotificationChannelsQuery {
 // @beta
 export type INotificationChannelsQueryResult = IPagedResource<INotificationChannelMetadataObject>;
 
-// @beta
+// @public
 export interface INotificationsQuery {
     query(): Promise<INotificationsQueryResult>;
     queryAll(): Promise<INotification[]>;
@@ -952,7 +952,7 @@ export interface IOrganizationNotificationChannelService {
     updateNotificationChannel(notificationChannel: INotificationChannelMetadataObject): Promise<INotificationChannelMetadataObject>;
 }
 
-// @beta
+// @public
 export interface IOrganizationNotificationService {
     getNotificationsQuery(): INotificationsQuery;
     markAllNotificationsAsRead(): Promise<void>;

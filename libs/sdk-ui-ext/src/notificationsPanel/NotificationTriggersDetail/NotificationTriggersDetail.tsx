@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import { IAlertDescription, IAlertNotification } from "@gooddata/sdk-model";
 import { alignConfigToAlignPoint, Overlay, UiButton } from "@gooddata/sdk-ui-kit";
 import React, { useRef, useState } from "react";
@@ -24,12 +24,15 @@ const messages = defineMessages({
     },
 });
 
+/**
+ * @internal
+ */
 export interface INotificationTriggerDetailProps {
     notification: IAlertNotification;
 }
 
 /**
- * @alpha
+ * @internal
  */
 export function NotificationTriggerDetail({ notification }: INotificationTriggerDetailProps) {
     const [isTriggersDialogOpen, setIsTriggersDialogOpen] = useState(false);
