@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 /**
  * This package provides various UI components used to build GoodData applications (such as buttons, icons, and so on).
  *
@@ -71,8 +71,6 @@ export { ComponentTable, propCombinationsFor } from "./@ui/@dev/ComponentTable.j
 export type { IComponentTableProps, IPropCombination } from "./@ui/@dev/ComponentTable.js";
 export type { StyleProps } from "./@ui/@utils/bem.js";
 export { bem, bemFactory } from "./@ui/@utils/bem.js";
-export { UiButton } from "./@ui/UiButton/UiButton.js";
-export type { UiButtonProps } from "./@ui/UiButton/UiButton.js";
 export type { SizeSmall, SizeMedium, SizeLarge } from "./@ui/@types/size.js";
 export type {
     VariantPrimary,
@@ -82,8 +80,16 @@ export type {
     VariantDanger,
 } from "./@ui/@types/variant.js";
 export type { ThemeColor } from "./@ui/@types/themeColors.js";
+export { useElementSize } from "./@ui/hooks/useElementSize.js";
 export type { IconType } from "./@ui/@types/icon.js";
+export { UiButton } from "./@ui/UiButton/UiButton.js";
+export type { UiButtonProps } from "./@ui/UiButton/UiButton.js";
 export { UiIcon } from "./@ui/UiIcon/UiIcon.js";
 export type { UiIconProps } from "./@ui/UiIcon/UiIcon.js";
 export { UiSkeleton } from "./@ui/UiSkeleton/UiSkeleton.js";
 export type { UiSkeletonProps } from "./@ui/UiSkeleton/UiSkeleton.js";
+export { UiPagedVirtualList } from "./@ui/UiPagedVirtualList/UiPagedVirtualList.js";
+export type {
+    UiPagedVirtualListProps,
+    UiPagedVirtualListSkeletonItemProps,
+} from "./@ui/UiPagedVirtualList/UiPagedVirtualList.js";

@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { IAlignPoint } from "../typings/positioning.js";
 import { Alignment, OverlayPositionType } from "../typings/overlay.js";
 
@@ -15,6 +15,10 @@ export interface IOverlayProps<T> {
     closeOnOutsideClick?: boolean;
     closeOnParentScroll?: boolean;
     closeOnEscape?: boolean;
+    width?: number | string;
+    maxWidth?: number | string;
+    height?: number | string;
+    maxHeight?: number | string;
 
     /**
      * Specifies a threshold for resizing the component when its content changes.

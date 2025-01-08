@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import React from "react";
 import { bem } from "../bem.js";
 import { INotificationsPanelView } from "../types.js";
@@ -7,9 +7,14 @@ import { defineMessages, useIntl } from "react-intl";
 const { b } = bem("gd-ui-ext-notifications-list-empty-state");
 
 /**
- * @alpha
+ * Props for the NotificationsListEmptyState component.
+ *
+ * @public
  */
 export interface INotificationsListEmptyStateComponentProps {
+    /**
+     * Active view of the notifications list.
+     */
     activeView: INotificationsPanelView;
 }
 
@@ -23,7 +28,9 @@ const messages = defineMessages({
 });
 
 /**
- * @internal
+ * Default implementation of the NotificationsListEmptyState component.
+ *
+ * @public
  */
 export function DefaultNotificationsListEmptyState({
     activeView,

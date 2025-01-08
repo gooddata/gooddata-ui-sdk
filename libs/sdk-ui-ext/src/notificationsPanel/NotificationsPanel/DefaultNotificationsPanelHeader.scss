@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 .gd-ui-ext-notifications-panel-header {
     display: flex;
@@ -7,6 +7,7 @@
     justify-content: space-between;
     padding-left: 15px;
     padding-right: 15px;
+    box-sizing: border-box;
 
     width: 100%;
 
@@ -27,5 +28,6 @@
         height: 23px;
         white-space: nowrap;
         border-bottom: 1px solid var(--gd-palette-complementary-3);
+        box-sizing: border-box;
     }
 }

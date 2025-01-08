@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import {
     areObjRefsEqual,
     filterObjRef,
@@ -14,7 +14,7 @@ import {
     IdentifierRef,
     filterLocalIdentifier,
 } from "@gooddata/sdk-model";
-import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { useBackendStrict, useCancelablePromise } from "@gooddata/sdk-ui";
 import { useMemo } from "react";
 import { translateAttributeFilter } from "./attributeFilterNaming.js";
 import { defineMessages, useIntl } from "react-intl";
@@ -50,17 +50,20 @@ function fetchLabels(backend: IAnalyticalBackend, workspaceId: string, filterDis
 }
 
 export function useNotificationsFilterDetail(notification: IAlertNotification) {
-    const workspaceId = useWorkspaceStrict(undefined, "NotificationTriggerDetails");
     const backend = useBackendStrict(undefined, "NotificationTriggerDetails");
     const intl = useIntl();
     const automationPromise = useCancelablePromise(
         {
             promise: async () => {
-                if (!notification.automationId) {
+                if (!notification.automationId || !notification.workspaceId) {
                     return null;
                 }
 
-                const automation = await fetchAutomation(backend, workspaceId, notification.automationId);
+                const automation = await fetchAutomation(
+                    backend,
+                    notification.workspaceId,
+                    notification.automationId,
+                );
 
                 const automationAlert = automation?.alert;
                 if (!automationAlert) {
@@ -91,17 +94,17 @@ export function useNotificationsFilterDetail(notification: IAlertNotification) {
                 const dashboardId = automation?.dashboard;
 
                 const dashboardPromise = dashboardId
-                    ? fetchDashboard(backend, workspaceId, dashboardId)
+                    ? fetchDashboard(backend, notification.workspaceId, dashboardId)
                     : Promise.resolve(null);
 
-                const labelsPromise = fetchLabels(backend, workspaceId, filterDisplayFormsRefs);
+                const labelsPromise = fetchLabels(backend, notification.workspaceId, filterDisplayFormsRefs);
 
                 const [dashboard, labels] = await Promise.all([dashboardPromise, labelsPromise]);
 
                 return { automation, dashboard, labels };
             },
         },
-        [notification.automationId, workspaceId],
+        [notification.automationId, notification.workspaceId],
     );
 
     const filtersInfo = useMemo(() => {

@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import React, { useMemo } from "react";
 import ReactLoadingSkeleton from "react-loading-skeleton";
 import { bem } from "../@utils/bem.js";
@@ -27,7 +27,7 @@ export interface UiSkeletonProps {
     /**
      * Gap between the items.
      */
-    gap?: number;
+    itemsGap?: number;
 
     /**
      * Whether to render the skeleton in a row or column.
@@ -42,7 +42,7 @@ export function UiSkeleton({
     itemsCount = 1,
     itemHeight = 24,
     itemWidth,
-    gap = 10,
+    itemsGap = 10,
     direction = "column",
 }: UiSkeletonProps) {
     const items = Array.from({ length: itemsCount }, (_, idx) => (
@@ -64,7 +64,7 @@ export function UiSkeleton({
         </div>
     ));
 
-    const style = useMemo(() => ({ gap }), [gap]);
+    const style = useMemo(() => ({ gap: itemsGap }), [itemsGap]);
 
     return (
         <div className={b({ direction })} style={style}>

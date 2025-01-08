@@ -1,8 +1,10 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { ILocale } from "@gooddata/sdk-ui";
 import { assertNever, INotification } from "@gooddata/sdk-model";
+import { Overlay, alignConfigToAlignPoint } from "@gooddata/sdk-ui-kit";
+import { invariant } from "ts-invariant";
 import { NotificationsProvider, useNotificationsContext } from "../data/NotificationsContext.js";
 import { OrganizationProvider } from "../@staging/OrganizationContext/OrganizationContext.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
@@ -11,9 +13,8 @@ import {
     INotificationsPanelHeaderComponentProps,
     DefaultNotificationsPanelHeader,
 } from "./DefaultNotificationsPanelHeader.js";
-import { IOpenNotificationsPanelButtonComponentProps } from "./DefaultOpenNotificationsPanelButton.js";
+import { INotificationsPanelButtonComponentProps } from "./DefaultNotificationsPanelButton.js";
 import { DefaultNotificationsPanel, INotificationsPanelComponentProps } from "./DefaultNotificationsPanel.js";
-import { Overlay, alignConfigToAlignPoint } from "@gooddata/sdk-ui-kit";
 import {
     DefaultNotificationsList,
     INotificationsListComponentProps,
@@ -27,19 +28,28 @@ import {
     INotificationsListErrorStateComponentProps,
 } from "../NotificationsList/DefaultNotificationsListErrorState.js";
 import { DefaultNotification, INotificationComponentProps } from "../Notification/DefaultNotification.js";
+import {
+    DefaultNotificationSkeletonItem,
+    INotificationSkeletonItemComponentProps,
+} from "../NotificationsList/DefaultSkeletonItem.js";
 
 const ALIGN_POINTS = [
     alignConfigToAlignPoint({ triggerAlignPoint: "bottom-right", overlayAlignPoint: "top-right" }),
+    alignConfigToAlignPoint({ triggerAlignPoint: "bottom-left", overlayAlignPoint: "top-left" }),
+    alignConfigToAlignPoint({ triggerAlignPoint: "top-right", overlayAlignPoint: "bottom-right" }),
+    alignConfigToAlignPoint({ triggerAlignPoint: "top-left", overlayAlignPoint: "bottom-left" }),
 ];
 
 /**
- * @alpha
+ * @public
  */
 export interface INotificationsPanelCustomComponentsProps {
     /**
      * Custom open notifications panel button component.
+     *
+     * - Required if renderInline is not enabled.
      */
-    OpenNotificationsPanelButton: React.ComponentType<IOpenNotificationsPanelButtonComponentProps>;
+    NotificationsPanelButton?: React.ComponentType<INotificationsPanelButtonComponentProps>;
 
     /**
      * Custom notifications panel component.
@@ -65,47 +75,113 @@ export interface INotificationsPanelCustomComponentsProps {
      * Custom notifications list error state component.
      */
     NotificationsListErrorState?: React.ComponentType<INotificationsListErrorStateComponentProps>;
+
     /**
      * Custom notification component.
      */
     Notification?: React.ComponentType<INotificationComponentProps>;
+
+    /**
+     * Custom notification skeleton item component.
+     */
+    NotificationSkeletonItem?: React.ComponentType<INotificationSkeletonItemComponentProps>;
 }
 
 /**
- * @alpha
+ * @public
  */
 export interface INotificationsPanelProps extends INotificationsPanelCustomComponentsProps {
-    /**
-     * Backend to use.
-     */
-    backend?: IAnalyticalBackend;
-
-    /**
-     * Workspace ID to use.
-     */
-    workspace?: string;
-
-    /**
-     * Refresh interval in milliseconds.
-     * Default is 10 minutes.
-     * If set to 0, notifications will not be refreshed automatically.
-     */
-    refreshInterval?: number;
-
     /**
      * Locale to use.
      */
     locale?: ILocale;
 
     /**
-     * Render notifications panel inline (without button + clicking on it).
+     * Backend to use.
+     *
+     * - If not defined, the backend from the BackendProvider context will be used.
+     */
+    backend?: IAnalyticalBackend;
+
+    /**
+     * Workspace ID to use.
+     *
+     * - If not defined, the workspace ID from the WorkspaceProvider context will be used.
+     * - If workspace is not defined and there is no WorkspaceProvider, notifications will be loaded from all workspaces.
+     */
+    workspace?: string;
+
+    /**
+     * Enable inline rendering of the notifications panel
+     *
+     * - Default: false
+     * - If enabled, NotificationsPanelButton won't be rendered, and NotificationsPanel won't be rendered inside modal
+     * - This is useful when you want to render notifications panel in a custom modal.
      */
     renderInline?: boolean;
 
     /**
-     * Handler for notification click.
+     * Refresh interval in milliseconds.
+     *
+     * - Default: 600000 (10 minutes)
+     * - If set to 0, notifications won't be refreshed automatically.
      */
-    onNotificationClick: (notification: INotification) => void;
+    refreshInterval?: number;
+
+    /**
+     * Number of notifications to load per page.
+     *
+     * - Default: 50
+     */
+    itemsPerPage?: number;
+
+    /**
+     * Number of skeleton items to render when loading notifications.
+     *
+     * - Default: 5
+     */
+    skeletonItemsCount?: number;
+
+    /**
+     * Height of the item in notifications list in pixels.
+     *
+     * - Default: 52
+     */
+    itemHeight?: number;
+
+    /**
+     * Optionally override max width of the notifications panel.
+     *
+     * - Does not have effect when renderInline is true - inline rendering always fills the parent container.
+     */
+    maxWidth?: number | string;
+
+    /**
+     * Maximum height of the notifications list in pixels.
+     *
+     * - Default: 527
+     * - Does not have effect when renderInline is true - inline rendering always fills the parent container.
+     */
+    maxListHeight?: number;
+
+    /**
+     * Gap between notification items in the list in pixels.
+     *
+     * - Default: 10
+     */
+    itemsGap?: number;
+
+    /**
+     * Padding of the notification item (from left and right) in pixels.
+     *
+     * - Default: 15
+     */
+    itemPadding?: number;
+
+    /**
+     * Callback for notification click.
+     */
+    onNotificationClick?: (notification: INotification) => void;
 }
 
 /**
@@ -114,14 +190,19 @@ export interface INotificationsPanelProps extends INotificationsPanelCustomCompo
 const TEN_MINUTES = 1000 * 60 * 10;
 
 /**
- * @alpha
+ * @public
  */
 export function NotificationsPanel(props: INotificationsPanelProps) {
-    const { locale, refreshInterval = TEN_MINUTES, backend, workspace } = props;
+    const { locale, refreshInterval = TEN_MINUTES, itemsPerPage = 50, backend, workspace } = props;
 
     return (
         <OrganizationProvider>
-            <NotificationsProvider backend={backend} workspace={workspace} refreshInterval={refreshInterval}>
+            <NotificationsProvider
+                backend={backend}
+                workspace={workspace}
+                refreshInterval={refreshInterval}
+                itemsPerPage={itemsPerPage}
+            >
                 <IntlWrapper locale={locale}>
                     <NotificationsPanelController {...props} />
                 </IntlWrapper>
@@ -134,15 +215,22 @@ export function NotificationsPanel(props: INotificationsPanelProps) {
  * @internal
  */
 function NotificationsPanelController({
-    OpenNotificationsPanelButton,
+    NotificationsPanelButton,
     NotificationsPanel = DefaultNotificationsPanel,
     NotificationsPanelHeader = DefaultNotificationsPanelHeader,
     NotificationsList = DefaultNotificationsList,
     NotificationsListEmptyState = DefaultNotificationsListEmptyState,
     NotificationsListErrorState = DefaultNotificationsListErrorState,
     Notification = DefaultNotification,
+    NotificationSkeletonItem = DefaultNotificationSkeletonItem,
     onNotificationClick,
     renderInline = false,
+    itemHeight = 52,
+    maxWidth = 370,
+    maxListHeight = 527,
+    itemsGap = 10,
+    itemPadding = 15,
+    skeletonItemsCount = 5,
 }: INotificationsPanelProps) {
     const {
         buttonRef,
@@ -157,6 +245,7 @@ function NotificationsPanelController({
         markNotificationAsRead,
         markAllNotificationsAsRead,
         unreadNotificationsCount,
+        hasUnreadNotifications,
         activeNotifications,
         //
         status,
@@ -174,77 +263,72 @@ function NotificationsPanelController({
         [markNotificationAsRead, closeNotificationsPanel, onNotificationClick],
     );
 
+    const notificationsPanel = (
+        <NotificationsPanel
+            NotificationsPanelHeader={NotificationsPanelHeader}
+            NotificationsList={NotificationsList}
+            NotificationsListEmptyState={NotificationsListEmptyState}
+            NotificationsListErrorState={NotificationsListErrorState}
+            Notification={Notification}
+            NotificationSkeletonItem={NotificationSkeletonItem}
+            toggleNotificationsPanel={toggleNotificationsPanel}
+            openNotificationsPanel={openNotificationsPanel}
+            closeNotificationsPanel={closeNotificationsPanel}
+            activeView={activeView}
+            changeActiveView={changeActiveView}
+            markNotificationAsRead={markNotificationAsRead}
+            markAllNotificationsAsRead={markAllNotificationsAsRead}
+            unreadNotificationsCount={unreadNotificationsCount}
+            hasUnreadNotifications={hasUnreadNotifications}
+            activeNotifications={activeNotifications}
+            onNotificationClick={handleNotificationClick}
+            status={status}
+            error={error}
+            loadNextPage={loadNextPage}
+            hasNextPage={hasNextPage}
+            itemHeight={itemHeight}
+            itemsGap={itemsGap}
+            itemPadding={itemPadding}
+            skeletonItemsCount={skeletonItemsCount}
+            maxListHeight={renderInline ? undefined : maxListHeight}
+        />
+    );
+
+    if (renderInline) {
+        return notificationsPanel;
+    }
+
+    invariant(
+        NotificationsPanelButton,
+        "If renderInline is not enabled, NotificationsPanelButton is required.",
+    );
+
     return (
         <>
-            {renderInline ? (
-                <NotificationsPanel
-                    NotificationsPanelHeader={NotificationsPanelHeader}
-                    NotificationsList={NotificationsList}
-                    NotificationsListEmptyState={NotificationsListEmptyState}
-                    NotificationsListErrorState={NotificationsListErrorState}
-                    Notification={Notification}
-                    toggleNotificationsPanel={toggleNotificationsPanel}
-                    openNotificationsPanel={openNotificationsPanel}
-                    closeNotificationsPanel={closeNotificationsPanel}
-                    activeView={activeView}
-                    changeActiveView={changeActiveView}
-                    markNotificationAsRead={markNotificationAsRead}
-                    markAllNotificationsAsRead={markAllNotificationsAsRead}
-                    unreadNotificationsCount={unreadNotificationsCount}
-                    activeNotifications={activeNotifications}
-                    onNotificationClick={handleNotificationClick}
-                    status={status}
-                    error={error}
-                    loadNextPage={loadNextPage}
-                    hasNextPage={hasNextPage}
-                />
-            ) : (
-                <>
-                    <OpenNotificationsPanelButton
-                        buttonRef={buttonRef}
-                        isNotificationPanelOpen={isOpen}
-                        toggleNotificationPanel={toggleNotificationsPanel}
-                        openNotificationPanel={openNotificationsPanel}
-                        closeNotificationPanel={closeNotificationsPanel}
-                        hasUnreadNotifications={unreadNotificationsCount > 0}
-                    />
-                    {isOpen ? (
-                        <Overlay
-                            className="gd-ui-ext-notifications-panel-overlay"
-                            isModal={false}
-                            alignTo={buttonRef.current}
-                            alignPoints={ALIGN_POINTS}
-                            closeOnEscape
-                            closeOnOutsideClick
-                            closeOnParentScroll={false}
-                            closeOnMouseDrag={false}
-                            onClose={closeNotificationsPanel}
-                        >
-                            <NotificationsPanel
-                                NotificationsPanelHeader={NotificationsPanelHeader}
-                                NotificationsList={NotificationsList}
-                                NotificationsListEmptyState={NotificationsListEmptyState}
-                                NotificationsListErrorState={NotificationsListErrorState}
-                                Notification={Notification}
-                                toggleNotificationsPanel={toggleNotificationsPanel}
-                                openNotificationsPanel={openNotificationsPanel}
-                                closeNotificationsPanel={closeNotificationsPanel}
-                                activeView={activeView}
-                                changeActiveView={changeActiveView}
-                                markNotificationAsRead={markNotificationAsRead}
-                                markAllNotificationsAsRead={markAllNotificationsAsRead}
-                                unreadNotificationsCount={unreadNotificationsCount}
-                                activeNotifications={activeNotifications}
-                                onNotificationClick={handleNotificationClick}
-                                status={status}
-                                error={error}
-                                loadNextPage={loadNextPage}
-                                hasNextPage={hasNextPage}
-                            />
-                        </Overlay>
-                    ) : null}
-                </>
-            )}
+            <NotificationsPanelButton
+                buttonRef={buttonRef}
+                isNotificationPanelOpen={isOpen}
+                toggleNotificationPanel={toggleNotificationsPanel}
+                openNotificationPanel={openNotificationsPanel}
+                closeNotificationPanel={closeNotificationsPanel}
+                hasUnreadNotifications={hasUnreadNotifications}
+            />
+            {isOpen ? (
+                <Overlay
+                    isModal={false}
+                    alignTo={buttonRef.current}
+                    alignPoints={ALIGN_POINTS}
+                    closeOnEscape
+                    closeOnOutsideClick
+                    closeOnParentScroll={false}
+                    closeOnMouseDrag={false}
+                    onClose={closeNotificationsPanel}
+                    width="100%"
+                    maxWidth={maxWidth}
+                >
+                    {notificationsPanel}
+                </Overlay>
+            ) : null}
         </>
     );
 }
@@ -255,12 +339,10 @@ function useNotificationsPanelController() {
     const closeNotificationsPanel = useCallback(() => setIsOpen(false), []);
     const toggleNotificationsPanel = useCallback(() => setIsOpen((x) => !x), []);
 
-    //
-
     const changeActiveView = useCallback((view: INotificationsPanelView) => setActiveView(view), []);
     const [activeView, setActiveView] = useState<INotificationsPanelView>("unread");
 
-    const buttonRef = useRef<HTMLElement>(null);
+    const buttonRef = useRef<HTMLButtonElement>(null);
 
     const {
         notifications,
@@ -299,6 +381,8 @@ function useNotificationsPanelController() {
 
     const hasNextPage = activeView === "unread" ? unreadNotificationsHasNextPage : notificationsHasNextPage;
 
+    const hasUnreadNotifications = unreadNotificationsCount > 0;
+
     return {
         buttonRef,
         isOpen,
@@ -311,6 +395,7 @@ function useNotificationsPanelController() {
         //
         markNotificationAsRead,
         markAllNotificationsAsRead,
+        hasUnreadNotifications,
         unreadNotificationsCount,
         activeNotifications,
         //

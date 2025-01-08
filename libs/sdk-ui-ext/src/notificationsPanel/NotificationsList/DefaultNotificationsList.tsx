@@ -1,109 +1,170 @@
-// (C) 2024 GoodData Corporation
-import React, { useLayoutEffect, useRef, useState } from "react";
+// (C) 2024-2025 GoodData Corporation
+import React from "react";
+import { useElementSize, UiPagedVirtualList } from "@gooddata/sdk-ui-kit";
 import { GoodDataSdkError, UseCancelablePromiseStatus } from "@gooddata/sdk-ui";
 import { INotificationComponentProps } from "../Notification/DefaultNotification.js";
 import { bem } from "../bem.js";
 import { INotification } from "@gooddata/sdk-model";
 import { INotificationsPanelView } from "../types.js";
-import { PagedVirtualList } from "../components/VirtualList.js";
-import {
-    DefaultNotificationsListEmptyState,
-    INotificationsListEmptyStateComponentProps,
-} from "./DefaultNotificationsListEmptyState.js";
-import {
-    DefaultNotificationsListErrorState,
-    INotificationsListErrorStateComponentProps,
-} from "./DefaultNotificationsListErrorState.js";
+import { INotificationsListEmptyStateComponentProps } from "./DefaultNotificationsListEmptyState.js";
+import { INotificationsListErrorStateComponentProps } from "./DefaultNotificationsListErrorState.js";
+import { INotificationSkeletonItemComponentProps } from "./DefaultSkeletonItem.js";
 
-const NOTIFICATION_ITEM_HEIGHT = 52;
+const { b } = bem("gd-ui-ext-notifications-list");
 
 /**
- * @alpha
+ * Props for the NotificationsList component.
+ *
+ * @public
  */
 export interface INotificationsListComponentProps {
+    /**
+     * Component to render when the notifications list is empty.
+     */
     NotificationsListEmptyState: React.ComponentType<INotificationsListEmptyStateComponentProps>;
+
+    /**
+     * Component to render when the notifications list is in error state.
+     */
     NotificationsListErrorState: React.ComponentType<INotificationsListErrorStateComponentProps>;
+
+    /**
+     * Component to render each notification.
+     */
     Notification: React.ComponentType<INotificationComponentProps>;
+
+    /**
+     * Component to render each skeleton item.
+     */
+    NotificationSkeletonItem: React.ComponentType<INotificationSkeletonItemComponentProps>;
+
+    /**
+     * Active view of the notifications list.
+     */
     activeView: INotificationsPanelView;
+
+    /**
+     * Status of the notifications list.
+     */
     status: UseCancelablePromiseStatus;
+
+    /**
+     * Error to display.
+     */
     error?: GoodDataSdkError;
-    notifications?: INotification[];
+
+    /**
+     * Loaded notifications relevant to the active view.
+     */
+    activeNotifications?: INotification[];
+
+    /**
+     * Callback function to mark notification as read.
+     */
     markNotificationAsRead: (notificationId: string) => Promise<void>;
+
+    /**
+     * Callback function to handle notification click.
+     */
     onNotificationClick: (notification: INotification) => void;
+
+    /**
+     * Whether there is a next page of notifications.
+     */
     hasNextPage: boolean;
+
+    /**
+     * Load next page of notifications.
+     */
     loadNextPage: () => void;
+
+    /**
+     * Height of the notification item in pixels.
+     */
+    itemHeight: number;
+
+    /**
+     * Gap between notification items in pixels.
+     */
+    itemsGap: number;
+
+    /**
+     * Padding of the notification item (from left/right) in pixels.
+     */
+    itemPadding: number;
+
+    /**
+     * Number of skeleton items to render when loading notifications.
+     */
+    skeletonItemsCount: number;
+
+    /**
+     * Maximum height of the notifications list in pixels.
+     */
+    maxListHeight?: number;
 }
 
-const { b, e } = bem("gd-ui-ext-notifications-list");
-
 /**
- * @internal
+ * Default implementation of the NotificationsList component.
+ *
+ * @public
  */
 export function DefaultNotificationsList({
     Notification,
+    NotificationsListEmptyState,
+    NotificationsListErrorState,
+    NotificationSkeletonItem,
     activeView,
     status,
     error,
-    notifications,
+    activeNotifications,
     markNotificationAsRead,
     onNotificationClick,
     hasNextPage,
     loadNextPage,
+    itemHeight,
+    itemsGap,
+    itemPadding,
+    skeletonItemsCount,
+    maxListHeight = 0,
 }: INotificationsListComponentProps) {
     const isError = status === "error";
-    const isEmpty = status === "success" && notifications?.length === 0;
+    const isEmpty = status === "success" && activeNotifications?.length === 0;
     const isLoading = status === "loading" || status === "pending";
-    const isSuccess = status === "success" && (notifications?.length ?? 0) > 0;
+    const isSuccess = status === "success" && (activeNotifications?.length ?? 0) > 0;
 
-    const containerRef = useRef<HTMLDivElement>(null);
-    const [availableHeight, setAvailableHeight] = useState<number>(0);
-
-    useLayoutEffect(() => {
-        const resizeObserver = new ResizeObserver((entries) => {
-            const [entry] = entries;
-            if (entry) {
-                setAvailableHeight(entry.contentRect.height);
-            }
-        });
-
-        if (containerRef.current) {
-            resizeObserver.observe(containerRef.current);
-        }
-
-        return () => {
-            if (resizeObserver) {
-                resizeObserver.disconnect();
-                setAvailableHeight(0);
-            }
-        };
-    }, []);
+    const { height, ref } = useElementSize();
 
     return (
-        <div className={b()} ref={containerRef}>
-            {isError ? <DefaultNotificationsListErrorState error={error} /> : null}
-            {isEmpty ? <DefaultNotificationsListEmptyState activeView={activeView} /> : null}
+        <div
+            className={b()}
+            ref={(node) => {
+                ref.current = node;
+            }}
+        >
+            {isError ? <NotificationsListErrorState error={error} /> : null}
+            {isEmpty ? <NotificationsListEmptyState activeView={activeView} /> : null}
             {isLoading || isSuccess ? (
-                <PagedVirtualList
-                    items={notifications}
-                    itemHeight={NOTIFICATION_ITEM_HEIGHT}
-                    itemsGap={10}
-                    itemPadding={15}
-                    skeletonItemsCount={5}
+                <UiPagedVirtualList
+                    items={activeNotifications}
+                    itemHeight={itemHeight}
+                    itemsGap={itemsGap}
+                    itemPadding={itemPadding}
+                    skeletonItemsCount={skeletonItemsCount}
                     hasNextPage={hasNextPage}
                     loadNextPage={loadNextPage}
                     isLoading={isLoading}
-                    maxHeight={Math.max(527, availableHeight)}
+                    maxHeight={Math.max(maxListHeight, height, (itemHeight + itemsGap) * skeletonItemsCount)}
+                    SkeletonItem={NotificationSkeletonItem}
                 >
                     {(notification) => (
-                        <div className={e("notification")}>
-                            <Notification
-                                notification={notification}
-                                markAsRead={markNotificationAsRead}
-                                onNotificationClick={onNotificationClick}
-                            />
-                        </div>
+                        <Notification
+                            notification={notification}
+                            markNotificationAsRead={markNotificationAsRead}
+                            onNotificationClick={onNotificationClick}
+                        />
                     )}
-                </PagedVirtualList>
+                </UiPagedVirtualList>
             ) : null}
         </div>
     );

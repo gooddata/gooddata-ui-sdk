@@ -1,10 +1,10 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import { INotificationsQuery } from "./query.js";
 
 /**
  * This service provides access to organization notifications.
  *
- * @beta
+ * @public
  */
 export interface IOrganizationNotificationService {
     /**

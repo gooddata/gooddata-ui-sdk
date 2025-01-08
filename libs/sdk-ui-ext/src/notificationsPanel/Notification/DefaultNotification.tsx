@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import React from "react";
 import { INotification } from "@gooddata/sdk-model";
 import { bem } from "../bem.js";
@@ -6,22 +6,37 @@ import { defineMessages, FormattedMessage } from "react-intl";
 import { AlertNotification } from "./AlertNotification.js";
 
 /**
- * @alpha
+ * Props for the Notification component.
+ *
+ * @public
  */
 export interface INotificationComponentProps {
+    /**
+     * Notification to display.
+     */
     notification: INotification;
-    markAsRead: (id: string) => void;
+
+    /**
+     * Function to mark notification as read.
+     */
+    markNotificationAsRead: (id: string) => void;
+
+    /**
+     * Function to handle notification click.
+     */
     onNotificationClick: (notification: INotification) => void;
 }
 
 const { b, e } = bem("gd-ui-ext-notification");
 
 /**
- * @internal
+ * Default implementation of the Notification component.
+ *
+ * @public
  */
 export function DefaultNotification({
     notification,
-    markAsRead,
+    markNotificationAsRead,
     onNotificationClick,
 }: INotificationComponentProps) {
     if (notification.notificationType !== "alertNotification") {
@@ -31,7 +46,7 @@ export function DefaultNotification({
     return (
         <AlertNotification
             notification={notification}
-            markAsRead={markAsRead}
+            markNotificationAsRead={markNotificationAsRead}
             onNotificationClick={onNotificationClick}
         />
     );

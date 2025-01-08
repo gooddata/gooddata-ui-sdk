@@ -1,26 +1,28 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import { IAnalyticalBackend, IOrganization } from "@gooddata/sdk-backend-spi";
 import { GoodDataSdkError, useBackendStrict, useCancelablePromise } from "@gooddata/sdk-ui";
 
 /**
- * @alpha
+ * @beta
  */
 export interface IUseFetchOrganizationProps {
     /**
      * Analytical backend instance to use.
-     * If not provided, it will be taken from the BackendProvider context.
+     *
+     * - If not provided, it will be taken from the BackendProvider context.
      */
     backend?: IAnalyticalBackend;
 
     /**
      * Organization ID to use.
-     * If not provided, the current organization will be used.
+     *
+     * - If not provided, organization of the currently logged in user will be used.
      */
     organizationId?: string;
 }
 
 /**
- * @alpha
+ * @beta
  */
 export function useFetchOrganization({ backend, organizationId }: IUseFetchOrganizationProps) {
     const effectiveBackend = useBackendStrict(backend, "useOrganization");
