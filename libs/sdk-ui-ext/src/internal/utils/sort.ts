@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { IntlShape } from "react-intl";
 import isEmpty from "lodash/isEmpty.js";
 import isNil from "lodash/isNil.js";
@@ -169,7 +169,10 @@ export function createSorts(
         case VisualizationTypes.LINE:
             return [];
         case VisualizationTypes.BAR:
-            return getDefaultBarChartSort(insight, canSortStackTotalValue(insight, supportedControls));
+            return getDefaultBarChartSort(
+                insight,
+                canSortStackBarChartTotalValue(insight, supportedControls),
+            );
         case VisualizationTypes.TREEMAP:
             return getDefaultTreemapSort(insight);
         case VisualizationTypes.HEATMAP:
@@ -186,18 +189,18 @@ export function createSorts(
     return [];
 }
 
-function areAllMeasuresOnSingleAxis(insight: IInsightDefinition, secondaryYAxis: IAxisConfig): boolean {
+function areAllMeasuresOnSingleAxis(insight: IInsightDefinition, secondaryAxis: IAxisConfig): boolean {
     const measureCount = insightMeasures(insight).length;
-    const numberOfMeasureOnSecondaryAxis = secondaryYAxis.measures?.length ?? 0;
+    const numberOfMeasureOnSecondaryAxis = secondaryAxis.measures?.length ?? 0;
     return numberOfMeasureOnSecondaryAxis === 0 || measureCount === numberOfMeasureOnSecondaryAxis;
 }
 
-function canSortStackTotalValue(
+function canSortStackBarChartTotalValue(
     insight: IInsightDefinition,
     supportedControls: IVisualizationProperties,
 ): boolean {
     const stackMeasures = supportedControls?.stackMeasures ?? false;
-    const secondaryAxis: IAxisConfig = supportedControls?.secondary_yaxis ?? { measures: [] };
+    const secondaryAxis: IAxisConfig = supportedControls?.secondary_xaxis ?? { measures: [] };
     const allMeasuresOnSingleAxis = areAllMeasuresOnSingleAxis(insight, secondaryAxis);
 
     return stackMeasures && allMeasuresOnSingleAxis;
