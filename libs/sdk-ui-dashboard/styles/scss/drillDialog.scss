@@ -200,7 +200,7 @@ $description-width-mobile: 320px;
 
 .drill-dialog-insight-container-button {
     position: absolute;
-    top: 10px;
+    top: -10px;
     left: 0;
     z-index: zIndexes.$drill-dialog-description-button;
     transition: all 0.3s ease-in-out;
@@ -230,7 +230,7 @@ $description-width-mobile: 320px;
     }
 
     &.drill-dialog-insight-container-button--open.drill-dialog-insight-container-button--mobile {
-        left: min($description-width-mobile + 10px, calc(100vw - 60px));
+        left: min($description-width-mobile + 10px, calc(100vw - 72px));
     }
 }
 
@@ -255,11 +255,11 @@ $description-width-mobile: 320px;
 
     &.drill-dialog-insight-container-description--open.drill-dialog-insight-container-description--mobile {
         width: $description-width-mobile;
-        max-width: calc(100vw - 70px);
+        max-width: calc(100vw - 82px);
 
         .drill-dialog-insight-container-description-content {
             width: $description-width-mobile;
-            max-width: calc(100vw - 70px);
+            max-width: calc(100vw - 82px);
         }
     }
 
