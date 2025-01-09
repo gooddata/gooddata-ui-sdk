@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import { describe, it, expect } from "vitest";
 
@@ -12,6 +12,7 @@ describe("NotificationChannelsConvertor", () => {
             type: "notificationChannel",
             destinationType: "webhook",
             title: "name",
+            sendInPlatformNotifications: false,
             destinationConfig: {
                 token: "token",
                 endpoint: "endpoint",
@@ -22,7 +23,7 @@ describe("NotificationChannelsConvertor", () => {
         expect(data).toEqual({
             attributes: {
                 name: "name",
-                destinationType: "WEBHOOK",
+                inPlatformNotification: "DISABLED",
                 destination: {
                     type: "WEBHOOK",
                     token: "token",
@@ -43,6 +44,7 @@ describe("NotificationChannelsConvertor", () => {
                 name: "name",
                 description: "description",
                 destinationType: "WEBHOOK",
+                inPlatformNotification: "ENABLED",
                 destination: {
                     type: "WEBHOOK",
                     url: "endpoint",
@@ -60,6 +62,7 @@ describe("NotificationChannelsConvertor", () => {
             destinationType: "webhook",
             title: "name",
             description: "description",
+            sendInPlatformNotifications: true,
             destinationConfig: {
                 endpoint: "endpoint",
                 token: "token",

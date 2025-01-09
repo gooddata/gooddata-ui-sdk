@@ -30,6 +30,7 @@
         "esm/**/*.d.ts",
         "esm/**/*.map",
         "esm/**/*.svg",
+        "src/**/*.scss",
         "styles",
         "NOTICE"
     ],
@@ -64,6 +65,7 @@
         "@gooddata/sdk-model": "workspace:*",
         "@gooddata/sdk-ui": "workspace:*",
         "@gooddata/sdk-ui-charts": "workspace:*",
+        "@gooddata/sdk-ui-filters": "workspace:*",
         "@gooddata/sdk-ui-geo": "workspace:*",
         "@gooddata/sdk-ui-kit": "workspace:*",
         "@gooddata/sdk-ui-pivot": "workspace:*",
@@ -82,6 +84,7 @@
         "lru-cache": "^10.0.1",
         "react-intl": "^6.4.1",
         "react-lines-ellipsis": "^0.15.0",
+        "react-loading-skeleton": "^3.4.0",
         "react-measure": "^2.5.2",
         "react-select": "^5.7.3",
         "react-select-async-paginate": "^0.7.3",

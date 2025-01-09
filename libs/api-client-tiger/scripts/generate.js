@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import dotenv from "dotenv";
 import { program } from "commander";
 import axios from "axios";

@@ -17,6 +17,7 @@ import { UiIcon } from "../UiIcon/UiIcon.js";
  * @internal
  */
 export interface UiButtonProps {
+    buttonRef?: React.RefObject<HTMLButtonElement>;
     size?: SizeSmall | SizeMedium | SizeLarge;
     variant?: VariantPrimary | VariantSecondary | VariantTertiary | VariantPopOut | VariantDanger;
     iconBefore?: IconType;
@@ -25,7 +26,8 @@ export interface UiButtonProps {
     isDisabled?: boolean;
     isLoading?: boolean;
     tooltip?: React.ReactNode;
-    onClick?: () => void;
+    onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    dataId?: string;
 }
 
 const { b, e } = bem("gd-ui-kit-button");
@@ -34,6 +36,7 @@ const { b, e } = bem("gd-ui-kit-button");
  * @internal
  */
 export const UiButton = ({
+    buttonRef,
     size = "medium",
     variant = "secondary",
     label,
@@ -41,11 +44,20 @@ export const UiButton = ({
     isLoading,
     iconBefore,
     iconAfter,
+    onClick,
+    dataId,
 }: UiButtonProps) => {
     const iconPosition = iconBefore ? "left" : iconAfter ? "right" : undefined;
 
     return (
-        <button className={b({ size, variant, isLoading, iconPosition })} disabled={isDisabled} tabIndex={0}>
+        <button
+            ref={buttonRef}
+            className={b({ size, variant, isLoading, iconPosition })}
+            disabled={isDisabled}
+            tabIndex={0}
+            onClick={onClick}
+            data-id={dataId}
+        >
             {iconBefore ? (
                 <span className={e("icon")}>
                     <UiIcon type={iconBefore} label={label} size={14} />

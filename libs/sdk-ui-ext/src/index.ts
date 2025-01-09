@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 /**
  * This package contains various extensions on top of the stable components included in GoodData.UI.
  *
@@ -110,3 +110,28 @@ export * from "./internal/components/dialogs/userManagementDialogs/index.js";
 export * from "./internal/components/attributeHierarchies/index.js";
 
 export * from "./internal/components/pluggableVisualizations/alerts.js";
+
+export { useNotifications } from "./notificationsPanel/data/useNotifications.js";
+export type { IUseNotificationsProps } from "./notificationsPanel/data/useNotifications.js";
+export { NotificationsPanel } from "./notificationsPanel/NotificationsPanel/NotificationsPanel.js";
+export type {
+    INotificationsPanelProps,
+    INotificationsPanelCustomComponentsProps,
+} from "./notificationsPanel/NotificationsPanel/NotificationsPanel.js";
+export { DefaultNotificationsPanel } from "./notificationsPanel/NotificationsPanel/DefaultNotificationsPanel.js";
+export type { INotificationsPanelComponentProps } from "./notificationsPanel/NotificationsPanel/DefaultNotificationsPanel.js";
+export { DefaultNotificationsPanelButton } from "./notificationsPanel/NotificationsPanel/DefaultNotificationsPanelButton.js";
+export type { INotificationsPanelButtonComponentProps } from "./notificationsPanel/NotificationsPanel/DefaultNotificationsPanelButton.js";
+export { DefaultNotificationsPanelHeader } from "./notificationsPanel/NotificationsPanel/DefaultNotificationsPanelHeader.js";
+export type { INotificationsPanelHeaderComponentProps } from "./notificationsPanel/NotificationsPanel/DefaultNotificationsPanelHeader.js";
+export { DefaultNotificationsList } from "./notificationsPanel/NotificationsList/DefaultNotificationsList.js";
+export type { INotificationsListComponentProps } from "./notificationsPanel/NotificationsList/DefaultNotificationsList.js";
+export { DefaultNotificationsListEmptyState } from "./notificationsPanel/NotificationsList/DefaultNotificationsListEmptyState.js";
+export type { INotificationsListEmptyStateComponentProps } from "./notificationsPanel/NotificationsList/DefaultNotificationsListEmptyState.js";
+export { DefaultNotificationsListErrorState } from "./notificationsPanel/NotificationsList/DefaultNotificationsListErrorState.js";
+export type { INotificationsListErrorStateComponentProps } from "./notificationsPanel/NotificationsList/DefaultNotificationsListErrorState.js";
+export { DefaultNotification } from "./notificationsPanel/Notification/DefaultNotification.js";
+export type { INotificationComponentProps } from "./notificationsPanel/Notification/DefaultNotification.js";
+export { DefaultNotificationSkeletonItem } from "./notificationsPanel/NotificationsList/DefaultSkeletonItem.js";
+export type { INotificationSkeletonItemComponentProps } from "./notificationsPanel/NotificationsList/DefaultSkeletonItem.js";
+export type { INotificationsPanelView } from "./notificationsPanel/types.js";

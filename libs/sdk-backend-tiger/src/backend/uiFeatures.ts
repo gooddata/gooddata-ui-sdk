@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { IEarlyAccessFeaturesConfig } from "@gooddata/sdk-model";
 
 /**
@@ -113,7 +113,6 @@ export enum TigerFeaturesNames {
     EnableNewInsightChangedPostMessageEvent = "enableNewInsightChangedPostMessageEvent",
     EnableIgnoreCrossFiltering = "enableIgnoreCrossFiltering",
     EnableHeadlineExport = "enableHeadlineExport",
-    EnableFlightRpcDataSource = "enableFlightRpcDataSource",
     EarlyAccessFeatures = "earlyAccessFeatures",
     EnableEarlyAccessFeaturesRollout = "enableEarlyAccessFeaturesRollout",
     EnableCrossFilteringAliasTitles = "enableCrossFilteringAliasTitles",
@@ -123,7 +122,10 @@ export enum TigerFeaturesNames {
     EnableNewUserCreationFlow = "enableNewUserCreationFlow",
     EnableDestinationTesting = "enableDestinationTesting",
     EnableInPlatformNotifications = "enableInPlatformNotifications",
+    EnableExternalRecipients = "enableExternalRecipients",
+    EnableDrilledTooltip = "enableDrilledTooltip",
     EnableVisualizationFineTuning = "enableVisualizationFineTuning",
+    EnableDashboardDescriptionDynamicHeight = "enableDashboardDescriptionDynamicHeight",
 }
 
 export type ITigerFeatureFlags = {
@@ -200,7 +202,6 @@ export type ITigerFeatureFlags = {
     enableKDVisualizationSwitcher: typeof FeatureFlagsValues["enableKDVisualizationSwitcher"][number];
     enableIgnoreCrossFiltering: typeof FeatureFlagsValues["enableIgnoreCrossFiltering"][number];
     enableHeadlineExport: typeof FeatureFlagsValues["enableHeadlineExport"][number];
-    enableFlightRpcDataSource: typeof FeatureFlagsValues["enableFlightRpcDataSource"][number];
     earlyAccessFeatures: typeof FeatureFlagsValues["earlyAccessFeatures"][number];
     enableEarlyAccessFeaturesRollout: typeof FeatureFlagsValues["enableEarlyAccessFeaturesRollout"][number];
     enableCrossFilteringAliasTitles: typeof FeatureFlagsValues["enableCrossFilteringAliasTitles"][number];
@@ -211,6 +212,9 @@ export type ITigerFeatureFlags = {
     enableDestinationTesting: typeof FeatureFlagsValues["enableDestinationTesting"][number];
     enableInPlatformNotifications: typeof FeatureFlagsValues["enableInPlatformNotifications"][number];
     enableVisualizationFineTuning: typeof FeatureFlagsValues["enableVisualizationFineTuning"][number];
+    enableExternalRecipients: typeof FeatureFlagsValues["enableExternalRecipients"][number];
+    enableDrilledTooltip: typeof FeatureFlagsValues["enableDrilledTooltip"][number];
+    enableDashboardDescriptionDynamicHeight: typeof FeatureFlagsValues["enableDashboardDescriptionDynamicHeight"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -287,7 +291,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableKDVisualizationSwitcher: true,
     enableIgnoreCrossFiltering: true,
     enableHeadlineExport: true,
-    enableFlightRpcDataSource: false,
     earlyAccessFeatures: undefined,
     enableEarlyAccessFeaturesRollout: false,
     enableCrossFilteringAliasTitles: true,
@@ -295,9 +298,12 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDashboardFlexibleLayout: false,
     enableNumberSeparators: true,
     enableNewUserCreationFlow: false,
-    enableDestinationTesting: false,
+    enableDestinationTesting: true,
     enableInPlatformNotifications: false,
     enableVisualizationFineTuning: false,
+    enableExternalRecipients: false,
+    enableDrilledTooltip: true,
+    enableDashboardDescriptionDynamicHeight: false,
 };
 
 export const FeatureFlagsValues = {
@@ -378,7 +384,6 @@ export const FeatureFlagsValues = {
     enableKDVisualizationSwitcher: [true, false] as const,
     enableIgnoreCrossFiltering: [true, false] as const,
     enableHeadlineExport: [true, false] as const,
-    enableFlightRpcDataSource: [true, false] as const,
     earlyAccessFeatures: [undefined, {} as IEarlyAccessFeaturesConfig] as const,
     enableEarlyAccessFeaturesRollout: [true, false] as const,
     enableCrossFilteringAliasTitles: [true, false] as const,
@@ -389,4 +394,7 @@ export const FeatureFlagsValues = {
     enableDestinationTesting: [true, false] as const,
     enableInPlatformNotifications: [true, false] as const,
     enableVisualizationFineTuning: [true, false] as const,
+    enableExternalRecipients: [true, false] as const,
+    enableDrilledTooltip: [true, false] as const,
+    enableDashboardDescriptionDynamicHeight: [true, false] as const,
 };

@@ -127,7 +127,7 @@ export const useEditAlert = ({
          */
         const updatedRecipients =
             selectedDestination?.allowedRecipients === "creator"
-                ? [convertCurrentUserToAutomationRecipient(users, currentUser)]
+                ? [convertCurrentUserToAutomationRecipient(users ?? [], currentUser)]
                 : undefined;
 
         setUpdatedAlert((alert) => transformAlertByDestination(alert, destinationId, updatedRecipients));

@@ -19,44 +19,39 @@ import {
     GenAIRelativeDateFilter,
     GenAIDateGranularity,
     GenAIAbsoluteDateFilter,
+    IGenAIVisualizationMetric,
+    MeasureBuilder,
+    GenAIMetricType,
+    ObjectType,
 } from "@gooddata/sdk-model";
+
+const measureBuilder = (md: IGenAIVisualizationMetric) => (m: MeasureBuilder) => {
+    if (md.title) {
+        m = m.title(md.title);
+    }
+
+    if (md.type === "attribute") {
+        m = m.aggregation("count");
+    }
+
+    if (md.type === "fact" && md.aggFunction) {
+        m = m.aggregation(md.aggFunction.toLowerCase() as MeasureAggregation);
+    }
+
+    return m;
+};
+
+const typeMap: { [key in GenAIMetricType]: ObjectType } = {
+    attribute: "attribute",
+    fact: "fact",
+    metric: "measure",
+};
 
 export const useExecution = (vis?: IGenAIVisualization) => {
     return React.useMemo(() => {
         const dimensions = vis?.dimensionality?.map((d) => newAttribute(d.id)) ?? [];
         const metrics =
-            vis?.metrics?.map((md) => {
-                switch (md.type) {
-                    case "fact":
-                        return newMeasure(idRef(md.id, "fact"), (m) => {
-                            if (md.aggFunction) {
-                                m = m.aggregation(md.aggFunction.toLowerCase() as MeasureAggregation);
-                            }
-
-                            if (md.title) {
-                                m = m.title(md.title);
-                            }
-
-                            return m;
-                        });
-                    case "metric":
-                        return newMeasure(idRef(md.id, "measure"), (m) => {
-                            if (md.title) {
-                                m = m.title(md.title);
-                            }
-
-                            return m;
-                        });
-                    case "attribute":
-                        return newMeasure(idRef(md.id, "attribute"), (m) => {
-                            if (md.title) {
-                                m = m.title(md.title);
-                            }
-
-                            return m.aggregation("count");
-                        });
-                }
-            }) ?? [];
+            vis?.metrics?.map((md) => newMeasure(idRef(md.id, typeMap[md.type]), measureBuilder(md))) ?? [];
 
         return {
             metrics,

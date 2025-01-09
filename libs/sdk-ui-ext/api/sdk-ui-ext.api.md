@@ -25,6 +25,7 @@ import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import { ILoadingProps } from '@gooddata/sdk-ui';
 import { ILocale } from '@gooddata/sdk-ui';
+import { INotification } from '@gooddata/sdk-model';
 import { IPivotTableConfig } from '@gooddata/sdk-ui-pivot';
 import { ISettings } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
@@ -34,6 +35,8 @@ import { LocalIdRef } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { OnError } from '@gooddata/sdk-ui';
 import { default as React_2 } from 'react';
+import { UiSkeleton } from '@gooddata/sdk-ui-kit';
+import { UseCancelablePromiseStatus } from '@gooddata/sdk-ui';
 import { WithIntlProps } from 'react-intl';
 import { WrappedComponentProps } from 'react-intl';
 
@@ -83,6 +86,30 @@ export type DataSourcePermission = "USE" | "MANAGE";
 
 // @internal (undocumented)
 export type DataSourcePermissionSubject = "user" | "userGroup";
+
+// @public
+export function DefaultNotification({ notification, markNotificationAsRead, onNotificationClick, }: INotificationComponentProps): React_2.JSX.Element;
+
+// @public
+export const DefaultNotificationSkeletonItem: typeof UiSkeleton;
+
+// @public
+export function DefaultNotificationsList({ Notification, NotificationsListEmptyState, NotificationsListErrorState, NotificationSkeletonItem, activeView, status, error, activeNotifications, markNotificationAsRead, onNotificationClick, hasNextPage, loadNextPage, itemHeight, itemsGap, itemPadding, skeletonItemsCount, maxListHeight, }: INotificationsListComponentProps): React_2.JSX.Element;
+
+// @public
+export function DefaultNotificationsListEmptyState({ activeView, }: INotificationsListEmptyStateComponentProps): React_2.JSX.Element;
+
+// @public
+export function DefaultNotificationsListErrorState({ error }: INotificationsListErrorStateComponentProps): React_2.JSX.Element;
+
+// @public
+export function DefaultNotificationsPanel({ NotificationsPanelHeader, NotificationsList, NotificationsListEmptyState, NotificationsListErrorState, Notification, NotificationSkeletonItem, activeView, changeActiveView, markNotificationAsRead, markAllNotificationsAsRead, unreadNotificationsCount, hasUnreadNotifications, activeNotifications, onNotificationClick, status, error, loadNextPage, hasNextPage, itemHeight, itemsGap, itemPadding, skeletonItemsCount, maxListHeight, }: INotificationsPanelComponentProps): React_2.JSX.Element;
+
+// @internal (undocumented)
+export function DefaultNotificationsPanelButton({ buttonRef, isNotificationPanelOpen, toggleNotificationPanel, hasUnreadNotifications, }: INotificationsPanelButtonComponentProps): React_2.JSX.Element;
+
+// @public
+export function DefaultNotificationsPanelHeader({ activeView, changeActiveView, markAllNotificationsAsRead, hasUnreadNotifications, unreadNotificationsCount, }: INotificationsPanelHeaderComponentProps): React_2.JSX.Element;
 
 // @internal (undocumented)
 export const DeleteUserDialog: React_2.FC<IDeleteUserDialogProps>;
@@ -415,6 +442,130 @@ export interface ILayoutDescriptor {
     type: LayoutType;
 }
 
+// @public
+export interface INotificationComponentProps {
+    markNotificationAsRead: (id: string) => void;
+    notification: INotification;
+    onNotificationClick: (notification: INotification) => void;
+}
+
+// @public
+export interface INotificationSkeletonItemComponentProps {
+    itemHeight: number;
+}
+
+// @public
+export interface INotificationsListComponentProps {
+    activeNotifications?: INotification[];
+    activeView: INotificationsPanelView;
+    error?: GoodDataSdkError;
+    hasNextPage: boolean;
+    itemHeight: number;
+    itemPadding: number;
+    itemsGap: number;
+    loadNextPage: () => void;
+    markNotificationAsRead: (notificationId: string) => Promise<void>;
+    maxListHeight?: number;
+    Notification: React_2.ComponentType<INotificationComponentProps>;
+    NotificationSkeletonItem: React_2.ComponentType<INotificationSkeletonItemComponentProps>;
+    NotificationsListEmptyState: React_2.ComponentType<INotificationsListEmptyStateComponentProps>;
+    NotificationsListErrorState: React_2.ComponentType<INotificationsListErrorStateComponentProps>;
+    onNotificationClick: (notification: INotification) => void;
+    skeletonItemsCount: number;
+    status: UseCancelablePromiseStatus;
+}
+
+// @public
+export interface INotificationsListEmptyStateComponentProps {
+    activeView: INotificationsPanelView;
+}
+
+// @public
+export interface INotificationsListErrorStateComponentProps {
+    error?: GoodDataSdkError;
+}
+
+// @public
+export interface INotificationsPanelButtonComponentProps {
+    buttonRef: React_2.RefObject<HTMLButtonElement>;
+    closeNotificationPanel: () => void;
+    hasUnreadNotifications: boolean;
+    isNotificationPanelOpen: boolean;
+    openNotificationPanel: () => void;
+    toggleNotificationPanel: () => void;
+}
+
+// @public
+export interface INotificationsPanelComponentProps {
+    activeNotifications: INotification[];
+    activeView: INotificationsPanelView;
+    changeActiveView: (view: INotificationsPanelView) => void;
+    closeNotificationsPanel: () => void;
+    error?: GoodDataSdkError;
+    hasNextPage: boolean;
+    hasUnreadNotifications: boolean;
+    itemHeight: number;
+    itemPadding: number;
+    itemsGap: number;
+    loadNextPage: () => void;
+    markAllNotificationsAsRead: () => Promise<void>;
+    markNotificationAsRead: (notificationId: string) => Promise<void>;
+    maxListHeight?: number;
+    Notification: React_2.ComponentType<INotificationComponentProps>;
+    NotificationSkeletonItem: React_2.ComponentType<INotificationSkeletonItemComponentProps>;
+    NotificationsList: React_2.ComponentType<INotificationsListComponentProps>;
+    NotificationsListEmptyState: React_2.ComponentType<INotificationsListEmptyStateComponentProps>;
+    NotificationsListErrorState: React_2.ComponentType<INotificationsListErrorStateComponentProps>;
+    NotificationsPanelHeader: React_2.ComponentType<INotificationsPanelHeaderComponentProps>;
+    onNotificationClick: (notification: INotification) => void;
+    openNotificationsPanel: () => void;
+    skeletonItemsCount: number;
+    status: UseCancelablePromiseStatus;
+    toggleNotificationsPanel: () => void;
+    unreadNotificationsCount: number;
+}
+
+// @public (undocumented)
+export interface INotificationsPanelCustomComponentsProps {
+    Notification?: React_2.ComponentType<INotificationComponentProps>;
+    NotificationSkeletonItem?: React_2.ComponentType<INotificationSkeletonItemComponentProps>;
+    NotificationsList?: React_2.ComponentType<INotificationsListComponentProps>;
+    NotificationsListEmptyState?: React_2.ComponentType<INotificationsListEmptyStateComponentProps>;
+    NotificationsListErrorState?: React_2.ComponentType<INotificationsListErrorStateComponentProps>;
+    NotificationsPanel?: React_2.ComponentType<INotificationsPanelComponentProps>;
+    NotificationsPanelButton?: React_2.ComponentType<INotificationsPanelButtonComponentProps>;
+    NotificationsPanelHeader?: React_2.ComponentType<INotificationsPanelHeaderComponentProps>;
+}
+
+// @public
+export interface INotificationsPanelHeaderComponentProps {
+    activeView: INotificationsPanelView;
+    changeActiveView: (view: INotificationsPanelView) => void;
+    hasUnreadNotifications: boolean;
+    markAllNotificationsAsRead: () => void;
+    unreadNotificationsCount: number;
+}
+
+// @public (undocumented)
+export interface INotificationsPanelProps extends INotificationsPanelCustomComponentsProps {
+    backend?: IAnalyticalBackend;
+    itemHeight?: number;
+    itemPadding?: number;
+    itemsGap?: number;
+    itemsPerPage?: number;
+    locale?: ILocale;
+    maxListHeight?: number;
+    maxWidth?: number | string;
+    onNotificationClick?: (notification: INotification) => void;
+    refreshInterval?: number;
+    renderInline?: boolean;
+    skeletonItemsCount?: number;
+    workspace?: string;
+}
+
+// @public
+export type INotificationsPanelView = "all" | "unread";
+
 // @internal (undocumented)
 export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo;
 
@@ -470,6 +621,14 @@ export interface ISizeInfo {
 export type ISizeInfoDefault = ISizeInfo & {
     default: number;
 };
+
+// @public
+export interface IUseNotificationsProps {
+    backend?: IAnalyticalBackend;
+    itemsPerPage: number;
+    refreshInterval: number;
+    workspace?: string;
+}
 
 // @internal (undocumented)
 export interface IUserEditDialogProps extends IWithTelemetryProps {
@@ -556,6 +715,9 @@ export type LayoutType = "fluid";
 // @internal (undocumented)
 export const MIN_VISUALIZATION_WIDTH = 2;
 
+// @public (undocumented)
+export function NotificationsPanel(props: INotificationsPanelProps): React_2.JSX.Element;
+
 // @alpha (undocumented)
 export const PluggableVisualizationErrorCodes: {
     INVALID_BUCKETS: string;
@@ -588,6 +750,25 @@ export type TelemetryEvent = "multiple-users-deleted" | "multiple-groups-deleted
 
 // @internal (undocumented)
 export type TrackEventCallback = (event: TelemetryEvent) => void;
+
+// @public (undocumented)
+export function useNotifications({ workspace, refreshInterval, itemsPerPage }: IUseNotificationsProps): {
+    notifications: INotification[];
+    notificationsStatus: "error" | "loading" | "pending" | "success";
+    notificationsError: GoodDataSdkError;
+    notificationsHasNextPage: boolean;
+    notificationsLoadNextPage: () => void;
+    notificationsReset: () => void;
+    unreadNotifications: INotification[];
+    unreadNotificationsStatus: "error" | "loading" | "pending" | "success";
+    unreadNotificationsError: GoodDataSdkError;
+    unreadNotificationsHasNextPage: boolean;
+    unreadNotificationsLoadNextPage: () => void;
+    unreadNotificationsReset: () => void;
+    unreadNotificationsCount: number;
+    markNotificationAsRead: (notificationId: string) => Promise<void>;
+    markAllNotificationsAsRead: () => Promise<void>;
+};
 
 // @internal (undocumented)
 export const UserEditDialog: React_2.FC<IUserEditDialogProps>;

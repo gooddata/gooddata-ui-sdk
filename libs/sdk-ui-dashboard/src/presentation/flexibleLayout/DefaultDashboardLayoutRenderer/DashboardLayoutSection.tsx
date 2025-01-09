@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 import flatMap from "lodash/flatMap.js";
 import React, { useMemo } from "react";
@@ -69,14 +69,15 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
         parentLayoutItemSize,
         parentLayoutPath,
     } = props;
-    const renderProps = { section, renderMode, parentLayoutItemSize, parentLayoutPath };
+    const showBorders = parentLayoutPath === undefined || parentLayoutPath.length === 0;
+    const renderProps = { section, renderMode, parentLayoutItemSize, parentLayoutPath, showBorders };
     const screen = useScreenSize();
 
     const items = useMemo(() => {
         if (renderMode === "edit") {
             const itemsInRowsByIndex = section
                 .items()
-                .asGridRows(screen, parentLayoutItemSize?.[screen]?.gridWidth)
+                .asGridRows(screen)
                 .map(
                     (itemsInRow) =>
                         [getItemIndex(last(itemsInRow)!.index()), itemsInRow] as [
@@ -102,24 +103,21 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
             );
         }
 
-        return flatMap(
-            section.items().asGridRows(screen, parentLayoutItemSize?.[screen]?.gridWidth),
-            (itemsInRow, index) => {
-                return (
-                    <DashboardLayoutGridRow
-                        key={index.toString()}
-                        section={section}
-                        items={itemsInRow}
-                        gridRowRenderer={gridRowRenderer}
-                        itemKeyGetter={itemKeyGetter}
-                        itemRenderer={itemRenderer}
-                        widgetRenderer={widgetRenderer}
-                        renderMode={renderMode}
-                        getLayoutDimensions={getLayoutDimensions}
-                    />
-                );
-            },
-        );
+        return flatMap(section.items().asGridRows(screen), (itemsInRow, index) => {
+            return (
+                <DashboardLayoutGridRow
+                    key={index.toString()}
+                    section={section}
+                    items={itemsInRow}
+                    gridRowRenderer={gridRowRenderer}
+                    itemKeyGetter={itemKeyGetter}
+                    itemRenderer={itemRenderer}
+                    widgetRenderer={widgetRenderer}
+                    renderMode={renderMode}
+                    getLayoutDimensions={getLayoutDimensions}
+                />
+            );
+        });
     }, [
         getLayoutDimensions,
         gridRowRenderer,
@@ -128,7 +126,6 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
         renderMode,
         section,
         widgetRenderer,
-        parentLayoutItemSize,
         screen,
     ]);
 

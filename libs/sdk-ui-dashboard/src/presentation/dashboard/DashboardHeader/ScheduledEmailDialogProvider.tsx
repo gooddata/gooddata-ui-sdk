@@ -2,9 +2,17 @@
 
 import React from "react";
 
-import { ScheduledEmailDialog, ScheduledEmailManagementDialog } from "../../scheduledEmail/index.js";
+import {
+    IScheduledEmailDialogProps,
+    ScheduledEmailDialog,
+    ScheduledEmailManagementDialog,
+} from "../../scheduledEmail/index.js";
 
-import { useDashboardScheduledEmails, useDashboardScheduledEmailsFilters } from "../../../model/index.js";
+import {
+    useDashboardScheduledEmails,
+    useDashboardScheduledEmailsFilters,
+    useWorkspaceUsers,
+} from "../../../model/index.js";
 
 export const ScheduledEmailDialogProvider = () => {
     const {
@@ -12,7 +20,6 @@ export const ScheduledEmailDialogProvider = () => {
         scheduledExportToEdit,
         // Data
         isInitialized,
-        users,
         widget,
         insight,
         automations,
@@ -52,7 +59,6 @@ export const ScheduledEmailDialogProvider = () => {
         <>
             {isScheduleEmailingManagementDialogOpen ? (
                 <ScheduledEmailManagementDialog
-                    isVisible={isScheduleEmailingManagementDialogOpen}
                     automations={automations}
                     notificationChannels={notificationChannels}
                     scheduleDataError={loadingError}
@@ -65,10 +71,8 @@ export const ScheduledEmailDialogProvider = () => {
                 />
             ) : null}
             {isScheduleEmailingDialogOpen ? (
-                <ScheduledEmailDialog
-                    isVisible={isScheduleEmailingDialogOpen}
+                <ScheduledEmailDialogWithUsers
                     scheduledExportToEdit={scheduledExportToEdit}
-                    users={users}
                     notificationChannels={notificationChannels}
                     widget={widget}
                     insight={insight}
@@ -87,3 +91,18 @@ export const ScheduledEmailDialogProvider = () => {
         </>
     );
 };
+
+/**
+ * Load users only if dialog is open
+ */
+function ScheduledEmailDialogWithUsers(props: Omit<IScheduledEmailDialogProps, "users">) {
+    const { users, status: usersStatus } = useWorkspaceUsers();
+
+    return (
+        <ScheduledEmailDialog
+            {...props}
+            users={users ?? []}
+            isLoading={props.isLoading || usersStatus === "pending" || usersStatus === "loading"}
+        />
+    );
+}

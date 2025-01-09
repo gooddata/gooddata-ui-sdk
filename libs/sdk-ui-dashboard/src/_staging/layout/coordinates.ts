@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
     IDashboardLayout,
@@ -303,4 +303,12 @@ export const hasParent = (path: ILayoutItemPath | ILayoutSectionPath): boolean =
         (isLayoutItemPath(path) && path.length > 1) ||
         (isLayoutSectionPath(path) && path.parent !== undefined && path.parent.length > 0)
     );
+};
+
+export const isFirstInContainer = (parentLayoutPath: ILayoutItemPath | undefined) => {
+    if (parentLayoutPath && parentLayoutPath.length > 1) {
+        const itemCoordinates = parentLayoutPath[parentLayoutPath.length - 1];
+        return itemCoordinates.itemIndex === 0 && itemCoordinates.sectionIndex === 0;
+    }
+    return false;
 };

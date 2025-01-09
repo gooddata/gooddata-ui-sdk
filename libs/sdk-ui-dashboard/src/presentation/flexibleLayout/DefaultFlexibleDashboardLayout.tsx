@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
 import {
     ObjRef,
@@ -7,10 +7,10 @@ import {
     isWidget,
     IDashboardLayout,
     IDashboardLayoutItem,
-    IDashboardLayoutSizeByScreenSize,
 } from "@gooddata/sdk-model";
 import { LRUCache } from "lru-cache";
 import max from "lodash/max.js";
+import cx from "classnames";
 
 import {
     useDashboardSelector,
@@ -38,7 +38,6 @@ import { EmptyDashboardLayout } from "./EmptyDashboardLayout.js";
 import { EmptyDashboardNestedLayout } from "./EmptyDashboardNestedLayout.js";
 import { useScreenSize } from "../dashboard/components/DashboardScreenSizeContext.js";
 import { useDashboardItemPathAndSize } from "../dashboard/components/DashboardItemPathAndSizeContext.js";
-import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../_staging/dashboard/flexibleLayout/index.js";
 
 /**
  * Get dashboard layout for exports.
@@ -50,15 +49,12 @@ import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../_staging/dashboard/fl
  */
 function getDashboardLayoutForExport(
     layout: IDashboardLayout<ExtendedDashboardWidget>,
-    parentSize: IDashboardLayoutSizeByScreenSize | undefined,
 ): IDashboardLayout<ExtendedDashboardWidget> {
     const dashLayout = DashboardLayoutBuilder.for(layout);
     const layoutFacade = dashLayout.facade();
     const sections = layoutFacade.sections();
     const screenSplitSections = sections.map((section) => ({
-        items: section
-            .items()
-            .asGridRows("xl", parentSize?.["xl"].gridWidth ?? DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT),
+        items: section.items().asGridRows("xl"),
         header: section.header(),
     }));
 
@@ -101,7 +97,7 @@ const itemKeyGetter: IDashboardLayoutItemKeyGetter<ExtendedDashboardWidget> = (k
  * @alpha
  */
 export const DefaultFlexibleDashboardLayout = (props: IDashboardLayoutProps): JSX.Element => {
-    const { layout: providedLayout, onFiltersChange, onDrill, onError } = props;
+    const { layout: providedLayout, onFiltersChange, onDrill, onError, dashboardItemClasses } = props;
 
     const selectedLayout = useDashboardSelector(selectLayout);
 
@@ -138,7 +134,7 @@ export const DefaultFlexibleDashboardLayout = (props: IDashboardLayoutProps): JS
 
     const transformedLayout = useMemo(() => {
         if (isExport) {
-            return getDashboardLayoutForExport(layout, itemSize);
+            return getDashboardLayoutForExport(layout);
         }
 
         return DashboardLayoutBuilder.for(layout, itemPath)
@@ -146,7 +142,7 @@ export const DefaultFlexibleDashboardLayout = (props: IDashboardLayoutProps): JS
                 section.modifyItems(sanitizeWidgets(getInsightByRef, enableWidgetCustomHeight)),
             )
             .build();
-    }, [isExport, layout, itemPath, itemSize, sanitizeWidgets, getInsightByRef, enableWidgetCustomHeight]);
+    }, [isExport, layout, itemPath, sanitizeWidgets, getInsightByRef, enableWidgetCustomHeight]);
 
     const widgetRenderer = useCallback<IDashboardLayoutWidgetRenderer<ExtendedDashboardWidget>>(
         (renderProps) => {
@@ -172,7 +168,9 @@ export const DefaultFlexibleDashboardLayout = (props: IDashboardLayoutProps): JS
     return (
         <>
             <DashboardLayout
-                className={isExport ? "export-mode" : ""}
+                className={cx(dashboardItemClasses, {
+                    "export-mode": isExport,
+                })}
                 layout={transformedLayout}
                 parentLayoutItemSize={itemSize}
                 parentLayoutPath={itemPath}

@@ -42,7 +42,11 @@ import { IDashboardProps } from "../types.js";
 import { DashboardLoading } from "./DashboardLoading.js";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { DefaultEmptyLayoutDropZoneBody, LayoutResizeStateProvider } from "../../dragAndDrop/index.js";
+import {
+    DefaultEmptyLayoutDropZoneBody,
+    LayoutResizeStateProvider,
+    HoveredWidgetProvider,
+} from "../../dragAndDrop/index.js";
 import { RenderModeAwareDashboardSidebar } from "../DashboardSidebar/RenderModeAwareDashboardSidebar.js";
 import { DASHBOARD_OVERLAYS_Z_INDEX } from "../../constants/index.js";
 import { DashboardItemPathAndSizeProvider } from "./DashboardItemPathAndSizeContext.js";
@@ -170,7 +174,9 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                             <DndProvider backend={HTML5Backend}>
                                                 <LayoutResizeStateProvider>
                                                     <DashboardItemPathAndSizeProvider>
-                                                        <DashboardLoading {...props} />
+                                                        <HoveredWidgetProvider>
+                                                            <DashboardLoading {...props} />
+                                                        </HoveredWidgetProvider>
                                                     </DashboardItemPathAndSizeProvider>
                                                 </LayoutResizeStateProvider>
                                             </DndProvider>

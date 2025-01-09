@@ -32,6 +32,7 @@ import { IUser } from '@gooddata/sdk-model';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { LocalIdRef } from '@gooddata/sdk-model';
 import { MessageDescriptor } from 'react-intl';
+import { MutableRefObject } from 'react';
 import { ObjRef } from '@gooddata/sdk-model';
 import { OverlayController as OverlayController_2 } from './OverlayController.js';
 import { PureComponent } from 'react';
@@ -58,6 +59,16 @@ export const AddGranteeBase: React_2.FC<IAddGranteeBaseProps>;
 
 // @internal (undocumented)
 export type AddMessageType = (message: MessageDescriptor, options?: MessageParameters) => string;
+
+// @internal (undocumented)
+export type AlignConfig = {
+    triggerAlignPoint: PositionPoint;
+    overlayAlignPoint: PositionPoint;
+    offset?: IOffset;
+};
+
+// @internal (undocumented)
+export function alignConfigToAlignPoint(alignConfig: AlignConfig): IAlignPoint;
 
 // @internal (undocumented)
 export type Alignment = {
@@ -102,6 +113,12 @@ export const BackButton: React_2.FC<IBackButtonProps>;
 
 // @internal
 export const bem: (block: `gd-ui-kit-${string}`) => {
+    b: (props?: StyleProps) => string;
+    e: (element: string, props?: StyleProps) => string;
+};
+
+// @internal
+export function bemFactory<TPrefix extends string>(block: `${TPrefix}-${string}`): {
     b: (props?: StyleProps) => string;
     e: (element: string, props?: StyleProps) => string;
 };
@@ -691,6 +708,9 @@ export const HeaderWorkspacePicker: React_2.FC<WithIntlProps<IHeaderWorkspacePic
 // @internal (undocumented)
 export type HelpMenuDropdownAlignPoints = "br tr" | "bl tl";
 
+// @internal (undocumented)
+export type HorizontalPosition = "left" | "center" | "right";
+
 // @public (undocumented)
 export const HubspotConversionTouchPointDialog: React_2.FC<IHubspotConversionTouchPointDialogBaseProps>;
 
@@ -808,6 +828,11 @@ export interface IAppHeaderProps {
     // (undocumented)
     menuItemsGroups?: IHeaderMenuItem[][];
     // (undocumented)
+    notificationsPanel?: (props: {
+        isMobile: boolean;
+        closeNotificationsOverlay: () => void;
+    }) => React_2.ReactNode;
+    // (undocumented)
     onChatItemClick?: (e: React_2.MouseEvent) => void;
     // (undocumented)
     onHelpClick?: (isOpen: boolean) => void;
@@ -845,6 +870,8 @@ export interface IAppHeaderState {
     guid: string;
     // (undocumented)
     isHelpMenuOpen: boolean;
+    // (undocumented)
+    isNotificationsMenuOpen: boolean;
     // (undocumented)
     isOverlayMenuOpen: boolean;
     // (undocumented)
@@ -1198,7 +1225,7 @@ export interface IConfirmDialogBaseProps extends IDialogBaseProps {
 }
 
 // @internal (undocumented)
-export type IconType = "check" | "plus" | "sync";
+export type IconType = "check" | "plus" | "sync" | "alert" | "close" | "question";
 
 // @internal (undocumented)
 export interface ICustomizableCheckmarkProps {
@@ -1453,6 +1480,8 @@ export interface IDropdownBodyRenderProps {
 
 // @internal (undocumented)
 export interface IDropdownButtonProps {
+    // (undocumented)
+    ariaLabel?: string;
     // (undocumented)
     children?: ReactNode;
     // (undocumented)
@@ -1992,6 +2021,8 @@ export interface IHeaderMenuItem {
     className?: string;
     // (undocumented)
     href?: string;
+    // (undocumented)
+    icon?: React_2.ReactNode;
     // (undocumented)
     iconName?: string;
     // (undocumented)
@@ -3286,7 +3317,7 @@ export interface IOverlayProps<T> {
     // (undocumented)
     alignPoints?: IAlignPoint[];
     // (undocumented)
-    alignTo?: string | HTMLElement;
+    alignTo?: string | HTMLElement | null;
     // (undocumented)
     children?: React.ReactNode;
     // (undocumented)
@@ -3301,11 +3332,17 @@ export interface IOverlayProps<T> {
     closeOnParentScroll?: boolean;
     // (undocumented)
     containerClassName?: string;
+    // (undocumented)
+    height?: number | string;
     ignoreClicksOn?: T[];
     // (undocumented)
     ignoreClicksOnByClass?: string[];
     // (undocumented)
     isModal?: boolean;
+    // (undocumented)
+    maxHeight?: number | string;
+    // (undocumented)
+    maxWidth?: number | string;
     // (undocumented)
     onAlign?: (optimalAlign: Alignment) => void;
     // (undocumented)
@@ -3320,6 +3357,8 @@ export interface IOverlayProps<T> {
     resizeObserverThreshold?: number;
     // (undocumented)
     shouldCloseOnClick?: (e: Event) => boolean;
+    // (undocumented)
+    width?: number | string;
     // (undocumented)
     zIndex?: number | undefined;
 }
@@ -4477,6 +4516,9 @@ export const OverlayControllerProvider: React_2.FC<IOverlayControllerProviderPro
 export type OverlayPositionType = "absolute" | "fixed" | SameAsTargetPosition;
 
 // @internal (undocumented)
+export type PositionPoint = `${VerticalPosition}-${HorizontalPosition}`;
+
+// @internal (undocumented)
 export function preselectDateDataset<T extends IDateDataset>(dateDatasets: T[], recommendedDate: T): Array<T | IDateDatasetHeader>;
 
 // @internal (undocumented)
@@ -4855,10 +4897,14 @@ export const Typography: React_2.FC<ITypographyProps>;
 export type TypographyTagName = "h1" | "h2" | "h3" | "p";
 
 // @internal (undocumented)
-export const UiButton: ({ size, variant, label, isDisabled, isLoading, iconBefore, iconAfter, }: UiButtonProps) => React_2.JSX.Element;
+export const UiButton: ({ buttonRef, size, variant, label, isDisabled, isLoading, iconBefore, iconAfter, onClick, dataId, }: UiButtonProps) => React_2.JSX.Element;
 
 // @internal (undocumented)
 export interface UiButtonProps {
+    // (undocumented)
+    buttonRef?: React_2.RefObject<HTMLButtonElement>;
+    // (undocumented)
+    dataId?: string;
     // (undocumented)
     iconAfter?: IconType;
     // (undocumented)
@@ -4870,7 +4916,7 @@ export interface UiButtonProps {
     // (undocumented)
     label: string;
     // (undocumented)
-    onClick?: () => void;
+    onClick?: (e: React_2.MouseEvent<HTMLButtonElement>) => void;
     // (undocumented)
     size?: SizeSmall | SizeMedium | SizeLarge;
     // (undocumented)
@@ -4887,11 +4933,58 @@ export interface UiIconProps {
     // (undocumented)
     color?: ThemeColor;
     // (undocumented)
-    label: string;
+    label?: string;
     // (undocumented)
     size?: number;
     // (undocumented)
     type: IconType;
+}
+
+// @internal (undocumented)
+export function UiPagedVirtualList<T>(props: UiPagedVirtualListProps<T>): React_2.JSX.Element;
+
+// @internal (undocumented)
+export interface UiPagedVirtualListProps<T> {
+    // (undocumented)
+    children: (item: T) => React_2.ReactNode;
+    // (undocumented)
+    hasNextPage?: boolean;
+    // (undocumented)
+    isLoading?: boolean;
+    // (undocumented)
+    itemHeight: number;
+    // (undocumented)
+    itemPadding: number;
+    // (undocumented)
+    items?: T[];
+    // (undocumented)
+    itemsGap: number;
+    // (undocumented)
+    loadNextPage?: () => void;
+    // (undocumented)
+    maxHeight: number;
+    // (undocumented)
+    SkeletonItem?: React_2.ComponentType<UiPagedVirtualListSkeletonItemProps>;
+    // (undocumented)
+    skeletonItemsCount: number;
+}
+
+// @internal (undocumented)
+export interface UiPagedVirtualListSkeletonItemProps {
+    // (undocumented)
+    itemHeight: number;
+}
+
+// @internal (undocumented)
+export function UiSkeleton({ itemsCount, itemHeight, itemWidth, itemsGap, direction, }: UiSkeletonProps): React_2.JSX.Element;
+
+// @internal (undocumented)
+export interface UiSkeletonProps {
+    direction?: "row" | "column";
+    itemHeight?: (number | string) | (number | string)[];
+    itemsCount?: number;
+    itemsGap?: number;
+    itemWidth?: (number | string) | (number | string)[];
 }
 
 // @internal (undocumented)
@@ -4916,6 +5009,13 @@ T,
 T,
 (value: T) => void
 ];
+
+// @internal (undocumented)
+export function useElementSize(): {
+    ref: MutableRefObject<HTMLElement>;
+    height: number;
+    width: number;
+};
 
 // @internal
 export const useHeaderSearch: () => HeaderSearchContext;
@@ -4973,6 +5073,9 @@ export type VariantSecondary = "secondary";
 
 // @internal (undocumented)
 export type VariantTertiary = "tertiary";
+
+// @internal (undocumented)
+export type VerticalPosition = "top" | "center" | "bottom";
 
 // @internal (undocumented)
 export function withBubble<T>(WrappedComponent: React_2.ComponentType<T>): React_2.FC<T & IWithBubbleProps>;

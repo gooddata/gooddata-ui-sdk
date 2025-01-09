@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import {
     IColorPalette,
     IDateFilterConfig,
@@ -809,5 +809,53 @@ export const selectEnableInPlatformNotifications: DashboardSelector<boolean> = c
     selectConfig,
     (state) => {
         return state.settings?.enableInPlatformNotifications ?? false;
+    },
+);
+
+/**
+ * Returns whether in-platform notifications are enabled.
+ *
+ * @beta
+ */
+export const selectAutomationId: DashboardSelector<string | undefined> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.automationId;
+    },
+);
+
+/**
+ * Returns whether external recipients are enabled.
+ *
+ * @internal
+ */
+export const selectEnableExternalRecipients: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableExternalRecipients ?? false;
+    },
+);
+
+/**
+ * Returns whether drill dialog tooltip is enabled.
+ *
+ * @internal
+ */
+export const selectEnableDrilledTooltip: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableDrilledTooltip ?? true;
+    },
+);
+
+/**
+ * Returns whether dynamic height of the dashboard section description fields in dashboard edit mode is enabled.
+ *
+ * @internal
+ */
+export const selectEnableDashboardDescriptionDynamicHeight: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableDashboardDescriptionDynamicHeight ?? false;
     },
 );

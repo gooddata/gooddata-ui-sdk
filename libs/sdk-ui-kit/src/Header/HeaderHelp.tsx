@@ -15,6 +15,7 @@ interface IHelpItem {
     className?: string;
     target?: string;
     iconName?: string;
+    icon?: React.ReactNode;
     onClick?: (obj: any) => void;
 }
 
@@ -62,6 +63,7 @@ export const CoreHeaderHelp: React.FC<IHeaderHelpProps> = ({
                 className={cx("gd-list-item gd-list-help-menu-item", { [item.className]: !!item.className })}
             >
                 {item.iconName ? <i className={cx(item.iconName, "gd-icon")} /> : null}
+                {item.icon ? item.icon : null}
                 <span>
                     <FormattedMessage id={item.key} />
                 </span>

@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 export type {
     DashboardDispatch,
     DashboardState,
@@ -99,6 +99,10 @@ export {
     selectEnableCrossFilteringAliasTitles,
     selectEnableFlexibleLayout,
     selectEnableInPlatformNotifications,
+    selectEnableExternalRecipients,
+    selectEnableDrilledTooltip,
+    selectAutomationId,
+    selectEnableDashboardDescriptionDynamicHeight,
 } from "./config/configSelectors.js";
 export type { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {
@@ -409,6 +413,8 @@ export {
 export {
     selectNotificationChannels,
     selectNotificationChannelsCount,
+    selectNotificationChannelsForScheduledExports,
+    selectNotificationChannelsCountForScheduledExports,
 } from "./notificationChannels/notificationChannelsSelectors.js";
 export type { NotificationChannelsState } from "./notificationChannels/notificationChannelsState.js";
 export type { AutomationsState } from "./automations/automationsState.js";
@@ -425,7 +431,7 @@ export {
 } from "./automations/automationsSelectors.js";
 
 export type { UsersState } from "./users/usersState.js";
-export { selectUsers } from "./users/usersSelectors.js";
+export { selectUsers, selectErrorUsers, selectUsersLoadingStatus } from "./users/usersSelectors.js";
 
 export type { IFilterViews, FilterViewsState } from "./filterViews/index.js";
 export { selectFilterViews, selectFilterViewsAreLoading } from "./filterViews/index.js";

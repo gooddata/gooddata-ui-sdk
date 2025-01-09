@@ -101,6 +101,7 @@ import {
 import { changeInsightWidgetIgnoreCrossFilteringHandler } from "./widgets/changeInsightWidgetIgnoreCrossFilteringHandler.js";
 import { setScreenSizeHandler } from "./layout/setScreenSizeHandler.js";
 import { toggleLayoutSectionHeadersHandler } from "./layout/toggleLayoutSectionHeadersHandler.js";
+import { loadAllWorkspaceUsersHandler } from "./users/loadAllUsersHandler.js";
 
 function* notImplementedCommand(ctx: DashboardContext, cmd: IDashboardCommand): SagaIterator<void> {
     yield dispatchDashboardEvent(commandRejected(ctx, cmd.correlationId));
@@ -209,4 +210,5 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.APPLY": applyFilterViewHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.CHANGE_DEFAULT_STATUS": setFilterViewAsDefaultHandler,
     "GDC.DASH/CMD.FILTER_CONTEXT.FILTER_VIEW.RELOAD": reloadFilterViewsHandler,
+    "GDC.DASH/CMD.USERS.LOAD_ALL": loadAllWorkspaceUsersHandler,
 };

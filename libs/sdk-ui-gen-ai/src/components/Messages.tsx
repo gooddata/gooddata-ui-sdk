@@ -31,13 +31,27 @@ const MessagesComponent: React.FC<MessagesComponentProps> = ({ messages, loading
                 {!messages.length && !loading ? <EmptyState /> : null}
                 {loading === "loading" || loading === "clearing" ? <Skeleton count={3} height="2em" /> : null}
                 {loading !== "loading" && loading !== "clearing"
-                    ? messages.map((message) => {
+                    ? messages.map((message, index) => {
+                          const isLast = index === messages.length - 1;
+
                           if (isUserMessage(message)) {
-                              return <UserMessageComponent key={message.localId} message={message} />;
+                              return (
+                                  <UserMessageComponent
+                                      key={message.localId}
+                                      message={message}
+                                      isLast={isLast}
+                                  />
+                              );
                           }
 
                           if (isAssistantMessage(message)) {
-                              return <AssistantMessageComponent key={message.localId} message={message} />;
+                              return (
+                                  <AssistantMessageComponent
+                                      key={message.localId}
+                                      message={message}
+                                      isLast={isLast}
+                                  />
+                              );
                           }
 
                           return assertNever(message);

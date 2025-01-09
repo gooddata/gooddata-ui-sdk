@@ -13,6 +13,7 @@ import { setUserFeedback } from "../../store/index.js";
 type AssistantMessageProps = {
     message: AssistantMessage;
     setUserFeedback: typeof setUserFeedback;
+    isLast?: boolean;
 };
 
 const labelMessage = defineMessage({ id: "gd.gen-ai.assistant-icon" });
@@ -20,6 +21,7 @@ const labelMessage = defineMessage({ id: "gd.gen-ai.assistant-icon" });
 const AssistantMessageComponentCore: React.FC<AssistantMessageProps & WrappedComponentProps> = ({
     message,
     setUserFeedback,
+    isLast,
     intl,
 }) => {
     const classNames = cx(
@@ -43,6 +45,7 @@ const AssistantMessageComponentCore: React.FC<AssistantMessageProps & WrappedCom
                     content={message.content}
                     isComplete={Boolean(message.complete || message.cancelled)}
                     isCancelled={message.cancelled}
+                    isLastMessage={isLast}
                 />
                 {message.complete ? (
                     <div

@@ -545,6 +545,7 @@ export interface IDateDataset {
 // @alpha
 export interface IDateFilterConfigsQuery {
     query(): Promise<IDateFilterConfigsQueryResult>;
+    queryCustomDateFilterConfig(): Promise<IDateFilterConfigsQueryResult>;
     withLimit(limit: number): IDateFilterConfigsQuery;
     withOffset(offset: number): IDateFilterConfigsQuery;
 }
@@ -886,12 +887,13 @@ export interface INotificationChannelsQuery {
 // @beta
 export type INotificationChannelsQueryResult = IPagedResource<INotificationChannelMetadataObject>;
 
-// @beta
+// @public
 export interface INotificationsQuery {
     query(): Promise<INotificationsQueryResult>;
     queryAll(): Promise<INotification[]>;
     withPage(page: number): INotificationsQuery;
     withSize(size: number): INotificationsQuery;
+    withStatus(status: "read" | "unread"): INotificationsQuery;
     withWorkspace(workspaceId: string): INotificationsQuery;
 }
 
@@ -950,7 +952,7 @@ export interface IOrganizationNotificationChannelService {
     updateNotificationChannel(notificationChannel: INotificationChannelMetadataObject): Promise<INotificationChannelMetadataObject>;
 }
 
-// @beta
+// @public
 export interface IOrganizationNotificationService {
     getNotificationsQuery(): INotificationsQuery;
     markAllNotificationsAsRead(): Promise<void>;

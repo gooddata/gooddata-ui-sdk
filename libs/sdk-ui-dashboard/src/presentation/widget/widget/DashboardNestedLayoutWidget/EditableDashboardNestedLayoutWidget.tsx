@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import cx from "classnames";
@@ -31,6 +31,7 @@ export const EditableDashboardNestedLayoutWidget: React.FC<IDashboardLayoutProps
     layout,
     parentLayoutItemSize,
     parentLayoutPath,
+    dashboardItemClasses,
 }) => {
     const screen = useScreenSize();
     const dispatch = useDashboardDispatch();
@@ -49,6 +50,7 @@ export const EditableDashboardNestedLayoutWidget: React.FC<IDashboardLayoutProps
         <>
             <DashboardItem
                 className={cx(
+                    dashboardItemClasses,
                     "gd-dashboard-nested-layout-widget",
                     "gd-dashboard-view-widget",
                     "is-edit-mode",

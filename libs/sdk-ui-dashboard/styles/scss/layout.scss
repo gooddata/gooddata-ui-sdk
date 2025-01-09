@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/typo-mixins";
 @use "@gooddata/sdk-ui-kit/styles/scss/typo";
@@ -410,6 +410,28 @@ $gd-dashboards-section-description-color: var(
     }
 }
 
+// The rules are scoped inside a class that's added dynamically based upon a feature flag value.
+// When ff is removed, class name envelope can be removed.
+.gd-auto-resized-dashboard-descriptions {
+    .gd-fluid-layout-row-header {
+        .gd-editable-label {
+            @include mixins.active-states {
+                border-color: variables.$editable-label-border;
+                border-radius: 3px;
+            }
+
+            &.is-editing {
+                border-radius: 3px;
+            }
+        }
+
+        .gd-editable-label-richtext {
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+    }
+}
+
 // ****** FLEXIBLE NESTED LAYOUT ******
 
 // The styles counts with 12 grid columns. The matching constant is defined in
@@ -432,25 +454,8 @@ $gd-dashboards-section-description-color: var(
                 color: kit-variables.$gd-color-state-blank;
             }
         }
-
-        .gd-editable-label {
-            @include mixins.active-states {
-                border-color: variables.$editable-label-border;
-                border-radius: 3px;
-            }
-
-            &.is-editing {
-                border-radius: 3px;
-            }
-        }
-
-        .gd-editable-label-richtext {
-            padding: 2px 5px;
-            border-radius: 3px;
-        }
     }
 
-    .gd-fluid-layout-row-header-container--no-headers,
     .gd-fluid-layout-row-header-container--with-headers {
         margin-top: 16px;
     }

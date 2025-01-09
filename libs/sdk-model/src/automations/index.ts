@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { IMetadataObject, IMetadataObjectDefinition } from "../ldm/metadata/types.js";
 import { IAuditable } from "../base/metadata.js";
@@ -11,7 +11,7 @@ import { Identifier } from "../objRef/index.js";
 import { IMeasure } from "../execution/measure/index.js";
 
 /**
- * @alpha
+ * @public
  */
 export interface IAutomationDetails {
     /**

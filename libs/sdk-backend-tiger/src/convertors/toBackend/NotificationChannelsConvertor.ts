@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import {
     JsonApiNotificationChannelPostOptionalId,
     JsonApiNotificationChannelIn,
@@ -87,7 +87,6 @@ function convertInPlatformNotificationChannelToBackend<
         ...shared,
         attributes: {
             ...shared.attributes,
-            destinationType: DeclarativeNotificationChannelDestinationTypeEnum.IN_PLATFORM,
             destination: { type: "IN_PLATFORM" },
         },
     };
@@ -103,7 +102,7 @@ function convertCustomSmtpNotificationChannelToBackend<
         ...shared,
         attributes: {
             ...shared.attributes,
-            destinationType: DeclarativeNotificationChannelDestinationTypeEnum.SMTP,
+            inPlatformNotification: channel.sendInPlatformNotifications ? "ENABLED" : "DISABLED",
             destination: config
                 ? ({
                       type: "SMTP",
@@ -129,7 +128,7 @@ function convertDefaultSmtpNotificationChannelToBackend<
         ...shared,
         attributes: {
             ...shared.attributes,
-            destinationType: DeclarativeNotificationChannelDestinationTypeEnum.DEFAULT_SMTP,
+            inPlatformNotification: channel.sendInPlatformNotifications ? "ENABLED" : "DISABLED",
             destination: config
                 ? ({
                       type: "DEFAULT_SMTP",
@@ -151,7 +150,7 @@ function convertWebhookNotificationChannelToBackend<
         ...shared,
         attributes: {
             ...shared.attributes,
-            destinationType: DeclarativeNotificationChannelDestinationTypeEnum.WEBHOOK,
+            inPlatformNotification: channel.sendInPlatformNotifications ? "ENABLED" : "DISABLED",
             destination: config
                 ? ({
                       type: "WEBHOOK",

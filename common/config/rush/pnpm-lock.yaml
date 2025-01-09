@@ -2687,6 +2687,9 @@ importers:
       '@gooddata/sdk-ui-charts':
         specifier: workspace:*
         version: link:../sdk-ui-charts
+      '@gooddata/sdk-ui-filters':
+        specifier: workspace:*
+        version: link:../sdk-ui-filters
       '@gooddata/sdk-ui-geo':
         specifier: workspace:*
         version: link:../sdk-ui-geo
@@ -2741,6 +2744,9 @@ importers:
       react-lines-ellipsis:
         specifier: ^0.15.0
         version: 0.15.4(react-dom@18.2.0)(react@18.2.0)
+      react-loading-skeleton:
+        specifier: ^3.4.0
+        version: 3.4.0(react@18.2.0)
       react-measure:
         specifier: ^2.5.2
         version: 2.5.2(react-dom@18.2.0)(react@18.2.0)
@@ -3531,6 +3537,9 @@ importers:
       '@gooddata/util':
         specifier: workspace:*
         version: link:../util
+      '@tanstack/react-virtual':
+        specifier: ^3.11.1
+        version: 3.11.1(react-dom@18.2.0)(react@18.2.0)
       classnames:
         specifier: ^2.3.1
         version: 2.3.2
@@ -3576,6 +3585,9 @@ importers:
       react-intl:
         specifier: ^6.4.1
         version: 6.5.5(react@18.2.0)(typescript@5.3.3)
+      react-loading-skeleton:
+        specifier: ^3.4.0
+        version: 3.4.0(react@18.2.0)
       react-markdown:
         specifier: ^9.0.1
         version: 9.0.1(@types/react@18.2.45)(react@18.2.0)
@@ -11165,6 +11177,21 @@ packages:
   /@swc/types@0.1.5:
     resolution: {integrity: sha512-myfUej5naTBWnqOCc/MdVOLVjXUXtIA+NpDrDBKJtLLg2shUjBu3cZmB/85RyitKc55+lUUyl7oRfLOvkr2hsw==}
     dev: true
+
+  /@tanstack/react-virtual@3.11.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-orn2QNe5tF6SqjucHJ6cKTKcRDe3GG7bcYqPNn72Yejj7noECdzgAyRfGt2pGDPemhYim3d1HIR/dgruCnLfUA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    dependencies:
+      '@tanstack/virtual-core': 3.10.9
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /@tanstack/virtual-core@3.10.9:
+    resolution: {integrity: sha512-kBknKOKzmeR7lN+vSadaKWXaLS0SZZG+oqpQ/k80Q6g9REn6zRHS/ZYdrIzHnpHgy/eWs00SujveUN/GJT2qTw==}
+    dev: false
 
   /@testing-library/dom@9.2.0:
     resolution: {integrity: sha512-xTEnpUKiV/bMyEsE5bT4oYA0x0Z/colMtxzUY8bKyPXBNLn/e0V4ZjBZkEhms0xE4pv9QsPfSRu9AWS4y5wGvA==}

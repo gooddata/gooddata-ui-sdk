@@ -1,18 +1,19 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import { IExportResult } from "../exports/index.js";
 import { IAutomationDetails } from "../automations/index.js";
+import isEmpty from "lodash/isEmpty.js";
 
 /**
  * Type of the notification.
  *
- * @alpha
+ * @public
  */
 export type NotificationType = "alertNotification" | "scheduleNotification" | "testNotification";
 
 /**
  * Notification with details about the automation or test that triggered it.
  *
- * @alpha
+ * @public
  */
 export interface INotificationBase {
     /**
@@ -49,7 +50,7 @@ export interface INotificationBase {
 /**
  * Notification with details about the alert that triggered it.
  *
- * @alpha
+ * @public
  */
 export interface IAlertNotification extends INotificationBase {
     notificationType: "alertNotification";
@@ -69,7 +70,7 @@ export interface IAlertNotification extends INotificationBase {
 /**
  * Notification with details about the schedule that triggered it.
  *
- * @alpha
+ * @public
  */
 export interface IScheduleNotification extends INotificationBase {
     notificationType: "scheduleNotification";
@@ -88,7 +89,7 @@ export interface IScheduleNotification extends INotificationBase {
 /**
  * Notification with details about the test that triggered it.
  *
- * @alpha
+ * @public
  */
 export interface ITestNotification extends INotificationBase {
     notificationType: "testNotification";
@@ -102,7 +103,7 @@ export interface ITestNotification extends INotificationBase {
 /**
  * Notification with details about the automation or test that triggered it.
  *
- * @alpha
+ * @public
  */
 export interface ITestNotificationDetails {
     /**
@@ -114,7 +115,7 @@ export interface ITestNotificationDetails {
 /**
  * Notification with details about the automation or test that triggered it.
  *
- * @alpha
+ * @public
  */
 export interface IAutomationNotificationDetailsBase {
     /**
@@ -131,7 +132,7 @@ export interface IAutomationNotificationDetailsBase {
 /**
  * Details of the alert notification.
  *
- * @alpha
+ * @public
  */
 export interface IAlertNotificationDetails extends IAutomationNotificationDetailsBase {
     /**
@@ -143,7 +144,7 @@ export interface IAlertNotificationDetails extends IAutomationNotificationDetail
 /**
  * Details of the schedule notification.
  *
- * @alpha
+ * @public
  */
 export interface IScheduleNotificationDetails extends IAutomationNotificationDetailsBase {
     /**
@@ -155,14 +156,14 @@ export interface IScheduleNotificationDetails extends IAutomationNotificationDet
 /**
  * Automation notification type.
  *
- * @alpha
+ * @public
  */
 export type AutomationNotificationType = "automation-task.completed" | "automation-task.limit-exceeded";
 
 /**
  * Data from the webhook message.
  *
- * @alpha
+ * @public
  */
 export interface IWebhookMessageDataBase {
     /**
@@ -199,7 +200,7 @@ export interface IWebhookMessageDataBase {
 /**
  * Data from the webhook message.
  *
- * @alpha
+ * @public
  */
 export interface IWebhookMessageDataAlert extends IWebhookMessageDataBase {
     /**
@@ -211,14 +212,14 @@ export interface IWebhookMessageDataAlert extends IWebhookMessageDataBase {
 /**
  * Data from the webhook message.
  *
- * @alpha
+ * @public
  */
 export type IWebhookMessageDataSchedule = IWebhookMessageDataBase;
 
 /**
  * Automation information.
  *
- * @alpha
+ * @public
  */
 export interface IWebhookAutomationInfo {
     /**
@@ -235,12 +236,16 @@ export interface IWebhookAutomationInfo {
      * URL of the dashboard, or custom dashboard URL (if configured on automation).
      */
     dashboardURL: string;
+    /**
+     * Indicates whether the dashboard URL is custom.
+     */
+    isCustomDashboardURL?: boolean;
 }
 
 /**
  * Alert description.
  *
- * @alpha
+ * @public
  */
 export interface IAlertDescription {
     /**
@@ -317,7 +322,7 @@ export interface IAlertDescription {
 /**
  * Alert evaluation row.
  *
- * @alpha
+ * @public
  */
 export interface IAlertEvaluationRow {
     /**
@@ -344,7 +349,7 @@ export interface IAlertEvaluationRow {
 /**
  * Metric value.
  *
- * @alpha
+ * @public
  */
 export interface IAlertEvaluationRowMetric {
     /**
@@ -361,7 +366,7 @@ export interface IAlertEvaluationRowMetric {
 /**
  * Webhook recipient.
  *
- * @alpha
+ * @public
  */
 export type WebhookRecipient = {
     /**
@@ -378,13 +383,65 @@ export type WebhookRecipient = {
 /**
  * Alert description status.
  *
- * @alpha
+ * @public
  */
 export type AlertDescriptionStatus = "SUCCESS" | "ERROR" | "INTERNAL_ERROR" | "TIMEOUT";
 
 /**
  * Notification.
  *
- * @alpha
+ * @public
  */
 export type INotification = IAlertNotification | IScheduleNotification | ITestNotification;
+
+/**
+ * Type guard to check if the notification is an alert notification.
+ *
+ * @public
+ */
+export function isAlertNotification(notification: unknown): notification is IAlertNotification {
+    if (isEmpty(notification)) {
+        return false;
+    }
+
+    return (notification as INotification).notificationType === "alertNotification";
+}
+
+/**
+ * Type guard to check if the notification is a schedule notification.
+ *
+ * @public
+ */
+export function isScheduleNotification(notification: unknown): notification is IScheduleNotification {
+    if (isEmpty(notification)) {
+        return false;
+    }
+
+    return (notification as INotification).notificationType === "scheduleNotification";
+}
+
+/**
+ * Type guard to check if the notification is a test notification.
+ *
+ * @public
+ */
+export function isTestNotification(notification: unknown): notification is ITestNotification {
+    if (isEmpty(notification)) {
+        return false;
+    }
+
+    return (notification as INotification).notificationType === "testNotification";
+}
+
+/**
+ * Type guard to check if the notification is a test notification.
+ *
+ * @public
+ */
+export function isNotification(notification: unknown): notification is INotification {
+    return (
+        isAlertNotification(notification) ||
+        isScheduleNotification(notification) ||
+        isTestNotification(notification)
+    );
+}

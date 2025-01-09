@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 @use "variables";
 @use "zIndexes";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
@@ -58,6 +58,9 @@
         height: 100%;
         border-left: 2px dashed;
 
+        &.default {
+            border-color: kit-variables.$gd-color-disabled;
+        }
         &.muted {
             border-color: kit-variables.$gd-color-text;
         }
@@ -89,6 +92,10 @@
         width: 100%;
         border-top: 2px dashed;
         border-color: kit-variables.$gd-palette-primary-base;
+
+        &.default {
+            border-color: kit-variables.$gd-color-disabled;
+        }
 
         &.muted {
             border-color: kit-variables.$gd-color-text;
@@ -142,6 +149,12 @@
         &.error {
             background: variables.$gd-palette-primary-base-mix15-white;
         }
+        &.squared {
+            left: 0;
+            right: 0;
+            margin: 0;
+            border-radius: 0;
+        }
     }
 
     .gd-resize-overlay-text {
@@ -193,23 +206,117 @@
     );
 }
 
+.gd-grid-layout-width-resizer-drag-preview {
+    padding: 0 0 0 30px;
+    &.gd-first-in-container {
+        .gd-fluidlayout-width-resizer__container {
+            padding-top: 0;
+        }
+    }
+}
+
+.gd-grid-layout-resizer-drag-preview,
 .gd-grid-layout {
-    .dash-width-resizer-container {
-        right: -20px;
-        width: 20px;
+    .gd-fluidlayout-width-resizer__container {
+        padding: 10px 0;
+        border-radius: 4px;
+    }
+    .gd-fluidlayout-width-resizer {
+        padding: 4px 0;
+        display: flex;
+        flex-direction: column;
+        border-radius: 4px;
+
+        .width-resizer-line {
+            flex: 1 0 auto;
+            width: 0;
+            margin-left: 4px;
+            height: unset;
+        }
     }
 
     .dash-height-resizer-container {
-        position: unset;
+        position: relative;
         right: unset;
         bottom: unset;
         left: unset;
-        height: 10px;
+        height: 0;
+    }
+
+    .width-resizer-drag-handler {
+        $width-resizer-center-size: 10px;
+
+        width: $width-resizer-center-size;
+        height: $width-resizer-center-size;
+        border: 2px solid;
+        border-radius: 3px;
+        flex: 0 0 $width-resizer-center-size;
+        &.default {
+            border-color: kit-variables.$gd-color-disabled;
+        }
+        &.muted {
+            border-color: kit-variables.$gd-color-text;
+        }
+
+        &.active {
+            border-color: kit-variables.$gd-palette-primary-base;
+        }
+
+        &.error {
+            border-color: kit-variables.$gd-palette-error-base;
+        }
+    }
+    .gd-fluidlayout-height-resizer {
+        padding: 0;
+        margin-top: 7px;
+        display: flex;
+        flex-direction: row;
+        border-radius: 4px;
+
+        .height-resizer-line {
+            flex: 1 0 auto;
+            margin-top: 4px;
+            width: unset;
+        }
+    }
+}
+
+.gd-grid-layout-resizer-drag-preview.height-resizer-drag-preview {
+    height: 20px;
+}
+
+.gd-grid-layout {
+    .dash-width-resizer-container {
+        position: relative;
+        left: -25px;
+        right: 0;
+        width: 0;
+        &.gd-first-in-container {
+            .gd-fluidlayout-width-resizer__container {
+                padding-top: 0;
+            }
+        }
+    }
+
+    .gd-fluidlayout-width-resizer__container {
+        background: variables.$gd-dashboards-content-backgroundColor;
+        width: 100%;
     }
 
     .dash-height-resizer-hotspot {
-        position: unset;
+        position: absolute;
+        bottom: -6px;
         display: flex;
+        height: 20px;
+    }
+
+    .gd-hover-detector {
+        width: 100%;
+        height: 100%;
+    }
+    .gd-resize-overlay {
+        left: -10px;
+        right: -10px;
     }
 }
 
@@ -217,6 +324,7 @@
     .dash-width-resizer-hotspot {
         position: unset;
         left: unset;
+        padding: 0 0 0 30px;
     }
 
     .gd-resize-overlay-text {

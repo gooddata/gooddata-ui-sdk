@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 /**
  * Settings are obtained from backend and are effectively a collection of feature flags or settings with
@@ -521,11 +521,6 @@ export interface ISettings {
     enableHeadlineExport?: boolean;
 
     /**
-     * Enables the FlightRPC (FlexFunctions) data source.
-     */
-    enableFlightRpcDataSource?: boolean;
-
-    /**
      * Enable early access features rollout.
      */
     enableEarlyAccessFeaturesRollout?: boolean;
@@ -565,6 +560,21 @@ export interface ISettings {
      * Enable fine-tuning options for visualization in AD configuration panel.
      */
     enableVisualizationFineTuning?: boolean;
+
+    /**
+     * Enable external recipients options
+     */
+    enableExternalRecipients?: boolean;
+
+    /**
+     * Enable drilled tooltip in drill dialog
+     */
+    enableDrilledTooltip?: boolean;
+
+    /**
+     * Enable dynamic height of the dashboard section description fields in dashboard edit mode.
+     */
+    enableDashboardDescriptionDynamicHeight?: boolean;
 
     [key: string]: number | boolean | string | object | undefined;
 }

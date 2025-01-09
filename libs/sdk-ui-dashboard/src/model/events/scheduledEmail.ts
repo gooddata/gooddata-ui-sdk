@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { DashboardContext } from "../types/commonTypes.js";
 import { IDashboardEvent } from "./base.js";
@@ -78,4 +78,34 @@ export function scheduledEmailSaved(
  */
 export const isDashboardScheduledEmailSaved = eventGuard<DashboardScheduledEmailSaved>(
     "GDC.DASH/EVT.SCHEDULED_EMAIL.SAVED",
+);
+
+/**
+ * This event is emitted after the automations are refreshed (after creating, updating, or removing alerts or scheduled exports).
+ *
+ * @beta
+ */
+export interface DashboardAutomationsRefreshed extends IDashboardEvent {
+    readonly type: "GDC.DASH/EVT.AUTOMATIONS.REFRESHED";
+}
+
+export function automationsRefreshed(
+    ctx: DashboardContext,
+    correlationId?: string,
+): DashboardAutomationsRefreshed {
+    return {
+        type: "GDC.DASH/EVT.AUTOMATIONS.REFRESHED",
+        ctx,
+        correlationId,
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardAutomationsRefreshed}.
+ *
+ * @param obj - object to test
+ * @beta
+ */
+export const isDashboardAutomationsRefreshed = eventGuard<DashboardAutomationsRefreshed>(
+    "GDC.DASH/EVT.AUTOMATIONS.REFRESHED",
 );
