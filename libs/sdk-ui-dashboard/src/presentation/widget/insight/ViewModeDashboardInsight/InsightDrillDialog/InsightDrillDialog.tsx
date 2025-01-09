@@ -4,6 +4,7 @@ import {
     idRef,
     IInsight,
     insightTitle,
+    isInsight,
     IInsightWidget,
     IInsightWidgetDescriptionConfiguration,
 } from "@gooddata/sdk-model";
@@ -67,15 +68,20 @@ const defaultDescriptionConfig: IInsightWidgetDescriptionConfiguration = {
 
 const getInsightWidgetDescription = (
     descriptionConfig: IInsightWidgetDescriptionConfiguration,
-    widgetDescription: string | undefined,
-    insightDescription: string | undefined,
+    widget: IInsightWidget | undefined,
+    insight: IInsight["insight"] | undefined,
 ): string | undefined => {
-    if (!descriptionConfig.visible) {
-        return undefined;
+    // We will handler description configuration only for insight widget that is
+    // same as insight in dialog
+    if (isInsight(widget) && widget.insight.identifier === insight?.identifier) {
+        if (!descriptionConfig.visible) {
+            return undefined;
+        }
+        const useInsightDescription = descriptionConfig.source === "insight";
+        return useInsightDescription ? insight?.summary : widget?.description;
     }
-
-    const useInsightDescription = descriptionConfig.source === "insight";
-    return useInsightDescription ? insightDescription : widgetDescription;
+    // If widget is not insight or insight is not same as insight in dialog, we will use insight summary as default
+    return insight?.summary;
 };
 
 const DRILL_MODAL_EXECUTION_PSEUDO_REF = idRef("@@GDC_DRILL_MODAL");
@@ -123,11 +129,7 @@ export const InsightDrillDialog = (props: InsightDrillDialogProps): JSX.Element 
 
     const [isOpen, setIsOpen] = useState(false);
     const descriptionConfig = widget.configuration?.description ?? defaultDescriptionConfig;
-    const description = getInsightWidgetDescription(
-        descriptionConfig,
-        widget.description,
-        insight.insight.summary,
-    );
+    const description = getInsightWidgetDescription(descriptionConfig, widget, insight.insight);
 
     return (
         <OverlayControllerProvider overlayController={overlayController}>
