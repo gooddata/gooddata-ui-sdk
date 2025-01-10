@@ -388,7 +388,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
                 </span>
                 {this.renderRecipientValue(recipient)}
                 {recipient.type === "externalUser" ? (
-                    <div style={{ background: "white", marginTop: "5px" }}>
+                    <div className="gd-recipient-option-label-external-warning">
                         <Message type="warning">
                             <FormattedMessage id="dialogs.schedule.email.user.warning.external" />
                         </Message>

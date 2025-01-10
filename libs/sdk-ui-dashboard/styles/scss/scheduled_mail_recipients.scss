@@ -242,6 +242,16 @@ $input-height: 28px;
                 margin-left: 10px;
                 color: kit-variables.$gd-color-disabled;
             }
+
+            .gd-recipient-option-label-external-warning {
+                margin: 5px -8px -6px -8px;
+                background: kit-variables.$default-gd-color-white;
+
+                .gd-message {
+                    font-size: 13px;
+                    padding: 4px 8px 4px 8px;
+                }
+            }
         }
 
         .gd-recipient-existed {
