@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { ReplaceSectionItem } from "../../commands/index.js";
@@ -24,9 +24,11 @@ import {
     findItem,
     getSectionIndex,
     getItemIndex,
+    getParentPath,
 } from "../../../_staging/layout/coordinates.js";
 import { normalizeItemSizeToParent } from "../../../_staging/layout/sizing.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
+import { resizeParentContainers } from "./containerHeightSanitization.js";
 
 type ReplaceSectionItemContext = {
     ctx: DashboardContext;
@@ -184,6 +186,8 @@ export function* replaceSectionItemHandler(
             }),
         ]),
     );
+
+    yield call(resizeParentContainers, getParentPath(layoutPath));
 
     return layoutSectionItemReplaced(
         ctx,

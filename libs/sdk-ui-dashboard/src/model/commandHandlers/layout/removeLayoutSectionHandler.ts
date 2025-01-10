@@ -1,10 +1,10 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes.js";
 import { RemoveLayoutSection } from "../../commands/index.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { selectLayout } from "../../store/layout/layoutSelectors.js";
-import { put, select } from "redux-saga/effects";
+import { put, select, call } from "redux-saga/effects";
 import { layoutActions } from "../../store/layout/index.js";
 import { DashboardLayoutSectionRemoved, layoutSectionRemoved } from "../../events/layout.js";
 import isEmpty from "lodash/isEmpty.js";
@@ -14,7 +14,9 @@ import {
     serializeLayoutSectionPath,
     findSections,
     updateSectionIndex,
+    getParentPath,
 } from "../../../_staging/layout/coordinates.js";
+import { resizeParentContainers } from "./containerHeightSanitization.js";
 
 export function* removeLayoutSectionHandler(
     ctx: DashboardContext,
@@ -67,6 +69,8 @@ export function* removeLayoutSectionHandler(
             },
         }),
     );
+
+    yield call(resizeParentContainers, getParentPath(targetSection));
 
     return layoutSectionRemoved(
         ctx,
