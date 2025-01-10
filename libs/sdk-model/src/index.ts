@@ -49,6 +49,7 @@ export type {
     NotificationChannelDestinationType,
     INotificationChannelMetadataObject,
     INotificationChannelMetadataObjectDefinition,
+    NotificationChannelDashboardLinkVisibility,
     INotificationChannelTestResponse,
     ToNotificationChannelMetadataObject,
 } from "./notificationChannels/index.js";

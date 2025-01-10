@@ -2501,6 +2501,7 @@ export type INotificationChannelMetadataObject = IWebhookNotificationChannelMeta
 export interface INotificationChannelMetadataObjectBase {
     allowedRecipients?: NotificationChannelAllowedRecipients;
     customDashboardUrl?: string;
+    dashboardLinkVisibility?: NotificationChannelDashboardLinkVisibility;
     destinationType: NotificationChannelDestinationType;
     // (undocumented)
     type: "notificationChannel";
@@ -4623,6 +4624,9 @@ export function newVirtualArithmeticMeasure(measuresOrIds: ReadonlyArray<Measure
 
 // @beta
 export type NotificationChannelAllowedRecipients = "creator" | "internal" | "external";
+
+// @beta
+export type NotificationChannelDashboardLinkVisibility = "hidden" | "visible" | "internalOnly";
 
 // @beta
 export type NotificationChannelDestinationType = "webhook" | "smtp" | "inPlatform";
