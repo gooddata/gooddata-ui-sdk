@@ -58,6 +58,9 @@ export const ThemeProvider: React_2.FC<IThemeProviderProps>;
 export type ThemeStatus = "pending" | "loading" | "success";
 
 // @public
+export const useIsDarkTheme: () => boolean;
+
+// @public
 export const useTheme: (theme?: ITheme) => ITheme | undefined;
 
 // @public

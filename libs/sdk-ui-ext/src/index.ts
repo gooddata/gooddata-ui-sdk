@@ -111,8 +111,6 @@ export * from "./internal/components/attributeHierarchies/index.js";
 
 export * from "./internal/components/pluggableVisualizations/alerts.js";
 
-export { useNotifications } from "./notificationsPanel/data/useNotifications.js";
-export type { IUseNotificationsProps } from "./notificationsPanel/data/useNotifications.js";
 export { NotificationsPanel } from "./notificationsPanel/NotificationsPanel/NotificationsPanel.js";
 export type {
     INotificationsPanelProps,
