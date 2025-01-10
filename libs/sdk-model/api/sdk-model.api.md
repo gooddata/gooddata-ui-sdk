@@ -964,6 +964,11 @@ export interface IAutomationDetails {
 }
 
 // @alpha (undocumented)
+export interface IAutomationExternalRecipient extends Omit<IAutomationUserRecipient, "type"> {
+    type: "externalUser";
+}
+
+// @alpha (undocumented)
 export interface IAutomationMetadataObject extends IAutomationMetadataObjectBase, IMetadataObject, IAuditable {
     // (undocumented)
     type: "automation";
@@ -999,7 +1004,7 @@ export interface IAutomationNotificationDetailsBase {
 }
 
 // @alpha (undocumented)
-export type IAutomationRecipient = IAutomationUserRecipient | IAutomationUserGroupRecipient;
+export type IAutomationRecipient = IAutomationUserRecipient | IAutomationUserGroupRecipient | IAutomationExternalRecipient;
 
 // @alpha (undocumented)
 export interface IAutomationRecipientBase {
@@ -1008,7 +1013,7 @@ export interface IAutomationRecipientBase {
 }
 
 // @alpha (undocumented)
-export type IAutomationRecipientType = "user" | "userGroup";
+export type IAutomationRecipientType = "user" | "userGroup" | "externalUser";
 
 // @alpha (undocumented)
 export interface IAutomationSchedule {
@@ -3071,6 +3076,9 @@ export function isAttributeSort(obj: unknown): obj is IAttributeSortItem;
 
 // @public
 export function isAttributeValueSort(obj: unknown): obj is IAttributeSortItem;
+
+// @alpha
+export function isAutomationExternalUserRecipient(obj: unknown): obj is IAutomationExternalRecipient;
 
 // @alpha (undocumented)
 export function isAutomationMetadataObject(obj: unknown): obj is IAutomationMetadataObject;

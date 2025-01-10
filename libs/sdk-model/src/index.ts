@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 /**
  * This package provides domain models for GoodData.UI.
  *
@@ -1020,6 +1020,7 @@ export type {
     IAutomationRecipientType,
     IAutomationUserGroupRecipient,
     IAutomationUserRecipient,
+    IAutomationExternalRecipient,
     IAutomationAlert,
     IAutomationAlertCondition,
     IAutomationAlertExecutionDefinition,
@@ -1038,6 +1039,7 @@ export {
     isAutomationMetadataObjectDefinition,
     isAutomationUserGroupRecipient,
     isAutomationUserRecipient,
+    isAutomationExternalUserRecipient,
 } from "./automations/index.js";
 
 export type { ISemanticSearchResultItem, ISemanticSearchRelationship } from "./genAI/semanticSearch.js";
