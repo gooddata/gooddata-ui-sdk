@@ -2087,5 +2087,20 @@
         "value": "Triggered for",
         "comment": "",
         "limit": 0
+    },
+    "notifications.panel.error.learnMore": {
+        "value": "Learn more",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.error.traceId": {
+        "value": "Trace ID",
+        "comment": "",
+        "limit": 0
+    },
+    "notifications.panel.error.message": {
+        "value": "The alert could not be processed.",
+        "comment": "",
+        "limit": 0
     }
 }

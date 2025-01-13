@@ -3,6 +3,7 @@ import React from "react";
 import cx from "classnames";
 import { UiIcon } from "@gooddata/sdk-ui-kit";
 import { bem } from "../bem.js";
+import { useIsDarkTheme } from "@gooddata/sdk-ui-theme-provider";
 
 const { b, e } = bem("gd-ui-ext-notifications-panel-button");
 
@@ -52,6 +53,7 @@ export function DefaultNotificationsPanelButton({
     toggleNotificationPanel,
     hasUnreadNotifications,
 }: INotificationsPanelButtonComponentProps) {
+    const isDarkTheme = useIsDarkTheme();
     return (
         <button
             ref={buttonRef}
@@ -60,7 +62,7 @@ export function DefaultNotificationsPanelButton({
         >
             <span className={e("icon")}>
                 {hasUnreadNotifications ? <span className={e("unread-status")} /> : null}
-                <UiIcon type="alert" size={14} color="complementary-0" />
+                <UiIcon type="alert" size={14} color={isDarkTheme ? "complementary-9" : "complementary-0"} />
             </span>
         </button>
     );

@@ -253,17 +253,3 @@ Component for rendering loading placeholder items.
 | Name       | Type   | Description                           |
 | ---------- | ------ | ------------------------------------- |
 | itemHeight | number | Height of the skeleton item in pixels |
-
-## Custom Implementation
-
-If you find that the provided components and customizations are not sufficient for your use case, you can use the `useNotifications` hook to implement your own notification UI.
-The hook provides methods for fetching unread/all notifications, refreshing notifications, marking them as read, and more.
-
-#### Props
-
-| Name                       | Type               | Default | Description                                                              |
-| -------------------------- | ------------------ | ------- | ------------------------------------------------------------------------ |
-| backend                    | IAnalyticalBackend | -       | Backend instance. Falls back to BackendProvider context if not specified |
-| workspace                  | string             | -       | Workspace ID. Falls back to WorkspaceProvider context if not specified   |
-| refreshInterval (required) | number             | -       | Time in milliseconds between notification refreshes. Set to 0 to disable |
-| itemsPerPage (required)    | number             | -       | Number of notifications loaded in each batch                             |

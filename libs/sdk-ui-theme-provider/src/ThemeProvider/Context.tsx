@@ -1,8 +1,9 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import compose from "lodash/flowRight.js";
 import { ITheme } from "@gooddata/sdk-model";
 import { wrapDisplayName } from "@gooddata/sdk-ui";
+import { isDarkTheme } from "./isDarkTheme.js";
 
 const ThemeContext = React.createContext<ITheme | undefined>(undefined);
 ThemeContext.displayName = "ThemeContext";
@@ -17,6 +18,7 @@ ThemeStatusContext.displayName = "ThemeStatusContext";
  * @public
  */
 export type ThemeStatus = "pending" | "loading" | "success";
+
 /**
  * @public
  */
@@ -89,6 +91,16 @@ export const ThemeContextProvider: React.FC<IThemeContextProviderProps> = ({
 export const useTheme = (theme?: ITheme): ITheme | undefined => {
     const themeFromContext = React.useContext(ThemeContext);
     return theme ?? themeFromContext;
+};
+
+/**
+ * Hook that returns whether the current theme is dark
+ *
+ * @public
+ */
+export const useIsDarkTheme = (): boolean => {
+    const theme = useTheme();
+    return isDarkTheme(theme);
 };
 
 /**

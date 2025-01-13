@@ -622,14 +622,6 @@ export type ISizeInfoDefault = ISizeInfo & {
     default: number;
 };
 
-// @public
-export interface IUseNotificationsProps {
-    backend?: IAnalyticalBackend;
-    itemsPerPage: number;
-    refreshInterval: number;
-    workspace?: string;
-}
-
 // @internal (undocumented)
 export interface IUserEditDialogProps extends IWithTelemetryProps {
     // (undocumented)
@@ -750,25 +742,6 @@ export type TelemetryEvent = "multiple-users-deleted" | "multiple-groups-deleted
 
 // @internal (undocumented)
 export type TrackEventCallback = (event: TelemetryEvent) => void;
-
-// @public (undocumented)
-export function useNotifications({ workspace, refreshInterval, itemsPerPage }: IUseNotificationsProps): {
-    notifications: INotification[];
-    notificationsStatus: "error" | "loading" | "pending" | "success";
-    notificationsError: GoodDataSdkError;
-    notificationsHasNextPage: boolean;
-    notificationsLoadNextPage: () => void;
-    notificationsReset: () => void;
-    unreadNotifications: INotification[];
-    unreadNotificationsStatus: "error" | "loading" | "pending" | "success";
-    unreadNotificationsError: GoodDataSdkError;
-    unreadNotificationsHasNextPage: boolean;
-    unreadNotificationsLoadNextPage: () => void;
-    unreadNotificationsReset: () => void;
-    unreadNotificationsCount: number;
-    markNotificationAsRead: (notificationId: string) => Promise<void>;
-    markAllNotificationsAsRead: () => Promise<void>;
-};
 
 // @internal (undocumented)
 export const UserEditDialog: React_2.FC<IUserEditDialogProps>;
