@@ -365,7 +365,7 @@
     "configurationPanel.zoomInsight": "Zoomattava visualisointi",
     "configurationPanel.zoomInsight.help": "Ota käyttöön zoomaus näyttääksesi yksityiskohtaisen näkymän visualisoinnista. Pidä vaihtonäppäintä painettuna panoroidaksesi zoomattua aluetta.",
     "configurationPanel.zoomInsight.notice": "Zoomia ei sovelleta vietyihin kojelautoihin",
-    "configurationPanel.drillConfig.selectInsight": "Valitse visualisointi...",
+    "configurationPanel.drillConfig.selectInsight": "Valitse visualisointi…",
     "gs.date.date-dataset.recommended": "Suositeltu",
     "gs.date.date-dataset.other": "Muut",
     "gs.date.date-dataset.related": "Liittyvä",
@@ -649,5 +649,9 @@
     "granularity.month": "kuukausi",
     "granularity.date": "päivä",
     "granularity.hour": "tunti",
-    "granularity.minute": "minuutti"
+    "granularity.minute": "minuutti",
+    "options.menu.unsupported.schedulingForInsightNotEnabled": "Et voi ajoittaa vientiä tälle pienoisohjelmalle.",
+    "options.menu.unsupported.alertingForInsightNotEnabled": "Et voi luoda hälytystä tälle pienoisohjelmalle.",
+    "nestedLayoutToolbar.hideHeader": "Piilota otsikko ja kuvaus.",
+    "nestedLayoutToolbar.showHeader": "Näytä otsikko ja kuvaus."
 }

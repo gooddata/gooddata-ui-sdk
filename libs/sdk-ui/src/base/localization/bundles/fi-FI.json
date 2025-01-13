@@ -657,5 +657,6 @@
     "userManagement.workspace.granularPermission.analyze.description": "Antaa käyttäjien luoda, muokata tai poistaa dashboardeja ja visualisointeja sekä tarkastella loogista tietomallia (LDM) ja mittareita.",
     "userManagement.workspace.granularPermission.manage.description": "Käyttäjät voivat muokata tai poistaa loogista tietomallia ja mittareita sekä käyttää kaikkia dashboardeja ja muokata dashboardin käyttöoikeuksia rajoituksetta.",
     "userManagement.workspace.granularPermission.warning": "<b>Varoitus:</b> Tämä toiminto poistaa kaikki tarpeettomat yhdistelmät.",
-    "userManagement.workspace.permission.and": "ja"
+    "userManagement.workspace.permission.and": "ja",
+    "gs.header.notifications": "Ilmoitukset"
 }

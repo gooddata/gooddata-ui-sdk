@@ -235,7 +235,7 @@
     "visualizationsList.create": "Creare una visualizzazione",
     "visualizationsList.noUserInsights": "Non sono state create visualizzazioni.",
     "visualizationsList.noVisualizationsFound": "Nessuna visualizzazione abbinata.",
-    "search_insights": "Cerca tutte le visualizzazioni...",
+    "search_insights": "Cerca tutte le visualizzazioni…",
     "save.as.new": "Salva come nuovo",
     "addPanel.deleteItem": "Rilascia per rimuovere",
     "addPanel.newItem": "Nuovo elemento",
@@ -365,7 +365,7 @@
     "configurationPanel.zoomInsight": "Visualizzazione zoomabile",
     "configurationPanel.zoomInsight.help": "Attivare lo zoom della visualizzazione per visualizzare una vista dettagliata. Tenere premuto il tasto shift per eseguire la panoramica dell'area ingrandita.",
     "configurationPanel.zoomInsight.notice": "Lo zoom non verrà applicato ai cruscotti esportati.",
-    "configurationPanel.drillConfig.selectInsight": "Scegliere la visualizzazione...",
+    "configurationPanel.drillConfig.selectInsight": "Scegliere la visualizzazione…",
     "gs.date.date-dataset.recommended": "Consigliato",
     "gs.date.date-dataset.other": "Altro",
     "gs.date.date-dataset.related": "Correlato",
@@ -649,5 +649,9 @@
     "granularity.month": "mese",
     "granularity.date": "giorno",
     "granularity.hour": "ora",
-    "granularity.minute": "minuto"
+    "granularity.minute": "minuto",
+    "options.menu.unsupported.schedulingForInsightNotEnabled": "Non è possibile pianificare un'esportazione per questo widget.",
+    "options.menu.unsupported.alertingForInsightNotEnabled": "Non è possibile creare un avviso per questo widget.",
+    "nestedLayoutToolbar.hideHeader": "Nascondi titolo e descrizione.",
+    "nestedLayoutToolbar.showHeader": "Mostra titolo e descrizione."
 }

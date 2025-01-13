@@ -235,7 +235,7 @@
     "visualizationsList.create": "Criar visualização",
     "visualizationsList.noUserInsights": "Nenhuma visualização criada.",
     "visualizationsList.noVisualizationsFound": "Nenhuma visualização correspondeu.",
-    "search_insights": "Pesquisar todas as visualizações...",
+    "search_insights": "Pesquisar todas as visualizações…",
     "save.as.new": "Salvar como novo",
     "addPanel.deleteItem": "Solte para remover",
     "addPanel.newItem": "Novo item",
@@ -365,7 +365,7 @@
     "configurationPanel.zoomInsight": "Visualização com zoom",
     "configurationPanel.zoomInsight.help": "Ative o zoom da visualização para exibir uma visão detalhada. Mantenha pressionada a tecla Shift para aplicar o zoom na área ampliada.",
     "configurationPanel.zoomInsight.notice": "O zoom não será aplicado a dashboards exportados",
-    "configurationPanel.drillConfig.selectInsight": "Escolha a visualização...",
+    "configurationPanel.drillConfig.selectInsight": "Escolha a visualização…",
     "gs.date.date-dataset.recommended": "Recomendado",
     "gs.date.date-dataset.other": "Outros",
     "gs.date.date-dataset.related": "Relacionado",
@@ -649,5 +649,9 @@
     "granularity.month": "mês",
     "granularity.date": "dia",
     "granularity.hour": "hora",
-    "granularity.minute": "minuto"
+    "granularity.minute": "minuto",
+    "options.menu.unsupported.schedulingForInsightNotEnabled": "Não é possível programar uma exportação para este widget.",
+    "options.menu.unsupported.alertingForInsightNotEnabled": "Não é possível criar um alerta para este widget.",
+    "nestedLayoutToolbar.hideHeader": "Ocultar título e descrição.",
+    "nestedLayoutToolbar.showHeader": "Exibir título e descrição."
 }

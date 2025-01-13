@@ -657,5 +657,6 @@
     "userManagement.workspace.granularPermission.analyze.description": "Permite que os usuários criem, editem ou excluam painéis e visualizações, além de visualizar o LDM (Modelo de Dados Lógicos) e as métricas.",
     "userManagement.workspace.granularPermission.manage.description": "Permite que os usuários possam editar ou excluir o modelo de dados lógicos e as métricas, acessar todos os painéis e editar as suas permissões de painel sem limitações.",
     "userManagement.workspace.granularPermission.warning": "<b>Cuidado:</b> Esta ação removerá todas as combinações redundantes.",
-    "userManagement.workspace.permission.and": "e"
+    "userManagement.workspace.permission.and": "e",
+    "gs.header.notifications": "Notificações"
 }

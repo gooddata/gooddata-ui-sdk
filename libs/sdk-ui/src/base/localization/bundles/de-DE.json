@@ -657,5 +657,6 @@
     "userManagement.workspace.granularPermission.analyze.description": "Ermöglicht Benutzern das Erstellen, Bearbeiten oder Löschen von Dashboards und Visualisierungen sowie das Anzeigen des logischen Datenmodells (LDM) und der Metriken.",
     "userManagement.workspace.granularPermission.manage.description": "Ermöglicht Benutzern das Bearbeiten oder Löschen des logischen Datenmodells und der Metriken sowie den uneingeschränkten Zugriff auf alle Dashboards und das Bearbeiten ihrer Dashboard-Berechtigungen.",
     "userManagement.workspace.granularPermission.warning": "<b>Achtung:</b> Mit dieser Aktion werden alle redundanten Kombinationen entfernt.",
-    "userManagement.workspace.permission.and": "und"
+    "userManagement.workspace.permission.and": "und",
+    "gs.header.notifications": "Benachrichtigungen"
 }

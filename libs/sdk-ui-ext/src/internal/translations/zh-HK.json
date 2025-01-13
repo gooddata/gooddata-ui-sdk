@@ -371,5 +371,21 @@
     "properties.advanced.chartConfigOverride.title": "高級定製",
     "properties.advanced.chartConfigOverride.snippets.header": "片段",
     "properties.advanced.chartConfigOverride.button.apply": "應用",
-    "properties.advanced.chartConfigOverride.button.cancel": "取消"
+    "properties.advanced.chartConfigOverride.button.cancel": "取消",
+    "gs.date.yesterday": "琴日",
+    "notifications.panel.tab.unread": "未讀（{count}）",
+    "notifications.panel.tab.all": "都",
+    "notifications.panel.markAllAsRead": "全部標記為已讀",
+    "notifications.panel.error.loading": "加載通知時出錯",
+    "notifications.panel.empty.all": "無通知",
+    "notifications.panel.empty.unread": "無未讀通知",
+    "notifications.panel.unsupported.notification.type": "不支持的通知類型",
+    "notifications.panel.markAsRead": "標記為已讀",
+    "notifications.filters.buttonLabel": "顯示篩選條件",
+    "notifications.filters.dialog.title": "應用的篩選條件",
+    "notifications.filters.dialog.dateRange": "日期範圍",
+    "notifications.panel.triggers.title": "{triggeredCount}/{totalCount}項",
+    "notifications.panel.triggers.dialog.newValue": "新值",
+    "close": "關閉",
+    "notifications.panel.triggers.dialog.title": "觸發條件"
 }

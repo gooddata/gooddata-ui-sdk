@@ -657,5 +657,6 @@
     "userManagement.workspace.granularPermission.analyze.description": "Permet aux utilisateurs de créer, modifier ou supprimer des tableaux de bord et des visualisations, tout en visualisant le modèle logique de données (MLD) et les métriques.",
     "userManagement.workspace.granularPermission.manage.description": "Permet aux utilisateurs d’accéder, de modifier ou de supprimer le modèle de données logique et les métriques, d’accéder à tous les tableaux de bord et de modifier leurs droits d’accès aux tableaux de bord sans aucune limitation.",
     "userManagement.workspace.granularPermission.warning": "<b>Attention :</b> Cette action supprimera toutes les combinaisons redondantes.",
-    "userManagement.workspace.permission.and": "et"
+    "userManagement.workspace.permission.and": "et",
+    "gs.header.notifications": "Notifications"
 }

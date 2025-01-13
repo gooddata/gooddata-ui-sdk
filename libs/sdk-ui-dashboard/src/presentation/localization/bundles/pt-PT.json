@@ -235,7 +235,7 @@
     "visualizationsList.create": "Criar visualização",
     "visualizationsList.noUserInsights": "Nenhuma visualização criada.",
     "visualizationsList.noVisualizationsFound": "Não há correspondência entre as visualizações.",
-    "search_insights": "Pesquisar todas as visualizações...",
+    "search_insights": "Pesquisar todas as visualizações…",
     "save.as.new": "Guardar como novo",
     "addPanel.deleteItem": "Largar para remover",
     "addPanel.newItem": "Novo item",
@@ -649,5 +649,9 @@
     "granularity.month": "mês",
     "granularity.date": "dia",
     "granularity.hour": "hora",
-    "granularity.minute": "minuto"
+    "granularity.minute": "minuto",
+    "options.menu.unsupported.schedulingForInsightNotEnabled": "Não é possível programar uma exportação para este widget.",
+    "options.menu.unsupported.alertingForInsightNotEnabled": "Não é possível criar um alerta para este widget.",
+    "nestedLayoutToolbar.hideHeader": "Ocultar o título e a descrição.",
+    "nestedLayoutToolbar.showHeader": "Mostrar o título e a descrição."
 }

@@ -371,5 +371,21 @@
     "properties.advanced.chartConfigOverride.title": "Advanced customisation",
     "properties.advanced.chartConfigOverride.snippets.header": "Snippets",
     "properties.advanced.chartConfigOverride.button.apply": "Apply",
-    "properties.advanced.chartConfigOverride.button.cancel": "Cancel"
+    "properties.advanced.chartConfigOverride.button.cancel": "Cancel",
+    "gs.date.yesterday": "Yesterday",
+    "notifications.panel.tab.unread": "Unread ({count})",
+    "notifications.panel.tab.all": "All",
+    "notifications.panel.markAllAsRead": "Mark all as read",
+    "notifications.panel.error.loading": "Error loading notifications",
+    "notifications.panel.empty.all": "No notifications",
+    "notifications.panel.empty.unread": "No unread notifications",
+    "notifications.panel.unsupported.notification.type": "Unsupported notification type",
+    "notifications.panel.markAsRead": "Mark as read",
+    "notifications.filters.buttonLabel": "Show filters",
+    "notifications.filters.dialog.title": "Applied filters",
+    "notifications.filters.dialog.dateRange": "Date Range",
+    "notifications.panel.triggers.title": "for {triggeredCount}/{totalCount} items",
+    "notifications.panel.triggers.dialog.newValue": "New value",
+    "close": "Close",
+    "notifications.panel.triggers.dialog.title": "Triggered for"
 }
