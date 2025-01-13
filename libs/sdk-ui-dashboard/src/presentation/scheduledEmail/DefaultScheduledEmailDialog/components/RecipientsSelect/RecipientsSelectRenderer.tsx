@@ -303,7 +303,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
     private renderMultiValueItemContainer = (
         label: string,
         removeIcon: React.ReactElement | null,
-        options: { hasEmail?: boolean; noExternal?: boolean; type?: "externalUser" } = {},
+        options: { hasEmail?: boolean; noExternal?: boolean; type?: "externalUser"; email?: string } = {},
     ): React.ReactElement => {
         const style = this.getStyle();
 
@@ -367,6 +367,17 @@ export class RecipientsSelectRenderer extends React.PureComponent<
             );
         }
 
+        if (options.email) {
+            return (
+                <BubbleHoverTrigger>
+                    {render()}
+                    <Bubble className="bubble-primary" alignPoints={TOOLTIP_ALIGN_POINTS}>
+                        {options.email}
+                    </Bubble>
+                </BubbleHoverTrigger>
+            );
+        }
+
         return render();
     };
 
@@ -387,6 +398,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
             hasEmail,
             noExternal,
             type: data.type,
+            email: data.email,
         });
     };
 
