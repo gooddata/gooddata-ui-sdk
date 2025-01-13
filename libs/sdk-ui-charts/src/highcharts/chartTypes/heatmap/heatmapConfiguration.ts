@@ -1,4 +1,4 @@
-// (C) 2007-2020 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import cloneDeep from "lodash/cloneDeep.js";
 import last from "lodash/last.js";
 
@@ -29,6 +29,13 @@ const HEATMAP_TEMPLATE = {
             },
         },
     },
+    xAxis: [
+        {
+            labels: {
+                distance: 7,
+            },
+        },
+    ],
     yAxis: [
         {
             labels: {

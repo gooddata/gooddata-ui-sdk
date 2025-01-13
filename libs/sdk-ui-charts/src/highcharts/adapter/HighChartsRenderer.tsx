@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { ContentRect } from "react-measure";
 import { v4 } from "uuid";
@@ -249,7 +249,7 @@ export class HighChartsRenderer extends React.PureComponent<
     private createChartConfig(chartConfig: HighchartsOptions, legendItemsEnabled: any[]): HighchartsOptions {
         const { series, chart, xAxis, yAxis } = chartConfig;
 
-        const selectionEvent = chart.zoomType
+        const selectionEvent = chart?.zooming?.type
             ? {
                   selection: this.onChartSelection,
               }
@@ -403,7 +403,7 @@ export class HighChartsRenderer extends React.PureComponent<
             theme,
             resetZoomButtonTooltip,
         } = this.props;
-        if (chart?.zoomType) {
+        if (chart?.zooming?.type) {
             return (
                 <BubbleHoverTrigger
                     tagName="abbr"
