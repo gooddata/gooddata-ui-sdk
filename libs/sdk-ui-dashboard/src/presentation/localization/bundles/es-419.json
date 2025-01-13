@@ -365,7 +365,7 @@
     "configurationPanel.zoomInsight": "Visualización con zoom",
     "configurationPanel.zoomInsight.help": "Permite ampliar la visualización para mostrar una vista detallada. Mantenga pulsada la tecla de mayúsculas para desplazarse por la zona ampliada.",
     "configurationPanel.zoomInsight.notice": "La opción de acercar/alejar no se aplica a los paneles exportados",
-    "configurationPanel.drillConfig.selectInsight": "Elija la visualización...",
+    "configurationPanel.drillConfig.selectInsight": "Elija la visualización…",
     "gs.date.date-dataset.recommended": "Recomendado",
     "gs.date.date-dataset.other": "Otros",
     "gs.date.date-dataset.related": "Relacionado",
@@ -649,5 +649,9 @@
     "granularity.month": "mes",
     "granularity.date": "día",
     "granularity.hour": "hora",
-    "granularity.minute": "minuto"
+    "granularity.minute": "minuto",
+    "options.menu.unsupported.schedulingForInsightNotEnabled": "No se puede programar una exportación para este widget.",
+    "options.menu.unsupported.alertingForInsightNotEnabled": "No se puede crear una alerta para este widget.",
+    "nestedLayoutToolbar.hideHeader": "Ocultar título y descripción.",
+    "nestedLayoutToolbar.showHeader": "Mostrar título y descripción."
 }

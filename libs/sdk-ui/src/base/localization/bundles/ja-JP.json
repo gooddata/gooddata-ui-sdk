@@ -657,5 +657,6 @@
     "userManagement.workspace.granularPermission.analyze.description": "論理データ・モデル（LDM）やメトリクスの表示とともに、ダッシュボードやビジュアライゼーションの作成、編集、削除が可能です。",
     "userManagement.workspace.granularPermission.manage.description": "ユーザーは、論理データモデルおよびメトリクスの編集、削除、すべてのダッシュボードへのアクセスおよびダッシュボードの権限の編集を制限なく行うことができます。",
     "userManagement.workspace.granularPermission.warning": "<b>注意:</b> このアクションにより、冗長な組み合わせが削除されます。",
-    "userManagement.workspace.permission.and": "および"
+    "userManagement.workspace.permission.and": "および",
+    "gs.header.notifications": "お知らせ"
 }

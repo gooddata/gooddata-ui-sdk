@@ -371,5 +371,21 @@
     "properties.advanced.chartConfigOverride.title": "高度なカスタマイズ",
     "properties.advanced.chartConfigOverride.snippets.header": "抜粋",
     "properties.advanced.chartConfigOverride.button.apply": "適用",
-    "properties.advanced.chartConfigOverride.button.cancel": "キャンセル"
+    "properties.advanced.chartConfigOverride.button.cancel": "キャンセル",
+    "gs.date.yesterday": "昨日",
+    "notifications.panel.tab.unread": "未読 ({count}件)",
+    "notifications.panel.tab.all": "すべて",
+    "notifications.panel.markAllAsRead": "すべて既読にする",
+    "notifications.panel.error.loading": "通知の読み込みエラー",
+    "notifications.panel.empty.all": "通知なし",
+    "notifications.panel.empty.unread": "未読通知なし",
+    "notifications.panel.unsupported.notification.type": "サポートされていない通知タイプ",
+    "notifications.panel.markAsRead": "既読にする",
+    "notifications.filters.buttonLabel": "フィルターを表示",
+    "notifications.filters.dialog.title": "適用されたフィルター",
+    "notifications.filters.dialog.dateRange": "日付範囲",
+    "notifications.panel.triggers.title": "{triggeredCount}/{totalCount} 件のアイテム用",
+    "notifications.panel.triggers.dialog.newValue": "新しい価値",
+    "close": "閉じる",
+    "notifications.panel.triggers.dialog.title": "トリガー済み："
 }

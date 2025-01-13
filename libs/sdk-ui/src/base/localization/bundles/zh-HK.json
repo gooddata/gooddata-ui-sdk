@@ -657,5 +657,6 @@
     "userManagement.workspace.granularPermission.analyze.description": "允許用戶創建、編輯或刪除儀錶板同可視化，以及查看邏輯數據模型（ LDM ）同量度。",
     "userManagement.workspace.granularPermission.manage.description": "允許用戶不受限制地編輯或刪除邏輯數據模型同指標，以及訪問所有控制面板和編輯其控制面板權限。",
     "userManagement.workspace.granularPermission.warning": "<b>謹慎：</b> 此操作將刪除所有多餘的組合。",
-    "userManagement.workspace.permission.and": "和"
+    "userManagement.workspace.permission.and": "和",
+    "gs.header.notifications": "通知"
 }

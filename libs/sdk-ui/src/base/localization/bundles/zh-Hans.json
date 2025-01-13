@@ -657,5 +657,6 @@
     "userManagement.workspace.granularPermission.analyze.description": "允许用户创建、编辑或删除仪表板和可视化效果，以及查看逻辑数据模型 (LDM) 和指标。",
     "userManagement.workspace.granularPermission.manage.description": "允许用户编辑或删除逻辑数据模型和指标，并访问所有仪表板并无限制编辑其仪表板权限。",
     "userManagement.workspace.granularPermission.warning": "<b>警告：</b>此操作将删除任何冗余组合。",
-    "userManagement.workspace.permission.and": "和"
+    "userManagement.workspace.permission.and": "和",
+    "gs.header.notifications": "通知"
 }

@@ -657,5 +657,6 @@
     "userManagement.workspace.granularPermission.analyze.description": "Permite a los usuarios crear, editar o eliminar cuadros de mando y visualizaciones, además de visualizar el Modelo Lógico de Datos (LDM) y las métricas.",
     "userManagement.workspace.granularPermission.manage.description": "Permite a los usuarios acceder, editar o eliminar el modelo lógico de datos y métricas, así como acceder a todos los cuadros de mando y editar sus permisos sin limitaciones.",
     "userManagement.workspace.granularPermission.warning": "<b>Precaución:</b> Esta acción eliminará cualquier combinación redundante.",
-    "userManagement.workspace.permission.and": "y"
+    "userManagement.workspace.permission.and": "y",
+    "gs.header.notifications": "Notificaciones"
 }

@@ -371,5 +371,21 @@
     "properties.advanced.chartConfigOverride.title": "Personalização avançada",
     "properties.advanced.chartConfigOverride.snippets.header": "Trechos",
     "properties.advanced.chartConfigOverride.button.apply": "Aplicar",
-    "properties.advanced.chartConfigOverride.button.cancel": "Cancelar"
+    "properties.advanced.chartConfigOverride.button.cancel": "Cancelar",
+    "gs.date.yesterday": "Ontem",
+    "notifications.panel.tab.unread": "Não lido ({count})",
+    "notifications.panel.tab.all": "Todos",
+    "notifications.panel.markAllAsRead": "Marcar tudo como lido",
+    "notifications.panel.error.loading": "Erro ao carregar notificações",
+    "notifications.panel.empty.all": "Nenhuma notificação",
+    "notifications.panel.empty.unread": "Nenhuma notificação não lida",
+    "notifications.panel.unsupported.notification.type": "Tipo de notificação não suportado",
+    "notifications.panel.markAsRead": "Marcar como lido",
+    "notifications.filters.buttonLabel": "Mostrar filtros",
+    "notifications.filters.dialog.title": "Filtros aplicados",
+    "notifications.filters.dialog.dateRange": "Intervalo de Datas",
+    "notifications.panel.triggers.title": "para {triggeredCount}/{totalCount} itens",
+    "notifications.panel.triggers.dialog.newValue": "Novo valor",
+    "close": "Fechar",
+    "notifications.panel.triggers.dialog.title": "Acionado para"
 }

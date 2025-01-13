@@ -371,5 +371,21 @@
     "properties.advanced.chartConfigOverride.title": "Personalización avanzada",
     "properties.advanced.chartConfigOverride.snippets.header": "Fragmentos",
     "properties.advanced.chartConfigOverride.button.apply": "Aplicar",
-    "properties.advanced.chartConfigOverride.button.cancel": "Cancelar"
+    "properties.advanced.chartConfigOverride.button.cancel": "Cancelar",
+    "gs.date.yesterday": "Ayer",
+    "notifications.panel.tab.unread": "Sin leer ({count})",
+    "notifications.panel.tab.all": "Todo",
+    "notifications.panel.markAllAsRead": "Marcar todo como leído",
+    "notifications.panel.error.loading": "Notificaciones de errores de carga",
+    "notifications.panel.empty.all": "Sin notificaciones",
+    "notifications.panel.empty.unread": "Notificaciones no leídas",
+    "notifications.panel.unsupported.notification.type": "Tipo de notificación no compatible",
+    "notifications.panel.markAsRead": "Marcar como leído",
+    "notifications.filters.buttonLabel": "Mostrar filtros",
+    "notifications.filters.dialog.title": "Filtros aplicados",
+    "notifications.filters.dialog.dateRange": "Intervalo de fechas",
+    "notifications.panel.triggers.title": "para {triggeredCount}/{totalCount} artículos",
+    "notifications.panel.triggers.dialog.newValue": "Nuevo valor",
+    "close": "Cerrar",
+    "notifications.panel.triggers.dialog.title": "Activado por"
 }

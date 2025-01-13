@@ -371,5 +371,21 @@
     "properties.advanced.chartConfigOverride.title": "Geavanceerde aanpassing",
     "properties.advanced.chartConfigOverride.snippets.header": "Fragmenten ",
     "properties.advanced.chartConfigOverride.button.apply": "Toepassen",
-    "properties.advanced.chartConfigOverride.button.cancel": "Annuleren"
+    "properties.advanced.chartConfigOverride.button.cancel": "Annuleren",
+    "gs.date.yesterday": "Gisteren",
+    "notifications.panel.tab.unread": "Ongelezen ({count})",
+    "notifications.panel.tab.all": "Alles",
+    "notifications.panel.markAllAsRead": "Alles als gelezen markeren",
+    "notifications.panel.error.loading": "Fout bij het laden van meldingen",
+    "notifications.panel.empty.all": "Geen meldingen",
+    "notifications.panel.empty.unread": "Geen ongelezen meldingen",
+    "notifications.panel.unsupported.notification.type": "Niet-ondersteund meldingstype",
+    "notifications.panel.markAsRead": "Als gelezen markeren",
+    "notifications.filters.buttonLabel": "Filters tonen",
+    "notifications.filters.dialog.title": "Toegepaste filters",
+    "notifications.filters.dialog.dateRange": "Datumbereik",
+    "notifications.panel.triggers.title": "voor {triggeredCount}/{totalCount} items",
+    "notifications.panel.triggers.dialog.newValue": "Nieuwe waarde",
+    "close": "Sluiten",
+    "notifications.panel.triggers.dialog.title": "Geactiveerd voor"
 }

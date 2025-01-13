@@ -235,7 +235,7 @@
     "visualizationsList.create": "創建可視化",
     "visualizationsList.noUserInsights": "未創建可視化。",
     "visualizationsList.noVisualizationsFound": "沒有匹配的可視化。",
-    "search_insights": "搜尋所有可視化...",
+    "search_insights": "搜尋所有可視化…",
     "save.as.new": "另存為新的",
     "addPanel.deleteItem": "放下即可刪除",
     "addPanel.newItem": "新物品",
@@ -251,8 +251,8 @@
     "addPanel.kpi.tooltip.no_measures.link": "了解更多",
     "visualizationsList.dragToAdd": "拖曳添加",
     "visualizationsList.savedVisualizations": "保存的可視化效果",
-    "configurationPanel.drillConfig.selectDashboard": "選擇儀表板...",
-    "configurationPanel.drillConfig.drillIntoDashboard.searchPlaceholder": "搜尋所有儀表板...",
+    "configurationPanel.drillConfig.selectDashboard": "選擇儀表板…",
+    "configurationPanel.drillConfig.drillIntoDashboard.searchPlaceholder": "搜尋所有儀表板…",
     "configurationPanel.drillConfig.forbiddenDashboard": "（不要與你分享）",
     "configurationPanel.drillConfig.forbiddenDashboard.tooltip": "儀表板不與您共用，但其他使用者可以存取此儀表板。",
     "configurationPanel.drillConfig.notSharedDashboard.tooltip": "儀表板不與您共享，但所有用戶只要鑽取即可存取它。",
@@ -649,5 +649,9 @@
     "granularity.month": "月",
     "granularity.date": "天",
     "granularity.hour": "小時",
-    "granularity.minute": "分分鐘"
+    "granularity.minute": "分分鐘",
+    "options.menu.unsupported.schedulingForInsightNotEnabled": "您無法安排此小部件的匯出。",
+    "options.menu.unsupported.alertingForInsightNotEnabled": "您無法為此小部件建立警報。",
+    "nestedLayoutToolbar.hideHeader": "隱藏標題和描述。",
+    "nestedLayoutToolbar.showHeader": "顯示標題和描述。"
 }
