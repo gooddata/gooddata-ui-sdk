@@ -127,10 +127,19 @@ $input-height: 28px;
             color: kit-variables.$gd-color-text;
             font-family: kit-variables.$gd-font-primary;
             font-size: 14px;
+            flex-grow: 0;
+            flex-shrink: 1;
         }
 
         .gd-recipient-quest {
             color: kit-variables.$gd-color-state-blank;
+            flex-grow: 0;
+            flex-shrink: 0;
+        }
+
+        .gd-recipient-remove-icon {
+            flex-grow: 0;
+            flex-shrink: 0;
         }
 
         // custom className from react-select rendered
@@ -191,8 +200,6 @@ $input-height: 28px;
 }
 
 .gd-recipients-overlay {
-    margin-top: 31px;
-
     // custom className from react-select rendered
     .gd-recipients__menu {
         padding: 0;

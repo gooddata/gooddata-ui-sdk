@@ -548,9 +548,9 @@
         "comment": "Message for recipients input when a user is external",
         "limit": 0
     },
-    "dialogs.schedule.email.user.quest": {
-        "value": "(quest)",
-        "comment": "Quest user label",
+    "dialogs.schedule.email.user.guest": {
+        "value": "(guest)",
+        "comment": "Guest user label",
         "limit": 0
     },
     "dialogs.schedule.email.subject.label": {
