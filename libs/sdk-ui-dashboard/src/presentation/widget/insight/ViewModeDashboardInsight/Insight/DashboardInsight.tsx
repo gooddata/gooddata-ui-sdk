@@ -1,5 +1,5 @@
-// (C) 2020-2024 GoodData Corporation
-import React, { CSSProperties, useCallback, useMemo, useState } from "react";
+// (C) 2020-2025 GoodData Corporation
+import React, { CSSProperties, useCallback, useEffect, useMemo, useState } from "react";
 import { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { createSelector } from "@reduxjs/toolkit";
 import {
@@ -86,6 +86,12 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
 
     const ref = widgetRef(widget);
 
+    // register as early as possible
+    const [initialRegistered, setInitialRegistered] = useState(true);
+    useEffect(() => {
+        onRequestAsyncRender();
+    }, []);
+
     // Custom components
     const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext({
         ErrorComponent: CustomErrorComponent,
@@ -116,17 +122,27 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
     const handleLoadingChanged = useCallback<OnLoadingChanged>(
         ({ isLoading }) => {
             if (isLoading) {
-                onRequestAsyncRender();
+                if (!initialRegistered) {
+                    // request when loading changed in later phases
+                    // such as re-execution on filters change
+                    onRequestAsyncRender();
+                }
+
                 // if we started loading, any previous vis error is obsolete at this point, get rid of it
                 setVisualizationError(undefined);
             } else {
+                // reset after first successful execution
+                if (initialRegistered) {
+                    setInitialRegistered(false);
+                }
+
                 onResolveAsyncRender();
             }
             executionsHandler.onLoadingChanged({ isLoading });
             setIsVisualizationLoading(isLoading);
             onLoadingChanged?.({ isLoading });
         },
-        [onLoadingChanged, executionsHandler.onLoadingChanged],
+        [onLoadingChanged, executionsHandler.onLoadingChanged, initialRegistered],
     );
 
     // Filtering

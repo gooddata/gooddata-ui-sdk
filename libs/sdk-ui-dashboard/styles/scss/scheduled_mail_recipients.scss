@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/_variables" as button-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
@@ -129,6 +129,10 @@ $input-height: 28px;
             font-size: 14px;
         }
 
+        .gd-recipient-quest {
+            color: kit-variables.$gd-color-state-blank;
+        }
+
         // custom className from react-select rendered
         .gd-recipients__multi-value__remove {
             display: inline-flex;
@@ -165,12 +169,17 @@ $input-height: 28px;
         }
 
         &.not-valid,
+        &.invalid-external,
         &.invalid-email {
             color: kit-variables.$gd-palette-error-base;
             background: var(--gd-palette-error-dimmed, #fcedec);
 
             .gd-recipient-label {
                 color: kit-variables.$gd-palette-error-base;
+            }
+
+            .gd-recipient-quest {
+                color: kit-variables.$is-negative-focused-background;
             }
 
             .gd-recipients__multi-value__remove,
@@ -232,6 +241,16 @@ $input-height: 28px;
             .gd-recipient-option-value-item {
                 margin-left: 10px;
                 color: kit-variables.$gd-color-disabled;
+            }
+
+            .gd-recipient-option-label-external-warning {
+                margin: 5px -8px -6px -8px;
+                background: kit-variables.$default-gd-color-white;
+
+                .gd-message {
+                    font-size: 13px;
+                    padding: 4px 8px 4px 8px;
+                }
             }
         }
 

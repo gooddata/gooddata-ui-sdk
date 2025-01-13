@@ -1,8 +1,9 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 /* eslint-disable import/named,import/namespace */
 import {
     IAutomationRecipient,
     INotificationChannelMetadataObject,
+    isAutomationExternalUserRecipient,
     isAutomationUserRecipient,
 } from "@gooddata/sdk-model";
 import React from "react";
@@ -26,6 +27,7 @@ import {
     BubbleHoverTrigger,
     IAlignPoint,
     LoadingMask,
+    Message,
     Overlay,
     OverlayController,
     OverlayControllerProvider,
@@ -101,6 +103,11 @@ export interface IRecipientsSelectRendererProps {
      * Allow to remove the last recipient
      */
     allowEmptySelection?: boolean;
+
+    /**
+     * Allow external recipients
+     */
+    allowExternalRecipients?: boolean;
 
     /**
      * Maximum number of recipients
@@ -299,7 +306,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
     private renderMultiValueItemContainer = (
         label: string,
         removeIcon: React.ReactElement | null,
-        validation: { hasEmail?: boolean } = {},
+        options: { hasEmail?: boolean; noExternal?: boolean; type?: "externalUser" } = {},
     ): React.ReactElement => {
         const style = this.getStyle();
 
@@ -307,12 +314,18 @@ export class RecipientsSelectRenderer extends React.PureComponent<
             return (
                 <div
                     className={cx("gd-recipient-value-item s-gd-recipient-value-item multiple-value", {
-                        "invalid-email": !validation.hasEmail,
+                        "invalid-email": !options.hasEmail,
+                        "invalid-external": options.noExternal,
                     })}
                 >
                     <div style={{ maxWidth: style.maxWidth }} className="gd-recipient-label">
                         {label}
                     </div>
+                    {options.type === "externalUser" ? (
+                        <div className="gd-recipient-quest">
+                            <FormattedMessage id="dialogs.schedule.email.user.quest" />
+                        </div>
+                    ) : null}
                     <div aria-label="remove-icon" className="s-gd-recipient-remove">
                         {removeIcon}
                     </div>
@@ -320,12 +333,39 @@ export class RecipientsSelectRenderer extends React.PureComponent<
             );
         };
 
-        if (validation.hasEmail === false) {
+        if (options.hasEmail === false) {
             return (
                 <BubbleHoverTrigger>
                     {render()}
                     <Bubble className="bubble-negative" alignPoints={TOOLTIP_ALIGN_POINTS}>
                         <FormattedMessage id="dialogs.schedule.email.user.missing.email" />
+                    </Bubble>
+                </BubbleHoverTrigger>
+            );
+        }
+
+        if (options.noExternal === true) {
+            return (
+                <BubbleHoverTrigger>
+                    {render()}
+                    <Bubble className="bubble-negative" alignPoints={TOOLTIP_ALIGN_POINTS}>
+                        <FormattedMessage id="dialogs.schedule.email.user.invalid.external" />
+                    </Bubble>
+                </BubbleHoverTrigger>
+            );
+        }
+
+        if (options.type === "externalUser") {
+            return (
+                <BubbleHoverTrigger>
+                    {render()}
+                    <Bubble className="bubble-primary" alignPoints={TOOLTIP_ALIGN_POINTS}>
+                        <FormattedMessage
+                            id="dialogs.schedule.email.user.used.external"
+                            values={{
+                                email: label,
+                            }}
+                        />
                     </Bubble>
                 </BubbleHoverTrigger>
             );
@@ -337,6 +377,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
     private renderMultiValueContainer = (
         multiValueProps: MultiValueGenericProps<IAutomationRecipient>,
     ): React.ReactElement => {
+        const { allowExternalRecipients } = this.props;
         const { data, children } = multiValueProps;
 
         // MultiValueRemove component from react-select
@@ -344,8 +385,13 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         const name = data.name ?? data.id;
         const hasEmail =
             this.isEmailChannel() && isAutomationUserRecipient(data) ? isEmail(data.email ?? "") : true;
+        const noExternal = data.type === "externalUser" && !allowExternalRecipients;
 
-        return this.renderMultiValueItemContainer(name, removeIcon, { hasEmail });
+        return this.renderMultiValueItemContainer(name, removeIcon, {
+            hasEmail,
+            noExternal,
+            type: data.type,
+        });
     };
 
     private renderOptionLabel = (recipient: IAutomationRecipient): React.ReactElement | null => {
@@ -357,6 +403,13 @@ export class RecipientsSelectRenderer extends React.PureComponent<
                     {displayName}
                 </span>
                 {this.renderRecipientValue(recipient)}
+                {recipient.type === "externalUser" ? (
+                    <div className="gd-recipient-option-label-external-warning">
+                        <Message type="warning">
+                            <FormattedMessage id="dialogs.schedule.email.user.warning.external" />
+                        </Message>
+                    </div>
+                ) : null}
             </div>
         );
     };
@@ -454,7 +507,12 @@ export class RecipientsSelectRenderer extends React.PureComponent<
     ): IAutomationRecipient[] {
         return searchKey
             ? options.filter((recipient: IAutomationRecipient) =>
-                  includes(isAutomationUserRecipient(recipient) ? recipient.email ?? "" : "", searchKey),
+                  includes(
+                      isAutomationUserRecipient(recipient) || isAutomationExternalUserRecipient(recipient)
+                          ? recipient.email ?? ""
+                          : "",
+                      searchKey,
+                  ),
               )
             : [];
     }

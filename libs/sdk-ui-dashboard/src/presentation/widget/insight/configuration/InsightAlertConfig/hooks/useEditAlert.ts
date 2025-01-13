@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useState } from "react";
 import { useIntl } from "react-intl";
 import {
@@ -12,6 +12,7 @@ import {
     ICatalogDateDataset,
     ICatalogMeasure,
     INotificationChannelMetadataObject,
+    isAutomationExternalUserRecipient,
     isAutomationUserRecipient,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
@@ -25,7 +26,12 @@ import {
     transformAlertByValue,
 } from "../utils/transformation.js";
 import { AlertAttribute, AlertMetric, AlertMetricComparatorType } from "../../../types.js";
-import { selectCurrentUser, selectUsers, useDashboardSelector } from "../../../../../../model/index.js";
+import {
+    selectCurrentUser,
+    selectEnableExternalRecipients,
+    selectUsers,
+    useDashboardSelector,
+} from "../../../../../../model/index.js";
 import { convertCurrentUserToAutomationRecipient } from "../../../../../../_staging/automation/index.js";
 import { isEmail } from "../../../../../scheduledEmail/DefaultScheduledEmailDialog/utils/validate.js";
 
@@ -55,12 +61,15 @@ export const useEditAlert = ({
     const [warningMessage, setWarningMessage] = useState<string | undefined>(undefined);
     const currentUser = useDashboardSelector(selectCurrentUser);
     const users = useDashboardSelector(selectUsers);
+    const enabledExternalRecipients = useDashboardSelector(selectEnableExternalRecipients);
     const intl = useIntl();
 
     const selectedDestination = destinations.find(
         (destination) => destination.id === updatedAlert.notificationChannel,
     );
     const showRecipientsSelect = selectedDestination?.allowedRecipients !== "creator";
+    const allowExternalRecipients =
+        selectedDestination?.allowedRecipients === "external" && enabledExternalRecipients;
 
     const changeMeasure = (measure: AlertMetric) => {
         setUpdatedAlert((alert) => transformAlertByMetric(metrics, alert, measure, catalogMeasures));
@@ -185,6 +194,9 @@ export const useEditAlert = ({
 
     const isValueDefined = isAlertValueDefined(updatedAlert.alert);
     const isRecipientsValid = isAlertRecipientsValid(updatedAlert);
+    const isExternalRecipientsValid = allowExternalRecipients
+        ? true
+        : !updatedAlert.recipients?.some(isAutomationExternalUserRecipient);
     const isAlertChanged = !isEqual(updatedAlert, alert);
     const areEmailsValid =
         selectedDestination?.destinationType === "smtp"
@@ -193,13 +205,15 @@ export const useEditAlert = ({
               )
             : true;
 
-    const canSubmit = isValueDefined && isAlertChanged && isRecipientsValid && areEmailsValid;
+    const canSubmit =
+        isValueDefined && isAlertChanged && isRecipientsValid && areEmailsValid && isExternalRecipientsValid;
 
     return {
         viewMode,
         updatedAlert,
         canSubmit,
         showRecipientsSelect,
+        allowExternalRecipients,
         warningMessage,
         //
         changeComparisonOperator,

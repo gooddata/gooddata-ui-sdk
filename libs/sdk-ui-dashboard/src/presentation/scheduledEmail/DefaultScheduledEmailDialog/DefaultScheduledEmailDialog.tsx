@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React, { useState } from "react";
 import noop from "lodash/noop.js";
 import { defineMessage, useIntl } from "react-intl";
@@ -98,6 +98,7 @@ export function ScheduledMailDialogRenderer({
         settings,
         startDate,
         showRecipientsSelect,
+        allowExternalRecipients,
         isDashboardExportSelected,
         isCsvExportSelected,
         isXlsxExportSelected,
@@ -230,6 +231,7 @@ export function ScheduledMailDialogRenderer({
                                     originalValue={originalAutomation.recipients || []}
                                     onChange={onRecipientsChange}
                                     allowEmptySelection
+                                    allowExternalRecipients={allowExternalRecipients}
                                     maxRecipients={maxAutomationsRecipients}
                                     notificationChannels={notificationChannels}
                                     notificationChannelId={editedAutomation.notificationChannel}

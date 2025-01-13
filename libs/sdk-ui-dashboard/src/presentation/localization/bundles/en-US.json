@@ -533,6 +533,26 @@
         "comment": "Message for recipients input when a user is missing an email address.",
         "limit": 0
     },
+    "dialogs.schedule.email.user.invalid.external": {
+        "value": "This user does not have access to the dashboard.",
+        "comment": "Message for recipients input when a user is external and not allowed.",
+        "limit": 0
+    },
+    "dialogs.schedule.email.user.used.external": {
+        "value": "The email “{email}” does not belong to this workspace. The recipient may receive sensitive data.",
+        "comment": "Message for recipients input when a user is external and allowed.",
+        "limit": 0
+    },
+    "dialogs.schedule.email.user.warning.external": {
+        "value": "This email address does not belong to this workspace. The recipient may receive sensitive data.",
+        "comment": "Message for recipients input when a user is external",
+        "limit": 0
+    },
+    "dialogs.schedule.email.user.quest": {
+        "value": "(quest)",
+        "comment": "Quest user label",
+        "limit": 0
+    },
     "dialogs.schedule.email.subject.label": {
         "value": "Subject",
         "comment": "Subject of the schedule email.",

@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 import {
     IAutomationMetadataObject,
@@ -110,6 +110,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
         updatedAlert,
         canSubmit,
         showRecipientsSelect,
+        allowExternalRecipients,
         warningMessage,
         //
         changeComparisonOperator,
@@ -285,6 +286,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                                 originalValue={alert.recipients || []}
                                 onChange={changeRecipients}
                                 allowEmptySelection
+                                allowExternalRecipients={allowExternalRecipients}
                                 maxRecipients={maxAutomationsRecipients}
                                 className="gd-edit-alert__recipients"
                                 notificationChannels={destinations}
