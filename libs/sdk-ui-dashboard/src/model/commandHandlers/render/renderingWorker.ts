@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { Task, SagaIterator } from "redux-saga";
 import { put, delay, take, join, race, call, all, spawn, cancel, actionChannel } from "redux-saga/effects";
 import { v4 as uuidv4 } from "uuid";
@@ -68,6 +68,13 @@ export interface RenderingWorkerConfiguration {
      *
      */
     asyncRenderExpectedCount?: number;
+
+    /**
+     * Indicates whether rendering worker is triggered inside export mode
+     *
+     * Default: false
+     */
+    isExport?: boolean;
 }
 
 const baseConfig: RenderingWorkerConfiguration = {
@@ -75,6 +82,7 @@ const baseConfig: RenderingWorkerConfiguration = {
     asyncRenderResolvedTimeout: 2000,
     maxTimeout: 20 * 60000,
     correlationIdGenerator: uuidv4,
+    isExport: false,
 };
 export function newRenderingWorker(renderingWorkerConfig: Partial<RenderingWorkerConfiguration>) {
     return function* renderingWorker(ctx: DashboardContext): SagaIterator<void> {
@@ -121,6 +129,16 @@ function* collectAsyncRenderTasks(config: RenderingWorkerConfiguration): SagaIte
         });
 
         if (timeoutResolved) {
+            if (
+                config.asyncRenderExpectedCount !== undefined &&
+                config.asyncRenderExpectedCount !== 0 &&
+                config.isExport
+            ) {
+                // put as console.error in export mode to get to the exporter logs
+                console.error(
+                    `Rendering worker reached timeout with ${asyncRenderTasks.size} registered tasks, expected ${config.asyncRenderExpectedCount}`,
+                );
+            }
             break;
         }
 
