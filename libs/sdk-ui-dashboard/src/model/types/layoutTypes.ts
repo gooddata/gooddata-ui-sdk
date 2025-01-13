@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import {
     idRef,
@@ -17,6 +17,8 @@ import {
 } from "@gooddata/sdk-model";
 import cloneDeep from "lodash/cloneDeep.js";
 import isEmpty from "lodash/isEmpty.js";
+
+import { ILayoutItemPath } from "../../types.js";
 
 /**
  * Base type for custom widgets. Custom widgets may extend this and add extra properties to hold widget-specific
@@ -306,3 +308,13 @@ export type InternalDashboardItemDefinition = ExtendedDashboardItem | StashedDas
  * @public
  */
 export type ExtendedDashboardLayoutSection = IDashboardLayoutSection<ExtendedDashboardWidget>;
+
+/**
+ * Item with its height
+ *
+ * @internal
+ */
+export interface IItemWithHeight {
+    itemPath: ILayoutItemPath;
+    height: number;
+}

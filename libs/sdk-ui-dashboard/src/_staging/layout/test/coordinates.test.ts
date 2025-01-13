@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { describe, it, expect } from "vitest";
 
@@ -20,6 +20,7 @@ import {
     findItem,
     findSection,
     findSections,
+    getParentPath,
 } from "../coordinates";
 import { NESTED_LAYOUT } from "./coordinates.mock";
 
@@ -940,6 +941,67 @@ describe("coordinates", () => {
                         sectionIndex: 1,
                     }),
                 ).toMatchSnapshot();
+            });
+        });
+    });
+
+    describe("getParentPath", () => {
+        describe("item path", () => {
+            it("should return undefined when section or item path is undefined", () => {
+                expect(getParentPath(undefined)).toBeUndefined();
+            });
+
+            it("should return undefined when item has no parent", () => {
+                expect(getParentPath([{ itemIndex: 0, sectionIndex: 1 }])).toBeUndefined();
+            });
+
+            it("should return path to the parent when item has just one parent", () => {
+                expect(
+                    getParentPath([
+                        { itemIndex: 0, sectionIndex: 1 },
+                        { itemIndex: 2, sectionIndex: 8 },
+                    ]),
+                ).toStrictEqual([{ itemIndex: 0, sectionIndex: 1 }]);
+            });
+
+            it("should return path to the immediate parent when item is nested in multiple parents", () => {
+                expect(
+                    getParentPath([
+                        { itemIndex: 4, sectionIndex: 5 },
+                        { itemIndex: 0, sectionIndex: 1 },
+                        { itemIndex: 2, sectionIndex: 8 },
+                    ]),
+                ).toStrictEqual([
+                    { itemIndex: 4, sectionIndex: 5 },
+                    { itemIndex: 0, sectionIndex: 1 },
+                ]);
+            });
+        });
+
+        describe("section path", () => {
+            it("should return undefined when section has no parent", () => {
+                expect(getParentPath({ parent: undefined, sectionIndex: 2 })).toBeUndefined();
+            });
+
+            it("should return path to the parent when section has just one parent", () => {
+                expect(
+                    getParentPath({ parent: [{ itemIndex: 0, sectionIndex: 1 }], sectionIndex: 2 }),
+                ).toStrictEqual([{ itemIndex: 0, sectionIndex: 1 }]);
+            });
+
+            it("should return path to the immediate parent when section is nested in multiple parents", () => {
+                expect(
+                    getParentPath({
+                        parent: [
+                            { itemIndex: 4, sectionIndex: 5 },
+                            { itemIndex: 0, sectionIndex: 1 },
+                        ],
+                        sectionIndex: 2,
+                    }),
+                ).toStrictEqual([
+                    { itemIndex: 4, sectionIndex: 5 },
+                    { itemIndex: 0, sectionIndex: 1 },
+                ]);
             });
         });
     });

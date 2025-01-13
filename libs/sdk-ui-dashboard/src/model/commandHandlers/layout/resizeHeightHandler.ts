@@ -1,8 +1,9 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { IWidget } from "@gooddata/sdk-model";
 import { SagaIterator } from "redux-saga";
-import { put, select } from "redux-saga/effects";
+import { call, put, select } from "redux-saga/effects";
+
 import { ResizeHeight } from "../../commands/layout.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import {
@@ -14,13 +15,16 @@ import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
 import { layoutActions } from "../../store/layout/index.js";
 import { selectLayout } from "../../store/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
-import { validateItemExists, validateSectionExists } from "./validation/layoutValidation.js";
 import {
     serializeLayoutSectionPath,
     findSection,
     asLayoutItemPath,
     serializeLayoutItemPath,
+    getParentPath,
 } from "../../../_staging/layout/coordinates.js";
+
+import { validateItemExists, validateSectionExists } from "./validation/layoutValidation.js";
+import { resizeParentContainers } from "./containerHeightSanitization.js";
 
 function validateLayoutIndexes(
     ctx: DashboardContext,
@@ -103,6 +107,8 @@ export function* resizeHeightHandler(
             height,
         }),
     );
+
+    yield call(resizeParentContainers, getParentPath(sectionPath));
 
     return layoutSectionItemsHeightResized(
         ctx,

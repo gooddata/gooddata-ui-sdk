@@ -1,8 +1,8 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { IWidget } from "@gooddata/sdk-model";
 import { SagaIterator } from "redux-saga";
-import { put, select } from "redux-saga/effects";
+import { put, select, call } from "redux-saga/effects";
 import { ResizeWidth } from "../../commands/layout.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 
@@ -23,7 +23,9 @@ import {
     findItem,
     getSectionIndex,
     getItemIndex,
+    getParentPath,
 } from "../../../_staging/layout/coordinates.js";
+import { resizeParentContainers } from "./containerHeightSanitization.js";
 
 function validateLayoutIndexes(
     ctx: DashboardContext,
@@ -98,6 +100,8 @@ export function* resizeWidthHandler(
             width,
         }),
     );
+
+    yield call(resizeParentContainers, getParentPath(layoutPath));
 
     return layoutSectionItemWidthResized(
         ctx,

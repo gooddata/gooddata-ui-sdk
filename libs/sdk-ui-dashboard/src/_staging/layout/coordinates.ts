@@ -312,3 +312,12 @@ export const isFirstInContainer = (parentLayoutPath: ILayoutItemPath | undefined
     }
     return false;
 };
+
+export const getParentPath = (
+    path: ILayoutItemPath | ILayoutSectionPath | undefined,
+): ILayoutItemPath | undefined => {
+    if (path === undefined) {
+        return undefined;
+    }
+    return isLayoutItemPath(path) ? (path.length > 1 ? path.slice(0, -1) : undefined) : path.parent;
+};

@@ -1,7 +1,7 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { batchActions } from "redux-batched-actions";
-import { SagaReturnType, put, select } from "redux-saga/effects";
+import { SagaReturnType, put, select, call } from "redux-saga/effects";
 
 import { DashboardContext } from "../../types/commonTypes.js";
 import { MoveSectionItem } from "../../commands/index.js";
@@ -20,6 +20,7 @@ import {
     getSectionIndex,
     areItemsInSameSection,
     asSectionPath,
+    getParentPath,
 } from "../../../_staging/layout/coordinates.js";
 
 import {
@@ -31,6 +32,7 @@ import {
 import { selectSettings } from "../../store/config/configSelectors.js";
 import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
 import { normalizeItemSizeToParent } from "../../../_staging/layout/sizing.js";
+import { resizeParentContainers } from "./containerHeightSanitization.js";
 
 type MoveSectionItemContext = {
     readonly ctx: DashboardContext;
@@ -262,6 +264,9 @@ export function* moveSectionItemHandler(
                 : []),
         ]),
     );
+
+    yield call(resizeParentContainers, getParentPath(fromPath));
+    yield call(resizeParentContainers, getParentPath(targetIndex));
 
     const targetSectionIndexUpdated =
         targetSectionIndex === undefined
