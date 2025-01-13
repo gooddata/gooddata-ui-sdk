@@ -40,7 +40,6 @@ import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../../../constants/index.js";
 const MAXIMUM_RECIPIENTS_RECEIVE = 60;
 const DELAY_TIME = 500;
 const PADDING = 16;
-const REMOVE_ICON_WIDTH = 21;
 const LOADING_MENU_HEIGHT = 50;
 const CREATE_OPTION = "create-option";
 const SELECT_OPTION = "select-option";
@@ -240,9 +239,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         const { width } = (!isEmpty(current) && current!.getBoundingClientRect()) || { width: undefined };
 
         return {
-            maxWidth: width
-                ? width - PADDING - REMOVE_ICON_WIDTH // label item width equal value item container - padding - remove icon
-                : "100%",
+            maxWidth: width ? width - PADDING : "100%",
             width,
         };
     }
@@ -282,7 +279,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         const style = this.getStyle();
         return (
             <OverlayControllerProvider overlayController={overlayController}>
-                <Overlay alignTo={".gd-recipients__value-container"}>
+                <Overlay alignTo={".gd-recipients-container"} alignPoints={[{ align: "bc tc" }]}>
                     <div className="gd-recipients-overlay" style={{ width: style.width }}>
                         <Menu className="s-gd-recipients-menu-container" {...menuProps}>
                             {menuProps.children}
@@ -313,20 +310,19 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         const render = () => {
             return (
                 <div
+                    style={{ maxWidth: style.maxWidth }}
                     className={cx("gd-recipient-value-item s-gd-recipient-value-item multiple-value", {
                         "invalid-email": !options.hasEmail,
                         "invalid-external": options.noExternal,
                     })}
                 >
-                    <div style={{ maxWidth: style.maxWidth }} className="gd-recipient-label">
-                        {label}
-                    </div>
+                    <div className="gd-recipient-label">{label}</div>
                     {options.type === "externalUser" ? (
                         <div className="gd-recipient-quest">
-                            <FormattedMessage id="dialogs.schedule.email.user.quest" />
+                            <FormattedMessage id="dialogs.schedule.email.user.guest" />
                         </div>
                     ) : null}
-                    <div aria-label="remove-icon" className="s-gd-recipient-remove">
+                    <div aria-label="remove-icon" className="gd-recipient-remove-icon s-gd-recipient-remove">
                         {removeIcon}
                     </div>
                 </div>
