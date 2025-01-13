@@ -10,7 +10,7 @@ import { useFetchNotifications } from "./useFetchNotifications.js";
 /**
  * Hook for fetching all and unread notifications.
  *
- * @public
+ * @internal
  */
 export interface IUseNotificationsProps {
     /**
@@ -38,7 +38,7 @@ export interface IUseNotificationsProps {
 }
 
 /**
- * @public
+ * @internal
  */
 export function useNotifications({ workspace, refreshInterval, itemsPerPage }: IUseNotificationsProps) {
     const effectiveWorkspace = useWorkspace(workspace);

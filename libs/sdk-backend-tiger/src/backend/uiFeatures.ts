@@ -299,7 +299,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableNumberSeparators: true,
     enableNewUserCreationFlow: false,
     enableDestinationTesting: true,
-    enableInPlatformNotifications: false,
+    enableInPlatformNotifications: true,
     enableVisualizationFineTuning: false,
     enableExternalRecipients: false,
     enableDrilledTooltip: true,

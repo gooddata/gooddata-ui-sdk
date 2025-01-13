@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
 import { act } from "react-dom/test-utils";
 import { render, RenderResult } from "@testing-library/react";
@@ -8,9 +8,10 @@ import { ITheme } from "@gooddata/sdk-model";
 import { WorkspaceProvider, BackendProvider } from "@gooddata/sdk-ui";
 import cloneDeep from "lodash/cloneDeep.js";
 
-import { isDarkTheme, ThemeModifier, ThemeProvider } from "../ThemeProvider.js";
+import { ThemeModifier, ThemeProvider } from "../ThemeProvider.js";
 import { withTheme } from "../Context.js";
 import { describe, it, expect, vi, beforeEach } from "vitest";
+import { isDarkTheme } from "../isDarkTheme.js";
 
 const renderComponent = async (component: React.ReactElement): Promise<RenderResult> => {
     let wrappedComponent;

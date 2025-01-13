@@ -8,6 +8,7 @@
     background-color: var(--gd-palette-complementary-0);
 
     box-shadow: 0 2px 10px 0 var(--gd-shadow-color);
+    border-radius: var(--gd-modal-borderRadius, 3px);
 
     display: flex;
     flex-direction: column;

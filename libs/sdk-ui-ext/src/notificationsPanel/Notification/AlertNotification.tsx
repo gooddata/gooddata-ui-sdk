@@ -4,6 +4,7 @@ import { IAlertDescription, IAlertNotification, INotification } from "@gooddata/
 import { getDateTimeConfig, IDateConfig, UiIcon } from "@gooddata/sdk-ui-kit";
 import { bem } from "../bem.js";
 import { Tooltip } from "../components/Tooltip.js";
+import { Popup } from "../components/Popup.js";
 // import { NotificationFiltersDetail } from "../NotificationFiltersDetail/NotificationFiltersDetail.js";
 import { NotificationTriggerDetail } from "../NotificationTriggersDetail/NotificationTriggersDetail.js";
 import { defineMessages, FormattedDate, FormattedMessage, FormattedTime, useIntl } from "react-intl";
@@ -39,7 +40,9 @@ export function AlertNotification({
             const target = event.target;
             const targetIsElement = target instanceof Element;
             const isNotificationsDetailsLink =
-                targetIsElement && target.closest(`[data-id="notification-detail"]`);
+                targetIsElement &&
+                (target.closest(`[data-id="notification-detail"]`) ||
+                    target.closest(`[data-id="notification-error"]`));
             if (isNotificationsDetailsLink) {
                 return;
             }
@@ -53,6 +56,11 @@ export function AlertNotification({
     // const isSliced = notification.details.data.alert.attribute;
     // const showSeparator = filterCount && filterCount > 0 && isSliced;
     const notificationTitle = getNotificationTitle(notification);
+    const isSliced = notification.details.data.alert.attribute;
+    const hasTriggers = notification.details.data.alert.totalValueCount > 0;
+    const isError = notification.details.data.alert.status !== "SUCCESS";
+    const errorMessage = notification.details.data.alert.errorMessage;
+    const traceId = notification.details.data.alert.traceId;
 
     return (
         <div className={b({ isRead: notification.isRead })} onClick={clickNotification}>
@@ -64,11 +72,44 @@ export function AlertNotification({
                 <div className={e("title", { isRead: notification.isRead })} title={notificationTitle}>
                     {notificationTitle}
                 </div>
-                <div className={e("links")}>
-                    {/* <NotificationFiltersDetail notification={notification} />
-                    {showSeparator ? "・" : null} */}
-                    <NotificationTriggerDetail notification={notification} />
-                </div>
+                {isError ? (
+                    <div className={e("error")}>
+                        <div className={e("error-icon")}>
+                            <UiIcon type="crossCircle" size={12} color="error" />
+                        </div>
+                        <div>
+                            <FormattedMessage id="notifications.panel.error.message" />{" "}
+                            <Popup
+                                popup={
+                                    <div className={e("error-popup")}>
+                                        {errorMessage}
+                                        <br />
+                                        <FormattedMessage id="notifications.panel.error.traceId" />: {traceId}
+                                    </div>
+                                }
+                            >
+                                {({ toggle, id }) => (
+                                    <u
+                                        data-id="notification-error"
+                                        id={id}
+                                        onClick={() => {
+                                            toggle();
+                                        }}
+                                    >
+                                        <FormattedMessage id="notifications.panel.error.learnMore" />
+                                    </u>
+                                )}
+                            </Popup>
+                        </div>
+                    </div>
+                ) : null}
+                {!isError && isSliced && hasTriggers ? (
+                    <div className={e("links")}>
+                        {/* <NotificationFiltersDetail notification={notification} />
+                        {showSeparator ? "・" : null} */}
+                        <NotificationTriggerDetail notification={notification} />
+                    </div>
+                ) : null}
             </div>
             <div className={e("time")}>
                 <NotificationTime config={getDateTimeConfig(notification.createdAt)} />

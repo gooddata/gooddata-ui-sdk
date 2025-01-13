@@ -1,6 +1,5 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { useEffect, useState, useRef } from "react";
-import { getLuminance } from "polished";
 import identity from "lodash/identity.js";
 import { useBackend, useWorkspace } from "@gooddata/sdk-ui";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -9,6 +8,7 @@ import { ITheme } from "@gooddata/sdk-model";
 import { clearCssProperties, setCssProperties } from "../cssProperties.js";
 import { ThemeContextProvider, ThemeStatus } from "./Context.js";
 import { prepareTheme } from "./prepareTheme.js";
+import { isDarkTheme } from "./isDarkTheme.js";
 
 /**
  * @public
@@ -73,20 +73,6 @@ export interface IThemeProviderProps {
      */
     children?: React.ReactNode;
 }
-
-/**
- * @internal
- */
-export const isDarkTheme = (theme: ITheme): boolean => {
-    const firstColor = theme?.palette?.complementary?.c0;
-    const lastColor = theme?.palette?.complementary?.c9;
-
-    if (!firstColor || !lastColor) {
-        return false;
-    }
-
-    return getLuminance(firstColor) < getLuminance(lastColor);
-};
 
 /**
  * Fetches the theme object from the backend upon mounting and passes both theme object and isThemeLoading flag

@@ -256,7 +256,9 @@ function NotificationsPanelController({
 
     const handleNotificationClick = useCallback(
         (notification: INotification) => {
-            markNotificationAsRead(notification.id);
+            if (!notification.isRead) {
+                markNotificationAsRead(notification.id);
+            }
             closeNotificationsPanel();
             onNotificationClick?.(notification);
         },
