@@ -649,5 +649,9 @@
     "granularity.month": "月",
     "granularity.date": "日",
     "granularity.hour": "時",
-    "granularity.minute": "分"
+    "granularity.minute": "分",
+    "options.menu.unsupported.schedulingForInsightNotEnabled": "このウィジェットのエクスポートをスケジュールすることはできません。",
+    "options.menu.unsupported.alertingForInsightNotEnabled": "このウィジェットにアラートを作成することはできません。",
+    "nestedLayoutToolbar.hideHeader": "タイトルと説明を隠す。",
+    "nestedLayoutToolbar.showHeader": "タイトルと説明を表示する。"
 }

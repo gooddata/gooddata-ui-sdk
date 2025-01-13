@@ -235,7 +235,7 @@
     "visualizationsList.create": "Visualisatie maken",
     "visualizationsList.noUserInsights": "Geen visualisaties gemaakt.",
     "visualizationsList.noVisualizationsFound": "Geen overeenkomende visualisatie.",
-    "search_insights": "Doorzoek alle visualisaties...",
+    "search_insights": "Doorzoek alle visualisaties…",
     "save.as.new": "Opslaan als nieuw",
     "addPanel.deleteItem": "Laat los om te verwijderen",
     "addPanel.newItem": "Nieuw item",
@@ -365,7 +365,7 @@
     "configurationPanel.zoomInsight": "Zoombare visualisatie",
     "configurationPanel.zoomInsight.help": "Inschakelen om in te zoomen op de visualisatie om een gedetailleerd beeld weer te geven. Houd de shift-toets ingedrukt om het ingezoomde gebied te verschuiven.",
     "configurationPanel.zoomInsight.notice": "Zoomen wordt niet toegepast op geëxporteerde dashboards",
-    "configurationPanel.drillConfig.selectInsight": "Kies visualisatie...",
+    "configurationPanel.drillConfig.selectInsight": "Kies visualisatie…",
     "gs.date.date-dataset.recommended": "Aanbevolen",
     "gs.date.date-dataset.other": "Overige",
     "gs.date.date-dataset.related": "Verwant",
@@ -649,5 +649,9 @@
     "granularity.month": "maand",
     "granularity.date": "dag",
     "granularity.hour": "uur",
-    "granularity.minute": "minuut"
+    "granularity.minute": "minuut",
+    "options.menu.unsupported.schedulingForInsightNotEnabled": "Je kunt geen export inplannen voor deze widget.",
+    "options.menu.unsupported.alertingForInsightNotEnabled": "Je kunt geen waarschuwing aanmaken voor deze widget.",
+    "nestedLayoutToolbar.hideHeader": "Verberg titel en beschrijving.",
+    "nestedLayoutToolbar.showHeader": "Toon titel en beschrijving."
 }

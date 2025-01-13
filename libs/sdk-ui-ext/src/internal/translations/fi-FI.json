@@ -371,5 +371,21 @@
     "properties.advanced.chartConfigOverride.title": "Edistynyt mukautus",
     "properties.advanced.chartConfigOverride.snippets.header": "Katkelmat",
     "properties.advanced.chartConfigOverride.button.apply": "Käytä",
-    "properties.advanced.chartConfigOverride.button.cancel": "Peruuta"
+    "properties.advanced.chartConfigOverride.button.cancel": "Peruuta",
+    "gs.date.yesterday": "Eilen",
+    "notifications.panel.tab.unread": "Lukematon ({count})",
+    "notifications.panel.tab.all": "Kaikki",
+    "notifications.panel.markAllAsRead": "Merkitse kaikki luetuksi",
+    "notifications.panel.error.loading": "Virhe ilmoitusten lataamisessa",
+    "notifications.panel.empty.all": "Ei ilmoituksia",
+    "notifications.panel.empty.unread": "Ei lukemattomia ilmoituksia",
+    "notifications.panel.unsupported.notification.type": "Ilmoitustyyppiä ei tueta",
+    "notifications.panel.markAsRead": "Merkitse luetuksi",
+    "notifications.filters.buttonLabel": "Näytä suodattimet",
+    "notifications.filters.dialog.title": "Käytetyt suodattimet",
+    "notifications.filters.dialog.dateRange": "Ajanjakso",
+    "notifications.panel.triggers.title": "kohteelle {triggeredCount}/{totalCount}items",
+    "notifications.panel.triggers.dialog.newValue": "Uusi arvo",
+    "close": "Sulje",
+    "notifications.panel.triggers.dialog.title": "Laukaistu kohteelle"
 }

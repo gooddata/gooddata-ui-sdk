@@ -251,8 +251,8 @@
     "addPanel.kpi.tooltip.no_measures.link": "了解更多",
     "visualizationsList.dragToAdd": "拖动以添加",
     "visualizationsList.savedVisualizations": "已保存的可视化",
-    "configurationPanel.drillConfig.selectDashboard": "选择控制面板...",
-    "configurationPanel.drillConfig.drillIntoDashboard.searchPlaceholder": "搜索所有控制面板...",
+    "configurationPanel.drillConfig.selectDashboard": "选择控制面板…",
+    "configurationPanel.drillConfig.drillIntoDashboard.searchPlaceholder": "搜索所有控制面板…",
     "configurationPanel.drillConfig.forbiddenDashboard": "（未共享给您）",
     "configurationPanel.drillConfig.forbiddenDashboard.tooltip": "控制面板未共享给您，但其他用户可以访问此控制面板。",
     "configurationPanel.drillConfig.notSharedDashboard.tooltip": "控制面板未共享给您，但所有用户都可以访问它，如果想深入了解。",
@@ -308,7 +308,7 @@
     "configurationPanel.drillConfig.disableDrillDownTooltip": "在此可视化的配置中，向下钻取处于关闭状态。",
     "configurationPanel.drillConfig.drillIntoUrl": "深入查看 URL",
     "configurationPanel.drillConfig.drillIntoUrl.invalidCustomUrl": "URL 参数无效",
-    "configurationPanel.drillConfig.select": "选择操作...",
+    "configurationPanel.drillConfig.select": "选择操作…",
     "configurationPanel.drillConfig.drillIntoDashboard.dateFilterWarning": "筛选目标控制面板时，可视化中的日期属性值不会被传输。",
     "configurationPanel.unlistedDashboardTab": "未列出的控制面板",
     "configurationPanel.visualprops.sectionTitle": "标题",
@@ -649,5 +649,9 @@
     "granularity.month": "月",
     "granularity.date": "天",
     "granularity.hour": "小时",
-    "granularity.minute": "分钟"
+    "granularity.minute": "分钟",
+    "options.menu.unsupported.schedulingForInsightNotEnabled": "无法为此小部件计划导出。",
+    "options.menu.unsupported.alertingForInsightNotEnabled": "无法为此小部件创建警报。",
+    "nestedLayoutToolbar.hideHeader": "隐藏标题和说明。",
+    "nestedLayoutToolbar.showHeader": "显示标题和说明。"
 }

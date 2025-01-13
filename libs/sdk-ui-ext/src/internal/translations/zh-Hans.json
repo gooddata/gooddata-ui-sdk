@@ -371,5 +371,21 @@
     "properties.advanced.chartConfigOverride.title": "高级定制",
     "properties.advanced.chartConfigOverride.snippets.header": "片段",
     "properties.advanced.chartConfigOverride.button.apply": "应用",
-    "properties.advanced.chartConfigOverride.button.cancel": "取消"
+    "properties.advanced.chartConfigOverride.button.cancel": "取消",
+    "gs.date.yesterday": "昨天",
+    "notifications.panel.tab.unread": "未读 ({count} ）",
+    "notifications.panel.tab.all": "全部",
+    "notifications.panel.markAllAsRead": "全部标记为已读",
+    "notifications.panel.error.loading": "加载通知时出错",
+    "notifications.panel.empty.all": "无通知",
+    "notifications.panel.empty.unread": "无未读通知",
+    "notifications.panel.unsupported.notification.type": "不支持的通知类型",
+    "notifications.panel.markAsRead": "标记为已读",
+    "notifications.filters.buttonLabel": "显示筛选条件",
+    "notifications.filters.dialog.title": "应用的筛选条件",
+    "notifications.filters.dialog.dateRange": "日期范围",
+    "notifications.panel.triggers.title": "针对{triggeredCount}/{totalCount}项",
+    "notifications.panel.triggers.dialog.newValue": "新数值",
+    "close": "关",
+    "notifications.panel.triggers.dialog.title": "触发对象："
 }

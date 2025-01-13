@@ -657,5 +657,6 @@
     "userManagement.workspace.granularPermission.analyze.description": "Hiermee kunnen gebruikers dashboards en visualisaties maken, bewerken of verwijderen, naast het bekijken van het Logical Data Model (LDM) en statistieken.",
     "userManagement.workspace.granularPermission.manage.description": "Hiermee kunnen gebruikers het logische datamodel en de statistieken openen, bewerken of verwijderen, en hebben ze toegang tot alle dashboards en kunnen ze hun dashboardtoestemmingen zonder beperkingen bewerken.",
     "userManagement.workspace.granularPermission.warning": "<b>Voorzichtig:</b> Deze actie verwijdert overbodige combinaties.",
-    "userManagement.workspace.permission.and": "en"
+    "userManagement.workspace.permission.and": "en",
+    "gs.header.notifications": "Meldingen"
 }

@@ -657,5 +657,6 @@
     "userManagement.workspace.granularPermission.analyze.description": "Consente agli utenti di creare, modificare o eliminare pannelli di controllo e visualizzazioni, oltre a visualizzare il Modello logico dei dati (LDM) e le metriche.",
     "userManagement.workspace.granularPermission.manage.description": "Consente agli utenti di modificare o eliminare il modello logico dei dati e le metriche, nonché di accedere a tutti i pannelli di controllo e di modificare le autorizzazioni dei pannelli di controllo senza limitazioni.",
     "userManagement.workspace.granularPermission.warning": "<b>Attenzione:</b> Questa azione rimuove tutte le combinazioni ridondanti.",
-    "userManagement.workspace.permission.and": "e"
+    "userManagement.workspace.permission.and": "e",
+    "gs.header.notifications": "Notifiche"
 }

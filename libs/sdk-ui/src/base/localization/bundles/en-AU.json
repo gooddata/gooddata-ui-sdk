@@ -657,5 +657,6 @@
     "userManagement.workspace.granularPermission.analyze.description": "Allows users to create, edit, or delete dashboards and visualisations, alongside viewing the Logical Data Model (LDM) and metrics.",
     "userManagement.workspace.granularPermission.manage.description": "Allows users can to, edit or delete the logical data model and metrics, and access all dashboards and edit their dashboard permissions without limitations.",
     "userManagement.workspace.granularPermission.warning": "<b>Warning:</b> This action will get rid of any unnecessary combinations.",
-    "userManagement.workspace.permission.and": "and"
+    "userManagement.workspace.permission.and": "and",
+    "gs.header.notifications": "Notifications"
 }

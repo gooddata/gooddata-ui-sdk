@@ -649,5 +649,9 @@
     "granularity.month": "month",
     "granularity.date": "day",
     "granularity.hour": "hour",
-    "granularity.minute": "minute"
+    "granularity.minute": "minute",
+    "options.menu.unsupported.schedulingForInsightNotEnabled": "You cannot schedule an export for this widget.",
+    "options.menu.unsupported.alertingForInsightNotEnabled": "You cannot create an alert for this widget.",
+    "nestedLayoutToolbar.hideHeader": "Hide title and description.",
+    "nestedLayoutToolbar.showHeader": "Show title and description."
 }
