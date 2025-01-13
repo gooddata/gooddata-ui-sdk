@@ -1,15 +1,18 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 /* eslint-disable import/named,import/namespace */
 import React, { useMemo, useState } from "react";
 import {
+    IAutomationExternalRecipient,
     IAutomationRecipient,
     INotificationChannelMetadataObject,
     IWorkspaceUser,
 } from "@gooddata/sdk-model";
 import sortBy from "lodash/sortBy.js";
 
-import { RecipientsSelectRenderer } from "./RecipientsSelectRenderer.js";
 import { convertUserToAutomationRecipient } from "../../../../../_staging/automation/index.js";
+import { isEmail } from "../../utils/validate.js";
+
+import { RecipientsSelectRenderer } from "./RecipientsSelectRenderer.js";
 
 interface IRecipientsSelectProps {
     /**
@@ -36,6 +39,11 @@ interface IRecipientsSelectProps {
      * Allow to remove the last recipient
      */
     allowEmptySelection?: boolean;
+
+    /**
+     * Allow to select external recipients
+     */
+    allowExternalRecipients?: boolean;
 
     /**
      * Maximum number of recipients
@@ -65,6 +73,7 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
         originalValue,
         onChange,
         allowEmptySelection,
+        allowExternalRecipients,
         maxRecipients,
         className,
         notificationChannels,
@@ -75,8 +84,16 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
 
     const options = useMemo(() => {
         const filteredUsers = search ? users?.filter((user) => matchUser(user, search)) : users;
-        return sortBy(filteredUsers?.map(convertUserToAutomationRecipient) ?? [], "user.email");
-    }, [users, search]);
+        const mappedUsers = sortBy(filteredUsers?.map(convertUserToAutomationRecipient) ?? [], "user.email");
+
+        // If there is no user found and the search is an email, add it as an external recipient
+        // if external recipients are allowed
+        if (search && mappedUsers.length === 0 && allowExternalRecipients && isEmail(search)) {
+            mappedUsers.push(createUser(search));
+        }
+
+        return mappedUsers;
+    }, [search, users, allowExternalRecipients]);
 
     const notificationChannel = useMemo(() => {
         return notificationChannels?.find((channel) => channel.id === notificationChannelId);
@@ -94,6 +111,7 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
                 setSearch(queryOptions?.search);
             }}
             allowEmptySelection={allowEmptySelection}
+            allowExternalRecipients={allowExternalRecipients}
             maxRecipients={maxRecipients}
             className={className}
             notificationChannel={notificationChannel}
@@ -111,4 +129,13 @@ function matchUser(user: IWorkspaceUser, search: string) {
         lowerCaseName?.includes(lowerCaseSearch) ||
         lowerCaseId?.includes(lowerCaseSearch)
     );
+}
+
+function createUser(search: string): IAutomationExternalRecipient {
+    return {
+        id: search,
+        email: search,
+        name: search,
+        type: "externalUser",
+    };
 }

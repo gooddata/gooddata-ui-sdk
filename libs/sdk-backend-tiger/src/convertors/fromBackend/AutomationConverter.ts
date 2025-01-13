@@ -12,6 +12,7 @@ import {
     JsonApiUserOutWithLinks,
     JsonApiAutomationPatchAttributesAlert,
     ArithmeticMeasureOperatorEnum,
+    JsonApiAutomationPatchAttributesExternalRecipients,
 } from "@gooddata/api-client-tiger";
 import {
     IAlertComparisonOperator,
@@ -55,6 +56,17 @@ function convertRecipient(
     };
 }
 
+function convertExternalRecipient(
+    external: JsonApiAutomationPatchAttributesExternalRecipients,
+): IAutomationRecipient {
+    return {
+        id: external.email,
+        type: "externalUser",
+        name: external.email,
+        email: external.email,
+    };
+}
+
 export function convertAutomation(
     automation: JsonApiAutomationOutWithLinks,
     included: JsonApiAutomationOutIncludes[],
@@ -73,6 +85,7 @@ export function convertAutomation(
         state,
         visualExports,
         tabularExports,
+        externalRecipients,
     } = attributes;
     const { createdBy, modifiedBy } = relationships;
 
@@ -92,10 +105,12 @@ export function convertAutomation(
         ...(tabularExports?.map((te) => convertInlineExportDefinitionMdObject(te)) ?? []),
     ];
 
-    const recipients =
-        relationships?.recipients?.data
+    const recipients = [
+        ...(relationships?.recipients?.data
             ?.map((r) => convertRecipient(r, included))
-            .filter(isAutomationUserRecipient) ?? [];
+            .filter(isAutomationUserRecipient) ?? []),
+        ...(externalRecipients?.map((r) => convertExternalRecipient(r)) ?? []),
+    ];
 
     const dashboard = relationships?.analyticalDashboard?.data?.id;
 

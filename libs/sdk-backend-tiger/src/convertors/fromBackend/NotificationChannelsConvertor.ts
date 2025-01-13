@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import {
     DeclarativeNotificationChannelDestinationTypeEnum,
     JsonApiNotificationChannelOut,
@@ -6,6 +6,7 @@ import {
     Smtp,
     JsonApiNotificationChannelOutAttributesAllowedRecipientsEnum,
     DefaultSmtp,
+    JsonApiNotificationChannelOutAttributesDashboardLinkVisibilityEnum,
 } from "@gooddata/api-client-tiger";
 import {
     assertNever,
@@ -53,7 +54,14 @@ function convertSharedNotificationChannelPropertiesFromBackend(
     channel: JsonApiNotificationChannelOut,
 ): Pick<
     INotificationChannelMetadataObject,
-    "id" | "type" | "title" | "description" | "customDashboardUrl" | "allowedRecipients" | "tags"
+    | "id"
+    | "type"
+    | "title"
+    | "description"
+    | "customDashboardUrl"
+    | "allowedRecipients"
+    | "tags"
+    | "dashboardLinkVisibility"
 > {
     return {
         type: "notificationChannel",
@@ -61,6 +69,7 @@ function convertSharedNotificationChannelPropertiesFromBackend(
         title: channel.attributes?.name ?? undefined,
         description: channel.attributes?.description ?? undefined,
         customDashboardUrl: channel.attributes?.customDashboardUrl,
+        dashboardLinkVisibility: convertDashboardLinkVisibility(channel.attributes?.dashboardLinkVisibility),
         allowedRecipients: convertAllowedRecipientsFromBackend(channel.attributes?.allowedRecipients),
         tags: [],
     };
@@ -157,6 +166,21 @@ function convertAllowedRecipientsFromBackend(
             return "external";
         default:
             assertNever(allowedRecipients);
+            return undefined;
+    }
+}
+
+function convertDashboardLinkVisibility(
+    type?: JsonApiNotificationChannelOutAttributesDashboardLinkVisibilityEnum,
+) {
+    switch (type) {
+        case JsonApiNotificationChannelOutAttributesDashboardLinkVisibilityEnum.HIDDEN:
+            return "hidden";
+        case JsonApiNotificationChannelOutAttributesDashboardLinkVisibilityEnum.ALL:
+            return "visible";
+        case JsonApiNotificationChannelOutAttributesDashboardLinkVisibilityEnum.INTERNAL_ONLY:
+            return "internalOnly";
+        default:
             return undefined;
     }
 }

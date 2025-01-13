@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import { IMdObject, isMdObject, isMdObjectDefinition, ToMdObjectDefinition } from "../ldm/metadata/next.js";
 
 /**
@@ -7,6 +7,17 @@ import { IMdObject, isMdObject, isMdObjectDefinition, ToMdObjectDefinition } fro
  * @beta
  */
 export type NotificationChannelDestinationType = "webhook" | "smtp" | "inPlatform";
+
+/**
+ * Visibility of the dashboard link in the email notification.
+ *
+ * Hidden - the link is not visible
+ * Visible - the link is visible for all
+ * InternalOnly - the link is visible only for internal users
+ *
+ * @beta
+ */
+export type NotificationChannelDashboardLinkVisibility = "hidden" | "visible" | "internalOnly";
 
 /**
  * Allowed recipients of notifications from this channel.
@@ -43,6 +54,11 @@ export interface INotificationChannelMetadataObjectBase {
      * If not specified it is going to be deduced based on the context. Allowed placeholders are \{workspaceId\}, \{dashboardId\}.
      */
     customDashboardUrl?: string;
+
+    /**
+     * Dashboard link visibility.
+     */
+    dashboardLinkVisibility?: NotificationChannelDashboardLinkVisibility;
 }
 
 /**
