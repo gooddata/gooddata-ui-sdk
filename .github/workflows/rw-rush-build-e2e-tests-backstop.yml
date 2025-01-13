@@ -54,7 +54,7 @@ jobs:
     needs: [warm-up-cache,build]
     runs-on:
       group: infra1-runners-arc
-      labels: runners-rxa-xlarge
+      labels: runners-mxa-2xlarge # bigger runner as backstop sometimes cannot launch the browser
     steps:
       - uses: actions/checkout@v4
         with:
