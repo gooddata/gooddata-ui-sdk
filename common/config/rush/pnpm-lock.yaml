@@ -805,11 +805,11 @@ importers:
         specifier: 1.1.5
         version: 1.1.5
       highcharts:
-        specifier: 9.3.0
-        version: 9.3.0
+        specifier: 12.1.2
+        version: 12.1.2
       highcharts-react-official:
         specifier: 3.2.1
-        version: 3.2.1(highcharts@9.3.0)(react@18.2.0)
+        version: 3.2.1(highcharts@12.1.2)(react@18.2.0)
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -2236,11 +2236,11 @@ importers:
         specifier: 1.1.5
         version: 1.1.5
       highcharts:
-        specifier: 9.3.0
-        version: 9.3.0
+        specifier: 12.1.2
+        version: 12.1.2
       highcharts-react-official:
         specifier: 3.2.1
-        version: 3.2.1(highcharts@9.3.0)(react@18.2.0)
+        version: 3.2.1(highcharts@12.1.2)(react@18.2.0)
       hoist-non-react-statics:
         specifier: ^3.3.0
         version: 3.3.2
@@ -17069,18 +17069,18 @@ packages:
     hasBin: true
     dev: true
 
-  /highcharts-react-official@3.2.1(highcharts@9.3.0)(react@18.2.0):
+  /highcharts-react-official@3.2.1(highcharts@12.1.2)(react@18.2.0):
     resolution: {integrity: sha512-hyQTX7ezCxl7JqumaWiGsroGWalzh24GedQIgO3vJbkGOZ6ySRAltIYjfxhrq4HszJOySZegotEF7v+haQ75UA==}
     peerDependencies:
       highcharts: '>=6.0.0'
       react: '>=16.8.0'
     dependencies:
-      highcharts: 9.3.0
+      highcharts: 12.1.2
       react: 18.2.0
     dev: false
 
-  /highcharts@9.3.0:
-    resolution: {integrity: sha512-nQ7yW5ni7wFiPgDN2IWrS6o6NjL1gK/OhZjrdpyB3FQuefMkTQngygP+JqZFMx7PDrP3YAvfejx0M5IgkC01ow==}
+  /highcharts@12.1.2:
+    resolution: {integrity: sha512-paZ72q1um0zZT1sS+O/3JfXVSOLPmZ0zlo8SgRc0rEplPFPQUPc4VpkgQS8IUTueeOBgIWwVpAWyC9tBYbQ0kg==}
     dev: false
 
   /history@4.10.1:

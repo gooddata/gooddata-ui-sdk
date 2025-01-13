@@ -1,4 +1,4 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { IExecutionDefinition, ITheme } from "@gooddata/sdk-model";
 import { IChartConfig } from "../../../interfaces/index.js";
 import { getCommonResponsiveConfig } from "../_chartCreators/responsive.js";
@@ -33,6 +33,13 @@ export function getColumnConfiguration(
                 },
             },
         },
+        xAxis: [
+            {
+                labels: {
+                    distance: 7,
+                },
+            },
+        ],
         yAxis: [
             {
                 stackLabels: {

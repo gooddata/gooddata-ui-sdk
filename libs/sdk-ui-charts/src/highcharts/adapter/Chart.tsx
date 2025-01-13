@@ -1,43 +1,22 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
+/* eslint-disable import/no-unassigned-import */
+
 import isEqual from "lodash/isEqual.js";
 import noop from "lodash/noop.js";
 import React from "react";
 import { initChartPlugins } from "./chartPlugins.js";
 import Highcharts, { HighchartsOptions } from "../lib/index.js";
-import { defaultImport } from "default-import";
 
-import defaultHighchartsMore from "highcharts/highcharts-more.js";
-import defaultDrillmodule from "highcharts/modules/drilldown.js";
-import defaultTreemapModule from "highcharts/modules/treemap.js";
-import defaultBulletModule from "highcharts/modules/bullet.js";
-import defaultFunnelModule from "highcharts/modules/funnel.js";
-import defaultHeatmap from "highcharts/modules/heatmap.js";
-import defaultPatternFill from "highcharts/modules/pattern-fill.js";
-import defaultSankeyModule from "highcharts/modules/sankey.js";
-import defaultDependencyWheelModule from "highcharts/modules/dependency-wheel.js";
+import "highcharts/highcharts-more.js";
+import "highcharts/modules/drilldown.js";
+import "highcharts/modules/treemap.js";
+import "highcharts/modules/bullet.js";
+import "highcharts/modules/funnel.js";
+import "highcharts/modules/heatmap.js";
+import "highcharts/modules/pattern-fill.js";
+import "highcharts/modules/sankey.js";
+import "highcharts/modules/dependency-wheel.js";
 
-// There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
-// In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.
-// https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
-const drillmodule = defaultImport(defaultDrillmodule);
-const treemapModule = defaultImport(defaultTreemapModule);
-const bulletModule = defaultImport(defaultBulletModule);
-const funnelModule = defaultImport(defaultFunnelModule);
-const sankeyModule = defaultImport(defaultSankeyModule);
-const dependencyWheelModule = defaultImport(defaultDependencyWheelModule);
-const heatmap = defaultImport(defaultHeatmap);
-const HighchartsMore = defaultImport(defaultHighchartsMore);
-const patternFill = defaultImport(defaultPatternFill);
-
-drillmodule(Highcharts);
-treemapModule(Highcharts);
-bulletModule(Highcharts);
-funnelModule(Highcharts);
-sankeyModule(Highcharts);
-dependencyWheelModule(Highcharts);
-heatmap(Highcharts);
-HighchartsMore(Highcharts);
-patternFill(Highcharts);
 initChartPlugins(Highcharts);
 
 /**
@@ -95,6 +74,7 @@ export class Chart extends React.Component<IChartProps> {
 
     public createChart(config: HighchartsOptions): void {
         const chartConfig = config.chart;
+
         try {
             this.chart = new Highcharts.Chart(
                 {

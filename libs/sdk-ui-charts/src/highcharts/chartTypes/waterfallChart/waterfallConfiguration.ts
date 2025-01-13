@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { IChartConfig } from "../../../interfaces/index.js";
 import { HighchartsOptions } from "../../lib/index.js";
 import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration.js";
@@ -31,6 +31,13 @@ export function getWaterfallConfiguration(config: IChartConfig): HighchartsOptio
         legend: {
             enabled: false,
         },
+        xAxis: [
+            {
+                labels: {
+                    distance: 7,
+                },
+            },
+        ],
     };
 
     return !config?.enableCompactSize
