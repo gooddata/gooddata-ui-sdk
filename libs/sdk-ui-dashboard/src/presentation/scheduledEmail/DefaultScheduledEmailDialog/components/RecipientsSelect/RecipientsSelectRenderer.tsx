@@ -355,6 +355,22 @@ export class RecipientsSelectRenderer extends React.PureComponent<
             );
         }
 
+        if (options.type === "externalUser") {
+            return (
+                <BubbleHoverTrigger>
+                    {render()}
+                    <Bubble className="bubble-primary" alignPoints={TOOLTIP_ALIGN_POINTS}>
+                        <FormattedMessage
+                            id="dialogs.schedule.email.user.used.external"
+                            values={{
+                                email: label,
+                            }}
+                        />
+                    </Bubble>
+                </BubbleHoverTrigger>
+            );
+        }
+
         return render();
     };
 

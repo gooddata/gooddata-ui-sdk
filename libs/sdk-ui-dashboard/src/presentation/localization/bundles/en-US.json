@@ -538,6 +538,11 @@
         "comment": "Message for recipients input when a user is external and not allowed.",
         "limit": 0
     },
+    "dialogs.schedule.email.user.used.external": {
+        "value": "The email “{email}” does not belong to this workspace. The recipient may receive sensitive data.",
+        "comment": "Message for recipients input when a user is external and allowed.",
+        "limit": 0
+    },
     "dialogs.schedule.email.user.warning.external": {
         "value": "This email address does not belong to this workspace. The recipient may receive sensitive data.",
         "comment": "Message for recipients input when a user is external",
