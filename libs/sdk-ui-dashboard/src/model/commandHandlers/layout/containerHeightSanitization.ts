@@ -14,8 +14,10 @@ import { ILayoutItemPath } from "../../../types.js";
 import { selectLayout, selectScreen } from "../../store/layout/layoutSelectors.js";
 import { IItemWithHeight, ExtendedDashboardWidget } from "../../types/layoutTypes.js";
 import { findItem, areLayoutPathsEqual } from "../../../_staging/layout/coordinates.js";
-import { implicitLayoutItemSizeFromXlSize } from "../../../_staging/layout/sizing.js";
-import { splitDashboardLayoutItemsAsRenderedGridRows } from "../../../presentation/flexibleLayout/DefaultDashboardLayoutRenderer/utils/sizing.js";
+import {
+    implicitLayoutItemSizeFromXlSize,
+    splitDashboardLayoutItemsAsRenderedGridRows,
+} from "../../../_staging/layout/sizing.js";
 import { layoutActions } from "../../store/layout/index.js";
 
 const getParentPathsFromDeepestToShallowest = (parentPath: ILayoutItemPath) =>

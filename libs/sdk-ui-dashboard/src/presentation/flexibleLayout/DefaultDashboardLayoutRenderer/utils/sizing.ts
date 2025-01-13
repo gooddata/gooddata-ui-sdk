@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     AnalyticalWidgetType,
     IDashboardLayout,
@@ -33,6 +33,7 @@ import {
     getDashboardLayoutWidgetMaxGridHeight,
     implicitLayoutItemSizeFromXlSize,
     determineSizeForScreen,
+    splitDashboardLayoutItemsAsRenderedGridRows,
 } from "../../../../_staging/layout/sizing.js";
 import {
     ALL_SCREENS,
@@ -102,50 +103,6 @@ export function unifyDashboardLayoutItemHeights<TWidget>(
             ),
         );
     }, itemsWithSizeForAllScreens);
-}
-
-/**
- * Divide the items into a list representing the future rows of the grid.
- * This is useful for performing item transformations, depending on how they really appear in the grid.
- *
- * @param items - dashboard layout items
- * @param parentLayoutSize - the size of parent layout, undefined if the items are in the root layout
- * @param screen - responsive screen class
- */
-export function splitDashboardLayoutItemsAsRenderedGridRows<TWidget>(
-    items: IDashboardLayoutItem<TWidget>[],
-    parentLayoutSize: IDashboardLayoutSizeByScreenSize | undefined,
-    screen: ScreenSize,
-): IDashboardLayoutItem<TWidget>[][] {
-    const parentLayoutColumnWidth =
-        parentLayoutSize?.[screen]?.gridWidth ?? DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT;
-    const renderedRows: IDashboardLayoutItem<TWidget>[][] = [];
-
-    let currentRowWidth = 0;
-    let currentRow: IDashboardLayoutItem<TWidget>[] = [];
-
-    items.forEach((item) => {
-        const itemSize = determineSizeForScreen(screen, item.size);
-
-        if (isNil(itemSize)) {
-            throw Error("Item size for current screen is undefined");
-        }
-
-        if (currentRowWidth + itemSize.gridWidth > parentLayoutColumnWidth) {
-            renderedRows.push(currentRow);
-            currentRow = [];
-            currentRowWidth = 0;
-        }
-
-        currentRow.push(item);
-        currentRowWidth = currentRowWidth + itemSize.gridWidth;
-    });
-
-    if (currentRow.length > 0) {
-        renderedRows.push(currentRow);
-    }
-
-    return renderedRows;
 }
 
 /**
