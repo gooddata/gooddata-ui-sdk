@@ -1,7 +1,7 @@
 <p align="center">
   <img src="assets/gooddata-logo.svg" alt="GoodData Logo" width="120px" height="120px"/>
 </p>
-<h1 align="center">GoodData.UI</h1>
+<h1 align="center">GoodData.UI test</h1>
 
 <p align="center">
   <a href="https://sdk.gooddata.com/gooddata-ui"><strong>sdk.gooddata.com/gooddata-ui</strong></a>
