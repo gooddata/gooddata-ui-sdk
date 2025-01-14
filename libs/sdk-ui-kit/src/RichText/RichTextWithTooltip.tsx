@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
@@ -70,7 +70,11 @@ const RichTextWithTooltipCore: React.FC<IRichTextWithTooltipProps> = ({
         <BubbleHoverTrigger showDelay={0} hideDelay={0} openOnInit={true}>
             {Component}
             {showTooltip ? (
-                <Bubble alignPoints={tooltipAlignPoints} className="bubble-primary bubble-small">
+                <Bubble
+                    alignPoints={tooltipAlignPoints}
+                    className="bubble-primary bubble-small"
+                    overlayClassName="rich-text-tooltip"
+                >
                     {description}
                     {tooltipMarkdown}
                 </Bubble>
