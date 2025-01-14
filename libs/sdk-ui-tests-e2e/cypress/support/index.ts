@@ -1,4 +1,5 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
+console.log("Cypress support/index.ts is loaded");
 import "./isolatedTest";
 import { establishSession } from "./session";
 import "./commands";
