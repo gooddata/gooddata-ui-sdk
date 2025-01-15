@@ -10,6 +10,8 @@ import {
     IAutomationAlert,
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
+    isAutomationUserRecipient,
+    isAutomationExternalUserRecipient,
     isExportDefinitionDashboardRequestPayload,
     isExportDefinitionVisualizationObjectRequestPayload,
 } from "@gooddata/sdk-model";
@@ -46,7 +48,10 @@ export function convertAutomation(
         {
             recipients: recipients?.length
                 ? {
-                      data: recipients?.map((r) => ({ type: "user", id: r.id })) ?? [],
+                      data:
+                          recipients
+                              ?.filter(isAutomationUserRecipient)
+                              .map((r) => ({ type: "user", id: r.id })) ?? [],
                   }
                 : undefined,
             notificationChannel: notificationChannel
@@ -60,6 +65,8 @@ export function convertAutomation(
         },
         isEmpty,
     );
+    const externalRecipients =
+        recipients?.filter(isAutomationExternalUserRecipient).map((r) => ({ email: r.email })) ?? [];
 
     const hasRelationships = !isEmpty(relationships);
 
@@ -96,6 +103,7 @@ export function convertAutomation(
             state,
             tabularExports,
             visualExports,
+            externalRecipients,
             ...metadataObj,
             ...scheduleObj,
             ...alertObj,

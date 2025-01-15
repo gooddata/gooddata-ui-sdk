@@ -1,6 +1,6 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { put, select } from "redux-saga/effects";
+import { put, select, call } from "redux-saga/effects";
 
 import { DashboardContext } from "../../types/commonTypes.js";
 import { MoveLayoutSection } from "../../commands/index.js";
@@ -16,9 +16,11 @@ import {
     areLayoutPathsEqual,
     updateSectionIndex,
     findSection,
+    getParentPath,
 } from "../../../_staging/layout/coordinates.js";
 
 import { validateSectionExists, validateSectionPlacement } from "./validation/layoutValidation.js";
+import { resizeParentContainers } from "./containerHeightSanitization.js";
 
 type MoveLayoutSectionContext = {
     readonly ctx: DashboardContext;
@@ -146,6 +148,9 @@ export function* moveLayoutSectionHandler(
             },
         }),
     );
+
+    yield call(resizeParentContainers, getParentPath(sourceSection));
+    yield call(resizeParentContainers, getParentPath(toSectionPath));
 
     return layoutSectionMoved(
         ctx,

@@ -1,8 +1,8 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { IWidget } from "@gooddata/sdk-model";
 import { SagaIterator } from "redux-saga";
-import { put, select } from "redux-saga/effects";
+import { put, select, call } from "redux-saga/effects";
 import { ResizeWidth } from "../../commands/layout.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 
@@ -23,7 +23,10 @@ import {
     findItem,
     getSectionIndex,
     getItemIndex,
+    getParentPath,
 } from "../../../_staging/layout/coordinates.js";
+import { resizeParentContainers } from "./containerHeightSanitization.js";
+import { selectSettings } from "../../store/config/configSelectors.js";
 
 function validateLayoutIndexes(
     ctx: DashboardContext,
@@ -86,9 +89,10 @@ export function* resizeWidthHandler(
     const layout = yield select(selectLayout);
     const insightsMap = yield select(selectInsightsMap);
     const screen = yield select(selectScreen);
+    const settings = yield select(selectSettings);
 
     validateLayoutIndexes(ctx, layout, cmd);
-    validateWidth(ctx, layout, insightsMap, cmd, screen);
+    validateWidth(ctx, layout, insightsMap, cmd, settings, screen);
 
     const layoutPath = itemPath === undefined ? [{ sectionIndex, itemIndex }] : itemPath;
 
@@ -98,6 +102,8 @@ export function* resizeWidthHandler(
             width,
         }),
     );
+
+    yield call(resizeParentContainers, getParentPath(layoutPath));
 
     return layoutSectionItemWidthResized(
         ctx,
@@ -114,6 +120,7 @@ function validateWidth(
     layout: ReturnType<typeof selectLayout>,
     insightsMap: ReturnType<typeof selectInsightsMap>,
     cmd: ResizeWidth,
+    settings: ReturnType<typeof selectSettings>,
     screen: ReturnType<typeof selectScreen> = "xl",
 ) {
     const {
@@ -125,7 +132,7 @@ function validateWidth(
             ? (layout.sections[sectionIndex].items[itemIndex].widget as IWidget)
             : (findItem(layout, itemPath).widget as IWidget);
 
-    const minLimit = getMinWidth(widget, insightsMap, screen);
+    const minLimit = getMinWidth(widget, insightsMap, screen, settings);
     const parent =
         itemPath !== undefined && itemPath.slice(0, -1).length > 0 && findItem(layout, itemPath.slice(0, -1));
 

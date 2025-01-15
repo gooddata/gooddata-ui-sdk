@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
     AnalyticalWidgetType,
@@ -14,7 +14,6 @@ import {
     isKpiWidget,
     isKpiWithoutComparison,
     isWidget,
-    IWidget,
     widgetType as getWidgetType,
     isVisualizationSwitcherWidget,
     IVisualizationSwitcherWidget,
@@ -53,6 +52,7 @@ import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../dashboard/flexibleLayout
 import { invariant } from "ts-invariant";
 import { findItem, hasParent } from "./coordinates.js";
 import { ILayoutItemPath } from "../../types.js";
+import isNil from "lodash/isNil.js";
 
 /**
  * @internal
@@ -138,7 +138,7 @@ export function getDashboardLayoutWidgetDefaultHeight(
  */
 export function getDashboardLayoutWidgetMinGridHeight(
     settings: ISettings,
-    widgetType: AnalyticalWidgetType,
+    widgetType: AnalyticalWidgetType | ExtendedDashboardWidget["type"],
     widgetContent?: MeasurableWidgetContent,
 ): number {
     const sizeInfo = getSizeInfo(settings, widgetType, widgetContent);
@@ -150,78 +150,144 @@ export function getDashboardLayoutWidgetMinGridHeight(
  */
 export function getDashboardLayoutWidgetMaxGridHeight(
     settings: ISettings,
-    widgetType: AnalyticalWidgetType,
+    widgetType: AnalyticalWidgetType | ExtendedDashboardWidget["type"],
     widgetContent?: MeasurableWidgetContent,
 ): number {
     const sizeInfo = getSizeInfo(settings, widgetType, widgetContent);
     return sizeInfo.height.max!;
 }
 
+function getSectionHeight(
+    rows: IDashboardLayoutItem<ExtendedDashboardWidget>[][],
+    screen: ScreenSize,
+    emptyLayoutMinHeight: number,
+) {
+    return rows.reduce((allRowsHeight, row) => {
+        const currentRowHeight = getRowHeight(row, screen, emptyLayoutMinHeight);
+        return allRowsHeight + currentRowHeight;
+    }, 0);
+}
+
+function getRowHeight(
+    row: IDashboardLayoutItem<ExtendedDashboardWidget>[],
+    screen: ScreenSize,
+    emptyLayoutMinHeight: number,
+) {
+    return row.reduce((maxRowItemHeight, item) => {
+        const sanitizedItemSize = implicitLayoutItemSizeFromXlSize(item.size.xl);
+        const currentItemHeight = sanitizedItemSize[screen]?.gridHeight ?? emptyLayoutMinHeight;
+        return Math.max(maxRowItemHeight, currentItemHeight);
+    }, 0);
+}
+
+function getContainerHeight(
+    container: IDashboardLayoutItem<ExtendedDashboardWidget>,
+    screen: ScreenSize,
+    settings: ISettings,
+): number {
+    const emptyLayoutMinHeight = getDashboardLayoutWidgetMinGridHeight(settings, container.widget!.type);
+    if (!isDashboardLayout(container.widget)) {
+        return emptyLayoutMinHeight;
+    }
+    return container.widget!.sections.reduce((allSectionsHeight, section) => {
+        const allScreenSizes = implicitLayoutItemSizeFromXlSize(container.size.xl);
+        const rows = splitDashboardLayoutItemsAsRenderedGridRows(section.items, allScreenSizes, screen);
+        const currentSectionHeight = getSectionHeight(rows, screen, emptyLayoutMinHeight);
+        return allSectionsHeight + currentSectionHeight;
+    }, 0);
+}
+
 /**
  * @internal
  */
-export function getMinHeight(widgets: IWidget[], insightMap: ObjRefMap<IInsight>, defaultMin = 0): number {
-    const mins: number[] = widgets.filter(isDashboardWidget).map((widget) => {
-        let widgetContent: MeasurableWidgetContent | undefined;
-        if (isKpiWidget(widget)) {
-            widgetContent = widget.kpi;
-        } else if (isInsightWidget(widget)) {
-            widgetContent = insightMap.get(widget.insight);
-        } else if (isVisualizationSwitcherWidget(widget) && widget.visualizations.length > 0) {
-            return Math.max(
-                ...getVisSwitcherHeightWidth(
-                    widget,
-                    widgetContent,
-                    insightMap,
-                    getDashboardLayoutWidgetMinGridHeight,
-                ),
+export function getMinHeight(
+    widgets: IDashboardLayoutItem<ExtendedDashboardWidget>[],
+    insightMap: ObjRefMap<IInsight>,
+    screen: ScreenSize,
+    settings: ISettings,
+    defaultMin = 0,
+): number {
+    const minimumHeights: number[] = widgets
+        .filter((layoutItem) => isDashboardWidget(layoutItem.widget))
+        .map((layoutItem) => {
+            const widget = layoutItem.widget!;
+            if (isVisualizationSwitcherWidget(widget) && widget.visualizations.length > 0) {
+                return Math.max(
+                    ...getVisSwitcherDimension(
+                        widget,
+                        insightMap,
+                        getDashboardLayoutWidgetMinGridHeight,
+                        settings,
+                    ),
+                );
+            } else if (isDashboardLayout(widget)) {
+                return getContainerHeight(layoutItem, screen, settings);
+            }
+            return getDashboardLayoutWidgetMinGridHeight(
+                settings,
+                getExtendedWidgetType(widget),
+                getWidgetContent(widget, insightMap),
             );
-        }
+        });
 
-        return getDashboardLayoutWidgetMinGridHeight(
-            { enableKDWidgetCustomHeight: true },
-            getWidgetType(widget),
-            widgetContent,
-        );
-    });
-    return Math.max(defaultMin, ...mins);
+    return Math.max(defaultMin, ...minimumHeights);
 }
 
 const MAXIMUM_HEIGHT_OF_ROW_WITH_NESTED_WIDGETS = 2000;
 
+function getExtendedWidgetType(
+    widget: ExtendedDashboardWidget,
+): AnalyticalWidgetType | ExtendedDashboardWidget["type"] {
+    return isWidget(widget) ? getWidgetType(widget) : widget.type;
+}
+
+function getWidgetContent(widget: ExtendedDashboardWidget, insightMap: ObjRefMap<IInsight>) {
+    if (isKpiWidget(widget)) {
+        return widget.kpi;
+    } else if (isInsightWidget(widget)) {
+        return insightMap.get(widget.insight);
+    }
+    return undefined;
+}
+
 /**
  * @internal
  */
-export function getMaxHeight(widgets: IWidget[], insightMap: ObjRefMap<IInsight>): number {
-    const containsNestedLayout = widgets.some(isDashboardLayout);
+export function getMaxHeight(
+    layoutItems: IDashboardLayoutItem<ExtendedDashboardWidget>[],
+    insightMap: ObjRefMap<IInsight>,
+    screen: ScreenSize,
+    settings: ISettings,
+): number {
+    const containsNestedLayout = layoutItems.some((layoutItem) => isDashboardLayout(layoutItem.widget));
     if (containsNestedLayout) {
         return MAXIMUM_HEIGHT_OF_ROW_WITH_NESTED_WIDGETS;
     }
 
-    const maxs: number[] = widgets.filter(isDashboardWidget).map((widget) => {
-        let widgetContent: MeasurableWidgetContent | undefined;
-        if (isKpiWidget(widget)) {
-            widgetContent = widget.kpi;
-        } else if (isInsightWidget(widget)) {
-            widgetContent = insightMap.get(widget.insight);
-        } else if (isVisualizationSwitcherWidget(widget) && widget.visualizations.length > 0) {
-            return Math.min(
-                ...getVisSwitcherHeightWidth(
-                    widget,
-                    widgetContent,
-                    insightMap,
-                    getDashboardLayoutWidgetMaxGridHeight,
-                ),
+    const maxHeights: number[] = layoutItems
+        .filter((layoutItem) => isDashboardWidget(layoutItem))
+        .map((layoutItem) => {
+            const widget = layoutItem.widget!;
+            if (isVisualizationSwitcherWidget(widget) && widget.visualizations.length > 0) {
+                return Math.min(
+                    ...getVisSwitcherDimension(
+                        widget,
+                        insightMap,
+                        getDashboardLayoutWidgetMaxGridHeight,
+                        settings,
+                    ),
+                );
+            }
+            if (isDashboardLayout(widget)) {
+                return getContainerHeight(layoutItem, screen, settings);
+            }
+            return getDashboardLayoutWidgetMaxGridHeight(
+                settings,
+                getExtendedWidgetType(widget),
+                getWidgetContent(widget, insightMap),
             );
-        }
-
-        return getDashboardLayoutWidgetMaxGridHeight(
-            { enableKDWidgetCustomHeight: true },
-            getWidgetType(widget),
-            widgetContent,
-        );
-    });
-    return Math.min(...maxs);
+        });
+    return Math.min(...maxHeights);
 }
 
 /**
@@ -236,28 +302,25 @@ export function getDashboardLayoutWidgetMinGridWidth(
     return sizeInfo.width.min!;
 }
 
-type DashboardLayoutWidgetGridWidthHeight = (
+type DashboardLayoutWidgetGridDimension = (
     settings: ISettings,
     widgetType: AnalyticalWidgetType,
     widgetContent?: MeasurableWidgetContent,
 ) => number;
 
-function getVisSwitcherHeightWidth(
+function getVisSwitcherDimension(
     widget: IVisualizationSwitcherWidget,
-    widgetContent: MeasurableWidgetContent | undefined,
     insightMap: ObjRefMap<IInsight>,
-    fn: DashboardLayoutWidgetGridWidthHeight,
+    getDashboardLayoutWidgetGridDimension: DashboardLayoutWidgetGridDimension,
+    settings: ISettings,
 ): number[] {
-    const result: number[] = [];
-    widget.visualizations.forEach((visualization) => {
-        widgetContent = insightMap.get(visualization.insight);
-
-        const heightWidth = fn({ enableKDWidgetCustomHeight: true }, getWidgetType(widget), widgetContent);
-
-        result.push(heightWidth);
+    return widget.visualizations.map((visualization) => {
+        return getDashboardLayoutWidgetGridDimension(
+            settings,
+            getWidgetType(widget),
+            insightMap.get(visualization.insight),
+        );
     });
-
-    return result;
 }
 
 /**
@@ -267,24 +330,14 @@ export function getMinWidth(
     widget: ExtendedDashboardWidget,
     insightMap: ObjRefMap<IInsight>,
     screen: ScreenSize,
-    settings: ISettings = { enableKDWidgetCustomHeight: true },
+    settings: ISettings,
 ): number {
-    let widgetContent: MeasurableWidgetContent | undefined;
     if (isCustomWidget(widget)) {
         return MIN_VISUALIZATION_WIDTH;
     }
-    if (isKpiWidget(widget)) {
-        widgetContent = widget.kpi;
-    } else if (isInsightWidget(widget)) {
-        widgetContent = insightMap.get(widget.insight);
-    } else if (isVisualizationSwitcherWidget(widget) && widget.visualizations.length > 0) {
+    if (isVisualizationSwitcherWidget(widget) && widget.visualizations.length > 0) {
         return Math.max(
-            ...getVisSwitcherHeightWidth(
-                widget,
-                widgetContent,
-                insightMap,
-                getDashboardLayoutWidgetMinGridWidth,
-            ),
+            ...getVisSwitcherDimension(widget, insightMap, getDashboardLayoutWidgetMinGridWidth, settings),
         );
     } else if (isDashboardLayout(widget)) {
         const emptyLayoutMinWidth = getDashboardLayoutWidgetMinGridWidth(settings, widget.type);
@@ -299,11 +352,11 @@ export function getMinWidth(
         }, emptyLayoutMinWidth);
     }
 
-    const widgetType: AnalyticalWidgetType | ExtendedDashboardWidget["type"] = isWidget(widget)
-        ? getWidgetType(widget)
-        : widget.type;
-
-    return getDashboardLayoutWidgetMinGridWidth(settings, widgetType, widgetContent);
+    return getDashboardLayoutWidgetMinGridWidth(
+        settings,
+        getExtendedWidgetType(widget),
+        getWidgetContent(widget, insightMap),
+    );
 }
 
 export function normalizeItemSizeToParent(
@@ -358,32 +411,35 @@ function normalizeSizeToParent(
  * @internal
  */
 export function calculateWidgetMinHeight(
-    widget: ExtendedDashboardWidget,
+    layoutItem: IDashboardLayoutItem<ExtendedDashboardWidget>,
     currentSize: IDashboardLayoutSize | undefined,
     insightMap: ObjRefMap<IInsight>,
     settings: ISettings,
+    screen: ScreenSize,
 ): number | undefined {
     let widgetType: AnalyticalWidgetType;
-    let insight: IInsight;
     let content: IInsight | IKpi;
+    const widget = layoutItem.widget;
 
     if (isWidget(widget)) {
         widgetType = getWidgetType(widget);
     }
+    if (isDashboardLayout(widget)) {
+        return getContainerHeight(layoutItem, screen, settings);
+    }
     if (isInsightWidget(widget)) {
-        insight = insightMap.get(widget.insight)!;
-        content = insight;
+        content = insightMap.get(widget.insight)!;
     }
     if (isKpiWidget(widget)) {
         content = widget.kpi;
     }
-
-    return currentSize
-        ? getDashboardLayoutItemHeight(currentSize) ||
-              (!currentSize.heightAsRatio
-                  ? getDashboardLayoutWidgetDefaultHeight(settings, widgetType!, content!)
-                  : undefined)
-        : undefined;
+    if (!currentSize || currentSize.heightAsRatio) {
+        return undefined;
+    }
+    return (
+        getDashboardLayoutItemHeight(currentSize) ||
+        getDashboardLayoutWidgetDefaultHeight(settings, widgetType!, content!)
+    );
 }
 
 export const getDashboardLayoutItemHeight = (size: IDashboardLayoutSize): number | undefined => {
@@ -535,4 +591,48 @@ function dashboardLayoutItemSizeForAllScreens(
             heightAsRatio,
         },
     };
+}
+
+/**
+ * Divide the items into a list representing the future rows of the grid.
+ * This is useful for performing item transformations, depending on how they really appear in the grid.
+ *
+ * @param items - dashboard layout items
+ * @param parentLayoutSize - the size of parent layout, undefined if the items are in the root layout
+ * @param screen - responsive screen class
+ */
+export function splitDashboardLayoutItemsAsRenderedGridRows<TWidget>(
+    items: IDashboardLayoutItem<TWidget>[],
+    parentLayoutSize: IDashboardLayoutSizeByScreenSize | undefined,
+    screen: ScreenSize,
+): IDashboardLayoutItem<TWidget>[][] {
+    const parentLayoutColumnWidth =
+        parentLayoutSize?.[screen]?.gridWidth ?? DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT;
+    const renderedRows: IDashboardLayoutItem<TWidget>[][] = [];
+
+    let currentRowWidth = 0;
+    let currentRow: IDashboardLayoutItem<TWidget>[] = [];
+
+    items.forEach((item) => {
+        const itemSize = determineSizeForScreen(screen, item.size);
+
+        if (isNil(itemSize)) {
+            throw Error("Item size for current screen is undefined");
+        }
+
+        if (currentRowWidth + itemSize.gridWidth > parentLayoutColumnWidth) {
+            renderedRows.push(currentRow);
+            currentRow = [];
+            currentRowWidth = 0;
+        }
+
+        currentRow.push(item);
+        currentRowWidth = currentRowWidth + itemSize.gridWidth;
+    });
+
+    if (currentRow.length > 0) {
+        renderedRows.push(currentRow);
+    }
+
+    return renderedRows;
 }

@@ -1,15 +1,19 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { useMemo } from "react";
 import reverse from "lodash/fp/reverse.js";
 
 import { DashboardLayoutGridRowProps } from "./DashboardLayoutGridRow.js";
 import { DashboardLayoutItem } from "./DashboardLayoutItem.js";
 import { IDashboardLayoutItemKeyGetter } from "./interfaces.js";
-import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
+import {
+    IDashboardLayoutItemFacade,
+    IDashboardLayoutSectionFacade,
+} from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { serializeLayoutItemPath } from "../../../_staging/layout/coordinates.js";
 import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
 import { HeightResizerHotspot } from "../dragAndDrop/Resize/HeightResizerHotspot.js";
 import { useIsDraggingWidget } from "../../dragAndDrop/draggableWidget/useIsDraggingWidget.js";
+import { ExtendedDashboardWidget } from "../../../model/index.js";
 
 const defaultItemKeyGetter: IDashboardLayoutItemKeyGetter<unknown> = ({ item }) =>
     serializeLayoutItemPath(item.index());
@@ -58,8 +62,9 @@ export function DashboardLayoutGridRowEdit<TWidget>(
                           <HeightResizerHotspot
                               key={`HeightResizerHotspot-${index}`}
                               getLayoutDimensions={getLayoutDimensions}
-                              section={section}
-                              items={itemsInRow}
+                              // TWidget to ExtendedDashboardWidget (originally unknown)
+                              section={section as IDashboardLayoutSectionFacade<ExtendedDashboardWidget>}
+                              items={itemsInRow as IDashboardLayoutItemFacade<ExtendedDashboardWidget>[]}
                           />,
                       );
                   }, rowItems),

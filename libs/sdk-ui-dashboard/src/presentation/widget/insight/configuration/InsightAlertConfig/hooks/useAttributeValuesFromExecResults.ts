@@ -1,11 +1,13 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { useCallback, useEffect, useState } from "react";
-import { DataViewFacade } from "@gooddata/sdk-ui";
+import { DataViewFacade, IDataSeries } from "@gooddata/sdk-ui";
 import {
     areObjRefsEqual,
+    isResultAttributeHeader,
     IAttributeDescriptor,
     IAttributeMetadataObject,
-    isResultAttributeHeader,
+    IAttribute,
+    IMeasure,
 } from "@gooddata/sdk-model";
 
 import { IExecutionResultEnvelope } from "../../../../../../model/index.js";
@@ -31,9 +33,30 @@ export function useAttributeValuesFromExecResults(execResult: IExecutionResultEn
 
     const getAttributeValues = useCallback(
         (attr: IAttributeMetadataObject): AttributeValue[] => {
-            const header = findHeader(dataView, attr);
+            const header = findAttributeHeader(dataView, attr);
             const indexes = findDimIndexes(dataView, header);
             return findAttributeValues(dataView, indexes);
+        },
+        [dataView],
+    );
+
+    const getMetricValue = useCallback(
+        (measure?: IMeasure, attr?: IAttribute, value?: string | null) => {
+            if (!measure || !dataView) {
+                return undefined;
+            }
+
+            const data = Array.from(dataView.data().series().allForMeasure(measure));
+            if (!attr && !value) {
+                return calculatePredictedValue(data);
+            }
+
+            const header = findAttributeHeader2(dataView, attr);
+            const indexes = findDimIndexes(dataView, header);
+
+            const values = calculateValues(dataView, indexes, value);
+            const result = calculatePredictedValue(data, values);
+            return result === 0 ? undefined : result;
         },
         [dataView],
     );
@@ -41,10 +64,42 @@ export function useAttributeValuesFromExecResults(execResult: IExecutionResultEn
     return {
         isResultLoading,
         getAttributeValues,
+        getMetricValue,
     };
 }
 
-function findHeader(dataView: DataViewFacade | null, attr: IAttributeMetadataObject) {
+function calculatePredictedValue(data: IDataSeries[], values?: string[] | null) {
+    return data.reduce((total, series) => {
+        return (
+            total +
+            Array.from(series).reduce((acc, item) => {
+                if (item.total) {
+                    return acc;
+                }
+                if (
+                    !values ||
+                    item.seriesDesc.scopeTitles().some((title) => title && values.includes(title))
+                ) {
+                    return acc + parseFloat(String(item.rawValue || "0"));
+                }
+                return acc;
+            }, 0)
+        );
+    }, 0);
+}
+
+function calculateValues(dataView: DataViewFacade | null, indexes: [number, number], value?: string | null) {
+    return findAttributeValues(dataView, indexes)
+        .map((v) => v.title)
+        .filter((v) => {
+            if (value) {
+                return v === value;
+            }
+            return true;
+        });
+}
+
+function findAttributeHeader(dataView: DataViewFacade | null, attr: IAttributeMetadataObject) {
     if (!dataView) {
         return null;
     }
@@ -60,6 +115,21 @@ function findHeader(dataView: DataViewFacade | null, attr: IAttributeMetadataObj
                         return areObjRefsEqual(descriptor.attributeHeader.ref, displayForm.ref);
                     })
                 );
+            }) ?? null
+    );
+}
+
+function findAttributeHeader2(dataView: DataViewFacade | null, attr: IAttribute | undefined) {
+    if (!dataView || !attr) {
+        return null;
+    }
+
+    return (
+        dataView
+            .meta()
+            .attributeDescriptors()
+            .find((descriptor) => {
+                return areObjRefsEqual(descriptor.attributeHeader.ref, attr.attribute.displayForm);
             }) ?? null
     );
 }

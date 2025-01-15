@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, put, SagaReturnType, select } from "redux-saga/effects";
 import isEmpty from "lodash/isEmpty.js";
@@ -21,6 +21,7 @@ import {
     updateItemIndex,
     findSection,
     getSectionIndex,
+    getParentPath,
 } from "../../../_staging/layout/coordinates.js";
 
 import { validateItemPlacement, validateSectionExists } from "./validation/layoutValidation.js";
@@ -31,6 +32,7 @@ import {
 } from "./validation/itemValidation.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
 import { normalizeItemSizeToParent } from "../../../_staging/layout/sizing.js";
+import { resizeParentContainers } from "./containerHeightSanitization.js";
 
 type AddSectionItemsContext = {
     readonly ctx: DashboardContext;
@@ -193,6 +195,8 @@ export function* addSectionItemsHandler(
             }),
         ]),
     );
+
+    yield call(resizeParentContainers, getParentPath(layoutPath));
 
     const originalItemIndex = itemPath === undefined ? itemIndex : getItemIndex(itemPath);
     const newItemIndex = resolveIndexOfNewItem(section.items, originalItemIndex);

@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 import {
     IAutomationMetadataObject,
@@ -38,11 +38,12 @@ import {
     getAlertFilters,
     getAlertMeasure,
     getAlertRelativeOperator,
-    getAlertThreshold,
     getValueSuffix,
 } from "./utils/getters.js";
 import { AlertAttributeSelect } from "./AlertAttributeSelect.js";
 import { translateGranularity } from "./utils/granularity.js";
+import { useAttributeValuesFromExecResults } from "./hooks/useAttributeValuesFromExecResults.js";
+import { useThresholdValue } from "./hooks/useThresholdValue.js";
 
 const TOOLTIP_ALIGN_POINTS = [{ align: "cl cr" }, { align: "cr cl" }];
 
@@ -110,6 +111,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
         updatedAlert,
         canSubmit,
         showRecipientsSelect,
+        allowExternalRecipients,
         warningMessage,
         //
         changeComparisonOperator,
@@ -150,6 +152,20 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
     const { isValid, invalidityReason } = useAlertValidation(alert, isNewAlert);
     const showFilterInfo = filters.length > 0 || Boolean(selectedComparator?.granularity);
 
+    const { isResultLoading, getAttributeValues, getMetricValue } =
+        useAttributeValuesFromExecResults(execResult);
+
+    const { value, setTouched } = useThresholdValue(
+        changeValue,
+        getMetricValue,
+        isNewAlert,
+        updatedAlert.alert,
+        selectedRelativeOperator,
+        selectedMeasure,
+        selectedAttribute,
+        selectedValue,
+    );
+
     return viewMode === "edit" ? (
         <DashboardInsightSubmenuContainer
             title={
@@ -175,13 +191,14 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                         {Boolean(canManageAttributes) && (
                             <>
                                 <AlertAttributeSelect
-                                    execResult={execResult}
                                     selectedAttribute={selectedAttribute}
                                     selectedValue={selectedValue}
                                     onAttributeChange={changeAttribute}
                                     attributes={attributes}
                                     catalogAttributes={catalogAttributes}
                                     catalogDateDatasets={catalogDateDatasets}
+                                    getAttributeValues={getAttributeValues}
+                                    isResultLoading={isResultLoading}
                                 />
                             </>
                         )}
@@ -251,8 +268,14 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                             className="gd-edit-alert__value-input s-alert-value-input"
                             isSmall
                             autofocus
-                            value={getAlertThreshold(updatedAlert.alert)}
-                            onChange={(e) => changeValue(e !== "" ? parseFloat(e as string) : undefined!)}
+                            value={value}
+                            onChange={(e, event) => {
+                                changeValue(e !== "" ? parseFloat(e as string) : undefined!);
+                                // Set touched state when user changes the value
+                                if (event) {
+                                    setTouched(true);
+                                }
+                            }}
                             type="number"
                             suffix={getValueSuffix(updatedAlert.alert)}
                         />
@@ -285,6 +308,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                                 originalValue={alert.recipients || []}
                                 onChange={changeRecipients}
                                 allowEmptySelection
+                                allowExternalRecipients={allowExternalRecipients}
                                 maxRecipients={maxAutomationsRecipients}
                                 className="gd-edit-alert__recipients"
                                 notificationChannels={destinations}

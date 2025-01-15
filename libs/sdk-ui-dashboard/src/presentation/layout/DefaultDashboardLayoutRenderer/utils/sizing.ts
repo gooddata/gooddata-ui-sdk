@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     AnalyticalWidgetType,
     IDashboardLayout,
@@ -205,7 +205,7 @@ function dashboardLayoutItemSizeForAllScreens(
  * @param items - dashboard layout items
  * @param screen - responsive screen class
  */
-export function splitDashboardLayoutItemsAsRenderedGridRows<TWidget>(
+function splitDashboardLayoutItemsAsRenderedGridRows<TWidget>(
     items: IDashboardLayoutItem<TWidget>[],
     screen: ScreenSize,
 ): IDashboardLayoutItem<TWidget>[][] {

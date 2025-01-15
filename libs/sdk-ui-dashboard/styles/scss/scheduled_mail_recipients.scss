@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 @use "@gooddata/sdk-ui-kit/styles/scss/Button/_variables" as button-variables;
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
 
@@ -127,6 +127,19 @@ $input-height: 28px;
             color: kit-variables.$gd-color-text;
             font-family: kit-variables.$gd-font-primary;
             font-size: 14px;
+            flex-grow: 0;
+            flex-shrink: 1;
+        }
+
+        .gd-recipient-quest {
+            color: kit-variables.$gd-color-state-blank;
+            flex-grow: 0;
+            flex-shrink: 0;
+        }
+
+        .gd-recipient-remove-icon {
+            flex-grow: 0;
+            flex-shrink: 0;
         }
 
         // custom className from react-select rendered
@@ -165,12 +178,17 @@ $input-height: 28px;
         }
 
         &.not-valid,
+        &.invalid-external,
         &.invalid-email {
             color: kit-variables.$gd-palette-error-base;
             background: var(--gd-palette-error-dimmed, #fcedec);
 
             .gd-recipient-label {
                 color: kit-variables.$gd-palette-error-base;
+            }
+
+            .gd-recipient-quest {
+                color: kit-variables.$is-negative-focused-background;
             }
 
             .gd-recipients__multi-value__remove,
@@ -182,8 +200,6 @@ $input-height: 28px;
 }
 
 .gd-recipients-overlay {
-    margin-top: 31px;
-
     // custom className from react-select rendered
     .gd-recipients__menu {
         padding: 0;
@@ -228,10 +244,23 @@ $input-height: 28px;
             padding: 6px 8px;
             font-size: 13px;
             line-height: 15px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
 
             .gd-recipient-option-value-item {
                 margin-left: 10px;
                 color: kit-variables.$gd-color-disabled;
+            }
+
+            .gd-recipient-option-label-external-warning {
+                margin: 5px -8px -6px -8px;
+                background: kit-variables.$default-gd-color-white;
+
+                .gd-message {
+                    font-size: 13px;
+                    padding: 4px 8px 4px 8px;
+                }
             }
         }
 

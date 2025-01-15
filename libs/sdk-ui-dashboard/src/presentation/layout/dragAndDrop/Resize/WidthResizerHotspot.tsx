@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { IWidget, ScreenSize } from "@gooddata/sdk-model";
 import React, { useEffect, useMemo, useState } from "react";
 
@@ -9,6 +9,7 @@ import {
     useDashboardSelector,
     selectInsightsMap,
     resizeWidth,
+    selectSettings,
 } from "../../../../model/index.js";
 import { useResizeHandlers, useResizeWidthItemStatus, useDashboardDrag } from "../../../dragAndDrop/index.js";
 import { getMinWidth } from "../../../../_staging/layout/sizing.js";
@@ -32,6 +33,7 @@ export function WidthResizerHotspot({
 }: WidthResizerHotspotProps) {
     const dispatch = useDashboardDispatch();
     const insightsMap = useDashboardSelector(selectInsightsMap);
+    const settings = useDashboardSelector(selectSettings);
     const { resizeStart, resizeEnd, getScrollCorrection } = useResizeHandlers();
 
     const widget = useMemo(() => item.widget() as IWidget, [item]);
@@ -46,7 +48,7 @@ export function WidthResizerHotspot({
     const itemIndex = item.index();
 
     const currentWidth = item.sizeForScreen(screen)!.gridWidth;
-    const minLimit = getMinWidth(widget, insightsMap, screen);
+    const minLimit = getMinWidth(widget, insightsMap, screen, settings);
     const maxLimit = getDashboardLayoutItemMaxGridWidth(item, screen);
 
     const [{ isDragging }, dragRef] = useDashboardDrag(

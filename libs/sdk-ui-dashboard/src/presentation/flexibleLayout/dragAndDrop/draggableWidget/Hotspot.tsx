@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import cx from "classnames";
 import React, { useCallback, useEffect, useRef, useMemo } from "react";
 
@@ -126,9 +126,15 @@ export const Hotspot: React.FC<IHotspotProps> = (props) => {
         [isEndingHotspot, layoutPath],
     );
 
+    const pathItems = layoutPath
+        ? layoutPath.map((pathItem) => `-${pathItem.sectionIndex}_${pathItem.itemIndex}`).join("")
+        : "";
+
+    const testClass = layoutPath ? `s-dropzone${pathItems}` : undefined;
+
     return (
         <div
-            className={cx(classNames, "dropzone", dropZoneType, {
+            className={cx(classNames, "dropzone", dropZoneType, testClass, {
                 hidden: !canDrop || !canDropSafe(item),
                 full: isEndingHotspot,
                 active: isOver,

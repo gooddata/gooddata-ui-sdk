@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { useMemo } from "react";
 import { Col, Row } from "react-grid-system";
 import reverse from "lodash/fp/reverse.js";
@@ -6,9 +6,13 @@ import reverse from "lodash/fp/reverse.js";
 import { DashboardLayoutGridRowProps } from "./DashboardLayoutGridRow.js";
 import { DashboardLayoutItem } from "./DashboardLayoutItem.js";
 import { IDashboardLayoutItemKeyGetter } from "./interfaces.js";
-import { IDashboardLayoutItemFacade } from "../../../_staging/dashboard/legacyFluidLayout/index.js";
+import {
+    IDashboardLayoutItemFacade,
+    IDashboardLayoutSectionFacade,
+} from "../../../_staging/dashboard/legacyFluidLayout/index.js";
 import { HeightResizerHotspot } from "../dragAndDrop/Resize/HeightResizerHotspot.js";
 import { useIsDraggingWidget } from "../../dragAndDrop/index.js";
+import { ExtendedDashboardWidget } from "../../../model/index.js";
 
 const defaultItemKeyGetter: IDashboardLayoutItemKeyGetter<unknown> = ({ item }) => item.index().toString();
 
@@ -59,8 +63,9 @@ export function DashboardLayoutGridRowEdit<TWidget>(
                                   key={`HeightResizerHotspot-${index}`}
                                   screen={screen}
                                   getLayoutDimensions={getLayoutDimensions}
-                                  section={section}
-                                  items={itemsInRow}
+                                  // TWidget to ExtendedDashboardWidget (originally unknown)
+                                  section={section as IDashboardLayoutSectionFacade<ExtendedDashboardWidget>}
+                                  items={itemsInRow as IDashboardLayoutItemFacade<ExtendedDashboardWidget>[]}
                               />
                           </Col>,
                       );
