@@ -1,5 +1,5 @@
 // (C) 2022-2025 GoodData Corporation
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useIntl } from "react-intl";
 import {
     IAlertComparisonOperator,
@@ -71,126 +71,149 @@ export const useEditAlert = ({
     const allowExternalRecipients =
         selectedDestination?.allowedRecipients === "external" && enabledExternalRecipients;
 
-    const changeMeasure = (measure: AlertMetric) => {
-        setUpdatedAlert((alert) => transformAlertByMetric(metrics, alert, measure, catalogMeasures));
-    };
+    const changeMeasure = useCallback(
+        (measure: AlertMetric) => {
+            setUpdatedAlert((alert) => transformAlertByMetric(metrics, alert, measure, catalogMeasures));
+        },
+        [catalogMeasures, metrics],
+    );
 
-    const changeAttribute = (
-        attribute: AlertAttribute | undefined,
-        value:
-            | {
-                  title: string;
-                  value: string;
-                  name: string;
-              }
-            | undefined,
-    ) => {
-        setUpdatedAlert((alert) => transformAlertByAttribute(attributes, alert, attribute, value));
-    };
+    const changeAttribute = useCallback(
+        (
+            attribute: AlertAttribute | undefined,
+            value:
+                | {
+                      title: string;
+                      value: string;
+                      name: string;
+                  }
+                | undefined,
+        ) => {
+            setUpdatedAlert((alert) => transformAlertByAttribute(attributes, alert, attribute, value));
+        },
+        [attributes],
+    );
 
-    const changeComparisonOperator = (measure: AlertMetric, comparisonOperator: IAlertComparisonOperator) => {
-        setUpdatedAlert((alert) =>
-            transformAlertByComparisonOperator(metrics, alert, measure, comparisonOperator),
-        );
-    };
+    const changeComparisonOperator = useCallback(
+        (measure: AlertMetric, comparisonOperator: IAlertComparisonOperator) => {
+            setUpdatedAlert((alert) =>
+                transformAlertByComparisonOperator(metrics, alert, measure, comparisonOperator),
+            );
+        },
+        [metrics],
+    );
 
-    const changeRelativeOperator = (
-        measure: AlertMetric,
-        relativeOperator: IAlertRelativeOperator,
-        arithmeticOperator: IAlertRelativeArithmeticOperator,
-    ) => {
-        setUpdatedAlert((alert) =>
-            transformAlertByRelativeOperator(
-                metrics,
-                alert,
-                measure,
-                relativeOperator,
-                arithmeticOperator,
-                catalogMeasures,
-            ),
-        );
-    };
+    const changeRelativeOperator = useCallback(
+        (
+            measure: AlertMetric,
+            relativeOperator: IAlertRelativeOperator,
+            arithmeticOperator: IAlertRelativeArithmeticOperator,
+        ) => {
+            setUpdatedAlert((alert) =>
+                transformAlertByRelativeOperator(
+                    metrics,
+                    alert,
+                    measure,
+                    relativeOperator,
+                    arithmeticOperator,
+                    catalogMeasures,
+                ),
+            );
+        },
+        [catalogMeasures, metrics],
+    );
 
-    const changeValue = (value: number) => {
+    const changeValue = useCallback((value: number) => {
         setUpdatedAlert((alert) => transformAlertByValue(alert, value));
-    };
+    }, []);
 
-    const changeDestination = (destinationId: string) => {
-        const previousDestination = destinations.find((channel) => alert.notificationChannel === channel.id);
-        const selectedDestination = destinations.find((channel) => destinationId === channel.id);
+    const changeDestination = useCallback(
+        (destinationId: string) => {
+            const previousDestination = destinations.find(
+                (channel) => alert.notificationChannel === channel.id,
+            );
+            const selectedDestination = destinations.find((channel) => destinationId === channel.id);
 
-        /**
-         * When allowed recipients are changed from "ALL" to "CREATOR", show warning message
-         */
-        const showWarningMessage =
-            selectedDestination?.allowedRecipients === "creator" &&
-            previousDestination?.allowedRecipients !== "creator";
-        setWarningMessage(
-            showWarningMessage
-                ? intl.formatMessage({ id: "insightAlert.config.warning.destination" })
-                : undefined,
-        );
+            /**
+             * When allowed recipients are changed from "ALL" to "CREATOR", show warning message
+             */
+            const showWarningMessage =
+                selectedDestination?.allowedRecipients === "creator" &&
+                previousDestination?.allowedRecipients !== "creator";
+            setWarningMessage(
+                showWarningMessage
+                    ? intl.formatMessage({ id: "insightAlert.config.warning.destination" })
+                    : undefined,
+            );
 
-        /**
-         * Reset recipients when new notification channel only allows the author/creator
-         */
-        const updatedRecipients =
-            selectedDestination?.allowedRecipients === "creator"
-                ? [convertCurrentUserToAutomationRecipient(users ?? [], currentUser)]
-                : undefined;
+            /**
+             * Reset recipients when new notification channel only allows the author/creator
+             */
+            const updatedRecipients =
+                selectedDestination?.allowedRecipients === "creator"
+                    ? [convertCurrentUserToAutomationRecipient(users ?? [], currentUser)]
+                    : undefined;
 
-        setUpdatedAlert((alert) => transformAlertByDestination(alert, destinationId, updatedRecipients));
-    };
+            setUpdatedAlert((alert) => transformAlertByDestination(alert, destinationId, updatedRecipients));
+        },
+        [alert.notificationChannel, currentUser, destinations, intl, users],
+    );
 
-    const changeComparisonType = (
-        measure: AlertMetric | undefined,
-        relativeOperator: [IAlertRelativeOperator, IAlertRelativeArithmeticOperator] | undefined,
-        comparisonType: AlertMetricComparatorType,
-    ) => {
-        if (!measure || !relativeOperator || !relativeOperator) {
-            return;
-        }
-        const [relativeOperatorValue, arithmeticOperator] = relativeOperator;
-        setUpdatedAlert((alert) =>
-            transformAlertByRelativeOperator(
-                metrics,
-                alert,
-                measure,
-                relativeOperatorValue,
-                arithmeticOperator,
-                catalogMeasures,
-                comparisonType,
-            ),
-        );
-    };
+    const changeComparisonType = useCallback(
+        (
+            measure: AlertMetric | undefined,
+            relativeOperator: [IAlertRelativeOperator, IAlertRelativeArithmeticOperator] | undefined,
+            comparisonType: AlertMetricComparatorType,
+        ) => {
+            if (!measure || !relativeOperator || !relativeOperator) {
+                return;
+            }
+            const [relativeOperatorValue, arithmeticOperator] = relativeOperator;
+            setUpdatedAlert((alert) =>
+                transformAlertByRelativeOperator(
+                    metrics,
+                    alert,
+                    measure,
+                    relativeOperatorValue,
+                    arithmeticOperator,
+                    catalogMeasures,
+                    comparisonType,
+                ),
+            );
+        },
+        [catalogMeasures, metrics],
+    );
 
-    const changeRecipients = (recipients: IAutomationRecipient[]) => {
+    const changeRecipients = useCallback((recipients: IAutomationRecipient[]) => {
         setUpdatedAlert((alert) => ({
             ...alert,
             recipients,
         }));
-    };
+    }, []);
 
-    const configureAlert = () => {
+    const configureAlert = useCallback(() => {
         setViewMode("configuration");
-    };
+    }, []);
 
-    const saveAlertConfiguration = (alert: IAutomationMetadataObject) => {
-        setUpdatedAlert(alert);
-        cancelAlertConfiguration();
-    };
-
-    const cancelAlertConfiguration = () => {
+    const cancelAlertConfiguration = useCallback(() => {
         setViewMode("edit");
-    };
+    }, []);
 
-    const createAlert = () => {
+    const saveAlertConfiguration = useCallback(
+        (alert: IAutomationMetadataObject) => {
+            setUpdatedAlert(alert);
+            cancelAlertConfiguration();
+        },
+        [cancelAlertConfiguration],
+    );
+
+    const createAlert = useCallback(() => {
         onCreate?.(updatedAlert);
-    };
+    }, [onCreate, updatedAlert]);
 
-    const updateAlert = () => {
+    const updateAlert = useCallback(() => {
         onUpdate?.(updatedAlert as IAutomationMetadataObject);
-    };
+    }, [onUpdate, updatedAlert]);
 
     const isValueDefined = isAlertValueDefined(updatedAlert.alert);
     const isRecipientsValid = isAlertRecipientsValid(updatedAlert);

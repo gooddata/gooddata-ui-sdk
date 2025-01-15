@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
 import isNumber from "lodash/isNumber.js";
 import isString from "lodash/isString.js";
@@ -43,17 +43,17 @@ export class Input extends React.PureComponent<InputPureProps, InputState> {
         }
     }
 
-    onChange = (value: string | number): void => {
-        this.valueChanged(value);
+    onChange = (value: string | number, e?: React.ChangeEvent<HTMLInputElement>): void => {
+        this.valueChanged(value, e);
     };
 
-    valueChanged(value: string | number): void {
+    valueChanged(value: string | number, e?: React.ChangeEvent<HTMLInputElement>): void {
         if (this.state.value !== value) {
             this.setState({
                 value,
             });
 
-            this.props.onChange(value);
+            this.props.onChange(value, e);
         }
     }
 
