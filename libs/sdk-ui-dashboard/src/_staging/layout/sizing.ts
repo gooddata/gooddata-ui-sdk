@@ -415,7 +415,6 @@ export function calculateWidgetMinHeight(
     currentSize: IDashboardLayoutSize | undefined,
     insightMap: ObjRefMap<IInsight>,
     settings: ISettings,
-    screen: ScreenSize,
 ): number | undefined {
     let widgetType: AnalyticalWidgetType;
     let content: IInsight | IKpi;
@@ -423,9 +422,6 @@ export function calculateWidgetMinHeight(
 
     if (isWidget(widget)) {
         widgetType = getWidgetType(widget);
-    }
-    if (isDashboardLayout(widget)) {
-        return getContainerHeight(layoutItem, screen, settings);
     }
     if (isInsightWidget(widget)) {
         content = insightMap.get(widget.insight)!;
