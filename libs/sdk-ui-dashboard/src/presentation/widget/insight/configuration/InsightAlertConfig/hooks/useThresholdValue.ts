@@ -14,6 +14,7 @@ import { AlertAttribute, AlertMetric } from "../../../types.js";
 export function useThresholdValue(
     changeValue: (value: number) => void,
     getMetricValue: (measure?: IMeasure, attr?: IAttribute, value?: string | null) => number | undefined,
+    isNewAlert?: boolean,
     alert?: IAutomationAlert,
     selectedRelativeOperator: [
         IAlertRelativeOperator | undefined,
@@ -30,7 +31,8 @@ export function useThresholdValue(
 
     useEffect(() => {
         // If input is already touched, do not trigger current value calculation
-        if (touched) {
+        // If alert is not new, do not trigger current value calculation because it is already set by user
+        if (touched || !isNewAlert) {
             return;
         }
 
@@ -46,6 +48,7 @@ export function useThresholdValue(
             }
         }
     }, [
+        isNewAlert,
         changeValue,
         getMetricValue,
         selectedAttribute?.attribute,

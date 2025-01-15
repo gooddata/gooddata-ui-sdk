@@ -158,6 +158,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
     const { value, setTouched } = useThresholdValue(
         changeValue,
         getMetricValue,
+        isNewAlert,
         updatedAlert.alert,
         selectedRelativeOperator,
         selectedMeasure,
