@@ -404,21 +404,27 @@ export class RecipientsSelectRenderer extends React.PureComponent<
 
     private renderOptionLabel = (recipient: IAutomationRecipient): React.ReactElement | null => {
         const displayName = recipient.name ?? recipient.id;
+        const email = isAutomationUserRecipient(recipient) ? recipient.email ?? "" : "";
 
         return (
-            <div className="gd-recipient-option-item s-gd-recipient-option-item">
-                <span className="gd-recipient-option-label-item s-gd-recipient-option-label-item">
-                    {displayName}
-                </span>
-                {this.renderRecipientValue(recipient)}
-                {recipient.type === "externalUser" ? (
-                    <div className="gd-recipient-option-label-external-warning">
-                        <Message type="warning">
-                            <FormattedMessage id="dialogs.schedule.email.user.warning.external" />
-                        </Message>
-                    </div>
-                ) : null}
-            </div>
+            <BubbleHoverTrigger>
+                <div className="gd-recipient-option-item s-gd-recipient-option-item">
+                    <span className="gd-recipient-option-label-item s-gd-recipient-option-label-item">
+                        {displayName}
+                    </span>
+                    {this.renderRecipientValue(recipient)}
+                    {recipient.type === "externalUser" ? (
+                        <div className="gd-recipient-option-label-external-warning">
+                            <Message type="warning">
+                                <FormattedMessage id="dialogs.schedule.email.user.warning.external" />
+                            </Message>
+                        </div>
+                    ) : null}
+                </div>
+                <Bubble className="bubble-primary" alignPoints={TOOLTIP_ALIGN_POINTS}>
+                    {displayName} {isEmail(email) ? `(${email})` : ""}
+                </Bubble>
+            </BubbleHoverTrigger>
         );
     };
 
