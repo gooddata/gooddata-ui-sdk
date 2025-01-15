@@ -147,7 +147,7 @@ export function getHeightsGR(
     return items.reduce((acc, item) => {
         const currentSize = item.sizeForScreen(screen);
         const widgetMinHeightPX =
-            calculateWidgetMinHeight(item.raw(), currentSize, insightMap, settings, screen) ??
+            calculateWidgetMinHeight(item.raw(), currentSize, insightMap, settings) ??
             DEFAULT_WIDTH_RESIZER_HEIGHT;
         const curHeightGR = fluidLayoutDescriptor.toGridHeight(widgetMinHeightPX);
         const gridHeight = item.sizeForScreen(screen)?.gridHeight ?? curHeightGR;

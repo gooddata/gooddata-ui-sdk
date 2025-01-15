@@ -130,7 +130,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext();
 
     const currentSize = item.size()[screen]!;
-    const minHeight = calculateWidgetMinHeight(item.raw(), currentSize, insights, settings, screen);
+    const minHeight = calculateWidgetMinHeight(item.raw(), currentSize, insights, settings);
     const height =
         currentSize.heightAsRatio && !currentSize.gridHeight
             ? getDashboardLayoutItemHeightForRatioAndScreen(currentSize, screen)
