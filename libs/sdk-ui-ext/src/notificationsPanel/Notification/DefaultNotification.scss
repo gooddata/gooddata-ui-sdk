@@ -36,6 +36,10 @@
                 display: none;
             }
         }
+
+        #{$root}__unread-status {
+            border: 1.4px solid var(--gd-palette-complementary-2);
+        }
     }
 
     &__unsupported {
@@ -72,7 +76,7 @@
         position: absolute;
         top: 0;
         right: 0;
-        border: 1.4px solid var(--gd-palette-complementary-2);
+        border: 1.4px solid var(--gd-palette-complementary-0);
         box-sizing: content-box;
     }
 
