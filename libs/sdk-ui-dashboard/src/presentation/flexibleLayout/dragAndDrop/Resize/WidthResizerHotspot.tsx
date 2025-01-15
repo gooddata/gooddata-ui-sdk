@@ -8,6 +8,7 @@ import {
     selectInsightsMap,
     useDashboardDispatch,
     useDashboardSelector,
+    selectSettings,
 } from "../../../../model/index.js";
 import { IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/flexibleLayout/index.js";
 import { getMinWidth } from "../../../../_staging/layout/sizing.js";
@@ -34,6 +35,7 @@ export function WidthResizerHotspot({
 }: WidthResizerHotspotProps) {
     const dispatch = useDashboardDispatch();
     const insightsMap = useDashboardSelector(selectInsightsMap);
+    const settings = useDashboardSelector(selectSettings);
     const { resizeStart, resizeEnd, getScrollCorrection } = useResizeHandlers();
     const screen = useScreenSize();
 
@@ -49,7 +51,7 @@ export function WidthResizerHotspot({
     const firstInContainer = isFirstInContainer(layoutPath);
 
     const currentWidth = item.sizeForScreen(screen)!.gridWidth;
-    const minLimit = getMinWidth(widget, insightsMap, screen);
+    const minLimit = getMinWidth(widget, insightsMap, screen, settings);
     const maxLimit = getDashboardLayoutItemMaxGridWidth(item, screen);
 
     const [{ isDragging }, dragRef] = useDashboardDrag(

@@ -14,8 +14,10 @@ import { ILayoutItemPath } from "../../../types.js";
 import { selectLayout, selectScreen } from "../../store/layout/layoutSelectors.js";
 import { IItemWithHeight, ExtendedDashboardWidget } from "../../types/layoutTypes.js";
 import { findItem, areLayoutPathsEqual } from "../../../_staging/layout/coordinates.js";
-import { implicitLayoutItemSizeFromXlSize } from "../../../_staging/layout/sizing.js";
-import { splitDashboardLayoutItemsAsRenderedGridRows } from "../../../presentation/flexibleLayout/DefaultDashboardLayoutRenderer/utils/sizing.js";
+import {
+    implicitLayoutItemSizeFromXlSize,
+    splitDashboardLayoutItemsAsRenderedGridRows,
+} from "../../../_staging/layout/sizing.js";
 import { layoutActions } from "../../store/layout/index.js";
 
 const getParentPathsFromDeepestToShallowest = (parentPath: ILayoutItemPath) =>
@@ -26,10 +28,12 @@ const getParentPathsFromDeepestToShallowest = (parentPath: ILayoutItemPath) =>
 const getUpdatedSizesOnly = (
     layout: IDashboardLayout<ExtendedDashboardWidget>,
     itemsWithSizes: IItemWithHeight[],
+    screen: ScreenSize,
 ) => {
     return itemsWithSizes.filter(({ itemPath, height }) => {
         const container = findItem(layout, itemPath);
-        return container.size.xl.gridHeight !== height;
+        const sanitizedItemSize = implicitLayoutItemSizeFromXlSize(container.size.xl);
+        return sanitizedItemSize[screen]?.gridHeight !== height;
     });
 };
 
@@ -79,7 +83,9 @@ class ContainerHeightCalculator {
             const itemIndex = section.items.findIndex((currentItem) => currentItem === item);
             const currentItemPath: ILayoutItemPath = [...itemPath, { sectionIndex, itemIndex }];
             const previouslyComputedHeight = this.getPreviouslyComputedHeight(currentItemPath);
-            const currentItemHeight = previouslyComputedHeight?.height ?? item.size.xl.gridHeight ?? 0;
+            const sanitizedItemSize = implicitLayoutItemSizeFromXlSize(item.size.xl);
+            const currentItemHeight =
+                previouslyComputedHeight?.height ?? sanitizedItemSize[this.screen]?.gridHeight ?? 0;
             return Math.max(maxItemHeight, currentItemHeight);
         }, 0);
     };
@@ -112,7 +118,7 @@ export function* resizeParentContainers(parentPath: ILayoutItemPath | undefined)
         ];
     }, []);
 
-    const updatedItemsWithSizes = getUpdatedSizesOnly(layout, itemsWithSizes);
+    const updatedItemsWithSizes = getUpdatedSizesOnly(layout, itemsWithSizes, screen);
 
     if (updatedItemsWithSizes.length > 0) {
         yield put(

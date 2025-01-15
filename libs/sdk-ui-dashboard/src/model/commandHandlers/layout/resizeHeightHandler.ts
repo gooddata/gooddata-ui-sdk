@@ -1,6 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
 
-import { IWidget } from "@gooddata/sdk-model";
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
@@ -13,7 +12,7 @@ import {
 import { getMaxHeight, getMinHeight } from "../../../_staging/layout/sizing.js";
 import { selectInsightsMap } from "../../store/insights/insightsSelectors.js";
 import { layoutActions } from "../../store/layout/index.js";
-import { selectLayout } from "../../store/layout/layoutSelectors.js";
+import { selectLayout, selectScreen } from "../../store/layout/layoutSelectors.js";
 import { DashboardContext } from "../../types/commonTypes.js";
 import {
     serializeLayoutSectionPath,
@@ -25,6 +24,7 @@ import {
 
 import { validateItemExists, validateSectionExists } from "./validation/layoutValidation.js";
 import { resizeParentContainers } from "./containerHeightSanitization.js";
+import { selectSettings } from "../../store/config/configSelectors.js";
 
 function validateLayoutIndexes(
     ctx: DashboardContext,
@@ -92,10 +92,12 @@ export function* resizeHeightHandler(
 
     const layout = yield select(selectLayout);
     const insightsMap = yield select(selectInsightsMap);
+    const screen = yield select(selectScreen);
+    const settings = yield select(selectSettings);
 
     validateLayoutIndexes(ctx, layout, cmd);
 
-    validateHeight(ctx, layout, insightsMap, cmd);
+    validateHeight(ctx, layout, insightsMap, cmd, screen, settings);
 
     const numericalSectionIndex = typeof sectionIndex === "number" ? sectionIndex : sectionIndex.sectionIndex;
     const sectionPath = typeof sectionIndex === "number" ? { parent: undefined, sectionIndex } : sectionIndex;
@@ -125,6 +127,8 @@ function validateHeight(
     layout: ReturnType<typeof selectLayout>,
     insightsMap: ReturnType<typeof selectInsightsMap>,
     cmd: ResizeHeight,
+    screen: ReturnType<typeof selectScreen> = "xl",
+    settings: ReturnType<typeof selectSettings>,
 ) {
     const {
         payload: { sectionIndex, itemIndexes, height },
@@ -132,12 +136,12 @@ function validateHeight(
 
     const widgets = itemIndexes.map((itemIndex) =>
         typeof sectionIndex === "number"
-            ? (layout.sections[sectionIndex].items[itemIndex].widget as IWidget)
-            : (findSection(layout, sectionIndex).items[itemIndex].widget as IWidget),
+            ? layout.sections[sectionIndex].items[itemIndex]
+            : findSection(layout, sectionIndex).items[itemIndex],
     );
 
-    const minLimit = getMinHeight(widgets, insightsMap);
-    const maxLimit = getMaxHeight(widgets, insightsMap);
+    const minLimit = getMinHeight(widgets, insightsMap, screen, settings);
+    const maxLimit = getMaxHeight(widgets, insightsMap, screen, settings);
 
     const validHeight = height >= minLimit && height <= maxLimit;
 
