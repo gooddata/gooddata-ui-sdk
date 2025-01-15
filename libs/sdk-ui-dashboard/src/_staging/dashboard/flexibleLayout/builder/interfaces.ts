@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     ObjRef,
     IDashboardLayout,
@@ -17,8 +17,7 @@ import {
     IDashboardLayoutSectionFacade,
     IDashboardLayoutSectionsFacade,
 } from "../facade/interfaces.js";
-
-// TODO LX-603: rewrite to support nested layouts
+import { ILayoutItemPath, ILayoutSectionPath } from "../../../../types.js";
 
 /**
  * Represents a query to select a subset of layout sections.
@@ -171,6 +170,21 @@ export interface IDashboardLayoutItemBuilder<TWidget = IDashboardWidget> {
      * @param modify - callback to modify the widget
      */
     modifyKpiWidget(modify: (builder: KpiWidgetBuilder) => KpiWidgetBuilder): this;
+
+    /**
+     * Modify existing layout widget in this item.
+     *
+     * Note: When the item doesn't contain a layout widget, the error is thrown.
+     *
+     * @param modify - callback to modify the widget
+     */
+    modifyLayoutWidget(
+        modify: (builder: IDashboardLayoutBuilder<TWidget>) => IDashboardLayoutBuilder<TWidget>,
+        dashboardLayoutBuilderConstructor: (
+            layout: IDashboardLayout<TWidget>,
+            layoutPath?: ILayoutItemPath,
+        ) => IDashboardLayoutBuilder<TWidget>,
+    ): this;
 }
 
 /**
@@ -384,6 +398,28 @@ export interface IDashboardLayoutBuilder<TWidget = IDashboardWidget> {
     ): this;
 
     /**
+     * Creates a new section and adds it to a layout.
+     *
+     * Note:
+     * - This operation is non-invasive, it cannot replace an existing section.
+     *   This means that if there is already an existing section on the specified index,
+     *   this and all subsequent sections will be moved after the added section.
+     *   If you want to replace an existing section use .modifySection() or .modifySections() method instead.
+     *
+     * - When no create callback is provided, an empty section is added
+     *
+     * @param create - callback to create the section
+     * @param sectionPath - path in layout where to place the section
+     * @returns this
+     */
+    createSection(
+        create?: (
+            builder: IDashboardLayoutSectionBuilder<TWidget>,
+        ) => IDashboardLayoutSectionBuilder<TWidget>,
+        sectionPath?: ILayoutSectionPath,
+    ): this;
+
+    /**
      * Adds a new section to a layout.
      *
      * Note:
@@ -399,6 +435,20 @@ export interface IDashboardLayoutBuilder<TWidget = IDashboardWidget> {
      * @returns this
      */
     addSection(section: IDashboardLayoutSection<TWidget>, index?: number): this;
+    /**
+     * Adds a new section to a layout.
+     *
+     * Note:
+     * - This operation is non-invasive, it cannot replace an existing section.
+     *   This means that if there is already an existing section on the specified index,
+     *   this and all subsequent sections will be moved after the added section.
+     *   If you want to replace an existing section use .modifySection() or .modifySections() method instead.
+     *
+     * @param section - section to add
+     * @param sectionPath - path where to place the section
+     * @returns this
+     */
+    addSection(section: IDashboardLayoutSection<TWidget>, sectionPath: ILayoutSectionPath): this;
 
     /**
      * Modify section at a specified index.
@@ -415,6 +465,23 @@ export interface IDashboardLayoutBuilder<TWidget = IDashboardWidget> {
     modifySection(index: number, modify: DashboardLayoutSectionModifications<TWidget>): this;
 
     /**
+     * Modify section at a specified path.
+     *
+     * Note:
+     * - If the section does not exist at the specified index, the error is thrown.
+     *   Do this only when you are sure about the section index, or use .modifySections() method instead,
+     *   which allows you to select the sections according to your predicate and does nothing if it is not met.
+     *
+     * @param sectionPath - section path
+     * @param modify - callback to modify the section
+     * @returns this
+     */
+    modifySection(
+        sectionPath: ILayoutSectionPath,
+        modify: DashboardLayoutSectionModifications<TWidget>,
+    ): this;
+
+    /**
      * Remove the section at a specified index.
      *
      * Note:
@@ -426,6 +493,19 @@ export interface IDashboardLayoutBuilder<TWidget = IDashboardWidget> {
      * @returns this
      */
     removeSection(index: number): this;
+
+    /**
+     * Remove the section at a specified path.
+     *
+     * Note:
+     * - If the section does not exist at the specified index, the error is thrown.
+     *   Do this only when you are sure about the section index, or use .removeSections() method instead,
+     *   which allows you to select the sections according to your predicate and does nothing if it is not met.
+     *
+     * @param sectionPath - the path of the section to remove
+     * @returns this
+     */
+    removeSection(sectionPath: ILayoutSectionPath): this;
 
     /**
      * Move section from a specified index to a target index.
@@ -445,10 +525,26 @@ export interface IDashboardLayoutBuilder<TWidget = IDashboardWidget> {
     moveSection(fromIndex: number, toIndex: number): this;
 
     /**
+     * Move section from a specified path to a target path.
+     *
+     * Note:
+     * - If the section does not exist at the specified path, the error is thrown.
+     * - This operation is non-invasive, it cannot replace an existing section.
+     *   This means that if there is already an existing section at the target path,
+     *   this and all subsequent sections will be moved after the added section.
+     *
+     * @param fromPath - the path of the section to move
+     * @param toPath - the target path where the section will be moved
+     * @returns this
+     */
+    moveSection(fromPath: ILayoutSectionPath, toPath: ILayoutSectionPath): this;
+
+    /**
      * Perform modifications for the selected section(s).
      * This is useful to perform a set of transformations for sections selected by any predicate.
      * Usually, you want to use .filter() and or .find() for the selector,
      * but it's really flexible and you can select any subset of the sections.
+     * Works only in root of this layout. Any nested layouts are not affected.
      *
      * Note:
      * - When no selector is provided, all sections are selected by default.
@@ -469,6 +565,7 @@ export interface IDashboardLayoutBuilder<TWidget = IDashboardWidget> {
      * This is useful to remove sections selected by any predicate.
      * Usually, you want to use .filter() and or .find() for the selector,
      * but it's really flexible and you can select any subset of the sections.
+     * Works only in root of this layout. Any nested layouts are not affected.
      *
      * Note:
      * - When no selector is provided, all sections are selected by default (and therefore removed).
@@ -482,6 +579,7 @@ export interface IDashboardLayoutBuilder<TWidget = IDashboardWidget> {
 
     /**
      * Remove all empty sections.
+     * Works only in root of this layout. Any nested layouts are not affected.
      *
      * @returns this
      */

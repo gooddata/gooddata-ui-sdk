@@ -1,16 +1,28 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { idRef, IDashboardLayout, IDashboardLayoutSection } from "@gooddata/sdk-model";
 import { newInsightWidget, newKpiWidget } from "@gooddata/sdk-backend-base";
 import { DashboardLayoutBuilder } from "../layout.js";
 import {
     createEmptyDashboardLayoutBuilder,
+    createEmptyDashboardLayoutSectionBuilder,
     createValueOrUpdateCallbackTestCases,
     defaultItemXlSize,
+    widgetWithNestedLayout,
 } from "./utils.js";
 import { describe, it, expect } from "vitest";
 import { serializeLayoutSectionPath } from "../../../../layout/coordinates";
+import { IDashboardLayoutItemBuilder, IDashboardLayoutSectionBuilder } from "../interfaces.js";
 
 describe("DashboardLayoutBuilder", () => {
+    const testSection = (title: string): IDashboardLayoutSection<any> => {
+        return {
+            type: "IDashboardLayoutSection",
+            header: {
+                title,
+            },
+            items: [],
+        };
+    };
     describe("constructors", () => {
         describe(".for()", () => {
             it("should use the provided layout", () => {
@@ -76,20 +88,33 @@ describe("DashboardLayoutBuilder", () => {
             expect(layoutBefore).toMatchSnapshot("before");
             expect(layoutAfter).toMatchSnapshot("after");
         });
+
+        it("should create a section at the provided path", () => {
+            const createSection = (layoutSectionBuilder: IDashboardLayoutSectionBuilder<any>) => {
+                const createItem = (itemBuilder: IDashboardLayoutItemBuilder<any>) => {
+                    return itemBuilder.widget(widgetWithNestedLayout);
+                };
+                return layoutSectionBuilder.createItem(defaultItemXlSize, createItem, 0);
+            };
+            const layoutBuilder = createEmptyDashboardLayoutBuilder()
+                .createSection()
+                .createSection(createSection, 1);
+
+            const layoutBefore = layoutBuilder.build();
+            const layoutAfter = layoutBuilder
+                .createSection((r) => r.header({ title: "Added section" }), {
+                    parent: [{ sectionIndex: 1, itemIndex: 0 }],
+                    sectionIndex: 1,
+                })
+                .build();
+
+            expect(layoutBefore).toMatchSnapshot("before");
+            expect(layoutAfter).toMatchSnapshot("after");
+        });
     });
 
     describe(".addSection()", () => {
-        const testSection = (title: string): IDashboardLayoutSection<any> => {
-            return {
-                type: "IDashboardLayoutSection",
-                header: {
-                    title,
-                },
-                items: [],
-            };
-        };
-
-        it("should create a section at the end of the layout by default", () => {
+        it("should add a section at the end of the layout by default", () => {
             const layoutBuilder = createEmptyDashboardLayoutBuilder().addSection(
                 testSection("Initial section"),
             );
@@ -101,13 +126,50 @@ describe("DashboardLayoutBuilder", () => {
             expect(layoutAfter).toMatchSnapshot("after");
         });
 
-        it("should create a section at the provided index", () => {
+        it("should add a section at the provided index", () => {
             const layoutBuilder = createEmptyDashboardLayoutBuilder()
                 .addSection(testSection("Section 1"))
                 .addSection(testSection("Section 2"));
 
             const layoutBefore = layoutBuilder.build();
             const layoutAfter = layoutBuilder.addSection(testSection("Added section"), 1).build();
+
+            expect(layoutBefore).toMatchSnapshot("before");
+            expect(layoutAfter).toMatchSnapshot("after");
+        });
+
+        it("should add a section at the provided path", () => {
+            const createSectionWithNestedLayout = (
+                layoutSectionBuilder: IDashboardLayoutSectionBuilder<any>,
+                title,
+            ) => {
+                const createItemWithNestedLayout = (itemBuilder: IDashboardLayoutItemBuilder<any>) => {
+                    const nestedLayoutBuilder = createEmptyDashboardLayoutBuilder()
+                        .addSection(testSection("Section 3"))
+                        .addSection(testSection("Section 4"));
+                    return itemBuilder.widget(nestedLayoutBuilder.build());
+                };
+                return layoutSectionBuilder
+                    .createItem(defaultItemXlSize, createItemWithNestedLayout, 0)
+                    .header({ title });
+            };
+
+            const layoutBuilder = createEmptyDashboardLayoutBuilder()
+                .addSection(testSection("Section 1"))
+                .addSection(
+                    createSectionWithNestedLayout(
+                        createEmptyDashboardLayoutSectionBuilder(),
+                        "Section 2",
+                    ).build(),
+                );
+
+            const layoutBefore = layoutBuilder.build();
+            const layoutAfter = layoutBuilder
+                .addSection(testSection("Added section"), {
+                    parent: [{ sectionIndex: 1, itemIndex: 0 }],
+                    sectionIndex: 1,
+                })
+                .build();
 
             expect(layoutBefore).toMatchSnapshot("before");
             expect(layoutAfter).toMatchSnapshot("after");
@@ -124,6 +186,40 @@ describe("DashboardLayoutBuilder", () => {
 
             const layoutBefore = layoutBuilder.build();
             const layoutAfter = layoutBuilder.removeSection(rowIndex).build();
+
+            expect(layoutBefore).toMatchSnapshot("before");
+            expect(layoutAfter).toMatchSnapshot("after");
+        });
+
+        it("should remove the section from the nested layout", () => {
+            const createSectionWithNestedLayout = (
+                layoutSectionBuilder: IDashboardLayoutSectionBuilder<any>,
+                title,
+            ) => {
+                const createItemWithNestedLayout = (itemBuilder: IDashboardLayoutItemBuilder<any>) => {
+                    const nestedLayoutBuilder = createEmptyDashboardLayoutBuilder()
+                        .addSection(testSection("Section 3"))
+                        .addSection(testSection("Section 4"));
+                    return itemBuilder.widget(nestedLayoutBuilder.build());
+                };
+                return layoutSectionBuilder
+                    .createItem(defaultItemXlSize, createItemWithNestedLayout, 0)
+                    .header({ title });
+            };
+
+            const layoutBuilder = createEmptyDashboardLayoutBuilder()
+                .addSection(testSection("Section 1"))
+                .addSection(
+                    createSectionWithNestedLayout(
+                        createEmptyDashboardLayoutSectionBuilder(),
+                        "Section 2",
+                    ).build(),
+                );
+
+            const layoutBefore = layoutBuilder.build();
+            const layoutAfter = layoutBuilder
+                .removeSection({ parent: [{ sectionIndex: 1, itemIndex: 0 }], sectionIndex: 1 })
+                .build();
 
             expect(layoutBefore).toMatchSnapshot("before");
             expect(layoutAfter).toMatchSnapshot("after");
@@ -153,6 +249,42 @@ describe("DashboardLayoutBuilder", () => {
             expect(layoutAfter).toMatchSnapshot("after");
         });
 
+        it("should modify the section in nested layout", () => {
+            const createSectionWithNestedLayout = (
+                layoutSectionBuilder: IDashboardLayoutSectionBuilder<any>,
+                title,
+            ) => {
+                const createItemWithNestedLayout = (itemBuilder: IDashboardLayoutItemBuilder<any>) => {
+                    const nestedLayoutBuilder = createEmptyDashboardLayoutBuilder()
+                        .addSection(testSection("Section 3"))
+                        .addSection(testSection("Original section"));
+                    return itemBuilder.widget(nestedLayoutBuilder.build());
+                };
+                return layoutSectionBuilder
+                    .createItem(defaultItemXlSize, createItemWithNestedLayout, 0)
+                    .header({ title });
+            };
+
+            const layoutBuilder = createEmptyDashboardLayoutBuilder()
+                .addSection(testSection("Section 1"))
+                .addSection(
+                    createSectionWithNestedLayout(
+                        createEmptyDashboardLayoutSectionBuilder(),
+                        "Section 2",
+                    ).build(),
+                );
+
+            const layoutBefore = layoutBuilder.build();
+            const layoutAfter = layoutBuilder
+                .modifySection({ parent: [{ sectionIndex: 1, itemIndex: 0 }], sectionIndex: 1 }, (r) =>
+                    r.header({ title: "Modified section" }),
+                )
+                .build();
+
+            expect(layoutBefore).toMatchSnapshot("before");
+            expect(layoutAfter).toMatchSnapshot("after");
+        });
+
         it("should throw error, when the section at provided index does not exist", () => {
             const boom = () => {
                 createEmptyDashboardLayoutBuilder().modifySection(0, (r) =>
@@ -173,6 +305,44 @@ describe("DashboardLayoutBuilder", () => {
 
             const layoutBefore = layoutBuilder.build();
             const layoutAfter = layoutBuilder.moveSection(0, 1).build();
+
+            expect(layoutBefore).toMatchSnapshot("before");
+            expect(layoutAfter).toMatchSnapshot("after");
+        });
+
+        it("should move the section in nested layout", () => {
+            const createSectionWithNestedLayout = (
+                layoutSectionBuilder: IDashboardLayoutSectionBuilder<any>,
+                title,
+            ) => {
+                const createItemWithNestedLayout = (itemBuilder: IDashboardLayoutItemBuilder<any>) => {
+                    const nestedLayoutBuilder = createEmptyDashboardLayoutBuilder()
+                        .addSection(testSection("Section 4"))
+                        .addSection(testSection("Section 5"));
+                    return itemBuilder.widget(nestedLayoutBuilder.build());
+                };
+                return layoutSectionBuilder
+                    .createItem(defaultItemXlSize, createItemWithNestedLayout, 0)
+                    .header({ title });
+            };
+
+            const layoutBuilder = createEmptyDashboardLayoutBuilder()
+                .addSection(testSection("Section 1 - to move"))
+                .addSection(
+                    createSectionWithNestedLayout(
+                        createEmptyDashboardLayoutSectionBuilder(),
+                        "Section 2",
+                    ).build(),
+                )
+                .addSection(testSection("Section 3"));
+
+            const layoutBefore = layoutBuilder.build();
+            const layoutAfter = layoutBuilder
+                .moveSection(
+                    { sectionIndex: 0 },
+                    { parent: [{ sectionIndex: 0, itemIndex: 0 }], sectionIndex: 1 },
+                )
+                .build();
 
             expect(layoutBefore).toMatchSnapshot("before");
             expect(layoutAfter).toMatchSnapshot("after");

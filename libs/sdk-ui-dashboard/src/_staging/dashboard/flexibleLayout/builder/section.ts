@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { invariant } from "ts-invariant";
 import identity from "lodash/identity.js";
 import isArray from "lodash/isArray.js";
@@ -25,7 +25,6 @@ import { DashboardLayoutItemBuilder } from "./item.js";
 import { getItemIndex } from "../../../layout/coordinates.js";
 
 /**
- * TODO LX-603: rewrite to support nested layouts
  * @alpha
  */
 export class DashboardLayoutSectionBuilder<TContent> implements IDashboardLayoutSectionBuilder<TContent> {
@@ -153,7 +152,6 @@ export class DashboardLayoutSectionBuilder<TContent> implements IDashboardLayout
                 };
             });
         } else if (itemsToRemove) {
-            // TODO LX-603: rewrite to support nested layouts, currently works only in root layout
             this.removeItem(getItemIndex(itemsToRemove.index()));
         }
         return this;
@@ -170,11 +168,9 @@ export class DashboardLayoutSectionBuilder<TContent> implements IDashboardLayout
         const itemsToModify = selector(this.facade().items());
         if (isArray(itemsToModify)) {
             itemsToModify.forEach((item) => {
-                // TODO LX-603: rewrite to support nested layouts, currently works only in root layout
                 this.modifyItem(getItemIndex(item.index()), modify);
             });
         } else if (itemsToModify) {
-            // TODO LX-603: rewrite to support nested layouts, currently works only in root layout
             this.modifyItem(getItemIndex(itemsToModify.index()), modify);
         }
         return this;
