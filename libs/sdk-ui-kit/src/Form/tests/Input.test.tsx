@@ -1,4 +1,4 @@
-// (C) 2007-2023 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Input } from "../Input.js";
@@ -76,7 +76,7 @@ describe("Input", () => {
                 },
             });
 
-            expect(onChange).toHaveBeenCalledWith(changedText);
+            expect(onChange).toHaveBeenCalledWith(changedText, expect.anything());
         });
 
         it("should not clear on Escape", () => {

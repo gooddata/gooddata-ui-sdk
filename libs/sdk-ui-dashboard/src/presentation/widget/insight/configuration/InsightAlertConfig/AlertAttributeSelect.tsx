@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React, { useMemo, useRef, useState } from "react";
 import {
     Button,
@@ -11,34 +11,32 @@ import {
 } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
-import { ICatalogAttribute, ICatalogDateDataset } from "@gooddata/sdk-model";
+import { IAttributeMetadataObject, ICatalogAttribute, ICatalogDateDataset } from "@gooddata/sdk-model";
 
 import { AlertAttribute } from "../../types.js";
 import {
     DASHBOARD_DIALOG_OVERS_Z_INDEX,
     IGNORED_CONFIGURATION_MENU_CLICK_CLASS,
 } from "../../../../constants/index.js";
-import { IExecutionResultEnvelope } from "../../../../../model/index.js";
 
-import {
-    AttributeValue,
-    useAttributeValuesFromExecResults,
-} from "./hooks/useAttributeValuesFromExecResults.js";
+import { AttributeValue } from "./hooks/useAttributeValuesFromExecResults.js";
 import { getSelectedCatalogAttribute, getSelectedCatalogAttributeValue } from "./utils/getters.js";
 
 export interface IAlertAttributeSelectProps {
-    execResult: IExecutionResultEnvelope | undefined;
     selectedAttribute: AlertAttribute | undefined;
     selectedValue: string | null | undefined;
     onAttributeChange: (attribute: AlertAttribute | undefined, value: AttributeValue | undefined) => void;
     attributes: AlertAttribute[];
     catalogAttributes: ICatalogAttribute[];
     catalogDateDatasets: ICatalogDateDataset[];
+    getAttributeValues: (attr: IAttributeMetadataObject) => AttributeValue[];
+    isResultLoading?: boolean;
 }
 
 export const AlertAttributeSelect = ({
     selectedAttribute: selectedAttributeProp,
-    execResult,
+    getAttributeValues,
+    isResultLoading,
     selectedValue,
     onAttributeChange,
     attributes,
@@ -55,8 +53,6 @@ export const AlertAttributeSelect = ({
     const [searchString, setSearchString] = useState("");
     const [isOpen, setIsOpen] = useState(false);
     const [isOpenAttribute, setIsOpenAttribute] = useState<string | null>(null);
-
-    const { isResultLoading, getAttributeValues } = useAttributeValuesFromExecResults(execResult);
 
     const selectedAttribute = useMemo(() => {
         return (

@@ -244,6 +244,9 @@ $input-height: 28px;
             padding: 6px 8px;
             font-size: 13px;
             line-height: 15px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
 
             .gd-recipient-option-value-item {
                 margin-left: 10px;
