@@ -256,6 +256,7 @@ $input-height: 28px;
             .gd-recipient-option-label-external-warning {
                 margin: 5px -8px -6px -8px;
                 background: kit-variables.$default-gd-color-white;
+                white-space: normal;
 
                 .gd-message {
                     font-size: 13px;

@@ -1022,6 +1022,7 @@ export type {
     IAutomationUserGroupRecipient,
     IAutomationUserRecipient,
     IAutomationExternalRecipient,
+    IAutomationUnknownRecipient,
     IAutomationAlert,
     IAutomationAlertCondition,
     IAutomationAlertExecutionDefinition,
@@ -1041,6 +1042,7 @@ export {
     isAutomationUserGroupRecipient,
     isAutomationUserRecipient,
     isAutomationExternalUserRecipient,
+    isAutomationUnknownUserRecipient,
 } from "./automations/index.js";
 
 export type { ISemanticSearchResultItem, ISemanticSearchRelationship } from "./genAI/semanticSearch.js";

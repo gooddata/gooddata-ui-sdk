@@ -238,10 +238,29 @@ export function isAutomationExternalUserRecipient(obj: unknown): obj is IAutomat
 /**
  * @alpha
  */
+export interface IAutomationUnknownRecipient extends Omit<IAutomationUserRecipient, "type"> {
+    /**
+     * Type of the recipient.
+     */
+    type: "unknownUser";
+}
+
+/**
+ * Type guard checking if the object is of type {@link IAutomationExternalRecipient}.
+ * @alpha
+ */
+export function isAutomationUnknownUserRecipient(obj: unknown): obj is IAutomationUnknownRecipient {
+    return !isEmpty(obj) && (obj as IAutomationUnknownRecipient).type === "unknownUser";
+}
+
+/**
+ * @alpha
+ */
 export type IAutomationRecipient =
     | IAutomationUserRecipient
     | IAutomationUserGroupRecipient
-    | IAutomationExternalRecipient;
+    | IAutomationExternalRecipient
+    | IAutomationUnknownRecipient;
 
 /**
  * @alpha

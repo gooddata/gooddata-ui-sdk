@@ -15,6 +15,7 @@ import {
     isAutomationUserRecipient,
     isWidget,
     isAutomationExternalUserRecipient,
+    isAutomationUnknownUserRecipient,
 } from "@gooddata/sdk-model";
 import parseISO from "date-fns/parseISO/index.js";
 import { getUserTimezone } from "../utils/timezone.js";
@@ -350,6 +351,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
     const hasValidExternalRecipients = allowExternalRecipients
         ? true
         : !editedAutomation.recipients?.some(isAutomationExternalUserRecipient);
+    const hasNoUnknownRecipients = !editedAutomation.recipients?.some(isAutomationUnknownUserRecipient);
     const hasDestination = !!editedAutomation.notificationChannel;
     const respectsRecipientsLimit = (editedAutomation.recipients?.length ?? 0) <= maxAutomationsRecipients;
     const hasFilledEmails =
@@ -366,6 +368,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         hasAttachments &&
         hasDestination &&
         hasValidExternalRecipients &&
+        hasNoUnknownRecipients &&
         hasFilledEmails;
 
     const isSubmitDisabled =
