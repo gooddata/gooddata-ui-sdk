@@ -13,6 +13,7 @@ import {
     ICatalogMeasure,
     INotificationChannelMetadataObject,
     isAutomationExternalUserRecipient,
+    isAutomationUnknownUserRecipient,
     isAutomationUserRecipient,
 } from "@gooddata/sdk-model";
 import isEqual from "lodash/isEqual.js";
@@ -220,6 +221,7 @@ export const useEditAlert = ({
     const isExternalRecipientsValid = allowExternalRecipients
         ? true
         : !updatedAlert.recipients?.some(isAutomationExternalUserRecipient);
+    const hasNoUnknownRecipients = !updatedAlert.recipients?.some(isAutomationUnknownUserRecipient);
     const isAlertChanged = !isEqual(updatedAlert, alert);
     const areEmailsValid =
         selectedDestination?.destinationType === "smtp"
@@ -229,7 +231,12 @@ export const useEditAlert = ({
             : true;
 
     const canSubmit =
-        isValueDefined && isAlertChanged && isRecipientsValid && areEmailsValid && isExternalRecipientsValid;
+        isValueDefined &&
+        isAlertChanged &&
+        isRecipientsValid &&
+        areEmailsValid &&
+        isExternalRecipientsValid &&
+        hasNoUnknownRecipients;
 
     return {
         viewMode,

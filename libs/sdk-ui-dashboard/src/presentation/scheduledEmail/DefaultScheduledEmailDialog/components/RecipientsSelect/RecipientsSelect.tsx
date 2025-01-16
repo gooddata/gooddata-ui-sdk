@@ -2,7 +2,6 @@
 /* eslint-disable import/named,import/namespace */
 import React, { useMemo, useState } from "react";
 import {
-    IAutomationExternalRecipient,
     IAutomationRecipient,
     INotificationChannelMetadataObject,
     IWorkspaceUser,
@@ -87,13 +86,12 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
         const mappedUsers = sortBy(filteredUsers?.map(convertUserToAutomationRecipient) ?? [], "user.email");
 
         // If there is no user found and the search is an email, add it as an external recipient
-        // if external recipients are allowed
-        if (search && mappedUsers.length === 0 && allowExternalRecipients && isEmail(search)) {
+        if (search && mappedUsers.length === 0) {
             mappedUsers.push(createUser(search));
         }
 
         return mappedUsers;
-    }, [search, users, allowExternalRecipients]);
+    }, [search, users]);
 
     const notificationChannel = useMemo(() => {
         return notificationChannels?.find((channel) => channel.id === notificationChannelId);
@@ -131,11 +129,12 @@ function matchUser(user: IWorkspaceUser, search: string) {
     );
 }
 
-function createUser(search: string): IAutomationExternalRecipient {
+function createUser(search: string): IAutomationRecipient {
+    const hasEmail = isEmail(search);
     return {
         id: search,
-        email: search,
         name: search,
-        type: "externalUser",
+        type: hasEmail ? "externalUser" : "unknownUser",
+        email: hasEmail ? search : undefined,
     };
 }

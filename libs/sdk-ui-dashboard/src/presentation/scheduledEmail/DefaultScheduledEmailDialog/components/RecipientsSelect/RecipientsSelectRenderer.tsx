@@ -303,7 +303,13 @@ export class RecipientsSelectRenderer extends React.PureComponent<
     private renderMultiValueItemContainer = (
         label: string,
         removeIcon: React.ReactElement | null,
-        options: { hasEmail?: boolean; noExternal?: boolean; type?: "externalUser"; email?: string } = {},
+        options: {
+            hasEmail?: boolean;
+            noExternal?: boolean;
+            invalidExternal?: boolean;
+            type?: "externalUser";
+            email?: string;
+        } = {},
     ): React.ReactElement => {
         const style = this.getStyle();
 
@@ -313,7 +319,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
                     style={{ maxWidth: style.maxWidth }}
                     className={cx("gd-recipient-value-item s-gd-recipient-value-item multiple-value", {
                         "invalid-email": !options.hasEmail,
-                        "invalid-external": options.noExternal,
+                        "invalid-external": options.noExternal || options.invalidExternal,
                     })}
                 >
                     <div className="gd-recipient-label">{label}</div>
@@ -328,6 +334,17 @@ export class RecipientsSelectRenderer extends React.PureComponent<
                 </div>
             );
         };
+
+        if (options.invalidExternal === true) {
+            return (
+                <BubbleHoverTrigger>
+                    {render()}
+                    <Bubble className="bubble-negative" alignPoints={TOOLTIP_ALIGN_POINTS}>
+                        <FormattedMessage id="dialogs.schedule.email.user.unknown" />
+                    </Bubble>
+                </BubbleHoverTrigger>
+            );
+        }
 
         if (options.hasEmail === false) {
             return (
@@ -393,16 +410,19 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         const hasEmail =
             this.isEmailChannel() && isAutomationUserRecipient(data) ? isEmail(data.email ?? "") : true;
         const noExternal = data.type === "externalUser" && !allowExternalRecipients;
+        const invalidExternal = data.type === "unknownUser";
 
         return this.renderMultiValueItemContainer(name, removeIcon, {
             hasEmail,
             noExternal,
+            invalidExternal,
             type: data.type,
             email: data.email,
         });
     };
 
     private renderOptionLabel = (recipient: IAutomationRecipient): React.ReactElement | null => {
+        const { allowExternalRecipients } = this.props;
         const displayName = recipient.name ?? recipient.id;
         const email = isAutomationUserRecipient(recipient) ? recipient.email ?? "" : "";
 
@@ -413,10 +433,24 @@ export class RecipientsSelectRenderer extends React.PureComponent<
                         {displayName}
                     </span>
                     {this.renderRecipientValue(recipient)}
-                    {recipient.type === "externalUser" ? (
+                    {allowExternalRecipients && recipient.type === "externalUser" ? (
                         <div className="gd-recipient-option-label-external-warning">
                             <Message type="warning">
                                 <FormattedMessage id="dialogs.schedule.email.user.warning.external" />
+                            </Message>
+                        </div>
+                    ) : null}
+                    {!allowExternalRecipients && recipient.type === "externalUser" ? (
+                        <div className="gd-recipient-option-label-external-warning">
+                            <Message type="error">
+                                <FormattedMessage id="dialogs.schedule.email.user.invalid.external" />
+                            </Message>
+                        </div>
+                    ) : null}
+                    {recipient.type === "unknownUser" ? (
+                        <div className="gd-recipient-option-label-external-warning">
+                            <Message type="error">
+                                <FormattedMessage id="dialogs.schedule.email.user.unknown" />
                             </Message>
                         </div>
                     ) : null}

@@ -1004,7 +1004,7 @@ export interface IAutomationNotificationDetailsBase {
 }
 
 // @alpha (undocumented)
-export type IAutomationRecipient = IAutomationUserRecipient | IAutomationUserGroupRecipient | IAutomationExternalRecipient;
+export type IAutomationRecipient = IAutomationUserRecipient | IAutomationUserGroupRecipient | IAutomationExternalRecipient | IAutomationUnknownRecipient;
 
 // @alpha (undocumented)
 export interface IAutomationRecipientBase {
@@ -1021,6 +1021,11 @@ export interface IAutomationSchedule {
     cronDescription?: string;
     firstRun?: string;
     timezone?: string;
+}
+
+// @alpha (undocumented)
+export interface IAutomationUnknownRecipient extends Omit<IAutomationUserRecipient, "type"> {
+    type: "unknownUser";
 }
 
 // @alpha (undocumented)
@@ -3086,6 +3091,9 @@ export function isAutomationMetadataObject(obj: unknown): obj is IAutomationMeta
 
 // @alpha (undocumented)
 export function isAutomationMetadataObjectDefinition(obj: unknown): obj is IAutomationMetadataObjectDefinition;
+
+// @alpha
+export function isAutomationUnknownUserRecipient(obj: unknown): obj is IAutomationUnknownRecipient;
 
 // @alpha
 export function isAutomationUserGroupRecipient(obj: unknown): obj is IAutomationUserGroupRecipient;
