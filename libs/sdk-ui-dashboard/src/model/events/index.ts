@@ -41,6 +41,7 @@ import {
     DashboardLayoutSectionItemsAdded,
     DashboardLayoutSectionMoved,
     DashboardLayoutSectionRemoved,
+    DashboardLayoutSectionItemMovedToNewSection,
 } from "./layout.js";
 import {
     DashboardKpiWidgetChanged,
@@ -261,6 +262,8 @@ export type {
     DashboardLayoutSectionItemMovedPayload,
     DashboardLayoutSectionItemRemoved,
     DashboardLayoutSectionItemRemovedPayload,
+    DashboardLayoutSectionItemMovedToNewSection,
+    DashboardLayoutSectionItemMovedToNewSectionPayload,
     DashboardLayoutChanged,
     DashboardLayoutChangedPayload,
     LayoutSectionHeadersToggled,
@@ -273,6 +276,7 @@ export {
     isDashboardLayoutSectionAdded,
     isDashboardLayoutSectionHeaderChanged,
     isDashboardLayoutSectionItemMoved,
+    isDashboardLayoutSectionItemMovedToNewSection,
     isDashboardLayoutSectionItemRemoved,
     isDashboardLayoutSectionItemReplaced,
     isDashboardLayoutSectionItemsAdded,
@@ -550,6 +554,7 @@ export type DashboardEvents =
     | DashboardLayoutSectionItemReplaced
     | DashboardLayoutSectionItemMoved
     | DashboardLayoutSectionItemRemoved
+    | DashboardLayoutSectionItemMovedToNewSection
     | DashboardLayoutChanged
     | DashboardKpiWidgetHeaderChanged
     | DashboardKpiWidgetDescriptionChanged
