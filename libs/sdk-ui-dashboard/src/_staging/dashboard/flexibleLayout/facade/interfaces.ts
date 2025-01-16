@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     ObjRef,
     IKpiWidget,
@@ -152,7 +152,8 @@ export interface IDashboardLayoutSectionsFacade<TWidget> {
 export interface IDashboardLayoutFacade<TWidget> {
     size(): IDashboardLayoutSize | undefined;
     sections(): IDashboardLayoutSectionsFacade<TWidget>;
+    nestedLayout(path: ILayoutItemPath): IDashboardLayoutFacade<TWidget> | undefined;
     section(sectionIndex: number): IDashboardLayoutSectionFacade<TWidget> | undefined;
     raw(): IDashboardLayout<TWidget>;
-    parent(): ILayoutItemPath | undefined;
+    path(): ILayoutItemPath | undefined;
 }

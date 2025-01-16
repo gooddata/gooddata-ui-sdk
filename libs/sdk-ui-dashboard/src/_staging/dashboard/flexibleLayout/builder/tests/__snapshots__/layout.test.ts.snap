@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`DashboardLayoutBuilder > .addSection() > should create a section at the end of the layout by default > after 1`] = `
+exports[`DashboardLayoutBuilder > .addSection() > should add a section at the end of the layout by default > after 1`] = `
 {
   "sections": [
     {
@@ -22,7 +22,7 @@ exports[`DashboardLayoutBuilder > .addSection() > should create a section at the
 }
 `;
 
-exports[`DashboardLayoutBuilder > .addSection() > should create a section at the end of the layout by default > before 1`] = `
+exports[`DashboardLayoutBuilder > .addSection() > should add a section at the end of the layout by default > before 1`] = `
 {
   "sections": [
     {
@@ -37,7 +37,7 @@ exports[`DashboardLayoutBuilder > .addSection() > should create a section at the
 }
 `;
 
-exports[`DashboardLayoutBuilder > .addSection() > should create a section at the provided index > after 1`] = `
+exports[`DashboardLayoutBuilder > .addSection() > should add a section at the provided index > after 1`] = `
 {
   "sections": [
     {
@@ -66,7 +66,7 @@ exports[`DashboardLayoutBuilder > .addSection() > should create a section at the
 }
 `;
 
-exports[`DashboardLayoutBuilder > .addSection() > should create a section at the provided index > before 1`] = `
+exports[`DashboardLayoutBuilder > .addSection() > should add a section at the provided index > before 1`] = `
 {
   "sections": [
     {
@@ -81,6 +81,115 @@ exports[`DashboardLayoutBuilder > .addSection() > should create a section at the
         "title": "Section 2",
       },
       "items": [],
+      "type": "IDashboardLayoutSection",
+    },
+  ],
+  "type": "IDashboardLayout",
+}
+`;
+
+exports[`DashboardLayoutBuilder > .addSection() > should add a section at the provided path > after 1`] = `
+{
+  "sections": [
+    {
+      "header": {
+        "title": "Section 1",
+      },
+      "items": [],
+      "type": "IDashboardLayoutSection",
+    },
+    {
+      "header": {
+        "title": "Section 2",
+      },
+      "items": [
+        {
+          "size": {
+            "xl": {
+              "gridWidth": 12,
+              "heightAsRatio": 50,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": {
+            "sections": [
+              {
+                "header": {
+                  "title": "Section 3",
+                },
+                "items": [],
+                "type": "IDashboardLayoutSection",
+              },
+              {
+                "header": {
+                  "title": "Added section",
+                },
+                "items": [],
+                "type": "IDashboardLayoutSection",
+              },
+              {
+                "header": {
+                  "title": "Section 4",
+                },
+                "items": [],
+                "type": "IDashboardLayoutSection",
+              },
+            ],
+            "type": "IDashboardLayout",
+          },
+        },
+      ],
+      "type": "IDashboardLayoutSection",
+    },
+  ],
+  "type": "IDashboardLayout",
+}
+`;
+
+exports[`DashboardLayoutBuilder > .addSection() > should add a section at the provided path > before 1`] = `
+{
+  "sections": [
+    {
+      "header": {
+        "title": "Section 1",
+      },
+      "items": [],
+      "type": "IDashboardLayoutSection",
+    },
+    {
+      "header": {
+        "title": "Section 2",
+      },
+      "items": [
+        {
+          "size": {
+            "xl": {
+              "gridWidth": 12,
+              "heightAsRatio": 50,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": {
+            "sections": [
+              {
+                "header": {
+                  "title": "Section 3",
+                },
+                "items": [],
+                "type": "IDashboardLayoutSection",
+              },
+              {
+                "header": {
+                  "title": "Section 4",
+                },
+                "items": [],
+                "type": "IDashboardLayoutSection",
+              },
+            ],
+            "type": "IDashboardLayout",
+          },
+        },
+      ],
       "type": "IDashboardLayoutSection",
     },
   ],
@@ -158,6 +267,145 @@ exports[`DashboardLayoutBuilder > .createSection() > should create a section at 
 }
 `;
 
+exports[`DashboardLayoutBuilder > .createSection() > should create a section at the provided path > after 1`] = `
+{
+  "sections": [
+    {
+      "items": [],
+      "type": "IDashboardLayoutSection",
+    },
+    {
+      "items": [
+        {
+          "size": {
+            "xl": {
+              "gridWidth": 12,
+              "heightAsRatio": 50,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": {
+            "configuration": {
+              "sections": {
+                "enableHeader": false,
+              },
+            },
+            "localIdentifier": "3aef8337-6f37-43ff-ae4b-dcad3f42a8fe",
+            "sections": [
+              {
+                "header": {},
+                "items": [
+                  {
+                    "size": {
+                      "xl": {
+                        "gridHeight": 8,
+                        "gridWidth": 2,
+                      },
+                    },
+                    "type": "IDashboardLayoutItem",
+                    "widget": {
+                      "description": "",
+                      "drills": [],
+                      "ignoreDashboardFilters": [],
+                      "insight": {
+                        "identifier": {
+                          "id": "5cd25094-6327-4c9c-bf33-ea640062f7e2",
+                          "type": "visualizationObject",
+                        },
+                      },
+                      "localIdentifier": "f6fc591e-0d9b-466d-a81b-d293a4ae401d",
+                      "title": "01",
+                      "type": "insight",
+                    },
+                  },
+                ],
+                "type": "IDashboardLayoutSection",
+              },
+              {
+                "header": {
+                  "title": "Added section",
+                },
+                "items": [],
+                "type": "IDashboardLayoutSection",
+              },
+            ],
+            "type": "IDashboardLayout",
+          },
+        },
+      ],
+      "type": "IDashboardLayoutSection",
+    },
+  ],
+  "type": "IDashboardLayout",
+}
+`;
+
+exports[`DashboardLayoutBuilder > .createSection() > should create a section at the provided path > before 1`] = `
+{
+  "sections": [
+    {
+      "items": [],
+      "type": "IDashboardLayoutSection",
+    },
+    {
+      "items": [
+        {
+          "size": {
+            "xl": {
+              "gridWidth": 12,
+              "heightAsRatio": 50,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": {
+            "configuration": {
+              "sections": {
+                "enableHeader": false,
+              },
+            },
+            "localIdentifier": "3aef8337-6f37-43ff-ae4b-dcad3f42a8fe",
+            "sections": [
+              {
+                "header": {},
+                "items": [
+                  {
+                    "size": {
+                      "xl": {
+                        "gridHeight": 8,
+                        "gridWidth": 2,
+                      },
+                    },
+                    "type": "IDashboardLayoutItem",
+                    "widget": {
+                      "description": "",
+                      "drills": [],
+                      "ignoreDashboardFilters": [],
+                      "insight": {
+                        "identifier": {
+                          "id": "5cd25094-6327-4c9c-bf33-ea640062f7e2",
+                          "type": "visualizationObject",
+                        },
+                      },
+                      "localIdentifier": "f6fc591e-0d9b-466d-a81b-d293a4ae401d",
+                      "title": "01",
+                      "type": "insight",
+                    },
+                  },
+                ],
+                "type": "IDashboardLayoutSection",
+              },
+            ],
+            "type": "IDashboardLayout",
+          },
+        },
+      ],
+      "type": "IDashboardLayoutSection",
+    },
+  ],
+  "type": "IDashboardLayout",
+}
+`;
+
 exports[`DashboardLayoutBuilder > .modifySection() > should modify the section > after 1`] = `
 {
   "sections": [
@@ -181,6 +429,108 @@ exports[`DashboardLayoutBuilder > .modifySection() > should modify the section >
         "title": "Original section",
       },
       "items": [],
+      "type": "IDashboardLayoutSection",
+    },
+  ],
+  "type": "IDashboardLayout",
+}
+`;
+
+exports[`DashboardLayoutBuilder > .modifySection() > should modify the section in nested layout > after 1`] = `
+{
+  "sections": [
+    {
+      "header": {
+        "title": "Section 1",
+      },
+      "items": [],
+      "type": "IDashboardLayoutSection",
+    },
+    {
+      "header": {
+        "title": "Section 2",
+      },
+      "items": [
+        {
+          "size": {
+            "xl": {
+              "gridWidth": 12,
+              "heightAsRatio": 50,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": {
+            "sections": [
+              {
+                "header": {
+                  "title": "Section 3",
+                },
+                "items": [],
+                "type": "IDashboardLayoutSection",
+              },
+              {
+                "header": {
+                  "title": "Modified section",
+                },
+                "items": [],
+                "type": "IDashboardLayoutSection",
+              },
+            ],
+            "type": "IDashboardLayout",
+          },
+        },
+      ],
+      "type": "IDashboardLayoutSection",
+    },
+  ],
+  "type": "IDashboardLayout",
+}
+`;
+
+exports[`DashboardLayoutBuilder > .modifySection() > should modify the section in nested layout > before 1`] = `
+{
+  "sections": [
+    {
+      "header": {
+        "title": "Section 1",
+      },
+      "items": [],
+      "type": "IDashboardLayoutSection",
+    },
+    {
+      "header": {
+        "title": "Section 2",
+      },
+      "items": [
+        {
+          "size": {
+            "xl": {
+              "gridWidth": 12,
+              "heightAsRatio": 50,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": {
+            "sections": [
+              {
+                "header": {
+                  "title": "Section 3",
+                },
+                "items": [],
+                "type": "IDashboardLayoutSection",
+              },
+              {
+                "header": {
+                  "title": "Original section",
+                },
+                "items": [],
+                "type": "IDashboardLayoutSection",
+              },
+            ],
+            "type": "IDashboardLayout",
+          },
+        },
+      ],
       "type": "IDashboardLayoutSection",
     },
   ],
@@ -416,6 +766,122 @@ exports[`DashboardLayoutBuilder > .moveSection() > should move the section > bef
 }
 `;
 
+exports[`DashboardLayoutBuilder > .moveSection() > should move the section in nested layout > after 1`] = `
+{
+  "sections": [
+    {
+      "header": {
+        "title": "Section 2",
+      },
+      "items": [
+        {
+          "size": {
+            "xl": {
+              "gridWidth": 12,
+              "heightAsRatio": 50,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": {
+            "sections": [
+              {
+                "header": {
+                  "title": "Section 4",
+                },
+                "items": [],
+                "type": "IDashboardLayoutSection",
+              },
+              {
+                "header": {
+                  "title": "Section 1 - to move",
+                },
+                "items": [],
+                "type": "IDashboardLayoutSection",
+              },
+              {
+                "header": {
+                  "title": "Section 5",
+                },
+                "items": [],
+                "type": "IDashboardLayoutSection",
+              },
+            ],
+            "type": "IDashboardLayout",
+          },
+        },
+      ],
+      "type": "IDashboardLayoutSection",
+    },
+    {
+      "header": {
+        "title": "Section 3",
+      },
+      "items": [],
+      "type": "IDashboardLayoutSection",
+    },
+  ],
+  "type": "IDashboardLayout",
+}
+`;
+
+exports[`DashboardLayoutBuilder > .moveSection() > should move the section in nested layout > before 1`] = `
+{
+  "sections": [
+    {
+      "header": {
+        "title": "Section 1 - to move",
+      },
+      "items": [],
+      "type": "IDashboardLayoutSection",
+    },
+    {
+      "header": {
+        "title": "Section 2",
+      },
+      "items": [
+        {
+          "size": {
+            "xl": {
+              "gridWidth": 12,
+              "heightAsRatio": 50,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": {
+            "sections": [
+              {
+                "header": {
+                  "title": "Section 4",
+                },
+                "items": [],
+                "type": "IDashboardLayoutSection",
+              },
+              {
+                "header": {
+                  "title": "Section 5",
+                },
+                "items": [],
+                "type": "IDashboardLayoutSection",
+              },
+            ],
+            "type": "IDashboardLayout",
+          },
+        },
+      ],
+      "type": "IDashboardLayoutSection",
+    },
+    {
+      "header": {
+        "title": "Section 3",
+      },
+      "items": [],
+      "type": "IDashboardLayoutSection",
+    },
+  ],
+  "type": "IDashboardLayout",
+}
+`;
+
 exports[`DashboardLayoutBuilder > .moveSection() > should throw error, when the section at provided index does not exist 1`] = `[Invariant Violation: Cannot move the section - section at index 0 does not exist.]`;
 
 exports[`DashboardLayoutBuilder > .removeSection() > should remove the section from the layout > after 1`] = `
@@ -433,6 +899,101 @@ exports[`DashboardLayoutBuilder > .removeSection() > should remove the section f
         "title": "Row to remove",
       },
       "items": [],
+      "type": "IDashboardLayoutSection",
+    },
+  ],
+  "type": "IDashboardLayout",
+}
+`;
+
+exports[`DashboardLayoutBuilder > .removeSection() > should remove the section from the nested layout > after 1`] = `
+{
+  "sections": [
+    {
+      "header": {
+        "title": "Section 1",
+      },
+      "items": [],
+      "type": "IDashboardLayoutSection",
+    },
+    {
+      "header": {
+        "title": "Section 2",
+      },
+      "items": [
+        {
+          "size": {
+            "xl": {
+              "gridWidth": 12,
+              "heightAsRatio": 50,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": {
+            "sections": [
+              {
+                "header": {
+                  "title": "Section 3",
+                },
+                "items": [],
+                "type": "IDashboardLayoutSection",
+              },
+            ],
+            "type": "IDashboardLayout",
+          },
+        },
+      ],
+      "type": "IDashboardLayoutSection",
+    },
+  ],
+  "type": "IDashboardLayout",
+}
+`;
+
+exports[`DashboardLayoutBuilder > .removeSection() > should remove the section from the nested layout > before 1`] = `
+{
+  "sections": [
+    {
+      "header": {
+        "title": "Section 1",
+      },
+      "items": [],
+      "type": "IDashboardLayoutSection",
+    },
+    {
+      "header": {
+        "title": "Section 2",
+      },
+      "items": [
+        {
+          "size": {
+            "xl": {
+              "gridWidth": 12,
+              "heightAsRatio": 50,
+            },
+          },
+          "type": "IDashboardLayoutItem",
+          "widget": {
+            "sections": [
+              {
+                "header": {
+                  "title": "Section 3",
+                },
+                "items": [],
+                "type": "IDashboardLayoutSection",
+              },
+              {
+                "header": {
+                  "title": "Section 4",
+                },
+                "items": [],
+                "type": "IDashboardLayoutSection",
+              },
+            ],
+            "type": "IDashboardLayout",
+          },
+        },
+      ],
       "type": "IDashboardLayoutSection",
     },
   ],

@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React, { useCallback, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
@@ -105,7 +105,7 @@ export function SectionHeaderEditable({
     }, [description]);
 
     const serializedSectionIndex = serializeLayoutSectionPath(section.index());
-    const isNestedLayout = section.layout().parent() !== undefined;
+    const isNestedLayout = section.layout().path() !== undefined;
 
     return (
         <div className={cx("gd-row-header-edit", { "gd-row-header-edit--nested": isNestedLayout })}>

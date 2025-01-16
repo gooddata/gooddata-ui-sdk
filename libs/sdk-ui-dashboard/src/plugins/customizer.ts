@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import {
     CustomDashboardInsightComponent,
     CustomDashboardWidgetComponent,
@@ -25,6 +25,7 @@ import {
     ICustomWidget,
 } from "../model/index.js";
 import { IDashboardLayout, IDashboardLayoutSection, IDashboardLayoutItem } from "@gooddata/sdk-model";
+import { ILayoutItemPath, ILayoutSectionPath } from "../types.js";
 
 /**
  * Set of functions you can use to customize how insights are rendered.
@@ -256,8 +257,25 @@ export interface IFluidLayoutCustomizer {
      * @param sectionIdx - index to add the new section at
      * @param section - section to add; note: customizer will make a deep copy of the item before adding it
      *  onto a dashboard. At this moment, the newly added items are read-only.
+     * @deprecated Use {@link IFluidLayoutCustomizer.addSectionToPath} with sectionPath param instead.
      */
     addSection(sectionIdx: number, section: IDashboardLayoutSection<ICustomWidget>): IFluidLayoutCustomizer;
+
+    /**
+     * Adds a new section with one or more custom widgets onto the layout even to the nested layout.
+     *
+     * @remarks
+     * The section to add must not be empty - it must contain at least one item. Attempts to add empty sections
+     * will be ignored and warnings will be reported.
+     *
+     * @param sectionPath - path in layout to add the new section at
+     * @param section - section to add; note: customizer will make a deep copy of the item before adding it
+     *  onto a dashboard. At this moment, the newly added items are read-only.
+     */
+    addSectionToPath(
+        sectionPath: ILayoutSectionPath,
+        section: IDashboardLayoutSection<ICustomWidget>,
+    ): IFluidLayoutCustomizer;
 
     /**
      * Adds a new item containing a custom widget onto the dashboard.
@@ -270,17 +288,40 @@ export interface IFluidLayoutCustomizer {
      * problems down the line if you are adding more items at specific indexes into the same section.
      *
      * Note: new items will be added into existing sections before new sections will be added using the
-     * {@link IFluidLayoutCustomizer.addSection} method. Therefore,
+     * {@link IFluidLayoutCustomizer.addSectionToPath} method. Therefore,
      *
      * @param sectionIdx - index of section where to add the new item
      * @param itemIdx - index within the section where to add new item; you may specify -1 to add the
      *  item at the end of the section
      * @param item - item containing custom widget; note: customizer will make a deep copy of the item before adding it
      *  onto a dashboard. At this moment, the newly added items are read-only.
+     * @deprecated Use {@link IFluidLayoutCustomizer.addItemToPath} with itemPath param instead.
      */
     addItem(
         sectionIdx: number,
         itemIdx: number,
+        item: IDashboardLayoutItem<ICustomWidget>,
+    ): IFluidLayoutCustomizer;
+
+    /**
+     * Adds a new item containing a custom widget onto the dashboard.
+     *
+     * @remarks
+     * New item will be added to
+     * position defined by provided path allowing target also nested layouts/sections. All sections in path already need to exist. The item
+     * to add must contain a custom widget data. Attempts to add item that does not contain any widget data
+     * will be ignored and warnings will be reported. Keep in mind that this can lead to further errors or
+     * problems down the line if you are adding more items at specific indexes into the same section.
+     *
+     * Note: new items will be added into existing sections before new sections will be added using the
+     * IFluidLayoutCustomizer.addSection method. Therefore,
+     *
+     * @param itemPath - layout path where to add new item
+     * @param item - item containing custom widget; note: customizer will make a deep copy of the item before adding it
+     *  onto a dashboard. At this moment, the newly added items are read-only.
+     */
+    addItemToPath(
+        itemPath: ILayoutItemPath,
         item: IDashboardLayoutItem<ICustomWidget>,
     ): IFluidLayoutCustomizer;
 }

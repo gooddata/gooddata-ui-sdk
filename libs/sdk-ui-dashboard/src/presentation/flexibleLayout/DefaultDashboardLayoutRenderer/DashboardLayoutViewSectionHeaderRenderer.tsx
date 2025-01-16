@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { Typography } from "@gooddata/sdk-ui-kit";
 import isEmpty from "lodash/isEmpty.js";
@@ -21,7 +21,7 @@ export const DashboardLayoutViewSectionHeader: React.FC<IDashboardLayoutSectionH
     if (!areSectionHeadersEnabled || (isEmpty(title) && isEmpty(description))) {
         return null;
     }
-    const isNestedLayout = section.layout().parent() !== undefined;
+    const isNestedLayout = section.layout().path() !== undefined;
     return (
         <div className="gd-fluid-layout-row-header s-fluid-layout-row-header">
             <div className={"gd-fluid-layout-row-header-container"}>

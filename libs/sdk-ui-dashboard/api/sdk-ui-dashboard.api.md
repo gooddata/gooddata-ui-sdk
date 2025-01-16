@@ -4712,8 +4712,12 @@ export interface IFilterViews {
 
 // @public
 export interface IFluidLayoutCustomizer {
+    // @deprecated
     addItem(sectionIdx: number, itemIdx: number, item: IDashboardLayoutItem<ICustomWidget>): IFluidLayoutCustomizer;
+    addItemToPath(itemPath: ILayoutItemPath, item: IDashboardLayoutItem<ICustomWidget>): IFluidLayoutCustomizer;
+    // @deprecated
     addSection(sectionIdx: number, section: IDashboardLayoutSection<ICustomWidget>): IFluidLayoutCustomizer;
+    addSectionToPath(sectionPath: ILayoutSectionPath, section: IDashboardLayoutSection<ICustomWidget>): IFluidLayoutCustomizer;
 }
 
 // @internal (undocumented)

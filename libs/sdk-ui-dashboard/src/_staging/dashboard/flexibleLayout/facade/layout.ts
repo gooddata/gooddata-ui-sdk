@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { IDashboardLayout, IDashboardLayoutSize, isDashboardLayout } from "@gooddata/sdk-model";
 import { invariant } from "ts-invariant";
 import {
@@ -47,6 +47,29 @@ export class DashboardLayoutFacade<TWidget> implements IDashboardLayoutFacade<TW
         return this.sections().section(rowIndex);
     }
 
+    public nestedLayout(path: ILayoutItemPath): IDashboardLayoutFacade<TWidget> | undefined {
+        const [nextPathEntry, ...remainingPath] = path;
+
+        if (nextPathEntry === undefined) {
+            return this;
+        }
+
+        const parentPath = this.path();
+
+        const pathToPrint = parentPath ? [...parentPath, nextPathEntry] : [nextPathEntry];
+
+        const nestedLayoutWidget = this.section(nextPathEntry.sectionIndex)?.item(nextPathEntry.itemIndex);
+        const isNestedLayout = nestedLayoutWidget?.isLayoutItem();
+        invariant(isNestedLayout, `Nested layout at path ${JSON.stringify(pathToPrint)} does not exist.`);
+        const nestedLayout = nestedLayoutWidget?.widget() as IDashboardLayout<TWidget>;
+        if (remainingPath && remainingPath.length > 0) {
+            return DashboardLayoutFacade.for(nestedLayout, nestedLayoutWidget.index()).nestedLayout(
+                remainingPath,
+            );
+        }
+        return DashboardLayoutFacade.for(nestedLayout, nestedLayoutWidget.index());
+    }
+
     public size(): IDashboardLayoutSize | undefined {
         return this.layout.size;
     }
@@ -55,7 +78,7 @@ export class DashboardLayoutFacade<TWidget> implements IDashboardLayoutFacade<TW
         return this.layout;
     }
 
-    public parent(): ILayoutItemPath | undefined {
+    public path(): ILayoutItemPath | undefined {
         return this.layoutPath;
     }
 }
