@@ -301,7 +301,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDestinationTesting: true,
     enableInPlatformNotifications: true,
     enableVisualizationFineTuning: false,
-    enableExternalRecipients: false,
+    enableExternalRecipients: true,
     enableDrilledTooltip: true,
     enableDashboardDescriptionDynamicHeight: false,
 };

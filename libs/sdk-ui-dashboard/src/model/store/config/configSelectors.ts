@@ -832,7 +832,7 @@ export const selectAutomationId: DashboardSelector<string | undefined> = createS
 export const selectEnableExternalRecipients: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableExternalRecipients ?? false;
+        return state.settings?.enableExternalRecipients ?? true;
     },
 );
 
