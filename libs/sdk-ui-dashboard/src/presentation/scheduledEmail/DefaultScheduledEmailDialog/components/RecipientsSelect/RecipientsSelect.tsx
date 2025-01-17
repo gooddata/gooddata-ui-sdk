@@ -9,7 +9,7 @@ import {
 import sortBy from "lodash/sortBy.js";
 
 import { convertUserToAutomationRecipient } from "../../../../../_staging/automation/index.js";
-import { isEmail } from "../../utils/validate.js";
+import { createUser, matchUser } from "../../utils/users.js";
 
 import { RecipientsSelectRenderer } from "./RecipientsSelectRenderer.js";
 
@@ -116,25 +116,3 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
         />
     );
 };
-
-function matchUser(user: IWorkspaceUser, search: string) {
-    const lowerCaseSearch = search.toLowerCase();
-    const lowerCaseEmail = user.email?.toLowerCase();
-    const lowerCaseName = user.fullName?.toLowerCase();
-    const lowerCaseId = user.login.toLowerCase();
-    return (
-        lowerCaseEmail?.includes(lowerCaseSearch) ||
-        lowerCaseName?.includes(lowerCaseSearch) ||
-        lowerCaseId?.includes(lowerCaseSearch)
-    );
-}
-
-function createUser(search: string): IAutomationRecipient {
-    const hasEmail = isEmail(search);
-    return {
-        id: search,
-        name: search,
-        type: hasEmail ? "externalUser" : "unknownUser",
-        email: hasEmail ? search : undefined,
-    };
-}

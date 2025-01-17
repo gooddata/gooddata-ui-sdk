@@ -3,7 +3,6 @@
 import {
     IAutomationRecipient,
     INotificationChannelMetadataObject,
-    isAutomationExternalUserRecipient,
     isAutomationUserRecipient,
 } from "@gooddata/sdk-model";
 import React from "react";
@@ -20,7 +19,6 @@ import ReactSelect, {
 import debounce from "lodash/debounce.js";
 import isEmpty from "lodash/isEmpty.js";
 import isEqual from "lodash/isEqual.js";
-import includes from "lodash/includes.js";
 import { IWorkspaceUsersQueryOptions } from "@gooddata/sdk-backend-spi";
 import {
     Bubble,
@@ -36,6 +34,7 @@ import cx from "classnames";
 
 import { isEmail } from "../../utils/validate.js";
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../../../constants/index.js";
+import { matchRecipient } from "../../utils/users.js";
 
 const MAXIMUM_RECIPIENTS_RECEIVE = 60;
 const DELAY_TIME = 500;
@@ -198,6 +197,9 @@ export class RecipientsSelectRenderer extends React.PureComponent<
                         classNamePrefix="gd-recipients"
                         components={creatableSelectComponent}
                         formatOptionLabel={this.renderOptionLabel}
+                        filterOption={(opt, value) => {
+                            return matchRecipient(opt.data, value);
+                        }}
                         isClearable={false}
                         isDisabled={!isMulti}
                         isMulti={isMulti}
@@ -523,12 +525,10 @@ export class RecipientsSelectRenderer extends React.PureComponent<
     };
 
     private loadUserListItems = (searchString: string): void => {
-        const { options, value, canListUsersInProject, onLoad } = this.props;
-        const matchedUserList = this.getMatchedRecipientEmails(options, searchString);
-        const matchedUserListCount = matchedUserList.length;
+        const { value, canListUsersInProject, onLoad } = this.props;
         const isRecipientAdded = this.isRecipientAdded(value, searchString);
 
-        if (!canListUsersInProject || isRecipientAdded || matchedUserListCount > 0) {
+        if (!canListUsersInProject || isRecipientAdded) {
             return;
         }
 
@@ -548,22 +548,6 @@ export class RecipientsSelectRenderer extends React.PureComponent<
     };
 
     private onSearch = debounce(this.onSearchCore, DELAY_TIME);
-
-    private getMatchedRecipientEmails(
-        options: IAutomationRecipient[],
-        searchKey: string,
-    ): IAutomationRecipient[] {
-        return searchKey
-            ? options.filter((recipient: IAutomationRecipient) =>
-                  includes(
-                      isAutomationUserRecipient(recipient) || isAutomationExternalUserRecipient(recipient)
-                          ? recipient.email ?? ""
-                          : "",
-                      searchKey,
-                  ),
-              )
-            : [];
-    }
 
     private isRecipientAdded = (value: ReadonlyArray<IAutomationRecipient>, searchKey: string): boolean => {
         return value.some((recipient: IAutomationRecipient) => isEqual(recipient.id, searchKey));
