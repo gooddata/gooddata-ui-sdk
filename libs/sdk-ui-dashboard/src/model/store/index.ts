@@ -101,7 +101,7 @@ export {
     selectEnableInPlatformNotifications,
     selectEnableExternalRecipients,
     selectEnableDrilledTooltip,
-    selectAutomationId,
+    selectFocusObject,
     selectEnableDashboardDescriptionDynamicHeight,
 } from "./config/configSelectors.js";
 export type { EntitlementsState } from "./entitlements/entitlementsState.js";

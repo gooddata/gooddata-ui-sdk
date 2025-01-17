@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 /*
  * The public API of the Dashboard model is exported from here.
@@ -16,6 +16,7 @@ export type {
     DashboardContext,
     ObjectAvailabilityConfig,
     DashboardConfig,
+    DashboardFocusObject,
     DashboardModelCustomizationFns,
     DashboardTransformFn,
     FiltersInfo,

@@ -1561,8 +1561,6 @@ export interface DashboardConfig {
     // @internal
     allowCreateInsightRequest?: boolean;
     allowUnfinishedFeatures?: boolean;
-    // @beta
-    automationId?: string;
     colorPalette?: IColorPalette;
     dateFilterConfig?: IDateFilterConfig;
     disableCrossFiltering?: boolean;
@@ -1571,6 +1569,8 @@ export interface DashboardConfig {
     enableFilterValuesResolutionInDrillEvents?: boolean;
     // @internal
     exportId?: string;
+    // @beta
+    focusObject?: DashboardFocusObject;
     // @internal
     hideSaveAsNewButton?: boolean;
     // @internal
@@ -2077,6 +2077,13 @@ export interface DashboardFilterViewDeletionSucceeded extends IDashboardEvent {
 export interface DashboardFilterViewDeletionSucceededPayload {
     // (undocumented)
     readonly filterView: IDashboardFilterView;
+}
+
+// @beta
+export interface DashboardFocusObject {
+    automationId?: string;
+    visualizationId?: string;
+    widgetId?: string;
 }
 
 // @public
@@ -7081,7 +7088,7 @@ export interface ResolveAsyncRenderPayload {
 }
 
 // @public
-export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "exportId" | "automationId"> & DashboardConfig;
+export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "exportId" | "focusObject"> & DashboardConfig;
 
 // @alpha (undocumented)
 export type ResolvedDateFilterValues = IResolvedDateFilterValue[];
@@ -7355,9 +7362,6 @@ export const selectAttributeFilterDisplayFormsMap: DashboardSelector<ObjRefMap<I
 
 // @alpha (undocumented)
 export const selectAttributesWithDrillDown: DashboardSelector<(ICatalogAttribute | ICatalogDateAttribute)[]>;
-
-// @beta
-export const selectAutomationId: DashboardSelector<string | undefined>;
 
 // @alpha
 export const selectAutomationsError: DashboardSelector<GoodDataSdkError | undefined>;
@@ -7850,6 +7854,9 @@ export const selectFilterViewsAreLoading: DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export const selectFilterViewsDialogMode: DashboardSelector<FilterViewDialogMode>;
+
+// @beta
+export const selectFocusObject: DashboardSelector<DashboardFocusObject>;
 
 // @internal (undocumented)
 export const selectGlobalDrillsDownAttributeHierarchyByWidgetRef: (ref: ObjRef) => DashboardSelector<IGlobalDrillDownAttributeHierarchyDefinition[]>;
