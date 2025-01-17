@@ -97,8 +97,8 @@ function getWidgetIndex(item: IDashboardLayoutItemFacade<ExtendedDashboardWidget
  */
 export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     ExtendedDashboardWidget,
-    Pick<IDashboardWidgetProps, "onError" | "onDrill" | "onFiltersChange">
-> = ({ item, DefaultWidgetRenderer, onDrill, onFiltersChange, onError, getLayoutDimensions }) => {
+    Pick<IDashboardWidgetProps, "onError" | "onDrill" | "onFiltersChange" | "rowIndex">
+> = ({ item, DefaultWidgetRenderer, onDrill, onFiltersChange, onError, getLayoutDimensions, rowIndex }) => {
     const screen = useScreenSize();
     const dispatch = useDashboardDispatch();
     const insights = useDashboardSelector(selectInsightsMap);
@@ -200,6 +200,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
             className={className}
             contentRef={contentRef}
             getLayoutDimensions={getLayoutDimensions}
+            rowIndex={rowIndex}
         >
             <div
                 ref={dragRef}
@@ -232,6 +233,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                             parentLayoutPath={item.index()}
                             ErrorComponent={ErrorComponent}
                             LoadingComponent={LoadingComponent}
+                            rowIndex={rowIndex}
                         />
                     </HoverDetector>
                 </DashboardItemPathAndSizeProvider>
@@ -269,6 +271,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                                 getGridColumnHeightInPx={getHeightInPx}
                                 getGridColumnWidth={getGridColumnWidth}
                                 getLayoutDimensions={getLayoutDimensions}
+                                rowIndex={rowIndex}
                             />
                         </>
                     )}

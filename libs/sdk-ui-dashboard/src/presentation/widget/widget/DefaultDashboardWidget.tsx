@@ -33,26 +33,87 @@ import { RenderModeAwareDashboardInsightWidget } from "./InsightWidget/index.js"
 import { RenderModeAwareDashboardRichTextWidget } from "./RichTextWidget/index.js";
 import { RenderModeAwareDashboardVisualizationSwitcherWidget } from "./VisualizationSwitcherWidget/RenderModeAwareDashboardVisualizationSwitcherWidget.js";
 import { RenderModeAwareDashboardNestedLayoutWidget } from "./DashboardNestedLayoutWidget/RenderModeAwareDashboardNestedLayoutWidget.js";
-import { isFirstInContainer } from "../../../_staging/layout/coordinates.js";
+import { serializeLayoutItemPath } from "../../../_staging/layout/coordinates.js";
+
+type WidgetComponentAdditionalProps = Pick<
+    IDashboardWidgetProps,
+    "widget" | "parentLayoutPath" | "screen" | "onFiltersChange" | "onError"
+>;
+
+interface IWidgetComponentOwnProps {
+    index: number;
+    rowIndex: number;
+}
+
+const WidgetComponent: React.FC<IWidgetComponentOwnProps & WidgetComponentAdditionalProps> = ({
+    widget,
+    index,
+    rowIndex,
+    parentLayoutPath,
+    screen,
+    onFiltersChange,
+    onError,
+}) => {
+    const dashboardItemClasses = parentLayoutPath
+        ? `s-dash-item-${serializeLayoutItemPath(parentLayoutPath)}`
+        : `s-dash-item-${index}`;
+    const dashboardItemClassNames = cx(dashboardItemClasses, {
+        "gd-first-container-row-widget": rowIndex === 0,
+    });
+
+    if (isInsightWidget(widget)) {
+        return (
+            <RenderModeAwareDashboardInsightWidget
+                widget={widget}
+                screen={screen}
+                dashboardItemClasses={dashboardItemClassNames}
+            />
+        );
+    } else if (isKpiWidget(widget)) {
+        return (
+            <DefaultDashboardKpiWidget
+                kpiWidget={widget}
+                screen={screen}
+                dashboardItemClasses={dashboardItemClassNames}
+                onFiltersChange={onFiltersChange}
+                onError={onError}
+            />
+        );
+    } else if (isRichTextWidget(widget)) {
+        return (
+            <RenderModeAwareDashboardRichTextWidget
+                widget={widget}
+                screen={screen}
+                dashboardItemClasses={dashboardItemClassNames}
+            />
+        );
+    } else if (isVisualizationSwitcherWidget(widget)) {
+        return (
+            <RenderModeAwareDashboardVisualizationSwitcherWidget
+                widget={widget}
+                screen={screen}
+                dashboardItemClasses={dashboardItemClassNames}
+            />
+        );
+    }
+    return null;
+};
 
 /**
  * @internal
  */
-export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget(
-    props: IDashboardWidgetProps,
-): JSX.Element {
-    const {
-        onError,
-        onFiltersChange,
-        screen,
-        widget,
-        backend,
-        // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
-        index,
-        parentLayoutItemSize,
-        parentLayoutPath,
-    } = props;
-
+export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget({
+    onError,
+    onFiltersChange,
+    screen,
+    widget,
+    backend,
+    // @ts-expect-error Don't expose index prop on public interface (we need it only for css class for KD tests)
+    index,
+    parentLayoutItemSize,
+    parentLayoutPath,
+    rowIndex,
+}: IDashboardWidgetProps): JSX.Element {
     const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
 
     if (!isDashboardWidget(widget)) {
@@ -98,64 +159,27 @@ export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget
         });
     }, [effectiveBackend, dispatchEvent, safeSerializeObjRef(ref)]);
 
-    const pathItems = parentLayoutPath
-        ? parentLayoutPath.map((pathItem) => `-${pathItem.sectionIndex}_${pathItem.itemIndex}`).join("")
-        : "";
-    const dashboardItemClasses = parentLayoutPath ? `s-dash-item${pathItems}` : `s-dash-item-${index}`;
-
-    const firstInContainer = isFirstInContainer(parentLayoutPath);
-
     if (isWidget(widget)) {
-        let renderWidget = null;
-        if (isInsightWidget(widget)) {
-            renderWidget = (
-                <RenderModeAwareDashboardInsightWidget
+        return (
+            <BackendProvider backend={backendWithEventing}>
+                <WidgetComponent
                     widget={widget}
                     screen={screen}
-                    dashboardItemClasses={cx(dashboardItemClasses, {
-                        "gd-first-in-container": firstInContainer,
-                    })}
-                />
-            );
-        } else if (isKpiWidget(widget)) {
-            renderWidget = (
-                <DefaultDashboardKpiWidget
-                    kpiWidget={widget}
-                    screen={screen}
-                    dashboardItemClasses={cx(dashboardItemClasses, {
-                        "gd-first-in-container": firstInContainer,
-                    })}
+                    index={index}
+                    parentLayoutPath={parentLayoutPath}
                     onFiltersChange={onFiltersChange}
                     onError={onError}
+                    rowIndex={rowIndex!}
                 />
-            );
-        } else if (isRichTextWidget(widget)) {
-            renderWidget = (
-                <RenderModeAwareDashboardRichTextWidget
-                    widget={widget}
-                    screen={screen}
-                    dashboardItemClasses={cx(dashboardItemClasses, {
-                        "gd-first-in-container": firstInContainer,
-                    })}
-                />
-            );
-        } else if (isVisualizationSwitcherWidget(widget)) {
-            renderWidget = (
-                <RenderModeAwareDashboardVisualizationSwitcherWidget
-                    widget={widget}
-                    screen={screen}
-                    dashboardItemClasses={cx(dashboardItemClasses, {
-                        "gd-first-in-container": firstInContainer,
-                    })}
-                />
-            );
-        }
-
-        return <BackendProvider backend={backendWithEventing}>{renderWidget}</BackendProvider>;
+            </BackendProvider>
+        );
     } else if (isFlexibleLayoutEnabled && isExtendedDashboardLayoutWidget(widget)) {
         const dashboardItemClasses = parentLayoutPath
-            ? `s-dash-item${pathItems}--container`
+            ? `s-dash-item-${serializeLayoutItemPath(parentLayoutPath)}--container`
             : `s-dash-item-${index}--container`;
+        const dashboardItemClassNames = cx(dashboardItemClasses, {
+            "gd-first-container-row-widget": rowIndex === 0,
+        });
         return (
             <RenderModeAwareDashboardNestedLayoutWidget
                 // nested layout widget merges layout and other widget props into single object. Split them here
@@ -164,9 +188,7 @@ export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget
                 onFiltersChange={onFiltersChange}
                 parentLayoutItemSize={parentLayoutItemSize}
                 parentLayoutPath={parentLayoutPath}
-                dashboardItemClasses={cx(dashboardItemClasses, {
-                    "gd-first-in-container": firstInContainer,
-                })}
+                dashboardItemClasses={dashboardItemClassNames}
             />
         );
     }
