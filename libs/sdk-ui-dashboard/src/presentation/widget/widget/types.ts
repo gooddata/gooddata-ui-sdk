@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { ComponentType } from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IErrorProps, ILoadingProps, OnError } from "@gooddata/sdk-ui";
@@ -139,6 +139,17 @@ export interface IDashboardWidgetProps {
      * @alpha
      */
     showMenu?: boolean;
+
+    /**
+     * Zero-based index of the row in which the item is rendered,
+     *
+     * @alpha
+     *
+     * @remarks
+     * Optional only for the compatibility reasons with old fluid layout.
+     * Once the flexible layout is the only one supported, it can be set as required.
+     */
+    rowIndex?: number;
 }
 
 ///

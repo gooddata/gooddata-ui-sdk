@@ -39,14 +39,17 @@ export function DashboardLayoutGridRowEdit<TWidget>(
     const isDraggingWidget = useIsDraggingWidget();
     const rowItems = useMemo(
         () =>
-            items.map((item) => (
-                <DashboardLayoutItem
-                    key={itemKeyGetter({ item, screen })}
-                    item={item}
-                    itemRenderer={itemRenderer}
-                    widgetRenderer={widgetRenderer}
-                />
-            )),
+            itemsInRowsByIndex.flatMap(([, itemsInRow], rowIndex) =>
+                itemsInRow.map((item) => (
+                    <DashboardLayoutItem
+                        key={itemKeyGetter({ item, screen })}
+                        item={item}
+                        itemRenderer={itemRenderer}
+                        widgetRenderer={widgetRenderer}
+                        rowIndex={rowIndex}
+                    />
+                )),
+            ),
         [itemKeyGetter, itemRenderer, items, screen, widgetRenderer],
     );
 

@@ -305,14 +305,6 @@ export const hasParent = (path: ILayoutItemPath | ILayoutSectionPath): boolean =
     );
 };
 
-export const isFirstInContainer = (parentLayoutPath: ILayoutItemPath | undefined) => {
-    if (parentLayoutPath && parentLayoutPath.length > 1) {
-        const itemCoordinates = parentLayoutPath[parentLayoutPath.length - 1];
-        return itemCoordinates.itemIndex === 0 && itemCoordinates.sectionIndex === 0;
-    }
-    return false;
-};
-
 export const getParentPath = (
     path: ILayoutItemPath | ILayoutSectionPath | undefined,
 ): ILayoutItemPath | undefined => {

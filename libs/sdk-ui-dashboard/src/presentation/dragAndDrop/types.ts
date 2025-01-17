@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { IDashboardAttributeFilter, IDashboardDateFilter, IInsight, IKpi } from "@gooddata/sdk-model";
 import { ICustomWidget } from "../../model/types/layoutTypes.js";
 import { ILayoutItemPath, ILayoutSectionPath } from "../../types.js";
@@ -409,6 +409,8 @@ export interface WidthResizerDragItem {
     initialLayoutDimensions: DOMRect;
     minLimit: number;
     maxLimit: number;
+    // TODO LX-608: make required
+    rowIndex?: number;
 }
 
 /**

@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 
 import React from "react";
 import {
@@ -17,6 +17,7 @@ export interface IDashboardLayoutItemProps<TWidget> {
     item: IDashboardLayoutItemFacade<TWidget>;
     itemRenderer?: IDashboardLayoutItemRenderer<TWidget>;
     widgetRenderer: IDashboardLayoutWidgetRenderer<TWidget>;
+    rowIndex: number;
 }
 
 const defaultItemRenderer: IDashboardLayoutItemRenderer<unknown> = (props) => (
@@ -24,11 +25,12 @@ const defaultItemRenderer: IDashboardLayoutItemRenderer<unknown> = (props) => (
 );
 
 export function DashboardLayoutItem<TWidget>(props: IDashboardLayoutItemProps<TWidget>): JSX.Element {
-    const { item, itemRenderer = defaultItemRenderer, widgetRenderer } = props;
+    const { item, itemRenderer = defaultItemRenderer, widgetRenderer, rowIndex } = props;
 
     const renderProps = {
         item,
         DefaultWidgetRenderer: DashboardLayoutWidgetRenderer,
+        rowIndex,
     } as IDashboardLayoutWidgetRenderProps<TWidget>;
 
     return itemRenderer({

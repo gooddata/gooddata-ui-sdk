@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import * as React from "react";
 
 import { isInitialPlaceholderWidget } from "../../../widgets/index.js";
@@ -28,6 +28,9 @@ export function DashboardLayoutEditSectionHeaderRenderer(
         <DashboardLayoutItemViewRenderer
             DefaultItemRenderer={DashboardLayoutItemViewRenderer}
             item={emptyItem}
+            // header is always at the top, this information is not usable by it but required by
+            // the shared interface with widget
+            rowIndex={-1}
         >
             <DashboardLayoutEditSectionHeader
                 section={section}

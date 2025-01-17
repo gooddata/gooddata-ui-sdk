@@ -4581,6 +4581,8 @@ export interface IDashboardWidgetProps {
     parentLayoutItemSize?: IDashboardLayoutSizeByScreenSize;
     // @alpha
     parentLayoutPath?: ILayoutItemPath;
+    // @alpha
+    rowIndex?: number;
     // @alpha (undocumented)
     screen: ScreenSize;
     // @alpha
@@ -9808,6 +9810,8 @@ export interface WidthResizerDragItem {
     maxLimit: number;
     // (undocumented)
     minLimit: number;
+    // (undocumented)
+    rowIndex?: number;
     // (undocumented)
     sectionIndex: number;
     // (undocumented)

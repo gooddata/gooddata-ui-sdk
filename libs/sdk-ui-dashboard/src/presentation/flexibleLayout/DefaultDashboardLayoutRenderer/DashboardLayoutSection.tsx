@@ -99,6 +99,9 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
                     widgetRenderer={widgetRenderer}
                     renderMode={renderMode}
                     getLayoutDimensions={getLayoutDimensions}
+                    // The information is required by the interface but edit row counts the indexes of rows
+                    // in the inside of the component, unlike view row component.
+                    rowIndex={-1}
                 />
             );
         }
@@ -115,6 +118,7 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
                     widgetRenderer={widgetRenderer}
                     renderMode={renderMode}
                     getLayoutDimensions={getLayoutDimensions}
+                    rowIndex={index}
                 />
             );
         });
