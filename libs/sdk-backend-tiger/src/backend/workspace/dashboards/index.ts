@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import {
     EntitiesApiGetEntityAnalyticalDashboardsRequest,
     isDashboardPluginsItem,
@@ -12,6 +12,7 @@ import {
     ValidateRelationsHeader,
     ITigerClient,
     JsonApiFilterViewOutDocument,
+    isDataSetItem,
 } from "@gooddata/api-client-tiger";
 import {
     IDashboardReferences,
@@ -82,6 +83,7 @@ import { getSettingsForCurrentUser } from "../settings/index.js";
 import { convertFilterView } from "../../../convertors/fromBackend/FilterViewConvertor.js";
 import { invariant } from "ts-invariant";
 import { convertApiError } from "../../../utils/errorHandling.js";
+import { convertDataSetItem } from "../../../convertors/fromBackend/DataSetConverter.js";
 
 const DEFAULT_POLL_DELAY = 5000;
 const MAX_POLL_ATTEMPTS = 50;
@@ -159,6 +161,8 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             .filter(isDashboardPluginsItem)
             .map((plugin) => convertDashboardPluginWithLinksFromBackend(plugin, included));
 
+        const dataSets = included.filter(isDataSetItem).map(convertDataSetItem);
+
         const filterContext = await this.prepareFilterContext(options?.exportId, filterContextRef, included);
 
         return {
@@ -166,6 +170,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             references: {
                 insights,
                 plugins,
+                dataSets,
             },
         };
     };
@@ -184,6 +189,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 plugins: included
                     .filter(isDashboardPluginsItem)
                     .map((plugin) => convertDashboardPluginWithLinksFromBackend(plugin, included)),
+                dataSets: included.filter(isDataSetItem).map(convertDataSetItem),
             };
         });
     };
@@ -234,6 +240,10 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
 
         if (includes(types, "insight")) {
             include.push("visualizationObjects");
+        }
+
+        if (includes(types, "dataSet")) {
+            include.push("datasets");
         }
 
         if (includes(types, "dashboardPlugin")) {

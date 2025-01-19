@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { useCallback } from "react";
 import classNames from "classnames";
 import { invariant } from "ts-invariant";
@@ -299,7 +299,7 @@ export function DefaultFilterBar(props: IFilterBarProps): JSX.Element {
 
                         const defaultDateFilterName = allDateDatasets.find((ds) =>
                             areObjRefsEqual(ds.dataSet.ref, filter.dateFilter.dataSet),
-                        )!.dataSet.title;
+                        )?.dataSet?.title;
 
                         return (
                             <DraggableDateFilter

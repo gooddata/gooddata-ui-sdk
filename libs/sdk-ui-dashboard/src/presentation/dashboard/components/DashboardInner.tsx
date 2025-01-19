@@ -6,6 +6,7 @@ import {
     useDashboardSelector,
     selectLocale,
     selectIsInEditMode,
+    selectCatalogIsLoaded,
     useDashboardAutomations,
     selectEnableFlexibleLayout,
 } from "../../../model/index.js";
@@ -33,6 +34,7 @@ export const DashboardInner: React.FC<IDashboardProps> = (props) => {
     const locale = useDashboardSelector(selectLocale);
     const isEditMode = useDashboardSelector(selectIsInEditMode);
     const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
+    const isCatalogLoaded = useDashboardSelector(selectCatalogIsLoaded);
 
     const headerRef = useRef(null);
     const layoutRef = useRef(null);
@@ -55,6 +57,7 @@ export const DashboardInner: React.FC<IDashboardProps> = (props) => {
             <div
                 className={cx("component-root", {
                     "sdk-edit-mode-on": isEditMode,
+                    "catalog-is-loaded": isCatalogLoaded,
                 })}
             >
                 <DragLayerComponent />

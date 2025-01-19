@@ -1243,6 +1243,7 @@ export type ICustomSmtpDestinationConfiguration = {
 // @alpha
 export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, IDashboardObjectIdentity, Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers>, IAccessControlAware {
     readonly attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
+    readonly dataSets?: IDataSetMetadataObject[];
     readonly dateFilterConfig?: IDashboardDateFilterConfig;
     readonly dateFilterConfigs?: IDashboardDateFilterConfigItem[];
     readonly disableCrossFiltering?: boolean;

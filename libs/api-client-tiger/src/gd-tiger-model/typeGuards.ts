@@ -17,6 +17,8 @@ import {
     JsonApiDashboardPluginOutWithLinksTypeEnum,
     JsonApiFilterContextInTypeEnum,
     JsonApiVisualizationObjectOutWithLinksTypeEnum,
+    JsonApiDatasetOutWithLinksTypeEnum,
+    JsonApiDatasetOutWithLinks,
 } from "../generated/metadata-json-api/index.js";
 
 /**
@@ -95,4 +97,11 @@ export function isDashboardPluginsItem(
         (dashboardPlugin as JsonApiDashboardPluginOutWithLinks).type ===
         JsonApiDashboardPluginOutWithLinksTypeEnum.DASHBOARD_PLUGIN
     );
+}
+
+/**
+ * @public
+ */
+export function isDataSetItem(dataSet: unknown): dataSet is JsonApiDatasetOutWithLinks {
+    return (dataSet as JsonApiDatasetOutWithLinks).type === JsonApiDatasetOutWithLinksTypeEnum.DATASET;
 }

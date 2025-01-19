@@ -1,4 +1,4 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { DashboardLoadResult, IDashboardLoader } from "./loader.js";
 import {
@@ -301,7 +301,7 @@ export class DashboardLoader implements IDashboardLoader {
                     dashboardRef,
                     filterContextRef,
                     { loadUserData: true, exportId: config?.exportId },
-                    ["dashboardPlugin"],
+                    ["dashboardPlugin", "dataSet"],
                 ));
 
         const ctx: DashboardContext = {

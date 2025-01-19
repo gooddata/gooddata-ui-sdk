@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { IAuditableDates, IAuditableUsers, IAuditable } from "../base/metadata.js";
 import {
@@ -10,6 +10,7 @@ import { Identifier, ObjRef } from "../objRef/index.js";
 import { IDashboardObjectIdentity } from "./common.js";
 import { IFilterContext, ITempFilterContext, IFilterContextDefinition } from "./filterContext.js";
 import { IDashboardWidget, IDashboardLayout } from "./layout.js";
+import { IDataSetMetadataObject } from "../ldm/metadata/dataSet/index.js";
 
 /**
  * Date filter configuration mode
@@ -316,6 +317,11 @@ export interface IDashboard<TWidget = IDashboardWidget>
      * Disables listing and saving of filter views for this dashboard.
      */
     readonly disableFilterViews?: boolean;
+
+    /**
+     * Data sets related to the dashboard, as defined by the includes directive
+     */
+    readonly dataSets?: IDataSetMetadataObject[];
 }
 
 /**

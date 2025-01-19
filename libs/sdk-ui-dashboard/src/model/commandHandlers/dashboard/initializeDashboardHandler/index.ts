@@ -1,11 +1,11 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
-import { all, call, put, SagaReturnType } from "redux-saga/effects";
+import { spawn, all, call, put, SagaReturnType } from "redux-saga/effects";
 import { InitializeDashboard } from "../../../commands/dashboard.js";
 import { DashboardInitialized, dashboardInitialized } from "../../../events/dashboard.js";
 import { loadingActions } from "../../../store/loading/index.js";
 import { DashboardContext, PrivateDashboardContext } from "../../../types/commonTypes.js";
-import { IDashboardWithReferences, walkLayout } from "@gooddata/sdk-backend-spi";
+import { IDashboardWithReferences, walkLayout, IWorkspaceCatalog } from "@gooddata/sdk-backend-spi";
 import { resolveDashboardConfig } from "./resolveDashboardConfig.js";
 import { configActions } from "../../../store/config/index.js";
 import { entitlementsActions } from "../../../store/entitlements/index.js";
@@ -35,13 +35,17 @@ import {
     isVisualizationSwitcherWidget,
     ObjRef,
     serializeObjRef,
+    IDateHierarchyTemplate,
 } from "@gooddata/sdk-model";
 import {
     actionsToInitializeExistingDashboard,
     actionsToInitializeNewDashboard,
 } from "../common/stateInitializers.js";
 import { executionResultsActions } from "../../../store/executionResults/index.js";
-import { createDisplayFormMapFromCatalog } from "../../../../_staging/catalog/displayFormMap.js";
+import {
+    createDisplayFormMap,
+    createDisplayFormMapFromCatalog,
+} from "../../../../_staging/catalog/displayFormMap.js";
 import { getPrivateContext } from "../../../store/_infra/contexts.js";
 import { accessibleDashboardsActions } from "../../../store/accessibleDashboards/index.js";
 import { loadAccessibleDashboardList } from "./loadAccessibleDashboardList.js";
@@ -88,7 +92,7 @@ async function loadDashboardFromBackend(
         return backend
             .workspace(workspace)
             .dashboards()
-            .getDashboardReferencedObjects(preloadedDashboard, ["insight"])
+            .getDashboardReferencedObjects(preloadedDashboard, ["insight", "dataSet"])
             .then((references) => {
                 return {
                     dashboard: preloadedDashboard,
@@ -100,7 +104,10 @@ async function loadDashboardFromBackend(
     return backend
         .workspace(workspace)
         .dashboards()
-        .getDashboardWithReferences(dashboardRef, filterContextRef, { loadUserData: true }, ["insight"]);
+        .getDashboardWithReferences(dashboardRef, filterContextRef, { loadUserData: true }, [
+            "insight",
+            "dataSet",
+        ]);
 }
 
 async function loadInsightsForPersistedDashboard(
@@ -149,6 +156,16 @@ type DashboardLoadResult = {
     event: DashboardInitialized;
 };
 
+function* decideAndLoadFullCatalog(ctx: DashboardContext, cmd: InitializeDashboard) {
+    // defer catalog loading when optimizations enabled
+    if (ctx.config?.settings?.enableCriticalContentPerformanceOptimizations) {
+        return null;
+    }
+
+    const fullCatalog: PromiseFnReturnType<typeof loadCatalog> = yield call(loadCatalog, ctx, cmd);
+    return fullCatalog;
+}
+
 function* loadExistingDashboard(
     ctx: DashboardContext,
     cmd: InitializeDashboard,
@@ -163,7 +180,7 @@ function* loadExistingDashboard(
         call(resolveDashboardConfig, ctx, cmd),
         call(resolvePermissions, ctx, cmd),
         call(resolveEntitlements, ctx),
-        call(loadCatalog, ctx, cmd),
+        call(decideAndLoadFullCatalog, ctx, cmd),
         call(loadDashboardAlerts, ctx),
         call(loadUser, ctx),
         call(loadDashboardList, ctx),
@@ -196,7 +213,7 @@ function* loadExistingDashboard(
         SagaReturnType<typeof resolveDashboardConfig>,
         SagaReturnType<typeof resolvePermissions>,
         PromiseFnReturnType<typeof resolveEntitlements>,
-        PromiseFnReturnType<typeof loadCatalog>,
+        PromiseFnReturnType<typeof decideAndLoadFullCatalog>,
         PromiseFnReturnType<typeof loadDashboardAlerts>,
         PromiseFnReturnType<typeof loadUser>,
         PromiseFnReturnType<typeof loadDashboardList>,
@@ -229,8 +246,8 @@ function* loadExistingDashboard(
         insights,
         config.settings,
         effectiveDateFilterConfig.config,
-        catalog.dateDatasets(),
-        createDisplayFormMapFromCatalog(catalog),
+        catalog ? catalog.dateDatasets() : [],
+        catalog ? createDisplayFormMapFromCatalog(catalog) : createDisplayFormMap([], []),
         cmd.payload.persistedDashboard,
     );
 
@@ -245,6 +262,19 @@ function* loadExistingDashboard(
         PromiseFnReturnType<typeof loadNotificationChannelsCount>,
     ] = yield all(ffCalls);
 
+    const catalogPayload = {
+        dateHierarchyTemplates,
+        ...(catalog
+            ? {
+                  attributes: catalog.attributes(),
+                  dateDatasets: catalog.dateDatasets(),
+                  facts: catalog.facts(),
+                  measures: catalog.measures(),
+                  attributeHierarchies: catalog.attributeHierarchies(),
+              }
+            : {}),
+    };
+
     const batch: BatchAction = batchActions(
         [
             backendCapabilitiesActions.setBackendCapabilities(backend.capabilities),
@@ -252,14 +282,7 @@ function* loadExistingDashboard(
             entitlementsActions.setEntitlements(entitlements),
             userActions.setUser(user),
             permissionsActions.setPermissions(permissions),
-            catalogActions.setCatalogItems({
-                attributes: catalog.attributes(),
-                dateDatasets: catalog.dateDatasets(),
-                facts: catalog.facts(),
-                measures: catalog.measures(),
-                attributeHierarchies: catalog.attributeHierarchies(),
-                dateHierarchyTemplates: dateHierarchyTemplates,
-            }),
+            catalogActions.setCatalogItems(catalogPayload),
             ...initActions,
             alertsActions.setAlerts(alerts),
             dateFilterConfigActions.setDateFilterConfig({
@@ -393,10 +416,26 @@ function* initializeNewDashboard(
     };
 }
 
-export function* initializeDashboardHandler(
-    ctx: DashboardContext,
-    cmd: InitializeDashboard,
-): SagaIterator<DashboardInitialized> {
+export function* requestCatalog(ctx: DashboardContext) {
+    const catalog: IWorkspaceCatalog = yield call(loadCatalog, ctx, { payload: { config: {} } } as any);
+    const dateHierarchyTemplates: IDateHierarchyTemplate[] = yield call(loadDateHierarchyTemplates, ctx);
+    yield put(
+        catalogActions.setCatalogItems({
+            attributes: catalog.attributes(),
+            dateDatasets: catalog.dateDatasets(),
+            facts: catalog.facts(),
+            measures: catalog.measures(),
+            attributeHierarchies: catalog.attributeHierarchies(),
+            dateHierarchyTemplates: dateHierarchyTemplates,
+        }),
+    );
+}
+
+function* advancedLoader(ctx: DashboardContext) {
+    yield call(requestCatalog, ctx);
+}
+
+export function* initializeDashboardHandler(ctx: DashboardContext, cmd: InitializeDashboard): SagaIterator {
     const { dashboardRef } = ctx;
     try {
         yield put(loadingActions.setLoadingStart());
@@ -413,7 +452,13 @@ export function* initializeDashboardHandler(
 
         yield put(loadingActions.setLoadingSuccess());
 
-        return result.event;
+        yield put(result.event);
+
+        if (ctx.config?.settings?.enableCriticalContentPerformanceOptimizations && dashboardRef) {
+            // let's run effects which are not essential for the existing
+            // dashboard to be rendered, such as catalog load
+            yield spawn(advancedLoader, ctx);
+        }
     } catch (e) {
         yield put(loadingActions.setLoadingError(e as Error));
 
