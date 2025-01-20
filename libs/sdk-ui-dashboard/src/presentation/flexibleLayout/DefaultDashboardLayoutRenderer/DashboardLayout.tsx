@@ -127,10 +127,11 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
 
     // do not render the tailing section hotspot if there is only one section in the layout, and it has only initial placeholders in it
     const shouldRenderSectionHotspot =
-        layout.sections.length > 1 ||
-        (layout.sections.length === 1 &&
-            layout.sections[0].items.some((i) => !isInitialPlaceholderWidget(i.widget)) &&
-            !isNestedLayout);
+        renderMode === "edit" &&
+        (layout.sections.length > 1 ||
+            (layout.sections.length === 1 &&
+                layout.sections[0].items.some((i) => !isInitialPlaceholderWidget(i.widget)) &&
+                !isNestedLayout));
 
     return (
         <GridLayoutElement
