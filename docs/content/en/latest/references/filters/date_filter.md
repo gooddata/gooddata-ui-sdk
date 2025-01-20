@@ -114,3 +114,145 @@ export class DateFilterComponentExample extends Component {
 | onCancel | false | Function | A callback when the selection is canceled by the user |
 | onOpen | false | Function | A callback when the filter dropdown is opened by the user |
 | onClose | false | Function | A callback when the filter dropdown is closed by the user |
+
+
+## How to Modify Date Filters in Dashboards
+
+You can adjust the date filters in your dashboard to show specific time granularities (e.g., only days, months, or years) using the `dateFilterConfig` metadata object. Here's a simple guide:
+
+### Setting Up dateFilterConfig
+
+You can configure `dateFilterConfig` at two levels:
+
+-   Organization Setting: /api/v1/entities/organizationSettings
+-   Workspace Setting: /api/v1/entities/workspaces/{workspaceId}/workspaceSettings
+
+**Example Payload for dateFilterConfig**
+
+To create this metadata object, send a `POST` request with the following payload. Update the type to workspaceSetting if needed:
+
+```json
+{
+    "data": {
+        "id": "dateFilterConfig",
+        "type": "organizationSetting",
+        "attributes": {
+            "content": {},
+            "type": "DATE_FILTER_CONFIG"
+        }
+    }
+}
+```
+
+### Editing Granularities in Relative Period
+
+The relative period defines which granularities (e.g., days, weeks, months) are available in the date filter. Supported granularities include:
+
+-   GDC.time.week_us
+-   GDC.time.month
+-   GDC.time.year
+-   GDC.time.quarter
+-   GDC.time.date
+-   GDC.time.hour
+-   GDC.time.minute
+
+**Example Configuration**
+
+```json
+{
+    "config": {
+        "absoluteForm": {
+            "localIdentifier": "absoluteForm",
+            "name": "",
+            "visible": true
+        },
+        "allTime": {
+            "localIdentifier": "allTime",
+            "name": "All time",
+            "visible": true
+        },
+        "relativeForm": {
+            "granularities": [
+                "GDC.time.week_us",
+                "GDC.time.month",
+                "GDC.time.year",
+                "GDC.time.quarter",
+                "GDC.time.date",
+                "GDC.time.hour",
+                "GDC.time.minute"
+            ],
+            "localIdentifier": "relativeForm",
+            "name": "",
+            "visible": true
+        },
+        "relativePresets": [
+            {
+                "from": -6,
+                "to": 0,
+                "granularity": "GDC.time.date",
+                "localIdentifier": "relative_last_7_days",
+                "name": "Last 7 days",
+                "visible": true
+            },
+            {
+                "from": -29,
+                "to": 0,
+                "granularity": "GDC.time.date",
+                "localIdentifier": "relative_last_30_days",
+                "name": "Last 30 days",
+                "visible": true
+            }
+            // Add more presets as needed
+        ],
+        "selectedOption": "relative_this_month"
+    }
+}
+```
+
+### Adding Predefined Periods
+
+You can customize the relativePresets section to define periods like "Last 10 days" or "Last month." Each preset includes:
+
+-   Granularity: Defines the time unit (e.g., day, week, month).
+-   From/To: Relative to today (0 represents today).Examples:
+    -   Last 3 days: from: -2, to: 0
+    -   This year: from: 0, to: 0
+-   Local Identifier: A unique name for the filter.
+-   Name: The display name on the dashboard.
+-   Visible: Controls if the filter is shown.
+
+**Example: Last 10 Days Filter**
+
+```json
+{
+    "from": -9,
+    "to": 0,
+    "granularity": "GDC.time.date",
+    "localIdentifier": "last_10_days",
+    "name": "Last 10 days",
+    "visible": true
+}
+```
+
+**Removing Granularities**
+
+To remove granularities, delete the corresponding items in the relativeForm section. For example, to include only months and years:
+
+```json
+"relativeForm": {
+  "granularities": [
+    "GDC.time.month",
+    "GDC.time.year"
+  ],
+  "localIdentifier": "relativeForm",
+  "name": "relativeForm",
+  "visible": true
+}
+```
+
+### Deleting dateFilterConfig
+
+To delete the configuration, send a `DELETE` request to the following endpoints:
+
+-   Organization: /api/v1/entities/organizationSettings/dateFilterConfig
+-   Workspace: /api/v1/entities/workspaces/{workspaceId}/workspaceSettings/dateFilterConfig
