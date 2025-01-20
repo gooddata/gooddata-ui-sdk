@@ -33,7 +33,10 @@ import {
     selectUsers,
     useDashboardSelector,
 } from "../../../../../../model/index.js";
-import { convertCurrentUserToAutomationRecipient } from "../../../../../../_staging/automation/index.js";
+import {
+    convertCurrentUserToAutomationRecipient,
+    convertCurrentUserToWorkspaceUser,
+} from "../../../../../../_staging/automation/index.js";
 import { isEmail } from "../../../../../scheduledEmail/DefaultScheduledEmailDialog/utils/validate.js";
 
 export interface IUseEditAlertProps {
@@ -68,9 +71,10 @@ export const useEditAlert = ({
     const selectedDestination = destinations.find(
         (destination) => destination.id === updatedAlert.notificationChannel,
     );
-    const showRecipientsSelect = selectedDestination?.allowedRecipients !== "creator";
+    const defaultUser = convertCurrentUserToWorkspaceUser(users ?? [], currentUser);
     const allowExternalRecipients =
         selectedDestination?.allowedRecipients === "external" && enabledExternalRecipients;
+    const allowOnlyLoggedUserRecipients = selectedDestination?.allowedRecipients === "creator";
 
     const changeMeasure = useCallback(
         (measure: AlertMetric) => {
@@ -239,10 +243,11 @@ export const useEditAlert = ({
         hasNoUnknownRecipients;
 
     return {
+        defaultUser,
         viewMode,
         updatedAlert,
         canSubmit,
-        showRecipientsSelect,
+        allowOnlyLoggedUserRecipients,
         allowExternalRecipients,
         warningMessage,
         //

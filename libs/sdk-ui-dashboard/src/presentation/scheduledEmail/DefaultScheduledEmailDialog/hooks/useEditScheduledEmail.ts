@@ -35,6 +35,7 @@ import { toModifiedISOString } from "../../DefaultScheduledEmailManagementDialog
 import {
     areAutomationsEqual,
     convertCurrentUserToAutomationRecipient,
+    convertCurrentUserToWorkspaceUser,
     getAutomationVisualizationFilters,
     isCsvVisualizationAutomation,
     isCsvVisualizationExportDefinition,
@@ -85,6 +86,8 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
 
     const currentUser = useDashboardSelector(selectCurrentUser);
     const users = useDashboardSelector(selectUsers);
+    const defaultUser = convertCurrentUserToWorkspaceUser(users ?? [], currentUser);
+
     const defaultRecipient = convertCurrentUserToAutomationRecipient(users ?? [], currentUser);
     const enabledExternalRecipients = useDashboardSelector(selectEnableExternalRecipients);
 
@@ -337,9 +340,9 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
     const selectedNotificationChannel = notificationChannels.find(
         (channel) => channel.id === editedAutomation.notificationChannel,
     );
-    const showRecipientsSelect = selectedNotificationChannel?.allowedRecipients !== "creator";
     const allowExternalRecipients =
         selectedNotificationChannel?.allowedRecipients === "external" && enabledExternalRecipients;
+    const allowOnlyLoggedUserRecipients = selectedNotificationChannel?.allowedRecipients === "creator";
 
     const { isValid: isOriginalAutomationValid } = useScheduleValidation(originalAutomation);
     const validationErrorMessage = !isOriginalAutomationValid
@@ -351,6 +354,10 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
     const hasValidExternalRecipients = allowExternalRecipients
         ? true
         : !editedAutomation.recipients?.some(isAutomationExternalUserRecipient);
+    const hasValidCreatorRecipient = allowOnlyLoggedUserRecipients
+        ? editedAutomation.recipients?.length === 1 &&
+          editedAutomation.recipients[0].id === defaultRecipient.id
+        : true;
     const hasNoUnknownRecipients = !editedAutomation.recipients?.some(isAutomationUnknownUserRecipient);
     const hasDestination = !!editedAutomation.notificationChannel;
     const respectsRecipientsLimit = (editedAutomation.recipients?.length ?? 0) <= maxAutomationsRecipients;
@@ -368,6 +375,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         hasAttachments &&
         hasDestination &&
         hasValidExternalRecipients &&
+        hasValidCreatorRecipient &&
         hasNoUnknownRecipients &&
         hasFilledEmails;
 
@@ -375,6 +383,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         !isValid || (scheduledExportToEdit && areAutomationsEqual(originalAutomation, editedAutomation));
 
     return {
+        defaultUser,
         areDashboardFiltersChanged,
         originalAutomation,
         editedAutomation,
@@ -386,7 +395,7 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         isXlsxExportSelected,
         settings,
         startDate,
-        showRecipientsSelect,
+        allowOnlyLoggedUserRecipients,
         allowExternalRecipients,
         validationErrorMessage,
         isSubmitDisabled,

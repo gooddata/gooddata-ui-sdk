@@ -92,13 +92,14 @@ export function ScheduledMailDialogRenderer({
     } = useDefaultScheduledEmailDialogData();
 
     const {
+        defaultUser,
         editedAutomation,
         originalAutomation,
         isSubmitDisabled,
         settings,
         startDate,
-        showRecipientsSelect,
         allowExternalRecipients,
+        allowOnlyLoggedUserRecipients,
         isDashboardExportSelected,
         isCsvExportSelected,
         isXlsxExportSelected,
@@ -224,19 +225,19 @@ export function ScheduledMailDialogRenderer({
                                 onChange={onDestinationChange}
                             />
                             <ContentDivider className="gd-divider-with-margin" />
-                            {showRecipientsSelect ? (
-                                <RecipientsSelect
-                                    users={users}
-                                    value={editedAutomation.recipients ?? []}
-                                    originalValue={originalAutomation.recipients || []}
-                                    onChange={onRecipientsChange}
-                                    allowEmptySelection
-                                    allowExternalRecipients={allowExternalRecipients}
-                                    maxRecipients={maxAutomationsRecipients}
-                                    notificationChannels={notificationChannels}
-                                    notificationChannelId={editedAutomation.notificationChannel}
-                                />
-                            ) : null}
+                            <RecipientsSelect
+                                loggedUser={defaultUser}
+                                users={users}
+                                value={editedAutomation.recipients ?? []}
+                                originalValue={originalAutomation.recipients || []}
+                                onChange={onRecipientsChange}
+                                allowEmptySelection
+                                allowOnlyLoggedUserRecipients={allowOnlyLoggedUserRecipients}
+                                allowExternalRecipients={allowExternalRecipients}
+                                maxRecipients={maxAutomationsRecipients}
+                                notificationChannels={notificationChannels}
+                                notificationChannelId={editedAutomation.notificationChannel}
+                            />
                             <Input
                                 className="gd-notifications-channels-dialog-subject s-gd-notifications-channels-dialog-subject"
                                 label={intl.formatMessage({ id: "dialogs.schedule.email.subject.label" })}

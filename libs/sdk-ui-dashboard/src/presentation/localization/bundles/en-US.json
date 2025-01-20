@@ -553,6 +553,11 @@
         "comment": "Message for recipients input when a user is unknown",
         "limit": 0
     },
+    "dialogs.schedule.email.user.notMe": {
+        "value": "This user is not allowed. There can be only you as a recipient.",
+        "comment": "Message for recipients input when a user is not allowed",
+        "limit": 0
+    },
     "dialogs.schedule.email.user.guest": {
         "value": "(guest)",
         "comment": "Guest user label",
