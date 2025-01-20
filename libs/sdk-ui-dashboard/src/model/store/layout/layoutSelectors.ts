@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import {
     ObjRef,
@@ -107,6 +107,35 @@ export const selectScreen: DashboardSelector<ScreenSize | undefined> = createSel
     },
 );
 
+const filterOutCustomWidgets = (layout: IDashboardLayout<ExtendedDashboardWidget>) => {
+    const dashboardLayout: IDashboardLayout<IWidget> = {
+        ...layout,
+        sections: layout.sections
+            .map((section) => {
+                return {
+                    ...section,
+                    items: section.items.filter(isItemWithBaseWidget).map((item) => {
+                        if (item.widget && isExtendedDashboardLayoutWidget(item.widget)) {
+                            const filteredLayout = filterOutCustomWidgets(item.widget);
+                            const widget: IWidget = item.widget;
+                            return {
+                                ...item,
+                                widget: {
+                                    ...widget,
+                                    sections: filteredLayout.sections,
+                                },
+                            };
+                        }
+                        return item;
+                    }),
+                };
+            })
+            .filter((section) => !isEmpty(section.items)),
+    };
+
+    return dashboardLayout;
+};
+
 /**
  * This selector returns the basic dashboard layout that does not contain any client-side extensions.
  *
@@ -124,21 +153,7 @@ export const selectScreen: DashboardSelector<ScreenSize | undefined> = createSel
  */
 export const selectBasicLayout: DashboardSelector<IDashboardLayout<IWidget>> = createSelector(
     selectLayout,
-    (layout) => {
-        const dashboardLayout: IDashboardLayout<IWidget> = {
-            ...layout,
-            sections: layout.sections
-                .map((section) => {
-                    return {
-                        ...section,
-                        items: section.items.filter(isItemWithBaseWidget),
-                    };
-                })
-                .filter((section) => !isEmpty(section.items)),
-        };
-
-        return dashboardLayout;
-    },
+    filterOutCustomWidgets,
 );
 
 /**
