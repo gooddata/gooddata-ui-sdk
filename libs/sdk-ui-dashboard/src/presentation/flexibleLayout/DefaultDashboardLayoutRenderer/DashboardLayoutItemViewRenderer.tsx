@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { useMemo } from "react";
 import cx from "classnames";
 import isNil from "lodash/isNil.js";
@@ -38,7 +38,7 @@ export const DashboardLayoutItemViewRenderer: IDashboardLayoutItemRenderer<unkno
 
     return (
         <GridLayoutElement
-            type="item"
+            type={item.isLayoutItem() ? "item" : "leaf-item"}
             layoutItemSize={item.size()}
             className={cx(
                 {

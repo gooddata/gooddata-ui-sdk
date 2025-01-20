@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 
 .export-mode {
     * {
@@ -24,7 +24,7 @@
         }
     }
 
-    .gd-grid-layout__item {
+    .gd-grid-layout__item--leaf {
         // overwrite 'flex'
         display: block !important; /* stylelint-disable-line declaration-no-important */
         page-break-inside: avoid;
