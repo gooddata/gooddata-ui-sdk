@@ -35,6 +35,15 @@ interface IRecipientsSelectProps {
     onChange: (recipientEmails: IAutomationRecipient[]) => void;
 
     /**
+     * Currently logged in user as a recipient
+     */
+    loggedUser?: IWorkspaceUser;
+
+    /**
+     * Allow to select only me as a recipient
+     */
+    allowOnlyLoggedUserRecipients?: boolean;
+    /**
      * Allow to remove the last recipient
      */
     allowEmptySelection?: boolean;
@@ -71,8 +80,10 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
         value,
         originalValue,
         onChange,
+        loggedUser,
         allowEmptySelection,
         allowExternalRecipients,
+        allowOnlyLoggedUserRecipients,
         maxRecipients,
         className,
         notificationChannels,
@@ -82,7 +93,11 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
     const [search, setSearch] = useState<string>();
 
     const options = useMemo(() => {
-        const filteredUsers = search ? users?.filter((user) => matchUser(user, search)) : users;
+        const validUsers = [
+            ...(allowOnlyLoggedUserRecipients ? users : []),
+            ...(allowOnlyLoggedUserRecipients && loggedUser ? [loggedUser] : []),
+        ];
+        const filteredUsers = search ? validUsers.filter((user) => matchUser(user, search)) : validUsers;
         const mappedUsers = sortBy(filteredUsers?.map(convertUserToAutomationRecipient) ?? [], "user.email");
 
         // If there is no user found and the search is an email, add it as an external recipient
@@ -91,7 +106,7 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
         }
 
         return mappedUsers;
-    }, [search, users]);
+    }, [allowOnlyLoggedUserRecipients, loggedUser, search, users]);
 
     const notificationChannel = useMemo(() => {
         return notificationChannels?.find((channel) => channel.id === notificationChannelId);
@@ -108,6 +123,8 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
             onLoad={(queryOptions) => {
                 setSearch(queryOptions?.search);
             }}
+            loggedUser={loggedUser ? convertUserToAutomationRecipient(loggedUser) : undefined}
+            allowOnlyLoggedUserRecipients={allowOnlyLoggedUserRecipients}
             allowEmptySelection={allowEmptySelection}
             allowExternalRecipients={allowExternalRecipients}
             maxRecipients={maxRecipients}

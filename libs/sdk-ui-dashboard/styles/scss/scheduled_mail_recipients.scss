@@ -179,6 +179,7 @@ $input-height: 28px;
 
         &.not-valid,
         &.invalid-external,
+        &.invalid-user,
         &.invalid-email {
             color: kit-variables.$gd-palette-error-base;
             background: var(--gd-palette-error-dimmed, #fcedec);

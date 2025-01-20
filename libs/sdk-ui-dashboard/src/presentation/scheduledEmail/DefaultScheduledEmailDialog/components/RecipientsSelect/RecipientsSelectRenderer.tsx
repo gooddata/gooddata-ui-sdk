@@ -98,6 +98,16 @@ export interface IRecipientsSelectRendererProps {
     canListUsersInProject?: boolean;
 
     /**
+     * Currently logged in user as a recipient
+     */
+    loggedUser?: IAutomationRecipient;
+
+    /**
+     * Allow to select only me as a recipient
+     */
+    allowOnlyLoggedUserRecipients?: boolean;
+
+    /**
      * Allow to remove the last recipient
      */
     allowEmptySelection?: boolean;
@@ -309,6 +319,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
             hasEmail?: boolean;
             noExternal?: boolean;
             invalidExternal?: boolean;
+            invalidLoggedUser?: boolean;
             type?: "externalUser";
             email?: string;
         } = {},
@@ -322,6 +333,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
                     className={cx("gd-recipient-value-item s-gd-recipient-value-item multiple-value", {
                         "invalid-email": !options.hasEmail,
                         "invalid-external": options.noExternal || options.invalidExternal,
+                        "invalid-user": options.invalidLoggedUser,
                     })}
                 >
                     <div className="gd-recipient-label">{label}</div>
@@ -336,6 +348,17 @@ export class RecipientsSelectRenderer extends React.PureComponent<
                 </div>
             );
         };
+
+        if (options.invalidLoggedUser === true) {
+            return (
+                <BubbleHoverTrigger>
+                    {render()}
+                    <Bubble className="bubble-negative" alignPoints={TOOLTIP_ALIGN_POINTS}>
+                        <FormattedMessage id="dialogs.schedule.email.user.notMe" />
+                    </Bubble>
+                </BubbleHoverTrigger>
+            );
+        }
 
         if (options.invalidExternal === true) {
             return (
@@ -403,7 +426,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
     private renderMultiValueContainer = (
         multiValueProps: MultiValueGenericProps<IAutomationRecipient>,
     ): React.ReactElement => {
-        const { allowExternalRecipients } = this.props;
+        const { allowExternalRecipients, allowOnlyLoggedUserRecipients, loggedUser } = this.props;
         const { data, children } = multiValueProps;
 
         // MultiValueRemove component from react-select
@@ -413,10 +436,12 @@ export class RecipientsSelectRenderer extends React.PureComponent<
             this.isEmailChannel() && isAutomationUserRecipient(data) ? isEmail(data.email ?? "") : true;
         const noExternal = data.type === "externalUser" && !allowExternalRecipients;
         const invalidExternal = data.type === "unknownUser";
+        const invalidLoggedUser = allowOnlyLoggedUserRecipients ? data.id !== loggedUser?.id : false;
 
         return this.renderMultiValueItemContainer(name, removeIcon, {
             hasEmail,
             noExternal,
+            invalidLoggedUser,
             invalidExternal,
             type: data.type,
             email: data.email,

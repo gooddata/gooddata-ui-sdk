@@ -107,11 +107,12 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
     canManageComparison,
 }) => {
     const {
+        defaultUser,
         viewMode,
         updatedAlert,
         canSubmit,
-        showRecipientsSelect,
         allowExternalRecipients,
+        allowOnlyLoggedUserRecipients,
         warningMessage,
         //
         changeComparisonOperator,
@@ -301,20 +302,20 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                                 overlayPositionType={overlayPositionType}
                             />
                         )}
-                        {showRecipientsSelect ? (
-                            <RecipientsSelect
-                                users={users}
-                                value={updatedAlert.recipients ?? []}
-                                originalValue={alert.recipients || []}
-                                onChange={changeRecipients}
-                                allowEmptySelection
-                                allowExternalRecipients={allowExternalRecipients}
-                                maxRecipients={maxAutomationsRecipients}
-                                className="gd-edit-alert__recipients"
-                                notificationChannels={destinations}
-                                notificationChannelId={updatedAlert.notificationChannel}
-                            />
-                        ) : null}
+                        <RecipientsSelect
+                            loggedUser={defaultUser}
+                            users={users}
+                            value={updatedAlert.recipients ?? []}
+                            originalValue={alert.recipients || []}
+                            onChange={changeRecipients}
+                            allowEmptySelection
+                            allowOnlyLoggedUserRecipients={allowOnlyLoggedUserRecipients}
+                            allowExternalRecipients={allowExternalRecipients}
+                            maxRecipients={maxAutomationsRecipients}
+                            className="gd-edit-alert__recipients"
+                            notificationChannels={destinations}
+                            notificationChannelId={updatedAlert.notificationChannel}
+                        />
                     </div>
                     {warningMessage ? <Message type="warning">{warningMessage}</Message> : null}
                     {!isValid ? (

@@ -23,7 +23,13 @@ export function matchRecipient(user: IAutomationRecipient, search: string) {
     const lowerCaseSearch = search.toLowerCase();
     const lowerCaseEmail = user.email?.toLowerCase();
     const lowerCaseName = user.name?.toLowerCase();
-    return (lowerCaseEmail?.includes(lowerCaseSearch) || lowerCaseName?.includes(lowerCaseSearch)) ?? false;
+    const lowerCaseId = user.id?.toLowerCase();
+    return (
+        (lowerCaseEmail?.includes(lowerCaseSearch) ||
+            lowerCaseName?.includes(lowerCaseSearch) ||
+            lowerCaseId?.includes(lowerCaseSearch)) ??
+        false
+    );
 }
 
 export function createUser(search: string): IAutomationRecipient {
