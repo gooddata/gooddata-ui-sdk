@@ -163,31 +163,25 @@ const DefaultDashboardInsightWidgetCore: React.FC<
     );
 
     const isHighlighted = useDashboardSelector(selectIsWidgetHighlighted(widget));
-    const [ignoreHighlight, setIgnoreHighlight] = useState(false);
+    const [keepHighlight, setKeepHighlight] = useState(false);
     const elementRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        let timeout: NodeJS.Timeout | undefined;
-
-        // We only want to scroll to element when one context property is specified at a time
-        const shouldScrollTo = [automationId, widgetId, visualizationId].filter(Boolean).length === 1;
-
-        if (isHighlighted) {
-            timeout = setTimeout(() => {
-                setIgnoreHighlight(true);
-            }, 5000);
+        if (isHighlighted && !keepHighlight) {
+            // We only want to scroll to element when one context property is specified at a time
+            const shouldScrollTo = [automationId, widgetId, visualizationId].filter(Boolean).length === 1;
 
             if (elementRef.current && shouldScrollTo) {
                 elementRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
             }
-        }
 
-        return () => {
-            if (timeout) {
-                clearTimeout(timeout);
-            }
-        };
-    }, [automationId, isHighlighted, visualizationId, widgetId]);
+            setKeepHighlight(true);
+        }
+        // We intentionally exclude keepHighlight
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isHighlighted, automationId, visualizationId, widgetId]);
+
+    const removeHighlight = useCallback(() => setKeepHighlight(false), []);
 
     return (
         <DashboardItem
@@ -196,10 +190,11 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                 "type-visualization",
                 "gd-dashboard-view-widget",
                 getVisTypeCssClass(widget.type, visType),
-                { "gd-highlighted": isHighlighted && !ignoreHighlight },
+                { "gd-highlighted": keepHighlight },
             )}
             screen={screen}
             ref={elementRef}
+            onClick={removeHighlight}
         >
             <DashboardItemVisualization
                 renderHeadline={(clientHeight) =>
