@@ -7,7 +7,7 @@ import { DashboardContext } from "../../types/commonTypes.js";
 import { PromiseFnReturnType } from "../../types/sagas.js";
 import { InitializeAutomations } from "../../commands/scheduledEmail.js";
 import {
-    selectAutomationId,
+    selectFocusObject,
     selectEnableAutomations,
     selectEnableInPlatformNotifications,
     selectEnableScheduling,
@@ -66,7 +66,7 @@ export function* initializeAutomationsHandler(
         selectAutomationsIsLoading,
     );
     const isReadOnly: ReturnType<typeof selectIsReadOnly> = yield select(selectIsReadOnly);
-    const automationId: ReturnType<typeof selectAutomationId> = yield select(selectAutomationId);
+    const { automationId }: ReturnType<typeof selectFocusObject> = yield select(selectFocusObject);
 
     if (
         !dashboardId ||
