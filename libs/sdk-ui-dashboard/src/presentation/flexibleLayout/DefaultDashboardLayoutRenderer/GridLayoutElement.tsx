@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React, { CSSProperties, MouseEventHandler, forwardRef } from "react";
 import cx from "classnames";
@@ -8,7 +8,7 @@ import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeCon
 
 import { determineWidthForScreen } from "../../../_staging/layout/sizing.js";
 
-export type LayoutElementType = "root" | "nested" | "section" | "item";
+export type LayoutElementType = "root" | "nested" | "section" | "item" | "leaf-item";
 
 const getElementClassName = (type: LayoutElementType, gridWidth: number) => {
     switch (type) {
@@ -18,7 +18,8 @@ const getElementClassName = (type: LayoutElementType, gridWidth: number) => {
             return `gd-grid-layout__container--nested gd-grid-layout__container--nested--width-${gridWidth}`;
         case "section":
             return "gd-grid-layout__section";
-        case "item":
+        case "leaf-item":
+            return "gd-grid-layout__item gd-grid-layout__item--leaf";
         default:
             return "gd-grid-layout__item";
     }
