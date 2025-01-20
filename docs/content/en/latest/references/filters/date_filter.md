@@ -168,7 +168,7 @@ The relative period defines which granularities (e.g., days, weeks, months) are 
         },
         "allTime": {
             "localIdentifier": "allTime",
-            "name": "allTime",
+            "name": "All time",
             "visible": true
         },
         "relativeForm": {
