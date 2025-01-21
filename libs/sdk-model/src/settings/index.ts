@@ -581,6 +581,12 @@ export interface ISettings {
      */
     enableAmplitudeTracker?: boolean;
 
+    /**
+     * Enables critical content performance optimizations.
+     * @alpha
+     */
+    enableCriticalContentPerformanceOptimizations?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

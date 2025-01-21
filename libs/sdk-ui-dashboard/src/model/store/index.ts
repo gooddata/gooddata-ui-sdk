@@ -103,6 +103,7 @@ export {
     selectEnableDrilledTooltip,
     selectFocusObject,
     selectEnableDashboardDescriptionDynamicHeight,
+    selectEnableCriticalContentPerformanceOptimizations,
 } from "./config/configSelectors.js";
 export type { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {

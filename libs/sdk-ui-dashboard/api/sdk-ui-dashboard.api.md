@@ -3131,7 +3131,7 @@ export function DefaultCancelButton({ isVisible, onCancelClick }: ICancelButtonP
 export const DefaultCancelEditDialog: React_2.FC<ICancelEditDialogProps>;
 
 // @alpha
-export const DefaultDashboardAttributeFilter: (props: IDashboardAttributeFilterProps) => JSX.Element | null;
+export const DefaultDashboardAttributeFilter: (props: IDashboardAttributeFilterProps) => JSX.Element;
 
 // @internal (undocumented)
 export function DefaultDashboardAttributeFilterComponentSetFactory(attributeFilterProvider: AttributeFilterComponentProvider): AttributeFilterComponentSet;
@@ -7692,6 +7692,9 @@ export const selectEnableCompanyLogoInEmbeddedUI: DashboardSelector<boolean>;
 
 // @alpha (undocumented)
 export const selectEnableComparisonInAlerting: DashboardSelector<boolean>;
+
+// @internal (undocumented)
+export const selectEnableCriticalContentPerformanceOptimizations: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableCrossFilteringAliasTitles: DashboardSelector<boolean>;
