@@ -126,6 +126,7 @@ export enum TigerFeaturesNames {
     EnableDrilledTooltip = "enableDrilledTooltip",
     EnableVisualizationFineTuning = "enableVisualizationFineTuning",
     EnableDashboardDescriptionDynamicHeight = "enableDashboardDescriptionDynamicHeight",
+    EnableAmplitudeTracker = "enableAmplitudeTracker",
 }
 
 export type ITigerFeatureFlags = {
@@ -215,6 +216,7 @@ export type ITigerFeatureFlags = {
     enableExternalRecipients: typeof FeatureFlagsValues["enableExternalRecipients"][number];
     enableDrilledTooltip: typeof FeatureFlagsValues["enableDrilledTooltip"][number];
     enableDashboardDescriptionDynamicHeight: typeof FeatureFlagsValues["enableDashboardDescriptionDynamicHeight"][number];
+    enableAmplitudeTracker: typeof FeatureFlagsValues["enableAmplitudeTracker"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -304,6 +306,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableExternalRecipients: true,
     enableDrilledTooltip: true,
     enableDashboardDescriptionDynamicHeight: false,
+    enableAmplitudeTracker: false,
 };
 
 export const FeatureFlagsValues = {
@@ -397,4 +400,5 @@ export const FeatureFlagsValues = {
     enableExternalRecipients: [true, false] as const,
     enableDrilledTooltip: [true, false] as const,
     enableDashboardDescriptionDynamicHeight: [true, false] as const,
+    enableAmplitudeTracker: [true, false] as const,
 };

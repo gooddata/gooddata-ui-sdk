@@ -3321,6 +3321,7 @@ export interface ISettings {
     enableAlerting?: boolean;
     enableAlertingRollout?: boolean;
     enableAlternativeDisplayFormSelection?: boolean;
+    enableAmplitudeTracker?: boolean;
     enableAnalyticalDashboardPermissions?: boolean;
     // (undocumented)
     enableAnalyticalDashboards?: boolean;

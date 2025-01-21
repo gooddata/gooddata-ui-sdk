@@ -576,6 +576,11 @@ export interface ISettings {
      */
     enableDashboardDescriptionDynamicHeight?: boolean;
 
+    /**
+     * Enables tracking events to Amplitude.
+     */
+    enableAmplitudeTracker?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 
