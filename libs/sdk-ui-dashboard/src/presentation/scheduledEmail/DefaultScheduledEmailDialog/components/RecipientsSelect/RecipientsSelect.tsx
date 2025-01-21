@@ -94,7 +94,7 @@ export const RecipientsSelect: React.FC<IRecipientsSelectProps> = (props) => {
 
     const options = useMemo(() => {
         const validUsers = [
-            ...(allowOnlyLoggedUserRecipients ? users : []),
+            ...(allowOnlyLoggedUserRecipients ? [] : users),
             ...(allowOnlyLoggedUserRecipients && loggedUser ? [loggedUser] : []),
         ];
         const filteredUsers = search ? validUsers.filter((user) => matchUser(user, search)) : validUsers;
