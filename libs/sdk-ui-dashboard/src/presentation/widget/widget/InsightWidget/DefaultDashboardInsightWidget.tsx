@@ -66,6 +66,20 @@ const selectIsWidgetHighlighted = (widget: IInsightWidget) =>
         },
     );
 
+const useOutsideClick = <T extends HTMLElement>(ref: React.RefObject<T>, callbackFn: () => void) => {
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (ref.current && !ref.current.contains(event.target as Node)) {
+                callbackFn();
+            }
+        };
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, [ref, callbackFn]);
+};
+
 export const DefaultDashboardInsightWidget: React.FC<Omit<IDefaultDashboardInsightWidgetProps, "insight">> = (
     props,
 ) => {
@@ -181,7 +195,9 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isHighlighted, automationId, visualizationId, widgetId]);
 
+    // Remove highlight on outside click
     const removeHighlight = useCallback(() => setKeepHighlight(false), []);
+    useOutsideClick(elementRef, removeHighlight);
 
     return (
         <DashboardItem
@@ -194,7 +210,6 @@ const DefaultDashboardInsightWidgetCore: React.FC<
             )}
             screen={screen}
             ref={elementRef}
-            onClick={removeHighlight}
         >
             <DashboardItemVisualization
                 renderHeadline={(clientHeight) =>
