@@ -4,9 +4,7 @@ import React, { CSSProperties, MouseEventHandler, forwardRef } from "react";
 import cx from "classnames";
 import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
-import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
-
-import { determineWidthForScreen } from "../../../_staging/layout/sizing.js";
+import { useWidthValidation } from "./useItemWidthValidation.js";
 
 export type LayoutElementType = "root" | "nested" | "section" | "item" | "leaf-item";
 
@@ -54,11 +52,13 @@ export interface IGridLayoutElementProps {
 
 export const GridLayoutElement = forwardRef<HTMLDivElement, IGridLayoutElementProps>(
     ({ children, className, style, type, layoutItemSize, onMouseLeave }, ref) => {
-        const screen = useScreenSize();
-        const gridWidth = determineWidthForScreen(screen, layoutItemSize);
+        // Fix item width locally if it is bigger than parent width to prevent css-gird render issues.
+        // Error is fired on DashboardLayoutWidget with more details.
+        const { validWidth } = useWidthValidation(layoutItemSize);
+
         const classNames = cx(
-            getElementClassName(type, gridWidth),
-            `gd-grid-layout__item--span-${gridWidth}`, // CSS Grid columns size class name
+            getElementClassName(type, validWidth),
+            `gd-grid-layout__item--span-${validWidth}`, // CSS Grid columns size class name
             className,
         );
 

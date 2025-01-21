@@ -61,6 +61,7 @@ import { useWidgetDragEndHandler } from "../dragAndDrop/draggableWidget/useWidge
 import { DashboardItemPathAndSizeProvider } from "../dashboard/components/DashboardItemPathAndSizeContext.js";
 import { shouldShowRowEndDropZone } from "./dragAndDrop/draggableWidget/RowEndHotspot.js";
 import { HoverDetector } from "./dragAndDrop/Resize/HoverDetector.js";
+import { useWidthValidation } from "./DefaultDashboardLayoutRenderer/useItemWidthValidation.js";
 
 /**
  * Tests in KD require widget index for css selectors.
@@ -189,6 +190,14 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     });
 
     const remainingGridWidth = isCustomWidget(widget) ? 0 : getRemainingWidthInRow(item, screen);
+
+    const { isValid, parentWidth } = useWidthValidation(item.size());
+
+    if (!isValid) {
+        console.error(
+            `DashboardLayoutWidget: Widget ID: ${widget.identifier} has width set to ${currentSize.gridWidth} which is bigger than the parent container's width ${parentWidth}!`,
+        );
+    }
 
     return (
         <DefaultWidgetRenderer
