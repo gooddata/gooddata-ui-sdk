@@ -618,6 +618,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableDashboardDescriptionDynamicHeight,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableAmplitudeTracker,
+            "enableAmplitudeTracker",
+            "BOOLEAN",
+            FeatureFlagsValues.enableAmplitudeTracker,
+        ),
     };
 }
 
