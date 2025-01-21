@@ -863,3 +863,13 @@ export const selectEnableDashboardDescriptionDynamicHeight: DashboardSelector<bo
         return state.settings?.enableDashboardDescriptionDynamicHeight ?? false;
     },
 );
+
+/**
+ * @internal
+ */
+export const selectEnableCriticalContentPerformanceOptimizations: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableCriticalContentPerformanceOptimizations ?? false;
+    },
+);

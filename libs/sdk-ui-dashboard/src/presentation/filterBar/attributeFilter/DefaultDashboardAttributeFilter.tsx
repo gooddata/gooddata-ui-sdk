@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { ReactNode, useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 import {
@@ -16,6 +16,7 @@ import {
     SingleSelectionAttributeFilterStatusBar,
     AttributeFilterDependencyTooltip,
     useAttributeFilterContext,
+    AttributeFilterLoading,
 } from "@gooddata/sdk-ui-filters";
 import { DashboardAttributeFilterConfigModeValues, filterObjRef } from "@gooddata/sdk-model";
 import { LoadingMask, LOADING_HEIGHT } from "@gooddata/sdk-ui-kit";
@@ -36,6 +37,8 @@ import {
     selectIsAttributeFilterDependentByLocalIdentifier,
     selectIsFilterFromCrossFilteringByLocalIdentifier,
     selectEnableDuplicatedLabelValuesInAttributeFilter,
+    selectIsDashboardExecuted,
+    selectEnableCriticalContentPerformanceOptimizations,
 } from "../../../model/index.js";
 import { useAttributes } from "../../../_staging/sharedHooks/useAttributes.js";
 import { getVisibilityIcon } from "../utils.js";
@@ -61,9 +64,23 @@ import { useDependentDateFilters } from "./useDependentDateFilters.js";
  *
  * @alpha
  */
-export const DefaultDashboardAttributeFilter = (
-    props: IDashboardAttributeFilterProps,
-): JSX.Element | null => {
+export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilterProps): JSX.Element => {
+    // In case, dashboard contains lot of filters,
+    // these are spawning lot of requests, which are potentially blocking execution(s).
+    // Do not load any filters UI data until executions are computed,
+    // as they have much higher priority.
+    const isDashboardExecuted = useDashboardSelector(selectIsDashboardExecuted);
+    const enableCriticalContentPerformanceOptimizations = useDashboardSelector(
+        selectEnableCriticalContentPerformanceOptimizations,
+    );
+    if (enableCriticalContentPerformanceOptimizations && !isDashboardExecuted) {
+        return <AttributeFilterLoading />;
+    }
+
+    return <DefaultDashboardAttributeFilterInner {...props} />;
+};
+
+const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterProps): JSX.Element | null => {
     const { filter, onFilterChanged, isDraggable, readonly, autoOpen, onClose, displayAsLabel } = props;
     const { parentFilters, parentFilterOverAttribute } = useParentFilters(filter);
     const { dependentDateFilters } = useDependentDateFilters(filter);

@@ -3338,6 +3338,8 @@ export interface ISettings {
     enableComparisonInAlerting?: boolean;
     enableCompositeGrain?: boolean;
     enableCreateUser?: boolean;
+    // @alpha
+    enableCriticalContentPerformanceOptimizations?: boolean;
     // @internal
     enableCrossFilteringAliasTitles?: boolean;
     // (undocumented)
