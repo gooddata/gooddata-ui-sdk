@@ -387,5 +387,8 @@
     "notifications.panel.triggers.title": "per {triggeredCount}/{totalCount} articoli",
     "notifications.panel.triggers.dialog.newValue": "Nuovo valore",
     "close": "Chiudere",
-    "notifications.panel.triggers.dialog.title": "Attivato per"
+    "notifications.panel.triggers.dialog.title": "Attivato per",
+    "notifications.panel.error.learnMore": "Maggiori informazioni",
+    "notifications.panel.error.traceId": "Trace ID",
+    "notifications.panel.error.message": "Non è stato possibile elaborare l'avviso."
 }

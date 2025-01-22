@@ -387,5 +387,8 @@
     "notifications.panel.triggers.title": "para {triggeredCount}/{totalCount} itens",
     "notifications.panel.triggers.dialog.newValue": "Novo valor",
     "close": "Fechar",
-    "notifications.panel.triggers.dialog.title": "Acionado para"
+    "notifications.panel.triggers.dialog.title": "Acionado para",
+    "notifications.panel.error.learnMore": "Saber mais",
+    "notifications.panel.error.traceId": "ID de rastreamento",
+    "notifications.panel.error.message": "O alerta não pôde ser processado."
 }

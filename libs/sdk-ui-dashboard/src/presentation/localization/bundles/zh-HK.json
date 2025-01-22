@@ -653,5 +653,9 @@
     "options.menu.unsupported.schedulingForInsightNotEnabled": "您無法計劃導出該小組件。",
     "options.menu.unsupported.alertingForInsightNotEnabled": "您無法為此小組件創建提示。",
     "nestedLayoutToolbar.hideHeader": "隱藏標題和描述。",
-    "nestedLayoutToolbar.showHeader": "顯示標題和描述。"
+    "nestedLayoutToolbar.showHeader": "顯示標題和描述。",
+    "dialogs.schedule.email.user.invalid.external": "此用戶無權訪問控制面板。",
+    "dialogs.schedule.email.user.used.external": "電子郵件“{email}”不屬於此工作區。 接收者可能會收到敏感數據。",
+    "dialogs.schedule.email.user.warning.external": "此電子郵件地址唔屬於此工作區。 接收者可能會收到敏感數據。",
+    "dialogs.schedule.email.user.guest": "（遊客）"
 }

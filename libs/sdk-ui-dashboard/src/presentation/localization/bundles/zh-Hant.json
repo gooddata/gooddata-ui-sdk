@@ -653,5 +653,9 @@
     "options.menu.unsupported.schedulingForInsightNotEnabled": "您無法安排此小部件的匯出。",
     "options.menu.unsupported.alertingForInsightNotEnabled": "您無法為此小部件建立警報。",
     "nestedLayoutToolbar.hideHeader": "隱藏標題和描述。",
-    "nestedLayoutToolbar.showHeader": "顯示標題和描述。"
+    "nestedLayoutToolbar.showHeader": "顯示標題和描述。",
+    "dialogs.schedule.email.user.invalid.external": "該使用者無權存取儀表板。",
+    "dialogs.schedule.email.user.used.external": "電子郵件「{email}」不屬於該工作區。接收者可能會收到敏感資料。",
+    "dialogs.schedule.email.user.warning.external": "該電子郵件地址不屬於該工作區。接收者可能會收到敏感資料。",
+    "dialogs.schedule.email.user.guest": "（訪客）"
 }
