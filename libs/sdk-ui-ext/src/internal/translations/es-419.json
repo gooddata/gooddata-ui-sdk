@@ -387,5 +387,8 @@
     "notifications.panel.triggers.title": "para {triggeredCount}/{totalCount} artículos",
     "notifications.panel.triggers.dialog.newValue": "Nuevo valor",
     "close": "Cerrar",
-    "notifications.panel.triggers.dialog.title": "Activado por"
+    "notifications.panel.triggers.dialog.title": "Activado por",
+    "notifications.panel.error.learnMore": "Más información",
+    "notifications.panel.error.traceId": "ID de rastreo",
+    "notifications.panel.error.message": "No se ha podido procesar la alerta."
 }

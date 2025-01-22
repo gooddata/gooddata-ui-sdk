@@ -387,5 +387,8 @@
     "notifications.panel.triggers.title": "{triggeredCount}/{totalCount} 件のアイテム用",
     "notifications.panel.triggers.dialog.newValue": "新しい価値",
     "close": "閉じる",
-    "notifications.panel.triggers.dialog.title": "トリガー済み："
+    "notifications.panel.triggers.dialog.title": "トリガー済み：",
+    "notifications.panel.error.learnMore": "詳細",
+    "notifications.panel.error.traceId": "トレースID",
+    "notifications.panel.error.message": "警告を処理できませんでした。"
 }

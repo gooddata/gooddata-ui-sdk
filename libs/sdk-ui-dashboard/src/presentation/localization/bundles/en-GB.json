@@ -653,5 +653,9 @@
     "options.menu.unsupported.schedulingForInsightNotEnabled": "You cannot schedule an export for this widget.",
     "options.menu.unsupported.alertingForInsightNotEnabled": "You cannot create an alert for this widget.",
     "nestedLayoutToolbar.hideHeader": "Hide title and description.",
-    "nestedLayoutToolbar.showHeader": "Show title and description."
+    "nestedLayoutToolbar.showHeader": "Show title and description.",
+    "dialogs.schedule.email.user.invalid.external": "This user does not have access to the Dashboard.",
+    "dialogs.schedule.email.user.used.external": "The email “{email}” does not belong to this workspace. The recipient may receive sensitive data.",
+    "dialogs.schedule.email.user.warning.external": "This email address does not belong to this workspace. The recipient may receive sensitive data.",
+    "dialogs.schedule.email.user.guest": "(guest)"
 }

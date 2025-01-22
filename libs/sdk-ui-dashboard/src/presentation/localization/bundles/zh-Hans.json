@@ -653,5 +653,9 @@
     "options.menu.unsupported.schedulingForInsightNotEnabled": "无法为此小部件计划导出。",
     "options.menu.unsupported.alertingForInsightNotEnabled": "无法为此小部件创建警报。",
     "nestedLayoutToolbar.hideHeader": "隐藏标题和说明。",
-    "nestedLayoutToolbar.showHeader": "显示标题和说明。"
+    "nestedLayoutToolbar.showHeader": "显示标题和说明。",
+    "dialogs.schedule.email.user.invalid.external": "此用户无权访问仪表板。",
+    "dialogs.schedule.email.user.used.external": "电子邮件 “{email} ”不属于此工作区。收件人可能会收到敏感数据。",
+    "dialogs.schedule.email.user.warning.external": "此电子邮件地址不属于此工作区。收件人可能会收到敏感数据。",
+    "dialogs.schedule.email.user.guest": "（客人）"
 }

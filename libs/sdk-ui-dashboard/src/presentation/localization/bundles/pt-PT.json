@@ -653,5 +653,9 @@
     "options.menu.unsupported.schedulingForInsightNotEnabled": "Não é possível programar uma exportação para este widget.",
     "options.menu.unsupported.alertingForInsightNotEnabled": "Não é possível criar um alerta para este widget.",
     "nestedLayoutToolbar.hideHeader": "Ocultar o título e a descrição.",
-    "nestedLayoutToolbar.showHeader": "Mostrar o título e a descrição."
+    "nestedLayoutToolbar.showHeader": "Mostrar o título e a descrição.",
+    "dialogs.schedule.email.user.invalid.external": "Este usuário não tem acesso ao painel.",
+    "dialogs.schedule.email.user.used.external": "O e-mail “{email}” não pertence a este espaço de trabalho. O destinatário pode receber dados confidenciais.",
+    "dialogs.schedule.email.user.warning.external": "Este endereço de e-mail não pertence a esta área de trabalho. O destinatário poderá receber dados sensíveis.",
+    "dialogs.schedule.email.user.guest": "(convidado)"
 }

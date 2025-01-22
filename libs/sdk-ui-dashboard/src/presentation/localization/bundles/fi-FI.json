@@ -653,5 +653,9 @@
     "options.menu.unsupported.schedulingForInsightNotEnabled": "Et voi ajoittaa vientiä tälle pienoisohjelmalle.",
     "options.menu.unsupported.alertingForInsightNotEnabled": "Et voi luoda hälytystä tälle pienoisohjelmalle.",
     "nestedLayoutToolbar.hideHeader": "Piilota otsikko ja kuvaus.",
-    "nestedLayoutToolbar.showHeader": "Näytä otsikko ja kuvaus."
+    "nestedLayoutToolbar.showHeader": "Näytä otsikko ja kuvaus.",
+    "dialogs.schedule.email.user.invalid.external": "Tällä käyttäjällä ei ole pääsyä ohjauspaneeliin.",
+    "dialogs.schedule.email.user.used.external": "Sähköpostiosoite “{email}” ei kuulu tähän työtilaan. Vastaanottaja saattaa saada arkaluonteisia tietoja.",
+    "dialogs.schedule.email.user.warning.external": "Tämä sähköpostiosoite ei kuulu tähän työtilaan. Vastaanottaja saattaa vastaanottaa arkaluonteisia tietoja.",
+    "dialogs.schedule.email.user.guest": "(vieras)"
 }

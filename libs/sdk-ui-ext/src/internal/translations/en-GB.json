@@ -387,5 +387,8 @@
     "notifications.panel.triggers.title": "for {triggeredCount}/{totalCount} items",
     "notifications.panel.triggers.dialog.newValue": "New value",
     "close": "Close",
-    "notifications.panel.triggers.dialog.title": "Triggered for"
+    "notifications.panel.triggers.dialog.title": "Triggered for",
+    "notifications.panel.error.learnMore": "Learn more",
+    "notifications.panel.error.traceId": "Trace ID",
+    "notifications.panel.error.message": "The alert could not be processed."
 }

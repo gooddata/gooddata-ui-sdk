@@ -653,5 +653,9 @@
     "options.menu.unsupported.schedulingForInsightNotEnabled": "Für dieses Widget kann kein Export geplant werden.",
     "options.menu.unsupported.alertingForInsightNotEnabled": "Für dieses Widget kann keine Benachrichtigung erstellt werden.",
     "nestedLayoutToolbar.hideHeader": "Titel und Beschreibung ausblenden.",
-    "nestedLayoutToolbar.showHeader": "Titel und Beschreibung anzeigen."
+    "nestedLayoutToolbar.showHeader": "Titel und Beschreibung anzeigen.",
+    "dialogs.schedule.email.user.invalid.external": "Dieser Benutzer hat keinen Zugriff auf das Dashboard.",
+    "dialogs.schedule.email.user.used.external": "Die E-Mail-Adresse “{email}” ist nicht bei diesem Workspace registriert. Der Empfänger könnte sensible Daten erhalten.",
+    "dialogs.schedule.email.user.warning.external": "Diese E-Mail-Adresse ist nicht bei diesem Workspace registriert. Der Empfänger könnte sensible Daten erhalten.",
+    "dialogs.schedule.email.user.guest": "(Gast)"
 }

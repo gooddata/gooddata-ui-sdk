@@ -387,5 +387,8 @@
     "notifications.panel.triggers.title": "適用於 {triggeredCount}/{totalCount} 個項目",
     "notifications.panel.triggers.dialog.newValue": "新值",
     "close": "關閉",
-    "notifications.panel.triggers.dialog.title": "觸發原因"
+    "notifications.panel.triggers.dialog.title": "觸發原因",
+    "notifications.panel.error.learnMore": "了解更多",
+    "notifications.panel.error.traceId": "追蹤 ID",
+    "notifications.panel.error.message": "無法處理警報。"
 }

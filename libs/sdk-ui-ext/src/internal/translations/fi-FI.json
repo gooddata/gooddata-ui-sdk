@@ -387,5 +387,8 @@
     "notifications.panel.triggers.title": "kohteelle {triggeredCount}/{totalCount}items",
     "notifications.panel.triggers.dialog.newValue": "Uusi arvo",
     "close": "Sulje",
-    "notifications.panel.triggers.dialog.title": "Laukaistu kohteelle"
+    "notifications.panel.triggers.dialog.title": "Laukaistu kohteelle",
+    "notifications.panel.error.learnMore": "Lue lisää",
+    "notifications.panel.error.traceId": "Jäljitystunnus",
+    "notifications.panel.error.message": "Hälytystä ei voitu käsitellä."
 }

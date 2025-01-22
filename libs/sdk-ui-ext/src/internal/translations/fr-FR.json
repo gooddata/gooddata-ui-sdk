@@ -387,5 +387,8 @@
     "notifications.panel.triggers.title": "pour les articles {triggeredCount}/{totalCount}",
     "notifications.panel.triggers.dialog.newValue": "Nouvelle valeur",
     "close": "Fermer",
-    "notifications.panel.triggers.dialog.title": "Déclenché pour"
+    "notifications.panel.triggers.dialog.title": "Déclenché pour",
+    "notifications.panel.error.learnMore": "En savoir plus",
+    "notifications.panel.error.traceId": "ID Trace",
+    "notifications.panel.error.message": "L'alerte n'a pas pu être traitée."
 }
