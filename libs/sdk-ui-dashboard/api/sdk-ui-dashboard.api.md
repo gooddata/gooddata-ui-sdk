@@ -2081,8 +2081,8 @@ export interface DashboardFilterViewDeletionSucceededPayload {
 
 // @beta
 export interface DashboardFocusObject {
-    automationId?: string;
-    visualizationId?: string;
+    automationId?: Identifier;
+    visualizationId?: Identifier;
     widgetId?: string;
 }
 
