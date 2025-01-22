@@ -1,25 +1,14 @@
 // (C) 2020-2025 GoodData Corporation
-import React, { useMemo, useCallback, useEffect, useState, useRef } from "react";
+import React, { useMemo, useCallback } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
-import {
-    IInsight,
-    widgetTitle,
-    insightVisualizationType,
-    IInsightWidget,
-    objRefToString,
-    isInsightWidget,
-} from "@gooddata/sdk-model";
+import { IInsight, widgetTitle, insightVisualizationType } from "@gooddata/sdk-model";
 import { VisType } from "@gooddata/sdk-ui";
 
 import {
     useDashboardSelector,
     selectSettings,
     useDashboardScheduledEmails,
-    selectDashboardUserAutomations,
-    selectWidgets,
-    selectIsDashboardExecuted,
-    selectFocusObject,
 } from "../../../../model/index.js";
 import {
     DashboardItem,
@@ -36,49 +25,7 @@ import { useInsightMenu } from "./useInsightMenu.js";
 import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard.js";
 import { IDefaultDashboardInsightWidgetProps } from "./types.js";
 import { useAlertingAndScheduling } from "./useAlertingAndScheduling.js";
-import { createSelector } from "@reduxjs/toolkit";
-
-const selectIsWidgetHighlighted = (widget: IInsightWidget) =>
-    createSelector(
-        selectFocusObject,
-        selectDashboardUserAutomations,
-        selectIsDashboardExecuted,
-        selectWidgets,
-        (dashboardFocusObject, automations, dashboardExecuted, widgets) => {
-            const { automationId, widgetId, visualizationId } = dashboardFocusObject;
-
-            const isAutomationContext =
-                !!automationId &&
-                automations?.some((a) => a.id === automationId && a.metadata?.widget === widget.identifier);
-            const isWidgetContext = widgetId === widget.identifier;
-
-            const firstWidgetWithVisualization = widgets.find(
-                (w) => isInsightWidget(w) && objRefToString(w.insight) === visualizationId,
-            );
-            const isFirstWidgetByVisualizationContext =
-                visualizationId && firstWidgetWithVisualization?.identifier === widget.identifier;
-
-            // do not highlight widget if dashboard is already executed to avoid repeating event when switching dashboard modes
-            return (
-                !dashboardExecuted &&
-                (isAutomationContext || isWidgetContext || isFirstWidgetByVisualizationContext)
-            );
-        },
-    );
-
-const useOutsideClick = <T extends HTMLElement>(ref: React.RefObject<T>, callbackFn: () => void) => {
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (ref.current && !ref.current.contains(event.target as Node)) {
-                callbackFn();
-            }
-        };
-
-        document.addEventListener("mousedown", handleClickOutside);
-
-        return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, [ref, callbackFn]);
-};
+import { useWidgetHighlighting } from "../../common/useWidgetHighlighting.js";
 
 export const DefaultDashboardInsightWidget: React.FC<Omit<IDefaultDashboardInsightWidgetProps, "insight">> = (
     props,
@@ -94,7 +41,6 @@ const DefaultDashboardInsightWidgetCore: React.FC<
 > = ({ widget, insight, screen, onError, onExportReady, onLoadingChanged, dashboardItemClasses }) => {
     const intl = useIntl();
     const settings = useDashboardSelector(selectSettings);
-    const { automationId, widgetId, visualizationId } = useDashboardSelector(selectFocusObject);
 
     const {
         isScheduledEmailingVisible,
@@ -176,28 +122,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         [InsightMenuComponentProvider, insight, widget],
     );
 
-    const isHighlighted = useDashboardSelector(selectIsWidgetHighlighted(widget));
-    const [keepHighlight, setKeepHighlight] = useState(false);
-    const elementRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        if (isHighlighted && !keepHighlight) {
-            // We only want to scroll to element when one context property is specified at a time
-            const shouldScrollTo = [automationId, widgetId, visualizationId].filter(Boolean).length === 1;
-
-            if (elementRef.current && shouldScrollTo) {
-                elementRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
-            }
-
-            setKeepHighlight(true);
-        }
-        // We intentionally exclude keepHighlight
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isHighlighted, automationId, visualizationId, widgetId]);
-
-    // Remove highlight on outside click
-    const removeHighlight = useCallback(() => setKeepHighlight(false), []);
-    useOutsideClick(elementRef, removeHighlight);
+    const { elementRef, highlighted } = useWidgetHighlighting(widget);
 
     return (
         <DashboardItem
@@ -206,7 +131,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                 "type-visualization",
                 "gd-dashboard-view-widget",
                 getVisTypeCssClass(widget.type, visType),
-                { "gd-highlighted": keepHighlight },
+                { "gd-highlighted": highlighted },
             )}
             screen={screen}
             ref={elementRef}

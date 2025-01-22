@@ -161,7 +161,7 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
         }
     }
 
-    &.gd-highlighted .dash-item-content {
+    &.gd-highlighted > .dash-item-content-wrapper > .dash-item-content {
         border-color: kit-variables.$gd-palette-primary-base;
     }
 
