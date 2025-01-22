@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import cx from "classnames";
 import React from "react";
 
@@ -11,7 +11,7 @@ import { IDashboardLayoutItemRenderer } from "./interfaces.js";
 import { useIsDraggingCurrentItem } from "../dragAndDrop/draggableWidget/useIsDraggingCurrentItem.js";
 
 const DashboardLayoutItemEditRenderer: IDashboardLayoutItemRenderer<unknown> = (props) => {
-    const { item, children } = props;
+    const { item, children, rowIndex } = props;
     const isDraggingCurrentItem = useIsDraggingCurrentItem(item.index());
     const isCustomWidget = isCustomWidgetBase(item.widget());
 
@@ -25,7 +25,7 @@ const DashboardLayoutItemEditRenderer: IDashboardLayoutItemRenderer<unknown> = (
             >
                 {children}
             </DashboardLayoutItemViewRenderer>
-            {isCustomWidget ? null : <RowEndHotspot item={item} />}
+            {isCustomWidget ? null : <RowEndHotspot item={item} rowIndex={rowIndex} />}
         </>
     );
 };
