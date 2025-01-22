@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import React from "react";
 import { render } from "@testing-library/react";
@@ -16,6 +16,7 @@ import {
 import { DashboardCustomizationLogger } from "../customizationLogging.js";
 
 import { DefaultAttributeFiltersCustomizer } from "../attributeFiltersCustomizer.js";
+import { EMPTY_MUTATIONS } from "./utils";
 
 //
 //
@@ -139,11 +140,8 @@ describe("Attribute Filter customizer", () => {
 
             expect(renderToHtml(Customizer, TestAttributeFilterWithCustomTitle)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: [],
-                insight: [],
+                ...EMPTY_MUTATIONS,
                 attributeFilter: ["provider"],
-                dashboardContent: [],
-                layouts: {},
             });
         });
 
@@ -156,11 +154,8 @@ describe("Attribute Filter customizer", () => {
 
             expect(renderToHtml(Customizer, TestAttributeFilter)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: [],
-                insight: [],
+                ...EMPTY_MUTATIONS,
                 attributeFilter: ["provider"],
-                dashboardContent: [],
-                layouts: {},
             });
         });
 
@@ -184,11 +179,8 @@ describe("Attribute Filter customizer", () => {
             // component from last registered and matching provider is `fromCustomProvider3`
             expect(renderToHtml(Customizer, TestAttributeFilterWithCustomTitle)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: [],
-                insight: [],
+                ...EMPTY_MUTATIONS,
                 attributeFilter: ["provider"],
-                dashboardContent: [],
-                layouts: {},
             });
         });
     });
@@ -200,11 +192,8 @@ describe("Attribute Filter customizer", () => {
 
             expect(renderToHtml(Customizer, TestAttributeFilter)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: [],
-                insight: [],
+                ...EMPTY_MUTATIONS,
                 attributeFilter: ["decorator"],
-                dashboardContent: [],
-                layouts: {},
             });
         });
 
@@ -220,11 +209,8 @@ describe("Attribute Filter customizer", () => {
 
             expect(renderToHtml(Customizer, TestAttributeFilterWithCustomTitle)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: [],
-                insight: [],
+                ...EMPTY_MUTATIONS,
                 attributeFilter: ["decorator", "provider"],
-                dashboardContent: [],
-                layouts: {},
             });
         });
 
@@ -239,11 +225,8 @@ describe("Attribute Filter customizer", () => {
 
             expect(renderToHtml(Customizer, TestAttributeFilter)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: [],
-                insight: [],
+                ...EMPTY_MUTATIONS,
                 attributeFilter: ["decorator", "provider"],
-                dashboardContent: [],
-                layouts: {},
             });
         });
 
@@ -256,11 +239,8 @@ describe("Attribute Filter customizer", () => {
 
             expect(renderToHtml(Customizer, TestAttributeFilterWithCustomTitle)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: [],
-                insight: [],
+                ...EMPTY_MUTATIONS,
                 attributeFilter: ["decorator"],
-                dashboardContent: [],
-                layouts: {},
             });
         });
 
@@ -273,11 +253,8 @@ describe("Attribute Filter customizer", () => {
 
             expect(renderToHtml(Customizer, TestAttributeFilter)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: [],
-                insight: [],
+                ...EMPTY_MUTATIONS,
                 attributeFilter: ["decorator"],
-                dashboardContent: [],
-                layouts: {},
             });
         });
 
@@ -296,11 +273,8 @@ describe("Attribute Filter customizer", () => {
             // decoration starts from last register; so need to see decorator2 -> decorator1 -> default component
             expect(renderToHtml(Customizer, TestAttributeFilterWithCustomTitle)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: [],
-                insight: [],
+                ...EMPTY_MUTATIONS,
                 attributeFilter: ["decorator"],
-                dashboardContent: [],
-                layouts: {},
             });
         });
 
@@ -324,11 +298,8 @@ describe("Attribute Filter customizer", () => {
             // decoration starts from last register; so need to see decorator2 -> decorator1 -> custom component
             expect(renderToHtml(Customizer, TestAttributeFilterWithCustomTitle)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: [],
-                insight: [],
+                ...EMPTY_MUTATIONS,
                 attributeFilter: ["decorator", "provider"],
-                dashboardContent: [],
-                layouts: {},
             });
         });
 
@@ -350,11 +321,8 @@ describe("Attribute Filter customizer", () => {
             // This will use decorator2 on top of customProvider1
             expect(renderToHtml(Customizer, TestAttributeFilterWithCustomTitle)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: [],
-                insight: [],
+                ...EMPTY_MUTATIONS,
                 attributeFilter: ["decorator", "provider"],
-                dashboardContent: [],
-                layouts: {},
             });
         });
     });

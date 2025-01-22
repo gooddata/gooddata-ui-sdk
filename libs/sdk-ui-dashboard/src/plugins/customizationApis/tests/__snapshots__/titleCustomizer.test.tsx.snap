@@ -1,0 +1,7 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`title customizer > title rendering mode > should render with decorator 1`] = `"<div>Decorator</div>"`;
+
+exports[`title customizer > title rendering mode > should render with default 1`] = `"<div class="dash-title-wrapper"><div class="s-gd-dashboard-title s-dash-title dash-title static">Title</div></div>"`;
+
+exports[`title customizer > title rendering mode > should render with provider 1`] = `"<div>Provider</div>"`;
