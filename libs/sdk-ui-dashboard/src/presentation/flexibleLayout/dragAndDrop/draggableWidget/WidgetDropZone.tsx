@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 
 import { ILayoutItemPath } from "../../../../types.js";
@@ -12,11 +12,13 @@ export type WidgetDropZoneProps = {
 };
 
 export const WidgetDropZone = (props: WidgetDropZoneProps) => {
-    const { isLastInSection, dropRef } = props;
+    const { isLastInSection, dropRef, layoutPath } = props;
+
+    const isInContainer = layoutPath.length > 1;
 
     return (
         <div className="widget-dropzone" ref={dropRef}>
-            <WidgetDropZoneBox isLast={isLastInSection} />
+            <WidgetDropZoneBox isLast={isLastInSection} isInContainer={isInContainer} />
         </div>
     );
 };

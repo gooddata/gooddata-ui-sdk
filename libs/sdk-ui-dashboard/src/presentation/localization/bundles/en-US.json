@@ -2372,6 +2372,11 @@
         "comment": "Used as placeholder when user drags some widget and tries to drop it on dashboard. Dropping the widget over such placeholder will cause adding the widget to an existing section of a dashboard. Do not translate HTML markup enclosed in <>. Translate words 'existing section'.",
         "limit": 0
     },
+    "dropzone.widget.last.in.container.row.desc": {
+        "value": "Drop to the <b>existing container</b>",
+        "comment": "Used as placeholder when user drags some widget and tries to drop it on dashboard. Dropping the widget over such placeholder will cause adding the widget to an existing container of a dashboard. Do not translate HTML markup enclosed in <>. Translate words 'existing container'.",
+        "limit": 0
+    },
     "deleteKpiConfirmationDialog.headline": {
         "value": "Delete KPI",
         "comment": "",

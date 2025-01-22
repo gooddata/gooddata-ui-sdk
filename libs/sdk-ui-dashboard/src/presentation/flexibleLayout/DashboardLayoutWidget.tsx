@@ -187,6 +187,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
 
     const hotspotClassNames = cx({
         "gd-nested-layout-hotspot": isNestedLayout,
+        "gd-first-container-row-dropzone": rowIndex === 0,
     });
 
     const remainingGridWidth = isCustomWidget(widget) ? 0 : getRemainingWidthInRow(item, screen);
