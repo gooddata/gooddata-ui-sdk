@@ -2639,6 +2639,11 @@
         "comment": "<b>, </b> and {br} are HTML tags. Do not translate them.",
         "limit": 0
     },
+    "nestedLayout.emptyDropZone.active.message": {
+        "value": "<b>Drop here</b>{br}to add to the container",
+        "comment": "<b>, </b> and {br} are HTML tags. Do not translate them.",
+        "limit": 0
+    },
     "attributesDropdown.valuesLimiting.title": {
         "value": "Filter values by",
         "comment": "The title of section that configures filters for listed values in the filter. There is a list of applied filters below the title.",
