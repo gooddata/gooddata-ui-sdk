@@ -448,6 +448,16 @@
     }
 }
 
+.gd-dashboard-nested-layout-widget-visualization-content {
+    .drag-info-placeholder-box p {
+        margin-top: 0;
+    }
+
+    .drop-target-message {
+        line-height: 28px;
+    }
+}
+
 .drag-info-placeholder-drop-target,
 .drop-target-inner {
     position: absolute;
