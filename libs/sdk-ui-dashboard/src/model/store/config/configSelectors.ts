@@ -10,7 +10,11 @@ import {
 import { createSelector } from "@reduxjs/toolkit";
 import { DashboardSelector, DashboardState } from "../types.js";
 import { invariant } from "ts-invariant";
-import { ObjectAvailabilityConfig, ResolvedDashboardConfig } from "../../types/commonTypes.js";
+import {
+    DashboardFocusObject,
+    ObjectAvailabilityConfig,
+    ResolvedDashboardConfig,
+} from "../../types/commonTypes.js";
 import { ILocale } from "@gooddata/sdk-ui";
 import { selectSupportsAttributeHierarchies } from "../backendCapabilities/backendCapabilitiesSelectors.js";
 
@@ -813,14 +817,14 @@ export const selectEnableInPlatformNotifications: DashboardSelector<boolean> = c
 );
 
 /**
- * Returns whether in-platform notifications are enabled.
+ * Returns dashboard focus object.
  *
  * @beta
  */
-export const selectAutomationId: DashboardSelector<string | undefined> = createSelector(
+export const selectFocusObject: DashboardSelector<DashboardFocusObject> = createSelector(
     selectConfig,
     (state) => {
-        return state.automationId;
+        return state.focusObject ?? {};
     },
 );
 
@@ -857,5 +861,15 @@ export const selectEnableDashboardDescriptionDynamicHeight: DashboardSelector<bo
     selectConfig,
     (state) => {
         return state.settings?.enableDashboardDescriptionDynamicHeight ?? false;
+    },
+);
+
+/**
+ * @internal
+ */
+export const selectEnableCriticalContentPerformanceOptimizations: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableCriticalContentPerformanceOptimizations ?? false;
     },
 );

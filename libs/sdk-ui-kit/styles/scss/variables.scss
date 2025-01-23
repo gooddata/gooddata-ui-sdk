@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "sass:color";
 
 $include-html-classes: false;
@@ -117,10 +117,7 @@ $is-selected-focused-color: $gd-palette-primary-base;
 $is-selected-focused-background: $gd-palette-primary-dimmed;
 
 $is-negative-focused-color: #fff;
-$is-negative-focused-background: var(
-    --gd-palette-error-dimmed90,
-    color.mix($gd-color-negative, $default-gd-color-text-light, 90%)
-);
+$is-negative-focused-background: var(--gd-palette-error-dimmed90, #e75e54);
 
 $navigation-bg: var(--gd-palette-complementary-1-from-theme, #303442);
 $navigation-active-item-bg: var(--gd-palette-complementary-0-from-theme, #131c28);

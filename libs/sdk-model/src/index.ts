@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 /**
  * This package provides domain models for GoodData.UI.
  *
@@ -49,6 +49,7 @@ export type {
     NotificationChannelDestinationType,
     INotificationChannelMetadataObject,
     INotificationChannelMetadataObjectDefinition,
+    NotificationChannelDashboardLinkVisibility,
     INotificationChannelTestResponse,
     ToNotificationChannelMetadataObject,
 } from "./notificationChannels/index.js";
@@ -1020,6 +1021,8 @@ export type {
     IAutomationRecipientType,
     IAutomationUserGroupRecipient,
     IAutomationUserRecipient,
+    IAutomationExternalRecipient,
+    IAutomationUnknownRecipient,
     IAutomationAlert,
     IAutomationAlertCondition,
     IAutomationAlertExecutionDefinition,
@@ -1038,6 +1041,8 @@ export {
     isAutomationMetadataObjectDefinition,
     isAutomationUserGroupRecipient,
     isAutomationUserRecipient,
+    isAutomationExternalUserRecipient,
+    isAutomationUnknownUserRecipient,
 } from "./automations/index.js";
 
 export type { ISemanticSearchResultItem, ISemanticSearchRelationship } from "./genAI/semanticSearch.js";

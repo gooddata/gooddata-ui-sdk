@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { SagaIterator } from "redux-saga";
 import { DashboardContext } from "../../types/commonTypes.js";
@@ -22,9 +22,15 @@ import {
 } from "./validation/itemValidation.js";
 import { addTemporaryIdentityToWidgets } from "../../utils/dashboardItemUtils.js";
 import { sanitizeHeader } from "./utils.js";
-import { updateSectionIndex, findSections, asLayoutItemPath } from "../../../_staging/layout/coordinates.js";
+import {
+    updateSectionIndex,
+    findSections,
+    asLayoutItemPath,
+    getParentPath,
+} from "../../../_staging/layout/coordinates.js";
 import { selectSettings } from "../../store/config/configSelectors.js";
 import { normalizeItemSizeToParent } from "../../../_staging/layout/sizing.js";
+import { resizeParentContainers } from "./containerHeightSanitization.js";
 
 type AddLayoutSectionContext = {
     readonly ctx: DashboardContext;
@@ -142,6 +148,10 @@ export function* addLayoutSectionHandler(
             }),
         ]),
     );
+
+    if (!isLegacyCommand) {
+        yield call(resizeParentContainers, getParentPath(index));
+    }
 
     const relevantSections = isLegacyCommand
         ? commandCtx.layout.sections

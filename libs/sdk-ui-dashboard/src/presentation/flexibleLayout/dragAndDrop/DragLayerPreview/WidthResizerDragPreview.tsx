@@ -9,21 +9,6 @@ import { WidthResizerDragItem } from "../../../dragAndDrop/types.js";
 import { applySizeLimitation } from "./sizeLimiting.js";
 import { DragResizeProps } from "../../../dragAndDrop/DragLayerPreview/types.js";
 import { useResizeHandlers } from "../../../dragAndDrop/index.js";
-import { isFirstInContainer } from "../../../../_staging/layout/coordinates.js";
-
-interface IWidthResizerDragPreviewOwnProps {
-    item: WidthResizerDragItem;
-    differenceFromInitialOffset: XYCoord;
-    initialSourceClientOffset: XYCoord;
-}
-
-export interface IWidthResizerDragPreviewDispatchProps {
-    toggleMinLimitReached: (value: boolean) => void;
-    positionIndexChanged: (initialIndex: number, currentIndex: number) => void;
-}
-
-export type IWidthResizerDragPreviewProps = IWidthResizerDragPreviewDispatchProps &
-    IWidthResizerDragPreviewOwnProps;
 
 export type WidthResizerDragPreviewProps = DragResizeProps<WidthResizerDragItem>;
 
@@ -32,8 +17,7 @@ export function WidthResizerDragPreview(props: WidthResizerDragPreviewProps) {
 
     const { item, differenceFromInitialOffset, initialOffset, scrollCorrection, getDragLayerPosition } =
         props;
-    const { gridColumnHeightInPx, layoutPath } = item;
-    const firstInContainer = isFirstInContainer(layoutPath);
+    const { gridColumnHeightInPx, rowIndex } = item;
 
     const sizeAndCoords = getSizeAndXCoords(
         item,
@@ -72,7 +56,7 @@ export function WidthResizerDragPreview(props: WidthResizerDragPreviewProps) {
                 "gd-grid-layout-resizer-drag-preview",
                 "gd-grid-layout-width-resizer-drag-preview",
                 {
-                    "gd-first-in-container": firstInContainer,
+                    "gd-first-container-row-widget": rowIndex === 0,
                 },
             )}
             style={style}

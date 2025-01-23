@@ -1,6 +1,6 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { ReactNode } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, defineMessages } from "react-intl";
 import cx from "classnames";
 import { Typography } from "@gooddata/sdk-ui-kit";
 
@@ -17,11 +17,21 @@ const widgetCategoryMapping: Partial<{ [D in DraggableItemType]: string }> = {
     visualizationSwitcherListItem: "visualizationSwitcher",
     dashboardLayoutListItem: "dashboardLayout",
 };
-export const DropZoneMessage: React.FC = () => {
+
+const messages = defineMessages({
+    dropZoneMessage: {
+        id: "nestedLayout.emptyDropZone.message",
+    },
+    dropZoneMessageActive: {
+        id: "nestedLayout.emptyDropZone.active.message",
+    },
+});
+
+export const DropZoneMessage: React.FC<{ canDrop?: boolean }> = ({ canDrop = false }) => {
     return (
         <Typography tagName="p" className="drop-target-message">
             <FormattedMessage
-                id="nestedLayout.emptyDropZone.message"
+                id={canDrop ? messages.dropZoneMessageActive.id : messages.dropZoneMessage.id}
                 values={{
                     b: (chunks: ReactNode) => <b>{chunks}</b>,
                     br: <br />,
@@ -71,7 +81,7 @@ export const EmptyNestedLayoutDropZone: React.FC = () => {
                 <DefaultEmptyNestedLayoutDropZoneBody />
                 <div className="drag-info-placeholder-drop-target s-drag-info-placeholder-drop-target">
                     <div className="drop-target-inner">
-                        <DropZoneMessage />
+                        <DropZoneMessage canDrop={canDrop} />
                     </div>
                 </div>
             </div>

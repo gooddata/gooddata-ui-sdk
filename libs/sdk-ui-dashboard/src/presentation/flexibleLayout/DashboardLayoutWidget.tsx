@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import {
     IDashboardLayoutSizeByScreenSize,
     IInsight,
@@ -61,6 +61,7 @@ import { useWidgetDragEndHandler } from "../dragAndDrop/draggableWidget/useWidge
 import { DashboardItemPathAndSizeProvider } from "../dashboard/components/DashboardItemPathAndSizeContext.js";
 import { shouldShowRowEndDropZone } from "./dragAndDrop/draggableWidget/RowEndHotspot.js";
 import { HoverDetector } from "./dragAndDrop/Resize/HoverDetector.js";
+import { useWidthValidation } from "./DefaultDashboardLayoutRenderer/useItemWidthValidation.js";
 
 /**
  * Tests in KD require widget index for css selectors.
@@ -97,8 +98,8 @@ function getWidgetIndex(item: IDashboardLayoutItemFacade<ExtendedDashboardWidget
  */
 export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     ExtendedDashboardWidget,
-    Pick<IDashboardWidgetProps, "onError" | "onDrill" | "onFiltersChange">
-> = ({ item, DefaultWidgetRenderer, onDrill, onFiltersChange, onError, getLayoutDimensions }) => {
+    Pick<IDashboardWidgetProps, "onError" | "onDrill" | "onFiltersChange" | "rowIndex">
+> = ({ item, DefaultWidgetRenderer, onDrill, onFiltersChange, onError, getLayoutDimensions, rowIndex }) => {
     const screen = useScreenSize();
     const dispatch = useDashboardDispatch();
     const insights = useDashboardSelector(selectInsightsMap);
@@ -136,7 +137,8 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext();
 
     const currentSize = item.size()[screen]!;
-    const minHeight = calculateWidgetMinHeight(widget, currentSize, insights, settings);
+    const minHeight = calculateWidgetMinHeight(item.raw(), currentSize, insights, settings);
+
     const height =
         currentSize.heightAsRatio && !currentSize.gridHeight
             ? getDashboardLayoutItemHeightForRatioAndScreen(currentSize, screen)
@@ -185,9 +187,18 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
 
     const hotspotClassNames = cx({
         "gd-nested-layout-hotspot": isNestedLayout,
+        "gd-first-container-row-dropzone": rowIndex === 0,
     });
 
     const remainingGridWidth = isCustomWidget(widget) ? 0 : getRemainingWidthInRow(item, screen);
+
+    const { isValid, parentWidth } = useWidthValidation(item.size());
+
+    if (!isValid) {
+        console.error(
+            `DashboardLayoutWidget: Widget ID: ${widget.identifier} has width set to ${currentSize.gridWidth} which is bigger than the parent container's width ${parentWidth}!`,
+        );
+    }
 
     return (
         <DefaultWidgetRenderer
@@ -199,6 +210,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
             className={className}
             contentRef={contentRef}
             getLayoutDimensions={getLayoutDimensions}
+            rowIndex={rowIndex}
         >
             <div
                 ref={dragRef}
@@ -231,6 +243,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                             parentLayoutPath={item.index()}
                             ErrorComponent={ErrorComponent}
                             LoadingComponent={LoadingComponent}
+                            rowIndex={rowIndex}
                         />
                     </HoverDetector>
                 </DashboardItemPathAndSizeProvider>
@@ -268,6 +281,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                                 getGridColumnHeightInPx={getHeightInPx}
                                 getGridColumnWidth={getGridColumnWidth}
                                 getLayoutDimensions={getLayoutDimensions}
+                                rowIndex={rowIndex}
                             />
                         </>
                     )}

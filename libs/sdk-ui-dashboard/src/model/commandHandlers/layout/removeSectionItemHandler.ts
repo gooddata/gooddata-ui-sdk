@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
@@ -17,9 +17,11 @@ import {
     asSectionPath,
     getItemIndex,
     getSectionIndex,
+    getParentPath,
 } from "../../../_staging/layout/coordinates.js";
 
 import { validateItemExists, validateSectionExists } from "./validation/layoutValidation.js";
+import { resizeParentContainers } from "./containerHeightSanitization.js";
 
 type RemoveSectionItemContext = {
     readonly ctx: DashboardContext;
@@ -143,6 +145,8 @@ export function* removeSectionItemSaga(
             ),
         );
 
+        yield call(resizeParentContainers, getParentPath(itemPath));
+
         yield dispatchDashboardEvent(
             layoutSectionRemoved(
                 ctx,
@@ -164,6 +168,8 @@ export function* removeSectionItemSaga(
                 },
             }),
         );
+
+        yield call(resizeParentContainers, getParentPath(itemPath));
 
         yield dispatchDashboardEvent(
             layoutSectionItemRemoved(

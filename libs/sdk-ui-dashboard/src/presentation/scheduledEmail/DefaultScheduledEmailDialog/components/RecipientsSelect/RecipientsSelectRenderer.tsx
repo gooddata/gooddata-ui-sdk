@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 /* eslint-disable import/named,import/namespace */
 import {
     IAutomationRecipient,
@@ -19,13 +19,13 @@ import ReactSelect, {
 import debounce from "lodash/debounce.js";
 import isEmpty from "lodash/isEmpty.js";
 import isEqual from "lodash/isEqual.js";
-import includes from "lodash/includes.js";
 import { IWorkspaceUsersQueryOptions } from "@gooddata/sdk-backend-spi";
 import {
     Bubble,
     BubbleHoverTrigger,
     IAlignPoint,
     LoadingMask,
+    Message,
     Overlay,
     OverlayController,
     OverlayControllerProvider,
@@ -34,11 +34,11 @@ import cx from "classnames";
 
 import { isEmail } from "../../utils/validate.js";
 import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../../../constants/index.js";
+import { matchRecipient } from "../../utils/users.js";
 
 const MAXIMUM_RECIPIENTS_RECEIVE = 60;
 const DELAY_TIME = 500;
 const PADDING = 16;
-const REMOVE_ICON_WIDTH = 21;
 const LOADING_MENU_HEIGHT = 50;
 const CREATE_OPTION = "create-option";
 const SELECT_OPTION = "select-option";
@@ -98,9 +98,24 @@ export interface IRecipientsSelectRendererProps {
     canListUsersInProject?: boolean;
 
     /**
+     * Currently logged in user as a recipient
+     */
+    loggedUser?: IAutomationRecipient;
+
+    /**
+     * Allow to select only me as a recipient
+     */
+    allowOnlyLoggedUserRecipients?: boolean;
+
+    /**
      * Allow to remove the last recipient
      */
     allowEmptySelection?: boolean;
+
+    /**
+     * Allow external recipients
+     */
+    allowExternalRecipients?: boolean;
 
     /**
      * Maximum number of recipients
@@ -192,6 +207,9 @@ export class RecipientsSelectRenderer extends React.PureComponent<
                         classNamePrefix="gd-recipients"
                         components={creatableSelectComponent}
                         formatOptionLabel={this.renderOptionLabel}
+                        filterOption={(opt, value) => {
+                            return matchRecipient(opt.data, value);
+                        }}
                         isClearable={false}
                         isDisabled={!isMulti}
                         isMulti={isMulti}
@@ -233,9 +251,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         const { width } = (!isEmpty(current) && current!.getBoundingClientRect()) || { width: undefined };
 
         return {
-            maxWidth: width
-                ? width - PADDING - REMOVE_ICON_WIDTH // label item width equal value item container - padding - remove icon
-                : "100%",
+            maxWidth: width ? width - PADDING : "100%",
             width,
         };
     }
@@ -275,7 +291,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         const style = this.getStyle();
         return (
             <OverlayControllerProvider overlayController={overlayController}>
-                <Overlay alignTo={".gd-recipients__value-container"}>
+                <Overlay alignTo={".gd-recipients-container"} alignPoints={[{ align: "bc tc" }]}>
                     <div className="gd-recipients-overlay" style={{ width: style.width }}>
                         <Menu className="s-gd-recipients-menu-container" {...menuProps}>
                             {menuProps.children}
@@ -299,33 +315,106 @@ export class RecipientsSelectRenderer extends React.PureComponent<
     private renderMultiValueItemContainer = (
         label: string,
         removeIcon: React.ReactElement | null,
-        validation: { hasEmail?: boolean } = {},
+        options: {
+            hasEmail?: boolean;
+            noExternal?: boolean;
+            invalidExternal?: boolean;
+            invalidLoggedUser?: boolean;
+            type?: "externalUser";
+            email?: string;
+        } = {},
     ): React.ReactElement => {
         const style = this.getStyle();
 
         const render = () => {
             return (
                 <div
+                    style={{ maxWidth: style.maxWidth }}
                     className={cx("gd-recipient-value-item s-gd-recipient-value-item multiple-value", {
-                        "invalid-email": !validation.hasEmail,
+                        "invalid-email": !options.hasEmail,
+                        "invalid-external": options.noExternal || options.invalidExternal,
+                        "invalid-user": options.invalidLoggedUser,
                     })}
                 >
-                    <div style={{ maxWidth: style.maxWidth }} className="gd-recipient-label">
-                        {label}
-                    </div>
-                    <div aria-label="remove-icon" className="s-gd-recipient-remove">
+                    <div className="gd-recipient-label">{label}</div>
+                    {options.type === "externalUser" ? (
+                        <div className="gd-recipient-quest">
+                            <FormattedMessage id="dialogs.schedule.email.user.guest" />
+                        </div>
+                    ) : null}
+                    <div aria-label="remove-icon" className="gd-recipient-remove-icon s-gd-recipient-remove">
                         {removeIcon}
                     </div>
                 </div>
             );
         };
 
-        if (validation.hasEmail === false) {
+        if (options.invalidLoggedUser === true) {
+            return (
+                <BubbleHoverTrigger>
+                    {render()}
+                    <Bubble className="bubble-negative" alignPoints={TOOLTIP_ALIGN_POINTS}>
+                        <FormattedMessage id="dialogs.schedule.email.user.notMe" />
+                    </Bubble>
+                </BubbleHoverTrigger>
+            );
+        }
+
+        if (options.invalidExternal === true) {
+            return (
+                <BubbleHoverTrigger>
+                    {render()}
+                    <Bubble className="bubble-negative" alignPoints={TOOLTIP_ALIGN_POINTS}>
+                        <FormattedMessage id="dialogs.schedule.email.user.unknown" />
+                    </Bubble>
+                </BubbleHoverTrigger>
+            );
+        }
+
+        if (options.hasEmail === false) {
             return (
                 <BubbleHoverTrigger>
                     {render()}
                     <Bubble className="bubble-negative" alignPoints={TOOLTIP_ALIGN_POINTS}>
                         <FormattedMessage id="dialogs.schedule.email.user.missing.email" />
+                    </Bubble>
+                </BubbleHoverTrigger>
+            );
+        }
+
+        if (options.noExternal === true) {
+            return (
+                <BubbleHoverTrigger>
+                    {render()}
+                    <Bubble className="bubble-negative" alignPoints={TOOLTIP_ALIGN_POINTS}>
+                        <FormattedMessage id="dialogs.schedule.email.user.invalid.external" />
+                    </Bubble>
+                </BubbleHoverTrigger>
+            );
+        }
+
+        if (options.type === "externalUser") {
+            return (
+                <BubbleHoverTrigger>
+                    {render()}
+                    <Bubble className="bubble-primary" alignPoints={TOOLTIP_ALIGN_POINTS}>
+                        <FormattedMessage
+                            id="dialogs.schedule.email.user.used.external"
+                            values={{
+                                email: label,
+                            }}
+                        />
+                    </Bubble>
+                </BubbleHoverTrigger>
+            );
+        }
+
+        if (options.email) {
+            return (
+                <BubbleHoverTrigger>
+                    {render()}
+                    <Bubble className="bubble-primary" alignPoints={TOOLTIP_ALIGN_POINTS}>
+                        {options.email}
                     </Bubble>
                 </BubbleHoverTrigger>
             );
@@ -337,6 +426,7 @@ export class RecipientsSelectRenderer extends React.PureComponent<
     private renderMultiValueContainer = (
         multiValueProps: MultiValueGenericProps<IAutomationRecipient>,
     ): React.ReactElement => {
+        const { allowExternalRecipients, allowOnlyLoggedUserRecipients, loggedUser } = this.props;
         const { data, children } = multiValueProps;
 
         // MultiValueRemove component from react-select
@@ -344,20 +434,58 @@ export class RecipientsSelectRenderer extends React.PureComponent<
         const name = data.name ?? data.id;
         const hasEmail =
             this.isEmailChannel() && isAutomationUserRecipient(data) ? isEmail(data.email ?? "") : true;
+        const noExternal = data.type === "externalUser" && !allowExternalRecipients;
+        const invalidExternal = data.type === "unknownUser";
+        const invalidLoggedUser = allowOnlyLoggedUserRecipients ? data.id !== loggedUser?.id : false;
 
-        return this.renderMultiValueItemContainer(name, removeIcon, { hasEmail });
+        return this.renderMultiValueItemContainer(name, removeIcon, {
+            hasEmail,
+            noExternal,
+            invalidLoggedUser,
+            invalidExternal,
+            type: data.type,
+            email: data.email,
+        });
     };
 
     private renderOptionLabel = (recipient: IAutomationRecipient): React.ReactElement | null => {
+        const { allowExternalRecipients } = this.props;
         const displayName = recipient.name ?? recipient.id;
+        const email = isAutomationUserRecipient(recipient) ? recipient.email ?? "" : "";
 
         return (
-            <div className="gd-recipient-option-item s-gd-recipient-option-item">
-                <span className="gd-recipient-option-label-item s-gd-recipient-option-label-item">
-                    {displayName}
-                </span>
-                {this.renderRecipientValue(recipient)}
-            </div>
+            <BubbleHoverTrigger>
+                <div className="gd-recipient-option-item s-gd-recipient-option-item">
+                    <span className="gd-recipient-option-label-item s-gd-recipient-option-label-item">
+                        {displayName}
+                    </span>
+                    {this.renderRecipientValue(recipient)}
+                    {allowExternalRecipients && recipient.type === "externalUser" ? (
+                        <div className="gd-recipient-option-label-external-warning">
+                            <Message type="warning">
+                                <FormattedMessage id="dialogs.schedule.email.user.warning.external" />
+                            </Message>
+                        </div>
+                    ) : null}
+                    {!allowExternalRecipients && recipient.type === "externalUser" ? (
+                        <div className="gd-recipient-option-label-external-warning">
+                            <Message type="error">
+                                <FormattedMessage id="dialogs.schedule.email.user.invalid.external" />
+                            </Message>
+                        </div>
+                    ) : null}
+                    {recipient.type === "unknownUser" ? (
+                        <div className="gd-recipient-option-label-external-warning">
+                            <Message type="error">
+                                <FormattedMessage id="dialogs.schedule.email.user.unknown" />
+                            </Message>
+                        </div>
+                    ) : null}
+                </div>
+                <Bubble className="bubble-primary" alignPoints={TOOLTIP_ALIGN_POINTS}>
+                    {displayName} {isEmail(email) ? `(${email})` : ""}
+                </Bubble>
+            </BubbleHoverTrigger>
         );
     };
 
@@ -422,12 +550,10 @@ export class RecipientsSelectRenderer extends React.PureComponent<
     };
 
     private loadUserListItems = (searchString: string): void => {
-        const { options, value, canListUsersInProject, onLoad } = this.props;
-        const matchedUserList = this.getMatchedRecipientEmails(options, searchString);
-        const matchedUserListCount = matchedUserList.length;
+        const { value, canListUsersInProject, onLoad } = this.props;
         const isRecipientAdded = this.isRecipientAdded(value, searchString);
 
-        if (!canListUsersInProject || isRecipientAdded || matchedUserListCount > 0) {
+        if (!canListUsersInProject || isRecipientAdded) {
             return;
         }
 
@@ -447,17 +573,6 @@ export class RecipientsSelectRenderer extends React.PureComponent<
     };
 
     private onSearch = debounce(this.onSearchCore, DELAY_TIME);
-
-    private getMatchedRecipientEmails(
-        options: IAutomationRecipient[],
-        searchKey: string,
-    ): IAutomationRecipient[] {
-        return searchKey
-            ? options.filter((recipient: IAutomationRecipient) =>
-                  includes(isAutomationUserRecipient(recipient) ? recipient.email ?? "" : "", searchKey),
-              )
-            : [];
-    }
 
     private isRecipientAdded = (value: ReadonlyArray<IAutomationRecipient>, searchKey: string): boolean => {
         return value.some((recipient: IAutomationRecipient) => isEqual(recipient.id, searchKey));

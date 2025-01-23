@@ -1,9 +1,10 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { invariant } from "ts-invariant";
 import {
     DashboardLayoutItemModifications,
     IDashboardLayoutItemBuilder,
     IDashboardLayoutSectionBuilder,
+    IDashboardLayoutBuilder,
 } from "./interfaces.js";
 import { IDashboardLayoutItemFacade } from "../facade/interfaces.js";
 import {
@@ -22,11 +23,13 @@ import {
     IDashboardLayoutSizeByScreenSize,
     IDashboardLayoutItem,
     isDashboardLayoutItem,
+    isDashboardLayout,
+    IDashboardLayout,
 } from "@gooddata/sdk-model";
 import identity from "lodash/identity.js";
+import { ILayoutItemPath } from "../../../../types.js";
 
 /**
- * TODO LX-603: rewrite to support nested layouts
  * @alpha
  */
 export class DashboardLayoutItemBuilder<TWidget> implements IDashboardLayoutItemBuilder<TWidget> {
@@ -134,7 +137,23 @@ export class DashboardLayoutItemBuilder<TWidget> implements IDashboardLayoutItem
             isKpiWidgetDefinition(content) || isKpiWidget(content),
             "Content of the item is not a kpi widget.",
         );
-        this.widget(modify(KpiWidgetBuilder.for(content)).build() as unknown as TWidget);
+        const builder = KpiWidgetBuilder.for(content);
+        this.widget(modify(builder).build() as unknown as TWidget);
+        return this;
+    }
+
+    public modifyLayoutWidget(
+        modify: (builder: IDashboardLayoutBuilder<TWidget>) => IDashboardLayoutBuilder<TWidget>,
+        dashboardLayoutBuilderConstructor: (
+            layout: IDashboardLayout<TWidget>,
+            layoutPath?: ILayoutItemPath,
+        ) => IDashboardLayoutBuilder<TWidget>,
+    ): this {
+        const content = this.facade().widget();
+        invariant(isDashboardLayout<TWidget>(content), "Content of the item is not a layout widget.");
+        const itemPath = this.getItemFacade().index();
+        const builder = dashboardLayoutBuilderConstructor(content, itemPath);
+        this.widget(modify(builder).build() as unknown as TWidget);
         return this;
     }
 }

@@ -964,6 +964,11 @@ export interface IAutomationDetails {
 }
 
 // @alpha (undocumented)
+export interface IAutomationExternalRecipient extends Omit<IAutomationUserRecipient, "type"> {
+    type: "externalUser";
+}
+
+// @alpha (undocumented)
 export interface IAutomationMetadataObject extends IAutomationMetadataObjectBase, IMetadataObject, IAuditable {
     // (undocumented)
     type: "automation";
@@ -999,7 +1004,7 @@ export interface IAutomationNotificationDetailsBase {
 }
 
 // @alpha (undocumented)
-export type IAutomationRecipient = IAutomationUserRecipient | IAutomationUserGroupRecipient;
+export type IAutomationRecipient = IAutomationUserRecipient | IAutomationUserGroupRecipient | IAutomationExternalRecipient | IAutomationUnknownRecipient;
 
 // @alpha (undocumented)
 export interface IAutomationRecipientBase {
@@ -1008,7 +1013,7 @@ export interface IAutomationRecipientBase {
 }
 
 // @alpha (undocumented)
-export type IAutomationRecipientType = "user" | "userGroup";
+export type IAutomationRecipientType = "user" | "userGroup" | "externalUser";
 
 // @alpha (undocumented)
 export interface IAutomationSchedule {
@@ -1016,6 +1021,11 @@ export interface IAutomationSchedule {
     cronDescription?: string;
     firstRun?: string;
     timezone?: string;
+}
+
+// @alpha (undocumented)
+export interface IAutomationUnknownRecipient extends Omit<IAutomationUserRecipient, "type"> {
+    type: "unknownUser";
 }
 
 // @alpha (undocumented)
@@ -2496,6 +2506,7 @@ export type INotificationChannelMetadataObject = IWebhookNotificationChannelMeta
 export interface INotificationChannelMetadataObjectBase {
     allowedRecipients?: NotificationChannelAllowedRecipients;
     customDashboardUrl?: string;
+    dashboardLinkVisibility?: NotificationChannelDashboardLinkVisibility;
     destinationType: NotificationChannelDestinationType;
     // (undocumented)
     type: "notificationChannel";
@@ -3072,11 +3083,17 @@ export function isAttributeSort(obj: unknown): obj is IAttributeSortItem;
 // @public
 export function isAttributeValueSort(obj: unknown): obj is IAttributeSortItem;
 
+// @alpha
+export function isAutomationExternalUserRecipient(obj: unknown): obj is IAutomationExternalRecipient;
+
 // @alpha (undocumented)
 export function isAutomationMetadataObject(obj: unknown): obj is IAutomationMetadataObject;
 
 // @alpha (undocumented)
 export function isAutomationMetadataObjectDefinition(obj: unknown): obj is IAutomationMetadataObjectDefinition;
+
+// @alpha
+export function isAutomationUnknownUserRecipient(obj: unknown): obj is IAutomationUnknownRecipient;
 
 // @alpha
 export function isAutomationUserGroupRecipient(obj: unknown): obj is IAutomationUserGroupRecipient;
@@ -3304,6 +3321,7 @@ export interface ISettings {
     enableAlerting?: boolean;
     enableAlertingRollout?: boolean;
     enableAlternativeDisplayFormSelection?: boolean;
+    enableAmplitudeTracker?: boolean;
     enableAnalyticalDashboardPermissions?: boolean;
     // (undocumented)
     enableAnalyticalDashboards?: boolean;
@@ -3320,6 +3338,8 @@ export interface ISettings {
     enableComparisonInAlerting?: boolean;
     enableCompositeGrain?: boolean;
     enableCreateUser?: boolean;
+    // @alpha
+    enableCriticalContentPerformanceOptimizations?: boolean;
     // @internal
     enableCrossFilteringAliasTitles?: boolean;
     // (undocumented)
@@ -4615,6 +4635,9 @@ export function newVirtualArithmeticMeasure(measuresOrIds: ReadonlyArray<Measure
 
 // @beta
 export type NotificationChannelAllowedRecipients = "creator" | "internal" | "external";
+
+// @beta
+export type NotificationChannelDashboardLinkVisibility = "hidden" | "visible" | "internalOnly";
 
 // @beta
 export type NotificationChannelDestinationType = "webhook" | "smtp" | "inPlatform";

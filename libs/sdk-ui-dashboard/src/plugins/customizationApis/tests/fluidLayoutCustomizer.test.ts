@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { FluidLayoutCustomizer } from "../fluidLayoutCustomizer.js";
 import { IDashboardLayout, IDashboardLayoutSection, IDashboardLayoutItem } from "@gooddata/sdk-model";
@@ -18,6 +18,52 @@ const LayoutWithOneSection: IDashboardLayout<ExtendedDashboardWidget> = {
         {
             type: "IDashboardLayoutSection",
             items: [],
+        },
+    ],
+};
+
+const LayoutWithNestedSections: IDashboardLayout<ExtendedDashboardWidget> = {
+    type: "IDashboardLayout",
+    sections: [
+        {
+            type: "IDashboardLayoutSection",
+            items: [
+                createTestItem(newCustomWidget("1", "custom1")),
+                createTestItem(newCustomWidget("2", "custom2")),
+            ],
+        },
+        {
+            type: "IDashboardLayoutSection",
+            items: [
+                createTestItem(newCustomWidget("3", "custom3")),
+                {
+                    type: "IDashboardLayoutItem",
+                    size: {
+                        xl: {
+                            gridWidth: 12,
+                        },
+                    },
+                    widget: {
+                        type: "IDashboardLayout",
+                        sections: [
+                            {
+                                type: "IDashboardLayoutSection",
+                                items: [
+                                    createTestItem(newCustomWidget("4", "custom4")),
+                                    createTestItem(newCustomWidget("5", "custom5")),
+                                ],
+                            },
+                            {
+                                type: "IDashboardLayoutSection",
+                                items: [
+                                    createTestItem(newCustomWidget("6", "custom6")),
+                                    createTestItem(newCustomWidget("7", "custom7")),
+                                ],
+                            },
+                        ],
+                    } as unknown as ICustomWidget,
+                },
+            ],
         },
     ],
 };
@@ -70,6 +116,58 @@ describe("fluid layout customizer", () => {
                 "1": "inserted",
                 "2": "inserted",
             },
+        });
+    });
+
+    it("should add new section with one new item to layout with nested layout", () => {
+        const newSection: IDashboardLayoutSection<ICustomWidget> = {
+            type: "IDashboardLayoutSection",
+            items: [createTestItem(newCustomWidget("8", "custom8"))],
+        };
+
+        Customizer.addSectionToPath(
+            { parent: [{ sectionIndex: 1, itemIndex: 1 }], sectionIndex: 1 },
+            newSection,
+        );
+
+        const updatedLayout = Customizer.applyTransformations(LayoutWithNestedSections);
+
+        expect((updatedLayout.sections[1].items[1].widget as IDashboardLayout).sections?.[1]).toEqual(
+            newSection,
+        );
+        expect(mutationContext).toEqual({
+            kpi: [],
+            insight: [],
+            attributeFilter: [],
+            dashboardContent: [],
+            layouts: {
+                "8": "inserted",
+            },
+        });
+    });
+
+    it("should not add new section widget which is not nested layout", () => {
+        const newSection: IDashboardLayoutSection<ICustomWidget> = {
+            type: "IDashboardLayoutSection",
+            items: [createTestItem(newCustomWidget("8", "custom8"))],
+        };
+
+        Customizer.addSectionToPath(
+            { parent: [{ sectionIndex: 0, itemIndex: 0 }], sectionIndex: 1 },
+            newSection,
+        );
+
+        let updatedLayout;
+        expect(() => {
+            updatedLayout = Customizer.applyTransformations(LayoutWithNestedSections);
+        }).toThrowError('Nested layout at path [{"sectionIndex":0,"itemIndex":0}] does not exist.');
+
+        expect(mutationContext).toEqual({
+            kpi: [],
+            insight: [],
+            attributeFilter: [],
+            dashboardContent: [],
+            layouts: {},
         });
     });
 
@@ -135,6 +233,33 @@ describe("fluid layout customizer", () => {
             dashboardContent: [],
             layouts: {
                 "1": "inserted",
+            },
+        });
+    });
+
+    it("should add new item into an existing section in nested layout", () => {
+        const item = createTestItem(newCustomWidget("8", "custom8"));
+
+        Customizer.addItemToPath(
+            [
+                { sectionIndex: 1, itemIndex: 1 },
+                { sectionIndex: 1, itemIndex: 0 },
+            ],
+            item,
+        );
+        const updatedNestedLayout = Customizer.applyTransformations(LayoutWithNestedSections);
+
+        expect(
+            (updatedNestedLayout.sections[1].items[1].widget as IDashboardLayout).sections?.[1].items[0],
+        ).toEqual(item);
+
+        expect(mutationContext).toEqual({
+            kpi: [],
+            insight: [],
+            attributeFilter: [],
+            dashboardContent: [],
+            layouts: {
+                "8": "inserted",
             },
         });
     });

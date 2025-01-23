@@ -150,6 +150,7 @@ options = {
             "src/widgets",
             "src/types.ts",
             "src/presentation/dragAndDrop/types.ts",
+            "src/presentation/flexibleLayout/DefaultDashboardLayoutRenderer/utils/sizing.ts"
         ]),
         depCruiser.moduleWithDependencies("presentation", "src/presentation", [
             "src/_staging/*",

@@ -505,3 +505,9 @@ $gd-dashboards-section-description-color: var(
         grid-template-columns: repeat(#{$i}, 1fr);
     }
 }
+
+.rich-text-tooltip {
+    // override overlay z-index defined in style element as overlay's zIndex prop is not exposed to Bubble
+    // stylelint-disable-next-line declaration-no-important
+    z-index: zIndexes.$dashboard-canvas-tooltip !important;
+}

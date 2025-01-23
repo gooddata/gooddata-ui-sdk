@@ -8,6 +8,7 @@ import {
     selectInsightsMap,
     useDashboardDispatch,
     useDashboardSelector,
+    selectSettings,
 } from "../../../../model/index.js";
 import { IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/flexibleLayout/index.js";
 import { getMinWidth } from "../../../../_staging/layout/sizing.js";
@@ -17,13 +18,13 @@ import { useDashboardDrag, useResizeHandlers, useResizeWidthItemStatus } from ".
 import { WidthResizer } from "./WidthResizer.js";
 import { useScreenSize } from "../../../dashboard/components/DashboardScreenSizeContext.js";
 import { useHoveredWidget } from "../../../dragAndDrop/HoveredWidgetContext.js";
-import { isFirstInContainer } from "../../../../_staging/layout/coordinates.js";
 
 export type WidthResizerHotspotProps = {
     item: IDashboardLayoutItemFacade<unknown>;
     getGridColumnHeightInPx: () => number;
     getGridColumnWidth: () => number;
     getLayoutDimensions: () => DOMRect;
+    rowIndex: number;
 };
 
 export function WidthResizerHotspot({
@@ -31,9 +32,11 @@ export function WidthResizerHotspot({
     getGridColumnWidth,
     getGridColumnHeightInPx,
     getLayoutDimensions,
+    rowIndex,
 }: WidthResizerHotspotProps) {
     const dispatch = useDashboardDispatch();
     const insightsMap = useDashboardSelector(selectInsightsMap);
+    const settings = useDashboardSelector(selectSettings);
     const { resizeStart, resizeEnd, getScrollCorrection } = useResizeHandlers();
     const screen = useScreenSize();
 
@@ -46,10 +49,9 @@ export function WidthResizerHotspot({
     const onMouseEnter = () => setResizerVisibility(true);
     const onMouseLeave = () => setResizerVisibility(false);
     const layoutPath = item.index();
-    const firstInContainer = isFirstInContainer(layoutPath);
 
     const currentWidth = item.sizeForScreen(screen)!.gridWidth;
-    const minLimit = getMinWidth(widget, insightsMap, screen);
+    const minLimit = getMinWidth(widget, insightsMap, screen, settings);
     const maxLimit = getDashboardLayoutItemMaxGridWidth(item, screen);
 
     const [{ isDragging }, dragRef] = useDashboardDrag(
@@ -67,6 +69,7 @@ export function WidthResizerHotspot({
                     currentWidth,
                     minLimit,
                     maxLimit,
+                    rowIndex,
                 };
             },
             dragEnd: (dragItem, monitor) => {
@@ -84,7 +87,7 @@ export function WidthResizerHotspot({
             },
         },
 
-        [widget, insightsMap, layoutPath, currentWidth, minLimit, maxLimit],
+        [widget, insightsMap, layoutPath, currentWidth, minLimit, maxLimit, rowIndex],
     );
 
     useEffect(() => {
@@ -108,7 +111,7 @@ export function WidthResizerHotspot({
     return (
         <div
             className={cx("dash-width-resizer-container", {
-                "gd-first-in-container": firstInContainer,
+                "gd-first-container-row-widget": rowIndex === 0,
             })}
         >
             {status === "default" ? (

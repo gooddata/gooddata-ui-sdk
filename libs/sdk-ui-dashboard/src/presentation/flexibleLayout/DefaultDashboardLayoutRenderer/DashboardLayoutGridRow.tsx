@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 
 import { RenderMode } from "../../../types.js";
@@ -29,6 +29,7 @@ export interface DashboardLayoutGridRowProps<TWidget> {
     getLayoutDimensions: () => DOMRect;
     items: IDashboardLayoutItemFacade<TWidget>[];
     renderMode: RenderMode;
+    rowIndex: number;
 }
 
 const defaultItemKeyGetter: IDashboardLayoutItemKeyGetter<unknown> = ({ item }) =>
@@ -43,6 +44,7 @@ export function DashboardLayoutGridRow<TWidget>(props: DashboardLayoutGridRowPro
         widgetRenderer,
         items,
         renderMode,
+        rowIndex,
     } = props;
     const screen = useScreenSize();
 
@@ -52,6 +54,7 @@ export function DashboardLayoutGridRow<TWidget>(props: DashboardLayoutGridRowPro
             item={item}
             itemRenderer={itemRenderer}
             widgetRenderer={widgetRenderer}
+            rowIndex={rowIndex}
         />
     ));
 

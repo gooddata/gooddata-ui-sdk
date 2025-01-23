@@ -208,6 +208,11 @@ export interface IDashboardLayoutItemRenderProps<TWidget = IDashboardWidget> {
      * Widget rendered by widgetRenderer.
      */
     children: React.ReactNode;
+
+    /**
+     * Zero-based index of the row in which the item is rendered,
+     */
+    rowIndex: number;
 }
 
 /**
@@ -276,6 +281,11 @@ export interface IDashboardLayoutWidgetRenderProps<TWidget = IDashboardWidget> {
      * Default widget renderer - can be used as a fallback for custom widgetRenderer.
      */
     DefaultWidgetRenderer: IDashboardLayoutWidgetRenderer<TWidget>;
+
+    /**
+     * Zero-based index of the row in which the item is rendered,
+     */
+    rowIndex: number;
 }
 
 /**

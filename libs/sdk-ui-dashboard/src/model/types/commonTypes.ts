@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
@@ -8,6 +8,7 @@ import {
     ISettings,
     ISeparators,
     IEntitlementDescriptor,
+    Identifier,
 } from "@gooddata/sdk-model";
 import { ILocale } from "@gooddata/sdk-ui";
 import keys from "lodash/keys.js";
@@ -233,11 +234,43 @@ export interface DashboardConfig {
 
     /**
      * @beta
+     *
+     * Specify the focus object in which context the dashboard should be opened.
+     *
+     * @remarks Only provide one of the focus properties at a time.
+     */
+    focusObject?: DashboardFocusObject;
+}
+
+/**
+ * @beta
+ *
+ * Specifies the focus object for the dashboard.
+ */
+export interface DashboardFocusObject {
+    /**
+     * @beta
      * If provided, the dashboard will be opened in the context of the given automation.
-     * This means, that target widget will be highlighted in the dashboard,
+     * This means, that target widget will be focused in the dashboard,
      * and filter context will be set to the one used in the automation.
      */
-    automationId?: string;
+    automationId?: Identifier;
+
+    /**
+     * @beta
+     * If provided, the dashboard will be opened in the context of the given widget.
+     * This means, that target widget will be focused in the dashboard.
+     *
+     * @remarks This property is not a formal MD identifier
+     */
+    widgetId?: string;
+
+    /**
+     * @beta
+     * If provided, the dashboard will be opened in the context of the given visualization.
+     * This means, that target visualizations represented by widgets will be focused in the dashboard.
+     */
+    visualizationId?: Identifier;
 }
 
 /**
@@ -255,7 +288,7 @@ export interface DashboardConfig {
  */
 export type ResolvedDashboardConfig = Omit<
     Required<DashboardConfig>,
-    "mapboxToken" | "exportId" | "automationId"
+    "mapboxToken" | "exportId" | "focusObject"
 > &
     DashboardConfig;
 

@@ -2,7 +2,7 @@
 
 const scenarios = require("./scenarios.config");
 
-const asyncCaptureLimit = parseInt(process.env.BACKSTOP_CAPTURE_LIMIT) || 3;
+const asyncCaptureLimit = parseInt(process.env.BACKSTOP_CAPTURE_LIMIT) || 4;
 const asyncCompareLimit = parseInt(process.env.BACKSTOP_COMPARE_LIMIT) || 40;
 
 console.log(`Backstop concurrency settings = capture: ${asyncCaptureLimit}, compare: ${asyncCompareLimit} `);

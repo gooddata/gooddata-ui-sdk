@@ -208,7 +208,7 @@
 
 .gd-grid-layout-width-resizer-drag-preview {
     padding: 0 0 0 30px;
-    &.gd-first-in-container {
+    &.gd-first-container-row-widget {
         .gd-fluidlayout-width-resizer__container {
             padding-top: 0;
         }
@@ -291,7 +291,7 @@
         left: -25px;
         right: 0;
         width: 0;
-        &.gd-first-in-container {
+        &.gd-first-container-row-widget {
             .gd-fluidlayout-width-resizer__container {
                 padding-top: 0;
             }

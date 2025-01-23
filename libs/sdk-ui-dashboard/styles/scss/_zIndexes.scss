@@ -35,3 +35,5 @@ $scheduled-email-mask-small: $scheduled-email-mask + 1;
 
 //toolbar need to be on top of resize and draggable wrapper
 $toolbar-basic: $resize-basic + 1;
+
+$dashboard-canvas-tooltip: $filterbar-sdk-8-12 + 1;

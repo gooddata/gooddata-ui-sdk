@@ -576,6 +576,17 @@ export interface ISettings {
      */
     enableDashboardDescriptionDynamicHeight?: boolean;
 
+    /**
+     * Enables tracking events to Amplitude.
+     */
+    enableAmplitudeTracker?: boolean;
+
+    /**
+     * Enables critical content performance optimizations.
+     * @alpha
+     */
+    enableCriticalContentPerformanceOptimizations?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

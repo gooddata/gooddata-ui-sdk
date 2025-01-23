@@ -653,5 +653,9 @@
     "options.menu.unsupported.schedulingForInsightNotEnabled": "このウィジェットのエクスポートをスケジュールすることはできません。",
     "options.menu.unsupported.alertingForInsightNotEnabled": "このウィジェットにアラートを作成することはできません。",
     "nestedLayoutToolbar.hideHeader": "タイトルと説明を隠す。",
-    "nestedLayoutToolbar.showHeader": "タイトルと説明を表示する。"
+    "nestedLayoutToolbar.showHeader": "タイトルと説明を表示する。",
+    "dialogs.schedule.email.user.invalid.external": "このユーザーはダッシュボードにアクセスできません。",
+    "dialogs.schedule.email.user.used.external": "電子メール “{email}” はこのワークスペースに属していません。受信者は機密データを受信する可能性があります。",
+    "dialogs.schedule.email.user.warning.external": "このメールアドレスはワークスペースに属していません。受信者は機密データを受け取る可能性があります。",
+    "dialogs.schedule.email.user.guest": "(ゲスト）"
 }

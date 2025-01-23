@@ -305,10 +305,11 @@ export const hasParent = (path: ILayoutItemPath | ILayoutSectionPath): boolean =
     );
 };
 
-export const isFirstInContainer = (parentLayoutPath: ILayoutItemPath | undefined) => {
-    if (parentLayoutPath && parentLayoutPath.length > 1) {
-        const itemCoordinates = parentLayoutPath[parentLayoutPath.length - 1];
-        return itemCoordinates.itemIndex === 0 && itemCoordinates.sectionIndex === 0;
+export const getParentPath = (
+    path: ILayoutItemPath | ILayoutSectionPath | undefined,
+): ILayoutItemPath | undefined => {
+    if (path === undefined) {
+        return undefined;
     }
-    return false;
+    return isLayoutItemPath(path) ? (path.length > 1 ? path.slice(0, -1) : undefined) : path.parent;
 };

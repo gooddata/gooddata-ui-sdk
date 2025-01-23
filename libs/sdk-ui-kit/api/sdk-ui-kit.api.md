@@ -3043,13 +3043,13 @@ export class Input extends React_2.PureComponent<InputPureProps, InputState> {
     // (undocumented)
     inputNodeRef: InputPure;
     // (undocumented)
-    onChange: (value: string | number) => void;
+    onChange: (value: string | number, e?: React_2.ChangeEvent<HTMLInputElement>) => void;
     // (undocumented)
     render(): React_2.JSX.Element;
     // (undocumented)
     UNSAFE_componentWillReceiveProps(nextProps: InputPureProps): void;
     // (undocumented)
-    valueChanged(value: string | number): void;
+    valueChanged(value: string | number, e?: React_2.ChangeEvent<HTMLInputElement>): void;
 }
 
 // @internal (undocumented)

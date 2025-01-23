@@ -1,5 +1,5 @@
-// (C) 2020-2024 GoodData Corporation
-import React, { useMemo, useCallback, useEffect, useState } from "react";
+// (C) 2020-2025 GoodData Corporation
+import React, { useMemo, useCallback } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 import { IInsight, widgetTitle, insightVisualizationType } from "@gooddata/sdk-model";
@@ -9,8 +9,6 @@ import {
     useDashboardSelector,
     selectSettings,
     useDashboardScheduledEmails,
-    selectDashboardUserAutomations,
-    selectAutomationId,
 } from "../../../../model/index.js";
 import {
     DashboardItem,
@@ -27,16 +25,7 @@ import { useInsightMenu } from "./useInsightMenu.js";
 import { DashboardWidgetInsightGuard } from "./DashboardWidgetInsightGuard.js";
 import { IDefaultDashboardInsightWidgetProps } from "./types.js";
 import { useAlertingAndScheduling } from "./useAlertingAndScheduling.js";
-import { createSelector } from "@reduxjs/toolkit";
-
-const selectIsWidgetHighlighted = (widgetId: string) =>
-    createSelector(
-        selectAutomationId,
-        selectDashboardUserAutomations,
-        (automationId, automations) =>
-            !!automationId &&
-            automations?.some((a) => a.id === automationId && a.metadata?.widget === widgetId),
-    );
+import { useWidgetHighlighting } from "../../common/useWidgetHighlighting.js";
 
 export const DefaultDashboardInsightWidget: React.FC<Omit<IDefaultDashboardInsightWidgetProps, "insight">> = (
     props,
@@ -133,23 +122,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
         [InsightMenuComponentProvider, insight, widget],
     );
 
-    const isHighlighted = useDashboardSelector(selectIsWidgetHighlighted(widget.identifier));
-    const [ignoreHighlight, setIgnoreHighlight] = useState(false);
-
-    useEffect(() => {
-        let timeout: NodeJS.Timeout | undefined;
-
-        if (isHighlighted) {
-            timeout = setTimeout(() => {
-                setIgnoreHighlight(true);
-            }, 5000);
-        }
-        return () => {
-            if (timeout) {
-                clearTimeout(timeout);
-            }
-        };
-    }, [isHighlighted]);
+    const { elementRef, highlighted } = useWidgetHighlighting(widget);
 
     return (
         <DashboardItem
@@ -158,9 +131,10 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                 "type-visualization",
                 "gd-dashboard-view-widget",
                 getVisTypeCssClass(widget.type, visType),
-                { "gd-highlighted": isHighlighted && !ignoreHighlight },
+                { "gd-highlighted": highlighted },
             )}
             screen={screen}
+            ref={elementRef}
         >
             <DashboardItemVisualization
                 renderHeadline={(clientHeight) =>

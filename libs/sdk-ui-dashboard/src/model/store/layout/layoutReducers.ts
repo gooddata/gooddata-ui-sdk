@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { CaseReducer, PayloadAction } from "@reduxjs/toolkit";
 import { invariant } from "ts-invariant";
 import { Draft } from "immer";
@@ -44,6 +44,7 @@ import {
     ExtendedDashboardWidget,
     StashedDashboardItemsId,
     isCustomWidget,
+    IItemWithHeight,
 } from "../../types/layoutTypes.js";
 import { addArrayElements, removeArrayElement } from "../../utils/arrayOps.js";
 
@@ -208,6 +209,37 @@ const changeItemsHeight: LayoutReducer<changeItemsHeightActionPayload> = (state,
             return;
         }
 
+        item.size = {
+            ...item.size,
+            xl: {
+                ...item.size.xl,
+                gridHeight: height,
+            },
+        };
+    });
+};
+
+//
+//
+//
+
+type updateHeightOfMultipleItemsActionPayload = {
+    itemsWithSizes: IItemWithHeight[];
+};
+
+const updateHeightOfMultipleItems: LayoutReducer<updateHeightOfMultipleItemsActionPayload> = (
+    state,
+    action,
+) => {
+    invariant(state.layout);
+    const rootLayout = state.layout;
+    const { itemsWithSizes } = action.payload;
+
+    itemsWithSizes.forEach(({ itemPath, height }) => {
+        const item = findItem(rootLayout, itemPath);
+        if (isCustomWidget(item.widget)) {
+            return;
+        }
         item.size = {
             ...item.size,
             xl: {
@@ -963,4 +995,5 @@ export const layoutReducers = {
     changeWidgetIgnoreCrossFiltering: withUndo(changeWidgetIgnoreCrossFiltering),
     resizeVisualizationSwitcherOnInsightChanged: withUndo(resizeVisualizationSwitcherOnInsightChanged),
     toggleLayoutSectionHeaders: withUndo(toggleLayoutSectionHeaders),
+    updateHeightOfMultipleItems,
 };

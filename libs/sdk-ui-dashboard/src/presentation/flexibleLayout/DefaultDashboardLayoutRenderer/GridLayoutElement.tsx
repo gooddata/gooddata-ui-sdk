@@ -1,14 +1,12 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React, { CSSProperties, MouseEventHandler, forwardRef } from "react";
 import cx from "classnames";
 import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
-import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
+import { useWidthValidation } from "./useItemWidthValidation.js";
 
-import { determineWidthForScreen } from "../../../_staging/layout/sizing.js";
-
-export type LayoutElementType = "root" | "nested" | "section" | "item";
+export type LayoutElementType = "root" | "nested" | "section" | "item" | "leaf-item";
 
 const getElementClassName = (type: LayoutElementType, gridWidth: number) => {
     switch (type) {
@@ -18,7 +16,8 @@ const getElementClassName = (type: LayoutElementType, gridWidth: number) => {
             return `gd-grid-layout__container--nested gd-grid-layout__container--nested--width-${gridWidth}`;
         case "section":
             return "gd-grid-layout__section";
-        case "item":
+        case "leaf-item":
+            return "gd-grid-layout__item gd-grid-layout__item--leaf";
         default:
             return "gd-grid-layout__item";
     }
@@ -53,11 +52,13 @@ export interface IGridLayoutElementProps {
 
 export const GridLayoutElement = forwardRef<HTMLDivElement, IGridLayoutElementProps>(
     ({ children, className, style, type, layoutItemSize, onMouseLeave }, ref) => {
-        const screen = useScreenSize();
-        const gridWidth = determineWidthForScreen(screen, layoutItemSize);
+        // Fix item width locally if it is bigger than parent width to prevent css-gird render issues.
+        // Error is fired on DashboardLayoutWidget with more details.
+        const { validWidth } = useWidthValidation(layoutItemSize);
+
         const classNames = cx(
-            getElementClassName(type, gridWidth),
-            `gd-grid-layout__item--span-${gridWidth}`, // CSS Grid columns size class name
+            getElementClassName(type, validWidth),
+            `gd-grid-layout__item--span-${validWidth}`, // CSS Grid columns size class name
             className,
         );
 

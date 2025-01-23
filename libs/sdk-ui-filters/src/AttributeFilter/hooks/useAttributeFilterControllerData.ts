@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useState, useEffect } from "react";
 import isEmpty from "lodash/isEmpty.js";
 import {
@@ -23,7 +23,7 @@ export function useAttributeFilterControllerData(
 
     const initStatus = handlerState.initialization.status;
     const initError = handlerState.initialization.error;
-    const isInitializing = initStatus === "loading";
+    const isInitializing = initStatus === "loading" || initStatus === "pending";
 
     const attribute = handlerState.attribute.data;
 

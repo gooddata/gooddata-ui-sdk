@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { useState } from "react";
 import {
     IAutomationMetadataObjectDefinition,
@@ -14,6 +14,8 @@ import {
     INotificationChannelMetadataObject,
     isAutomationUserRecipient,
     isWidget,
+    isAutomationExternalUserRecipient,
+    isAutomationUnknownUserRecipient,
 } from "@gooddata/sdk-model";
 import parseISO from "date-fns/parseISO/index.js";
 import { getUserTimezone } from "../utils/timezone.js";
@@ -25,6 +27,7 @@ import {
     selectCurrentUser,
     selectTimezone,
     selectUsers,
+    selectEnableExternalRecipients,
 } from "../../../../model/index.js";
 import { normalizeTime } from "@gooddata/sdk-ui-kit";
 import { WidgetAttachmentType } from "../types.js";
@@ -32,6 +35,7 @@ import { toModifiedISOString } from "../../DefaultScheduledEmailManagementDialog
 import {
     areAutomationsEqual,
     convertCurrentUserToAutomationRecipient,
+    convertCurrentUserToWorkspaceUser,
     getAutomationVisualizationFilters,
     isCsvVisualizationAutomation,
     isCsvVisualizationExportDefinition,
@@ -82,7 +86,10 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
 
     const currentUser = useDashboardSelector(selectCurrentUser);
     const users = useDashboardSelector(selectUsers);
+    const defaultUser = convertCurrentUserToWorkspaceUser(users ?? [], currentUser);
+
     const defaultRecipient = convertCurrentUserToAutomationRecipient(users ?? [], currentUser);
+    const enabledExternalRecipients = useDashboardSelector(selectEnableExternalRecipients);
 
     const firstChannel = notificationChannels[0]?.id;
 
@@ -333,7 +340,9 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
     const selectedNotificationChannel = notificationChannels.find(
         (channel) => channel.id === editedAutomation.notificationChannel,
     );
-    const showRecipientsSelect = selectedNotificationChannel?.allowedRecipients !== "creator";
+    const allowExternalRecipients =
+        selectedNotificationChannel?.allowedRecipients === "external" && enabledExternalRecipients;
+    const allowOnlyLoggedUserRecipients = selectedNotificationChannel?.allowedRecipients === "creator";
 
     const { isValid: isOriginalAutomationValid } = useScheduleValidation(originalAutomation);
     const validationErrorMessage = !isOriginalAutomationValid
@@ -342,6 +351,14 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
 
     const hasAttachments = !!editedAutomation.exportDefinitions?.length;
     const hasRecipients = (editedAutomation.recipients?.length ?? 0) > 0;
+    const hasValidExternalRecipients = allowExternalRecipients
+        ? true
+        : !editedAutomation.recipients?.some(isAutomationExternalUserRecipient);
+    const hasValidCreatorRecipient = allowOnlyLoggedUserRecipients
+        ? editedAutomation.recipients?.length === 1 &&
+          editedAutomation.recipients[0].id === defaultRecipient.id
+        : true;
+    const hasNoUnknownRecipients = !editedAutomation.recipients?.some(isAutomationUnknownUserRecipient);
     const hasDestination = !!editedAutomation.notificationChannel;
     const respectsRecipientsLimit = (editedAutomation.recipients?.length ?? 0) <= maxAutomationsRecipients;
     const hasFilledEmails =
@@ -357,12 +374,16 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         respectsRecipientsLimit &&
         hasAttachments &&
         hasDestination &&
+        hasValidExternalRecipients &&
+        hasValidCreatorRecipient &&
+        hasNoUnknownRecipients &&
         hasFilledEmails;
 
     const isSubmitDisabled =
         !isValid || (scheduledExportToEdit && areAutomationsEqual(originalAutomation, editedAutomation));
 
     return {
+        defaultUser,
         areDashboardFiltersChanged,
         originalAutomation,
         editedAutomation,
@@ -374,7 +395,8 @@ export function useEditScheduledEmail(props: IUseEditScheduledEmailProps) {
         isXlsxExportSelected,
         settings,
         startDate,
-        showRecipientsSelect,
+        allowOnlyLoggedUserRecipients,
+        allowExternalRecipients,
         validationErrorMessage,
         isSubmitDisabled,
         onTitleChange,

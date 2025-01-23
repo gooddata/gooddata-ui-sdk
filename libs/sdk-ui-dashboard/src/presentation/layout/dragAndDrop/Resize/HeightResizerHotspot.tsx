@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { useEffect, useMemo, useState } from "react";
 import { ISettings, IWidget, ScreenSize, IInsight } from "@gooddata/sdk-model";
 import { fluidLayoutDescriptor, INSIGHT_WIDGET_SIZE_INFO_DEFAULT } from "@gooddata/sdk-ui-ext";
@@ -25,8 +25,8 @@ import { ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
 import { DEFAULT_WIDTH_RESIZER_HEIGHT } from "../../constants.js";
 
 export type HeightResizerHotspotProps = {
-    section: IDashboardLayoutSectionFacade<unknown>;
-    items: IDashboardLayoutItemFacade<unknown>[];
+    section: IDashboardLayoutSectionFacade<ExtendedDashboardWidget>;
+    items: IDashboardLayoutItemFacade<ExtendedDashboardWidget>[];
     screen: ScreenSize;
     getLayoutDimensions: () => DOMRect;
 };
@@ -44,6 +44,7 @@ export function HeightResizerHotspot({
     const { resizeDirection, resizeItemIdentifiers, resizeStart, resizeEnd, getScrollCorrection } =
         useResizeContext();
     const widgets = useMemo(() => items.map((item) => item.widget() as IWidget), [items]);
+    const layoutItems = useMemo(() => items.map((item) => item.raw()), [items]);
     const widgetIdentifiers = useMemo(() => widgets.map((widget) => widget.identifier), [widgets]);
     const customWidgetsRestrictions = useMemo(() => getCustomWidgetRestrictions(items), [items]);
 
@@ -52,8 +53,14 @@ export function HeightResizerHotspot({
             dragItem: () => {
                 const initialLayoutDimensions = getLayoutDimensions();
 
-                const minLimit = getMinHeight(widgets, insightsMap, customWidgetsRestrictions.heightLimit);
-                const maxLimit = getMaxHeight(widgets, insightsMap);
+                const minLimit = getMinHeight(
+                    layoutItems,
+                    insightsMap,
+                    screen,
+                    settings,
+                    customWidgetsRestrictions.heightLimit,
+                );
+                const maxLimit = getMaxHeight(layoutItems, insightsMap, screen, settings);
                 const heightsGR = getHeightsGR(items, insightsMap, screen, settings);
 
                 return {
@@ -70,8 +77,14 @@ export function HeightResizerHotspot({
                 const scrollCorrection = getScrollCorrection();
 
                 const { sectionIndex, itemIndexes, widgetHeights } = item;
-                const minLimit = getMinHeight(widgets, insightsMap, customWidgetsRestrictions.heightLimit);
-                const maxLimit = getMaxHeight(widgets, insightsMap);
+                const minLimit = getMinHeight(
+                    layoutItems,
+                    insightsMap,
+                    screen,
+                    settings,
+                    customWidgetsRestrictions.heightLimit,
+                );
+                const maxLimit = getMaxHeight(layoutItems, insightsMap, screen, settings);
                 const newHeightGR = getNewHeightGR(
                     widgetHeights,
                     monitor.getDifferenceFromInitialOffset()?.y || 0,
@@ -85,7 +98,7 @@ export function HeightResizerHotspot({
             },
         },
 
-        [widgets, insightsMap, customWidgetsRestrictions.heightLimit],
+        [layoutItems, insightsMap, customWidgetsRestrictions.heightLimit, screen, settings],
     );
 
     useEffect(() => {
@@ -126,7 +139,7 @@ export function HeightResizerHotspot({
 }
 
 export function getHeightsGR(
-    items: IDashboardLayoutItemFacade<unknown>[],
+    items: IDashboardLayoutItemFacade<ExtendedDashboardWidget>[],
     insightMap: ObjRefMap<IInsight>,
     screen: ScreenSize,
     settings: ISettings,
@@ -134,12 +147,8 @@ export function getHeightsGR(
     return items.reduce((acc, item) => {
         const currentSize = item.sizeForScreen(screen);
         const widgetMinHeightPX =
-            calculateWidgetMinHeight(
-                item.widget() as ExtendedDashboardWidget,
-                currentSize,
-                insightMap,
-                settings,
-            ) ?? DEFAULT_WIDTH_RESIZER_HEIGHT;
+            calculateWidgetMinHeight(item.raw(), currentSize, insightMap, settings) ??
+            DEFAULT_WIDTH_RESIZER_HEIGHT;
         const curHeightGR = fluidLayoutDescriptor.toGridHeight(widgetMinHeightPX);
         const gridHeight = item.sizeForScreen(screen)?.gridHeight ?? curHeightGR;
         return [...acc, gridHeight];

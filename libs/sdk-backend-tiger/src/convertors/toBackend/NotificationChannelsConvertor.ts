@@ -7,6 +7,7 @@ import {
     DefaultSmtp,
     Webhook,
     JsonApiNotificationChannelOutAttributesAllowedRecipientsEnum,
+    JsonApiNotificationChannelOutAttributesDashboardLinkVisibilityEnum,
 } from "@gooddata/api-client-tiger";
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
@@ -24,6 +25,7 @@ import {
     IWebhookNotificationChannelMetadataObjectDefinition,
     isNotificationChannelMetadataObject,
     NotificationChannelDestinationType,
+    NotificationChannelDashboardLinkVisibility,
 } from "@gooddata/sdk-model";
 
 type BackendReturnType<T> = T extends INotificationChannelMetadataObject
@@ -64,6 +66,7 @@ function convertSharedNotificationChannelPropertiesToBackend<
             name: channel.title,
             description: channel.description,
             customDashboardUrl: channel.customDashboardUrl,
+            dashboardLinkVisibility: convertDashboardLinkVisibility(channel.dashboardLinkVisibility),
             allowedRecipients: convertAllowedRecipientsToBackend(channel.allowedRecipients),
         },
     };
@@ -210,5 +213,18 @@ function convertNotificationChannelTypeToBackend(
         default:
             assertNever(type);
             return [DeclarativeNotificationChannelDestinationTypeEnum.WEBHOOK];
+    }
+}
+
+function convertDashboardLinkVisibility(type?: NotificationChannelDashboardLinkVisibility) {
+    switch (type) {
+        case "hidden":
+            return JsonApiNotificationChannelOutAttributesDashboardLinkVisibilityEnum.HIDDEN;
+        case "visible":
+            return JsonApiNotificationChannelOutAttributesDashboardLinkVisibilityEnum.ALL;
+        case "internalOnly":
+            return JsonApiNotificationChannelOutAttributesDashboardLinkVisibilityEnum.INTERNAL_ONLY;
+        default:
+            return undefined;
     }
 }

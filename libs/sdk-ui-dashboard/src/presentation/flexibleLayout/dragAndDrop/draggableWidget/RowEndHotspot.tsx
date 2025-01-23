@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { IDashboardWidget } from "@gooddata/sdk-model";
 import cx from "classnames";
 import React from "react";
@@ -15,10 +15,11 @@ import { getRemainingWidthInRow } from "../../rowEndHotspotHelper.js";
 
 export type RowEndHotspotProps<TWidget = IDashboardWidget> = {
     item: IDashboardLayoutItemFacade<TWidget>;
+    rowIndex: number;
 };
 
 export const RowEndHotspot = (props: RowEndHotspotProps<unknown>) => {
-    const { item } = props;
+    const { item, rowIndex } = props;
 
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const screen = useScreenSize();
@@ -60,6 +61,7 @@ export const RowEndHotspot = (props: RowEndHotspotProps<unknown>) => {
                     "gd-fluidlayout-column-row-end-hotspot",
                     {
                         "gd-fluidlayout-column-dropzone__text--hidden": remainingGridWidth < 2,
+                        "gd-first-container-row-dropzone": rowIndex === 0,
                     },
                 )}
             >
