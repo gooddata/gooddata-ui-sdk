@@ -2,6 +2,18 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "10.18.0",
+            "tag": "@gooddata/sdk-ui-all_v10.18.0",
+            "date": "Thu, 23 Jan 2025 08:58:58 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Introduce NotificationPanel component."
+                    }
+                ]
+            }
+        },
+        {
             "version": "10.17.0",
             "tag": "@gooddata/sdk-ui-all_v10.17.0",
             "date": "Thu, 09 Jan 2025 09:00:05 GMT",

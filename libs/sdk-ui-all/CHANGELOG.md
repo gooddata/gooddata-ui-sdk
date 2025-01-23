@@ -1,6 +1,14 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 09 Jan 2025 09:00:05 GMT and should not be manually modified.
+This log was last generated on Thu, 23 Jan 2025 08:58:58 GMT and should not be manually modified.
+
+## 10.18.0
+
+Thu, 23 Jan 2025 08:58:58 GMT
+
+### Updates
+
+-   Introduce NotificationPanel component.
 
 ## 10.17.0
 
