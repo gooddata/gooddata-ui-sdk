@@ -1,6 +1,10 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useCallback } from "react";
-import { selectEnableAutomations } from "../../store/index.js";
+import {
+    selectAutomationsIsInitialized,
+    selectAutomationsIsLoading,
+    selectEnableAutomations,
+} from "../../store/index.js";
 import { useDashboardDispatch, useDashboardSelector } from "../DashboardStoreProvider.js";
 import {
     refreshAutomations as refreshAutomationsCommand,
@@ -8,6 +12,7 @@ import {
 } from "../../commands/index.js";
 
 /**
+ *
  * @alpha
  */
 export const useDashboardAutomations = () => {
@@ -15,13 +20,15 @@ export const useDashboardAutomations = () => {
 
     // Feature Flags
     const enableAutomations = useDashboardSelector(selectEnableAutomations);
+    const isInitialized = useDashboardSelector(selectAutomationsIsInitialized);
+    const isLoading = useDashboardSelector(selectAutomationsIsLoading);
 
     // Data initialization
     const initializeAutomations = useCallback(() => {
-        if (enableAutomations) {
+        if (enableAutomations && !isInitialized && !isLoading) {
             dispatch(initializeAutomationsCommand());
         }
-    }, [dispatch, enableAutomations]);
+    }, [dispatch, enableAutomations, isInitialized, isLoading]);
 
     // Data Reload
     const refreshAutomations = useCallback(() => {
@@ -31,6 +38,8 @@ export const useDashboardAutomations = () => {
     }, [dispatch, enableAutomations]);
 
     return {
+        isInitialized,
+        isLoading,
         refreshAutomations,
         initializeAutomations,
     };

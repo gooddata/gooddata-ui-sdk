@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 @use "fixed-data-table-2/dist/fixed-data-table.css";
 @use "sass:color";
 @use "animations";
@@ -209,13 +209,15 @@ $menu-item-icon-width: 30px;
         }
 
         &.is-submenu {
-            &::after {
-                @extend %menu-item-icon;
+            &:not(.is-loading) {
+                &::after {
+                    @extend %menu-item-icon;
 
-                content: "\E611";
-                right: 0;
-                width: $menu-item-icon-width;
-                font-size: 14px;
+                    content: "\E611";
+                    right: 0;
+                    width: $menu-item-icon-width;
+                    font-size: 14px;
+                }
             }
         }
     }
