@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { FormattedMessage, defineMessages } from "react-intl";
@@ -24,6 +24,7 @@ export interface ResizeOverlayProps {
     reachedWidthLimit: ReachedResizingLimit;
     reachedHeightLimit: ReachedResizingLimit;
     isOverNestedLayout?: boolean;
+    isInFirstRow?: boolean;
 }
 
 function getMessage({
@@ -69,7 +70,7 @@ function getStatus({
 
 export function ResizeOverlay(props: ResizeOverlayProps) {
     const status = getStatus(props);
-    const { isOverNestedLayout = false } = props;
+    const { isOverNestedLayout = false, isInFirstRow = false } = props;
 
     if (status === ResizeOverlayStatus.None) {
         return null;
@@ -82,6 +83,7 @@ export function ResizeOverlay(props: ResizeOverlayProps) {
         active: isActive,
         error: isInError,
         squared: isOverNestedLayout,
+        "gd-first-container-row-widget": isInFirstRow && !isOverNestedLayout,
     });
 
     const message = getMessage({

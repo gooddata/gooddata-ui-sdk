@@ -150,6 +150,8 @@
             background: variables.$gd-palette-primary-base-mix15-white;
         }
         &.squared {
+            top: 0;
+            bottom: 0;
             left: 0;
             right: 0;
             margin: 0;
@@ -315,8 +317,15 @@
         height: 100%;
     }
     .gd-resize-overlay {
-        left: -10px;
-        right: -10px;
+        top: 5px;
+        bottom: 5px;
+        left: -5px;
+        right: -5px;
+        border-radius: calc(#{variables.$gd-dashboards-content-widget-borderRadius});
+    }
+
+    .gd-resize-overlay.gd-first-container-row-widget {
+        top: -5px;
     }
 }
 
