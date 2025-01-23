@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { useCallback, useMemo, useState, Dispatch, SetStateAction } from "react";
 import { useIntl } from "react-intl";
@@ -7,6 +7,7 @@ import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 import {
     selectCanCreateAutomation,
     selectExecutionResultByRef,
+    useDashboardAutomations,
     useDashboardSelector,
 } from "../../../../model/index.js";
 
@@ -40,15 +41,31 @@ type UseInsightMenuConfig = {
 
 export const useInsightMenu = (
     config: UseInsightMenuConfig,
-): { menuItems: IInsightMenuItem[]; isMenuOpen: boolean; openMenu: () => void; closeMenu: () => void } => {
+): {
+    initializeMenuItems: () => void;
+    isLoading: boolean;
+    isInitialized: boolean;
+    menuItems: IInsightMenuItem[];
+    isMenuOpen: boolean;
+    openMenu: () => void;
+    closeMenu: () => void;
+} => {
     const { insight, widget } = config;
+    const { initializeAutomations, isLoading, isInitialized } = useDashboardAutomations();
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const closeMenu = useCallback(() => setIsMenuOpen(false), []);
-    const openMenu = useCallback(() => setIsMenuOpen(true), []);
+    const closeMenu = useCallback(() => setIsMenuOpen(false), [setIsMenuOpen]);
+    const openMenu = useCallback(() => {
+        initializeAutomations();
+        setIsMenuOpen(true);
+    }, [initializeAutomations, setIsMenuOpen]);
 
     const { insightMenuItemsProvider } = useDashboardCustomizationsContext();
-    const defaultMenuItems = useDefaultMenuItems(config, setIsMenuOpen);
+    const defaultMenuItems = useDefaultMenuItems(config, {
+        setIsMenuOpen,
+        isAutomationsInitialized: isInitialized,
+        isAutomationsLoading: isLoading,
+    });
 
     const menuItems = useMemo<IInsightMenuItem[]>(() => {
         return insightMenuItemsProvider && insight
@@ -56,10 +73,29 @@ export const useInsightMenu = (
             : defaultMenuItems;
     }, [insightMenuItemsProvider, insight, widget, defaultMenuItems, closeMenu]);
 
-    return { menuItems, isMenuOpen, openMenu, closeMenu };
+    return {
+        initializeMenuItems: initializeAutomations,
+        isLoading,
+        isInitialized,
+        menuItems,
+        isMenuOpen,
+        openMenu,
+        closeMenu,
+    };
 };
 
-function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispatch<SetStateAction<boolean>>) {
+function useDefaultMenuItems(
+    config: UseInsightMenuConfig,
+    {
+        setIsMenuOpen,
+        isAutomationsInitialized,
+        isAutomationsLoading,
+    }: {
+        setIsMenuOpen: Dispatch<SetStateAction<boolean>>;
+        isAutomationsInitialized: boolean;
+        isAutomationsLoading: boolean;
+    },
+) {
     const {
         exportCSVEnabled,
         exportXLSXEnabled,
@@ -112,6 +148,8 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
             alertingDisabled,
             alertingDisabledReason,
             canCreateAutomation,
+            isAutomationsInitialized,
+            isAutomationsLoading,
         });
     }, [
         intl,
@@ -132,5 +170,7 @@ function useDefaultMenuItems(config: UseInsightMenuConfig, setIsMenuOpen: Dispat
         scheduleExportDisabledReason,
         alertingDisabledReason,
         canCreateAutomation,
+        isAutomationsInitialized,
+        isAutomationsLoading,
     ]);
 }

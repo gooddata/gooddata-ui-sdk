@@ -2440,6 +2440,8 @@ export interface IItemProps {
     // (undocumented)
     disabled?: boolean;
     // (undocumented)
+    isLoading?: boolean;
+    // (undocumented)
     onClick?: (e: React_2.MouseEvent<HTMLDivElement>) => void;
     // (undocumented)
     style?: React_2.CSSProperties;
@@ -3909,6 +3911,8 @@ export interface ISingleSelectListItemProps {
     icon?: string | ReactNode;
     // (undocumented)
     info?: string | ReactNode;
+    // (undocumented)
+    isLoading?: boolean;
     // (undocumented)
     isSelected?: boolean;
     // (undocumented)

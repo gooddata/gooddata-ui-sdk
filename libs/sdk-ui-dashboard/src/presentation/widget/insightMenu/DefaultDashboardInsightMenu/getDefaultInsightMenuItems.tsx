@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
 import { IntlShape } from "react-intl";
 import compact from "lodash/compact.js";
@@ -38,6 +38,8 @@ export function getDefaultInsightMenuItems(
         alertingDisabled: boolean;
         alertingDisabledReason?: AlertingDisabledReason;
         canCreateAutomation: boolean;
+        isAutomationsInitialized: boolean;
+        isAutomationsLoading: boolean;
     },
 ): IInsightMenuItem[] {
     const {
@@ -57,6 +59,8 @@ export function getDefaultInsightMenuItems(
         alertingDisabled,
         alertingDisabledReason,
         canCreateAutomation,
+        isAutomationsInitialized,
+        isAutomationsLoading,
     } = config;
 
     const defaultWidgetTooltip = isDataError
@@ -134,6 +138,7 @@ export function getDefaultInsightMenuItems(
                     ? alertingForInsightNotEnabledTooltip
                     : undefined,
             disabled: alertingDisabled,
+            isLoading: !isAutomationsInitialized || isAutomationsLoading,
         },
         isSomeScheduleVisible && {
             itemId: "SchedulingSeparator",
@@ -155,6 +160,7 @@ export function getDefaultInsightMenuItems(
                     : undefined,
             icon: "gd-icon-clock",
             className: "s-options-menu-schedule-export",
+            isLoading: !isAutomationsInitialized || isAutomationsLoading,
         },
         isScheduleExportManagementVisible && {
             type: "button",
@@ -167,6 +173,7 @@ export function getDefaultInsightMenuItems(
             tooltip: defaultWidgetTooltip,
             icon: canCreateAutomation ? "gd-icon-list" : "gd-icon-clock",
             className: "s-options-menu-schedule-export-edit",
+            isLoading: !isAutomationsInitialized || isAutomationsLoading,
         },
     ];
 

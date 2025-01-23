@@ -152,6 +152,11 @@
         "comment": "Translate as imperative. Schedule alerts for dashboard or widget, without create permissions.",
         "limit": 0
     },
+    "options.menu.loading.tooltip": {
+        "value": "Loading actions…",
+        "comment": "Tooltip of the skeleton item, when menu is loading required data. Use '…' as one character, not 3 dots ('...').",
+        "limit": 0
+    },
     "options.menu.delete": {
         "value": "Delete",
         "comment": "Delete Dashboard",
@@ -1202,6 +1207,11 @@
     "widget.options.menu.scheduleExport.edit": {
         "value": "Show schedules",
         "comment": "",
+        "limit": 0
+    },
+    "widget.options.menu.loading.tooltip": {
+        "value": "Loading actions…",
+        "comment": "Tooltip of the skeleton item, when widget menu is loading required data. Use '…' as one character, not 3 dots ('...').",
         "limit": 0
     },
     "widget.error.missing_insight.message": {
