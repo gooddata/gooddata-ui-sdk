@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-examples",
-    "version": "10.18.0",
+    "version": "10.19.0-alpha.34",
     "description": "GoodData React interactive examples",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",
