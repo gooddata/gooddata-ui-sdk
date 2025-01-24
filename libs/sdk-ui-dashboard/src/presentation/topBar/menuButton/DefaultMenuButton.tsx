@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import React, { useCallback, useMemo, useState } from "react";
 import cx from "classnames";
 import {
@@ -13,8 +13,7 @@ import {
 import { useIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
 
-import { IMenuButtonItem, IMenuButtonProps } from "./types.js";
-import { useDashboardAutomations } from "../../../model/index.js";
+import { IMenuButtonProps } from "./types.js";
 
 const ALIGN_POINTS_TOOLTIP = [{ align: "bc tr" }, { align: "cl cr" }];
 const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
@@ -33,16 +32,9 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
     // dashboard components
     const dropdownAnchorClassName = useMemo(() => `dash-header-options-anchor-${uuid()}`, []);
 
-    const { initializeAutomations, isInitialized, isLoading } = useDashboardAutomations();
-
     const onMenuButtonClick = useCallback(() => {
-        initializeAutomations();
         setIsOpen((prevIsOpen) => !prevIsOpen);
-    }, [initializeAutomations, setIsOpen]);
-
-    const onMenuButtonClose = useCallback(() => {
-        setIsOpen(false);
-    }, [setIsOpen]);
+    }, []);
 
     const visibleMenuItems = useMemo(() => menuItems.filter((item) => item.visible !== false), [menuItems]);
 
@@ -57,8 +49,6 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
         return null;
     }
 
-    const isLoadingActions = !isInitialized || isLoading;
-
     const renderMenuItems = () => {
         return (
             <Overlay
@@ -71,27 +61,62 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
                 onClose={onMenuButtonClick}
             >
                 <ItemsWrapper smallItemsSpacing>
-                    {isLoadingActions ? (
-                        <DefaultMenuButtonItem
-                            menuItem={{
-                                tooltip: intl.formatMessage({ id: "options.menu.loading.tooltip" }),
-                                itemName: intl.formatMessage({ id: "options.menu.loading.tooltip" }),
-                                itemId: "loading",
-                                type: "button",
-                                disabled: true,
-                                isLoading: true,
-                            }}
-                            onClose={onMenuButtonClose}
-                        />
-                    ) : (
-                        visibleMenuItems.map((menuItem) => (
-                            <DefaultMenuButtonItem
+                    {visibleMenuItems.map((menuItem) => {
+                        if (menuItem.type === "separator") {
+                            return (
+                                <SingleSelectListItem
+                                    key={menuItem.itemId}
+                                    type={menuItem.type}
+                                    className={menuItem.className}
+                                />
+                            );
+                        }
+
+                        if (menuItem.type === "header") {
+                            return (
+                                <SingleSelectListItem
+                                    key={menuItem.itemId}
+                                    type={menuItem.type}
+                                    title={menuItem.itemName}
+                                    className={menuItem.className}
+                                />
+                            );
+                        }
+
+                        const selectorClassName = `gd-menu-item-${menuItem.itemId}`;
+                        const body = (
+                            <SingleSelectListItem
+                                className={cx("gd-menu-item", menuItem.className, `s-${menuItem.itemId}`, {
+                                    [selectorClassName]: menuItem.tooltip,
+                                    "is-disabled": menuItem.disabled,
+                                })}
                                 key={menuItem.itemId}
-                                menuItem={menuItem}
-                                onClose={onMenuButtonClose}
+                                title={menuItem.itemName}
+                                icon={menuItem.icon}
+                                onClick={
+                                    menuItem.disabled
+                                        ? undefined
+                                        : () => {
+                                              menuItem.onClick?.();
+                                              setIsOpen(false);
+                                          }
+                                }
                             />
-                        ))
-                    )}
+                        );
+
+                        if (!menuItem.tooltip) {
+                            return body;
+                        }
+
+                        return (
+                            <BubbleHoverTrigger key={menuItem.itemId} eventsOnBubble={true}>
+                                {body}
+                                <Bubble alignTo={`.${selectorClassName}`} alignPoints={bubbleAlignPoints}>
+                                    <span>{menuItem.tooltip}</span>
+                                </Bubble>
+                            </BubbleHoverTrigger>
+                        );
+                    })}
                 </ItemsWrapper>
             </Overlay>
         );
@@ -122,53 +147,3 @@ export const DefaultMenuButton = (props: IMenuButtonProps): JSX.Element | null =
         </>
     );
 };
-
-function DefaultMenuButtonItem({ menuItem, onClose }: { menuItem: IMenuButtonItem; onClose: () => void }) {
-    if (menuItem.type === "separator") {
-        return <SingleSelectListItem type={menuItem.type} className={menuItem.className} />;
-    }
-
-    if (menuItem.type === "header") {
-        return (
-            <SingleSelectListItem
-                type={menuItem.type}
-                title={menuItem.itemName}
-                className={menuItem.className}
-            />
-        );
-    }
-
-    const selectorClassName = `gd-menu-item-${menuItem.itemId}`;
-    const body = (
-        <SingleSelectListItem
-            className={cx("gd-menu-item", menuItem.className, `s-${menuItem.itemId}`, {
-                [selectorClassName]: menuItem.tooltip,
-                "is-disabled": menuItem.disabled,
-            })}
-            title={menuItem.itemName}
-            icon={menuItem.icon}
-            isLoading={menuItem.isLoading}
-            onClick={
-                menuItem.disabled
-                    ? undefined
-                    : () => {
-                          menuItem.onClick?.();
-                          onClose();
-                      }
-            }
-        />
-    );
-
-    if (!menuItem.tooltip) {
-        return body;
-    }
-
-    return (
-        <BubbleHoverTrigger eventsOnBubble={true}>
-            {body}
-            <Bubble alignTo={`.${selectorClassName}`} alignPoints={bubbleAlignPoints}>
-                <span>{menuItem.tooltip}</span>
-            </Bubble>
-        </BubbleHoverTrigger>
-    );
-}

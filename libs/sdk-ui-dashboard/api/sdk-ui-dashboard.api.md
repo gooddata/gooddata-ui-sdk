@@ -3803,8 +3803,6 @@ export function getDefaultInsightMenuItems(intl: IntlShape, config: {
     alertingDisabled: boolean;
     alertingDisabledReason?: AlertingDisabledReason;
     canCreateAutomation: boolean;
-    isAutomationsInitialized: boolean;
-    isAutomationsLoading: boolean;
 }): IInsightMenuItem[];
 
 // @internal (undocumented)
@@ -4844,7 +4842,6 @@ export interface IInsightMenuItemButton {
     disabled?: boolean;
     // (undocumented)
     icon?: JSX.Element | string;
-    isLoading?: boolean;
     // (undocumented)
     itemId: string;
     // (undocumented)
@@ -4871,7 +4868,6 @@ export interface IInsightMenuSubmenu {
     disabled?: boolean;
     // (undocumented)
     icon?: JSX.Element | string;
-    isLoading?: boolean;
     // (undocumented)
     itemId: string;
     // (undocumented)
@@ -4954,8 +4950,6 @@ export interface IMenuButtonItemButton extends IMenuItemCommonProps {
     disabled?: boolean;
     // (undocumented)
     icon?: string | ReactNode;
-    // (undocumented)
-    isLoading?: boolean;
     // (undocumented)
     itemName: string;
     // (undocumented)
@@ -9037,8 +9031,6 @@ export const useDashboardAsyncRender: (id: string) => UseDashboardAsyncRender;
 
 // @alpha (undocumented)
 export const useDashboardAutomations: () => {
-    isInitialized: boolean;
-    isLoading: boolean;
     refreshAutomations: () => void;
     initializeAutomations: () => void;
 };

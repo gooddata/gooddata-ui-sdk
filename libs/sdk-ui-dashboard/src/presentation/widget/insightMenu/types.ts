@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2024 GoodData Corporation
 import { ComponentType, MouseEvent, ReactNode } from "react";
 import { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 import { RenderMode } from "../../../types.js";
@@ -25,11 +25,6 @@ export interface IInsightMenuItemButton {
      * Additional class names to be applied to the item.
      */
     className?: string;
-
-    /**
-     * Is loading additional data, required for the item?
-     */
-    isLoading?: boolean;
 }
 /**
  * @beta
@@ -90,11 +85,6 @@ export interface IInsightMenuSubmenu {
      */
     className?: string;
     onClick?: (e: MouseEvent) => void;
-
-    /**
-     * Is loading additional data, required for the submenu?
-     */
-    isLoading?: boolean;
 }
 
 export function isIInsightMenuSubmenu(obj: IInsightMenuItem): obj is IInsightMenuSubmenu {

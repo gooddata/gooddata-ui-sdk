@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React from "react";
 import classnames from "classnames";
 
@@ -66,7 +66,6 @@ export interface IItemProps {
     children: React.ReactNode;
     className?: string;
     style?: React.CSSProperties;
-    isLoading?: boolean;
     onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
@@ -77,7 +76,6 @@ export const Item: React.FC<IItemProps> = ({
     checked = false,
     subMenu = false,
     disabled = false,
-    isLoading = false,
     className,
     children,
     style,
@@ -91,7 +89,6 @@ export const Item: React.FC<IItemProps> = ({
                 "is-checked": checked,
                 "is-submenu": subMenu,
                 "is-disabled": disabled,
-                "is-loading": isLoading,
             },
             className,
         )}

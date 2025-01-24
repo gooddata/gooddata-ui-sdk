@@ -10,6 +10,7 @@ import {
     selectFocusObject,
     selectEnableAutomations,
     selectEnableInPlatformNotifications,
+    selectEnableScheduling,
     selectIsReadOnly,
 } from "../../store/config/configSelectors.js";
 import { automationsActions } from "../../store/automations/index.js";
@@ -53,7 +54,7 @@ export function* initializeAutomationsHandler(
     const canManageAutomations: ReturnType<typeof selectCanManageWorkspace> = yield select(
         selectCanManageWorkspace,
     );
-    const enableAutomations: ReturnType<typeof selectEnableAutomations> = yield select(
+    const enableAutomations: ReturnType<typeof selectEnableScheduling> = yield select(
         selectEnableAutomations,
     );
     const enableInPlatformNotifications: ReturnType<typeof selectEnableInPlatformNotifications> =
@@ -126,7 +127,6 @@ export function* initializeAutomationsHandler(
                 automationsActions.setUserAutomations(automations),
                 automationsActions.setAllAutomationsCount(allAutomationsCount),
                 notificationChannelsActions.setNotificationChannels(notificationChannels),
-                notificationChannelsActions.setNotificationChannelsCount(notificationChannels.length),
             ]),
         );
     } catch (e) {
