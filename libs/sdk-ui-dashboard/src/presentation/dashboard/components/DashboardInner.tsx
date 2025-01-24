@@ -1,11 +1,12 @@
-// (C) 2022-2025 GoodData Corporation
-import React, { RefObject, useRef } from "react";
+// (C) 2022-2024 GoodData Corporation
+import React, { RefObject, useEffect, useRef } from "react";
 import cx from "classnames";
 import { IntlWrapper } from "../../localization/index.js";
 import {
     useDashboardSelector,
     selectLocale,
     selectIsInEditMode,
+    useDashboardAutomations,
     selectEnableFlexibleLayout,
 } from "../../../model/index.js";
 import { DashboardHeader } from "../DashboardHeader/DashboardHeader.js";
@@ -38,6 +39,11 @@ export const DashboardInner: React.FC<IDashboardProps> = (props) => {
     const bottomRef = useRef(null);
 
     useDashboardDragScroll(layoutRef, headerRef, bottomRef);
+    const { initializeAutomations } = useDashboardAutomations();
+
+    useEffect(() => {
+        initializeAutomations();
+    }, [initializeAutomations]);
 
     const DragLayerComponent = isFlexibleLayoutEnabled
         ? FlexibleDragLayerComponent

@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import React, { useState } from "react";
 import { Separator } from "@gooddata/sdk-ui-kit";
 
@@ -10,7 +10,6 @@ import { selectRenderMode, useDashboardSelector } from "../../../../../model/ind
 import { DashboardInsightMenuBubble } from "./DashboardInsightMenuBubble.js";
 import { DashboardInsightEditMenuBubble } from "./DashboardInsightEditMenuBubble.js";
 import { RenderMode } from "../../../../../types.js";
-import { useIntl } from "react-intl";
 
 export const DashboardInsightMenuBody: React.FC<
     IDashboardInsightMenuProps & {
@@ -80,19 +79,6 @@ type DashboardInsightMenuRootProps = {
     setSubmenu: React.Dispatch<React.SetStateAction<IInsightMenuSubmenu | null>>;
 };
 const DashboardInsightMenuRoot: React.FC<DashboardInsightMenuRootProps> = ({ items, setSubmenu }) => {
-    const intl = useIntl();
-    if (items.some((item) => (item.type === "button" || item.type === "submenu") && item.isLoading)) {
-        return (
-            <DashboardInsightMenuItemButton
-                isLoading
-                disabled
-                itemId="loading"
-                itemName="Loading"
-                tooltip={intl.formatMessage({ id: "widget.options.menu.loading.tooltip" })}
-            />
-        );
-    }
-
     return (
         <>
             {items.map((item) => {

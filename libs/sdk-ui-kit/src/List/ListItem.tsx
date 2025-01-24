@@ -1,10 +1,9 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2024 GoodData Corporation
 import React, { Component, ReactNode, createRef } from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
 
 import { Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
-import { UiSkeleton } from "../@ui/UiSkeleton/UiSkeleton.js";
 
 const BUBBLE_OFFSET_X = 16;
 
@@ -25,7 +24,6 @@ export interface ISingleSelectListItemProps {
     eventsOnBubble?: boolean;
     hideDelayBubble?: number;
     isSelected?: boolean;
-    isLoading?: boolean;
 
     onClick?: (e: React.MouseEvent<HTMLElement>) => void;
     onMouseOver?: (e: React.MouseEvent<HTMLElement>) => void;
@@ -70,17 +68,14 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
     }
 
     private getClassNames = () => {
-        const { title, isSelected, className, isLoading } = this.props;
+        const { title, isSelected, className } = this.props;
         const generatedSeleniumClass = `s-${stringUtils.simplifyText(title)}`;
 
-        return cx("gd-list-item", className, generatedSeleniumClass, {
-            "is-selected": isSelected,
-            "is-loading": isLoading,
-        });
+        return cx("gd-list-item", className, generatedSeleniumClass, { "is-selected": isSelected });
     };
 
     public render(): JSX.Element {
-        const { icon, onClick, onMouseOver, onMouseOut, type, isLoading } = this.props;
+        const { icon, onClick, onMouseOver, onMouseOut, type } = this.props;
 
         if (type === "separator") {
             return this.renderSeparatorItem();
@@ -90,16 +85,6 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
             return this.renderHeaderItem();
         }
 
-        const content = isLoading ? (
-            <UiSkeleton itemWidth={110} />
-        ) : (
-            <>
-                {this.renderIcon(icon)}
-                {this.renderTitle()}
-                {this.renderInfo()}
-            </>
-        );
-
         return (
             <div
                 className={this.getClassNames()}
@@ -107,7 +92,9 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
                 onMouseOver={onMouseOver}
                 onMouseOut={onMouseOut}
             >
-                {content}
+                {this.renderIcon(icon)}
+                {this.renderTitle()}
+                {this.renderInfo()}
             </div>
         );
     }

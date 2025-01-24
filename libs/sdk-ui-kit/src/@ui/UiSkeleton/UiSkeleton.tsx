@@ -45,31 +45,24 @@ export function UiSkeleton({
     itemsGap = 10,
     direction = "column",
 }: UiSkeletonProps) {
-    const items = Array.from({ length: itemsCount }, (_, idx) => {
-        const height =
-            typeof itemHeight === "number" || typeof itemHeight === "undefined"
-                ? itemHeight
-                : itemHeight[idx];
-        const width =
-            typeof itemWidth === "number" || typeof itemWidth === "undefined" ? itemWidth : itemWidth[idx];
-
-        const isFixedSize = typeof width === "number" && typeof height === "number";
-
-        return (
-            <div
-                className={e("item")}
-                key={idx}
-                style={{
-                    height,
-                    width,
-                    // For fixed sizes, disable shrinking
-                    flexShrink: isFixedSize ? 0 : undefined,
-                }}
-            >
-                <ReactLoadingSkeleton />
-            </div>
-        );
-    });
+    const items = Array.from({ length: itemsCount }, (_, idx) => (
+        <div
+            className={e("item")}
+            key={idx}
+            style={{
+                height:
+                    typeof itemHeight === "number" || typeof itemHeight === "undefined"
+                        ? itemHeight
+                        : itemHeight[idx],
+                width:
+                    typeof itemWidth === "number" || typeof itemWidth === "undefined"
+                        ? itemWidth
+                        : itemWidth[idx],
+            }}
+        >
+            <ReactLoadingSkeleton />
+        </div>
+    ));
 
     const style = useMemo(() => ({ gap: itemsGap }), [itemsGap]);
 

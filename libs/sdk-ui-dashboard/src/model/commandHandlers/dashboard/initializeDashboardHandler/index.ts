@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2024 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { all, call, put, SagaReturnType } from "redux-saga/effects";
 import { InitializeDashboard } from "../../../commands/dashboard.js";
@@ -45,6 +45,8 @@ import { createDisplayFormMapFromCatalog } from "../../../../_staging/catalog/di
 import { getPrivateContext } from "../../../store/_infra/contexts.js";
 import { accessibleDashboardsActions } from "../../../store/accessibleDashboards/index.js";
 import { loadAccessibleDashboardList } from "./loadAccessibleDashboardList.js";
+import { loadLegacyDashboards } from "./loadLegacyDashboards.js";
+import { legacyDashboardsActions } from "../../../store/legacyDashboards/index.js";
 import uniqBy from "lodash/uniqBy.js";
 import { loadDashboardPermissions } from "./loadDashboardPermissions.js";
 import { dashboardPermissionsActions } from "../../../store/dashboardPermissions/index.js";
@@ -52,8 +54,12 @@ import { resolveEntitlements } from "./resolveEntitlements.js";
 import { attributeFilterConfigsActions } from "../../../store/attributeFilterConfigs/index.js";
 import { dateFilterConfigsActions } from "../../../store/dateFilterConfigs/index.js";
 import { loadDateHierarchyTemplates } from "./loadDateHierarchyTemplates.js";
+import { automationsActions } from "../../../store/automations/index.js";
+import { notificationChannelsActions } from "../../../store/notificationChannels/index.js";
 import { filterViewsActions } from "../../../store/filterViews/index.js";
 import { loadFilterViews } from "./loadFilterViews.js";
+import { loadWorkspaceAutomationsCount } from "../common/loadWorkspaceAutomationsCount.js";
+import { loadNotificationChannelsCount } from "../common/loadNotificationChannelsCount.js";
 import { applyDefaultFilterView } from "../common/filterViews.js";
 
 async function loadDashboardFromBackend(
@@ -161,6 +167,7 @@ function* loadExistingDashboard(
         call(loadDashboardAlerts, ctx),
         call(loadUser, ctx),
         call(loadDashboardList, ctx),
+        call(loadLegacyDashboards, ctx),
         call(loadDashboardPermissions, ctx),
         call(loadDateHierarchyTemplates, ctx),
         call(loadFilterViews, ctx),
@@ -179,6 +186,7 @@ function* loadExistingDashboard(
         alerts,
         user,
         listedDashboards,
+        legacyDashboards,
         dashboardPermissions,
         dateHierarchyTemplates,
         filterViews,
@@ -192,6 +200,7 @@ function* loadExistingDashboard(
         PromiseFnReturnType<typeof loadDashboardAlerts>,
         PromiseFnReturnType<typeof loadUser>,
         PromiseFnReturnType<typeof loadDashboardList>,
+        PromiseFnReturnType<typeof loadLegacyDashboards>,
         PromiseFnReturnType<typeof loadDashboardPermissions>,
         PromiseFnReturnType<typeof loadDateHierarchyTemplates>,
         PromiseFnReturnType<typeof loadFilterViews>,
@@ -225,6 +234,17 @@ function* loadExistingDashboard(
         cmd.payload.persistedDashboard,
     );
 
+    // After FF removal, we can move this to other calls and call it in parallel
+    const ffCalls = [
+        call(loadWorkspaceAutomationsCount, ctx, config.settings),
+        call(loadNotificationChannelsCount, ctx, config.settings),
+    ];
+
+    const [allAutomationsCount, notificationChannelsCount]: [
+        PromiseFnReturnType<typeof loadWorkspaceAutomationsCount>, // todo: split alerts vs schedules, later move to dialogs
+        PromiseFnReturnType<typeof loadNotificationChannelsCount>,
+    ] = yield all(ffCalls);
+
     const batch: BatchAction = batchActions(
         [
             backendCapabilitiesActions.setBackendCapabilities(backend.capabilities),
@@ -255,9 +275,12 @@ function* loadExistingDashboard(
             }),
             listedDashboardsActions.setListedDashboards(listedDashboards),
             accessibleDashboardsActions.setAccessibleDashboards(accessibleDashboards || listedDashboards),
+            legacyDashboardsActions.setLegacyDashboards(legacyDashboards),
             uiActions.setMenuButtonItemsVisibility(config.menuButtonItemsVisibility),
             renderModeActions.setRenderMode(config.initialRenderMode),
             dashboardPermissionsActions.setDashboardPermissions(dashboardPermissions),
+            automationsActions.setAllAutomationsCount(allAutomationsCount),
+            notificationChannelsActions.setNotificationChannelsCount(notificationChannelsCount),
             filterViewsActions.setFilterViews({
                 dashboard: ctx.dashboardRef!, // should be defined as we are in existing dashboard load fn
                 filterViews,
@@ -287,6 +310,7 @@ function* initializeNewDashboard(
         user,
         listedDashboards,
         accessibleDashboards,
+        legacyDashboards,
         dateHierarchyTemplates,
     ]: [
         SagaReturnType<typeof resolveDashboardConfig>,
@@ -296,6 +320,7 @@ function* initializeNewDashboard(
         PromiseFnReturnType<typeof loadUser>,
         PromiseFnReturnType<typeof loadDashboardList>,
         PromiseFnReturnType<typeof loadAccessibleDashboardList>,
+        PromiseFnReturnType<typeof loadLegacyDashboards>,
         PromiseFnReturnType<typeof loadDateHierarchyTemplates>,
     ] = yield all([
         call(resolveDashboardConfig, ctx, cmd),
@@ -305,9 +330,21 @@ function* initializeNewDashboard(
         call(loadUser, ctx),
         call(loadDashboardList, ctx),
         call(loadAccessibleDashboardList, ctx),
+        call(loadLegacyDashboards, ctx),
         call(loadDateHierarchyTemplates, ctx),
         call(loadFilterViews, ctx),
     ]);
+
+    // After FF removal, we can move this to other calls and call it in parallel
+    const ffCalls = [
+        call(loadWorkspaceAutomationsCount, ctx, config.settings),
+        call(loadNotificationChannelsCount, ctx, config.settings),
+    ];
+
+    const [allAutomationsCount, notificationChannelsCount]: [
+        PromiseFnReturnType<typeof loadWorkspaceAutomationsCount>,
+        PromiseFnReturnType<typeof loadNotificationChannelsCount>,
+    ] = yield all(ffCalls);
 
     const batch: BatchAction = batchActions(
         [
@@ -326,6 +363,7 @@ function* initializeNewDashboard(
             }),
             listedDashboardsActions.setListedDashboards(listedDashboards),
             accessibleDashboardsActions.setAccessibleDashboards(accessibleDashboards),
+            legacyDashboardsActions.setLegacyDashboards(legacyDashboards),
             executionResultsActions.clearAllExecutionResults(),
             ...actionsToInitializeNewDashboard(config.dateFilterConfig),
             dateFilterConfigActions.setDateFilterConfig({
@@ -342,6 +380,8 @@ function* initializeNewDashboard(
                 canEditDashboard: true,
                 canEditLockedDashboard: true,
             }),
+            automationsActions.setAllAutomationsCount(allAutomationsCount),
+            notificationChannelsActions.setNotificationChannelsCount(notificationChannelsCount),
         ],
         "@@GDC.DASH/BATCH.INIT.NEW",
     );
