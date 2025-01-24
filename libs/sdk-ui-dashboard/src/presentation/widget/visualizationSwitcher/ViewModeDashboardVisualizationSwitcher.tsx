@@ -39,6 +39,7 @@ export const ViewModeDashboardVisualizationSwitcher: React.FC<IDashboardVisualiz
         onExportReady,
         onLoadingChanged,
         screen,
+        exportData,
     } = props;
 
     const [activeVisualizationId, setActiveVisualizationId] = React.useState(initialActiveVisualizationId);
@@ -63,6 +64,7 @@ export const ViewModeDashboardVisualizationSwitcher: React.FC<IDashboardVisualiz
                 onExportReady={onExportReady}
                 onLoadingChanged={onLoadingChanged}
                 onActiveVisualizationChange={setActiveVisualizationId}
+                exportData={exportData}
             />
         );
     }
@@ -90,6 +92,7 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
     onError,
     onExportReady,
     onLoadingChanged,
+    exportData,
 }) => {
     const intl = useIntl();
     const visType = insightVisualizationType(insight) as VisType;
@@ -197,6 +200,7 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
                         onActiveVisualizationChange={(activeVisualizationId) =>
                             onActiveVisualizationChange(activeVisualizationId)
                         }
+                        exportData={exportData?.title}
                     />
                 )}
                 renderBeforeVisualization={() => (
@@ -243,6 +247,7 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
                         onLoadingChanged={onLoadingChanged}
                         clientHeight={clientHeight}
                         clientWidth={clientWidth}
+                        exportData={exportData?.widget}
                     />
                 )}
             </DashboardItemVisualization>

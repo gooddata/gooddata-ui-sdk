@@ -6,13 +6,19 @@ import responsiveHOC from "react-lines-ellipsis/lib/responsiveHOC.js";
 const ResponsiveEllipsis = responsiveHOC()(LinesEllipsis);
 
 import { DashboardItemHeadlineContainer } from "./DashboardItemHeadlineContainer.js";
+import { CommonExportDataAttributes } from "../../export/index.js";
 
 interface IDashboardItemHeadlineProps {
     title: string;
     clientHeight?: number;
+    exportData?: CommonExportDataAttributes;
 }
 
-export const DashboardItemHeadline: React.FC<IDashboardItemHeadlineProps> = ({ title, clientHeight }) => {
+export const DashboardItemHeadline: React.FC<IDashboardItemHeadlineProps> = ({
+    title,
+    clientHeight,
+    exportData,
+}) => {
     // actually reference to instance of LinesEllipsis component, but lib has wrong typings
     const elementRef = useRef<HTMLDivElement>(null);
 
@@ -45,7 +51,7 @@ export const DashboardItemHeadline: React.FC<IDashboardItemHeadlineProps> = ({ t
     }, [title, elementWidth]);
 
     return (
-        <DashboardItemHeadlineContainer clientHeight={clientHeight}>
+        <DashboardItemHeadlineContainer clientHeight={clientHeight} exportData={exportData}>
             {truncatedTitlePart}
         </DashboardItemHeadlineContainer>
     );

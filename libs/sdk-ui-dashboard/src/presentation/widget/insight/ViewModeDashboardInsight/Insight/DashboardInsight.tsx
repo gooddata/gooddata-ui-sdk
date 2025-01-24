@@ -83,6 +83,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         onExportReady,
         ErrorComponent: CustomErrorComponent,
         LoadingComponent: CustomLoadingComponent,
+        exportData,
     } = props;
 
     const ref = widgetRef(widget);
@@ -283,7 +284,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
     };
 
     return (
-        <div className={cx("visualization-content", { "in-edit-mode": isInEditMode })}>
+        <div className={cx("visualization-content", { "in-edit-mode": isInEditMode })} {...exportData}>
             <div
                 className={cx("gd-visualization-content", { zoomable: isZoomable })}
                 style={insightPositionStyle}

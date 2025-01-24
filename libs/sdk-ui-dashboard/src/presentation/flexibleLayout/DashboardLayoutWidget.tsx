@@ -62,6 +62,7 @@ import { DashboardItemPathAndSizeProvider } from "../dashboard/components/Dashbo
 import { shouldShowRowEndDropZone } from "./dragAndDrop/draggableWidget/RowEndHotspot.js";
 import { HoverDetector } from "./dragAndDrop/Resize/HoverDetector.js";
 import { useWidthValidation } from "./DefaultDashboardLayoutRenderer/useItemWidthValidation.js";
+import { useWidgetExportData } from "../export/index.js";
 
 /**
  * Tests in KD require widget index for css selectors.
@@ -119,6 +120,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     const isRichText = isRichTextWidget(widget);
     const isRichTextWidgetInEditState = isSelected && isRichText;
     const isNestedLayout = isExtendedDashboardLayoutWidget(widget);
+    const exportData = useWidgetExportData(widget);
 
     const [{ isDragging }, dragRef] = useDashboardDrag(
         {
@@ -244,6 +246,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                             ErrorComponent={ErrorComponent}
                             LoadingComponent={LoadingComponent}
                             rowIndex={rowIndex}
+                            exportData={exportData}
                         />
                     </HoverDetector>
                 </DashboardItemPathAndSizeProvider>

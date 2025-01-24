@@ -393,6 +393,7 @@ export { uiActions } from "./ui/index.js";
 export type { RenderModeState } from "./renderMode/renderModeState.js";
 export {
     selectIsInEditMode,
+    selectIsInExportMode,
     selectIsInViewMode,
     selectRenderMode,
 } from "./renderMode/renderModeSelectors.js";

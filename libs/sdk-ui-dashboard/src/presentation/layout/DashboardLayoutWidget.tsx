@@ -56,6 +56,7 @@ import { getRefsForSection, getRefsForItem } from "./refs.js";
 import { ResizeOverlay } from "./dragAndDrop/Resize/ResizeOverlay.js";
 import { WidthResizerHotspot } from "./dragAndDrop/Resize/WidthResizerHotspot.js";
 import { Hotspot } from "./dragAndDrop/draggableWidget/Hotspot.js";
+import { useWidgetExportData } from "../export/index.js";
 
 /**
  * Tests in KD require widget index for css selectors.
@@ -112,6 +113,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     const { isSelected } = useWidgetSelection(widget.ref);
     const isRichText = isRichTextWidget(widget);
     const isRichTextWidgetInEditState = isSelected && isRichText;
+    const exportData = useWidgetExportData(widget);
 
     const [{ isDragging }, dragRef] = useDashboardDrag(
         {
@@ -201,6 +203,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                     widget={widget as ExtendedDashboardWidget}
                     ErrorComponent={ErrorComponent}
                     LoadingComponent={LoadingComponent}
+                    exportData={exportData}
                 />
             </div>
 

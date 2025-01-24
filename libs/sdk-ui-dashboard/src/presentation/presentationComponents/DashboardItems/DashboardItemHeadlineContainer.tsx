@@ -1,9 +1,11 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { memo } from "react";
+import { CommonExportDataAttributes } from "../../export/index.js";
 
 interface IDashboardItemHeadlineContainerProps {
     children: React.ReactNode;
     clientHeight?: number;
+    exportData?: CommonExportDataAttributes;
 }
 
 const SMALLEST_WIDGET_HEIGHT = 120;
@@ -46,10 +48,20 @@ function getOuterStyle(
 const DashboardItemHeadlineContainerInner: React.FC<{
     hasCustomMargin: boolean;
     isCustomHeightSmall: boolean;
+    exportData?: CommonExportDataAttributes;
     children?: React.ReactNode;
-}> = memo(function DashboardItemHeadlineContainerInner({ hasCustomMargin, isCustomHeightSmall, children }) {
+}> = memo(function DashboardItemHeadlineContainerInner({
+    hasCustomMargin,
+    isCustomHeightSmall,
+    exportData,
+    children,
+}) {
     return (
-        <div className={"item-headline-outer"} style={getOuterStyle(hasCustomMargin, isCustomHeightSmall)}>
+        <div
+            className={"item-headline-outer"}
+            style={getOuterStyle(hasCustomMargin, isCustomHeightSmall)}
+            {...exportData}
+        >
             <div className="item-headline" style={isCustomHeightSmall ? INNER_STYLE_SMALL : undefined}>
                 {children}
             </div>
@@ -60,11 +72,13 @@ const DashboardItemHeadlineContainerInner: React.FC<{
 export const DashboardItemHeadlineContainer: React.FC<IDashboardItemHeadlineContainerProps> = ({
     children,
     clientHeight,
+    exportData,
 }) => {
     return (
         <DashboardItemHeadlineContainerInner
             hasCustomMargin={clientHeight !== undefined ? clientHeight <= SMALL_WIDGET_HEIGHT : false}
             isCustomHeightSmall={isSmallCustomHeight(clientHeight)}
+            exportData={exportData}
         >
             {children}
         </DashboardItemHeadlineContainerInner>

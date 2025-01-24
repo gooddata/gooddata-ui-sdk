@@ -1,7 +1,8 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import { ComponentType } from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IRichTextWidget } from "@gooddata/sdk-model";
+import { WidgetExportDataAttributes } from "../../export/index.js";
 
 ///
 /// Component props
@@ -55,6 +56,13 @@ export interface IDashboardRichTextProps {
      * @alpha
      */
     clientWidth?: number;
+
+    /**
+     * Data for export in export mode.
+     *
+     * @alpha
+     */
+    exportData?: WidgetExportDataAttributes;
 }
 
 ///
