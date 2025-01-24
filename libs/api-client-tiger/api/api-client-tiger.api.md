@@ -8984,6 +8984,9 @@ function isDashboardPluginLink(pluginLink: unknown): pluginLink is IDashboardPlu
 export function isDashboardPluginsItem(dashboardPlugin: unknown): dashboardPlugin is JsonApiDashboardPluginOutWithLinks;
 
 // @public (undocumented)
+export function isDataSetItem(dataSet: unknown): dataSet is JsonApiDatasetOutWithLinks;
+
+// @public (undocumented)
 function isFilterContext(filterContext: unknown): filterContext is IFilterContext;
 
 // @public (undocumented)

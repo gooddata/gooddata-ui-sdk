@@ -84,6 +84,7 @@ const baseConfig: RenderingWorkerConfiguration = {
     correlationIdGenerator: uuidv4,
     isExport: false,
 };
+
 export function newRenderingWorker(renderingWorkerConfig: Partial<RenderingWorkerConfiguration>) {
     return function* renderingWorker(ctx: DashboardContext): SagaIterator<void> {
         const config = { ...baseConfig, ...renderingWorkerConfig };

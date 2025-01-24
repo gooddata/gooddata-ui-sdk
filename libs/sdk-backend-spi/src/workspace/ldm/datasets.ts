@@ -1,5 +1,5 @@
-// (C) 2019-2022 GoodData Corporation
-import { IDataset, IMetadataObject } from "@gooddata/sdk-model";
+// (C) 2019-2025 GoodData Corporation
+import { IDataset, IMetadataObject, ObjRef, IDataSetMetadataObject } from "@gooddata/sdk-model";
 
 /**
  * Service for querying workspace datasets
@@ -20,4 +20,11 @@ export interface IWorkspaceDatasetsService {
      * @returns promise of workspace datasets metadata
      */
     getAllDatasetsMeta(): Promise<IMetadataObject[]>;
+
+    /**
+     * Get all dataSets for given refs
+     *
+     * @returns promise array of workspace dataSets metadata objects
+     */
+    getDataSets(refs: ObjRef[]): Promise<IDataSetMetadataObject[]>;
 }

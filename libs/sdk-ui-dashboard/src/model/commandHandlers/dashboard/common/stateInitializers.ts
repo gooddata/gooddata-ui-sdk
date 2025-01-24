@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { SagaIterator } from "redux-saga";
 import { call } from "redux-saga/effects";
 import update from "lodash/fp/update.js";
@@ -20,6 +20,7 @@ import {
     ObjRef,
     isObjRef,
     isIdentifierRef,
+    IDataSetMetadataObject,
 } from "@gooddata/sdk-model";
 
 import { alertsActions } from "../../../store/alerts/index.js";
@@ -75,12 +76,13 @@ export function actionsToInitializeNewDashboard(
 const keepOnlyFiltersWithValidRef = (
     filter: FilterContextItem,
     availableDfRefs: ObjRef[],
-    availableDateDatasets: ICatalogDateDataset[],
+    validDataSetIds: string[],
 ) => {
     if (!isDashboardAttributeFilter(filter)) {
         if (isDashboardDateFilterWithDimension(filter)) {
-            return availableDateDatasets.some((dateDataSet) =>
-                areObjRefsEqual(dateDataSet.dataSet.ref, filter.dateFilter.dataSet!),
+            return (
+                isIdentifierRef(filter.dateFilter.dataSet!) &&
+                validDataSetIds.includes(filter.dateFilter.dataSet?.identifier)
             );
         }
         return true; // common date filter is kept always
@@ -89,10 +91,20 @@ const keepOnlyFiltersWithValidRef = (
     return availableDfRefs.some((ref) => areObjRefsEqual(ref, filter.attributeFilter.displayForm));
 };
 
+export function loadDataSets(
+    ctx: DashboardContext,
+    dataSetRefs: ObjRef[],
+): Promise<IDataSetMetadataObject[]> {
+    const { backend, workspace } = ctx;
+
+    return backend.workspace(workspace).datasets().getDataSets(dataSetRefs);
+}
+
 function* sanitizeFilterContext(
     ctx: DashboardContext,
     filterContext: IDashboard["filterContext"],
-    dateDataSets: ICatalogDateDataset[] = [],
+    catalogDateDataSets: ICatalogDateDataset[] | null,
+    dataSets: IDataSetMetadataObject[] = [],
     displayForms?: ObjRefMap<IAttributeDisplayFormMetadataObject>,
 ): SagaIterator<IDashboard["filterContext"]> {
     // we don't need sanitize filter references, if backend guarantees consistent references
@@ -130,11 +142,39 @@ function* sanitizeFilterContext(
         availableRefs = yield call(loadAvailableDisplayFormRefs, ctx, usedFilterDisplayForms);
     }
 
+    if (ctx.config?.settings?.enableCriticalContentPerformanceOptimizations) {
+        // full catalog may not be available here, just related datasets to the dashboard
+        // -- find out if some datasets are still missing and if needed, fetch them
+
+        // additional date filters, let them validate
+        const additionalDateFilters = filterContext.filters
+            .filter((filter) => !isDashboardAttributeFilter(filter))
+            .filter(isDashboardDateFilterWithDimension)
+            .map((filter) => filter.dateFilter.dataSet!);
+
+        // check which are missing and load them
+        const missingDataSets = additionalDateFilters
+            .filter(isIdentifierRef)
+            .filter((filter) => !dataSets.find((dataSet) => dataSet.id === filter.identifier));
+        const loadedMissing = yield call(loadDataSets, ctx, missingDataSets);
+
+        const resolvedDataSetsIds = [...dataSets, ...loadedMissing].map((dataSet) => dataSet.id);
+        return update(
+            "filters",
+            (filters: FilterContextItem[]) =>
+                filters.filter((filter) => {
+                    return keepOnlyFiltersWithValidRef(filter, availableRefs, resolvedDataSetsIds);
+                }),
+            filterContext,
+        );
+    }
+
+    const dataSetIds = (catalogDateDataSets || []).map((dataSet) => dataSet.dataSet.id);
     return update(
         "filters",
         (filters: FilterContextItem[]) =>
             filters.filter((filter) => {
-                return keepOnlyFiltersWithValidRef(filter, availableRefs, dateDataSets);
+                return keepOnlyFiltersWithValidRef(filter, availableRefs, dataSetIds);
             }),
         filterContext,
     );
@@ -170,6 +210,8 @@ function getDisplayAsLabels(dashboard: IDashboard): ObjRef[] {
  * @param dateFilterConfig - effective date filter config to use; note that this function will not store
  *  the date filter config anywhere; it uses the config during filter context sanitization & determining
  *  which date option is selected
+ * @param dateDataSets - all catalog date datasets used to validate date filters. May not be given when
+ *  catalog load is being deferred
  * @param displayForms - specify display forms that should be used for in-memory resolution of
  *  attribute filter display forms to metadata objects
  * @param persistedDashboard - dashboard to use for the persisted dashboard state slice in case it needs to be different from the dashboard param
@@ -180,7 +222,7 @@ export function* actionsToInitializeExistingDashboard(
     insights: IInsight[],
     settings: ISettings,
     dateFilterConfig: IDateFilterConfig,
-    dateDataSets: ICatalogDateDataset[],
+    dateDataSets: ICatalogDateDataset[] | null,
     displayForms?: ObjRefMap<IAttributeDisplayFormMetadataObject>,
     persistedDashboard?: IDashboard,
 ): SagaIterator<Array<PayloadAction<any>>> {
@@ -189,6 +231,7 @@ export function* actionsToInitializeExistingDashboard(
         ctx,
         dashboard.filterContext,
         dateDataSets,
+        dashboard.dataSets,
         displayForms,
     );
 

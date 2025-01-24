@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     IFilter,
     ObjRef,
@@ -12,6 +12,7 @@ import {
     IScheduledMail,
     IScheduledMailDefinition,
     IInsight,
+    IDataSetMetadataObject,
     IDashboardPlugin,
     IDashboard,
     IListedDashboard,
@@ -41,6 +42,11 @@ export interface IDashboardReferences {
      * Referenced plugins. Empty if no plugins on dashboard or referenced plugins were not requested.
      */
     plugins: IDashboardPlugin[];
+
+    /**
+     * Referenced dataSets. Only direct references, does not include dataSets linked from filter context.
+     */
+    dataSets?: IDataSetMetadataObject[];
 }
 
 /**
@@ -174,7 +180,7 @@ export interface IGetScheduledMailOptions {
 /**
  * @alpha
  */
-export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin";
+export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin" | "dataSet";
 
 /**
  * Service to list, create and update analytical dashboards

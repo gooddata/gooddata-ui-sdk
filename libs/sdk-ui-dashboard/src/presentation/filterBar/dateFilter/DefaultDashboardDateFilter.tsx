@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { useCallback, useMemo, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -52,8 +52,8 @@ export const DefaultDashboardDateFilter = (props: IDashboardDateFilterProps): JS
     if (filter?.dateFilter.dataSet) {
         const dateDataSetName = allDateDatasets.find((ds) =>
             areObjRefsEqual(ds.dataSet.ref, filter?.dateFilter.dataSet),
-        )!.dataSet.title;
-        defaultDateFilterName = config.customFilterName ?? dateDataSetName;
+        )?.dataSet?.title;
+        defaultDateFilterName = config.customFilterName ?? dateDataSetName ?? "";
     } else {
         defaultDateFilterName =
             config.customFilterName ?? intl.formatMessage({ id: "dateFilterDropdown.title" });

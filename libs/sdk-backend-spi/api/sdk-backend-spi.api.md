@@ -46,6 +46,7 @@ import { IDashboardPlugin } from '@gooddata/sdk-model';
 import { IDashboardPluginDefinition } from '@gooddata/sdk-model';
 import { IDashboardWidget } from '@gooddata/sdk-model';
 import { IDataset } from '@gooddata/sdk-model';
+import { IDataSetMetadataObject } from '@gooddata/sdk-model';
 import { IDataSourceIdentifierDescriptor } from '@gooddata/sdk-model';
 import { IDataSourcePermissionAssignment } from '@gooddata/sdk-model';
 import { IDateFilter } from '@gooddata/sdk-model';
@@ -458,6 +459,7 @@ export interface ICommentExpressionToken {
 
 // @alpha
 export interface IDashboardReferences {
+    dataSets?: IDataSetMetadataObject[];
     insights: IInsight[];
     plugins: IDashboardPlugin[];
 }
@@ -1379,6 +1381,7 @@ export interface IWorkspaceDashboardsService {
 // @public
 export interface IWorkspaceDatasetsService {
     getAllDatasetsMeta(): Promise<IMetadataObject[]>;
+    getDataSets(refs: ObjRef[]): Promise<IDataSetMetadataObject[]>;
     getDatasets(): Promise<IDataset[]>;
 }
 
@@ -1622,7 +1625,7 @@ export class ProtectedDataError extends AnalyticalBackendError {
 }
 
 // @alpha (undocumented)
-export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin";
+export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin" | "dataSet";
 
 // @public
 export type SupportedInsightReferenceTypes = Exclude<InsightReferenceTypes, "displayForm" | "variable">;

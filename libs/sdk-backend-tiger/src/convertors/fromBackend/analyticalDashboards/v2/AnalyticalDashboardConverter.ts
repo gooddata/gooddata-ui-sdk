@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { v4 as uuidv4 } from "uuid";
 import {
     AnalyticalDashboardModelV2,
@@ -7,6 +7,7 @@ import {
     JsonApiDashboardPluginOutWithLinks,
     JsonApiFilterContextOutDocument,
     JsonApiAnalyticalDashboardOutIncludes,
+    isDataSetItem,
 } from "@gooddata/api-client-tiger";
 import { LayoutPath, walkLayout } from "@gooddata/sdk-backend-spi";
 
@@ -38,6 +39,7 @@ import { getShareStatus, stripQueryParams } from "../../utils.js";
 import { sanitizeSelectionMode } from "../common/singleSelectionFilter.js";
 import { convertUserIdentifier } from "../../UsersConverter.js";
 import { convertLayout } from "../../../shared/layoutConverter.js";
+import { convertDataSetItem } from "../../DataSetConverter.js";
 
 function setWidgetRefsInLayout(layout: IDashboardLayout<IDashboardWidget> | undefined) {
     if (!layout) {
@@ -195,6 +197,7 @@ export function convertDashboard(
         disableUserFilterReset,
         disableUserFilterSave,
         disableFilterViews,
+        dataSets: included?.filter(isDataSetItem).map(convertDataSetItem) ?? [],
     };
 }
 
