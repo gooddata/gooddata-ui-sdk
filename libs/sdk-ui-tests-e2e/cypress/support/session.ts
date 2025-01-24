@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import { Api, getTigerAuthToken } from "../tools/api";
 
 export const establishSession = () => {
@@ -8,6 +8,9 @@ export const establishSession = () => {
         Api.injectAuthHeader(tigerAuthToken);
     }
 };
+
+before(establishSession);
+beforeEach(establishSession);
 
 Cypress.on("uncaught:exception", (error) => {
     console.error("Uncaught exception cause", error);
