@@ -4037,6 +4037,8 @@ export interface IStylingSettingWidgetProps<T extends StylingPickerItemContent> 
     // (undocumented)
     isLoading?: boolean;
     // (undocumented)
+    isSavingActionInProgress?: boolean;
+    // (undocumented)
     itemToColorPreview: (itemContent: T) => string[];
     // (undocumented)
     locale?: string;
