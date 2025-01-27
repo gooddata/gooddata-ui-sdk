@@ -39,7 +39,6 @@ export const RowEndHotspot = (props: RowEndHotspotProps<unknown>) => {
     ); // increment item index manually as end hotspot is rendered as prev type
 
     const remainingGridWidth = getRemainingWidthInRow(item, screen);
-    //const { gridHeight } = item.sizeForScreenWithFallback(screen);
 
     const isDropZoneVisible = shouldShowRowEndDropZone(remainingGridWidth);
 
