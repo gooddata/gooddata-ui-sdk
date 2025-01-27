@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { IUser, uriRef, idRef } from "@gooddata/sdk-model";
 import {
@@ -16,12 +16,15 @@ import {
  * as a container for full name and lastname will be an empty string
  */
 export const convertUser = (user: IUserProfile): IUser => {
-    const { name, userId, links, organizationName, permissions } = user;
+    const { name, userId, email, links, organizationName, firstName, lastName, permissions } = user;
 
     return {
         ref: uriRef(links!.user!),
         login: userId!,
         fullName: name,
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
         organizationName: organizationName,
         permissions,
     };

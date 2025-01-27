@@ -1194,6 +1194,7 @@ export interface ITextExpressionToken {
 // @public
 export interface IUserService {
     getUser(): Promise<IUser>;
+    getUserWithDetails(): Promise<IUser>;
     settings(): IUserSettingsService;
 }
 
