@@ -9084,9 +9084,15 @@ interface ITotalItem {
 // @public (undocumented)
 export interface IUserProfile {
     // (undocumented)
+    email?: string;
+    // (undocumented)
     entitlements: ApiEntitlement[];
     // (undocumented)
     features?: ILiveFeatures | IStaticFeatures;
+    // (undocumented)
+    firstName?: string;
+    // (undocumented)
+    lastName?: string;
     // (undocumented)
     links: {
         user: string;
@@ -17184,6 +17190,8 @@ export interface PositiveAttributeFilterPositiveAttributeFilter {
 export interface ProfileApiInterface {
     // (undocumented)
     getCurrent: () => Promise<IUserProfile>;
+    // (undocumented)
+    getCurrentWithDetails: () => Promise<IUserProfile>;
 }
 
 // @public

@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { IUser } from "@gooddata/sdk-model";
 import { IUserService, IUserSettingsService } from "@gooddata/sdk-backend-spi";
 import { TigerUserSettingsService } from "./settings.js";
@@ -15,6 +15,12 @@ export class TigerUserService implements IUserService {
     public async getUser(): Promise<IUser> {
         return this.authCall(async (client) => {
             return convertUser(await client.profile.getCurrent());
+        });
+    }
+
+    public async getUserWithDetails(): Promise<IUser> {
+        return this.authCall(async (client) => {
+            return convertUser(await client.profile.getCurrentWithDetails());
         });
     }
 }
