@@ -1,17 +1,16 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import {
     IAlertComparisonOperator,
     IAutomationAlertCondition,
     IAutomationAlertTrigger,
     IAutomationMetadataObjectDefinition,
     IAutomationRecipient,
-    ICatalogMeasure,
     IFilter,
 } from "@gooddata/sdk-model";
 
 import { AlertMetric } from "../../../types.js";
 
-import { getMeasureFormat, getMeasureTitle } from "./getters.js";
+import { getMeasureFormat, getMeasureTitle, IMeasureFormatMap } from "./getters.js";
 import { transformAlertExecutionByMetric } from "./transformation.js";
 
 /**
@@ -23,14 +22,14 @@ export function createDefaultAlert(
     measure: AlertMetric,
     notificationChannelId: string,
     currentUser: IAutomationRecipient,
-    catalogMeasures: ICatalogMeasure[] = [],
+    measureFormatMap: IMeasureFormatMap,
     comparisonOperator: IAlertComparisonOperator = "GREATER_THAN",
 ): IAutomationMetadataObjectDefinition {
     const condition: IAutomationAlertCondition = {
         type: "comparison",
         left: {
             id: measure.measure.measure.localIdentifier,
-            format: getMeasureFormat(measure.measure, catalogMeasures),
+            format: getMeasureFormat(measure.measure, measureFormatMap),
             title: getMeasureTitle(measure.measure),
         },
         operator: comparisonOperator,

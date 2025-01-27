@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React from "react";
 import { isInsightWidget, objRefToString } from "@gooddata/sdk-model";
 import { ScrollablePanel, OverlayControllerProvider, OverlayController } from "@gooddata/sdk-ui-kit";
@@ -41,9 +41,9 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
         canManageAttributes,
         canManageComparison,
         canCreateAutomation,
-        catalogMeasures,
         catalogAttributes,
         catalogDateDatasets,
+        measureFormatMap,
         //
         creatingAlert,
         initiateAlertCreation,
@@ -93,7 +93,7 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
                 onUpdate={updateExistingAlert}
                 onCancel={cancelAlertEditing}
                 onClose={onClose}
-                catalogMeasures={catalogMeasures}
+                measureFormatMap={measureFormatMap}
                 catalogAttributes={catalogAttributes}
                 catalogDateDatasets={catalogDateDatasets}
                 maxAutomationsRecipients={maxAutomationsRecipients}
@@ -116,7 +116,7 @@ export const InsightAlerts: React.FC<IInsightMenuSubmenuComponentProps> = ({ wid
                 onClose={onClose}
                 maxAutomationsReached={maxAutomationsReached}
                 maxAutomationsRecipients={maxAutomationsRecipients}
-                catalogMeasures={catalogMeasures}
+                measureFormatMap={measureFormatMap}
                 catalogAttributes={catalogAttributes}
                 catalogDateDatasets={catalogDateDatasets}
             />
