@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import React from "react";
 import { render } from "@testing-library/react";
@@ -16,6 +16,7 @@ import {
 import { DashboardCustomizationLogger } from "../customizationLogging.js";
 
 import { DefaultDashboardContentCustomizer } from "../dashboardContentCustomizer.js";
+import { EMPTY_MUTATIONS } from "./utils";
 
 //
 //
@@ -121,11 +122,8 @@ describe("Attribute Filter customizer", () => {
 
             expect(renderToHtml(Customizer, TestDashboardContent)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: [],
-                insight: [],
-                attributeFilter: [],
+                ...EMPTY_MUTATIONS,
                 dashboardContent: ["decorator"],
-                layouts: {},
             });
         });
 
@@ -138,11 +136,8 @@ describe("Attribute Filter customizer", () => {
 
             expect(renderToHtml(Customizer, TestSecondDashboardContent)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: [],
-                insight: [],
-                attributeFilter: [],
+                ...EMPTY_MUTATIONS,
                 dashboardContent: ["decorator"],
-                layouts: {},
             });
         });
 
@@ -155,11 +150,8 @@ describe("Attribute Filter customizer", () => {
 
             expect(renderToHtml(Customizer, TestDashboardContent)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: [],
-                insight: [],
-                attributeFilter: [],
+                ...EMPTY_MUTATIONS,
                 dashboardContent: ["decorator"],
-                layouts: {},
             });
         });
 
@@ -178,11 +170,8 @@ describe("Attribute Filter customizer", () => {
             // decoration starts from last register; so need to see decorator2 -> decorator1 -> default component
             expect(renderToHtml(Customizer, TestSecondDashboardContent)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: [],
-                insight: [],
-                attributeFilter: [],
+                ...EMPTY_MUTATIONS,
                 dashboardContent: ["decorator"],
-                layouts: {},
             });
         });
     });

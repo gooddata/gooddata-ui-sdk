@@ -6,6 +6,7 @@ import { ExtendedDashboardWidget, ICustomWidget, newCustomWidget } from "../../.
 import { DashboardCustomizationLogger } from "../customizationLogging.js";
 import { createCustomizerMutationsContext, CustomizerMutationsContext } from "../types.js";
 import { describe, it, expect, beforeEach } from "vitest";
+import { EMPTY_MUTATIONS } from "./utils";
 
 const EmptyLayout: IDashboardLayout<ExtendedDashboardWidget> = {
     type: "IDashboardLayout",
@@ -108,10 +109,7 @@ describe("fluid layout customizer", () => {
         const updatedNonEmptyLayout = Customizer.applyTransformations(LayoutWithOneSection);
         expect(updatedNonEmptyLayout.sections[1]).toEqual(newSection);
         expect(mutationContext).toEqual({
-            kpi: [],
-            insight: [],
-            attributeFilter: [],
-            dashboardContent: [],
+            ...EMPTY_MUTATIONS,
             layouts: {
                 "1": "inserted",
                 "2": "inserted",
@@ -136,10 +134,7 @@ describe("fluid layout customizer", () => {
             newSection,
         );
         expect(mutationContext).toEqual({
-            kpi: [],
-            insight: [],
-            attributeFilter: [],
-            dashboardContent: [],
+            ...EMPTY_MUTATIONS,
             layouts: {
                 "8": "inserted",
             },
@@ -163,11 +158,7 @@ describe("fluid layout customizer", () => {
         }).toThrowError('Nested layout at path [{"sectionIndex":0,"itemIndex":0}] does not exist.');
 
         expect(mutationContext).toEqual({
-            kpi: [],
-            insight: [],
-            attributeFilter: [],
-            dashboardContent: [],
-            layouts: {},
+            ...EMPTY_MUTATIONS,
         });
     });
 
@@ -182,11 +173,7 @@ describe("fluid layout customizer", () => {
         const updatedEmptyLayout = Customizer.applyTransformations(EmptyLayout);
         expect(updatedEmptyLayout.sections.length).toEqual(0);
         expect(mutationContext).toEqual({
-            kpi: [],
-            insight: [],
-            attributeFilter: [],
-            dashboardContent: [],
-            layouts: {},
+            ...EMPTY_MUTATIONS,
         });
     });
 
@@ -211,11 +198,7 @@ describe("fluid layout customizer", () => {
         const updatedEmptyLayout = Customizer.applyTransformations(EmptyLayout);
         expect(updatedEmptyLayout.sections.length).toEqual(0);
         expect(mutationContext).toEqual({
-            kpi: [],
-            insight: [],
-            attributeFilter: [],
-            dashboardContent: [],
-            layouts: {},
+            ...EMPTY_MUTATIONS,
         });
     });
 
@@ -227,10 +210,7 @@ describe("fluid layout customizer", () => {
 
         expect(updatedNonEmptyLayout.sections[0].items).toEqual([item]);
         expect(mutationContext).toEqual({
-            kpi: [],
-            insight: [],
-            attributeFilter: [],
-            dashboardContent: [],
+            ...EMPTY_MUTATIONS,
             layouts: {
                 "1": "inserted",
             },
@@ -254,10 +234,7 @@ describe("fluid layout customizer", () => {
         ).toEqual(item);
 
         expect(mutationContext).toEqual({
-            kpi: [],
-            insight: [],
-            attributeFilter: [],
-            dashboardContent: [],
+            ...EMPTY_MUTATIONS,
             layouts: {
                 "8": "inserted",
             },
@@ -277,11 +254,7 @@ describe("fluid layout customizer", () => {
         const updatedNonEmptyLayout = Customizer.applyTransformations(LayoutWithOneSection);
         expect(updatedNonEmptyLayout.sections[0]).toEqual(LayoutWithOneSection.sections[0]);
         expect(mutationContext).toEqual({
-            kpi: [],
-            insight: [],
-            attributeFilter: [],
-            dashboardContent: [],
-            layouts: {},
+            ...EMPTY_MUTATIONS,
         });
     });
 
@@ -301,10 +274,7 @@ describe("fluid layout customizer", () => {
         expect(updatedNonEmptyLayout.sections[1].items).toEqual([newItem]);
 
         expect(mutationContext).toEqual({
-            kpi: [],
-            insight: [],
-            attributeFilter: [],
-            dashboardContent: [],
+            ...EMPTY_MUTATIONS,
             layouts: {
                 "1": "inserted",
                 "2": "inserted",
