@@ -3422,6 +3422,7 @@ export interface ISettings {
     enableSeparateTotalLabels?: boolean;
     // (undocumented)
     enableSingleStoreDataSource?: boolean;
+    enableSlideshowExports?: boolean;
     enableSmtp?: boolean;
     // (undocumented)
     enableSnowflakeKeyPairAuthentication?: boolean;

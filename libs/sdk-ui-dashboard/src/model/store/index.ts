@@ -104,6 +104,7 @@ export {
     selectFocusObject,
     selectEnableDashboardDescriptionDynamicHeight,
     selectEnableCriticalContentPerformanceOptimizations,
+    selectEnableSlideshowExports,
 } from "./config/configSelectors.js";
 export type { EntitlementsState } from "./entitlements/entitlementsState.js";
 export {

@@ -7877,6 +7877,9 @@ export const selectEnableRichTextDescriptions: DashboardSelector<boolean>;
 // @alpha (undocumented)
 export const selectEnableScheduling: DashboardSelector<boolean>;
 
+// @internal (undocumented)
+export const selectEnableSlideshowExports: DashboardSelector<boolean>;
+
 // @internal
 export const selectEnableUnavailableItemsVisibility: DashboardSelector<boolean>;
 
