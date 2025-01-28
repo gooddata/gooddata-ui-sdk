@@ -42,6 +42,12 @@ describe("title customizer", () => {
         Customizer = new DefaultTitleCustomizer(
             new TestingDashboardCustomizationLogger({ warn: mockWarn }),
             mutationContext,
+            () => {
+                function Comp() {
+                    return <div>Default</div>;
+                }
+                return Comp;
+            },
         );
     });
 
