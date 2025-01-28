@@ -5,8 +5,8 @@ import { InvariantError } from "ts-invariant";
 import { ITitleCustomizer } from "../customizer.js";
 import {
     CustomTitleComponent,
-    DefaultTitle,
     OptionalTitleComponentProvider,
+    RenderModeAwareTitle,
     TitleComponentProvider,
 } from "../../presentation/index.js";
 
@@ -15,7 +15,7 @@ import { CustomizerMutationsContext } from "./types.js";
 import union from "lodash/union.js";
 
 const DefaultTitleRendererProvider: TitleComponentProvider = () => {
-    return DefaultTitle;
+    return RenderModeAwareTitle;
 };
 
 interface ITitleCustomizerState {
