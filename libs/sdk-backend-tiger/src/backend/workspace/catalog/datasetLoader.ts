@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
     EntitiesApiGetAllEntitiesAttributesRequest,
@@ -12,6 +12,7 @@ import {
     JsonApiLabelOutAttributesValueTypeEnum,
     JsonApiAttributeOutIncludes,
     JsonApiAttributeHierarchyOutWithLinks,
+    JsonApiDatasetLinkage,
 } from "@gooddata/api-client-tiger";
 import {
     CatalogItem,
@@ -52,6 +53,14 @@ function getAttributeLabels(
         .filter((obj): obj is JsonApiLabelOutWithLinks => obj !== undefined);
 }
 
+function getAttributeDataSet(
+    attribute: JsonApiAttributeOutWithLinks,
+    included: JsonApiAttributeOutIncludes[] | undefined,
+): JsonApiDatasetOutWithLinks | undefined {
+    const dataSetRef = attribute.relationships?.dataset?.data as JsonApiDatasetLinkage;
+    return lookupRelatedObject(included, dataSetRef.id, dataSetRef.type) as JsonApiDatasetOutWithLinks;
+}
+
 function isGeoLabel(label: JsonApiLabelOutWithLinks): boolean {
     const type = label.attributes?.valueType;
 
@@ -67,6 +76,7 @@ function createNonDateAttributes(attributes: JsonApiAttributeOutList): ICatalogA
 
     return nonDateAttributes.map((attribute) => {
         const allLabels = getAttributeLabels(attribute, attributes.included);
+        const dataSet = getAttributeDataSet(attribute, attributes.included);
         const geoLabels = allLabels.filter(isGeoLabel);
 
         const defaultView = attribute.relationships?.defaultView?.data;
@@ -74,7 +84,7 @@ function createNonDateAttributes(attributes: JsonApiAttributeOutList): ICatalogA
         // use the defaultView if available, fall back to primary: exactly one label is guaranteed to be primary
         const defaultLabel = defaultViewLabel ?? allLabels.filter((label) => label.attributes!.primary)[0];
 
-        return convertAttribute(attribute, defaultLabel, geoLabels, allLabels);
+        return convertAttribute(attribute, defaultLabel, geoLabels, allLabels, dataSet);
     });
 }
 

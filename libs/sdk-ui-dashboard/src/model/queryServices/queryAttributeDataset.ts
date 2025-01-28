@@ -1,12 +1,14 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
-import { IMetadataObject, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
+import { areObjRefsEqual, IMetadataObject, ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 import { createCachedQueryService } from "../store/_infra/queryService.js";
 import { DashboardContext } from "../types/commonTypes.js";
 import { SagaIterator } from "redux-saga";
-import { call, SagaReturnType } from "redux-saga/effects";
+import { call, SagaReturnType, select } from "redux-saga/effects";
 import { invalidQueryArguments } from "../events/general.js";
 import { QueryAttributeDataSet } from "../queries/attributeDataSet.js";
+import { selectPreloadedAttributesWithReferences } from "../store/index.js";
+import { IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
 
 export const QueryAttributeDataSetService = createCachedQueryService(
     "GDC.DASH/QUERY.DATA.SET.ATTRIBUTE",
@@ -22,10 +24,22 @@ export const QueryAttributeDataSetService = createCachedQueryService(
 
 async function loadAttributeDataSetMeta(
     ctx: DashboardContext,
-    displayFormRef: ObjRef,
+    attributeRef: ObjRef,
+    preloadedAttributesWithReferences?: IAttributeWithReferences[],
 ): Promise<IMetadataObject> {
     const { backend, workspace } = ctx;
-    return backend.workspace(workspace).attributes().getAttributeDatasetMeta(displayFormRef);
+
+    // First try to get the dataSet from preloaded filters
+    const dataSet = preloadedAttributesWithReferences?.find((attr) =>
+        areObjRefsEqual(attr.attribute.ref, attributeRef),
+    )?.dataSet;
+
+    if (dataSet) {
+        return dataSet;
+    }
+
+    // If dataSet is not in preloaded filters, fetch it from backend
+    return backend.workspace(workspace).attributes().getAttributeDatasetMeta(attributeRef);
 }
 
 function* queryService(ctx: DashboardContext, query: QueryAttributeDataSet): SagaIterator<IMetadataObject> {
@@ -34,10 +48,14 @@ function* queryService(ctx: DashboardContext, query: QueryAttributeDataSet): Sag
         correlationId,
     } = query;
 
+    const preloadedAttributesWithReferences: ReturnType<typeof selectPreloadedAttributesWithReferences> =
+        yield select(selectPreloadedAttributesWithReferences);
+
     const attributeDataSet: SagaReturnType<typeof loadAttributeDataSetMeta> = yield call(
         loadAttributeDataSetMeta,
         ctx,
         displayForm,
+        preloadedAttributesWithReferences,
     );
 
     if (!attributeDataSet) {

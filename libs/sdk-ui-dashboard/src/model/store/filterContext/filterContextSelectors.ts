@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import { DashboardSelector, DashboardState } from "../types.js";
 import { invariant } from "ts-invariant";
@@ -23,6 +23,7 @@ import { createMemoizedSelector } from "../_infra/selectors.js";
 import compact from "lodash/compact.js";
 import isEmpty from "lodash/isEmpty.js";
 import { selectSupportsCircularDependencyInFilters } from "../backendCapabilities/backendCapabilitiesSelectors.js";
+import { IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
 
 const selectSelf = createSelector(
     (state: DashboardState) => state,
@@ -504,3 +505,14 @@ export const selectIsAttributeFilterDependentByLocalIdentifier: (
         },
     ),
 );
+
+/**
+ * Select preloaded attribute metadata objects with references for attribute filters.
+ *
+ * @internal
+ */
+export const selectPreloadedAttributesWithReferences: DashboardSelector<
+    IAttributeWithReferences[] | undefined
+> = createSelector(selectSelf, (state) => {
+    return state.attributesWithReferences;
+});

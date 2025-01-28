@@ -1,5 +1,7 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
+    isDataSetItem,
+    isLabelItem,
     JsonApiAnalyticalDashboardOutWithLinks,
     JsonApiAttributeOut,
     JsonApiAttributeOutDocument,
@@ -9,7 +11,6 @@ import {
     JsonApiFactOutWithLinks,
     JsonApiLabelLinkage,
     JsonApiLabelOutWithLinks,
-    JsonApiLabelOutWithLinksTypeEnum,
     JsonApiMetricOutWithLinks,
 } from "@gooddata/api-client-tiger";
 import keyBy from "lodash/keyBy.js";
@@ -46,24 +47,34 @@ export const commonMetadataObjectModifications =
             .title(item.attributes?.title || "")
             .description(item.attributes?.description || "");
 
-function createLabelMap(
+export function createLabelMap(
     included: JsonApiAttributeOutDocument["included"] | undefined,
 ): Record<string, JsonApiLabelOutWithLinks> {
     if (!included) {
         return {};
     }
 
-    const labels = included.filter((include): include is JsonApiLabelOutWithLinks => {
-        return include.type === JsonApiLabelOutWithLinksTypeEnum.LABEL;
-    });
+    const labels = included.filter(isLabelItem);
 
     return keyBy(labels, (t) => t.id);
+}
+
+export function createDataSetMap(
+    included: JsonApiAttributeOutDocument["included"] | undefined,
+): Record<string, JsonApiDatasetOutWithLinks> {
+    if (!included) {
+        return {};
+    }
+
+    const dataSets = included.filter(isDataSetItem);
+
+    return keyBy(dataSets, (t) => t.id);
 }
 
 /**
  * Converts all labels of this attribute. The map contains sideloaded label information
  */
-function convertAttributeLabels(
+export function convertAttributeLabels(
     attribute: JsonApiAttributeOut | JsonApiAttributeOutWithLinks,
     labelsMap: Record<string, JsonApiLabelOutWithLinks>,
 ): IAttributeDisplayFormMetadataObject[] {

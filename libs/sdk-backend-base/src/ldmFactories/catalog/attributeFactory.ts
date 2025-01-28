@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import identity from "lodash/identity.js";
 import {
     AttributeModifications,
@@ -10,6 +10,7 @@ import {
     isAttributeDisplayFormMetadataObject,
     IAttributeMetadataObject,
     isAttributeMetadataObject,
+    IDataSetMetadataObject,
 } from "@gooddata/sdk-model";
 import { GroupableCatalogItemBuilder } from "./groupFactory.js";
 import { builderFactory, BuilderModifications } from "../builder.js";
@@ -52,6 +53,11 @@ export class CatalogAttributeBuilder<
         } else {
             this.item.defaultDisplayForm = displayFormOrRef;
         }
+        return this;
+    }
+
+    public dataSet(dataSet: IDataSetMetadataObject | undefined): this {
+        this.item.dataSet = dataSet;
         return this;
     }
 

@@ -6,7 +6,7 @@ import { DashboardInitialized, dashboardInitialized } from "../../../events/dash
 import { loadingActions } from "../../../store/loading/index.js";
 import { DashboardContext, PrivateDashboardContext } from "../../../types/commonTypes.js";
 import { IDashboardWithReferences, walkLayout, IWorkspaceCatalog } from "@gooddata/sdk-backend-spi";
-import { resolveDashboardConfig } from "./resolveDashboardConfig.js";
+import { resolveDashboardConfigAndFeatureFlagDependentCalls } from "./resolveDashboardConfig.js";
 import { configActions } from "../../../store/config/index.js";
 import { entitlementsActions } from "../../../store/entitlements/index.js";
 import { PromiseFnReturnType } from "../../../types/sagas.js";
@@ -62,9 +62,9 @@ import { automationsActions } from "../../../store/automations/index.js";
 import { notificationChannelsActions } from "../../../store/notificationChannels/index.js";
 import { filterViewsActions } from "../../../store/filterViews/index.js";
 import { loadFilterViews } from "./loadFilterViews.js";
-import { loadWorkspaceAutomationsCount } from "../common/loadWorkspaceAutomationsCount.js";
-import { loadNotificationChannelsCount } from "../common/loadNotificationChannelsCount.js";
 import { applyDefaultFilterView } from "../common/filterViews.js";
+import { preloadAttributeFiltersData as preloadAttributeFiltersDataFromBackend } from "./preloadAttributeFiltersData.js";
+import { filterContextActions } from "../../../store/filterContext/index.js";
 
 async function loadDashboardFromBackend(
     ctx: DashboardContext,
@@ -158,7 +158,7 @@ type DashboardLoadResult = {
 
 function* decideAndLoadFullCatalog(ctx: DashboardContext, cmd: InitializeDashboard) {
     // defer catalog loading when optimizations enabled
-    if (ctx.config?.settings?.enableCriticalContentPerformanceOptimizations) {
+    if (cmd.payload.config?.settings?.enableCriticalContentPerformanceOptimizations) {
         return null;
     }
 
@@ -177,7 +177,7 @@ function* loadExistingDashboard(
 
     const calls = [
         call(loadDashboardFromBackend, ctx, privateCtx, dashboardRef, !!cmd.payload.persistedDashboard),
-        call(resolveDashboardConfig, ctx, cmd),
+        call(resolveDashboardConfigAndFeatureFlagDependentCalls, ctx, cmd),
         call(resolvePermissions, ctx, cmd),
         call(resolveEntitlements, ctx),
         call(decideAndLoadFullCatalog, ctx, cmd),
@@ -196,7 +196,10 @@ function* loadExistingDashboard(
 
     const [
         dashboardWithReferences,
-        config,
+        {
+            resolvedConfig: config,
+            additionalData: { workspaceAutomationsCount, notificationChannelsCount },
+        },
         permissions,
         entitlements,
         catalog,
@@ -210,7 +213,7 @@ function* loadExistingDashboard(
         accessibleDashboards,
     ]: [
         PromiseFnReturnType<typeof loadDashboardFromBackend>,
-        SagaReturnType<typeof resolveDashboardConfig>,
+        SagaReturnType<typeof resolveDashboardConfigAndFeatureFlagDependentCalls>,
         SagaReturnType<typeof resolvePermissions>,
         PromiseFnReturnType<typeof resolveEntitlements>,
         PromiseFnReturnType<typeof decideAndLoadFullCatalog>,
@@ -250,17 +253,6 @@ function* loadExistingDashboard(
         catalog ? createDisplayFormMapFromCatalog(catalog) : createDisplayFormMap([], []),
         cmd.payload.persistedDashboard,
     );
-
-    // After FF removal, we can move this to other calls and call it in parallel
-    const ffCalls = [
-        call(loadWorkspaceAutomationsCount, ctx, config.settings),
-        call(loadNotificationChannelsCount, ctx, config.settings),
-    ];
-
-    const [allAutomationsCount, notificationChannelsCount]: [
-        PromiseFnReturnType<typeof loadWorkspaceAutomationsCount>, // todo: split alerts vs schedules, later move to dialogs
-        PromiseFnReturnType<typeof loadNotificationChannelsCount>,
-    ] = yield all(ffCalls);
 
     const catalogPayload = {
         dateHierarchyTemplates,
@@ -302,7 +294,7 @@ function* loadExistingDashboard(
             uiActions.setMenuButtonItemsVisibility(config.menuButtonItemsVisibility),
             renderModeActions.setRenderMode(config.initialRenderMode),
             dashboardPermissionsActions.setDashboardPermissions(dashboardPermissions),
-            automationsActions.setAllAutomationsCount(allAutomationsCount),
+            automationsActions.setAllAutomationsCount(workspaceAutomationsCount),
             notificationChannelsActions.setNotificationChannelsCount(notificationChannelsCount),
             filterViewsActions.setFilterViews({
                 dashboard: ctx.dashboardRef!, // should be defined as we are in existing dashboard load fn
@@ -326,7 +318,10 @@ function* initializeNewDashboard(
     const { backend } = ctx;
 
     const [
-        config,
+        {
+            resolvedConfig: config,
+            additionalData: { notificationChannelsCount, workspaceAutomationsCount },
+        },
         permissions,
         entitlements,
         catalog,
@@ -336,7 +331,7 @@ function* initializeNewDashboard(
         legacyDashboards,
         dateHierarchyTemplates,
     ]: [
-        SagaReturnType<typeof resolveDashboardConfig>,
+        SagaReturnType<typeof resolveDashboardConfigAndFeatureFlagDependentCalls>,
         SagaReturnType<typeof resolvePermissions>,
         PromiseFnReturnType<typeof resolveEntitlements>,
         PromiseFnReturnType<typeof loadCatalog>,
@@ -346,7 +341,7 @@ function* initializeNewDashboard(
         PromiseFnReturnType<typeof loadLegacyDashboards>,
         PromiseFnReturnType<typeof loadDateHierarchyTemplates>,
     ] = yield all([
-        call(resolveDashboardConfig, ctx, cmd),
+        call(resolveDashboardConfigAndFeatureFlagDependentCalls, ctx, cmd),
         call(resolvePermissions, ctx, cmd),
         call(resolveEntitlements, ctx),
         call(loadCatalog, ctx, cmd),
@@ -357,17 +352,6 @@ function* initializeNewDashboard(
         call(loadDateHierarchyTemplates, ctx),
         call(loadFilterViews, ctx),
     ]);
-
-    // After FF removal, we can move this to other calls and call it in parallel
-    const ffCalls = [
-        call(loadWorkspaceAutomationsCount, ctx, config.settings),
-        call(loadNotificationChannelsCount, ctx, config.settings),
-    ];
-
-    const [allAutomationsCount, notificationChannelsCount]: [
-        PromiseFnReturnType<typeof loadWorkspaceAutomationsCount>,
-        PromiseFnReturnType<typeof loadNotificationChannelsCount>,
-    ] = yield all(ffCalls);
 
     const batch: BatchAction = batchActions(
         [
@@ -403,7 +387,7 @@ function* initializeNewDashboard(
                 canEditDashboard: true,
                 canEditLockedDashboard: true,
             }),
-            automationsActions.setAllAutomationsCount(allAutomationsCount),
+            automationsActions.setAllAutomationsCount(workspaceAutomationsCount),
             notificationChannelsActions.setNotificationChannelsCount(notificationChannelsCount),
         ],
         "@@GDC.DASH/BATCH.INIT.NEW",
@@ -417,8 +401,11 @@ function* initializeNewDashboard(
 }
 
 export function* requestCatalog(ctx: DashboardContext) {
-    const catalog: IWorkspaceCatalog = yield call(loadCatalog, ctx, { payload: { config: {} } } as any);
-    const dateHierarchyTemplates: IDateHierarchyTemplate[] = yield call(loadDateHierarchyTemplates, ctx);
+    const [catalog, dateHierarchyTemplates]: [IWorkspaceCatalog, IDateHierarchyTemplate[]] = yield all([
+        call(loadCatalog, ctx, { payload: { config: {} } } as InitializeDashboard),
+        call(loadDateHierarchyTemplates, ctx),
+    ]);
+
     yield put(
         catalogActions.setCatalogItems({
             attributes: catalog.attributes(),
@@ -431,8 +418,15 @@ export function* requestCatalog(ctx: DashboardContext) {
     );
 }
 
-function* advancedLoader(ctx: DashboardContext) {
-    yield call(requestCatalog, ctx);
+export function* preloadAttributeFiltersData(ctx: DashboardContext, dashboard: IDashboard) {
+    const attributesWithReferences: PromiseFnReturnType<typeof preloadAttributeFiltersDataFromBackend> =
+        yield call(preloadAttributeFiltersDataFromBackend, ctx, dashboard);
+
+    yield put(filterContextActions.setPreloadedAttributesWithReferences(attributesWithReferences));
+}
+
+function* advancedLoader(ctx: DashboardContext, dashboard?: IDashboard): SagaIterator {
+    yield all([call(requestCatalog, ctx), call(preloadAttributeFiltersData, ctx, dashboard!)]);
 }
 
 export function* initializeDashboardHandler(ctx: DashboardContext, cmd: InitializeDashboard): SagaIterator {
@@ -454,10 +448,13 @@ export function* initializeDashboardHandler(ctx: DashboardContext, cmd: Initiali
 
         yield put(result.event);
 
-        if (ctx.config?.settings?.enableCriticalContentPerformanceOptimizations && dashboardRef) {
+        if (
+            result.event.payload.config.settings?.enableCriticalContentPerformanceOptimizations &&
+            dashboardRef
+        ) {
             // let's run effects which are not essential for the existing
             // dashboard to be rendered, such as catalog load
-            yield spawn(advancedLoader, ctx);
+            yield spawn(advancedLoader, ctx, result.event.payload.dashboard);
         }
     } catch (e) {
         yield put(loadingActions.setLoadingError(e as Error));

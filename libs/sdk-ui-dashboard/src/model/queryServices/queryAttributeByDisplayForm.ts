@@ -1,4 +1,4 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 
 import {
     areObjRefsEqual,
@@ -13,7 +13,8 @@ import { DashboardContext } from "../types/commonTypes.js";
 import { SagaIterator } from "redux-saga";
 import { call, SagaReturnType, select } from "redux-saga/effects";
 import { invalidQueryArguments } from "../events/general.js";
-import { selectCatalogAttributes } from "../store/index.js";
+import { selectCatalogAttributes, selectPreloadedAttributesWithReferences } from "../store/index.js";
+import { IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
 
 export const QueryAttributeByDisplayFormService = createCachedQueryService(
     "GDC.DASH/QUERY.DISPLAY.FORM.ATTRIBUTE",
@@ -29,23 +30,33 @@ export const QueryAttributeByDisplayFormService = createCachedQueryService(
 
 /**
  * Loads the attribute metadata for given display form. Primarily the metadata are loaded
- * from the catalog attributes. If the required attribute is not listed in the catalog
+ * from the preloaded filter attributes or catalog attributes. If the required attribute is not listed in the preloaded attributes or catalog
  * (e.g. deprecated attributes), the attribute metadata are fetched from the backend.
  */
 async function loadAttributeByDisplayForm(
     ctx: DashboardContext,
     catalogAttributes: ICatalogAttribute[],
     displayFormRef: ObjRef,
+    preloadedAttributesWithReferences?: IAttributeWithReferences[],
 ): Promise<IAttributeMetadataObject> {
     const { backend, workspace } = ctx;
-    const attribute = catalogAttributes.find((catalogAttribute) =>
-        catalogAttribute.displayForms.some((df) => areObjRefsEqual(df.ref, displayFormRef)),
-    );
+    // First try to get the attribute from preloaded filters
+    let attribute = preloadedAttributesWithReferences?.find((attr) =>
+        attr.attribute.displayForms.some((df) => areObjRefsEqual(df.ref, displayFormRef)),
+    )?.attribute;
 
-    if (attribute) {
-        return attribute.attribute;
+    if (!attribute) {
+        // If the attribute is not in preloaded filters, try to get it from catalog attributes
+        attribute = catalogAttributes.find((catalogAttribute) =>
+            catalogAttribute.displayForms.some((df) => areObjRefsEqual(df.ref, displayFormRef)),
+        )?.attribute;
     }
 
+    if (attribute) {
+        return attribute;
+    }
+
+    // If attribute is not in preloaded filters or catalog attributes, fetch it from backend
     return backend.workspace(workspace).attributes().getAttributeByDisplayForm(displayFormRef);
 }
 
@@ -53,8 +64,13 @@ async function loadAttributes(
     ctx: DashboardContext,
     catalogAttributes: ICatalogAttribute[],
     displayForms: ObjRef[],
+    preloadedAttributesWithReferences?: IAttributeWithReferences[],
 ) {
-    return Promise.all(displayForms.map((df) => loadAttributeByDisplayForm(ctx, catalogAttributes, df)));
+    return Promise.all(
+        displayForms.map((df) =>
+            loadAttributeByDisplayForm(ctx, catalogAttributes, df, preloadedAttributesWithReferences),
+        ),
+    );
 }
 
 function* queryService(
@@ -65,6 +81,8 @@ function* queryService(
         payload: { displayForms },
         correlationId,
     } = query;
+    const preloadedAttributesWithReferences: ReturnType<typeof selectPreloadedAttributesWithReferences> =
+        yield select(selectPreloadedAttributesWithReferences);
     const catalogAttributes: ReturnType<typeof selectCatalogAttributes> = yield select(
         selectCatalogAttributes,
     );
@@ -74,6 +92,7 @@ function* queryService(
         ctx,
         catalogAttributes,
         displayForms,
+        preloadedAttributesWithReferences,
     );
 
     if (!attributes) {

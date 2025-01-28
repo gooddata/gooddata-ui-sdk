@@ -1,5 +1,6 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
+    IAttributeWithReferences,
     IElementsQueryFactory,
     IWorkspaceAttributesService,
     NotSupported,
@@ -15,6 +16,7 @@ import {
     IDataSetMetadataObject,
     IdentifierRef,
     objRefToString,
+    idRef,
 } from "@gooddata/sdk-model";
 import { TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { TigerWorkspaceElements } from "./elements/index.js";
@@ -31,9 +33,12 @@ import {
 import { invariant } from "ts-invariant";
 
 import {
+    convertAttributeLabels,
     convertAttributesWithSideloadedLabels,
     convertAttributeWithSideloadedLabels,
     convertDatasetWithLinks,
+    createDataSetMap,
+    createLabelMap,
 } from "../../../convertors/fromBackend/MetadataConverter.js";
 import { DateFormatter } from "../../../convertors/fromBackend/dateFormatting/types.js";
 import { getIdOrigin } from "../../../convertors/fromBackend/ObjectInheritance.js";
@@ -74,6 +79,7 @@ export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
                 workspaceId: this.workspace,
                 origin: "ALL",
                 filter,
+                size: refs.length,
             });
             const result = allDisplayForms?.data?.data;
 
@@ -117,9 +123,50 @@ export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
         throw new NotSupported("not supported");
     }
 
+    //
     getAttributeDatasetMeta(ref: ObjRef): Promise<IMetadataObject> {
         return this.authCall((client) => {
             return loadAttributeDataset(client, this.workspace, ref);
+        });
+    }
+
+    getAttributesWithReferences(refs: ObjRef[]): Promise<IAttributeWithReferences[]> {
+        return this.authCall(async (client) => {
+            const filter = refs
+                .filter(isIdentifierRef)
+                .map((ref) => `labels.id==${ref.identifier}`)
+                .join(",");
+
+            const allAttributes = await client.entities.getAllEntitiesAttributes({
+                include: ["labels", "datasets"],
+                workspaceId: this.workspace,
+                origin: "ALL",
+                filter,
+                size: refs.length,
+            });
+
+            const labelsMap = createLabelMap(allAttributes.data.included);
+            const datasetMap = createDataSetMap(allAttributes.data.included);
+            return allAttributes.data.data.map((attr): IAttributeWithReferences => {
+                const dataset = attr.relationships?.dataset?.data?.id
+                    ? datasetMap[attr.relationships?.dataset?.data?.id]
+                    : undefined;
+                return {
+                    attribute: {
+                        type: "attribute",
+                        id: attr.id,
+                        uri: attr.id,
+                        ref: idRef(attr.id, "attribute"),
+                        title: attr.attributes?.title ?? "",
+                        description: attr.attributes?.description ?? "",
+                        displayForms: convertAttributeLabels(attr, labelsMap),
+                        unlisted: false,
+                        deprecated: false,
+                        production: true,
+                    },
+                    dataSet: dataset ? convertDatasetWithLinks(dataset) : undefined,
+                };
+            });
         });
     }
 

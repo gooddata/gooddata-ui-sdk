@@ -956,6 +956,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_account",
+        "production": true,
+        "ref": {
+          "identifier": "f_account",
+        },
+        "tags": [
+          "Account",
+        ],
+        "title": "Account",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "attr.f_account.account",
@@ -1049,6 +1065,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_account",
+        "production": true,
+        "ref": {
+          "identifier": "f_account",
+        },
+        "tags": [
+          "Account",
+        ],
+        "title": "Account",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "f_account.id",
@@ -1140,6 +1172,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         },
         "title": "Activity",
         "type": "attribute",
+        "uri": "sanitize_uri",
+      },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_activity",
+        "production": true,
+        "ref": {
+          "identifier": "f_activity",
+        },
+        "tags": [
+          "Activity",
+        ],
+        "title": "Activity",
+        "type": "dataSet",
+        "unlisted": false,
         "uri": "sanitize_uri",
       },
       "defaultDisplayForm": {
@@ -1255,6 +1303,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_activity",
+        "production": true,
+        "ref": {
+          "identifier": "f_activity",
+        },
+        "tags": [
+          "Activity",
+        ],
+        "title": "Activity",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "f_activity.id",
@@ -1329,6 +1393,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         },
         "title": "Activity Type",
         "type": "attribute",
+        "uri": "sanitize_uri",
+      },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_activity",
+        "production": true,
+        "ref": {
+          "identifier": "f_activity",
+        },
+        "tags": [
+          "Activity",
+        ],
+        "title": "Activity",
+        "type": "dataSet",
+        "unlisted": false,
         "uri": "sanitize_uri",
       },
       "defaultDisplayForm": {
@@ -1621,6 +1701,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "City",
+        "id": "f_city",
+        "production": true,
+        "ref": {
+          "identifier": "f_city",
+        },
+        "tags": [
+          "City",
+        ],
+        "title": "City",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "f_city.id",
@@ -1838,6 +1934,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "City",
+        "id": "f_city",
+        "production": true,
+        "ref": {
+          "identifier": "f_city",
+        },
+        "tags": [
+          "City",
+        ],
+        "title": "City",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "county_name",
@@ -1972,6 +2084,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_owner",
+        "production": true,
+        "ref": {
+          "identifier": "f_owner",
+        },
+        "tags": [
+          "owner",
+        ],
+        "title": "owner",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "f_owner.department_id",
@@ -2086,6 +2214,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_opportunitysnapshot",
+        "production": true,
+        "ref": {
+          "identifier": "f_opportunitysnapshot",
+        },
+        "tags": [
+          "OpportunitySnapshot",
+        ],
+        "title": "OpportunitySnapshot",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "f_opportunitysnapshot.forecastcategory_id",
@@ -2160,6 +2304,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         },
         "title": "Is Active?",
         "type": "attribute",
+        "uri": "sanitize_uri",
+      },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_stage",
+        "production": true,
+        "ref": {
+          "identifier": "f_stage",
+        },
+        "tags": [
+          "Stage",
+        ],
+        "title": "Stage",
+        "type": "dataSet",
+        "unlisted": false,
         "uri": "sanitize_uri",
       },
       "defaultDisplayForm": {
@@ -2238,6 +2398,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_activity",
+        "production": true,
+        "ref": {
+          "identifier": "f_activity",
+        },
+        "tags": [
+          "Activity",
+        ],
+        "title": "Activity",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "f_activity.isclosed_id",
@@ -2312,6 +2488,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         },
         "title": "Is Closed?",
         "type": "attribute",
+        "uri": "sanitize_uri",
+      },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_stage",
+        "production": true,
+        "ref": {
+          "identifier": "f_stage",
+        },
+        "tags": [
+          "Stage",
+        ],
+        "title": "Stage",
+        "type": "dataSet",
+        "unlisted": false,
         "uri": "sanitize_uri",
       },
       "defaultDisplayForm": {
@@ -2390,6 +2582,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_activity",
+        "production": true,
+        "ref": {
+          "identifier": "f_activity",
+        },
+        "tags": [
+          "Activity",
+        ],
+        "title": "Activity",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "f_activity.istask_id",
@@ -2464,6 +2672,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         },
         "title": "Is Won?",
         "type": "attribute",
+        "uri": "sanitize_uri",
+      },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_stage",
+        "production": true,
+        "ref": {
+          "identifier": "f_stage",
+        },
+        "tags": [
+          "Stage",
+        ],
+        "title": "Stage",
+        "type": "dataSet",
+        "unlisted": false,
         "uri": "sanitize_uri",
       },
       "defaultDisplayForm": {
@@ -2642,6 +2866,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_opportunitysnapshot",
+        "production": true,
+        "ref": {
+          "identifier": "f_opportunitysnapshot",
+        },
+        "tags": [
+          "OpportunitySnapshot",
+        ],
+        "title": "OpportunitySnapshot",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "attr.f_opportunitysnapshot.oppsnapshot",
@@ -2736,6 +2976,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         },
         "title": "Opp. Snapshot Id",
         "type": "attribute",
+        "uri": "sanitize_uri",
+      },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_opportunitysnapshot",
+        "production": true,
+        "ref": {
+          "identifier": "f_opportunitysnapshot",
+        },
+        "tags": [
+          "OpportunitySnapshot",
+        ],
+        "title": "OpportunitySnapshot",
+        "type": "dataSet",
+        "unlisted": false,
         "uri": "sanitize_uri",
       },
       "defaultDisplayForm": {
@@ -2849,6 +3105,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_opportunity",
+        "production": true,
+        "ref": {
+          "identifier": "f_opportunity",
+        },
+        "tags": [
+          "Opportunity",
+        ],
+        "title": "Opportunity",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "attr.f_opportunity.opportunity",
@@ -2960,6 +3232,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_opportunity",
+        "production": true,
+        "ref": {
+          "identifier": "f_opportunity",
+        },
+        "tags": [
+          "Opportunity",
+        ],
+        "title": "Opportunity",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "f_opportunity.id",
@@ -3034,6 +3322,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         },
         "title": "Owner Id",
         "type": "attribute",
+        "uri": "sanitize_uri",
+      },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_owner",
+        "production": true,
+        "ref": {
+          "identifier": "f_owner",
+        },
+        "tags": [
+          "owner",
+        ],
+        "title": "owner",
+        "type": "dataSet",
+        "unlisted": false,
         "uri": "sanitize_uri",
       },
       "defaultDisplayForm": {
@@ -3150,6 +3454,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         },
         "title": "Priority",
         "type": "attribute",
+        "uri": "sanitize_uri",
+      },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_activity",
+        "production": true,
+        "ref": {
+          "identifier": "f_activity",
+        },
+        "tags": [
+          "Activity",
+        ],
+        "title": "Activity",
+        "type": "dataSet",
+        "unlisted": false,
         "uri": "sanitize_uri",
       },
       "defaultDisplayForm": {
@@ -3321,6 +3641,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_product",
+        "production": true,
+        "ref": {
+          "identifier": "f_product",
+        },
+        "tags": [
+          "product",
+        ],
+        "title": "product",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "attr.f_product.product",
@@ -3450,6 +3786,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_product",
+        "production": true,
+        "ref": {
+          "identifier": "f_product",
+        },
+        "tags": [
+          "product",
+        ],
+        "title": "product",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "f_product.id",
@@ -3542,6 +3894,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         },
         "title": "Product that is renamed to test the long attribute name",
         "type": "attribute",
+        "uri": "sanitize_uri",
+      },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_product",
+        "production": true,
+        "ref": {
+          "identifier": "f_product",
+        },
+        "tags": [
+          "product",
+        ],
+        "title": "product",
+        "type": "dataSet",
+        "unlisted": false,
         "uri": "sanitize_uri",
       },
       "defaultDisplayForm": {
@@ -3656,6 +4024,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_owner",
+        "production": true,
+        "ref": {
+          "identifier": "f_owner",
+        },
+        "tags": [
+          "owner",
+        ],
+        "title": "owner",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "f_owner.region_id",
@@ -3767,6 +4151,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_owner",
+        "production": true,
+        "ref": {
+          "identifier": "f_owner",
+        },
+        "tags": [
+          "owner",
+        ],
+        "title": "owner",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "attr.f_owner.salesrep",
@@ -3860,6 +4260,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_stagehistory",
+        "production": true,
+        "ref": {
+          "identifier": "f_stagehistory",
+        },
+        "tags": [
+          "stagehistory",
+        ],
+        "title": "stagehistory",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "attr.f_stagehistory.stagehistory",
@@ -3936,6 +4352,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_stagehistory",
+        "production": true,
+        "ref": {
+          "identifier": "f_stagehistory",
+        },
+        "tags": [
+          "stagehistory",
+        ],
+        "title": "stagehistory",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "f_stagehistory.id",
@@ -4010,6 +4442,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         },
         "title": "Stage Id",
         "type": "attribute",
+        "uri": "sanitize_uri",
+      },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_stage",
+        "production": true,
+        "ref": {
+          "identifier": "f_stage",
+        },
+        "tags": [
+          "Stage",
+        ],
+        "title": "Stage",
+        "type": "dataSet",
+        "unlisted": false,
         "uri": "sanitize_uri",
       },
       "defaultDisplayForm": {
@@ -4120,6 +4568,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         },
         "title": "Stage Name",
         "type": "attribute",
+        "uri": "sanitize_uri",
+      },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_stage",
+        "production": true,
+        "ref": {
+          "identifier": "f_stage",
+        },
+        "tags": [
+          "Stage",
+        ],
+        "title": "Stage",
+        "type": "dataSet",
+        "unlisted": false,
         "uri": "sanitize_uri",
       },
       "defaultDisplayForm": {
@@ -4249,6 +4713,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "City",
+        "id": "f_city",
+        "production": true,
+        "ref": {
+          "identifier": "f_city",
+        },
+        "tags": [
+          "City",
+        ],
+        "title": "City",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "state_id",
@@ -4342,6 +4822,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_activity",
+        "production": true,
+        "ref": {
+          "identifier": "f_activity",
+        },
+        "tags": [
+          "Activity",
+        ],
+        "title": "Activity",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "f_activity.status_id",
@@ -4416,6 +4912,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         },
         "title": "Status",
         "type": "attribute",
+        "uri": "sanitize_uri",
+      },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_stage",
+        "production": true,
+        "ref": {
+          "identifier": "f_stage",
+        },
+        "tags": [
+          "Stage",
+        ],
+        "title": "Stage",
+        "type": "dataSet",
+        "unlisted": false,
         "uri": "sanitize_uri",
       },
       "defaultDisplayForm": {
@@ -4496,6 +5008,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         },
         "title": "Timeline",
         "type": "attribute",
+        "uri": "sanitize_uri",
+      },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_timeline",
+        "production": true,
+        "ref": {
+          "identifier": "f_timeline",
+        },
+        "tags": [
+          "Timeline",
+        ],
+        "title": "Timeline",
+        "type": "dataSet",
+        "unlisted": false,
         "uri": "sanitize_uri",
       },
       "defaultDisplayForm": {
@@ -4626,6 +5154,22 @@ exports[`tiger catalog > should correctly get catalog availability when derived 
         },
         "title": "User Id",
         "type": "attribute",
+        "uri": "sanitize_uri",
+      },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_owner",
+        "production": true,
+        "ref": {
+          "identifier": "f_owner",
+        },
+        "tags": [
+          "owner",
+        ],
+        "title": "owner",
+        "type": "dataSet",
+        "unlisted": false,
         "uri": "sanitize_uri",
       },
       "defaultDisplayForm": {
@@ -9070,6 +9614,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_account",
+        "production": true,
+        "ref": {
+          "identifier": "f_account",
+        },
+        "tags": [
+          "Account",
+        ],
+        "title": "Account",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "attr.f_account.account",
@@ -9163,6 +9723,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_account",
+        "production": true,
+        "ref": {
+          "identifier": "f_account",
+        },
+        "tags": [
+          "Account",
+        ],
+        "title": "Account",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "f_account.id",
@@ -9254,6 +9830,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         },
         "title": "Activity",
         "type": "attribute",
+        "uri": "sanitize_uri",
+      },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_activity",
+        "production": true,
+        "ref": {
+          "identifier": "f_activity",
+        },
+        "tags": [
+          "Activity",
+        ],
+        "title": "Activity",
+        "type": "dataSet",
+        "unlisted": false,
         "uri": "sanitize_uri",
       },
       "defaultDisplayForm": {
@@ -9369,6 +9961,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_activity",
+        "production": true,
+        "ref": {
+          "identifier": "f_activity",
+        },
+        "tags": [
+          "Activity",
+        ],
+        "title": "Activity",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "f_activity.id",
@@ -9443,6 +10051,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         },
         "title": "Activity Type",
         "type": "attribute",
+        "uri": "sanitize_uri",
+      },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_activity",
+        "production": true,
+        "ref": {
+          "identifier": "f_activity",
+        },
+        "tags": [
+          "Activity",
+        ],
+        "title": "Activity",
+        "type": "dataSet",
+        "unlisted": false,
         "uri": "sanitize_uri",
       },
       "defaultDisplayForm": {
@@ -9735,6 +10359,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "City",
+        "id": "f_city",
+        "production": true,
+        "ref": {
+          "identifier": "f_city",
+        },
+        "tags": [
+          "City",
+        ],
+        "title": "City",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "f_city.id",
@@ -9952,6 +10592,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "City",
+        "id": "f_city",
+        "production": true,
+        "ref": {
+          "identifier": "f_city",
+        },
+        "tags": [
+          "City",
+        ],
+        "title": "City",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "county_name",
@@ -10086,6 +10742,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_owner",
+        "production": true,
+        "ref": {
+          "identifier": "f_owner",
+        },
+        "tags": [
+          "owner",
+        ],
+        "title": "owner",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "f_owner.department_id",
@@ -10200,6 +10872,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_opportunitysnapshot",
+        "production": true,
+        "ref": {
+          "identifier": "f_opportunitysnapshot",
+        },
+        "tags": [
+          "OpportunitySnapshot",
+        ],
+        "title": "OpportunitySnapshot",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "f_opportunitysnapshot.forecastcategory_id",
@@ -10274,6 +10962,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         },
         "title": "Is Active?",
         "type": "attribute",
+        "uri": "sanitize_uri",
+      },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_stage",
+        "production": true,
+        "ref": {
+          "identifier": "f_stage",
+        },
+        "tags": [
+          "Stage",
+        ],
+        "title": "Stage",
+        "type": "dataSet",
+        "unlisted": false,
         "uri": "sanitize_uri",
       },
       "defaultDisplayForm": {
@@ -10352,6 +11056,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_activity",
+        "production": true,
+        "ref": {
+          "identifier": "f_activity",
+        },
+        "tags": [
+          "Activity",
+        ],
+        "title": "Activity",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "f_activity.isclosed_id",
@@ -10426,6 +11146,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         },
         "title": "Is Closed?",
         "type": "attribute",
+        "uri": "sanitize_uri",
+      },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_stage",
+        "production": true,
+        "ref": {
+          "identifier": "f_stage",
+        },
+        "tags": [
+          "Stage",
+        ],
+        "title": "Stage",
+        "type": "dataSet",
+        "unlisted": false,
         "uri": "sanitize_uri",
       },
       "defaultDisplayForm": {
@@ -10504,6 +11240,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_activity",
+        "production": true,
+        "ref": {
+          "identifier": "f_activity",
+        },
+        "tags": [
+          "Activity",
+        ],
+        "title": "Activity",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "f_activity.istask_id",
@@ -10578,6 +11330,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         },
         "title": "Is Won?",
         "type": "attribute",
+        "uri": "sanitize_uri",
+      },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_stage",
+        "production": true,
+        "ref": {
+          "identifier": "f_stage",
+        },
+        "tags": [
+          "Stage",
+        ],
+        "title": "Stage",
+        "type": "dataSet",
+        "unlisted": false,
         "uri": "sanitize_uri",
       },
       "defaultDisplayForm": {
@@ -10756,6 +11524,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_opportunitysnapshot",
+        "production": true,
+        "ref": {
+          "identifier": "f_opportunitysnapshot",
+        },
+        "tags": [
+          "OpportunitySnapshot",
+        ],
+        "title": "OpportunitySnapshot",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "attr.f_opportunitysnapshot.oppsnapshot",
@@ -10850,6 +11634,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         },
         "title": "Opp. Snapshot Id",
         "type": "attribute",
+        "uri": "sanitize_uri",
+      },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_opportunitysnapshot",
+        "production": true,
+        "ref": {
+          "identifier": "f_opportunitysnapshot",
+        },
+        "tags": [
+          "OpportunitySnapshot",
+        ],
+        "title": "OpportunitySnapshot",
+        "type": "dataSet",
+        "unlisted": false,
         "uri": "sanitize_uri",
       },
       "defaultDisplayForm": {
@@ -10963,6 +11763,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_opportunity",
+        "production": true,
+        "ref": {
+          "identifier": "f_opportunity",
+        },
+        "tags": [
+          "Opportunity",
+        ],
+        "title": "Opportunity",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "attr.f_opportunity.opportunity",
@@ -11074,6 +11890,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_opportunity",
+        "production": true,
+        "ref": {
+          "identifier": "f_opportunity",
+        },
+        "tags": [
+          "Opportunity",
+        ],
+        "title": "Opportunity",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "f_opportunity.id",
@@ -11148,6 +11980,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         },
         "title": "Owner Id",
         "type": "attribute",
+        "uri": "sanitize_uri",
+      },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_owner",
+        "production": true,
+        "ref": {
+          "identifier": "f_owner",
+        },
+        "tags": [
+          "owner",
+        ],
+        "title": "owner",
+        "type": "dataSet",
+        "unlisted": false,
         "uri": "sanitize_uri",
       },
       "defaultDisplayForm": {
@@ -11264,6 +12112,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         },
         "title": "Priority",
         "type": "attribute",
+        "uri": "sanitize_uri",
+      },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_activity",
+        "production": true,
+        "ref": {
+          "identifier": "f_activity",
+        },
+        "tags": [
+          "Activity",
+        ],
+        "title": "Activity",
+        "type": "dataSet",
+        "unlisted": false,
         "uri": "sanitize_uri",
       },
       "defaultDisplayForm": {
@@ -11435,6 +12299,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_product",
+        "production": true,
+        "ref": {
+          "identifier": "f_product",
+        },
+        "tags": [
+          "product",
+        ],
+        "title": "product",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "attr.f_product.product",
@@ -11564,6 +12444,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_product",
+        "production": true,
+        "ref": {
+          "identifier": "f_product",
+        },
+        "tags": [
+          "product",
+        ],
+        "title": "product",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "f_product.id",
@@ -11656,6 +12552,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         },
         "title": "Product that is renamed to test the long attribute name",
         "type": "attribute",
+        "uri": "sanitize_uri",
+      },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_product",
+        "production": true,
+        "ref": {
+          "identifier": "f_product",
+        },
+        "tags": [
+          "product",
+        ],
+        "title": "product",
+        "type": "dataSet",
+        "unlisted": false,
         "uri": "sanitize_uri",
       },
       "defaultDisplayForm": {
@@ -11770,6 +12682,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_owner",
+        "production": true,
+        "ref": {
+          "identifier": "f_owner",
+        },
+        "tags": [
+          "owner",
+        ],
+        "title": "owner",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "f_owner.region_id",
@@ -11881,6 +12809,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_owner",
+        "production": true,
+        "ref": {
+          "identifier": "f_owner",
+        },
+        "tags": [
+          "owner",
+        ],
+        "title": "owner",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "attr.f_owner.salesrep",
@@ -11974,6 +12918,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_stagehistory",
+        "production": true,
+        "ref": {
+          "identifier": "f_stagehistory",
+        },
+        "tags": [
+          "stagehistory",
+        ],
+        "title": "stagehistory",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "attr.f_stagehistory.stagehistory",
@@ -12050,6 +13010,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_stagehistory",
+        "production": true,
+        "ref": {
+          "identifier": "f_stagehistory",
+        },
+        "tags": [
+          "stagehistory",
+        ],
+        "title": "stagehistory",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "f_stagehistory.id",
@@ -12124,6 +13100,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         },
         "title": "Stage Id",
         "type": "attribute",
+        "uri": "sanitize_uri",
+      },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_stage",
+        "production": true,
+        "ref": {
+          "identifier": "f_stage",
+        },
+        "tags": [
+          "Stage",
+        ],
+        "title": "Stage",
+        "type": "dataSet",
+        "unlisted": false,
         "uri": "sanitize_uri",
       },
       "defaultDisplayForm": {
@@ -12234,6 +13226,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         },
         "title": "Stage Name",
         "type": "attribute",
+        "uri": "sanitize_uri",
+      },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_stage",
+        "production": true,
+        "ref": {
+          "identifier": "f_stage",
+        },
+        "tags": [
+          "Stage",
+        ],
+        "title": "Stage",
+        "type": "dataSet",
+        "unlisted": false,
         "uri": "sanitize_uri",
       },
       "defaultDisplayForm": {
@@ -12363,6 +13371,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "City",
+        "id": "f_city",
+        "production": true,
+        "ref": {
+          "identifier": "f_city",
+        },
+        "tags": [
+          "City",
+        ],
+        "title": "City",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "state_id",
@@ -12456,6 +13480,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         "type": "attribute",
         "uri": "sanitize_uri",
       },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_activity",
+        "production": true,
+        "ref": {
+          "identifier": "f_activity",
+        },
+        "tags": [
+          "Activity",
+        ],
+        "title": "Activity",
+        "type": "dataSet",
+        "unlisted": false,
+        "uri": "sanitize_uri",
+      },
       "defaultDisplayForm": {
         "attribute": {
           "identifier": "f_activity.status_id",
@@ -12530,6 +13570,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         },
         "title": "Status",
         "type": "attribute",
+        "uri": "sanitize_uri",
+      },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_stage",
+        "production": true,
+        "ref": {
+          "identifier": "f_stage",
+        },
+        "tags": [
+          "Stage",
+        ],
+        "title": "Stage",
+        "type": "dataSet",
+        "unlisted": false,
         "uri": "sanitize_uri",
       },
       "defaultDisplayForm": {
@@ -12610,6 +13666,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         },
         "title": "Timeline",
         "type": "attribute",
+        "uri": "sanitize_uri",
+      },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_timeline",
+        "production": true,
+        "ref": {
+          "identifier": "f_timeline",
+        },
+        "tags": [
+          "Timeline",
+        ],
+        "title": "Timeline",
+        "type": "dataSet",
+        "unlisted": false,
         "uri": "sanitize_uri",
       },
       "defaultDisplayForm": {
@@ -12740,6 +13812,22 @@ exports[`tiger catalog > should read catalog for reference workspace 1`] = `
         },
         "title": "User Id",
         "type": "attribute",
+        "uri": "sanitize_uri",
+      },
+      "dataSet": {
+        "deprecated": false,
+        "description": "",
+        "id": "f_owner",
+        "production": true,
+        "ref": {
+          "identifier": "f_owner",
+        },
+        "tags": [
+          "owner",
+        ],
+        "title": "owner",
+        "type": "dataSet",
+        "unlisted": false,
         "uri": "sanitize_uri",
       },
       "defaultDisplayForm": {
