@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import {
     areObjRefsEqual,
     attributeAlias,
@@ -13,7 +13,6 @@ import {
     ICatalogAttribute,
     ICatalogDateAttribute,
     ICatalogDateDataset,
-    ICatalogMeasure,
     IFilter,
     IMeasure,
     isAttributeElementsByValue,
@@ -25,7 +24,10 @@ import {
     measureIdentifier,
     measureTitle,
     ObjRef,
+    isMeasureGroupDescriptor,
+    IMeasureDescriptor,
 } from "@gooddata/sdk-model";
+import { IExecutionResult } from "@gooddata/sdk-backend-spi";
 import { IntlShape } from "react-intl";
 
 import { AlertAttribute, AlertMetric, AlertMetricComparator } from "../../../types.js";
@@ -39,10 +41,12 @@ import {
 
 import { isChangeOperator, isDifferenceOperator } from "./guards.js";
 
+export type IMeasureFormatMap = { [key: string]: string };
+
 /**
  * @internal
  */
-export function getMeasureFormat(measure: IMeasure | undefined, catalogMeasures?: ICatalogMeasure[]) {
+export function getMeasureFormat(measure: IMeasure | undefined, measureFormatMap: IMeasureFormatMap = {}) {
     if (!measure) {
         return DEFAULT_MEASURE_FORMAT;
     }
@@ -53,9 +57,8 @@ export function getMeasureFormat(measure: IMeasure | undefined, catalogMeasures?
     }
 
     // measure format from the catalog
-    const catalogMeasure = findMeasureInCatalog(measure, catalogMeasures);
-
-    return catalogMeasure?.measure.format ?? DEFAULT_MEASURE_FORMAT;
+    const resolvedIdentifier = measureIdentifier(measure);
+    return (resolvedIdentifier && measureFormatMap[resolvedIdentifier]) ?? DEFAULT_MEASURE_FORMAT;
 }
 
 /**
@@ -376,9 +379,31 @@ function getAttributeRelatedFilter(attr: AlertAttribute | undefined, alert?: IAu
     };
 }
 
-function findMeasureInCatalog(
-    measure: IMeasure,
-    catalogMeasures?: ICatalogMeasure[],
-): ICatalogMeasure | undefined {
-    return catalogMeasures?.find((m) => m.measure.id === measureIdentifier(measure));
+/**
+ * Prepare a mapping between measure identifiers and measure formats.
+ * Obtain the information from the execution result measure group dimension headers.
+ * @internal
+ */
+export function getMeasureFormatsFromExecution(execResult: IExecutionResult | undefined): IMeasureFormatMap {
+    const dimensions = execResult?.dimensions ?? [];
+    for (const dim of dimensions) {
+        const measureGroup = dim.headers.find(isMeasureGroupDescriptor);
+
+        if (measureGroup) {
+            return measureGroup.measureGroupHeader.items.reduce(
+                (acc: IMeasureFormatMap, item: IMeasureDescriptor) => {
+                    const identifier = item.measureHeaderItem?.identifier;
+                    const format = item.measureHeaderItem?.format;
+                    if (identifier) {
+                        acc[identifier] = format;
+                    }
+
+                    return acc;
+                },
+                {},
+            );
+        }
+    }
+
+    return {};
 }
