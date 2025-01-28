@@ -2648,6 +2648,16 @@ export interface DashboardModelCustomizationFns {
     existingDashboardTransformFn?: DashboardTransformFn;
 }
 
+// @internal (undocumented)
+export enum DashboardPartId {
+    // (undocumented)
+    FiltersBar = "filtersBar",
+    // (undocumented)
+    MainContent = "mainContent",
+    // (undocumented)
+    Sidebar = "sidebar"
+}
+
 // @public (undocumented)
 export interface DashboardPermissionsState {
     // @beta (undocumented)
@@ -4093,6 +4103,7 @@ export interface IDashboardBaseProps {
     config?: DashboardConfig;
     dashboard?: string | ObjRef | IDashboard;
     filterContextRef?: ObjRef;
+    keyboardNavigation?: KeyboardNavigationConfig;
     permissions?: IWorkspacePermissions;
     workspace?: string;
 }
@@ -4901,6 +4912,13 @@ export interface IInsightMenuSubmenuComponentProps {
     onClose: () => void;
     onGoBack: () => void;
     widget: IInsightWidget;
+}
+
+// @internal
+export interface IKeyboardNavigationConfigItem {
+    onFocus?: () => void;
+    tabIndex?: number;
+    targetElementId?: string;
 }
 
 // @internal (undocumented)
@@ -6006,6 +6024,9 @@ export interface IXlsxExportConfig {
     showFilters?: boolean;
     title?: string;
 }
+
+// @internal
+export type KeyboardNavigationConfig = Record<DashboardPartId, IKeyboardNavigationConfigItem>;
 
 // @internal (undocumented)
 export const KPI_PLACEHOLDER_WIDGET_ID = "__kpiPlaceholder__";
