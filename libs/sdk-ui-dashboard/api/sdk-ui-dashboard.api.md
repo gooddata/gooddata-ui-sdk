@@ -6026,7 +6026,9 @@ export interface IXlsxExportConfig {
 }
 
 // @internal
-export type KeyboardNavigationConfig = Record<DashboardPartId, IKeyboardNavigationConfigItem>;
+export type KeyboardNavigationConfig = {
+    [key in DashboardPartId]?: IKeyboardNavigationConfigItem;
+};
 
 // @internal (undocumented)
 export const KPI_PLACEHOLDER_WIDGET_ID = "__kpiPlaceholder__";
