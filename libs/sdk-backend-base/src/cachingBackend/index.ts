@@ -314,10 +314,12 @@ class WithCatalogCaching extends DecoratedWorkspaceCatalogFactory {
                         catalogAttribute.displayForms.forEach((displayForm) => {
                             this.cacheAttributeByDisplayForm(displayForm.ref, catalogAttribute.attribute);
                         });
-                        this.cacheAttributeDataSetMeta(
-                            catalogAttribute.attribute.ref,
-                            catalogAttribute.dataSet!,
-                        );
+                        if (catalogAttribute.dataSet) {
+                            this.cacheAttributeDataSetMeta(
+                                catalogAttribute.attribute.ref,
+                                catalogAttribute.dataSet,
+                            );
+                        }
                     });
                     return catalog;
                 })
@@ -898,7 +900,9 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
             loaded.attribute.displayForms.forEach((displayForm) => {
                 this.cacheAttributeByDisplayForm(displayForm.ref, loaded.attribute);
             });
-            this.cacheAttributeDataSetMeta(loaded.attribute.ref, loaded.dataSet!);
+            if (loaded.dataSet) {
+                this.cacheAttributeDataSetMeta(loaded.attribute.ref, loaded.dataSet);
+            }
             // save the cache item for both types of refs
             cache.set(loaded.attribute.id, promisifiedResult);
         });
