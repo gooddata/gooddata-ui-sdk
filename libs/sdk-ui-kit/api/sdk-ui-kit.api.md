@@ -845,6 +845,8 @@ export interface IAppHeaderProps {
     // (undocumented)
     onUpsellButtonClick?: (e: React_2.MouseEvent) => void;
     // (undocumented)
+    organizationName?: string;
+    // (undocumented)
     search?: React_2.ReactNode;
     // (undocumented)
     showChatItem?: boolean;
@@ -2138,6 +2140,8 @@ export interface IHyperlinkProps {
 
 // @internal (undocumented)
 export interface IIconProps {
+    // (undocumented)
+    ariaHidden?: boolean;
     // (undocumented)
     className?: string;
     // (undocumented)
