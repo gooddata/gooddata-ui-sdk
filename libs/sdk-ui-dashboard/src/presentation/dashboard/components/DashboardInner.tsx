@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { RefObject, useEffect, useRef } from "react";
 import cx from "classnames";
 import { IntlWrapper } from "../../localization/index.js";
@@ -51,6 +51,15 @@ export const DashboardInner: React.FC<IDashboardProps> = (props) => {
         ? FlexibleDragLayerComponent
         : FlexibleFluidDragLayerComponent;
 
+    const mainContentNavigationConfig = props.keyboardNavigation?.mainContent;
+
+    const mainContentNavigationProps = mainContentNavigationConfig
+        ? {
+              tabIndex: mainContentNavigationConfig.tabIndex,
+              id: mainContentNavigationConfig.targetElementId,
+          }
+        : {};
+
     return (
         <IntlWrapper locale={locale}>
             {/* we need wrapping element for drag layer and dashboard for proper rendering in flex layout */}
@@ -68,7 +77,7 @@ export const DashboardInner: React.FC<IDashboardProps> = (props) => {
                         WrapCreatePanelItemWithDragComponent={WrapCreatePanelItemWithDrag}
                         WrapInsightListItemWithDragComponent={WrapInsightListItemWithDrag}
                     />
-                    <div className="gd-dash-content">
+                    <div className="gd-dash-content" {...mainContentNavigationProps}>
                         {/* gd-dash-header-wrapper-sdk-8-12 style is added because we should keep old styles unchanged to not brake plugins */}
                         <div
                             className="gd-dash-header-wrapper gd-dash-header-wrapper-sdk-8-12"

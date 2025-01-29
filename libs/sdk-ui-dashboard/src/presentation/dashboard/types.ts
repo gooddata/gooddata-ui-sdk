@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React, { ComponentType } from "react";
 import { ReactReduxContextValue } from "react-redux";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -579,6 +579,41 @@ export interface IDashboardEventing {
 }
 
 /**
+ * @internal
+ */
+export enum DashboardPartId {
+    MainContent = "mainContent",
+    FiltersBar = "filtersBar",
+    Sidebar = "sidebar",
+}
+
+/**
+ * Configuration for keyboard navigation
+ *
+ * @internal
+ */
+export interface IKeyboardNavigationConfigItem {
+    /**
+     * id which will be set to the target element
+     */
+    targetElementId?: string;
+    /**
+     * tabIndex which will be set to the target element
+     */
+    tabIndex?: number;
+    /**
+     * onFocus callback which will be called when the target element is focused
+     */
+    onFocus?: () => void;
+}
+
+/**
+ * Configurations for keyboard navigation for individual parts of the dashboard
+ * @internal
+ */
+export type KeyboardNavigationConfig = Record<DashboardPartId, IKeyboardNavigationConfigItem>;
+
+/**
  * @public
  */
 export interface IDashboardBaseProps {
@@ -640,6 +675,11 @@ export interface IDashboardBaseProps {
      * logged-in user.
      */
     permissions?: IWorkspacePermissions;
+
+    /**
+     * Specify tab index and addressable id for the dashboard components used by keyboard navigation
+     */
+    keyboardNavigation?: KeyboardNavigationConfig;
 }
 
 /**
