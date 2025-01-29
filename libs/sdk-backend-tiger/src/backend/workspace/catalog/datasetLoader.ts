@@ -41,7 +41,10 @@ function getAttributeLabels(
     attribute: JsonApiAttributeOutWithLinks,
     included: JsonApiAttributeOutIncludes[] | undefined,
 ): JsonApiLabelOutWithLinks[] {
-    const labelsRefs = attribute.relationships?.labels?.data as JsonApiLabelLinkage[];
+    if (!included) {
+        return [];
+    }
+    const labelsRefs = (attribute.relationships?.labels?.data ?? []) as JsonApiLabelLinkage[];
     return labelsRefs
         .map((ref) => {
             const obj = lookupRelatedObject(included, ref.id, ref.type);
@@ -58,6 +61,9 @@ function getAttributeDataSet(
     included: JsonApiAttributeOutIncludes[] | undefined,
 ): JsonApiDatasetOutWithLinks | undefined {
     const dataSetRef = attribute.relationships?.dataset?.data as JsonApiDatasetLinkage;
+    if (!dataSetRef || !included) {
+        return;
+    }
     return lookupRelatedObject(included, dataSetRef.id, dataSetRef.type) as JsonApiDatasetOutWithLinks;
 }
 
