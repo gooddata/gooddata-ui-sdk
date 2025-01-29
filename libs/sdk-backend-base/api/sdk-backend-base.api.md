@@ -281,6 +281,8 @@ export class CatalogAttributeBuilder<T extends ICatalogAttribute = ICatalogAttri
     // (undocumented)
     attribute(attributeOrRef: IAttributeMetadataObject | ObjRef, modifications?: BuilderModifications<AttributeMetadataObjectBuilder>): this;
     // (undocumented)
+    dataSet(dataSet: IDataSetMetadataObject | undefined): this;
+    // (undocumented)
     defaultDisplayForm(displayFormOrRef: IAttributeDisplayFormMetadataObject | ObjRef, modifications?: BuilderModifications<AttributeDisplayFormMetadataObjectBuilder>): this;
     // (undocumented)
     displayForms(displayForms: IAttributeDisplayFormMetadataObject[]): this;

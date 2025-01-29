@@ -141,6 +141,7 @@ import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IAttributeFilterBaseProps } from '@gooddata/sdk-ui-filters';
 import { IAttributeMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
+import { IAttributeWithReferences } from '@gooddata/sdk-backend-spi';
 import { IAutomationMetadataObject } from '@gooddata/sdk-model';
 import { IAutomationMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { IAvailableDrillTargets } from '@gooddata/sdk-ui';
@@ -3141,7 +3142,7 @@ export function DefaultCancelButton({ isVisible, onCancelClick }: ICancelButtonP
 export const DefaultCancelEditDialog: React_2.FC<ICancelEditDialogProps>;
 
 // @alpha
-export const DefaultDashboardAttributeFilter: (props: IDashboardAttributeFilterProps) => JSX.Element;
+export const DefaultDashboardAttributeFilter: (props: IDashboardAttributeFilterProps) => JSX.Element | null;
 
 // @internal (undocumented)
 export function DefaultDashboardAttributeFilterComponentSetFactory(attributeFilterProvider: AttributeFilterComponentProvider): AttributeFilterComponentSet;
@@ -3692,6 +3693,8 @@ export function filterContextItemsToDashboardFiltersByWidget(filterContextItems:
 export interface FilterContextState {
     // @beta
     attributeFilterDisplayForms?: IAttributeDisplayFormMetadataObject[];
+    // @beta
+    attributesWithReferences?: IAttributeWithReferences[];
     // @beta
     filterContextDefinition?: IFilterContextDefinition;
     // @beta
@@ -7967,6 +7970,9 @@ export const selectHasCatalogFacts: DashboardSelector<boolean>;
 // @alpha (undocumented)
 export const selectHasCatalogMeasures: DashboardSelector<boolean>;
 
+// @alpha (undocumented)
+export const selectHasSomeExecutionResult: DashboardSelector<boolean>;
+
 // @public
 export const selectHideKpiDrillInEmbedded: DashboardSelector<boolean>;
 
@@ -8251,6 +8257,9 @@ export const selectPersistedDashboard: DashboardSelector<IDashboard | undefined>
 
 // @public
 export const selectPlatformEdition: DashboardSelector<PlatformEdition>;
+
+// @internal
+export const selectPreloadedAttributesWithReferences: DashboardSelector<IAttributeWithReferences[] | undefined>;
 
 // @internal (undocumented)
 export const selectRenderMode: DashboardSelector<RenderMode>;

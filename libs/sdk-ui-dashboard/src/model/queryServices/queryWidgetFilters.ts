@@ -49,6 +49,7 @@ import isEmpty from "lodash/isEmpty.js";
 import { ICustomWidget, FilterableDashboardWidget } from "../types/layoutTypes.js";
 import { selectSupportsMultipleDateFilters } from "../store/backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { selectEnableCriticalContentPerformanceOptimizations } from "../store/index.js";
 
 export const QueryWidgetFiltersService = createQueryService("GDC.DASH/QUERY.WIDGET.FILTERS", queryService);
 
@@ -332,7 +333,7 @@ function* queryWithInsight(
 
     const effectiveInsightFilters = insightFilters(insight);
 
-    const avoidCatalogForFilterLookup = !!ctx.config?.settings?.enableCriticalContentPerformanceOptimizations;
+    const avoidCatalogForFilterLookup = yield select(selectEnableCriticalContentPerformanceOptimizations);
 
     const [dateFilters, attributeFilters] = yield all([
         select(
@@ -381,7 +382,7 @@ function* queryWithoutInsight(
     > = yield select(widgetAwareDashboardFiltersSelector);
 
     const supportsMultipleDateFilters = yield select(selectSupportsMultipleDateFilters);
-    const avoidCatalogForFilterLookup = !!ctx.config?.settings?.enableCriticalContentPerformanceOptimizations;
+    const avoidCatalogForFilterLookup = yield select(selectEnableCriticalContentPerformanceOptimizations);
 
     const [dateFilters, attributeFilters] = yield all([
         select(

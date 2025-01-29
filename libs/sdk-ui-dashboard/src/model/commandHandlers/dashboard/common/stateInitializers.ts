@@ -106,6 +106,7 @@ function* sanitizeFilterContext(
     catalogDateDataSets: ICatalogDateDataset[] | null,
     dataSets: IDataSetMetadataObject[] = [],
     displayForms?: ObjRefMap<IAttributeDisplayFormMetadataObject>,
+    settings?: ISettings,
 ): SagaIterator<IDashboard["filterContext"]> {
     // we don't need sanitize filter references, if backend guarantees consistent references
     if (!ctx.backend.capabilities.allowsInconsistentRelations) {
@@ -142,7 +143,7 @@ function* sanitizeFilterContext(
         availableRefs = yield call(loadAvailableDisplayFormRefs, ctx, usedFilterDisplayForms);
     }
 
-    if (ctx.config?.settings?.enableCriticalContentPerformanceOptimizations) {
+    if (settings?.enableCriticalContentPerformanceOptimizations) {
         // full catalog may not be available here, just related datasets to the dashboard
         // -- find out if some datasets are still missing and if needed, fetch them
 
@@ -233,6 +234,7 @@ export function* actionsToInitializeExistingDashboard(
         dateDataSets,
         dashboard.dataSets,
         displayForms,
+        settings,
     );
 
     const sanitizedDashboard: IDashboard<ExtendedDashboardWidget> = {

@@ -293,6 +293,12 @@ export interface IAttributeHierarchiesService {
     updateAttributeHierarchy(catalogAttributeHierarchy: ICatalogAttributeHierarchy): Promise<ICatalogAttributeHierarchy>;
 }
 
+// @beta (undocumented)
+export interface IAttributeWithReferences {
+    attribute: IAttributeMetadataObject;
+    dataSet?: IDataSetMetadataObject;
+}
+
 // @public
 export interface IAuthenticatedPrincipal {
     userId: string;
@@ -1256,6 +1262,7 @@ export interface IWorkspaceAttributesService {
     getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject>;
     getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]>;
     getAttributes(refs: ObjRef[]): Promise<IAttributeMetadataObject[]>;
+    getAttributesWithReferences(displayFormRefs: ObjRef[]): Promise<IAttributeWithReferences[]>;
     getCommonAttributes(attributeRefs: ObjRef[]): Promise<ObjRef[]>;
     getCommonAttributesBatch(attributesRefsBatch: ObjRef[][]): Promise<ObjRef[][]>;
     getConnectedAttributesByDisplayForm(ref: ObjRef): Promise<ObjRef[]>;

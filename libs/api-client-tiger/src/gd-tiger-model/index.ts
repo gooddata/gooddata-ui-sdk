@@ -38,4 +38,5 @@ export {
     isFilterContextData,
     isDashboardPluginsItem,
     isDataSetItem,
+    isLabelItem,
 } from "./typeGuards.js";

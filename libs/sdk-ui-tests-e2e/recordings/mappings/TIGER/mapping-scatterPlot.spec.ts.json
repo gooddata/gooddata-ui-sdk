@@ -1,10 +1,10 @@
 {
     "mappings": [
         {
-            "id": "9ead3190-33de-4cc4-8025-6a832ad7e8bc",
-            "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_execution_afm_execute_result_2551720cdbd0815357635cda3b2ae1940589f6f41b4d8e8266a76feaaaf5f5cc839c90bd715f5409a982bac262955bf45e5d0c08",
+            "id": "3eb240c1-d81a-4e2b-980e-2f4b046600da",
+            "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_execution_afm_execute_result_6a36f7d5da86a7ee9d3f8439de51be56fba7ab32bb8f49b7cd4531e682cbbfe22bdf720ee4fa0a72e24b8fe3557b44c74374d006",
             "request": {
-                "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/execution/afm/execute/result/2551720cdbd0815357635cda3b2ae1940589f6f4%3A1b4d8e8266a76feaaaf5f5cc839c90bd715f5409a982bac262955bf45e5d0c08",
+                "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/execution/afm/execute/result/6a36f7d5da86a7ee9d3f8439de51be56fba7ab32%3Abb8f49b7cd4531e682cbbfe22bdf720ee4fa0a72e24b8fe3557b44c74374d006",
                 "method": "GET"
             },
             "response": {
@@ -27,46 +27,10 @@
                     "Content-Type": "application/json"
                 }
             },
-            "uuid": "9ead3190-33de-4cc4-8025-6a832ad7e8bc"
+            "uuid": "3eb240c1-d81a-4e2b-980e-2f4b046600da"
         },
         {
-            "id": "cc2e2c36-bfb4-4873-a311-a83bb77f4e57",
-            "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_execution_afm_execute",
-            "request": {
-                "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/execution/afm/execute",
-                "method": "POST",
-                "bodyPatterns": [
-                    {
-                        "equalToJson": "{\"resultSpec\":{\"dimensions\":[{\"localIdentifier\":\"dim_0\",\"itemIdentifiers\":[\"a_dt_closedate_timestamp.year\",\"a_f_owner.department_id\"]},{\"localIdentifier\":\"dim_1\",\"itemIdentifiers\":[\"measureGroup\"]}],\"totals\":[]},\"execution\":{\"measures\":[{\"localIdentifier\":\"m_amount_bop\",\"definition\":{\"measure\":{\"item\":{\"identifier\":{\"id\":\"amount_bop\",\"type\":\"metric\"}}}}},{\"localIdentifier\":\"m_avg._amount\",\"definition\":{\"measure\":{\"item\":{\"identifier\":{\"id\":\"avg._amount\",\"type\":\"metric\"}}}}}],\"attributes\":[{\"label\":{\"identifier\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"label\"}},\"localIdentifier\":\"a_dt_closedate_timestamp.year\"},{\"label\":{\"identifier\":{\"id\":\"f_owner.department_id\",\"type\":\"label\"}},\"localIdentifier\":\"a_f_owner.department_id\"}],\"filters\":[],\"auxMeasures\":[]},\"settings\":{}}",
-                        "ignoreArrayOrder": false,
-                        "ignoreExtraElements": false
-                    }
-                ]
-            },
-            "response": {
-                "status": 200,
-                "body": "{\"executionResponse\":{\"dimensions\":[{\"headers\":[{\"attributeHeader\":{\"localIdentifier\":\"a_dt_closedate_timestamp.year\",\"label\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"label\"},\"labelName\":\"Closed - Year\",\"attribute\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"attribute\"},\"attributeName\":\"Closed - Year\",\"granularity\":\"YEAR\",\"primaryLabel\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"label\"},\"format\":{\"locale\":\"vn-VN\",\"pattern\":\"y\"},\"valueType\":\"TEXT\"}},{\"attributeHeader\":{\"localIdentifier\":\"a_f_owner.department_id\",\"label\":{\"id\":\"f_owner.department_id\",\"type\":\"label\"},\"labelName\":\"Department\",\"attribute\":{\"id\":\"f_owner.department_id\",\"type\":\"attribute\"},\"attributeName\":\"Department\",\"granularity\":null,\"primaryLabel\":{\"id\":\"f_owner.department_id\",\"type\":\"label\"},\"valueType\":\"TEXT\"}}],\"localIdentifier\":\"dim_0\"},{\"headers\":[{\"measureGroupHeaders\":[{\"localIdentifier\":\"m_amount_bop\",\"format\":\"$#,##0.00\",\"name\":\"Amount [BOP]\"},{\"localIdentifier\":\"m_avg._amount\",\"format\":\"$#,##0.00\",\"name\":\"Avg. Amount\"}]}],\"localIdentifier\":\"dim_1\"}],\"links\":{\"executionResult\":\"2551720cdbd0815357635cda3b2ae1940589f6f4:1b4d8e8266a76feaaaf5f5cc839c90bd715f5409a982bac262955bf45e5d0c08\"}}}",
-                "headers": {
-                    "X-Content-Type-Options": "nosniff",
-                    "Pragma": "no-cache",
-                    "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
-                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
-                    "Vary": [
-                        "Accept-Encoding",
-                        "Origin",
-                        "Access-Control-Request-Method",
-                        "Access-Control-Request-Headers"
-                    ],
-                    "Expires": "0",
-                    "X-XSS-Protection": "0",
-                    "Content-Type": "application/json"
-                }
-            },
-            "uuid": "cc2e2c36-bfb4-4873-a311-a83bb77f4e57"
-        },
-        {
-            "id": "d2beb9b8-3e87-4485-b065-004c4ed246f1",
+            "id": "5f0cd1fd-133d-49e9-b4e8-d4cd4211914e",
             "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_resolvesettings",
             "request": {
                 "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/resolveSettings",
@@ -90,10 +54,46 @@
                     "Content-Type": "application/json"
                 }
             },
-            "uuid": "d2beb9b8-3e87-4485-b065-004c4ed246f1"
+            "uuid": "5f0cd1fd-133d-49e9-b4e8-d4cd4211914e"
         },
         {
-            "id": "eae05f39-e8f3-4fa0-8751-8e765467184c",
+            "id": "cfced591-6861-43e7-ac7f-c924c6748179",
+            "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_execution_afm_execute",
+            "request": {
+                "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/execution/afm/execute",
+                "method": "POST",
+                "bodyPatterns": [
+                    {
+                        "equalToJson": "{\"resultSpec\":{\"dimensions\":[{\"localIdentifier\":\"dim_0\",\"itemIdentifiers\":[\"a_dt_closedate_timestamp.year\",\"a_f_owner.department_id\"]},{\"localIdentifier\":\"dim_1\",\"itemIdentifiers\":[\"measureGroup\"]}],\"totals\":[]},\"execution\":{\"measures\":[{\"localIdentifier\":\"m_amount_bop\",\"definition\":{\"measure\":{\"item\":{\"identifier\":{\"id\":\"amount_bop\",\"type\":\"metric\"}}}}},{\"localIdentifier\":\"m_avg._amount\",\"definition\":{\"measure\":{\"item\":{\"identifier\":{\"id\":\"avg._amount\",\"type\":\"metric\"}}}}}],\"attributes\":[{\"label\":{\"identifier\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"label\"}},\"localIdentifier\":\"a_dt_closedate_timestamp.year\"},{\"label\":{\"identifier\":{\"id\":\"f_owner.department_id\",\"type\":\"label\"}},\"localIdentifier\":\"a_f_owner.department_id\"}],\"filters\":[],\"auxMeasures\":[]},\"settings\":{}}",
+                        "ignoreArrayOrder": false,
+                        "ignoreExtraElements": false
+                    }
+                ]
+            },
+            "response": {
+                "status": 200,
+                "body": "{\"executionResponse\":{\"dimensions\":[{\"headers\":[{\"attributeHeader\":{\"localIdentifier\":\"a_dt_closedate_timestamp.year\",\"label\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"label\"},\"labelName\":\"Closed - Year\",\"attribute\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"attribute\"},\"attributeName\":\"Closed - Year\",\"granularity\":\"YEAR\",\"primaryLabel\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"label\"},\"format\":{\"locale\":\"vn-VN\",\"pattern\":\"y\"},\"valueType\":\"TEXT\"}},{\"attributeHeader\":{\"localIdentifier\":\"a_f_owner.department_id\",\"label\":{\"id\":\"f_owner.department_id\",\"type\":\"label\"},\"labelName\":\"Department\",\"attribute\":{\"id\":\"f_owner.department_id\",\"type\":\"attribute\"},\"attributeName\":\"Department\",\"granularity\":null,\"primaryLabel\":{\"id\":\"f_owner.department_id\",\"type\":\"label\"},\"valueType\":\"TEXT\"}}],\"localIdentifier\":\"dim_0\"},{\"headers\":[{\"measureGroupHeaders\":[{\"localIdentifier\":\"m_amount_bop\",\"format\":\"$#,##0.00\",\"name\":\"Amount [BOP]\"},{\"localIdentifier\":\"m_avg._amount\",\"format\":\"$#,##0.00\",\"name\":\"Avg. Amount\"}]}],\"localIdentifier\":\"dim_1\"}],\"links\":{\"executionResult\":\"6a36f7d5da86a7ee9d3f8439de51be56fba7ab32:bb8f49b7cd4531e682cbbfe22bdf720ee4fa0a72e24b8fe3557b44c74374d006\"}}}",
+                "headers": {
+                    "X-Content-Type-Options": "nosniff",
+                    "Pragma": "no-cache",
+                    "Referrer-Policy": "no-referrer",
+                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+                    "Vary": [
+                        "Accept-Encoding",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                    ],
+                    "Expires": "0",
+                    "X-XSS-Protection": "0",
+                    "Content-Type": "application/json"
+                }
+            },
+            "uuid": "cfced591-6861-43e7-ac7f-c924c6748179"
+        },
+        {
+            "id": "b8420f7a-4109-43f2-b399-eaa13e4aaa85",
             "name": "api_v1_entities_workspaces_c76e0537d0614abb0027f7c992656b964922506f",
             "request": {
                 "url": "/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f?include=parent&metaInclude=config%2Cpermissions",
@@ -101,7 +101,7 @@
             },
             "response": {
                 "status": 200,
-                "body": "{\"data\":{\"id\":\"c76e0537d0614abb0027f7c992656b964922506f\",\"type\":\"workspace\",\"attributes\":{\"name\":\"E2E_SDK_cypress_test -- 2025-01-27T10:27:07.563Z\"},\"meta\":{\"config\":{\"dataSamplingAvailable\":true,\"approximateCountAvailable\":true,\"showAllValuesOnDatesAvailable\":true},\"permissions\":[\"MANAGE\",\"ANALYZE\",\"EXPORT\",\"EXPORT_TABULAR\",\"EXPORT_PDF\",\"CREATE_AUTOMATION\",\"CREATE_FILTER_VIEW\",\"VIEW\"]}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f?include=parent&metaInclude=config%2Cpermissions\"}}",
+                "body": "{\"data\":{\"id\":\"c76e0537d0614abb0027f7c992656b964922506f\",\"type\":\"workspace\",\"attributes\":{\"name\":\"E2E_SDK_cypress_test -- 2025-01-29T09:37:21.278Z\"},\"meta\":{\"config\":{\"dataSamplingAvailable\":true,\"approximateCountAvailable\":true,\"showAllValuesOnDatesAvailable\":true},\"permissions\":[\"MANAGE\",\"ANALYZE\",\"EXPORT\",\"EXPORT_TABULAR\",\"EXPORT_PDF\",\"CREATE_AUTOMATION\",\"CREATE_FILTER_VIEW\",\"VIEW\"]}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f?include=parent&metaInclude=config%2Cpermissions\"}}",
                 "headers": {
                     "Referrer-Policy": "no-referrer",
                     "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
@@ -112,10 +112,10 @@
                     "Content-Type": "application/vnd.gooddata.api+json"
                 }
             },
-            "uuid": "eae05f39-e8f3-4fa0-8751-8e765467184c"
+            "uuid": "b8420f7a-4109-43f2-b399-eaa13e4aaa85"
         },
         {
-            "id": "af195861-691f-42a4-932f-87585dec088f",
+            "id": "e6959a5c-a498-41a5-b75d-1447c428a445",
             "name": "api_v1_entities_workspaces",
             "request": {
                 "url": "/api/v1/entities/workspaces?include=parent&page=0&size=100&sort=name%2Casc&metaInclude=page",
@@ -123,7 +123,7 @@
             },
             "response": {
                 "status": 200,
-                "body": "{\"data\":[{\"id\":\"452ff4f155774c0e89a8f7732d4674bb\",\"type\":\"workspace\",\"attributes\":{\"name\":\"0.my_manual_test\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/452ff4f155774c0e89a8f7732d4674bb\"}},{\"id\":\"6bb14fa4cb144f80864252e89be29507\",\"type\":\"workspace\",\"attributes\":{\"name\":\"0-testing\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/6bb14fa4cb144f80864252e89be29507\"}},{\"id\":\"9cdae60aad5d4edda042a229d1fce506\",\"type\":\"workspace\",\"attributes\":{\"name\":\"AYE - E2E - Radial Bar Chart\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9cdae60aad5d4edda042a229d1fce506\"}},{\"id\":\"child_prefix_cr\",\"type\":\"workspace\",\"attributes\":{\"name\":\"child_prefix_cr\",\"prefix\":\"CR_\"},\"relationships\":{\"parent\":{\"data\":{\"id\":\"parent_prefix_pr\",\"type\":\"workspace\"}}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/child_prefix_cr\"}},{\"id\":\"c76e0537d0614abb0027f7c992656b964922506f\",\"type\":\"workspace\",\"attributes\":{\"name\":\"E2E_SDK_cypress_test -- 2025-01-27T10:27:07.563Z\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f\"}},{\"id\":\"bf9681affe534dd9983c55149ba3d1c1\",\"type\":\"workspace\",\"attributes\":{\"name\":\"E2E_SDK_cypress_test_child -- 2025-01-27T10:27:13.569Z\"},\"relationships\":{\"parent\":{\"data\":{\"id\":\"c76e0537d0614abb0027f7c992656b964922506f\",\"type\":\"workspace\"}}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/bf9681affe534dd9983c55149ba3d1c1\"}},{\"id\":\"8c28f85af79a416ebb67710dd34e18db\",\"type\":\"workspace\",\"attributes\":{\"name\":\"empty-ws 2024-12-04T12:48:03.013Z\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/8c28f85af79a416ebb67710dd34e18db\"}},{\"id\":\"Home-ui-cypress-ws_12296824268_xpjtnv\",\"type\":\"workspace\",\"attributes\":{\"name\":\"Home-ui-cypress-ws_12296824268_xpjtnv\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/Home-ui-cypress-ws_12296824268_xpjtnv\"}},{\"id\":\"e2aeb364793b443582720834df254b0d\",\"type\":\"workspace\",\"attributes\":{\"name\":\"IVAN SDK mock-handling\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/e2aeb364793b443582720834df254b0d\"}},{\"id\":\"0bb495ceb5c140a6848f0bc2f23785a3\",\"type\":\"workspace\",\"attributes\":{\"name\":\"Ivan SDK test\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/0bb495ceb5c140a6848f0bc2f23785a3\"}},{\"id\":\"1a7ccea580014af6ae7e0acf6120d5ad\",\"type\":\"workspace\",\"attributes\":{\"name\":\"KKAZ dashboard description\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/1a7ccea580014af6ae7e0acf6120d5ad\"}},{\"id\":\"ccaf54d106da43629d0dd7d9aaf387f9\",\"type\":\"workspace\",\"attributes\":{\"name\":\"KKAZ - E2E - Gauge Chart\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/ccaf54d106da43629d0dd7d9aaf387f9\"}},{\"id\":\"44db2f01216642acb771c1491d3de340\",\"type\":\"workspace\",\"attributes\":{\"name\":\"KKAZ - E2E - Gauge Chart NEW\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/44db2f01216642acb771c1491d3de340\"}},{\"id\":\"79332acea8ed40efb1b531ef3872af47\",\"type\":\"workspace\",\"attributes\":{\"name\":\"KKAZ - E2E - Insight to action\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/79332acea8ed40efb1b531ef3872af47\"}},{\"id\":\"f25ae71f8ef447218891f90605070bbb\",\"type\":\"workspace\",\"attributes\":{\"name\":\"KKAZ - E2E - Polar, Target Gauge KPI\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/f25ae71f8ef447218891f90605070bbb\"}},{\"id\":\"ae5a2a2b81cb4bfcbe41649bdd3e845a\",\"type\":\"workspace\",\"attributes\":{\"name\":\"KKAZ - E2E - Table with images [another]\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/ae5a2a2b81cb4bfcbe41649bdd3e845a\"}},{\"id\":\"44bfcf2f2a4f4bd7b4982b37c9e8a1e0\",\"type\":\"workspace\",\"attributes\":{\"name\":\"KKAZ - E2E - Table with images NEW\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/44bfcf2f2a4f4bd7b4982b37c9e8a1e0\"}},{\"id\":\"parent_prefix_pr\",\"type\":\"workspace\",\"attributes\":{\"name\":\"parent_prefix_pr\",\"prefix\":\"PR_\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/parent_prefix_pr\"}},{\"id\":\"perftest_ws_child_postgres_1736225363000_0\",\"type\":\"workspace\",\"attributes\":{\"name\":\"perftest_ws_child_postgres_1736225363000_0\"},\"relationships\":{\"parent\":{\"data\":{\"id\":\"perftest_ws_parent_postgres_1736225363000_0\",\"type\":\"workspace\"}}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/perftest_ws_child_postgres_1736225363000_0\"}},{\"id\":\"perftest_ws_parent_postgres_1736225363000_0\",\"type\":\"workspace\",\"attributes\":{\"name\":\"perftest_ws_parent_postgres_1736225363000_0\"},\"relationships\":{\"parent\":{\"data\":{\"id\":\"perftest_ws_root_postgres_1736225363000_0\",\"type\":\"workspace\"}}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/perftest_ws_parent_postgres_1736225363000_0\"}},{\"id\":\"perftest_ws_root_postgres_1736225363000_0\",\"type\":\"workspace\",\"attributes\":{\"name\":\"perftest_ws_root_postgres_1736225363000_0\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/perftest_ws_root_postgres_1736225363000_0\"}},{\"id\":\"6eddbb13a0d243699ac0ce808603b43c\",\"type\":\"workspace\",\"attributes\":{\"name\":\"PJI e2e keep\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/6eddbb13a0d243699ac0ce808603b43c\"}},{\"id\":\"subchild_no_prefix\",\"type\":\"workspace\",\"attributes\":{\"name\":\"subchild_no_prefix\"},\"relationships\":{\"parent\":{\"data\":{\"id\":\"child_prefix_cr\",\"type\":\"workspace\"}}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/subchild_no_prefix\"}},{\"id\":\"49597630b3224f8486b1c4d6d968fd41\",\"type\":\"workspace\",\"attributes\":{\"name\":\"tu\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/49597630b3224f8486b1c4d6d968fd41\"}},{\"id\":\"86737175df10462285b105be0cd8987d\",\"type\":\"workspace\",\"attributes\":{\"name\":\"tu00\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/86737175df10462285b105be0cd8987d\"}},{\"id\":\"cbaef440900b41faa0abf9669cfb1df9\",\"type\":\"workspace\",\"attributes\":{\"name\":\"tuan\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/cbaef440900b41faa0abf9669cfb1df9\"}}],\"included\":[{\"id\":\"c76e0537d0614abb0027f7c992656b964922506f\",\"type\":\"workspace\",\"attributes\":{\"name\":\"E2E_SDK_cypress_test -- 2025-01-27T10:27:07.563Z\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f\"}},{\"id\":\"perftest_ws_root_postgres_1736225363000_0\",\"type\":\"workspace\",\"attributes\":{\"name\":\"perftest_ws_root_postgres_1736225363000_0\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/perftest_ws_root_postgres_1736225363000_0\"}},{\"id\":\"parent_prefix_pr\",\"type\":\"workspace\",\"attributes\":{\"name\":\"parent_prefix_pr\",\"prefix\":\"PR_\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/parent_prefix_pr\"}},{\"id\":\"perftest_ws_parent_postgres_1736225363000_0\",\"type\":\"workspace\",\"attributes\":{\"name\":\"perftest_ws_parent_postgres_1736225363000_0\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/perftest_ws_parent_postgres_1736225363000_0\"}},{\"id\":\"child_prefix_cr\",\"type\":\"workspace\",\"attributes\":{\"name\":\"child_prefix_cr\",\"prefix\":\"CR_\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/child_prefix_cr\"}}],\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces?include=parent&metaInclude=page&page=0&size=100&sort=name,asc\"},\"meta\":{\"page\":{\"size\":100,\"totalElements\":26,\"totalPages\":1,\"number\":0}}}",
+                "body": "{\"data\":[{\"id\":\"452ff4f155774c0e89a8f7732d4674bb\",\"type\":\"workspace\",\"attributes\":{\"name\":\"0.my_manual_test\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/452ff4f155774c0e89a8f7732d4674bb\"}},{\"id\":\"6bb14fa4cb144f80864252e89be29507\",\"type\":\"workspace\",\"attributes\":{\"name\":\"0-testing\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/6bb14fa4cb144f80864252e89be29507\"}},{\"id\":\"9cdae60aad5d4edda042a229d1fce506\",\"type\":\"workspace\",\"attributes\":{\"name\":\"AYE - E2E - Radial Bar Chart\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9cdae60aad5d4edda042a229d1fce506\"}},{\"id\":\"child_prefix_cr\",\"type\":\"workspace\",\"attributes\":{\"name\":\"child_prefix_cr\",\"prefix\":\"CR_\"},\"relationships\":{\"parent\":{\"data\":{\"id\":\"parent_prefix_pr\",\"type\":\"workspace\"}}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/child_prefix_cr\"}},{\"id\":\"c76e0537d0614abb0027f7c992656b964922506f\",\"type\":\"workspace\",\"attributes\":{\"name\":\"E2E_SDK_cypress_test -- 2025-01-29T09:37:21.278Z\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f\"}},{\"id\":\"9ad002b24ebf43fb89b01708124c15e2\",\"type\":\"workspace\",\"attributes\":{\"name\":\"E2E_SDK_cypress_test_child -- 2025-01-29T09:21:32.321Z\"},\"relationships\":{\"parent\":{\"data\":{\"id\":\"36f5a563875f49eaa5dd1c2ad2f49d28\",\"type\":\"workspace\"}}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/9ad002b24ebf43fb89b01708124c15e2\"}},{\"id\":\"c3e183aa47914a049e3ace3b693a44e4\",\"type\":\"workspace\",\"attributes\":{\"name\":\"E2E_SDK_cypress_test_child -- 2025-01-29T09:37:29.243Z\"},\"relationships\":{\"parent\":{\"data\":{\"id\":\"c76e0537d0614abb0027f7c992656b964922506f\",\"type\":\"workspace\"}}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/c3e183aa47914a049e3ace3b693a44e4\"}},{\"id\":\"8c28f85af79a416ebb67710dd34e18db\",\"type\":\"workspace\",\"attributes\":{\"name\":\"empty-ws 2024-12-04T12:48:03.013Z\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/8c28f85af79a416ebb67710dd34e18db\"}},{\"id\":\"Home-ui-cypress-ws_12296824268_xpjtnv\",\"type\":\"workspace\",\"attributes\":{\"name\":\"Home-ui-cypress-ws_12296824268_xpjtnv\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/Home-ui-cypress-ws_12296824268_xpjtnv\"}},{\"id\":\"e2aeb364793b443582720834df254b0d\",\"type\":\"workspace\",\"attributes\":{\"name\":\"IVAN SDK mock-handling\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/e2aeb364793b443582720834df254b0d\"}},{\"id\":\"0bb495ceb5c140a6848f0bc2f23785a3\",\"type\":\"workspace\",\"attributes\":{\"name\":\"Ivan SDK test\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/0bb495ceb5c140a6848f0bc2f23785a3\"}},{\"id\":\"36f5a563875f49eaa5dd1c2ad2f49d28\",\"type\":\"workspace\",\"attributes\":{\"name\":\"Ivan test project\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/36f5a563875f49eaa5dd1c2ad2f49d28\"}},{\"id\":\"1a7ccea580014af6ae7e0acf6120d5ad\",\"type\":\"workspace\",\"attributes\":{\"name\":\"KKAZ dashboard description\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/1a7ccea580014af6ae7e0acf6120d5ad\"}},{\"id\":\"ccaf54d106da43629d0dd7d9aaf387f9\",\"type\":\"workspace\",\"attributes\":{\"name\":\"KKAZ - E2E - Gauge Chart\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/ccaf54d106da43629d0dd7d9aaf387f9\"}},{\"id\":\"44db2f01216642acb771c1491d3de340\",\"type\":\"workspace\",\"attributes\":{\"name\":\"KKAZ - E2E - Gauge Chart NEW\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/44db2f01216642acb771c1491d3de340\"}},{\"id\":\"79332acea8ed40efb1b531ef3872af47\",\"type\":\"workspace\",\"attributes\":{\"name\":\"KKAZ - E2E - Insight to action\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/79332acea8ed40efb1b531ef3872af47\"}},{\"id\":\"f25ae71f8ef447218891f90605070bbb\",\"type\":\"workspace\",\"attributes\":{\"name\":\"KKAZ - E2E - Polar, Target Gauge KPI\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/f25ae71f8ef447218891f90605070bbb\"}},{\"id\":\"ae5a2a2b81cb4bfcbe41649bdd3e845a\",\"type\":\"workspace\",\"attributes\":{\"name\":\"KKAZ - E2E - Table with images [another]\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/ae5a2a2b81cb4bfcbe41649bdd3e845a\"}},{\"id\":\"44bfcf2f2a4f4bd7b4982b37c9e8a1e0\",\"type\":\"workspace\",\"attributes\":{\"name\":\"KKAZ - E2E - Table with images NEW\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/44bfcf2f2a4f4bd7b4982b37c9e8a1e0\"}},{\"id\":\"parent_prefix_pr\",\"type\":\"workspace\",\"attributes\":{\"name\":\"parent_prefix_pr\",\"prefix\":\"PR_\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/parent_prefix_pr\"}},{\"id\":\"perftest_ws_child_postgres_1736225363000_0\",\"type\":\"workspace\",\"attributes\":{\"name\":\"perftest_ws_child_postgres_1736225363000_0\"},\"relationships\":{\"parent\":{\"data\":{\"id\":\"perftest_ws_parent_postgres_1736225363000_0\",\"type\":\"workspace\"}}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/perftest_ws_child_postgres_1736225363000_0\"}},{\"id\":\"perftest_ws_parent_postgres_1736225363000_0\",\"type\":\"workspace\",\"attributes\":{\"name\":\"perftest_ws_parent_postgres_1736225363000_0\"},\"relationships\":{\"parent\":{\"data\":{\"id\":\"perftest_ws_root_postgres_1736225363000_0\",\"type\":\"workspace\"}}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/perftest_ws_parent_postgres_1736225363000_0\"}},{\"id\":\"perftest_ws_root_postgres_1736225363000_0\",\"type\":\"workspace\",\"attributes\":{\"name\":\"perftest_ws_root_postgres_1736225363000_0\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/perftest_ws_root_postgres_1736225363000_0\"}},{\"id\":\"6eddbb13a0d243699ac0ce808603b43c\",\"type\":\"workspace\",\"attributes\":{\"name\":\"PJI e2e keep\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/6eddbb13a0d243699ac0ce808603b43c\"}},{\"id\":\"subchild_no_prefix\",\"type\":\"workspace\",\"attributes\":{\"name\":\"subchild_no_prefix\"},\"relationships\":{\"parent\":{\"data\":{\"id\":\"child_prefix_cr\",\"type\":\"workspace\"}}},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/subchild_no_prefix\"}},{\"id\":\"49597630b3224f8486b1c4d6d968fd41\",\"type\":\"workspace\",\"attributes\":{\"name\":\"tu\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/49597630b3224f8486b1c4d6d968fd41\"}},{\"id\":\"86737175df10462285b105be0cd8987d\",\"type\":\"workspace\",\"attributes\":{\"name\":\"tu00\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/86737175df10462285b105be0cd8987d\"}},{\"id\":\"cbaef440900b41faa0abf9669cfb1df9\",\"type\":\"workspace\",\"attributes\":{\"name\":\"tuan\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/cbaef440900b41faa0abf9669cfb1df9\"}}],\"included\":[{\"id\":\"perftest_ws_root_postgres_1736225363000_0\",\"type\":\"workspace\",\"attributes\":{\"name\":\"perftest_ws_root_postgres_1736225363000_0\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/perftest_ws_root_postgres_1736225363000_0\"}},{\"id\":\"36f5a563875f49eaa5dd1c2ad2f49d28\",\"type\":\"workspace\",\"attributes\":{\"name\":\"Ivan test project\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/36f5a563875f49eaa5dd1c2ad2f49d28\"}},{\"id\":\"parent_prefix_pr\",\"type\":\"workspace\",\"attributes\":{\"name\":\"parent_prefix_pr\",\"prefix\":\"PR_\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/parent_prefix_pr\"}},{\"id\":\"perftest_ws_parent_postgres_1736225363000_0\",\"type\":\"workspace\",\"attributes\":{\"name\":\"perftest_ws_parent_postgres_1736225363000_0\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/perftest_ws_parent_postgres_1736225363000_0\"}},{\"id\":\"child_prefix_cr\",\"type\":\"workspace\",\"attributes\":{\"name\":\"child_prefix_cr\",\"prefix\":\"CR_\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/child_prefix_cr\"}},{\"id\":\"c76e0537d0614abb0027f7c992656b964922506f\",\"type\":\"workspace\",\"attributes\":{\"name\":\"E2E_SDK_cypress_test -- 2025-01-29T09:37:21.278Z\"},\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f\"}}],\"links\":{\"self\":\"https://staging-automation.dev-latest.stg11.panther.intgdc.com/api/v1/entities/workspaces?include=parent&metaInclude=page&page=0&size=100&sort=name,asc\"},\"meta\":{\"page\":{\"size\":100,\"totalElements\":28,\"totalPages\":1,\"number\":0}}}",
                 "headers": {
                     "X-Content-Type-Options": "nosniff",
                     "Pragma": "no-cache",
@@ -141,10 +141,10 @@
                     "Content-Type": "application/vnd.gooddata.api+json"
                 }
             },
-            "uuid": "af195861-691f-42a4-932f-87585dec088f"
+            "uuid": "e6959a5c-a498-41a5-b75d-1447c428a445"
         },
         {
-            "id": "ca47cd50-4ada-4eef-bfd6-265a08ab3d05",
+            "id": "57b22ec3-6a4a-4722-b356-5b616142b632",
             "name": "api_v1_entities_workspaces_c76e0537d0614abb0027f7c992656b964922506f_visualizationobjects_3fb464aa-4a2c-4412-8811-609e5d6e06a5",
             "request": {
                 "url": "/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f/visualizationObjects/3fb464aa-4a2c-4412-8811-609e5d6e06a5",
@@ -170,10 +170,10 @@
                     "Content-Type": "application/vnd.gooddata.api+json"
                 }
             },
-            "uuid": "ca47cd50-4ada-4eef-bfd6-265a08ab3d05"
+            "uuid": "57b22ec3-6a4a-4722-b356-5b616142b632"
         },
         {
-            "id": "fbbd304c-f53d-49f4-ad3d-a1ff8839c7da",
+            "id": "1149dee4-fb7a-434f-80ab-4b73c65af723",
             "name": "api_v1_profile",
             "request": {
                 "url": "/api/v1/profile",
@@ -197,13 +197,13 @@
                     "Content-Type": "application/json"
                 }
             },
-            "uuid": "fbbd304c-f53d-49f4-ad3d-a1ff8839c7da"
+            "uuid": "1149dee4-fb7a-434f-80ab-4b73c65af723"
         },
         {
-            "id": "77ad942f-2bee-4928-9107-836861aa598a",
-            "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_execution_afm_execute_result_69378cedb1b23651535792cd30f640fa5d2ebb56b4df81dc6c72cde480e44a7acfb67810eb3d43cc3aaaf1c562af8fef20499960",
+            "id": "d93a12b3-64c7-4a3a-888b-45d551203cd1",
+            "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_execution_afm_execute_result_388f0a1d974ba397e6b92512b56c7902bf6e72795d51713bb9984d0f94bb222117e23299292acf6cd1dc550844be362f387f37be",
             "request": {
-                "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/execution/afm/execute/result/69378cedb1b23651535792cd30f640fa5d2ebb56%3Ab4df81dc6c72cde480e44a7acfb67810eb3d43cc3aaaf1c562af8fef20499960",
+                "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/execution/afm/execute/result/388f0a1d974ba397e6b92512b56c7902bf6e7279%3A5d51713bb9984d0f94bb222117e23299292acf6cd1dc550844be362f387f37be",
                 "method": "GET"
             },
             "response": {
@@ -226,10 +226,10 @@
                     "Content-Type": "application/json"
                 }
             },
-            "uuid": "77ad942f-2bee-4928-9107-836861aa598a"
+            "uuid": "d93a12b3-64c7-4a3a-888b-45d551203cd1"
         },
         {
-            "id": "014457c3-5349-4b78-9afa-fbb183dba449",
+            "id": "2dd5fec7-8e09-4c2d-b488-4ef039486639",
             "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_execution_afm_execute",
             "request": {
                 "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/execution/afm/execute",
@@ -244,7 +244,7 @@
             },
             "response": {
                 "status": 200,
-                "body": "{\"executionResponse\":{\"dimensions\":[{\"headers\":[{\"attributeHeader\":{\"localIdentifier\":\"a_f_owner.department_id\",\"label\":{\"id\":\"f_owner.department_id\",\"type\":\"label\"},\"labelName\":\"Department\",\"attribute\":{\"id\":\"f_owner.department_id\",\"type\":\"attribute\"},\"attributeName\":\"Department\",\"granularity\":null,\"primaryLabel\":{\"id\":\"f_owner.department_id\",\"type\":\"label\"},\"valueType\":\"TEXT\"}},{\"attributeHeader\":{\"localIdentifier\":\"a_dt_closedate_timestamp.year\",\"label\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"label\"},\"labelName\":\"Closed - Year\",\"attribute\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"attribute\"},\"attributeName\":\"Closed - Year\",\"granularity\":\"YEAR\",\"primaryLabel\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"label\"},\"format\":{\"locale\":\"vn-VN\",\"pattern\":\"y\"},\"valueType\":\"TEXT\"}}],\"localIdentifier\":\"dim_0\"},{\"headers\":[{\"measureGroupHeaders\":[{\"localIdentifier\":\"m_amount_bop\",\"format\":\"$#,##0.00\",\"name\":\"Amount [BOP]\"},{\"localIdentifier\":\"m_avg._amount\",\"format\":\"$#,##0.00\",\"name\":\"Avg. Amount\"}]}],\"localIdentifier\":\"dim_1\"}],\"links\":{\"executionResult\":\"69378cedb1b23651535792cd30f640fa5d2ebb56:b4df81dc6c72cde480e44a7acfb67810eb3d43cc3aaaf1c562af8fef20499960\"}}}",
+                "body": "{\"executionResponse\":{\"dimensions\":[{\"headers\":[{\"attributeHeader\":{\"localIdentifier\":\"a_f_owner.department_id\",\"label\":{\"id\":\"f_owner.department_id\",\"type\":\"label\"},\"labelName\":\"Department\",\"attribute\":{\"id\":\"f_owner.department_id\",\"type\":\"attribute\"},\"attributeName\":\"Department\",\"granularity\":null,\"primaryLabel\":{\"id\":\"f_owner.department_id\",\"type\":\"label\"},\"valueType\":\"TEXT\"}},{\"attributeHeader\":{\"localIdentifier\":\"a_dt_closedate_timestamp.year\",\"label\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"label\"},\"labelName\":\"Closed - Year\",\"attribute\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"attribute\"},\"attributeName\":\"Closed - Year\",\"granularity\":\"YEAR\",\"primaryLabel\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"label\"},\"format\":{\"locale\":\"vn-VN\",\"pattern\":\"y\"},\"valueType\":\"TEXT\"}}],\"localIdentifier\":\"dim_0\"},{\"headers\":[{\"measureGroupHeaders\":[{\"localIdentifier\":\"m_amount_bop\",\"format\":\"$#,##0.00\",\"name\":\"Amount [BOP]\"},{\"localIdentifier\":\"m_avg._amount\",\"format\":\"$#,##0.00\",\"name\":\"Avg. Amount\"}]}],\"localIdentifier\":\"dim_1\"}],\"links\":{\"executionResult\":\"388f0a1d974ba397e6b92512b56c7902bf6e7279:5d51713bb9984d0f94bb222117e23299292acf6cd1dc550844be362f387f37be\"}}}",
                 "headers": {
                     "X-Content-Type-Options": "nosniff",
                     "Pragma": "no-cache",
@@ -262,7 +262,7 @@
                     "Content-Type": "application/json"
                 }
             },
-            "uuid": "014457c3-5349-4b78-9afa-fbb183dba449"
+            "uuid": "2dd5fec7-8e09-4c2d-b488-4ef039486639"
         }
     ]
 }

@@ -8995,6 +8995,9 @@ function isFilterContext_2(filterContext: unknown): filterContext is IFilterCont
 // @public (undocumented)
 export function isFilterContextData(filterContext: unknown): filterContext is JsonApiFilterContextIn;
 
+// @public (undocumented)
+export function isLabelItem(label: unknown): label is JsonApiLabelOutWithLinks;
+
 // @internal (undocumented)
 export function isLiveFeatures(features: ILiveFeatures | IStaticFeatures | undefined): features is ILiveFeatures;
 

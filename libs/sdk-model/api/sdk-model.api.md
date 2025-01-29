@@ -1079,6 +1079,7 @@ export interface IBucket {
 // @public
 export interface ICatalogAttribute extends IGroupableCatalogItemBase {
     attribute: IAttributeMetadataObject;
+    dataSet?: IDataSetMetadataObject;
     defaultDisplayForm: IAttributeDisplayFormMetadataObject;
     displayForms: IAttributeDisplayFormMetadataObject[];
     geoPinDisplayForms: IAttributeDisplayFormMetadataObject[];
