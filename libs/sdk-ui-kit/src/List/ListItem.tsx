@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { Component, ReactNode, createRef } from "react";
 import cx from "classnames";
 import { stringUtils } from "@gooddata/util";
@@ -128,12 +128,12 @@ export class SingleSelectListItem extends Component<ISingleSelectListItemProps, 
     private renderIcon = (icon: string | ReactNode) => {
         if (icon && typeof icon === "string") {
             const iconClasses = cx("gd-list-icon", icon);
-            return <span role="icon" className={iconClasses} />;
+            return <span role="icon" aria-hidden={true} className={iconClasses} />;
         }
         if (icon) {
             const iconClasses = cx("gd-list-icon");
             return (
-                <span role="icon" className={iconClasses}>
+                <span role="icon" aria-hidden={true} className={iconClasses}>
                     {icon}
                 </span>
             );

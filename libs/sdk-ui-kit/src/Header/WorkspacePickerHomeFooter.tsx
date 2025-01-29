@@ -1,4 +1,4 @@
-// (C) 2020-2022 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import { ITheme } from "@gooddata/sdk-model";
@@ -25,13 +25,20 @@ const WorkspacePickerHomeFooterComponent: React.FC<IWorkspacePickerHomeFooterPro
     theme,
 }) => {
     const mergedClassNames = cx("gd-workspace-picker-home-footer", className);
+
     return (
-        <a role="icon-home" className={mergedClassNames} href={href} onClick={onClick}>
+        <a
+            className={mergedClassNames}
+            data-testid="s-workspace-picker-home-footer"
+            href={href}
+            onClick={onClick}
+        >
             <Icon.Home
                 className="gd-icon-home"
                 width={20}
                 height={20}
                 color={theme?.palette?.complementary?.c7}
+                ariaHidden={true}
             />
             {children}
         </a>

@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React, { Component, createRef } from "react";
 import { WrappedComponentProps, injectIntl, FormattedMessage } from "react-intl";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
@@ -58,6 +58,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
         | "helpMenuDropdownAlignPoints"
         | "search"
         | "notificationsPanel"
+        | "organizationName"
     > = {
         logoHref: "/",
         helpMenuDropdownAlignPoints: "br tr",
@@ -66,6 +67,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
         menuItemsGroups: [],
         search: null,
         notificationsPanel: null,
+        organizationName: "",
     };
 
     private nodeRef = createRef<HTMLDivElement>();
@@ -87,7 +89,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
     }
 
     public render() {
-        const { logoUrl, logoTitle, workspacePicker } = this.props;
+        const { logoUrl, logoTitle, workspacePicker, organizationName } = this.props;
 
         this.createStyles();
 
@@ -97,15 +99,28 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
             "gd-header-shrink": this.state.responsiveMode,
         });
 
+        const logoHrefAccesibilityText = this.props.intl.formatMessage({
+            id: "gs.header.href.accessibility",
+        });
+        const imageAltAccessibilityText = `${organizationName} ${this.props.intl.formatMessage({
+            id: "gs.header.logo.title.accessibility",
+        })}`;
+
         return (
             <div className={this.getClassNames()} ref={this.nodeRef}>
-                <a href={this.props.logoHref} onClick={this.props.onLogoClick} className={logoLinkClassName}>
+                <a
+                    aria-label={logoHrefAccesibilityText}
+                    title={logoHrefAccesibilityText}
+                    href={this.props.logoHref}
+                    onClick={this.props.onLogoClick}
+                    className={logoLinkClassName}
+                >
                     <img
                         src={logoUrl}
                         title={logoTitle}
                         onLoad={this.measureChildren}
                         onError={this.measureChildren}
-                        alt=""
+                        alt={imageAltAccessibilityText}
                     />
                 </a>
                 {workspacePicker}

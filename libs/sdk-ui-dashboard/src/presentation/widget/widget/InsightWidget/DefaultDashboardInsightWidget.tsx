@@ -124,6 +124,12 @@ const DefaultDashboardInsightWidgetCore: React.FC<
 
     const { elementRef, highlighted } = useWidgetHighlighting(widget);
 
+    const accessibilityWidgetDescription = settings.enableDescriptions
+        ? widget.configuration?.description?.source === "widget" || !insight
+            ? widget.description
+            : insight.insight.summary
+        : "";
+
     return (
         <DashboardItem
             className={cx(
@@ -135,6 +141,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
             )}
             screen={screen}
             ref={elementRef}
+            description={accessibilityWidgetDescription}
         >
             <DashboardItemVisualization
                 renderHeadline={(clientHeight) =>
