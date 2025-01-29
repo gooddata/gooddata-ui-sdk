@@ -153,17 +153,17 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         error: filtersError,
     } = useWidgetFilters(widget, insight);
 
+    /**
+     * Filters hash for hooks dependencies
+     * We use stringified value to avoid setting equal filters. This prevents cascading cache invalidation
+     * and expensive re-renders down the line. The stringification is worth it as the filters are usually
+     * pretty small thus saving more time than it is taking.
+     */
+    const filtersForInsightHash = stringify(filtersForInsight);
+
     const insightWithAddedFilters = useMemo(
         () => insightSetFilters(insight, filtersForInsight),
-        [
-            insight,
-            /**
-             * We use stringified value to avoid setting equal filters. This prevents cascading cache invalidation
-             * and expensive re-renders down the line. The stringification is worth it as the filters are usually
-             * pretty small thus saving more time than it is taking.
-             */
-            stringify(filtersForInsight),
-        ],
+        [insight, filtersForInsightHash],
     );
 
     const insightWithAddedWidgetProperties = useResolveDashboardInsightProperties({
@@ -211,7 +211,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         // need reset custom error when filters changed
         // one of custom error is no data
         setVisualizationError(undefined);
-    }, [stringify(filtersForInsight)]);
+    }, [filtersForInsightHash]);
 
     // CSS
     const insightPositionStyle: CSSProperties = useMemo(() => {
