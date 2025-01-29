@@ -611,7 +611,9 @@ export interface IKeyboardNavigationConfigItem {
  * Configurations for keyboard navigation for individual parts of the dashboard
  * @internal
  */
-export type KeyboardNavigationConfig = Record<DashboardPartId, IKeyboardNavigationConfigItem>;
+export type KeyboardNavigationConfig = {
+    [key in DashboardPartId]?: IKeyboardNavigationConfigItem;
+};
 
 /**
  * @public
