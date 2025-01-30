@@ -57,6 +57,8 @@ export const DashboardInner: React.FC<IDashboardProps> = (props) => {
         ? {
               tabIndex: mainContentNavigationConfig.tabIndex,
               id: mainContentNavigationConfig.targetElementId,
+              role: "main",
+              ["aria-label"]: mainContentNavigationConfig.ariaLabel,
           }
         : {};
 
@@ -77,7 +79,7 @@ export const DashboardInner: React.FC<IDashboardProps> = (props) => {
                         WrapCreatePanelItemWithDragComponent={WrapCreatePanelItemWithDrag}
                         WrapInsightListItemWithDragComponent={WrapInsightListItemWithDrag}
                     />
-                    <div className="gd-dash-content" {...mainContentNavigationProps}>
+                    <main className="gd-dash-content" {...mainContentNavigationProps}>
                         {/* gd-dash-header-wrapper-sdk-8-12 style is added because we should keep old styles unchanged to not brake plugins */}
                         <div
                             className="gd-dash-header-wrapper gd-dash-header-wrapper-sdk-8-12"
@@ -97,7 +99,7 @@ export const DashboardInner: React.FC<IDashboardProps> = (props) => {
                             </DashboardScreenSizeProvider>
                         </div>
                         <div className="gd-dash-bottom-position-pixel" ref={bottomRef} />
-                    </div>
+                    </main>
                 </div>
                 <Toolbar />
             </div>

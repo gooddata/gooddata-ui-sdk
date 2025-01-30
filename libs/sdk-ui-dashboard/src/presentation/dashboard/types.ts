@@ -602,6 +602,10 @@ export interface IKeyboardNavigationConfigItem {
      */
     tabIndex?: number;
     /**
+     * aria-label which will be set to the target element
+     */
+    ariaLabel?: string;
+    /**
      * onFocus callback which will be called when the target element is focused
      */
     onFocus?: () => void;

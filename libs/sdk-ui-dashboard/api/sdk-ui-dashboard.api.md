@@ -4941,6 +4941,7 @@ export interface IInsightMenuSubmenuComponentProps {
 
 // @internal
 export interface IKeyboardNavigationConfigItem {
+    ariaLabel?: string;
     onFocus?: () => void;
     tabIndex?: number;
     targetElementId?: string;

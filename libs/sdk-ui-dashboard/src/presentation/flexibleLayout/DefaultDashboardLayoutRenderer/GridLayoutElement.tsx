@@ -70,14 +70,19 @@ export const GridLayoutElement = forwardRef<HTMLDivElement, IGridLayoutElementPr
 
         const sanitizedExportData = type === "section" ? { ...exportData } : {};
 
-        return (
-            <div
+        return type === "section" ? (
+            <section
+                role="section"
                 className={classNames}
                 style={style}
                 onMouseLeave={onMouseLeave}
                 ref={ref}
                 {...sanitizedExportData}
             >
+                {children}
+            </section>
+        ) : (
+            <div className={classNames} style={style} onMouseLeave={onMouseLeave} ref={ref}>
                 {children}
             </div>
         );
