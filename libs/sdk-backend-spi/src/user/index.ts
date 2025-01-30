@@ -1,4 +1,4 @@
-// (C) 2020-2021 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { IUser } from "@gooddata/sdk-model";
 import { IUserSettingsService } from "./settings/index.js";
 
@@ -19,4 +19,9 @@ export interface IUserService {
      * Returns currently authenticated user
      */
     getUser(): Promise<IUser>;
+
+    /**
+     * Returns currently authenticated user with details
+     */
+    getUserWithDetails(): Promise<IUser>;
 }

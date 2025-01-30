@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { IInsight, IInsightWidget, ScreenSize } from "@gooddata/sdk-model";
 
 export interface IInsightWidgetDescriptionTriggerProps {

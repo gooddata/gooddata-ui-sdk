@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { createSelector } from "@reduxjs/toolkit";
 import compact from "lodash/compact.js";
 import { UnexpectedError } from "@gooddata/sdk-backend-spi";
@@ -46,6 +46,7 @@ import {
     selectAllCatalogDisplayFormsMap,
     selectAttributesWithDisplayFormLink,
     selectAttributesWithHierarchyDescendants,
+    selectCatalogIsLoaded,
 } from "../catalog/catalogSelectors.js";
 import { selectDrillableItems } from "../drill/drillSelectors.js";
 import {
@@ -628,17 +629,27 @@ export const selectConfiguredAndImplicitDrillsByWidgetRef: (
     ref: ObjRef,
 ) => DashboardSelector<IImplicitDrillWithPredicates[]> = createMemoizedSelector((ref: ObjRef) =>
     createSelector(
+        selectCatalogIsLoaded,
         selectValidConfiguredDrillsByWidgetRef(ref),
         selectImplicitDrillsDownByWidgetRef(ref),
         selectImplicitDrillsToUrlByWidgetRef(ref),
         selectCrossFilteringByWidgetRef(ref),
-        (configuredDrills, implicitDrillDownDrills, implicitDrillToUrlDrills, crossFiltering) => {
-            return compact([
-                ...configuredDrills,
-                ...implicitDrillDownDrills,
-                ...implicitDrillToUrlDrills,
-                crossFiltering,
-            ]);
+        (
+            catalogIsLoaded,
+            configuredDrills,
+            implicitDrillDownDrills,
+            implicitDrillToUrlDrills,
+            crossFiltering,
+        ) => {
+            // disable drilling until catalog is fully loaded
+            return catalogIsLoaded
+                ? compact([
+                      ...configuredDrills,
+                      ...implicitDrillDownDrills,
+                      ...implicitDrillToUrlDrills,
+                      crossFiltering,
+                  ])
+                : [];
         },
     ),
 );

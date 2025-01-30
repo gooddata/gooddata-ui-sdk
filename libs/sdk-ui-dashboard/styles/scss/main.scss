@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 @use "@gooddata/sdk-ui-kit/src/@ui/defaultTheme.scss";
 @use "@gooddata/sdk-ui-kit/styles/css/list";
 @use "@gooddata/sdk-ui-kit/styles/css/messages";
@@ -7,6 +7,7 @@
 @use "@gooddata/sdk-ui-filters/styles/css/dateFilter";
 @use "@gooddata/sdk-ui-filters/styles/css/attributeFilterNext";
 @use "@gooddata/sdk-ui-ext/styles/internal/css/attribute_hierarchies";
+@use "remove";
 @use "dashboard";
 @use "dragAndDrop";
 @use "filterBar";

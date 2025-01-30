@@ -254,6 +254,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
                         reachedWidthLimit={widthLimitReached}
                         reachedHeightLimit={heightLimitReached}
                         isOverNestedLayout={isNestedLayout}
+                        isInFirstRow={rowIndex === 0}
                     />
                 ) : null}
                 {canShowHotspot && !isAnyPlaceholderWidget(widget) ? (

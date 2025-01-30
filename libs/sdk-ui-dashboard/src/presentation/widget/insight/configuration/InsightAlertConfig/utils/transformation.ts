@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import {
     IAlertComparisonOperator,
     IAlertRelativeArithmeticOperator,
@@ -10,7 +10,6 @@ import {
     IAutomationMetadataObject,
     IAutomationRecipient,
     IRelativeDateFilter,
-    ICatalogMeasure,
     IFilter,
     isArithmeticMeasure,
     isRelativeDateFilter,
@@ -25,7 +24,12 @@ import {
 } from "../../../types.js";
 import { ARITHMETIC_OPERATORS, COMPARISON_OPERATORS, RELATIVE_OPERATORS } from "../constants.js";
 
-import { getAttributeRelatedFilterInfo, getMeasureFormat, getMeasureTitle } from "./getters.js";
+import {
+    getAttributeRelatedFilterInfo,
+    getMeasureFormat,
+    getMeasureTitle,
+    IMeasureFormatMap,
+} from "./getters.js";
 
 //alerts transformations
 
@@ -40,7 +44,7 @@ export function transformAlertByMetric(
     metrics: AlertMetric[],
     alert: IAutomationMetadataObject,
     measure: AlertMetric,
-    catalogMeasures?: ICatalogMeasure[],
+    measureFormatMap?: IMeasureFormatMap,
 ): IAutomationMetadataObject {
     const periodMeasure = measure.comparators.find(
         (c) =>
@@ -54,7 +58,7 @@ export function transformAlertByMetric(
             ...cond,
             measure: {
                 ...cond.measure,
-                ...transformRelativeCondition(measure, periodMeasure, catalogMeasures),
+                ...transformRelativeCondition(measure, periodMeasure, measureFormatMap),
             },
         } as IAutomationAlertRelativeCondition;
 
@@ -83,7 +87,7 @@ export function transformAlertByMetric(
         ...cond,
         left: {
             id: measure.measure.measure.localIdentifier,
-            format: getMeasureFormat(measure.measure, catalogMeasures),
+            format: getMeasureFormat(measure.measure, measureFormatMap),
             title: getMeasureTitle(measure.measure),
         },
     } as IAutomationAlertComparisonCondition;
@@ -230,7 +234,7 @@ export function transformAlertByRelativeOperator(
     measure: AlertMetric,
     relativeOperator: IAlertRelativeOperator,
     arithmeticOperator: IAlertRelativeArithmeticOperator,
-    catalogMeasures?: ICatalogMeasure[],
+    measureFormatMap?: IMeasureFormatMap,
     comparatorType?: AlertMetricComparatorType,
 ): IAutomationMetadataObject {
     const periodMeasure = measure.comparators.filter((c) =>
@@ -243,7 +247,7 @@ export function transformAlertByRelativeOperator(
         measure: {
             ...cond.measure,
             operator: arithmeticOperator,
-            ...transformRelativeCondition(measure, periodMeasure[0], catalogMeasures),
+            ...transformRelativeCondition(measure, periodMeasure[0], measureFormatMap),
         },
         operator: relativeOperator,
     } as IAutomationAlertCondition;
@@ -450,7 +454,7 @@ function transformToRelativeCondition(
 function transformRelativeCondition(
     measure: AlertMetric,
     periodMeasure: AlertMetricComparator | undefined,
-    catalogMeasures?: ICatalogMeasure[],
+    measureFormatMap?: IMeasureFormatMap,
 ) {
     const isNormalSetup = measure.isPrimary && !periodMeasure?.isPrimary;
     const isReverseSetup = !measure.isPrimary && periodMeasure?.isPrimary;
@@ -461,12 +465,12 @@ function transformRelativeCondition(
         return {
             left: {
                 id: periodMeasure.measure.measure.localIdentifier,
-                format: getMeasureFormat(periodMeasure.measure, catalogMeasures),
+                format: getMeasureFormat(periodMeasure.measure, measureFormatMap),
                 title: getMeasureTitle(periodMeasure.measure),
             },
             right: {
                 id: measure.measure.measure.localIdentifier,
-                format: getMeasureFormat(measure.measure, catalogMeasures),
+                format: getMeasureFormat(measure.measure, measureFormatMap),
                 title: getMeasureTitle(measure.measure),
             },
         };
@@ -478,12 +482,12 @@ function transformRelativeCondition(
         return {
             left: {
                 id: measure.measure.measure.localIdentifier,
-                format: getMeasureFormat(measure.measure, catalogMeasures),
+                format: getMeasureFormat(measure.measure, measureFormatMap),
                 title: getMeasureTitle(measure.measure),
             },
             right: {
                 id: periodMeasure?.measure.measure.localIdentifier,
-                format: getMeasureFormat(periodMeasure?.measure, catalogMeasures),
+                format: getMeasureFormat(periodMeasure?.measure, measureFormatMap),
                 title: periodMeasure?.measure ? getMeasureTitle(periodMeasure?.measure) : undefined,
             },
         };
@@ -494,12 +498,12 @@ function transformRelativeCondition(
     return {
         left: {
             id: measure.measure.measure.localIdentifier,
-            format: getMeasureFormat(measure.measure, catalogMeasures),
+            format: getMeasureFormat(measure.measure, measureFormatMap),
             title: getMeasureTitle(measure.measure),
         },
         right: {
             id: periodMeasure?.measure.measure.localIdentifier,
-            format: getMeasureFormat(periodMeasure?.measure, catalogMeasures),
+            format: getMeasureFormat(periodMeasure?.measure, measureFormatMap),
             title: periodMeasure?.measure ? getMeasureTitle(periodMeasure?.measure) : undefined,
         },
     };

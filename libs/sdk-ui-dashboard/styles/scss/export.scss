@@ -26,7 +26,6 @@
 
     .gd-grid-layout__item--leaf {
         page-break-inside: avoid;
-        border: 1px solid red !important; /* stylelint-disable-line declaration-no-important */
 
         .dash-item {
             min-height: inherit;

@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     idRef,
     ICatalogAttribute,
@@ -33,6 +33,7 @@ import { commonMetadataObjectModifications, MetadataObjectFromApi } from "./Meta
 import { isInheritedObject } from "./ObjectInheritance.js";
 import { convertLabelType } from "./LabelTypeConverter.js";
 import { convertUserIdentifier } from "./UsersConverter.js";
+import { convertDataSetItem } from "./DataSetConverter.js";
 
 const commonGroupableCatalogItemModifications =
     <TItem extends IGroupableCatalogItemBase, T extends IGroupableCatalogItemBuilder<TItem>>(
@@ -65,12 +66,14 @@ export const convertAttribute = (
     defaultLabel: JsonApiLabelOutWithLinks,
     geoLabels: JsonApiLabelOutWithLinks[],
     allLabels: JsonApiLabelOutWithLinks[],
+    dataSet?: JsonApiDatasetOutWithLinks,
 ): ICatalogAttribute => {
     const attributeRef = idRef(attribute.id, "attribute");
 
     const geoPinDisplayForms = geoLabels.map((df) => tigerLabelToDisplayFormMd(df, attributeRef));
     const displayForms = allLabels.map((df) => tigerLabelToDisplayFormMd(df, attributeRef, defaultLabel.id));
     const defaultDisplayForm = displayForms.find((df) => df.id === defaultLabel.id)!;
+    const convertedDataSet = dataSet ? convertDataSetItem(dataSet) : undefined;
 
     return newCatalogAttribute((catalogA) =>
         catalogA
@@ -80,6 +83,7 @@ export const convertAttribute = (
             .defaultDisplayForm(defaultDisplayForm)
             .geoPinDisplayForms(geoPinDisplayForms)
             .displayForms(displayForms)
+            .dataSet(convertedDataSet)
             .modify(commonGroupableCatalogItemModifications(attribute)),
     );
 };

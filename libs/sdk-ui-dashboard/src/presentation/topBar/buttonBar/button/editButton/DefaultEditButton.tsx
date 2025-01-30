@@ -6,6 +6,7 @@ import { Bubble, BubbleHoverTrigger, Button, useMediaQuery } from "@gooddata/sdk
 import {
     selectIsDashboardLoading,
     selectIsInEditMode,
+    selectCatalogIsLoaded,
     switchToEditRenderMode,
     useDashboardDispatch,
     useDashboardSelector,
@@ -23,6 +24,7 @@ export function useEditButtonProps(): IEditButtonProps {
 
     const canEnterEdit = useDashboardSelector(selectCanEnterEditMode);
     const isDashboardLoading = useDashboardSelector(selectIsDashboardLoading);
+    const isCatalogLoaded = useDashboardSelector(selectCatalogIsLoaded);
     const isEditing = useDashboardSelector(selectIsInEditMode);
 
     const dispatch = useDashboardDispatch();
@@ -30,7 +32,7 @@ export function useEditButtonProps(): IEditButtonProps {
 
     return {
         isVisible: minWidthForEditing && !isEditing && canEnterEdit,
-        isEnabled: !isDashboardLoading,
+        isEnabled: !isDashboardLoading && isCatalogLoaded,
         onEditClick,
     };
 }

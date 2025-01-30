@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import cx from "classnames";
 import React, { useMemo } from "react";
 import {
@@ -12,7 +12,6 @@ import { useInsightListItemDropHandler } from "./useInsightListItemDropHandler.j
 import { useInsightPlaceholderDropHandler } from "./useInsightPlaceholderDropHandler.js";
 import { useKpiPlaceholderDropHandler } from "./useKpiPlaceholderDropHandler.js";
 import { useMoveWidgetDropHandler } from "./useMoveWidgetHandler.js";
-import { getDashboardLayoutItemHeightForGrid } from "../../../../_staging/layout/sizing.js";
 import { BaseDraggableLayoutItem } from "../../../dragAndDrop/types.js";
 import { useRichTextPlaceholderDropHandler } from "./useRichTextPlaceholderDropHandler.js";
 import { useVisualizationSwitcherPlaceholderDropHandler } from "./useVisualizationSwitcherPlaceholderDropHandler.js";
@@ -112,9 +111,6 @@ export const WidgetDropZoneColumn = (props: WidgetDropZoneColumnProps) => {
                 xs: { gridWidth: usedWidth, gridHeight },
             }}
             className={cx("gd-fluidlayout-column", "gd-fluidlayout-column-dropzone", "s-fluid-layout-column")}
-            style={{
-                minHeight: getDashboardLayoutItemHeightForGrid(gridHeight),
-            }}
         >
             <WidgetDropZone isLastInSection={isLastInSection} layoutPath={layoutPath} dropRef={dropRef} />
         </GridLayoutElement>

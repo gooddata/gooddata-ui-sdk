@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import {
     IAutomationMetadataObject,
     IAutomationMetadataObjectDefinition,
@@ -37,7 +37,6 @@ import {
     useWorkspaceUsers,
 } from "../../../../../../model/index.js";
 import { convertCurrentUserToAutomationRecipient } from "../../../../../../_staging/automation/index.js";
-import { useMetricsAndFacts } from "../../../../../../_staging/sharedHooks/useMetricsAndFacts.js";
 import { DEFAULT_MAX_RECIPIENTS } from "../../../../../scheduledEmail/DefaultScheduledEmailDialog/constants.js";
 import { messages } from "../messages.js";
 import {
@@ -45,6 +44,7 @@ import {
     getSupportedInsightMeasuresByInsight,
 } from "../utils/items.js";
 import { createDefaultAlert } from "../utils/convertors.js";
+import { getMeasureFormatsFromExecution } from "../utils/getters.js";
 
 import { useSaveAlertToBackend } from "./useSaveAlertToBackend.js";
 
@@ -143,8 +143,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         widget,
         insight,
     });
-    const { metricsAndFacts, metricsAndFactsLoading, metricsAndFactsLoadingError } = useMetricsAndFacts();
-    const { metrics: catalogMetrics } = metricsAndFacts ?? { metrics: [] };
+
     const locale = useDashboardSelector(selectLocale);
 
     const supportedAttributes = useMemo(
@@ -178,6 +177,10 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
     >(null);
     const [editingAlert, setEditingAlert] = useState<IAutomationMetadataObject | null>(null);
 
+    const measureFormatMap = useMemo(() => {
+        return getMeasureFormatsFromExecution(execResult?.executionResult);
+    }, [execResult?.executionResult]);
+
     // Handle async widget filters and catalog state
     useEffect(() => {
         if (
@@ -185,7 +188,6 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
             usersStatus === "success" &&
             defaultMeasure &&
             defaultNotificationChannelId &&
-            !metricsAndFactsLoading &&
             !defaultAlert
         ) {
             setDefaultAlert(
@@ -195,13 +197,10 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
                     defaultMeasure,
                     defaultNotificationChannelId,
                     convertCurrentUserToAutomationRecipient(users ?? [], currentUser),
-                    metricsAndFacts?.metrics ?? [],
+                    measureFormatMap,
                 ),
             );
-        } else if (
-            (widgetFiltersStatus === "error" || usersStatus === "error" || metricsAndFactsLoadingError) &&
-            !defaultAlert
-        ) {
+        } else if ((widgetFiltersStatus === "error" || usersStatus === "error") && !defaultAlert) {
             closeInsightWidgetMenu();
             addError(messages.alertLoadingError);
         }
@@ -213,9 +212,6 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         supportedMeasures,
         widgetFilters,
         widgetFiltersStatus,
-        metricsAndFacts,
-        metricsAndFactsLoading,
-        metricsAndFactsLoadingError,
         addError,
         currentUser,
         users,
@@ -334,12 +330,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
 
     return {
         isLoading:
-            isSavingAlert ||
-            isLoadingFilters ||
-            isRefreshingAutomations ||
-            isDeletingAlert ||
-            metricsAndFactsLoading ||
-            isLoadingUsers,
+            isSavingAlert || isLoadingFilters || isRefreshingAutomations || isDeletingAlert || isLoadingUsers,
         destinations,
         users,
         alerts,
@@ -365,7 +356,7 @@ export const useInsightWidgetAlerting = ({ widget, closeInsightWidgetMenu }: IIn
         canManageAttributes,
         canManageComparison,
         canCreateAutomation,
-        catalogMeasures: catalogMetrics ?? [],
+        measureFormatMap,
         catalogAttributes: catalogAttributes ?? [],
         catalogDateDatasets: catalogDateDatasets ?? [],
     };

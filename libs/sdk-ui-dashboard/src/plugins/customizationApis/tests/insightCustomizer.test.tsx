@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import React from "react";
 import { invariant } from "ts-invariant";
@@ -17,6 +17,7 @@ import {
     OptionalInsightComponentProvider,
 } from "../../../presentation/index.js";
 import { createCustomizerMutationsContext, CustomizerMutationsContext } from "../types.js";
+import { EMPTY_MUTATIONS } from "./utils";
 
 //
 //
@@ -134,11 +135,8 @@ describe("insight customizer", () => {
             expect(renderToHtml(Customizer, TestInsightWithTag1)).toMatchSnapshot();
             expect(renderToHtml(Customizer, TestInsightWithBothTags)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: [],
+                ...EMPTY_MUTATIONS,
                 insight: ["tag"],
-                attributeFilter: [],
-                dashboardContent: [],
-                layouts: {},
             });
         });
 
@@ -147,11 +145,8 @@ describe("insight customizer", () => {
 
             expect(renderToHtml(Customizer, TestInsightWithTag2)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: [],
+                ...EMPTY_MUTATIONS,
                 insight: ["tag"],
-                attributeFilter: [],
-                dashboardContent: [],
-                layouts: {},
             });
         });
 
@@ -162,11 +157,8 @@ describe("insight customizer", () => {
             // using that component
             expect(renderToHtml(Customizer, TestInsightWithBothTags)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: [],
+                ...EMPTY_MUTATIONS,
                 insight: ["tag"],
-                attributeFilter: [],
-                dashboardContent: [],
-                layouts: {},
             });
         });
 
@@ -177,11 +169,8 @@ describe("insight customizer", () => {
 
             expect(renderToHtml(Customizer, TestInsightWithBothTags)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: [],
+                ...EMPTY_MUTATIONS,
                 insight: ["tag"],
-                attributeFilter: [],
-                dashboardContent: [],
-                layouts: {},
             });
         });
 
@@ -199,11 +188,7 @@ describe("insight customizer", () => {
 
             expect(consoleSpy).toHaveBeenCalled();
             expect(mutationContext).toEqual({
-                kpi: [],
-                insight: [],
-                attributeFilter: [],
-                dashboardContent: [],
-                layouts: {},
+                ...EMPTY_MUTATIONS,
             });
 
             consoleSpy.mockReset();
@@ -221,11 +206,8 @@ describe("insight customizer", () => {
 
             expect(renderToHtml(Customizer, TestInsightWithCustomTitle)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: [],
+                ...EMPTY_MUTATIONS,
                 insight: ["provider"],
-                attributeFilter: [],
-                dashboardContent: [],
-                layouts: {},
             });
         });
 
@@ -238,11 +220,8 @@ describe("insight customizer", () => {
 
             expect(renderToHtml(Customizer, TestInsight)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: [],
+                ...EMPTY_MUTATIONS,
                 insight: ["provider"],
-                attributeFilter: [],
-                dashboardContent: [],
-                layouts: {},
             });
         });
 
@@ -266,11 +245,8 @@ describe("insight customizer", () => {
             // component from last registered and matching provider is `fromCustomProvider3`
             expect(renderToHtml(Customizer, TestInsightWithCustomTitle)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: [],
+                ...EMPTY_MUTATIONS,
                 insight: ["provider"],
-                attributeFilter: [],
-                dashboardContent: [],
-                layouts: {},
             });
         });
     });
@@ -282,11 +258,8 @@ describe("insight customizer", () => {
 
             expect(renderToHtml(Customizer, TestInsight)).toMatchSnapshot();
             expect(mutationContext).toEqual({
-                kpi: [],
+                ...EMPTY_MUTATIONS,
                 insight: ["decorator"],
-                attributeFilter: [],
-                dashboardContent: [],
-                layouts: {},
             });
         });
 

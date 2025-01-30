@@ -19,6 +19,16 @@
         "comment": "A global semantic search button label in the main menu",
         "limit": 0
     },
+    "gs.header.logo.title.accessibility": {
+        "value": "logo",
+        "comment": "",
+        "limit": 0
+    },
+    "gs.header.href.accessibility": {
+        "value": "Go to homepage",
+        "comment": "",
+        "limit": 0
+    },
     "gs.header.notifications": {
         "value": "Notifications",
         "comment": "A global notifications button label in the main menu",

@@ -94,6 +94,10 @@
 }
 
 .gd-grid-layout {
+    .gd-fluidlayout-column-dropzone {
+        height: 100%;
+    }
+
     .gd-empty-dashboard-dropzone {
         .drag-info-placeholder-inner,
         .drag-info-placeholder-drop-target {
@@ -103,6 +107,10 @@
         .drop-target-inner {
             align-content: center;
             height: 100%;
+        }
+
+        .drag-info-placeholder {
+            min-height: 300px;
         }
     }
 

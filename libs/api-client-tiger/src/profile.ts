@@ -1,6 +1,7 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { AxiosInstance } from "axios";
 import { ApiEntitlement } from "./generated/metadata-json-api/index.js";
+import { tigerEntitiesObjectsClientFactory } from "./entitiesObjects.js";
 
 export type FeatureContext = {
     organizationId: string;
@@ -47,6 +48,9 @@ export function isStaticFeatures(
 export interface IUserProfile {
     name: string;
     userId: string;
+    email?: string;
+    firstName?: string;
+    lastName?: string;
     organizationName: string;
     organizationId: string;
     links: {
@@ -60,11 +64,47 @@ export interface IUserProfile {
 
 export interface ProfileApiInterface {
     getCurrent: () => Promise<IUserProfile>;
+    getCurrentWithDetails: () => Promise<IUserProfile>;
 }
 
 export const tigerProfileClientFactory = (axios: AxiosInstance): ProfileApiInterface => {
     return {
         // TODO: replace with direct call of TigerClient (once methods are generated from OpenAPI)
-        getCurrent: async () => (await axios.get<IUserProfile>("/api/v1/profile")).data,
+        getCurrent: async (_detailed?: boolean) => {
+            return (await axios.get<IUserProfile>("/api/v1/profile")).data;
+        },
+        getCurrentWithDetails: async (_detailed?: boolean) => {
+            const profile = (await axios.get<IUserProfile>("/api/v1/profile")).data;
+
+            return {
+                ...profile,
+                ...(await getUserDetails(axios, profile.userId)),
+            };
+        },
     };
 };
+
+async function getUserDetails(axios: AxiosInstance, id: string) {
+    const entitiesApi = tigerEntitiesObjectsClientFactory(axios);
+    const user = (
+        await entitiesApi.getEntityUsers({
+            id,
+        })
+    ).data;
+
+    const firstName = user.data.attributes?.firstname;
+    const lastName = user.data.attributes?.lastname;
+    const email = user.data.attributes?.email;
+
+    return {
+        ...(firstName &&
+            lastName && {
+                name: `${firstName} ${lastName}`,
+                firstName,
+                lastName,
+            }),
+        ...(email && {
+            email,
+        }),
+    };
+}

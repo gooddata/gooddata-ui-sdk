@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 /**
  * This package provides definitions of the Service Provider Interface (SPI) for the Analytical Backend.
  *
@@ -151,7 +151,7 @@ export type { IAttributeHierarchiesService } from "./workspace/attributeHierarch
 
 export type { IWorkspacePermissionsService } from "./workspace/permissions/index.js";
 
-export type { IWorkspaceAttributesService } from "./workspace/attributes/index.js";
+export type { IWorkspaceAttributesService, IAttributeWithReferences } from "./workspace/attributes/index.js";
 
 export type {
     IWorkspaceMeasuresService,

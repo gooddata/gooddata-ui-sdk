@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import cypressGrepPlugin from "@cypress/grep/src/plugin";
@@ -56,7 +56,6 @@ export default defineConfig({
             },
         },
         specPattern: "./cypress/integration/**/*.spec.ts",
-        videoUploadOnPasses: false,
     },
     scrollBehavior: false,
     video: true,

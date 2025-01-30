@@ -1,6 +1,5 @@
 #!/usr/bin/env node
-// (C) 2021-2024 GoodData Corporation
-/* eslint-disable sonarjs/cognitive-complexity */
+// (C) 2021-2025 GoodData Corporation
 
 /**
  * Run Isolated tests with local instance of Cypress
@@ -16,13 +15,10 @@
  *    * authorization has to be provided to this script (TIGER_API_TOKEN)
  */
 
-import fs from "fs";
-
 import "./env.js";
-
 import { runCypress } from "./lib/cypress.js";
 import { getRecordingsWorkspaceId } from "./lib/recordings.js";
-import { wiremockReset, wiremockImportMappings, wiremockMockLogRequests } from "./lib/wiremock.js";
+import { wiremockReset } from "./lib/wiremock.js";
 
 async function main() {
     const withRecordings = process.argv.indexOf("--with-recordings") !== -1;
@@ -32,7 +28,8 @@ async function main() {
     const host = "http://localhost:9500";
     const mockServer = withRecordings ? "localhost:8080" : undefined;
 
-    const { TEST_WORKSPACE_ID, TIGER_API_TOKEN, FILTER, CYPRESS_TEST_TAGS } = process.env;
+    const { TEST_WORKSPACE_ID, TEST_CHILD_WORKSPACE_ID, TIGER_API_TOKEN, FILTER, CYPRESS_TEST_TAGS } =
+        process.env;
 
     if (!CYPRESS_TEST_TAGS) {
         process.stderr.write(
@@ -63,33 +60,9 @@ async function main() {
     const workspaceId = withRecordings ? getRecordingsWorkspaceId() : TEST_WORKSPACE_ID;
     process.stderr.write("Running the isolated tests locally\n");
 
-    if (!withRecordings) {
-        runCypress({
-            visual: true,
-            appHost: host,
-            mockServer: mockServer,
-            authorization,
-            workspaceId,
-            updateSnapshots,
-            tagsFilter: CYPRESS_TEST_TAGS.split(","),
-            workingDir: "./",
-            config: `baseUrl=${host}`,
-        });
-    } else {
-        const currentTestFileMappings = `./recordings/mappings/TIGER/mapping-${FILTER}.json`;
-        if (!fs.existsSync(currentTestFileMappings)) {
-            process.stderr.write(
-                "Cypress running locally with recordings requires specify EXACTLY single test to run.\nAdd FILTER=<test.spec.ts> to the .env\n",
-            );
-            return;
-        }
+    const childWorkspaceId = TEST_CHILD_WORKSPACE_ID;
 
-        await wiremockReset(mockServer);
-
-        await wiremockImportMappings(mockServer, currentTestFileMappings);
-
-        await wiremockMockLogRequests(mockServer);
-
+    if (withRecordings) {
         await new Promise(() => {
             runCypress({
                 visual: true,
@@ -97,12 +70,26 @@ async function main() {
                 mockServer: mockServer,
                 authorization,
                 workspaceId,
+                childWorkspaceId,
                 tagsFilter: CYPRESS_TEST_TAGS.split(","),
                 workingDir: "./",
                 config: `baseUrl=${host},specPattern=cypress/**/${FILTER}`,
             });
         });
         await wiremockReset(mockServer);
+    } else {
+        runCypress({
+            visual: true,
+            appHost: host,
+            mockServer: mockServer,
+            authorization,
+            workspaceId,
+            childWorkspaceId,
+            updateSnapshots,
+            tagsFilter: CYPRESS_TEST_TAGS.split(","),
+            workingDir: "./",
+            config: `baseUrl=${host}`,
+        });
     }
 }
 

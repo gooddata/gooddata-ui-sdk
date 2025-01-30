@@ -39,7 +39,6 @@ export const RowEndHotspot = (props: RowEndHotspotProps<unknown>) => {
     ); // increment item index manually as end hotspot is rendered as prev type
 
     const remainingGridWidth = getRemainingWidthInRow(item, screen);
-    const { gridHeight } = item.sizeForScreenWithFallback(screen);
 
     const isDropZoneVisible = shouldShowRowEndDropZone(remainingGridWidth);
 
@@ -48,11 +47,11 @@ export const RowEndHotspot = (props: RowEndHotspotProps<unknown>) => {
             <GridLayoutElement
                 type="item"
                 layoutItemSize={{
-                    xl: { gridWidth: remainingGridWidth, gridHeight },
-                    lg: { gridWidth: remainingGridWidth, gridHeight },
-                    md: { gridWidth: remainingGridWidth, gridHeight },
-                    sm: { gridWidth: remainingGridWidth, gridHeight },
-                    xs: { gridWidth: remainingGridWidth, gridHeight },
+                    xl: { gridWidth: remainingGridWidth },
+                    lg: { gridWidth: remainingGridWidth },
+                    md: { gridWidth: remainingGridWidth },
+                    sm: { gridWidth: remainingGridWidth },
+                    xs: { gridWidth: remainingGridWidth },
                 }}
                 className={cx(
                     "gd-fluidlayout-column",

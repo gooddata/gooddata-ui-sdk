@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -28,6 +28,7 @@ interface ToolbarProps {
 export const Toolbar: React.FC<ToolbarProps> = ({ layout, onWidgetDelete, onToggleHeaders, onClose }) => {
     const userInteraction = useDashboardUserInteraction();
     const { areSectionHeadersEnabled } = useLayoutSectionsConfiguration(layout);
+    const hasSections = layout.sections.length > 0;
     return (
         <Bubble
             className="bubble-light"
@@ -40,39 +41,44 @@ export const Toolbar: React.FC<ToolbarProps> = ({ layout, onWidgetDelete, onTogg
             arrowStyle={ARROW_STYLES}
             onClose={onClose}
         >
-            <div>
-                <BubbleHoverTrigger eventsOnBubble={true}>
-                    <div
-                        className="gd-nested-layout__toolbar__button s-nested-layout__button--headers"
-                        onClick={() => {
-                            onToggleHeaders(!areSectionHeadersEnabled);
-                            userInteraction.nestedLayoutInteraction(
-                                areSectionHeadersEnabled
-                                    ? "nestedLayoutHeaderDisabled"
-                                    : "nestedLayoutHeaderEnabled",
-                            );
-                        }}
-                    >
-                        <Icon.Header
-                            className={cx({
-                                "gd-nested-layout__toolbar__icon--headers-active": areSectionHeadersEnabled,
-                                "gd-nested-layout__toolbar__icon--headers-disabled":
-                                    !areSectionHeadersEnabled,
-                            })}
-                            width={28}
-                            height={28}
-                        />
+            {hasSections ? (
+                <>
+                    <div>
+                        <BubbleHoverTrigger eventsOnBubble={true}>
+                            <div
+                                className="gd-nested-layout__toolbar__button s-nested-layout__button--headers"
+                                onClick={() => {
+                                    onToggleHeaders(!areSectionHeadersEnabled);
+                                    userInteraction.nestedLayoutInteraction(
+                                        areSectionHeadersEnabled
+                                            ? "nestedLayoutHeaderDisabled"
+                                            : "nestedLayoutHeaderEnabled",
+                                    );
+                                }}
+                            >
+                                <Icon.Header
+                                    className={cx({
+                                        "gd-nested-layout__toolbar__icon--headers-active":
+                                            areSectionHeadersEnabled,
+                                        "gd-nested-layout__toolbar__icon--headers-disabled":
+                                            !areSectionHeadersEnabled,
+                                    })}
+                                    width={28}
+                                    height={28}
+                                />
+                            </div>
+                            <Bubble alignPoints={TOOLTIP_ALIGN_POINTS}>
+                                {areSectionHeadersEnabled ? (
+                                    <FormattedMessage id="nestedLayoutToolbar.hideHeader" />
+                                ) : (
+                                    <FormattedMessage id="nestedLayoutToolbar.showHeader" />
+                                )}
+                            </Bubble>
+                        </BubbleHoverTrigger>
                     </div>
-                    <Bubble alignPoints={TOOLTIP_ALIGN_POINTS}>
-                        {areSectionHeadersEnabled ? (
-                            <FormattedMessage id="nestedLayoutToolbar.hideHeader" />
-                        ) : (
-                            <FormattedMessage id="nestedLayoutToolbar.showHeader" />
-                        )}
-                    </Bubble>
-                </BubbleHoverTrigger>
-            </div>
-            <div className="gd-nested-layout__toolbar__delimiter" />
+                    <div className="gd-nested-layout__toolbar__delimiter" />
+                </>
+            ) : null}
             <div>
                 <BubbleHoverTrigger eventsOnBubble={true}>
                     <div
