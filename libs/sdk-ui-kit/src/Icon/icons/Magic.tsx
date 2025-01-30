@@ -1,9 +1,9 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import React from "react";
 
 import { IIconProps } from "../typings.js";
 
-export const Magic: React.FC<IIconProps> = ({ color = "#b1c1d1", className, width, height }) => {
+export const Magic: React.FC<IIconProps> = ({ color = "#b1c1d1", className, width, height, ariaHidden }) => {
     return (
         <svg
             className={className}
@@ -13,6 +13,7 @@ export const Magic: React.FC<IIconProps> = ({ color = "#b1c1d1", className, widt
             version="1.1"
             xmlns="http://www.w3.org/2000/svg"
             xmlnsXlink="http://www.w3.org/1999/xlink"
+            aria-hidden={ariaHidden}
         >
             <g stroke="none" fill="none" fillRule="evenodd">
                 <g fill={color} stroke={color} strokeWidth="0.1">

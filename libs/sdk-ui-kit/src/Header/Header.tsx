@@ -120,7 +120,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
                         title={logoTitle}
                         onLoad={this.measureChildren}
                         onError={this.measureChildren}
-                        alt={imageAltAccessibilityText}
+                        alt={logoUrl ? imageAltAccessibilityText : ""}
                     />
                 </a>
                 {workspacePicker}

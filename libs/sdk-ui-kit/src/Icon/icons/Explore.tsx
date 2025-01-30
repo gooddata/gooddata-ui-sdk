@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import React from "react";
 
 import { IIconProps } from "../typings.js";
@@ -6,7 +6,7 @@ import { IIconProps } from "../typings.js";
 /**
  * @internal
  */
-export const Explore: React.FC<IIconProps> = ({ color, className, width, height }) => {
+export const Explore: React.FC<IIconProps> = ({ color, className, width, height, ariaHidden }) => {
     return (
         <svg
             className={className}
@@ -14,6 +14,7 @@ export const Explore: React.FC<IIconProps> = ({ color, className, width, height 
             height={height ?? 16}
             viewBox="0 0 16 16"
             xmlns="http://www.w3.org/2000/svg"
+            aria-hidden={ariaHidden}
         >
             <g stroke={color ?? "#B1BECA"} fill="none" fillRule="evenodd">
                 <path strokeWidth="2" strokeLinecap="square" d="M10.5 10V6.667M4.5 10V7.75M7.5 10V3.7" />
