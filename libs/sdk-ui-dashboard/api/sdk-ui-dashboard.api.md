@@ -7051,6 +7051,7 @@ payload: RenderMode_2;
 type: string;
 }) => void | RenderModeState_2 | WritableDraft<RenderModeState_2>;
 setEditRenderMode: (state: WritableDraft<RenderModeState_2>, action: AnyAction) => void | RenderModeState_2 | WritableDraft<RenderModeState_2>;
+setExportRenderMode: (state: WritableDraft<RenderModeState_2>, action: AnyAction) => void | RenderModeState_2 | WritableDraft<RenderModeState_2>;
 setViewRenderMode: (state: WritableDraft<RenderModeState_2>, action: AnyAction) => void | RenderModeState_2 | WritableDraft<RenderModeState_2>;
 }, "renderModeSlice">;
 

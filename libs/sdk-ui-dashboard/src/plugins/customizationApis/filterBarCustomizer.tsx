@@ -1,11 +1,11 @@
 // (C) 2022-2025 GoodData Corporation
 import React from "react";
 import {
-    DefaultFilterBar,
     HiddenFilterBar,
     CustomFilterBarComponent,
     FilterBarComponentProvider,
     OptionalFilterBarComponentProvider,
+    RenderModeAwareFilterBar,
 } from "../../presentation/index.js";
 import { FilterBarRenderingMode, IFilterBarCustomizer } from "../customizer.js";
 import { IDashboardCustomizationLogger } from "./customizationLogging.js";
@@ -14,7 +14,7 @@ import { InvariantError } from "ts-invariant";
 import union from "lodash/union.js";
 
 const DefaultFilterBarRendererProvider: FilterBarComponentProvider = () => {
-    return DefaultFilterBar;
+    return RenderModeAwareFilterBar;
 };
 
 interface IFilterBarCustomizerState {
