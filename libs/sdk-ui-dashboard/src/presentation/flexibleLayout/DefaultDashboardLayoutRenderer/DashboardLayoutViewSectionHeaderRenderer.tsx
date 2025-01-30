@@ -7,13 +7,16 @@ import { IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexi
 import { useLayoutSectionsConfiguration } from "../../widget/common/useLayoutSectionsConfiguration.js";
 
 import { DashboardLayoutSectionHeaderDescription } from "./DashboardLayoutSectionHeaderDescription.js";
+import { HeaderExportData } from "../../export/index.js";
 
 export interface IDashboardLayoutSectionHeaderProps {
     section: IDashboardLayoutSectionFacade<unknown>;
+    exportData?: HeaderExportData;
 }
 
 export const DashboardLayoutViewSectionHeader: React.FC<IDashboardLayoutSectionHeaderProps> = ({
     section,
+    exportData,
 }) => {
     const { areSectionHeadersEnabled } = useLayoutSectionsConfiguration(section.layout().raw());
     const title = section.title();
@@ -27,7 +30,7 @@ export const DashboardLayoutViewSectionHeader: React.FC<IDashboardLayoutSectionH
             <div className={"gd-fluid-layout-row-header-container"}>
                 <div className="gd-row-header-view">
                     {title ? (
-                        <div className="gd-row-header-title-wrapper">
+                        <div className="gd-row-header-title-wrapper" {...exportData?.title}>
                             <span className="title">
                                 <Typography
                                     tagName={isNestedLayout ? "h3" : "h2"}
@@ -39,7 +42,10 @@ export const DashboardLayoutViewSectionHeader: React.FC<IDashboardLayoutSectionH
                         </div>
                     ) : null}
                     {description ? (
-                        <DashboardLayoutSectionHeaderDescription description={description} />
+                        <DashboardLayoutSectionHeaderDescription
+                            description={description}
+                            exportData={exportData?.description}
+                        />
                     ) : null}
                 </div>
             </div>

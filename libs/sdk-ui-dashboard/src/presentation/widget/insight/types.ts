@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import { ComponentType } from "react";
 import { IAnalyticalBackend, IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import {
@@ -31,6 +31,7 @@ import {
     OnDrillToInsightSuccess,
     OnWidgetDrill,
 } from "../../drill/types.js";
+import { WidgetExportDataAttributes } from "../../export/index.js";
 
 ///
 /// Component props
@@ -163,6 +164,11 @@ export interface IDashboardInsightProps {
      * @internal
      */
     pushData?: (data: IPushData) => void;
+
+    /**
+     * @alpha
+     */
+    exportData?: WidgetExportDataAttributes;
 }
 
 /**

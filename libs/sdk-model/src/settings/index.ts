@@ -587,6 +587,11 @@ export interface ISettings {
      */
     enableCriticalContentPerformanceOptimizations?: boolean;
 
+    /**
+     * Enable slideshow exports using the new export render mode in KD.
+     */
+    enableSlideshowExports?: boolean;
+
     [key: string]: number | boolean | string | object | undefined;
 }
 

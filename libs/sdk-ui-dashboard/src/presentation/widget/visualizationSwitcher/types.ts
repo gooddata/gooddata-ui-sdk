@@ -1,9 +1,10 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import { ComponentType } from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { IVisualizationSwitcherWidget, ScreenSize } from "@gooddata/sdk-model";
 import { OnError, OnExportReady, OnLoadingChanged } from "@gooddata/sdk-ui";
+import { WidgetExportData } from "../../export/index.js";
 
 ///
 /// Component props
@@ -62,6 +63,13 @@ export interface IDashboardVisualizationSwitcherProps {
      * @alpha
      */
     clientWidth?: number;
+
+    /**
+     * Data for export in export mode.
+     *
+     * @alpha
+     */
+    exportData?: WidgetExportData;
 
     onLoadingChanged?: OnLoadingChanged;
     onExportReady?: OnExportReady;

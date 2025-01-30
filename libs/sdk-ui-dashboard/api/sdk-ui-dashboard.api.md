@@ -14,7 +14,6 @@ import { CaseReducer } from '@reduxjs/toolkit';
 import { CaseReducerActions } from '@reduxjs/toolkit';
 import { CatalogState as CatalogState_2 } from './catalogState.js';
 import { CommandProcessingStatus as CommandProcessingStatus_2 } from '../../../model/index.js';
-import { Component } from 'react';
 import { ComponentPropsWithRef } from 'react';
 import { ComponentType } from 'react';
 import { CreateAttributeHierarchyRequested as CreateAttributeHierarchyRequested_2 } from '../events/attributeHierarchies.js';
@@ -209,6 +208,7 @@ import { IExecutionResult } from '@gooddata/sdk-backend-spi';
 import { IExportResult } from '@gooddata/sdk-backend-spi';
 import { IFilter } from '@gooddata/sdk-model';
 import { IFilterableWidget } from '@gooddata/sdk-model';
+import { IFilterBarProps as IFilterBarProps_2 } from './types.js';
 import { IFilterContext } from '@gooddata/sdk-model';
 import { IFilterContextDefinition } from '@gooddata/sdk-model';
 import { IHeaderPredicate } from '@gooddata/sdk-ui';
@@ -252,6 +252,7 @@ import { ISharingApplyPayload as ISharingApplyPayload_2 } from '@gooddata/sdk-ui
 import { ITempFilterContext } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
 import { ITitleProps as ITitleProps_2 } from './types.js';
+import { ITopBarProps as ITopBarProps_2 } from './types.js';
 import { ITranslations } from '@gooddata/sdk-ui';
 import { IUser } from '@gooddata/sdk-model';
 import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
@@ -282,7 +283,6 @@ import { default as React_2 } from 'react';
 import { ReactNode } from 'react';
 import { ReactReduxContextValue } from 'react-redux';
 import { Reducer } from '@reduxjs/toolkit';
-import { RefAttributes } from 'react';
 import { RenderMode as RenderMode_2 } from '../../../types.js';
 import { RenderModeState as RenderModeState_2 } from './renderModeState.js';
 import { SagaIterator } from 'redux-saga';
@@ -1079,6 +1079,11 @@ export type CommandProcessingStatus = "running" | "success" | "error";
 
 // @alpha
 export function commandStartedEventHandler<TCommand extends IDashboardCommand>(type: TCommand["type"], handler: DashboardEventHandler<DashboardCommandStarted<TCommand>>["handler"]): DashboardEventHandler<DashboardCommandStarted<TCommand>>;
+
+// @alpha
+export type CommonExportDataAttributes = {
+    "data-export-type": ExportElementType;
+};
 
 // @public (undocumented)
 export interface ConfigState {
@@ -3628,6 +3633,9 @@ export interface ExportDashboardToPdf extends IDashboardCommand {
 // @beta
 export function exportDashboardToPdf(correlationId?: string): ExportDashboardToPdf;
 
+// @alpha
+export type ExportElementType = "section" | "section-title" | "section-description" | "widget" | "widget-title" | "widget-description";
+
 // @beta (undocumented)
 export interface ExportInsightWidget extends IDashboardCommand {
     // (undocumented)
@@ -3823,6 +3831,12 @@ export function getDefaultInsightMenuItems(intl: IntlShape, config: {
 
 // @internal (undocumented)
 export function getDrillDownTitle(drillDefinition: IDrillDownDefinition, drillEvent: IDrillEvent, drillDownIntersectionIgnoredAttributes?: IDrillDownIntersectionIgnoredAttributes[], drillTargetDisplayForm?: IAttributeDisplayFormMetadataObject): string | null;
+
+// @alpha
+export type HeaderExportData = {
+    title?: CommonExportDataAttributes;
+    description?: CommonExportDataAttributes;
+};
 
 // @internal (undocumented)
 export class HeadlessDashboard {
@@ -4378,6 +4392,8 @@ export interface IDashboardInsightProps {
     clientWidth?: number;
     // @alpha
     ErrorComponent: ComponentType<IErrorProps>;
+    // @alpha (undocumented)
+    exportData?: WidgetExportDataAttributes;
     insight: IInsight;
     // @alpha
     LoadingComponent: ComponentType<ILoadingProps>;
@@ -4509,6 +4525,8 @@ export interface IDashboardRichTextProps {
     clientHeight?: number;
     // @alpha
     clientWidth?: number;
+    // @alpha
+    exportData?: WidgetExportDataAttributes;
     widget: IRichTextWidget;
     // @alpha
     workspace?: string;
@@ -4564,6 +4582,8 @@ export interface IDashboardVisualizationSwitcherProps {
     clientHeight?: number;
     // @alpha
     clientWidth?: number;
+    // @alpha
+    exportData?: WidgetExportData;
     // (undocumented)
     onError?: OnError;
     // (undocumented)
@@ -4597,6 +4617,8 @@ export interface IDashboardWidgetProps {
     dateDataset?: ObjRef;
     // @alpha
     ErrorComponent: ComponentType<IErrorProps>;
+    // @alpha
+    exportData?: WidgetExportData;
     ignoredAttributeFilters?: ObjRefInScope[];
     // @alpha
     LoadingComponent: ComponentType<ILoadingProps>;
@@ -7020,7 +7042,7 @@ export interface RenameDashboardPayload {
 }
 
 // @beta (undocumented)
-export type RenderMode = "view" | "edit";
+export type RenderMode = "view" | "edit" | "export";
 
 // @internal
 export const renderModeActions: CaseReducerActions<    {
@@ -7038,7 +7060,13 @@ export function renderModeAware<T extends ComponentType<any>>(components: {
 } & Partial<Record<RenderMode, T>>): ComponentType<ComponentPropsWithRef<T>>;
 
 // @internal (undocumented)
-export const RenderModeAwareTitle: ComponentType<ITitleProps_2 | (ITitleProps_2 & RefAttributes<Component<ITitleProps_2, any, any>>)>;
+export const RenderModeAwareFilterBar: React_2.ComponentType<IFilterBarProps_2>;
+
+// @internal (undocumented)
+export const RenderModeAwareTitle: React_2.ComponentType<ITitleProps_2 | (ITitleProps_2 & React_2.RefAttributes<React_2.Component<ITitleProps_2, any, any>>)>;
+
+// @internal (undocumented)
+export const RenderModeAwareTopBar: React_2.ComponentType<ITopBarProps_2>;
 
 // @beta (undocumented)
 export interface RenderModeChangeOptions {
@@ -7360,6 +7388,11 @@ export interface ScreenSizeChanged extends IDashboardEvent {
 export interface ScreenSizeChangedPayload {
     readonly screenSize: ScreenSize;
 }
+
+// @alpha
+export type SectionExportData = HeaderExportData & {
+    section?: CommonExportDataAttributes;
+};
 
 // @alpha
 export const selectAccessibleDashboards: (state: DashboardState) => IListedDashboard[];
@@ -7877,6 +7910,9 @@ export const selectEnableRichTextDescriptions: DashboardSelector<boolean>;
 // @alpha (undocumented)
 export const selectEnableScheduling: DashboardSelector<boolean>;
 
+// @internal (undocumented)
+export const selectEnableSlideshowExports: DashboardSelector<boolean>;
+
 // @internal
 export const selectEnableUnavailableItemsVisibility: DashboardSelector<boolean>;
 
@@ -8119,6 +8155,9 @@ export const selectIsFilterViewsDialogOpen: DashboardSelector<boolean>;
 
 // @public
 export const selectIsInEditMode: DashboardSelector<boolean>;
+
+// @internal
+export const selectIsInExportMode: DashboardSelector<boolean>;
 
 // @internal (undocumented)
 export const selectIsInViewMode: DashboardSelector<boolean>;
@@ -9813,6 +9852,9 @@ export function useSaveAsNewButtonProps(): ISaveAsNewButtonProps;
 // @internal (undocumented)
 export function useSaveButtonProps(): ISaveButtonProps;
 
+// @alpha (undocumented)
+export const useSectionExportData: () => SectionExportData | undefined;
+
 // @internal (undocumented)
 export function useShareButtonProps(): IShareButtonProps;
 
@@ -9829,6 +9871,9 @@ export function useWidgetExecutionsHandler(widgetRef: ObjRef): {
     onSuccess: (executionResult: IExecutionResult, warnings: IResultWarning[] | undefined) => void;
     onPushData: (data: IPushData) => void;
 };
+
+// @alpha (undocumented)
+export const useWidgetExportData: (widget: ExtendedDashboardWidget) => WidgetExportData | undefined;
 
 // @public
 export function useWidgetFilters(widget: FilterableDashboardWidget | undefined | null, insight?: IInsightDefinition): QueryProcessingState<IFilter[]>;
@@ -9896,6 +9941,17 @@ export interface WidgetConfigPanelProps<TWidget> {
 export interface WidgetDescription {
     description?: string;
 }
+
+// @alpha
+export type WidgetExportData = HeaderExportData & {
+    widget?: WidgetExportDataAttributes;
+};
+
+// @alpha
+export type WidgetExportDataAttributes = CommonExportDataAttributes & {
+    "data-export-widget-type"?: string;
+    "data-export-visualization-type"?: string;
+};
 
 // @beta
 export type WidgetFilterOperation = FilterOpEnableDateFilter | FilterOpDisableDateFilter | FilterOpReplaceAttributeIgnores | FilterOpIgnoreAttributeFilter | FilterOpUnignoreAttributeFilter | FilterOpIgnoreDateFilter | FilterOpUnignoreDateFilter | FilterOpReplaceAll;

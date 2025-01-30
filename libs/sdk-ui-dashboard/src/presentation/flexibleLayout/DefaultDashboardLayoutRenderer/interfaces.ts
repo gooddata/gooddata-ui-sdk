@@ -12,6 +12,7 @@ import {
     IDashboardLayoutItemFacade,
     IDashboardLayoutSectionFacade,
 } from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
+import { CommonExportDataAttributes, HeaderExportData } from "../../export/index.js";
 
 /**
  * Default props provided to {@link IDashboardLayoutSectionKeyGetter}.
@@ -93,6 +94,11 @@ export interface IDashboardLayoutSectionRenderProps<TWidget = IDashboardWidget> 
      * Is section with borders. Default true.
      */
     showBorders?: boolean;
+
+    /**
+     * Data for section export in export mode.
+     */
+    exportData?: CommonExportDataAttributes;
 }
 
 /**
@@ -131,6 +137,11 @@ export interface IDashboardLayoutSectionHeaderRenderProps<TWidget = IDashboardWi
      * Default renderer of the section header - can be used as a fallback for custom sectionHeaderRenderer.
      */
     DefaultSectionHeaderRenderer: IDashboardLayoutSectionHeaderRenderer<TWidget>;
+
+    /**
+     * Data for header export in export mode.
+     */
+    exportData?: HeaderExportData;
 }
 
 /**

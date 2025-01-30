@@ -5,6 +5,7 @@ import cx from "classnames";
 import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
 import { useWidthValidation } from "./useItemWidthValidation.js";
+import { CommonExportDataAttributes } from "../../export/index.js";
 
 export type LayoutElementType = "root" | "nested" | "section" | "item" | "leaf-item";
 
@@ -48,10 +49,15 @@ export interface IGridLayoutElementProps {
      * Callback called when mouse leave the element.
      */
     onMouseLeave?: MouseEventHandler;
+
+    /**
+     * Data for export in export mode.
+     */
+    exportData?: CommonExportDataAttributes;
 }
 
 export const GridLayoutElement = forwardRef<HTMLDivElement, IGridLayoutElementProps>(
-    ({ children, className, style, type, layoutItemSize, onMouseLeave }, ref) => {
+    ({ children, className, style, type, layoutItemSize, onMouseLeave, exportData }, ref) => {
         // Fix item width locally if it is bigger than parent width to prevent css-gird render issues.
         // Error is fired on DashboardLayoutWidget with more details.
         const { validWidth } = useWidthValidation(layoutItemSize);
@@ -62,8 +68,16 @@ export const GridLayoutElement = forwardRef<HTMLDivElement, IGridLayoutElementPr
             className,
         );
 
+        const sanitizedExportData = type === "section" ? { ...exportData } : {};
+
         return (
-            <div className={classNames} style={style} onMouseLeave={onMouseLeave} ref={ref}>
+            <div
+                className={classNames}
+                style={style}
+                onMouseLeave={onMouseLeave}
+                ref={ref}
+                {...sanitizedExportData}
+            >
                 {children}
             </div>
         );

@@ -128,6 +128,7 @@ export enum TigerFeaturesNames {
     EnableDashboardDescriptionDynamicHeight = "enableDashboardDescriptionDynamicHeight",
     EnableAmplitudeTracker = "enableAmplitudeTracker",
     EnableCriticalContentPerformanceOptimizations = "enableCriticalContentPerformanceOptimizations",
+    EnableSlideshowExports = "enableSlideshowExports",
 }
 
 export type ITigerFeatureFlags = {
@@ -219,6 +220,7 @@ export type ITigerFeatureFlags = {
     enableDashboardDescriptionDynamicHeight: typeof FeatureFlagsValues["enableDashboardDescriptionDynamicHeight"][number];
     enableAmplitudeTracker: typeof FeatureFlagsValues["enableAmplitudeTracker"][number];
     enableCriticalContentPerformanceOptimizations: typeof FeatureFlagsValues["enableCriticalContentPerformanceOptimizations"][number];
+    enableSlideshowExports: typeof FeatureFlagsValues["enableSlideshowExports"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -310,6 +312,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDashboardDescriptionDynamicHeight: false,
     enableAmplitudeTracker: false,
     enableCriticalContentPerformanceOptimizations: false,
+    enableSlideshowExports: false,
 };
 
 export const FeatureFlagsValues = {
@@ -405,4 +408,5 @@ export const FeatureFlagsValues = {
     enableDashboardDescriptionDynamicHeight: [true, false] as const,
     enableAmplitudeTracker: [true, false] as const,
     enableCriticalContentPerformanceOptimizations: [true, false] as const,
+    enableSlideshowExports: [true, false] as const,
 };

@@ -37,7 +37,7 @@ import { serializeLayoutItemPath } from "../../../_staging/layout/coordinates.js
 
 type WidgetComponentAdditionalProps = Pick<
     IDashboardWidgetProps,
-    "widget" | "parentLayoutPath" | "screen" | "onFiltersChange" | "onError"
+    "widget" | "parentLayoutPath" | "screen" | "onFiltersChange" | "onError" | "exportData"
 >;
 
 interface IWidgetComponentOwnProps {
@@ -53,6 +53,7 @@ const WidgetComponent: React.FC<IWidgetComponentOwnProps & WidgetComponentAdditi
     screen,
     onFiltersChange,
     onError,
+    exportData,
 }) => {
     const dashboardItemClasses = parentLayoutPath
         ? `s-dash-item-${serializeLayoutItemPath(parentLayoutPath)}`
@@ -67,6 +68,7 @@ const WidgetComponent: React.FC<IWidgetComponentOwnProps & WidgetComponentAdditi
                 widget={widget}
                 screen={screen}
                 dashboardItemClasses={dashboardItemClassNames}
+                exportData={exportData}
             />
         );
     } else if (isKpiWidget(widget)) {
@@ -85,6 +87,7 @@ const WidgetComponent: React.FC<IWidgetComponentOwnProps & WidgetComponentAdditi
                 widget={widget}
                 screen={screen}
                 dashboardItemClasses={dashboardItemClassNames}
+                exportData={exportData}
             />
         );
     } else if (isVisualizationSwitcherWidget(widget)) {
@@ -93,6 +96,7 @@ const WidgetComponent: React.FC<IWidgetComponentOwnProps & WidgetComponentAdditi
                 widget={widget}
                 screen={screen}
                 dashboardItemClasses={dashboardItemClassNames}
+                exportData={exportData}
             />
         );
     }
@@ -113,6 +117,7 @@ export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget
     parentLayoutItemSize,
     parentLayoutPath,
     rowIndex,
+    exportData,
 }: IDashboardWidgetProps): JSX.Element {
     const isFlexibleLayoutEnabled = useDashboardSelector(selectEnableFlexibleLayout);
 
@@ -170,6 +175,7 @@ export const DefaultDashboardWidget = React.memo(function DefaultDashboardWidget
                     onFiltersChange={onFiltersChange}
                     onError={onError}
                     rowIndex={rowIndex!}
+                    exportData={exportData}
                 />
             </BackendProvider>
         );

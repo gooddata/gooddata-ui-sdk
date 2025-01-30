@@ -8,7 +8,11 @@ options = {
 
         depCruiser.isolatedSubmodule("constants", "src/presentation/constants"),
         depCruiser.isolatedSubmodule("localization", "src/presentation/localization"),
-        depCruiser.isolatedSubmodule("presentationComponents", "src/presentation/presentationComponents"),
+        depCruiser.moduleWithDependencies(
+            "presentationComponents",
+            "src/presentation/presentationComponents",
+            ["src/presentation/export"],
+        ),
 
         // TODO: RAIL-3611
         // depCruiser.moduleWithDependencies("_staging", "src/_staging",["src/types.ts"]),
@@ -140,6 +144,7 @@ options = {
             "src/presentation/localization",
             "src/presentation/presentationComponents",
             "src/presentation/widget",
+            "src/presentation/export",
             "src/types.ts",
             "src/widgets",
         ]),
@@ -150,7 +155,7 @@ options = {
             "src/widgets",
             "src/types.ts",
             "src/presentation/dragAndDrop/types.ts",
-            "src/presentation/flexibleLayout/DefaultDashboardLayoutRenderer/utils/sizing.ts"
+            "src/presentation/flexibleLayout/DefaultDashboardLayoutRenderer/utils/sizing.ts",
         ]),
         depCruiser.moduleWithDependencies("presentation", "src/presentation", [
             "src/_staging/*",
@@ -215,12 +220,13 @@ options = {
             "src/presentation/dashboardList",
             "src/presentation/localization",
             "src/presentation/presentationComponents",
+            "src/presentation/export",
             "src/presentation/scheduledEmail/*",
             "src/types.ts",
             "src/widgets",
             "src/presentation/dashboard/components/DashboardScreenSizeContext.tsx",
             "src/presentation/layout/dragAndDrop/draggableWidget/EmptyDashboardDropZone.ts",
-            "src/presentation/flexibleLayout/dragAndDrop/draggableWidget/EmptyDashboardDropZone.ts"
+            "src/presentation/flexibleLayout/dragAndDrop/draggableWidget/EmptyDashboardDropZone.ts",
         ]),
     ],
     options: depCruiser.DefaultOptions,

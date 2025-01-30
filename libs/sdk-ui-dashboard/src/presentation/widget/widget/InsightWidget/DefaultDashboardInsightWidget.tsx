@@ -38,7 +38,16 @@ export const DefaultDashboardInsightWidget: React.FC<Omit<IDefaultDashboardInsig
  */
 const DefaultDashboardInsightWidgetCore: React.FC<
     IDefaultDashboardInsightWidgetProps & { insight?: IInsight }
-> = ({ widget, insight, screen, onError, onExportReady, onLoadingChanged, dashboardItemClasses }) => {
+> = ({
+    widget,
+    insight,
+    screen,
+    onError,
+    onExportReady,
+    onLoadingChanged,
+    dashboardItemClasses,
+    exportData,
+}) => {
     const intl = useIntl();
     const settings = useDashboardSelector(selectSettings);
 
@@ -146,7 +155,11 @@ const DefaultDashboardInsightWidgetCore: React.FC<
             <DashboardItemVisualization
                 renderHeadline={(clientHeight) =>
                     !widget.configuration?.hideTitle && (
-                        <DashboardItemHeadline title={widget.title} clientHeight={clientHeight} />
+                        <DashboardItemHeadline
+                            title={widget.title}
+                            clientHeight={clientHeight}
+                            exportData={exportData?.title}
+                        />
                     )
                 }
                 renderBeforeVisualization={() => (
@@ -194,6 +207,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
                         onError={onError}
                         ErrorComponent={ErrorComponent}
                         LoadingComponent={LoadingComponent}
+                        exportData={exportData?.widget}
                     />
                 )}
             </DashboardItemVisualization>

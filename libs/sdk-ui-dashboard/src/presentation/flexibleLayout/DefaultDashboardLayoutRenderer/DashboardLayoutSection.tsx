@@ -24,6 +24,7 @@ import last from "lodash/last.js";
 import { DashboardLayoutGridRowEdit } from "./DashboardLayoutGridRowEdit.js";
 import { getItemIndex, serializeLayoutItemPath } from "../../../_staging/layout/coordinates.js";
 import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
+import { useSectionExportData } from "../../export/index.js";
 
 /**
  * @alpha
@@ -70,7 +71,15 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
         parentLayoutPath,
     } = props;
     const showBorders = parentLayoutPath === undefined || parentLayoutPath.length === 0;
-    const renderProps = { section, renderMode, parentLayoutItemSize, parentLayoutPath, showBorders };
+    const exportData = useSectionExportData();
+    const renderProps = {
+        section,
+        renderMode,
+        parentLayoutItemSize,
+        parentLayoutPath,
+        showBorders,
+        exportData: exportData?.section,
+    };
     const screen = useScreenSize();
 
     const items = useMemo(() => {
@@ -143,6 +152,7 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
                     DefaultSectionHeaderRenderer: DashboardLayoutSectionHeaderRenderer,
                     parentLayoutItemSize,
                     parentLayoutPath,
+                    exportData,
                 })}
                 {items}
                 {renderMode === "edit" ? <DashboardLayoutSectionOverlayController section={section} /> : null}
