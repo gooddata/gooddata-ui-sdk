@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import * as Navigation from "../../tools/navigation";
 import { Widget } from "../../tools/widget";

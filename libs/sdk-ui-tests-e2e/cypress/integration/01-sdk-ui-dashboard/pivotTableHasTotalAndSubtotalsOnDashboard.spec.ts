@@ -1,4 +1,4 @@
-// (C) 2023 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import * as Navigation from "../../tools/navigation";
 import { Export } from "../../tools/export";
 import { TopBar } from "../../tools/dashboards";
@@ -36,7 +36,7 @@ describe("Export dashboard", { tags: ["checklist_integrated_tiger_export"] }, ()
 describe("Pivot Table with multi format metrics", { tags: ["checklist_integrated_tiger"] }, () => {
     it("should render insight with multi format metrics correctly", () => {
         Navigation.visit("dashboard/dashboard-pivot-table-scenario");
-        const table = new Widget(1).waitTableLoaded().getTable();
+        const table = new Widget(0, 1).waitTableLoaded().getTable();
         table.waitLoaded();
         table.hasCellValue(6, 1, "Closed Won");
         table.hasCellValue(6, 2, "██████████");
