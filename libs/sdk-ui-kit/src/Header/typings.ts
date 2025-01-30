@@ -37,7 +37,7 @@ export interface IAppHeaderProps {
     logoHref?: string;
     logoTitle?: string;
 
-    organizationName?: string;
+    isAccessibilityCompliant?: string;
 
     documentationUrl?: string;
 
