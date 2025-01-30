@@ -5,8 +5,8 @@ import { InvariantError } from "ts-invariant";
 import { ITopBarCustomizer } from "../customizer.js";
 import {
     CustomTopBarComponent,
-    DefaultTopBar,
     OptionalTopBarComponentProvider,
+    RenderModeAwareTopBar,
     TopBarComponentProvider,
 } from "../../presentation/index.js";
 
@@ -15,7 +15,7 @@ import { CustomizerMutationsContext } from "./types.js";
 import union from "lodash/union.js";
 
 const DefaultTopBarRendererProvider: TopBarComponentProvider = () => {
-    return DefaultTopBar;
+    return RenderModeAwareTopBar;
 };
 
 interface ITopBarCustomizerState {
