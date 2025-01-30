@@ -35,7 +35,8 @@ export const selectExecutionResult = adapterSelectors.selectById;
 export const selectHasSomeExecutionResult: DashboardSelector<boolean> = createSelector(
     selectExecutionResultEntities,
     (executionResults): boolean => {
-        return Object.values(executionResults).filter((e) => !!e?.executionResult).length >= 1;
+        // Empty results can be resolved as error, so consider error also as resolved
+        return Object.values(executionResults).filter((e) => !!e?.executionResult || !!e?.error).length >= 1;
     },
 );
 
