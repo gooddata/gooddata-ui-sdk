@@ -820,6 +820,8 @@ export interface IAppHeaderProps {
     // (undocumented)
     helpRedirectUrl?: string;
     // (undocumented)
+    isAccessibilityCompliant?: string;
+    // (undocumented)
     logoHref?: string;
     // (undocumented)
     logoTitle?: string;
@@ -844,8 +846,6 @@ export interface IAppHeaderProps {
     onMenuItemClick?: (menuItem: IHeaderMenuItem, e?: React_2.MouseEvent) => void;
     // (undocumented)
     onUpsellButtonClick?: (e: React_2.MouseEvent) => void;
-    // (undocumented)
-    organizationName?: string;
     // (undocumented)
     search?: React_2.ReactNode;
     // (undocumented)

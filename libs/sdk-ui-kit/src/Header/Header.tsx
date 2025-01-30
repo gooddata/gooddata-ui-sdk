@@ -58,7 +58,6 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
         | "helpMenuDropdownAlignPoints"
         | "search"
         | "notificationsPanel"
-        | "organizationName"
     > = {
         logoHref: "/",
         helpMenuDropdownAlignPoints: "br tr",
@@ -67,7 +66,6 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
         menuItemsGroups: [],
         search: null,
         notificationsPanel: null,
-        organizationName: "",
     };
 
     private nodeRef = createRef<HTMLDivElement>();
@@ -89,7 +87,7 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
     }
 
     public render() {
-        const { logoUrl, logoTitle, workspacePicker, organizationName } = this.props;
+        const { workspacePicker, isAccessibilityCompliant } = this.props;
 
         this.createStyles();
 
@@ -99,30 +97,12 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
             "gd-header-shrink": this.state.responsiveMode,
         });
 
-        const logoHrefAccesibilityText = this.props.intl.formatMessage({
-            id: "gs.header.href.accessibility",
-        });
-        const imageAltAccessibilityText = `${organizationName} ${this.props.intl.formatMessage({
-            id: "gs.header.logo.title.accessibility",
-        })}`;
-
         return (
             <div className={this.getClassNames()} ref={this.nodeRef}>
-                <a
-                    aria-label={logoHrefAccesibilityText}
-                    title={logoHrefAccesibilityText}
-                    href={this.props.logoHref}
-                    onClick={this.props.onLogoClick}
-                    className={logoLinkClassName}
-                >
-                    <img
-                        src={logoUrl}
-                        title={logoTitle}
-                        onLoad={this.measureChildren}
-                        onError={this.measureChildren}
-                        alt={logoUrl ? imageAltAccessibilityText : ""}
-                    />
-                </a>
+                {isAccessibilityCompliant
+                    ? this.renderAccessibilityLogo(logoLinkClassName)
+                    : this.renderLogo(logoLinkClassName)}
+
                 {workspacePicker}
                 {this.renderNav()}
             </div>
@@ -136,6 +116,50 @@ class AppHeaderCore extends Component<IAppHeaderProps & WrappedComponentProps, I
     public componentWillUnmount() {
         window.removeEventListener("resize", this.resizeHandler);
         removeFromDom(this.stylesheet);
+    }
+
+    private renderLogo(logoLinkClassName: string) {
+        const { logoUrl, logoTitle } = this.props;
+        return (
+            <a href={this.props.logoHref} onClick={this.props.onLogoClick} className={logoLinkClassName}>
+                <img
+                    src={logoUrl}
+                    title={logoTitle}
+                    onLoad={this.measureChildren}
+                    onError={this.measureChildren}
+                    alt=""
+                />
+            </a>
+        );
+    }
+
+    private renderAccessibilityLogo(logoLinkClassName: string) {
+        const { logoUrl, logoTitle, intl } = this.props;
+
+        const logoHrefAccesibilityText = intl.formatMessage({
+            id: "gs.header.href.accessibility",
+        });
+        const imageAltAccessibilityText = intl.formatMessage({
+            id: "gs.header.logo.title.accessibility",
+        });
+
+        return (
+            <a
+                aria-label={logoHrefAccesibilityText}
+                title={logoHrefAccesibilityText}
+                href={this.props.logoHref}
+                onClick={this.props.onLogoClick}
+                className={logoLinkClassName}
+            >
+                <img
+                    src={logoUrl}
+                    title={logoTitle}
+                    onLoad={this.measureChildren}
+                    onError={this.measureChildren}
+                    alt={imageAltAccessibilityText}
+                />
+            </a>
+        );
     }
 
     private getClassNames = () => {
