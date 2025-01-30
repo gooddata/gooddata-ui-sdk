@@ -9087,6 +9087,8 @@ interface ITotalItem {
 // @public (undocumented)
 export interface IUserProfile {
     // (undocumented)
+    deployment?: string;
+    // (undocumented)
     email?: string;
     // (undocumented)
     entitlements: ApiEntitlement[];
