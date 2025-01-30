@@ -3312,6 +3312,8 @@ export interface ISettings {
     ADCatalogGroupsExpanded?: boolean;
     ADMeasureValueFilterNullAsZeroOption?: string;
     alertDefault?: IAlertDefault;
+    // @alpha
+    dateFilterConfig?: IDateFilterConfig;
     disableKpiDashboardHeadlineUnderline?: boolean;
     // @beta
     earlyAccessFeatures?: IEarlyAccessFeaturesConfig;
