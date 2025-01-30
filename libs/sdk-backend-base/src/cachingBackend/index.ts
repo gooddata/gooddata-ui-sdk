@@ -108,7 +108,6 @@ type AttributeCacheEntry = {
     attributesByDisplayForms: LRUCache<string, Promise<IAttributeMetadataObject>>;
     attributeElementResults?: LRUCache<string, Promise<IElementsQueryResult>>;
     dataSetsMeta: LRUCache<string, Promise<IMetadataObject>>;
-    attributesWithReferences: LRUCache<string, Promise<IAttributeWithReferences>>;
 };
 
 type AutomationCacheEntry = {
@@ -613,9 +612,6 @@ function getOrCreateAttributeCache(ctx: CachingContext, workspace: string): Attr
                       max: ctx.config.maxAttributeElementResultsPerWorkspace!,
                   })
                 : undefined,
-            attributesWithReferences: new LRUCache<string, Promise<IAttributeWithReferences>>({
-                max: ctx.config.maxAttributesPerWorkspace!,
-            }),
         };
         cache.set(workspace, cacheEntry);
     }
@@ -867,18 +863,43 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
     };
 
     public async getAttributesWithReferences(refs: ObjRef[]): Promise<IAttributeWithReferences[]> {
-        const cache = getOrCreateAttributeCache(this.ctx, this.workspace).attributesWithReferences;
+        const attributeByDfCache = getOrCreateAttributeCache(
+            this.ctx,
+            this.workspace,
+        ).attributesByDisplayForms;
+        const dataSetByAttributeCache = getOrCreateAttributeCache(this.ctx, this.workspace).dataSetsMeta;
 
         // grab a reference to the cache results as soon as possible in case they would get evicted while loading the ones with missing data in cache
         // then would might not be able to call cache.get again and be guaranteed to get the data
-        const refsWithCacheResults = refs.map(
-            (ref): { ref: ObjRef; cacheHit: Promise<IAttributeWithReferences> | undefined } => {
-                const idCacheKey = isIdentifierRef(ref) ? ref.identifier : undefined;
-                const cacheHit = idCacheKey ? cache.get(idCacheKey) : undefined;
+        const refsWithCacheResults: { ref: ObjRef; cacheHit?: Promise<IAttributeWithReferences> }[] = [];
 
-                return { ref, cacheHit };
-            },
-        );
+        for (const ref of refs) {
+            // First, get attribute cached by display form if available
+            const attrCacheKey = isIdentifierRef(ref) ? ref.identifier : undefined;
+            const attrCacheHit = attrCacheKey ? attributeByDfCache.get(attrCacheKey) : undefined;
+            const attributeFromCache = attrCacheHit ? await attrCacheHit : undefined;
+
+            // If attribute was cached, try to get dataSet by attribute from cache
+            const dataSetCacheKey =
+                attributeFromCache && isIdentifierRef(attributeFromCache.ref)
+                    ? attributeFromCache.ref.identifier
+                    : undefined;
+            const dataSetCacheHit = dataSetCacheKey
+                ? dataSetByAttributeCache.get(dataSetCacheKey)
+                : undefined;
+            const dataSetFromCache = dataSetCacheHit ? await dataSetCacheHit : undefined;
+
+            // If both attribute and dataSet were cached, consider it as a cacheHit of attribute with references
+            const cacheHit =
+                attributeFromCache && dataSetFromCache
+                    ? Promise.resolve({
+                          attribute: attributeFromCache,
+                          dataSet: dataSetFromCache,
+                      } as IAttributeWithReferences)
+                    : undefined;
+
+            refsWithCacheResults.push({ ref, cacheHit });
+        }
 
         const [withCacheHits, withoutCacheHits] = partition(
             refsWithCacheResults,
@@ -891,23 +912,27 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
             // await the stuff from cache, we need the data available (we cannot just return the promises)
             Promise.all(withCacheHits.map((item) => item.cacheHit!)),
             // load items not in cache using the bulk operation
-            this.decorated.getAttributesWithReferences(refsToLoad),
+            refsToLoad.length > 0
+                ? this.decorated.getAttributesWithReferences(refsToLoad)
+                : Promise.resolve([]),
         ]);
 
         // save newly loaded to cache for future reference
         loadedFromServer.forEach((loaded) => {
-            const promisifiedResult = Promise.resolve(loaded);
+            // Cache attribute by display form refs
             loaded.attribute.displayForms.forEach((displayForm) => {
                 this.cacheAttributeByDisplayForm(displayForm.ref, loaded.attribute);
             });
+
+            // Cache dataSet by attribute ref
             if (loaded.dataSet) {
                 this.cacheAttributeDataSetMeta(loaded.attribute.ref, loaded.dataSet);
             }
-            // save the cache item for both types of refs
-            cache.set(loaded.attribute.id, promisifiedResult);
         });
 
-        const loadedRefs = loadedFromServer.map((item) => item.attribute.ref);
+        const loadedRefs = loadedFromServer.flatMap((item) =>
+            item.attribute.displayForms.map((df) => df.ref),
+        );
         const outputRefs = this.ctx.capabilities.allowsInconsistentRelations
             ? skipMissingReferences(refs, refsToLoad, loadedRefs)
             : refs;
@@ -916,16 +941,15 @@ class WithAttributesCaching extends DecoratedWorkspaceAttributesService {
         const candidates = [...loadedFromServer, ...alreadyInCache];
 
         return outputRefs.map((ref) => {
-            const match = candidates.find((item) => refMatchesMdObject(ref, item.attribute, "attribute"));
+            const match = candidates.find((item) =>
+                item.attribute.displayForms.some((df) => areObjRefsEqual(ref, df.ref)),
+            );
             // if this bombs, some data got lost in the process
             invariant(match);
             return match;
         });
     }
 
-    ///
-    /// Caching of individual catalog objects
-    ///
     private cacheAttributeByDisplayForm = (displayFormRef: ObjRef, attribute: IAttributeMetadataObject) => {
         const cache = getOrCreateAttributeCache(this.ctx, this.workspace).attributesByDisplayForms;
 
