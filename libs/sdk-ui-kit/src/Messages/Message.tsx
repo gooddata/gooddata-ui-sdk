@@ -1,8 +1,10 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 
 import { IMessageProps } from "./typings.js";
+import { Button } from "../Button/index.js";
+import { useIntl } from "react-intl";
 
 /**
  * @internal
@@ -15,6 +17,8 @@ export const Message: React.FC<IMessageProps> = ({
     contrast,
     intensive,
 }) => {
+    const intl = useIntl();
+
     const classes = cx("gd-message", "s-message", className, {
         success: type === "success",
         progress: type === "progress",
@@ -24,16 +28,20 @@ export const Message: React.FC<IMessageProps> = ({
         intensive,
     });
 
+    const accesibilityRole = type === "error" ? "alert" : "status";
+
     return (
-        <div className={classes}>
+        <div role={accesibilityRole} aria-live={type === "error" ? undefined : "polite"} className={classes}>
             <div className="gd-message-text">
                 {children}
                 {onClose ? (
                     <div className="gd-message-dismiss-container">
-                        <a
-                            aria-label="dismiss"
-                            className="gd-message-dismiss gd-icon-cross"
+                        <Button
+                            className="gd-message-dismiss gd-icon-cross s-dialog-close-button"
                             onClick={onClose}
+                            ariaLabel={intl.formatMessage({
+                                id: "message.accessibility.dismiss.notification",
+                            })}
                         />
                     </div>
                 ) : null}

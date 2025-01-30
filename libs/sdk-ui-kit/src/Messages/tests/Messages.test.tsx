@@ -1,5 +1,6 @@
-// (C) 2007-2022 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
+import { IntlProvider } from "react-intl";
 import { screen, waitFor, render } from "@testing-library/react";
 import defaultUserEvent from "@testing-library/user-event";
 import { describe, it, expect, vi } from "vitest";
@@ -32,8 +33,17 @@ const mockError: Array<IMessage> = [
     },
 ];
 
+const DefaultLocale = "en-US";
+const messages = {
+    "message.accessibility.dismiss.notification": "Dismiss notification",
+};
+
 function renderMessages(options: Partial<IMessagesProps>) {
-    return render(<Messages messages={[]} {...options} />);
+    return render(
+        <IntlProvider key={DefaultLocale} locale={DefaultLocale} messages={messages}>
+            <Messages messages={[]} {...options} />
+        </IntlProvider>,
+    );
 }
 
 describe("Messages", () => {
@@ -45,7 +55,7 @@ describe("Messages", () => {
                 onMessageClose,
             });
 
-            await userEvent.click(screen.getByLabelText("dismiss"));
+            await userEvent.click(screen.getByLabelText("Dismiss notification"));
 
             await waitFor(() => {
                 expect(onMessageClose).toBeCalledWith(expect.stringContaining(mockMessages[0].id));
