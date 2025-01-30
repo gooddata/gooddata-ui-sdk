@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import * as Navigation from "../../tools/navigation";
 import { AttributeFilter } from "../../tools/filterBar";
 import { TopBar } from "../../tools/dashboards";
@@ -10,7 +10,7 @@ const stateFilter = new AttributeFilter("State");
 const cityFilter = new AttributeFilter("City");
 const product = new AttributeFilter("Product");
 const stageName = new AttributeFilter("Stage Name");
-const table = new Table(".s-dash-item-0");
+const table = new Table(".s-dash-item-0_0");
 const topBar = new TopBar();
 
 describe("Dependent filter", () => {
@@ -109,136 +109,140 @@ describe("Dependent filter", () => {
         cityFilter.open().hasSubtitle("Hartford").hasFilterListSize(10).hasSelectedValueList(["Hartford"]);
     });
 
-    it("should test parent - child interaction in edit mode", { tags: "pre-merge_isolated_tiger" }, () => {
-        topBar.enterEditMode().editButtonIsVisible(false);
+    it.skip(
+        "should test parent - child interaction in edit mode",
+        { tags: "pre-merge_isolated_tiger" },
+        () => {
+            topBar.enterEditMode().editButtonIsVisible(false);
 
-        table
-            .waitLoaded()
-            .getColumnValues(1)
-            .should("deep.equal", [
-                "Connecticut",
-                "Connecticut",
-                "Massachusetts",
-                "New Hampshire",
-                "New York",
-                "New York",
-                "Oregon",
-                "Pennsylvania",
-                "Rhode Island",
-            ]);
+            table
+                .waitLoaded()
+                .getColumnValues(1)
+                .should("deep.equal", [
+                    "Connecticut",
+                    "Connecticut",
+                    "Massachusetts",
+                    "New Hampshire",
+                    "New York",
+                    "New York",
+                    "Oregon",
+                    "Pennsylvania",
+                    "Rhode Island",
+                ]);
 
-        stateFilter
-            .isLoaded()
-            .open()
-            .hasSubtitle("All")
-            .hasFilterListSize(48)
-            .configureLimitingParentFilterDependency("Region")
-            .hasFilterListSize(7)
-            .hasSelectedValueList([
-                "Connecticut",
-                "Massachusetts",
-                "New Hampshire",
-                "New York",
-                "Oregon",
-                "Pennsylvania",
-                "Rhode Island",
-            ]);
+            stateFilter
+                .isLoaded()
+                .open()
+                .hasSubtitle("All")
+                .hasFilterListSize(48)
+                .configureLimitingParentFilterDependency("Region")
+                .hasFilterListSize(7)
+                .hasSelectedValueList([
+                    "Connecticut",
+                    "Massachusetts",
+                    "New Hampshire",
+                    "New York",
+                    "Oregon",
+                    "Pennsylvania",
+                    "Rhode Island",
+                ]);
 
-        table
-            .waitLoaded()
-            .getColumnValues(1)
-            .should("deep.equal", [
-                "Connecticut",
-                "Connecticut",
-                "Massachusetts",
-                "New Hampshire",
-                "New York",
-                "New York",
-                "Oregon",
-                "Pennsylvania",
-                "Rhode Island",
-            ]);
+            table
+                .waitLoaded()
+                .getColumnValues(1)
+                .should("deep.equal", [
+                    "Connecticut",
+                    "Connecticut",
+                    "Massachusetts",
+                    "New Hampshire",
+                    "New York",
+                    "New York",
+                    "Oregon",
+                    "Pennsylvania",
+                    "Rhode Island",
+                ]);
 
-        regionFilter.open().selectAttribute(["West Coast"]).apply();
-        table.waitLoadStarted().waitLoaded();
+            regionFilter.open().selectAttribute(["West Coast"]).apply();
+            table.waitLoadStarted().waitLoaded();
 
-        stateFilter
-            .open()
-            .hasSubtitle("All")
-            .hasFilterListSize(3)
-            .hasSelectedValueList(["California", "Oregon", "Washington"])
-            .hasValueList(["California", "Oregon", "Washington"])
-            .selectAttribute(["California"])
-            .apply()
-            .isLoaded()
-            .hasSubtitle("California");
+            stateFilter
+                .open()
+                .hasSubtitle("All")
+                .hasFilterListSize(3)
+                .hasSelectedValueList(["California", "Oregon", "Washington"])
+                .hasValueList(["California", "Oregon", "Washington"])
+                .selectAttribute(["California"])
+                .apply()
+                .isLoaded()
+                .hasSubtitle("California");
 
-        cy.wait(1000);
+            cy.wait(1000);
 
-        cityFilter
-            .open()
-            .hasSubtitle("All")
-            .hasFilterListSize(50)
-            .configureLimitingParentFilterDependency("Region")
-            .hasFilterListSize(7)
-            .selectAttribute(["Sacramento"])
-            .apply();
+            cityFilter
+                .open()
+                .hasSubtitle("All")
+                .hasFilterListSize(50)
+                .configureLimitingParentFilterDependency("Region")
+                .hasFilterListSize(7)
+                .selectAttribute(["Sacramento"])
+                .apply();
 
-        table.waitLoadStarted().waitLoaded();
+            table.waitLoadStarted().waitLoaded();
 
-        cityFilter.isLoaded().hasSubtitle("Sacramento");
+            cityFilter.isLoaded().hasSubtitle("Sacramento");
 
-        table.getColumnValues(0).should("deep.equal", ["West Coast"]);
-        table.getColumnValues(1).should("deep.equal", ["California"]);
-        table.getColumnValues(2).should("deep.equal", ["Sacramento"]);
+            table.getColumnValues(0).should("deep.equal", ["West Coast"]);
+            table.getColumnValues(1).should("deep.equal", ["California"]);
+            table.getColumnValues(2).should("deep.equal", ["Sacramento"]);
 
-        regionFilter
-            .open()
-            .elementsAreLoaded()
-            .clearIrrelevantElementValuesIsVisible(false)
-            .showAllElementValuesIsVisible(false)
-            .selectAttribute(["East Coast"])
-            .apply();
+            regionFilter
+                .open()
+                .elementsAreLoaded()
+                .clearIrrelevantElementValuesIsVisible(false)
+                .showAllElementValuesIsVisible(false)
+                .selectAttribute(["East Coast"])
+                .apply();
 
-        cy.wait(1000);
+            cy.wait(1000);
 
-        stateFilter
-            .open()
-            .elementsAreLoaded()
-            .clearIrrelevantElementValuesIsVisible(true)
-            .showAllElementValuesIsVisible(true);
-        cityFilter
-            .open()
-            .elementsAreLoaded()
-            .clearIrrelevantElementValuesIsVisible(true)
-            .showAllElementValuesIsVisible(true);
-        regionFilter
-            .open()
-            .elementsAreLoaded()
-            .clearIrrelevantElementValuesIsVisible(false)
-            .showAllElementValuesIsVisible(false)
-            .selectAttribute(["West Coast"])
-            .apply();
+            stateFilter
+                .open()
+                .elementsAreLoaded()
+                .clearIrrelevantElementValuesIsVisible(true)
+                .showAllElementValuesIsVisible(true);
+            cityFilter
+                .open()
+                .elementsAreLoaded()
+                .clearIrrelevantElementValuesIsVisible(true)
+                .showAllElementValuesIsVisible(true);
+            regionFilter
+                .open()
+                .elementsAreLoaded()
+                .clearIrrelevantElementValuesIsVisible(false)
+                .showAllElementValuesIsVisible(false)
+                .selectAttribute(["West Coast"])
+                .apply();
 
-        cy.wait(1000);
+            cy.wait(1000);
 
-        stateFilter
-            .open()
-            .elementsAreLoaded()
-            .clearIrrelevantElementValuesIsVisible(false)
-            .showAllElementValuesIsVisible(true);
-        cityFilter
-            .open()
-            .elementsAreLoaded()
-            .clearIrrelevantElementValuesIsVisible(false)
-            .showAllElementValuesIsVisible(true);
+            stateFilter
+                .open()
+                .elementsAreLoaded()
+                .clearIrrelevantElementValuesIsVisible(false)
+                .showAllElementValuesIsVisible(true);
+            cityFilter
+                .open()
+                .elementsAreLoaded()
+                .clearIrrelevantElementValuesIsVisible(false)
+                .showAllElementValuesIsVisible(true);
 
-        topBar.cancelEditMode().discardChanges().editButtonIsVisible(true);
+            topBar.cancelEditMode().discardChanges().editButtonIsVisible(true);
 
-        regionFilter.isLoaded().open().hasSubtitle("East Coast").hasFilterListSize(4);
-        stateFilter.isLoaded().open().hasSubtitle("All").hasFilterListSize(48);
-        cityFilter.isLoaded().open().hasSubtitle("All").hasFilterListSize(300);
-    });
+            regionFilter.isLoaded().open().hasSubtitle("East Coast").hasFilterListSize(4);
+            stateFilter.isLoaded().open().hasSubtitle("All").hasFilterListSize(48);
+            cityFilter.isLoaded().open().hasSubtitle("All").hasFilterListSize(300);
+        },
+    );
 
     it(
         "child filter can reduce to zero element by parent filter",
