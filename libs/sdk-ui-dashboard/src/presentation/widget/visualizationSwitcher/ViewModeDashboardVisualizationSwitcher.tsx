@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
@@ -171,6 +171,12 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
         [InsightMenuComponentProvider, insight, activeVisualization],
     );
 
+    const accessibilityWidgetDescription = settings.enableDescriptions
+        ? activeVisualization.configuration?.description?.source === "widget" || !insight
+            ? activeVisualization.description
+            : insight.insight.summary
+        : "";
+
     return (
         <DashboardItem
             className={cx(
@@ -179,6 +185,7 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
                 getVisTypeCssClass(activeVisualization.type, visType),
             )}
             screen={screen}
+            description={accessibilityWidgetDescription}
         >
             <DashboardItemVisualization
                 renderHeadline={(clientHeight, clientWidth) => (

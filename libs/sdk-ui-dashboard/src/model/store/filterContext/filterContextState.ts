@@ -1,5 +1,6 @@
-// (C) 2021-2023 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
+import { IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
 import {
     IDashboardObjectIdentity,
     IFilterContextDefinition,
@@ -45,10 +46,17 @@ export interface FilterContextState {
      * @beta
      */
     attributeFilterDisplayForms?: IAttributeDisplayFormMetadataObject[];
+
+    /**
+     * Attribute metadata objects with referenced objects for all attribute filters in the `filterContextDefinition`
+     * @beta
+     */
+    attributesWithReferences?: IAttributeWithReferences[];
 }
 
 export const filterContextInitialState: FilterContextState = {
     filterContextDefinition: undefined,
     filterContextIdentity: undefined,
     attributeFilterDisplayForms: undefined,
+    attributesWithReferences: undefined,
 };

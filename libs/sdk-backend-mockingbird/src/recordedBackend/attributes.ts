@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import { RecordedBackendConfig, RecordingIndex } from "./types.js";
 import { RecordedElementQueryFactory } from "./elements.js";
 import {
@@ -15,6 +15,7 @@ import values from "lodash/values.js";
 import { objRefsToStringKey } from "./utils.js";
 import compact from "lodash/compact.js";
 import {
+    IAttributeWithReferences,
     IElementsQueryFactory,
     IWorkspaceAttributesService,
     NotSupported,
@@ -119,6 +120,10 @@ export class RecordedAttributes implements IWorkspaceAttributesService {
     };
 
     public getAttributeDatasetMeta(_: ObjRef): Promise<IMetadataObject> {
+        throw new NotSupported("not supported");
+    }
+
+    public getAttributesWithReferences(_refs: ObjRef[]): Promise<IAttributeWithReferences[]> {
         throw new NotSupported("not supported");
     }
 

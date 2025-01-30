@@ -2,7 +2,7 @@
 
 set -e
 
-CYPRESS_IMAGE='020413372491.dkr.ecr.us-east-1.amazonaws.com/tools/gdc-frontend-cypress-factory:202311211156.11759a0'
+CYPRESS_IMAGE='020413372491.dkr.ecr.us-east-1.amazonaws.com/tools/gdc-frontend-cypress-factory:202501151356.a6074a3'
 DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}") && pwd -P))
 ROOT_DIR=$(echo $(cd $(dirname "${BASH_SOURCE[0]}")/../../../ && pwd -P))
 E2E_TEST_DIR=$ROOT_DIR/libs/sdk-ui-tests-e2e
@@ -38,7 +38,7 @@ if [[ "$GITHUB_ACTIONS" != "true" ]]; then
     export USER_GID=$(id -g $USER)
 fi
 PROJECT_NAME=tiger-sdk-ui-tests-e2e-${EXECUTOR_NUMBER:-default}
-MODE=record NO_COLOR=1 docker-compose -f docker-compose-isolated.yaml -p "$PROJECT_NAME" up \
+MODE=record NO_COLOR=1 docker compose -f docker-compose-isolated.yaml -p "$PROJECT_NAME" up \
     --abort-on-container-exit --exit-code-from isolated-tests \
     --force-recreate --always-recreate-deps --renew-anon-volumes --no-color
 

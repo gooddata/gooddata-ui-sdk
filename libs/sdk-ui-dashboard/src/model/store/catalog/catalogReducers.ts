@@ -14,12 +14,12 @@ import { CatalogState } from "./catalogState.js";
 type CatalogReducer<A extends Action> = CaseReducer<CatalogState, A>;
 
 export interface SetCatalogItemsPayload {
-    attributes: ICatalogAttribute[];
-    measures: ICatalogMeasure[];
-    facts: ICatalogFact[];
-    dateDatasets: ICatalogDateDataset[];
-    attributeHierarchies: ICatalogAttributeHierarchy[];
-    dateHierarchyTemplates: IDateHierarchyTemplate[];
+    attributes?: ICatalogAttribute[];
+    measures?: ICatalogMeasure[];
+    facts?: ICatalogFact[];
+    dateDatasets?: ICatalogDateDataset[];
+    attributeHierarchies?: ICatalogAttributeHierarchy[];
+    dateHierarchyTemplates?: IDateHierarchyTemplate[];
 }
 
 const setCatalogItems: CatalogReducer<PayloadAction<SetCatalogItemsPayload>> = (state, action) => {

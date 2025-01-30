@@ -5,6 +5,7 @@ import { ScreenSize } from "@gooddata/sdk-model";
 
 interface IDashboardItemProps extends React.HTMLAttributes<HTMLDivElement> {
     screen: ScreenSize;
+    description?: string;
     ref?: React.Ref<HTMLDivElement>;
 }
 
@@ -18,13 +19,14 @@ const screenClasses: { [S in ScreenSize]: string } = {
 };
 
 export const DashboardItem: React.FC<IDashboardItemProps> = React.forwardRef(
-    ({ className, screen, ...props }, ref) => {
+    ({ className, screen, description, ...props }, ref) => {
         return (
-            <div
+            <figure
                 {...props}
                 className={cx(className, "dash-item", "s-dash-item", screenClasses[screen])}
                 tabIndex={0}
                 ref={ref}
+                aria-description={description}
             />
         );
     },

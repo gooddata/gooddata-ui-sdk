@@ -1,4 +1,4 @@
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import React from "react";
 import {
@@ -14,6 +14,7 @@ import { DefaultKpiCustomizer } from "../kpiCustomizer.js";
 import { DashboardCustomizationLogger } from "../customizationLogging.js";
 import { createCustomizerMutationsContext, CustomizerMutationsContext } from "../types.js";
 import { describe, it, expect, beforeEach } from "vitest";
+import { EMPTY_MUTATIONS } from "./utils";
 
 //
 //
@@ -134,11 +135,8 @@ describe("KPI customizer", () => {
 
             expect(renderToHtml(Customizer, TestKpiWidgetWithCustomTitle)).toMatchSnapshot();
             expect(mutationContext).toEqual({
+                ...EMPTY_MUTATIONS,
                 kpi: ["provider"],
-                insight: [],
-                attributeFilter: [],
-                dashboardContent: [],
-                layouts: {},
             });
         });
 
@@ -151,11 +149,8 @@ describe("KPI customizer", () => {
 
             expect(renderToHtml(Customizer, TestKpiWidget)).toMatchSnapshot();
             expect(mutationContext).toEqual({
+                ...EMPTY_MUTATIONS,
                 kpi: ["provider"],
-                insight: [],
-                attributeFilter: [],
-                dashboardContent: [],
-                layouts: {},
             });
         });
 
@@ -179,11 +174,8 @@ describe("KPI customizer", () => {
             // component from last registered and matching provider is `fromCustomProvider3`
             expect(renderToHtml(Customizer, TestKpiWidgetWithCustomTitle)).toMatchSnapshot();
             expect(mutationContext).toEqual({
+                ...EMPTY_MUTATIONS,
                 kpi: ["provider"],
-                insight: [],
-                attributeFilter: [],
-                dashboardContent: [],
-                layouts: {},
             });
         });
     });
@@ -195,11 +187,8 @@ describe("KPI customizer", () => {
 
             expect(renderToHtml(Customizer, TestKpiWidget)).toMatchSnapshot();
             expect(mutationContext).toEqual({
+                ...EMPTY_MUTATIONS,
                 kpi: ["decorator"],
-                insight: [],
-                attributeFilter: [],
-                dashboardContent: [],
-                layouts: {},
             });
         });
 
@@ -215,11 +204,8 @@ describe("KPI customizer", () => {
 
             expect(renderToHtml(Customizer, TestKpiWidgetWithCustomTitle)).toMatchSnapshot();
             expect(mutationContext).toEqual({
+                ...EMPTY_MUTATIONS,
                 kpi: ["decorator", "provider"],
-                insight: [],
-                attributeFilter: [],
-                dashboardContent: [],
-                layouts: {},
             });
         });
 
@@ -234,11 +220,8 @@ describe("KPI customizer", () => {
 
             expect(renderToHtml(Customizer, TestKpiWidget)).toMatchSnapshot();
             expect(mutationContext).toEqual({
+                ...EMPTY_MUTATIONS,
                 kpi: ["decorator", "provider"],
-                insight: [],
-                attributeFilter: [],
-                dashboardContent: [],
-                layouts: {},
             });
         });
 
@@ -251,11 +234,8 @@ describe("KPI customizer", () => {
 
             expect(renderToHtml(Customizer, TestKpiWidgetWithCustomTitle)).toMatchSnapshot();
             expect(mutationContext).toEqual({
+                ...EMPTY_MUTATIONS,
                 kpi: ["decorator"],
-                insight: [],
-                attributeFilter: [],
-                dashboardContent: [],
-                layouts: {},
             });
         });
 
@@ -268,11 +248,8 @@ describe("KPI customizer", () => {
 
             expect(renderToHtml(Customizer, TestKpiWidget)).toMatchSnapshot();
             expect(mutationContext).toEqual({
+                ...EMPTY_MUTATIONS,
                 kpi: ["decorator"],
-                insight: [],
-                attributeFilter: [],
-                dashboardContent: [],
-                layouts: {},
             });
         });
 
@@ -291,11 +268,8 @@ describe("KPI customizer", () => {
             // decoration starts from last register; so need to see decorator2 -> decorator1 -> default component
             expect(renderToHtml(Customizer, TestKpiWidgetWithCustomTitle)).toMatchSnapshot();
             expect(mutationContext).toEqual({
+                ...EMPTY_MUTATIONS,
                 kpi: ["decorator"],
-                insight: [],
-                attributeFilter: [],
-                dashboardContent: [],
-                layouts: {},
             });
         });
 
@@ -319,11 +293,8 @@ describe("KPI customizer", () => {
             // decoration starts from last register; so need to see decorator2 -> decorator1 -> custom component
             expect(renderToHtml(Customizer, TestKpiWidgetWithCustomTitle)).toMatchSnapshot();
             expect(mutationContext).toEqual({
+                ...EMPTY_MUTATIONS,
                 kpi: ["decorator", "provider"],
-                insight: [],
-                attributeFilter: [],
-                dashboardContent: [],
-                layouts: {},
             });
         });
 
@@ -345,11 +316,8 @@ describe("KPI customizer", () => {
             // This will use decorator2 on top of customProvider1
             expect(renderToHtml(Customizer, TestKpiWidgetWithCustomTitle)).toMatchSnapshot();
             expect(mutationContext).toEqual({
+                ...EMPTY_MUTATIONS,
                 kpi: ["decorator", "provider"],
-                insight: [],
-                attributeFilter: [],
-                dashboardContent: [],
-                layouts: {},
             });
         });
     });

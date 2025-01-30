@@ -1,5 +1,5 @@
-// (C) 2022-2024 GoodData Corporation
-import React, { ReactNode, useMemo } from "react";
+// (C) 2022-2025 GoodData Corporation
+import React, { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 import cx from "classnames";
 import { Typography } from "@gooddata/sdk-ui-kit";
@@ -8,7 +8,6 @@ import { BaseDraggableLayoutItem, DraggableItemType } from "../../../dragAndDrop
 import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
 import { useEmptyContentHandlers } from "./useEmptyContentHandlers.js";
 import { GridLayoutElement } from "../../DefaultDashboardLayoutRenderer/index.js";
-import { getDashboardLayoutItemHeightForGrid } from "../../../../_staging/layout/sizing.js";
 
 const widgetCategoryMapping: Partial<{ [D in DraggableItemType]: string }> = {
     "insight-placeholder": "insight",
@@ -29,17 +28,7 @@ export const EmptyDashboardDropZone: React.FC = () => {
 
     const { item, itemType, canDrop, isOver, dropRef } = useEmptyContentHandlers(sectionPath);
 
-    const { gridWidth = 12, gridHeight } = (item as BaseDraggableLayoutItem)?.size || {};
-    const layoutItemSize = useMemo(
-        () => ({
-            xl: { gridWidth, gridHeight },
-            lg: { gridWidth, gridHeight },
-            md: { gridWidth, gridHeight },
-            sm: { gridWidth, gridHeight },
-            xs: { gridWidth, gridHeight },
-        }),
-        [gridWidth, gridHeight],
-    );
+    const { gridHeight } = (item as BaseDraggableLayoutItem)?.size || {};
 
     const widgetCategory = widgetCategoryMapping[itemType];
     const message =
@@ -52,29 +41,28 @@ export const EmptyDashboardDropZone: React.FC = () => {
             />
         );
 
+    const emptyDashboardDropZoneSize = {
+        xl: { gridWidth: 12, gridHeight },
+        lg: { gridWidth: 12, gridHeight },
+        md: { gridWidth: 12, gridHeight },
+        sm: { gridWidth: 12, gridHeight },
+        xs: { gridWidth: 12, gridHeight },
+    };
+
     return (
         <GridLayoutElement
             type={"root"}
-            layoutItemSize={{
-                xl: { gridWidth: 12, gridHeight },
-                lg: { gridWidth: 12, gridHeight },
-                md: { gridWidth: 12, gridHeight },
-                sm: { gridWidth: 12, gridHeight },
-                xs: { gridWidth: 12, gridHeight },
-            }}
+            layoutItemSize={emptyDashboardDropZoneSize}
             className="gd-empty-dashboard-dropzone"
         >
             <GridLayoutElement
                 type={"item"}
-                layoutItemSize={layoutItemSize}
+                layoutItemSize={emptyDashboardDropZoneSize}
                 className={cx("drag-info-placeholder", "dash-item", {
                     [`type-${widgetCategory}`]: !!widgetCategory,
                     "type-none": !widgetCategory,
                     "s-last-drop-position": canDrop,
                 })}
-                style={{
-                    minHeight: gridHeight ? getDashboardLayoutItemHeightForGrid(gridHeight) : undefined,
-                }}
             >
                 <div
                     className={cx("drag-info-placeholder-inner", { "can-drop": canDrop, "is-over": isOver })}

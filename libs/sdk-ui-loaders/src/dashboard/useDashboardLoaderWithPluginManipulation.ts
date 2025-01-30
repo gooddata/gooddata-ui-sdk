@@ -1,4 +1,4 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { invariant } from "ts-invariant";
 import compact from "lodash/compact.js";

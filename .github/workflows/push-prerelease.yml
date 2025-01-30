@@ -27,7 +27,7 @@ jobs:
               repo: context.repo.repo,
             });
 
-            return pullRequests?.data[0]?.labels?.some((it)=>it.name==='publish pre-release');
+            return pullRequests?.data[0]?.labels?.every((it) => it.name !== 'skip publish');
           result-encoding: string
       - uses: actions/github-script@v7
         id: author

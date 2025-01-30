@@ -37,8 +37,9 @@ import {
     selectIsAttributeFilterDependentByLocalIdentifier,
     selectIsFilterFromCrossFilteringByLocalIdentifier,
     selectEnableDuplicatedLabelValuesInAttributeFilter,
-    selectIsDashboardExecuted,
+    selectHasSomeExecutionResult,
     selectEnableCriticalContentPerformanceOptimizations,
+    selectPreloadedAttributesWithReferences,
 } from "../../../model/index.js";
 import { useAttributes } from "../../../_staging/sharedHooks/useAttributes.js";
 import { getVisibilityIcon } from "../utils.js";
@@ -64,16 +65,18 @@ import { useDependentDateFilters } from "./useDependentDateFilters.js";
  *
  * @alpha
  */
-export const DefaultDashboardAttributeFilter = (props: IDashboardAttributeFilterProps): JSX.Element => {
+export const DefaultDashboardAttributeFilter = (
+    props: IDashboardAttributeFilterProps,
+): JSX.Element | null => {
     // In case, dashboard contains lot of filters,
-    // these are spawning lot of requests, which are potentially blocking execution(s).
-    // Do not load any filters UI data until executions are computed,
-    // as they have much higher priority.
-    const isDashboardExecuted = useDashboardSelector(selectIsDashboardExecuted);
+    // these are spawning lot of requests (collectLabelElements), which are potentially blocking execution(s).
+    // Wait at least for one executed result until we start loading them, so they are not blocking execution(s).
+    const hasSomeExecutionResult = useDashboardSelector(selectHasSomeExecutionResult);
+    const filtersPreloaded = useDashboardSelector(selectPreloadedAttributesWithReferences);
     const enableCriticalContentPerformanceOptimizations = useDashboardSelector(
         selectEnableCriticalContentPerformanceOptimizations,
     );
-    if (enableCriticalContentPerformanceOptimizations && !isDashboardExecuted) {
+    if (enableCriticalContentPerformanceOptimizations && !(hasSomeExecutionResult && filtersPreloaded)) {
         return <AttributeFilterLoading />;
     }
 

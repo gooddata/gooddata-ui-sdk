@@ -170,6 +170,7 @@ export {
     selectCanAddMoreFilters,
     selectIsAttributeFilterDependentByLocalIdentifier,
     selectFilterContextDateFilterByDataSet,
+    selectPreloadedAttributesWithReferences,
 } from "./filterContext/filterContextSelectors.js";
 export type { IImplicitDrillWithPredicates } from "./widgetDrills/widgetDrillSelectors.js";
 export {
@@ -249,6 +250,7 @@ export {
 } from "./insights/insightsSelectors.js";
 export type { CatalogState } from "./catalog/catalogState.js";
 export {
+    selectCatalogIsLoaded,
     selectAttributesWithDrillDown,
     selectCatalogAttributes,
     selectCatalogAttributeDisplayForms,
@@ -336,6 +338,7 @@ export {
     selectIsExecutionResultExportableToCsvByRef,
     selectIsExecutionResultExportableToXlsxByRef,
     selectIsExecutionResultReadyForExportByRef,
+    selectHasSomeExecutionResult,
 } from "./executionResults/executionResultsSelectors.js";
 export type { IExecutionResultEnvelope } from "./executionResults/types.js";
 export type { UiState, InvalidCustomUrlDrillParameterInfo, FilterViewDialogMode } from "./ui/uiState.js";

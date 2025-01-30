@@ -46,6 +46,7 @@ import { IDashboardPlugin } from '@gooddata/sdk-model';
 import { IDashboardPluginDefinition } from '@gooddata/sdk-model';
 import { IDashboardWidget } from '@gooddata/sdk-model';
 import { IDataset } from '@gooddata/sdk-model';
+import { IDataSetMetadataObject } from '@gooddata/sdk-model';
 import { IDataSourceIdentifierDescriptor } from '@gooddata/sdk-model';
 import { IDataSourcePermissionAssignment } from '@gooddata/sdk-model';
 import { IDateFilter } from '@gooddata/sdk-model';
@@ -292,6 +293,12 @@ export interface IAttributeHierarchiesService {
     updateAttributeHierarchy(catalogAttributeHierarchy: ICatalogAttributeHierarchy): Promise<ICatalogAttributeHierarchy>;
 }
 
+// @beta (undocumented)
+export interface IAttributeWithReferences {
+    attribute: IAttributeMetadataObject;
+    dataSet?: IDataSetMetadataObject;
+}
+
 // @public
 export interface IAuthenticatedPrincipal {
     userId: string;
@@ -458,6 +465,7 @@ export interface ICommentExpressionToken {
 
 // @alpha
 export interface IDashboardReferences {
+    dataSets?: IDataSetMetadataObject[];
     insights: IInsight[];
     plugins: IDashboardPlugin[];
 }
@@ -1192,6 +1200,7 @@ export interface ITextExpressionToken {
 // @public
 export interface IUserService {
     getUser(): Promise<IUser>;
+    getUserWithDetails(): Promise<IUser>;
     settings(): IUserSettingsService;
 }
 
@@ -1253,6 +1262,7 @@ export interface IWorkspaceAttributesService {
     getAttributeDisplayForm(ref: ObjRef): Promise<IAttributeDisplayFormMetadataObject>;
     getAttributeDisplayForms(refs: ObjRef[]): Promise<IAttributeDisplayFormMetadataObject[]>;
     getAttributes(refs: ObjRef[]): Promise<IAttributeMetadataObject[]>;
+    getAttributesWithReferences(displayFormRefs: ObjRef[]): Promise<IAttributeWithReferences[]>;
     getCommonAttributes(attributeRefs: ObjRef[]): Promise<ObjRef[]>;
     getCommonAttributesBatch(attributesRefsBatch: ObjRef[][]): Promise<ObjRef[][]>;
     getConnectedAttributesByDisplayForm(ref: ObjRef): Promise<ObjRef[]>;
@@ -1379,6 +1389,7 @@ export interface IWorkspaceDashboardsService {
 // @public
 export interface IWorkspaceDatasetsService {
     getAllDatasetsMeta(): Promise<IMetadataObject[]>;
+    getDataSets(refs: ObjRef[]): Promise<IDataSetMetadataObject[]>;
     getDatasets(): Promise<IDataset[]>;
 }
 
@@ -1622,7 +1633,7 @@ export class ProtectedDataError extends AnalyticalBackendError {
 }
 
 // @alpha (undocumented)
-export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin";
+export type SupportedDashboardReferenceTypes = "insight" | "dashboardPlugin" | "dataSet";
 
 // @public
 export type SupportedInsightReferenceTypes = Exclude<InsightReferenceTypes, "displayForm" | "variable">;

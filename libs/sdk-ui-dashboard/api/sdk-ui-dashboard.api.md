@@ -141,6 +141,7 @@ import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IAttributeFilterBaseProps } from '@gooddata/sdk-ui-filters';
 import { IAttributeMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
+import { IAttributeWithReferences } from '@gooddata/sdk-backend-spi';
 import { IAutomationMetadataObject } from '@gooddata/sdk-model';
 import { IAutomationMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { IAvailableDrillTargets } from '@gooddata/sdk-ui';
@@ -2648,6 +2649,16 @@ export interface DashboardModelCustomizationFns {
     existingDashboardTransformFn?: DashboardTransformFn;
 }
 
+// @internal (undocumented)
+export enum DashboardPartId {
+    // (undocumented)
+    FiltersBar = "filtersBar",
+    // (undocumented)
+    MainContent = "mainContent",
+    // (undocumented)
+    Sidebar = "sidebar"
+}
+
 // @public (undocumented)
 export interface DashboardPermissionsState {
     // @beta (undocumented)
@@ -3131,7 +3142,7 @@ export function DefaultCancelButton({ isVisible, onCancelClick }: ICancelButtonP
 export const DefaultCancelEditDialog: React_2.FC<ICancelEditDialogProps>;
 
 // @alpha
-export const DefaultDashboardAttributeFilter: (props: IDashboardAttributeFilterProps) => JSX.Element;
+export const DefaultDashboardAttributeFilter: (props: IDashboardAttributeFilterProps) => JSX.Element | null;
 
 // @internal (undocumented)
 export function DefaultDashboardAttributeFilterComponentSetFactory(attributeFilterProvider: AttributeFilterComponentProvider): AttributeFilterComponentSet;
@@ -3666,6 +3677,9 @@ export type FilterableDashboardWidget = IWidget | ICustomWidget;
 // @internal (undocumented)
 export const FilterBar: (props: IFilterBarProps) => JSX.Element;
 
+// @public (undocumented)
+export type FilterBarComponentProvider = (props: IFilterBarProps) => CustomFilterBarComponent;
+
 // @public
 export type FilterBarRenderingMode = "default" | "hidden";
 
@@ -3679,6 +3693,8 @@ export function filterContextItemsToDashboardFiltersByWidget(filterContextItems:
 export interface FilterContextState {
     // @beta
     attributeFilterDisplayForms?: IAttributeDisplayFormMetadataObject[];
+    // @beta
+    attributesWithReferences?: IAttributeWithReferences[];
     // @beta
     filterContextDefinition?: IFilterContextDefinition;
     // @beta
@@ -4090,6 +4106,7 @@ export interface IDashboardBaseProps {
     config?: DashboardConfig;
     dashboard?: string | ObjRef | IDashboard;
     filterContextRef?: ObjRef;
+    keyboardNavigation?: KeyboardNavigationConfig;
     permissions?: IWorkspacePermissions;
     workspace?: string;
 }
@@ -4197,6 +4214,11 @@ export interface IDashboardCustomizer {
     insightWidgets(): IDashboardInsightCustomizer;
     kpiWidgets(): IDashboardKpiCustomizer;
     layout(): IDashboardLayoutCustomizer;
+    loading(): ILoadingCustomizer;
+    richTextWidgets(): IRichTextCustomizer;
+    title(): ITitleCustomizer;
+    topBar(): ITopBarCustomizer;
+    visualizationSwitcherWidgets(): IVisualizationSwitcherCustomizer;
 }
 
 // @public
@@ -4413,6 +4435,8 @@ export interface IDashboardKpiProps {
 // @public
 export interface IDashboardLayoutCustomizer {
     customizeFluidLayout(fun: FluidLayoutCustomizationFn): IDashboardLayoutCustomizer;
+    withCustomDecorator(providerFactory: (next: LayoutComponentProvider) => OptionalLayoutComponentProvider): IDashboardLayoutCustomizer;
+    withCustomProvider(provider: OptionalLayoutComponentProvider): IDashboardLayoutCustomizer;
 }
 
 // @internal (undocumented)
@@ -4720,6 +4744,8 @@ export type IExportConfig = ICsvExportConfig | IXlsxExportConfig;
 // @public
 export interface IFilterBarCustomizer {
     setRenderingMode(mode: FilterBarRenderingMode): IFilterBarCustomizer;
+    withCustomDecorator(providerFactory: (next: FilterBarComponentProvider) => OptionalFilterBarComponentProvider): IFilterBarCustomizer;
+    withCustomProvider(provider: OptionalFilterBarComponentProvider): IFilterBarCustomizer;
 }
 
 // @alpha (undocumented)
@@ -4891,6 +4917,13 @@ export interface IInsightMenuSubmenuComponentProps {
     widget: IInsightWidget;
 }
 
+// @internal
+export interface IKeyboardNavigationConfigItem {
+    onFocus?: () => void;
+    tabIndex?: number;
+    targetElementId?: string;
+}
+
 // @internal (undocumented)
 export type IKpiDraggingComponentProps = {
     itemType: "kpi";
@@ -4925,6 +4958,12 @@ export interface ILegacyDashboard {
 export interface ILegacyDashboardTab {
     readonly identifier: string;
     readonly title: string;
+}
+
+// @public
+export interface ILoadingCustomizer {
+    withCustomDecorator(providerFactory: (next: LoadingComponentProvider) => OptionalLoadingComponentProvider): ILoadingCustomizer;
+    withCustomProvider(provider: OptionalLoadingComponentProvider): ILoadingCustomizer;
 }
 
 // @alpha (undocumented)
@@ -5208,6 +5247,12 @@ export interface IResolvedFilterValues {
     };
     // (undocumented)
     dateFilters: ResolvedDateFilterValues;
+}
+
+// @public
+export interface IRichTextCustomizer {
+    withCustomDecorator(providerFactory: (next: RichTextComponentProvider) => OptionalRichTextComponentProvider): IRichTextCustomizer;
+    withCustomProvider(provider: OptionalRichTextComponentProvider): IRichTextCustomizer;
 }
 
 // @internal (undocumented)
@@ -5809,6 +5854,12 @@ export function isVisualizationSwitcherDraggableItem(item: any): item is Visuali
 // @internal (undocumented)
 export function isVisualizationSwitcherDraggableListItem(item: any): item is VisualizationSwitcherDraggableListItem;
 
+// @public
+export interface ITitleCustomizer {
+    withCustomDecorator(providerFactory: (next: TitleComponentProvider) => OptionalTitleComponentProvider): ITitleCustomizer;
+    withCustomProvider(provider: OptionalTitleComponentProvider): ITitleCustomizer;
+}
+
 // @alpha (undocumented)
 export interface ITitleProps {
     // (undocumented)
@@ -5821,6 +5872,12 @@ export interface ITitleProps {
 export interface IToolbarProps {
     // (undocumented)
     children?: React.ReactNode;
+}
+
+// @public
+export interface ITopBarCustomizer {
+    withCustomDecorator(providerFactory: (next: TopBarComponentProvider) => OptionalTopBarComponentProvider): ITopBarCustomizer;
+    withCustomProvider(provider: OptionalTopBarComponentProvider): ITopBarCustomizer;
 }
 
 // @alpha (undocumented)
@@ -5896,6 +5953,14 @@ export interface IUseWidgetSelectionResult {
     onSelected: (e?: MouseEvent_2) => void;
 }
 
+// @public
+export interface IVisualizationSwitcherCustomizer {
+    withCustomSwitcherDecorator(providerFactory: (next: VisualizationSwitcherComponentProvider) => OptionalVisualizationSwitcherComponentProvider): IVisualizationSwitcherCustomizer;
+    withCustomSwitcherProvider(provider: OptionalVisualizationSwitcherComponentProvider): IVisualizationSwitcherCustomizer;
+    withCustomToolbarDecorator(providerFactory: (next: VisualizationSwitcherToolbarComponentProvider) => OptionalVisualizationSwitcherToolbarComponentProvider): IVisualizationSwitcherCustomizer;
+    withCustomToolbarProvider(provider: OptionalVisualizationSwitcherToolbarComponentProvider): IVisualizationSwitcherCustomizer;
+}
+
 // @internal (undocumented)
 export type IVisualizationSwitcherDraggingComponentProps = {
     itemType: "visualizationSwitcher";
@@ -5963,6 +6028,11 @@ export interface IXlsxExportConfig {
     title?: string;
 }
 
+// @internal
+export type KeyboardNavigationConfig = {
+    [key in DashboardPartId]?: IKeyboardNavigationConfigItem;
+};
+
 // @internal (undocumented)
 export const KPI_PLACEHOLDER_WIDGET_ID = "__kpiPlaceholder__";
 
@@ -6009,6 +6079,9 @@ export interface KpiWidgetComparison {
 // @internal
 export type KpiWidgetComponentSet = CustomComponentBase<IDashboardKpiProps, Parameters<KpiComponentProvider>> & DraggableComponent & CreatableByDragComponent & CreatablePlaceholderComponent<IDashboardWidgetProps> & ConfigurableWidget<IKpiWidget>;
 
+// @public (undocumented)
+export type LayoutComponentProvider = (props: IDashboardLayoutProps) => CustomDashboardLayoutComponent;
+
 // @alpha
 export interface LayoutSectionHeadersToggled extends IDashboardEvent {
     // (undocumented)
@@ -6050,6 +6123,9 @@ export interface LoadAllWorkspaceUsers extends IDashboardCommand {
 
 // @internal
 export function loadAllWorkspaceUsers(correlationId?: string): LoadAllWorkspaceUsers;
+
+// @public (undocumented)
+export type LoadingComponentProvider = (props: ILoadingProps) => ComponentType<ILoadingProps>;
 
 // @beta (undocumented)
 export interface LoadingState {
@@ -6402,6 +6478,9 @@ export type OptionalDashboardLayoutComponentProvider = OptionalProvider<Dashboar
 // @public (undocumented)
 export type OptionalDateFilterComponentProvider = OptionalProvider<DateFilterComponentProvider>;
 
+// @public (undocumented)
+export type OptionalFilterBarComponentProvider = OptionalProvider<FilterBarComponentProvider>;
+
 // @alpha (undocumented)
 export type OptionalInsightBodyComponentProvider = OptionalProvider<InsightBodyComponentProvider>;
 
@@ -6421,10 +6500,22 @@ export type OptionalInsightMenuTitleComponentProvider = OptionalProvider<Insight
 export type OptionalKpiComponentProvider = OptionalProvider<KpiComponentProvider>;
 
 // @public (undocumented)
+export type OptionalLayoutComponentProvider = OptionalProvider<LayoutComponentProvider>;
+
+// @public (undocumented)
+export type OptionalLoadingComponentProvider = OptionalProvider<LoadingComponentProvider>;
+
+// @public (undocumented)
 export type OptionalProvider<T> = T extends (...args: infer TArgs) => infer TRes ? (...args: TArgs) => TRes | undefined : never;
 
 // @public (undocumented)
 export type OptionalRichTextComponentProvider = OptionalProvider<RichTextComponentProvider>;
+
+// @public (undocumented)
+export type OptionalTitleComponentProvider = OptionalProvider<TitleComponentProvider>;
+
+// @public (undocumented)
+export type OptionalTopBarComponentProvider = OptionalProvider<TopBarComponentProvider>;
 
 // @alpha (undocumented)
 export type OptionalVisualizationSwitcherComponentProvider = OptionalProvider<VisualizationSwitcherComponentProvider>;
@@ -7480,6 +7571,9 @@ export const selectCatalogDateDatasets: DashboardSelector<ICatalogDateDataset[]>
 // @public (undocumented)
 export const selectCatalogFacts: DashboardSelector<ICatalogFact[]>;
 
+// @alpha (undocumented)
+export const selectCatalogIsLoaded: DashboardSelector<boolean>;
+
 // @public (undocumented)
 export const selectCatalogMeasures: DashboardSelector<ICatalogMeasure[]>;
 
@@ -7876,6 +7970,9 @@ export const selectHasCatalogFacts: DashboardSelector<boolean>;
 // @alpha (undocumented)
 export const selectHasCatalogMeasures: DashboardSelector<boolean>;
 
+// @alpha (undocumented)
+export const selectHasSomeExecutionResult: DashboardSelector<boolean>;
+
 // @public
 export const selectHideKpiDrillInEmbedded: DashboardSelector<boolean>;
 
@@ -8160,6 +8257,9 @@ export const selectPersistedDashboard: DashboardSelector<IDashboard | undefined>
 
 // @public
 export const selectPlatformEdition: DashboardSelector<PlatformEdition>;
+
+// @internal
+export const selectPreloadedAttributesWithReferences: DashboardSelector<IAttributeWithReferences[] | undefined>;
 
 // @internal (undocumented)
 export const selectRenderMode: DashboardSelector<RenderMode>;
@@ -8602,6 +8702,9 @@ export function switchToEditRenderMode(correlationId?: string): ChangeRenderMode
 // @internal (undocumented)
 export const Title: (props: ITitleProps) => JSX.Element;
 
+// @public (undocumented)
+export type TitleComponentProvider = (props: ITitleProps) => CustomTitleComponent;
+
 // @internal (undocumented)
 export interface ToggleLayoutSectionHeaders extends IDashboardCommand {
     // (undocumented)
@@ -8626,6 +8729,9 @@ export const Toolbar: (props: IToolbarProps) => JSX.Element;
 
 // @internal (undocumented)
 export const TopBar: (props: ITopBarProps) => JSX.Element;
+
+// @public (undocumented)
+export type TopBarComponentProvider = (props: ITopBarProps) => CustomTopBarComponent;
 
 // @internal (undocumented)
 export const translations: {

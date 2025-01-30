@@ -1,4 +1,4 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import defaultUserEvent from "@testing-library/user-event";
@@ -86,7 +86,7 @@ describe("DropdownControl", () => {
 
             await userEvent.click(screen.getByRole("button"));
             await waitFor(() => {
-                expect(screen.getByRole(role)).toBeInTheDocument();
+                expect(screen.getByRole(role, { hidden: true })).toBeInTheDocument();
             });
         });
     });

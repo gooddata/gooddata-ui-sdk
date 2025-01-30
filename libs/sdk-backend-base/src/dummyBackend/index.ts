@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     IAnalyticalBackendConfig,
     IAuthenticatedPrincipal,
@@ -82,6 +82,7 @@ import {
     IChatThread,
     IOrganizationLlmEndpointsService,
     IOrganizationNotificationService,
+    IAttributeWithReferences,
 } from "@gooddata/sdk-backend-spi";
 import {
     defFingerprint,
@@ -1144,6 +1145,9 @@ class DummyWorkspaceAttributesService implements IWorkspaceAttributesService {
         throw new NotSupported("not supported");
     }
     getAttributeDatasetMeta(_ref: ObjRef): Promise<IMetadataObject> {
+        throw new NotSupported("not supported");
+    }
+    getAttributesWithReferences(_refs: ObjRef[]): Promise<IAttributeWithReferences[]> {
         throw new NotSupported("not supported");
     }
     getConnectedAttributesByDisplayForm(_ref: ObjRef): Promise<ObjRef[]> {

@@ -1,8 +1,9 @@
-// (C) 2019-2020 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import isEmpty from "lodash/isEmpty.js";
 import { IAttributeMetadataObject } from "../../metadata/attribute/index.js";
 import { IAttributeDisplayFormMetadataObject } from "../../metadata/attributeDisplayForm/index.js";
 import { IGroupableCatalogItemBase } from "../group/index.js";
+import { IDataSetMetadataObject } from "../../../ldm/metadata/dataSet/index.js";
 
 /**
  * Type representing catalog attribute
@@ -19,6 +20,11 @@ export interface ICatalogAttribute extends IGroupableCatalogItemBase {
      * Attribute metadata object that catalog attribute represents
      */
     attribute: IAttributeMetadataObject;
+
+    /**
+     * Attribute dataset
+     */
+    dataSet?: IDataSetMetadataObject;
 
     /**
      * Default display form of the attribute

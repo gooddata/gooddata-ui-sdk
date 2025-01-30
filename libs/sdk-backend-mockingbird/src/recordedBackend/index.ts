@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 
 import {
     InMemoryPaging,
@@ -569,6 +569,18 @@ function recordedOrganizations(implConfig: RecordedBackendConfig): IOrganization
 function recordedUserService(implConfig: RecordedBackendConfig): IUserService {
     return {
         async getUser(): Promise<IUser> {
+            return (
+                implConfig.userManagement?.user ?? {
+                    login: USER_ID,
+                    ref: idRef(USER_ID),
+                    email: "",
+                    fullName: "",
+                    firstName: "",
+                    lastName: "",
+                }
+            );
+        },
+        async getUserWithDetails(): Promise<IUser> {
             return (
                 implConfig.userManagement?.user ?? {
                     login: USER_ID,
