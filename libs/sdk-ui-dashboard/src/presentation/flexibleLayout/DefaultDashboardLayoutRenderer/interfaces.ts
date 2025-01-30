@@ -426,6 +426,11 @@ export interface IDashboardLayoutRenderProps<TWidget = IDashboardWidget> {
      * The path to the layout item in which the section is nested. Undefined if the layout is a root layout.
      */
     parentLayoutPath: ILayoutItemPath | undefined;
+
+    /**
+     * Transformer for export layout
+     */
+    exportTransformer?: <TWidget>(layout: IDashboardLayout<TWidget>) => IDashboardLayout<TWidget> | undefined;
 }
 
 /**

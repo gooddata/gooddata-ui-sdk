@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import { IDashboardLayout, ScreenSize } from "@gooddata/sdk-model";
 import cx from "classnames";
 import isEqual from "lodash/isEqual.js";
@@ -12,6 +12,9 @@ import {
 } from "react-grid-system";
 import { DashboardLayoutFacade } from "../../../_staging/dashboard/legacyFluidLayout/facade/layout.js";
 import { DASHBOARD_LAYOUT_GRID_CONFIGURATION } from "../../constants/index.js";
+import { layoutTransformer } from "../../../_staging/slideshow/index.js";
+import { emptyDOMRect } from "../../constants.js";
+
 import { DashboardLayoutSection } from "./DashboardLayoutSection.js";
 import {
     IDashboardLayoutRenderProps,
@@ -24,7 +27,6 @@ import {
     getResizedItemPositions,
     unifyDashboardLayoutItemHeights,
 } from "./utils/sizing.js";
-import { emptyDOMRect } from "../../constants.js";
 
 setConfiguration(DASHBOARD_LAYOUT_GRID_CONFIGURATION);
 
@@ -57,6 +59,7 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
         className,
         debug,
         onMouseLeave,
+        exportTransformer,
         enableCustomHeight,
         renderMode = "view",
     } = props;
@@ -65,10 +68,17 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
 
     const { layoutFacade, resizedItemPositions } = useMemo(() => {
         const updatedLayout = removeHeights(layout, !!enableCustomHeight);
-        const layoutFacade = DashboardLayoutFacade.for(unifyDashboardLayoutItemHeights(updatedLayout));
+
+        const exportMode = renderMode === "export";
+        let unifiedLayout = unifyDashboardLayoutItemHeights(updatedLayout);
+        if (exportMode) {
+            unifiedLayout = exportTransformer?.(unifiedLayout) ?? layoutTransformer<TWidget>(unifiedLayout);
+        }
+
+        const layoutFacade = DashboardLayoutFacade.for(unifiedLayout);
         const resizedItemPositions = getResizedItemPositions(layout, layoutFacade.raw());
         return { layoutFacade, resizedItemPositions };
-    }, [layout, enableCustomHeight]);
+    }, [layout, enableCustomHeight, exportTransformer]);
 
     const sectionRendererWrapped = useCallback<IDashboardLayoutSectionRenderer<TWidget>>(
         (renderProps) =>

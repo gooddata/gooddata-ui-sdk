@@ -24,4 +24,8 @@ export type {
     ILoadingCustomizer,
     IVisualizationSwitcherCustomizer,
     IRichTextCustomizer,
+    ExportLayoutCustomizationFn,
+    IExportLayoutCustomizer,
+    SectionSlidesTransformer,
+    SectionSlidesTransformerFunction,
 } from "./customizer.js";

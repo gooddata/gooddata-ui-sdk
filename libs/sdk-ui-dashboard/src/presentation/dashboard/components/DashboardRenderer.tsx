@@ -106,6 +106,9 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                             <ExportDialogContextProvider>
                                 <DashboardCustomizationsProvider
                                     insightMenuItemsProvider={props.insightMenuItemsProvider}
+                                    existingExportTransformFn={
+                                        props.customizationFns?.existingExportTransformFn
+                                    }
                                 >
                                     <DashboardComponentsProvider
                                         ErrorComponent={props.ErrorComponent ?? DefaultError}

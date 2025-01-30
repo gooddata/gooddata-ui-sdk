@@ -2466,6 +2466,9 @@ export type DashboardLayoutDraggableListItem = BaseDraggableLayoutItem & {
 // @internal (undocumented)
 export type DashboardLayoutDraggingComponent = ComponentType<IDashboardLayoutDraggingComponentProps>;
 
+// @public (undocumented)
+export type DashboardLayoutExportTransformFn = <TWidget>(layout: IDashboardLayout<TWidget>) => IDashboardLayout<TWidget> | undefined;
+
 // @beta
 export interface DashboardLayoutSectionAdded extends IDashboardEvent {
     // (undocumented)
@@ -2652,6 +2655,7 @@ export interface DashboardMetaState {
 // @public (undocumented)
 export interface DashboardModelCustomizationFns {
     existingDashboardTransformFn?: DashboardTransformFn;
+    existingExportTransformFn?: DashboardLayoutExportTransformFn;
 }
 
 // @internal (undocumented)
@@ -3653,6 +3657,9 @@ export interface ExportInsightWidgetPayload {
     readonly ref: ObjRef;
 }
 
+// @alpha (undocumented)
+export type ExportLayoutCustomizationFn = <TWidget>(layout: IDashboardLayout, customizer: IExportLayoutCustomizer<TWidget>) => void;
+
 // @public
 export type ExtendedDashboardItem<T = ExtendedDashboardWidget> = IDashboardLayoutItem<T>;
 
@@ -4450,6 +4457,7 @@ export interface IDashboardKpiProps {
 
 // @public
 export interface IDashboardLayoutCustomizer {
+    customizeExportLayout(fun: ExportLayoutCustomizationFn): IDashboardLayoutCustomizer;
     customizeFluidLayout(fun: FluidLayoutCustomizationFn): IDashboardLayoutCustomizer;
     withCustomDecorator(providerFactory: (next: LayoutComponentProvider) => OptionalLayoutComponentProvider): IDashboardLayoutCustomizer;
     withCustomProvider(provider: OptionalLayoutComponentProvider): IDashboardLayoutCustomizer;
@@ -4762,6 +4770,12 @@ export interface IExecutionResultEnvelope {
 
 // @beta (undocumented)
 export type IExportConfig = ICsvExportConfig | IXlsxExportConfig;
+
+// @alpha
+export interface IExportLayoutCustomizer<TWidget> {
+    // (undocumented)
+    addTransformer(fn: SectionSlidesTransformer<TWidget>): IExportLayoutCustomizer<TWidget>;
+}
 
 // @public
 export interface IFilterBarCustomizer {
@@ -6568,6 +6582,12 @@ export interface PlaceholderWidget extends ICustomWidget {
     readonly isLoading?: boolean;
 }
 
+// @internal (undocumented)
+export type PrivateDashboardContext = DashboardModelCustomizationFns & {
+    preloadedDashboard?: IDashboard;
+    widgetsOverlayFn?: WidgetsOverlayFn;
+};
+
 // @internal
 export type QueryActions<TQuery extends IDashboardQuery, TResult> = CaseReducerActions<AllQueryCacheReducers<TQuery, TResult>, string>;
 
@@ -7395,6 +7415,21 @@ export interface ScreenSizeChangedPayload {
 export type SectionExportData = HeaderExportData & {
     section?: CommonExportDataAttributes;
 };
+
+// @alpha (undocumented)
+export type SectionSlidesTransformer<TWidget> = (section: IDashboardLayoutSection<TWidget>, fn: SectionSlidesTransformerFunction<TWidget>) => IDashboardLayoutSection<TWidget>[] | undefined;
+
+// @alpha (undocumented)
+export interface SectionSlidesTransformerFunction<TWidget> {
+    breakUpSlide: (section: IDashboardLayoutSection<TWidget>) => IDashboardLayoutSection<TWidget>[] | undefined;
+    containerSlide: (item: IDashboardLayoutItem<TWidget>, transform: (section: IDashboardLayoutSection<TWidget>) => IDashboardLayoutSection<TWidget>[] | undefined) => IDashboardLayoutSection<TWidget>[] | undefined;
+    containsVisualisationSwitcher: (section: IDashboardLayoutSection<TWidget>) => boolean;
+    defaultItems: (section: IDashboardLayoutSection<TWidget>) => IDashboardLayoutSection<TWidget>[] | undefined;
+    defaultSection: (section: IDashboardLayoutSection<TWidget>) => IDashboardLayoutSection<TWidget>[] | undefined;
+    itemsSlide: (section: IDashboardLayoutSection<TWidget>, transform: (item: IDashboardLayoutItem<TWidget>) => IDashboardLayoutSection<TWidget>[]) => IDashboardLayoutSection<TWidget>[] | undefined;
+    switcherSlide: (item: IDashboardLayoutItem<TWidget>) => IDashboardLayoutSection<TWidget>[] | undefined;
+    widgetSlide: (item: IDashboardLayoutItem<TWidget>) => IDashboardLayoutSection<TWidget>[] | undefined;
+}
 
 // @alpha
 export const selectAccessibleDashboards: (state: DashboardState) => IListedDashboard[];

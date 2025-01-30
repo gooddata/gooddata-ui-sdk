@@ -29,6 +29,8 @@ export type {
     IResolvedFilterValues,
     WidgetsOverlayFn,
     IDashboardWidgetOverlay,
+    PrivateDashboardContext,
+    DashboardLayoutExportTransformFn,
 } from "./types/commonTypes.js";
 export type {
     ICustomWidget,

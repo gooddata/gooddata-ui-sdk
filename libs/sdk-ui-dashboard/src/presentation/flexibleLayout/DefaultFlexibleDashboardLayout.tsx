@@ -38,6 +38,7 @@ import { EmptyDashboardLayout } from "./EmptyDashboardLayout.js";
 import { EmptyDashboardNestedLayout } from "./EmptyDashboardNestedLayout.js";
 import { useScreenSize } from "../dashboard/components/DashboardScreenSizeContext.js";
 import { useDashboardItemPathAndSize } from "../dashboard/components/DashboardItemPathAndSizeContext.js";
+import { useDashboardCustomizationsContext } from "../dashboardContexts/index.js";
 
 /**
  * Get dashboard layout for exports.
@@ -105,6 +106,7 @@ export const DefaultFlexibleDashboardLayout = (props: IDashboardLayoutProps): JS
     const insights = useDashboardSelector(selectInsightsMap);
     const isExport = useDashboardSelector(selectIsExport);
     const renderMode = useDashboardSelector(selectRenderMode);
+    const { existingExportTransformFn } = useDashboardCustomizationsContext();
 
     const screenSize = useScreenSize();
     const { itemPath, itemSize } = useDashboardItemPathAndSize();
@@ -174,6 +176,7 @@ export const DefaultFlexibleDashboardLayout = (props: IDashboardLayoutProps): JS
                 layout={transformedLayout}
                 parentLayoutItemSize={itemSize}
                 parentLayoutPath={itemPath}
+                exportTransformer={existingExportTransformFn}
                 itemKeyGetter={itemKeyGetter}
                 widgetRenderer={widgetRenderer}
                 enableCustomHeight={enableWidgetCustomHeight}

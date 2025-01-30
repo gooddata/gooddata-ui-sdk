@@ -1,10 +1,16 @@
 // (C) 2021-2025 GoodData Corporation
 import React from "react";
 import union from "lodash/union.js";
-import { FluidLayoutCustomizationFn, IDashboardLayoutCustomizer } from "../customizer.js";
+import {
+    ExportLayoutCustomizationFn,
+    FluidLayoutCustomizationFn,
+    IDashboardLayoutCustomizer,
+} from "../customizer.js";
 import { IDashboardCustomizationLogger } from "./customizationLogging.js";
 import { FluidLayoutCustomizer } from "./fluidLayoutCustomizer.js";
+import { ExportLayoutCustomizer } from "./exportLayoutCustomizer.js";
 import { IDashboardLayout } from "@gooddata/sdk-model";
+import { DashboardLayoutExportTransformFn } from "../../model/types/commonTypes.js";
 import { DashboardTransformFn, ExtendedDashboardWidget } from "../../model/index.js";
 import { CustomizerMutationsContext } from "./types.js";
 import {
@@ -91,6 +97,7 @@ export class DefaultLayoutCustomizer implements IDashboardLayoutCustomizer {
     private readonly logger: IDashboardCustomizationLogger;
     private readonly mutationContext: CustomizerMutationsContext;
     private readonly fluidLayoutTransformations: FluidLayoutCustomizationFn[] = [];
+    private readonly exportLayoutTransformations: ExportLayoutCustomizationFn[] = [];
     private sealed = false;
     private state: ILayoutCustomizerState;
 
@@ -112,6 +119,20 @@ export class DefaultLayoutCustomizer implements IDashboardLayoutCustomizer {
         } else {
             this.logger.warn(
                 `Attempting to add layout customization outside of plugin registration. Ignoring.`,
+            );
+        }
+
+        return this;
+    };
+
+    public customizeExportLayout = (
+        customizationFn: ExportLayoutCustomizationFn,
+    ): IDashboardLayoutCustomizer => {
+        if (!this.sealed) {
+            this.exportLayoutTransformations.push(customizationFn);
+        } else {
+            this.logger.warn(
+                `Attempting to add layout export customization outside of plugin registration. Ignoring.`,
             );
         }
 
@@ -184,7 +205,7 @@ export class DefaultLayoutCustomizer implements IDashboardLayoutCustomizer {
         return this;
     };
 
-    public getExistingDashboardTransformFn = (): DashboardTransformFn => {
+    getExistingDashboardTransformFn = (): DashboardTransformFn => {
         const snapshot = [...this.fluidLayoutTransformations];
 
         return (dashboard) => {
@@ -232,5 +253,63 @@ export class DefaultLayoutCustomizer implements IDashboardLayoutCustomizer {
                 layout: newLayout,
             };
         };
+    };
+
+    getExistingLayoutTransformFn = (): DashboardLayoutExportTransformFn => {
+        const snapshot = [...this.exportLayoutTransformations];
+        const { logger, mutationContext } = this;
+
+        function handler<TWidget>(layout: IDashboardLayout<TWidget>): IDashboardLayout<TWidget> | undefined {
+            /*
+             * Once the dashboard component supports multiple layout types, then the code here must only
+             * perform the transformations applicable for the dashboard's layout type..
+             *
+             * At this point, since dashboard only supports fluid layout, the code tests that there is a
+             * layout in a dashboard and is of expected type. This condition will be always true for
+             * non-empty, non-corrupted dashboards
+             */
+            if (!layout || layout.type !== "IDashboardLayout") {
+                return undefined;
+            }
+
+            //We need to skip export layout changes if nothing defined, than default transformer
+            //will be used
+            if (snapshot.length === 0) {
+                return undefined;
+            }
+
+            const newLayout = snapshot.reduce((currentLayout, fn) => {
+                // Create a new fluid layout customizer just for this round of processing
+                const customizer = new ExportLayoutCustomizer<TWidget>(logger, mutationContext);
+
+                try {
+                    // call out to the plugin-provided function with the current value of the layout & the
+                    // customizer to use. the custom function may now inspect the layout & use the customizer
+                    // to add sections or items. customizer will not reflect those changes immediately. instead
+                    // it will accumulate those operations
+                    fn(currentLayout as IDashboardLayout, customizer);
+                    // now make the customizer apply the registered layout modifications; this is done so that
+                    // customizer can guarantee that all new items are added at first (keeping the original
+                    // section indexes) and only then new sections are added
+                    return customizer.applyTransformations(
+                        currentLayout as IDashboardLayout<TWidget>,
+                    ) as IDashboardLayout<ExtendedDashboardWidget>;
+                } catch (e) {
+                    logger.error(
+                        "An error has occurred while transforming export dashboard layout. Skipping failed transformation.",
+                        e,
+                    );
+
+                    return currentLayout as IDashboardLayout<ExtendedDashboardWidget>;
+                }
+            }, layout as IDashboardLayout<ExtendedDashboardWidget>);
+
+            return {
+                ...layout,
+                sections: newLayout.sections,
+            } as IDashboardLayout<TWidget>;
+        }
+
+        return handler;
     };
 }
