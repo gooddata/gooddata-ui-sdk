@@ -4082,7 +4082,9 @@ export interface ITotalLocatorItemBody {
 // @public
 export interface IUser {
     authenticationId?: string;
+    deployment?: string;
     email?: string;
+    entitlements?: IEntitlementDescriptor[];
     firstName?: string;
     fullName?: string;
     lastName?: string;

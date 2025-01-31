@@ -60,6 +60,7 @@ export interface IUserProfile {
     features?: ILiveFeatures | IStaticFeatures;
     permissions?: string[];
     entitlements: ApiEntitlement[]; // reuse better type from metadata-api instead of original from auth-api
+    deployment?: string;
 }
 
 export interface ProfileApiInterface {
@@ -71,14 +72,23 @@ export const tigerProfileClientFactory = (axios: AxiosInstance): ProfileApiInter
     return {
         // TODO: replace with direct call of TigerClient (once methods are generated from OpenAPI)
         getCurrent: async (_detailed?: boolean) => {
-            return (await axios.get<IUserProfile>("/api/v1/profile")).data;
+            const response = await axios.get<IUserProfile>("/api/v1/profile");
+            const deployment = response.headers?.["gooddata-deployment"];
+            return {
+                ...response.data,
+                ...(deployment ? { deployment } : {}),
+            };
         },
         getCurrentWithDetails: async (_detailed?: boolean) => {
-            const profile = (await axios.get<IUserProfile>("/api/v1/profile")).data;
+            const response = await axios.get<IUserProfile>("/api/v1/profile");
+            const profile = response.data;
+            const deployment = response.headers?.["gooddata-deployment"];
 
+            const details = await getUserDetails(axios, profile.userId);
             return {
                 ...profile,
-                ...(await getUserDetails(axios, profile.userId)),
+                ...details,
+                ...(deployment ? { deployment } : {}),
             };
         },
     };

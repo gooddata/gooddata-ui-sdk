@@ -16,7 +16,18 @@ import {
  * as a container for full name and lastname will be an empty string
  */
 export const convertUser = (user: IUserProfile): IUser => {
-    const { name, userId, email, links, organizationName, firstName, lastName, permissions } = user;
+    const {
+        name,
+        userId,
+        email,
+        links,
+        organizationName,
+        firstName,
+        lastName,
+        permissions,
+        entitlements,
+        deployment,
+    } = user;
 
     return {
         ref: uriRef(links!.user!),
@@ -27,6 +38,8 @@ export const convertUser = (user: IUserProfile): IUser => {
         lastName: lastName,
         organizationName: organizationName,
         permissions,
+        entitlements,
+        deployment,
     };
 };
 
