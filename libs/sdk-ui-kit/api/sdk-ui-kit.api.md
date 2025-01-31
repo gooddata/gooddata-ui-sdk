@@ -820,7 +820,7 @@ export interface IAppHeaderProps {
     // (undocumented)
     helpRedirectUrl?: string;
     // (undocumented)
-    isAccessibilityCompliant?: string;
+    isAccessibilityCompliant?: boolean;
     // (undocumented)
     logoHref?: string;
     // (undocumented)
