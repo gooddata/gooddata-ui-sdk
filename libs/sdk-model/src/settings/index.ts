@@ -1,4 +1,5 @@
 // (C) 2020-2025 GoodData Corporation
+import { IDateFilterConfig } from "../dateFilterConfig/index.js";
 
 /**
  * Settings are obtained from backend and are effectively a collection of feature flags or settings with
@@ -591,6 +592,12 @@ export interface ISettings {
      * Enable slideshow exports using the new export render mode in KD.
      */
     enableSlideshowExports?: boolean;
+
+    /**
+     * Date filter configuration.
+     * @alpha
+     */
+    dateFilterConfig?: IDateFilterConfig;
 
     [key: string]: number | boolean | string | object | undefined;
 }

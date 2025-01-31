@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import {
     IWorkspaceSettings,
     IWorkspaceSettingsService,
@@ -14,6 +14,10 @@ import { TigerSettingsService, mapTypeToKey } from "../../settings/index.js";
 import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "../constants.js";
 import { FeatureContext, isLiveFeatures, isStaticFeatures } from "@gooddata/api-client-tiger";
 import { LIB_VERSION } from "../../../__version.js";
+import {
+    convertDateFilterConfig,
+    IWrappedDateFilterConfig,
+} from "../../../convertors/fromBackend/DateFilterConfigurationConverter.js";
 
 export class TigerWorkspaceSettings
     extends TigerSettingsService<IWorkspaceSettings>
@@ -171,9 +175,18 @@ async function resolveSettings(authCall: TigerAuthenticatedCallGuard, workspace:
     );
 
     return data.reduce((result: ISettings, setting) => {
+        const key = mapTypeToKey(setting.type, setting.id);
+        if (key === "dateFilterConfig") {
+            return {
+                ...result,
+                [key]: convertDateFilterConfig(
+                    (setting.content as { config: IWrappedDateFilterConfig })?.config,
+                ),
+            };
+        }
         return {
             ...result,
-            [mapTypeToKey(setting.type, setting.id)]: unwrapSettingContent(setting.content),
+            [key]: unwrapSettingContent(setting.content),
         };
     }, {});
 }

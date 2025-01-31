@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import {
     IAbsoluteDateFilterPreset,
@@ -340,7 +340,9 @@ const convertRelativePreset = (relativePreset: IDateFilterRelativePreset): IRela
     };
 };
 
-export const convertDateFilterConfig = (dateFilterConfig: IWrappedDateFilterConfig): IDateFilterConfig => {
+export const convertDateFilterConfig = (
+    dateFilterConfig: IWrappedDateFilterConfig | undefined,
+): IDateFilterConfig => {
     if (!dateFilterConfig) {
         return DefaultDateFilterConfig;
     }

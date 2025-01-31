@@ -51,6 +51,7 @@ function loadSettingsForCurrentUser(ctx: DashboardContext): Promise<IUserWorkspa
     return backend.workspace(workspace).settings().getSettingsForCurrentUser();
 }
 
+///
 async function loadCustomDateFilterConfig(ctx: DashboardContext): Promise<IDateFilterConfig | undefined> {
     const { backend, workspace } = ctx;
 
@@ -78,8 +79,10 @@ function loadColorPalette(ctx: DashboardContext): Promise<IColorPalette> {
 }
 
 function* resolveDateFilterConfig(ctx: DashboardContext, config: DashboardConfig, cmd: InitializeDashboard) {
-    if (config.dateFilterConfig !== undefined) {
+    if (config.dateFilterConfig) {
         return config.dateFilterConfig;
+    } else if (config?.settings?.dateFilterConfig) {
+        return config.settings.dateFilterConfig;
     }
 
     const customDateFilterConfig: PromiseFnReturnType<typeof loadCustomDateFilterConfig> = yield call(
