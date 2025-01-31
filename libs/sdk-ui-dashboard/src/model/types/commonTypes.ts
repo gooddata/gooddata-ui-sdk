@@ -9,6 +9,7 @@ import {
     ISeparators,
     IEntitlementDescriptor,
     Identifier,
+    IDashboardLayout,
 } from "@gooddata/sdk-model";
 import { ILocale } from "@gooddata/sdk-ui";
 import keys from "lodash/keys.js";
@@ -406,6 +407,13 @@ export type DashboardTransformFn = (
 /**
  * @public
  */
+export type DashboardLayoutExportTransformFn = <TWidget>(
+    layout: IDashboardLayout<TWidget>,
+) => IDashboardLayout<TWidget> | undefined;
+
+/**
+ * @public
+ */
 export interface DashboardModelCustomizationFns {
     /**
      * Provide a function that will be used during dashboard initialization of an existing dashboard.
@@ -418,6 +426,18 @@ export interface DashboardModelCustomizationFns {
      *    dashboard will be used as-is.
      */
     existingDashboardTransformFn?: DashboardTransformFn;
+
+    /**
+     * Provide a function that will be used during dashboard export initialization of an existing dashboard.
+     *
+     * @remarks
+     * This function will be called after the dashboard is loaded from backend transformed by another plugins
+     * and before is rendered to the export. This will be not stored in the state.
+     *
+     *  - If the function is not defined, results in an error or returns `undefined`, then the original
+     *  dashboard export transformation will be used as-is.
+     */
+    existingExportTransformFn?: DashboardLayoutExportTransformFn;
 }
 
 /**

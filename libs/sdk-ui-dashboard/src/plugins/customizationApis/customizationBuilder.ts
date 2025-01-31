@@ -202,6 +202,7 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
                 this.visualizationSwitcherCustomizer.getVisualizationSwitcherToolbarComponentProvider(),
             customizationFns: {
                 existingDashboardTransformFn: this.layoutCustomizer.getExistingDashboardTransformFn(),
+                existingExportTransformFn: this.layoutCustomizer.getExistingLayoutTransformFn(),
             },
             widgetsOverlayFn: this.getWidgetsOverlayFn(),
             // only set the value if there is anything to set

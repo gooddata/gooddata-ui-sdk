@@ -410,6 +410,11 @@ export interface IDashboardLayoutRenderProps<TWidget = IDashboardWidget> {
     enableCustomHeight?: boolean;
 
     /**
+     * Transformer for export layout
+     */
+    exportTransformer?: <TWidget>(layout: IDashboardLayout<TWidget>) => IDashboardLayout<TWidget> | undefined;
+
+    /**
      * Dashboard render mode
      */
     renderMode?: RenderMode;

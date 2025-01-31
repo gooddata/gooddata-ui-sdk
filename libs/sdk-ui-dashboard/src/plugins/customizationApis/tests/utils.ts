@@ -15,5 +15,6 @@ export const EMPTY_MUTATIONS: CustomizerMutationsContext = {
     visualizationSwitcherToolbar: [],
     attributeFilter: [],
     dashboardContent: [],
+    exports: [],
     layouts: {},
 };

@@ -351,6 +351,117 @@ export type FluidLayoutCustomizationFn = (
 ) => void;
 
 /**
+ * Set of functions you can use to customize the export layout of the dashboard rendered.
+ *
+ * @alpha
+ */
+export interface IExportLayoutCustomizer<TWidget> {
+    addTransformer(fn: SectionSlidesTransformer<TWidget>): IExportLayoutCustomizer<TWidget>;
+}
+
+/**
+ * @alpha
+ */
+export type ExportLayoutCustomizationFn = <TWidget>(
+    layout: IDashboardLayout,
+    customizer: IExportLayoutCustomizer<TWidget>,
+) => void;
+
+/**
+ * @alpha
+ */
+export type SectionSlidesTransformer<TWidget> = (
+    section: IDashboardLayoutSection<TWidget>,
+    fn: SectionSlidesTransformerFunction<TWidget>,
+) => IDashboardLayoutSection<TWidget>[] | undefined;
+
+/**
+ * @alpha
+ */
+export interface SectionSlidesTransformerFunction<TWidget> {
+    /**
+     * Default transformer for the section. This is used as default transformation method for the section in
+     * case that no plugin override it. Can be used to provide default transformation for the section in custom
+     * plugin.
+     *
+     * @param section - Section to transform
+     */
+    defaultSection: (
+        section: IDashboardLayoutSection<TWidget>,
+    ) => IDashboardLayoutSection<TWidget>[] | undefined;
+    /**
+     * Default transformer for the items. This is used as default transformation method for the items in
+     * section in case that no plugin override it. Can be used to provide default transformation for the items in
+     * custom plugin.
+     *
+     * @param section - Section to transform
+     */
+    defaultItems: (
+        section: IDashboardLayoutSection<TWidget>,
+    ) => IDashboardLayoutSection<TWidget>[] | undefined;
+
+    /**
+     * This transformer ís used to extract break up slide from current section. Break up slide is created
+     * from section title and description. This transformer only create slide when section has title or description.
+     *
+     * @param section - Section to transform
+     */
+    breakUpSlide: (
+        section: IDashboardLayoutSection<TWidget>,
+    ) => IDashboardLayoutSection<TWidget>[] | undefined;
+
+    /**
+     * This transformer is used to extract widget slide from current section and provided item. Widget slide is created from
+     * provided item. Widget slide always contains only one item that mean there will be one item on created slide.
+     *
+     * @param item - Layout item (widget, kpi, ...) to transform
+     */
+    widgetSlide: (item: IDashboardLayoutItem<TWidget>) => IDashboardLayoutSection<TWidget>[] | undefined;
+
+    /**
+     * This transformer is used to create multiple slides from switcher widget. Each slide contains one visualization
+     * that is part of the switcher.
+     *
+     * @param item - Layout item specifically visualization switcher to transform
+     */
+    switcherSlide: (item: IDashboardLayoutItem<TWidget>) => IDashboardLayoutSection<TWidget>[] | undefined;
+
+    /**
+     * This is more complex transformer that is used to transform container item in the layout to a slide. Container item is
+     * transformed as a structured slide, but if it contains a visualization switcher, it is transformed to a flat list of visualizations
+     * that are part of container item.
+     *
+     * @param item - Layout item specifically  container to transform
+     * @param transform - function to transform each section in the layout
+     */
+    containerSlide: (
+        item: IDashboardLayoutItem<TWidget>,
+        transform: (
+            section: IDashboardLayoutSection<TWidget>,
+        ) => IDashboardLayoutSection<TWidget>[] | undefined,
+    ) => IDashboardLayoutSection<TWidget>[] | undefined;
+
+    /**
+     * This is helper function that is used to iterate all items in the section. On every item
+     * it calls provided transform function. This function is used to transform all items in the section.
+     *
+     * @param section - Section to transform
+     * @param transform - function to transform each item in the layout
+     */
+    itemsSlide: (
+        section: IDashboardLayoutSection<TWidget>,
+        transform: (item: IDashboardLayoutItem<TWidget>) => IDashboardLayoutSection<TWidget>[],
+    ) => IDashboardLayoutSection<TWidget>[] | undefined;
+
+    /**
+     * This function is used to determine if the section contains visualization switcher.
+     *
+     * @param section - Section to check
+     */
+    containsVisualisationSwitcher: (section: IDashboardLayoutSection<TWidget>) => boolean;
+}
+
+/**
  * @alpha
  */
 export interface IDashboardContentCustomizer {
@@ -428,6 +539,24 @@ export interface IDashboardLayoutCustomizer {
      * be called.
      */
     customizeFluidLayout(fun: FluidLayoutCustomizationFn): IDashboardLayoutCustomizer;
+
+    /**
+     * Register customization of the export layout that is used to render the dashboard.
+     *
+     * @remarks
+     * At this point, you can register a function which will be called after dashboard component loads
+     * the dashboard and before it starts rendering the layout itself. The function will be called
+     * with two arguments:
+     *
+     * -  The actual dashboard layout
+     * -  Customizer that allows the plugin to work with export definition
+     *
+     * Your customization function may introspect the original layout and then register its customizations.
+     *
+     * If the dashboard is not rendering export layout, then the registered function will not
+     * be called.
+     */
+    customizeExportLayout(fun: ExportLayoutCustomizationFn): IDashboardLayoutCustomizer;
 
     /**
      * Register a provider for React components to render layout.

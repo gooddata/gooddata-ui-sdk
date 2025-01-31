@@ -14,9 +14,10 @@ export type CustomizerMutationsContext = {
     visualizationSwitcher: CustomizerMutationsType[];
     visualizationSwitcherToolbar: CustomizerMutationsType[];
     layouts: Record<string, CustomizerMutationsType>;
+    exports: CustomizerMutationsType[];
 };
 
-export type CustomizerMutationsType = "tag" | "provider" | "body" | "decorator" | "inserted";
+export type CustomizerMutationsType = "tag" | "provider" | "body" | "decorator" | "inserted" | "transformed";
 
 export function createCustomizerMutationsContext(): CustomizerMutationsContext {
     return {
@@ -33,5 +34,6 @@ export function createCustomizerMutationsContext(): CustomizerMutationsContext {
         visualizationSwitcher: [],
         dashboardContent: [],
         layouts: {},
+        exports: [],
     };
 }
