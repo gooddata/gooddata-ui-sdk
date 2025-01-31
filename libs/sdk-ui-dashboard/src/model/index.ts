@@ -16,6 +16,7 @@ export type {
     DashboardContext,
     ObjectAvailabilityConfig,
     DashboardConfig,
+    DashboardExportSlideConfig,
     DashboardFocusObject,
     DashboardModelCustomizationFns,
     DashboardTransformFn,

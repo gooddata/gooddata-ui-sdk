@@ -241,6 +241,30 @@ export interface DashboardConfig {
      * @remarks Only provide one of the focus properties at a time.
      */
     focusObject?: DashboardFocusObject;
+
+    /**
+     * Specify the slide configuration for the dashboard. This sizes will be used in export mode as size
+     * of the slide where visualization will be fit and rendered.
+     *
+     * @alpha
+     */
+    slideConfig?: DashboardExportSlideConfig;
+}
+
+/**
+ * Specifies the size of the slide where visualization will be fit and rendered.
+ *
+ * @alpha
+ */
+export interface DashboardExportSlideConfig {
+    /**
+     * Preferred width of slide in export mode.
+     */
+    width: number;
+    /**
+     * Preferred height of slide in export mode.
+     */
+    height: number;
 }
 
 /**
@@ -289,7 +313,7 @@ export interface DashboardFocusObject {
  */
 export type ResolvedDashboardConfig = Omit<
     Required<DashboardConfig>,
-    "mapboxToken" | "exportId" | "focusObject"
+    "mapboxToken" | "exportId" | "focusObject" | "slideConfig"
 > &
     DashboardConfig;
 
