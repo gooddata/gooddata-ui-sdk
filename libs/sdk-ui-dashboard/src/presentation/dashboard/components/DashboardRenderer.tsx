@@ -109,6 +109,7 @@ export const DashboardRenderer: React.FC<IDashboardProps> = (props: IDashboardPr
                                     existingExportTransformFn={
                                         props.customizationFns?.existingExportTransformFn
                                     }
+                                    slideConfig={props.config?.slideConfig}
                                 >
                                     <DashboardComponentsProvider
                                         ErrorComponent={props.ErrorComponent ?? DefaultError}

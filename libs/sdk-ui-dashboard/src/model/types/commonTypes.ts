@@ -243,18 +243,19 @@ export interface DashboardConfig {
     focusObject?: DashboardFocusObject;
 
     /**
+     * @alpha
+     *
      * Specify the slide configuration for the dashboard. This sizes will be used in export mode as size
      * of the slide where visualization will be fit and rendered.
      *
-     * @alpha
      */
     slideConfig?: DashboardExportSlideConfig;
 }
 
 /**
- * Specifies the size of the slide where visualization will be fit and rendered.
- *
  * @alpha
+ *
+ * Specifies the size of the slide where visualization will be fit and rendered.
  */
 export interface DashboardExportSlideConfig {
     /**

@@ -9898,7 +9898,7 @@ export function useSaveAsNewButtonProps(): ISaveAsNewButtonProps;
 export function useSaveButtonProps(): ISaveButtonProps;
 
 // @alpha (undocumented)
-export const useSectionExportData: () => SectionExportData | undefined;
+export const useSectionExportData: (firstLevel: boolean) => SectionExportData | undefined;
 
 // @internal (undocumented)
 export function useShareButtonProps(): IShareButtonProps;

@@ -13,6 +13,7 @@ import {
 import { DashboardLayoutFacade } from "../../../_staging/dashboard/legacyFluidLayout/facade/layout.js";
 import { DASHBOARD_LAYOUT_GRID_CONFIGURATION } from "../../constants/index.js";
 import { layoutTransformer } from "../../../_staging/slideshow/index.js";
+import { useSlideSizeStyle } from "../../dashboardContexts/index.js";
 import { emptyDOMRect } from "../../constants.js";
 
 import { DashboardLayoutSection } from "./DashboardLayoutSection.js";
@@ -122,11 +123,14 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
         [debug, resizedItemPositions, widgetRenderer],
     );
 
+    const slideStyles = useSlideSizeStyle(renderMode, "root");
+
     return (
         <div
             className={cx("gd-fluidlayout-container", "s-fluid-layout-container", "gd-dashboards", className)}
             onMouseLeave={onMouseLeave}
             ref={layoutRef}
+            style={slideStyles}
         >
             <ScreenClassProvider useOwnWidth={false}>
                 <ScreenClassRender

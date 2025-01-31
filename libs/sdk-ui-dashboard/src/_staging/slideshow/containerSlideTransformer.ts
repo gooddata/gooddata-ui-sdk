@@ -27,6 +27,12 @@ export function containerSlideTransformer<TWidget>(
 
             // If the layout does not contain a visualization switcher use whole content as a single slide
         } else {
+            const base = {
+                ...item.size?.xl,
+                gridWidth: 12,
+                gridHeight: 22,
+            };
+
             return [
                 {
                     type: "IDashboardLayoutSection",
@@ -34,10 +40,11 @@ export function containerSlideTransformer<TWidget>(
                         {
                             ...item,
                             size: {
-                                xl: {
-                                    ...item.size?.xl,
-                                    gridWidth: 12,
-                                },
+                                xl: base,
+                                lg: base,
+                                xs: base,
+                                sm: base,
+                                md: base,
                             },
                         },
                     ],

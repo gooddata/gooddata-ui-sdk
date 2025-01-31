@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 import React, { createContext, useContext } from "react";
 
-import { DashboardLayoutExportTransformFn } from "../../model/index.js";
+import { DashboardLayoutExportTransformFn, DashboardExportSlideConfig } from "../../model/index.js";
 
 import { InsightMenuItemsProvider } from "./types.js";
 
@@ -11,6 +11,7 @@ import { InsightMenuItemsProvider } from "./types.js";
 interface IDashboardCustomizationsContext {
     insightMenuItemsProvider?: InsightMenuItemsProvider;
     existingExportTransformFn?: DashboardLayoutExportTransformFn;
+    slideConfig?: DashboardExportSlideConfig;
 }
 
 /**

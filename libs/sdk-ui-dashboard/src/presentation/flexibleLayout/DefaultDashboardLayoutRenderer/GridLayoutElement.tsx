@@ -4,8 +4,9 @@ import React, { CSSProperties, MouseEventHandler, forwardRef } from "react";
 import cx from "classnames";
 import { IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
-import { useWidthValidation } from "./useItemWidthValidation.js";
 import { CommonExportDataAttributes } from "../../export/index.js";
+
+import { useWidthValidation } from "./useItemWidthValidation.js";
 
 export type LayoutElementType = "root" | "nested" | "section" | "item" | "leaf-item";
 
@@ -54,10 +55,15 @@ export interface IGridLayoutElementProps {
      * Data for export in export mode.
      */
     exportData?: CommonExportDataAttributes;
+
+    /**
+     * Export styles for export mode.
+     */
+    exportStyles?: CSSProperties;
 }
 
 export const GridLayoutElement = forwardRef<HTMLDivElement, IGridLayoutElementProps>(
-    ({ children, className, style, type, layoutItemSize, onMouseLeave, exportData }, ref) => {
+    ({ children, className, style, type, layoutItemSize, onMouseLeave, exportData, exportStyles }, ref) => {
         // Fix item width locally if it is bigger than parent width to prevent css-gird render issues.
         // Error is fired on DashboardLayoutWidget with more details.
         const { validWidth } = useWidthValidation(layoutItemSize);
@@ -69,12 +75,16 @@ export const GridLayoutElement = forwardRef<HTMLDivElement, IGridLayoutElementPr
         );
 
         const sanitizedExportData = type === "section" ? { ...exportData } : {};
+        const sanitizedStyle = {
+            ...style,
+            ...exportStyles,
+        };
 
         return type === "section" ? (
             <section
                 role="section"
                 className={classNames}
-                style={style}
+                style={sanitizedStyle}
                 onMouseLeave={onMouseLeave}
                 ref={ref}
                 {...sanitizedExportData}
@@ -82,7 +92,7 @@ export const GridLayoutElement = forwardRef<HTMLDivElement, IGridLayoutElementPr
                 {children}
             </section>
         ) : (
-            <div className={classNames} style={style} onMouseLeave={onMouseLeave} ref={ref}>
+            <div className={classNames} style={sanitizedStyle} onMouseLeave={onMouseLeave} ref={ref}>
                 {children}
             </div>
         );

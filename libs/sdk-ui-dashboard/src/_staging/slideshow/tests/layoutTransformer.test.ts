@@ -58,6 +58,11 @@ const layout = {
     },
 };
 
+const base = {
+    gridWidth: 12,
+    gridHeight: 22,
+};
+
 describe("LayoutTransformer", () => {
     it("empty layout", () => {
         const data = layoutTransformer(layout as IDashboardLayout);
@@ -105,10 +110,11 @@ describe("LayoutTransformer", () => {
                     items: [
                         {
                             size: {
-                                xl: {
-                                    gridHeight: 22,
-                                    gridWidth: 12,
-                                },
+                                xl: base,
+                                lg: base,
+                                xs: base,
+                                sm: base,
+                                md: base,
                             },
                             type: "IDashboardLayoutItem",
                             widget: {
@@ -132,10 +138,11 @@ describe("LayoutTransformer", () => {
                     items: [
                         {
                             size: {
-                                xl: {
-                                    gridHeight: 22,
-                                    gridWidth: 12,
-                                },
+                                xl: base,
+                                lg: base,
+                                xs: base,
+                                sm: base,
+                                md: base,
                             },
                             type: "IDashboardLayoutItem",
                             widget: {

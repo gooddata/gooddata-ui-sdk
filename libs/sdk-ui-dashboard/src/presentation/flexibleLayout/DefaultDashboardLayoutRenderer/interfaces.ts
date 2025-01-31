@@ -1,5 +1,5 @@
 // (C) 2019-2025 GoodData Corporation
-import React from "react";
+import React, { CSSProperties } from "react";
 import {
     IDashboardLayout,
     IDashboardWidget,
@@ -99,6 +99,11 @@ export interface IDashboardLayoutSectionRenderProps<TWidget = IDashboardWidget> 
      * Data for section export in export mode.
      */
     exportData?: CommonExportDataAttributes;
+
+    /**
+     * Export styles for export mode.
+     */
+    exportStyles?: CSSProperties;
 }
 
 /**
@@ -224,6 +229,11 @@ export interface IDashboardLayoutItemRenderProps<TWidget = IDashboardWidget> {
      * Zero-based index of the row in which the item is rendered,
      */
     rowIndex: number;
+
+    /**
+     * Dashboard render mode
+     */
+    renderMode?: RenderMode;
 }
 
 /**
