@@ -20,6 +20,7 @@ import {
     selectInsightsMap,
     selectEnableWidgetCustomHeight,
     selectRenderMode,
+    selectFocusObject,
 } from "../../model/index.js";
 import { serializeLayoutItemPath } from "../../_staging/layout/coordinates.js";
 
@@ -106,6 +107,7 @@ export const DefaultFlexibleDashboardLayout = (props: IDashboardLayoutProps): JS
     const insights = useDashboardSelector(selectInsightsMap);
     const isExport = useDashboardSelector(selectIsExport);
     const renderMode = useDashboardSelector(selectRenderMode);
+    const dashboardFocusObject = useDashboardSelector(selectFocusObject);
     const { existingExportTransformFn } = useDashboardCustomizationsContext();
 
     const screenSize = useScreenSize();
@@ -183,6 +185,7 @@ export const DefaultFlexibleDashboardLayout = (props: IDashboardLayoutProps): JS
                 sectionRenderer={renderModeAwareDashboardLayoutSectionRenderer}
                 sectionHeaderRenderer={renderModeAwareDashboardLayoutSectionHeaderRenderer}
                 renderMode={renderMode}
+                focusObject={dashboardFocusObject}
             />
         </>
     );

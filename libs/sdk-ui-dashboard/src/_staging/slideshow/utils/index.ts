@@ -1,5 +1,13 @@
 // (C) 2022-2025 GoodData Corporation
-import { isDashboardLayout, isVisualizationSwitcherWidget } from "@gooddata/sdk-model";
+import {
+    IDashboardLayout,
+    isDashboardLayout,
+    isInsightWidget,
+    isKpiWidget,
+    isRichTextWidget,
+    isVisualizationSwitcherWidget,
+    IWidget,
+} from "@gooddata/sdk-model";
 
 /**
  * This function checks if the layout widget contains a visualization switcher somewhere in its structure.
@@ -21,3 +29,41 @@ export function containsVisualizationSwitcher<TWidget>(widget: TWidget) {
     }
     return false;
 }
+
+function getAllWidgetsFromLayout<TWidget>(layout: IDashboardLayout<TWidget>): IWidget[] {
+    return layout.sections.flatMap((section) =>
+        section.items.flatMap((item) => {
+            const widget = item.widget;
+            if (!widget) return [];
+
+            if (isKpiWidget(widget) || isInsightWidget(widget) || isRichTextWidget(widget)) {
+                return [widget];
+            } else if (isVisualizationSwitcherWidget(widget)) {
+                return [widget, ...widget.visualizations];
+            } else if (isDashboardLayout(widget)) {
+                return [...getAllWidgetsFromLayout(widget)];
+            } else {
+                return [];
+            }
+        }),
+    );
+}
+
+/**
+ * This function is used to find a focused widget in the layout structure.
+ *
+ * @param layout - dashboard layout
+ * @param widgetId - widget identifier to find
+ * @returns
+ */
+export const findFocusedWidget = <TWidget>(
+    layout: IDashboardLayout<TWidget>,
+    widgetId: string | undefined,
+): TWidget | undefined => {
+    if (!widgetId) {
+        return undefined;
+    }
+
+    const allWidgets = getAllWidgetsFromLayout(layout);
+    return allWidgets.find((widget) => widget.identifier === widgetId) as TWidget;
+};

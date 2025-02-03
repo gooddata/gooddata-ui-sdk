@@ -21,6 +21,7 @@ import {
     selectEnableWidgetCustomHeight,
     selectRenderMode,
     selectEnableFlexibleLayout,
+    selectFocusObject,
 } from "../../model/index.js";
 import { isInitialPlaceholderWidget } from "../../widgets/index.js";
 import { DefaultFlexibleDashboardLayout } from "../flexibleLayout/index.js";
@@ -103,6 +104,7 @@ const LegacyDefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Element
     const insights = useDashboardSelector(selectInsightsMap);
     const isExport = useDashboardSelector(selectIsExport);
     const renderMode = useDashboardSelector(selectRenderMode);
+    const dashboardFocusObject = useDashboardSelector(selectFocusObject);
     const { existingExportTransformFn } = useDashboardCustomizationsContext();
 
     const getInsightByRef = useCallback(
@@ -165,6 +167,7 @@ const LegacyDefaultDashboardLayout = (props: IDashboardLayoutProps): JSX.Element
                 sectionHeaderRenderer={renderModeAwareDashboardLayoutSectionHeaderRenderer}
                 exportTransformer={existingExportTransformFn}
                 renderMode={renderMode}
+                focusObject={dashboardFocusObject}
             />
             {!!shouldRenderSectionHotspot && (
                 <SectionHotspot index={transformedLayout.sections.length} targetPosition="below" />
