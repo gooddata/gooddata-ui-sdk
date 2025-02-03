@@ -5,6 +5,7 @@ import {
     selectDashboardUserAutomations,
     selectFocusObject,
     selectIsDashboardExecuted,
+    selectIsInExportMode,
     selectWidgets,
     useDashboardSelector,
 } from "../../../model/index.js";
@@ -17,7 +18,12 @@ const selectIsWidgetHighlighted = (widget: IWidget) =>
         selectDashboardUserAutomations,
         selectIsDashboardExecuted,
         selectWidgets,
-        (dashboardFocusObject, automations, dashboardExecuted, widgets) => {
+        selectIsInExportMode,
+        (dashboardFocusObject, automations, dashboardExecuted, widgets, isInExportMode) => {
+            if (isInExportMode) {
+                return false;
+            }
+
             const { automationId, widgetId, visualizationId } = dashboardFocusObject;
 
             const matchedAutomation = automations?.find((a) => a.id === automationId);
