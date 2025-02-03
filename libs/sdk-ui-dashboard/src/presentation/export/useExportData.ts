@@ -7,7 +7,8 @@ import {
     selectIsInExportMode,
     useDashboardSelector,
 } from "../../model/index.js";
-import { SectionExportData, WidgetExportData } from "./types.js";
+import { SectionExportData, WidgetExportData, WidgetExportDataAttributes } from "./types.js";
+import { useMemo } from "react";
 
 /**
  * @alpha
@@ -47,4 +48,26 @@ export const useWidgetExportData = (widget: ExtendedDashboardWidget): WidgetExpo
         title: { "data-export-type": "widget-title" },
         description: { "data-export-type": "widget-description" },
     };
+};
+
+/**
+ * @alpha
+ */
+export const useVisualizationExportData = (
+    widget: WidgetExportDataAttributes | undefined,
+    loading: boolean,
+    error: boolean,
+): Partial<WidgetExportDataAttributes> | undefined => {
+    const isExportMode = useDashboardSelector(selectIsInExportMode);
+
+    return useMemo(() => {
+        if (!isExportMode) {
+            return undefined;
+        }
+
+        return {
+            ...widget,
+            "data-export-visualization-status": loading ? "loading" : error ? "error" : "loaded",
+        };
+    }, [widget, isExportMode, loading, error]);
 };

@@ -45,6 +45,7 @@ import { DASHBOARD_LAYOUT_RESPONSIVE_SMALL_WIDTH } from "../../../../constants/i
 import { IntlWrapper } from "../../../../localization/index.js";
 import { InsightBody } from "../../InsightBody.js";
 import { useHandlePropertiesPushData } from "./useHandlePropertiesPushData.js";
+import { useVisualizationExportData } from "../../../../export/index.js";
 
 const selectCommonDashboardInsightProps = createSelector(
     [selectLocale, selectSettings, selectColorPalette],
@@ -234,6 +235,13 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
     const visualizationProperties = insightProperties(insightWithAddedWidgetProperties);
     const isZoomable = visualizationProperties?.controls?.zoomInsight;
 
+    // we need wait with insight rendering until filters are successfully resolved
+    // loading of insight is initiated after filters are successful, until then show loading component
+    // if filter status is success and visualization is loading, render both loading and insight
+    const loading = filtersStatus === "running" || isVisualizationLoading;
+
+    const exportDataVis = useVisualizationExportData(exportData, loading, !!effectiveError);
+
     const renderComponent = () => {
         if (effectiveError) {
             return (
@@ -247,12 +255,7 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
         } else {
             return (
                 <>
-                    {
-                        // we need wait with insight rendering until filters are successfully resolved
-                        // loading of insight is initiated after filters are successful, until then show loading component
-                        // if filter status is success and visualization is loading, render both loading and insight
-                        filtersStatus === "running" || isVisualizationLoading ? <LoadingComponent /> : null
-                    }
+                    {loading ? <LoadingComponent /> : null}
                     {filtersStatus === "success" ? (
                         <div className="insight-view-visualization" style={insightWrapperStyle}>
                             <InsightBody
@@ -284,7 +287,12 @@ export const DashboardInsight = (props: IDashboardInsightProps): JSX.Element => 
     };
 
     return (
-        <div className={cx("visualization-content", { "in-edit-mode": isInEditMode })} {...exportData}>
+        <div
+            className={cx("visualization-content", {
+                "in-edit-mode": isInEditMode,
+            })}
+            {...exportDataVis}
+        >
             <div
                 className={cx("gd-visualization-content", { zoomable: isZoomable })}
                 style={insightPositionStyle}

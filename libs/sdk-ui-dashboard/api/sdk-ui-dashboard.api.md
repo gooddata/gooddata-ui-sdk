@@ -9906,6 +9906,9 @@ export function useShareButtonProps(): IShareButtonProps;
 // @alpha (undocumented)
 export const useTopBarProps: () => ITopBarProps;
 
+// @alpha (undocumented)
+export const useVisualizationExportData: (widget: WidgetExportDataAttributes | undefined, loading: boolean, error: boolean) => Partial<WidgetExportDataAttributes> | undefined;
+
 // @internal (undocumented)
 export function useWidgetDragEndHandler(): () => void;
 
@@ -9997,6 +10000,7 @@ export type WidgetExportData = HeaderExportData & {
 export type WidgetExportDataAttributes = CommonExportDataAttributes & {
     "data-export-widget-type"?: string;
     "data-export-visualization-type"?: string;
+    "data-export-visualization-status"?: "loading" | "loaded" | "error";
 };
 
 // @beta
