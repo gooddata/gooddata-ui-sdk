@@ -229,24 +229,21 @@ function resolveWidgetDateFilterIgnore(
         ({ dateDataset, dateDatasetLink }) => {
             return (
                 !!widget.dateDataSet &&
-                dateDataset &&
                 (avoidCatalogForFilterLookup
-                    ? areObjRefsEqual(widget.dateDataSet, dateDatasetLink)
-                    : refMatchesMdObject(widget.dateDataSet, dateDataset.dataSet, "dataSet"))
+                    ? dateDatasetLink && areObjRefsEqual(widget.dateDataSet, dateDatasetLink)
+                    : dateDataset && refMatchesMdObject(widget.dateDataSet, dateDataset.dataSet, "dataSet"))
             );
         },
     );
     const nonIgnoredWidgetDateFilterDateDatasetPairs = widgetDateFilterDateDatasetPairs.filter(
         ({ dateDataset, dateDatasetLink }) => {
-            const matches =
-                dateDataset &&
-                widget.ignoreDashboardFilters
-                    ?.filter(isDashboardDateFilterReference)
-                    .some((ignored) =>
-                        avoidCatalogForFilterLookup
-                            ? areObjRefsEqual(ignored.dataSet, dateDatasetLink)
-                            : refMatchesMdObject(ignored.dataSet, dateDataset.dataSet, "dataSet"),
-                    );
+            const matches = widget.ignoreDashboardFilters
+                ?.filter(isDashboardDateFilterReference)
+                .some((ignored) =>
+                    avoidCatalogForFilterLookup
+                        ? dateDatasetLink && areObjRefsEqual(ignored.dataSet, dateDatasetLink)
+                        : dateDataset && refMatchesMdObject(ignored.dataSet, dateDataset.dataSet, "dataSet"),
+                );
 
             return !matches;
         },
@@ -286,10 +283,10 @@ function resolveDateFilters(
     // prioritize dashboard filters over insight ones
     // and strip useless all time filters at the end
     const init = dashboardDateFilterDateDatasetPairs
-        .filter((item) => !!item.dateDataset)
+        .filter((item) => (avoidCatalogForFilterLookup ? !!item.dateDatasetLink : !!item.dateDataset))
         .map((item) => item.filter);
     return insightDateFilterDateDatasetPairs
-        .filter((item) => !!item.dateDataset)
+        .filter((item) => (avoidCatalogForFilterLookup ? !!item.dateDatasetLink : !!item.dateDataset))
         .reduceRight((acc: IDateFilter[], curr) => {
             const alreadyPresent = avoidCatalogForFilterLookup
                 ? acc.some((item) => areObjRefsEqual(filterObjRef(item), curr.dateDatasetLink))
