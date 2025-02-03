@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { getTestClassByTitle } from "../support/commands/tools/classes";
 
@@ -13,14 +13,19 @@ import {
 
 export type InteractionType = "measure" | "attribute";
 export class WidgetConfiguration {
-    constructor(private widgetIndex: number) {}
+    constructor(private widgetIndex: number, private section: number = 0) {}
 
     getElement() {
         return cy.get(".s-gd-configuration-bubble");
     }
 
     open() {
-        new Widget(this.widgetIndex).getElement().click().find(".dash-item-action").first().click();
+        new Widget(this.widgetIndex, this.section)
+            .getElement()
+            .click()
+            .find(".dash-item-action")
+            .first()
+            .click();
         this.getElement().should("be.visible");
         return this;
     }

@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 export class RichText {
     constructor(private parentSelector: string) {}
@@ -74,7 +74,7 @@ export class RichText {
     }
 
     confirmChanges() {
-        this.getConfirmButtonElement().click();
+        this.getConfirmButtonElement().click({ force: true });
         this.isView();
         return this;
     }
