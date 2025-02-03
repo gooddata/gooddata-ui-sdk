@@ -77,7 +77,7 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
         }
 
         const layoutFacade = DashboardLayoutFacade.for(unifiedLayout);
-        const resizedItemPositions = getResizedItemPositions(layout, layoutFacade.raw());
+        const resizedItemPositions = exportMode ? [] : getResizedItemPositions(layout, layoutFacade.raw());
         return { layoutFacade, resizedItemPositions };
     }, [layout, enableCustomHeight, exportTransformer]);
 
