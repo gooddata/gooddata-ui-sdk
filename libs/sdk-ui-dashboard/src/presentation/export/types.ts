@@ -39,6 +39,7 @@ export type HeaderExportData = {
 export type WidgetExportDataAttributes = CommonExportDataAttributes & {
     "data-export-widget-type"?: string;
     "data-export-visualization-type"?: string;
+    "data-export-visualization-status"?: "loading" | "loaded" | "error";
 };
 
 /**
