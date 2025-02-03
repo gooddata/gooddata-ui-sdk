@@ -4,6 +4,11 @@ import { IDashboardLayoutItem, IDashboardLayoutSection } from "@gooddata/sdk-mod
 export function widgetSlideTransformer<TWidget>(
     item: IDashboardLayoutItem<TWidget>,
 ): IDashboardLayoutSection<TWidget>[] {
+    const base = {
+        gridWidth: 12,
+        gridHeight: 22,
+    };
+
     return [
         {
             type: "IDashboardLayoutSection",
@@ -11,10 +16,11 @@ export function widgetSlideTransformer<TWidget>(
                 {
                     ...item,
                     size: {
-                        xl: {
-                            gridWidth: 12,
-                            gridHeight: 22,
-                        },
+                        xl: base,
+                        xs: base,
+                        md: base,
+                        sm: base,
+                        lg: base,
                     },
                 },
             ],

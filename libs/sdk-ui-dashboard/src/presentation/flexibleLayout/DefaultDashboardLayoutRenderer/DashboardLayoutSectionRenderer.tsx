@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 
 import { IDashboardLayoutSectionRenderer } from "./interfaces.js";
@@ -12,6 +12,7 @@ export const DashboardLayoutSectionRenderer: IDashboardLayoutSectionRenderer<unk
     parentLayoutItemSize,
     className,
     isHidden,
+    exportStyles,
 }) => {
     const style = isHidden ? isHiddenStyle : defaultStyle;
     return (
@@ -20,6 +21,7 @@ export const DashboardLayoutSectionRenderer: IDashboardLayoutSectionRenderer<unk
             layoutItemSize={parentLayoutItemSize}
             className={className}
             style={style}
+            exportStyles={exportStyles}
         >
             {children}
         </GridLayoutElement>

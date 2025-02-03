@@ -49,6 +49,10 @@ const switcher1 = {
         ref: { type: "insight", identifier: "switcher1" },
     },
 };
+const base = {
+    gridWidth: 12,
+    gridHeight: 22,
+};
 
 describe("SwitcherSlideTransformer", () => {
     it("no switcher", () => {
@@ -65,10 +69,11 @@ describe("SwitcherSlideTransformer", () => {
                 items: [
                     {
                         size: {
-                            xl: {
-                                gridHeight: 4,
-                                gridWidth: 12,
-                            },
+                            xl: base,
+                            lg: base,
+                            xs: base,
+                            sm: base,
+                            md: base,
                         },
                         type: "IDashboardLayoutItem",
                         widget: {
@@ -101,10 +106,11 @@ describe("SwitcherSlideTransformer", () => {
                 items: [
                     {
                         size: {
-                            xl: {
-                                gridHeight: 4,
-                                gridWidth: 12,
-                            },
+                            xl: base,
+                            lg: base,
+                            xs: base,
+                            sm: base,
+                            md: base,
                         },
                         type: "IDashboardLayoutItem",
                         widget: {

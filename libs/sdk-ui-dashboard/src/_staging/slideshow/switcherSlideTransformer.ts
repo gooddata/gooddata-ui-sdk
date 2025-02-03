@@ -15,6 +15,12 @@ export function switcherSlideTransformer<TWidget>(
     item: IDashboardLayoutItem<TWidget>,
 ): IDashboardLayoutSection<TWidget>[] | undefined {
     if (isVisualizationSwitcherWidget(item.widget)) {
+        const base = {
+            ...item.size.xl,
+            gridWidth: 12,
+            gridHeight: 22,
+        };
+
         return item.widget.visualizations.map((visualization) => {
             return {
                 type: "IDashboardLayoutSection",
@@ -23,10 +29,11 @@ export function switcherSlideTransformer<TWidget>(
                         widget: visualization as TWidget,
                         type: "IDashboardLayoutItem",
                         size: {
-                            xl: {
-                                ...item.size.xl,
-                                gridWidth: 12,
-                            },
+                            xl: base,
+                            md: base,
+                            lg: base,
+                            sm: base,
+                            xs: base,
                         },
                     },
                 ],

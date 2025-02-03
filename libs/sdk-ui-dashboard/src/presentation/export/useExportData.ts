@@ -12,10 +12,10 @@ import { SectionExportData, WidgetExportData } from "./types.js";
 /**
  * @alpha
  */
-export const useSectionExportData = (): SectionExportData | undefined => {
+export const useSectionExportData = (firstLevel: boolean): SectionExportData | undefined => {
     const isExportMode = useDashboardSelector(selectIsInExportMode);
 
-    if (!isExportMode) {
+    if (!isExportMode || !firstLevel) {
         return undefined;
     }
 

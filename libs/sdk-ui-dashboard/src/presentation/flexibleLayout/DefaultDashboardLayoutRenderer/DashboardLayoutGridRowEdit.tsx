@@ -44,6 +44,7 @@ export function DashboardLayoutGridRowEdit<TWidget>(
                     <DashboardLayoutItem
                         key={itemKeyGetter({ item, screen })}
                         item={item}
+                        renderMode={renderMode}
                         itemRenderer={itemRenderer}
                         widgetRenderer={widgetRenderer}
                         rowIndex={rowIndex}

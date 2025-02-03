@@ -20,6 +20,10 @@ const widget1 = {
         drills: [],
     },
 };
+const base = {
+    gridWidth: 12,
+    gridHeight: 22,
+};
 
 describe("WidgetSlideTransformer", () => {
     it("always transform", () => {
@@ -31,10 +35,11 @@ describe("WidgetSlideTransformer", () => {
                     {
                         ...widget1,
                         size: {
-                            xl: {
-                                gridHeight: 22,
-                                gridWidth: 12,
-                            },
+                            xl: base,
+                            lg: base,
+                            xs: base,
+                            sm: base,
+                            md: base,
                         },
                     },
                 ],

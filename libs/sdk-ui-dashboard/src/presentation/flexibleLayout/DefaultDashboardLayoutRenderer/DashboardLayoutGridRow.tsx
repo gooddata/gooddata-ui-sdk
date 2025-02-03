@@ -50,6 +50,7 @@ export function DashboardLayoutGridRow<TWidget>(props: DashboardLayoutGridRowPro
 
     const rowItems = items.map((item) => (
         <DashboardLayoutItem
+            renderMode={renderMode}
             key={itemKeyGetter({ item, screen })}
             item={item}
             itemRenderer={itemRenderer}

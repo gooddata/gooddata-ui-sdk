@@ -49,6 +49,10 @@ const switcher1 = {
         ref: { type: "insight", identifier: "switcher1" },
     },
 };
+const base = {
+    gridHeight: 22,
+    gridWidth: 12,
+};
 
 describe("ContainerSlideTransformer", () => {
     it("no layout widget", () => {
@@ -99,10 +103,11 @@ describe("ContainerSlideTransformer", () => {
                 items: [
                     {
                         size: {
-                            xl: {
-                                gridHeight: 4,
-                                gridWidth: 12,
-                            },
+                            xl: base,
+                            lg: base,
+                            xs: base,
+                            sm: base,
+                            md: base,
                         },
                         type: "IDashboardLayoutItem",
                         widget: {
@@ -162,10 +167,11 @@ describe("ContainerSlideTransformer", () => {
                 items: [
                     {
                         size: {
-                            xl: {
-                                gridHeight: 4,
-                                gridWidth: 12,
-                            },
+                            xl: base,
+                            lg: base,
+                            xs: base,
+                            sm: base,
+                            md: base,
                         },
                         type: "IDashboardLayoutItem",
                         widget: {
@@ -275,10 +281,11 @@ describe("ContainerSlideTransformer", () => {
                 items: [
                     {
                         size: {
-                            xl: {
-                                gridHeight: 4,
-                                gridWidth: 12,
-                            },
+                            xl: base,
+                            lg: base,
+                            xs: base,
+                            sm: base,
+                            md: base,
                         },
                         type: "IDashboardLayoutItem",
                         widget: {
@@ -311,10 +318,11 @@ describe("ContainerSlideTransformer", () => {
                 items: [
                     {
                         size: {
-                            xl: {
-                                gridHeight: 4,
-                                gridWidth: 12,
-                            },
+                            xl: base,
+                            lg: base,
+                            xs: base,
+                            sm: base,
+                            md: base,
                         },
                         type: "IDashboardLayoutItem",
                         widget: {

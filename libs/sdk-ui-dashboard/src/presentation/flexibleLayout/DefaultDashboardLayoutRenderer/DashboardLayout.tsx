@@ -11,6 +11,7 @@ import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeCon
 import { SectionHotspot } from "../dragAndDrop/draggableWidget/SectionHotspot.js";
 import { isInitialPlaceholderWidget } from "../../../widgets/index.js";
 import { layoutTransformer } from "../../../_staging/slideshow/index.js";
+import { useSlideSizeStyle } from "../../dashboardContexts/index.js";
 import { ILayoutSectionPath } from "../../../types.js";
 import { emptyDOMRect } from "../../constants.js";
 
@@ -124,6 +125,7 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
 
     const screenSize = useScreenSize();
     const isNestedLayout = itemPath !== undefined;
+    const type = isNestedLayout ? "nested" : "root";
 
     const sectionIndex = useMemo(
         (): ILayoutSectionPath => ({
@@ -141,9 +143,11 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
                 layout.sections[0].items.some((i) => !isInitialPlaceholderWidget(i.widget)) &&
                 !isNestedLayout));
 
+    const slideStyles = useSlideSizeStyle(renderMode, type);
+
     return (
         <GridLayoutElement
-            type={isNestedLayout ? "nested" : "root"}
+            type={type}
             layoutItemSize={itemSize}
             className={cx(
                 {
@@ -153,6 +157,7 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
             )}
             onMouseLeave={onMouseLeave}
             ref={layoutRef}
+            exportStyles={slideStyles}
         >
             {layoutFacade.sections().map((section) => {
                 return (

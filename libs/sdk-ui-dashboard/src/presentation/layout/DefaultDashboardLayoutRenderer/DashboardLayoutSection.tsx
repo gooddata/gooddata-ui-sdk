@@ -65,7 +65,7 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
         screen,
         renderMode,
     } = props;
-    const exportData = useSectionExportData();
+    const exportData = useSectionExportData(true);
     const renderProps = { section, screen, renderMode, exportData: exportData?.section };
 
     const items = useMemo(() => {
