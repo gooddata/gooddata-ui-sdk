@@ -3646,7 +3646,7 @@ export interface ExportDashboardToPdf extends IDashboardCommand {
 export function exportDashboardToPdf(correlationId?: string): ExportDashboardToPdf;
 
 // @alpha
-export type ExportElementType = "section" | "section-title" | "section-description" | "widget" | "widget-title" | "widget-description";
+export type ExportElementType = "section" | "section-title" | "section-description" | "widget" | "widget-content" | "widget-title" | "widget-description";
 
 // @beta (undocumented)
 export interface ExportInsightWidget extends IDashboardCommand {
@@ -9989,6 +9989,7 @@ export interface WidgetDescription {
 
 // @alpha
 export type WidgetExportData = HeaderExportData & {
+    section?: CommonExportDataAttributes;
     widget?: WidgetExportDataAttributes;
 };
 

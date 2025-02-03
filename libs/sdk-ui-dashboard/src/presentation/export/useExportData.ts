@@ -38,8 +38,9 @@ export const useWidgetExportData = (widget: ExtendedDashboardWidget): WidgetExpo
     }
 
     return {
+        section: { "data-export-type": "widget" },
         widget: {
-            "data-export-type": "widget",
+            "data-export-type": "widget-content",
             "data-export-widget-type": widget.type,
             ...(insight ? { "data-export-visualization-type": insightVisualizationType(insight) } : {}),
         },

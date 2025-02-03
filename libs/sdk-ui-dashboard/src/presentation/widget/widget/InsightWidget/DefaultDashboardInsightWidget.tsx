@@ -152,6 +152,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
             screen={screen}
             ref={elementRef}
             description={accessibilityWidgetDescription}
+            exportData={exportData?.section}
         >
             <DashboardItemVisualization
                 renderHeadline={(clientHeight) =>

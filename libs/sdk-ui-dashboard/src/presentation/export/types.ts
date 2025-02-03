@@ -10,6 +10,7 @@ export type ExportElementType =
     | "section-title"
     | "section-description"
     | "widget"
+    | "widget-content"
     | "widget-title"
     | "widget-description";
 
@@ -62,6 +63,7 @@ export type WidgetExportDataAttributes = CommonExportDataAttributes & {
  * @alpha
  */
 export type WidgetExportData = HeaderExportData & {
+    section?: CommonExportDataAttributes;
     widget?: WidgetExportDataAttributes;
 };
 

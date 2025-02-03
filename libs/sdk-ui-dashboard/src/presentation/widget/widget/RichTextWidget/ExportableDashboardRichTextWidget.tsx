@@ -24,6 +24,7 @@ export const ExportableDashboardRichTextWidget: React.FC<IDefaultDashboardRichTe
             })}
             screen={screen}
             ref={elementRef}
+            exportData={exportData?.section}
         >
             <DashboardItemBase visualizationClassName="gd-rich-text-widget-wrapper">
                 {() => <DashboardRichText widget={widget} exportData={exportData?.widget} />}
