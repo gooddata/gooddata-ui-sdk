@@ -3204,6 +3204,21 @@
         "comment": "Label of attribute select dropdown",
         "limit": 0
     },
+    "insightAlert.config.accessbility.input": {
+        "value": "Condition value",
+        "comment": "",
+        "limit": 0
+    },
+    "insightAlert.config.accessbility.dropdown": {
+        "value": "Condition type",
+        "comment": "",
+        "limit": 0
+    },
+    "alert.accessibility.destination.label": {
+        "value": "Select how to send the alert",
+        "comment": "",
+        "limit": 0
+    },
     "granularity.this_keyword": {
         "value": "This",
         "comment": "Label that says 'This' in the context of time period. For example 'This month', 'This year'.",

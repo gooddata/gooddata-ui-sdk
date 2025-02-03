@@ -1296,6 +1296,8 @@ export interface IDatePickerOwnProps {
     // (undocumented)
     dateFormat?: string;
     // (undocumented)
+    id?: string;
+    // (undocumented)
     locale?: string;
     // (undocumented)
     onAlign?: (align: string) => void;
@@ -3037,6 +3039,7 @@ export class Input extends React_2.PureComponent<InputPureProps, InputState> {
         onBlur: (...args: any[]) => void;
         onFocus: (...args: any[]) => void;
         placeholder: string;
+        ariaLabel: string;
         prefix: string;
         readonly: boolean;
         suffix: string;
@@ -3081,6 +3084,7 @@ export class InputPure extends React_2.PureComponent<InputPureProps> implements 
         onBlur: (...args: any[]) => void;
         onFocus: (...args: any[]) => void;
         placeholder: string;
+        ariaLabel: string;
         prefix: string;
         readonly: boolean;
         suffix: string;
@@ -3120,6 +3124,10 @@ export class InputPure extends React_2.PureComponent<InputPureProps> implements 
 
 // @internal (undocumented)
 export interface InputPureProps extends IDomNativeProps {
+    // (undocumented)
+    accessibilityType?: string;
+    // (undocumented)
+    ariaLabel?: string;
     // (undocumented)
     className: string;
     // (undocumented)
@@ -3200,6 +3208,7 @@ export class InputWithNumberFormat extends React_2.PureComponent<InputWithNumber
         onBlur: (...args: any[]) => void;
         onFocus: (...args: any[]) => void;
         placeholder: string;
+        ariaLabel: string;
         prefix: string;
         readonly: boolean;
         suffix: string;
@@ -4176,6 +4185,8 @@ export interface ITextAreaWithSubmitState {
 export interface ITimepickerOwnProps {
     // (undocumented)
     className?: string;
+    // (undocumented)
+    id?: string;
     // (undocumented)
     locale?: string;
     // (undocumented)

@@ -64,6 +64,11 @@
         "comment": "Use '…' as one character, not 3 dots ('...').",
         "limit": 0
     },
+    "gs.list.acessibility.search.label": {
+        "value": "Search attribute values",
+        "comment": "",
+        "limit": 0
+    },
     "gs.list.notAvailableAbbreviation": {
         "value": "N/A",
         "comment": "Stands for 'Not Available",
@@ -3425,6 +3430,16 @@
     },
     "message.accessibility.dismiss.notification": {
         "value": "Dismiss notification",
+        "comment": "",
+        "limit": 0
+    },
+    "datePicker.accessibility.label": {
+        "value": "Select starting date",
+        "comment": "",
+        "limit": 0
+    },
+    "timePicker.accessibility.label": {
+        "value": "Select starting time",
         "comment": "",
         "limit": 0
     }

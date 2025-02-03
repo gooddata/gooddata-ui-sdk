@@ -26,10 +26,11 @@ export const DashboardItem: React.FC<IDashboardItemProps> = React.forwardRef(
             <figure
                 {...props}
                 {...exportData}
+                {...(description ? { "aria-description": description } : {})}
                 className={cx(className, "dash-item", "s-dash-item", screenClasses[screen])}
                 tabIndex={0}
                 ref={ref}
-                aria-description={description}
+                role="figure"
             />
         );
     },

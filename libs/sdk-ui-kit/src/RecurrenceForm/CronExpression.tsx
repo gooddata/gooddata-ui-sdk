@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React, { useEffect, useState } from "react";
 import { defineMessage, FormattedMessage } from "react-intl";
@@ -15,6 +15,7 @@ const TOOLTIP_ALIGN_POINTS = [{ align: "cr cl" }];
 const errorMessage = defineMessage({ id: "recurrence.error.too_often" });
 
 interface ICronExpressionProps {
+    id: string;
     expression: string;
     onChange: (expression: string, isValid: boolean) => void;
     allowHourlyRecurrence?: boolean;
@@ -23,7 +24,7 @@ interface ICronExpressionProps {
 }
 
 export const CronExpression: React.FC<ICronExpressionProps> = (props) => {
-    const { expression, onChange, allowHourlyRecurrence, showTimezone, timezone } = props;
+    const { id, expression, onChange, allowHourlyRecurrence, showTimezone, timezone } = props;
     const theme = useTheme();
     const [validationError, setValidationError] = useState<string | null>(null);
     const [hover, setHover] = useState(false);
@@ -58,7 +59,7 @@ export const CronExpression: React.FC<ICronExpressionProps> = (props) => {
                     "has-error": !!validationError,
                 })}
             >
-                <input className="gd-input-field" onChange={handleChange} value={expression} />
+                <input id={id} className="gd-input-field" onChange={handleChange} value={expression} />
                 {validationError ? (
                     <span className="gd-recurrence-form-cron-error-message">
                         <FormattedMessage id={validationError} />

@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React from "react";
 import { IntlShape, MessageDescriptor, useIntl } from "react-intl";
@@ -82,6 +82,7 @@ const getRepeatItems = (
 };
 
 export interface IRepeatTypeSelectProps {
+    id: string;
     repeatType: RecurrenceType;
     startDate?: Date | null;
     onChange: (repeatType: string) => void;
@@ -90,7 +91,7 @@ export interface IRepeatTypeSelectProps {
 }
 
 export const RepeatTypeSelect: React.FC<IRepeatTypeSelectProps> = (props) => {
-    const { onChange, repeatType, startDate = null, allowHourlyRecurrence, onRepeatDropdownOpen } = props;
+    const { id, onChange, repeatType, startDate = null, allowHourlyRecurrence, onRepeatDropdownOpen } = props;
     const intl = useIntl();
     const repeatItems = getRepeatItems(intl, startDate, allowHourlyRecurrence);
     const repeatTypeItem = repeatItems.find((item) => item.id === repeatType);
@@ -103,6 +104,7 @@ export const RepeatTypeSelect: React.FC<IRepeatTypeSelectProps> = (props) => {
             className="gd-recurrence-form-type s-recurrence-form-type"
             renderButton={({ toggleDropdown, isOpen }) => (
                 <DropdownButton
+                    id={id}
                     value={repeatTypeItem.title}
                     onClick={() => {
                         !isOpen && onRepeatDropdownOpen?.();

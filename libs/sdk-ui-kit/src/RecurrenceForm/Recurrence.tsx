@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React from "react";
 import { RepeatTypeSelect } from "./RepeatTypeSelect.js";
@@ -48,11 +48,17 @@ export const Recurrence: React.FC<IRecurrenceProps> = (props) => {
         onRecurrenceDropdownOpen,
     } = props;
 
+    const accessibilityValue = "schedule.recurrence";
     return (
         <div className="gd-recurrence-form-repeat gd-input-component">
-            {label ? <label className="gd-label">{label}</label> : null}
+            {label ? (
+                <label htmlFor={accessibilityValue} className="gd-label">
+                    {label}
+                </label>
+            ) : null}
             <div className="gd-recurrence-form-repeat-inner">
                 <RepeatTypeSelect
+                    id={accessibilityValue}
                     repeatType={recurrenceType}
                     startDate={startDate}
                     onChange={onRepeatTypeChange}
@@ -70,6 +76,7 @@ export const Recurrence: React.FC<IRecurrenceProps> = (props) => {
                 ) : null}
                 {recurrenceType === RECURRENCE_TYPES.CRON ? (
                     <CronExpression
+                        id={accessibilityValue}
                         expression={cronValue}
                         onChange={onCronValueChange}
                         allowHourlyRecurrence={allowHourlyRecurrence}
