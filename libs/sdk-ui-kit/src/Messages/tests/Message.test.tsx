@@ -1,6 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2022 GoodData Corporation
 import React from "react";
-import { IntlProvider } from "react-intl";
 import { render, screen, waitFor } from "@testing-library/react";
 import defaultUserEvent from "@testing-library/user-event";
 import noop from "lodash/noop.js";
@@ -15,18 +14,11 @@ import { IMessageProps } from "../typings.js";
 // https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
 const userEvent = defaultImport(defaultUserEvent);
 
-const DefaultLocale = "en-US";
-const messages = {
-    "message.accessibility.dismiss.notification": "Dismiss notification",
-};
-
 function renderMessage(options: Partial<IMessageProps>, children: JSX.Element = null) {
     return render(
-        <IntlProvider key={DefaultLocale} locale={DefaultLocale} messages={messages}>
-            <Message type={"success"} {...options}>
-                {children}
-            </Message>
-        </IntlProvider>,
+        <Message type={"success"} {...options}>
+            {children}
+        </Message>,
     );
 }
 
@@ -37,9 +29,9 @@ interface IMessageComponentProps {
 const MessageComponent: React.FC<IMessageComponentProps> = ({ onClick = noop }) => (
     <div>
         Test component with
-        <button className="link" onClick={onClick}>
+        <a className="link" onClick={onClick}>
             fake link
-        </button>
+        </a>
     </div>
 );
 
@@ -81,7 +73,7 @@ describe("Message", () => {
             onClose,
         });
 
-        await userEvent.click(screen.getByLabelText("Dismiss notification"));
+        await userEvent.click(screen.getByLabelText("dismiss"));
         await waitFor(() => {
             expect(onClose).toHaveBeenCalledTimes(1);
         });

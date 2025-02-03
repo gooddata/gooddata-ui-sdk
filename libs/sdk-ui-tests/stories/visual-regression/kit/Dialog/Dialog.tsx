@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import React, { PureComponent } from "react";
 import {
     Button,
@@ -14,7 +14,6 @@ import { wrapWithTheme } from "../../themeWrapper.js";
 
 import "@gooddata/sdk-ui-kit/styles/css/main.css";
 import "./styles.scss";
-import { IntlWrapper } from "@gooddata/sdk-ui";
 
 class DialogExamples extends PureComponent {
     state = {
@@ -156,27 +155,25 @@ class DialogExamples extends PureComponent {
 
     public renderCommunityEditionDialogContent(): JSX.Element {
         return (
-            <IntlWrapper>
-                <CommunityEditionDialog
-                    onClose={() => {
-                        this.setState({ communityDialogOpen: false });
-                    }}
-                    headerText="About GoodData.CN community edition"
-                    infoText="The community edition is meant for evaluation purposes only."
-                    copyrightText="Copyright (c) 2021 GoodData Corporation"
-                    closeButtonText="Close"
-                    links={[
-                        {
-                            text: "Licence information",
-                            uri: "#licence",
-                        },
-                        {
-                            text: "Terms of use",
-                            uri: "#tou",
-                        },
-                    ]}
-                />
-            </IntlWrapper>
+            <CommunityEditionDialog
+                onClose={() => {
+                    this.setState({ communityDialogOpen: false });
+                }}
+                headerText="About GoodData.CN community edition"
+                infoText="The community edition is meant for evaluation purposes only."
+                copyrightText="Copyright (c) 2021 GoodData Corporation"
+                closeButtonText="Close"
+                links={[
+                    {
+                        text: "Licence information",
+                        uri: "#licence",
+                    },
+                    {
+                        text: "Terms of use",
+                        uri: "#tou",
+                    },
+                ]}
+            />
         );
     }
 

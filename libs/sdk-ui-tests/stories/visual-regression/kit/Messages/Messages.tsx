@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2020 GoodData Corporation
 import React from "react";
 import reject from "lodash/reject.js";
 import keys from "lodash/keys.js";
@@ -8,7 +8,6 @@ import { wrapWithTheme } from "../../themeWrapper.js";
 
 import { storiesOf } from "../../../_infra/storyRepository.js";
 import { UiKit } from "../../../_infra/storyGroups.js";
-import { withIntl } from "@gooddata/sdk-ui";
 
 const info: { guidelines: { name: string }[]; messages: Record<string, IMessage> } = {
     guidelines: [
@@ -155,8 +154,6 @@ class MessagesExamples extends React.Component<unknown, IMessagesExamplesState> 
     }
 }
 
-const WithIntl = withIntl(MessagesExamples);
-
 storiesOf(`${UiKit}/Messages`)
-    .add("full-featured", () => <WithIntl />, { screenshot: true })
-    .add("themed", () => wrapWithTheme(<WithIntl />), { screenshot: true });
+    .add("full-featured", () => <MessagesExamples />, { screenshot: true })
+    .add("themed", () => wrapWithTheme(<MessagesExamples />), { screenshot: true });
