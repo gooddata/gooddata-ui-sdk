@@ -4,7 +4,6 @@ import cx from "classnames";
 import { DashboardItem, DashboardItemBase } from "../../../presentationComponents/index.js";
 import { IDefaultDashboardRichTextWidgetProps } from "./types.js";
 import { DashboardRichText } from "../../richText/DashboardRichText.js";
-import { useWidgetHighlighting } from "../../common/useWidgetHighlighting.js";
 
 /**
  * @internal
@@ -15,15 +14,10 @@ export const ExportableDashboardRichTextWidget: React.FC<IDefaultDashboardRichTe
     dashboardItemClasses,
     exportData,
 }) => {
-    const { elementRef, highlighted } = useWidgetHighlighting(widget);
-
     return (
         <DashboardItem
-            className={cx(dashboardItemClasses, "type-visualization", "gd-dashboard-view-widget", {
-                "gd-highlighted": highlighted,
-            })}
+            className={cx(dashboardItemClasses, "type-visualization", "gd-dashboard-view-widget")}
             screen={screen}
-            ref={elementRef}
             exportData={exportData?.section}
         >
             <DashboardItemBase visualizationClassName="gd-rich-text-widget-wrapper">

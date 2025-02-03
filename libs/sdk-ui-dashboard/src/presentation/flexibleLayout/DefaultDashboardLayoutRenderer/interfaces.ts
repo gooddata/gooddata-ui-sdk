@@ -13,6 +13,7 @@ import {
     IDashboardLayoutSectionFacade,
 } from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { CommonExportDataAttributes, HeaderExportData } from "../../export/index.js";
+import { DashboardFocusObject } from "../../../model/index.js";
 
 /**
  * Default props provided to {@link IDashboardLayoutSectionKeyGetter}.
@@ -428,6 +429,11 @@ export interface IDashboardLayoutRenderProps<TWidget = IDashboardWidget> {
     renderMode?: RenderMode;
 
     /**
+     * Dashboard focus object.
+     */
+    focusObject?: DashboardFocusObject;
+
+    /**
      * The size of layout item in which the layout is nested. Undefined, when the layout is the root layout.
      */
     parentLayoutItemSize?: IDashboardLayoutSizeByScreenSize;
@@ -440,7 +446,10 @@ export interface IDashboardLayoutRenderProps<TWidget = IDashboardWidget> {
     /**
      * Transformer for export layout
      */
-    exportTransformer?: <TWidget>(layout: IDashboardLayout<TWidget>) => IDashboardLayout<TWidget> | undefined;
+    exportTransformer?: <TWidget>(
+        layout: IDashboardLayout<TWidget>,
+        focusObject?: DashboardFocusObject,
+    ) => IDashboardLayout<TWidget> | undefined;
 }
 
 /**

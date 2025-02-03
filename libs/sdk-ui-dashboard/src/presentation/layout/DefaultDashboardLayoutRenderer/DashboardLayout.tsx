@@ -63,6 +63,7 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
         exportTransformer,
         enableCustomHeight,
         renderMode = "view",
+        focusObject,
     } = props;
 
     const layoutRef = React.useRef<HTMLDivElement>(null);
@@ -73,13 +74,15 @@ export function DashboardLayout<TWidget>(props: IDashboardLayoutRenderProps<TWid
         const exportMode = renderMode === "export";
         let unifiedLayout = unifyDashboardLayoutItemHeights(updatedLayout);
         if (exportMode) {
-            unifiedLayout = exportTransformer?.(unifiedLayout) ?? layoutTransformer<TWidget>(unifiedLayout);
+            unifiedLayout =
+                exportTransformer?.(unifiedLayout, focusObject) ??
+                layoutTransformer<TWidget>(unifiedLayout, focusObject);
         }
 
         const layoutFacade = DashboardLayoutFacade.for(unifiedLayout);
         const resizedItemPositions = exportMode ? [] : getResizedItemPositions(layout, layoutFacade.raw());
         return { layoutFacade, resizedItemPositions };
-    }, [layout, enableCustomHeight, exportTransformer]);
+    }, [layout, enableCustomHeight, exportTransformer, renderMode, focusObject]);
 
     const sectionRendererWrapped = useCallback<IDashboardLayoutSectionRenderer<TWidget>>(
         (renderProps) =>

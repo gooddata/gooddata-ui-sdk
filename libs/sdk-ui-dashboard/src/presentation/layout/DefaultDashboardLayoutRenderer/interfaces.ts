@@ -6,6 +6,7 @@ import {
     IDashboardLayoutSectionFacade,
 } from "../../../_staging/dashboard/legacyFluidLayout/facade/interfaces.js";
 import { CommonExportDataAttributes, SectionExportData } from "../../export/index.js";
+import { DashboardFocusObject } from "../../../model/index.js";
 
 /**
  * Default props provided to {@link IDashboardLayoutSectionKeyGetter}.
@@ -412,12 +413,20 @@ export interface IDashboardLayoutRenderProps<TWidget = IDashboardWidget> {
     /**
      * Transformer for export layout
      */
-    exportTransformer?: <TWidget>(layout: IDashboardLayout<TWidget>) => IDashboardLayout<TWidget> | undefined;
+    exportTransformer?: <TWidget>(
+        layout: IDashboardLayout<TWidget>,
+        focusObject?: DashboardFocusObject,
+    ) => IDashboardLayout<TWidget> | undefined;
 
     /**
      * Dashboard render mode
      */
     renderMode?: RenderMode;
+
+    /**
+     * Dashboard focus object.
+     */
+    focusObject?: DashboardFocusObject;
 }
 
 /**
