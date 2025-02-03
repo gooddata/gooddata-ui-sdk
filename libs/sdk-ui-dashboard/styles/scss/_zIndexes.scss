@@ -20,8 +20,6 @@ $drill-dialog-error: $drill-dialog-loading + 1;
 $drill-select: 5002;
 $drill-dialog-charts: $filterbar-sdk-8-12 + 1;
 
-$layout-fluidlayout-item-changed: $drag-and-drop-draggable-wrapper + 1;
-
 $topbar-basic: 5001;
 
 $kpi-alert-dialog: 1000;
@@ -29,6 +27,8 @@ $kpi-alert-dialog: 1000;
 $resize-basic: 101;
 $resize-basic-overlay: $resize-basic + 4;
 $resize-basic-overlay-text: $resize-basic-overlay + 1;
+
+$layout-fluidlayout-item-changed: $resize-basic-overlay-text + 1;
 
 $scheduled-email-mask: 5001;
 $scheduled-email-mask-small: $scheduled-email-mask + 1;
