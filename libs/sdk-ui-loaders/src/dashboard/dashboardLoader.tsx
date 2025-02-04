@@ -292,17 +292,29 @@ export class DashboardLoader implements IDashboardLoader {
         const { config } = this.baseProps;
         let dashboardConfig = config;
 
-        const dashboardWithPlugins =
-            dashboardRef &&
-            (await backend
-                .workspace(workspace)
-                .dashboards()
-                .getDashboardWithReferences(
-                    dashboardRef,
-                    filterContextRef,
-                    { loadUserData: true, exportId: config?.exportId },
-                    ["dashboardPlugin", "dataSet"],
-                ));
+        let dashboardWithPlugins: IDashboardWithReferences | undefined;
+        if (
+            config?.settings?.enableCriticalContentPerformanceOptimizations &&
+            isDashboard(dashboard) &&
+            config?.references
+        ) {
+            dashboardWithPlugins = {
+                dashboard,
+                references: config.references,
+            };
+        } else {
+            dashboardWithPlugins =
+                dashboardRef &&
+                (await backend
+                    .workspace(workspace)
+                    .dashboards()
+                    .getDashboardWithReferences(
+                        dashboardRef,
+                        filterContextRef,
+                        { loadUserData: true, exportId: config?.exportId },
+                        ["dashboardPlugin", "dataSet"],
+                    ));
+        }
 
         const ctx: DashboardContext = {
             backend,

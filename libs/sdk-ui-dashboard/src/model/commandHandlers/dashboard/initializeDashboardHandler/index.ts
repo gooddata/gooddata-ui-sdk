@@ -80,6 +80,16 @@ async function loadDashboardFromBackend(
         // as our version of dashboard differs from what is on the backend
         // hence we must do the resolution on the client
         if (hasPersistedDashboard) {
+            if (
+                ctx.config?.settings?.enableCriticalContentPerformanceOptimizations &&
+                ctx.config?.references
+            ) {
+                return {
+                    dashboard: preloadedDashboard,
+                    references: ctx.config.references,
+                };
+            }
+
             const insights = await loadInsightsForPersistedDashboard(ctx, preloadedDashboard);
             return {
                 dashboard: preloadedDashboard,
