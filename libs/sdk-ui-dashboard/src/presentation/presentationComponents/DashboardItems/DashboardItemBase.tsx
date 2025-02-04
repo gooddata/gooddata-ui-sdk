@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React, { MouseEvent } from "react";
 
 import { DashboardItemContent } from "./DashboardItemContent.js";
@@ -49,6 +49,11 @@ export interface IDashboardItemBaseProps {
      * Flag indicating the given item is selected.
      */
     isSelected?: boolean;
+
+    /**
+     * Is export flag.
+     */
+    isExport?: boolean;
     /**
      * Callback to call when an item is selected. Called with the relevant mouse event if originating from a click.
      */
@@ -72,6 +77,7 @@ export const DashboardItemBase: React.FC<IDashboardItemBaseProps> = ({
     contentRef,
     isSelectable = false,
     isSelected = false,
+    isExport = false,
     onSelected,
     onEnter,
     onLeave,
@@ -86,6 +92,7 @@ export const DashboardItemBase: React.FC<IDashboardItemBaseProps> = ({
                         ref={contentRef}
                         isSelectable={isSelectable}
                         isSelected={isSelected}
+                        isExport={isExport}
                         onSelected={onSelected}
                         onEnter={onEnter}
                         onLeave={onLeave}

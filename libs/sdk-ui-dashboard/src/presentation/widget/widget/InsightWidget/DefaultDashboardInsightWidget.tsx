@@ -155,6 +155,7 @@ const DefaultDashboardInsightWidgetCore: React.FC<
             exportData={exportData?.section}
         >
             <DashboardItemVisualization
+                isExport={!!exportData}
                 renderHeadline={(clientHeight) =>
                     !widget.configuration?.hideTitle && (
                         <DashboardItemHeadline

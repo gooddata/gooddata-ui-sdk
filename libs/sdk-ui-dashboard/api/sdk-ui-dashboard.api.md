@@ -7434,6 +7434,7 @@ export type SectionSlidesTransformer<TWidget> = (section: IDashboardLayoutSectio
 export interface SectionSlidesTransformerFunction<TWidget> {
     breakUpSlide: (section: IDashboardLayoutSection<TWidget>) => IDashboardLayoutSection<TWidget>[] | undefined;
     containerSlide: (item: IDashboardLayoutItem<TWidget>, transform: (section: IDashboardLayoutSection<TWidget>) => IDashboardLayoutSection<TWidget>[] | undefined) => IDashboardLayoutSection<TWidget>[] | undefined;
+    containerSwitcherSlide: (item: IDashboardLayoutItem<TWidget>, transform: (section: IDashboardLayoutSection<TWidget>) => IDashboardLayoutSection<TWidget>[] | undefined) => IDashboardLayoutSection<TWidget>[] | undefined;
     containsVisualisationSwitcher: (section: IDashboardLayoutSection<TWidget>) => boolean;
     defaultItems: (section: IDashboardLayoutSection<TWidget>) => IDashboardLayoutSection<TWidget>[] | undefined;
     defaultSection: (section: IDashboardLayoutSection<TWidget>) => IDashboardLayoutSection<TWidget>[] | undefined;

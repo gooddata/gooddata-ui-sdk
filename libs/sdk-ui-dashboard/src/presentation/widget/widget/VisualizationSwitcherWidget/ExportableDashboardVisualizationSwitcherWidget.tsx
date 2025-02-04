@@ -19,7 +19,10 @@ export const ExportableDashboardVisualizationSwitcherWidget: React.FC<
             screen={screen}
             exportData={exportData?.section}
         >
-            <DashboardItemBase visualizationClassName="gd-visualization-switcher-widget-wrapper">
+            <DashboardItemBase
+                visualizationClassName="gd-visualization-switcher-widget-wrapper"
+                isExport={true}
+            >
                 {() => (
                     <DashboardVisualizationSwitcher widget={widget} screen={screen} exportData={exportData} />
                 )}

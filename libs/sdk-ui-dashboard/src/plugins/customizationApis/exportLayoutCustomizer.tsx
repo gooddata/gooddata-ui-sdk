@@ -10,11 +10,12 @@ import {
     widgetSlideTransformer,
     sectionItemsLayoutSection,
     sectionLayoutSection,
+    containerSwitcherSlideTransformer,
+    containsVisualizationSwitcher,
 } from "../../_staging/slideshow/index.js";
 
 import { IDashboardCustomizationLogger } from "./customizationLogging.js";
 import { CustomizerMutationsContext } from "./types.js";
-import { containsVisualizationSwitcher } from "../../_staging/slideshow/utils/index.js";
 
 export class ExportLayoutCustomizer<TWidget> implements IExportLayoutCustomizer<TWidget> {
     private transformers: SectionSlidesTransformer<TWidget>[] = [];
@@ -43,6 +44,7 @@ export class ExportLayoutCustomizer<TWidget> implements IExportLayoutCustomizer<
                         widgetSlide: widgetSlideTransformer,
                         switcherSlide: switcherSlideTransformer,
                         containerSlide: containerSlideTransformer,
+                        containerSwitcherSlide: containerSwitcherSlideTransformer,
                         itemsSlide: itemsSlideTransformer,
                         containsVisualisationSwitcher: containsVisualizationSwitcher,
                     });
