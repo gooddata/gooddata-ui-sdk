@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 import * as Navigation from "../../tools/navigation";
 import { AttributeFilter } from "../../tools/filterBar";
 import { TopBar } from "../../tools/dashboards";
@@ -234,6 +234,8 @@ describe("Dependent filter", () => {
             .showAllElementValuesIsVisible(true);
 
         topBar.cancelEditMode().discardChanges().editButtonIsVisible(true);
+
+        table.waitLoaded();
 
         regionFilter.isLoaded().open().hasSubtitle("East Coast").hasFilterListSize(4);
         stateFilter.isLoaded().open().hasSubtitle("All").hasFilterListSize(48);
