@@ -1,5 +1,5 @@
 // (C) 2021-2025 GoodData Corporation
-import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { IAnalyticalBackend, IDashboardReferences } from "@gooddata/sdk-backend-spi";
 import {
     IColorPalette,
     ObjRef,
@@ -250,6 +250,14 @@ export interface DashboardConfig {
      *
      */
     slideConfig?: DashboardExportSlideConfig;
+
+    /**
+     * @alpha
+     *
+     * Dashboard referenced objects.
+     * If provided, initialization of the dashboard avoid additional requests to resolve them.
+     */
+    references?: IDashboardReferences;
 }
 
 /**
@@ -314,7 +322,7 @@ export interface DashboardFocusObject {
  */
 export type ResolvedDashboardConfig = Omit<
     Required<DashboardConfig>,
-    "mapboxToken" | "exportId" | "focusObject" | "slideConfig"
+    "mapboxToken" | "exportId" | "focusObject" | "slideConfig" | "references"
 > &
     DashboardConfig;
 

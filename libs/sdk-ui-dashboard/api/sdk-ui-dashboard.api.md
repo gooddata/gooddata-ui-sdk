@@ -179,6 +179,7 @@ import { IDashboardLayoutSectionHeader } from '@gooddata/sdk-model';
 import { IDashboardLayoutSizeByScreenSize } from '@gooddata/sdk-model';
 import { IDashboardObjectIdentity } from '@gooddata/sdk-model';
 import { IDashboardPermissions } from '@gooddata/sdk-model';
+import { IDashboardReferences } from '@gooddata/sdk-backend-spi';
 import { IDashboardRichTextProps as IDashboardRichTextProps_2 } from './types.js';
 import { IDashboardVisualizationSwitcherProps as IDashboardVisualizationSwitcherProps_2 } from './types.js';
 import { IDashboardWidget } from '@gooddata/sdk-model';
@@ -1592,6 +1593,8 @@ export interface DashboardConfig {
     // @beta
     menuButtonItemsVisibility?: IMenuButtonItemsVisibility;
     objectAvailability?: ObjectAvailabilityConfig;
+    // @alpha
+    references?: IDashboardReferences;
     separators?: ISeparators;
     settings?: ISettings;
     // @alpha
@@ -7237,7 +7240,7 @@ export interface ResolveAsyncRenderPayload {
 }
 
 // @public
-export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "exportId" | "focusObject" | "slideConfig"> & DashboardConfig;
+export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "exportId" | "focusObject" | "slideConfig" | "references"> & DashboardConfig;
 
 // @alpha (undocumented)
 export type ResolvedDateFilterValues = IResolvedDateFilterValue[];
