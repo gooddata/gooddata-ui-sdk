@@ -14,7 +14,10 @@ import {
     selectFilterContextAttributeFilterByLocalId,
 } from "../../../store/filterContext/filterContextSelectors.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
-import { selectIsCrossFiltering } from "../../../store/drill/drillSelectors.js";
+import {
+    selectIsCrossFiltering,
+    selectIsFilterFromCrossFilteringByLocalIdentifier,
+} from "../../../store/drill/drillSelectors.js";
 
 export function* changeAttributeFilterSelectionHandler(
     ctx: DashboardContext,
@@ -64,7 +67,10 @@ export function* changeAttributeFilterSelectionHandler(
     }
 
     const isCrossFiltering = yield select(selectIsCrossFiltering);
-    if (isCrossFiltering) {
+    const isCurrentFilterCrossFiltering = yield select(
+        selectIsFilterFromCrossFilteringByLocalIdentifier(filterLocalId),
+    );
+    if (isCrossFiltering && !isCurrentFilterCrossFiltering) {
         yield call(resetCrossFiltering, cmd);
     }
 
