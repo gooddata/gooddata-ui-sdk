@@ -1,7 +1,7 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 
 import { SagaIterator } from "redux-saga";
-import { select } from "redux-saga/effects";
+import { put, select } from "redux-saga/effects";
 import { IDashboardDateFilter } from "@gooddata/sdk-model";
 
 import { IDashboardCommand } from "../../commands/base.js";
@@ -12,6 +12,9 @@ import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import { selectEffectiveDateFilterOptions } from "../../store/dateFilterConfig/dateFilterConfigSelectors.js";
 import { findDateFilterOptionByValue } from "../../../_staging/dateFilterConfig/dateFilterOptionMapping.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { removeAttributeFilters } from "../../commands/filters.js";
+import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
+import { drillActions } from "../../store/drill/index.js";
 
 export function* dispatchFilterContextChanged(
     ctx: DashboardContext,
@@ -52,4 +55,12 @@ export function* canApplyDateFilter(dateFilter: IDashboardDateFilter): SagaItera
     }
 
     return !!targetOption;
+}
+
+export function* resetCrossFiltering(cmd: IDashboardCommand) {
+    const virtualFilters: ReturnType<typeof selectCrossFilteringFiltersLocalIdentifiers> = yield select(
+        selectCrossFilteringFiltersLocalIdentifiers,
+    );
+    yield put(removeAttributeFilters(virtualFilters, cmd.correlationId));
+    yield put(drillActions.resetCrossFiltering());
 }

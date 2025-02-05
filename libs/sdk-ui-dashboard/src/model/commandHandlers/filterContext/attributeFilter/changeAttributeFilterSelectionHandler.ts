@@ -1,4 +1,4 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { all, call, put, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import { invariant } from "ts-invariant";
@@ -8,12 +8,13 @@ import { attributeFilterSelectionChanged } from "../../../events/filters.js";
 import { ChangeAttributeFilterSelection } from "../../../commands/filters.js";
 import { filterContextActions } from "../../../store/filterContext/index.js";
 import { DashboardContext } from "../../../types/commonTypes.js";
-import { dispatchFilterContextChanged } from "../common.js";
+import { dispatchFilterContextChanged, resetCrossFiltering } from "../common.js";
 import {
     selectAttributeFilterDescendants,
     selectFilterContextAttributeFilterByLocalId,
 } from "../../../store/filterContext/filterContextSelectors.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
+import { selectIsCrossFiltering } from "../../../store/drill/drillSelectors.js";
 
 export function* changeAttributeFilterSelectionHandler(
     ctx: DashboardContext,
@@ -60,6 +61,11 @@ export function* changeAttributeFilterSelectionHandler(
                 ),
             ),
         );
+    }
+
+    const isCrossFiltering = yield select(selectIsCrossFiltering);
+    if (isCrossFiltering) {
+        yield call(resetCrossFiltering, cmd);
     }
 
     yield dispatchDashboardEvent(attributeFilterSelectionChanged(ctx, changedFilter, cmd.correlationId));
