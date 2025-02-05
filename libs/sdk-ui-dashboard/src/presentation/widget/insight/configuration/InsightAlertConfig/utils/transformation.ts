@@ -10,10 +10,15 @@ import {
     IAutomationMetadataObject,
     IAutomationRecipient,
     IRelativeDateFilter,
+    ObjRefInScope,
     IFilter,
+    IMeasure,
     isArithmeticMeasure,
     isRelativeDateFilter,
     objRefToString,
+    isRankingFilter,
+    isMeasureValueFilter,
+    isLocalIdRef,
 } from "@gooddata/sdk-model";
 
 import {
@@ -38,7 +43,7 @@ import {
  * @param metrics - all available metrics
  * @param alert - alert to transform
  * @param measure - selected metric
- * @param catalogMeasures - all available measures from catalog
+ * @param measureFormatMap - all available measures from catalog
  */
 export function transformAlertByMetric(
     metrics: AlertMetric[],
@@ -225,7 +230,7 @@ export function transformAlertByComparisonOperator(
  * @param measure - selected metric
  * @param relativeOperator - selected relative operator
  * @param arithmeticOperator - selected arithmetic operator
- * @param catalogMeasures - all available measures from catalog
+ * @param measureFormatMap - all available measures from catalog
  * @param comparatorType - selected comparator type
  */
 export function transformAlertByRelativeOperator(
@@ -381,6 +386,11 @@ export function transformAlertExecutionByMetric(
                 auxMeasures: [
                     ...collectAllRelatedMeasures(metrics, measure.measure),
                     ...collectAllRelatedMeasures(metrics, periodMeasure.measure),
+                    ...collectAllRelatedMeasuresFromFilters(
+                        metrics,
+                        [measure.measure, periodMeasure.measure],
+                        originalFilters,
+                    ),
                 ],
             },
             metadata: {
@@ -396,7 +406,10 @@ export function transformAlertExecutionByMetric(
             ...execution,
             filters: [...originalFilters],
             measures: [measure.measure],
-            auxMeasures: collectAllRelatedMeasures(metrics, measure.measure),
+            auxMeasures: [
+                ...collectAllRelatedMeasures(metrics, measure.measure),
+                ...collectAllRelatedMeasuresFromFilters(metrics, [measure.measure], originalFilters),
+            ],
         },
         metadata: {
             ...alert.metadata,
@@ -520,4 +533,37 @@ function collectAllRelatedMeasures(metrics: AlertMetric[], measure: AlertMetric[
         return related.map((m) => m.measure);
     }
     return [];
+}
+
+function collectAllRelatedMeasuresFromFilters(
+    metrics: AlertMetric[],
+    alreadyUsed: IMeasure[],
+    filters: IFilter[],
+): IMeasure[] {
+    return filters.reduce<IMeasure[]>((acc, filter) => {
+        if (isRankingFilter(filter)) {
+            const measure = filter.rankingFilter.measure;
+            collectMeasure(metrics, alreadyUsed, measure, acc);
+        }
+        if (isMeasureValueFilter(filter)) {
+            const measure = filter.measureValueFilter.measure;
+            collectMeasure(metrics, alreadyUsed, measure, acc);
+        }
+
+        return acc;
+    }, []);
+}
+
+function collectMeasure(
+    metrics: AlertMetric[],
+    alreadyUsed: IMeasure[],
+    measure: ObjRefInScope,
+    acc: IMeasure[],
+) {
+    if (isLocalIdRef(measure)) {
+        const related = metrics.find((m) => m.measure.measure.localIdentifier === measure.localIdentifier);
+        if (related && !alreadyUsed.includes(related.measure)) {
+            acc.push(related.measure);
+        }
+    }
 }
