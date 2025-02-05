@@ -34,8 +34,8 @@ cleanup() {
     if [ -n "$WORKSPACE_CREATED" ]; then
       if [ $DELETE_MODE = "delete_never" ]; then
         echo "DELETE_MODE is delete_never, skip deleting the created workspace"
-      else
-        node $ROOT_DIR/common/scripts/install-run-rushx.js delete-ref-workspace
+#      else
+#        node $ROOT_DIR/common/scripts/install-run-rushx.js delete-ref-workspace
       fi
     fi
     rm -f $E2E_TEST_DIR/.env
