@@ -407,13 +407,15 @@ const DefaultDashboardAttributeFilterInner = (props: IDashboardAttributeFilterPr
         userInteraction,
     ]);
 
+    const AttributeFilterComponent = props.AttributeFilterComponent ?? AttributeFilterButton;
+
     return (
         <AttributeFilterParentFilteringProvider
             filter={filter}
             attributes={attributes}
             displayAsLabel={displayAsLabel}
         >
-            <AttributeFilterButton
+            <AttributeFilterComponent
                 title={filter.attributeFilter.title}
                 resetOnParentFilterChange={false}
                 filter={attributeFilter}

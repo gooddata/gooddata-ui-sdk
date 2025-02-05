@@ -138,6 +138,7 @@ import { IAttributeElement } from '@gooddata/sdk-model';
 import { IAttributeElements } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IAttributeFilterBaseProps } from '@gooddata/sdk-ui-filters';
+import type { IAttributeFilterButtonProps } from '@gooddata/sdk-ui-filters';
 import { IAttributeMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IAttributeWithReferences } from '@gooddata/sdk-backend-spi';
@@ -4122,6 +4123,8 @@ export interface IDashboardAttributeFilterPlaceholderProps {
 
 // @public (undocumented)
 export interface IDashboardAttributeFilterProps {
+    // @alpha
+    AttributeFilterComponent?: ComponentType<IAttributeFilterButtonProps>;
     autoOpen?: boolean;
     displayAsLabel?: ObjRef;
     filter: IDashboardAttributeFilter;
