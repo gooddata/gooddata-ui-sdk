@@ -28,6 +28,7 @@ import {
     selectWidgetsOverlayState,
     selectWidgetsModification,
     selectSectionModification,
+    selectIsInExportMode,
     selectIsExport,
     useWidgetSelection,
     isExtendedDashboardLayoutWidget,
@@ -100,6 +101,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     const insights = useDashboardSelector(selectInsightsMap);
     const settings = useDashboardSelector(selectSettings);
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
+    const isExportMode = useDashboardSelector(selectIsInExportMode);
     const isExport = useDashboardSelector(selectIsExport);
     const enableWidgetCustomHeight = useDashboardSelector(selectEnableWidgetCustomHeight);
 
@@ -132,7 +134,7 @@ export const DashboardLayoutWidget: IDashboardLayoutWidgetRenderer<
     const { ErrorComponent, LoadingComponent } = useDashboardComponentsContext();
 
     const currentSize = item.size()[screen]!;
-    const minHeight = calculateWidgetMinHeight(item.raw(), currentSize, insights, settings);
+    const minHeight = calculateWidgetMinHeight(item.raw(), currentSize, insights, settings, isExportMode);
     const height =
         currentSize.heightAsRatio && !currentSize.gridHeight
             ? getDashboardLayoutItemHeightForRatioAndScreen(currentSize, screen)
