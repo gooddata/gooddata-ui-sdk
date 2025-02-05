@@ -442,6 +442,27 @@ export interface SectionSlidesTransformerFunction<TWidget> {
     ) => IDashboardLayoutSection<TWidget>[] | undefined;
 
     /**
+     * This is more complex transformer that is used to transform container item in the layout to a slide. Container item is
+     * transformed as a structured slide, but if it contains a visualization switcher, switcher is spread into multiple slides
+     * where each slide contains one visualization from each switcher.
+     *
+     * @remarks
+     * If there are 2 switchers in the container, one with 3 visualizations and the other with 2 visualizations, then
+     * this transformer will create 3 slides. First slide will contain first visualizations from both switchers, second slide
+     * will contain second visualizations from both switchers and last slide will contain third visualization from the first
+     * switcher and empty item from the second switcher.
+     *
+     * @param item - Layout item specifically  container to transform
+     * @param transform - function to transform each section in the layout
+     */
+    containerSwitcherSlide: (
+        item: IDashboardLayoutItem<TWidget>,
+        transform: (
+            section: IDashboardLayoutSection<TWidget>,
+        ) => IDashboardLayoutSection<TWidget>[] | undefined,
+    ) => IDashboardLayoutSection<TWidget>[] | undefined;
+
+    /**
      * This is helper function that is used to iterate all items in the section. On every item
      * it calls provided transform function. This function is used to transform all items in the section.
      *

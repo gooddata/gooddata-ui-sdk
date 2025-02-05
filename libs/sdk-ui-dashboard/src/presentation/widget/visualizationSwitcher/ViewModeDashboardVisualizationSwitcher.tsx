@@ -191,6 +191,7 @@ export const ViewModeDashboardVisualizationSwitcherContent: React.FC<
             description={accessibilityWidgetDescription}
         >
             <DashboardItemVisualization
+                isExport={!!exportData}
                 renderHeadline={(clientHeight, clientWidth) => (
                     <VisualizationSwitcherNavigationHeader
                         widget={widget}

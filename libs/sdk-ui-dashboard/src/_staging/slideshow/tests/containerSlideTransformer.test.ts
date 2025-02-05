@@ -98,34 +98,7 @@ describe("ContainerSlideTransformer", () => {
             sectionLayoutSection,
         );
 
-        expect(data).toEqual([
-            {
-                items: [
-                    {
-                        size: {
-                            xl: base,
-                            lg: base,
-                            xs: base,
-                            sm: base,
-                            md: base,
-                        },
-                        type: "IDashboardLayoutItem",
-                        widget: {
-                            configuration: {},
-                            sections: [],
-                            size: {
-                                xl: {
-                                    gridHeight: 4,
-                                    gridWidth: 4,
-                                },
-                            },
-                            type: "IDashboardLayout",
-                        },
-                    },
-                ],
-                type: "IDashboardLayoutSection",
-            },
-        ]);
+        expect(data).toMatchSnapshot();
     });
 
     it("simple items in container, keep it as is", () => {
@@ -162,76 +135,7 @@ describe("ContainerSlideTransformer", () => {
             sectionLayoutSection,
         );
 
-        expect(data).toEqual([
-            {
-                items: [
-                    {
-                        size: {
-                            xl: base,
-                            lg: base,
-                            xs: base,
-                            sm: base,
-                            md: base,
-                        },
-                        type: "IDashboardLayoutItem",
-                        widget: {
-                            configuration: {},
-                            sections: [
-                                {
-                                    header: {
-                                        description: "Description",
-                                        title: "Title",
-                                    },
-                                    items: [
-                                        {
-                                            size: {
-                                                xl: {
-                                                    gridHeight: 4,
-                                                    gridWidth: 4,
-                                                },
-                                            },
-                                            type: "IDashboardLayoutItem",
-                                            widget: {
-                                                drills: [],
-                                                identifier: "test1",
-                                                insight: { type: "insight", identifier: "test1" },
-                                                ref: { type: "insight", identifier: "test1" },
-                                                type: "insight",
-                                            },
-                                        },
-                                        {
-                                            size: {
-                                                xl: {
-                                                    gridHeight: 4,
-                                                    gridWidth: 4,
-                                                },
-                                            },
-                                            type: "IDashboardLayoutItem",
-                                            widget: {
-                                                drills: [],
-                                                identifier: "test2",
-                                                insight: { type: "insight", identifier: "test2" },
-                                                ref: { type: "insight", identifier: "test2" },
-                                                type: "insight",
-                                            },
-                                        },
-                                    ],
-                                    type: "IDashboardLayoutSection",
-                                },
-                            ],
-                            size: {
-                                xl: {
-                                    gridHeight: 4,
-                                    gridWidth: 4,
-                                },
-                            },
-                            type: "IDashboardLayout",
-                        },
-                    },
-                ],
-                type: "IDashboardLayoutSection",
-            },
-        ]);
+        expect(data).toMatchSnapshot();
     });
 
     it("visualisation switcher item in container, convert to flat", () => {
@@ -268,89 +172,6 @@ describe("ContainerSlideTransformer", () => {
             sectionLayoutSection,
         );
 
-        expect(data).toEqual([
-            {
-                header: {
-                    description: "Description",
-                    title: "Title",
-                },
-                items: [],
-                type: "IDashboardLayoutSection",
-            },
-            {
-                items: [
-                    {
-                        size: {
-                            xl: base,
-                            lg: base,
-                            xs: base,
-                            sm: base,
-                            md: base,
-                        },
-                        type: "IDashboardLayoutItem",
-                        widget: {
-                            size: {
-                                xl: {
-                                    gridHeight: 4,
-                                    gridWidth: 4,
-                                },
-                            },
-                            type: "IDashboardLayoutItem",
-                            widget: {
-                                drills: [],
-                                identifier: "test1",
-                                insight: {
-                                    identifier: "test1",
-                                    type: "insight",
-                                },
-                                ref: {
-                                    identifier: "test1",
-                                    type: "insight",
-                                },
-                                type: "insight",
-                            },
-                        },
-                    },
-                ],
-                type: "IDashboardLayoutSection",
-            },
-            {
-                items: [
-                    {
-                        size: {
-                            xl: base,
-                            lg: base,
-                            xs: base,
-                            sm: base,
-                            md: base,
-                        },
-                        type: "IDashboardLayoutItem",
-                        widget: {
-                            size: {
-                                xl: {
-                                    gridHeight: 4,
-                                    gridWidth: 4,
-                                },
-                            },
-                            type: "IDashboardLayoutItem",
-                            widget: {
-                                drills: [],
-                                identifier: "test2",
-                                insight: {
-                                    identifier: "test2",
-                                    type: "insight",
-                                },
-                                ref: {
-                                    identifier: "test2",
-                                    type: "insight",
-                                },
-                                type: "insight",
-                            },
-                        },
-                    },
-                ],
-                type: "IDashboardLayoutSection",
-            },
-        ]);
+        expect(data).toMatchSnapshot();
     });
 });

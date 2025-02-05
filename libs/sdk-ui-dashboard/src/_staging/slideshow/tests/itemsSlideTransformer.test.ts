@@ -68,61 +68,6 @@ describe("ItemsSlideTransformer", () => {
             ],
         );
 
-        expect(data).toEqual([
-            {
-                items: [
-                    {
-                        size: {
-                            xl: {
-                                gridHeight: 4,
-                                gridWidth: 4,
-                            },
-                        },
-                        type: "IDashboardLayoutItem",
-                        widget: {
-                            drills: [],
-                            identifier: "test1",
-                            insight: {
-                                identifier: "test1",
-                                type: "insight",
-                            },
-                            ref: {
-                                identifier: "test1",
-                                type: "insight",
-                            },
-                            type: "insight",
-                        },
-                    },
-                ],
-                type: "IDashboardLayoutSection",
-            },
-            {
-                items: [
-                    {
-                        size: {
-                            xl: {
-                                gridHeight: 4,
-                                gridWidth: 4,
-                            },
-                        },
-                        type: "IDashboardLayoutItem",
-                        widget: {
-                            drills: [],
-                            identifier: "test2",
-                            insight: {
-                                identifier: "test2",
-                                type: "insight",
-                            },
-                            ref: {
-                                identifier: "test2",
-                                type: "insight",
-                            },
-                            type: "insight",
-                        },
-                    },
-                ],
-                type: "IDashboardLayoutSection",
-            },
-        ]);
+        expect(data).toMatchSnapshot();
     });
 });

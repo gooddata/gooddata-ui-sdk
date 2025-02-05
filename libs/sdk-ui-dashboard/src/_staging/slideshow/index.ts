@@ -6,3 +6,5 @@ export * from "./containerSlideTransformer.js";
 export * from "./switcherSlideTransformer.js";
 export * from "./widgetSlideTransformer.js";
 export * from "./sectionSlideTransformer.js";
+export * from "./containerSwitcherSlideTransformer.js";
+export * from "./utils/index.js";
