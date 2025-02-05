@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React, { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 import {
@@ -49,13 +49,16 @@ export const WidgetAttachments = (props: IWidgetAttachmentsProps) => {
         }
     };
 
+    const accessibilityValue = "form.attachments";
+
     return (
         <div className="gd-input-component gd-notifications-channels-attachments s-notifications-channels-attachments">
-            <label className="gd-label">
+            <label htmlFor={accessibilityValue} className="gd-label">
                 <FormattedMessage id="dialogs.schedule.email.attachments.label" />
             </label>
             <div className="gd-attachment-list">
                 <AttachmentWidgets
+                    id={accessibilityValue}
                     csvSelected={csvSelected}
                     xlsxSelected={xlsxSelected}
                     settings={settings}

@@ -239,6 +239,7 @@ export function ScheduledMailDialogRenderer({
                                 notificationChannelId={editedAutomation.notificationChannel}
                             />
                             <Input
+                                id="schedule.subject"
                                 className="gd-notifications-channels-dialog-subject s-gd-notifications-channels-dialog-subject"
                                 label={intl.formatMessage({ id: "dialogs.schedule.email.subject.label" })}
                                 maxlength={MAX_SUBJECT_LENGTH}
@@ -251,6 +252,7 @@ export function ScheduledMailDialogRenderer({
                                 onChange={onSubjectChange}
                             />
                             <Textarea
+                                id="schedule.message"
                                 className="gd-notifications-channels-dialog-message s-gd-notifications-channels-dialog-message"
                                 label={intl.formatMessage({ id: "dialogs.schedule.email.message.label" })}
                                 maxlength={MAX_MESSAGE_LENGTH}

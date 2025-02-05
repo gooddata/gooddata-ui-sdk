@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import * as React from "react";
 import { WeekStart } from "@gooddata/sdk-model";
@@ -30,11 +30,16 @@ export const DateTime: React.FC<IDateTimeProps> = (props) => {
         onDateChange(newDate, !!selectedTime);
     };
 
+    const accessibilityValue = "schedule.start.time";
+
     return (
         <div className="gd-recurrence-form-datetime s-recurrence-form-datetime gd-input-component">
-            <label className="gd-label">{label}</label>
+            <label htmlFor={accessibilityValue} className="gd-label">
+                {label}
+            </label>
             <div className="gd-recurrence-form-datetime-inner">
                 <Datepicker
+                    id={accessibilityValue}
                     className="gd-recurrence-form-datetime-date s-recurrence-form-datetime-date"
                     date={date}
                     dateFormat={dateFormat}
@@ -44,6 +49,7 @@ export const DateTime: React.FC<IDateTimeProps> = (props) => {
                     weekStart={weekStart}
                 />
                 <Timepicker
+                    id={accessibilityValue}
                     className="gd-recurrence-form-datetime-time s-recurrence-form-datetime-time"
                     maxVisibleItemsCount={MAX_VISIBLE_TIME_ITEMS_COUNT}
                     time={date}

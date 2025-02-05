@@ -72,11 +72,13 @@ export const AlertAttributeSelect = ({
         return null;
     }
 
+    const accessibilityValue = "alert.attribute";
+
     return (
         <>
-            <div className="gd-edit-alert__measure-label">
+            <label htmlFor={accessibilityValue} className="gd-edit-alert__measure-label">
                 <FormattedMessage id="insightAlert.config.for" />
-            </div>
+            </label>
             <div className="gd-alert-attribute-select">
                 <Menu
                     toggler={
@@ -86,6 +88,7 @@ export const AlertAttributeSelect = ({
                             }}
                         >
                             <Button
+                                id={accessibilityValue}
                                 className={cx("gd-alert-attribute-select__button s-alert-attribute-select", {
                                     "is-active": opened,
                                 })}

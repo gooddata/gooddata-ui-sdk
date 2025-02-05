@@ -1,4 +1,4 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2025 GoodData Corporation
 import React, { useState } from "react";
 import { IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, Button, Icon, OverlayPositionType } from "@gooddata/sdk-ui-kit";
@@ -29,11 +29,13 @@ export const EditAlertConfiguration: React.FC<IEditAlertConfigurationProps> = ({
     const canSubmit = updatedAlert.alert?.trigger.mode !== alert.alert?.trigger.mode;
     const theme = useTheme();
 
+    const accessibilityValue = "alert.configuration.trigger";
+
     return (
         <div className="gd-edit-alert-configuration">
             <div className="gd-edit-alert-configuration__form">
-                <div className="gd-edit-alert-configuration__trigger-label">
-                    <FormattedMessage id="insightAlert.config.trigger" />{" "}
+                <label htmlFor={accessibilityValue} className="gd-edit-alert-configuration__trigger-label">
+                    <FormattedMessage id="insightAlert.config.trigger" />
                     <BubbleHoverTrigger>
                         <Icon.QuestionMark
                             className="gd-edit-alert-configuration__trigger-label-icon"
@@ -45,9 +47,10 @@ export const EditAlertConfiguration: React.FC<IEditAlertConfigurationProps> = ({
                             <FormattedMessage id="insightAlert.config.trigger.tooltip" />
                         </Bubble>
                     </BubbleHoverTrigger>
-                </div>
+                </label>
                 <div className="gd-edit-alert-configuration__trigger-select">
                     <AlertTriggerModeSelect
+                        id={accessibilityValue}
                         selectedTriggerMode={updatedAlert.alert?.trigger.mode ?? "ALWAYS"}
                         onTriggerModeChange={(triggerMode) => {
                             setUpdatedAlert({

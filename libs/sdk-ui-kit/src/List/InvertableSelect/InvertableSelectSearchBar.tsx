@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2025 GoodData Corporation
 import React from "react";
 import { useIntl } from "react-intl";
 import cx from "classnames";
@@ -33,6 +33,8 @@ export function InvertableSelectSearchBar(props: IInvertableSelectSearchBarProps
             clearOnEsc
             isSearch
             isSmall={isSmall}
+            type="search"
+            ariaLabel={intl.formatMessage({ id: "gs.list.acessibility.search.label" })}
         />
     );
 }

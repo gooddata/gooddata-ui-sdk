@@ -1,4 +1,4 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2025 GoodData Corporation
 import React, { useRef } from "react";
 import { Dropdown, Button, List, SingleSelectListItem, OverlayPositionType } from "@gooddata/sdk-ui-kit";
 import cx from "classnames";
@@ -10,6 +10,7 @@ import { getMeasureTitle } from "./utils/getters.js";
 import { DROPDOWN_ITEM_HEIGHT } from "./constants.js";
 
 export interface IAlertMetricSelectProps {
+    id: string;
     selectedMeasure: AlertMetric | undefined;
     onMeasureChange: (measure: AlertMetric) => void;
     measures: AlertMetric[];
@@ -19,6 +20,7 @@ export interface IAlertMetricSelectProps {
 const measureIcon = <div className="gd-alert-measure-select__icon gd-icon-metric" />;
 
 export const AlertMeasureSelect = ({
+    id,
     selectedMeasure,
     onMeasureChange,
     measures,
@@ -42,6 +44,7 @@ export const AlertMeasureSelect = ({
                             }}
                         >
                             <Button
+                                id={id}
                                 className={cx("gd-alert-measure-select__button s-alert-measure-select", {
                                     "is-active": isOpen,
                                 })}

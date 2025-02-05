@@ -1,4 +1,4 @@
-// (C) 2020-2024 GoodData Corporation
+// (C) 2020-2025 GoodData Corporation
 import React from "react";
 import cx from "classnames";
 import DefaultNativeListener from "react-native-listener";
@@ -40,6 +40,8 @@ export interface InputPureProps extends IDomNativeProps {
     name?: string;
     type?: string;
     required?: boolean;
+    accessibilityType?: string;
+    ariaLabel?: string;
 }
 /**
  * @internal
@@ -64,6 +66,7 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
         onBlur: noop,
         onFocus: noop,
         placeholder: "",
+        ariaLabel: "",
         prefix: "",
         readonly: false,
         suffix: "",
@@ -196,6 +199,7 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
             name,
             type,
             required,
+            ariaLabel,
         } = this.props;
 
         return (
@@ -220,6 +224,7 @@ export class InputPure extends React.PureComponent<InputPureProps> implements ID
                         placeholder={placeholder}
                         readOnly={readonly}
                         value={value}
+                        aria-label={ariaLabel}
                     />
                     {this.renderSearch(isSearch)}
                     {this.renderClearIcon(clearOnEsc)}

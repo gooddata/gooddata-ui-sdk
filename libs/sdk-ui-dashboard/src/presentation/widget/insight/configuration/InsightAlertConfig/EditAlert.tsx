@@ -167,6 +167,8 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
         selectedValue,
     );
 
+    const accessibilityValue = "alert.measure";
+
     return viewMode === "edit" ? (
         <DashboardInsightSubmenuContainer
             title={
@@ -180,15 +182,17 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
             <div className="gd-edit-alert">
                 <div className="gd-edit-alert__form">
                     <div className="gd-edit-alert__form-content">
-                        <div className="gd-edit-alert__measure-label">
+                        <label htmlFor={accessibilityValue} className="gd-edit-alert__measure-label">
                             <FormattedMessage id="insightAlert.config.when" />
-                        </div>
+                        </label>
                         <AlertMeasureSelect
+                            id={accessibilityValue}
                             selectedMeasure={selectedMeasure}
                             onMeasureChange={changeMeasure}
                             measures={measures}
                             overlayPositionType={overlayPositionType}
                         />
+
                         {Boolean(canManageAttributes) && (
                             <>
                                 <AlertAttributeSelect
@@ -279,6 +283,7 @@ export const EditAlert: React.FC<IEditAlertProps> = ({
                             }}
                             type="number"
                             suffix={getValueSuffix(updatedAlert.alert)}
+                            ariaLabel={intl.formatMessage({ id: "insightAlert.config.accessbility.input" })}
                         />
                         <AlertComparisonPeriodSelect
                             measure={selectedMeasure}
