@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2025 GoodData Corporation
 import { DashboardAttributeFilterConfigMode, DashboardDateFilterConfigMode } from "@gooddata/sdk-model";
 import camelCase from "lodash/camelCase";
 import { getTestClassByTitle } from "../support/commands/tools/classes";
@@ -50,12 +50,12 @@ export class AttributeFilter {
     }
 
     clearAllValues() {
-        this.getDropdownElement().find(".s-select-all-checkbox").click();
-        this.getDropdownElement()
-            .find(".gd-list-all-checkbox")
+        cy.get(".overlay.dropdown-body .s-select-all-checkbox").should("be.visible").click();
+        cy.get(".overlay.dropdown-body .gd-list-all-checkbox")
+            .should("be.visible")
             .then(($ele) => {
                 if ($ele.hasClass("gd-list-all-checkbox-checked")) {
-                    this.getDropdownElement().find(".s-select-all-checkbox").click();
+                    cy.get(".overlay.dropdown-body .s-select-all-checkbox").should("be.visible").click();
                 }
             });
         return this;
@@ -146,11 +146,10 @@ export class AttributeFilter {
     }
 
     showAllElementValues() {
-        this.getDropdownElement()
-            .find(".s-attribute-filter-status-show-all")
-            .find(".s-action-show-all")
+        cy.get(".overlay.dropdown-body .s-attribute-filter-status-show-all .s-action-show-all")
             .should("be.visible")
             .click();
+
         this.elementsAreLoaded();
         return this;
     }
@@ -163,11 +162,10 @@ export class AttributeFilter {
     }
 
     clearIrrelevantElementValues() {
-        this.getDropdownElement()
-            .find(".s-attribute-filter-status-irrelevant-message")
-            .find(".s-action-clear")
+        cy.get(".overlay.dropdown-body .s-attribute-filter-status-irrelevant-message .s-action-clear")
             .should("be.visible")
             .click();
+
         this.elementsAreLoaded();
         return this;
     }
