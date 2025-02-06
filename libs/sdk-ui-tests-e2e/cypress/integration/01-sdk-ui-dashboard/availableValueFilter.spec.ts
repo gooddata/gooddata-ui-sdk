@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import * as Navigation from "../../tools/navigation";
 import { Headline } from "../../tools/headline";
 import { FilterBar, TopBar } from "../../tools/dashboards";
@@ -49,6 +49,7 @@ describe("Available value filter", () => {
             .searchMetricDependency("Account")
             .selectMetricDependency("Account")
             .hasFilterListSize(2)
+            .elementsAreLoaded()
             .showAllElementValues()
             .selectAttribute(["Anaheim"])
             .apply();
