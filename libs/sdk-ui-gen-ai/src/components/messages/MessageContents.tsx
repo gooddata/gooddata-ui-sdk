@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React from "react";
 import Skeleton from "react-loading-skeleton";
@@ -17,10 +17,12 @@ type MessageContentsProps = {
     isCancelled?: boolean;
     isLastMessage?: boolean;
     useMarkdown?: boolean;
+    messageId: string;
 };
 
 export const MessageContents: React.FC<MessageContentsProps> = ({
     content,
+    messageId,
     isComplete = true,
     isCancelled = false,
     isLastMessage = false,
@@ -52,6 +54,7 @@ export const MessageContents: React.FC<MessageContentsProps> = ({
                                 content={item}
                                 key={index}
                                 showSuggestions={isLastMessage}
+                                messageId={messageId}
                             />
                         );
                     default:

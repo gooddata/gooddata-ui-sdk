@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 export type { RootState } from "./types.js";
 export { getStore } from "./store.js";
@@ -20,6 +20,9 @@ export {
     setGlobalErrorAction,
     cancelAsyncAction,
     setUserFeedback,
+    saveVisualizationAction,
+    saveVisualizationErrorAction,
+    saveVisualizationSuccessAction,
 } from "./messages/messagesSlice.js";
 
 export {

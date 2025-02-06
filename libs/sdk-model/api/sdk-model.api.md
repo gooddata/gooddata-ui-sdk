@@ -2023,6 +2023,8 @@ export interface IGenAIVisualization {
     filters?: GenAIFilter[];
     id: string;
     metrics: IGenAIVisualizationMetric[];
+    savedVisualizationId?: string;
+    saving?: boolean;
     suggestions?: IGenAISuggestion[];
     title: string;
     visualizationType: GenAIVisualizationType;

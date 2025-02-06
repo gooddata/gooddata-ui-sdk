@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import React from "react";
 import { Provider as StoreProvider } from "react-redux";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -9,6 +9,7 @@ import { IntlWrapper } from "../localization/IntlWrapper.js";
 import { GenAIChatOverlay } from "./GenAIChatOverlay.js";
 import { ChatEventHandler } from "../store/events.js";
 import { isOpenSelector, setOpenAction } from "../store/index.js";
+import { ConfigProvider } from "./ConfigContext.js";
 
 export type GenAIChatDialogProps = {
     backend?: IAnalyticalBackend;
@@ -58,7 +59,9 @@ export const GenAIChatDialog: React.FC<GenAIChatDialogProps> = ({
                 <BackendProvider backend={effectiveBackend}>
                     <WorkspaceProvider workspace={effectiveWorkspace}>
                         <OverlayControllerProvider overlayController={chatOverlayController}>
-                            <GenAIChatOverlay onClose={onClose} />
+                            <ConfigProvider allowCreateVisualization={true}>
+                                <GenAIChatOverlay onClose={onClose} />
+                            </ConfigProvider>
                         </OverlayControllerProvider>
                     </WorkspaceProvider>
                 </BackendProvider>

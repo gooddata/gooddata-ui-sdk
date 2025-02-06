@@ -1,4 +1,4 @@
-// (C) 2023-2024 GoodData Corporation
+// (C) 2023-2025 GoodData Corporation
 
 import { GenAIObjectType } from "./common.js";
 import { ISemanticSearchResultItem } from "./semanticSearch.js";
@@ -106,6 +106,14 @@ export interface IGenAIVisualization {
      * Suggestions for the visualization.
      */
     suggestions?: IGenAISuggestion[];
+    /**
+     * A visualization ID in case it was saved.
+     */
+    savedVisualizationId?: string;
+    /**
+     * A flag indicating if visualization is being saved right now
+     */
+    saving?: boolean;
 }
 
 /**

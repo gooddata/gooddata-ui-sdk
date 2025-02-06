@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import React from "react";
 import { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { BackendProvider, useBackendStrict, useWorkspaceStrict, WorkspaceProvider } from "@gooddata/sdk-ui";
@@ -7,6 +7,7 @@ import { useGenAIStore } from "../hooks/useGenAIStore.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
 import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
 import { ChatEventHandler } from "../store/events.js";
+import { ConfigProvider } from "./ConfigContext.js";
 
 /**
  * Properties for the GenAIChat component.
@@ -41,7 +42,9 @@ export const GenAIChat: React.FC<GenAIChatProps> = ({ backend, workspace, eventH
             <StoreProvider store={genAIStore}>
                 <BackendProvider backend={effectiveBackend}>
                     <WorkspaceProvider workspace={effectiveWorkspace}>
-                        <GenAIChatWrapper />
+                        <ConfigProvider allowCreateVisualization={false}>
+                            <GenAIChatWrapper />
+                        </ConfigProvider>
                     </WorkspaceProvider>
                 </BackendProvider>
             </StoreProvider>
