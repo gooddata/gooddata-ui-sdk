@@ -3437,8 +3437,6 @@ export interface ISettings {
     enableWaterfallChart?: boolean;
     enableWeekFilters?: boolean;
     enableWidgetIdentifiersRollout?: boolean;
-    enableWorkspaceHierarchySettings?: boolean;
-    enableWorkspacesHierarchyView?: boolean;
     formatLocale?: string;
     hideKpiDrillInEmbedded?: boolean;
     // (undocumented)

@@ -95,7 +95,6 @@ export enum TigerFeaturesNames {
     EnableSnowflakeKeyPairAuthentication = "enableSnowflakeKeyPairAuthentication",
     EnableInvalidValuesInAttributeFilter = "enableInvalidValuesInAttributeFilter",
     EnableDuplicatedLabelValuesInAttributeFilter = "enableDuplicatedLabelValuesInAttributeFilter",
-    EnableWorkspacesHierarchyView = "enableWorkspacesHierarchyView",
     EnableMultipleDataSourcesInWorkspace = "enableMultipleDataSourcesInWorkspace",
     EnableScatterPlotSegmentation = "enableScatterPlotSegmentation",
     EnableScatterPlotClustering = "enableScatterPlotClustering",
@@ -109,7 +108,6 @@ export enum TigerFeaturesNames {
     EnableGenAIChatRollout = "enableGenAIChatRollout",
     EnableDashboardFilterViews = "enableDashboardFilterViews",
     EnableAlertingRollout = "enableAlertingRollout",
-    EnableWorkspaceHierarchySettings = "enableWorkspaceHierarchySettings",
     EnableNewInsightChangedPostMessageEvent = "enableNewInsightChangedPostMessageEvent",
     EnableIgnoreCrossFiltering = "enableIgnoreCrossFiltering",
     EnableHeadlineExport = "enableHeadlineExport",
@@ -186,7 +184,6 @@ export type ITigerFeatureFlags = {
     enableSnowflakeKeyPairAuthentication: typeof FeatureFlagsValues["enableSnowflakeKeyPairAuthentication"][number];
     enableInvalidValuesInAttributeFilter: typeof FeatureFlagsValues["enableInvalidValuesInAttributeFilter"][number];
     enableDuplicatedLabelValuesInAttributeFilter: typeof FeatureFlagsValues["enableDuplicatedLabelValuesInAttributeFilter"][number];
-    enableWorkspacesHierarchyView: typeof FeatureFlagsValues["enableWorkspacesHierarchyView"][number];
     enableMultipleDataSourcesInWorkspace: typeof FeatureFlagsValues["enableMultipleDataSourcesInWorkspace"][number];
     enableScatterPlotSegmentation: typeof FeatureFlagsValues["enableScatterPlotSegmentation"][number];
     enableScatterPlotClustering: typeof FeatureFlagsValues["enableScatterPlotClustering"][number];
@@ -200,7 +197,6 @@ export type ITigerFeatureFlags = {
     enableGenAIChatRollout: typeof FeatureFlagsValues["enableGenAIChatRollout"][number];
     enableAlertingRollout: typeof FeatureFlagsValues["enableAlertingRollout"][number];
     enableDashboardFilterViews: typeof FeatureFlagsValues["enableDashboardFilterViews"][number];
-    enableWorkspaceHierarchySettings: typeof FeatureFlagsValues["enableWorkspaceHierarchySettings"][number];
     enableNewInsightChangedPostMessageEvent: typeof FeatureFlagsValues["enableNewInsightChangedPostMessageEvent"][number];
     enableKDVisualizationSwitcher: typeof FeatureFlagsValues["enableKDVisualizationSwitcher"][number];
     enableIgnoreCrossFiltering: typeof FeatureFlagsValues["enableIgnoreCrossFiltering"][number];
@@ -278,7 +274,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableSnowflakeKeyPairAuthentication: true,
     enableInvalidValuesInAttributeFilter: false,
     enableDuplicatedLabelValuesInAttributeFilter: true,
-    enableWorkspacesHierarchyView: false,
     enableMultipleDataSourcesInWorkspace: true,
     enableScatterPlotSegmentation: true,
     enableScatterPlotClustering: true,
@@ -292,7 +287,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableGenAIChatRollout: false,
     enableAlertingRollout: false,
     enableDashboardFilterViews: true,
-    enableWorkspaceHierarchySettings: false,
     enableNewInsightChangedPostMessageEvent: false,
     enableKDVisualizationSwitcher: true,
     enableIgnoreCrossFiltering: true,
@@ -374,7 +368,6 @@ export const FeatureFlagsValues = {
     enableSnowflakeKeyPairAuthentication: [true, false] as const,
     enableInvalidValuesInAttributeFilter: [true, false] as const,
     enableDuplicatedLabelValuesInAttributeFilter: [true, false] as const,
-    enableWorkspacesHierarchyView: [true, false] as const,
     enableMultipleDataSourcesInWorkspace: [true, false] as const,
     enableScatterPlotSegmentation: [true, false] as const,
     enableScatterPlotClustering: [true, false] as const,
@@ -388,7 +381,6 @@ export const FeatureFlagsValues = {
     enableGenAIChatRollout: [true, false] as const,
     enableAlertingRollout: [true, false] as const,
     enableDashboardFilterViews: [true, false] as const,
-    enableWorkspaceHierarchySettings: [true, false] as const,
     enableNewInsightChangedPostMessageEvent: [true, false] as const,
     enableKDVisualizationSwitcher: [true, false] as const,
     enableIgnoreCrossFiltering: [true, false] as const,

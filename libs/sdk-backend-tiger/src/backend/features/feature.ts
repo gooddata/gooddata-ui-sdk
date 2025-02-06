@@ -410,13 +410,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableWorkspacesHierarchyView,
-            "enableWorkspacesHierarchyView",
-            "BOOLEAN",
-            FeatureFlagsValues.enableWorkspacesHierarchyView,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableMultipleDataSourcesInWorkspace,
             "enableMultipleDataSourcesInWorkspace",
             "BOOLEAN",
@@ -498,13 +491,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableDashboardFilterViews",
             "BOOLEAN",
             FeatureFlagsValues.enableDashboardFilterViews,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableWorkspaceHierarchySettings,
-            "enableWorkspaceHierarchySettings",
-            "BOOLEAN",
-            FeatureFlagsValues.enableWorkspaceHierarchySettings,
         ),
         ...loadFeature(
             features,
