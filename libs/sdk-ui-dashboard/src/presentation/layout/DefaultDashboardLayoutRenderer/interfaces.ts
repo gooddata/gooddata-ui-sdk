@@ -1,5 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
+import { CSSProperties } from "react";
 import { IDashboardLayout, IDashboardWidget, ScreenSize } from "@gooddata/sdk-model";
+
 import { RenderMode } from "../../../types.js";
 import {
     IDashboardLayoutItemFacade,
@@ -88,6 +90,11 @@ export interface IDashboardLayoutSectionRenderProps<TWidget = IDashboardWidget> 
      * Data for section export in export mode.
      */
     exportData?: CommonExportDataAttributes;
+
+    /**
+     * Styles for section export in export mode.
+     */
+    exportStyles?: CSSProperties;
 }
 
 /**

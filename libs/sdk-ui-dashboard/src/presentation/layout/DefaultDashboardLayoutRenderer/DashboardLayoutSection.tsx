@@ -23,6 +23,7 @@ import { DashboardLayoutSectionOverlayController } from "../DashboardItemOverlay
 import last from "lodash/last.js";
 import { DashboardLayoutGridRowEdit } from "./DashboardLayoutGridRowEdit.js";
 import { useSectionExportData } from "../../export/index.js";
+import { useSlideSizeStyle } from "../../dashboardContexts/index.js";
 
 /**
  * @alpha
@@ -66,6 +67,7 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
         renderMode,
     } = props;
     const exportData = useSectionExportData(true);
+    const exportStyles = useSlideSizeStyle(renderMode, "section");
     const renderProps = { section, screen, renderMode, exportData: exportData?.section };
 
     const items = useMemo(() => {
@@ -128,6 +130,7 @@ export function DashboardLayoutSection<TWidget>(props: IDashboardLayoutSectionPr
 
     return sectionRenderer({
         ...renderProps,
+        exportStyles,
         DefaultSectionRenderer: DashboardLayoutSectionRenderer,
         children: (
             <>
