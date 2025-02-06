@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React from "react";
 import cx from "classnames";
@@ -19,7 +19,7 @@ export const UserMessageComponent: React.FC<UserMessageProps> = ({ message, isLa
 
     return (
         <div className={classNames}>
-            <MessageContents content={message.content} isLastMessage={isLast} />
+            <MessageContents content={message.content} isLastMessage={isLast} messageId={message.localId} />
         </div>
     );
 };

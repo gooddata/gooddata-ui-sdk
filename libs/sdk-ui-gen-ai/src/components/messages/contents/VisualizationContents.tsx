@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 
 import React from "react";
 import cx from "classnames";
@@ -9,18 +9,27 @@ import { makeTextContents, makeUserMessage, VisualizationContents } from "../../
 import { useExecution } from "./useExecution.js";
 import { VisualizationErrorBoundary } from "./VisualizationErrorBoundary.js";
 import { MarkdownComponent } from "./Markdown.js";
-import { Button } from "@gooddata/sdk-ui-kit";
+import { Bubble, BubbleHoverTrigger, Button, Icon } from "@gooddata/sdk-ui-kit";
 import { useDispatch } from "react-redux";
 import { newMessageAction } from "../../../store/index.js";
+import { useConfig } from "../../ConfigContext.js";
+import { VisualizationSaveDialog } from "./VisualizationSaveDialog.js";
+import { FormattedMessage } from "react-intl";
+import { useWorkspaceStrict } from "@gooddata/sdk-ui";
+
+const VIS_HEIGHT = 250;
+const HEADLINE_HEIGHT = 50;
 
 export type VisualizationContentsProps = {
     content: VisualizationContents;
+    messageId: string;
     useMarkdown?: boolean;
     showSuggestions?: boolean;
 };
 
 export const VisualizationContentsComponent: React.FC<VisualizationContentsProps> = ({
     content,
+    messageId,
     useMarkdown,
     showSuggestions = false,
 }) => {
@@ -31,13 +40,67 @@ export const VisualizationContentsComponent: React.FC<VisualizationContentsProps
     );
     const visualization = content.createdVisualizations?.[0];
     const { metrics, dimensions, filters } = useExecution(visualization);
+    const config = useConfig();
+    const [saveDialogOpen, setSaveDialogOpen] = React.useState(false);
+    const workspaceId = useWorkspaceStrict();
+
+    const handleButtonClick = (e: any) => {
+        if (visualization?.savedVisualizationId) {
+            // TODO should instead trigger an event and let the hosting app do the redirect
+            const url = `/analyze/#/${workspaceId}/${visualization.savedVisualizationId}/edit`;
+            if (e.ctrlKey || e.metaKey) {
+                // Open in a new tab
+                window.open(url);
+            } else {
+                // Open in the same tab
+                window.location.href = url;
+            }
+            e.preventDefault();
+            e.stopPropagation();
+        } else {
+            setSaveDialogOpen(true);
+        }
+    };
 
     return (
         <div className={className}>
             <MarkdownComponent allowMarkdown={useMarkdown}>{content.text}</MarkdownComponent>
             {visualization ? (
                 <div className="gd-gen-ai-chat__visualization">
-                    <div className="gd-gen-ai-chat__visualization__wrapper">
+                    {config.allowCreateVisualization ? (
+                        <div onClick={handleButtonClick} className="gd-gen-ai-chat__visualization__save">
+                            <BubbleHoverTrigger
+                                tagName="div"
+                                className="gd-gen-ai-chat__visualization__save__bubble"
+                            >
+                                {visualization.savedVisualizationId ? (
+                                    <Icon.Edit width={18} height={18} color="#fff" />
+                                ) : (
+                                    <Icon.Save width={18} height={18} color="#fff" />
+                                )}
+                                <Bubble alignPoints={[{ align: "bc tc", offset: { x: 0, y: 8 } }]}>
+                                    {visualization.savedVisualizationId ? (
+                                        <FormattedMessage id={"gd.gen-ai.button.edit"} />
+                                    ) : (
+                                        <FormattedMessage id={"gd.gen-ai.button.save"} />
+                                    )}
+                                </Bubble>
+                            </BubbleHoverTrigger>
+                        </div>
+                    ) : null}
+                    {saveDialogOpen ? (
+                        <VisualizationSaveDialog
+                            onClose={() => setSaveDialogOpen(false)}
+                            visualization={visualization}
+                            messageId={messageId}
+                        />
+                    ) : null}
+                    <div
+                        className={cx(
+                            "gd-gen-ai-chat__visualization__wrapper",
+                            `gd-gen-ai-chat__visualization__wrapper--${visualization.visualizationType.toLowerCase()}`,
+                        )}
+                    >
                         <VisualizationErrorBoundary>
                             {(() => {
                                 switch (visualization.visualizationType) {
@@ -94,7 +157,7 @@ const assertNever = (value: never): never => {
 
 const renderBarChart = (metrics: IMeasure[], dimensions: IAttribute[], filters: IFilter[]) => (
     <BarChart
-        height={300}
+        height={VIS_HEIGHT}
         measures={metrics}
         viewBy={[dimensions[0], dimensions[1]].filter(Boolean)}
         stackBy={metrics.length <= 1 ? dimensions[2] : undefined}
@@ -111,7 +174,7 @@ const renderBarChart = (metrics: IMeasure[], dimensions: IAttribute[], filters: 
 
 const renderColumnChart = (metrics: IMeasure[], dimensions: IAttribute[], filters: IFilter[]) => (
     <ColumnChart
-        height={300}
+        height={VIS_HEIGHT}
         measures={metrics}
         viewBy={[dimensions[0], dimensions[1]].filter(Boolean)}
         stackBy={metrics.length <= 1 ? dimensions[2] : undefined}
@@ -128,7 +191,7 @@ const renderColumnChart = (metrics: IMeasure[], dimensions: IAttribute[], filter
 
 const renderLineChart = (metrics: IMeasure[], dimensions: IAttribute[], filters: IFilter[]) => (
     <LineChart
-        height={300}
+        height={VIS_HEIGHT}
         measures={metrics}
         trendBy={dimensions[0]}
         segmentBy={metrics.length <= 1 ? dimensions[1] : undefined}
@@ -143,7 +206,7 @@ const renderLineChart = (metrics: IMeasure[], dimensions: IAttribute[], filters:
 
 const renderPieChart = (metrics: IMeasure[], dimensions: IAttribute[], filters: IFilter[]) => (
     <PieChart
-        height={300}
+        height={VIS_HEIGHT}
         measures={metrics}
         viewBy={metrics.length <= 1 ? dimensions[0] : undefined}
         filters={filters}
@@ -156,7 +219,7 @@ const renderTable = (metrics: IMeasure[], dimensions: IAttribute[], filters: IFi
 
 const renderHeadline = (metrics: IMeasure[], _dimensions: IAttribute[], filters: IFilter[]) => (
     <Headline
-        height={300}
+        height={HEADLINE_HEIGHT}
         primaryMeasure={metrics[0]}
         secondaryMeasures={[metrics[1], metrics[2]].filter(Boolean)}
         filters={filters}

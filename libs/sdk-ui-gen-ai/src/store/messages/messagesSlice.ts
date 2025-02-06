@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2025 GoodData Corporation
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { GenAIChatInteractionUserFeedback } from "@gooddata/sdk-model";
 import {
@@ -6,6 +6,7 @@ import {
     Contents,
     isAssistantMessage,
     isUserMessage,
+    isVisualizationContents,
     makeErrorContents,
     Message,
     UserMessage,
@@ -225,6 +226,69 @@ const messagesSlice = createSlice({
 
             assistantMessage.feedback = payload.feedback;
         },
+        saveVisualizationAction: (
+            state,
+            {
+                payload,
+            }: PayloadAction<{
+                visualizationId: string;
+                visualizationTitle: string;
+                assistantMessageId: string;
+            }>,
+        ) => {
+            const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
+
+            const visualization = assistantMessage.content
+                .filter(isVisualizationContents)
+                .flatMap((content) => content.createdVisualizations)
+                .find((content) => content.id === payload.visualizationId);
+
+            if (visualization) {
+                visualization.saving = true;
+            }
+        },
+        saveVisualizationErrorAction: (
+            state,
+            {
+                payload,
+            }: PayloadAction<{
+                visualizationId: string;
+                assistantMessageId: string;
+            }>,
+        ) => {
+            const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
+
+            const visualization = assistantMessage.content
+                .filter(isVisualizationContents)
+                .flatMap((content) => content.createdVisualizations)
+                .find((content) => content.id === payload.visualizationId);
+
+            if (visualization) {
+                visualization.saving = false;
+            }
+        },
+        saveVisualizationSuccessAction: (
+            state,
+            {
+                payload,
+            }: PayloadAction<{
+                visualizationId: string;
+                assistantMessageId: string;
+                savedVisualizationId: string;
+            }>,
+        ) => {
+            const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
+
+            const visualization = assistantMessage.content
+                .filter(isVisualizationContents)
+                .flatMap((content) => content.createdVisualizations)
+                .find((content) => content.id === payload.visualizationId);
+
+            if (visualization) {
+                visualization.saving = false;
+                visualization.savedVisualizationId = payload.savedVisualizationId;
+            }
+        },
     },
 });
 
@@ -246,4 +310,7 @@ export const {
     setGlobalErrorAction,
     cancelAsyncAction,
     setUserFeedback,
+    saveVisualizationAction,
+    saveVisualizationErrorAction,
+    saveVisualizationSuccessAction,
 } = messagesSlice.actions;
