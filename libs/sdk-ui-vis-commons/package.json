@@ -57,7 +57,7 @@
         "@gooddata/sdk-ui-kit": "workspace:*",
         "@gooddata/sdk-ui-theme-provider": "workspace:*",
         "classnames": "^2.3.1",
-        "default-import": "1.1.5",
+        "default-import": "1.1.7",
         "lodash": "^4.17.21",
         "react-intl": "^6.4.1",
         "react-measure": "^2.5.2",

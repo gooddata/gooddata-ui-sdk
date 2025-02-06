@@ -55,7 +55,7 @@
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-model": "workspace:*",
         "@gooddata/util": "workspace:*",
-        "default-import": "1.1.5",
+        "default-import": "1.1.7",
         "hoist-non-react-statics": "^3.3.0",
         "http-status-codes": "^2.1.4",
         "json-stable-stringify": "^1.0.1",
