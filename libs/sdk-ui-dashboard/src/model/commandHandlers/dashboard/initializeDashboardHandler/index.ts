@@ -410,9 +410,9 @@ function* initializeNewDashboard(
     };
 }
 
-export function* requestCatalog(ctx: DashboardContext) {
+export function* requestCatalog(ctx: DashboardContext, cmd: InitializeDashboard) {
     const [catalog, dateHierarchyTemplates]: [IWorkspaceCatalog, IDateHierarchyTemplate[]] = yield all([
-        call(loadCatalog, ctx, { payload: { config: {} } } as InitializeDashboard),
+        call(loadCatalog, ctx, cmd),
         call(loadDateHierarchyTemplates, ctx),
     ]);
 
@@ -435,8 +435,12 @@ export function* preloadAttributeFiltersData(ctx: DashboardContext, dashboard: I
     yield put(filterContextActions.setPreloadedAttributesWithReferences(attributesWithReferences));
 }
 
-function* advancedLoader(ctx: DashboardContext, dashboard?: IDashboard): SagaIterator {
-    yield all([call(requestCatalog, ctx), call(preloadAttributeFiltersData, ctx, dashboard!)]);
+function* advancedLoader(
+    ctx: DashboardContext,
+    cmd: InitializeDashboard,
+    dashboard?: IDashboard,
+): SagaIterator {
+    yield all([call(requestCatalog, ctx, cmd), call(preloadAttributeFiltersData, ctx, dashboard!)]);
 }
 
 export function* initializeDashboardHandler(ctx: DashboardContext, cmd: InitializeDashboard): SagaIterator {
@@ -464,7 +468,7 @@ export function* initializeDashboardHandler(ctx: DashboardContext, cmd: Initiali
         ) {
             // let's run effects which are not essential for the existing
             // dashboard to be rendered, such as catalog load
-            yield spawn(advancedLoader, ctx, result.event.payload.dashboard);
+            yield spawn(advancedLoader, ctx, cmd, result.event.payload.dashboard);
         }
     } catch (e) {
         yield put(loadingActions.setLoadingError(e as Error));
