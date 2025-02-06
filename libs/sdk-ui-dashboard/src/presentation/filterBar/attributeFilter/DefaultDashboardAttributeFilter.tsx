@@ -40,6 +40,7 @@ import {
     selectHasSomeExecutionResult,
     selectEnableCriticalContentPerformanceOptimizations,
     selectPreloadedAttributesWithReferences,
+    selectIsDashboardExecuted,
 } from "../../../model/index.js";
 import { useAttributes } from "../../../_staging/sharedHooks/useAttributes.js";
 import { getVisibilityIcon } from "../utils.js";
@@ -71,12 +72,16 @@ export const DefaultDashboardAttributeFilter = (
     // In case, dashboard contains lot of filters,
     // these are spawning lot of requests (collectLabelElements), which are potentially blocking execution(s).
     // Wait at least for one executed result until we start loading them, so they are not blocking execution(s).
+    const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const hasSomeExecutionResult = useDashboardSelector(selectHasSomeExecutionResult);
     const filtersPreloaded = useDashboardSelector(selectPreloadedAttributesWithReferences);
+    const isDashboardExecuted = useDashboardSelector(selectIsDashboardExecuted);
     const enableCriticalContentPerformanceOptimizations = useDashboardSelector(
         selectEnableCriticalContentPerformanceOptimizations,
     );
-    if (enableCriticalContentPerformanceOptimizations && !(hasSomeExecutionResult && filtersPreloaded)) {
+    const showFilter = isInEditMode || isDashboardExecuted || (hasSomeExecutionResult && filtersPreloaded);
+
+    if (enableCriticalContentPerformanceOptimizations && !showFilter) {
         return <AttributeFilterLoading />;
     }
 
